@@ -210,7 +210,7 @@ class PackageTests(unittest.TestCase):
 
 
 class BranchPushGateTests(unittest.TestCase):
-    def test_real_pushes_reject_shared_bugfix_and_allow_audit_research(self):
+    def test_real_pushes_preserve_gates_for_temporary_audits_and_research(self):
         # All refs, including main, belong to this disposable local fixture.
         # The QA stub records invocation; it does not impersonate project QA.
         with tempfile.TemporaryDirectory() as tmp:
@@ -290,14 +290,26 @@ class BranchPushGateTests(unittest.TestCase):
             git('push', 'origin', 'HEAD:refs/heads/fix/new-task')
             self.assertTrue(marker.exists(), 'fresh PR branch must run the QA gate')
             self.assertEqual(head, git('rev-parse', 'refs/heads/fix/new-task', cwd=remote).stdout.strip())
-            for retained in ('audit/retained-study', 'research/reconstruction-package'):
-                with self.subTest(retained=retained):
+            # The push hook checks source integrity, not the branch's retention
+            # designation: a routine audit is still a temporary PR head.
+            for name in ('audit/one-shot-finding', 'audit/owner-approved-campaign',
+                         'research/reconstruction-package'):
+                with self.subTest(project_branch=name):
                     marker.unlink()
-                    git('push', 'origin', 'HEAD:refs/heads/' + retained)
-                    self.assertTrue(marker.exists(), 'retained project branches must pass the normal QA gate')
-                    self.assertEqual(head, git('rev-parse', 'refs/heads/' + retained,
+                    git('push', 'origin', 'HEAD:refs/heads/' + name)
+                    self.assertTrue(marker.exists(), 'every PR head must pass the same QA gate')
+                    self.assertEqual(head, git('rev-parse', 'refs/heads/' + name,
                                                cwd=remote).stdout.strip())
             marker.unlink()
+            git('push', 'origin', '--delete', 'audit/one-shot-finding')
+            self.assertNotEqual(0, git('show-ref', '--verify',
+                                      'refs/heads/audit/one-shot-finding',
+                                      cwd=remote, accept=False).returncode)
+            for retained in ('audit/owner-approved-campaign',
+                             'research/reconstruction-package'):
+                self.assertEqual(head, git('rev-parse', 'refs/heads/' + retained,
+                                           cwd=remote).stdout.strip())
+            self.assertFalse(marker.exists(), 'deleting a temporary audit head must not run QA')
             (checkout / 'change.txt').write_text('uncommitted fixture change\n')
             rejected = git('push', 'origin', 'HEAD:refs/heads/fix/dirty', accept=False)
             self.assertNotEqual(0, rejected.returncode)
