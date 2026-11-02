@@ -125,12 +125,44 @@ void provider_object_once(const wchar_t* path) {
     require(f.provider.module==0&&destroyed()==1&&fault::frees==2,
         "provider cleanup destroyed the object or released the module twice");
 }
+void provider_empty_slot(const wchar_t*) {
+    std::array<std::uintptr_t,7> table{};
+    const std::uintptr_t object=reinterpret_cast<std::uintptr_t>(table.data());
+    bool rejected=false;
+    try{(void)application::Provider::method<int(*)(void*)>(reinterpret_cast<std::uintptr_t>(&object),1);}
+    catch(const std::logic_error&){rejected=true;}
+    require(rejected,"empty provider vtable slot must be rejected before an indirect call");
+}
+void provider_byte_layout(const wchar_t*) {
+    using Method=int(*)(void*);
+    const auto expected=+[](void*){return 73;};
+    // Deliberately unaligned readable storage: no pointer object is constructed
+    // in either buffer. Resolve/call the slot through the production adapter.
+    alignas(std::uintptr_t) std::array<std::byte,1+7*sizeof(std::uintptr_t)> table{};
+    alignas(std::uintptr_t) std::array<std::byte,1+sizeof(std::uintptr_t)> object{};
+    const auto table_address=reinterpret_cast<std::uintptr_t>(table.data()+1);
+    const auto function_address=reinterpret_cast<std::uintptr_t>(expected);
+    std::memcpy(object.data()+1,&table_address,sizeof(table_address));
+    std::memcpy(table.data()+1+sizeof(std::uintptr_t),&function_address,sizeof(function_address));
+    const auto object_address=reinterpret_cast<std::uintptr_t>(object.data()+1);
+    const auto function=application::Provider::method<Method>(object_address,1);
+    require(function==expected&&function(reinterpret_cast<void*>(object_address))==73,
+        "provider byte-backed vtable resolution changed the slot or object");
+    const std::uintptr_t null_table=0;
+    for(const auto address:{std::uintptr_t{0},reinterpret_cast<std::uintptr_t>(&null_table)}) {
+        bool rejected=false;
+        try{(void)application::Provider::method<Method>(address,1);}
+        catch(const std::logic_error&){rejected=true;}
+        require(rejected,"null provider object/table must fail before the foreign call");
+    }
+}
 }
 int wmain(int argc,wchar_t** argv)try {
     require(argc==2||argc==3,"expected fixture DLL path and optional case");
     const std::wstring_view selected=argc==3?argv[2]:L"all";bool ran=false;
     for(auto [name,fn]:{std::pair{L"acquire",acquisition_failure},{L"mixed",mixed_release},{L"retry",repeated_failure},
                       {L"provider-retry",provider_retry},{L"provider-object",provider_object_once},
+                      {L"provider-slot",provider_empty_slot},{L"provider-layout",provider_byte_layout},
                       {L"provider-physical-lease",provider_physical_lease}})
         if(selected==L"all"||selected==name){fn(argv[1]);ran=true;}
     require(ran,"unknown case");std::cout<<"PASS: native-module acquisition/retained-release/retry controls\n";return 0;
