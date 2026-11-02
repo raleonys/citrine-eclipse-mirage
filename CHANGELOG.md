@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- [PR #28](https://github.com/raleonys/citrine-eclipse-mirage/pull/28): Read online-provider object and method-table fields through byte copies, reject missing tables or methods before indirect calls, and match the observed single-object destruction call. Add malformed-slot, unaligned-storage and module-cleanup regressions.
+
 - Restore owner-approved 34-name LUTRAVEX weekly semantic version queue from project Library and Citrine_Eclipse_Mirage_x.y.z_CODENAME.zip naming; retire -RNN prospectively without changing ABI or release history.
 
 - Run actual Windows Native Release/Debug, Production/Golden Release, CRT Release, Debug, Compile Only, full Windows portable Debug/Release, and reference graph automatically for every PR. Keep existing required Windows native/production check names and preserve weekly draft-only publication; no runtime source or ABI change.
