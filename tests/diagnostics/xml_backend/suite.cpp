@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "backend.hpp"
+#include "benchmark_cases.hpp"
+#include "../../fixtures/xml_reader/wire_contracts.hpp"
+#include <algorithm>
+#include <numeric>
+#include <cstdint>
 #include "oracle_reader.hpp"
 #include "messages_fixtures.hpp"
 #include "storage_fixtures.hpp"
@@ -200,6 +205,32 @@ void protocol(const char* output){
 
  std::cout<<"PASS: "<<cases.size()<<" actual process/dispatch/challenge protocol cases across "<<ps.size()<<" reader profiles; fake crypto/effects, real XML and MemoryPrinter\n";
 }
+void wire_contracts() {
+ auto ps=profiles();
+ for(auto& profile:ps) {
+  auto fields=[&](const std::string& input) {
+   auto parsed=profile->backend().parse_c_string(input);require(!parsed.has_error,"wire fixture rejected");
+   const auto* root=parsed.document->first_element();require(root&&root->name()=="LSX","wire root");
+   const auto* request=root->first_element();require(request&&request->name()=="Request","wire request");
+   const auto* command=request->first_element();require(command&&command->name()=="GetProfile","wire command");
+   auto id=request->attribute("id"),recipient=request->attribute("recipient"),index=command->attribute("index");
+   require(id&&recipient&&index,"wire required attributes");
+   return std::make_tuple(std::string(*id),std::string(*recipient),std::string(*index));
+  };
+  using namespace xml_contract_fixture;
+  const auto canonical=std::make_tuple(std::string("public-dll"),std::string("EbisuSDK"),std::string("0"));
+  require(fields(profile_request())==canonical,"wire canonical fields differ from explicit oracle");
+  for(const auto& [name,input]:equivalent_forms())require(fields(input)==canonical,"wire equivalent form changed parsed fields");
+  for(const auto& value:equivalent_values()) {
+   const auto expected=std::make_tuple(std::string("public-dll"),std::string("EbisuSDK"),value.decoded);
+   require(fields(profile_request(value.literal))==expected,"wire literal differs from explicit value oracle");
+   require(fields(profile_request(value.reference))==expected,"wire reference differs from explicit value oracle");
+  }
+  require(fields(profile_request("A","EbisuSDK","wire-next"))==std::make_tuple(std::string("wire-next"),std::string("EbisuSDK"),std::string("A")),"wire fields stale across requests");
+  for(const auto& input:malformed_frames())require(profile->backend().parse_c_string(input).has_error,"malformed wire fixture accepted");
+ }
+ std::cout<<"PASS: actual DLL wire fixtures: 8 equivalent forms, 5 value pairs and 3 malformed inputs on both readers\n";
+}
 void ownership(){
  auto ps=profiles();for(auto& p:ps){
   std::string s="<R a='retained&amp;&#65;&unknown;'><C>payload&amp;&#65;</C>";
@@ -306,21 +337,56 @@ void probe() {
   }
  }
 }
-void benchmark(unsigned iterations,const char* output){
- auto ps=profiles();std::vector<std::pair<std::string,std::string>> cases={{"small-request","<LSX><Request id='1' recipient='EALS'><GetProfile index='0'/></Request></LSX>"},{"large-text","<R>"+std::string(65536,'x')+"</R>"}};
- std::string wide="<R>";for(unsigned i=0;i<256;++i)wide+="<C v='1'/>";wide+="</R>";cases.emplace_back("many-elements",std::move(wide));
- cases.emplace_back("reference-heavy","<R>"+std::string(4096,'&')+"&#65;&amp;&#x1F600;&unknown;</R>");
- cases.emplace_back("declaration-request","<?xml version='1.0'?><LSX><Request id='1' recipient='EALS'><GetProfile index='0'/></Request></LSX>");
- cases.emplace_back("legacy-accepted","< R a='A&amp;'><!odd><C v='1'/></R>");
- std::ofstream out(output);out<<"profile,case,repeat,iterations,input_bytes,p50_ns,p95_ns,p99_ns,sink\n";
- for(unsigned repeat=0;repeat<5;++repeat)for(std::size_t shift=0;shift<ps.size();++shift){auto& p=ps[(shift+repeat)%ps.size()];for(auto& [name,s]:cases){
-  for(unsigned i=0;i<50;++i){auto d=p->backend().parse_c_string(s);(void)snapshot(d.document->first_element(),p->nodes());}
-  std::vector<long long> times;times.reserve(iterations);std::size_t sink=0;
-  for(unsigned i=0;i<iterations;++i){auto begin=std::chrono::steady_clock::now();{auto d=p->backend().parse_c_string(s);require(!d.has_error,"benchmark input failure");auto r=d.document->first_element();for(auto n=r->first_element();n;n=n->next_element()){sink+=n->name().size();if(auto a=n->attribute("v"))sink+=a->size();}if(auto text=p->nodes().text_003860(*r))sink+=std::char_traits<char>::length(text);}times.push_back(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-begin).count());}
-  std::sort(times.begin(),times.end());auto percentile=[&](unsigned n){return times[(times.size()-1)*n/100];};
-  out<<p->name<<','<<name<<','<<repeat<<','<<iterations<<','<<s.size()<<','<<percentile(50)<<','<<percentile(95)<<','<<percentile(99)<<','<<sink<<'\n';
- }}
- std::cout<<"PASS: interleaved five-repeat local parse/traverse/free timing recorded\n";
+// All profiles perform the same parse, complete traversal and destruction.
+// Hash every value so benchmark work cannot disappear or silently change semantics.
+std::uint64_t consume(Profile& profile,const msg::XmlNode* root) {
+ return xml_comparison::consume_xml(root,profile.nodes());
+}
+void benchmark(unsigned iterations,unsigned repeats,unsigned seed,const char* output){
+ require(iterations>=32&&iterations<=100000,"benchmark iterations must be in 32..100000");
+ require(repeats>=10&&repeats<=100,"benchmark repeats must be in 10..100");
+ auto ps=profiles();const auto cases=xml_comparison::benchmark_cases();
+ std::mt19937 random(seed);std::vector<unsigned> first_profile(cases.size());
+ for(auto& first:first_profile)first=random()%2;
+ std::ofstream out(output);
+ require(bool(out),"cannot open benchmark report");
+ out<<"profile,case,repeat,order,iterations,input_bytes,mean_ns,p50_ns,p95_ns,p99_ns,sink,input_hash,seed\n"<<std::setprecision(17);
+ for(unsigned repeat=0;repeat<repeats;++repeat) {
+  std::vector<std::size_t> order(cases.size());std::iota(order.begin(),order.end(),0);
+  std::shuffle(order.begin(),order.end(),random);
+  for(auto index:order) {
+   const auto& item=cases[index];const auto& input=item.input;
+   auto reference=ps[0]->backend().parse_c_string(input);auto candidate=ps[1]->backend().parse_c_string(input);
+   require(!reference.has_error&&!candidate.has_error,"benchmark fixture must parse successfully");
+   require(snapshot(reference.document->first_element(),ps[0]->nodes())==snapshot(candidate.document->first_element(),ps[1]->nodes()),"benchmark semantic preflight mismatch");
+   const auto expected=consume(*ps[0],reference.document->first_element());
+   require(expected==consume(*ps[1],candidate.document->first_element()),"benchmark consumption mismatch");
+   // Bound large-document work while retaining >= 32 separately timed samples.
+   const auto count=std::min<unsigned>(iterations,std::max<std::size_t>(32,8*1024*1024/input.size()));
+   std::uint64_t input_hash=1469598103934665603ULL;
+   for(unsigned char c:input){input_hash^=c;input_hash*=1099511628211ULL;}
+   const unsigned first=(first_profile[index]+repeat)%2;
+   reference.document.reset();candidate.document.reset();
+   for(unsigned position=0;position<2;++position) {
+    auto& profile=*ps[(first+position)%2];
+    auto& backend=profile.backend();auto& access=profile.nodes();
+    for(unsigned i=0;i<50;++i){auto parsed=backend.parse_c_string(input);require(!parsed.has_error,"benchmark warmup failure");(void)xml_comparison::consume_xml(parsed.document->first_element(),access);}
+    std::vector<double> durations;durations.reserve(count);std::uint64_t sink=0;
+    const auto all_begin=std::chrono::steady_clock::now();
+    for(unsigned i=0;i<count;++i) {
+     const auto begin=std::chrono::steady_clock::now();
+     {auto parsed=backend.parse_c_string(input);require(!parsed.has_error,"benchmark parse failure");const auto value=xml_comparison::consume_xml(parsed.document->first_element(),access);require(value==expected,"benchmark value changed");sink+=value;}
+     durations.push_back(std::chrono::duration<double,std::nano>(std::chrono::steady_clock::now()-begin).count());
+    }
+    const auto elapsed=std::chrono::duration<double,std::nano>(std::chrono::steady_clock::now()-all_begin).count();
+    std::sort(durations.begin(),durations.end());
+    auto percentile=[&](unsigned p){return durations[(durations.size()-1)*p/100];};
+    out<<profile.name<<','<<item.name<<','<<repeat<<','<<position<<','<<count<<','<<input.size()<<','<<elapsed/count<<','<<percentile(50)<<','<<percentile(95)<<','<<percentile(99)<<','<<sink<<','<<input_hash<<','<<seed<<'\n';
+   }
+  }
+ }
+ require(bool(out),"benchmark report write failed");
+ std::cout<<"PASS: paired randomized Release parse/traverse/free timing with semantic preflight recorded\n";
 }
 }
 int main(int argc,char** argv)try{
@@ -332,9 +398,10 @@ int main(int argc,char** argv)try{
  else if(op=="protocol"&&argc==3)protocol(argv[2]);
  else if(op=="protocol-edges"&&argc==3)protocol_edges(argv[2]);
  else if(op=="ownership")ownership();
+ else if(op=="wire-contracts")wire_contracts();
  else if(op=="storage"&&argc==3)storage(argv[2]);
  else if(op=="fuzz"&&argc==4)fuzz(std::stoul(argv[2]),argv[3]);
  else if(op=="holdout"&&argc==4)fuzz(std::stoul(argv[2]),argv[3],true);
- else if(op=="benchmark"&&argc==4)benchmark(std::stoul(argv[2]),argv[3]);
+ else if(op=="benchmark"&&argc==6)benchmark(std::stoul(argv[2]),std::stoul(argv[3]),std::stoul(argv[4]),argv[5]);
  else return 2;return 0;
 }catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unknown comparison exception\n";return 1;}
