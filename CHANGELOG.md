@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Add automated real-DLL XML equivalence/value/malformed-frame recovery contracts across three TCP lifecycle cycles and run them on finalized Golden output. Strengthen the independent reader benchmark with ten shared fixtures, full-work digests, 20 randomized paired Release rounds, compiler/source receipts, separate allocation measurements and per-fixture uncertainty reports. Reject incomplete or misleading performance receipts in infrastructure tests; production parser/vendor/ABI/CRT behavior is unchanged.
+
 - Add an A11-07 actual hook-transaction regression for the MH_ERROR_DISABLED return path: an already-inactive patch does not bypass active-call drain or a failed uninitialize, and later retries skip duplicate disable while preserving original slots and engine ownership. Test-only, no patched MinHook, vendor, ABI or shipping code changes.
 
 - Remove both obsolete TinyXML2 CMake target aliases at the owner's request. Use only the pugixml target names in active build policy and documentation, and retain the actual pugixml development project in Windows reference artifacts.
