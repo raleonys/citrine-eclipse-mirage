@@ -24,6 +24,23 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def load_unique_json(path):
+    """Read a machine identity JSON file without collapsing duplicate keys.
+
+    Duplicate keys at *any* nesting level are ambiguous even when the values
+    match, so source inventories must reject them before verifying hashes.
+    """
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError('Duplicate JSON object key: ' + repr(key))
+            result[key] = value
+        return result
+    return json.loads(Path(path).read_text(encoding='utf-8'),
+                      object_pairs_hook=unique_object)
+
+
 def safe_member(name):
     parts = name.split('/')
     if (not name or '\\' in name or name.startswith('/') or re.match(r'^[A-Za-z]:', name)
@@ -125,7 +142,7 @@ def write_manifest(root):
 
 def verify_manifest(root):
     root = Path(root)
-    manifest = json.loads((root / MANIFEST).read_text(encoding='utf-8'))
+    manifest = load_unique_json(root / MANIFEST)
     if not isinstance(manifest, dict) or manifest.get('schema') != MANIFEST_SCHEMA:
         return ['Unrecognized active source manifest schema']
     if 'classification' in manifest:

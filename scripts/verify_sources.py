@@ -3,13 +3,12 @@
 """Check the declared application/test/vendor source bytes and layout boundary."""
 from pathlib import Path
 import hashlib
-import json
 import re
-from project_files import vendor_symlinks, source_payload, alias_payload
+from project_files import vendor_symlinks, source_payload, alias_payload, load_unique_json
 
 
 def verify(root):
-    manifest=json.loads((root/'metadata/SOURCE_FILES.json').read_text())
+    manifest=load_unique_json(root/'metadata/SOURCE_FILES.json')
     errors=[]
     expected=manifest['files']
     allowed_links=vendor_symlinks(root)
