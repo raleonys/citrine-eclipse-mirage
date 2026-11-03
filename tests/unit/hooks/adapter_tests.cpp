@@ -2,6 +2,7 @@
 
 #include "preloader_l/platform/hook_engine_adapters.hpp"
 #include "preloader_l/platform/hook_unload_guard.hpp"
+#include <windows.h>
 #include <algorithm>
 #include <array>
 #include <iostream>

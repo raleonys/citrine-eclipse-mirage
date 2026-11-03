@@ -1590,8 +1590,8 @@
       "sha256": "8ab85a4ac0ba0bdcc3b360e1fdc563859c3bc64657dab75024760d65c04f8348"
     },
     "tests/unit/hooks/adapter_tests.cpp": {
-      "bytes": 11499,
-      "sha256": "aced400d33780abf9d426c8e312f9509e185134b15e0e286cf67ef9cc85d3649"
+      "bytes": 11520,
+      "sha256": "ef20b30c19a0553bf654a86da332f1026a7f65d8507bc9be24f37bc0515a3866"
     },
     "tests/unit/hooks/transaction_tests.cpp": {
       "bytes": 4238,
