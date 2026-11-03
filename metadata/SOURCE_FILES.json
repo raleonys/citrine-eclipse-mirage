@@ -854,8 +854,8 @@
       "sha256": "45f0acf77d47fc5bc6ae2d57ecd388e5bcff24f2786def9638a992e97fe25e0e"
     },
     "src/platform/atomic_files_windows.cpp": {
-      "bytes": 5745,
-      "sha256": "1cfca698a9338ff570e1fdffbec6d164c793682ce4d36432f0ce16276cb4dfe8"
+      "bytes": 6585,
+      "sha256": "58cee5196da65d0e954a9d05a47769a2f43d04ed45eb6eb6a691442f8f9a9b53"
     },
     "src/platform/crypt_query.cpp": {
       "bytes": 1987,
@@ -1242,8 +1242,8 @@
       "sha256": "26c58732fec8d80839ef966f87b2502f46ec4b9b86096b6c6fa995887974e43c"
     },
     "tests/native/atomic_staging_tests.cpp": {
-      "bytes": 4052,
-      "sha256": "6647bdbe515abcff072ca8b8614ee7c3958326b3e48db0aa05003d18f5cd4867"
+      "bytes": 7690,
+      "sha256": "6afcc865779b5c963580d65e226867cb83375671e96ae9026fe962965c21bf1f"
     },
     "tests/native/cleanup_retry_tests.cpp": {
       "bytes": 1778,
