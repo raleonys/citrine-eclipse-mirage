@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Add a standalone, test-only pugixml comparison against the pinned PR #108 corrected XML reader. Reuse its actual checked value decoder, frozen corpus, protocol and achievement-storage fixtures; record candidate contract failures and behavior differences alongside timing, tracked allocations, fault injection and sanitizer results. Add isolated Linux/MSVC diagnostic CI without changing production targets, the four vendor trees/pins or XML runtime selection. Current measurements block direct migration.
+
 - Run the root-ownership caller-isolation regression through existing portable and Windows Native infrastructure targets. Poison absolute Git selectors in a child process and verify the disposable caller's object store, refs, HEAD, config, index and worktree registry remain unchanged; preserve the underlying fixture-environment fix and all push gates.
 
 - Resolve the Source QA report fixture root before output ancestry checks, matching the real entrypoint and Windows short/long temporary-path aliases. Preserve mandatory hardlink, early rejection and failed-write/replace checks.

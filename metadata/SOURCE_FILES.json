@@ -1109,6 +1109,34 @@
       "bytes": 3978,
       "sha256": "fb86c271f58b368e9c8afe8484a0871396c94ca9ca730bc506291e2032d68d7c"
     },
+    "tests/diagnostics/xml_backend/allocation.cpp": {
+      "bytes": 3620,
+      "sha256": "296b46f877b25b400319b126f4b0691af6ad407a544f6c016dc005c8cb501602"
+    },
+    "tests/diagnostics/xml_backend/backend.cpp": {
+      "bytes": 5447,
+      "sha256": "a95320837eff1b728586551c484c239f0977dc72762c5fa595a433d94f3f6639"
+    },
+    "tests/diagnostics/xml_backend/backend.hpp": {
+      "bytes": 754,
+      "sha256": "11f049296a57cfae73c7bc21587e222242b9d5b170447697a5efb45048a09f07"
+    },
+    "tests/diagnostics/xml_backend/CMakeLists.txt": {
+      "bytes": 4592,
+      "sha256": "3335fd4f9ba582fc8b6228bf00838b52f029304f8ff65302a336cf84c83c0695"
+    },
+    "tests/diagnostics/xml_backend/reference_codec.cpp": {
+      "bytes": 503,
+      "sha256": "135def8f85113c4959f91f54275698f975e24071d9e98585c22b70203219fa53"
+    },
+    "tests/diagnostics/xml_backend/run.py": {
+      "bytes": 10353,
+      "sha256": "b3f75d374241e6eb3424a73505eeeffbd4f70d3cdc097f9c77a5effd73116b3e"
+    },
+    "tests/diagnostics/xml_backend/suite.cpp": {
+      "bytes": 21300,
+      "sha256": "90114839df5cf5f56111593f5623021e0fe9bb3c0106e5e38958fd354dddd748"
+    },
     "tests/fixtures/xml_reader/optimization-baseline.txt": {
       "bytes": 1477836,
       "sha256": "d598f453b1f495f8f6aec57d00596895d0cdd557c74c21fe42b22ac7b6fcec57"
