@@ -215,7 +215,7 @@ Inspect actual conclusions for the exact proposed commit. A skipped Windows job
 is not a PASS, a configured job is not proof of execution, and earlier-head
 results do not establish acceptance after a relevant change. Evidence artifacts
 retain toolchain provenance, receipts, CTest results and Golden reports for
-14 days. The local Golden DLL, checksum and receipt are downloadable after
+14 days. The Golden DLL, checksum and receipt are downloadable after
 the production profile succeeds.
 
 These CI jobs do not merge PRs, publish releases or establish actual

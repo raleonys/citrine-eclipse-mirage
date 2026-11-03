@@ -182,7 +182,7 @@ static void dispatch_tests(){
 }
 static void multi_command_request_contract_tests(){
     // C21-RISK-001: retain observed first-child-only dispatch. This tests the
-    // real TinyXML2 document tree without inventing a Consumer acceptance rule.
+    // real pugixml-backed document tree without inventing a Consumer acceptance rule.
     preloader_l::xml_reader_bridge::Backend reader;
     struct Accepted {const char* xml;std::string_view first_name;std::uint32_t rva;};
     const Accepted accepted[]={
@@ -313,4 +313,4 @@ static void process_tests(){
         check(f.process(input)==std::string("R\0",2));check(!f.encrypted); // error field controls success
     }
 }
-int main(){codec_tests();reset_tests();dispatch_tests();multi_command_request_contract_tests();challenge_tests();process_tests();std::printf("PASS: %u checks; synthetic XML/crypto/queue only; no sockets or target execution\n",checks);}
+int main(){codec_tests();reset_tests();dispatch_tests();multi_command_request_contract_tests();challenge_tests();process_tests();std::printf("PASS: %u checks; real and synthetic XML; controlled crypto/queue; no sockets or target execution\n",checks);}

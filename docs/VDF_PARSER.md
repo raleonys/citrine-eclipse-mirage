@@ -53,8 +53,9 @@ error locations. The numeric fixture tests only the vendor API.
 This binding does not select `surge.cfg` / `surge_override.cfg`
 or establish their precedence. Production Asio/filesystem adapters,
 automatic bootstrap, Consumer ABI, and native Windows/MSVC/game
-acceptance remain separate tasks. TinyXML2 owns XML; this grammar
-is not the XML/LSX parser. Vendored files and TinyXML2 depth 500
+acceptance remain separate tasks. Pugixml and the first-party compatibility
+layer own XML; this grammar is not the XML/LSX parser. Vendored files and
+the project XML depth-500 boundary
 remain unchanged.
 
 All 115 existing parser assertions were retained without modification.

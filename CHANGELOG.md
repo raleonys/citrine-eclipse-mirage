@@ -8,7 +8,44 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
-- Pin C21 LSX multi-command request compatibility with actual TinyXML2 input: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or multiple Request siblings still fail closed. No production protocol-policy change.
+- Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
+
+- Remove obsolete publication classifications and location labels from operator output, active policies and generated build/Golden reports. Use `BUILD_RECEIPT.json`, `DIST_RECEIPT.json`, `GOLDEN_PASS` and `golden/` consistently across producers, checks and GitHub artifacts; retain draft publication as its own explicit state. Keep Golden/runtime/hash gates, failure codes and rollback behavior, and reject reintroduced labels through Source QA. Preserve vendor bytes and retained historical evidence.
+
+- Extend the actual patched MinHook SAFE-FREEZE native fixture with two distinct hooks and queued/all-hook IP relocation checks: queued enable, queued disable, `MH_EnableHook(MH_ALL_HOOKS)`, `MH_DisableHook(MH_ALL_HOOKS)`, target-byte restoration, peer context writes and final ownership retirement (D326-F0006, Issue #20). No production or vendor changes.
+
+- Add automated real-DLL XML equivalence/value/malformed-frame recovery contracts across three TCP lifecycle cycles and run them on finalized Golden output. Strengthen the independent reader benchmark with ten shared fixtures, full-work digests, 20 randomized paired Release rounds, compiler/source receipts, separate allocation measurements and per-fixture uncertainty reports. Reject incomplete or misleading performance receipts in infrastructure tests; production parser/vendor/ABI/CRT behavior is unchanged.
+
+- Add an A11-07 actual hook-transaction regression for the MH_ERROR_DISABLED return path: an already-inactive patch does not bypass active-call drain or a failed uninitialize, and later retries skip duplicate disable while preserving original slots and engine ownership. Test-only, no patched MinHook, vendor, ABI or shipping code changes.
+
+- Remove both obsolete TinyXML2 CMake target aliases at the owner's request. Use only the pugixml target names in active build policy and documentation, and retain the actual pugixml development project in Windows reference artifacts.
+
+- Complete the owner-authorized pugixml production migration in PR #149: replace the active TinyXML2 tree with the exact supplied pugixml 1.16 archive and MIT notice, retaining retired input provenance and the other three vendor pins. Preserve the XML interface, depth/error/newline and corrected reference-decoding policies behind first-party reader code; keep the production static CRT and separately compiled development shared CRT. Compile that actual reader in differential, sanitizer, allocation, router/AES/license and real-file storage fixtures, and add its reader/corpus/allocation contracts to portable CI. Reject retired TinyXML2 production sources and candidate oracle linkage; retain the independent external control, measured reference-only OOM leak and qualified MSVC Debug noexcept OOM results. DLL ABI and hook behavior are unchanged; native/Golden acceptance must run on the production migration head.
+
+- Test SAFE-FREEZE's patched MinHook peer-context write failure handling in the existing native fixture: an injected SetThreadContext failure during single-hook enable or disable must reject the transition, retain original/patch bytes and the live peer IP, release owned thread handles, and succeed on exact retry. No product/vendor/engine implementation change.
+
+- Confine MinHook header/status dependencies to the existing native hook-engine adapter, preserving application status values, virtual signatures and SAFE-FREEZE bytes. Compile the existing transaction and fake-engine tests as a portable target on Linux/Windows, and make direct native test dependencies explicit, including the Windows API header used by the native adapter fixture. Vendor inputs, patch output, lifecycle policy, DLL exports and CRT selection remain unchanged.
+
+- Write CTest JUnit reports to absolute paths matching their artifact and weekly source-package inputs; reject missing reports after otherwise successful tests. Correct the isolated/full Windows portable diagnostic paths and update its strict inventory from 28 to the current 30 tests. Test selection, failure propagation, runtime/vendor sources, ABI and release publication policy are unchanged.
+
+- Run the root-ownership caller-isolation regression through existing portable and Windows Native infrastructure targets. Poison absolute Git selectors in a child process and verify the disposable caller's object store, refs, HEAD, config, index and worktree registry remain unchanged; preserve the underlying fixture-environment fix and all push gates.
+
+- Resolve the Source QA report fixture root before output ancestry checks, matching the real entrypoint and Windows short/long temporary-path aliases. Preserve mandatory hardlink, early rejection and failed-write/replace checks.
+
+- Publish Source QA JSON reports through a closed exclusive temporary file and atomic name replacement, preserving source inodes behind hardlinked report names and the previous complete report after write/replace failure. Validate report destinations before running checks; retain the existing project-build boundary, missing-parent creation and nonzero failed-check result. Runtime, vendor, ABI and mandatory pre-push validation are unchanged.
+
+- Isolate disposable root-ownership Git fixtures from repository-local environment variables inherited by hooks. Preserve the caller environment while preventing fixture init/commit/worktree commands from selecting its repository; verify the foreign linked-worktree HEAD, registry, index, config and tracked content remain unchanged. Keep the real worktree/forged-gitfile checks and mandatory push gate intact; runtime, vendor and ABI inputs are unchanged.
+
+- Audit C34-F002: stage both source ZIP artifacts before publication, reject existing mismatched pairs, and restore the prior ZIP on checksum publication failure; document crash-atomicity limits.
+- Audit C34-F001: reject pre-existing symlinked source ZIP partials/output paths and use exclusively opened random temporary files for archive and checksum generation.
+
+- Audit C34-F005: reject unrecognized active-source manifest schemas and misleading release-classification fields, keeping publication state separate from source identity.
+
+- Audit C34-F003: validate both ownership-ledger schemas and explicit role policies, complete three previously untyped script entries, and test missing or unknown roles.
+
+- Replace the README campaign artwork with the exact new owner-supplied 1400 x 1100 RGBA PNG (612724 bytes), preserving transparency and encoded bytes. Update the artwork identity/provenance and active manifest; runtime/profile avatars, production resources, ABI and code are unchanged.
+
+- Audit C34-F004: confine Python cache-cleanup report files to the owned build tree and publish them through exclusive temporary files; reject unsafe, directory and missing-parent destinations before deleting caches. Cover linked-directory escapes, hardlinked sources and failed report publication.
 
 - Preserve the owner-authorized Draft status of existing four-field research PR #81 as a narrow exception to the normal ready-for-review PR rule; record its continuing source-provenance scope without treating the work as a routine audit, production release or automatic merge. Update governance, agent workflow and PR guidance only; no runtime, vendor or ABI change.
 
@@ -266,4 +303,4 @@ The following sections are preserved verbatim from the R24 source-import changel
 - Remove whole preloader/version and private CRT research packages from build.
 - Decouple the approved hook-11 selector from the preloader project.
 - Add an actual development DLL target and a dynamically linked source host.
-- Adapt Brownfield local build launchers; keep publication and Golden acceptance separate.
+- Adapt Brownfield build launchers; keep publication and Golden acceptance separate.

@@ -45,7 +45,7 @@ manifest refreshes record this specifically authorized replacement only.
 [Current record](../metadata/ASIO_UPDATE_REVIEW.json),
 [archive delta](../metadata/evidence/asio-update/ARCHIVE_DELTA.json), and
 [validation](../metadata/evidence/asio-update/VALIDATION.json) distinguish exact vendor bytes,
-local builds and real Windows/MSVC CI. Game acceptance is separate.
+builds and real Windows/MSVC CI. Game acceptance is separate.
 
 The owner merged the prerequisite CI/review setup PR. This dependency update
 now targets main in its own PR; it is not merged automatically.

@@ -2,6 +2,7 @@
 
 #include "preloader_l/xml/reader.hpp"
 #include <atomic>
+#include <pugixml.hpp>
 #include <chrono>
 #include <cstdio>
 #include <cstdlib>
@@ -44,6 +45,8 @@ void operator delete(void* p,std::size_t) noexcept {std::free(p);}
 void operator delete[](void* p,std::size_t) noexcept {std::free(p);}
 
 namespace {
+void* pugi_allocate(std::size_t size){try{return ::operator new(size);}catch(const std::bad_alloc&){return nullptr;}}
+void pugi_release(void* pointer){::operator delete(pointer);}
 namespace reader=preloader_l::xml_reader_bridge;
 std::atomic<std::size_t> result_sink{0};
 void require(bool value,const char* reason){if(!value)throw std::runtime_error(reason);}
@@ -98,6 +101,7 @@ void measure(const char* name,const std::string& input,unsigned iterations){
 }
 }
 int main(int argc,char** argv)try{
+    pugi::set_memory_management_functions(pugi_allocate,pugi_release);
     if(argc>1&&std::strcmp(argv[1],"--benchmark")==0){
         const unsigned iterations=argc>2?static_cast<unsigned>(std::stoul(argv[2])):1000;
         require(iterations>0&&iterations<=100000,"benchmark iterations outside1..100000");

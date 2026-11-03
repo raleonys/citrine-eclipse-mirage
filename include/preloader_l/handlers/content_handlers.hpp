@@ -16,7 +16,7 @@ using Path = configuration::Path;
 using Achievement = configuration::Achievement;
 using AchievementMap = std::map<std::string,Achievement,std::less<>>;
 
-// Decoded tinyxml2 view. Adapter preserves attribute/document order, absence,
+// Decoded project XML view. Adapter preserves attribute/document order, absence,
 // empty text and case. No file or XML parsing happens in this module.
 struct ChildText { std::optional<std::string> name, text; };
 struct RequestTree {
