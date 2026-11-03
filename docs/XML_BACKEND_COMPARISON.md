@@ -126,34 +126,60 @@ in MSVC Debug and Release. These are source-linked integration fixtures, not
 real Consumer/game or production-DLL acceptance. Exact-head hosted execution
 must be checked before describing those profiles as passed.
 
-## Performance and remaining scope
+## Automated production DLL contracts
 
-Adding compatibility reduces the initial minimally mapped candidate's speed
-advantage. An illustrative local Release measurement (median p50 over five
-interleaved repeats, 2,000 parses/traversals/destructions per case) is:
+`dll_public_xml_contracts` loads the actual application DLL, connects through
+its real TCP/LSX listener and compares complete response bytes without masking
+fields. Shared fixtures cover eight equivalent XML forms, five decoded/literal
+value pairs and three malformed-frame/recovery pairs. The cases include numeric
+references in request ids/recipients/values, Unicode, unknown/invalid references,
+20,000-digit references, declarations, BOM, comments and legacy whitespace.
+Malformed requests have a distinct id and are followed by a valid frame on the
+same session; a bogus reply or failure to resume fails the test. All cases run
+through three load/start/shutdown/unload cycles.
 
-| Input | Corrected TinyXML2 | Compatible pugixml |
-| --- | ---: | ---: |
-| Small request | 0.681 microseconds | 0.501 microseconds |
-| Request with declaration | 0.771 microseconds | 0.551 microseconds |
-| 64 KiB text | 83.756 microseconds | 28.513 microseconds |
-| 256 children | 37.005 microseconds | 29.224 microseconds |
-| Reference-heavy text | 27.832 microseconds | 26.520 microseconds |
-| Legacy accepted form | 0.531 microseconds | 0.541 microseconds |
+The identical input fixtures are also checked against both source readers before
+benchmarking. Native Debug/Release run the actual-DLL test automatically. Golden
+runs the same XML contracts on the finalized `preloader_l.dll`, preserving its
+before/after hash checks and all existing stages. No production logging, export
+or parser code is added. These are automated application protocol contracts;
+they do not assert execution of an unavailable real game/provider.
 
-Small-request tracked peak heap remains **9,614 versus 33,598 bytes**. Tracking
-covers ordinary C++ allocations and pugixml's public allocator callback, not
-RSS/OS allocations or every aligned allocation family. Allocator instrumentation
-runs in a separate executable. Timing is informational and host-specific, with
-no CI speed threshold; sanitizer runs omit timing.
+## Performance reporting
 
-The current conclusion is compatibility on the tested contract, with a useful
-speed gain on ordinary fixtures and a higher small-document memory cost.
-Production now selects this reader, with separate static-CRT and development
-shared-CRT pugixml builds. Full native application/Golden acceptance must run
-with this selection. Real Consumer validation remains the owner's separate
-pre-release task. Passing source-linked comparison fixtures does not establish
-real game execution or universal XML equivalence.
+Release profiles measure both readers in one executable with the same compiler,
+CRT, inputs and complete parse/traverse/destroy work. Ten fixtures cover small
+requests, 64 KiB/1 MiB text, wide/deep trees, many attributes, Unicode references,
+reference-heavy text, declarations and legacy forms. Full-tree semantic preflight
+and consumption digests reject different work before accepting measurements.
+
+The default is 20 paired rounds, randomized fixture order and balanced backend-first order with seed
+424242, and 50 untimed warmups per backend/case/round. Each round uses up to 2,000
+separately timed operations; large documents aim for an 8 MiB input budget per round,
+with a minimum of 32 samples. Mean elapsed cost includes timer/check/loop overhead;
+p50/p95/p99 samples include parsing, traversal and destruction. These are warm
+process measurements, not cold startup or game FPS measurements.
+
+`performance.json` and the readable `performance.txt` report per-fixture paired
+geometric mean latency ratios and paired-bootstrap, Bonferroni-adjusted nominal
+95% family intervals. An interval entirely below/above 1 is labeled
+`FASTER_IN_THIS_RUN`/`SLOWER_IN_THIS_RUN`; one containing 1 is `INCONCLUSIVE`.
+No timing threshold turns noisy CI into a universal speed claim. Windows and
+Linux results are reported separately. Input digests, round order, sample count,
+compiler version/flags, host architecture and source/fixture hashes are retained.
+
+Allocation measurements use the same complete traversal in a separate executable;
+timing has no allocator instrumentation. Reports include allocation calls, total
+allocated bytes and peak tracked live bytes. This covers ordinary C++ allocations
+and pugixml's public callback, not RSS or every aligned allocation family. Memory
+costs and slower fixtures remain visible. Infrastructure regressions reject missing
+pairs, changed digests/work, duplicate rounds, invalid timings and unclean or
+incomplete allocation controls. Debug/sanitizer profiles keep functional/fault
+checks but do not publish Release performance claims.
+
+Production selects this reader with separate static-CRT and development shared-CRT
+builds. Native/Golden and comparison results must be checked for the exact commit;
+real Consumer acceptance remains the owner's separate pre-release task.
 
 ## Reproduce
 
@@ -171,5 +197,5 @@ GCC/Clang ASan+UBSan. On Windows, use `--configuration Debug` or `Release`.
 Inputs are normalized to CMake paths before source expansion. Output paths stay
 below this checkout's ignored `build/`. `summary.json` records completeness,
 exact harness/input identities, evaluated candidate linkage, differential
-results, reference allocation failures, timings and the qualified decision.
+results, reference allocation failures, performance receipts and the qualified decision.
 CI retains these files and logs as artifacts, not new evidence-tree commits.

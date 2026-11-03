@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "backend.hpp"
+#include "benchmark_cases.hpp"
 #include "oracle_reader.hpp"
 #include "pugixml.hpp"
 #include <array>
@@ -71,6 +72,11 @@ int main(int argc,char** argv){
   for(unsigned i=0;i<32;++i)input+="</R>";
  }
  if(payload=="error")input="<R bad=>";
+ bool measured_case=false;
+ if(payload.starts_with("benchmark:")) {
+  for(const auto& item:xml_comparison::benchmark_cases())if(payload.substr(10)==item.name){input=item.input;measured_case=true;break;}
+  if(!measured_case)return 2;
+ }
  const bool cache=payload=="cache-attribute"||payload=="cache-text";
  std::optional<preloader_l::messages::ParseResult> retained;
  const preloader_l::messages::XmlNode* cached_root=nullptr;
@@ -100,6 +106,7 @@ int main(int argc,char** argv){
  }else {
   try{
    auto parsed=backend.parse_c_string(input);if(parsed.has_error)outcome=1;
+   else if(measured_case)sink=xml_comparison::consume_xml(parsed.document->first_element(),nodes);
    else {auto r=parsed.document->first_element();for(auto n=r;n;n=n->first_element()){sink+=n->name().size();for(auto& [key,value]:nodes.attributes_in_order(*n))sink+=key.size()+value.size();if(auto text=nodes.text_003860(*n))sink+=std::char_traits<char>::length(text);}}
   }catch(const std::bad_alloc&){outcome=2;}catch(...){outcome=3;}
  }

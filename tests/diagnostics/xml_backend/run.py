@@ -11,6 +11,7 @@ import platform
 import sys
 import statistics
 import subprocess
+from performance import CASES, PROFILES, summarize
 
 HERE = Path(__file__).resolve().parent
 REPOSITORY = HERE.parents[2]
@@ -60,9 +61,15 @@ def main():
     parser.add_argument('--mutations', type=int, default=100000)
     parser.add_argument('--holdout-mutations', type=int, default=500000)
     parser.add_argument('--timing-iterations', type=int, default=2000)
+    parser.add_argument('--timing-repeats', type=int, default=20)
+    parser.add_argument('--timing-seed', type=int, default=424242)
     args = parser.parse_args()
     if args.mutations < 1 or args.holdout_mutations < 1 or args.timing_iterations < 1:
         parser.error('Iteration counts must be positive')
+    if not 32 <= args.timing_iterations <= 100000 or not 10 <= args.timing_repeats <= 100:
+        parser.error('Timing requires 32..100000 iterations and 10..100 paired rounds')
+    if not 0 <= args.timing_seed < 1 << 32:
+        parser.error('Timing seed must be an unsigned 32-bit integer')
     reference, pugi = args.reference_root.resolve(), args.pugixml_root.resolve()
     verify_inputs(reference, pugi)
     if args.verify_only:
@@ -70,6 +77,8 @@ def main():
         return
     output = output_path(args.output)
     output.mkdir(parents=True, exist_ok=True)
+    for name in ['performance.json', 'performance.txt', 'performance-allocations.json', 'timing.csv']:
+        (output / name).unlink(missing_ok=True)
     build = output / 'binaries'
     report = {'reference_commit': REFERENCE, 'pugixml_commit': PUGIXML,
               'pugixml_files': PUGI_FILES, 'host': platform.platform(),
@@ -80,7 +89,10 @@ def main():
               'configuration': args.configuration, 'sanitizers': args.sanitizers,
               'mutations': args.mutations, 'holdout_mutations': args.holdout_mutations,
               'seed': 85621504, 'holdout_seed': 202892583, 'commands': [],
-              'production_migration': 'PUGIXML_SELECTED', 'complete': False}
+              'production_migration': 'PUGIXML_SELECTED', 'complete': False,
+              'timing_repeats': args.timing_repeats, 'timing_seed': args.timing_seed,
+              'cpu': platform.processor(), 'architecture': platform.machine(),
+              'wire_fixture_sha256': hashlib.sha256((REPOSITORY / 'tests/fixtures/xml_reader/wire_contracts.hpp').read_bytes()).hexdigest()}
 
     def run(name, command, allowed=(0,), timeout=300, reference_oom_measurement=False):
         environment = os.environ.copy()
@@ -108,6 +120,7 @@ def main():
     query = build / '.cmake/api/v1/query/codemodel-v2'
     query.parent.mkdir(parents=True, exist_ok=True)
     query.touch()
+    (query.parent / 'toolchains-v1').touch()
     configure = ['cmake', '-S', HERE, '-B', build, f'-DXML_REFERENCE_ROOT={reference.as_posix()}',
                  f'-DPUGIXML_ROOT={pugi.as_posix()}', f'-DCMAKE_BUILD_TYPE={args.configuration}',
                  f'-DXML_COMPARISON_SANITIZERS={"ON" if args.sanitizers else "OFF"}']
@@ -117,11 +130,18 @@ def main():
     reply = build / '.cmake/api/v1/reply'
     index = json.loads(max(reply.glob('index-*.json')).read_text(encoding='utf-8'))
     model = json.loads((reply / index['reply']['codemodel-v2']['jsonFile']).read_text(encoding='utf-8'))
+    toolchains = json.loads((reply / index['reply']['toolchains-v1']['jsonFile']).read_text(encoding='utf-8'))
+    report['compilers'] = [{key: item['compiler'].get(key) for key in ['id', 'version']}
+                           for item in toolchains['toolchains'] if item['language']=='CXX']
     linkage = []
+    report['compile_flags'] = {}
     for configuration in model['configurations']:
         targets = {target['id']: json.loads((reply / target['jsonFile']).read_text(encoding='utf-8'))
                    for target in configuration['targets']}
         selected=next(target for target in targets.values() if target['name']=='comparison_candidate')
+        report['compile_flags'][configuration['name']] = [fragment['fragment']
+            for group in selected.get('compileGroups', [])
+            for fragment in group.get('compileCommandFragments', []) if fragment.get('role')=='flags']
         actual_sources={str((Path(source['path']) if Path(source['path']).is_absolute()
                             else HERE / source['path']).resolve())
                         for source in selected.get('sources',[]) if source['path'].endswith('.cpp')}
@@ -159,7 +179,7 @@ def main():
     baseline = reference / 'tests/fixtures/xml_reader/optimization-baseline.txt'
     run('reference-reader', [binary('reference_reader')])
     run('reference-corpus', [binary('reference_corpus'), corpus, baseline])
-    candidate = run('candidate-reader', [binary('candidate_reader')])
+    reader_result = run('candidate-reader', [binary('candidate_reader')])
     report['candidate_reader_contract'] = 'PASS'
     run('candidate-corpus', [binary('candidate_corpus'), corpus, baseline])
     run('candidate-allocation-contracts', [binary('candidate_allocations')])
@@ -172,10 +192,22 @@ def main():
     for operation in ['compatibility', 'safety', 'protocol', 'protocol-edges', 'storage']:
         run(operation, [suite, operation, output / (operation + '.tsv')])
     run('ownership', [suite, 'ownership'])
+    run('wire-contracts', [suite, 'wire-contracts'])
     run('mutations', [suite, 'fuzz', args.mutations, output / 'mutations.csv'])
     run('holdout', [suite, 'holdout', args.holdout_mutations, output / 'holdout.csv'])
-    if not args.sanitizers:
-        run('timing', [suite, 'benchmark', args.timing_iterations, output / 'timing.csv'])
+    measure_performance = not args.sanitizers and args.configuration == 'Release'
+    memory_measurements = []
+    if measure_performance:
+        run('timing', [suite, 'benchmark', args.timing_iterations, args.timing_repeats,
+                       args.timing_seed, output / 'timing.csv'])
+        for case in CASES:
+            for profile in PROFILES:
+                result = run('memory-' + profile + '-' + case,
+                    [binary('comparison_allocations'), profile, '-1', 'once', 'benchmark:' + case])
+                record = json.loads(result.stdout)
+                record['case'] = case
+                memory_measurements.append(record)
+        (output / 'performance-allocations.json').write_text(json.dumps(memory_measurements, indent=2) + '\n', encoding='utf-8')
 
     allocations = []
     debug_stl_termination_confirmed = False
@@ -239,7 +271,7 @@ def main():
                              'fault_injections': sum(row['fail_at'] >= 0 for row in allocations)}
     report['allocation_recovery'] = ('UNPROVEN_FOR_MSVC_DEBUG_NOEXCEPT_OOM'
         if report['allocations']['debug_unrecoverable_allocations'] else 'CANDIDATE_FAULTS_PASS')
-    if not args.sanitizers:
+    if measure_performance:
         with (output / 'timing.csv').open(encoding='utf-8', newline='') as stream:
             timing = list(csv.DictReader(stream))
         report['median_p50_ns'] = {profile: {
@@ -248,10 +280,30 @@ def main():
             for case in sorted({row['case'] for row in timing})}
             for profile in ['tiny', 'pugi_checked']}
     candidate_corpus = next(row for row in report['corpus'] if row['profile'] == 'pugi_checked')
-    incompatible = candidate.returncode != 0 or any(int(candidate_corpus[field]) for field in
+    incompatible = reader_result.returncode != 0 or any(int(candidate_corpus[field]) for field in
         ['acceptance_diff', 'success_DOM_diff', 'failed_DOM_diff', 'error_code_diff', 'diagnostic_diff']) or any(report['application_differences'].values())
     if incompatible:
         raise RuntimeError('Candidate compatibility regression')
+    if measure_performance:
+        measured = summarize(timing, memory_measurements, args.timing_repeats, args.timing_seed)
+        measured['provenance'] = {key: report[key] for key in
+            ['host', 'cpu', 'architecture', 'configuration', 'compilers', 'compile_flags',
+             'production_reader_files', 'harness_files', 'wire_fixture_sha256', 'reference_commit', 'pugixml_commit']}
+        report['performance'] = measured
+        (output / 'performance.json').write_text(json.dumps(measured, indent=2) + '\n', encoding='utf-8')
+        lines = ['Measured complete parse/traverse/destroy cost; lower ratio is faster.',
+                 'Host-specific observations with paired bootstrap family intervals; no global speed claim.',
+                 'Allocation measurements are separate ordinary C++/pugixml tracked heap controls, not RSS.',
+                 '',
+                 'case | TinyXML2 us | pugixml us | latency ratio [interval] | tracked peak bytes TinyXML2/pugixml | observation',
+                 '--- | --- | --- | --- | --- | ---']
+        for case in measured['cases']:
+            baseline, candidate = (case['profiles'][profile] for profile in PROFILES)
+            lines.append(f"{case['case']} | {baseline['median_mean_ns']/1000:.3f} | {candidate['median_mean_ns']/1000:.3f} | "
+                         f"{case['candidate_over_reference_latency']:.3f} [{case['interval_low']:.3f}, {case['interval_high']:.3f}] | "
+                         f"{baseline['peak_live_bytes']}/{candidate['peak_live_bytes']} | {case['observation']}")
+        (output / 'performance.txt').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+        print('\n'.join(lines), flush=True)
     report['decision'] = 'PRODUCTION_READER_COMPATIBLE_REQUIRES_FULL_NATIVE_GOLDEN_AND_CONSUMER_REVIEW'
     report['complete'] = True
     (output / 'summary.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')

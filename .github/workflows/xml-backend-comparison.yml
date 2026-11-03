@@ -10,6 +10,9 @@ on:
       - "third_party/pugixml/**"
       - "tests/unit/xml_reader/**"
       - "tests/performance/xml_reader_probe.cpp"
+      - "tests/fixtures/xml_reader/**"
+      - "tests/infrastructure/test_xml_performance.py"
+      - "tools/preloader_l_runtime_host/**"
       - "docs/XML_BACKEND_COMPARISON.md"
       - ".github/workflows/xml-backend-comparison.yml"
   workflow_dispatch:
@@ -62,6 +65,17 @@ jobs:
             --reference-root build/xml-reference \
             --pugixml-root third_party/pugixml \
             --output build/xml-backend-comparison --configuration '${{ matrix.configuration }}' "${options[@]}"
+      - name: Publish measured performance observations
+        if: always()
+        shell: bash
+        run: |
+          if [ -f build/xml-backend-comparison/performance.txt ]; then
+            {
+              echo '### XML performance measurements'
+              echo 'Host-specific paired measurements; latency ratio below 1 means lower measured latency.'
+              cat build/xml-backend-comparison/performance.txt
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Retain differential results, input pins, compiler settings and failures
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -72,6 +86,7 @@ jobs:
             build/xml-backend-comparison/*.json
             build/xml-backend-comparison/*.tsv
             build/xml-backend-comparison/*.csv
+            build/xml-backend-comparison/*.txt
             build/xml-backend-comparison/binaries/CMakeCache.txt
             build/xml-backend-comparison/binaries/CMakeFiles/CMakeConfigureLog.yaml
           if-no-files-found: warn

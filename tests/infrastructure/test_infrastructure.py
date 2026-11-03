@@ -790,8 +790,9 @@ class LocalDistTests(unittest.TestCase):
             index=len(calls);calls.append(command)
             if index==6:
                 self.assertTrue(command[0].endswith('preloader_l_runtime_host.exe'))
-                self.assertEqual('preloader_l.dll',Path(command[-1]).name)
-                if corrupt_runtime:Path(command[-1]).write_bytes(b'changed during runtime')
+                self.assertEqual('preloader_l.dll',Path(command[-2]).name)
+                self.assertEqual('--xml-contracts',command[-1])
+                if corrupt_runtime:Path(command[-2]).write_bytes(b'changed during runtime')
             return subprocess.CompletedProcess(command,37 if index==failed_stage or (index==6 and runtime_failure) else 0,'synthetic process result\n','')
         with patch.object(golden,'pending_targets',return_value=[]),patch.object(golden.subprocess,'run',side_effect=run):
             report=golden.pipeline(self.root,self.raw,self.build,self.output)

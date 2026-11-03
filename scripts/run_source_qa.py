@@ -23,6 +23,7 @@ CHECKS = [
     ('production/reference build boundary regressions', ['tests/infrastructure/test_build_partition.py']),
     ('MinHook single-disable IP action and build-copy integrity', ['tests/infrastructure/test_hook_disable_action.py']),
     ('native size evidence reader regressions', ['tests/infrastructure/test_size_evidence.py']),
+    ('XML performance receipt regressions', ['tests/infrastructure/test_xml_performance.py']),
     ('weekly draft release regressions', ['tests/infrastructure/test_weekly_release.py']),
     ('operator entrypoints', ['scripts/check_human_launcher_contract.py']),
     ('whole-source identity', ['scripts/check_manifest.py']),
