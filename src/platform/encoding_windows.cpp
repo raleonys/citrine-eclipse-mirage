@@ -19,12 +19,13 @@ int NativeCalls::multi_byte_to_wide(std::uint32_t cp,std::uint32_t flags,const c
         std::wstring buffer;
         if(output&&capacity) {
             buffer.resize(static_cast<std::size_t>(capacity));
-            std::memcpy(buffer.data(),output,static_cast<std::size_t>(capacity)*sizeof(char16_t));
+            // The Win32 destination is output-only; do not read caller storage.
         }
         SetLastError(entry_error);
         count=MultiByteToWideChar(cp,flags,input,size,buffer.empty()?nullptr:buffer.data(),capacity);
         saved=GetLastError();
-        if(output&&capacity)std::memcpy(output,buffer.data(),static_cast<std::size_t>(capacity)*sizeof(char16_t));
+        // Publish only the characters reported as written; preserve the unused tail.
+        if(output&&count>0)std::memcpy(output,buffer.data(),static_cast<std::size_t>(count)*sizeof(char16_t));
     }
     // Preserve API error across compatibility-buffer allocation/destruction.
     SetLastError(saved);return count;
