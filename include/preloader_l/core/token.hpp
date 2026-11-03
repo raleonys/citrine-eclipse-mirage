@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/config/configuration.hpp"
 #include "preloader_l/codec/crypto.hpp"
@@ -5,7 +7,7 @@
 #include <string>
 #include <string_view>
 
-namespace preloader_l::token_recovered {
+namespace preloader_l::token {
 using Path = configuration::Path;
 struct FileStatus { std::int32_t kind, error; };
 class Dependencies {
@@ -20,4 +22,4 @@ public:
 // Uses explicit byte lengths; neither XML decoding nor C-string truncation occurs.
 std::string extract_game_token(std::string_view decrypted);
 std::string load_token_02afa0(const Path&, Dependencies&);
-} // namespace preloader_l::token_recovered
+} // namespace preloader_l::token

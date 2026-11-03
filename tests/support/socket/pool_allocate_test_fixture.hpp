@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/pool_allocate.hpp"
 #include "preloader_l/xml/pool_release.hpp"
@@ -12,7 +14,7 @@
 #include <vector>
 
 namespace pool_allocate_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 inline unsigned checks=0;
 inline void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
 inline std::uint64_t word(std::span<const std::uint8_t> b,std::size_t at,unsigned n=8){std::uint64_t v=0;for(unsigned i=0;i<n;++i)v|=std::uint64_t(b[at+i])<<(8*i);return v;}
@@ -58,7 +60,7 @@ struct Fixture {
     void refresh(){regions.clear();add(pool_address,pool);for(unsigned i=0;i<blocks.size();++i)add(block_address(i),blocks[i]);add(mode_address,mode);add(constants_address,constants);for(auto r:extras)regions.push_back(r);memory.regions=regions;}
     std::uint64_t get(std::uintptr_t p,unsigned n=8){return word(memory.view(p,n),0,n);}
     void set(std::uintptr_t p,std::uint64_t v,unsigned n=8){put(memory.view(p,n),0,v,n);}
-    std::uintptr_t allocate(){s::RecoveredPoolAllocationEffects dispatch{context};return dispatch.pool_allocate(types[type].target,pool_address);}
+    std::uintptr_t allocate(){s::PoolAllocationEffectsAdapter dispatch{context};return dispatch.pool_allocate(types[type].target,pool_address);}
     void recycled(std::uintptr_t item=block_address(),std::uint64_t next=0){put(pool,0x68,item);set(item,next);}
 };
 inline std::uintptr_t Effects::allocate_04b0bc(std::uint64_t n){calls.push_back({"allocate",0,0,n});enter("allocate");const auto result=owner.forced_allocation?*owner.forced_allocation:Fixture::block_address(owner.next_block++);leave("allocate");return result;}

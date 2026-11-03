@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 // ASCII-only paths in synthetic fixtures; never truncate a UTF-16 code unit.
 #include <stdexcept>

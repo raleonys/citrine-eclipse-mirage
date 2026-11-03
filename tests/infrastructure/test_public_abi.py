@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Reject export-table mutations of the actual linked application DLL."""
 import hashlib
 from pathlib import Path

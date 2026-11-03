@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_environment_constructor.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Bounded defined-field projection of the native string. The first sixteen
 // bytes are shared inline data/heap-address representation; no host ABI cast.
 struct WriteFinishString {
@@ -38,7 +40,7 @@ class WriteFinishApi {
 public:
     virtual ~WriteFinishApi()=default;
     // Call site passes both arguments even though the retained CRT thunk
-    // eventually jumps to free. Its implementation is not recovered here.
+    // eventually jumps to free. Its implementation is not modeled here.
     virtual void free_sized_04b0f8(std::uintptr_t,std::uint64_t bytes)=0;
     [[noreturn]]virtual void invalid_parameter_05c974()=0;
     virtual void next_write_02a500(std::uintptr_t owner_identity)=0;
@@ -59,18 +61,18 @@ struct WriteFinishContext {
 // alive through the native last use. Uninitialized local string bytes become
 // defined only when the required message constructor has filled them.
 void finish_write_025a70(SendHandler&,Error&,WriteFinishContext&);
-class RecoveredFinishedWriteEffects:public RecoveredConstructedWriteEffects {
+class FinishedWriteEffects:public ConstructedWriteEffects {
 public:
-    RecoveredFinishedWriteEffects(IoCompletionEnvironment environment,WorkerRunApi& worker,
+    FinishedWriteEffects(IoCompletionEnvironment environment,WorkerRunApi& worker,
         HandlerDispatchMemory& memory,std::span<HandlerScheduleBinding> schedules,
         AsyncSendApi& send,DispatcherApi& completion,Api& errors,std::span<SendStreamBinding> streams,
         IoEnvironmentConstructorContext& constructor,std::span<IoEnvironmentSourceBinding> sources,
         WriteFinishApi& finish,std::span<WriteFinishOwnerBinding> owners,
         std::span<WriteFinishCategoryBinding> categories,std::span<WriteFinishAllocationHeader> headers)
-        :RecoveredConstructedWriteEffects(environment,worker,memory,schedules,send,completion,errors,
+        :ConstructedWriteEffects(environment,worker,memory,schedules,send,completion,errors,
              streams,constructor,sources),finish_context_{*this,finish,owners,categories,headers}{}
     void finish_write_025a70(SendHandler&,Error&) final;
     WriteFinishContext& finish_context(){return finish_context_;}
 private:WriteFinishContext finish_context_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

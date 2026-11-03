@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/handlers/misc_handlers.hpp"
 #include <cstdlib>
 #include <algorithm>
@@ -9,12 +11,12 @@
 #include <source_location>
 #include <utility>
 #include <vector>
-using namespace preloader_l::misc_handlers_recovered;
+using namespace preloader_l::misc_handlers;
 namespace {
 int checks=0;
 void check(bool value,std::source_location where=std::source_location::current()) {++checks;if(!value)throw std::runtime_error("check "+std::to_string(checks)+" at line "+std::to_string(where.line()));}
 struct Failure {};
-struct Trace: Xml,Elements,preloader_l::handlers_recovered::Effects,IgoEffects,NoResponse {
+struct Trace: Xml,Elements,preloader_l::handlers::Effects,IgoEffects,NoResponse {
     std::vector<std::string> calls;
     std::map<Request,Request> first,next;
     std::map<Request,std::string> texts;

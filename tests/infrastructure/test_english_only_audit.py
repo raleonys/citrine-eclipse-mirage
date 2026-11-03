@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Deterministic first-party language audit and exclusion boundary tests."""
 import json
 import re

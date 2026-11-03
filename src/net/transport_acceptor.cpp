@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_acceptor.hpp"
 #include <bit>
 #include <cstring>
 #include <limits>
 #include <ws2tcpip.h>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 Error captured_wsa(Api& errors){
     const auto category=errors.system_category_028620();
@@ -91,9 +93,9 @@ AcceptorState& acceptor_020e20(AcceptorState& state,std::span<const std::byte> e
     }
     return state;
 }
-void AcceptorBackend::construct_acceptor_020e20(const server_recovered::Endpoint& endpoint,bool reuse,int backlog){
+void AcceptorBackend::construct_acceptor_020e20(const server::Endpoint& endpoint,bool reuse,int backlog){
     if(backlog!=std::numeric_limits<std::int32_t>::max())
-        throw UnsupportedInput("Recovered constructor uses fixed INT_MAX backlog");
+        throw UnsupportedInput("Constructor requires fixed INT_MAX backlog");
     static_assert(sizeof(sockaddr_in)==16 && sizeof(sockaddr_in6)==28);
     sockaddr_storage storage{};
     const auto port=static_cast<std::uint16_t>((endpoint.port_host_order>>8)|(endpoint.port_host_order<<8));
@@ -110,4 +112,4 @@ void AcceptorBackend::construct_acceptor_020e20(const server_recovered::Endpoint
     const auto bytes=std::as_bytes(std::span<sockaddr_storage>(&storage,1));
     (void)acceptor_020e20(state_,bytes,reuse,errors_,api_,runtime_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_composed_write_native.hpp"
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 AsyncSendResult NativeAsyncSendApi::send(Socket socket,Buffer& buffer,std::uint32_t flags,OVERLAPPED& overlapped){
     if(!imports_.send || !imports_.get_error)throw UnsupportedInput("Async send imports require both SDK functions");
     DWORD transferred=0;
@@ -7,4 +9,4 @@ AsyncSendResult NativeAsyncSendApi::send(Socket socket,Buffer& buffer,std::uint3
     const auto error=imports_.get_error(); // unconditional, immediately after WSASend
     return {result,static_cast<std::uint32_t>(error),static_cast<std::uint32_t>(transferred)};
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

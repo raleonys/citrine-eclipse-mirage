@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "../../support/fixture_ascii.hpp"
 #include "preloader_l/handlers/content_handlers.hpp"
 #include <algorithm>
@@ -7,7 +9,7 @@
 #include <stdexcept>
 #include <tuple>
 
-using namespace preloader_l::content_handlers_recovered;
+using namespace preloader_l::content_handlers;
 static unsigned checks;
 static void require(bool value) {++checks;if(!value)throw std::runtime_error("check "+std::to_string(checks));}
 struct ThreadError {int code;};
@@ -32,7 +34,7 @@ struct MockXml final:Xml {
     int fail_attribute=-1;
     int writes=0;
     std::function<void()> after_open;
-    const char* attribute_002cc0(preloader_l::handlers_recovered::Request,const char*)override {
+    const char* attribute_002cc0(preloader_l::handlers::Request,const char*)override {
         throw std::runtime_error("request snapshot should be used");
     }
     void open_004080(const char* name,bool compact)override {
@@ -125,7 +127,7 @@ struct MockEffects final:Effects {
 struct Fixture {
     std::vector<preloader_l::configuration::Content> contents{{"C2","Second","v2","TEST_STATE"},{"C1","First","v1","INSTALLED"}};
     std::vector<preloader_l::configuration::Entitlement> entitlements{{"itemA","group1","verA","typeA","tagA"},{"itemB","group2","verB","typeB","tagB"},{"itemC","group1","verC","typeC","tagC"}};
-    preloader_l::handlers_recovered::Attributes game{{"DISPLAY_NAME","Synthetic Game"}};
+    preloader_l::handlers::Attributes game{{"DISPLAY_NAME","Synthetic Game"}};
     AchievementMap achievements{{"z",{3,0,0,"old","Name Z","Steam Z",33}},{"a",{5,1,5,"won","Name A","Steam A",44}}};
     std::string set="TEST_SET",content_id="TEST_CONTENT",user_id="user-test";
     Path achievement_file=u"synthetic-achievements.xml",avatar=u"synthetic-avatar.png",default_avatar=u"synthetic-default.png",user_directory=u"synthetic-user",last_avatar=u"synthetic-last.png";

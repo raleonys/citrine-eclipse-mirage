@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Check real exit propagation and inherited-output lifetime independently of Wine."""
 import subprocess
 import sys

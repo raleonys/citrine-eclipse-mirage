@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/event_adapters.hpp"
 #include <stdexcept>
 
-namespace preloader_l::event_queue_recovered {
-Mutex& ContentQueue::mutex_02c620(){return event_queue_recovered::mutex_02c620(context_);}
+namespace preloader_l::event_queue {
+Mutex& ContentQueue::mutex_02c620(){return event_queue::mutex_02c620(context_);}
 bool ContentQueue::initialized_locked() const {
     (void)queue_02c400(context_);
     return true; // Getter has completed or its provider/initializer threw.
@@ -32,4 +34,4 @@ std::uint64_t MessageQueue::reserve_front_locked(){return context_.storage.reser
 bool MessageQueue::finish_reserved(std::uint64_t token,bool success) noexcept {
     return context_.storage.finish_reserved(token,success);
 }
-} // namespace preloader_l::event_queue_recovered
+} // namespace preloader_l::event_queue

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 cmake_minimum_required(VERSION 3.20)
 project(preloader_l LANGUAGES C CXX)
 
@@ -114,11 +116,39 @@ if(BUILD_TESTING OR PRELOADER_L_BUILD_SOURCE_API_DLL)
   target_link_libraries(preloader_l_reference_models PUBLIC preloader_l_core)
 endif()
 if(PRELOADER_L_BUILD_SOURCE_API_DLL)
-  add_library(preloader_l_source_api SHARED $<TARGET_OBJECTS:preloader_l_objects>
-    $<TARGET_OBJECTS:preloader_l_vdf_objects> $<TARGET_OBJECTS:preloader_l_reference_objects>
-    src/platform/dll_entry.cpp resources/surge.rc)
+  if(MSVC)
+    # C++ objects cross the development DLL boundary, including Debug STL
+    # container proxies. Both modules must use the same shared compiler CRT.
+    # Never reuse the shipping /MT or /MTd objects in this /MD or /MDd graph.
+    set(_source_api_crt "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+    get_target_property(_source_hook_sources preloader_l_minhook SOURCES)
+    get_target_property(_source_hook_includes preloader_l_minhook INTERFACE_INCLUDE_DIRECTORIES)
+    add_library(preloader_l_source_minhook STATIC ${_source_hook_sources})
+    target_include_directories(preloader_l_source_minhook PUBLIC ${_source_hook_includes})
+    add_dependencies(preloader_l_source_minhook preloader_l_verify_vendors preloader_l_verify_hook_engine)
+    add_library(preloader_l_source_tinyxml2 STATIC third_party/tinyxml2/tinyxml2.cpp)
+    target_include_directories(preloader_l_source_tinyxml2 PUBLIC third_party/tinyxml2)
+    add_dependencies(preloader_l_source_tinyxml2 preloader_l_verify_vendors)
+    set_target_properties(preloader_l_source_minhook preloader_l_source_tinyxml2
+      PROPERTIES MSVC_RUNTIME_LIBRARY "${_source_api_crt}")
+    add_library(preloader_l_source_api SHARED ${PRELOADER_L_APPLICATION_SOURCES}
+      src/platform/crypt_query_host.cpp "${_avatar_header}"
+      ${PRELOADER_L_VDF_SOURCES} ${PRELOADER_L_REFERENCE_SOURCES}
+      src/platform/dll_entry.cpp resources/surge.rc)
+    target_include_directories(preloader_l_source_api PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
+    target_compile_definitions(preloader_l_source_api PRIVATE NOMINMAX)
+    target_compile_options(preloader_l_source_api PRIVATE /GS)
+    target_link_libraries(preloader_l_source_api PRIVATE preloader_l_source_minhook
+      preloader_l_source_tinyxml2 preloader_l_asio preloader_l_pegtl
+      crypt32 ws2_32 kernel32 user32 shell32)
+    set_target_properties(preloader_l_source_api PROPERTIES MSVC_RUNTIME_LIBRARY "${_source_api_crt}")
+  else()
+    add_library(preloader_l_source_api SHARED $<TARGET_OBJECTS:preloader_l_objects>
+      $<TARGET_OBJECTS:preloader_l_vdf_objects> $<TARGET_OBJECTS:preloader_l_reference_objects>
+      src/platform/dll_entry.cpp resources/surge.rc)
+    target_link_libraries(preloader_l_source_api PRIVATE preloader_l_core)
+  endif()
   target_include_directories(preloader_l_source_api PRIVATE include resources)
-  target_link_libraries(preloader_l_source_api PRIVATE preloader_l_core)
   set_target_properties(preloader_l_source_api PROPERTIES
     OUTPUT_NAME "preloader.source" PREFIX "" WINDOWS_EXPORT_ALL_SYMBOLS ON)
   if(MSVC)
@@ -130,6 +160,9 @@ if(PRELOADER_L_BUILD_SOURCE_API_DLL)
   add_executable(preloader_l_source_host tools/preloader_l_source_host/main.cpp)
   target_include_directories(preloader_l_source_host PRIVATE include)
   target_link_libraries(preloader_l_source_host PRIVATE preloader_l_source_api preloader_l_asio)
+  if(MSVC)
+    set_target_properties(preloader_l_source_host PROPERTIES MSVC_RUNTIME_LIBRARY "${_source_api_crt}")
+  endif()
 endif()
 
 add_executable(preloader_l_runtime_host tools/preloader_l_runtime_host/main.cpp)

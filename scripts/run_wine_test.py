@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Capture Wine output without waiting for unrelated services' inherited pipes.
 
 Use as CMAKE_CROSSCOMPILING_EMULATOR: python;this_script;wine64. The actual

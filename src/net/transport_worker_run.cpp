@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_worker_run.hpp"
 #include <bit>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 void stop_worker_02a190(IocpSchedulerEntry& scheduler,WorkerRunApi& api,Api& errors,WorkerRunEffects& effects){
     if(effects.exchange_stop_34(scheduler,1)!=0)return;
     if(effects.exchange_wake_38(scheduler,1)!=0)return;
@@ -53,10 +55,10 @@ std::uintptr_t delete_worker_function_026320(IocpWorkerFunction& function,std::u
     if((flags&1U)!=0)effects.delete_function_04b0f8(function,32);
     return identity;
 }
-void RecoveredWorkerFunctionEffects::delete_function_slot_00(IocpWorkerFunction& function,std::uint32_t flags){
+void WorkerFunctionEffects::delete_function_slot_00(IocpWorkerFunction& function,std::uint32_t flags){
     (void)delete_worker_function_026320(function,flags,effects_);
 }
-void RecoveredWorkerFunctionEffects::invoke_function_slot_08(IocpWorkerFunction& function){
+void WorkerFunctionEffects::invoke_function_slot_08(IocpWorkerFunction& function){
     run_worker_function_029890(function,environment_,api_,errors_,effects_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

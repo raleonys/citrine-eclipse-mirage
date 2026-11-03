@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/node_constructors_test_fixture.hpp"
 using namespace node_constructors_test;
 namespace {

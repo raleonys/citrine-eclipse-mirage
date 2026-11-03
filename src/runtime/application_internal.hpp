@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/runtime/application.hpp"
 #include "preloader_l/codec/encoding.hpp"
@@ -35,7 +37,7 @@ struct NoResponse:std::runtime_error {NoResponse():std::runtime_error("RE no-res
     throw std::system_error(value.code,std::generic_category(),value.context);
 }
 
-class Mutex final:public content_handlers_recovered::Mutex {
+class Mutex final:public content_handlers::Mutex {
     // Standard CRT storage permits detecting same-thread reentry without
     // deadlocking. The public contract is the RE type2, nonrecursive mutex.
     std::recursive_mutex mutex_;
@@ -52,31 +54,31 @@ public:
 };
 // RAII queue/mutex owner in place of private CRT guard/atexit machinery. The
 // source adapters still determine per-request locking and lazy DOWN seeding.
-class Events final:public event_queue_recovered::Initialization {
+class Events final:public event_queue::Initialization {
     std::recursive_mutex init_;
     std::int32_t epoch_=1;
 public:
-    event_queue_recovered::Guards guards{0,0};
+    event_queue::Guards guards{0,0};
     Mutex mutex;
-    event_queue_recovered::OwnedStorage storage;
-    event_queue_recovered::Context context{guards,*this,mutex,storage};
-    event_queue_recovered::ContentQueue content{context};
-    event_queue_recovered::MessageQueue messages{context};
-    event_queue_recovered::IgoQueue igo{context};
+    event_queue::OwnedStorage storage;
+    event_queue::Context context{guards,*this,mutex,storage};
+    event_queue::ContentQueue content{context};
+    event_queue::MessageQueue messages{context};
+    event_queue::IgoQueue igo{context};
     int thread_epoch() override{return -2147483647;}
     void header_04b838(std::int32_t& guard) override {init_.lock();if(guard==0)guard=-1;else init_.unlock();}
     void footer(std::int32_t& guard) override {guard=epoch_++;init_.unlock();}
     void abort_initialization(std::int32_t& guard) noexcept override {guard=0;init_.unlock();}
-    void construct_mutex_04a698(content_handlers_recovered::Mutex&,std::uint32_t) override;
-    int register_atexit(event_queue_recovered::Cleanup) override;
+    void construct_mutex_04a698(content_handlers::Mutex&,std::uint32_t) override;
+    int register_atexit(event_queue::Cleanup) override;
 };
 
 class Environment final:public configuration::Dependencies,
                         public achievement_storage::Effects,
-                        public handlers_recovered::Effects,
+                        public handlers::Effects,
                         public achievement_runtime::PersistenceEffects {
 public:
-    Environment(configuration::State&,Options&,file_recovered::NativeFactory&,
+    Environment(configuration::State&,Options&,file::NativeFactory&,
                 xml_reader_bridge::Backend&,achievement_storage::Paths&,
                 achievement_runtime::HostClock&,achievement_runtime::HostFormatter&);
     void configure();
@@ -131,7 +133,7 @@ public:
     void remove_04948c(const Path&) override;
     void update_achievement_storage_01eb00(configuration::State&) override;
     bool set_environment_variable(std::string_view,std::string_view) override;
-    status_recovered::Status status_01ea20(const Path&,std::uint32_t) override;
+    status::Status status_01ea20(const Path&,std::uint32_t) override;
     [[noreturn]] void filesystem_error_018130(std::string_view,std::uint32_t,const Path&) override;
     std::int64_t timestamp_to_epoch_041e10(std::string_view) override;
     void log_profile_name_084f48(std::string_view) override;
@@ -141,19 +143,19 @@ public:
     bool online_avatar_virtual_28(const Path&) override;
     bool copy_overwrite_048d20(const Path&,const Path&) override;
     void log_saved_size_085530(std::int32_t) override;
-    online_recovered::Object provider=0;
+    online::Object provider=0;
     std::string auth_code;
 private:
     configuration::State& state_;
     Options& options_;
-    file_recovered::NativeFactory& files_;
+    file::NativeFactory& files_;
     achievement_runtime::HostClock& clock_;
     achievement_runtime::HostFormatter& formatter_;
-    encoding_recovered::NativeCalls encoding_;
-    encoding_recovered::PortableErrors errors_;
-    status_recovered::NativeStats stats_;
+    encoding::NativeCalls encoding_;
+    encoding::PortableErrors errors_;
+    status::NativeStats stats_;
     achievement_storage::HostCrtNumbers numbers_;
-    timestamp_recovered::HostGetTime timestamp_;
+    timestamp::HostGetTime timestamp_;
     achievement_storage::Storage storage_;
 #ifndef NDEBUG
     std::mutex log_mutex_;

@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_receive_buffer.hpp"
 #include "preloader_l/net/transport_async_receive.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct ReceiveStringBinding {std::uintptr_t identity=0;ReceiveBufferString* string=nullptr;};
 // Selected live projections of native stream+8 socket and *stream+28 service.
 // The allocator token is computed as literal stream identity+68 at the call.
@@ -27,17 +29,17 @@ struct ComposedReadContext {
 using ComposedReadStart=decltype(&start_async_receive_021d10);
 // Defined-field map: words60_78={stream,string,effective_size_or_npos,maximum},
 // byte80=delimiter, dword84=flag, words88_98={scan/result,last_request,frame_owner}.
-// Optional callee injection is for isolated caller tests only. The recovered
+// Optional callee injection is for isolated caller tests only. The
 // effects bridge always uses the actual021d10 source through the default.
 void composed_receive_025c40(ReceiveHandler&,const Error&,std::uint64_t bytes,std::uint32_t flag,
     ComposedReadContext&,ComposedReadStart call_021d10=&start_async_receive_021d10);
-class RecoveredComposedReadEffects:public RecoveredFinishedWriteEffects {
+class ComposedReadEffects:public FinishedWriteEffects {
 public:
-    using RecoveredFinishedWriteEffects::RecoveredFinishedWriteEffects;
+    using FinishedWriteEffects::FinishedWriteEffects;
     // Pure dependency binding before work is submitted. Context, constructor,
     // registries and this effects object must outlive all pending operations.
     void bind_read_context(ComposedReadContext& context){read_=&context;}
     void receive_body_025c40(ReceiveHandler&,Error&,std::uint64_t,std::uint32_t) final;
 private:ComposedReadContext* read_=nullptr;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

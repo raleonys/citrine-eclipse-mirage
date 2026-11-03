@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/codec/crypto.hpp"
 #include "preloader_l/codec/crypto_constants.hpp"
 #include <algorithm>
@@ -5,7 +7,7 @@
 #include <limits>
 #include <windows.h>
 
-namespace preloader_l::crypto_recovered {
+namespace preloader_l::crypto {
 namespace {
 std::uint8_t multiply(std::uint8_t a,std::uint8_t b){
     std::uint8_t result=0;
@@ -86,7 +88,7 @@ bool Cipher::decrypt_with_offset(std::string& value,std::size_t offset){
     for(auto pos=value.size()-padding;pos<value.size();++pos)if(static_cast<unsigned char>(value[pos])!=padding)return false;
     value.resize(value.size()-padding);return true;
 }
-std::unique_ptr<messages_recovered::Cipher> CryptoFactory::create_0423d0(){return std::make_unique<Cipher>();}
+std::unique_ptr<messages::Cipher> CryptoFactory::create_0423d0(){return std::make_unique<Cipher>();}
 std::uint32_t Lcg::next_045070()noexcept{state_=state_*0x343fdu+0x269ec3u;return (state_>>16)&0x7fff;}
 std::int64_t seconds_from_filetime_05eeb8(std::uint64_t ticks){
     const auto signed_delta=std::bit_cast<std::int64_t>(ticks-0x19db1ded53e8000ull);

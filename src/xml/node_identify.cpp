@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/node_identify.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width=8){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -52,8 +54,8 @@ std::uintptr_t identify_node_0038b0(std::uintptr_t document,std::uintptr_t input
     store(m,out_node,node);
     return result;
 }
-std::uintptr_t RecoveredNodeIdentifyEffects::identify_0038b0(std::uintptr_t document,
+std::uintptr_t NodeIdentifyEffects::identify_0038b0(std::uintptr_t document,
     std::uintptr_t input,std::uintptr_t out_node){
     return identify_node_0038b0(document,input,out_node,identify_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

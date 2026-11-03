@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/handlers/misc_handlers.hpp"
 #include <exception>
 #include <limits>
 
-namespace preloader_l::misc_handlers_recovered {
+namespace preloader_l::misc_handlers {
 static bool response(Xml& xml,const char* element,const char* key,const char* value) {
     xml.open_004080(element,false);
     xml.attribute_005560(key,value);
@@ -90,7 +92,7 @@ bool restart_game_032ab0(Xml& xml) {
     return result(xml,"1","Origin is waiting for the game to shutdown.");
 }
 bool permission_02d9e0(Xml& xml) {return response(xml,"CheckPermissionResponse","Access","GRANTED");}
-bool utc_time_02fea0(Xml& xml,handlers_recovered::Effects& effects) {
+bool utc_time_02fea0(Xml& xml,handlers::Effects& effects) {
     xml.open_004080("GetUTCTimeResponse",false);
     const auto time=effects.current_time_041b60();
     xml.attribute_005560("Time",time.c_str());
@@ -117,4 +119,4 @@ bool query_offers_031ec0(Xml& xml) {
     xml.close_virtual_48(false);
     return true;
 }
-} // namespace preloader_l::misc_handlers_recovered
+} // namespace preloader_l::misc_handlers

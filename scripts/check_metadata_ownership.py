@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Validate metadata and script registry schema, ownership and role contracts."""
 import json
 from pathlib import Path

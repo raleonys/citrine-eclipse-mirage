@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
 """Offline, pinned, fail-closed materialization of the active owner-provided vendor ZIPs.
 
 Preserves every member payload, with portable exact descriptors for locked aliases.

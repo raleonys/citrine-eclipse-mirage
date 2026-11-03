@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_service_constructor.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct ServiceGateImports {
     decltype(&::InitializeCriticalSectionAndSpinCount) initialize=&::InitializeCriticalSectionAndSpinCount;
     decltype(&::GetLastError) get_last_error=&::GetLastError;
@@ -15,4 +17,4 @@ public:
     std::uint32_t get_last_error() override;
 private:ServiceGateImports imports_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

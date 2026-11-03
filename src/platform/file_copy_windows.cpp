@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/file_copy.hpp"
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -24,7 +26,7 @@ OpenResult NativeSystemCalls::open_attributes(const Path& path,std::uint32_t sha
 }
 std::uint32_t NativeSystemCalls::file_id_info(Handle handle,Identity& out) {
     static_assert(sizeof(Identity)==24);
-    // Use the recovered FileIdInfo value/layout without raising the project's
+    // Use the FileIdInfo value/layout without raising the project's
     // Windows target macro just to expose newer SDK type names.
     if(GetFileInformationByHandleEx(native(handle),static_cast<FILE_INFO_BY_HANDLE_CLASS>(0x12),
                                    &out,sizeof(out)))return 0;

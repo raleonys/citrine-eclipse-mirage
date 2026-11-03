@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/pool_append_test_fixture.hpp"
 using namespace pool_append_test;
 namespace {

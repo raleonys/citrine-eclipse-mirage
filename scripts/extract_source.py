@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Extract a verified source ZIP; portable locked aliases require no symlink rights."""
 import argparse
 import json

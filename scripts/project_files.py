@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Canonical source inventory shared by source QA and flat-package verification."""
 import hashlib
 import json

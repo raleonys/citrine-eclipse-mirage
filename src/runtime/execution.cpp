@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/execution.hpp"
 #include <bit>
 #include <limits>
 #include <atomic>
 
-namespace preloader_l::execution_recovered {
+namespace preloader_l::execution {
 namespace {
 std::int64_t wrap_add(std::int64_t a, std::int64_t b) {
     return std::bit_cast<std::int64_t>(static_cast<std::uint64_t>(a) + static_cast<std::uint64_t>(b));
@@ -26,11 +28,11 @@ void initialize_mutex_04a698(MutexState& mutex, std::uint32_t observed_type) {
 
 int lock_04a6ac(MutexState& mutex, Platform& platform) {
     // 04a6ac is XOR EDX,EDX; JMP04a6d4. Timed/try branches of04a6d4
-    // are intentionally outside this untimed caller's recovered contract.
+    // are intentionally outside this untimed caller's contract.
     const auto thread = platform.current_thread_id();
     // Owner is inspected BEFORE the native lock is acquired. Raw C++ accesses
     // race with another thread's publication/release even though the original
-    // x64 loads/stores are naturally aligned. Preserve the recovered layout.
+    // x64 loads/stores are naturally aligned. Preserve the specified layout.
     std::atomic_ref<std::uint32_t> owner(mutex.owner_48);
     if ((mutex.type & ~std::uint32_t{0x100}) == 1) {
         if (owner.load(std::memory_order_relaxed) != thread) {

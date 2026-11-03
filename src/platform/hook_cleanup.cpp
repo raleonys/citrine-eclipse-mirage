@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/hook_cleanup.hpp"
-namespace preloader_l::network_hook_recovered {
+namespace preloader_l::network_hook {
 void cleanup_hooks_0102b0(std::span<const std::uintptr_t> targets, CleanupEffects& e) {
     for (const auto& target : targets) {
         if (e.disable_hook_046a00(target) != 0) {
