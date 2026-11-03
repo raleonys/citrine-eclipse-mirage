@@ -111,6 +111,33 @@ void native() {
     const int query=MultiByteToWideChar(65001,8,"abc",3,nullptr,0);
     const auto query_error=GetLastError();SetLastError(31337);
     check(calls.multi_byte_to_wide(65001,8,"abc",3,nullptr,0)==query&&GetLastError()==query_error,"temporary allocation preserves API entry/exit error state");
+    // Output storage is an output-only destination. On success the adapter must
+    // publish precisely the converted prefix, not copy its temporary tail.
+    char16_t actual[5]={u'?',u'?',u'?',u'?',u'?'};
+    wchar_t reference[5]={L'?',L'?',L'?',L'?',L'?'};
+    SetLastError(4242);
+    const int direct_prefix=MultiByteToWideChar(65001,8,"abc",3,reference,5);
+    const DWORD direct_prefix_error=GetLastError();
+    SetLastError(4242);
+    const int adapted_prefix=calls.multi_byte_to_wide(65001,8,"abc",3,actual,5);
+    check(adapted_prefix==direct_prefix&&adapted_prefix==3&&
+          GetLastError()==direct_prefix_error,"native wide conversion prefix count/error parity");
+    check(std::equal(actual,actual+5,reference,[](char16_t a,wchar_t b){return a==static_cast<char16_t>(b);}),
+          "native wide conversion retains destination tail");
+    const char malformed[]={static_cast<char>(0xc3),'('};
+    char16_t failed_output[4]={u'Q',u'R',u'S',u'T'};
+    wchar_t failed_reference[4]={L'Q',L'R',L'S',L'T'};
+    SetLastError(4343);
+    const int direct_invalid=MultiByteToWideChar(65001,8,malformed,2,failed_reference,4);
+    const DWORD direct_invalid_error=GetLastError();
+    SetLastError(4343);
+    const int adapted_invalid=calls.multi_byte_to_wide(65001,8,malformed,2,failed_output,4);
+    check(adapted_invalid==direct_invalid&&GetLastError()==direct_invalid_error,
+          "native malformed UTF8 preserves Win32 error contract");
+    check(std::equal(failed_output,failed_output+4,failed_reference,
+                     [](char16_t a,wchar_t b){return a==static_cast<char16_t>(b);}),
+          "native malformed UTF8 destination parity");
+
 }
 }
 int main(){try{synthetic();native();std::cout<<"PASS: "<<checks<<" encoding checks; real Win32 only on synthetic strings, original targets not executed\n";return 0;
