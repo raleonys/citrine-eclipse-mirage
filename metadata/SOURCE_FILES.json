@@ -1666,8 +1666,8 @@
       "sha256": "7878639316fb203b68c3dde08e2ede1281d3eb135d1bbef82a6a811492e903ee"
     },
     "tests/unit/messages/messages_tests.cpp": {
-      "bytes": 15689,
-      "sha256": "2f8a7871547faa7881060546cf25cf61c1a3d2dcdc9563fb8d4ae4ccccd4e102"
+      "bytes": 18622,
+      "sha256": "f810ff16e3cec2faa6659d394b85b19016a433d31aa8714e92f4309eeac06e83"
     },
     "tests/unit/misc_handlers/misc_handlers_tests.cpp": {
       "bytes": 9114,
