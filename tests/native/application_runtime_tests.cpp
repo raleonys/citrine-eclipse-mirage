@@ -293,6 +293,28 @@ int main(int argc,char** argv) try {
         require(online.configuration().username=="fixture-online"&&online.configuration().persona_id=="fixture-persona","RE provider virtual profile methods bound");
         Peer peer(online.configuration().server_port);(void)peer.frame();
         require(peer.request("provider-auth","<GetAuthCode ClientId='fixture'/>").find("fixture-auth")!=std::string::npos,"RE provider auth method bound");
+        const auto last_avatar=online.configuration().last_avatar_path;
+        const auto small_cache=fs::path(online.configuration().user_directory)/"_AVATAR_fixture-user-id_128";
+        const std::string before_copy="last-avatar-before-small-copy";
+        require(file::write_binary_03c1d0(last_avatar,before_copy,files),"seed existing last-avatar before shared denial");
+        {
+            struct HeldFile {
+                HANDLE value;
+                ~HeldFile(){if(value!=INVALID_HANDLE_VALUE)CloseHandle(value);}
+            } held{CreateFileW(fs::path(last_avatar).c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,0,nullptr)};
+            require(held.value!=INVALID_HANDLE_VALUE,"hold real last-avatar file without write sharing");
+            require(peer.request("provider-small-denied","<QueryImage Width='128' Height='128' ImageId='AVATAR:fixture-user-id'/>").find("_AVATAR_fixture-user-id_128")!=std::string::npos,
+                "small own avatar provider succeeds while last-avatar copy is denied");
+            require(file::read_binary_03b3f0(small_cache.u16string(),files)=="fixture-provider-avatar"&&
+                file::read_binary_03b3f0(last_avatar,files)==before_copy,"real denied copy preserves existing last-avatar bytes");
+        }
+        require(peer.request("provider-small-retry","<QueryImage Width='128' Height='128' ImageId='AVATAR:fixture-user-id'/>").find("_AVATAR_fixture-user-id_128")!=std::string::npos,
+            "retry small own avatar succeeds after exact denial handle closes");
+        require(file::read_binary_03b3f0(last_avatar,files)=="fixture-provider-avatar","first successful scaled-zero avatar updates real last-avatar file");
+        const std::string equal_marker="last-avatar-after-small-copy";
+        require(file::write_binary_03c1d0(last_avatar,equal_marker,files),"independently mark last-avatar after successful small copy");
+        (void)peer.request("provider-small-equal","<QueryImage Width='128' Height='128' ImageId='AVATAR:fixture-user-id'/>");
+        require(file::read_binary_03b3f0(last_avatar,files)==equal_marker,"equal scaled-zero avatar does not overwrite last-avatar again");
         require(peer.request("provider-avatar","<QueryImage Width='416' Height='416' ImageId='AVATAR:fixture-user-id'/>").find("_AVATAR_")!=std::string::npos,"RE provider avatar method bound");
         require(file::read_binary_03b3f0(online.configuration().last_avatar_path,files)=="fixture-provider-avatar","real provider avatar cache/copy path");
         online.stop();require(destroyed()==1,"RE provider destructor called exactly once after session drain");

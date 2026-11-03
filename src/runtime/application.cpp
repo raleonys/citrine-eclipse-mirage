@@ -304,7 +304,7 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
     Events events;
     Mutex achievements_mutex;
     handlers::Profile profile;
-    std::int32_t saved_avatar_size=0,attempted_files=0;
+    std::int32_t saved_avatar_size=-1,attempted_files=0;
     std::uint8_t blocked=0;
     LicenseEffects license_base{environment,provider,files};
     file::NativeTextEnvironment hash_text;
