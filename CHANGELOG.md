@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Test SAFE-FREEZE's patched MinHook peer-context write failure handling in the existing native fixture: an injected SetThreadContext failure during single-hook enable or disable must reject the transition, retain original/patch bytes and the live peer IP, release owned thread handles, and succeed on exact retry. No product/vendor/engine implementation change.
+
 - Confine MinHook header/status dependencies to the existing native hook-engine adapter, preserving application status values, virtual signatures and SAFE-FREEZE bytes. Compile the existing transaction and fake-engine tests as a portable target on Linux/Windows, and make direct native test dependencies explicit, including the Windows API header used by the native adapter fixture. Vendor inputs, patch output, lifecycle policy, DLL exports and CRT selection remain unchanged.
 
 - Write CTest JUnit reports to absolute paths matching their artifact and weekly source-package inputs; reject missing reports after otherwise successful tests. Correct the isolated/full Windows portable diagnostic paths and update its strict inventory from 28 to the current 30 tests. Test selection, failure propagation, runtime/vendor sources, ABI and release publication policy are unchanged.
