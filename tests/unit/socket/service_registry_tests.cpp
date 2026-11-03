@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_service_registry.hpp"
 #include <array>
 #include <functional>
 #include <iostream>
 #include <vector>
 
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 namespace {
 unsigned checks=0;
 void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}

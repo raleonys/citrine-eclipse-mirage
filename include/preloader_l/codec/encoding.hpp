@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/config/configuration.hpp"
 #include <cstdint>
 #include <string>
 #include <string_view>
 
-namespace preloader_l::encoding_recovered {
+namespace preloader_l::encoding {
 using Path=configuration::Path;
 struct Result {int count;std::uint32_t error;};
 class Calls {
@@ -45,4 +47,4 @@ public:
     [[noreturn]] void runtime_00cd70(int)override;
     [[noreturn]] void filesystem_00cdb0(std::uint32_t)override;
 };
-} // namespace preloader_l::encoding_recovered
+} // namespace preloader_l::encoding

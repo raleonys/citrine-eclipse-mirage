@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_io_completion_dispatch.hpp"
 #include "preloader_l/net/transport_composed_write_native.hpp"
 #include "preloader_l/net/transport_queued_write.hpp"
@@ -8,7 +10,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 namespace {
 unsigned checks=0;void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
 [[noreturn]]void unexpected(){throw std::logic_error("Unexpected IO integration dependency");}
@@ -22,8 +24,8 @@ struct Table:s::IoHandlerVtable{
  void move_slot_10(s::IoHandlerEnvironment& to,s::IoHandlerEnvironment& from)override{++moves;to.payload_00=from.payload_00;to.state_18=from.state_18;}
  std::uintptr_t query_slot_18(s::IoHandlerEnvironment&)override{return 0xabc;}
 };
-struct Effects:s::RecoveredFinishedWriteEffects{
- using RecoveredFinishedWriteEffects::RecoveredFinishedWriteEffects;
+struct Effects:s::FinishedWriteEffects{
+ using FinishedWriteEffects::FinishedWriteEffects;
  s::AsyncSendOperation& project_async_send(s::OperationStorage&)override;
 
 
@@ -47,7 +49,7 @@ struct Routing:s::IoDispatcherEffects{
  std::array<std::uintptr_t,2>& copy_exception_024100(std::array<std::uintptr_t,2>&,const std::array<std::uintptr_t,2>&)override{unexpected();}
  [[noreturn]]void rethrow_029880(std::array<std::uintptr_t,2>&)override{unexpected();}
 };
-struct Worker:s::RecoveredDispatcherWorkerEffects{
+struct Worker:s::DispatcherWorkerEffects{
  Fixture& f;explicit Worker(Fixture&);
  std::uint32_t exchange_stop_34(s::IocpSchedulerEntry&,std::uint32_t)override;
  std::uint32_t exchange_wake_38(s::IocpSchedulerEntry&,std::uint32_t)override;
@@ -58,8 +60,8 @@ struct Worker:s::RecoveredDispatcherWorkerEffects{
 struct Packet{OVERLAPPED* identity=nullptr;DWORD bytes=0,error=0;ULONG_PTR key=0;};
 struct Functor:s::PostedFunctor{unsigned invokes=0,discards=0;std::function<void()> action;void call_slot_00(std::uint8_t flag)override{if(flag){++invokes;if(action)action();}else ++discards;}};
 struct FinishCategory:s::WriteFinishCategory{void message_slot_10(s::WriteFinishString&,std::int32_t)override;};
-struct FinishApi:s::RecoveredQueuedWriteApi{
- Fixture& f;s::WriteFinishStream initial{0x100,0},returned{0x200,-8};explicit FinishApi(Fixture& v,s::QueuedWriteContext& c):RecoveredQueuedWriteApi(c),f(v){}
+struct FinishApi:s::QueuedWriteApi{
+ Fixture& f;s::WriteFinishStream initial{0x100,0},returned{0x200,-8};explicit FinishApi(Fixture& v,s::QueuedWriteContext& c):QueuedWriteApi(c),f(v){}
  void free_sized_04b0f8(std::uintptr_t,std::uint64_t)override;
  [[noreturn]]void invalid_parameter_05c974()override{unexpected();}
  s::WriteFinishStream& begin_log_006880(std::uintptr_t,std::uintptr_t)override;
@@ -93,7 +95,7 @@ std::uint64_t FinishApi::widen_01e510(std::uintptr_t stream,std::uint8_t c){f.ev
 void FinishApi::put_00fe90(s::WriteFinishStream& stream,std::uint8_t c){f.events.push_back("putlog");check(&stream==&returned&&c==255,"actual025a70 truncates widen to character byte");}
 void FinishApi::flush_00e1e0(s::WriteFinishStream& stream){f.events.push_back("flushlog");check(&stream==&returned,"actual025a70 flushes returned stream");}
 Routing::Routing(Fixture& fixture):IoDispatcherEffects(fixture.posted_bindings,fixture.io_bindings,fixture.environment(),fixture.worker_api,fixture.memory,fixture.errors,fixture.effects),f(fixture){}
-Worker::Worker(Fixture& fixture):RecoveredDispatcherWorkerEffects(fixture.state,{fixture.guard,{0x1111},{0x2222}},fixture.api,fixture.routing,fixture.worker_api,fixture.errors),f(fixture){}
+Worker::Worker(Fixture& fixture):DispatcherWorkerEffects(fixture.state,{fixture.guard,{0x1111},{0x2222}},fixture.api,fixture.routing,fixture.worker_api,fixture.errors),f(fixture){}
 void Routing::complete_unknown(s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& error,std::uint32_t bytes){++unknown;if(other)other(owner,op,error,bytes);else unexpected();}
 std::uint32_t Worker::exchange_stop_34(s::IocpSchedulerEntry& entry,std::uint32_t value){const auto old=entry.high_34;entry.high_34=value;f.events.push_back("stop");return old;}
 std::uint32_t Worker::exchange_wake_38(s::IocpSchedulerEntry& entry,std::uint32_t value){const auto old=static_cast<std::uint32_t>(entry.word_38);entry.word_38=(entry.word_38&0xffffffff00000000ULL)|value;return old;}

@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_acceptor.hpp"
 #include <ws2tcpip.h>
 #include <windows.h>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct AcceptorImports {
     decltype(&::WSASocketW) create=&::WSASocketW;
     decltype(&::CreateIoCompletionPort) attach=&::CreateIoCompletionPort;
@@ -28,4 +30,4 @@ public:
     std::int32_t set_nonblocking(Socket,std::uint32_t command,std::uint32_t& value) override;
 private:AcceptorImports imports_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

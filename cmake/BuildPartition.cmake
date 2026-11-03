@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 # Configure/build proof for the production/reference/source-API target boundary.
 # Request compiler-generated target/dependency data, including on fresh builds.
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/.cmake/api/v1/query")

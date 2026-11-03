@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_handler_dispatch_bridge.hpp"
 #include <functional>
 #include <iostream>
 #include <memory>
 #include <vector>
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 namespace {
 unsigned checks=0;void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
 [[noreturn]]void unexpected(){throw std::logic_error("Unexpected synthetic handler dependency");}
@@ -24,8 +26,8 @@ struct Memory:s::HandlerDispatchMemory{
  s::ReceiveHandlerTask& project_receive_task(s::OperationStorage& p,s::HandlerTaskContext& c)override{if(projection)projection();receive=std::make_unique<s::ReceiveHandlerTask>(p,c);return *receive;}
  s::SendHandlerTask& project_send_task(s::OperationStorage& p,s::HandlerTaskContext& c)override{if(projection)projection();send=std::make_unique<s::SendHandlerTask>(p,c);return *send;}
 };
-struct Effects:s::RecoveredHandlerDispatchEffects{unsigned receives=0,sends=0;std::function<void(s::ReceiveHandler&,s::Error&,std::uint64_t,std::uint32_t)> receive;std::function<void(s::SendHandler&,s::Error&,std::uint64_t,std::uint32_t)> send;
- using RecoveredHandlerDispatchEffects::RecoveredHandlerDispatchEffects;s::Category misc_category_0285b0()override{unexpected();}
+struct Effects:s::HandlerDispatchEffects{unsigned receives=0,sends=0;std::function<void(s::ReceiveHandler&,s::Error&,std::uint64_t,std::uint32_t)> receive;std::function<void(s::SendHandler&,s::Error&,std::uint64_t,std::uint32_t)> send;
+ using HandlerDispatchEffects::HandlerDispatchEffects;s::Category misc_category_0285b0()override{unexpected();}
  void receive_body_025c40(s::ReceiveHandler& h,s::Error& e,std::uint64_t n,std::uint32_t f)override{++receives;if(receive)receive(h,e,n,f);}void send_body_0261d0(s::SendHandler& h,s::Error& e,std::uint64_t n,std::uint32_t f)override{++sends;if(send)send(h,e,n,f);}};
 struct Fixture;Fixture* active=nullptr;
 void prepare(s::IoHandlerEnvironment&,std::uintptr_t,s::IoPrepareScratch&);void borrowed(s::IoHandlerEnvironment&,s::BorrowedIoHandler&);void publish(s::IoHandlerEnvironment&,s::OwnedHandlerTask*&);

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/core/binary_io.hpp"
 #include "preloader_l/runtime/event_queue.hpp"
 #include <windows.h>
@@ -9,7 +11,7 @@
 #include <stdexcept>
 
 using namespace preloader_l;
-namespace io=file_recovered;
+namespace io=file;
 namespace fs=std::filesystem;
 namespace {
 unsigned checks=0;
@@ -73,7 +75,7 @@ void native_failures() {
     require(read(xml)=="new-xml","native staging failure never truncates existing first file");
 }
 void event_publication() {
-    event_queue_recovered::OwnedStorage storage;storage.construct_seed_copy("seed");storage.pop_front_locked();
+    event_queue::OwnedStorage storage;storage.construct_seed_copy("seed");storage.pop_front_locked();
     std::string value="achievement";
     rejects([&]{storage.push_persisted_locked(value,[&]{require(!storage.nonempty_relaxed(),"reserved event unpublished during persistence");throw std::runtime_error("disk failure");});},"persistence failure propagated");
     require(!storage.nonempty_locked()&&!storage.nonempty_relaxed(),"failed persistence discards reserved event");

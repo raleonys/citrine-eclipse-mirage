@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include <winsock2.h>
 #include <windows.h>
 #include <atomic>
@@ -106,28 +108,28 @@ void require(bool b,const char* text){if(!b)throw std::runtime_error(text);}
 struct Factory:net::HandlerFactory {
     bool throw_create=false;
     unsigned tickets=0,positive=0,negative=0;
-    struct Ticket:server_recovered::DeliveryReceipt {
+    struct Ticket:server::DeliveryReceipt {
         Factory& f;explicit Ticket(Factory& x):f(x){++f.tickets;}
         ~Ticket(){--f.tickets;}
         bool finish(bool success)noexcept override{if(success)++f.positive;else ++f.negative;return true;}
     };
-    struct Handler:server_recovered::Handler {
+    struct Handler:server::Handler {
         Factory& f;explicit Handler(Factory& x):f(x){}
         void reset_02bc70()override{}
         std::string initial_message_02d540()override{return std::string("hello\0",6);}
         std::string process_message_033d70(std::string_view)override{return {};}
-        server_recovered::PreparedResponse prepare_response(std::string_view)override{return {std::string(128*1024,'X'),std::make_unique<Ticket>(f)};}
+        server::PreparedResponse prepare_response(std::string_view)override{return {std::string(128*1024,'X'),std::make_unique<Ticket>(f)};}
     };
-    std::unique_ptr<server_recovered::Handler> create()override{if(throw_create)throw std::runtime_error("fixture handler failure");return std::make_unique<Handler>(*this);}
+    std::unique_ptr<server::Handler> create()override{if(throw_create)throw std::runtime_error("fixture handler failure");return std::make_unique<Handler>(*this);}
     void error(std::string_view,std::exception_ptr)noexcept override{}
 };
 struct Context {
-    Factory factory;execution_recovered::MutexState mutex{};
+    Factory factory;execution::MutexState mutex{};
     std::uint8_t a=0,b=0,c=0;std::uint16_t port=0;
-    execution_recovered::WindowsPlatform platform{+[](int){throw std::runtime_error("thread error");}};
+    execution::WindowsPlatform platform{+[](int){throw std::runtime_error("thread error");}};
     std::int64_t frequency=platform.query_performance_frequency();
-    execution_recovered::Execution execution{mutex,{a,b,c},frequency,platform};
-    Context(){execution_recovered::initialize_mutex_04a698(mutex,2);}
+    execution::Execution execution{mutex,{a,b,c},frequency,platform};
+    Context(){execution::initialize_mutex_04a698(mutex,2);}
 };
 struct Harness {
     Context c;net::AsioService::Impl owner{c.factory,c.execution,c.port,c.a,{}};
@@ -191,7 +193,7 @@ void receive_cancellation_lifetime(){
     struct Reset{~Reset(){receive_buffer_probe::recording=false;receive_buffer_probe::tracked=nullptr;}} reset;
     receive_buffer_probe::count=0;receive_buffer_probe::released=0;
     receive_buffer_probe::socket=h.client->socket.native_handle();receive_buffer_probe::recording=true;
-    h.client->async_receive(4096,[&](server_recovered::Error,std::string){++callbacks;});
+    h.client->async_receive(4096,[&](server::Error,std::string){++callbacks;});
     receive_buffer_probe::recording=false;
     require(receive_buffer_probe::tracked!=nullptr&&receive_buffer_probe::released==0,
         "actual WSARecv borrows the observed live containing buffer allocation");
@@ -228,7 +230,7 @@ void constructor_rollback(){
 void bind_rollback(){
     fault::reset();Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.a,{});owner.used=true;
     Tcp::acceptor blocker(owner.io,{asio::ip::address_v4::loopback(),net::listener_policy::first_port});
-    server_recovered::Endpoint endpoint;endpoint.family=2;endpoint.address[0]=127;endpoint.address[3]=1;
+    server::Endpoint endpoint;endpoint.family=2;endpoint.address[0]=127;endpoint.address[3]=1;
     fault::select_next=true;fault::error=WSAEWOULDBLOCK;
     try{owner.construct_acceptor_020e20(endpoint,true,128);}catch(const std::exception&){}
     const auto raw=fault::target.load();const bool blocked=stop_failed(owner);fault::error=0;

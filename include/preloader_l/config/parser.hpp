@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/config/configuration.hpp"
 #include <cstddef>
@@ -29,7 +31,7 @@ struct State {
     std::string accumulator,key,value;
     bool removed_utf8_bom=false;
 };
-// Recovered Config2/VDF grammar, executed by the supplied PEGTL dependency.
+// Config2/VDF byte grammar, implemented using the bundled PEGTL dependency.
 // No I/O, target code or locale calls. Caller keeps raw_bytes alive during parse.
 // Empty input succeeds. Syntax failure throws ParseError; completed earlier
 // nodes and action state remain available in State. Original exception ABI,

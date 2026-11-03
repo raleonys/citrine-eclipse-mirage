@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/node_insertion.hpp"
 #include <array>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Ten native local output bytes and a signed DWORD count are projected as
 // caller-supplied effects, not a native stack frame or decoder implementation.
 class NativeNodeStringEffects {
@@ -21,15 +23,15 @@ struct NativeNodeStringContext {
 };
 std::uintptr_t materialize_node_string_0035e0(std::uintptr_t pair,NativeNodeStringContext&);
 
-class RecoveredNodeStringEffects:public RecoveredNodeInsertionEffects,public NativeNodeStringEffects {
+class NodeStringEffects:public NodeInsertionEffects,public NativeNodeStringEffects {
 public:
-    RecoveredNodeStringEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes,
+    NodeStringEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes,
         const NativeErrorArgumentTail& arguments,PoolAllocationDispatch& allocator,
         NativeNodeParseIdentities parse_ids={},NativeNodeIdentifyIdentities identify_ids={},
         NativeNodeConstructorIdentities constructor_ids={},NativeNodeStringIdentities string_ids={})
-        :RecoveredNodeInsertionEffects(memory,nodes,arguments,allocator,parse_ids,identify_ids,constructor_ids),
+        :NodeInsertionEffects(memory,nodes,arguments,allocator,parse_ids,identify_ids,constructor_ids),
          string_{memory,*this,*this,*this,string_ids}{}
     std::uintptr_t materialize_0035e0(std::uintptr_t) final;
 private:NativeNodeStringContext string_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

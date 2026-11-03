@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/event_adapters.hpp"
 #include "preloader_l/runtime/achievement_runtime.hpp"
 #include "preloader_l/xml/reader.hpp"
@@ -6,9 +8,9 @@
 #include <limits>
 #include <stdexcept>
 #include <vector>
-namespace eq=preloader_l::event_queue_recovered;
-namespace msg=preloader_l::messages_recovered;
-namespace content=preloader_l::content_handlers_recovered;
+namespace eq=preloader_l::event_queue;
+namespace msg=preloader_l::messages;
+namespace content=preloader_l::content_handlers;
 namespace ar=preloader_l::achievement_runtime;
 namespace cfg=preloader_l::configuration;
 namespace {
@@ -54,9 +56,9 @@ struct Clock final:ar::Clock {
     std::optional<ar::BrokenDown> gmtime_05fffc(std::int64_t)override{return ar::BrokenDown{0,0,0,1,0,100,6,0,0};}
 };
 struct Directories final:preloader_l::achievement_writer::Effects {void create_directories_018e00(const cfg::Path&)override{unused();}};
-struct Files final:preloader_l::file_recovered::Factory {
-    std::unique_ptr<preloader_l::file_recovered::Input> open_input_039f70(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
-    std::unique_ptr<preloader_l::file_recovered::Output> open_output_03a1a0(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
+struct Files final:preloader_l::file::Factory {
+    std::unique_ptr<preloader_l::file::Input> open_input_039f70(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
+    std::unique_ptr<preloader_l::file::Output> open_output_03a1a0(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
 };
 struct ContentEffects final:ar::PersistenceEffects {
     using PersistenceEffects::PersistenceEffects;
@@ -100,7 +102,7 @@ struct Fixture {
     cfg::State state{};preloader_l::achievement_storage::Paths paths;Clock clock{achievement};ar::HostFormatter formatter;Directories directories;Files files;ContentEffects content_effects{state,paths,clock,formatter,directories,files};
     preloader_l::xml_reader_bridge::Backend xml;Factory factory;Random random;Effects effects;std::uint8_t encrypted=1,show=1,online=0;std::int32_t saved=0;
     Fixture(){state.achievements_set="set";state.game_attributes["DISPLAY_NAME"]="Game";state.achievements.emplace("a",cfg::Achievement{1,0,0,"old","Award","1",0});}
-    void show_igo(){auto response=content_effects.printer_0019b0();require(preloader_l::misc_handlers_recovered::show_igo_032b10(response->xml(),igo),"real IGO handler succeeds");}
+    void show_igo(){auto response=content_effects.printer_0019b0();require(preloader_l::misc_handlers::show_igo_032b10(response->xml(),igo),"real IGO handler succeeds");}
     void grant(){auto response=content_effects.printer_0019b0();const auto refs=ar::bind_state(state,paths,online,saved,achievement,content_queue);content::RequestTree request;request.attributes={{"AchievementId","a"}};require(content::grant_achievement_030010(request,response->xml(),refs,content_effects),"real grant handler succeeds");require(!achievement.held && !mutex.held,"grant releases both mutexes");}
     std::string process(Cipher& cipher,msg::EventDelivery* delivery=nullptr){std::string input=encrypted?"00":"<LSX><Request id=\"1\" recipient=\"EbisuSDK\"><GetConfig/></Request></LSX>";return msg::process_message_033d70({encrypted,show,cipher,messages,delivery},input,xml,factory,random,effects);}
 };

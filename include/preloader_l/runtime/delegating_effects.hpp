@@ -1,17 +1,19 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/runtime/online.hpp"
 #include "preloader_l/runtime/libraries.hpp"
 #include "preloader_l/codec/encoding.hpp"
 #include "preloader_l/core/binary_io.hpp"
 
-namespace preloader_l::online_recovered {
-// New composition, not another recovered original function. The caller selects
+namespace preloader_l::online {
+// Source composition, not an independently verified original function. The caller selects
 // every backend. This class has no native DLL loading/provider implementation.
-class RecoveredEffects final : public Effects {
+class DelegatingEffects final : public Effects {
 public:
-    RecoveredEffects(Effects& remaining, recovered::libraries::SystemCalls& libraries,
-        status_recovered::Stats& stats, encoding_recovered::Calls& encoding,
-        encoding_recovered::Errors& errors, file_recovered::Factory& files)
+    DelegatingEffects(Effects& remaining, system_services::libraries::SystemCalls& libraries,
+        status::Stats& stats, encoding::Calls& encoding,
+        encoding::Errors& errors, file::Factory& files)
         : remaining_(remaining), libraries_(libraries), stats_(stats),
           encoding_(encoding), errors_(errors), files_(files) {}
     std::uint32_t suppress_errors_0450a0() override;
@@ -29,7 +31,7 @@ public:
     const char* user_id_virtual_20(Object) override;
     void destroy_virtual_00(Object) override;
     bool free_library(Module) override;
-    status_recovered::Status status_01ea20(const Path&, std::uint32_t) override;
+    status::Status status_01ea20(const Path&, std::uint32_t) override;
     [[noreturn]] void filesystem_error_018130(std::string_view, std::uint32_t, const Path&) override;
     std::string read_binary_03b3f0(const Path&) override;
     bool write_binary_03c1d0(const Path&, std::string_view) override;
@@ -40,10 +42,10 @@ public:
     void finish_flag_036820() override;
 private:
     Effects& remaining_;
-    recovered::libraries::SystemCalls& libraries_;
-    status_recovered::Stats& stats_;
-    encoding_recovered::Calls& encoding_;
-    encoding_recovered::Errors& errors_;
-    file_recovered::Factory& files_;
+    system_services::libraries::SystemCalls& libraries_;
+    status::Stats& stats_;
+    encoding::Calls& encoding_;
+    encoding::Errors& errors_;
+    file::Factory& files_;
 };
-} // namespace preloader_l::online_recovered
+} // namespace preloader_l::online

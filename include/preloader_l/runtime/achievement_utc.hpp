@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/runtime/calendar.hpp"
 #include <optional>
@@ -5,7 +7,7 @@
 #include <string_view>
 
 namespace preloader_l::achievement_runtime {
-using BrokenDown=calendar_recovered::BrokenDown;
+using BrokenDown=calendar::BrokenDown;
 class Clock {
 public:
     virtual ~Clock()=default;
@@ -20,7 +22,7 @@ public:
     // Native STL locale, stream state, allocation and exceptions belong here.
     virtual std::string put_time_03d610(const BrokenDown&,std::string_view)=0;
 };
-// Explicit host-runtime compatibility choices, not recovered original CRT/ABI.
+// Explicit host-runtime compatibility choices, not a claim of original CRT/ABI equivalence.
 class HostClock final:public Clock {
 public:
     std::int64_t time_05eeb8() override;

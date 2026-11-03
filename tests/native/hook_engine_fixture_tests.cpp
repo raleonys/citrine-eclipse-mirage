@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/hook_engine/fake_state.hpp"
 #include <MinHook.h>
 extern "C" {

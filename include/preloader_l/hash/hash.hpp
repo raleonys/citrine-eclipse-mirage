@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/config/configuration.hpp"
 #include <array>
@@ -8,7 +10,7 @@
 #include <string>
 #include <string_view>
 
-namespace preloader_l::hash_recovered {
+namespace preloader_l::hash {
 using Path = configuration::Path;
 using DigestWords = std::array<std::uint32_t,5>;
 
@@ -69,4 +71,4 @@ public:
 // the source configuration nor the target file is modified.
 bool file_hash_matches_042d20(const Path&,std::string expected,
                             FileFactory&,TextEnvironment&);
-} // namespace preloader_l::hash_recovered
+} // namespace preloader_l::hash

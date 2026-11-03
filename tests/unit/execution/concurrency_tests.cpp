@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/execution.hpp"
 #include <atomic>
 #include <barrier>
@@ -6,7 +8,7 @@
 #include <thread>
 #include <vector>
 
-using namespace preloader_l::execution_recovered;
+using namespace preloader_l::execution;
 struct OS final:Platform {
     std::mutex gate;
     std::atomic<unsigned> next{1};

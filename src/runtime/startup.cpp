@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/startup.hpp"
 #include <bit>
 #include <utility>
 
-namespace preloader_l::startup_recovered {
+namespace preloader_l::startup {
 std::string get_environment_039950(InputPlatform& platform, const char* name) {
     const char* value = platform.crt_getenv_05f318(name);
     return value ? std::string(value) : std::string{};
@@ -104,4 +106,4 @@ void setup_console_038760(StateReferences state, ConsolePlatform& platform) {
     const auto error_destination = platform.stream_052238(2);
     (void)platform.reopen_05f024(error_destination,"conout$","w",error);
 }
-} // namespace preloader_l::startup_recovered
+} // namespace preloader_l::startup

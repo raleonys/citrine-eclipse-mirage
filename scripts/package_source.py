@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Create a flat source ZIP from an already verified active source manifest."""
 import argparse
 import json

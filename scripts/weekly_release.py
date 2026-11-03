@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Prepare source-bound release candidates; only draft GitHub releases may be written."""
 import argparse
 import hashlib
@@ -9,13 +11,13 @@ import shutil
 import subprocess
 import xml.etree.ElementTree as ET
 import zipfile
+from weekly_naming import FIRST, successor, approved_tag, require_tag, asset_names, validate_registry, load_registry
 
 from check_falcion_golden_cleaning import check
 from package_source import package
 from run_golden_pipeline import ORDER
 
 ROOT = Path(__file__).resolve().parents[1]
-TAG = re.compile(r'([A-Za-z0-9][A-Za-z0-9._-]{0,79})-R([0-9]{2})\Z')
 COMMIT = re.compile(r'[0-9a-f]{40}\Z')
 MARKER = re.compile(r'<!-- surge-weekly:(\{[^\n]*\}) -->')
 
@@ -38,13 +40,6 @@ def head(root=ROOT):
     return subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip()
 
 
-def tag_parts(tag):
-    match = TAG.fullmatch(tag)
-    if not match or int(match[2]) == 0:
-        raise ValueError('Use a filename-safe external series followed by -R01 through -R99')
-    return match[1], int(match[2])
-
-
 def state(release):
     matches = MARKER.findall(release.get('body') or '')
     if not matches:
@@ -52,10 +47,9 @@ def state(release):
     if len(matches) != 1:
         raise ValueError('Ambiguous candidate source marker')
     value = json.loads(matches[0])
-    if (value.get('schema') != 1 or not COMMIT.fullmatch(value.get('source_sha', ''))
-            or value.get('status') not in ('preparing', 'complete')):
+    if value.get('schema') != 1 or not COMMIT.fullmatch(value.get('source_sha', '')) or value.get('status') not in ('preparing', 'complete'):
         raise ValueError('Invalid candidate source marker')
-    tag_parts(release['tag_name'])
+    require_tag(release['tag_name'])
     return value
 
 
@@ -66,41 +60,31 @@ def marker(source, status):
 
 def plan(releases, source, start_tag=''):
     if not COMMIT.fullmatch(source):
-        raise ValueError('Expected a full source commit')
-    managed = [(r, state(r)) for r in releases]
-    managed = [(r, s) for r, s in managed if s]
+        raise ValueError('Expected full source commit')
+    validate_registry(load_registry())
+    tracked = [(r, state(r)) for r in releases]
+    tracked = [(r, s) for r, s in tracked if s is not None]
     result = {'source_sha': source, 'ready': False, 'tag': '', 'existing_id': None}
-    if start_tag:
-        tag_parts(start_tag)
-        existing = [r for r in releases if r['tag_name'] == start_tag]
-        if existing:
-            r = existing[0]
-            s = state(r)
-            if not s or s['source_sha'] != source:
-                raise ValueError('The requested tag is already reserved for another candidate')
-            if s['status'] == 'complete':
-                return {**result, 'reason': 'SOURCE_ALREADY_PREPARED'}
-            if not r['draft']:
-                raise ValueError('Never update a published release')
-            return {**result, 'ready': True, 'tag': start_tag, 'existing_id': r['id']}
-        return {**result, 'ready': True, 'tag': start_tag}
-    if not managed:
-        return {**result, 'reason': 'BOOTSTRAP_REQUIRED: run manually once with start_tag'}
-    latest, previous = max(managed, key=lambda item: int(item[0]['id']))
-    if previous['source_sha'] == source:
-        if previous['status'] == 'complete':
-            return {**result, 'reason': 'NO_NEW_COMMITS'}
-        if not latest['draft']:
-            raise ValueError('An incomplete candidate was published; manual review is required')
-        return {**result, 'ready': True, 'tag': latest['tag_name'], 'existing_id': latest['id']}
-    series, revision = tag_parts(latest['tag_name'])
-    for release in releases:
-        match = TAG.fullmatch(release['tag_name'])
-        if match and match[1] == series:
-            revision = max(revision, int(match[2]))
-    if revision == 99:
-        raise ValueError('R99 reached; explicitly start the next owner-selected series')
-    return {**result, 'ready': True, 'tag': f'{series}-R{revision + 1:02d}'}
+    if tracked:
+        last, status = max(tracked, key=lambda pair: tuple(map(int, require_tag(pair[0]['tag_name']).split('.'))))
+        tag = last['tag_name']
+        if status['source_sha'] == source:
+            if start_tag and start_tag != tag:
+                raise ValueError('Same source cannot be repackaged under a new version')
+            if status['status'] == 'complete':
+                return {**result, 'reason': 'NO_NEW_COMMITS'}
+            if not last['draft']:
+                raise ValueError('Incomplete draft already published')
+            return {**result, 'ready': True, 'tag': tag, 'existing_id': last['id']}
+        version = successor(require_tag(tag))
+    else:
+        version = FIRST
+    tag = approved_tag(version)
+    if start_tag and start_tag != tag:
+        raise ValueError('start_tag must match exact next approved semantic version')
+    if any(r['tag_name'] == tag for r in releases):
+        raise ValueError('Tag reserved by unrelated release')
+    return {**result, 'ready': True, 'tag': tag}
 
 
 def junit(path):
@@ -195,7 +179,7 @@ def bundle(root, payload, output):
     if output == root or root in output.parents or output.exists():
         raise ValueError('Use a fresh external candidate directory')
     p = load(payload / 'plan.json')
-    tag_parts(p['tag'])
+    require_tag(p['tag'])
     if not p['ready'] or p['source_sha'] != head(root):
         raise ValueError('Candidate checkout does not match planned source')
     manifest = sha(root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')
@@ -206,7 +190,8 @@ def bundle(root, payload, output):
     portable_tests = junit(payload / 'PORTABLE_CTEST.xml')
     native = validate_profile(payload / 'native', 'native', manifest, p['source_sha'])
     golden = validate_profile(payload / 'production', 'production', manifest, p['source_sha'])
-    source = payload / (p['tag'] + '_source.zip')
+    source_name, binary_name = asset_names(p['tag'])
+    source = payload / source_name
     verify_sidecar(source)
     errors = check(root, source)
     if errors:
@@ -221,7 +206,7 @@ def bundle(root, payload, output):
                'source_zip_sha256': sha(source), 'game_acceptance': 'NOT_RUN',
                'publication': False}
     write(output / 'RELEASE_RECEIPT.json', receipt)
-    binary = output / (p['tag'] + '_windows_x64.zip')
+    binary = output / binary_name
     files = {path.name: path for path in (payload / 'production/dist').iterdir() if path.is_file()}
     if set(files) != {'preloader_l.dll', 'preloader_l.dll.sha256', 'LOCAL_DIST_RECEIPT.json'}:
         raise ValueError('Unexpected runtime payload')
@@ -294,19 +279,19 @@ def publish_draft(github, p, assets):
     assets = Path(assets)
     receipt = load(assets / 'RELEASE_RECEIPT.json')
     tag = p['tag']
-    tag_parts(tag)
+    require_tag(tag)
     if (not p['ready'] or receipt['source_sha'] != p['source_sha'] or receipt['tag'] != tag
             or receipt.get('classification') != 'DRAFT_NOT_RELEASED'
             or receipt.get('publication') is not False
             or receipt.get('game_acceptance') != 'NOT_RUN'):
         raise ValueError('Draft receipt/source mismatch')
     paths = sorted(assets.iterdir())
-    expected = {tag + suffix for suffix in ('_source.zip', '_source.zip.sha256',
-                                           '_windows_x64.zip', '_windows_x64.zip.sha256')}
+    source_name, binary_name = asset_names(tag)
+    expected = {source_name, source_name + '.sha256', binary_name, binary_name + '.sha256'}
     expected |= {'RELEASE_RECEIPT.json', 'RELEASE_RECEIPT.json.sha256'}
     if {path.name for path in paths} != expected:
         raise ValueError('Unexpected release assets')
-    for name in (tag + '_source.zip', tag + '_windows_x64.zip', 'RELEASE_RECEIPT.json'):
+    for name in (source_name, binary_name, 'RELEASE_RECEIPT.json'):
         verify_sidecar(assets / name)
     releases = github.releases()
     existing = next((r for r in releases if r['tag_name'] == tag), None)
@@ -397,7 +382,8 @@ def main():
         shutil.copyfile(args.plan, args.output / 'plan.json')
         shutil.copyfile(ROOT / 'build/qa/weekly-source-qa.json', args.output / 'SOURCE_QA.json')
         shutil.copyfile(ROOT / 'build/weekly-portable/CTEST_RESULTS.xml', args.output / 'PORTABLE_CTEST.xml')
-        package(ROOT, args.output / (p['tag'] + '_source.zip'))
+        source_name, _ = asset_names(p['tag'])
+        package(ROOT, args.output / source_name)
     elif args.command == 'capture':
         capture(ROOT, args.profile, args.build, args.output, args.source)
     elif args.command == 'bundle':

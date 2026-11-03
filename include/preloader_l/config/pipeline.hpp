@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/core/binary_io.hpp"
 #include "preloader_l/config/parser.hpp"
@@ -8,12 +10,12 @@ namespace preloader_l::config_pipeline {
 // section copies in 019ad0. Factory and provider must outlive this object.
 class DocumentPipeline {
 public:
-    DocumentPipeline(file_recovered::Factory& files,
+    DocumentPipeline(file::Factory& files,
                      const parser::BinaryIterationOrder& selected_copy_order)
         : files_(files), order_(selected_copy_order) {}
     configuration::Node read(const configuration::Path&) const;
 private:
-    file_recovered::Factory& files_;
+    file::Factory& files_;
     const parser::BinaryIterationOrder& order_;
 };
 

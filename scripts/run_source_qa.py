@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Visible local source QA, independent of publication and Windows availability."""
 import argparse
 import json
@@ -17,6 +19,7 @@ CHECKS = [
     ('owner integration requirements', ['scripts/check_integration_requirements.py']),
     ('metadata ownership', ['scripts/check_metadata_ownership.py']),
     ('production/reference build boundary regressions', ['tests/infrastructure/test_build_partition.py']),
+    ('MinHook single-disable IP action and build-copy integrity', ['tests/infrastructure/test_hook_disable_action.py']),
     ('native size evidence reader regressions', ['tests/infrastructure/test_size_evidence.py']),
     ('weekly draft release regressions', ['tests/infrastructure/test_weekly_release.py']),
     ('operator entrypoints', ['scripts/check_human_launcher_contract.py']),
@@ -25,6 +28,10 @@ CHECKS = [
     ('Golden PE negative regressions', ['tests/infrastructure/test_pe_metadata_tools.py']),
     ('restricted named imports', ['tests/infrastructure/test_corvexon_mswsock_imports.py']),
     ('MSVC link negative regressions', ['scripts/check_msvc_shipping_link_command.py', '--self-test']),
+    ('C++ interface/adapter identity regressions', ['tests/infrastructure/test_cpp_type_identities.py']),
+    ('C++ interface/adapter identity policy', ['scripts/check_cpp_type_identities.py']),
+    ('source SPDX and identifier regressions', ['tests/infrastructure/test_source_identity_license.py']),
+    ('source SPDX and identifier policy', ['scripts/check_source_identity_license.py']),
     ('first-party language audit regressions', ['tests/infrastructure/test_english_only_audit.py']),
     ('first-party English-only prose gate', ['scripts/check_english_only.py', '--check']),
     ('SURGE infrastructure regressions', ['tests/infrastructure/test_infrastructure.py']),

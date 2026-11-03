@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/session_handler.hpp"
 #include "preloader_l/xml/reader.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-namespace msg=preloader_l::messages_recovered;
+namespace msg=preloader_l::messages;
 namespace bridge=preloader_l::session_bridge;
 namespace {
 unsigned checks=0;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/receive_buffer_test_fixture.hpp"
 #include <algorithm>
 using namespace buffer_test;
