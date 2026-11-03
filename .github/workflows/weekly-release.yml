@@ -119,11 +119,11 @@ jobs:
         with:
           name: weekly-failed-${{ matrix.profile }}
           path: |
-            build/weekly-${{ matrix.profile }}/LOCAL_BUILD_RECEIPT.json
+            build/weekly-${{ matrix.profile }}/BUILD_RECEIPT.json
             build/weekly-${{ matrix.profile }}/BUILD_TOOLCHAIN_PROVENANCE.log
             build/weekly-${{ matrix.profile }}/CTEST_RESULTS.xml
             build/weekly-${{ matrix.profile }}/Testing/Temporary/*.log
-            build/weekly-${{ matrix.profile }}/golden-local/*.json
+            build/weekly-${{ matrix.profile }}/golden/*.json
           if-no-files-found: warn
           retention-days: 14
 

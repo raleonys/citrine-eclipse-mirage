@@ -215,7 +215,7 @@ def main():
                 errors.append('Linked production binary missing')
     except (OSError, ValueError, KeyError, TypeError) as error:
         errors.append(str(error))
-    result = {'schema': 'surge.build-partition-check.v1', 'classification': 'NOT_RELEASE',
+    result = {'schema': 'surge.build-partition-check.v1',
               'result': 'FAIL' if errors else 'PASS_SOURCE_PARTITION' if args.source_only else 'PASS_TARGET_GRAPH' if args.graph_only else 'PASS_PRODUCTION_BOUNDARY',
               'map_format': format_name, 'errors': errors,
               'native_msvc_and_game_acceptance': 'SEPARATE_REQUIRED_EVIDENCE'}

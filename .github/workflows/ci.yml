@@ -122,26 +122,26 @@ jobs:
           name: windows-${{ matrix.profile }}-evidence
           path: |
             build/ci-${{ matrix.profile }}/BUILD_TOOLCHAIN_PROVENANCE.log
-            build/ci-${{ matrix.profile }}/LOCAL_BUILD_RECEIPT.json
+            build/ci-${{ matrix.profile }}/BUILD_RECEIPT.json
             build/ci-${{ matrix.profile }}/PUBLIC_DLL_ABI_CHECK.json
             build/ci-${{ matrix.profile }}/DLL_RESOURCE_CHECK.json
             build/ci-${{ matrix.profile }}/CTEST_RESULTS.xml
             build/ci-${{ matrix.profile }}/production-boundary.*.json
-            build/ci-${{ matrix.profile }}/golden-local/**/*.json
+            build/ci-${{ matrix.profile }}/golden/**/*.json
             build/ci-${{ matrix.profile }}/Testing/Temporary/*.log
             build/ci-${{ matrix.profile }}/CMakeCache.txt
             build/ci-${{ matrix.profile }}/CMakeFiles/CMakeConfigureLog.yaml
           if-no-files-found: warn
           retention-days: 14
-      - name: Retain validated local Golden candidate
+      - name: Retain validated Golden candidate
         if: success() && matrix.profile == 'production'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: local-golden-candidate
+          name: golden-candidate
           path: |
             dist/preloader_l.dll
             dist/preloader_l.dll.sha256
-            dist/LOCAL_DIST_RECEIPT.json
+            dist/DIST_RECEIPT.json
           if-no-files-found: error
           retention-days: 14
 

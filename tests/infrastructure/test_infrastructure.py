@@ -617,7 +617,7 @@ class GovernanceTests(unittest.TestCase):
             root = Path(tmp)
             (root / 'metadata').mkdir()
             for name in golden.POLICIES:
-                (root / 'metadata' / name).write_text(json.dumps({'activation':'READY_LOCAL_TARGET'}))
+                (root / 'metadata' / name).write_text(json.dumps({'activation':'READY_TARGET'}))
             self.assertEqual(4, len(golden.pending_targets(root)))
 
     def test_product_targets_are_configuration_ready_not_native_acceptance(self):
@@ -767,7 +767,39 @@ class GovernanceTests(unittest.TestCase):
             self.assertTrue(any('masks child exit' in e for e in launchers.check(root)))
 
 
-class LocalDistTests(unittest.TestCase):
+class BuildWordingTests(unittest.TestCase):
+    def test_active_operator_tools_and_contracts_reject_retired_labels(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for name in ('scripts/build_orchestration/build.ps1','tools/inspect.py',
+                         'cmake/Policy.cmake','.github/workflows/ci.yml',
+                         'metadata/POLICY.json','src/platform/module.cpp',
+                         'include/preloader_l/platform/module.hpp','CMakeLists.txt'):
+                path=root/name
+                path.parent.mkdir(parents=True,exist_ok=True)
+                for label in ('NOT_RELEASE','LOCAL_GOLDEN_PASS','LOCAL_BUILD_RECEIPT.json',
+                              'LOCAL_DIST_CONTRACT.json','Local Golden','local build',
+                              'golden-local','READY_LOCAL_TARGET'):
+                    path.write_text(label,encoding='utf-8')
+                    self.assertEqual(['Obsolete build wording: '+name+':1'],
+                                     launchers.check_build_wording(root))
+                path.write_text('GOLDEN_PASS\nBUILD_RECEIPT.json\nDIST_RECEIPT.json\n',encoding='utf-8')
+                self.assertEqual([],launchers.check_build_wording(root))
+
+    def test_historical_evidence_and_vendor_bytes_are_not_rewritten(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for name in ('metadata/evidence/OLD.json','docs/evidence/OLD.log',
+                         'third_party/vendor/tool.py','tests/fixtures/old.txt'):
+                path=root/name
+                path.parent.mkdir(parents=True,exist_ok=True)
+                path.write_text('NOT_RELEASE; LOCAL_GOLDEN_PASS',encoding='utf-8')
+            before={path:path.read_bytes() for path in root.rglob('*') if path.is_file()}
+            self.assertEqual([],launchers.check_build_wording(root))
+            self.assertEqual(before,{path:path.read_bytes() for path in before})
+
+
+class DistTests(unittest.TestCase):
     """Synthetic process results test orchestration only; never stand in for MSVC evidence."""
     def setUp(self):
         import shutil
@@ -776,12 +808,12 @@ class LocalDistTests(unittest.TestCase):
         self.root=Path(self.temp.name)/'source'
         (self.root/'metadata').mkdir(parents=True)
         (self.root/'metadata/ACTIVE_SOURCE_MANIFEST.json').write_text('{"fixture_only":true,"files":{}}')
-        shutil.copyfile(ROOT/'metadata/LOCAL_DIST_CONTRACT.json',self.root/'metadata/LOCAL_DIST_CONTRACT.json')
+        shutil.copyfile(ROOT/'metadata/DIST_CONTRACT.json',self.root/'metadata/DIST_CONTRACT.json')
         self.build=self.root/'build/golden'
         self.build.mkdir(parents=True)
         self.raw=self.build/'preloader.unsigned.dll'
         self.raw.write_bytes(b'synthetic orchestration fixture, not a PE or MSVC result')
-        self.output=self.build/'golden-local'
+        self.output=self.build/'golden'
 
     def run_pipeline(self,failed_stage=None,runtime_failure=False,corrupt_runtime=False):
         calls=[]
@@ -804,7 +836,7 @@ class LocalDistTests(unittest.TestCase):
     def test_success_stages_exact_final_name_hash_receipt_and_original_bytes(self):
         before=self.raw.read_bytes()
         report,calls=self.run_pipeline()
-        self.assertEqual('LOCAL_GOLDEN_PASS',report['result'])
+        self.assertEqual('GOLDEN_PASS',report['result'])
         self.assertEqual(7,len(calls))
         target=self.root/'dist/preloader_l.dll'
         self.assertEqual(before,target.read_bytes())
@@ -813,8 +845,12 @@ class LocalDistTests(unittest.TestCase):
         receipt=json.loads(Path(report['dist_receipt']).read_text())
         self.assertEqual(report['sha256'],receipt['sha256'])
         self.assertEqual(golden.sha(self.root/'metadata/ACTIVE_SOURCE_MANIFEST.json'),receipt['source_manifest_sha256'])
-        self.assertFalse(receipt['official_release'])
-        self.assertFalse(receipt['library_publication'])
+        self.assertEqual('surge.dist-receipt.v1',receipt['schema'])
+        self.assertEqual('surge.golden.v1',report['schema'])
+        for value in (receipt,report):
+            self.assertNotIn('classification',value)
+            self.assertNotIn('official_release',value)
+            self.assertNotIn('library_publication',value)
 
     def test_every_golden_failure_preserves_previous_dist_and_skips_runtime(self):
         self.run_pipeline()
@@ -837,7 +873,7 @@ class LocalDistTests(unittest.TestCase):
 
     def test_incomplete_result_cannot_stage_dist(self):
         with self.assertRaises(ValueError):
-            golden.stage_local_dist(self.root,self.raw,{'result':'LOCAL_GOLDEN_PASS','steps':[]})
+            golden.stage_dist(self.root,self.raw,{'result':'GOLDEN_PASS','steps':[]})
         self.assertFalse((self.root/'dist').exists())
 
     def test_replace_failure_restores_previous_bundle(self):
@@ -852,13 +888,13 @@ class LocalDistTests(unittest.TestCase):
                 raise OSError('injected sidecar commit failure')
             return replace(source,target)
         with patch.object(golden.os,'replace',side_effect=fail_sidecar):
-            with self.assertRaises(OSError):golden.stage_local_dist(self.root,artifact,report)
+            with self.assertRaises(OSError):golden.stage_dist(self.root,artifact,report)
         self.assertEqual(before,self.dist_bytes())
-        self.assertFalse((self.root/'dist/.local-golden.lock').exists())
+        self.assertFalse((self.root/'dist/.golden.lock').exists())
         self.assertFalse(list((self.root/'dist').glob('.candidate-*')))
 
     def test_final_filename_matches_unchanged_hook_filter(self):
-        contract=json.loads((ROOT/'metadata/LOCAL_DIST_CONTRACT.json').read_text())
+        contract=json.loads((ROOT/'metadata/DIST_CONTRACT.json').read_text())
         header=(ROOT/'include/preloader_l/platform/crypt_query.hpp').read_text()
         source=(ROOT/'src/platform/crypt_query.cpp').read_text()
         declaration=re.search(r'\btarget_suffix\s*=\s*u"([^"\n]+)"\s*;',header)

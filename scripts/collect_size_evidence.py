@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
-"""Collect read-only DLL/MAP/COFF evidence from an existing local build.
+"""Collect read-only DLL/MAP/COFF evidence from an existing build.
 
 Object section sizes are pre-link contributions, never final function sizes.
 No build, binary execution, finalization, publication or source repair is performed.
@@ -215,9 +215,9 @@ def collect(root, build, config, dll, output, with_symbols=False):
         p = build / name
         if p.is_file():
             records[name] = add('link/' + name, p)
-    receipt = root / 'dist/LOCAL_DIST_RECEIPT.json'
+    receipt = root / 'dist/DIST_RECEIPT.json'
     if receipt.is_file():
-        records['dist_receipt'] = add('link/LOCAL_DIST_RECEIPT.json', receipt)
+        records['dist_receipt'] = add('link/DIST_RECEIPT.json', receipt)
     compilation = build / 'compile_commands.json'
     if compilation.is_file():
         commands = json.loads(compilation.read_text(encoding='utf-8'))
@@ -271,7 +271,6 @@ def collect(root, build, config, dll, output, with_symbols=False):
         writer.writerow([row.get(k, '') for k in ['object', 'target', 'file_bytes', 'code_raw_bytes', 'rdata_raw_bytes', 'comdat_sections', 'sha256', 'unsupported']])
     payload['analysis/object_sections.csv'] = csv_out.getvalue().encode()
     report = {'schema': 'surge.size-evidence.v1', 'result': 'PARTIAL_UNSUPPORTED_OBJECTS' if failures else 'COLLECTED',
-              'classification': 'READ_ONLY_LOCAL_EVIDENCE_NOT_SHIPPING_ACCEPTANCE',
               'configuration': config, 'binary': dll_record, 'binary_sections': section_rows,
               'exports': pe.exports(), 'production_map': map_record, 'contracts_and_reports': records,
               'objects': objects, 'unsupported_objects': failures,

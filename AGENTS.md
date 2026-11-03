@@ -31,6 +31,7 @@ This document is the operational entrypoint for agents and contributors. [GOVERN
 - Keep standard compiler CRT and the accepted exact four vendor trees: Asio, MinHook, PEGTL and pugixml. Preserve their source pins and required portable alias descriptors. No custom CRT, unapproved vendor modification, new VDF policy or default changes. Consult `metadata/VENDOR_LOCK.json`, `docs/VENDORING.md`, and parser contracts.
 - Keep active SDK/listener/transport, persistence, configuration, avatar fallback, Windows filesystem and Debug-only diagnostic behavior unless a narrowly approved change proves equivalence. Current machine contracts, not superseded historical work orders, are authoritative.
 - Preserve Golden PE layout, resource/import/export, checksum and source-pinning requirements; validate a finalized copy without corrupting raw build output. A Golden fixture PASS is not production DLL acceptance. See `docs/GOLDEN_PROTOCOLS.md` and `docs/VALIDATION.md`.
+- Operator tools report the selected build profile and its validation result. Use the current build/distribution receipt names and Golden vocabulary consistently in scripts, policies and CI consumers; publication state belongs to the weekly release receipt. Source QA rejects retired build labels. Historical evidence and original archive names remain byte-exact.
 - Do not import unrelated Brownfield application/CRT implementations or carry forward historical acceptance as current execution. Internal compatibility identifiers are not public project branding.
 
 ## Navigation and change discipline
