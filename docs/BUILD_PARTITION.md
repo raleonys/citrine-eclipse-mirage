@@ -34,8 +34,9 @@ Production must never depend on a reference target or the source API DLL. With
 are not configured. The owner-selected pugixml archive replaces TinyXML2; the other three vendor
 pins are unchanged. `xml/reader.cpp`, `xml/reader_policy.cpp`,
 `xml/reader_values.cpp` and `xml/memory_printer.cpp` are production inputs.
-The old XML vendor target identifiers remain aliases of the corresponding
-pugixml targets, preserving build references without linking retired code.
+Production and test targets link `preloader_l_pugixml`; the MSVC development
+DLL links `preloader_l_source_pugixml`. No legacy XML vendor target aliases
+are provided.
 The evaluated production graph rejects `third_party/tinyxml2/` sources.
 The external TinyXML2 control exists only in the standalone comparison.
 

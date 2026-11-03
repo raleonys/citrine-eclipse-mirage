@@ -59,8 +59,6 @@ add_library(preloader_l_pugixml STATIC "${PROJECT_SOURCE_DIR}/third_party/pugixm
 target_include_directories(preloader_l_pugixml PUBLIC "${PROJECT_SOURCE_DIR}/third_party/pugixml/src")
 target_compile_definitions(preloader_l_pugixml PUBLIC PUGIXML_NO_XPATH)
 add_dependencies(preloader_l_pugixml preloader_l_verify_vendors)
-# Retain the old build identifier for downstream CMake callers only.
-add_library(preloader_l_tinyxml2 ALIAS preloader_l_pugixml)
 add_dependencies(preloader_l_asio preloader_l_verify_vendors)
 add_dependencies(preloader_l_pegtl preloader_l_verify_vendors)
 
