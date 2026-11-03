@@ -6,6 +6,27 @@
 #include <iostream>
 #include <list>
 #include <optional>
+#include <cstdlib>
+#include <limits>
+#include <new>
+
+// This executable-only allocation probe is disabled outside one bounded test.
+namespace allocation_probe {
+thread_local bool armed=false;
+thread_local std::size_t count=0;
+thread_local std::size_t fail_at=static_cast<std::size_t>(-1);
+}
+void* operator new(std::size_t bytes) {
+    if(allocation_probe::armed && ++allocation_probe::count==allocation_probe::fail_at)
+        throw std::bad_alloc();
+    if(auto* p=std::malloc(bytes?bytes:1))return p;
+    throw std::bad_alloc();
+}
+void* operator new[](std::size_t n){return ::operator new(n);}
+void operator delete(void* p) noexcept {std::free(p);}
+void operator delete(void* p,std::size_t) noexcept {std::free(p);}
+void operator delete[](void* p) noexcept {::operator delete(p);}
+void operator delete[](void* p,std::size_t) noexcept {::operator delete(p);}
 
 using namespace preloader_l;
 namespace {
@@ -107,6 +128,60 @@ config_hash::Node parsed(std::string_view bytes) {
     parser::State state;require(parser::parse(bytes,state),"synthetic parser succeeds");
     return config_hash::from_parser(*state.root.find("Config2"));
 }
+bool same_node(const config_hash::Node& a,const config_hash::Node& b) {
+    if(a.name!=b.name||a.value!=b.value||a.table.bucket_count!=b.table.bucket_count||
+       a.table.traversal!=b.table.traversal||a.children.size()!=b.children.size())return false;
+    for(const auto& [key,child]:a.children) {
+        const auto it=b.children.find(key);
+        if(it==b.children.end()||!same_node(child,it->second))return false;
+    }
+    return true;
+}
+config_hash::Node assignment_fixture(const std::string& prefix) {
+    config_hash::Node root;
+    root.name=prefix;root.value=std::string(96,prefix.front());
+    for(unsigned i=0;i<4;++i) {
+        const auto key=prefix+"-row-"+std::to_string(i)+std::string(80,'K');
+        auto& child=root.lookup(key);
+        child.name=prefix+"-child";child.value=std::string(90,'V');
+        for(unsigned j=0;j<3;++j) {
+            const auto nested=prefix+"-nested-"+std::to_string(j)+std::string(60,'N');
+            auto& leaf=child.lookup(nested);
+            leaf.name=prefix+"-leaf";leaf.value=std::string(90,'D');
+        }
+    }
+    root.validate();return root;
+}
+void assignment_failure_rollback() {
+    // Fault every allocation in a successful run; before this fix a
+    // recursive failure could consume one previously live destination row.
+    const auto original=assignment_fixture("original");
+    const auto source=assignment_fixture("replacement");
+    auto success=original;
+    allocation_probe::count=0;
+    allocation_probe::fail_at=static_cast<std::size_t>(-1);
+    allocation_probe::armed=true;
+    success.assign_from(source);
+    allocation_probe::armed=false;
+    const auto allocations=allocation_probe::count;
+    require(allocations>=20&&allocations<10000,"meaningful assignment allocation campaign");
+    success.validate();
+    for(std::size_t ordinal=1;ordinal<=allocations;++ordinal) {
+        auto destination=original;
+        allocation_probe::count=0;allocation_probe::fail_at=ordinal;
+        allocation_probe::armed=true;
+        bool failed=false;
+        try{destination.assign_from(source);}
+        catch(const std::bad_alloc&){failed=true;}
+        allocation_probe::armed=false;
+        require(failed,"each counted allocation must be injectable");
+        require(same_node(destination,original),
+            "failed nested Config2 assignment preserves previous owner state");
+        destination.validate();
+    }
+    auto final=original;final.assign_from(source);
+    require(same_node(final,success),"allocation campaign keeps successful copy");
+}
 void recursive_assignment() {
     using namespace config_hash;
     auto source=parsed(R"("Config2" {"a" {"a" "1" "b" "2" "i" "3" "j" "4"} "b" "value" "i" "other"})");
@@ -157,6 +232,6 @@ void recursive_assignment() {
 }
 }
 int main() {
-    try {growth_and_oracle();recursive_assignment();std::cout<<"PASS: "<<checks<<" Config2 growth/copy/positional-reuse checks\n";}
+    try {growth_and_oracle();recursive_assignment();assignment_failure_rollback();std::cout<<"PASS: "<<checks<<" Config2 growth/copy/positional-reuse checks\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }
