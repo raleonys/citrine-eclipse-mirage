@@ -76,7 +76,8 @@ public:
 class Environment final:public configuration::Dependencies,
                         public achievement_storage::Effects,
                         public handlers::Effects,
-                        public achievement_runtime::PersistenceEffects {
+                        public achievement_runtime::PersistenceEffects,
+                        public content_handlers::AvatarRequest {
 public:
     Environment(configuration::State&,Options&,file::NativeFactory&,
                 xml_reader_bridge::Backend&,achievement_storage::Paths&,
@@ -141,6 +142,7 @@ public:
     std::int32_t atoi_05ee08(std::string_view) override;
     void unknown_entitlement_field(std::string_view) override;
     bool online_avatar_virtual_28(const Path&) override;
+    bool request_online_avatar(const Path&,const char*,std::int32_t) override;
     bool copy_overwrite_048d20(const Path&,const Path&) override;
     void log_saved_size_085530(std::int32_t) override;
     online::Object provider=0;

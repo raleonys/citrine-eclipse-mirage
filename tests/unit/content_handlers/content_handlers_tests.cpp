@@ -86,7 +86,7 @@ struct MockDocument final:DocumentWriter {
     Xml& xml()override{return writer;}
     std::string c_string_without_nul()const override {require(writer.record->stack.empty());return payload;}
 };
-struct MockEffects final:Effects {
+struct MockEffects:Effects {
     std::vector<std::string> diagnostics,atoi_inputs,paths_widened;
     std::vector<Path> online_paths,utf8_paths;
     std::vector<std::pair<Path,Path>> copies;
@@ -258,6 +258,24 @@ static RequestTree image(std::string width="416",std::string owner="user-test") 
     return{{{"Width",std::move(width)},{"Height","odd-height"},{"ImageId","avatar:"+owner}}, {}};
 }
 static void image_tests() {
+    struct CompleteAvatar final:MockEffects,AvatarRequest {
+        std::string owner;std::int32_t size=0;
+        bool request_online_avatar(const Path& path,const char* who,std::int32_t scaled) override {
+            online_paths.push_back(path);owner=who;size=scaled;return avatar_success;
+        }
+        bool online_avatar_virtual_28(const Path&) override {throw std::logic_error("Complete avatar route required");}
+    };
+    {
+        Fixture f;f.online=1;CompleteAvatar effects;effects.avatar_success=true;
+        for(const auto scaled:{2,-2}) {
+            effects.atoi_value=scaled*208;MockXml response;
+            const auto owner=std::string(96,'u')+":tail";
+            const auto width=scaled>0?"00416":"-417";
+            require(query_image_0314f0(image(width,owner),response,f.refs(),effects));
+            require(effects.owner==owner&&effects.size==scaled);
+            require(effects.online_paths.back()==u"synthetic-user\\_AVATAR_"+Path(owner.begin(),owner.end())+u"_"+Path(width,width+std::char_traits<char>::length(width)));
+        }
+    }
     Fixture f;
     for(const auto& absent:{"Width","Height","ImageId"}) {
         auto q=image();std::erase_if(q.attributes,[&](const auto& a){return a.first==absent;});MockXml x;

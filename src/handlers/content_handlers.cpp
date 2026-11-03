@@ -178,7 +178,8 @@ bool query_image_0314f0(const RequestTree& request,Xml& x,StateReferences s,Effe
             const auto size=effects.atoi_05ee08(*width)/208;
             const auto filename="_AVATAR_"+owner+"_"+*width;
             const auto cache=effects.path_append_016b50(s.user_directory_0a3a00,effects.filesystem_widen_006d70(filename));
-            if(effects.online_avatar_virtual_28(cache)) {
+            auto* avatar=dynamic_cast<AvatarRequest*>(&effects);
+            if(avatar?avatar->request_online_avatar(cache,owner.c_str(),size):effects.online_avatar_virtual_28(cache)) {
                 result=cache;
                 if(own&&s.saved_avatar_size_0a1130<size&&effects.copy_overwrite_048d20(cache,s.last_avatar_0a3a60)) {
                     s.saved_avatar_size_0a1130=size;

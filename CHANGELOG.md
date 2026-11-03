@@ -9,6 +9,7 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 ### Additional unreleased changes
 
 - Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
+- Preserve QueryImage owner ID and signed width/208 through the production avatar provider call. Keep the legacy path-only Effects interface available to source adapters, select the complete call in the application, and test real slot5 argument forwarding and nonzero-byte return handling.
 
 - Validate SOURCE_FILES byte counts alongside SHA-256, rejecting missing, malformed and stale sizes. Add matching-hash negative controls for multibyte/CRLF payloads and count-only tampering.
 
