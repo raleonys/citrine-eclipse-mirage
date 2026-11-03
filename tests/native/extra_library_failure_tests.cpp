@@ -7,7 +7,7 @@
 #include <new>
 #include <stdexcept>
 
-namespace fault {thread_local bool next=false;unsigned loads=0,frees=0,fail_frees=0;}
+namespace fault {thread_local bool next=false;unsigned loads=0,frees=0,fail_frees=0,fail_on_free=0;}
 void* operator new(std::size_t n){if(fault::next){fault::next=false;throw std::bad_alloc();}if(auto p=std::malloc(n?n:1))return p;throw std::bad_alloc();}
 void* operator new[](std::size_t n){return ::operator new(n);}
 void operator delete(void* p)noexcept{std::free(p);}
@@ -15,7 +15,12 @@ void operator delete[](void* p)noexcept{std::free(p);}
 void operator delete(void* p,std::size_t)noexcept{std::free(p);}
 void operator delete[](void* p,std::size_t)noexcept{std::free(p);}
 HMODULE WINAPI TestLoadLibraryW(LPCWSTR path){++fault::loads;return ::LoadLibraryW(path);}
-BOOL WINAPI TestFreeLibrary(HMODULE module){++fault::frees;if(fault::fail_frees){--fault::fail_frees;SetLastError(ERROR_BUSY);return FALSE;}return ::FreeLibrary(module);}
+BOOL WINAPI TestFreeLibrary(HMODULE module){
+    ++fault::frees;
+    if(fault::fail_frees){--fault::fail_frees;SetLastError(ERROR_BUSY);return FALSE;}
+    if(fault::fail_on_free==fault::frees){fault::fail_on_free=0;SetLastError(ERROR_BUSY);return FALSE;}
+    return ::FreeLibrary(module);
+}
 #define LoadLibraryW TestLoadLibraryW
 #define FreeLibrary TestFreeLibrary
 #include "src/platform/library_system.cpp"
@@ -37,7 +42,7 @@ struct Fixture {
     execution::Execution execution{mutex,{a,b,c},frequency,platform};
     application::ExtraLibraries extras{env,execution,c};
     application::Provider provider{state,env,files,execution,b};
-    Fixture(){execution::initialize_mutex_04a698(mutex,2);fault::loads=fault::frees=fault::fail_frees=0;}
+    Fixture(){execution::initialize_mutex_04a698(mutex,2);fault::loads=fault::frees=fault::fail_frees=fault::fail_on_free=0;}
 };
 void acquisition_failure(const wchar_t* path) {
     Fixture f;bool threw=false;fault::next=true;fault::fail_frees=1;
@@ -96,10 +101,11 @@ void extra_provider_stage_retry(const wchar_t* path) {
 
     // The extra stage now retires once. A distinct failure in the later
     // provider stage must retain that lease without reviving the extra one.
-    fault::fail_frees=1;
+    // Skip this attempt's successful extra release; fail its provider release.
+    fault::fail_on_free=fault::frees+2;
     bool second_failed=false;
     try{cleanup();}catch(const std::runtime_error&){second_failed=true;}
-    require(second_failed&&fault::frees==3&&f.provider.module==provider_module&&
+    require(second_failed&&fault::frees==3&&fault::fail_on_free==0&&f.provider.module==provider_module&&
             f.provider.online==1&&
             ::GetModuleHandleW(path)==reinterpret_cast<HMODULE>(provider_module),
         "second attempt must retire extra ownership and retain failed provider ownership");

@@ -8,7 +8,15 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Target the later provider FreeLibrary call by its exact ordinal in the staged module cleanup test, so the second attempt actually retires the extra lease before the injected provider failure. Preserve all physical image, counter, retry and final-unload assertions.
+
 - Add an A11-06 source-linked native staged-cleanup regression: an extra-library FreeLibrary failure prevents provider retirement, the next explicit retry releases the extra lease before a separate provider FreeLibrary failure, and final/idempotent retries release exactly the remaining module without double-free. Test-only; no shipping owner, ABI or vendor behavior change.
+
+- Audit C34-F003: validate both ownership-ledger schemas and explicit role policies, complete three previously untyped script entries, and test missing or unknown roles.
+
+- Replace the README campaign artwork with the exact new owner-supplied 1400 x 1100 RGBA PNG (612724 bytes), preserving transparency and encoded bytes. Update the artwork identity/provenance and active manifest; runtime/profile avatars, production resources, ABI and code are unchanged.
+
+- Audit C34-F004: confine Python cache-cleanup report files to the owned build tree and publish them through exclusive temporary files; reject unsafe, directory and missing-parent destinations before deleting caches. Cover linked-directory escapes, hardlinked sources and failed report publication.
 
 - Preserve the owner-authorized Draft status of existing four-field research PR #81 as a narrow exception to the normal ready-for-review PR rule; record its continuing source-provenance scope without treating the work as a routine audit, production release or automatic merge. Update governance, agent workflow and PR guidance only; no runtime, vendor or ABI change.
 

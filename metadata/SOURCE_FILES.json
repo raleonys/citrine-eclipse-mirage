@@ -1142,8 +1142,8 @@
       "sha256": "3108408fd67b132ec5fb7b604fca748ffc3979b2411dbfcda75e2ed892699771"
     },
     "tests/infrastructure/test_infrastructure.py": {
-      "bytes": 35807,
-      "sha256": "e45fcb070984d6b9cb9f177b4fa8122f701f0894f9ad5bd74d1a005642692d58"
+      "bytes": 47267,
+      "sha256": "4644b67abfd1cd6005adc54a88bd42850f2c36b2e856e178239a36639c093ffa"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
       "bytes": 27883,
@@ -1214,8 +1214,8 @@
       "sha256": "569c65ef825bab01f6e838e7330d75cb99c43a5cdebffa2a6a801bd0af032140"
     },
     "tests/native/extra_library_failure_tests.cpp": {
-      "bytes": 12857,
-      "sha256": "90a5a02bbb6996a5ffe677f655ac1962d915db59272d60e5899c67406ca6643e"
+      "bytes": 13131,
+      "sha256": "d2656676838620eb5450fbdf78eb1f0cbc4ca227d2934016abfc790218ca2a41"
     },
     "tests/native/file_copy_windows_tests.cpp": {
       "bytes": 4816,
