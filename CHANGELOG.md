@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Diagnose conservative unload-scan refusals in Debug with bounded, allocation-free reason, peer, register/stack slot and image-relative offsets. Emit only after releasing scanner-owned suspensions, preserve LastError and fail-closed results on output failure, and emit nothing in Release. Retain all scan, TLS, retry and shutdown acceptance rules while investigating intermittent status-4 lifecycle failures.
+
 - Audit C34-F001: reject pre-existing symlinked source ZIP partials/output paths and use exclusively opened random temporary files for archive and checksum generation.
 
 - Audit C34-F005: reject unrecognized active-source manifest schemas and misleading release-classification fields without reviving obsolete non-release policy.
