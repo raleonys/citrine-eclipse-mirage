@@ -1122,16 +1122,16 @@
       "sha256": "11f049296a57cfae73c7bc21587e222242b9d5b170447697a5efb45048a09f07"
     },
     "tests/diagnostics/xml_backend/CMakeLists.txt": {
-      "bytes": 4592,
-      "sha256": "3335fd4f9ba582fc8b6228bf00838b52f029304f8ff65302a336cf84c83c0695"
+      "bytes": 4706,
+      "sha256": "8a17ef87a1515d5ee6d63e5cd111424505aa996eadc9219174631388f5d2cbbd"
     },
     "tests/diagnostics/xml_backend/reference_codec.cpp": {
       "bytes": 503,
       "sha256": "135def8f85113c4959f91f54275698f975e24071d9e98585c22b70203219fa53"
     },
     "tests/diagnostics/xml_backend/run.py": {
-      "bytes": 10353,
-      "sha256": "b3f75d374241e6eb3424a73505eeeffbd4f70d3cdc097f9c77a5effd73116b3e"
+      "bytes": 10375,
+      "sha256": "547d332d6b7dfbb9cd487b78557806d70894fdb3216f29c50be7142b712f859c"
     },
     "tests/diagnostics/xml_backend/suite.cpp": {
       "bytes": 21300,

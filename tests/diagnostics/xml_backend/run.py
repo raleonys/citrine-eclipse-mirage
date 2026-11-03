@@ -109,8 +109,8 @@ def main():
             raise RuntimeError(f'{name} failed; see {output / (name + ".log")}')
         return result
 
-    configure = ['cmake', '-S', HERE, '-B', build, f'-DXML_REFERENCE_ROOT={reference}',
-                 f'-DPUGIXML_ROOT={pugi}', f'-DCMAKE_BUILD_TYPE={args.configuration}',
+    configure = ['cmake', '-S', HERE, '-B', build, f'-DXML_REFERENCE_ROOT={reference.as_posix()}',
+                 f'-DPUGIXML_ROOT={pugi.as_posix()}', f'-DCMAKE_BUILD_TYPE={args.configuration}',
                  f'-DXML_COMPARISON_SANITIZERS={"ON" if args.sanitizers else "OFF"}']
     run('configure', configure)
     run('build', ['cmake', '--build', build, '--config', args.configuration, '--parallel', '2'], timeout=600)
