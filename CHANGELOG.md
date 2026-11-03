@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Check retained foreign exception provenance without comparing independent current_exception captures, preserving the native regression on MSVC runtimes that copy the active exception.
+
 - Quarantine the online-provider object and module when foreign destruction throws, preserve the original exception, and reject later calls or unload attempts before dereferencing possibly consumed storage. Keep pre-call slot failures retryable and preserve module-only retries after successful destruction; add source-linked failure controls.
 
 - Validate SOURCE_FILES byte counts alongside SHA-256, rejecting missing, malformed and stale sizes. Add matching-hash negative controls for multibyte/CRLF payloads and count-only tampering.

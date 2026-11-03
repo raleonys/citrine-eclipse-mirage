@@ -125,7 +125,7 @@ void provider_object_once(const wchar_t* path) {
     require(f.provider.module==0&&destroyed()==1&&fault::frees==2,
         "provider cleanup destroyed the object or released the module twice");
 }
-struct ForeignDestroyFailure {unsigned marker=0x7351;};
+struct ForeignDestroyFailure {unsigned marker;const void* origin;};
 struct ForeignObject {
     std::uintptr_t table;
     unsigned calls=0,effects=0;
@@ -133,10 +133,10 @@ struct ForeignObject {
 };
 void foreign_destroy(void* raw) {
     auto& object=*static_cast<ForeignObject*>(raw);++object.calls;
-    if(object.before_effect)throw ForeignDestroyFailure{};
+    if(object.before_effect)throw ForeignDestroyFailure{0x7351,&object};
     ++object.effects;
     if(object.poison)object.table=1; // A retry must reject before reading this address.
-    throw ForeignDestroyFailure{};
+    throw ForeignDestroyFailure{0x7351,&object};
 }
 void foreign_destroy_ok(void* raw){++static_cast<ForeignObject*>(raw)->calls;}
 void provider_unknown_destruction(const wchar_t* path) {
@@ -151,11 +151,13 @@ void provider_unknown_destruction(const wchar_t* path) {
         f.provider.object=reinterpret_cast<std::uintptr_t>(&object);f.provider.online=1;
         f.env.provider=f.provider.object;
         bool original=false;std::exception_ptr first_failure;
-        try{f.provider.close();}catch(const ForeignDestroyFailure& error){original=error.marker==0x7351;first_failure=std::current_exception();}
+        try{f.provider.close();}catch(const ForeignDestroyFailure& error){original=error.marker==0x7351&&error.origin==&object;}
+        first_failure=f.provider.destruction_failure;
+        require(first_failure!=nullptr,"foreign failure was not retained");
         require(original&&object.calls==1&&object.effects==(before?0u:1u),
             "foreign destructor failure was replaced or its effects changed");
         const auto retained=f.provider.object;
-        auto rejected=[&](auto operation){bool blocked=false;try{operation();}catch(const ForeignDestroyFailure& error){blocked=error.marker==0x7351&&std::current_exception()==first_failure;}require(blocked,"unknown destruction allowed another foreign operation");};
+        auto rejected=[&](auto operation){bool blocked=false;try{operation();}catch(const ForeignDestroyFailure& error){blocked=error.marker==0x7351&&error.origin==&object&&f.provider.destruction_failure==first_failure;}require(blocked,"unknown destruction allowed another foreign operation");};
         rejected([&]{f.provider.close();});
         rejected([&]{f.provider.destroy_virtual_00(retained);});
         rejected([&]{(void)f.provider.status_virtual_08(retained);});
