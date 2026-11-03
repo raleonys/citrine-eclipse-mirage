@@ -45,17 +45,19 @@ void acquisition_failure(const wchar_t* path) {
     fault::next=false;fault::fail_frees=0;
     require(threw&&fault::loads==0&&fault::frees==0,"ownership allocation failed after acquiring a native module");f.extras.close();
 }
-void load_error_mode_unwind(const wchar_t*) {
+void load_error_mode_unwind(const wchar_t* path) {
     const auto original=GetErrorMode();
     struct Restore {DWORD mode;~Restore(){SetErrorMode(mode);}} restore{original};
-    for(bool main:{true,false})for(DWORD incoming:{DWORD{SEM_NOOPENFILEERRORBOX},
+    for(bool acquired_prefix:{false,true})for(bool main:{true,false})for(DWORD incoming:{DWORD{SEM_NOOPENFILEERRORBOX},
             DWORD{SEM_NOOPENFILEERRORBOX|SEM_FAILCRITICALERRORS}}) {
         Fixture f;
         // An isolated high surrogate fails the actual Win32 UTF-8 conversion
         // before LoadLibraryW. Both source startup prerequisites are ready.
         const configuration::Path invalid(1,char16_t{0xd800});
-        if(main)f.state.extra_dlls_from_main.push_back(invalid);
-        else f.state.extra_dlls.push_back(invalid);
+        auto& paths=main?f.state.extra_dlls_from_main:f.state.extra_dlls;
+        require(GetModuleHandleW(path)==nullptr,"error mode fixture begins without a module lease");
+        if(acquired_prefix)paths.push_back(application::detail::utf16(path));
+        paths.push_back(invalid);
         f.extras.configure(f.state);f.a=f.b=1;
         SetErrorMode(incoming);
         const auto expected=GetErrorMode();
@@ -67,10 +69,14 @@ void load_error_mode_unwind(const wchar_t*) {
         const auto after=GetErrorMode();
         require(failed,"extra library load must preserve the conversion failure");
         require(after==expected,"failed extra library phase changed the host error mode");
-        require(fault::loads==0&&fault::frees==0&&f.c==0,
-            "failed conversion must not load a DLL or publish worker readiness");
+        const unsigned expected_loads=acquired_prefix?1u:0u;
+        require(fault::loads==expected_loads&&fault::frees==0&&f.c==0,
+            "failed conversion must preserve earlier leases without publishing readiness");
+        require((GetModuleHandleW(path)!=nullptr)==acquired_prefix,
+            "an earlier acquired image must remain owned after a later conversion failure");
         f.extras.close();f.extras.close();
-        require(fault::frees==0,"failed conversion acquired no cleanup lease");
+        require(fault::frees==expected_loads&&GetModuleHandleW(path)==nullptr,
+            "cleanup must release exactly the retained prefix once");
         Fixture success;success.a=success.b=1;
         success.extras.load(main);
         require(GetErrorMode()==expected&&success.c==(main?0:1),
