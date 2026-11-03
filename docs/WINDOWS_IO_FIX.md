@@ -12,13 +12,18 @@ earlier five-vendor target list by explicit owner instruction.
 | Gulrak usage | No longer present in application, includes, targets, or test backend |
 | Gulrak vendor | `third_party/filesystem`, CMake interface target, include dependency, and current lock entry removed |
 | I/O tests | Unicode/binary/rename/remove/error checks preserved with standard filesystem |
-| Remaining vendors | Asio, MinHook, PEGTL, TinyXML2; original member hashes and TinyXML2 limit 500 unchanged |
+| Active vendors | Asio, MinHook, PEGTL, pugixml; exact owner-archive member hashes retained; first-party XML policy preserves the depth-500 boundary |
 | Asio diagnostics | Brownfield `_WIN32_WINNT=0x0601` / `WINVER=0x0601` definitions propagated to consumers |
 
 The owner's original Gulrak archive and prior source packages remain preserved
 outside the current product snapshot. The current product has no vendor payload
 for it; historical metadata comparison records may retain its name for
 provenance purposes.
+
+The XML dependency was subsequently replaced in [PR #149](https://github.com/raleonys/citrine-eclipse-mirage/pull/149).
+The current reader uses unmodified pugixml with first-party grammar, diagnostic,
+reference-decoding and depth handling. TinyXML2 is used only by the external
+diagnostic control. See [the current vendor contract](VENDORING.md).
 
 This change selects the Windows/MSVC standard filesystem implementation.
 It does not claim full import/byte/edge-case equivalence with the historical
