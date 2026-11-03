@@ -42,7 +42,7 @@ std::vector<std::unique_ptr<Profile>> profiles(){
 }
 void corpus(const char* corpus,const char* output){
  std::ifstream f(corpus);require(bool(f),"corpus input missing");std::ofstream detail(std::string(output)+".differences.tsv");
- detail<<"profile\trow\tbaseline_code\tcandidate_code\tkind\tinput_hex\tcandidate_diagnostic_hex\tbaseline_tree\tcandidate_tree\n";
+ detail<<"profile\trow\tbaseline_code\tcandidate_code\tkind\tinput_hex\tcandidate_diagnostic_hex\tbaseline_diagnostic_hex\tbaseline_tree\tcandidate_tree\n";
  auto ps=profiles();struct Totals{std::size_t acceptance=0,tree=0,failed_tree=0,code=0,diagnostic=0,exact=0,policy=0;};std::vector<Totals> totals(ps.size());
  std::string line;std::size_t rows=0;
  while(std::getline(f,line)){
@@ -53,12 +53,61 @@ void corpus(const char* corpus,const char* output){
    auto parsed=ps[i]->backend().parse_c_string({s.data(),s.size()});auto tree=snapshot(parsed.document->first_element(),ps[i]->nodes());auto& t=totals[i];
    bool a=baseline.has_error!=parsed.has_error,b=(!baseline.has_error&&!parsed.has_error&&base_tree!=tree),c=baseline.returned_code!=parsed.returned_code,d=baseline.document->error_name()!=parsed.document->error_name();
    t.acceptance+=a;t.tree+=b;t.failed_tree+=(baseline.has_error&&parsed.has_error&&base_tree!=tree);t.code+=c;t.diagnostic+=d;t.exact+=!(a||base_tree!=tree||c||d);t.policy+=parsed.returned_code>=1000;
-   if(a||b||c)detail<<ps[i]->name<<'\t'<<rows<<'\t'<<baseline.returned_code<<'\t'<<parsed.returned_code<<'\t'<<(a?"acceptance":b?"tree":"code")<<'\t'<<hex(s)<<'\t'<<hex(parsed.document->error_name())<<'\t'<<base_tree<<'\t'<<tree<<'\n';
+   if(a||b||c||d)detail<<ps[i]->name<<'\t'<<rows<<'\t'<<baseline.returned_code<<'\t'<<parsed.returned_code<<'\t'<<(a?"acceptance":b?"tree":c?"code":"diagnostic")<<'\t'<<hex(s)<<'\t'<<hex(parsed.document->error_name())<<'\t'<<hex(baseline.document->error_name())<<'\t'<<base_tree<<'\t'<<tree<<'\n';
   }
  }
  require(rows==12087,"corpus row count");std::ofstream summary(output);summary<<"profile\tcases\tacceptance_diff\tsuccess_DOM_diff\tfailed_DOM_diff\terror_code_diff\tdiagnostic_diff\texact_equal\tpolicy_rejections\n";
  for(std::size_t i=0;i<ps.size();++i){auto t=totals[i];summary<<ps[i]->name<<'\t'<<rows<<'\t'<<t.acceptance<<'\t'<<t.tree<<'\t'<<t.failed_tree<<'\t'<<t.code<<'\t'<<t.diagnostic<<'\t'<<t.exact<<'\t'<<t.policy<<'\n';}
+ require(totals[1].exact==rows,"candidate differs from corrected reference corpus");
  std::cout<<"PASS: differential results recorded (reference corpus validated by its separate target) for "<<rows<<" cases\n";
+}
+void compatibility_cases(const char* output){
+ struct Case {const char* name;std::string input;int code;};
+ std::vector<Case> cases={
+  {"BOM-after-whitespace"," \t\n\xef\xbb\xbf<R>a\n\rb</R>",0},
+  {"newline-pairs","<R a='a\r\n\rb'>a\n\r\nb</R>",0},
+  {"reference-order","<R a='&#13;&#10;&#0;'>&amp;&#x100000000;&unknown;</R>",0},
+  {"trailing-less-than","raw\ntext<",15},
+  {"unknown-node","<R><!odd>text</R>",0},
+  {"declarations-only","<?a?><?b?>",0},
+  {"declaration-after-text","raw<?pi?>",11},
+  {"declaration-in-element","<R><?pi?></R>",11},
+  {"declaration-after-comment","<!--x--><?pi?>",11},
+  {"attribute-less-than","<R a='<'/>",0},
+  {"vertical-whitespace","<R> \r\v\n</R>",0},
+  {"form-feed-before-CDATA","<R><!--c-->\f<![CDATA[]]>tail</R>",0},
+  {"extended-tag-whitespace","<R \fa='x'\vb='y'/>",0},
+  {"root-close-ignores-tail","</R>ignored<broken",0},
+  {"closing-tag-attributes","<R></R a='x'>",0},
+  {"slash-closed-closing-spelling","</R/>",0},
+  {"whitespace-after-less-than","< \nR/>",0},
+  {"missing-parent-close","<R><C/>",15},
+  {"open-tag-at-EOF","<R>",14},
+  {"unclosed-text","<R>payload",8},
+  {"single-less-than","<",15},
+  {"long-element-diagnostic","<"+std::string(10000,'N'),6},
+  {"long-attribute-diagnostic","<"+std::string(10000,'N')+" a=>",7},
+  {"long-declaration-diagnostic","<R><?"+std::string(10000,'x')+"\r\n?></R>",11}
+ };
+ std::string open,close;for(unsigned i=0;i<498;++i){open+="<R>";close+="</R>";}
+ cases.push_back({"deep-self-closed-leaf",open+"<R/>"+close,0});
+ cases.push_back({"deep-open-at-EOF",open+"<R>",14});
+ cases.push_back({"deep-entered-child-list",open+"<R><C/></R>"+close,18});
+ auto ps=profiles();std::ofstream out(output);
+ out<<"case\tprofile\tcode\tdiagnostic_hex\ttree\n";
+ for(const auto& test:cases) {
+  std::string reference_tree,reference_diagnostic;
+  for(auto& p:ps) {
+   auto result=p->backend().parse_c_string(test.input);
+   auto tree=snapshot(result.document->first_element(),p->nodes());
+   require(result.returned_code==test.code&&result.has_error==(test.code!=0),test.name);
+   require(result.document->error_name().size()<=999,"bounded legacy diagnostic");
+   if(p->name=="tiny"){reference_tree=tree;reference_diagnostic=result.document->error_name();}
+   else require(tree==reference_tree&&result.document->error_name()==reference_diagnostic,test.name);
+   out<<test.name<<'\t'<<p->name<<'\t'<<result.returned_code<<'\t'<<hex(result.document->error_name())<<'\t'<<tree<<'\n';
+  }
+ }
+ std::cout<<"PASS: "<<cases.size()<<" explicit grammar, normalization, depth and full-diagnostic boundaries across both readers\n";
 }
 void safety(const char* output){
  std::vector<std::pair<std::string,std::string>> cases={
@@ -143,6 +192,7 @@ void protocol(const char* output){
   auto reference=flow(*ps[0],s,enc,fail);
   for(auto& p:ps){auto r=flow(*p,s,enc,fail);bool same=std::tie(r.output,r.input,r.encrypted,r.decrypts,r.encrypts,r.fixed,r.keys,r.handlers,r.error)==std::tie(reference.output,reference.input,reference.encrypted,reference.decrypts,reference.encrypts,reference.fixed,reference.keys,reference.handlers,reference.error);
    out<<p->name<<'\t'<<name<<'\t'<<hex(r.output)<<'\t'<<hex(r.input)<<'\t'<<r.encrypted<<'\t'<<r.decrypts<<'\t'<<r.encrypts<<'\t'<<r.error<<'\t'<<same<<'\n';
+   require(same,"candidate changed actual message state/output behavior");
 
   }
  }
@@ -185,6 +235,7 @@ void protocol_edges(const char* output){
  };
  for(auto& [name,input]:cases){auto baseline=flow(*ps[0],input);for(auto& p:ps){auto r=flow(*p,input);bool same=std::tie(r.output,r.input,r.encrypted,r.decrypts,r.encrypts,r.fixed,r.keys,r.handlers,r.error)==std::tie(baseline.output,baseline.input,baseline.encrypted,baseline.decrypts,baseline.encrypts,baseline.fixed,baseline.keys,baseline.handlers,baseline.error);
   out<<p->name<<'\t'<<name<<'\t'<<hex(r.output)<<'\t'<<hex(r.input)<<'\t'<<r.encrypted<<'\t'<<r.decrypts<<'\t'<<r.encrypts<<'\t'<<r.error<<'\t'<<same<<'\n';
+  require(same,"candidate changed negative message state/output behavior");
 
  }}
  std::cout<<"PASS: negative protocol matrix recorded; "<<cases.size()<<" cases across "<<ps.size()<<" profiles, differences remain visible in the TSV\n";
@@ -210,26 +261,56 @@ void storage(const char* output){
    require(f.files.output.size()==1,"storage must publish one INI fixture");auto ini=f.files.output.begin()->second;
    if(p->name=="tiny")baseline={state,ini};bool same=baseline==std::make_pair(state,ini);
    out<<p->name<<'\t'<<name<<'\t'<<hex(state)<<'\t'<<hex(ini)<<'\t'<<same<<'\n';
-   if((p->name=="tiny"||p->name=="pugi_checked")&&name!="lfcr-name")require(same,"reader changed tested achievement state/INI bytes");
+   require(same,"reader changed tested achievement state/INI bytes");
    if((p->name=="tiny"||p->name=="pugi_checked")&&name=="overflow-id")require(f.state.achievements.contains("pre&#x100000000;suffix"),"reader must preserve entire literal achievement key");
   }
  }
  std::cout<<"PASS: "<<cases.size()<<" real achievement Storage/writer cases across "<<ps.size()<<" profiles; in-memory files/effects, exact state and INI bytes\n";
 }
-void fuzz(unsigned iterations,const char* output){
- std::mt19937 random(0x51a7b00);auto ps=profiles();std::size_t parses=0;
+void fuzz(unsigned iterations,const char* output,bool holdout=false){
+ const unsigned seed=holdout?0xc17e527:0x51a7b00;
+ std::mt19937 random(seed);auto ps=profiles();std::size_t parses=0,differences=0;
+ std::ofstream detail(std::string(output)+".differences.tsv");
+ detail<<"iteration\tinput_hex\treference_code\tcandidate_code\treference_diagnostic_hex\tcandidate_diagnostic_hex\treference_tree\tcandidate_tree\n";
  std::vector<std::string> seeds={"<LSX><Request id='1' recipient='EALS'><GetConfig a='&#65;'/></Request></LSX>","<R><![CDATA[&#0;]]></R>","<R a='prefix&#x100000000;suffix'/>","<!--x--><R a='x'/>","<R><C/></R>"};
+ if(holdout)seeds={"<?a?><?b?><R/>","<?xml version='1.0'?><!--x--><R a='t\r\n\n\rb'/>",
+  "<R><?x?></R>","<!DOCTYPE R [<!ENTITY e 'x'>]><R>&e;</R>","<R><!odd>text</R>",
+  "</R>junk","</R/>","<R></R a='v'>","< R/><\nS/>","<R \fa='v'\vb='w'/>",
+  "<R>a\n<","<R> \t\r\n</R>","<R><!--c--> \t <![CDATA[]]>x</R>",
+  "<R a='<' b='&amp;#13;'/>"," \r\n\xef\xbb\xbf<R/>","raw\ntext<R/>",
+  "<R><![CDATA[A\r\n\rB]]></R>","<R><C></R>"};
  for(unsigned i=0;i<iterations;++i){std::string s=seeds[random()%seeds.size()];unsigned edits=1+random()%12;
+  if(holdout&&random()%4==0){s.resize(random()%193);for(auto& byte:s)byte=char(random()%256);}
   for(unsigned e=0;e<edits;++e){auto at=random()%(s.size()+1);switch(random()%3){case 0:s.insert(at,1,char(random()%256));break;case 1:if(at<s.size())s.erase(at,1);break;default:if(at<s.size())s[at]=char(random()%256);}}
-  for(auto& p:ps){auto parsed=p->backend().parse_c_string(s);if(!parsed.has_error){(void)snapshot(parsed.document->first_element(),p->nodes());}++parses;}
+  std::string reference_tree,reference_diagnostic;int reference_code=0;bool reference_error=false;
+  for(auto& p:ps){auto parsed=p->backend().parse_c_string(s);auto tree=snapshot(parsed.document->first_element(),p->nodes());
+   if(p->name=="tiny") {reference_tree=tree;reference_code=parsed.returned_code;reference_error=parsed.has_error;reference_diagnostic=parsed.document->error_name();}
+   else if(reference_code!=parsed.returned_code||reference_error!=parsed.has_error||reference_tree!=tree||reference_diagnostic!=parsed.document->error_name()) {
+    ++differences;detail<<i<<'\t'<<hex(s)<<'\t'<<reference_code<<'\t'<<parsed.returned_code<<'\t'<<hex(reference_diagnostic)<<'\t'<<hex(parsed.document->error_name())<<'\t'<<reference_tree<<'\t'<<tree<<'\n';
+   }
+   ++parses;
+  }
  }
- std::ofstream out(output);out<<"seed,mutated_inputs,profiles,parse_attempts\n"<<0x51a7b00<<','<<iterations<<','<<ps.size()<<','<<parses<<'\n';
- std::cout<<"PASS: deterministic mutation exploration "<<iterations<<" inputs / "<<parses<<" parse attempts (not exhaustive fuzz assurance)\n";
+ std::ofstream out(output);out<<"seed,mutated_inputs,profiles,parse_attempts,differences\n"<<seed<<','<<iterations<<','<<ps.size()<<','<<parses<<','<<differences<<'\n';
+ std::cout<<"Deterministic differential mutations: "<<iterations<<" inputs / "<<parses<<" parses / "<<differences<<" differences (not exhaustive fuzz assurance)\n";
+ require(differences==0,"candidate differs from reference on deterministic mutations");
+}
+void probe() {
+ auto ps=profiles();std::string line;
+ while(std::getline(std::cin,line)) {
+  const auto input=unhex(line);
+  for(auto& p:ps) {
+   auto parsed=p->backend().parse_c_string(input);
+   std::cout<<p->name<<'\t'<<parsed.returned_code<<'\t'<<parsed.has_error<<'\t'<<hex(parsed.document->error_name())<<'\t'<<snapshot(parsed.document->first_element(),p->nodes())<<'\n';
+  }
+ }
 }
 void benchmark(unsigned iterations,const char* output){
  auto ps=profiles();std::vector<std::pair<std::string,std::string>> cases={{"small-request","<LSX><Request id='1' recipient='EALS'><GetProfile index='0'/></Request></LSX>"},{"large-text","<R>"+std::string(65536,'x')+"</R>"}};
  std::string wide="<R>";for(unsigned i=0;i<256;++i)wide+="<C v='1'/>";wide+="</R>";cases.emplace_back("many-elements",std::move(wide));
  cases.emplace_back("reference-heavy","<R>"+std::string(4096,'&')+"&#65;&amp;&#x1F600;&unknown;</R>");
+ cases.emplace_back("declaration-request","<?xml version='1.0'?><LSX><Request id='1' recipient='EALS'><GetProfile index='0'/></Request></LSX>");
+ cases.emplace_back("legacy-accepted","< R a='A&amp;'><!odd><C v='1'/></R>");
  std::ofstream out(output);out<<"profile,case,repeat,iterations,input_bytes,p50_ns,p95_ns,p99_ns,sink\n";
  for(unsigned repeat=0;repeat<5;++repeat)for(std::size_t shift=0;shift<ps.size();++shift){auto& p=ps[(shift+repeat)%ps.size()];for(auto& [name,s]:cases){
   for(unsigned i=0;i<50;++i){auto d=p->backend().parse_c_string(s);(void)snapshot(d.document->first_element(),p->nodes());}
@@ -243,13 +324,16 @@ void benchmark(unsigned iterations,const char* output){
 }
 int main(int argc,char** argv)try{
  using namespace eval;if(argc<2)return 2;std::string op=argv[1];
- if(op=="corpus"&&argc==4)corpus(argv[2],argv[3]);
+ if(op=="probe"&&argc==2)probe();
+ else if(op=="corpus"&&argc==4)corpus(argv[2],argv[3]);
+ else if(op=="compatibility"&&argc==3)compatibility_cases(argv[2]);
  else if(op=="safety"&&argc==3)safety(argv[2]);
  else if(op=="protocol"&&argc==3)protocol(argv[2]);
  else if(op=="protocol-edges"&&argc==3)protocol_edges(argv[2]);
  else if(op=="ownership")ownership();
  else if(op=="storage"&&argc==3)storage(argv[2]);
  else if(op=="fuzz"&&argc==4)fuzz(std::stoul(argv[2]),argv[3]);
+ else if(op=="holdout"&&argc==4)fuzz(std::stoul(argv[2]),argv[3],true);
  else if(op=="benchmark"&&argc==4)benchmark(std::stoul(argv[2]),argv[3]);
  else return 2;return 0;
 }catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unknown comparison exception\n";return 1;}

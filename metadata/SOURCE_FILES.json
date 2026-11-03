@@ -1110,32 +1110,40 @@
       "sha256": "fb86c271f58b368e9c8afe8484a0871396c94ca9ca730bc506291e2032d68d7c"
     },
     "tests/diagnostics/xml_backend/allocation.cpp": {
-      "bytes": 3620,
-      "sha256": "296b46f877b25b400319b126f4b0691af6ad407a544f6c016dc005c8cb501602"
+      "bytes": 5220,
+      "sha256": "5237845a4c1c468f71d024c127ff7cb50553ca50b1edf2fa25362235e993be6e"
     },
     "tests/diagnostics/xml_backend/backend.cpp": {
-      "bytes": 5447,
-      "sha256": "a95320837eff1b728586551c484c239f0977dc72762c5fa595a433d94f3f6639"
+      "bytes": 5226,
+      "sha256": "ea31bc189ea3aebd54625ce43772a03e3d3767e61521aec7da8a9c22ec70548a"
     },
     "tests/diagnostics/xml_backend/backend.hpp": {
       "bytes": 754,
       "sha256": "11f049296a57cfae73c7bc21587e222242b9d5b170447697a5efb45048a09f07"
     },
     "tests/diagnostics/xml_backend/CMakeLists.txt": {
-      "bytes": 4706,
-      "sha256": "8a17ef87a1515d5ee6d63e5cd111424505aa996eadc9219174631388f5d2cbbd"
+      "bytes": 8018,
+      "sha256": "c8769b812b866dc2ae70b0a51c4b25da07b141ec39d3f018438edca465329702"
+    },
+    "tests/diagnostics/xml_backend/compatibility.cpp": {
+      "bytes": 11231,
+      "sha256": "b82387d1bff29e8e3bf11b24638ee9a74030a7fc3fed5d543e23371dad896d37"
+    },
+    "tests/diagnostics/xml_backend/compatibility.hpp": {
+      "bytes": 549,
+      "sha256": "804febb7c74631116f04cc71febabfe60170bc259c0b810d9cdb2ec22ee517ce"
     },
     "tests/diagnostics/xml_backend/reference_codec.cpp": {
-      "bytes": 503,
-      "sha256": "135def8f85113c4959f91f54275698f975e24071d9e98585c22b70203219fa53"
+      "bytes": 395,
+      "sha256": "6102f1d9361e90fc735bdaaeabcecf9d813f5352037aff1cda46e4227b9aee35"
     },
     "tests/diagnostics/xml_backend/run.py": {
-      "bytes": 10375,
-      "sha256": "547d332d6b7dfbb9cd487b78557806d70894fdb3216f29c50be7142b712f859c"
+      "bytes": 14056,
+      "sha256": "d202e5410b672c7ecc9f96aa0bdc6c00d99d745d74b682c1cf1c7c110372ef96"
     },
     "tests/diagnostics/xml_backend/suite.cpp": {
-      "bytes": 21300,
-      "sha256": "90114839df5cf5f56111593f5623021e0fe9bb3c0106e5e38958fd354dddd748"
+      "bytes": 26516,
+      "sha256": "bb2ab4965ea609b9da5aa0c4258c29e4ca2ee208b5d0ee1a199633f72f06c1c8"
     },
     "tests/fixtures/xml_reader/optimization-baseline.txt": {
       "bytes": 1477836,

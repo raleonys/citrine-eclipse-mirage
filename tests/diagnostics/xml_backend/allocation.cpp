@@ -39,14 +39,48 @@ int main(int argc,char** argv){
  auto& backend=name=="tiny"?static_cast<preloader_l::messages::XmlBackend&>(tiny):static_cast<preloader_l::messages::XmlBackend&>(candidate);
  auto& nodes=name=="tiny"?static_cast<preloader_l::dispatch::NodeAccess&>(tiny):static_cast<preloader_l::dispatch::NodeAccess&>(candidate);
  const std::string_view payload=argc>4?argv[4]:"small";
- const std::string input=payload=="rewrite"?"<R a='pre&amp;&#65;&unknown;mid&#0;suffix'><C>&#x110000;&#xD800;</C></R>":"<LSX><Request id='1' recipient='EALS'><GetProfile index='0'/></Request></LSX>";
+ std::string input=payload=="rewrite"?"<R a='pre&amp;&#65;&unknown;mid&#0;suffix'><C>&#x110000;&#xD800;</C></R>":"<LSX><Request id='1' recipient='EALS'><GetProfile index='0'/></Request></LSX>";
+ if(payload=="legacy")input="<R><!odd>\v<C a='A&amp;'>\n\r</C></R>";
+ if(payload=="attributes") {
+  input="<R";for(unsigned i=0;i<32;++i)input+=" a"+std::to_string(i)+"='&amp;'";input+="/>";
+ }
+ if(payload=="depth") {
+  input.clear();for(unsigned i=0;i<32;++i)input+="<R>";
+  for(unsigned i=0;i<32;++i)input+="</R>";
+ }
+ if(payload=="error")input="<R bad=>";
+ const bool cache=payload=="cache-attribute"||payload=="cache-text";
+ std::optional<preloader_l::messages::ParseResult> retained;
+ const preloader_l::messages::XmlNode* cached_root=nullptr;
+ if(cache) {
+  input="<R a='prefix&amp;&#65;&unknown;suffix'>prefix&amp;&#65;&unknown;suffix</R>";
+  retained.emplace(backend.parse_c_string(input));cached_root=retained->document->first_element();
+ }
  int outcome=0;std::size_t sink=0;
  probe::begin(fail,persistent);
- try{
-  auto parsed=backend.parse_c_string(input);if(parsed.has_error)outcome=1;
-  else {auto r=parsed.document->first_element();for(auto n=r;n;n=n->first_element()){sink+=n->name().size();for(auto& [key,value]:nodes.attributes_in_order(*n))sink+=key.size()+value.size();if(auto text=nodes.text_003860(*n))sink+=std::char_traits<char>::length(text);}}
- }catch(const std::bad_alloc&){outcome=2;}catch(...){outcome=3;}
+ if(cache) {
+  auto lookup=[&] {
+   auto value=payload=="cache-attribute"?cached_root->attribute("a"):
+       std::optional<std::string_view>(nodes.text_003860(*cached_root));
+   if(!value||*value!="prefix&A&unknown;suffix")throw std::logic_error("decoded cache retry changed input");
+   sink+=value->size();
+  };
+  try{lookup();}catch(const std::bad_alloc&){outcome=2;}catch(...){outcome=3;}
+  // Lift the injected failure and retry the very same parsed document.
+  probe::fail=-1;probe::persistent=false;
+  try{lookup();}catch(...){outcome=3;}
+  retained.reset();
+ }else {
+  try{
+   auto parsed=backend.parse_c_string(input);if(parsed.has_error)outcome=1;
+   else {auto r=parsed.document->first_element();for(auto n=r;n;n=n->first_element()){sink+=n->name().size();for(auto& [key,value]:nodes.attributes_in_order(*n))sink+=key.size()+value.size();if(auto text=nodes.text_003860(*n))sink+=std::char_traits<char>::length(text);}}
+  }catch(const std::bad_alloc&){outcome=2;}catch(...){outcome=3;}
+ }
  probe::enabled=false;probe::fail=-1;
  std::printf("{\"profile\":\"%s\",\"fail_at\":%ld,\"persistent\":%s,\"outcome\":%d,\"calls\":%zu,\"allocated_bytes\":%zu,\"peak_live_bytes\":%zu,\"outstanding\":%zu,\"tracking_overflow\":%s,\"sink\":%zu}\n",argv[1],fail,persistent?"true":"false",outcome,probe::calls,probe::allocated,probe::peak,probe::outstanding,probe::overflow?"true":"false",sink);
+ std::fflush(stdout); // Preserve the counters before a possible LSan exit report.
+ // The pointer registry must not make a real leak look reachable to LSan.
+ // Keep the reported counters; release only the registry's artificial roots.
+ for(auto& slot:probe::slots)slot={};
  return probe::outstanding||probe::overflow||outcome==3?1:0;
 }

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "backend.hpp"
+#include "compatibility.hpp"
 #include <pugixml.hpp>
 #include <stdexcept>
 #include <unordered_map>
@@ -39,11 +40,13 @@ public:
     const Element* wrap(pugi::xml_node node)const {
         return node?&elements.try_emplace(node,node,*this).first->second:nullptr;
     }
-    const char* decoded(const char* value)const {
+    const char* decoded(const char* value,bool references=true)const {
         const std::string_view input(value);
-        if(input.find('&')==input.npos)return value;
+        if(input.find('\r')==input.npos&&(!references||input.find('&')==input.npos))return value;
         if(auto found=values.find(value);found!=values.end())return found->second.c_str();
-        auto result=decode_reference_value(input);
+        auto normalized=compatibility::normalize_newlines(input);
+        auto result=references?decode_reference_value(normalized.empty()?input:std::string_view(normalized)):std::string{};
+        if(result.empty())result=std::move(normalized);
         if(result.empty())return value;
         return values.try_emplace(value,std::move(result)).first->second.c_str();
     }
@@ -62,39 +65,30 @@ const Element& checked(const msg::XmlNode& node) {
     if(!element)throw std::invalid_argument("XML comparison received a foreign node");
     return *element;
 }
-// Approximate public status mapping, deliberately not a claim of error-policy
-// equivalence. The corpus and real message flow record remaining differences.
-int mapped(pugi::xml_parse_status status,std::string_view input) {
-    switch(status) {
-    case pugi::status_ok:return 0;
-    case pugi::status_bad_attribute:return 7;
-    case pugi::status_bad_pcdata:return 8;
-    case pugi::status_bad_cdata:return 9;
-    case pugi::status_bad_comment:return 10;
-    case pugi::status_end_element_mismatch:return 14;
-    case pugi::status_no_document_element:
-        return input.find_first_not_of(" \r\n\t")==input.npos?13:8;
-    default:return 15;
-    }
-}
 }
 msg::ParseResult Backend::parse_c_string(std::string_view input) {
     if(input.size()>std::string{}.max_size())throw std::length_error("XML input exceeds string size limit");
     if(auto end=input.find('\0');end!=input.npos)input=input.substr(0,end);
     auto document=std::make_unique<Document>();
-    // Preserve comments/PI/whitespace and raw attribute whitespace; bypass
-    // upstream entity conversion through its public parse option.
-    constexpr auto flags=(pugi::parse_full|pugi::parse_ws_pcdata|pugi::parse_ws_pcdata_single)
-        &~pugi::parse_escapes&~pugi::parse_wconv_attribute;
-    auto result=document->native.load_buffer(input.empty()?"":input.data(),input.size(),flags,pugi::encoding_utf8);
-    if(result.status==pugi::status_out_of_memory)throw std::bad_alloc();
-    const int code=mapped(result.status,input);
-    if(!result) {
-        document->diagnostic=std::string(result.description())+" offset="+std::to_string(result.offset);
-        // The public reader exposes no partial tree after a parse failure.
-        document->native.reset();
+    auto policy=compatibility::inspect(input);
+    const int code=policy.code;
+    if(code)document->diagnostic=std::move(policy.diagnostic);
+    else {
+        // Keep values raw until the shared checked value policy is requested.
+        constexpr auto flags=(pugi::parse_full|pugi::parse_fragment)
+            &~pugi::parse_escapes&~pugi::parse_wconv_attribute&~pugi::parse_eol;
+        const auto data=input.substr(policy.begin,policy.end-policy.begin);
+        if(!policy.construct) {
+            const auto result=document->native.load_buffer(data.empty()?"":data.data(),data.size(),flags,pugi::encoding_utf8);
+            if(result.status==pugi::status_out_of_memory)throw std::bad_alloc();
+            policy.construct=!result;
+        }
+        if(policy.construct) {
+            document->native.reset();
+            compatibility::construct(document->native,input);
+        }
     }
-    return {std::move(document),code,!bool(result)};
+    return {std::move(document),code,code!=0};
 }
 std::unique_ptr<msg::XmlPrinter> Backend::printer() {
     return std::make_unique<preloader_l::xml::MemoryPrinter>();
@@ -110,7 +104,7 @@ const char* Backend::text_003860(const msg::XmlNode& node) {
     const auto& element=checked(node);
     for(auto child:element.native.children()) {
         if(child.type()==pugi::node_comment)continue;
-        if(child.type()==pugi::node_cdata)return child.value();
+        if(child.type()==pugi::node_cdata)return element.owner.decoded(child.value(),false);
         return child.type()==pugi::node_pcdata?element.owner.decoded(child.value()):nullptr;
     }
     return nullptr;

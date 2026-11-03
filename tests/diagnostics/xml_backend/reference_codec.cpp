@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-// Compile the pinned reference reader once in this test-only translation unit.
-// This gives both parsers exactly the same checked value decoder, without
-// copying it or exposing a new production API. The source hash is checked by CMake.
-#include XML_REFERENCE_READER_SOURCE
+// Compile the unchanged first-party value policy extracted from the pinned
+// control. The candidate does not compile or link the TinyXML2 reader/oracle.
+#include "reference_value_policy.hpp"
 #include "backend.hpp"
 namespace xml_comparison {
 std::string decode_reference_value(std::string_view value) {
-    return preloader_l::xml_reader_bridge::decode_references(value);
+    return policy::decode_references(value);
 }
 }
