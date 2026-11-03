@@ -1278,8 +1278,8 @@
       "sha256": "b44b7a448065fb462cdd2e822e6f4b0cd802a84d7f0fca62e1d6fa1d6b983d45"
     },
     "tests/native/hook_freeze_tests.c": {
-      "bytes": 9417,
-      "sha256": "0752f1cc1d123e2c875143139007ea24b88aab902cfea831d316fa6b76d3d331"
+      "bytes": 12026,
+      "sha256": "4c1e9407eb5c4aa35ece6fdbff4db3892bfd840bf9cfe33a053da2708061eebc"
     },
     "tests/native/listener_owners_tests.cpp": {
       "bytes": 8761,

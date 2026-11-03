@@ -118,6 +118,48 @@ static void single_hook_ip_relocation(void) {
     require(VirtualFree(target,0,MEM_RELEASE),"release hook fixture after removal");
     peer_ip=0;
 }
+static void queued_and_all_hook_ip_relocation(void) {
+    unsigned char* memory=(unsigned char*)VirtualAlloc(NULL,128,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE);
+    unsigned char* first=memory;
+    unsigned char* second;
+    LPVOID first_trampoline=NULL, second_trampoline=NULL;
+    int writes;
+    require(memory!=NULL,"allocate executable two-hook fixture; never call it");
+    second=memory+64;
+    memset(memory,0x90,128);
+    first[16]=0xc3;first[32]=0xc3;second[16]=0xc3;second[32]=0xc3;
+    require(MH_CreateHook(first,first+32,&first_trampoline)==MH_OK&&first_trampoline!=NULL,
+        "create first queued hook");
+    require(MH_CreateHook(second,second+32,&second_trampoline)==MH_OK&&second_trampoline!=NULL,
+        "create second queued hook");
+    peer_ip=(DWORD64)(ULONG_PTR)(first+2);writes=context_writes;
+    require(MH_QueueEnableHook(first)==MH_OK&&MH_QueueEnableHook(second)==MH_OK,
+        "queue enable for two distinct hooks");
+    require(MH_ApplyQueued()==MH_OK,"apply queued two-hook enable");
+    require(peer_ip==(DWORD64)(ULONG_PTR)((unsigned char*)first_trampoline+2)&&
+        context_writes==writes+1&&first[0]==0xe9&&second[0]==0xe9,
+        "queued enable maps suspended peer into the first trampoline");
+    writes=context_writes;
+    require(MH_QueueDisableHook(MH_ALL_HOOKS)==MH_OK,"queue disable for both hooks");
+    require(MH_ApplyQueued()==MH_OK,"apply queued all-hook disable");
+    require(peer_ip==(DWORD64)(ULONG_PTR)(first+2)&&context_writes==writes+1&&
+        first[0]==0x90&&second[0]==0x90,
+        "queued all-hook disable returns peer to original target");
+    peer_ip=(DWORD64)(ULONG_PTR)(second+2);writes=context_writes;
+    require(MH_EnableHook(MH_ALL_HOOKS)==MH_OK,"enable all existing hooks");
+    require(peer_ip==(DWORD64)(ULONG_PTR)((unsigned char*)second_trampoline+2)&&
+        context_writes==writes+1,"all-hook enable relocates the second target IP");
+    writes=context_writes;
+    require(MH_DisableHook(MH_ALL_HOOKS)==MH_OK,"disable all existing hooks");
+    require(peer_ip==(DWORD64)(ULONG_PTR)(second+2)&&context_writes==writes+1&&
+        first[0]==0x90&&second[0]==0x90,
+        "all-hook disable restores second IP and both targets");
+    require(!HasRetainedThreadOwnership(),"queued and all-hook transitions drain thread owners");
+    require(MH_RemoveHook(first)==MH_OK&&MH_RemoveHook(second)==MH_OK,
+        "remove both disabled hooks without duplicate relocation");
+    require(VirtualFree(memory,0,MEM_RELEASE),"release both hook fixture targets");
+    peer_ip=0;
+}
 int main(void) {
     FROZEN_THREADS threads;
     HANDLE heap;
@@ -150,6 +192,7 @@ int main(void) {
     fail_context=FALSE;fail_suspend=TRUE;
     require(Freeze(&threads,ALL_HOOKS_POS,ACTION_ENABLE)==MH_ERROR_MEMORY_PROTECT,"failed live peer suspension rejects patching");
     reset_faults();single_hook_ip_relocation();
+    reset_faults();queued_and_all_hook_ip_relocation();
     require(MH_Uninitialize()==MH_OK&&g_hHeap==NULL,"engine releases only after successful cleanup");
     printf("PASS: %d actual SAFE-FREEZE failure and retry checks\n",checks);return 0;
 }
