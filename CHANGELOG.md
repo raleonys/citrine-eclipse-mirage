@@ -10,6 +10,10 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 - Confine MinHook header/status dependencies to the existing native hook-engine adapter, preserving application status values, virtual signatures and SAFE-FREEZE bytes. Compile the existing transaction and fake-engine tests as a portable target on Linux/Windows, and make direct native test dependencies explicit, including the Windows API header used by the native adapter fixture. Vendor inputs, patch output, lifecycle policy, DLL exports and CRT selection remain unchanged.
 
+- Resolve the Source QA report fixture root before output ancestry checks, matching the real entrypoint and Windows short/long temporary-path aliases. Preserve mandatory hardlink, early rejection and failed-write/replace checks.
+
+- Publish Source QA JSON reports through a closed exclusive temporary file and atomic name replacement, preserving source inodes behind hardlinked report names and the previous complete report after write/replace failure. Validate report destinations before running checks; retain the existing project-build boundary, missing-parent creation and nonzero failed-check result. Runtime, vendor, ABI and mandatory pre-push validation are unchanged.
+
 - Isolate disposable root-ownership Git fixtures from repository-local environment variables inherited by hooks. Preserve the caller environment while preventing fixture init/commit/worktree commands from selecting its repository; verify the foreign linked-worktree HEAD, registry, index, config and tracked content remain unchanged. Keep the real worktree/forged-gitfile checks and mandatory push gate intact; runtime, vendor and ABI inputs are unchanged.
 
 - Audit C34-F002: stage both source ZIP artifacts before publication, reject existing mismatched pairs, and restore the prior ZIP on checksum publication failure; document crash-atomicity limits.

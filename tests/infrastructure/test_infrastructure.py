@@ -2,6 +2,8 @@
 
 """Tamper, failure-propagation and source/package identity regressions."""
 from pathlib import Path
+import contextlib
+import io
 import json
 import os
 import re
@@ -27,6 +29,7 @@ import generate_avatar_data as avatar_data
 import clear_tool_python_cache as tool_cache
 import check_repository_contract as repository
 import verify_sources as source_verification
+import run_source_qa as source_qa
 from golden_policy import load_target, PolicyPending
 
 
@@ -311,6 +314,98 @@ class PackageTests(unittest.TestCase):
                 warnings.simplefilter('ignore', UserWarning)
                 archive.writestr('src/value.cpp', 'duplicate')
         self.assertTrue(any('Duplicate' in e for e in falcion.check(self.root, self.zip)))
+
+
+class SourceQaReportTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        # Windows temp paths may use an 8.3 alias; match the resolved ROOT
+        # used by the real QA entrypoint before comparing output ancestry.
+        self.root = Path(self.temp.name).resolve()
+        (self.root / 'src').mkdir()
+        (self.root / 'build').mkdir()
+        self.source = self.root / 'src/sentinel.cpp'
+        self.source.write_text('owned source sentinel\n')
+        self.marker = self.root / 'checks-ran'
+        # One actual disposable child process; never recursively run project QA.
+        (self.root / 'check.py').write_text(
+            'from pathlib import Path\n'
+            'Path(__file__).with_name("checks-ran").write_text("ran\\n")\n')
+
+    def run_fixture(self, report):
+        with patch.object(source_qa, 'ROOT', self.root), \
+             patch.object(source_qa, 'CHECKS', [('fixture check', ['check.py'])]), \
+             patch.object(sys, 'argv', ['run_source_qa.py', '--report', str(report)]), \
+             contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            return source_qa.main()
+
+    def test_hardlinked_report_preserves_source_inode(self):
+        report = self.root / 'build/report.json'
+        os.link(self.source, report)
+        before = self.source.read_bytes()
+        self.assertEqual(0, self.run_fixture(report))
+        self.assertEqual(before, self.source.read_bytes())
+        self.assertFalse(os.path.samefile(self.source, report))
+        self.assertEqual('PASS_SOURCE_QA', json.loads(report.read_text())['result'])
+        self.assertEqual([report], list(report.parent.iterdir()))
+
+    def test_invalid_report_is_rejected_before_checks(self):
+        directory = self.root / 'build/directory'
+        directory.mkdir()
+        blocker = self.root / 'build/not-a-directory'
+        blocker.write_text('preserved parent file\n')
+        for report in (self.source, directory, blocker / 'report.json'):
+            with self.subTest(report=report), self.assertRaises(SystemExit) as error:
+                self.run_fixture(report)
+            self.assertEqual(2, error.exception.code)
+            self.assertFalse(self.marker.exists())
+            self.assertEqual('owned source sentinel\n', self.source.read_text())
+        self.assertEqual([], list(directory.iterdir()))
+        self.assertEqual('preserved parent file\n', blocker.read_text())
+
+    def test_missing_parents_receive_complete_report(self):
+        report = self.root / 'build/qa/nested/report.json'
+        self.assertEqual(0, self.run_fixture(report))
+        data = json.loads(report.read_text())
+        self.assertEqual('surge.source-qa.v1', data['schema'])
+        self.assertEqual('NOT_RUN', data['native_game_acceptance'])
+        self.assertEqual(0, data['checks'][0]['exit_code'])
+        self.assertTrue(self.marker.exists())
+        self.assertEqual([report], list(report.parent.iterdir()))
+
+    def test_replace_failure_preserves_previous_report(self):
+        report = self.root / 'build/report.json'
+        report.write_bytes(b'previous complete report\n')
+        with patch.object(os, 'replace', side_effect=PermissionError('fixture replace failure')):
+            with self.assertRaises(PermissionError):
+                self.run_fixture(report)
+        self.assertEqual(b'previous complete report\n', report.read_bytes())
+        self.assertTrue(self.marker.exists())
+        self.assertEqual([report], list(report.parent.iterdir()))
+
+    def test_partial_write_failure_preserves_previous_report(self):
+        report = self.root / 'build/report.json'
+        report.write_bytes(b'previous complete report\n')
+        def fail_write(value, output, **kwargs):
+            output.write('{')
+            raise OSError('fixture partial write failure')
+        with patch.object(source_qa.json, 'dump', side_effect=fail_write):
+            with self.assertRaises(OSError):
+                self.run_fixture(report)
+        self.assertEqual(b'previous complete report\n', report.read_bytes())
+        self.assertTrue(self.marker.exists())
+        self.assertEqual([report], list(report.parent.iterdir()))
+
+    def test_failed_check_retains_nonzero_result_and_report(self):
+        with (self.root / 'check.py').open('a') as output:
+            output.write('raise SystemExit(7)\n')
+        report = self.root / 'build/report.json'
+        self.assertEqual(1, self.run_fixture(report))
+        data = json.loads(report.read_text())
+        self.assertEqual('FAIL', data['result'])
+        self.assertEqual(7, data['checks'][0]['exit_code'])
+        self.assertEqual([report], list(report.parent.iterdir()))
 
 
 class BranchPushGateTests(unittest.TestCase):
