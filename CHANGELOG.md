@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Isolate disposable root-ownership Git fixtures from repository-local environment variables inherited by hooks. Preserve the caller environment while preventing fixture init/commit/worktree commands from selecting its repository; verify the foreign linked-worktree HEAD, registry, index, config and tracked content remain unchanged. Keep the real worktree/forged-gitfile checks and mandatory push gate intact; runtime, vendor and ABI inputs are unchanged.
+
 - Audit C34-F002: stage both source ZIP artifacts before publication, reject existing mismatched pairs, and restore the prior ZIP on checksum publication failure; document crash-atomicity limits.
 - Audit C34-F001: reject pre-existing symlinked source ZIP partials/output paths and use exclusively opened random temporary files for archive and checksum generation.
 
