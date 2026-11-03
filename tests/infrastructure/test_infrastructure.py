@@ -94,6 +94,38 @@ class PackageTests(unittest.TestCase):
             self.assertIn('CMakeLists.txt', archive.namelist())
             self.assertEqual({'CMakeLists.txt','src','metadata'}, {Path(name).parts[0] for name in archive.namelist()})
 
+
+    def test_preexisting_package_partials_cannot_redirect_writes(self):
+        victim = self.base / 'unrelated-fixture.txt'
+        victim.write_bytes(b'unmodified audit fixture')
+        for name in ('source.zip.partial', 'source.zip.sha256.partial'):
+            with self.subTest(partial=name):
+                unsafe = self.base / name
+                try:
+                    unsafe.symlink_to(victim)
+                except (OSError, NotImplementedError):
+                    self.skipTest('Symlink fixture unavailable on this host')
+                try:
+                    with self.assertRaisesRegex(ValueError, 'Unsafe existing source package partial path'):
+                        packaging.package(self.root, self.zip)
+                    self.assertEqual(b'unmodified audit fixture', victim.read_bytes())
+                    self.assertFalse(self.zip.exists())
+                    self.assertFalse(list(self.base.glob('.source.zip.*.partial')))
+                finally:
+                    unsafe.unlink()
+
+    def test_symlinked_package_output_is_rejected_without_modifying_target(self):
+        victim = self.base / 'unrelated-fixture.txt'
+        victim.write_bytes(b'unchanged output target')
+        try:
+            self.zip.symlink_to(victim)
+        except (OSError, NotImplementedError):
+            self.skipTest('Symlink fixture unavailable on this host')
+        with self.assertRaisesRegex(ValueError, 'symlinked source ZIP'):
+            packaging.package(self.root, self.zip)
+        self.assertEqual(b'unchanged output target', victim.read_bytes())
+        self.assertTrue(self.zip.is_symlink())
+
     def test_source_drift_is_not_automatically_legitimized(self):
         (self.root / 'src/value.cpp').write_text('changed')
         with self.assertRaises(ValueError):
