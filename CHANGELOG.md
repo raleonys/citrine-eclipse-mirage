@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Test extra-library allocation failures after native DLL acquisition and phase-result insertion. Require retained physical module leases, unchanged worker readiness, failed-release retention and exact idempotent cleanup retries; inject only throwing vector-buffer allocations.
+
 - Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
 
 - Validate SOURCE_FILES byte counts alongside SHA-256, rejecting missing, malformed and stale sizes. Add matching-hash negative controls for multibyte/CRLF payloads and count-only tampering.
