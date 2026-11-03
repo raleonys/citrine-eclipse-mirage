@@ -1626,8 +1626,8 @@
       "sha256": "ce5ae5ad2224cca25206f63ee8b57a034ec5ac7ba99a4c8aefc61c23cbbdcbab"
     },
     "tests/unit/file/license_files_tests.cpp": {
-      "bytes": 7669,
-      "sha256": "ce9d940c2131ae4bc1c9b6e6b36e14f4c7ad946c0db955a3992b12155bc158c2"
+      "bytes": 9853,
+      "sha256": "edf9a25cf963ca1d920e1cd69e089cb79fac9db62c25c6396e8252c2be6ae452"
     },
     "tests/unit/handlers/handlers_tests.cpp": {
       "bytes": 7916,
