@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/platform/hook_setup.hpp"
 #include "preloader_l/platform/registry_abi_cells.hpp"
@@ -7,8 +9,8 @@
 #include <string>
 #include <string_view>
 
-namespace preloader_l::registry_recovered {
-using Values = host_init_recovered::Values;
+namespace preloader_l::registry {
+using Values = host_init::Values;
 using Handle = std::uint64_t;
 using Status = std::uint32_t;
 using HandleCell = ScalarCell<Handle>;

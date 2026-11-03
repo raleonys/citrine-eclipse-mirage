@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/node_identify_test_fixture.hpp"
 using namespace node_identify_test;
 namespace {

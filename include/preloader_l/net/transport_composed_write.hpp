@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_handler_dispatch_bridge.hpp"
 #include "preloader_l/net/transport_io_completion_dispatch.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct SendBufferSlice {std::uintptr_t data=0;std::uint64_t size=0;};
 struct AsyncSendResult {std::int32_t result=0;std::uint32_t last_error=0,transferred=0;};
 class AsyncSendApi {
@@ -54,18 +56,18 @@ void publish_send_started_028c00(IocpSchedulerEntry&,CancelOperation&,Dispatcher
 void start_async_send_021fd0(AsyncSendService&,SendSocketImplementation&,SendBufferSlice&,
     std::uint32_t flags,SendHandler&,std::uintptr_t allocator_identity,ComposedWriteContext&);
 void composed_write_0261d0(SendHandler&,const Error&,std::uint64_t bytes,std::uint32_t flag,ComposedWriteContext&);
-// Closes the previous0261d0 provider using the actual recovered source. Native
+// Closes the previous 0261d0 provider using its implemented source. Native
 // receive body/factory/025a70 still remain mandatory. Context and dependencies
 // must outlive all operations; no native object/OVERLAPPED ABI overlay is used.
-class RecoveredComposedWriteEffects:public RecoveredHandlerDispatchEffects,public ComposedWriteEffects {
+class ComposedWriteEffectsAdapter:public HandlerDispatchEffects,public ComposedWriteEffects {
 public:
-    RecoveredComposedWriteEffects(IoCompletionEnvironment environment,WorkerRunApi& worker,
+    ComposedWriteEffectsAdapter(IoCompletionEnvironment environment,WorkerRunApi& worker,
         HandlerDispatchMemory& memory,std::span<HandlerScheduleBinding> schedules,
         AsyncSendApi& send,DispatcherApi& completion,Api& errors,std::span<SendStreamBinding> streams)
-        :RecoveredHandlerDispatchEffects(environment,worker,memory,schedules),
+        :HandlerDispatchEffects(environment,worker,memory,schedules),
          context_{environment,worker,memory,send,completion,errors,*this,streams}{}
     void send_body_0261d0(SendHandler&,Error&,std::uint64_t,std::uint32_t) final;
     ComposedWriteContext& write_context(){return context_;}
 private:ComposedWriteContext context_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

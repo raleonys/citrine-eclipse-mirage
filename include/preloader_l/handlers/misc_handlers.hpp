@@ -1,13 +1,15 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/handlers/handlers.hpp"
 #include <cstdint>
 #include <string>
 #include <string_view>
 
-namespace preloader_l::misc_handlers_recovered {
-using handlers_recovered::Request;
-using handlers_recovered::Xml;
-using handlers_recovered::Attributes;
+namespace preloader_l::misc_handlers {
+using handlers::Request;
+using handlers::Xml;
+using handlers::Attributes;
 // Extra operations observed in handlers with request child elements. A missing
 // text node stays nullptr; callers must not silently synthesize an empty value.
 class Elements {
@@ -50,8 +52,8 @@ bool voip_02da30(Xml&);
 bool wallet_02ff60(Xml&);
 bool restart_game_032ab0(Xml&);
 bool permission_02d9e0(Xml&);
-bool utc_time_02fea0(Xml&,handlers_recovered::Effects&);
+bool utc_time_02fea0(Xml&,handlers::Effects&);
 bool show_igo_032b10(Xml&,IgoEffects&);
 bool start_download_032ca0(Xml&);
 bool query_offers_031ec0(Xml&);
-} // namespace preloader_l::misc_handlers_recovered
+} // namespace preloader_l::misc_handlers

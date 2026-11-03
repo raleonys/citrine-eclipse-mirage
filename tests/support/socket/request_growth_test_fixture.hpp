@@ -1,13 +1,15 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_request_growth.hpp"
 #include "tests/support/socket/request_mutation_test_fixture.hpp"
 
 namespace growth_test {
-namespace s=preloader_l::socket_recovered;namespace b=buffer_test;namespace r=receive_test;
+namespace s=preloader_l::socket;namespace b=buffer_test;namespace r=receive_test;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Failure {int code;};
-struct Api:s::RecoveredRequestGrowthApi {
-    unsigned ranges=0;explicit Api(s::ReceiveBufferContext& c):RecoveredRequestGrowthApi(c){}
+struct Api:s::RequestGrowthApi {
+    unsigned ranges=0;explicit Api(s::ReceiveBufferContext& c):RequestGrowthApi(c){}
     [[noreturn]]void out_of_range_00cec0()override{++ranges;throw Failure{1};}
 };
 struct Fixture {

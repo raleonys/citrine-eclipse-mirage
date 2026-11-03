@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_service_registry.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 bool matches(ServiceEntry& entry,const ServiceKey& key,ServiceRegistryEffects& effects){
     // The fixed022fa0 key has id0; keep the native short-circuit predicate without
@@ -41,7 +43,7 @@ ServiceEntry& resolve_service_0239c0(ServiceRegistry& registry,ContextIdentity c
 }
 SocketService& RegistryLifecycleEffects::resolve_service_0239c0(ContextIdentity context){
     if(context.value!=context_.value)throw UnsupportedInput("Registry projection is bound to one context identity");
-    auto& entry=socket_recovered::resolve_service_0239c0(registry_,context,registry_effects_);
+    auto& entry=socket::resolve_service_0239c0(registry_,context,registry_effects_);
     for(const auto& binding:bindings_)
         if(binding.entry==&entry && binding.service && binding.close_context)return *binding.service;
     throw UnsupportedInput("Resolved registry entry has no live service/context projection");
@@ -57,4 +59,4 @@ void RegistryLifecycleEffects::close_and_cancel_026fb0(SocketService& service,So
 void RegistryLifecycleEffects::executor_cleanup(SocketObject& object,std::uintptr_t table){
     executor_.executor_cleanup(object,table);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

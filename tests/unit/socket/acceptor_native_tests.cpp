@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_acceptor_native.hpp"
 #include <bit>
 #include <cstring>
@@ -5,8 +7,8 @@
 #include <limits>
 #include <vector>
 
-namespace sock=preloader_l::socket_recovered;
-namespace srv=preloader_l::server_recovered;
+namespace sock=preloader_l::socket;
+namespace srv=preloader_l::server;
 namespace {
 unsigned checks=0;
 void require(bool condition,const char* why){++checks;if(!condition)throw std::runtime_error(why);}

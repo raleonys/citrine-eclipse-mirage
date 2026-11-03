@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/node_base.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width=8){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -40,5 +42,5 @@ void destroy_native_node_base_001ea0(std::uintptr_t node,NativeNodeBaseContext& 
     store(memory,node+0x20,0);
     store(memory,node+0x28,0);
 }
-void RecoveredNodeBaseEffects::destroy_node_base_001ea0(std::uintptr_t node){destroy_native_node_base_001ea0(node,node_base_);}
-} // namespace preloader_l::socket_recovered
+void NodeBaseEffects::destroy_node_base_001ea0(std::uintptr_t node){destroy_native_node_base_001ea0(node,node_base_);}
+} // namespace preloader_l::socket

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 add_library(portable_config STATIC src/config/configuration.cpp)
 target_include_directories(portable_config PUBLIC include)
 function(portable_check name)
@@ -12,6 +14,10 @@ portable_check(portable_execution src/runtime/execution.cpp tests/unit/execution
 portable_check(portable_execution_concurrency src/runtime/execution.cpp tests/unit/execution/concurrency_tests.cpp)
 target_link_libraries(portable_execution_concurrency PRIVATE Threads::Threads)
 set_tests_properties(portable_execution_concurrency PROPERTIES TIMEOUT 30)
+portable_check(portable_network_hook src/platform/hook_connect.cpp src/runtime/execution.cpp
+  tests/unit/network_hook/hook_tests.cpp)
+target_compile_definitions(portable_network_hook PRIVATE PRELOADER_L_PRODUCTION_NETWORK_TESTS=1)
+target_link_libraries(portable_network_hook PRIVATE Threads::Threads)
 portable_check(portable_parser src/config/parser.cpp tests/unit/parser/parser_tests.cpp)
 portable_check(portable_hash src/hash/hash.cpp tests/unit/hash/hash_tests.cpp)
 portable_check(portable_config_order src/config/parser.cpp src/config/order.cpp tests/unit/config_order/order_tests.cpp)
@@ -33,3 +39,4 @@ target_link_libraries(portable_configuration_defaults_integration PRIVATE preloa
 portable_check(portable_online src/runtime/online.cpp src/core/paths.cpp tests/unit/online/online_tests.cpp)
 target_compile_definitions(portable_online PRIVATE PRELOADER_L_PORTABLE_ONLINE_TESTS=1)
 portable_check(portable_server src/net/server.cpp src/runtime/execution.cpp tests/unit/server/server_tests.cpp)
+portable_check(portable_registry_rollback src/platform/registry.cpp tests/unit/registry/allocation_failure_tests.cpp)

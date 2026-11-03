@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/core/license_files.hpp"
 #include "preloader_l/core/token_constants.hpp"
 #include "preloader_l/xml/reader.hpp"
@@ -6,11 +8,11 @@
 #include <locale>
 #include <stdexcept>
 
-namespace file=preloader_l::file_recovered;
-namespace license=preloader_l::license_recovered;
-namespace crypto=preloader_l::crypto_recovered;
-namespace token=preloader_l::token_recovered;
-namespace xml=preloader_l::xml_recovered;
+namespace file=preloader_l::file;
+namespace license=preloader_l::license;
+namespace crypto=preloader_l::crypto;
+namespace token=preloader_l::token;
+namespace xml=preloader_l::xml;
 namespace reader=preloader_l::xml_reader_bridge;
 namespace {
 unsigned checks=0;
@@ -48,7 +50,7 @@ public:
     [[noreturn]] void no_response_02bcd0_04d228()override{throw NoResponse{};}
 };
 class NoAttributes final:public xml::AttributeReader {
-public:const char* attribute(preloader_l::handlers_recovered::Request,const char*)override{unused();}
+public:const char* attribute(preloader_l::handlers::Request,const char*)override{unused();}
 };
 std::string encrypted_fixture(std::string_view value) {
     std::string bytes(65,'H');bytes+="<GameToken>";bytes+=value;bytes+="</GameToken>";
@@ -76,7 +78,7 @@ void run(const std::filesystem::path& directory) {
     std::string auth,license_value,exe_hash(40,'0'),content_id="fixture-content";
     std::uint8_t online=0,fake_auth=0,blocked=0;
     std::int32_t attempts=0;
-    preloader_l::handlers_recovered::Attributes game;
+    preloader_l::handlers::Attributes game;
     license::Handlers core({auth,online,fake_auth,license_value,expected,exe_hash,content_id,
         dll,dll,base,game,attempts,blocked},binding);
     reader::Backend backend;auto request=backend.parse_c_string("<RequestLicense/>");

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/achievement_writer.hpp"
 #include <algorithm>
 #include <filesystem>
@@ -12,7 +14,7 @@ unsigned checks=0;
 void require(bool ok,const char* label){++checks;if(!ok)throw std::runtime_error(label);}
 template<class E,class F>void rejects(F f,const char* label){bool hit=false;try{f();}catch(const E&){hit=true;}require(hit,label);}
 using Events=std::vector<std::string>;
-struct Output final:file_recovered::Output {
+struct Output final:file::Output {
     Events& events;std::string& captured;std::uint32_t state;std::string fail;
     Output(Events& e,std::string& c,std::uint32_t s,std::string f):events(e),captured(c),state(s),fail(std::move(f)){}
     ~Output()override{events.emplace_back("destroy");}
@@ -20,16 +22,16 @@ struct Output final:file_recovered::Output {
     void write_03be80(std::string_view bytes)override{events.emplace_back("write");if(fail=="write")throw std::runtime_error("synthetic write failure");captured.assign(bytes);}
     void close_03ae70()override{events.emplace_back("close");if(fail=="close")throw std::runtime_error("synthetic close failure");}
 };
-struct Files final:file_recovered::Factory {
+struct Files final:file::Factory {
     Events& events;std::string captured,fail;configuration::Path opened;std::uint32_t state=0;bool null_stream=false;
     explicit Files(Events& e):events(e){}
-    void replace_atomic(std::span<const file_recovered::FileWrite> writes)override {
+    void replace_atomic(std::span<const file::FileWrite> writes)override {
         require(writes.size()==1,"single INI atomic replacement");events.emplace_back("atomic");opened=writes[0].path;
         if(state||null_stream||!fail.empty())throw std::runtime_error("injected checked persistence failure");
         captured=writes[0].bytes;
     }
-    std::unique_ptr<file_recovered::Input> open_input_039f70(const configuration::Path&,std::uint32_t,std::uint32_t)override{throw std::logic_error("writer may not read");}
-    std::unique_ptr<file_recovered::Output> open_output_03a1a0(const configuration::Path& p,std::uint32_t mode,std::uint32_t share)override{
+    std::unique_ptr<file::Input> open_input_039f70(const configuration::Path&,std::uint32_t,std::uint32_t)override{throw std::logic_error("writer may not read");}
+    std::unique_ptr<file::Output> open_output_03a1a0(const configuration::Path& p,std::uint32_t mode,std::uint32_t share)override{
         require(mode==0x20 && share==0x40,"existing binary output open flags");events.emplace_back("open");opened=p;
         if(null_stream)return {};
         return std::make_unique<Output>(events,captured,state,fail);
@@ -102,7 +104,7 @@ void writer_flow() {
 void native_fixture(const std::filesystem::path& directory) {
     std::filesystem::create_directories(directory);
     const auto target=directory/"achievement-writer-generated.ini";
-    Events events;Effects effects(events);file_recovered::NativeFactory files;configuration::State state{};
+    Events events;Effects effects(events);file::NativeFactory files;configuration::State state{};
     state.achievements["owned-fixture"]=record(2,-1,-2,"own-fixture-id",123);
     achievement_writer::write_ini_01f9a0(target.u16string(),state,effects,files);
     std::ifstream input(target,std::ios::binary);

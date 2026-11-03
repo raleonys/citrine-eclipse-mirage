@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/thread_launch.hpp"
 #include <limits>
 
-namespace preloader_l::threads_recovered {
+namespace preloader_l::threads {
 Context* make_context_05e87c(std::uintptr_t entry, std::uintptr_t argument, Effects& e) {
     auto* context = e.calloc_context_066848();
     e.free_0668c0(nullptr); // Present even on failed allocation, 05e89e..05e8a3.
@@ -64,9 +66,9 @@ Handle begin_thread_05e8e0(void* security, std::uint32_t stack_size,
     end_thread_05e9bc(result, e);
     // Worker exceptions are NOT caught here; no inferred SEH/EH cleanup.
 }
-recovered::Handle BootstrapThreadBridge::begin_thread_05e8e0(
-    recovered::ThreadEntry entry, void* payload, std::uint32_t* id) {
-    return threads_recovered::begin_thread_05e8e0(nullptr, 0,
+system_services::Handle BootstrapThreadBridge::begin_thread_05e8e0(
+    system_services::ThreadEntry entry, void* payload, std::uint32_t* id) {
+    return threads::begin_thread_05e8e0(nullptr, 0,
         bind_application_entry(entry), reinterpret_cast<std::uintptr_t>(payload), 0, id, effects_);
 }
 }

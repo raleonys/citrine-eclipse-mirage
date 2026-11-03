@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_scheduler_registry.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct IocpSchedulerEntry;
 struct IocpWorker {
     std::uintptr_t word_00=0,handle_08=0,event_10=0;
@@ -60,4 +62,4 @@ public:
         std::uint32_t concurrency_hint,std::uint8_t own_thread) final;
 private:IocpConstructorApi& api_;ServiceGateApi& gates_;Api& errors_;IocpConstructionEffects& effects_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

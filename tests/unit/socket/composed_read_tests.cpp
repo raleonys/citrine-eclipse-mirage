@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/composed_read_test_fixture.hpp"
 using namespace read_test;
 namespace {

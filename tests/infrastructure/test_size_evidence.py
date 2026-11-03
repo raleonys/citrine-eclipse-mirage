@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """COFF evidence reader rejects malformed input and preserves object-size meaning."""
 from pathlib import Path
 import struct

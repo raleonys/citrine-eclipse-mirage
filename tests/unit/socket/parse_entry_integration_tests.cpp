@@ -1,12 +1,14 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/parse_entry_test_fixture.hpp"
 #include <cstring>
 using namespace parse_entry_test;
 namespace {
-struct Effects:s::RecoveredParseEntryEffects {
+struct Effects:s::ParseEntryEffects {
     std::vector<std::uint32_t> classified;std::vector<Lower::Virtual> virtuals;std::vector<CoreDocs::Error> errors;std::vector<std::uintptr_t> freed;
     std::function<std::int32_t(std::uint32_t)> classifier;std::function<void(const Lower::Virtual&)> virtual_hook;std::function<void(const CoreDocs::Error&)> error_hook;
     std::function<std::uintptr_t(std::uint64_t)> allocator;std::function<void(std::uintptr_t,std::uintptr_t,std::uint64_t)> copier;std::function<void(std::uintptr_t)> free_hook;
-    Effects(s::ReceiveBufferMemory& memory,s::NativeNodeClearEffects& nodes):RecoveredParseEntryEffects(memory,nodes){}
+    Effects(s::ReceiveBufferMemory& memory,s::NativeNodeClearEffects& nodes):ParseEntryEffects(memory,nodes){}
     std::int32_t classify_051fc0(std::uint32_t b)override{classified.push_back(b);return classifier?classifier(b):0;}
     void parse_virtual(std::uintptr_t t,std::uintptr_t d,std::uintptr_t c,std::uintptr_t z,std::uintptr_t l)override{virtuals.push_back({t,d,c,z,l});if(virtual_hook)virtual_hook(virtuals.back());}
     void set_error_005820(std::uintptr_t d,std::int32_t c,std::uint32_t l,std::uintptr_t p)override{errors.push_back({d,c,l,p});if(error_hook)error_hook(errors.back());}

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Validate registered human entrypoints and their automation/exit-code boundary."""
 import json
 from pathlib import Path

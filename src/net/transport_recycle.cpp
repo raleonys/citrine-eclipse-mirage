@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_recycle.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 void recycle_0283c0(RecycleMap& state,CancelNode& node,RecycleFailureEffects& failures){
     auto& map=state.map;
     if(map.buckets.empty())throw UnsupportedInput("Recycler requires nonzero initialized bucket count");
@@ -38,14 +40,14 @@ void recycle_0283c0(RecycleMap& state,CancelNode& node,RecycleFailureEffects& fa
     node.previous=old_free_previous;
     --state.map_size;
 }
-void RecoveredCancellationRecycler::recycle_0283c0(CancelMap& map,CancelNode& node){
+void CancellationRecyclerAdapter::recycle_0283c0(CancelMap& map,CancelNode& node){
     for(auto* metadata:maps_){
         if(metadata && metadata->map.buckets.data()==map.buckets.data()
             && metadata->map.buckets.size()==map.buckets.size()
             && metadata->map.sentinel==map.sentinel){
-            socket_recovered::recycle_0283c0(*metadata,node,failures_);return;
+            socket::recycle_0283c0(*metadata,node,failures_);return;
         }
     }
     throw UnsupportedInput("Cancellation recycler has no metadata for this map");
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

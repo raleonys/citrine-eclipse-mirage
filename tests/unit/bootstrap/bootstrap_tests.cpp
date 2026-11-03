@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/bootstrap.hpp"
 #include <array>
 #include <iostream>
@@ -7,7 +9,7 @@
 #include <vector>
 #include <algorithm>
 
-using namespace preloader_l::recovered;
+using namespace preloader_l::system_services;
 namespace {
 int checks = 0;
 void require(bool ok, const char* message) {

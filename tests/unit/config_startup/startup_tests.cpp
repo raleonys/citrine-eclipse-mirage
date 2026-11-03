@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "../../support/fixture_ascii.hpp"
 #include "preloader_l/config/startup.hpp"
 #include <algorithm>
@@ -17,26 +19,26 @@ configuration::Path wide(std::string_view value){return {value.begin(),value.end
 std::string ascii(const configuration::Path& value){return preloader_l::test_support::fixture_ascii(value);}
 std::size_t position(const Events& events,std::string_view value){const auto found=std::find(events.begin(),events.end(),value);require(found!=events.end(),"expected event present");return static_cast<std::size_t>(found-events.begin());}
 
-struct FileInput final:file_recovered::Input {
+struct FileInput final:file::Input {
     std::string bytes;Events& events;
     FileInput(std::string b,Events& e):bytes(std::move(b)),events(e){}
     std::uint32_t initial_state()const override{return 0;}
-    void seek_03b610(std::int64_t offset,file_recovered::Seek)override{require(offset==0,"binary stream seeks from zero");}
+    void seek_03b610(std::int64_t offset,file::Seek)override{require(offset==0,"binary stream seeks from zero");}
     std::uint64_t position_sum_03ba50()override{return bytes.size();}
     std::int32_t peek_043790()override{throw std::logic_error("unexpected peek");}
     std::size_t read_03b2a0(std::span<std::uint8_t> out)override{std::copy(bytes.begin(),bytes.end(),out.begin());return bytes.size();}
     void close_03ae70()override{events.emplace_back("file-close");}
 };
-struct Files final:file_recovered::Factory {
+struct Files final:file::Factory {
     Events& events;std::string base,over;
     std::vector<configuration::Path> opened;
     explicit Files(Events& e):events(e){}
-    std::unique_ptr<file_recovered::Input> open_input_039f70(const configuration::Path& path,std::uint32_t mode,std::uint32_t share)override{
+    std::unique_ptr<file::Input> open_input_039f70(const configuration::Path& path,std::uint32_t mode,std::uint32_t share)override{
         require(mode==0x20 && share==0x40,"original input mode/share");opened.push_back(path);
         const bool second=path.ends_with(u"surge_override.cfg");events.emplace_back(second?"read-override":"read-base");
         return std::make_unique<FileInput>(second?over:base,events);
     }
-    std::unique_ptr<file_recovered::Output> open_output_03a1a0(const configuration::Path&,std::uint32_t,std::uint32_t)override{throw std::logic_error("configuration must not open output stream here");}
+    std::unique_ptr<file::Output> open_output_03a1a0(const configuration::Path&,std::uint32_t,std::uint32_t)override{throw std::logic_error("configuration must not open output stream here");}
 };
 struct Effects final:configuration::Dependencies {
     Events& events;std::string fail;
@@ -74,7 +76,7 @@ struct Effects final:configuration::Dependencies {
     }
     bool set_environment_variable(std::string_view name,std::string_view value)override{environment.emplace_back(name,value);event("env:"+std::string(name));return false;}
 };
-struct InputPlatform final:startup_recovered::InputPlatform {
+struct InputPlatform final:startup::InputPlatform {
     Events& events;std::string arguments="-emuGameLang cli-language -showLSX -showConsole";
     std::string retained;
     explicit InputPlatform(Events& e):events(e){}
@@ -85,13 +87,13 @@ struct InputPlatform final:startup_recovered::InputPlatform {
     int utf8_no_flags(const wchar_t*,int,char*,int)override{throw std::logic_error("not invoked");}
     bool set_environment_variable_a(const char* name,const char* value)override{require(std::string_view(name)=="OriginEmuCmdArgs","argument output name");retained=value;events.emplace_back("arguments-publish");return false;}
 };
-struct Console final:startup_recovered::ConsolePlatform {
+struct Console final:startup::ConsolePlatform {
     Events& events;unsigned attaches=0,allocations=0,reopens=0;
     explicit Console(Events& e):events(e){}
     bool attach_console(std::uint32_t id)override{require(id==0xffffffffu,"attach parent process");++attaches;events.emplace_back("console-attach");return false;}
     bool allocate_console()override{++allocations;events.emplace_back("console-allocate");return false;}
-    startup_recovered::ConsoleHandle console_window()override{return 1;}
-    bool move_window(startup_recovered::ConsoleHandle h,int x,int y,int w,int height,bool repaint)override{require(h==1 && x==100 && y==100 && w==800 && height==500 && repaint,"console move arguments");return false;}
+    startup::ConsoleHandle console_window()override{return 1;}
+    bool move_window(startup::ConsoleHandle h,int x,int y,int w,int height,bool repaint)override{require(h==1 && x==100 && y==100 && w==800 && height==500 && repaint,"console move arguments");return false;}
     std::uintptr_t stream_052238(unsigned index)override{return 0x100+index;}
     int reopen_05f024(std::uintptr_t destination,const char*,const char*,std::uintptr_t stream)override{require(destination==stream,"both opaque stream pointers preserved");++reopens;return -1;}
 };
@@ -105,24 +107,24 @@ struct BootstrapEffects final:config_startup::BootstrapConfiguration {
     ~BootstrapEffects()override{for(void* block:owned)::operator delete(block);current=nullptr;}
     static void worker_fixture(){}
     static void boolean_fixture(bool value){require(current && value,"only synchronous true branch invoked");current->events.emplace_back("sync-boolean");}
-    int register_exit(recovered::RegisteredCallback id)override{require(id==recovered::RegisteredCallback::exit_038950,"exit callback identity");events.emplace_back("register-exit");return -1;}
-    void install_terminate(recovered::RegisteredCallback id)override{require(id==recovered::RegisteredCallback::terminate_038890,"terminate callback identity");events.emplace_back("install-terminate");}
+    int register_exit(system_services::RegisteredCallback id)override{require(id==system_services::RegisteredCallback::exit_038950,"exit callback identity");events.emplace_back("register-exit");return -1;}
+    void install_terminate(system_services::RegisteredCallback id)override{require(id==system_services::RegisteredCallback::terminate_038890,"terminate callback identity");events.emplace_back("install-terminate");}
     void* log_insert_006880(void* stream,std::uintptr_t)override{events.emplace_back("bootstrap-log-part");return stream;}
     void log_finish_0088e0(void*)override{events.emplace_back("bootstrap-log-finish");}
     void* allocate_04b0bc(std::size_t bytes)override{++allocations;events.emplace_back("allocate");auto* p=::operator new(bytes);owned.push_back(p);return p;}
     void delete_04b0f8(void*,std::size_t)override{throw std::logic_error("test-owned payload handled by fake thread boundary");}
-    recovered::NoArgumentFunction worker(recovered::Worker)override{return &worker_fixture;}
-    recovered::BooleanFunction boolean_worker_035850()override{return &boolean_fixture;}
-    recovered::Handle begin_thread_05e8e0(recovered::ThreadEntry entry,void* payload,std::uint32_t* id)override{
+    system_services::NoArgumentFunction worker(system_services::Worker)override{return &worker_fixture;}
+    system_services::BooleanFunction boolean_worker_035850()override{return &boolean_fixture;}
+    system_services::Handle begin_thread_05e8e0(system_services::ThreadEntry entry,void* payload,std::uint32_t* id)override{
         require(state.username=="override-user","worker sees completed configuration with SDK override ignored");
         require(state.game_attributes.at("AVAILABLE_VERSION")=="base-version","worker sees post-configuration state");
-        if(entry==recovered::ThreadEntry::no_argument_0388a0)require(static_cast<recovered::NoArgumentPayload*>(payload)->function==&worker_fixture,"noargument payload identity");
-        else require(!static_cast<recovered::BooleanPayload*>(payload)->value && static_cast<recovered::BooleanPayload*>(payload)->function==&boolean_fixture,"boolean false payload identity");
+        if(entry==system_services::ThreadEntry::no_argument_0388a0)require(static_cast<system_services::NoArgumentPayload*>(payload)->function==&worker_fixture,"noargument payload identity");
+        else require(!static_cast<system_services::BooleanPayload*>(payload)->value && static_cast<system_services::BooleanPayload*>(payload)->function==&boolean_fixture,"boolean false payload identity");
         ++started;*id=started;events.emplace_back("thread-"+std::to_string(started));
         const auto found=std::find(owned.begin(),owned.end(),payload);require(found!=owned.end(),"owned test payload");owned.erase(found);::operator delete(payload);
         return 0x200+started;
     }
-    bool close_handle(recovered::Handle h)override{require(h==0x201+closed,"close matches synthetic thread");++closed;events.emplace_back("close-thread");return true;}
+    bool close_handle(system_services::Handle h)override{require(h==0x201+closed,"close matches synthetic thread");++closed;events.emplace_back("close-thread");return true;}
     [[noreturn]]void throw_thread_error_04a648(int)override{throw std::runtime_error("unexpected thread error");}
     void between_workers_00e310()override{events.emplace_back("between-workers");}
     void guard_return_017a30()override{events.emplace_back("guard-return");}
@@ -141,7 +143,7 @@ struct Fixture {
     Events events;configuration::State state{};Files files{events};Effects deps{events};InputPlatform input{events};Console console{events};
     std::uint8_t show_lsx=0,show_console=0,no_console=0;
     BootstrapEffects bridge{state,deps,files,{show_lsx,show_console,no_console},input,console,events};
-    recovered::Bootstrap bootstrap{bridge};
+    system_services::Bootstrap bootstrap{bridge};
     Fixture(){state.executable_path=u"old-path";files.base=base_text();files.over=R"("Config2" {"Game" {"Name" "ignored-name" "Version" "ignored-version" "ContentId" "ignored-content" "Language" "override-language" "LanguageRegistrySpoof" "false"} "User" {"Username" "override-user"} "Content" {"ignored" {}}})";}
 };
 void whole_startup() {
@@ -193,7 +195,7 @@ void native_generated_files(const std::filesystem::path& directory) {
     {std::ofstream file(base,std::ios::binary|std::ios::trunc);file<<base_text();require(static_cast<bool>(file),"own native base fixture written");}
     {std::ofstream file(over,std::ios::binary|std::ios::trunc);file<<R"("Config2" {"User" {"Username" "native-override-user"} "Content" {"ignored" {}}})";require(static_cast<bool>(file),"own native override fixture written");}
     Events events;Effects deps(events);configuration::State state{};deps.executable=(directory/"synthetic-host.exe").u16string();deps.mutate_persistence=false;
-    file_recovered::NativeFactory files;
+    file::NativeFactory files;
     config_startup::initialize_configuration(state,deps,files);
     require(state.username=="native-override-user" && state.content.size()==12,"real own files reach base collection and override application");
     require(deps.logs.size()==2 && std::filesystem::path(deps.logs[0]).lexically_normal()==base.lexically_normal() && std::filesystem::path(deps.logs[1]).lexically_normal()==over.lexically_normal(),"own native base/override paths logged in order");

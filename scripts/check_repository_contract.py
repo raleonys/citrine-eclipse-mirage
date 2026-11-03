@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Check source scope, native CMake source ownership and pinned SURGE resource."""
 import hashlib
 import json

@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_composed_write.hpp"
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct AsyncSendImports {
     decltype(&::WSASend) send=&::WSASend;
     decltype(&::WSAGetLastError) get_error=&::WSAGetLastError;
@@ -13,4 +15,4 @@ public:
     AsyncSendResult send(Socket,Buffer&,std::uint32_t,OVERLAPPED&) override;
 private:AsyncSendImports imports_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

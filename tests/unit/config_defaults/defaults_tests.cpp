@@ -1,10 +1,21 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/application.hpp"
 #include <cstddef>
+#include <cstdio>
+#include <cstring>
 #include <cstdlib>
+#include <exception>
 #include <iostream>
 #include <limits>
 #include <new>
 #include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
+#if defined(_MSC_VER) && defined(_DEBUG)
+#include <crtdbg.h>
+#endif
 
 namespace allocation {
 struct alignas(std::max_align_t) Header {bool tracked;};
@@ -29,6 +40,18 @@ void operator delete(void* p,std::size_t) noexcept {allocation::release(p);}
 void operator delete[](void* p,std::size_t) noexcept {allocation::release(p);}
 
 namespace {
+// Test-only breadcrumb: preserve the last stage if MSVC Debug terminates
+// before main can report an exception. No production code is modified.
+void debug_stage(const char* stage, std::size_t fail_at=0) noexcept {
+#if defined(_MSC_VER) && defined(_DEBUG)
+    std::fprintf(stderr, "CONFIG_DEFAULTS_DEBUG stage=%s fail_at=%zu live=%zu\n",
+                 stage, fail_at, allocation::live);
+    std::fflush(stderr);
+#else
+    (void)stage;
+    (void)fail_at;
+#endif
+}
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 void constructor_contract() {
     const auto s=preloader_l::application::initial_state();
@@ -73,18 +96,127 @@ void independent_values() {
         "independent results share no mutable configuration state");
 }
 void allocation_unwind() {
+#if defined(_MSC_VER) && defined(_DEBUG)
+    // MSVC Debug basic_string can allocate iterator proxies inside noexcept
+    // constructors. Failing global new during State construction terminates.
+    // Build the real initial_state() unarmed, then inject failures only into
+    // throwing map insertion boundaries. This tests cleanup of partial map
+    // mutations, not early initial_state() constructor failure unwind.
+    std::vector<std::pair<std::string,std::string>> inserts;
+    inserts.reserve(32);
+    for(unsigned i=0;i<32;++i)
+        inserts.emplace_back("FAULT_TEST_KEY_"+std::to_string(i),std::string(64,'v'));
+#endif
     unsigned failures=0;bool completed=false;
     for(std::size_t fail_at=1;fail_at<=256&&!completed;++fail_at) {
+        debug_stage("allocation-attempt", fail_at);
+#if !(defined(_MSC_VER) && defined(_DEBUG))
         allocation::remaining=fail_at;allocation::armed=true;
-        try {auto state=preloader_l::application::initial_state();allocation::armed=false;completed=state.game_attributes.size()==14;}
+#endif
+        try {
+            auto state=preloader_l::application::initial_state();
+#if defined(_MSC_VER) && defined(_DEBUG)
+            allocation::remaining=fail_at;allocation::armed=true;
+            for(const auto& item:inserts)
+                state.game_attributes.emplace(item.first,item.second);
+            allocation::armed=false;
+            completed=state.game_attributes.size()==14+inserts.size();
+#else
+            allocation::armed=false;completed=state.game_attributes.size()==14;
+#endif
+        }
         catch(const std::bad_alloc&){allocation::armed=false;++failures;}
-        require(allocation::live==0,"every injected construction failure releases all partially constructed allocations");
+        debug_stage("allocation-result", fail_at);
+        require(allocation::live==0,"every injected failure releases all tracked partially inserted allocations");
     }
+#if defined(_MSC_VER) && defined(_DEBUG)
+    require(completed&&failures>20,"all throwing map insertion failure points were exhausted before success");
+#else
     require(completed&&failures>20,"all actual constructor allocation points were exhausted before a successful call");
+#endif
     constructor_contract();
 }
 }
-int main() try {
-    constructor_contract();independent_values();allocation_unwind();
+int main(int argc,char** argv) try {
+#if defined(_MSC_VER) && defined(_DEBUG)
+    // Test-only: avoid interactive MSVC CRT dialogs that stall hosted CI.
+    // Preserve errors as stderr output and an actual nonzero test exit.
+    for (int kind : {_CRT_ERROR, _CRT_ASSERT}) {
+        _CrtSetReportMode(kind, _CRTDBG_MODE_FILE);
+        _CrtSetReportFile(kind, _CRTDBG_FILE_STDERR);
+    }
+    _set_abort_behavior(0, _WRITE_ABORT_MSG | _CALL_REPORTFAULT);
+    std::set_terminate([]() noexcept {
+        std::fputs("CONFIG_DEFAULTS_DEBUG stage=terminate", stderr);
+        if (const auto eptr = std::current_exception()) {
+            try { std::rethrow_exception(eptr); }
+            catch (const std::bad_alloc&) { std::fputs(" exception=bad_alloc", stderr); }
+            catch (const std::exception&) { std::fputs(" exception=std_exception", stderr); }
+            catch (...) { std::fputs(" exception=unknown", stderr); }
+        }
+        std::fputc('\n', stderr);
+        std::fflush(stderr);
+        std::_Exit(86);
+    });
+#endif
+#if defined(_MSC_VER) && defined(_DEBUG)
+    if (argc == 2 && std::strncmp(argv[1], "--probe=", 8) == 0) {
+        const char* mode = argv[1] + 8;
+        const bool raw = std::strcmp(mode, "raw-new") == 0;
+        const bool map = std::strcmp(mode, "map-default") == 0;
+        const bool state = std::strcmp(mode, "state-default") == 0;
+        const bool stateDirect = std::strcmp(mode, "state-direct-init") == 0;
+        const bool narrow = std::strcmp(mode, "string-default") == 0;
+        const bool path = std::strcmp(mode, "path-default") == 0;
+        if (!raw && !map && !state && !stateDirect && !narrow && !path) return 2;
+        std::fprintf(stderr, "PROBE_NOEXCEPT state=%d map=%d\n",
+                     int(noexcept(preloader_l::configuration::State{})),
+                     int(noexcept(std::map<std::string, std::string, std::less<>>{})));
+        std::fflush(stderr);
+        debug_stage(mode);
+        allocation::remaining = 1;
+        allocation::armed = true;
+        try {
+            if (raw) {
+                void* p = ::operator new(sizeof(int));
+                ::operator delete(p);
+            } else if (map) {
+                std::map<std::string, std::string, std::less<>> value;
+                (void)value;
+            } else if (narrow) {
+                std::string value;
+                (void)value;
+            } else if (path) {
+                std::u16string value;
+                (void)value;
+            } else if (state) {
+                preloader_l::configuration::State value{};
+                (void)value;
+            } else {
+                preloader_l::configuration::State value;
+                (void)value;
+            }
+            allocation::armed = false;
+            std::fprintf(stderr, "PROBE_UNEXPECTED_SUCCESS mode=%s\n", mode);
+            return 3;
+        } catch (const std::bad_alloc&) {
+            allocation::armed = false;
+            std::fprintf(stderr, "PROBE_CAUGHT mode=%s exception=bad_alloc live=%zu\n",
+                         mode, allocation::live);
+            std::fflush(stderr);
+            return allocation::live == 0 ? 0 : 4;
+        }
+    }
+#else
+    (void)argc;
+    (void)argv;
+#endif
+    debug_stage("constructor-contract-start");
+    constructor_contract();
+    debug_stage("independent-values-start");
+    independent_values();
+    debug_stage("allocation-unwind-start");
+    allocation_unwind();
+    debug_stage("complete");
     std::cout<<"PASS: constructor defaults, independent state and allocation-failure recovery\n";return 0;
 }catch(const std::exception& e){allocation::armed=false;std::cerr<<e.what()<<'\n';return 1;}

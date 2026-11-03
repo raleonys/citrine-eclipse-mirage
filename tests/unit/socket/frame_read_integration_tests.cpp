@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/frame_read_test_fixture.hpp"
 using namespace frame_test;
 namespace {
@@ -5,8 +7,8 @@ struct Effects:read_test::Completion {
     s::ComposedReadContext* read=nullptr;
     void receive_body_025c40(s::ReceiveHandler& h,s::Error& e,std::uint64_t n,std::uint32_t flag)override{s::composed_receive_025c40(h,e,n,flag,*read);}
 };
-struct Bridge:s::RecoveredFrameReadApi {
-    using RecoveredFrameReadApi::RecoveredFrameReadApi;
+struct Bridge:s::FrameReadApiAdapter {
+    using FrameReadApiAdapter::FrameReadApiAdapter;
     void construct_length_error_024390(s::ReadLengthError&,std::uintptr_t)override{r::unexpected();}
     [[noreturn]]void throw_length_error_023930(s::ReadLengthError&)override{r::unexpected();}
 };

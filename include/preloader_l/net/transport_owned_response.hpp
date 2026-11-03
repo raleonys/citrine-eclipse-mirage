@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_response_dispatch.hpp"
 #include "preloader_l/net/transport_handler_dispatch.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct OwnedResponseContext;
 // Typed host projection, never an ABI cast. Native offsets: callback00,
 // function08,response10,object30,control38;48 is the allocator marker.
@@ -31,10 +33,10 @@ void call_owned_response_022280(OwnedResponseTask&,std::uint8_t,OwnedResponseCon
     ResponseWriteCall call=&invoke_response_write);
 // Closes N2's owned factory hook.009eb0 remains a mandatory independent COPY
 // provider; this bridge does not invent string allocator or native ABI bodies.
-class RecoveredOwnedResponseApi:public ResponseDispatchApi {
+class OwnedResponseApi:public ResponseDispatchApi {
 public:
-    explicit RecoveredOwnedResponseApi(OwnedResponseContext& context):context_(context){}
+    explicit OwnedResponseApi(OwnedResponseContext& context):context_(context){}
     void make_owned_response_020cb0(PostedFunctor*&,MessageWriteTask&) final;
 private:OwnedResponseContext& context_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

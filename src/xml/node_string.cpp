@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/node_string.hpp"
 #include <bit>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& m,std::uintptr_t a,unsigned width=8){
     const auto b=m.view(a,width);std::uint64_t v=0;
@@ -97,7 +99,7 @@ std::uintptr_t materialize_node_string_0035e0(std::uintptr_t pair,NativeNodeStri
     store(m,pair,load(m,pair,4)&0x200,4);
     return load(m,pair+8);
 }
-std::uintptr_t RecoveredNodeStringEffects::materialize_0035e0(std::uintptr_t pair){
+std::uintptr_t NodeStringEffects::materialize_0035e0(std::uintptr_t pair){
     return materialize_node_string_0035e0(pair,string_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: GPL-3.0-only
 # Local, read-only source gate. GitHub CI remains an independent check.
 set -eu
 cd "$(git rev-parse --show-toplevel)"
@@ -13,12 +14,12 @@ while read -r local_ref local_sha remote_ref remote_sha; do
     esac
     case "$local_sha" in
         0000000000000000000000000000000000000000)
-            if [ "$remote_ref" = refs/heads/bugfix ]; then
-                echo 'PUSH BLOCKED: the shared bugfix branch must be retained.' >&2
-                exit 1
-            fi
             continue ;;
     esac
+    if [ "$remote_ref" = refs/heads/bugfix ]; then
+        echo 'PUSH BLOCKED: use a fresh PR branch; the shared bugfix branch is retired.' >&2
+        exit 1
+    fi
     pushed_commit=$(git rev-parse "$local_sha^{commit}")
     if [ "$pushed_commit" != "$tested_head" ]; then
         echo 'PUSH BLOCKED: check out the commit being pushed and validate it there.' >&2

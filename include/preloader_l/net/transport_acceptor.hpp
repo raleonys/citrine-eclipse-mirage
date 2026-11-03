@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_operations.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 inline constexpr Socket invalid_socket=~Socket{0};
 struct AcceptorService {std::uintptr_t completion_port=0;};
 // Logical selected fields, not an overlay of the native ASIO object.
@@ -49,8 +51,8 @@ class AcceptorBackend:public AddressBackend {
 public:
     AcceptorBackend(AcceptorState& state,Api& errors,AcceptorApi& api,AcceptorRuntime& runtime)
         :AddressBackend(errors),state_(state),errors_(errors),api_(api),runtime_(runtime){}
-    void construct_acceptor_020e20(const server_recovered::Endpoint&,bool,int) final;
+    void construct_acceptor_020e20(const server::Endpoint&,bool,int) final;
 private:
     AcceptorState& state_;Api& errors_;AcceptorApi& api_;AcceptorRuntime& runtime_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket
