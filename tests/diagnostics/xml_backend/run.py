@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
-"""Run the isolated, pinned XML comparison; never configure production targets."""
+"""Compare the selected production XML reader with the pinned external control."""
 import argparse
 import csv
 import hashlib
@@ -11,7 +11,6 @@ import platform
 import sys
 import statistics
 import subprocess
-import urllib.request
 
 HERE = Path(__file__).resolve().parent
 REPOSITORY = HERE.parents[2]
@@ -32,7 +31,7 @@ def output_path(path):
     return path
 
 
-def verify_inputs(reference, pugi, fetch=False):
+def verify_inputs(reference, pugi):
     def git(*args):
         return subprocess.check_output(['git', '-C', str(reference), *args], text=True).strip()
     if Path(git('rev-parse', '--show-toplevel')).resolve() != reference:
@@ -42,19 +41,10 @@ def verify_inputs(reference, pugi, fetch=False):
     # Reject tracked source drift, including staged edits, before compiling it.
     if git('diff', '--name-only', 'HEAD', '--', 'include', 'src', 'tests', 'third_party/tinyxml2'):
         raise ValueError('Reference inputs have local tracked changes')
-    if fetch:
-        output_path(pugi)
+    if pugi != (REPOSITORY / 'third_party/pugixml').resolve():
+        raise ValueError('Production comparison requires the installed pinned pugixml tree')
     for name, expected in PUGI_FILES.items():
         path = pugi / name
-        if fetch and not path.exists():
-            url = f'https://raw.githubusercontent.com/zeux/pugixml/{PUGIXML}/{name}'
-            with urllib.request.urlopen(url, timeout=60) as response:
-                data = response.read()
-            if hashlib.sha256(data).hexdigest() != expected:
-                raise ValueError('Downloaded pugixml input hash mismatch: ' + name)
-            path.parent.mkdir(parents=True, exist_ok=True)
-            with path.open('xb') as stream:
-                stream.write(data)
         if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
             raise ValueError('External pugixml input hash mismatch: ' + name)
 
@@ -62,9 +52,8 @@ def verify_inputs(reference, pugi, fetch=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--reference-root', type=Path, required=True)
-    parser.add_argument('--pugixml-root', type=Path, required=True)
+    parser.add_argument('--pugixml-root', type=Path, default=REPOSITORY / 'third_party/pugixml')
     parser.add_argument('--output', type=Path, default=REPOSITORY / 'build/xml-backend-comparison')
-    parser.add_argument('--fetch-pugixml', action='store_true', help='Explicitly download hash-checked diagnostic inputs')
     parser.add_argument('--verify-only', action='store_true')
     parser.add_argument('--sanitizers', action='store_true')
     parser.add_argument('--configuration', choices=['Debug', 'Release'], default='Release')
@@ -75,7 +64,7 @@ def main():
     if args.mutations < 1 or args.holdout_mutations < 1 or args.timing_iterations < 1:
         parser.error('Iteration counts must be positive')
     reference, pugi = args.reference_root.resolve(), args.pugixml_root.resolve()
-    verify_inputs(reference, pugi, args.fetch_pugixml)
+    verify_inputs(reference, pugi)
     if args.verify_only:
         print('PASS: pinned PR #108 reference and exact owner-upload pugixml core/license bytes')
         return
@@ -86,10 +75,12 @@ def main():
               'pugixml_files': PUGI_FILES, 'host': platform.platform(),
               'harness_files': {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
                                 for path in sorted(HERE.iterdir()) if path.is_file()},
+              'production_reader_files': {str(path.relative_to(REPOSITORY)): hashlib.sha256(path.read_bytes()).hexdigest()
+                  for path in sorted((REPOSITORY / 'src/xml').glob('reader*')) if path.is_file()},
               'configuration': args.configuration, 'sanitizers': args.sanitizers,
               'mutations': args.mutations, 'holdout_mutations': args.holdout_mutations,
               'seed': 85621504, 'holdout_seed': 202892583, 'commands': [],
-              'production_migration': 'NOT_SWITCHED', 'complete': False}
+              'production_migration': 'PUGIXML_SELECTED', 'complete': False}
 
     def run(name, command, allowed=(0,), timeout=300, reference_oom_measurement=False):
         environment = os.environ.copy()
@@ -130,6 +121,14 @@ def main():
     for configuration in model['configurations']:
         targets = {target['id']: json.loads((reply / target['jsonFile']).read_text(encoding='utf-8'))
                    for target in configuration['targets']}
+        selected=next(target for target in targets.values() if target['name']=='comparison_candidate')
+        actual_sources={str((Path(source['path']) if Path(source['path']).is_absolute()
+                            else HERE / source['path']).resolve())
+                        for source in selected.get('sources',[]) if source['path'].endswith('.cpp')}
+        expected_sources={str((REPOSITORY / ('src/xml/' + name)).resolve())
+                          for name in ['reader.cpp','reader_policy.cpp','reader_values.cpp']}
+        if actual_sources!=expected_sources:
+            raise RuntimeError('Comparison candidate is not the selected production reader source set')
         for target in targets.values():
             if not target['name'].startswith('candidate_'):
                 continue
@@ -163,6 +162,7 @@ def main():
     candidate = run('candidate-reader', [binary('candidate_reader')])
     report['candidate_reader_contract'] = 'PASS'
     run('candidate-corpus', [binary('candidate_corpus'), corpus, baseline])
+    run('candidate-allocation-contracts', [binary('candidate_allocations')])
     if sys.platform == 'win32':
         for profile in ['reference', 'candidate']:
             run(profile + '-dispatch', [binary(profile + '_dispatch')])
@@ -252,7 +252,7 @@ def main():
         ['acceptance_diff', 'success_DOM_diff', 'failed_DOM_diff', 'error_code_diff', 'diagnostic_diff']) or any(report['application_differences'].values())
     if incompatible:
         raise RuntimeError('Candidate compatibility regression')
-    report['decision'] = 'COMPATIBLE_ON_TESTED_CONTRACT_REQUIRES_PRODUCTION_AND_CONSUMER_REVIEW'
+    report['decision'] = 'PRODUCTION_READER_COMPATIBLE_REQUIRES_FULL_NATIVE_GOLDEN_AND_CONSUMER_REVIEW'
     report['complete'] = True
     (output / 'summary.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
     print(report['decision'], flush=True)

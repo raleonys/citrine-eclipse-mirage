@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "backend.hpp"
+#include "oracle_reader.hpp"
 #include "pugixml.hpp"
 #include <array>
 #include <cstdio>
@@ -55,7 +56,7 @@ int main(int argc,char** argv){
  if(argc<2)return 2;std::string_view name=argv[1];long fail=argc>2?std::strtol(argv[2],nullptr,10):-1;bool persistent=argc>3&&std::string_view(argv[3])=="persistent";
  probe::profile=argv[1];
  pugi::set_memory_management_functions(probe::pugi_allocate,probe::pugi_release);
- preloader_l::xml_reader_bridge::Backend tiny;xml_comparison::Backend candidate;
+ preloader_l::xml_tiny_reference::Backend tiny;xml_comparison::Backend candidate;
  if(name!="tiny"&&name!="pugi_checked")return 2;
  auto& backend=name=="tiny"?static_cast<preloader_l::messages::XmlBackend&>(tiny):static_cast<preloader_l::messages::XmlBackend&>(candidate);
  auto& nodes=name=="tiny"?static_cast<preloader_l::dispatch::NodeAccess&>(tiny):static_cast<preloader_l::dispatch::NodeAccess&>(candidate);

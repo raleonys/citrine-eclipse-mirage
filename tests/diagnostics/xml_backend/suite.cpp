@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "backend.hpp"
+#include "oracle_reader.hpp"
 #include "messages_fixtures.hpp"
 #include "storage_fixtures.hpp"
 #include <chrono>
@@ -15,7 +16,7 @@ namespace msg=preloader_l::messages;
 namespace access=preloader_l::dispatch;
 struct Profile {
  std::string name;
- preloader_l::xml_reader_bridge::Backend tiny;
+ preloader_l::xml_tiny_reference::Backend tiny;
  xml_comparison::Backend pugi;
  explicit Profile(std::string name):name(std::move(name)){}
  msg::XmlBackend& backend(){return name=="tiny"?static_cast<msg::XmlBackend&>(tiny):pugi;}

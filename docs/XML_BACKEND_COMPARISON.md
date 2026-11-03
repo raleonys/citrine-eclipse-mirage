@@ -1,10 +1,12 @@
 # Pugixml compatibility diagnostic
 
-The isolated candidate now matches the corrected project XML contract in the
-tested reader, corpus, message and persistence cases. This replaces the initial
-comparison's NO_GO result for the minimally mapped candidate. It does not switch
-the production backend: shipping sources, targets, the four accepted vendor
-trees/pins, DLL ABI and CRT remain unchanged.
+PR #149 now selects pugixml for the production XML reader and development DLL.
+The owner requested completing the migration in this open PR before merging.
+The compatibility diagnostic compiles the actual production reader sources;
+there is no separate candidate implementation to drift from shipping code.
+The public reader interface, DLL ABI, standard CRT and three other vendor pins
+remain unchanged. Native application and Golden results must belong to this
+production migration commit; earlier test-only passes do not establish them.
 
 ## Inputs and independent link graphs
 
@@ -20,23 +22,23 @@ The owner-uploaded `pugixml-master.zip` has SHA-256
 `4cd80a72fde87ce1f23eae4ed048446b2e887fc25437793e525367448be2cf81`.
 Its core matches official pugixml commit
 `f0a3faa76e04f35110257ca8713363dee3c890e8` (version macro 1160). The runner
-verifies its three source/header files and MIT license separately. It accepts
-a local extraction or explicitly downloads those exact diagnostic inputs below
-ignored `build/`. Neither vendor source is patched. XPath is disabled only for
-the candidate diagnostic target.
+verifies its three source/header files and MIT license separately. Full installed
+member verification pins all 191 files in `third_party/pugixml`. The runner
+requires that installed tree and performs no download. Neither vendor source is
+patched. XPath is disabled for production and diagnostic pugixml targets.
 
-The standalone `tests/diagnostics/xml_backend/CMakeLists.txt` has no connection
-to the production CMake graph. Both backends use the exact checked value decoder
-extracted at configure time from the pinned **first-party** reference source.
-Marker checks reject unexpected extraction changes. The candidate does not link
-the reference reader or TinyXML2. CMake File API traversal verifies this for
+The standalone `tests/diagnostics/xml_backend/CMakeLists.txt` compiles exactly
+`src/xml/reader.cpp`, `reader_policy.cpp` and `reader_values.cpp` from this checkout.
+The reference uses the pinned control's first-party reader with a namespace-only
+binding change to avoid an ODR collision. Both preserve the checked value-decoder
+logic from PR #108. The candidate does not link the reference reader or TinyXML2. CMake File API traversal verifies this for
 every candidate-only executable/configuration and requires a real pugixml
 dependency; `candidate-linkage.json` records the evaluated transitive graph.
 The reference is linked only into separate control and differential targets.
 
 ## Compatibility policy
 
-`compatibility.cpp` owns the project's syntax and error decisions. It uses an
+`src/xml/reader_policy.cpp` owns the project's syntax and error decisions. It uses an
 iterative scanner with a small inline stack, limits entered child lists to the
 reference depth boundary, and detects malformed text, attributes, duplicate
 attributes, mismatched elements, declarations, comments, CDATA and unknown
@@ -72,7 +74,9 @@ differential-mutation mismatch, candidate allocation leak, sanitizer error or
 oracle linkage. Candidate failures are no longer permitted as successful
 diagnostic measurements.
 
-Local Release and ASan+UBSan execution covers:
+The required Release and ASan+UBSan profiles cover the following matrices.
+Exact-head results are retained as workflow artifacts and in the PR description;
+this list is test scope, not a substitute for checking those results:
 
 - The unchanged 5,042-check reader test and 12,087-row corrected corpus test on
   both backends. The corpus also compares every full diagnostic and tree:
@@ -145,10 +149,11 @@ no CI speed threshold; sanitizer runs omit timing.
 
 The current conclusion is compatibility on the tested contract, with a useful
 speed gain on ordinary fixtures and a higher small-document memory cost.
-Production integration and vendor-policy/pin changes are separate work. A
-shipping switch still needs native application/Golden acceptance with the
-candidate actually selected, followed by real Consumer validation. Passing a
-test-only backend does not establish those results or universal XML equivalence.
+Production now selects this reader, with separate static-CRT and development
+shared-CRT pugixml builds. Full native application/Golden acceptance must run
+with this selection. Real Consumer validation remains the owner's separate
+pre-release task. Passing source-linked comparison fixtures does not establish
+real game execution or universal XML equivalence.
 
 ## Reproduce
 
@@ -157,12 +162,11 @@ git fetch origin a34a0536f0980b38d77d029f11fa3720dcaedc6e
 git worktree add --detach build/xml-reference a34a0536f0980b38d77d029f11fa3720dcaedc6e
 python -B tests/diagnostics/xml_backend/run.py \
   --reference-root build/xml-reference \
-  --pugixml-root build/xml-comparison-input/pugixml --fetch-pugixml \
   --output build/xml-backend-comparison/release
 ```
 
-For offline execution, omit `--fetch-pugixml` and use the verified owner-upload
-extraction. Repeat with `--sanitizers` and a separate output directory for
+The installed owner-archive pugixml tree is the default input. The control
+checkout must already exist; the runner itself is offline. Repeat with `--sanitizers` and a separate output directory for
 GCC/Clang ASan+UBSan. On Windows, use `--configuration Debug` or `Release`.
 Inputs are normalized to CMake paths before source expansion. Output paths stay
 below this checkout's ignored `build/`. `summary.json` records completeness,

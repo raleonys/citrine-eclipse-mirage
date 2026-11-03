@@ -5,6 +5,11 @@ on:
   pull_request:
     paths:
       - "tests/diagnostics/xml_backend/**"
+      - "src/xml/**"
+      - "include/preloader_l/xml/**"
+      - "third_party/pugixml/**"
+      - "tests/unit/xml_reader/**"
+      - "tests/performance/xml_reader_probe.cpp"
       - "docs/XML_BACKEND_COMPARISON.md"
       - ".github/workflows/xml-backend-comparison.yml"
   workflow_dispatch:
@@ -55,7 +60,7 @@ jobs:
           if [ '${{ matrix.sanitizers }}' = 'true' ]; then options+=(--sanitizers); fi
           python -B tests/diagnostics/xml_backend/run.py \
             --reference-root build/xml-reference \
-            --pugixml-root build/xml-comparison-input/pugixml --fetch-pugixml \
+            --pugixml-root third_party/pugixml \
             --output build/xml-backend-comparison --configuration '${{ matrix.configuration }}' "${options[@]}"
       - name: Retain differential results, input pins, compiler settings and failures
         if: always()

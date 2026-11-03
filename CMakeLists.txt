@@ -64,7 +64,7 @@ add_library(preloader_l_objects OBJECT ${PRELOADER_L_APPLICATION_SOURCES}
   src/platform/crypt_query_host.cpp "${_avatar_header}")
 target_include_directories(preloader_l_objects PUBLIC include)
 target_include_directories(preloader_l_objects PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
-target_link_libraries(preloader_l_objects PUBLIC preloader_l_minhook preloader_l_tinyxml2
+target_link_libraries(preloader_l_objects PUBLIC preloader_l_minhook preloader_l_pugixml
   preloader_l_asio)
 target_compile_definitions(preloader_l_objects PUBLIC NOMINMAX)
 set_target_properties(preloader_l_objects PROPERTIES POSITION_INDEPENDENT_CODE ON)
@@ -73,7 +73,7 @@ add_library(preloader_l_core STATIC $<TARGET_OBJECTS:preloader_l_objects>
   $<TARGET_OBJECTS:preloader_l_vdf_objects>)
 target_include_directories(preloader_l_core PUBLIC include)
 target_compile_definitions(preloader_l_core PUBLIC NOMINMAX)
-target_link_libraries(preloader_l_core PUBLIC preloader_l_minhook preloader_l_tinyxml2
+target_link_libraries(preloader_l_core PUBLIC preloader_l_minhook preloader_l_pugixml
   preloader_l_asio
   crypt32 ws2_32 kernel32 user32 shell32)
 
@@ -106,7 +106,7 @@ endif()
 if(BUILD_TESTING OR PRELOADER_L_BUILD_SOURCE_API_DLL)
   add_library(preloader_l_reference_objects OBJECT ${PRELOADER_L_REFERENCE_SOURCES})
   target_include_directories(preloader_l_reference_objects PUBLIC include)
-  target_link_libraries(preloader_l_reference_objects PRIVATE preloader_l_minhook preloader_l_tinyxml2 preloader_l_asio)
+  target_link_libraries(preloader_l_reference_objects PRIVATE preloader_l_minhook preloader_l_pugixml preloader_l_asio)
   target_compile_definitions(preloader_l_reference_objects PRIVATE NOMINMAX)
   set_target_properties(preloader_l_reference_objects PROPERTIES POSITION_INDEPENDENT_CODE ON)
   if(MSVC)
@@ -126,10 +126,12 @@ if(PRELOADER_L_BUILD_SOURCE_API_DLL)
     add_library(preloader_l_source_minhook STATIC ${_source_hook_sources})
     target_include_directories(preloader_l_source_minhook PUBLIC ${_source_hook_includes})
     add_dependencies(preloader_l_source_minhook preloader_l_verify_vendors preloader_l_verify_hook_engine)
-    add_library(preloader_l_source_tinyxml2 STATIC third_party/tinyxml2/tinyxml2.cpp)
-    target_include_directories(preloader_l_source_tinyxml2 PUBLIC third_party/tinyxml2)
-    add_dependencies(preloader_l_source_tinyxml2 preloader_l_verify_vendors)
-    set_target_properties(preloader_l_source_minhook preloader_l_source_tinyxml2
+    add_library(preloader_l_source_pugixml STATIC third_party/pugixml/src/pugixml.cpp)
+    target_include_directories(preloader_l_source_pugixml PUBLIC third_party/pugixml/src)
+    target_compile_definitions(preloader_l_source_pugixml PUBLIC PUGIXML_NO_XPATH)
+    add_library(preloader_l_source_tinyxml2 ALIAS preloader_l_source_pugixml)
+    add_dependencies(preloader_l_source_pugixml preloader_l_verify_vendors)
+    set_target_properties(preloader_l_source_minhook preloader_l_source_pugixml
       PROPERTIES MSVC_RUNTIME_LIBRARY "${_source_api_crt}")
     add_library(preloader_l_source_api SHARED ${PRELOADER_L_APPLICATION_SOURCES}
       src/platform/crypt_query_host.cpp "${_avatar_header}"
@@ -139,7 +141,7 @@ if(PRELOADER_L_BUILD_SOURCE_API_DLL)
     target_compile_definitions(preloader_l_source_api PRIVATE NOMINMAX)
     target_compile_options(preloader_l_source_api PRIVATE /GS)
     target_link_libraries(preloader_l_source_api PRIVATE preloader_l_source_minhook
-      preloader_l_source_tinyxml2 preloader_l_asio preloader_l_pegtl
+      preloader_l_source_pugixml preloader_l_asio preloader_l_pegtl
       crypt32 ws2_32 kernel32 user32 shell32)
     set_target_properties(preloader_l_source_api PROPERTIES MSVC_RUNTIME_LIBRARY "${_source_api_crt}")
   else()

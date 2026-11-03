@@ -27,8 +27,10 @@ not build inputs to the current product.
   `3RD PARTY` archives. Gulrak was subsequently removed by explicit owner
   instruction; the original archive is retained. Older RE MinHook/TinyXML2
   copies are removed from the active tree, and Brownfield's vendor tree is
-  not imported. Vendor bytes and TinyXML2's default limit of 500 remain
-  unchanged.
+  not imported. PR #149 replaces the active TinyXML2 tree with the owner's
+  exact pugixml archive; the external pinned control and historical member
+  list preserve retired input provenance. The project depth-500 boundary
+  remains in first-party XML policy. No vendor bytes are patched.
 - Tests are separate from headers and application `.cpp` files. CRT/preloader
   tests excluded from the product scope are not modified to conceal failures;
   they remain in the earlier package and are itemized in the scope list.
