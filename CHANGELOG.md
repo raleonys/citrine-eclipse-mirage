@@ -6,7 +6,9 @@ This file distinguishes source imports, integrated pull requests and published r
 
 Current development entries are updated alongside their pull requests. They describe source changes, including proposed work, rather than published releases or proof of Windows/native/game acceptance. The separately dated merged-PR checkpoint below preserves the earlier history through PR #62.
 
-### Current unreleased changes (updated 2026-11-03)
+### Current unreleased changes (updated 2026-11-04)
+
+- Reject source ZIP destinations whose parent-directory alias resolves exactly to the source root before staging any file. Add negative source-root and positive external-directory symlink tests; preserve runtime, vendor, public ABI and release policy.
 
 - Correct current XML dependency documentation to name pugixml, identify pre-migration TinyXML2 audit/CSV findings as historical, and record PR #149 as integrated in the owner requirements. Refresh the changelog heading and link recent integrated PRs; retain original archive provenance and external diagnostic-control references.
 
