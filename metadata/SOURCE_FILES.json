@@ -1238,8 +1238,8 @@
       "sha256": "d2ca4acf091c3e3cf4db00b4f2d015e60172ce3fbf52bbc7b1eae82b9e3f8e5d"
     },
     "tests/native/atomic_persistence_tests.cpp": {
-      "bytes": 6840,
-      "sha256": "26c58732fec8d80839ef966f87b2502f46ec4b9b86096b6c6fa995887974e43c"
+      "bytes": 8024,
+      "sha256": "56dea69fefcb062729b5744d55f37c42fb07c38519dec7a35614fa416d6204e2"
     },
     "tests/native/atomic_staging_tests.cpp": {
       "bytes": 4052,
