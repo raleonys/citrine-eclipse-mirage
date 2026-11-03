@@ -78,6 +78,21 @@ void contracts(){
     require(failed,"wrapper allocation failure is injected");
     const auto* system_services=retry.document->first_element();
     require(system_services&&system_services->name()=="R"&&system_services->first_element()->name()=="C","wrapper lookup retries after allocation failure without losing document ownership");
+    for(const bool text_value:{false,true}) {
+        auto entity=backend.parse_c_string("<R v='a-long-prefix&amp;a-long-suffix'>a-long-prefix&amp;a-long-suffix</R>");
+        const auto* element=entity.document->first_element();
+        allocation_probe::fail_after=0;failed=false;
+        try{if(text_value)(void)backend.text_003860(*element);else (void)element->attribute("v");}
+        catch(const std::bad_alloc&){failed=true;}
+        allocation_probe::fail_after=-1;
+        require(failed,"decoded-value allocation failure is injected");
+        require(element->attribute("v")=="a-long-prefix&a-long-suffix","attribute decode retries after allocation failure");
+        const auto* text=backend.text_003860(*element);
+        require(text&&std::string_view(text)=="a-long-prefix&a-long-suffix","text decode retries after allocation failure");
+        allocation_probe::begin();
+        for(unsigned i=0;i<1000;++i){(void)element->attribute("v");(void)backend.text_003860(*element);}
+        require(allocation_probe::end().calls==0,"repeated decoded-value lookup allocates nothing");
+    }
     std::printf("PASS: one owned input-sized buffer; repeated wrapper lookups allocate zero times\n");
 }
 void measure(const char* name,const std::string& input,unsigned iterations){

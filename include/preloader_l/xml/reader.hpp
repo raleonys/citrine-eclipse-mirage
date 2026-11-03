@@ -5,7 +5,9 @@
 
 namespace preloader_l::xml_reader_bridge {
 // XML reader using the exact owner-provided TinyXML2 archive, with its unchanged
-// default depth=500. This vendor choice is NOT proof that the
+// default depth=500. Value references are decoded once at this boundary using
+// checked Unicode arithmetic; invalid/unknown references remain literal.
+// This vendor choice is NOT proof that the
 // original DLL embedded this exact release or that all malformed inputs match.
 class Backend final:public messages::XmlBackend,
                     public dispatch::NodeAccess {

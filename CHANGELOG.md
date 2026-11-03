@@ -8,7 +8,7 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
-- Cover the C33 TinyXML2 numeric-character-reference boundary in the native product XML reader, including maximum Unicode code points, invalid overflow values and oversized hexadecimal strings; preserve the pinned vendor and its malformed-reference behavior.
+- Decode XML value references once at the first-party reader boundary using checked Unicode arithmetic and TinyXML2's public entity-processing option. Preserve invalid/unknown references literally, prevent numeric overflow/NUL truncation and unknown-entity compaction corruption, retain CDATA and parser diagnostics, and cache document-owned values. Keep the original C33 regression and frozen corpus, add explicit reviewed malformed-value corrections plus ownership/allocation and settings/achievement integration tests; all vendor bytes and pins remain unchanged.
 
 - Audit C34-F001: reject pre-existing symlinked source ZIP partials/output paths and use exclusively opened random temporary files for archive and checksum generation.
 

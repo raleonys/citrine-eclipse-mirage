@@ -130,7 +130,62 @@ void bounded_input_and_wrapper_rehash() {
     check(r->first_element()==first&&first->attribute("v")=="retained","root and child identities survive wrapper-map rehash");
     check(std::string_view(backend.text_003860(*first))=="payload","text survives caller overwrite and wrapper-map rehash");
 }
+void reference_values_and_contexts() {
+    reader::Backend backend;
+    const auto verify=[&](std::string_view reference,std::string_view expected) {
+        const auto input="<R a='prefix"+std::string(reference)+"suffix'>prefix"+std::string(reference)+"suffix</R>";
+        auto parsed=backend.parse_c_string(input);
+        if(parsed.has_error)throw std::runtime_error("reference fixture parse: "+std::string(reference)+" "+std::string(parsed.document->error_name()));
+        const auto& node=root(parsed);
+        const auto value="prefix"+std::string(expected)+"suffix";
+        check(node.attribute("a")==value,"attribute reference preserves complete prefix/suffix");
+        const auto* text=backend.text_003860(node);
+        check(text&&std::string_view(text)==value,"text reference preserves complete prefix/suffix");
+        const auto attrs=backend.attributes_in_order(node);
+        check(attrs.size()==1&&attrs[0].second==value,"ordered attributes use the same reference policy");
+    };
+    for(const auto& [reference,expected]:std::vector<std::pair<std::string,std::string>>{
+        {"&#9;","\t"},{"&#10;","\n"},{"&#13;","\r"},{"&#32;"," "},
+        {"&#x7F;","\x7f"},{"&#x80;","\xc2\x80"},{"&#x7FF;","\xdf\xbf"},
+        {"&#x800;","\xe0\xa0\x80"},{"&#xD7FF;","\xed\x9f\xbf"},
+        {"&#xE000;","\xee\x80\x80"},{"&#xFFFD;","\xef\xbf\xbd"},
+        {"&#x10000;","\xf0\x90\x80\x80"},{"&#1114111;","\xf4\x8f\xbf\xbf"},
+        {"&amp;&#65;&x1f600;","&A&x1f600;"},{"&amp;&unknown;","&&unknown;"},
+        {"&amp;#x100000000;","&#x100000000;"},{"&#38;#65;","&#65;"},
+        {"&amp;amp;","&amp;"},{"&quot;&amp;&apos;&lt;&gt;","\"&'<>"}})
+        verify(reference,expected);
+    for(const auto* reference:{"&#0;","&#x0;","&#5;","&#6;","&#31;","&#xD800;",
+            "&#xDFFF;","&#65534;","&#65535;","&#x110000;","&#x100000000;",
+            "&#4294967296;","&#18446744073709551616;","&#x10000000000000000;",
+            "&#;","&#x;","&#X41;","&#xGG;","&#-1;","&#43","&unknown;","&AMP;","&"})
+        verify(reference,reference);
+    verify("&#"+std::string(20000,'0')+"65;","A");
+    verify("&#x"+std::string(20000,'F')+";","&#x"+std::string(20000,'F')+";");
+    auto contexts=backend.parse_c_string("<?xml version='1.0'?><!DOCTYPE R [<!ENTITY named '&#65;'>]><R a='&named;'><!--&amp;&#0;--><![CDATA[&amp;&#65;&#0;]]><C/></R>");
+    check(!contexts.has_error,"DTD context fixture parses");
+    const auto& node=root(contexts);
+    check(node.attribute("a")=="&named;","DTD entities remain unexpanded and literal");
+    check(std::string_view(backend.text_003860(node))=="&amp;&#65;&#0;","CDATA bypasses reference decoding after comments");
+    auto pi=backend.parse_c_string("<R><?pi value='&#65;'?>&#65;</R>");
+    check(pi.has_error&&!pi.document->first_element(),"nested PI retains the pinned parser's rejection");
 }
-int main(){try{reading_and_ownership();errors_and_depth();numeric_character_reference_bounds();bounded_input_and_wrapper_rehash();
+void decoded_value_ownership() {
+    reader::Backend backend;std::string input="<R>";
+    for(unsigned i=0;i<2048;++i)input+="<C v='value&amp;owned'>text&amp;owned</C>";
+    input+="</R>";auto parsed=backend.parse_c_string(input);input.assign(input.size(),'X');
+    const auto* first=root(parsed).first_element();check(first!=nullptr,"decoded ownership first child");
+    const auto value=first->attribute("v");check(value=="value&owned","decoded attribute retained");
+    const auto* text=backend.text_003860(*first);
+    for(auto* node=first;node;node=node->next_element()) {
+        check(node->attribute("v")=="value&owned","decode every attribute across cache rehash");
+        check(std::string_view(backend.text_003860(*node))=="text&owned","decode every text across cache rehash");
+    }
+    check(value&&value->data()==first->attribute("v")->data()&&*value=="value&owned","borrowed decoded attribute survives cache growth");
+    check(text==backend.text_003860(*first)&&std::string_view(text)=="text&owned","decoded text pointer survives cache growth");
+    for(unsigned i=0;i<20;++i)(void)backend.parse_c_string("<Other a='&amp;'/>");
+    check(*value=="value&owned"&&std::string_view(text)=="text&owned","decoded values remain owned by their original document");
+}
+}
+int main(){try{reading_and_ownership();errors_and_depth();numeric_character_reference_bounds();bounded_input_and_wrapper_rehash();reference_values_and_contexts();decoded_value_ownership();
     std::cout<<"PASS: "<<checks<<" actual XML reader checks; selected upstream compatibility source, original target not executed\n";
     return 0;}catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}}

@@ -79,6 +79,23 @@ equivalence.
 
 ## Build-time versus active runtime use
 
+The XML reader disables TinyXML2 entity processing through its public constructor
+option and decodes references in parsed attribute/text values at the first-party
+boundary. The five predefined entities and valid XML Unicode scalar references
+are decoded exactly once with checked arithmetic. Invalid numeric references,
+unknown entities and bare ampersands remain literal; CDATA is not decoded and
+DTD entities are not expanded. Decoded values are owned by the document and
+cached without mutating vendor nodes. Syntax errors, full diagnostics, the depth
+limit and first-NUL semantics still belong to the pinned parser. This avoids its
+numeric multiplier saturation and unknown-entity compaction paths without a
+vendor edit, build-copy patch, new dependency or stricter raw UTF-8 policy.
+
+The original 12,087-row XML fixture remains frozen. Its corpus test lists only
+reviewed value corrections for malformed references, with the old row and exact
+new output checked explicitly. Other acceptance, code, diagnostic, ownership and
+DOM expectations remain unchanged. These regressions are not an assertion of
+complete XML validation, native DLL acceptance or game compatibility.
+
 MinHook and TinyXML2 are linked to existing
 DLL hook-engine/XML targets. PEGTL now runs
 the existing Config2/VDF grammar documented
