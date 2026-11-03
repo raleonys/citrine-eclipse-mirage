@@ -69,10 +69,12 @@ jobs:
         shell: pwsh
         run: |
           $build = 'build/msvc-defaults-diagnostic'
-          ctest --test-dir $build -C Debug -R '^portable_configuration_defaults$' --output-on-failure --verbose --timeout 75 --output-junit "$build/CTEST_RESULTS.xml" 2>&1 | Tee-Object -FilePath "$build/config_defaults_debug_ctest.log"
+          $junit = Join-Path (Resolve-Path $build) 'CTEST_RESULTS.xml'
+          ctest --test-dir $build -C Debug -R '^portable_configuration_defaults$' --output-on-failure --verbose --timeout 75 --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/config_defaults_debug_ctest.log"
           $testExit = $LASTEXITCODE
           "CTEST_EXIT_CODE=$testExit" | Set-Content -Path "$build/CTEST_EXIT_CODE.txt"
           if ($testExit -ne 0) { exit $testExit }
+          if (-not (Test-Path -LiteralPath $junit -PathType Leaf)) { throw 'Diagnostic JUnit report is missing' }
       - name: Retain Windows Debug diagnostic evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -91,7 +93,7 @@ jobs:
           retention-days: 14
 
   full-windows-portable:
-    name: Windows x64 portable ${{ matrix.configuration }} (28 tests)
+    name: Windows x64 portable ${{ matrix.configuration }} (31 tests)
     runs-on: windows-2022
     timeout-minutes: 45
     strategy:
@@ -124,17 +126,19 @@ jobs:
           $code = $LASTEXITCODE
           $listed | Tee-Object -FilePath "$build/ctest-inventory.log"
           if ($code -ne 0) { throw "CTest inventory failed: $code" }
-          if (-not ($listed -match '^Total Tests:\s+28\s*$')) {
-            throw 'Unexpected Windows portable test inventory (expected exactly 28)'
+          if (-not ($listed -match '^Total Tests:\s+31\s*$')) {
+            throw 'Unexpected Windows portable test inventory (expected exactly 31)'
           }
       - name: Run all Windows portable tests
         shell: pwsh
         run: |
           $build = 'build/msvc-full-portable-${{ matrix.configuration }}'
-          ctest --test-dir $build -C '${{ matrix.configuration }}' --output-on-failure --timeout 120 --output-junit "$build/CTEST_RESULTS.xml" 2>&1 | Tee-Object -FilePath "$build/ctest.log"
+          $junit = Join-Path (Resolve-Path $build) 'CTEST_RESULTS.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' --output-on-failure --timeout 120 --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/ctest.log"
           $code = $LASTEXITCODE
           "CTEST_EXIT_CODE=$code" | Set-Content "$build/CTEST_EXIT_CODE.txt"
           if ($code -ne 0) { throw "Full Windows portable CTest failed: $code" }
+          if (-not (Test-Path -LiteralPath $junit -PathType Leaf)) { throw 'Full portable JUnit report is missing' }
       - name: Retain full portable acceptance evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

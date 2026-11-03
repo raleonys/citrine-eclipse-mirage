@@ -63,6 +63,21 @@ expected/actual hashes. Reproduction and fresh checks are recorded in
 
 ## Lifecycle contract
 
+The existing `hook_engine::Api` / `BatchApi` boundary exposes application-owned
+integer status codes without including MinHook or Windows headers. `NativeApi`
+owns the MinHook include and compile-time checks for all native-to-application
+status values. Method signatures, numeric diagnostics and the selected native
+engine remain unchanged. Native tests that call MinHook directly include its
+header explicitly; source-included shutdown fixtures include it before their
+function interception macros.
+
+`portable_hook_transaction` runs the same real transaction source and fake-engine
+regressions on Linux and Windows without linking MinHook. It checks staging,
+queued activation, failed rollback, retained ownership, drain and cleanup retries.
+This proves the transaction boundary is independently buildable; it does not
+exercise SAFE-FREEZE, native thread suspension or live patches. Existing native
+engine and lifecycle tests retain those separate responsibilities.
+
 | Requirement | Concrete path |
 | --- | --- |
 | NtGetNextThread SAFE-FREEZE | Patched MinHook enumerates stable duplicated peer handles, checks suspend/context operations and retains failed resume/close/heap owners for retry. Missing Nt API fails closed; no Toolhelp fallback. |

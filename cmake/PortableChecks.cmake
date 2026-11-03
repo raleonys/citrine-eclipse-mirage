@@ -39,4 +39,5 @@ target_link_libraries(portable_configuration_defaults_integration PRIVATE preloa
 portable_check(portable_online src/runtime/online.cpp src/core/paths.cpp tests/unit/online/online_tests.cpp)
 target_compile_definitions(portable_online PRIVATE PRELOADER_L_PORTABLE_ONLINE_TESTS=1)
 portable_check(portable_server src/net/server.cpp src/runtime/execution.cpp tests/unit/server/server_tests.cpp)
+portable_check(portable_hook_transaction src/platform/hook_transaction.cpp tests/unit/hooks/transaction_tests.cpp)
 portable_check(portable_registry_rollback src/platform/registry.cpp tests/unit/registry/allocation_failure_tests.cpp)
