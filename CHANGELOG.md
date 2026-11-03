@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Extend the source-included public DllShutdown fixture with a bounded A11-06-X1 staged retry: test-only exception immediately after real file recovery, followed by a real hook-disable failure, then successful single-owner retirement. Distinguish this boundary injection from a genuine incomplete native rollback; no product, vendor or ABI change.
+
 - Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
 
 - Validate SOURCE_FILES byte counts alongside SHA-256, rejecting missing, malformed and stale sizes. Add matching-hash negative controls for multibyte/CRLF payloads and count-only tampering.

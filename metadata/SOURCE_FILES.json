@@ -1234,8 +1234,8 @@
       "sha256": "8d8afc7300ac322e1dcb82a2d1ee1046546bd31a9bea67e272f392dce388d82a"
     },
     "tests/native/application_shutdown_failure_tests.cpp": {
-      "bytes": 5710,
-      "sha256": "d2ca4acf091c3e3cf4db00b4f2d015e60172ce3fbf52bbc7b1eae82b9e3f8e5d"
+      "bytes": 7624,
+      "sha256": "4e71d3afcefbe87918f20493cc8c860079ee18507c9dd596891b872cfe4edea9"
     },
     "tests/native/atomic_persistence_tests.cpp": {
       "bytes": 6840,
@@ -1370,8 +1370,8 @@
       "sha256": "aadd4065f25dcaf4751018f7a6df4f3081c328d07905614f4de7f52b21b4be61"
     },
     "tests/support/runtime/application_shutdown_fixture.cpp": {
-      "bytes": 4181,
-      "sha256": "703d5572314cf4a914a8c270fc7432c37361d1ff08a281c14a4d7c01de253165"
+      "bytes": 4997,
+      "sha256": "fbedd411dfd3b1c14d46724e3ca3770ac8fec4d4724b8300c87284765c23d2d5"
     },
     "tests/support/runtime/cleanup_retry_fixture.cpp": {
       "bytes": 1163,
