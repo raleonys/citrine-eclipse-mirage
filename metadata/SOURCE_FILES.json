@@ -2134,8 +2134,8 @@
       "sha256": "48231f8956b8094bd14eb57a06248c509b775a68974e093cd9dd18f5852b4e9b"
     },
     "tests/unit/startup/startup_tests.cpp": {
-      "bytes": 10430,
-      "sha256": "7a9750744cb41fc6f2817b3f8be353f9633fad04e8779eb681eacf50194d1466"
+      "bytes": 11267,
+      "sha256": "d3a1c90efc634d067fc541b2cf849279ec6b11a28c0480e0e0f26f04df91bbad"
     },
     "tests/unit/status/status_tests.cpp": {
       "bytes": 7865,
