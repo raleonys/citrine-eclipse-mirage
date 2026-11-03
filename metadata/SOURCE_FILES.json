@@ -1110,8 +1110,8 @@
       "sha256": "fb86c271f58b368e9c8afe8484a0871396c94ca9ca730bc506291e2032d68d7c"
     },
     "tests/diagnostics/xml_backend/allocation.cpp": {
-      "bytes": 5220,
-      "sha256": "5237845a4c1c468f71d024c127ff7cb50553ca50b1edf2fa25362235e993be6e"
+      "bytes": 5279,
+      "sha256": "c3b0bbab2ec3877b5d913859362905f32779150f5a81da77cd4f3760ddd661b6"
     },
     "tests/diagnostics/xml_backend/backend.cpp": {
       "bytes": 5226,

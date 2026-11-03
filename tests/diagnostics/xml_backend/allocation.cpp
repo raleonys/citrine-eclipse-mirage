@@ -7,6 +7,9 @@
 #include <cstdlib>
 #include <exception>
 #include <new>
+#include <optional>
+#include <stdexcept>
+#include <string>
 #include <string_view>
 namespace probe {
 struct Slot {void* pointer=nullptr;std::size_t bytes=0;};
