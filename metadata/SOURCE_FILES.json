@@ -886,8 +886,8 @@
       "sha256": "5b92c197b26f309b5593df95b762c1811ebc0fec61a60dd3b08458f564804a7e"
     },
     "src/platform/file_io_windows.cpp": {
-      "bytes": 2708,
-      "sha256": "248db3000dca769c64df84498f40fc94332eeeef61c3f5517090c6e8de870545"
+      "bytes": 2877,
+      "sha256": "8e706ee2c162e96a2f7e0a873b1912ca7dfcc7408ed0ed66199b1426dc78b045"
     },
     "src/platform/hook_cleanup.cpp": {
       "bytes": 624,
@@ -1618,8 +1618,8 @@
       "sha256": "f0f2476bdfc4336c323a3360be098d5b30803cb5e7cb6c4bca37399af92e4c90"
     },
     "tests/unit/file/binary_io_tests.cpp": {
-      "bytes": 6796,
-      "sha256": "7374e32cbe6cb5e8fd7194ca1e1955b217f1c71932600cb380ba9d3e1a6ac75e"
+      "bytes": 7098,
+      "sha256": "bd6c838525ffb8d05e374fdca2474d5692ce0946dd393df4cae1bb22e62d1c89"
     },
     "tests/unit/file/file_copy_tests.cpp": {
       "bytes": 9422,
