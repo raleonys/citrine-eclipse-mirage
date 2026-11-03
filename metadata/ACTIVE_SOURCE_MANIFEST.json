@@ -389,7 +389,7 @@
     "metadata/SESSION_TRANSPORT_POLICY.json": "2403d829c98174d3cf7caa0d382d6478457d22f4d74e162194372d66c8894b66",
     "metadata/SHUTDOWN_RECOVERY_REVIEW.json": "6a0799c62dd9fcba984035ab48a06c078e0b7958ed778e2641e44124726b0ce9",
     "metadata/SOCKET_RETIREMENT_REVIEW.json": "a27d0cd84fc6ab05cf5b321bafce23cde6b887dc374c715ee9fa8553c97d45c6",
-    "metadata/SOURCE_FILES.json": "2cd668482cd8413e3c5f1673c33acb70a458bd9a01d0983e2c19ba94698741df",
+    "metadata/SOURCE_FILES.json": "491df9722da79736a26d5a59afffb5c169dad5c19511c4de17af75f3e3a1bf28",
     "metadata/SOURCE_INPUTS.json": "04bb9354fc5a4d6a192b59ef1e2c10badb69769ff2f30fa5afcd3920145acdb8",
     "metadata/UNLOAD_RECOVERY_CONTRACT.json": "bcc72f466706903cf4cd76e93bdc0dc62b83574524055026fe2ec184b860fd9b",
     "metadata/URSYNEX_GOLDEN_FINALIZER.json": "f8c08ca30b9ef2e77354adb043ad75c3dae09942e53ecbe8ff8ed637001b855d",
@@ -599,7 +599,7 @@
     "tests/diagnostics/xml_backend/performance.py": "76e3855034b9bf42573dd94f9eb947bc0ed22ab8bd399e6036f835c09031a76e",
     "tests/fixtures/xml_reader/optimization-baseline.txt": "d598f453b1f495f8f6aec57d00596895d0cdd557c74c21fe42b22ac7b6fcec57",
     "tests/fixtures/xml_reader/optimization-corpus.txt": "0f860de117e3786c4b58c5f74b3d5a34a1ba4e39bee1253ae563f917bd14a5a1",
-    "tests/fixtures/xml_reader/wire_contracts.hpp": "6c3d9c49df2921e669e24447d081e01f620dbe3314ea6cc692b8143014729f60",
+    "tests/fixtures/xml_reader/wire_contracts.hpp": "ff8dadab50028201077b165b2b725a4466845291a8361efd2d302449795b2d07",
     "tests/infrastructure/test_build_partition.py": "b5323ab60eea17a29888bf70e7b34d7fc6323b9977c5e656f751dc22a6e67123",
     "tests/infrastructure/test_build_path_reparse.ps1": "2954f243060fadaa01b5c7a27d341b2d326e4f6bd00f9dea250033b48e801227",
     "tests/infrastructure/test_corvexon_mswsock_imports.py": "e2b2cad669df9c09b9f730432f06874f9aa8dbf2408eedebb919c717a0f1f508",
@@ -3612,7 +3612,7 @@
     "tools/inspect_dll.py": "29a86d9c26bcf0e594e7958625b1625c24a4feb2ff75d4ce70d7cb1102b4c33e",
     "tools/preloader_l_crt_host/main.cpp": "deabcd42a1fea2df29b9f080017160be0f222fef11837b5b03c76846d9395cf6",
     "tools/preloader_l_runtime_host/listener_owners.hpp": "181f51a617e3a6ace4e340ee41b684cd9c8d9630ee5f6df6929058a88af072b0",
-    "tools/preloader_l_runtime_host/main.cpp": "c6060cfd6eccd004c2fbf21803673b1760acc0c54ceee126f7d281c7961d0382",
+    "tools/preloader_l_runtime_host/main.cpp": "2b34cd58ff3eeb2146ccb4ece0f366951489c75422b07d395f20aa5b21c6517c",
     "tools/preloader_l_source_host/main.cpp": "015ecf4786f817673616022656a51c363759cd152bc4a3b808163116ce888066",
     "tools/README.md": "100b6b0bce155329c2e6bd3647229231d602b93898fc917f042d3b48b3bfda26",
     "tools/runtime_probe.hpp": "54ad0df82fa98f263b2ddfe5f8ef97c9a500b34e7e9fd32f6054f1f3a8081c7f",
@@ -3629,11 +3629,11 @@
     "docs/BUILD_PATH_TRUST.md": "4ff4da3b801d1ca023bd88db26a20edeb8bc8edabadc86193c46f161c3e95e72",
     "scripts/build_orchestration/build_path_pinning.ps1": "fd69e8ec890b65954f0365bc94faa38d988a66fc6b64e2d15de10698c8447dd9",
     ".github/workflows/xml-backend-comparison.yml": "276c4db13cbdf4b07ef0a8c497b4fa7fa5922bb5a55d62e36eafc89021c4797f",
-    "docs/XML_BACKEND_COMPARISON.md": "381a6e5208c28fda6548371aa604503554ac1a75718bbce3ce5558c694d2a80f",
+    "docs/XML_BACKEND_COMPARISON.md": "330c74e22092763283e56354570bdb0592ced385c11b17c4d7882be4fa2f23dd",
     "tests/diagnostics/xml_backend/allocation.cpp": "49cb867bae5d1b3b8e375e197bedb9b13eef67ad0ea8c29ed6480317adf619bf",
     "tests/diagnostics/xml_backend/backend.hpp": "148e339141c327c5e6b7ca7dc2afd7564d9ae8451e1aeddacfd3a6fcecdc5fcd",
     "tests/diagnostics/xml_backend/CMakeLists.txt": "d92bc591d7d5ccd7ffccf893e7d53ee72b4a7dc67a879aea9e383cb12c3c7581",
     "tests/diagnostics/xml_backend/run.py": "6917255f14afeeb57e919c60204b73c2ac0f7916ae120e817d9392ea6ca6d358",
-    "tests/diagnostics/xml_backend/suite.cpp": "3b93c6c1f828dc1525de2972d751643be6d62d16100509831dffbf011547552a"
+    "tests/diagnostics/xml_backend/suite.cpp": "b013343a7c32906c86066e2719879044c3f9830d3e1b217cabec64d0c41d09da"
   }
 }

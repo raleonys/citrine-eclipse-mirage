@@ -1146,8 +1146,8 @@
       "sha256": "6917255f14afeeb57e919c60204b73c2ac0f7916ae120e817d9392ea6ca6d358"
     },
     "tests/diagnostics/xml_backend/suite.cpp": {
-      "bytes": 30002,
-      "sha256": "3b93c6c1f828dc1525de2972d751643be6d62d16100509831dffbf011547552a"
+      "bytes": 30562,
+      "sha256": "b013343a7c32906c86066e2719879044c3f9830d3e1b217cabec64d0c41d09da"
     },
     "tests/fixtures/xml_reader/optimization-baseline.txt": {
       "bytes": 1477836,
@@ -1158,8 +1158,8 @@
       "sha256": "0f860de117e3786c4b58c5f74b3d5a34a1ba4e39bee1253ae563f917bd14a5a1"
     },
     "tests/fixtures/xml_reader/wire_contracts.hpp": {
-      "bytes": 2068,
-      "sha256": "6c3d9c49df2921e669e24447d081e01f620dbe3314ea6cc692b8143014729f60"
+      "bytes": 2192,
+      "sha256": "ff8dadab50028201077b165b2b725a4466845291a8361efd2d302449795b2d07"
     },
     "tests/infrastructure/test_build_partition.py": {
       "bytes": 22950,

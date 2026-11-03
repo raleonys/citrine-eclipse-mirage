@@ -130,8 +130,9 @@ must be checked before describing those profiles as passed.
 
 `dll_public_xml_contracts` loads the actual application DLL, connects through
 its real TCP/LSX listener and compares complete response bytes without masking
-fields. Shared fixtures cover eight equivalent XML forms, five decoded/literal
-value pairs and three malformed-frame/recovery pairs. The cases include numeric
+fields. Explicit id/index/value expectations also prevent two equally wrong
+responses from satisfying the equivalence checks. Shared fixtures cover eight equivalent XML forms, five decoded/literal
+value pairs, a successive request-id/value check and three malformed-frame/recovery pairs. The cases include numeric
 references in request ids/recipients/values, Unicode, unknown/invalid references,
 20,000-digit references, declarations, BOM, comments and legacy whitespace.
 Malformed requests have a distinct id and are followed by a valid frame on the

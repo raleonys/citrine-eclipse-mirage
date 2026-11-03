@@ -58,15 +58,23 @@ void xml_contracts(asio::ip::tcp::socket& socket,std::string& buffered,
     // The existing profile response contains no timestamp/random challenge field.
     using namespace xml_contract_fixture;
     const auto canonical=profile_request();
+    require(canonical_response.find("id=\"public-dll\"")!=std::string::npos&&
+            canonical_response.find("UserIndex=\"0\"")!=std::string::npos,
+            "real DLL canonical response omitted expected id/index");
     for(const auto& [name,request]:equivalent_forms())
         if(exchange(socket,buffered,request)!=canonical_response)
             throw std::runtime_error("Real DLL XML equivalence failed: "+name);
-    for(const auto& [literal,reference]:equivalent_values()) {
-        const auto expected=exchange(socket,buffered,profile_request(literal));
-        require(expected.find("GetProfileResponse")!=std::string::npos,"missing value-control response");
-        require(exchange(socket,buffered,profile_request(reference))==expected,
+    for(const auto& value:equivalent_values()) {
+        const auto expected=exchange(socket,buffered,profile_request(value.literal));
+        // Literal fixtures already contain the exact expected XML escaping.
+        require(expected.find("UserIndex=\""+value.literal+"\"")!=std::string::npos,
+                "real DLL did not return the explicit expected attribute value");
+        require(exchange(socket,buffered,profile_request(value.reference))==expected,
                 "real DLL changed decoded/literal/Unicode attribute semantics");
     }
+    const auto next=exchange(socket,buffered,profile_request("A","EbisuSDK","wire-next"));
+    require(next.find("id=\"wire-next\"")!=std::string::npos&&next.find("UserIndex=\"A\"")!=std::string::npos,
+            "real DLL returned stale request id/value");
     for(const auto& invalid:malformed_frames()) {
         // No reply for malformed XML; the same session must process the next
         // valid frame in FIFO order. A bogus reply has a distinct request id.
@@ -74,7 +82,7 @@ void xml_contracts(asio::ip::tcp::socket& socket,std::string& buffered,
         require(exchange(socket,buffered,std::move(pipelined))==canonical_response,
                 "real DLL malformed-frame rejection/recovery changed");
     }
-    std::cout<<"PASS: real DLL XML contracts: 8 equivalent forms, 5 value pairs, 3 malformed/recovery pairs\n";
+    std::cout<<"PASS: real DLL XML contracts: 8 equivalent forms, 5 value pairs, fresh id/value, 3 malformed/recovery pairs\n";
 }
 void cycle(const wchar_t* path,unsigned index,bool validate_xml) {
     const std::wstring supplied(path);

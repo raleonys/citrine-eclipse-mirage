@@ -218,9 +218,15 @@ void wire_contracts() {
    return std::make_tuple(std::string(*id),std::string(*recipient),std::string(*index));
   };
   using namespace xml_contract_fixture;
-  const auto canonical=fields(profile_request());
+  const auto canonical=std::make_tuple(std::string("public-dll"),std::string("EbisuSDK"),std::string("0"));
+  require(fields(profile_request())==canonical,"wire canonical fields differ from explicit oracle");
   for(const auto& [name,input]:equivalent_forms())require(fields(input)==canonical,"wire equivalent form changed parsed fields");
-  for(const auto& [literal,reference]:equivalent_values())require(fields(profile_request(literal))==fields(profile_request(reference)),"wire value contract changed");
+  for(const auto& value:equivalent_values()) {
+   const auto expected=std::make_tuple(std::string("public-dll"),std::string("EbisuSDK"),value.decoded);
+   require(fields(profile_request(value.literal))==expected,"wire literal differs from explicit value oracle");
+   require(fields(profile_request(value.reference))==expected,"wire reference differs from explicit value oracle");
+  }
+  require(fields(profile_request("A","EbisuSDK","wire-next"))==std::make_tuple(std::string("wire-next"),std::string("EbisuSDK"),std::string("A")),"wire fields stale across requests");
   for(const auto& input:malformed_frames())require(profile->backend().parse_c_string(input).has_error,"malformed wire fixture accepted");
  }
  std::cout<<"PASS: actual DLL wire fixtures: 8 equivalent forms, 5 value pairs and 3 malformed inputs on both readers\n";
