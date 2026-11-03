@@ -5,7 +5,7 @@ import argparse
 import hashlib
 import json
 import re
-from pathlib import Path, PurePosixPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 import sys
 import unicodedata
 
@@ -44,7 +44,9 @@ def source_paths(manifest):
         if not isinstance(name, str):
             raise ValueError('Non-string file path')
         path = PurePosixPath(name)
-        if path.is_absolute() or any(part in {'.', '..'} for part in name.split('/')):
+        if (not name or '\\' in name or path.as_posix() != name
+                or path.is_absolute() or PureWindowsPath(name).drive
+                or any(part in {'.', '..'} for part in name.split('/'))):
             raise ValueError('Unsafe source path: ' + name)
         if name.startswith(EXCLUDED_PREFIXES):
             continue
@@ -65,13 +67,18 @@ def blocking_language_signal(name):
 
 def audit(root):
     root = Path(root)
+    resolved_root = root.resolve()
     manifest_path = root / 'metadata/ACTIVE_SOURCE_MANIFEST.json'
     manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
     findings = []
     scanned = 0
     for name in source_paths(manifest):
-        path = root.joinpath(*PurePosixPath(name).parts)
-        if not path.is_file() or path.is_symlink():
+        path = root
+        for part in PurePosixPath(name).parts:
+            path = path / part
+            if path.is_symlink() or getattr(path, 'is_junction', lambda: False)():
+                raise ValueError('Missing or nonregular active source: ' + name)
+        if not path.is_file() or not path.resolve().is_relative_to(resolved_root):
             raise ValueError('Missing or nonregular active source: ' + name)
         try:
             text = path.read_text(encoding='utf-8')

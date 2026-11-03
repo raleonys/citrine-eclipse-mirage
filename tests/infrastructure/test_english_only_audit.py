@@ -64,8 +64,23 @@ class LanguageSignalAuditTests(unittest.TestCase):
             checker.audit(self.root)
         self.assertEqual(2, checker.main(['--root', str(self.root), '--check']))
 
+    def test_symlinked_directory_ancestor_fails_closed(self):
+        real = self.root / 'real'
+        real.mkdir()
+        (real / 'prose.md').write_text('English text only\n', encoding='utf-8')
+        try:
+            (self.root / 'docs').symlink_to(real, target_is_directory=True)
+        except (OSError, NotImplementedError) as error:
+            self.skipTest(f'Directory symlinks unavailable: {error}')
+        self.manifest(['docs/prose.md'])
+        with self.assertRaisesRegex(ValueError, 'Missing or nonregular'):
+            checker.audit(self.root)
+
     def test_manifest_paths_cannot_escape_root(self):
-        for path in ['../outside.md', '/tmp/absolute.md', 'docs/../prose.md']:
+        for path in ['../outside.md', '/tmp/absolute.md', 'docs/../prose.md',
+                     r'docs\..\outside.md', r'C:\temp\outside.md',
+                     'C:/temp/outside.md', r'\\server\share\outside.md',
+                     'docs//prose.md']:
             with self.subTest(path=path):
                 self.manifest([path])
                 with self.assertRaisesRegex(ValueError, 'Unsafe source path'):
