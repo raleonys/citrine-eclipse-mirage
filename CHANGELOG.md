@@ -8,7 +8,15 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Resolve the Source QA report fixture root before output ancestry checks, matching the real entrypoint and Windows short/long temporary-path aliases. Preserve mandatory hardlink, early rejection and failed-write/replace checks.
+
 - Publish Source QA JSON reports through a closed exclusive temporary file and atomic name replacement, preserving source inodes behind hardlinked report names and the previous complete report after write/replace failure. Validate report destinations before running checks; retain the existing project-build boundary, missing-parent creation and nonzero failed-check result. Runtime, vendor, ABI and mandatory pre-push validation are unchanged.
+
+- Audit C34-F003: validate both ownership-ledger schemas and explicit role policies, complete three previously untyped script entries, and test missing or unknown roles.
+
+- Replace the README campaign artwork with the exact new owner-supplied 1400 x 1100 RGBA PNG (612724 bytes), preserving transparency and encoded bytes. Update the artwork identity/provenance and active manifest; runtime/profile avatars, production resources, ABI and code are unchanged.
+
+- Audit C34-F004: confine Python cache-cleanup report files to the owned build tree and publish them through exclusive temporary files; reject unsafe, directory and missing-parent destinations before deleting caches. Cover linked-directory escapes, hardlinked sources and failed report publication.
 
 - Preserve the owner-authorized Draft status of existing four-field research PR #81 as a narrow exception to the normal ready-for-review PR rule; record its continuing source-provenance scope without treating the work as a routine audit, production release or automatic merge. Update governance, agent workflow and PR guidance only; no runtime, vendor or ABI change.
 

@@ -216,7 +216,9 @@ class SourceQaReportTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
+        # Windows temp paths may use an 8.3 alias; match the resolved ROOT
+        # used by the real QA entrypoint before comparing output ancestry.
+        self.root = Path(self.temp.name).resolve()
         (self.root / 'src').mkdir()
         (self.root / 'build').mkdir()
         self.source = self.root / 'src/sentinel.cpp'
@@ -520,11 +522,65 @@ class GovernanceTests(unittest.TestCase):
             (root / 'metadata').mkdir()
             (root / 'metadata/METADATA_OWNERSHIP.json').write_text(json.dumps({'files': {
                 'METADATA_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'registry', 'role': 'CURRENT_CONTRACT'},
-                'SCRIPT_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'script registry', 'role': 'CURRENT_CONTRACT'}}}))
-            (root / 'metadata/SCRIPT_OWNERSHIP.json').write_text(json.dumps({'files': {}}))
+                'SCRIPT_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'script registry', 'role': 'CURRENT_CONTRACT'}},
+                'schema': ownership.METADATA_SCHEMA}))
+            (root / 'metadata/SCRIPT_OWNERSHIP.json').write_text(json.dumps({'schema': ownership.SCRIPT_SCHEMA, 'files': {}}))
             self.assertEqual([], ownership.check(root))
             (root / 'metadata/unowned.json').write_text('{}')
             self.assertTrue(any('Unowned' in e for e in ownership.check(root)))
+
+
+    def test_ownership_schemas_and_allowed_roles_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'metadata').mkdir()
+            (root / 'scripts').mkdir()
+            (root / 'scripts/audit_tool.py').write_text('pass\n')
+            metadata = {
+                'schema': ownership.METADATA_SCHEMA,
+                'files': {
+                    'METADATA_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'metadata registry',
+                                                'role': 'CURRENT_CONTRACT'},
+                    'SCRIPT_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'script registry',
+                                              'role': 'CURRENT_CONTRACT'},
+                },
+            }
+            scripts = {
+                'schema': ownership.SCRIPT_SCHEMA,
+                'files': {
+                    'scripts/audit_tool.py': {'owner': 'qa', 'purpose': 'fixture script',
+                                              'role': 'PYTHON_TOOL_OR_MODULE'},
+                },
+            }
+            metadata_path = root / 'metadata/METADATA_OWNERSHIP.json'
+            script_path = root / 'metadata/SCRIPT_OWNERSHIP.json'
+            def write_records():
+                metadata_path.write_text(json.dumps(metadata))
+                script_path.write_text(json.dumps(scripts))
+            write_records()
+            self.assertEqual([], ownership.check(root))
+            for ledger, key in ((metadata, 'metadata'), (scripts, 'script')):
+                ledger['schema'] = 'unexpected.audit.schema'
+                write_records()
+                self.assertTrue(any('Unrecognized ' + key + ' ownership schema' in error
+                                    for error in ownership.check(root)))
+                ledger['schema'] = (ownership.METADATA_SCHEMA if key == 'metadata'
+                                    else ownership.SCRIPT_SCHEMA)
+                write_records()
+            for ledger, name in ((metadata, 'METADATA_OWNERSHIP.json'),
+                                 (scripts, 'scripts/audit_tool.py')):
+                record = ledger['files'][name]
+                role = record.pop('role')
+                write_records()
+                self.assertTrue(any('invalid' in error and name in error
+                                    for error in ownership.check(root)))
+                record['role'] = 'UNKNOWN_ROLE'
+                write_records()
+                self.assertTrue(any('invalid' in error and name in error
+                                    for error in ownership.check(root)))
+                record['role'] = role
+                write_records()
+                self.assertEqual([], ownership.check(root))
 
     def test_launcher_result_and_argument_mutations(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -649,6 +705,116 @@ class LocalDistTests(unittest.TestCase):
 
 
 class ToolCacheTests(unittest.TestCase):
+    def cleanup_fixture(self, base):
+        root = base / 'source'
+        (root / 'scripts').mkdir(parents=True)
+        (root / 'metadata').mkdir()
+        (root / 'build').mkdir()
+        (root / 'scripts/helper.py').write_text('value=1\n')
+        victim = root / 'metadata/keep.json'
+        victim.write_bytes(b'owned source sentinel')
+        inventory.write_manifest(root)
+        payload = root / 'scripts/__pycache__/helper.cpython-313.pyc'
+        payload.parent.mkdir()
+        payload.write_bytes(b'owned cache')
+        command = [sys.executable, '-B', str(ROOT / 'scripts/clear_tool_python_cache.py'),
+                   '--root', str(root), '--quiet', '--report']
+        return root, victim, payload, command
+
+    def test_cleanup_report_invalid_targets_preserve_sources_and_cache(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, victim, payload, command = self.cleanup_fixture(Path(tmp))
+            directory = root / 'build/directory'
+            directory.mkdir()
+            protected = {p: p.read_bytes() for p in
+                         [victim, root / inventory.MANIFEST, root / 'scripts/helper.py']}
+            for target in [victim, root / inventory.MANIFEST, root / 'scripts/helper.py',
+                           root / 'build', directory, root / 'build/missing/report.json',
+                           root.parent / 'outside.json', root / 'build/../metadata/keep.json',
+                           Path('metadata/keep.json')]:
+                with self.subTest(target=str(target)):
+                    result = subprocess.run(command + [str(target)], cwd=root,
+                                            capture_output=True, text=True)
+                    self.assertNotEqual(0, result.returncode)
+                    self.assertEqual('', result.stdout)
+                    self.assertIn('TOOL_CACHE_CLEANUP: FAIL:', result.stderr)
+                    self.assertTrue(payload.exists())
+                    for path, before in protected.items():
+                        self.assertEqual(before, path.read_bytes())
+                    self.assertFalse(list((root / 'build').rglob('*.partial')))
+            self.assertFalse((root.parent / 'outside.json').exists())
+
+    def test_cleanup_report_linked_directories_cannot_reach_outside(self):
+        import os
+        for link_root in (True, False):
+            with self.subTest(link_root=link_root), tempfile.TemporaryDirectory() as tmp:
+                base = Path(tmp)
+                root, victim, payload, command = self.cleanup_fixture(base)
+                outside = base / 'outside'
+                outside.mkdir()
+                sentinel = outside / 'report.json'
+                sentinel.write_bytes(b'outside sentinel')
+                link = root / 'build' if link_root else root / 'build/redirect'
+                if link_root:
+                    link.rmdir()
+                if os.name == 'nt':
+                    made = subprocess.run(['cmd.exe', '/d', '/c', 'mklink', '/J',
+                                           str(link), str(outside)], capture_output=True, text=True)
+                    self.assertEqual(0, made.returncode, made.stdout + made.stderr)
+                else:
+                    link.symlink_to(outside, target_is_directory=True)
+                try:
+                    result = subprocess.run(command + [str(link / 'report.json')],
+                                            capture_output=True, text=True)
+                    self.assertNotEqual(0, result.returncode)
+                    self.assertIn('TOOL_CACHE_CLEANUP: FAIL:', result.stderr)
+                    self.assertTrue(payload.exists())
+                    self.assertEqual(b'owned source sentinel', victim.read_bytes())
+                    self.assertEqual(b'outside sentinel', sentinel.read_bytes())
+                    self.assertEqual(['report.json'], sorted(p.name for p in outside.iterdir()))
+                finally:
+                    if os.name == 'nt':
+                        os.rmdir(link)  # Remove the owned junction entry, never its target.
+                    else:
+                        link.unlink()
+                self.assertEqual(b'outside sentinel', sentinel.read_bytes())
+
+    def test_cleanup_report_atomic_replace_preserves_hardlinked_source(self):
+        import os
+        with tempfile.TemporaryDirectory() as tmp:
+            root, victim, payload, command = self.cleanup_fixture(Path(tmp))
+            report = root / 'build/report.json'
+            os.link(victim, report)
+            self.assertTrue(os.path.samefile(victim, report))
+            result = subprocess.run(command + [str(report)], capture_output=True, text=True)
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertEqual('', result.stdout)
+            self.assertEqual(b'owned source sentinel', victim.read_bytes())
+            self.assertFalse(os.path.samefile(victim, report))
+            self.assertFalse(payload.exists())
+            self.assertEqual(['scripts/__pycache__/helper.cpython-313.pyc'],
+                             json.loads(report.read_text())['removed'])
+            self.assertFalse(list(report.parent.glob('.*.partial')))
+
+    def test_cleanup_report_replace_failure_preserves_previous_report(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            report = Path(tmp) / 'report.json'
+            report.write_bytes(b'previous complete report')
+            output = '{"removed": []}\n'
+            def fail_replace(source, target):
+                self.assertEqual(report, target)
+                self.assertEqual(b'previous complete report', report.read_bytes())
+                self.assertEqual(output, Path(source).read_text(encoding='utf-8'))
+                raise OSError('injected report publication failure')
+            with patch.object(tool_cache.os, 'replace', side_effect=fail_replace):
+                with self.assertRaisesRegex(OSError, 'injected report publication failure'):
+                    tool_cache.write_report(report, output)
+            self.assertEqual(b'previous complete report', report.read_bytes())
+            self.assertEqual(['report.json'], sorted(p.name for p in report.parent.iterdir()))
+            tool_cache.write_report(report, output)
+            self.assertEqual(output, report.read_text())
+            self.assertEqual(['report.json'], sorted(p.name for p in report.parent.iterdir()))
+
     def test_quiet_cleanup_keeps_report_and_propagates_failure(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
@@ -673,6 +839,53 @@ class ToolCacheTests(unittest.TestCase):
             cp=subprocess.run(command,capture_output=True,text=True)
             self.assertNotEqual(0,cp.returncode)
             self.assertIn('TOOL_CACHE_CLEANUP: FAIL:',cp.stderr)
+
+
+    def test_cleanup_report_rejects_source_destinations_before_mutation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'scripts').mkdir()
+            (root / 'metadata').mkdir()
+            (root / 'scripts/helper.py').write_text('value=1\n')
+            victim = root / 'metadata/METADATA_OWNERSHIP.json'
+            victim.write_bytes(b'original active record')
+            inventory.write_manifest(root)
+            baseline = victim.read_bytes()
+            cache = root / 'scripts/__pycache__'
+            cache.mkdir()
+            payload = cache / 'helper.cpython-313.pyc'
+            payload.write_bytes(b'fixture')
+
+            command = [sys.executable, '-B', str(ROOT / 'scripts/clear_tool_python_cache.py'),
+                       '--root', str(root), '--quiet', '--report', str(victim)]
+            result = subprocess.run(command, capture_output=True, text=True)
+            self.assertNotEqual(0, result.returncode)
+            self.assertIn('beneath source build/', result.stderr)
+            self.assertEqual(baseline, victim.read_bytes())
+            self.assertTrue(payload.exists())
+
+            build = root / 'build'
+            build.mkdir()
+            linked = build / 'unsafe.json'
+            try:
+                linked.symlink_to(victim)
+            except (OSError, NotImplementedError):
+                pass
+            else:
+                command[-1] = str(linked)
+                result = subprocess.run(command, capture_output=True, text=True)
+                self.assertNotEqual(0, result.returncode)
+                self.assertEqual(baseline, victim.read_bytes())
+                self.assertTrue(payload.exists())
+
+            report = build / 'PYTHON_CACHE_CLEANUP.json'
+            command[-1] = str(report)
+            result = subprocess.run(command, capture_output=True, text=True)
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertEqual(['scripts/__pycache__/helper.cpython-313.pyc'],
+                             json.loads(report.read_text())['removed'])
+            self.assertEqual(baseline, victim.read_bytes())
+            self.assertFalse(list(build.glob('.*.partial')))
 
     def test_cleanup_removes_only_owned_generated_caches_without_refresh(self):
         with tempfile.TemporaryDirectory() as tmp:
