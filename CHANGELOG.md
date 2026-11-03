@@ -10,6 +10,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 - Add a standalone, test-only pugixml comparison against the pinned PR #108 corrected XML reader. Reuse its actual checked value decoder, frozen corpus, protocol and achievement-storage fixtures; record candidate contract failures and behavior differences alongside timing, tracked allocations, fault injection and sanitizer results. Add isolated Linux/MSVC diagnostic CI and normalize native Windows input paths before CMake source expansion, without changing production targets, the four vendor trees/pins or XML runtime selection. Current measurements block direct migration.
 
+- Write CTest JUnit reports to absolute paths matching their artifact and weekly source-package inputs; reject missing reports after otherwise successful tests. Correct the isolated/full Windows portable diagnostic paths and update its strict inventory from 28 to the current 30 tests. Test selection, failure propagation, runtime/vendor sources, ABI and release publication policy are unchanged.
+
 - Run the root-ownership caller-isolation regression through existing portable and Windows Native infrastructure targets. Poison absolute Git selectors in a child process and verify the disposable caller's object store, refs, HEAD, config, index and worktree registry remain unchanged; preserve the underlying fixture-environment fix and all push gates.
 
 - Resolve the Source QA report fixture root before output ancestry checks, matching the real entrypoint and Windows short/long temporary-path aliases. Preserve mandatory hardlink, early rejection and failed-write/replace checks.

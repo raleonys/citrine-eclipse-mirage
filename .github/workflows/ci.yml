@@ -50,7 +50,9 @@ jobs:
       - name: Build portable checks
         run: cmake --build build/portable --parallel 2
       - name: Run portable checks
-        run: ctest --test-dir build/portable --output-on-failure --output-junit build/portable/CTEST_RESULTS.xml
+        run: |
+          ctest --test-dir build/portable --output-on-failure --output-junit "$GITHUB_WORKSPACE/build/portable/CTEST_RESULTS.xml"
+          test -s "$GITHUB_WORKSPACE/build/portable/CTEST_RESULTS.xml"
       - name: Retain source validation evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -176,8 +178,10 @@ jobs:
       - name: Run complete Windows portable CTest inventory
         run: |
           $build = 'build/ci-portable-${{ matrix.configuration }}'
-          ctest --test-dir $build -C '${{ matrix.configuration }}' --no-tests=error --output-on-failure --timeout 180 --output-junit "$build/CTEST_RESULTS.xml" 2>&1 | Tee-Object -FilePath "$build/portable-ctest.log"
+          $junit = Join-Path (Resolve-Path $build) 'CTEST_RESULTS.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' --no-tests=error --output-on-failure --timeout 180 --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/portable-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'Portable CTest failed' }
+          if (-not (Test-Path -LiteralPath $junit -PathType Leaf)) { throw 'Portable JUnit report is missing' }
       - name: Retain Windows portable evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
