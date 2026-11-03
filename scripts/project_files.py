@@ -53,7 +53,9 @@ def vendor_symlinks(root):
             raise ValueError('Vendor root is not owned by its declared name')
         for rel,target in record.get('symlinks',{}).items():
             safe_member(rel)
-            if not target or target.startswith('/') or any(c in target for c in ['\\',':','\x00']):
+            if (not target or target.startswith('/') or
+                    any(c in target for c in ['\\', ':']) or
+                    any(ord(c) < 32 or ord(c) == 127 for c in target)):
                 raise ValueError('Unsafe vendor symlink target')
             stack=list(PurePosixPath(rel).parent.parts)
             for part in target.split('/'):
