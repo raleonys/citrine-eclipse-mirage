@@ -10,11 +10,14 @@
 #include <new>
 #include <stdexcept>
 
-namespace fault {thread_local bool next=false;unsigned injected=0;}
+namespace fault {thread_local bool next=false;unsigned injected=0,attempts=0;}
 void* operator new(std::size_t n){
     // Select the first queued std::string element's backing allocation, not
     // MSVC Debug's unrelated string/iterator proxy construction allocations.
-    if(fault::next&&n==sizeof(std::string)){fault::next=false;++fault::injected;throw std::bad_alloc();}
+    if(fault::next){
+        ++fault::attempts;
+        if(n==sizeof(std::string)){fault::next=false;++fault::injected;throw std::bad_alloc();}
+    }
     if(auto p=std::malloc(n?n:1))return p;throw std::bad_alloc();
 }
 void* operator new[](std::size_t n){return ::operator new(n);}
@@ -51,7 +54,8 @@ int main()try {
     fault::next=true;
     f.hooks.crypt_observed(hooks::Selection{});
 #ifdef NDEBUG
-    require(fault::next&&fault::injected==0,"Release observer must not allocate for diagnostics");
+    require(fault::next&&fault::injected==0&&fault::attempts==0,
+        "Release observer must not attempt C++ allocation for diagnostics");
     fault::next=false;
 #else
     require(!fault::next&&fault::injected==1,"actual Debug logger must consume the allocation fault");

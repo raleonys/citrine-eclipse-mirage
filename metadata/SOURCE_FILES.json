@@ -1254,8 +1254,8 @@
       "sha256": "c1c71f5514103ec38be1c48cfaf0ecfab56eff6370496476a04eb5caa8e1e850"
     },
     "tests/native/crypt_diagnostic_failure_tests.cpp": {
-      "bytes": 3558,
-      "sha256": "32ba4f5420cc06e26f63e6db111f0dacfefe508d7c5b049367ff33e0a1edaa44"
+      "bytes": 3657,
+      "sha256": "e615d0e61e6ad9fd3af85aa742e20f558adcd64552d9b8c582eea1200352d321"
     },
     "tests/native/crypt_path_probe_tests.cpp": {
       "bytes": 7166,
