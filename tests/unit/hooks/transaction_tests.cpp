@@ -43,6 +43,34 @@ void retained_rollback(){
     const auto count=api.calls.size();api.closed=status_code::ok;
     require(tx.rollback(std::chrono::milliseconds(0))&&!tx.owns_engine()&&api.calls.size()==count+1,"retry only unfinished engine release after successful disable");
 }
+// A11-07: status_code::disabled reports an already inactive patch, not proof
+// that callback drain or final engine cleanup has completed.
+void already_disabled_drain_retry(){
+    Engine api;Calls calls;Transaction tx(api,calls);void* original=nullptr;
+    require(tx.begin()==status_code::ok,"already-disabled case owns the engine");
+    require(tx.create(nullptr,nullptr,&original)==status_code::ok&&
+            tx.queue(nullptr)==status_code::ok&&tx.activate()==status_code::ok,
+            "already-disabled fixture activates one staged hook");
+    api.disabled=status_code::disabled;calls.quiet=false;
+    require(!tx.finish(std::chrono::milliseconds(0))&&
+            tx.state()==TransactionState::CleanupIncomplete&&tx.owns_engine(),
+            "already-disabled status cannot bypass an incomplete callback drain");
+    require(api.calls==std::vector<int>({1,2,3,4,5})&&calls.drains==1,
+            "first attempt performs disable once without uninitializing");
+    calls.quiet=true;api.closed=status_code::memory_protect;
+    require(!tx.finish(std::chrono::milliseconds(0))&&
+            tx.state()==TransactionState::CleanupIncomplete&&tx.owns_engine(),
+            "failed engine cleanup retains exact transaction ownership");
+    require(api.calls==std::vector<int>({1,2,3,4,5,6})&&calls.drains==2,
+            "drain retry must not call disable a second time");
+    api.closed=status_code::ok;
+    require(tx.finish(std::chrono::milliseconds(0))&&
+            tx.state()==TransactionState::Stopped&&!tx.owns_engine(),
+            "final retry releases owned engine after the successful drain");
+    require(api.calls==std::vector<int>({1,2,3,4,5,6,6})&&
+            calls.drains==3&&original==reinterpret_cast<void*>(123),
+            "retry only uninitializes unfinished engine and retains original slot");
+}
 void partial_staging_and_external_owner(){
     {Engine api;Calls calls;Transaction tx(api,calls);void* original=nullptr;tx.begin();api.queued=status_code::not_created;
      tx.create(nullptr,nullptr,&original);require(tx.queue(nullptr)!=status_code::ok,"queue failure");
@@ -52,5 +80,5 @@ void partial_staging_and_external_owner(){
      require(tx.rollback(std::chrono::milliseconds(0))&&api.calls==std::vector<int>{1},"external engine never disabled/uninitialized");}
 }
 }
-int main()try{staged_activation();retained_rollback();partial_staging_and_external_owner();std::cout<<"PASS: "<<checks<<" hook transaction checks\n";}
+int main()try{staged_activation();retained_rollback();already_disabled_drain_retry();partial_staging_and_external_owner();std::cout<<"PASS: "<<checks<<" hook transaction checks\n";}
 catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}

@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Add an A11-07 actual hook-transaction regression for the MH_ERROR_DISABLED return path: an already-inactive patch does not bypass active-call drain or a failed uninitialize, and later retries skip duplicate disable while preserving original slots and engine ownership. Test-only, no patched MinHook, vendor, ABI or shipping code changes.
+
 - Remove both obsolete TinyXML2 CMake target aliases at the owner's request. Use only the pugixml target names in active build policy and documentation, and retain the actual pugixml development project in Windows reference artifacts.
 
 - Complete the owner-authorized pugixml production migration in PR #149: replace the active TinyXML2 tree with the exact supplied pugixml 1.16 archive and MIT notice, retaining retired input provenance and the other three vendor pins. Preserve the XML interface, depth/error/newline and corrected reference-decoding policies behind first-party reader code; keep the production static CRT and separately compiled development shared CRT. Compile that actual reader in differential, sanitizer, allocation, router/AES/license and real-file storage fixtures, and add its reader/corpus/allocation contracts to portable CI. Reject retired TinyXML2 production sources and candidate oracle linkage; retain the independent external control, measured reference-only OOM leak and qualified MSVC Debug noexcept OOM results. DLL ABI and hook behavior are unchanged; native/Golden acceptance must run on the production migration head.
