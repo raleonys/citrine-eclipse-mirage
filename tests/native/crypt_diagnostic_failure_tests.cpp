@@ -2,6 +2,8 @@
 
 #include "src/runtime/application_internal.hpp"
 #include <cstdlib>
+#include <cstdio>
+#include <exception>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -10,7 +12,9 @@
 
 namespace fault {thread_local bool next=false;unsigned injected=0;}
 void* operator new(std::size_t n){
-    if(fault::next){fault::next=false;++fault::injected;throw std::bad_alloc();}
+    // Select the first queued std::string element's backing allocation, not
+    // MSVC Debug's unrelated string/iterator proxy construction allocations.
+    if(fault::next&&n==sizeof(std::string)){fault::next=false;++fault::injected;throw std::bad_alloc();}
     if(auto p=std::malloc(n?n:1))return p;throw std::bad_alloc();
 }
 void* operator new[](std::size_t n){return ::operator new(n);}
@@ -37,6 +41,10 @@ struct Fixture {
 };
 }
 int main()try {
+    std::set_terminate([]{
+        std::fputs("FAIL: unexpected terminate in crypt diagnostic fixture\n",stderr);
+        std::_Exit(86);
+    });
     Fixture f;
     // With no configured directory the real Debug logger queues its first
     // record. Fail that allocation after the observer sets its reentry guard.
