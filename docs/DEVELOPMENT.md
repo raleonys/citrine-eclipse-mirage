@@ -15,7 +15,7 @@ Human-facing commands under `scripts/build_orchestration/`:
 | `build_debug.cmd` | Debug application DLL with the same public API checks; debugger symbols are retained |
 | `build_native_acceptance.cmd` | Citrine Eclipse Mirage CTest source/adapter/CRT tests on Windows |
 | `build_crt_acceptance.cmd` | Builds and runs only selected compiler CRT/public DLL/source smoke targets |
-| `build_production.cmd` | Native MSVC Golden link and six-stage verification; does not publish an official release |
+| `build_production.cmd` | Native MSVC Golden link, six-stage verification and validated `dist` artifacts |
 
 The human-facing CMD window colors the final result, shows the exit code,
 and waits before closing. Automation should invoke the matching `.ps1`
@@ -23,12 +23,20 @@ script directly without waiting. Arguments include
 `-BuildDir build\...` and `-Config Release|RelWithDebInfo|Debug`.
 The sole profile executor is `build_profile.ps1`; `build_common.ps1` is the
 shared helper. Each profile uses its own build directory, lock, toolchain
-hash record, and local receipt. MSVC environment variables are restored
+hash record, and build receipt. MSVC environment variables are restored
 after execution; test failures are never converted into success.
 When Golden product targets are missing, the operator reports `BLOCKED`
 and returns exit code 3. Receipts distinguish build success from profile
 validation. See [MSVC_PROFILE_FIX.md](MSVC_PROFILE_FIX.md) for the MSVC
 resource/test compatibility correction.
+
+Build evidence is written to `BUILD_RECEIPT.json` in the selected build
+directory. Production verification writes `golden/GOLDEN_REPORT.json` and,
+after all required checks pass, `dist/DIST_RECEIPT.json` beside the DLL and
+checksum. CI and weekly draft packaging consume these same paths. Older
+generated receipts are not reused as current evidence; regenerate the selected
+profile after upgrading. Publication state is recorded separately as `DRAFT`
+by weekly release preparation.
 
 Source QA (does not require Windows):
 
@@ -50,8 +58,8 @@ python -B scripts/check_falcion_golden_cleaning.py --package ../citrine-eclipse-
 Packaging does not refresh the manifest automatically. The Golden command
 returns a nonzero exit code if required product targets are missing;
 [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) documents that case. Building
-and testing do not require Library publication, an external release identity,
-or release authorization.
+and testing use the same source and binary checks whether started from an
+operator launcher or GitHub Actions.
 
 ## Current concrete runtime
 

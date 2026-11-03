@@ -1,7 +1,6 @@
 {
-  "schema": "surge.local-dist-contract.v1",
+  "schema": "surge.dist-contract.v1",
   "task": "SURGE-WINDOWS-IO-20261029",
-  "classification": "NOT_RELEASE",
   "owner_intent": "Expected final preloader_l.dll under dist; user inspected unsigned build output because final file was missing",
   "directory": "dist",
   "runtime_dll_name": "preloader_l.dll",
@@ -11,7 +10,7 @@
   "required_files": [
     "preloader_l.dll",
     "preloader_l.dll.sha256",
-    "LOCAL_DIST_RECEIPT.json"
+    "DIST_RECEIPT.json"
   ],
   "gate": "ALL_SIX_GOLDEN_STAGES_THEN_FINAL_NAME_RUNTIME_LOAD_START_SOCKET_PROFILE_SHUTDOWN_UNLOAD_PASS",
   "runtime_check": "Existing runtime host validates three actual finalized-DLL cycles via the existing EALsxPort/LSX greeting/profile protocol, then DllShutdown/unload; removed management exports must be absent",

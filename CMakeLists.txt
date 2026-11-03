@@ -37,9 +37,9 @@ if(MSVC)
   # Compiler-owned standard CRT; consistent /MT Release and /MTd Debug targets.
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
-option(PRELOADER_L_GOLDEN_LINK_PROFILE "Emit the bounded local MSVC Golden link profile" OFF)
+option(PRELOADER_L_GOLDEN_LINK_PROFILE "Emit the bounded MSVC Golden link profile" OFF)
 if(PRELOADER_L_GOLDEN_LINK_PROFILE AND NOT MSVC)
-  message(FATAL_ERROR "Golden shipping link evidence requires MSVC on Windows; cross-build remains development-only.")
+  message(FATAL_ERROR "Golden shipping link evidence requires native MSVC on Windows.")
 endif()
 
 option(PRELOADER_L_BUILD_SOURCE_API_DLL "Build the separate C++ source API development DLL" ${BUILD_TESTING})
