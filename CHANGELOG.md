@@ -4,6 +4,8 @@ This file distinguishes source imports, integrated pull requests and published r
 
 ## Unreleased — post-import GitHub development (2026-10-30 to 2026-10-31)
 
+- Coordinate overlapping provider and extra-library error suppression with shared process-mode leases, retaining suppression until the final loader finishes and restoring the incoming mode on normal and exceptional exits. Add actual Win32 mode regression coverage for both entry/completion orders and preexisting suppression. Rebuild internal C++ system-call adapters for the explicit suppression-boundary methods; the public DLL ABI is unchanged.
+
 The 52 entries below are the merged pull requests verified through PR #62, linked to their individual review records. The GitHub Releases collection was empty at this checkpoint, so these entries must not be read as published releases or evidence of Windows/native/game acceptance.
 
 ### Additional unreleased changes
