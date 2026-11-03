@@ -45,6 +45,38 @@ void acquisition_failure(const wchar_t* path) {
     fault::next=false;fault::fail_frees=0;
     require(threw&&fault::loads==0&&fault::frees==0,"ownership allocation failed after acquiring a native module");f.extras.close();
 }
+void load_error_mode_unwind(const wchar_t*) {
+    const auto original=GetErrorMode();
+    struct Restore {DWORD mode;~Restore(){SetErrorMode(mode);}} restore{original};
+    for(bool main:{true,false})for(DWORD incoming:{DWORD{SEM_NOOPENFILEERRORBOX},
+            DWORD{SEM_NOOPENFILEERRORBOX|SEM_FAILCRITICALERRORS}}) {
+        Fixture f;
+        // An isolated high surrogate fails the actual Win32 UTF-8 conversion
+        // before LoadLibraryW. Both source startup prerequisites are ready.
+        const configuration::Path invalid(1,char16_t{0xd800});
+        if(main)f.state.extra_dlls_from_main.push_back(invalid);
+        else f.state.extra_dlls.push_back(invalid);
+        f.extras.configure(f.state);f.a=f.b=1;
+        SetErrorMode(incoming);
+        const auto expected=GetErrorMode();
+        bool failed=false;
+        try{f.extras.load(main);}
+        catch(const std::system_error& error) {
+            failed=error.code().value()==ERROR_NO_UNICODE_TRANSLATION;
+        }
+        const auto after=GetErrorMode();
+        require(failed,"extra library load must preserve the conversion failure");
+        require(after==expected,"failed extra library phase changed the host error mode");
+        require(fault::loads==0&&fault::frees==0&&f.c==0,
+            "failed conversion must not load a DLL or publish worker readiness");
+        f.extras.close();f.extras.close();
+        require(fault::frees==0,"failed conversion acquired no cleanup lease");
+        Fixture success;success.a=success.b=1;
+        success.extras.load(main);
+        require(GetErrorMode()==expected&&success.c==(main?0:1),
+            "successful empty phase must retain error mode and readiness semantics");
+    }
+}
 void mixed_release(const wchar_t* path) {
     Fixture f;require(f.extras.load_library(path)!=0&&f.extras.load_library(path)!=0,"fixture DLL load");
     fault::fail_frees=1;bool threw=false;
@@ -163,7 +195,8 @@ int wmain(int argc,wchar_t** argv)try {
     for(auto [name,fn]:{std::pair{L"acquire",acquisition_failure},{L"mixed",mixed_release},{L"retry",repeated_failure},
                       {L"provider-retry",provider_retry},{L"provider-object",provider_object_once},
                       {L"provider-slot",provider_empty_slot},{L"provider-layout",provider_byte_layout},
-                      {L"provider-physical-lease",provider_physical_lease}})
+                      {L"provider-physical-lease",provider_physical_lease},
+                      {L"load-error-mode",load_error_mode_unwind}})
         if(selected==L"all"||selected==name){fn(argv[1]);ran=true;}
     require(ran,"unknown case");std::cout<<"PASS: native-module acquisition/retained-release/retry controls\n";return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

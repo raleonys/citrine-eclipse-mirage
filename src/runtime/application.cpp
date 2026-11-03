@@ -105,7 +105,17 @@ public:
         for(const auto& p:s.extra_dlls_from_main)state_.from_main.push_back(wide(p));
         for(const auto& p:s.extra_dlls)state_.from_worker.push_back(wide(p));
     }
-    void load(bool main){system_services::libraries::load_phase_035850(*this,*this,state_,main);}
+    void load(bool main) {
+        const auto previous_mode=native_.get_error_mode();
+        try{system_services::libraries::load_phase_035850(*this,*this,state_,main);}
+        catch(...) {
+            // The retained source model restores only on its normal path.
+            // Application startup must not leave the host's process-wide
+            // error mode changed after a conversion/allocation failure.
+            native_.set_error_mode(previous_mode);
+            throw;
+        }
+    }
     void close() {
         bool pending=false;
         for(auto& module:leases_)if(module) {

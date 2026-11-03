@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Restore the host process error mode when the application extra-library phase throws, while retaining the historical source model. Add native invalid-UTF-16 failure and successful-phase controls for main/worker loads, unchanged failure propagation, readiness and lease ownership.
+
 - Extend the actual patched MinHook SAFE-FREEZE native fixture with two distinct hooks and queued/all-hook IP relocation checks: queued enable, queued disable, `MH_EnableHook(MH_ALL_HOOKS)`, `MH_DisableHook(MH_ALL_HOOKS)`, target-byte restoration, peer context writes and final ownership retirement (D326-F0006, Issue #20). No production or vendor changes.
 
 - Add automated real-DLL XML equivalence/value/malformed-frame recovery contracts across three TCP lifecycle cycles and run them on finalized Golden output. Strengthen the independent reader benchmark with ten shared fixtures, full-work digests, 20 randomized paired Release rounds, compiler/source receipts, separate allocation measurements and per-fixture uncertainty reports. Reject incomplete or misleading performance receipts in infrastructure tests; production parser/vendor/ABI/CRT behavior is unchanged.
