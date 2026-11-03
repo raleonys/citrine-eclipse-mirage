@@ -1522,8 +1522,8 @@
       "sha256": "661645a5f230e9b2a3e51b7c3a531b9c32e6fd15ce598641f1f2b1e8b5b15b11"
     },
     "tests/unit/achievement_runtime/utc_tests.cpp": {
-      "bytes": 5366,
-      "sha256": "016638435651e0b8367a6ecfc59df823951a72b893a16725f2478005d3fd40c7"
+      "bytes": 6519,
+      "sha256": "bd902cb4df40df147a36323a08f5ef8e91343aa614c27bcaaaf38f546603bf86"
     },
     "tests/unit/achievement_storage/startup_model_tests.cpp": {
       "bytes": 3989,
