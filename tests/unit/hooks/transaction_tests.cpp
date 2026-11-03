@@ -10,7 +10,7 @@ int checks;
 void require(bool value,const char* message){++checks;if(!value)throw std::runtime_error(message);}
 struct Engine final:BatchApi {
     std::vector<int> calls;
-    int init=MH_OK,created=MH_OK,queued=MH_OK,applied=MH_OK,disabled=MH_OK,closed=MH_OK;
+    int init=status_code::ok,created=status_code::ok,queued=status_code::ok,applied=status_code::ok,disabled=status_code::ok,closed=status_code::ok;
     int initialize()override{calls.push_back(1);return init;}
     int create(void*,void*,void** original)override{calls.push_back(2);*original=reinterpret_cast<void*>(123);return created;}
     int enable(void*)override{throw std::runtime_error("Individual enable forbidden");}
@@ -22,33 +22,33 @@ struct Engine final:BatchApi {
 struct Calls final:Quiescence {bool quiet=true;int drains=0;bool drain(std::chrono::milliseconds)override{++drains;return quiet;}};
 void staged_activation(){
     Engine api;Calls calls;Transaction tx(api,calls);void* original=nullptr;
-    require(tx.begin()==MH_OK,"owned initialization");
-    for(int i=0;i<11;++i){require(tx.create(nullptr,nullptr,&original)==MH_OK,"stage original");require(tx.queue(nullptr)==MH_OK,"queue target");}
+    require(tx.begin()==status_code::ok,"owned initialization");
+    for(int i=0;i<11;++i){require(tx.create(nullptr,nullptr,&original)==status_code::ok,"stage original");require(tx.queue(nullptr)==status_code::ok,"queue target");}
     require(api.calls.size()==23&&original==reinterpret_cast<void*>(123),"no apply during creation/queue");
-    require(tx.activate()==MH_OK&&api.calls.back()==4&&tx.state()==TransactionState::Active,"single batch apply");
+    require(tx.activate()==status_code::ok&&api.calls.back()==4&&tx.state()==TransactionState::Active,"single batch apply");
     require(tx.finish(std::chrono::milliseconds(1))&&!tx.owns_engine(),"complete shutdown releases engine");
     require(api.calls[24]==5&&api.calls[25]==6&&calls.drains==1,"disable then drain then engine release");
 }
 void retained_rollback(){
     Engine api;Calls calls;Transaction tx(api,calls);void* original=nullptr;
-    tx.begin();tx.create(nullptr,nullptr,&original);tx.queue(nullptr);api.applied=MH_ERROR_MEMORY_PROTECT;
-    require(tx.activate()!=MH_OK&&tx.owns_engine(),"failed apply may retain active patches");
-    api.disabled=MH_ERROR_MEMORY_PROTECT;
+    tx.begin();tx.create(nullptr,nullptr,&original);tx.queue(nullptr);api.applied=status_code::memory_protect;
+    require(tx.activate()!=status_code::ok&&tx.owns_engine(),"failed apply may retain active patches");
+    api.disabled=status_code::memory_protect;
     require(!tx.rollback(std::chrono::milliseconds(0))&&tx.state()==TransactionState::RollbackIncomplete&&calls.drains==0,"failed rollback retains engine before drain");
     require(original==reinterpret_cast<void*>(123),"original slot survives incomplete rollback");
-    api.disabled=MH_OK;calls.quiet=false;
+    api.disabled=status_code::ok;calls.quiet=false;
     require(!tx.rollback(std::chrono::milliseconds(0))&&tx.owns_engine()&&api.calls.back()==5,"live trampoline blocks engine release");
-    calls.quiet=true;api.closed=MH_ERROR_MEMORY_PROTECT;
+    calls.quiet=true;api.closed=status_code::memory_protect;
     require(!tx.rollback(std::chrono::milliseconds(0))&&tx.owns_engine(),"uninitialize failure retains ownership");
-    const auto count=api.calls.size();api.closed=MH_OK;
+    const auto count=api.calls.size();api.closed=status_code::ok;
     require(tx.rollback(std::chrono::milliseconds(0))&&!tx.owns_engine()&&api.calls.size()==count+1,"retry only unfinished engine release after successful disable");
 }
 void partial_staging_and_external_owner(){
-    {Engine api;Calls calls;Transaction tx(api,calls);void* original=nullptr;tx.begin();api.queued=MH_ERROR_NOT_CREATED;
-     tx.create(nullptr,nullptr,&original);require(tx.queue(nullptr)!=MH_OK,"queue failure");
-     require(tx.activate()!=MH_OK&&api.calls.back()==3,"staging failure prevents apply");require(tx.rollback(std::chrono::milliseconds(0)),"partial staging rollback");}
-    {Engine api;Calls calls;Transaction tx(api,calls);api.init=MH_ERROR_ALREADY_INITIALIZED;
-     require(tx.begin()!=MH_OK&&!tx.owns_engine(),"external engine not adopted");
+    {Engine api;Calls calls;Transaction tx(api,calls);void* original=nullptr;tx.begin();api.queued=status_code::not_created;
+     tx.create(nullptr,nullptr,&original);require(tx.queue(nullptr)!=status_code::ok,"queue failure");
+     require(tx.activate()!=status_code::ok&&api.calls.back()==3,"staging failure prevents apply");require(tx.rollback(std::chrono::milliseconds(0)),"partial staging rollback");}
+    {Engine api;Calls calls;Transaction tx(api,calls);api.init=status_code::already_initialized;
+     require(tx.begin()!=status_code::ok&&!tx.owns_engine(),"external engine not adopted");
      require(tx.rollback(std::chrono::milliseconds(0))&&api.calls==std::vector<int>{1},"external engine never disabled/uninitialized");}
 }
 }
