@@ -974,20 +974,20 @@
       "sha256": "d4018b757421f9638861a4ac889f4a2393eb79d689860ba26710b8b2f2c9a605"
     },
     "src/runtime/application.cpp": {
-      "bytes": 29158,
-      "sha256": "83cd2049f9e36a99c62735e06b5455b38e6e7a222ecbcfb8299d0949deb6c866"
+      "bytes": 29157,
+      "sha256": "cb4d9ff6bfd7233d8563afefb3849b2d34ce3bfbd5b10bc2a911b5936144107e"
     },
     "src/runtime/application_defaults.cpp": {
       "bytes": 2261,
       "sha256": "cc36e01fb302d11d91e0a9245e53bfabf667e35d3fa30c7dedcc130ac46d8fd1"
     },
     "src/runtime/application_environment.cpp": {
-      "bytes": 13411,
-      "sha256": "e519757c341f522865cc5698c88b9ddf66c64e5d53a799df60dda8c8f6f65e67"
+      "bytes": 13532,
+      "sha256": "ce1128831e6e4271d643cda60ea1fc58c13c444e2818457e22afc9b8dc737965"
     },
     "src/runtime/application_internal.hpp": {
-      "bytes": 7282,
-      "sha256": "807f9439621b227aa56038a5c13988d1dbdc1bae74d2d7c09a2b01bae0b7949c"
+      "bytes": 7320,
+      "sha256": "dd9bc8e716f89b18afd4e04ccd6a102e08f562bef2f9ba67db715e371bcaeb89"
     },
     "src/runtime/bootstrap.cpp": {
       "bytes": 4419,
@@ -1280,6 +1280,10 @@
     "tests/native/hook_freeze_tests.c": {
       "bytes": 12026,
       "sha256": "4c1e9407eb5c4aa35ece6fdbff4db3892bfd840bf9cfe33a053da2708061eebc"
+    },
+    "tests/native/license_ticket_time_tests.cpp": {
+      "bytes": 3716,
+      "sha256": "f09ffbf3f996a00523231adcdef004587f98cfc37c1d19232ea294c3f66ed90b"
     },
     "tests/native/listener_owners_tests.cpp": {
       "bytes": 8761,
