@@ -1134,16 +1134,16 @@
       "sha256": "6a6174a006f53712b4ae3bb15087b5fab176f7c62d27f931a3d5c04e2d01bbb4"
     },
     "tests/diagnostics/xml_backend/CMakeLists.txt": {
-      "bytes": 8546,
-      "sha256": "ec8be378d06c5ec9136e66a05510089903560e54c696f40300a62e4653e11fee"
+      "bytes": 8576,
+      "sha256": "d92bc591d7d5ccd7ffccf893e7d53ee72b4a7dc67a879aea9e383cb12c3c7581"
     },
     "tests/diagnostics/xml_backend/performance.py": {
-      "bytes": 6714,
-      "sha256": "609a69218c3061a087d5dca02cb861102ab6c734adf7e30732071911b66d45bb"
+      "bytes": 7463,
+      "sha256": "76e3855034b9bf42573dd94f9eb947bc0ed22ab8bd399e6036f835c09031a76e"
     },
     "tests/diagnostics/xml_backend/run.py": {
-      "bytes": 20293,
-      "sha256": "52865c96320ce8452e952fbe6f31906269ef1e6672495e4b1b33317c80dfe4e3"
+      "bytes": 20328,
+      "sha256": "6917255f14afeeb57e919c60204b73c2ac0f7916ae120e817d9392ea6ca6d358"
     },
     "tests/diagnostics/xml_backend/suite.cpp": {
       "bytes": 30002,
@@ -1226,8 +1226,8 @@
       "sha256": "7c8372a4398d7c7af51de6dd20952b4ae463e4167baedd5e20bd71a01499955e"
     },
     "tests/infrastructure/test_xml_performance.py": {
-      "bytes": 5135,
-      "sha256": "72cad9307621c61cae3f63daa764d731bc63dd61fff80e66c3bcf67775d9bfa6"
+      "bytes": 6379,
+      "sha256": "dd0e73c17f4ae7102ab6675fcd4484bbb46ed41be7203b0c524318399b862bc6"
     },
     "tests/native/application_runtime_tests.cpp": {
       "bytes": 22444,

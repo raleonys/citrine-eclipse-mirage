@@ -389,7 +389,7 @@
     "metadata/SESSION_TRANSPORT_POLICY.json": "2403d829c98174d3cf7caa0d382d6478457d22f4d74e162194372d66c8894b66",
     "metadata/SHUTDOWN_RECOVERY_REVIEW.json": "6a0799c62dd9fcba984035ab48a06c078e0b7958ed778e2641e44124726b0ce9",
     "metadata/SOCKET_RETIREMENT_REVIEW.json": "a27d0cd84fc6ab05cf5b321bafce23cde6b887dc374c715ee9fa8553c97d45c6",
-    "metadata/SOURCE_FILES.json": "d395afaf38e6b9ea8729e368bc6e9d5a3b61c785005cddaa957e650ae2743d90",
+    "metadata/SOURCE_FILES.json": "2cd668482cd8413e3c5f1673c33acb70a458bd9a01d0983e2c19ba94698741df",
     "metadata/SOURCE_INPUTS.json": "04bb9354fc5a4d6a192b59ef1e2c10badb69769ff2f30fa5afcd3920145acdb8",
     "metadata/UNLOAD_RECOVERY_CONTRACT.json": "bcc72f466706903cf4cd76e93bdc0dc62b83574524055026fe2ec184b860fd9b",
     "metadata/URSYNEX_GOLDEN_FINALIZER.json": "f8c08ca30b9ef2e77354adb043ad75c3dae09942e53ecbe8ff8ed637001b855d",
@@ -596,7 +596,7 @@
     "src/xml/reader_policy.hpp": "71ebc58da688f5508e8bfe97d8f549817e4f5820332dcd2d83833f077bb879df",
     "src/xml/reader_values.cpp": "f281028b52e5d2d338938d9d4c8f269e6214c78872b973705745cc16739f27fd",
     "tests/diagnostics/xml_backend/benchmark_cases.hpp": "6a6174a006f53712b4ae3bb15087b5fab176f7c62d27f931a3d5c04e2d01bbb4",
-    "tests/diagnostics/xml_backend/performance.py": "609a69218c3061a087d5dca02cb861102ab6c734adf7e30732071911b66d45bb",
+    "tests/diagnostics/xml_backend/performance.py": "76e3855034b9bf42573dd94f9eb947bc0ed22ab8bd399e6036f835c09031a76e",
     "tests/fixtures/xml_reader/optimization-baseline.txt": "d598f453b1f495f8f6aec57d00596895d0cdd557c74c21fe42b22ac7b6fcec57",
     "tests/fixtures/xml_reader/optimization-corpus.txt": "0f860de117e3786c4b58c5f74b3d5a34a1ba4e39bee1253ae563f917bd14a5a1",
     "tests/fixtures/xml_reader/wire_contracts.hpp": "6c3d9c49df2921e669e24447d081e01f620dbe3314ea6cc692b8143014729f60",
@@ -615,7 +615,7 @@
     "tests/infrastructure/test_vendor_contract.py": "2286ef8c2a00ade400c18e50e5e6b54ba906c9382380d6186732a93c3b0873f8",
     "tests/infrastructure/test_weekly_release.py": "d730d1c492fe3215aca942ad5e60967244bb550e31fd8ae6bf57397f3e52a3f1",
     "tests/infrastructure/test_wine_runner.py": "7c8372a4398d7c7af51de6dd20952b4ae463e4167baedd5e20bd71a01499955e",
-    "tests/infrastructure/test_xml_performance.py": "72cad9307621c61cae3f63daa764d731bc63dd61fff80e66c3bcf67775d9bfa6",
+    "tests/infrastructure/test_xml_performance.py": "dd0e73c17f4ae7102ab6675fcd4484bbb46ed41be7203b0c524318399b862bc6",
     "tests/native/application_runtime_tests.cpp": "8d8afc7300ac322e1dcb82a2d1ee1046546bd31a9bea67e272f392dce388d82a",
     "tests/native/application_shutdown_failure_tests.cpp": "d2ca4acf091c3e3cf4db00b4f2d015e60172ce3fbf52bbc7b1eae82b9e3f8e5d",
     "tests/native/atomic_persistence_tests.cpp": "26c58732fec8d80839ef966f87b2502f46ec4b9b86096b6c6fa995887974e43c",
@@ -3632,8 +3632,8 @@
     "docs/XML_BACKEND_COMPARISON.md": "381a6e5208c28fda6548371aa604503554ac1a75718bbce3ce5558c694d2a80f",
     "tests/diagnostics/xml_backend/allocation.cpp": "49cb867bae5d1b3b8e375e197bedb9b13eef67ad0ea8c29ed6480317adf619bf",
     "tests/diagnostics/xml_backend/backend.hpp": "148e339141c327c5e6b7ca7dc2afd7564d9ae8451e1aeddacfd3a6fcecdc5fcd",
-    "tests/diagnostics/xml_backend/CMakeLists.txt": "ec8be378d06c5ec9136e66a05510089903560e54c696f40300a62e4653e11fee",
-    "tests/diagnostics/xml_backend/run.py": "52865c96320ce8452e952fbe6f31906269ef1e6672495e4b1b33317c80dfe4e3",
+    "tests/diagnostics/xml_backend/CMakeLists.txt": "d92bc591d7d5ccd7ffccf893e7d53ee72b4a7dc67a879aea9e383cb12c3c7581",
+    "tests/diagnostics/xml_backend/run.py": "6917255f14afeeb57e919c60204b73c2ac0f7916ae120e817d9392ea6ca6d358",
     "tests/diagnostics/xml_backend/suite.cpp": "3b93c6c1f828dc1525de2972d751643be6d62d16100509831dffbf011547552a"
   }
 }

@@ -11,7 +11,7 @@ import platform
 import sys
 import statistics
 import subprocess
-from performance import CASES, PROFILES, summarize
+from performance import CASES, PROFILES, summarize, compile_receipt
 
 HERE = Path(__file__).resolve().parent
 REPOSITORY = HERE.parents[2]
@@ -139,9 +139,9 @@ def main():
         targets = {target['id']: json.loads((reply / target['jsonFile']).read_text(encoding='utf-8'))
                    for target in configuration['targets']}
         selected=next(target for target in targets.values() if target['name']=='comparison_candidate')
-        report['compile_flags'][configuration['name']] = [fragment['fragment']
-            for group in selected.get('compileGroups', [])
-            for fragment in group.get('compileCommandFragments', []) if fragment.get('role')=='flags']
+        report['compile_flags'][configuration['name']] = {
+            name: compile_receipt(next(t for t in targets.values() if t['name']==name))
+            for name in ['comparison_candidate', 'comparison_reference', 'comparison_pugi', 'comparison_tiny']}
         actual_sources={str((Path(source['path']) if Path(source['path']).is_absolute()
                             else HERE / source['path']).resolve())
                         for source in selected.get('sources',[]) if source['path'].endswith('.cpp')}

@@ -11,6 +11,18 @@ CASES = ('small-request', 'large-text', 'one-MiB-text', 'many-elements',
          'unicode-reference', 'many-attributes', 'deep-elements')
 
 
+def compile_receipt(target):
+    # CMake File API compileCommandFragments have no required role member.
+    groups=[g for g in target.get('compileGroups', []) if g.get('language')=='CXX']
+    fragments=list(dict.fromkeys(f['fragment'] for g in groups
+                                for f in g.get('compileCommandFragments', []) if f.get('fragment', '').strip()))
+    standards=sorted({g.get('languageStandard', {}).get('standard') for g in groups} - {None})
+    if not fragments or standards!=['20']:
+        raise ValueError('Missing C++20 compiler flags/standard receipt: ' + target['name'])
+    return {'flags': fragments, 'standards': standards,
+            'definitions': sorted({d['define'] for g in groups for d in g.get('defines', [])})}
+
+
 def positive(value, name):
     number = float(value)
     if not math.isfinite(number) or number <= 0:

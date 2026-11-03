@@ -7,7 +7,7 @@ import sys
 import unittest
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'diagnostics/xml_backend'))
-from performance import CASES, PROFILES, summarize
+from performance import CASES, PROFILES, summarize, compile_receipt
 
 
 def fixture(ratios=(.5,)*10):
@@ -28,6 +28,23 @@ def fixture(ratios=(.5,)*10):
 
 
 class PerformanceReceipts(unittest.TestCase):
+    def test_cmake_compiler_fragments_without_role_are_preserved(self):
+        for flags in ['-O3 -DNDEBUG -std=c++20', '/O2 /Ob2 /DNDEBUG -MT /std:c++20']:
+            target={'name':'backend', 'compileGroups':[{'language':'CXX',
+                'compileCommandFragments':[{'fragment':flags}],
+                'languageStandard':{'standard':'20'}, 'defines':[{'define':'PUGIXML_NO_XPATH'}]}]}
+            self.assertEqual(compile_receipt(target), {'flags':[flags], 'standards':['20'],
+                                                       'definitions':['PUGIXML_NO_XPATH']})
+
+    def test_missing_flags_or_wrong_language_standard_cannot_claim_provenance(self):
+        target={'name':'backend', 'compileGroups':[{'language':'CXX',
+            'compileCommandFragments':[{'fragment':'-O3'}], 'languageStandard':{'standard':'20'}}]}
+        for missing in ['compileCommandFragments','languageStandard']:
+            broken=copy.deepcopy(target);del broken['compileGroups'][0][missing]
+            with self.assertRaises(ValueError):compile_receipt(broken)
+        broken=copy.deepcopy(target);broken['compileGroups'][0]['languageStandard']['standard']='17'
+        with self.assertRaises(ValueError):compile_receipt(broken)
+
     def test_latency_ratio_direction_and_exact_constant_interval(self):
         for ratio, label in [(.5, 'FASTER_IN_THIS_RUN'), (2, 'SLOWER_IN_THIS_RUN')]:
             rows, memory = fixture((ratio,)*10)
