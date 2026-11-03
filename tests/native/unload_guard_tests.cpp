@@ -5,11 +5,13 @@
 #include <windows.h>
 #include <tlhelp32.h>
 #include <array>
+#include <algorithm>
 #include <cstdint>
 #include <cstring>
 #include <iostream>
 #include <set>
 #include <stdexcept>
+#include <string_view>
 
 namespace fake {
 struct State {
@@ -24,12 +26,24 @@ struct State {
     bool reenter=false,reentry_rejected=false,in_module=false;
     std::uint64_t register_value=0,instruction=0;
     DWORD image_protection=PAGE_READWRITE;
+    unsigned trace_writes=0,unsafe_trace_writes=0;
+    std::array<char,256> trace{};
+    bool trace_write_fail=false;
 } state;
 HANDLE handle(){return reinterpret_cast<HANDLE>(static_cast<std::uintptr_t>(++state.next));}
 BOOL WINAPI module(DWORD,LPCWSTR,HMODULE* out){*out=reinterpret_cast<HMODULE>(state.image.data());return TRUE;}
 DWORD WINAPI current_thread(){return 10;}
 DWORD WINAPI current_process(){return 7;}
 DWORD WINAPI last_error(){return state.error;}
+void WINAPI set_error(DWORD error){state.error=error;}
+HANDLE WINAPI stderr_handle(DWORD){return reinterpret_cast<HANDLE>(1);}
+BOOL WINAPI write_trace(HANDLE,LPCVOID bytes,DWORD count,LPDWORD written,LPOVERLAPPED){
+    ++state.trace_writes;if(state.depth>state.foreign_depth)++state.unsafe_trace_writes;
+    const auto length=std::min<std::size_t>(count,state.trace.size()-1);
+    std::memcpy(state.trace.data(),bytes,length);state.trace[length]=0;
+    state.error=ERROR_WRITE_FAULT;*written=state.trace_write_fail?0:count;
+    return !state.trace_write_fail;
+}
 HANDLE WINAPI snapshot(DWORD,DWORD){++state.created;auto h=handle();state.snapshots.insert(h);return h;}
 BOOL WINAPI first(HANDLE,THREADENTRY32* out){out->th32ThreadID=state.peer?11:10;out->th32OwnerProcessID=7;return TRUE;}
 BOOL WINAPI next(HANDLE,THREADENTRY32*){state.error=state.enumeration_fail?ERROR_ACCESS_DENIED:ERROR_NO_MORE_FILES;return FALSE;}
@@ -75,6 +89,9 @@ SIZE_T WINAPI query(LPCVOID address,PMEMORY_BASIC_INFORMATION out,SIZE_T){
 #define GetCurrentThreadId fake::current_thread
 #define GetCurrentProcessId fake::current_process
 #define GetLastError fake::last_error
+#define SetLastError fake::set_error
+#define GetStdHandle fake::stderr_handle
+#define WriteFile fake::write_trace
 #define CreateToolhelp32Snapshot fake::snapshot
 #define Thread32First fake::first
 #define Thread32Next fake::next
@@ -90,6 +107,9 @@ SIZE_T WINAPI query(LPCVOID address,PMEMORY_BASIC_INFORMATION out,SIZE_T){
 #undef GetCurrentThreadId
 #undef GetCurrentProcessId
 #undef GetLastError
+#undef SetLastError
+#undef GetStdHandle
+#undef WriteFile
 #undef CreateToolhelp32Snapshot
 #undef Thread32First
 #undef Thread32Next
@@ -225,6 +245,24 @@ void tls_data_marker(){
     directory.Size=sizeof(IMAGE_TLS_DIRECTORY64);tls->StartAddressOfRawData=base+901;
     require(!scan(),"reversed TLS data range fails closed");
 }
+void diagnostic_safety(){
+    reset();auto& s=fake::state;
+    s.register_value=reinterpret_cast<std::uint64_t>(s.image.data())+128;
+    s.error=12345;s.trace_write_fail=true;
+    require(!scan(),"failed diagnostic output cannot turn an unsafe scan safe");
+#ifndef NDEBUG
+    require(s.trace_writes==1&&s.unsafe_trace_writes==0,"diagnostic writes only after the owned suspension is released");
+    const std::string_view text(s.trace.data());
+    require(text.find("reason=image-register")!=text.npos&&text.find("image_rva=0x80")!=text.npos&&text.find("slot=10")!=text.npos,"diagnostic identifies R11 and the relative image reference");
+    require(s.error==12345,"failed best-effort diagnostic preserves incoming LastError");
+#else
+    require(s.trace_writes==0,"Release emits no unload scan diagnostic");
+#endif
+    reset();s.resume_fail=true;s.register_value=reinterpret_cast<std::uint64_t>(s.image.data())+128;
+    require(!scan()&&s.trace_writes==0,"diagnostics remain silent while a failed resume retains the suspension");
+    s.resume_fail=false;s.peer=false;
+    require(scan()&&s.unsafe_trace_writes==0,"exact retained suspension can still be recovered without diagnostic interference");
 }
-int main()try{resume_retry();close_retry();other_failures();volatile_register_guard();scan_behavior();tls_data_marker();std::cout<<"PASS: "<<checks<<" actual unload guard failure/retry and stack checks\n";}
+}
+int main()try{resume_retry();close_retry();other_failures();volatile_register_guard();scan_behavior();tls_data_marker();diagnostic_safety();std::cout<<"PASS: "<<checks<<" actual unload guard failure/retry and stack checks\n";}
 catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}

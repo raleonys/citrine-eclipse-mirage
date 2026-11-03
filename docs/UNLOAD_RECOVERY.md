@@ -71,3 +71,26 @@ All other image pointers, unreadable stacks, scan failures, retained OS owners
 and retry rules remain conservative. Invalid or missing TLS metadata grants no
 exemption. The native effect tests cover the marker, adjacent data/code values,
 RIP, executable protections and malformed TLS ranges.
+
+## Debug refusal diagnostics
+
+Debug builds emit `UNLOAD_SCAN_BLOCKED` with the first recorded refusal reason,
+peer ID, register index or stack-slot index, image-relative reference offset and
+validated TLS endpoint offset. Register indices follow the scanner's existing
+array (R11 is index 10); stack slots count from the suspended peer's RSP. Output
+contains no absolute image addresses or machine paths. This record diagnoses a
+refusal; it does not establish that a pointer is harmless or justify an exemption.
+
+The scanner records into gate-owned fixed state while inspecting a suspended
+peer, then formats into a bounded stack buffer after releasing its owned
+suspensions. Failed resume suppresses output while ownership remains pending.
+Output is best effort, preserves LastError and cannot change the scan result or
+discard retained handles. Release builds compile out this diagnostic. Existing
+scan, TLS, teardown retry and public shutdown requirements remain unchanged.
+
+The shutdown listener workflow keeps five Visual Studio lifecycle attempts per
+configuration for normal PRs. Its manual diagnostic dispatch can instead select
+NMake with the Native profile's testing/source-API configuration and twenty
+independent attempts. Every attempt must pass; failures are counted and retained,
+not retried until green. Generator, source commit and individual exits are recorded
+in the existing receipt and per-attempt JUnit artifacts.

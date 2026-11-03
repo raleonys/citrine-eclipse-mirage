@@ -15,6 +15,17 @@ on:
       - "include/preloader_l/platform/hook_unload_guard.hpp"
       - "tests/native/unload_guard_tests.cpp"
   workflow_dispatch:
+    inputs:
+      generator:
+        description: "Diagnostic build generator"
+        type: choice
+        options: [VisualStudio, NMake]
+        default: VisualStudio
+      attempts:
+        description: "Independent lifecycle attempts; every attempt must pass"
+        type: choice
+        options: ["5", "20"]
+        default: "5"
 
 permissions:
   contents: read
@@ -31,6 +42,9 @@ jobs:
     defaults:
       run:
         shell: pwsh
+    env:
+      SHUTDOWN_DIAGNOSTIC_GENERATOR: ${{ inputs.generator || 'VisualStudio' }}
+      SHUTDOWN_DIAGNOSTIC_ATTEMPTS: ${{ inputs.attempts || '5' }}
     steps:
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
@@ -43,12 +57,24 @@ jobs:
       - name: Configure lifecycle acceptance
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
+          if ($env:SHUTDOWN_DIAGNOSTIC_GENERATOR -eq 'NMake') {
+            . ./scripts/build_orchestration/build_common.ps1
+            $vs = Find-VcVars64
+            Import-VcVarsEnvironment (Resolve-BoundExecutable 'cmd.exe') $vs[1]
+            cmake -S . -B $build -G 'NMake Makefiles' -DCMAKE_BUILD_TYPE='${{ matrix.configuration }}' -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=ON
+          } elseif ($env:SHUTDOWN_DIAGNOSTIC_GENERATOR -eq 'VisualStudio') {
+            cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
+          } else { throw 'Unsupported shutdown diagnostic generator' }
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown configure failed' }
       - name: Build actual DLL, lifecycle host and native fault fixtures
         id: native_build
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
+          if ($env:SHUTDOWN_DIAGNOSTIC_GENERATOR -eq 'NMake') {
+            . ./scripts/build_orchestration/build_common.ps1
+            $vs = Find-VcVars64
+            Import-VcVarsEnvironment (Resolve-BoundExecutable 'cmd.exe') $vs[1]
+          }
           cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_runtime_host unload_guard_contracts listener_owners_contracts net_failure_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown build failed' }
       - name: Verify unload ownership, TLS boundaries and listener diagnostic faults
@@ -57,16 +83,19 @@ jobs:
           $junit = Join-Path (Resolve-Path $build) 'unload-guard-junit.xml'
           ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(unload_guard_contracts|listener_owners_contracts)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/unload-guard-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'Unload guard or listener diagnostic contracts failed' }
-      - name: Repeat five independent DLL lifecycle tests
+      - name: Repeat independent DLL lifecycle tests
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
           $receipt = "$build/shutdown-receipt.txt"
           "checkout_sha=$(git rev-parse HEAD)" | Set-Content $receipt
           "pr_head=$env:GITHUB_HEAD_REF" | Add-Content $receipt
           "configuration=${{ matrix.configuration }}" | Add-Content $receipt
+          "generator=$env:SHUTDOWN_DIAGNOSTIC_GENERATOR" | Add-Content $receipt
+          if ($env:SHUTDOWN_DIAGNOSTIC_ATTEMPTS -notin @('5', '20')) { throw 'Unsupported lifecycle attempt count' }
+          $attempts = [int]$env:SHUTDOWN_DIAGNOSTIC_ATTEMPTS
           $failed = 0
-          for ($attempt = 1; $attempt -le 5; $attempt++) {
-            "ATTEMPT $attempt/5" | Tee-Object -FilePath "$build/shutdown-ctest.log" -Append
+          for ($attempt = 1; $attempt -le $attempts; $attempt++) {
+            "ATTEMPT $attempt/$attempts" | Tee-Object -FilePath "$build/shutdown-ctest.log" -Append
             $junit = Join-Path (Resolve-Path $build) "shutdown-junit-$attempt.xml"
             ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^dll_public_lifecycle$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/shutdown-ctest.log" -Append
             $exitCode = $LASTEXITCODE
@@ -74,7 +103,7 @@ jobs:
             if ($exitCode -ne 0) { $failed++ }
           }
           "failed_attempts=$failed" | Add-Content $receipt
-          if ($failed -ne 0) { throw "$failed of five lifecycle attempts failed" }
+          if ($failed -ne 0) { throw "$failed of $attempts lifecycle attempts failed" }
       - name: Verify dual-family accept cancellation and closed admission
         # Collect the focused test even if an independent lifecycle attempt
         # fails. Both failures remain visible and fail the workflow.
