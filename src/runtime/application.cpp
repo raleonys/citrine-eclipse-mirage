@@ -15,6 +15,7 @@
 #include <atomic>
 #include <cstring>
 #include <future>
+#include <exception>
 #include <thread>
 
 namespace preloader_l::application {
@@ -40,6 +41,8 @@ public:
     std::uint8_t& ready;
     std::uintptr_t module=0,object=0;
     std::uint8_t online=0;
+    bool destruction_unknown=false;
+    std::exception_ptr destruction_failure;
     Provider(configuration::State& s,Environment& e,file::Factory& f,
         execution::Execution& x,std::uint8_t& r):state(s),env(e),files(f),execution(x),ready(r){}
     online::StateRefs refs(){return {state.executable_path,state.cookie_path,state.last_profile_path,
@@ -56,6 +59,15 @@ public:
         if(!address)throw std::logic_error("Provider method is unavailable");
         return reinterpret_cast<Fn>(address);
     }
+    void require_known_destruction() const {
+        if(destruction_unknown) {
+            if(destruction_failure)std::rethrow_exception(destruction_failure);
+            throw std::runtime_error("Online provider destruction outcome is unknown");
+        }
+    }
+    template<class Fn> Fn checked_method(std::uintptr_t o,std::size_t slot) const {
+        require_known_destruction();return method<Fn>(o,slot);
+    }
     std::uint32_t suppress_errors_0450a0() override {auto m=GetErrorMode();SetErrorMode(m|1);return m;}
     void restore_error_mode(std::uint32_t m) override {SetErrorMode(m);}
     Path filesystem_widen_006d70(std::string_view s) override {
@@ -69,12 +81,22 @@ public:
     std::uintptr_t call_create_online(std::uintptr_t fn,const char16_t* p) override {
         const auto value=wide(p);return reinterpret_cast<std::uintptr_t>(reinterpret_cast<void*(*)(const wchar_t*)>(fn)(value.c_str()));
     }
-    std::int32_t status_virtual_08(std::uintptr_t o) override{return method<int(*)(void*)>(o,1)(reinterpret_cast<void*>(o));}
-    const char* username_virtual_10(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,2)(reinterpret_cast<void*>(o));}
-    const char* persona_virtual_18(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,3)(reinterpret_cast<void*>(o));}
-    const char* user_id_virtual_20(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,4)(reinterpret_cast<void*>(o));}
-    void destroy_virtual_00(std::uintptr_t o) override{method<void(*)(void*)>(o,0)(reinterpret_cast<void*>(o));}
+    std::int32_t status_virtual_08(std::uintptr_t o) override{return checked_method<int(*)(void*)>(o,1)(reinterpret_cast<void*>(o));}
+    const char* username_virtual_10(std::uintptr_t o) override{return checked_method<const char*(*)(void*)>(o,2)(reinterpret_cast<void*>(o));}
+    const char* persona_virtual_18(std::uintptr_t o) override{return checked_method<const char*(*)(void*)>(o,3)(reinterpret_cast<void*>(o));}
+    const char* user_id_virtual_20(std::uintptr_t o) override{return checked_method<const char*(*)(void*)>(o,4)(reinterpret_cast<void*>(o));}
+    void destroy_virtual_00(std::uintptr_t o) override {
+        const auto destroy=checked_method<void(*)(void*)>(o,0);
+        // Slot resolution can fail before entry and remains retryable. Once
+        // entered, a foreign destructor may have consumed the object even if
+        // it throws. Keep both identities and block all further foreign use.
+        destruction_unknown=true;
+        try{destroy(reinterpret_cast<void*>(o));}
+        catch(...){destruction_failure=std::current_exception();throw;}
+        destruction_unknown=false;
+    }
     bool free_library(std::uintptr_t m) override {
+        require_known_destruction();
         if(!FreeLibrary(reinterpret_cast<HMODULE>(m)))
             throw std::runtime_error("Online DLL cleanup incomplete");
         return true;
@@ -88,7 +110,7 @@ public:
     void dialog_038bc0(std::string_view,std::string_view text,std::uint32_t flags) override{MessageBoxW(nullptr,wide(env.widen_0145d0(text)).c_str(),L"SURGE",flags);}
     void wait_steps_036880(std::int32_t n) override{execution.wait_steps_036880(n);}
     void finish_flag_036820() override{execution.finish_flag_036820(ready);}
-    void load(){online::worker_035b60(refs(),*this);env.provider=object;}
+    void load(){require_known_destruction();online::worker_035b60(refs(),*this);env.provider=object;}
     void close(){env.provider=0;online::cleanup_0366f0(refs(),*this);online=0;}
 };
 class ExtraLibraries final:public system_services::libraries::SystemCalls,
@@ -145,7 +167,7 @@ class LicenseEffects final:public license::Effects {
 public:
     LicenseEffects(Environment& e,Provider& p,file::Factory& f):env_(e),provider_(p),files_(f){}
     const char* online_auth_virtual_30(const char* id) override {
-        return Provider::method<const char*(*)(void*,const char*)>(provider_.object,6)(reinterpret_cast<void*>(provider_.object),id);
+        return provider_.checked_method<const char*(*)(void*,const char*)>(provider_.object,6)(reinterpret_cast<void*>(provider_.object),id);
     }
     license::FileStatus status_01ea20(const Path& p,std::uint32_t f) override {auto s=env_.status_01ea20(p,f);return {s.kind,static_cast<std::int32_t>(s.error)};}
     [[noreturn]] void filesystem_error_018130(std::string_view op,std::int32_t e,const Path& p) override{env_.filesystem_error_018130(op,e,p);}

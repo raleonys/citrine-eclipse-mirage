@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Quarantine the online-provider object and module when foreign destruction throws, preserve the original exception, and reject later calls or unload attempts before dereferencing possibly consumed storage. Keep pre-call slot failures retryable and preserve module-only retries after successful destruction; add source-linked failure controls.
+
 - Validate SOURCE_FILES byte counts alongside SHA-256, rejecting missing, malformed and stale sizes. Add matching-hash negative controls for multibyte/CRLF payloads and count-only tampering.
 
 - Remove obsolete publication classifications and location labels from operator output, active policies and generated build/Golden reports. Use `BUILD_RECEIPT.json`, `DIST_RECEIPT.json`, `GOLDEN_PASS` and `golden/` consistently across producers, checks and GitHub artifacts; retain draft publication as its own explicit state. Keep Golden/runtime/hash gates, failure codes and rollback behavior, and reject reintroduced labels through Source QA. Preserve vendor bytes and retained historical evidence.
