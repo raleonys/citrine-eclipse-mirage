@@ -67,8 +67,29 @@ class IdentityBoundaryTests(unittest.TestCase):
         path=self.root/'src/module.cpp'
         for namespace,accepted in [('preloader_l::module',True),('upstream::module',False)]:
             payload=('namespace '+namespace+' {}\n').encode('utf-8');path.write_bytes(payload)
-            (self.root/'metadata/SOURCE_FILES.json').write_text(json.dumps({'files':{'src/module.cpp':{'sha256':inventory.digest(payload)}}}))
+            (self.root/'metadata/SOURCE_FILES.json').write_text(json.dumps({'files':{'src/module.cpp':{'bytes':len(payload),'sha256':inventory.digest(payload)}}}))
             self.assertEqual(accepted,source_verification.verify(self.root)['status']=='PASS')
+
+    def test_source_sizes_are_required_integer_byte_counts(self):
+        for folder in ['include','tests','third_party']:(self.root/folder).mkdir()
+        # UTF-8 and CRLF distinguish bytes from characters and normalized text.
+        payload=b'// \xc3\xa9\r\nnamespace preloader_l::fixture {}\r\n'
+        (self.root/'src/module.cpp').write_bytes(payload)
+        manifest=self.root/'metadata/SOURCE_FILES.json'
+        entry={'bytes':len(payload),'sha256':inventory.digest(payload)}
+        def verify(record):
+            manifest.write_text(json.dumps({'files':{'src/module.cpp':record}}))
+            return source_verification.verify(self.root)
+        self.assertEqual('PASS',verify(entry)['status'])
+        for size in [len(payload)-1,len(payload)+1,len(payload.decode('utf-8')),
+                     -1,True,float(len(payload)),str(len(payload)),None]:
+            with self.subTest(size=size):
+                result=verify(dict(entry,bytes=size))
+                self.assertEqual('FAIL',result['status'])
+                self.assertTrue(any('source size' in error.lower() for error in result['errors']))
+                self.assertFalse(any('Source differs:' in error for error in result['errors']))
+        self.assertEqual('FAIL',verify({'sha256':entry['sha256']})['status'])
+        self.assertEqual('PASS',verify(entry)['status'])
 
 
 class PackageTests(unittest.TestCase):
