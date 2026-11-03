@@ -357,10 +357,8 @@ add_library(preloader_l_pegtl INTERFACE)
             cmake += f'file(GENERATE OUTPUT "${{CMAKE_BINARY_DIR}}/crt.txt" CONTENT "{content}")\n'
             cmake += 'file(GENERATE OUTPUT "${CMAKE_BINARY_DIR}/dev-links.txt" CONTENT "$<TARGET_PROPERTY:preloader_l_source_api,LINK_LIBRARIES>")\n'
             (source / 'CMakeLists.txt').write_text(cmake)
-            # Reconfigure both graphs without repeating compiler discovery.
-            # Each configure regenerates the CRT/link outputs checked below.
-            build = Path(tmp) / 'build'
             for config, suffix in [('Debug', 'Debug'), ('Release', '')]:
+                build = Path(tmp) / config
                 cp = subprocess.run(['cmake', '-S', str(source), '-B', str(build),
                                      '-DCMAKE_BUILD_TYPE=' + config,
                                      '-DCMAKE_CONFIGURATION_TYPES=' + config], capture_output=True, text=True)
