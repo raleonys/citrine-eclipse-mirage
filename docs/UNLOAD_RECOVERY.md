@@ -87,3 +87,10 @@ suspensions. Failed resume suppresses output while ownership remains pending.
 Output is best effort, preserves LastError and cannot change the scan result or
 discard retained handles. Release builds compile out this diagnostic. Existing
 scan, TLS, teardown retry and public shutdown requirements remain unchanged.
+
+The shutdown listener workflow keeps five Visual Studio lifecycle attempts per
+configuration for normal PRs. Its manual diagnostic dispatch can instead select
+NMake with the Native profile's testing/source-API configuration and twenty
+independent attempts. Every attempt must pass; failures are counted and retained,
+not retried until green. Generator, source commit and individual exits are recorded
+in the existing receipt and per-attempt JUnit artifacts.
