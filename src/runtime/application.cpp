@@ -208,7 +208,7 @@ public:
         if(!transaction_.owns_engine()||failed_)throw std::runtime_error("Selected hook installation failed; owner must abort startup");
         const std::size_t expected=7+(state_.block_reruns?2:0)+(!state_.documents.empty()?2:0);
         if(targets_.size()!=expected)throw std::runtime_error("Required native hook staging incomplete");
-        if(transaction_.activate()!=MH_OK)throw std::runtime_error("Native hook batch apply failed");
+        if(transaction_.activate()!=platform::hook_engine::status_code::ok)throw std::runtime_error("Native hook batch apply failed");
         }catch(...){
             // Keep this Hooks owner/context alive if rollback is incomplete.
             // Application abort releases startup gates before retrying teardown.
@@ -276,9 +276,9 @@ public:
     }
     std::int32_t create_hook_0466e0(std::uintptr_t target,host_init::Callback c,std::uintptr_t& original) override {
         void* result=nullptr;auto status=transaction_.create(reinterpret_cast<void*>(target),reinterpret_cast<void*>(resolver_.rebuilt_address(c)),&result);
-        original=reinterpret_cast<std::uintptr_t>(result);if(status!=MH_OK)failed_=true;return status;
+        original=reinterpret_cast<std::uintptr_t>(result);if(status!=platform::hook_engine::status_code::ok)failed_=true;return status;
     }
-    std::int32_t enable_hook_046a10(std::uintptr_t p) override{auto s=transaction_.queue(reinterpret_cast<void*>(p));if(s!=MH_OK)failed_=true;return s;}
+    std::int32_t enable_hook_046a10(std::uintptr_t p) override{auto s=transaction_.queue(reinterpret_cast<void*>(p));if(s!=platform::hook_engine::status_code::ok)failed_=true;return s;}
     void log_text_006880(std::string_view s) override {if(s=="Hooking function "||s=="Enabling hook for ")failed_=true;env_.debug_log({"hook installation status: ",s});}
     void log_integer_00af90(std::int32_t code) override{env_.debug_log_number("hook status code: ",code);}
 };

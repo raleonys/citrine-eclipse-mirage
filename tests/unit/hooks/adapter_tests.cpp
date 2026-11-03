@@ -108,17 +108,17 @@ __declspec(noinline) int WINAPI native_b(int n){return n+native_b_offset;}
 int WINAPI detour_a(int n){return original_a(n)+100;}
 int WINAPI detour_b(int n){return original_b(n)+200;}
 void test_native_queued_activation(){
-    NativeApi api;require(api.initialize()==MH_OK,"real engine initialized for queue behavior");
+    NativeApi api;require(api.initialize()==status_code::ok,"real engine initialized for queue behavior");
     void* a=nullptr;void* b=nullptr;
-    require(api.create(reinterpret_cast<void*>(&native_a),reinterpret_cast<void*>(&detour_a),&a)==MH_OK,"first actual fixture hook created");
-    require(api.create(reinterpret_cast<void*>(&native_b),reinterpret_cast<void*>(&detour_b),&b)==MH_OK,"second actual fixture hook created");
+    require(api.create(reinterpret_cast<void*>(&native_a),reinterpret_cast<void*>(&detour_a),&a)==status_code::ok,"first actual fixture hook created");
+    require(api.create(reinterpret_cast<void*>(&native_b),reinterpret_cast<void*>(&detour_b),&b)==status_code::ok,"second actual fixture hook created");
     original_a=reinterpret_cast<ActualFunction>(a);original_b=reinterpret_cast<ActualFunction>(b);
     ActualFunction volatile call_a=&native_a,call_b=&native_b;
-    require(api.queue_enable(reinterpret_cast<void*>(&native_a))==MH_OK&&api.queue_enable(reinterpret_cast<void*>(&native_b))==MH_OK,"both actual hooks queued");
+    require(api.queue_enable(reinterpret_cast<void*>(&native_a))==status_code::ok&&api.queue_enable(reinterpret_cast<void*>(&native_b))==status_code::ok,"both actual hooks queued");
     require(call_a(3)==14&&call_b(3)==16,"queued hooks remain inactive before one batch apply");
-    require(api.apply_queued()==MH_OK&&call_a(3)==114&&call_b(3)==216,"one batch apply activates both hooks and usable originals");
-    require(api.disable(nullptr)==MH_OK&&call_a(3)==14&&call_b(3)==16,"batch disable restores both original functions");
-    require(api.uninitialize()==MH_OK,"actual queued test releases engine");
+    require(api.apply_queued()==status_code::ok&&call_a(3)==114&&call_b(3)==216,"one batch apply activates both hooks and usable originals");
+    require(api.disable(nullptr)==status_code::ok&&call_a(3)==14&&call_b(3)==16,"batch disable restores both original functions");
+    require(api.uninitialize()==status_code::ok,"actual queued test releases engine");
 }
 DWORD WINAPI guard_thread(void* stop){WaitForSingleObject(static_cast<HANDLE>(stop),INFINITE);return 0;}
 void test_external_thread_guard(){
