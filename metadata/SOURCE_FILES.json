@@ -1046,8 +1046,8 @@
       "sha256": "bed84b57abb15a3818cbe0902ed5fe91fa685ca5503af0b606aacf6c591f2d0b"
     },
     "src/xml/memory_printer.cpp": {
-      "bytes": 2832,
-      "sha256": "d2ac9bfff90009c2fcb4c4384c74186bf20c02e2fd3ceb830946ffa67fad3570"
+      "bytes": 3980,
+      "sha256": "a7a204978dea17e777fa18348755cdea50cdbd9d1c6416739beb9a2d9eb039ca"
     },
     "src/xml/native_document.cpp": {
       "bytes": 6061,
@@ -2158,8 +2158,8 @@
       "sha256": "fde14fd68b2d74cedb46d37f84953b10cdab2d3597bad71e3f0914593331aed9"
     },
     "tests/unit/xml/printer_tests.cpp": {
-      "bytes": 5615,
-      "sha256": "f7aeceaba6f5811834b46bf3d8c30d88ad64c3825d415d38935ea88aa87c5964"
+      "bytes": 7562,
+      "sha256": "c241ad1d05b1d8cf95bf4cca0fec930c5957b3e4619f6d7f41c3c1810883bdf1"
     },
     "tests/unit/xml_reader/corpus_tests.cpp": {
       "bytes": 6387,
