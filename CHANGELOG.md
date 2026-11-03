@@ -8,6 +8,10 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Synchronize the staged callback-lease test with accepted main and recompute only reviewed merged source identities, including the SOURCE_FILES digest used by packaging and Golden. Preserve all callback lease assertions and acceptance gates.
+
+- Exercise A11-04 native callback owner retention with a staged two-family Binding drain: hold the real process and connect entry wrappers concurrently, reject close with two then one live lease, and preserve per-thread original results/errors through final retirement. This source-included test does not claim a donor Application gate, a real patched MinHook callback or Consumer unload acceptance.
+
 - Audit C34-F003: validate both ownership-ledger schemas and explicit role policies, complete three previously untyped script entries, and test missing or unknown roles.
 
 - Replace the README campaign artwork with the exact new owner-supplied 1400 x 1100 RGBA PNG (612724 bytes), preserving transparency and encoded bytes. Update the artwork identity/provenance and active manifest; runtime/profile avatars, production resources, ABI and code are unchanged.
