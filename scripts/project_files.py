@@ -8,6 +8,7 @@ from pathlib import Path, PurePosixPath
 import re
 
 MANIFEST = 'metadata/ACTIVE_SOURCE_MANIFEST.json'
+MANIFEST_SCHEMA = 'surge.active-source.v1'
 ALIAS_STORAGE = 'locked-relative-target-descriptors-v1'
 TRANSIENT = {'build', 'dist', '.git'}
 ARCHIVES = ('.zip', '.7z', '.rar', '.tar', '.tgz', '.tar.gz', '.gz')
@@ -114,7 +115,7 @@ def source_files(root):
 def write_manifest(root):
     root = Path(root)
     files = source_files(root)
-    manifest = {'schema': 'surge.active-source.v1',
+    manifest = {'schema': MANIFEST_SCHEMA,
                 'vendor_alias_storage': ALIAS_STORAGE,
                 'symlinks': vendor_symlinks(root),
                 'files': {name: digest(data) for name, data in files.items()}}
@@ -125,6 +126,10 @@ def write_manifest(root):
 def verify_manifest(root):
     root = Path(root)
     manifest = json.loads((root / MANIFEST).read_text(encoding='utf-8'))
+    if not isinstance(manifest, dict) or manifest.get('schema') != MANIFEST_SCHEMA:
+        return ['Unrecognized active source manifest schema']
+    if 'classification' in manifest:
+        return ['Release classification does not belong in source identity manifests']
     actual = {name: digest(data) for name, data in source_files(root).items()}
     expected = manifest['files']
     if manifest.get('symlinks',{})!=vendor_symlinks(root):

@@ -100,6 +100,27 @@ class PackageTests(unittest.TestCase):
             packaging.package(self.root, self.zip)
         self.assertFalse(self.zip.exists())
 
+
+    def test_source_manifest_schema_and_release_classification_fail_closed(self):
+        manifest_path = self.root / inventory.MANIFEST
+        original = manifest_path.read_bytes()
+        content = json.loads(original)
+        self.assertEqual(inventory.MANIFEST_SCHEMA, content['schema'])
+        self.assertNotIn('classification', content)
+        self.assertEqual([], inventory.verify_manifest(self.root))
+
+        for mutate, expected in (
+                ({'schema': 'unexpected.audit.schema'}, 'Unrecognized active source manifest schema'),
+                ({'classification': 'RELEASE'}, 'Release classification does not belong')):
+            with self.subTest(mutate=mutate):
+                modified = dict(content)
+                modified.update(mutate)
+                manifest_path.write_text(json.dumps(modified) + '\n', encoding='utf-8')
+                self.assertTrue(any(expected in message
+                                    for message in inventory.verify_manifest(self.root)))
+                manifest_path.write_bytes(original)
+        self.assertEqual([], inventory.verify_manifest(self.root))
+
     def test_unrecorded_source_is_rejected(self):
         (self.root / 'src/extra.cpp').write_text('unexpected')
         self.assertTrue(inventory.verify_manifest(self.root))
