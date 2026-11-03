@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Keep Debug CryptQueryObject diagnostics from terminating the host when logging throws; restore the observer reentry guard and verify actual logger allocation failure, subsequent callback logging and the Release no-allocation path.
+
 - Remove obsolete publication classifications and location labels from operator output, active policies and generated build/Golden reports. Use `BUILD_RECEIPT.json`, `DIST_RECEIPT.json`, `GOLDEN_PASS` and `golden/` consistently across producers, checks and GitHub artifacts; retain draft publication as its own explicit state. Keep Golden/runtime/hash gates, failure codes and rollback behavior, and reject reintroduced labels through Source QA. Preserve vendor bytes and retained historical evidence.
 
 - Extend the actual patched MinHook SAFE-FREEZE native fixture with two distinct hooks and queued/all-hook IP relocation checks: queued enable, queued disable, `MH_EnableHook(MH_ALL_HOOKS)`, `MH_DisableHook(MH_ALL_HOOKS)`, target-byte restoration, peer context writes and final ownership retirement (D326-F0006, Issue #20). No production or vendor changes.

@@ -231,7 +231,9 @@ public:
     void crypt_observed(hooks::Selection) noexcept override {
 #ifndef NDEBUG
         thread_local bool logging=false;if(logging)return;logging=true;
-        env_.debug_log("phase");
+        // Diagnostics cannot escape this noexcept observer or prevent the
+        // original API result from reaching the host. Always reset reentry.
+        try{env_.debug_log("phase");}catch(...){}
         logging=false;
 #endif
     }
