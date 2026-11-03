@@ -363,12 +363,13 @@ void benchmark(unsigned iterations,unsigned repeats,unsigned seed,const char* ou
    reference.document.reset();candidate.document.reset();
    for(unsigned position=0;position<2;++position) {
     auto& profile=*ps[(first+position)%2];
-    for(unsigned i=0;i<50;++i){auto parsed=profile.backend().parse_c_string(input);require(!parsed.has_error,"benchmark warmup failure");(void)consume(profile,parsed.document->first_element());}
+    auto& backend=profile.backend();auto& access=profile.nodes();
+    for(unsigned i=0;i<50;++i){auto parsed=backend.parse_c_string(input);require(!parsed.has_error,"benchmark warmup failure");(void)xml_comparison::consume_xml(parsed.document->first_element(),access);}
     std::vector<double> durations;durations.reserve(count);std::uint64_t sink=0;
     const auto all_begin=std::chrono::steady_clock::now();
     for(unsigned i=0;i<count;++i) {
      const auto begin=std::chrono::steady_clock::now();
-     {auto parsed=profile.backend().parse_c_string(input);require(!parsed.has_error,"benchmark parse failure");const auto value=consume(profile,parsed.document->first_element());require(value==expected,"benchmark value changed");sink+=value;}
+     {auto parsed=backend.parse_c_string(input);require(!parsed.has_error,"benchmark parse failure");const auto value=xml_comparison::consume_xml(parsed.document->first_element(),access);require(value==expected,"benchmark value changed");sink+=value;}
      durations.push_back(std::chrono::duration<double,std::nano>(std::chrono::steady_clock::now()-begin).count());
     }
     const auto elapsed=std::chrono::duration<double,std::nano>(std::chrono::steady_clock::now()-all_begin).count();

@@ -389,7 +389,7 @@
     "metadata/SESSION_TRANSPORT_POLICY.json": "2403d829c98174d3cf7caa0d382d6478457d22f4d74e162194372d66c8894b66",
     "metadata/SHUTDOWN_RECOVERY_REVIEW.json": "6a0799c62dd9fcba984035ab48a06c078e0b7958ed778e2641e44124726b0ce9",
     "metadata/SOCKET_RETIREMENT_REVIEW.json": "a27d0cd84fc6ab05cf5b321bafce23cde6b887dc374c715ee9fa8553c97d45c6",
-    "metadata/SOURCE_FILES.json": "5f1c261bb509eb7c657ef800fee0d49d38f37c6cb4938a06401f7ba6375983d7",
+    "metadata/SOURCE_FILES.json": "145cc6bc8daae6fbc883e6425f89ab46c483c1491d48a134512a5c1215550b85",
     "metadata/SOURCE_INPUTS.json": "04bb9354fc5a4d6a192b59ef1e2c10badb69769ff2f30fa5afcd3920145acdb8",
     "metadata/UNLOAD_RECOVERY_CONTRACT.json": "bcc72f466706903cf4cd76e93bdc0dc62b83574524055026fe2ec184b860fd9b",
     "metadata/URSYNEX_GOLDEN_FINALIZER.json": "f8c08ca30b9ef2e77354adb043ad75c3dae09942e53ecbe8ff8ed637001b855d",
@@ -3634,6 +3634,6 @@
     "tests/diagnostics/xml_backend/backend.hpp": "148e339141c327c5e6b7ca7dc2afd7564d9ae8451e1aeddacfd3a6fcecdc5fcd",
     "tests/diagnostics/xml_backend/CMakeLists.txt": "ec8be378d06c5ec9136e66a05510089903560e54c696f40300a62e4653e11fee",
     "tests/diagnostics/xml_backend/run.py": "52865c96320ce8452e952fbe6f31906269ef1e6672495e4b1b33317c80dfe4e3",
-    "tests/diagnostics/xml_backend/suite.cpp": "7bc9262ace7458352353ebcda5e38997496c1345411f0c4eba63a799e5d78288"
+    "tests/diagnostics/xml_backend/suite.cpp": "3b93c6c1f828dc1525de2972d751643be6d62d16100509831dffbf011547552a"
   }
 }

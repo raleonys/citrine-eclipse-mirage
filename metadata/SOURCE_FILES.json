@@ -1146,8 +1146,8 @@
       "sha256": "52865c96320ce8452e952fbe6f31906269ef1e6672495e4b1b33317c80dfe4e3"
     },
     "tests/diagnostics/xml_backend/suite.cpp": {
-      "bytes": 29918,
-      "sha256": "7bc9262ace7458352353ebcda5e38997496c1345411f0c4eba63a799e5d78288"
+      "bytes": 30002,
+      "sha256": "3b93c6c1f828dc1525de2972d751643be6d62d16100509831dffbf011547552a"
     },
     "tests/fixtures/xml_reader/optimization-baseline.txt": {
       "bytes": 1477836,
