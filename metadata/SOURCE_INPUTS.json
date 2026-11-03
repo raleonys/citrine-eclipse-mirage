@@ -38,7 +38,15 @@
       "bytes": 819823,
       "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
       "path": "/workspace/project-input/3RD PARTY/tinyxml2-master.zip",
-      "source_materialization": "INSTALLED_BYTE_EXACT"
+      "source_materialization": "RETIRED_FROM_ACTIVE_TREE_PRESERVED_IN_GIT_AND_ORIGINAL_INPUT"
+    },
+    "pugixml-master.zip": {
+      "sha256": "4cd80a72fde87ce1f23eae4ed048446b2e887fc25437793e525367448be2cf81",
+      "bytes": 670227,
+      "production_integration": "Selected by owner for PR #149; exact-head build/runtime evidence remains separate",
+      "path": "/workspace/attachments/cfef2e33-0dee-4155-91e6-b72b67b6c675/pugixml-master.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT",
+      "upstream_commit_from_archive_comment": "f0a3faa76e04f35110257ca8713363dee3c890e8"
     }
   },
   "source_reference_document": "metadata/evidence/contracts/SOURCE_INPUTS.json"

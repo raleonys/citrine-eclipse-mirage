@@ -224,7 +224,7 @@ def collect(root, build, config, dll, output, with_symbols=False):
         selected = [x for x in commands if Path(x['file']).resolve().is_relative_to(root / 'src')]
         payload['commands/compile_commands.json'] = (json.dumps(selected, indent=2) + '\n').encode()
     targets = set(policy['production_targets'] + policy['reference_targets'] + policy['source_api_targets'])
-    targets.update(['preloader_l_minhook', 'preloader_l_tinyxml2'])
+    targets.update(['preloader_l_minhook', 'preloader_l_pugixml'])
     objects, failures = [], []
     dumpbin = shutil.which('dumpbin') if with_symbols else None
     if with_symbols and not dumpbin:

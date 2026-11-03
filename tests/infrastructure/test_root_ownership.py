@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from check_repository_contract import (
     check_root_file_ownership, check_archived_evidence, check_active_identifiers,
-    check_layout_migration_reference,
+    check_layout_migration_reference, declared_application_sources,
 )
 
 
@@ -33,6 +33,14 @@ def fixture_git_environment():
 
 
 class RepositoryRootOwnership(unittest.TestCase):
+    def test_application_declarations_keep_complete_source_path_boundaries(self):
+        text = '''add_library(app src/xml/reader.cpp "src/platform/entry.cpp")
+        add_library(vendor third_party/pugixml/src/pugixml.cpp)
+        add_library(other external/src/adapter.cpp ../src/foreign.cpp)
+        add_library(unlisted src/runtime/unowned.cpp)'''
+        self.assertEqual({'src/xml/reader.cpp', 'src/platform/entry.cpp',
+                          'src/runtime/unowned.cpp'}, declared_application_sources(text))
+
     def test_nested_fixtures_preserve_inherited_worktree_repository(self):
         if not shutil.which('git'):
             self.skipTest('Git executable not available')

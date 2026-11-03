@@ -213,7 +213,7 @@ def bundle(root, payload, output):
     files['RELEASE_RECEIPT.json'] = output / 'RELEASE_RECEIPT.json'
     files['LICENSE'] = root / 'LICENSE'
     for vendor, license_file in (('asio', 'LICENSE_1_0.txt'), ('minhook', 'LICENSE.txt'),
-                                 ('pegtl', 'LICENSE_1_0.txt'), ('tinyxml2', 'LICENSE.txt')):
+                                 ('pegtl', 'LICENSE_1_0.txt'), ('pugixml', 'LICENSE.md')):
         files['licenses/' + vendor + '.txt'] = root / 'third_party' / vendor / license_file
     for profile in ('native', 'production'):
         for path in (payload / profile).rglob('*'):

@@ -2,8 +2,9 @@
 
 The source consists of four active ZIP archives supplied
 by the owner. For Asio, the later uploaded archive
-replaced the former input; the other three original
-archives were retained. Gulrak was removed by the
+replaced the former input; the owner subsequently selected the supplied
+pugixml archive to replace TinyXML2 in PR #149. MinHook and PEGTL
+archives are unchanged. Gulrak was removed by the
 owner's later instruction. Brownfield vendor copies
 or other versions downloaded from the internet
 are not substituted.
@@ -13,9 +14,9 @@ are not substituted.
 | Asio | 1.38.2; owner snapshot `bdf337ddb1a667c274372a602de5857ad3cb3ed0` | `third_party/asio` |
 | MinHook | v1.3.4 in README | `third_party/minhook` |
 | PEGTL | 4.0.0 | `third_party/pegtl` |
-| TinyXML2 | 11.0.0 | `third_party/tinyxml2` |
+| pugixml | 1.16; owner snapshot `f0a3faa76e04f35110257ca8713363dee3c890e8` | `third_party/pugixml` |
 
-All 2,835 file/link entries are verified against
+All 2,753 file/link entries are verified against
 archive-member hash lists. Licenses and Asio's
 logical links `asio/include → ../include`
 and `asio/src → ../src` are preserved.
@@ -45,7 +46,10 @@ dependencies or use a package manager.
 Project CMake targets are
 `preloader_l_asio`, `preloader_l_minhook`,
 `preloader_l_pegtl`, and
-`preloader_l_tinyxml2`.
+`preloader_l_pugixml`. The previous `preloader_l_tinyxml2` identifier is
+retained as a CMake alias of pugixml for build compatibility; it contains no
+TinyXML2 source. The development DLL uses its own shared-CRT pugixml build.
+XPath is disabled with the public `PUGIXML_NO_XPATH` definition.
 Build-time member-hash verification also runs.
 On mismatch, the checker reports missing,
 extra and modified paths and expected/actual
@@ -62,24 +66,28 @@ from incorrectly selecting `null_thread`.
 It is not a vendor-source patch or a
 disabled threading test.
 
-## TinyXML2 depth 500
+## XML compatibility and retired input
 
-The old RE copy had changed
-`TINYXML2_MAX_ELEMENT_DEPTH` to 100;
-the new archive uses **500**. The vendor
-default is preserved; no source or build-tree
-patch resets it to 100. The XML adapter
-test now checks this actual vendor limit:
-because the document level is also counted,
-498 nested elements are accepted and 499
-trigger a depth error. This is an explicitly
-recorded behavior difference from the older
-RE profile, not proof of original/native
-equivalence.
+Pugixml is compiled directly from the complete, unmodified 191-file owner
+archive. Its MIT license and member hashes are included. Project grammar,
+checked reference decoding, diagnostic text and depth handling live in
+`src/xml/reader_policy.cpp` and `reader_values.cpp`, behind the unchanged reader
+interface. The legacy depth contract remains: 498 nested elements succeed and
+499 fail with error 18. This is a project policy, not a pugixml vendor patch.
+
+The previous TinyXML2 lock/member list remains historical provenance in
+`retired_vendor_inputs`; its active tree and build input are removed. Git
+history and the diagnostic's separately pinned PR #108 checkout retain the
+original bytes and tests. TinyXML2 is reachable only in that external control,
+never in the application or development DLL. The source graph rejects a
+retired TinyXML2 path in production. See [XML_BACKEND_COMPARISON.md](XML_BACKEND_COMPARISON.md)
+for differential checks, deliberate malformed-value corrections and evidence
+limits. Earlier vendoring reports describe the vendor selection at their own
+checkpoint; they are not fresh pugixml native acceptance.
 
 ## Build-time versus active runtime use
 
-MinHook and TinyXML2 are linked to existing
+MinHook and pugixml are linked to existing
 DLL hook-engine/XML targets. PEGTL now runs
 the existing Config2/VDF grammar documented
 in RE within the actual Application parser:
@@ -211,5 +219,5 @@ Current commit evidence and hash-pinned
 SAFE-FREEZE exception applied only to
 a build copy:
 [HOOK_ENGINE_HARDENING.md](HOOK_ENGINE_HARDENING.md).
-Member hashes of the four original
-vendor trees remain unchanged.
+The three retained vendor pins are unchanged; pugixml is pinned separately
+to its exact owner archive.
