@@ -9,7 +9,7 @@
 #include <MinHook.h>
 
 static int checks, enumeration, resumes, closes, cursor_closes;
-static BOOL unavailable, fail_resume, fail_close, fail_heap, fail_context, fail_suspend, fail_cursor, fail_array;
+static BOOL unavailable, fail_resume, fail_close, fail_heap, fail_context, fail_set_context, fail_suspend, fail_cursor, fail_array;
 static HANDLE cursor_handle = (HANDLE)(ULONG_PTR)0x4321;
 static HANDLE peer_handle = (HANDLE)(ULONG_PTR)0x4322;
 static DWORD64 peer_ip;
@@ -52,7 +52,7 @@ static BOOL WINAPI context_peer(HANDLE thread,LPCONTEXT context) {
     return GetThreadContext(thread,context);
 }
 static BOOL WINAPI update_context_peer(HANDLE thread,const CONTEXT* context) {
-    if(thread==peer_handle){peer_ip=context->Rip;++context_writes;return TRUE;}
+    if(thread==peer_handle){if(fail_set_context){SetLastError(ERROR_ACCESS_DENIED);return FALSE;}peer_ip=context->Rip;++context_writes;return TRUE;}
     return SetThreadContext(thread,context);
 }
 static BOOL WINAPI exit_code(HANDLE thread,LPDWORD code) {
@@ -82,7 +82,7 @@ static LPVOID WINAPI allocate_heap(HANDLE heap,DWORD flags,SIZE_T bytes) {
 #include "hook.c"
 
 static void reset_faults(void) {
-    unavailable=fail_resume=fail_close=fail_heap=fail_context=fail_suspend=fail_cursor=fail_array=FALSE;
+    unavailable=fail_resume=fail_close=fail_heap=fail_context=fail_set_context=fail_suspend=fail_cursor=fail_array=FALSE;
 }
 static void single_hook_ip_relocation(void) {
     unsigned char* target=(unsigned char*)VirtualAlloc(NULL,64,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE);
@@ -92,13 +92,24 @@ static void single_hook_ip_relocation(void) {
     memset(target,0x90,64);target[16]=0xc3;target[32]=0xc3;
     require(MH_CreateHook(target,target+32,&trampoline)==MH_OK&&trampoline!=NULL,"create actual single hook and trampoline");
     peer_ip=(DWORD64)(ULONG_PTR)(target+2);writes=context_writes;
-    require(MH_EnableHook(target)==MH_OK,"enable actual single hook");
+    fail_set_context=TRUE;
+    require(MH_EnableHook(target)==MH_ERROR_MEMORY_PROTECT,"failed peer SetThreadContext rejects single enable");
+    require(target[0]==0x90&&peer_ip==(DWORD64)(ULONG_PTR)(target+2)&&context_writes==writes&&
+        !HasRetainedThreadOwnership(),"failed enable does not publish patch, relocate IP or leak peer");
+    fail_set_context=FALSE;
+    require(MH_EnableHook(target)==MH_OK,"enable actual single hook after SetThreadContext retry");
     require(peer_ip==(DWORD64)(ULONG_PTR)((unsigned char*)trampoline+2)&&context_writes==writes+1,"single enable maps target IP to trampoline");
     require(target[0]==0xe9,"single enable patches target");
     fail_context=TRUE;
     require(MH_DisableHook(target)==MH_ERROR_MEMORY_PROTECT,"unresolved peer context rejects single disable");
     require(target[0]==0xe9&&peer_ip==(DWORD64)(ULONG_PTR)((unsigned char*)trampoline+2),"failed disable preserves live patch and peer IP");
     fail_context=FALSE;writes=context_writes;
+    fail_set_context=TRUE;
+    require(MH_DisableHook(target)==MH_ERROR_MEMORY_PROTECT,"failed peer SetThreadContext rejects single disable");
+    require(target[0]==0xe9&&peer_ip==(DWORD64)(ULONG_PTR)((unsigned char*)trampoline+2)&&
+        context_writes==writes&&!HasRetainedThreadOwnership(),
+        "failed disable retains live patch and peer IP without leaking thread owners");
+    fail_set_context=FALSE;
     require(MH_DisableHook(target)==MH_OK,"disable actual single hook after context retry");
     require(peer_ip==(DWORD64)(ULONG_PTR)(target+2)&&context_writes==writes+1,"single disable maps trampoline IP back to target");
     require(target[0]==0x90,"single disable restores target bytes");

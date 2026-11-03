@@ -155,7 +155,7 @@ def pipeline(root, dll, build_dir, output_dir):
         if report['result'] == 'LOCAL_GOLDEN_PASS':
             candidate_before = sha(candidate)
             try:
-                cp = subprocess.run([str(build_dir / 'preloader_l_runtime_host.exe'), str(candidate)],
+                cp = subprocess.run([str(build_dir / 'preloader_l_runtime_host.exe'), str(candidate), '--xml-contracts'],
                                     cwd=root, text=True, capture_output=True, timeout=120, env=child_environment)
                 runtime = {'exit_code': cp.returncode, 'output': cp.stdout + cp.stderr}
             except subprocess.TimeoutExpired:
