@@ -97,11 +97,115 @@ class PackageTests(unittest.TestCase):
             self.assertIn('CMakeLists.txt', archive.namelist())
             self.assertEqual({'CMakeLists.txt','src','metadata'}, {Path(name).parts[0] for name in archive.namelist()})
 
+
+    def test_checksum_commit_failure_retains_previous_complete_package(self):
+        previous = packaging.package(self.root, self.zip)
+        sidecar = Path(previous['sha256_file'])
+        original_zip, original_sidecar = self.zip.read_bytes(), sidecar.read_bytes()
+        (self.root / 'src/value.cpp').write_text('int value() { return 9; }\n')
+        inventory.write_manifest(self.root)
+
+        replace = packaging.os.replace
+        def reject_checksum(source, destination):
+            if Path(destination) == sidecar:
+                raise OSError('injected checksum publication error')
+            return replace(source, destination)
+
+        with patch.object(packaging.os, 'replace', side_effect=reject_checksum):
+            with self.assertRaisesRegex(OSError, 'injected checksum publication error'):
+                packaging.package(self.root, self.zip)
+        self.assertEqual(original_zip, self.zip.read_bytes())
+        self.assertEqual(original_sidecar, sidecar.read_bytes())
+        self.assertFalse(list(self.base.glob('.*.partial')))
+        self.assertFalse(list(self.base.glob('.*.rollback')))
+
+        replacement = packaging.package(self.root, self.zip)
+        self.assertNotEqual(previous['sha256'], replacement['sha256'])
+        self.assertEqual(replacement['sha256'] + '  source.zip\n', sidecar.read_text())
+
+    def test_checksum_commit_failure_without_old_pair_removes_new_zip(self):
+        sidecar = Path(str(self.zip) + '.sha256')
+        replace = packaging.os.replace
+        def reject_checksum(source, destination):
+            if Path(destination) == sidecar:
+                raise OSError('injected checksum publication error')
+            return replace(source, destination)
+        with patch.object(packaging.os, 'replace', side_effect=reject_checksum):
+            with self.assertRaisesRegex(OSError, 'injected checksum publication error'):
+                packaging.package(self.root, self.zip)
+        self.assertFalse(self.zip.exists())
+        self.assertFalse(sidecar.exists())
+        self.assertFalse(list(self.base.glob('.*.partial')))
+
+    def test_incomplete_existing_pair_is_not_overwritten(self):
+        self.zip.write_bytes(b'old ZIP without receipt')
+        with self.assertRaisesRegex(ValueError, 'incomplete source ZIP/checksum pair'):
+            packaging.package(self.root, self.zip)
+        self.assertEqual(b'old ZIP without receipt', self.zip.read_bytes())
+        self.zip.unlink()
+        sidecar = Path(str(self.zip) + '.sha256')
+        sidecar.write_text('orphaned receipt\n')
+        with self.assertRaisesRegex(ValueError, 'incomplete source ZIP/checksum pair'):
+            packaging.package(self.root, self.zip)
+        self.assertEqual('orphaned receipt\n', sidecar.read_text())
+
+    def test_preexisting_package_partials_cannot_redirect_writes(self):
+        victim = self.base / 'unrelated-fixture.txt'
+        victim.write_bytes(b'unmodified audit fixture')
+        for name in ('source.zip.partial', 'source.zip.sha256.partial'):
+            with self.subTest(partial=name):
+                unsafe = self.base / name
+                try:
+                    unsafe.symlink_to(victim)
+                except (OSError, NotImplementedError):
+                    self.skipTest('Symlink fixture unavailable on this host')
+                try:
+                    with self.assertRaisesRegex(ValueError, 'Unsafe existing source package partial path'):
+                        packaging.package(self.root, self.zip)
+                    self.assertEqual(b'unmodified audit fixture', victim.read_bytes())
+                    self.assertFalse(self.zip.exists())
+                    self.assertFalse(list(self.base.glob('.source.zip.*.partial')))
+                finally:
+                    unsafe.unlink()
+
+    def test_symlinked_package_output_is_rejected_without_modifying_target(self):
+        victim = self.base / 'unrelated-fixture.txt'
+        victim.write_bytes(b'unchanged output target')
+        try:
+            self.zip.symlink_to(victim)
+        except (OSError, NotImplementedError):
+            self.skipTest('Symlink fixture unavailable on this host')
+        with self.assertRaisesRegex(ValueError, 'symlinked source ZIP'):
+            packaging.package(self.root, self.zip)
+        self.assertEqual(b'unchanged output target', victim.read_bytes())
+        self.assertTrue(self.zip.is_symlink())
+
     def test_source_drift_is_not_automatically_legitimized(self):
         (self.root / 'src/value.cpp').write_text('changed')
         with self.assertRaises(ValueError):
             packaging.package(self.root, self.zip)
         self.assertFalse(self.zip.exists())
+
+
+    def test_source_manifest_schema_and_release_classification_fail_closed(self):
+        manifest_path = self.root / inventory.MANIFEST
+        original = manifest_path.read_bytes()
+        content = json.loads(original)
+        self.assertEqual(inventory.MANIFEST_SCHEMA, content['schema'])
+        self.assertNotIn('classification', content)
+        self.assertEqual([], inventory.verify_manifest(self.root))
+
+        for mutate, expected in (
+                ({'schema': 'unexpected.audit.schema'}, 'Unrecognized active source manifest schema'),
+                ({'classification': 'RELEASE'}, 'Release classification does not belong')):
+            with self.subTest(mutate=mutate):
+                modified = dict(content)
+                modified.update(mutate)
+                manifest_path.write_text(json.dumps(modified) + '\n', encoding='utf-8')
+                self.assertTrue(any(expected in message
+                                    for message in inventory.verify_manifest(self.root)))
+                manifest_path.write_bytes(original)
+        self.assertEqual([], inventory.verify_manifest(self.root))
 
     def test_unrecorded_source_is_rejected(self):
         (self.root / 'src/extra.cpp').write_text('unexpected')
