@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Align displayed source paths with their existing navigation targets in the historical comparison tables, and link retired hook validation evidence to its exact historical Git version.
+
 - Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
 
 - Validate SOURCE_FILES byte counts alongside SHA-256, rejecting missing, malformed and stale sizes. Add matching-hash negative controls for multibyte/CRLF payloads and count-only tampering.
@@ -228,7 +230,7 @@ The following sections are preserved verbatim from the R24 source-import changel
 - Build MinHook with the selected NtGetNextThread SAFE-FREEZE patch in a separately verified build copy; preserve every original vendor member.
 - Add explicit transaction states, rollback ownership retention, call drain and retryable DLL cleanup without changing the three production exports.
 - Correct the donor helper's second-handle retention on simultaneous array allocation and two close failures; cover the actual patched engine with injected-failure tests.
-- See [hook lifecycle contract and provenance](docs/HOOK_ENGINE_HARDENING.md) and [fresh evidence](docs/evidence/HOOK_HARDENING.json).
+- See [hook lifecycle contract and provenance](docs/HOOK_ENGINE_HARDENING.md) and [historical validation evidence](https://github.com/raleonys/citrine-eclipse-mirage/blob/50b6a293522bf63ebdd1fccc900b061abc964362/docs/evidence/HOOK_HARDENING.json).
 
 ## Owner-restored Windows standard IO — 2026-10-29
 
