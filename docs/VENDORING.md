@@ -46,9 +46,8 @@ dependencies or use a package manager.
 Project CMake targets are
 `preloader_l_asio`, `preloader_l_minhook`,
 `preloader_l_pegtl`, and
-`preloader_l_pugixml`. The previous `preloader_l_tinyxml2` identifier is
-retained as a CMake alias of pugixml for build compatibility; it contains no
-TinyXML2 source. The development DLL uses its own shared-CRT pugixml build.
+`preloader_l_pugixml`. The development DLL uses its own shared-CRT
+`preloader_l_source_pugixml` build. No legacy XML vendor target aliases are provided.
 XPath is disabled with the public `PUGIXML_NO_XPATH` definition.
 Build-time member-hash verification also runs.
 On mismatch, the checker reports missing,

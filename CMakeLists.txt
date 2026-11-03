@@ -129,7 +129,6 @@ if(PRELOADER_L_BUILD_SOURCE_API_DLL)
     add_library(preloader_l_source_pugixml STATIC third_party/pugixml/src/pugixml.cpp)
     target_include_directories(preloader_l_source_pugixml PUBLIC third_party/pugixml/src)
     target_compile_definitions(preloader_l_source_pugixml PUBLIC PUGIXML_NO_XPATH)
-    add_library(preloader_l_source_tinyxml2 ALIAS preloader_l_source_pugixml)
     add_dependencies(preloader_l_source_pugixml preloader_l_verify_vendors)
     set_target_properties(preloader_l_source_minhook preloader_l_source_pugixml
       PROPERTIES MSVC_RUNTIME_LIBRARY "${_source_api_crt}")
