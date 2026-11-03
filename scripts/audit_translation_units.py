@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Produce a per-TU symbol/test/source-API usage matrix from built COFF objects.
 
 Uses LLVM inspection tools and the generated CMake target graph. Object lookup
@@ -125,7 +127,7 @@ def build_report(root, build, config, nm, objdump, readobj):
         for index, line in enumerate((root / name).read_text(encoding='utf-8').splitlines(), 1):
             if re.search(r'GetProcAddress|CreateThread|std::thread|rebuilt_address|GetModuleHandleEx', line):
                 bindings.append({'source': name, 'line': index, 'text': line.strip()})
-    return {'schema': 'surge.translation-unit-usage.v1', 'classification': 'NOT_RELEASE',
+    return {'schema': 'surge.translation-unit-usage.v1',
             'analysis': 'EXTERNAL_COFF_SYMBOL_REFERENCES_PLUS_TARGET_AND_BINDING_REVIEW; NOT_EXHAUSTIVE_DYNAMIC_PROOF',
             'production_tu_count': len(production), 'reference_tu_count': len(ref),
             'reference_only_symbol_count': len(ref_providers),

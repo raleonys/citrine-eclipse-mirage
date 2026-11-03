@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_frame_read.hpp"
 #include "preloader_l/runtime/thread_launch.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct MessageWriteTask {
     std::uintptr_t function_00=0;ReceiveBufferString response_08;
     std::uintptr_t object_28=0;IoReference* control_30=nullptr;
@@ -41,11 +43,11 @@ std::uint32_t route_message_thread_entry(std::uintptr_t entry,std::uintptr_t arg
 // Source bridge to the existing CRT05e8e0, without changing CRT production.
 // Effects::invoke_entry must route the opaque entry/argument through the above
 // router using a registered live closure. The OS thread backend stays required.
-class RecoveredMessageThreadApi:public FrameReadApi {
+class MessageThreadApi:public FrameReadApi {
 public:
-    explicit RecoveredMessageThreadApi(threads_recovered::Effects& threads):threads_(threads){}
+    explicit MessageThreadApi(threads::Effects& threads):threads_(threads){}
     std::uintptr_t begin_frame_thread_05e8e0(std::uintptr_t,std::uint32_t,std::uintptr_t,
         FrameMessageClosure*,std::uint32_t,std::uint32_t&) final;
-private:threads_recovered::Effects& threads_;
+private:threads::Effects& threads_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

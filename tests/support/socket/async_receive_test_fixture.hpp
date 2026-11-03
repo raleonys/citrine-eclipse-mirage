@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_async_receive.hpp"
 #include <functional>
@@ -6,7 +8,7 @@
 #include <vector>
 
 namespace receive_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 inline unsigned checks=0;
 inline void check(bool value,const char* message){++checks;if(!value)throw std::runtime_error(message);}
 [[noreturn]]inline void unexpected(){throw std::logic_error("Unexpected synthetic receive dependency");}

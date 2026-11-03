@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 # Explicit runtime and retained reference model graphs; no source file is deleted.
 set(PRELOADER_L_VDF_SOURCES src/config/parser.cpp)
 set(PRELOADER_L_APPLICATION_SOURCES
@@ -58,6 +60,8 @@ set(PRELOADER_L_APPLICATION_SOURCES
   src/runtime/timestamp.cpp
   src/xml/memory_printer.cpp
   src/xml/reader.cpp
+  src/xml/reader_policy.cpp
+  src/xml/reader_values.cpp
 )
 
 # Retained for reference contracts and the optional C++ development DLL only.
@@ -136,7 +140,7 @@ set(PRELOADER_L_REFERENCE_SOURCES
   src/xml/pool_release.cpp
   src/runtime/bootstrap.cpp
   src/runtime/thread_launch.cpp
-  src/runtime/recovered_effects.cpp
+  src/runtime/delegating_effects.cpp
   src/platform/hook_cleanup.cpp
   src/platform/hook_engine_adapters.cpp
   src/config/pipeline.cpp

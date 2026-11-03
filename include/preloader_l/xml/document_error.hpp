@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/parse_entry.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // An explicitly supplied invocation identity for the native variadic tail.
 // This is neither a host va_list nor proof of a native caller-stack ABI.
 struct NativeErrorArgumentTail {std::uintptr_t opaque_cursor=0;};
@@ -32,14 +34,14 @@ void set_document_error_005820(std::uintptr_t document,std::int32_t error_id,
 // The invoker must supply the argument-tail context for each call. Formatting,
 // including a nonzero detail format, remains a mandatory lower effect. This
 // source bridge does not capture or synthesize a native caller's varargs.
-class RecoveredDocumentErrorEffects:public RecoveredParseEntryEffects,
+class DocumentErrorEffects:public ParseEntryEffects,
     public NativeDocumentErrorEffects {
 public:
-    RecoveredDocumentErrorEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes,
+    DocumentErrorEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes,
         const NativeErrorArgumentTail& arguments)
-        :RecoveredParseEntryEffects(memory,nodes),error_{memory,*this,*this},arguments_(arguments){}
+        :ParseEntryEffects(memory,nodes),error_{memory,*this,*this},arguments_(arguments){}
     void set_error_005820(std::uintptr_t,std::int32_t,std::uint32_t,std::uintptr_t) final;
 private:
     NativeDocumentErrorContext error_;const NativeErrorArgumentTail& arguments_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

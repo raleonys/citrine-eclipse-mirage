@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "../../support/fixture_ascii.hpp"
 #include "storage_fixture.hpp"
 #include "preloader_l/config/startup.hpp"
@@ -8,7 +10,7 @@ struct Configuration final:achievement_storage::ConfigurationDependencies {
     std::vector<std::string> seen_names;
     explicit Configuration(achievement_storage::Storage& storage):ConfigurationDependencies(storage){}
     Path executable_path_03c6d0()override{return u"C:\\fixture\\host.exe";}
-    Path parent_path_019820(const Path& p)override{return path_recovered::parent_path_019820(p);}
+    Path parent_path_019820(const Path& p)override{return path::parent_path_019820(p);}
     Path join_016b00(const Path& a,const Path& b)override{return join(a,b);}
     Path widen_0145d0(std::string_view s)override{return wide(s);}
     Path filesystem_widen_010540(std::string_view s)override{return wide(s);}

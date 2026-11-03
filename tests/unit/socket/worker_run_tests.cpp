@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_worker_run.hpp"
 #include <bit>
 #include <functional>
 #include <iostream>
 #include <vector>
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 namespace {
 unsigned checks=0;
 void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
@@ -41,7 +43,7 @@ struct Effects:s::WorkerRunEffects{
 struct Fixture{
  Gate gate;CRITICAL_SECTION section{};Entry scheduler{gate,section};
  Api api{*this};Errors errors{*this};Effects effects{*this};std::uint32_t index=0xfedcba98U,status=0;
- s::Category generic{0x8899,preloader_l::server_recovered::ErrorCategory::other};
+ s::Category generic{0x8899,preloader_l::server::ErrorCategory::other};
  std::int32_t boolean=0,set_result=0;void* tls=reinterpret_cast<void*>(0x12345678ULL);
  std::vector<std::string> trace;std::vector<std::pair<std::uint32_t,void*>> setters;
  std::vector<std::uint32_t> getters;std::vector<std::uintptr_t> freed;
@@ -57,7 +59,7 @@ void* Api::tls_get(std::uint32_t index){f.getters.push_back(index);auto* value=f
 std::int32_t Api::tls_set(std::uint32_t index,void* value){f.setters.emplace_back(index,value);f.tls=value;f.event("set");return f.set_result;}
 std::int32_t Api::post_stop(std::uintptr_t port,std::uint32_t bytes,std::uintptr_t key,OVERLAPPED* operation){check(port==f.scheduler.completion.port && !bytes && !key && !operation,"stop posts live port with zero bytes/key and null OVERLAPPED");f.event("post");return f.boolean;}
 std::uint32_t Api::get_last_error(){auto value=f.status;f.event("error");return value;}
-s::Category Errors::system_category_028620(){f.event("category");return {0x9922,preloader_l::server_recovered::ErrorCategory::system};}
+s::Category Errors::system_category_028620(){f.event("category");return {0x9922,preloader_l::server::ErrorCategory::system};}
 std::uint32_t Effects::exchange_stop_34(s::IocpSchedulerEntry& scheduler,std::uint32_t value){check(&scheduler==&f.scheduler && value==1,"stop exact target and exchange1");auto old=scheduler.high_34;scheduler.high_34=value;f.event("stop");return old;}
 std::uint32_t Effects::exchange_wake_38(s::IocpSchedulerEntry& scheduler,std::uint32_t value){check(&scheduler==&f.scheduler && value==1,"wake exact target and low32 exchange1");auto old=static_cast<std::uint32_t>(scheduler.word_38);scheduler.word_38=(scheduler.word_38&0xffffffff00000000ULL)|value;f.event("wake");return old;}
 std::uint64_t Effects::dispatch_027c10(s::IocpSchedulerEntry& scheduler,std::uint32_t timeout,s::WorkerThreadState& state,s::WorkerRunResult& result){check(&scheduler==&f.scheduler && timeout==0xffffffffU,"dispatch exact scheduler and infinite timeout");auto* context=static_cast<s::WorkerTlsContext*>(f.tls);check(context && context->state==&state && context->port_key==&scheduler.completion.port,"TLS context contains address of live port and exact state identity");check(f.initialized==&state.context_58,"same initialized CRT pair passed in dispatcher state");f.state=&state;f.event("dispatch");++f.calls;if(f.dispatcher)return f.dispatcher(state,result);return f.dispatches.at(f.calls-1);}

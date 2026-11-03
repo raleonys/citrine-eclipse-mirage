@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include <windows.h>
 #include <cstdint>
 #include <cstdio>
 namespace {
 struct Object {std::uintptr_t* table;};
 int mode=0,destroyed=0;
-void destroy(Object*,unsigned){++destroyed;}
+void destroy(Object*){++destroyed;}
 int status(Object*){return mode;}
 const char* username(Object*){return "fixture-online";}
 const char* persona(Object*){return "fixture-persona";}

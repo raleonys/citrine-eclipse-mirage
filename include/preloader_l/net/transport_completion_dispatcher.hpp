@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_worker_run.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct DispatcherQueue {CancelOperation* head=nullptr;CancelOperation* tail=nullptr;};
 class DispatcherService {
 public:
@@ -68,9 +70,9 @@ std::uint64_t dispatch_completion_027c10(DispatcherState&,std::uint32_t requeste
     DispatcherEffects&,WorkerRunApi&,Api& errors,WorkerRunEffects&);
 // Actual bridge replacing prior required027c10. Remaining methods/CRT/atomic
 // storage stay mandatory; caller supplies state for the exact entry identity.
-class RecoveredDispatcherWorkerEffects:public WorkerRunEffects {
+class DispatcherWorkerEffects:public WorkerRunEffects {
 public:
-    RecoveredDispatcherWorkerEffects(DispatcherState& state,DispatcherEnvironment environment,
+    DispatcherWorkerEffects(DispatcherState& state,DispatcherEnvironment environment,
         DispatcherApi& api,DispatcherEffects& effects,WorkerRunApi& worker_api,Api& errors)
         :state_(state),environment_(environment),api_(api),effects_(effects),worker_api_(worker_api),errors_(errors){}
     std::uint64_t dispatch_027c10(IocpSchedulerEntry&,std::uint32_t,
@@ -79,4 +81,4 @@ private:
     DispatcherState& state_;DispatcherEnvironment environment_;DispatcherApi& api_;
     DispatcherEffects& effects_;WorkerRunApi& worker_api_;Api& errors_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/core/license.hpp"
 #include "preloader_l/xml/memory_printer.hpp"
 #include <algorithm>
@@ -11,7 +13,7 @@
 
 namespace {
 using namespace preloader_l;
-using namespace license_recovered;
+using namespace license;
 int checked=0;
 void check(bool condition,const char* description) {
     ++checked;
@@ -25,12 +27,12 @@ struct Exit { std::int32_t code; };
 struct NoResponse {};
 struct FsError { std::string operation; std::int32_t error; Path path; };
 struct Injected {};
-struct Node final : messages_recovered::XmlNode {
+struct Node final : messages::XmlNode {
     std::map<std::string,std::string,std::less<>> attributes;
     mutable std::vector<std::string> reads;
     std::string_view name() const override { return "SyntheticRequest"; }
-    const messages_recovered::XmlNode* first_element() const override { return nullptr; }
-    const messages_recovered::XmlNode* next_element() const override { return nullptr; }
+    const messages::XmlNode* first_element() const override { return nullptr; }
+    const messages::XmlNode* next_element() const override { return nullptr; }
     std::optional<std::string_view> attribute(std::string_view key) const override {
         reads.emplace_back(key);
         auto found=attributes.find(key);
@@ -38,10 +40,10 @@ struct Node final : messages_recovered::XmlNode {
         return found->second;
     }
 };
-struct Xml final : handlers_recovered::Xml {
-    xml_recovered::MemoryPrinter printer;
+struct Xml final : handlers::Xml {
+    xml::MemoryPrinter printer;
     std::vector<std::string> calls;
-    const char* attribute_002cc0(handlers_recovered::Request,const char*) override { throw Injected{}; }
+    const char* attribute_002cc0(handlers::Request,const char*) override { throw Injected{}; }
     void open_004080(const char* element,bool compact) override {
         calls.emplace_back("open:"+std::string(element)); printer.open_element(element,compact);
     }
@@ -137,7 +139,7 @@ struct Fixture {
     std::string auth="synthetic-fallback",license,dll_hash=std::string(40,'d'),exe_hash=std::string(40,'e'),content="fixture-content";
     std::uint8_t online=0,fake=0,blocked=0;
     Path dll=u"C:\\fixture\\dbdata.dll",exe=u"C:\\fixture\\game.exe",base=u"C:\\fixture\\license\\fixture-id";
-    handlers_recovered::Attributes game{{"DISPLAY_NAME","Fixture Game"},{"INSTALLED_VERSION","1.2"}};
+    handlers::Attributes game{{"DISPLAY_NAME","Fixture Game"},{"INSTALLED_VERSION","1.2"}};
     std::int32_t attempts=0;
     Mock effects;
     Node request;

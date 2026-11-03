@@ -1,12 +1,14 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "storage_fixture.hpp"
 
 namespace {
-struct ReturnCodeXml final:messages_recovered::XmlBackend {
+struct ReturnCodeXml final:messages::XmlBackend {
     xml_reader_bridge::Backend actual;bool force_error=false;
-    messages_recovered::ParseResult parse_c_string(std::string_view raw)override{
+    messages::ParseResult parse_c_string(std::string_view raw)override{
         auto parsed=actual.parse_c_string(raw);parsed.returned_code=99;parsed.has_error=force_error;return parsed;
     }
-    std::unique_ptr<messages_recovered::XmlPrinter> printer()override{return actual.printer();}
+    std::unique_ptr<messages::XmlPrinter> printer()override{return actual.printer();}
 };
 void xml_updates() {
     Fixture f;f.paths.xml_path=u"retained.xml";f.paths.ini_path=u"retained.ini";f.state.achievements["known"]=record("configuration-name");
@@ -43,8 +45,14 @@ void xml_updates() {
         achievement_storage::Storage storage(probe.paths,proxy,probe.numbers,probe.effects,probe.files);storage.update_01eb00(probe.state);
         require(probe.state.achievements.contains("proxy-id")==!error,"document error state controls import; parser numeric return code ignored");
     }
+    Fixture references;references.paths.xml_path=u"owned-entity-fixture.xml";
+    references.files.input[references.paths.xml_path]=R"(<R><A Id="pre&#x100000000;suffix" Count="4" Name="&amp;&#65;&x1f600;"/><A Id="pre&#0;suffix" Count="2"/></R>)";
+    references.storage.update_01eb00(references.state);
+    require(references.state.achievements.size()==2 && references.state.achievements.at("pre&#x100000000;suffix").field04==4,"oversized reference preserves entire achievement key");
+    require(references.state.achievements.at("pre&#0;suffix").field04==2,"NUL reference cannot truncate an achievement key");
+    require(references.state.achievements.at("pre&#x100000000;suffix").display_name=="&A&x1f600;","unknown entity after compaction cannot corrupt persisted achievement name");
 }
-struct AttributeNode final:messages_recovered::XmlNode {
+struct AttributeNode final:messages::XmlNode {
     std::optional<std::string> value;
     std::string_view name()const override{return "fixture";}
     const XmlNode* first_element()const override{return nullptr;}
@@ -96,7 +104,7 @@ void native_fixture(const std::filesystem::path& dir) {
     const auto xml=dir/"achievement-own-fixture.xml";
     {std::ofstream out(xml,std::ios::binary|std::ios::trunc);out<<R"(<root><entry Id="native" Count="4" Progress="2" Name="own-file"/></root>)";require(static_cast<bool>(out),"own XML fixture written");}
     const auto parent=dir/"achievement_watcher"/"42";std::filesystem::create_directories(parent);
-    file_recovered::NativeFactory files;achievement_storage::Storage storage(f.paths,f.xml,f.numbers,f.effects,files);storage.update_01eb00(f.state);
+    file::NativeFactory files;achievement_storage::Storage storage(f.paths,f.xml,f.numbers,f.effects,files);storage.update_01eb00(f.state);
     require(f.state.achievements.at("native").field04==4 && f.state.achievements.at("native").display_name=="own-file","actual own XML file parsed and applied");
     std::ifstream in(parent/"achievements.ini",std::ios::binary);const std::string bytes{std::istreambuf_iterator<char>(in),std::istreambuf_iterator<char>()};
     require(bytes=="[]\r\nAchieved=4\r\nUnlockTime=11\r\n\r\n","actual own INI file bytes through read/storage/writer sources");

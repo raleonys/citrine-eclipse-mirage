@@ -1,4 +1,6 @@
-"""Local Golden orchestration. Never publishes, and never substitutes fixture targets."""
+# SPDX-License-Identifier: GPL-3.0-only
+
+"""Build-bound Golden verification and distribution staging."""
 import argparse
 import hashlib
 import json
@@ -42,44 +44,44 @@ def execute_steps(steps, run):
     return results
 
 
-def stage_local_dist(root, artifact, report):
-    """Commit a byte-identical local runtime DLL only after Golden and runtime PASS."""
+def stage_dist(root, artifact, report):
+    """Commit a byte-identical runtime DLL only after Golden and runtime PASS."""
     root, artifact = Path(root).resolve(), Path(artifact).resolve()
-    if (report.get('result') != 'LOCAL_GOLDEN_PASS'
+    if (report.get('result') != 'GOLDEN_PASS'
             or [s['stage'] for s in report.get('steps', [])] != ORDER
             or any(s['exit_code'] for s in report['steps'])
             or report.get('runtime_check', {}).get('exit_code') != 0):
-        raise ValueError('Local dist requires all six Golden stages and final-name runtime PASS')
-    contract = json.loads((root / 'metadata/LOCAL_DIST_CONTRACT.json').read_text(encoding='utf-8'))
+        raise ValueError('Dist requires all six Golden stages and final-name runtime PASS')
+    contract = json.loads((root / 'metadata/DIST_CONTRACT.json').read_text(encoding='utf-8'))
     if contract['runtime_dll_name'] != 'preloader_l.dll' or contract['directory'] != 'dist':
-        raise ValueError('Local runtime filename/directory contract drift')
+        raise ValueError('Runtime filename/directory contract drift')
     digest = sha(artifact)
     if digest != report['sha256'] or report['runtime_check']['sha256_after'] != digest:
-        raise ValueError('Validated candidate hash changed before local dist')
+        raise ValueError('Validated candidate hash changed before dist')
     dist = root / 'dist'
     if dist.is_symlink() or dist.resolve() != dist:
-        raise ValueError('Local dist must be an owned directory, not a link')
+        raise ValueError('Dist must be an owned directory, not a link')
     dist.mkdir(exist_ok=True)
-    names = ['preloader_l.dll', 'preloader_l.dll.sha256', 'LOCAL_DIST_RECEIPT.json']
+    names = ['preloader_l.dll', 'preloader_l.dll.sha256', 'DIST_RECEIPT.json']
     for name in names:
         path = dist / name
         if path.is_symlink() or (path.exists() and not path.is_file()):
-            raise ValueError('Unsafe existing local dist member: ' + name)
-    receipt = {'schema': 'surge.local-dist-receipt.v1', 'classification': 'NOT_RELEASE',
-               'result': 'LOCAL_GOLDEN_PASS', 'runtime_dll_name': names[0], 'sha256': digest,
+            raise ValueError('Unsafe existing dist member: ' + name)
+    receipt = {'schema': 'surge.dist-receipt.v1',
+               'result': 'GOLDEN_PASS', 'runtime_dll_name': names[0], 'sha256': digest,
                'input_sha256': report['input_sha256'],
                'source_manifest_sha256': sha(root / 'metadata/ACTIVE_SOURCE_MANIFEST.json'),
                'golden_artifact': str(artifact.relative_to(root)),
                'steps': [{'stage': s['stage'], 'exit_code': s['exit_code']} for s in report['steps']],
-               'runtime_check': report['runtime_check'], 'official_release': False, 'library_publication': False}
-    lock = dist / '.local-golden.lock'
+               'runtime_check': report['runtime_check']}
+    lock = dist / '.golden.lock'
     descriptor = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
     try:
         with tempfile.TemporaryDirectory(prefix='.candidate-', dir=dist) as td:
             stage = Path(td)
             shutil.copy2(artifact, stage / names[0])
             if sha(stage / names[0]) != digest:
-                raise ValueError('Local dist copy hash mismatch')
+                raise ValueError('Dist copy hash mismatch')
             (stage / names[1]).write_text(digest + '  ' + names[0] + '\n', encoding='utf-8')
             (stage / names[2]).write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
             backups = stage / 'previous'
@@ -111,8 +113,8 @@ def pipeline(root, dll, build_dir, output_dir):
     root, dll, build_dir, output_dir = map(lambda p: Path(p).resolve(), (root, dll, build_dir, output_dir))
     if not any(parent == root / 'build' for parent in output_dir.parents):
         raise ValueError('Golden output must be a subdirectory of this project build/')
-    report = {'schema': 'surge.local-golden.v1', 'classification': 'NOT_RELEASE',
-              'stage_order': ORDER, 'official_release': False, 'library_publication': False,
+    report = {'schema': 'surge.golden.v1',
+              'stage_order': ORDER,
               'result': 'BLOCKED_TARGET_SEMANTICS', 'steps': [], 'pending': pending_targets(root)}
     if report['pending']:
         return report
@@ -149,11 +151,11 @@ def pipeline(root, dll, build_dir, output_dir):
             index += 1
             return result
         report['steps'] = execute_steps(steps, run)
-        report['result'] = 'LOCAL_GOLDEN_PASS' if len(report['steps']) == 6 and all(s['exit_code'] == 0 for s in report['steps']) else 'FAIL'
-        if report['result'] == 'LOCAL_GOLDEN_PASS':
+        report['result'] = 'GOLDEN_PASS' if len(report['steps']) == 6 and all(s['exit_code'] == 0 for s in report['steps']) else 'FAIL'
+        if report['result'] == 'GOLDEN_PASS':
             candidate_before = sha(candidate)
             try:
-                cp = subprocess.run([str(build_dir / 'preloader_l_runtime_host.exe'), str(candidate)],
+                cp = subprocess.run([str(build_dir / 'preloader_l_runtime_host.exe'), str(candidate), '--xml-contracts'],
                                     cwd=root, text=True, capture_output=True, timeout=120, env=child_environment)
                 runtime = {'exit_code': cp.returncode, 'output': cp.stdout + cp.stderr}
             except subprocess.TimeoutExpired:
@@ -170,14 +172,14 @@ def pipeline(root, dll, build_dir, output_dir):
         if sha(dll) != before:
             report['result'] = 'FAIL'
             report['errors'] = ['Original build DLL changed during Golden execution']
-        if report['result'] == 'LOCAL_GOLDEN_PASS':
+        if report['result'] == 'GOLDEN_PASS':
             target = output_dir / ('preloader_l.' + sha(candidate)[:16] + '.dll')
             shutil.copy2(candidate, target)
             sidecar = Path(str(target) + '.sha256')
             sidecar.write_text(sha(target) + '  ' + target.name + '\n', encoding='utf-8')
             report.update(artifact=str(target), sha256=sha(target), sha256_file=str(sidecar))
             try:
-                report.update(stage_local_dist(root, target, report))
+                report.update(stage_dist(root, target, report))
             except (OSError, ValueError, KeyError) as error:
                 report.update(result='FAIL', dist_error=str(error))
     report['input_sha256'] = before
@@ -189,12 +191,12 @@ def main():
     ap.add_argument('--check-target', action='store_true')
     ap.add_argument('--dll', type=Path)
     ap.add_argument('--build-dir', type=Path)
-    ap.add_argument('--output-dir', type=Path, default=ROOT / 'build/golden-local')
+    ap.add_argument('--output-dir', type=Path, default=ROOT / 'build/golden')
     args = ap.parse_args()
     if args.check_target:
         pending = pending_targets(ROOT)
-        print(json.dumps({'result': 'BLOCKED_TARGET_SEMANTICS' if pending else 'READY_LOCAL_TARGET',
-                          'pending': pending, 'official_release': False}, indent=2))
+        print(json.dumps({'result': 'BLOCKED_TARGET_SEMANTICS' if pending else 'READY_TARGET',
+                          'pending': pending}, indent=2))
         return 3 if pending else 0
     if not args.dll or not args.build_dir:
         ap.error('--dll and --build-dir are required')
@@ -203,7 +205,7 @@ def main():
         args.output_dir.mkdir(parents=True, exist_ok=True)
         (args.output_dir / 'GOLDEN_REPORT.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
         print(json.dumps(report, indent=2))
-        return 0 if report['result'] == 'LOCAL_GOLDEN_PASS' else 3 if report['pending'] else 1
+        return 0 if report['result'] == 'GOLDEN_PASS' else 3 if report['pending'] else 1
     except (OSError, ValueError, KeyError) as error:
         print('GOLDEN_PIPELINE: FAIL:', error, file=sys.stderr)
         return 1

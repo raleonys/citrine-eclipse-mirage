@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_response_containers.hpp"
 #include <algorithm>
 #include <cstring>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uint64_t word(std::span<const std::uint8_t> bytes){
     std::uint64_t result=0;for(unsigned i=0;i<8;++i)result|=std::uint64_t{bytes[i]}<<(i*8);return result;
@@ -121,10 +123,10 @@ void grow_response_deque_026670(WriteFinishOwner& queue,std::uint64_t extra,Dequ
     queue.map_size_d8+=delta; //026831 reload AFTER free, not cached candidate
     queue.map_d0=context.maps.view(data,new_bytes); // pure host projection, not a native callback
 }
-ReceiveBufferString& RecoveredResponseContainersApi::copy_response_009eb0(ReceiveBufferString& to,ReceiveBufferString& from){
+ReceiveBufferString& ResponseContainersApi::copy_response_009eb0(ReceiveBufferString& to,ReceiveBufferString& from){
     return copy_response_string_009eb0(to,from,strings_);
 }
-void RecoveredResponseQueueApi::grow_deque_026670(WriteFinishOwner& owner,std::uint64_t extra){
+void ResponseQueueApiAdapter::grow_deque_026670(WriteFinishOwner& owner,std::uint64_t extra){
     grow_response_deque_026670(owner,extra,growth_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

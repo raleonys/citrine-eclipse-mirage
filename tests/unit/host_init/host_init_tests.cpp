@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/hook_setup.hpp"
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
 #include <utility>
 
-using namespace preloader_l::host_init_recovered;
+using namespace preloader_l::host_init;
 namespace {
 int checks = 0;
 void require(bool value, const char* detail) {

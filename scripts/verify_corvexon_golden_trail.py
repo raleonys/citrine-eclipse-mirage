@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
 from __future__ import annotations
 from pathlib import Path
 import argparse, fnmatch, hashlib, json, struct, subprocess, sys

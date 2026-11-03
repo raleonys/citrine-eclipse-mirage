@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Infrastructure FALCION boundaries adapted to the SURGE source product."""
 import argparse
 import json

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/core/binary_io.hpp"
 #include <windows.h>
 #include <algorithm>
@@ -8,7 +10,7 @@
 #include <vector>
 #include <exception>
 
-namespace preloader_l::file_recovered {
+namespace preloader_l::file {
 namespace {
 [[noreturn]] void fail(const char* operation,DWORD error=GetLastError()) {
     throw std::system_error(static_cast<int>(error),std::system_category(),operation);
@@ -125,4 +127,4 @@ void NativeFactory::replace_atomic(std::span<const FileWrite> writes) {
 void NativeFactory::recover_atomic() {
     std::lock_guard lock(atomic_->mutex);atomic_->files.recover();
 }
-} // namespace preloader_l::file_recovered
+} // namespace preloader_l::file

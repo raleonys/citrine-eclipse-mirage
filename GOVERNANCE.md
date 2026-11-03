@@ -2,7 +2,7 @@
 
 ## Authority and scope
 
-This document defines the intended GitHub-centered contribution and release model for Citrine Eclipse Mirage. The repository remains private until the owner separately approves a visibility change.
+This document defines the GitHub-centered contribution and release model for Citrine Eclipse Mirage. The repository became public by owner decision on 2026-11-02; release publication, ABI changes and other protected decisions remain separately governed.
 
 The owner's latest explicit instructions take precedence over repository guidance. Technical safety requirements and compatibility contracts remain effective unless an approved change explicitly replaces them. A successful check does not prove a different validation class.
 
@@ -11,8 +11,11 @@ This is the active governance authority. Historical task orders remain accessibl
 ## Source control and contributions
 
 - `main` is the accepted integration branch. Only the owner merges reviewed pull requests. Do not write, reset, force-push, or delete `main` directly.
-- Use the retained `bugfix` branch for routine changes; synchronize it with `main` without rewriting shared history. Preserve active dedicated audit branches.
-- Pull requests are opened ready for review, never as draft PRs. They describe scope, validation results, limitations, and any pending checks.
+- Ordinary one-PR branches, including bugfixes, individual audit findings and standalone changes, are temporary. Create a fresh descriptive branch from current accepted `main`, never reuse the retired shared `bugfix` branch, and delete each temporary head after its PR closes (merged or unmerged). First record its exact tip, resolve dependencies and preserve needed unmerged work. Never rewrite shared history.
+- Dedicated research, reverse-engineering and reconstruction workstreams may retain their branches across successive PRs and after an individual PR closes. This exemption is for identifiable continuing projects, not every branch prefixed `research/`; keep a recorded scope, owner and closure condition. Retire a sustained-work branch only on an explicit owner decision after verifying source/evidence preservation and live dependencies.
+- **Audit branches are temporary by default.** An ordinary `audit/*` PR does not gain retention merely from its name or its findings. Only a specifically designated long-running audit campaign, approved by the owner with a documented continuing scope and review points, may use the sustained-work exception. Evaluate existing audit branches individually before cleanup; do not bulk-delete unreviewed branches or silently classify them all as retained.
+- GitHub's **Automatically delete head branches** setting is repository-wide and can remove eligible retained research or designated long-running audit heads following merge. Leave it disabled unless an independently verified exception protects every retained branch; manually clean up closed temporary PR branches. Never delete `main` or discard unmerged work.
+- Ordinary contribution PRs are opened ready for review, not as drafts. Existing [research PR #81](https://github.com/raleonys/citrine-eclipse-mirage/pull/81) is an explicitly owner-authorized exception: its continuing four-field research/source-provenance workstream remains a GitHub Draft until the owner decides it is ready. This does not authorize draft mode for routine audit/bugfix PRs or for newly created research PRs without a separate explicit owner decision. Every PR documents scope, validation results, limitations and pending checks.
 - A pull request is a proposed upstream change, not a separate release. A merged pull request updates the source tree; it does not create a release or tag.
 - Do not change repository visibility, licenses, public ABI, internal source/target identities, or upstream dependency pins without explicit authorization.
 
@@ -22,9 +25,9 @@ The intended public-repository configuration runs source integrity, portable tes
 
 A skipped check is not a PASS. CI infrastructure failures may be rerun or repaired without being classified as product defects. Source changes are checked against exact source and dependency identities; no test evidence is automatically inherited from a different commit.
 
-The repository's current private workflow only runs source and portable checks automatically for ordinary pull requests. Windows native and Golden jobs remain manually dispatched until a separate CI migration enables and verifies their PR triggers and the applicable merge protections. Do not claim that this intended policy is already enforced.
+PR CI schedules Source QA, Linux portable, native Windows MSVC Release and Debug, Production/Golden Release, CRT Release, Debug, Compile Only, and full Windows portable Debug/Release. The reference object graph is also scheduled for every PR; specialized diagnostic workflows retain change-specific paths. Always verify actual check conclusions for the exact commit. The main ruleset requires the named Windows native and Windows production checks; additional check requirements are a separate ruleset decision.
 
-Local build, debug, and focused testing remain available developer tools; separate publication-governance credentials or repeated release gates are not prerequisites for ordinary development. During the migration, existing tracked hooks and QA scripts are updated only through reviewed changes, not silently bypassed.
+Build, debug, and focused testing remain available developer tools; separate publication-governance credentials or repeated release gates are not prerequisites for ordinary development. During the migration, existing tracked hooks and QA scripts are updated only through reviewed changes, not silently bypassed.
 
 ## Changelog maintenance
 
@@ -36,9 +39,10 @@ Maintain a source-linked `CHANGELOG.md` alongside relevant PRs. A PR-only CI cov
 - GitHub Actions prepares the source-bound candidate and its Windows/Golden evidence. The owner reviews the draft and manually publishes it.
 - The owner separately runs real Consumer/game acceptance before stable publication. This acceptance is not repeated for every pull request.
 - A failing unmerged pull request does not stop a weekly draft based on an already accepted `main` commit. A failed weekly candidate remains unpublished until resolved.
-- Stable or significant cumulative versions may receive a codename, without inventing another release class.
+- Prospective weekly semantic versions advance 3.2.6 TALVOR → 3.2.7 ERINTHAR → 3.2.8 FORMADRIL → 3.2.9 CETRION → 3.3.0 VESPERKAI and follow the owner-approved LUTRAVEX registry. The retired -RNN weekly model must not be used.
+- New archive names are `Citrine_Eclipse_Mirage_x.y.z_CODENAME.zip` (source companion `_source.zip`); minor and patch are one digit (0..9). Do not rename historical artifacts or compatibility-sensitive binary/Golden fields.
 - Associate released assets and retained results with the exact commit, binary and package checksums. Verify the actual distributed archive once; ordinary PR work does not require repeated ZIP fresh-extract campaigns.
-- Do not reintroduce Brownfield G0-G4 gates, mandatory eight-shard release cycles, Library current-pointer transactions, or obsolete non-release classifications as new requirements.
+- Do not reintroduce Brownfield G0-G4 gates, mandatory eight-shard release cycles, Library current-pointer transactions, or publication classifications on build and test results.
 
 ## Documentation and metadata ownership
 
@@ -60,7 +64,7 @@ Public documents should not disclose unnecessary implementation or integration d
 
 ## Migration record
 
-Remaining work includes metadata rationalization, removal of obsolete state files, PR-triggered Windows/Golden QA, and verified merge protection. Each migration must report its actual result and must not advertise pending controls as active.
+Remaining work includes metadata rationalization, verifying first PR-triggered Windows/Golden acceptance on the exact commit, and evaluating additional required check contexts. A configured CI job is not a PASS before actual execution.
 
 ## Retained technical boundaries
 

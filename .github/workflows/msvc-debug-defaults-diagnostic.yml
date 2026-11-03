@@ -1,0 +1,156 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
+name: MSVC Debug configuration defaults diagnostic
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/msvc-debug-defaults-diagnostic.yml'
+      - 'tests/unit/config_defaults/defaults_tests.cpp'
+
+permissions:
+  contents: read
+
+jobs:
+  isolated-msvc-debug:
+    name: MSVC Debug isolated config-defaults test
+    runs-on: windows-2022
+    timeout-minutes: 15
+    steps:
+      - name: Preserve exact checkout bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Configure MSVC x64 portable checks
+        shell: pwsh
+        run: cmake -S . -B build/msvc-defaults-diagnostic -G "Visual Studio 17 2022" -A x64 -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON
+      - name: Build isolated Debug target
+        shell: pwsh
+        run: cmake --build build/msvc-defaults-diagnostic --config Debug --target portable_configuration_defaults --parallel 2
+      - name: Verify Debug executable
+        shell: pwsh
+        run: |
+          $target = 'build/msvc-defaults-diagnostic/Debug/portable_configuration_defaults.exe'
+          if (-not (Test-Path -LiteralPath $target)) { throw "Missing Debug test executable: $target" }
+          Get-Item -LiteralPath $target | Select-Object FullName, Length
+      - name: Compare injected failure across allocation boundaries
+        shell: pwsh
+        run: |
+          $target = 'build/msvc-defaults-diagnostic/Debug/portable_configuration_defaults.exe'
+          $log = 'build/msvc-defaults-diagnostic/constructor_probe.log'
+          foreach ($mode in @('raw-new', 'map-default', 'string-default', 'path-default', 'state-default', 'state-direct-init')) {
+            & $target "--probe=$mode" 2>&1 | Tee-Object -FilePath $log -Append
+            $probeExit = $LASTEXITCODE
+            "PROBE_EXIT mode=$mode code=$probeExit" | Tee-Object -FilePath $log -Append
+            if ($mode -eq 'raw-new' -and $probeExit -ne 0) {
+              throw "Direct allocation exception control failed: $probeExit"
+            }
+          }
+          # Deliberately preserve failing probe exits as evidence, then run the real CTest.
+          exit 0
+      - name: Compare iterator-disabled Debug control (diagnostic only)
+        shell: pwsh
+        run: |
+          $build = 'build/msvc-iterator0-control'
+          # Explicitly preserve exception-unwinding semantics; CMAKE_CXX_FLAGS replaces the MSVC default.
+          $iteratorFlags = '/EHsc /D_ITERATOR_DEBUG_LEVEL=0'
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON "-DCMAKE_CXX_FLAGS=$iteratorFlags"
+          if ($LASTEXITCODE -ne 0) { throw 'Iterator-control configuration failed' }
+          Get-Content "$build/CMakeCache.txt" | Select-String '^CMAKE_CXX_FLAGS:STRING='
+          cmake --build $build --config Debug --target portable_configuration_defaults --parallel 2
+          if ($LASTEXITCODE -ne 0) { throw 'Iterator-control build failed' }
+          ctest --test-dir $build -C Debug -R '^portable_configuration_defaults$' --verbose --output-on-failure --timeout 90 2>&1 | Tee-Object -FilePath "$build/control_ctest.log"
+          $controlExit = $LASTEXITCODE
+          "CONTROL_EXIT_CODE=$controlExit"
+          # This is diagnostic evidence, not genuine Debug acceptance.
+          exit 0
+      - name: Run isolated test and collect stage breadcrumbs
+        shell: pwsh
+        run: |
+          $build = 'build/msvc-defaults-diagnostic'
+          $junit = Join-Path (Resolve-Path $build) 'CTEST_RESULTS.xml'
+          ctest --test-dir $build -C Debug -R '^portable_configuration_defaults$' --output-on-failure --verbose --timeout 75 --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/config_defaults_debug_ctest.log"
+          $testExit = $LASTEXITCODE
+          "CTEST_EXIT_CODE=$testExit" | Set-Content -Path "$build/CTEST_EXIT_CODE.txt"
+          if ($testExit -ne 0) { exit $testExit }
+          if (-not (Test-Path -LiteralPath $junit -PathType Leaf)) { throw 'Diagnostic JUnit report is missing' }
+      - name: Retain Windows Debug diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: msvc-config-defaults-debug-evidence
+          path: |
+            build/msvc-defaults-diagnostic/CTEST_EXIT_CODE.txt
+            build/msvc-defaults-diagnostic/config_defaults_debug_ctest.log
+            build/msvc-defaults-diagnostic/constructor_probe.log
+            build/msvc-iterator0-control/control_ctest.log
+            build/msvc-defaults-diagnostic/CTEST_RESULTS.xml
+            build/msvc-defaults-diagnostic/Testing/Temporary/LastTest.log
+            build/msvc-defaults-diagnostic/CMakeCache.txt
+            build/msvc-defaults-diagnostic/CMakeFiles/CMakeConfigureLog.yaml
+          if-no-files-found: warn
+          retention-days: 14
+
+  full-windows-portable:
+    name: Windows x64 portable ${{ matrix.configuration }} (35 tests)
+    runs-on: windows-2022
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+    steps:
+      - name: Preserve exact checkout bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Configure all portable checks
+        shell: pwsh
+        run: |
+          $build = 'build/msvc-full-portable-${{ matrix.configuration }}'
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON
+          if ($LASTEXITCODE -ne 0) { throw 'Portable configure failed' }
+      - name: Build all portable targets
+        shell: pwsh
+        run: |
+          $build = 'build/msvc-full-portable-${{ matrix.configuration }}'
+          cmake --build $build --config '${{ matrix.configuration }}' --parallel 2
+          if ($LASTEXITCODE -ne 0) { throw 'Portable build failed' }
+      - name: Verify full portable test inventory
+        shell: pwsh
+        run: |
+          $build = 'build/msvc-full-portable-${{ matrix.configuration }}'
+          $listed = & ctest --test-dir $build -C '${{ matrix.configuration }}' -N 2>&1
+          $code = $LASTEXITCODE
+          $listed | Tee-Object -FilePath "$build/ctest-inventory.log"
+          if ($code -ne 0) { throw "CTest inventory failed: $code" }
+          if (-not ($listed -match '^Total Tests:\s+35\s*$')) {
+            throw 'Unexpected Windows portable test inventory (expected exactly 35)'
+          }
+      - name: Run all Windows portable tests
+        shell: pwsh
+        run: |
+          $build = 'build/msvc-full-portable-${{ matrix.configuration }}'
+          $junit = Join-Path (Resolve-Path $build) 'CTEST_RESULTS.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' --output-on-failure --timeout 120 --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/ctest.log"
+          $code = $LASTEXITCODE
+          "CTEST_EXIT_CODE=$code" | Set-Content "$build/CTEST_EXIT_CODE.txt"
+          if ($code -ne 0) { throw "Full Windows portable CTest failed: $code" }
+          if (-not (Test-Path -LiteralPath $junit -PathType Leaf)) { throw 'Full portable JUnit report is missing' }
+      - name: Retain full portable acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: msvc-full-portable-${{ matrix.configuration }}-evidence
+          path: |
+            build/msvc-full-portable-${{ matrix.configuration }}/ctest-inventory.log
+            build/msvc-full-portable-${{ matrix.configuration }}/ctest.log
+            build/msvc-full-portable-${{ matrix.configuration }}/CTEST_EXIT_CODE.txt
+            build/msvc-full-portable-${{ matrix.configuration }}/CTEST_RESULTS.xml
+            build/msvc-full-portable-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
+            build/msvc-full-portable-${{ matrix.configuration }}/CMakeCache.txt
+            build/msvc-full-portable-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
+          if-no-files-found: warn
+          retention-days: 14

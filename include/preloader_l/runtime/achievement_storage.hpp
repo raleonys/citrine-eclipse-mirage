@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/runtime/achievement_writer.hpp"
 #include "preloader_l/protocol/messages.hpp"
@@ -13,7 +15,7 @@ public:
     virtual std::optional<std::uint32_t> scan_decimal(std::string_view)=0; // %d
     virtual std::optional<std::uint32_t> scan_hex(std::string_view)=0;     // %x
 };
-// Explicit host-C-runtime compatibility choice, not recovered original CRT/ABI.
+// Explicit host-C-runtime compatibility choice, not a claim of original CRT/ABI equivalence.
 // Overflow/locale/malformed byte equality is not established.
 class HostCrtNumbers final:public Numbers {
 public:
@@ -21,28 +23,28 @@ public:
     std::optional<std::uint32_t> scan_decimal(std::string_view) override;
     std::optional<std::uint32_t> scan_hex(std::string_view) override;
 };
-std::uint32_t attribute_003b70(const messages_recovered::XmlNode&,std::string_view key,
+std::uint32_t attribute_003b70(const messages::XmlNode&,std::string_view key,
                             std::uint32_t fallback,Numbers&);
 class Effects:public achievement_writer::Effects {
 public:
     virtual configuration::Path filesystem_widen_006d70(std::string_view)=0;
     virtual std::int64_t timestamp_to_epoch_041e10(std::string_view)=0;
-    virtual status_recovered::Status status_01ea20(const configuration::Path&,std::uint32_t flags)=0;
+    virtual status::Status status_01ea20(const configuration::Path&,std::uint32_t flags)=0;
     [[noreturn]] virtual void filesystem_error_018130(std::string_view operation,
         std::uint32_t error,const configuration::Path&)=0;
 };
 class Storage {
 public:
-    Storage(Paths& paths,messages_recovered::XmlBackend& xml,Numbers& numbers,
-            Effects& effects,file_recovered::Factory& files)
+    Storage(Paths& paths,messages::XmlBackend& xml,Numbers& numbers,
+            Effects& effects,file::Factory& files)
         :paths_(paths),xml_(xml),numbers_(numbers),effects_(effects),files_(files){}
     void update_01eb00(configuration::State&);
 private:
     Paths& paths_;
-    messages_recovered::XmlBackend& xml_;
+    messages::XmlBackend& xml_;
     Numbers& numbers_;
     Effects& effects_;
-    file_recovered::Factory& files_;
+    file::Factory& files_;
 };
 // Implements only the persistence method for the existing startup dependency.
 // All remaining configuration OS/path/log/license methods remain abstract.

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/document_error_test_fixture.hpp"
 using namespace document_error_test;
 namespace {

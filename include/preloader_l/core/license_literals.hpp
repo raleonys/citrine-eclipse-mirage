@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 // Static ASCII literals originate in the SHA-256-bound input; no user CFG values.
 // The four config diagnostics use the owner-approved surge.cfg product name.
 // Address comments identify original evidence, not rebuilt storage locations.
-namespace preloader_l::license_recovered::literals {
+namespace preloader_l::license::literals {
 inline constexpr char c_083870[] = "0"; // 0x180083870 / file 0x82070
 inline constexpr char c_083960[] = "DISPLAY_NAME"; // 0x180083960 / file 0x82160
 inline constexpr char c_083978[] = "INSTALLED_VERSION"; // 0x180083978 / file 0x82178

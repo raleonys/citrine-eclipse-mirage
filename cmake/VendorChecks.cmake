@@ -1,6 +1,8 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 add_executable(vendor_api_smoke "${PROJECT_SOURCE_DIR}/tests/vendors/vendor_api_smoke.cpp")
 target_link_libraries(vendor_api_smoke PRIVATE preloader_l_asio
-  preloader_l_tinyxml2)
+  preloader_l_pugixml)
 if(WIN32)
   target_link_libraries(vendor_api_smoke PRIVATE preloader_l_minhook)
 endif()

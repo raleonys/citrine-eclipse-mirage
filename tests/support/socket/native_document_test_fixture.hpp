@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/native_document.hpp"
 #include "tests/support/socket/native_dispatch_test_fixture.hpp"
@@ -5,7 +7,7 @@
 #include <cstring>
 
 namespace document_test {
-namespace s=preloader_l::socket_recovered;namespace m=preloader_l::messages_recovered;
+namespace s=preloader_l::socket;namespace m=preloader_l::messages;
 using response_test::check;using response_test::checks;
 struct Failure {int code;};
 struct State {
@@ -60,9 +62,9 @@ struct Effects:s::NativeDocumentEffects {
     void free_04b0f8(std::uintptr_t p)override{freed.push_back(p);event("free");state.release(p);}
     void destroy_node_base_001ea0(std::uintptr_t p)override{receiver(p);event("base-destroy");++destroys;}
 };
-struct Api:s::RecoveredMessageDocumentApi {
+struct Api:s::MessageDocumentApi {
     s::NativeMessageApi& next;session_cipher_test::Effects& effects;
-    Api(s::PrefixCipherContext& c,std::span<s::PrefixCipherBinding> b,s::NativeDispatchContext& d,s::NativeDocumentContext& docs,std::span<s::NativeDocumentBinding> bindings,s::NativeMessageApi& n,session_cipher_test::Effects& e):RecoveredMessageDocumentApi(c,b,d,docs,bindings),next(n),effects(e){}
+    Api(s::PrefixCipherContext& c,std::span<s::PrefixCipherBinding> b,s::NativeDispatchContext& d,s::NativeDocumentContext& docs,std::span<s::NativeDocumentBinding> bindings,s::NativeMessageApi& n,session_cipher_test::Effects& e):MessageDocumentApi(c,b,d,docs,bindings),next(n),effects(e){}
     void log(s::NativeMessageLog k,s::NativeMessageDocument& d,s::ReceiveBufferString& v)override{next.log(k,d,v);}
     s::NativeMessageEventQueue& event_queue_02c400()override{return next.event_queue_02c400();}
     s::NativeMessageMutex& event_mutex_02c620()override{return next.event_mutex_02c620();}

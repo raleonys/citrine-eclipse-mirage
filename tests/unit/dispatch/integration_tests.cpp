@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/router/router.hpp"
 #include "preloader_l/codec/crypto.hpp"
 #include "preloader_l/xml/reader.hpp"
@@ -6,16 +8,16 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace msg=preloader_l::messages_recovered;
-namespace xml=preloader_l::xml_recovered;
-namespace info=preloader_l::handlers_recovered;
-namespace misc=preloader_l::misc_handlers_recovered;
-namespace content=preloader_l::content_handlers_recovered;
-namespace dispatch=preloader_l::dispatch_recovered;
-namespace crypto=preloader_l::crypto_recovered;
+namespace msg=preloader_l::messages;
+namespace xml=preloader_l::xml;
+namespace info=preloader_l::handlers;
+namespace misc=preloader_l::misc_handlers;
+namespace content=preloader_l::content_handlers;
+namespace dispatch=preloader_l::dispatch;
+namespace crypto=preloader_l::crypto;
 namespace config=preloader_l::configuration;
 namespace reader=preloader_l::xml_reader_bridge;
-namespace license=preloader_l::license_recovered;
+namespace license=preloader_l::license;
 namespace {
 int checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -296,6 +298,12 @@ void actual_reader_pipeline() {
     bool rejected=false;try{(void)f.process_actual("<lsx><Request id='42' recipient='EbisuSDK'><GoOnline/></Request></lsx>");}catch(const InvalidMessage&){rejected=true;}
     check(rejected,"actual XML names remain case-sensitive");
     check(f.effects.decrypt_failures==0,"valid encrypted request did not use failure fallback");
+    for(const std::string reference:{"prefix&#x100000000;suffix","prefix&#0;suffix","&amp;&#65;&x1f600;"}) {
+        const auto id=reference=="&amp;&#65;&x1f600;"?"&A&x1f600;":reference;
+        f.settings[id]="exact entity lookup";
+        const auto literal=f.process_actual("<LSX><Request id='42' recipient='EbisuSDK'><GetSetting SettingId='"+reference+"'/></Request></LSX>");
+        check(literal==wrapped("        <GetSettingResponse Setting=\"exact entity lookup\"/>\n")+std::string(1,'\0'),"entity reference preserves the exact settings key through actual router and serializer");
+    }
 }
 void recovered_license_pipeline() {
     Fixture f(true,true);f.online=0;

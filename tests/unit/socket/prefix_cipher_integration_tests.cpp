@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/prefix_cipher_test_fixture.hpp"
 using namespace core_test;
 using container_test::active_container;
@@ -31,8 +33,8 @@ struct Finish:s::WriteFinishApi {
     s::WriteFinishStream& append_007990(s::WriteFinishStream&,std::uintptr_t,std::uint64_t)override{r::unexpected();}
     std::uint64_t widen_01e510(std::uintptr_t,std::uint8_t)override{r::unexpected();}void put_00fe90(s::WriteFinishStream&,std::uint8_t)override{r::unexpected();}void flush_00e1e0(s::WriteFinishStream&)override{r::unexpected();}
 };
-struct App:s::RecoveredNativeMessageApi {
-    message_test::Fixture& m;App(s::ResponseDispatchContext& c,s::NativeMessageContext& core,message_test::Fixture& m):RecoveredNativeMessageApi(c,core),m(m){}
+struct App:s::NativeMessageApiAdapter {
+    message_test::Fixture& m;App(s::ResponseDispatchContext& c,s::NativeMessageContext& core,message_test::Fixture& m):NativeMessageApiAdapter(c,core),m(m){}
     void destroy_empty_message_00aa50(s::ReceiveBufferString& value)override{m.api.destroy_empty_message_00aa50(value);}
     void cleanup_exit_waits_04a47c()override{r::unexpected();}
 };
@@ -44,8 +46,8 @@ struct Loop {
     s::QueuedWriteOwner owner{0x12000,&f.m.base.owner,&f.queue,&streams[0]};
     std::array<s::QueuedWriteOwnerBinding,1> owners{{{0x12000,&owner}}};
     s::WriteFinishContext finished{effects,finish,f.owners,{},containers.bytes.headers};
-    preloader_l::crypto_recovered::Cipher schedule,oracle;s::PrefixCipherState cipher{2,schedule,cipher_test::test_iv};
-    s::RecoveredPrefixCipherBlocks blocks{containers.bytes.memory};s::PrefixCipherContext cipher_context{native.strings,blocks};
+    preloader_l::crypto::Cipher schedule,oracle;s::PrefixCipherState cipher{2,schedule,cipher_test::test_iv};
+    s::PrefixCipherBlocksAdapter blocks{containers.bytes.memory};s::PrefixCipherContext cipher_context{native.strings,blocks};
     std::array<s::PrefixCipherBinding,1> cipher_bindings{{{0x120f0,&cipher}}};cipher_test::Api cipher_api{cipher_context,cipher_bindings,native.api};
     s::NativeMessageContext selected{native.bindings,core.show,native.strings,native.mutation,native.locals,cipher_api};
     App app{containers.response,selected,f.m};s::MessageDispatchContext message{f.m.frame,app,f.m.owners,f.m.copies,f.m.closures};

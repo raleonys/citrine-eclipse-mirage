@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_worker_run_native.hpp"
 #include <functional>
 #include <iostream>
 #include <limits>
 #include <vector>
-namespace s=preloader_l::socket_recovered;namespace t=preloader_l::threads_recovered;
+namespace s=preloader_l::socket;namespace t=preloader_l::threads;
 namespace {
 unsigned checks=0;void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
 [[noreturn]]void unused(){throw std::logic_error("Unexpected native run integration dependency");}
@@ -61,9 +63,9 @@ struct Effects:s::WorkerRunEffects{
  void delete_function_04b0f8(s::IocpWorkerFunction& value,std::uint32_t bytes)override{check(&value==function && value.table_identity==0x1800844b8ULL && bytes==32,"actual scalar delete base table before native-size free");trace.push_back("delete");++deletes;delete function;function=nullptr;}
  [[noreturn]]void raise_028240(s::Error,std::uintptr_t)override{unused();}
 };
-struct Workers:s::RecoveredWorkerFunctionEffects{
+struct Workers:s::WorkerFunctionEffects{
  s::IocpWorker worker;Effects& effects;
- Workers(Startup& startup,Errors& errors,Threads& threads,s::WorkerRunEnvironment environment,s::WorkerRunApi& api,Effects& effects):RecoveredWorkerFunctionEffects(startup,errors,threads,environment,api,effects),effects(effects){}
+ Workers(Startup& startup,Errors& errors,Threads& threads,s::WorkerRunEnvironment environment,s::WorkerRunApi& api,Effects& effects):WorkerFunctionEffects(startup,errors,threads,environment,api,effects),effects(effects){}
  s::IocpWorker* allocate_worker_04b0bc(std::uint32_t bytes)override{check(bytes==24,"actual024990 requests native24 worker bytes");return &worker;}
  s::IocpWorkerFunction* allocate_function_04b0bc(std::uint32_t bytes)override{check(bytes==32,"actual024990 requests native32 function bytes");effects.function=new s::IocpWorkerFunction;return effects.function;}
  void delete_worker_04b0f8(s::IocpWorker&,std::uint32_t)override{unused();}[[noreturn]]void raise_028240(s::Error,std::uintptr_t)override{unused();}

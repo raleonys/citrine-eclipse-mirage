@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/asio_service.hpp"
 #include "preloader_l/net/listener_policy.hpp"
 #include "preloader_l/net/handler_policy.hpp"
@@ -13,7 +15,7 @@
 
 namespace preloader_l::net {
 namespace {
-using namespace server_recovered;
+using namespace server;
 Error translated(const asio::error_code& e) {
     auto category=ErrorCategory::system;
     if(e.category()==asio::error::get_misc_category())category=ErrorCategory::asio_misc;
@@ -83,7 +85,7 @@ SessionPolicy validated(SessionPolicy policy){policy.validate();return policy;}
 struct AsioService::Impl final:ServerBackend {
     struct Client;
     HandlerFactory& factory;
-    execution_recovered::Execution& execution;
+    execution::Execution& execution;
     std::uint16_t& port;
     std::uint8_t& ready;
     const SessionPolicy policy;
@@ -107,8 +109,10 @@ struct AsioService::Impl final:ServerBackend {
     std::array<bool,2> accept_pending{};
     bool start_signalled=false;
     bool used=false;
-    Impl(HandlerFactory& f,execution_recovered::Execution& e,std::uint16_t& p,std::uint8_t& r,SessionPolicy limits)
-        :factory(f),execution(e),port(p),ready(r),policy(validated(limits)){
+    bool accept_enabled=true; // IO-thread only; control thread posts activation.
+
+    Impl(HandlerFactory& f,execution::Execution& e,std::uint16_t& p,std::uint8_t& r,SessionPolicy limits,bool defer_accept=false)
+        :factory(f),execution(e),port(p),ready(r),policy(validated(limits)),accept_enabled(!defer_accept){
             deferred_closes.reserve(policy.max_sessions+8);
         }
     static void retain_native(void* context,NativeClose pending)noexcept {
@@ -140,6 +144,7 @@ struct AsioService::Impl final:ServerBackend {
         try {result.get();}catch(...){stop();throw;}
     }
     void stop();
+    void resume_accepts();
     void retire_io() noexcept;
     void failed_dispatch(std::exception_ptr error) noexcept {
         // No allocation or socket access from a handler worker. The bounded
@@ -389,6 +394,14 @@ struct AsioService::Impl::Client final:Transport,Scheduling,std::enable_shared_f
 };
 void AsioService::Impl::async_accept_021b00() {
     if(stopping||active_sessions>=policy.max_sessions)return;
+    if(!accept_enabled) {
+        // Application startup waits only for a bound listener; early sockets
+        // remain in the OS backlog until provider/profile readiness is published.
+        if(!start_signalled){start_signalled=true;started.set_value();}
+        return;
+    }
+    // Retain the original immediate mode ordering: failed accept submission
+    // must fail startup, rather than signalling success before the operation.
     queue_accept(acceptor,0);
     if(acceptor_v6)queue_accept(*acceptor_v6,1);
     if(!start_signalled){start_signalled=true;started.set_value();}
@@ -417,6 +430,15 @@ void AsioService::Impl::queue_accept(asio::ip::tcp::acceptor& listener,std::size
         }catch(...){factory.error("accepted session",std::current_exception());}
         async_accept_021b00();
     });}catch(...){accept_pending[index]=false;throw;}
+}
+void AsioService::Impl::resume_accepts() {
+    if(!used||stopping.load(std::memory_order_acquire))
+        throw std::logic_error("Cannot resume accept after service stop");
+    asio::post(io,[this] {
+        if(stopping.load(std::memory_order_acquire))return;
+        accept_enabled=true;
+        try{async_accept_021b00();}catch(...){failed_dispatch(std::current_exception());}
+    });
 }
 void AsioService::Impl::retire_io() noexcept {
     try {
@@ -447,9 +469,10 @@ void AsioService::Impl::stop() {
         throw std::runtime_error("Native socket or IO cleanup incomplete");
     clients.clear();
 }
-AsioService::AsioService(HandlerFactory& f,execution_recovered::Execution& e,std::uint16_t& p,std::uint8_t& r,SessionPolicy policy)
-    :impl_(std::make_unique<Impl>(f,e,p,r,policy)){}
+AsioService::AsioService(HandlerFactory& f,execution::Execution& e,std::uint16_t& p,std::uint8_t& r,SessionPolicy policy,bool defer_accept)
+    :impl_(std::make_unique<Impl>(f,e,p,r,policy,defer_accept)){}
 AsioService::~AsioService()=default;
 void AsioService::start(){impl_->start();}
+void AsioService::resume_accepts(){impl_->resume_accepts();}
 void AsioService::stop(){impl_->stop();}
 }

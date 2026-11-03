@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 # Configure/build proof for the production/reference/source-API target boundary.
 # Request compiler-generated target/dependency data, including on fresh builds.
 file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/.cmake/api/v1/query")
@@ -74,7 +76,7 @@ function(preloader_l_install_partition_gate)
       "${PROJECT_SOURCE_DIR}/scripts/import_descriptor_order.py"
       "${PROJECT_SOURCE_DIR}/metadata/URSYNEX_GOLDEN_FINALIZER.json"
       "${PROJECT_SOURCE_DIR}/metadata/CORVEXON_GOLDEN_TRAIL.json"
-      "${PROJECT_SOURCE_DIR}/metadata/LOCAL_DIST_CONTRACT.json")
+      "${PROJECT_SOURCE_DIR}/metadata/DIST_CONTRACT.json")
     add_custom_command(TARGET preloader_l POST_BUILD
       COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/scripts/import_descriptor_order.py"
         --root "${PROJECT_SOURCE_DIR}" --dll "$<TARGET_FILE:preloader_l>"

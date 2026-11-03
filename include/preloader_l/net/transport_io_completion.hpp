@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_posted_operation.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct IoHandlerEnvironment;
 class IoHandlerVtable {
 public:
@@ -89,7 +91,7 @@ class IoCompletionEffects {
 public:
     virtual ~IoCompletionEffects()=default;
     virtual Category misc_category_0285b0()=0;
-    // Remaining native algorithms, not empty callbacks or newly recovered code.
+    // Remaining native algorithms; no empty callbacks are supplied here.
     virtual void receive_body_025c40(ReceiveHandler&,Error& copied_error,std::uint64_t bytes,std::uint32_t flag)=0;
     virtual void send_body_0261d0(SendHandler&,Error& copied_error,std::uint64_t bytes,std::uint32_t flag)=0;
     virtual void schedule_send_0229d0(IoHandlerEnvironment&,SendHandler&)=0;
@@ -103,4 +105,4 @@ void invoke_receive_021a40(ReceiveHandler&,IoCompletionEffects&);
 void invoke_send_021a80(SendHandler&,IoCompletionEffects&);
 void complete_receive_027710(std::uintptr_t owner,ReceiveIoOperation&,const Error&,std::uint64_t bytes,IoCompletionEnvironment,WorkerRunApi&,PostedMemoryEffects&,Api&,IoCompletionEffects&);
 void complete_send_027a20(std::uintptr_t owner,SendIoOperation&,const Error&,std::uint64_t bytes,IoCompletionEnvironment,WorkerRunApi&,PostedMemoryEffects&,Api&,IoCompletionEffects&);
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

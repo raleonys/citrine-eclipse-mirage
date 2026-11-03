@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #ifndef REA_TEST_FAKE_WIN32_H
 #define REA_TEST_FAKE_WIN32_H
 /* Test-only API seam: include SDK declarations before redirecting call sites.

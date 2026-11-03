@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_native_message.hpp"
 #include "tests/support/socket/request_growth_test_fixture.hpp"
 
 namespace native_message_test {
-namespace s=preloader_l::socket_recovered;namespace m=preloader_l::messages_recovered;
+namespace s=preloader_l::socket;namespace m=preloader_l::messages;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Failure{int code;};
 struct Bytes:s::ReceiveBufferApi {

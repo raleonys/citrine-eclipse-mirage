@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 cmake_minimum_required(VERSION 3.20)
 project(preloader_l LANGUAGES C CXX)
 
@@ -35,9 +37,9 @@ if(MSVC)
   # Compiler-owned standard CRT; consistent /MT Release and /MTd Debug targets.
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
-option(PRELOADER_L_GOLDEN_LINK_PROFILE "Emit the bounded local MSVC Golden link profile" OFF)
+option(PRELOADER_L_GOLDEN_LINK_PROFILE "Emit the bounded MSVC Golden link profile" OFF)
 if(PRELOADER_L_GOLDEN_LINK_PROFILE AND NOT MSVC)
-  message(FATAL_ERROR "Golden shipping link evidence requires MSVC on Windows; cross-build remains development-only.")
+  message(FATAL_ERROR "Golden shipping link evidence requires native MSVC on Windows.")
 endif()
 
 option(PRELOADER_L_BUILD_SOURCE_API_DLL "Build the separate C++ source API development DLL" ${BUILD_TESTING})
@@ -62,7 +64,7 @@ add_library(preloader_l_objects OBJECT ${PRELOADER_L_APPLICATION_SOURCES}
   src/platform/crypt_query_host.cpp "${_avatar_header}")
 target_include_directories(preloader_l_objects PUBLIC include)
 target_include_directories(preloader_l_objects PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
-target_link_libraries(preloader_l_objects PUBLIC preloader_l_minhook preloader_l_tinyxml2
+target_link_libraries(preloader_l_objects PUBLIC preloader_l_minhook preloader_l_pugixml
   preloader_l_asio)
 target_compile_definitions(preloader_l_objects PUBLIC NOMINMAX)
 set_target_properties(preloader_l_objects PROPERTIES POSITION_INDEPENDENT_CODE ON)
@@ -71,7 +73,7 @@ add_library(preloader_l_core STATIC $<TARGET_OBJECTS:preloader_l_objects>
   $<TARGET_OBJECTS:preloader_l_vdf_objects>)
 target_include_directories(preloader_l_core PUBLIC include)
 target_compile_definitions(preloader_l_core PUBLIC NOMINMAX)
-target_link_libraries(preloader_l_core PUBLIC preloader_l_minhook preloader_l_tinyxml2
+target_link_libraries(preloader_l_core PUBLIC preloader_l_minhook preloader_l_pugixml
   preloader_l_asio
   crypt32 ws2_32 kernel32 user32 shell32)
 
@@ -104,7 +106,7 @@ endif()
 if(BUILD_TESTING OR PRELOADER_L_BUILD_SOURCE_API_DLL)
   add_library(preloader_l_reference_objects OBJECT ${PRELOADER_L_REFERENCE_SOURCES})
   target_include_directories(preloader_l_reference_objects PUBLIC include)
-  target_link_libraries(preloader_l_reference_objects PRIVATE preloader_l_minhook preloader_l_tinyxml2 preloader_l_asio)
+  target_link_libraries(preloader_l_reference_objects PRIVATE preloader_l_minhook preloader_l_pugixml preloader_l_asio)
   target_compile_definitions(preloader_l_reference_objects PRIVATE NOMINMAX)
   set_target_properties(preloader_l_reference_objects PROPERTIES POSITION_INDEPENDENT_CODE ON)
   if(MSVC)
@@ -114,11 +116,40 @@ if(BUILD_TESTING OR PRELOADER_L_BUILD_SOURCE_API_DLL)
   target_link_libraries(preloader_l_reference_models PUBLIC preloader_l_core)
 endif()
 if(PRELOADER_L_BUILD_SOURCE_API_DLL)
-  add_library(preloader_l_source_api SHARED $<TARGET_OBJECTS:preloader_l_objects>
-    $<TARGET_OBJECTS:preloader_l_vdf_objects> $<TARGET_OBJECTS:preloader_l_reference_objects>
-    src/platform/dll_entry.cpp resources/surge.rc)
+  if(MSVC)
+    # C++ objects cross the development DLL boundary, including Debug STL
+    # container proxies. Both modules must use the same shared compiler CRT.
+    # Never reuse the shipping /MT or /MTd objects in this /MD or /MDd graph.
+    set(_source_api_crt "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+    get_target_property(_source_hook_sources preloader_l_minhook SOURCES)
+    get_target_property(_source_hook_includes preloader_l_minhook INTERFACE_INCLUDE_DIRECTORIES)
+    add_library(preloader_l_source_minhook STATIC ${_source_hook_sources})
+    target_include_directories(preloader_l_source_minhook PUBLIC ${_source_hook_includes})
+    add_dependencies(preloader_l_source_minhook preloader_l_verify_vendors preloader_l_verify_hook_engine)
+    add_library(preloader_l_source_pugixml STATIC third_party/pugixml/src/pugixml.cpp)
+    target_include_directories(preloader_l_source_pugixml PUBLIC third_party/pugixml/src)
+    target_compile_definitions(preloader_l_source_pugixml PUBLIC PUGIXML_NO_XPATH)
+    add_dependencies(preloader_l_source_pugixml preloader_l_verify_vendors)
+    set_target_properties(preloader_l_source_minhook preloader_l_source_pugixml
+      PROPERTIES MSVC_RUNTIME_LIBRARY "${_source_api_crt}")
+    add_library(preloader_l_source_api SHARED ${PRELOADER_L_APPLICATION_SOURCES}
+      src/platform/crypt_query_host.cpp "${_avatar_header}"
+      ${PRELOADER_L_VDF_SOURCES} ${PRELOADER_L_REFERENCE_SOURCES}
+      src/platform/dll_entry.cpp resources/surge.rc)
+    target_include_directories(preloader_l_source_api PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
+    target_compile_definitions(preloader_l_source_api PRIVATE NOMINMAX)
+    target_compile_options(preloader_l_source_api PRIVATE /GS)
+    target_link_libraries(preloader_l_source_api PRIVATE preloader_l_source_minhook
+      preloader_l_source_pugixml preloader_l_asio preloader_l_pegtl
+      crypt32 ws2_32 kernel32 user32 shell32)
+    set_target_properties(preloader_l_source_api PROPERTIES MSVC_RUNTIME_LIBRARY "${_source_api_crt}")
+  else()
+    add_library(preloader_l_source_api SHARED $<TARGET_OBJECTS:preloader_l_objects>
+      $<TARGET_OBJECTS:preloader_l_vdf_objects> $<TARGET_OBJECTS:preloader_l_reference_objects>
+      src/platform/dll_entry.cpp resources/surge.rc)
+    target_link_libraries(preloader_l_source_api PRIVATE preloader_l_core)
+  endif()
   target_include_directories(preloader_l_source_api PRIVATE include resources)
-  target_link_libraries(preloader_l_source_api PRIVATE preloader_l_core)
   set_target_properties(preloader_l_source_api PROPERTIES
     OUTPUT_NAME "preloader.source" PREFIX "" WINDOWS_EXPORT_ALL_SYMBOLS ON)
   if(MSVC)
@@ -130,6 +161,9 @@ if(PRELOADER_L_BUILD_SOURCE_API_DLL)
   add_executable(preloader_l_source_host tools/preloader_l_source_host/main.cpp)
   target_include_directories(preloader_l_source_host PRIVATE include)
   target_link_libraries(preloader_l_source_host PRIVATE preloader_l_source_api preloader_l_asio)
+  if(MSVC)
+    set_target_properties(preloader_l_source_host PROPERTIES MSVC_RUNTIME_LIBRARY "${_source_api_crt}")
+  endif()
 endif()
 
 add_executable(preloader_l_runtime_host tools/preloader_l_runtime_host/main.cpp)
@@ -183,6 +217,8 @@ if(BUILD_TESTING)
   endif()
   add_test(NAME dll_public_lifecycle COMMAND preloader_l_runtime_host $<TARGET_FILE:preloader_l>)
   set_tests_properties(dll_public_lifecycle PROPERTIES TIMEOUT 60)
+  add_test(NAME dll_public_xml_contracts COMMAND preloader_l_runtime_host $<TARGET_FILE:preloader_l> --xml-contracts)
+  set_tests_properties(dll_public_xml_contracts PROPERTIES TIMEOUT 120)
   add_executable(dll_public_c_consumer tests/native/public_c_consumer.c)
   target_include_directories(dll_public_c_consumer PRIVATE include)
   target_link_libraries(dll_public_c_consumer PRIVATE preloader_l)

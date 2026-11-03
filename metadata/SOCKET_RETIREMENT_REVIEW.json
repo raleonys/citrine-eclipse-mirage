@@ -1,6 +1,5 @@
 {
   "schema": "surge.socket-retirement-review.v1",
-  "classification": "NOT_RELEASE",
   "owner": "Explicit owner continuation of native socket ownership, safe retry and pending IO review",
   "documentation": "docs/SOCKET_RETIREMENT.md",
   "validation": "metadata/evidence/socket-retirement/VALIDATION.json",

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/prefix_cipher_test_fixture.hpp"
 using namespace cipher_test;
 namespace {

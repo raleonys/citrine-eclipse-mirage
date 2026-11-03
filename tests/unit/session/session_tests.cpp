@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/session_handler.hpp"
 #include "preloader_l/net/session_routing.hpp"
 #include "preloader_l/runtime/achievement_runtime.hpp"
@@ -10,16 +12,16 @@
 #include <iostream>
 #include <limits>
 #include <stdexcept>
-namespace msg=preloader_l::messages_recovered;
-namespace srv=preloader_l::server_recovered;
+namespace msg=preloader_l::messages;
+namespace srv=preloader_l::server;
 namespace cfg=preloader_l::configuration;
-namespace content=preloader_l::content_handlers_recovered;
-namespace info=preloader_l::handlers_recovered;
-namespace misc=preloader_l::misc_handlers_recovered;
-namespace dispatch=preloader_l::dispatch_recovered;
-namespace eq=preloader_l::event_queue_recovered;
+namespace content=preloader_l::content_handlers;
+namespace info=preloader_l::handlers;
+namespace misc=preloader_l::misc_handlers;
+namespace dispatch=preloader_l::dispatch;
+namespace eq=preloader_l::event_queue;
 namespace ar=preloader_l::achievement_runtime;
-namespace crypto=preloader_l::crypto_recovered;
+namespace crypto=preloader_l::crypto;
 namespace bridge=preloader_l::session_bridge;
 namespace {
 unsigned checks=0;
@@ -45,9 +47,9 @@ struct Clock final:ar::Clock {
     std::optional<ar::BrokenDown> gmtime_05fffc(std::int64_t)override{return ar::BrokenDown{0,0,0,1,0,100,6,0,0};}
 };
 struct Directories final:preloader_l::achievement_writer::Effects {void create_directories_018e00(const cfg::Path&)override{unused();}};
-struct Files final:preloader_l::file_recovered::Factory {
-    std::unique_ptr<preloader_l::file_recovered::Input> open_input_039f70(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
-    std::unique_ptr<preloader_l::file_recovered::Output> open_output_03a1a0(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
+struct Files final:preloader_l::file::Factory {
+    std::unique_ptr<preloader_l::file::Input> open_input_039f70(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
+    std::unique_ptr<preloader_l::file::Output> open_output_03a1a0(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
 };
 struct ContentEffects final:ar::PersistenceEffects {
     using PersistenceEffects::PersistenceEffects;

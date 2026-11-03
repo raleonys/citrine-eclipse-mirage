@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_scheduler_registry.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 bool matches(ServiceEntry& entry,const ServiceKey& key,SchedulerRegistryEffects& effects){
     if(entry.key.id && key.id && entry.key.id==key.id)return true;
@@ -41,7 +43,7 @@ ServiceEntry& resolve_scheduler_023b30(SchedulerRegistry& state,SchedulerRegistr
 std::uintptr_t SchedulerConstructionEffects::resolve_scheduler_023b30(std::uintptr_t identity){
     for(const auto& binding:registries_){
         if(binding.registry && binding.registry_identity==identity){
-            auto& entry=socket_recovered::resolve_scheduler_023b30(*binding.registry,effects_);
+            auto& entry=socket::resolve_scheduler_023b30(*binding.registry,effects_);
             for(const auto& service:services_)
                 if(service.entry==&entry)return service.scheduler_identity;
             throw UnsupportedInput("Resolved scheduler entry has no identity projection");
@@ -49,4 +51,4 @@ std::uintptr_t SchedulerConstructionEffects::resolve_scheduler_023b30(std::uintp
     }
     throw UnsupportedInput("Scheduler resolver has no registry identity binding");
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

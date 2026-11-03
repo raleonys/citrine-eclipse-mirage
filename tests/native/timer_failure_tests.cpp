@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include <asio.hpp>
 #include "preloader_l/net/server.hpp"
 #include "preloader_l/net/session_policy.hpp"
@@ -36,22 +38,22 @@ using namespace std::chrono_literals;
 void require(bool value,const char* text){if(!value)throw std::runtime_error(text);}
 struct Factory:net::HandlerFactory {
     unsigned errors=0;
-    struct Handler:server_recovered::Handler {
+    struct Handler:server::Handler {
         void reset_02bc70()override{}
         std::string initial_message_02d540()override{return std::string("hello\0",6);}
         std::string process_message_033d70(std::string_view)override{return {};}
     };
-    std::unique_ptr<server_recovered::Handler> create()override{return std::make_unique<Handler>();}
+    std::unique_ptr<server::Handler> create()override{return std::make_unique<Handler>();}
     void error(std::string_view,std::exception_ptr)noexcept override{++errors;}
 };
 struct Context {
-    Factory factory;execution_recovered::MutexState mutex{};
+    Factory factory;execution::MutexState mutex{};
     std::uint8_t a=0,b=0,c=0;std::uint16_t port=0;
-    execution_recovered::WindowsPlatform platform{+[](int){throw std::runtime_error("thread error");}};
+    execution::WindowsPlatform platform{+[](int){throw std::runtime_error("thread error");}};
     std::int64_t frequency=platform.query_performance_frequency();
-    execution_recovered::Execution execution{mutex,{a,b,c},frequency,platform};
+    execution::Execution execution{mutex,{a,b,c},frequency,platform};
     net::SessionPolicy policy;
-    Context(){execution_recovered::initialize_mutex_04a698(mutex,2);policy.receive_idle=200ms;}
+    Context(){execution::initialize_mutex_04a698(mutex,2);policy.receive_idle=200ms;}
 };
 struct Harness {
     Context c;

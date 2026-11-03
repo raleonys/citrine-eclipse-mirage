@@ -53,8 +53,9 @@ error locations. The numeric fixture tests only the vendor API.
 This binding does not select `surge.cfg` / `surge_override.cfg`
 or establish their precedence. Production Asio/filesystem adapters,
 automatic bootstrap, Consumer ABI, and native Windows/MSVC/game
-acceptance remain separate tasks. TinyXML2 owns XML; this grammar
-is not the XML/LSX parser. Vendored files and TinyXML2 depth 500
+acceptance remain separate tasks. Pugixml and the first-party compatibility
+layer own XML; this grammar is not the XML/LSX parser. Vendored files and
+the project XML depth-500 boundary
 remain unchanged.
 
 All 115 existing parser assertions were retained without modification.
@@ -88,3 +89,38 @@ Current runtime binding:
 [RUNTIME_BINDING.md](RUNTIME_BINDING.md). Earlier vendor/parser counts
 here are historical snapshot evidence; new application tests are
 tracked in [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json).
+
+## C25-F001 depth exhaustion mitigation candidate
+
+A linear lexical preflight rejects the 129th simultaneously open structural
+object before PEGTL recursively enters its Object rules. The candidate limit
+is 128, including the root object, across the entire raw VDF document (also
+subtrees that a later Config2 selection might ignore). Adjacent or repeated
+root objects do not accumulate depth. Quoted braces, supported quote/backslash
+escapes, line comments and nonnested block comments do not increase it.
+The original PEGTL grammar/actions and four vendored source trees are unchanged.
+
+The preflight runs after the existing single UTF-8 BOM bookkeeping. Rejection
+uses the existing `ParseError(ErrorRule::grammar)` and reports the offending
+post-BOM byte, LF-counted line and column. No PEGTL actions run: prior AST,
+open frames, accumulator, key and value remain untouched; the BOM flag still
+reflects the attempted input. Because the whole input is scanned first, an
+over-depth suffix takes precedence over earlier syntax errors or otherwise
+completed objects. This behavior is part of the proposed policy, not historical
+RE error-order parity. Inputs below the limit still use only the real PEGTL
+parser, including its existing partial-action and syntax-error semantics.
+
+The parser regression exercises the 128-level AST and Node conversion,
+sequential roots, exact 129/22,000-level rejection, quoted/commented/escaped
+bytes at the boundary, embedded NUL before excessive nesting, pre-existing
+State preservation and BOM/CRLF byte/line/column locations. The frozen 23,417-case
+VDF corpus and expected full-state fingerprint remain unchanged. Native MSVC
+Debug/Release must execute the boundary and conversion/destruction checks;
+portable or Wine execution alone does not establish Windows stack headroom.
+
+**Compatibility decision:** 128 is a new product input restriction, not a
+recovered RE limit. Owner review/approval of this explicit policy and real
+configuration compatibility is required before merge. Passing synthetic tests
+and the existing corpus does not prove every Consumer configuration or arbitrary
+host-thread stack size. No DLL export, error-enum layout or CFG path precedence
+change is proposed. Exact-head validation and its limits are tracked in PR #77.

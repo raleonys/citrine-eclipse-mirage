@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
@@ -11,7 +13,7 @@
 #include <iostream>
 #include <type_traits>
 #include <vector>
-using namespace preloader_l::registry_recovered;
+using namespace preloader_l::registry;
 namespace {
 int checks=0;
 void check(bool ok) { ++checks; if(!ok) throw std::runtime_error("check "+std::to_string(checks)); }
