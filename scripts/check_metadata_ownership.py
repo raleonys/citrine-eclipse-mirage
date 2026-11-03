@@ -27,7 +27,7 @@ def check(root):
     if not isinstance(registry, dict) or not isinstance(script_registry, dict):
         return sorted(errors + ['Ownership registry files must be a mapping'])
 
-    actual = {p.name for p in (root / 'metadata').glob('*.json')}
+    actual = {p.name for p in (root / 'metadata').iterdir() if p.suffix.lower() == '.json'}
     errors += ['Unowned metadata: ' + n for n in actual - registry.keys()]
     errors += ['Missing owned metadata: ' + n for n in registry.keys() - actual]
     for name, record in registry.items():
@@ -35,7 +35,7 @@ def check(root):
                 or not record.get('purpose') or record.get('role') not in METADATA_ROLES):
             errors.append('Incomplete or invalid metadata ownership: ' + name)
     actual_scripts = {p.relative_to(root).as_posix() for directory in ['scripts', 'tools']
-                      for p in (root / directory).rglob('*') if p.suffix in {'.py', '.ps1', '.cmd'}}
+                      for p in (root / directory).rglob('*') if p.suffix.lower() in {'.py', '.ps1', '.cmd'}}
     if actual_scripts != set(script_registry):
         errors.append('Script ownership file-set mismatch')
     for name, record in script_registry.items():

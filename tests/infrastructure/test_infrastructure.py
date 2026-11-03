@@ -713,6 +713,42 @@ class GovernanceTests(unittest.TestCase):
             self.assertTrue(any('Unowned' in e for e in ownership.check(root)))
 
 
+    def test_uppercase_ownership_extensions_are_not_skipped(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for folder in ('metadata', 'scripts', 'tools'):
+                (root / folder).mkdir()
+            entry = lambda role: {'owner': 'qa', 'purpose': 'fixture', 'role': role}
+            metadata = {'schema': ownership.METADATA_SCHEMA, 'files': {
+                'METADATA_OWNERSHIP.json': entry('CURRENT_CONTRACT'),
+                'SCRIPT_OWNERSHIP.json': entry('CURRENT_CONTRACT')}}
+            scripts = {'schema': ownership.SCRIPT_SCHEMA, 'files': {}}
+            def save():
+                (root / 'metadata/METADATA_OWNERSHIP.json').write_text(json.dumps(metadata))
+                (root / 'metadata/SCRIPT_OWNERSHIP.json').write_text(json.dumps(scripts))
+            save()
+            self.assertEqual([], ownership.check(root))
+            cases = [
+                ('metadata/unlisted.JSON', 'Unowned metadata: unlisted.JSON', 'CURRENT_CONTRACT'),
+                ('scripts/unlisted.PY', 'Script ownership file-set mismatch', 'PYTHON_TOOL_OR_MODULE'),
+                ('tools/unlisted.PS1', 'Script ownership file-set mismatch', 'AUTOMATION'),
+                ('scripts/unlisted.CMD', 'Script ownership file-set mismatch', 'HUMAN_LAUNCHER'),
+            ]
+            for name, message, role in cases:
+                with self.subTest(name=name):
+                    path = root / name
+                    path.write_text('fixture\n')
+                    self.assertIn(message, ownership.check(root))
+                    ledger = metadata['files'] if name.startswith('metadata/') else scripts['files']
+                    key = path.name if name.startswith('metadata/') else name
+                    ledger[key] = entry(role)
+                    save()
+                    self.assertEqual([], ownership.check(root))
+                    path.unlink()
+                    del ledger[key]
+                    save()
+                    self.assertEqual([], ownership.check(root))
+
     def test_ownership_schemas_and_allowed_roles_fail_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
