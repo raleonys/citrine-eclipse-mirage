@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Fail closed on Config2 achievement set and SteamAppId values that can escape their intended XML filename or watcher-directory leaf through separators, dot/dot-dot, Windows ADS colon or embedded NUL. Check both before any XML read, path update, epoch conversion or INI write. Add source-linked safe/unsafe and no-partial-effects fixtures while preserving ordinary identifier and conversion order; treat this as a compatibility-sensitive lexical guard, not full Windows reparse-point confinement.
+
 - Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
 
 - Validate SOURCE_FILES byte counts alongside SHA-256, rejecting missing, malformed and stale sizes. Add matching-hash negative controls for multibyte/CRLF payloads and count-only tampering.
