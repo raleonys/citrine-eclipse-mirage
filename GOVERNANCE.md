@@ -27,7 +27,7 @@ A skipped check is not a PASS. CI infrastructure failures may be rerun or repair
 
 PR CI schedules Source QA, Linux portable, native Windows MSVC Release and Debug, Production/Golden Release, CRT Release, Debug, Compile Only, and full Windows portable Debug/Release. The reference object graph is also scheduled for every PR; specialized diagnostic workflows retain change-specific paths. Always verify actual check conclusions for the exact commit. The main ruleset requires the named Windows native and Windows production checks; additional check requirements are a separate ruleset decision.
 
-Local build, debug, and focused testing remain available developer tools; separate publication-governance credentials or repeated release gates are not prerequisites for ordinary development. During the migration, existing tracked hooks and QA scripts are updated only through reviewed changes, not silently bypassed.
+Build, debug, and focused testing remain available developer tools; separate publication-governance credentials or repeated release gates are not prerequisites for ordinary development. During the migration, existing tracked hooks and QA scripts are updated only through reviewed changes, not silently bypassed.
 
 ## Changelog maintenance
 
@@ -42,7 +42,7 @@ Maintain a source-linked `CHANGELOG.md` alongside relevant PRs. A PR-only CI cov
 - Prospective weekly semantic versions advance 3.2.6 TALVOR → 3.2.7 ERINTHAR → 3.2.8 FORMADRIL → 3.2.9 CETRION → 3.3.0 VESPERKAI and follow the owner-approved LUTRAVEX registry. The retired -RNN weekly model must not be used.
 - New archive names are `Citrine_Eclipse_Mirage_x.y.z_CODENAME.zip` (source companion `_source.zip`); minor and patch are one digit (0..9). Do not rename historical artifacts or compatibility-sensitive binary/Golden fields.
 - Associate released assets and retained results with the exact commit, binary and package checksums. Verify the actual distributed archive once; ordinary PR work does not require repeated ZIP fresh-extract campaigns.
-- Do not reintroduce Brownfield G0-G4 gates, mandatory eight-shard release cycles, Library current-pointer transactions, or obsolete non-release classifications as new requirements.
+- Do not reintroduce Brownfield G0-G4 gates, mandatory eight-shard release cycles, Library current-pointer transactions, or publication classifications on build and test results.
 
 ## Documentation and metadata ownership
 

@@ -1,6 +1,5 @@
 {
   "schema": "surge.build-partition.v1",
-  "classification": "NOT_RELEASE",
   "owner": "Explicit owner approval of audited runtime/reference/source-API separation without deleting source models",
   "production_targets": [
     "preloader_l",

@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Remove obsolete publication classifications and location labels from operator output, active policies and generated build/Golden reports. Use `BUILD_RECEIPT.json`, `DIST_RECEIPT.json`, `GOLDEN_PASS` and `golden/` consistently across producers, checks and GitHub artifacts; retain draft publication as its own explicit state. Keep Golden/runtime/hash gates, failure codes and rollback behavior, and reject reintroduced labels through Source QA. Preserve vendor bytes and retained historical evidence.
+
 - Add an A11-07 actual hook-transaction regression for the MH_ERROR_DISABLED return path: an already-inactive patch does not bypass active-call drain or a failed uninitialize, and later retries skip duplicate disable while preserving original slots and engine ownership. Test-only, no patched MinHook, vendor, ABI or shipping code changes.
 
 - Remove both obsolete TinyXML2 CMake target aliases at the owner's request. Use only the pugixml target names in active build policy and documentation, and retain the actual pugixml development project in Windows reference artifacts.
@@ -31,7 +33,7 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 - Audit C34-F002: stage both source ZIP artifacts before publication, reject existing mismatched pairs, and restore the prior ZIP on checksum publication failure; document crash-atomicity limits.
 - Audit C34-F001: reject pre-existing symlinked source ZIP partials/output paths and use exclusively opened random temporary files for archive and checksum generation.
 
-- Audit C34-F005: reject unrecognized active-source manifest schemas and misleading release-classification fields without reviving obsolete non-release policy.
+- Audit C34-F005: reject unrecognized active-source manifest schemas and misleading release-classification fields, keeping publication state separate from source identity.
 
 - Audit C34-F003: validate both ownership-ledger schemas and explicit role policies, complete three previously untyped script entries, and test missing or unknown roles.
 
@@ -295,4 +297,4 @@ The following sections are preserved verbatim from the R24 source-import changel
 - Remove whole preloader/version and private CRT research packages from build.
 - Decouple the approved hook-11 selector from the preloader project.
 - Add an actual development DLL target and a dynamically linked source host.
-- Adapt Brownfield local build launchers; keep publication and Golden acceptance separate.
+- Adapt Brownfield build launchers; keep publication and Golden acceptance separate.

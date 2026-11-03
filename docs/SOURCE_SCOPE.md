@@ -34,7 +34,7 @@ not build inputs to the current product.
 - Tests are separate from headers and application `.cpp` files. CRT/preloader
   tests excluded from the product scope are not modified to conceal failures;
   they remain in the earlier package and are itemized in the scope list.
-- Brownfield adaptation covers local build helpers, actual Golden tools
+- Brownfield adaptation covers build helpers, actual Golden tools
   and pipeline, compatible negative tests, metadata/script ownership,
   source QA, five operator profiles, and flat source packaging. It does
   not transfer application code.

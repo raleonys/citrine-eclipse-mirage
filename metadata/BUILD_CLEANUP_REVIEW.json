@@ -1,6 +1,5 @@
 {
   "schema": "surge.build-cleanup-review.v1",
-  "classification": "NOT_RELEASE",
   "owner": "Explicit owner authorization to apply audited cleanup with diagnostic TLS gating",
   "documentation": "docs/BUILD_CLEANUP.md",
   "validation": "metadata/evidence/build-cleanup/VALIDATION.json",
