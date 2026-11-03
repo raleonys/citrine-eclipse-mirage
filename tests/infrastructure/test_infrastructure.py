@@ -107,6 +107,39 @@ class PackageTests(unittest.TestCase):
         inventory.write_manifest(self.root)
         self.zip = self.base / 'source.zip'
 
+    def test_manifest_refresh_replaces_hardlink_without_modifying_other_owner(self):
+        destination = self.root / inventory.MANIFEST
+        original = destination.read_bytes()
+        unrelated = self.base / 'hardlink-owner.txt'
+        unrelated.write_bytes(original)
+        destination.unlink()
+        try:
+            os.link(unrelated, destination)
+        except OSError:
+            self.skipTest('hardlink creation unavailable on this filesystem')
+        (self.root / 'src/value.cpp').write_text('int value() { return 9; }\n')
+        inventory.write_manifest(self.root)
+        self.assertEqual(original, unrelated.read_bytes(),
+                         'manifest refresh must not truncate the other hardlink owner')
+        self.assertNotEqual(original, destination.read_bytes())
+        self.assertEqual([], inventory.verify_manifest(self.root))
+        self.assertFalse(list(destination.parent.glob('.' + destination.name + '.*.partial')))
+
+    def test_manifest_refresh_replace_failure_preserves_prior_manifest(self):
+        destination = self.root / inventory.MANIFEST
+        original = destination.read_bytes()
+        (self.root / 'src/value.cpp').write_text('int value() { return 9; }\n')
+        with patch.object(inventory.os, 'replace', side_effect=OSError('synthetic manifest commit failure')):
+            with self.assertRaisesRegex(OSError, 'synthetic manifest commit failure'):
+                inventory.write_manifest(self.root)
+        self.assertEqual(original, destination.read_bytes(),
+                         'failed publication must retain the complete old manifest')
+        self.assertFalse(list(destination.parent.glob('.' + destination.name + '.*.partial')))
+        self.assertTrue(inventory.verify_manifest(self.root),
+                        'the previous manifest must still reject changed source bytes')
+        inventory.write_manifest(self.root)
+        self.assertEqual([], inventory.verify_manifest(self.root))
+
     def test_flat_roundtrip_and_determinism(self):
         first = packaging.package(self.root, self.zip)
         second = packaging.package(self.root, self.base / 'second.zip')
