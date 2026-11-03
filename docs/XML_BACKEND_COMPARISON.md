@@ -90,7 +90,7 @@ Local Release and ASan+UBSan execution covers:
 - Per-allocation one-shot/persistent failures on plain/reference-heavy,
   legacy, many-attribute, deep and malformed inputs. Attribute/text cache tests
   lift an injected failure and retry the same document. The local configuration
-  uses 612 isolated processes: 16 controls and 596 injected failures.
+  uses 614 isolated allocation processes: 18 controls and 596 injected failures.
 
 The expanded malformed-input allocation probe exposes a **failed reference
 measurement**: pinned TinyXML2 retains one allocation when the final error-text
@@ -101,6 +101,20 @@ with a positive outstanding count; other crashes, tracking overflow and
 sanitizer faults still fail. It is not reproduced in the candidate or reported
 as a reference PASS. LSan remains enabled; the allocation registry clears its
 artificial pointer roots before process exit. Candidate probes must stay clean.
+
+MSVC Debug adds an independent standard-library-only control, with no parser
+call. If failing an empty string's allocation demonstrably terminates through
+its noexcept constructor, the diagnostic records that runtime behavior before
+classifying matching injected `std::bad_alloc` terminations. Debug iterator
+checking is preserved. Such exits are accepted only for that demonstrated
+Debug configuration, a selected injected allocation, the active bad-allocation
+exception and a non-overflowing tracker. They remain
+`UNRECOVERABLE_DEBUG_OOM_NOT_A_RECOVERY_PASS`, with allocation recovery marked
+unproven. Counters at termination are not normal cleanup/leak measurements.
+Unknown terminations still fail; a separate deliberate-termination control
+verifies they cannot produce an eligible Debug allocation record. Release
+candidate failures retain their strict leak/recovery requirements. This does
+not classify every Debug fault as recoverable or disable any functional test.
 
 The Windows matrix additionally runs the unchanged complete router/AES,
 settings/license and real-file achievement-storage fixtures with both backends

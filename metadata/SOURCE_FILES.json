@@ -1110,8 +1110,8 @@
       "sha256": "fb86c271f58b368e9c8afe8484a0871396c94ca9ca730bc506291e2032d68d7c"
     },
     "tests/diagnostics/xml_backend/allocation.cpp": {
-      "bytes": 5279,
-      "sha256": "c3b0bbab2ec3877b5d913859362905f32779150f5a81da77cd4f3760ddd661b6"
+      "bytes": 6734,
+      "sha256": "2b17d1fadf3af8ef02fa65c5fe37b2bce200e44f3a735c245ba640c71bd5fd36"
     },
     "tests/diagnostics/xml_backend/backend.cpp": {
       "bytes": 5226,
@@ -1138,8 +1138,8 @@
       "sha256": "6102f1d9361e90fc735bdaaeabcecf9d813f5352037aff1cda46e4227b9aee35"
     },
     "tests/diagnostics/xml_backend/run.py": {
-      "bytes": 14056,
-      "sha256": "d202e5410b672c7ecc9f96aa0bdc6c00d99d745d74b682c1cf1c7c110372ef96"
+      "bytes": 15882,
+      "sha256": "948fc6d10b20a69062ee20ddd83e0e462a952b6593bc0b71b514a324cd5a86ed"
     },
     "tests/diagnostics/xml_backend/suite.cpp": {
       "bytes": 26516,

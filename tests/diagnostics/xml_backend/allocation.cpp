@@ -12,13 +12,19 @@
 #include <string>
 #include <string_view>
 namespace probe {
+#if defined(_MSC_VER) && defined(_ITERATOR_DEBUG_LEVEL)
+constexpr int debug_iterator_level=_ITERATOR_DEBUG_LEVEL;
+#else
+constexpr int debug_iterator_level=0;
+#endif
 struct Slot {void* pointer=nullptr;std::size_t bytes=0;};
 std::array<Slot,8192> slots;
 bool enabled=false,persistent=false;long fail=-1;
+bool injected=false;long requested=-1;const char* profile="unset";
 std::size_t calls=0,allocated=0,live=0,peak=0,outstanding=0;bool overflow=false;
-void begin(long n,bool all){for(auto& s:slots)s={};calls=allocated=live=peak=outstanding=0;overflow=false;fail=n;persistent=all;enabled=true;}
+void begin(long n,bool all){for(auto& s:slots)s={};calls=allocated=live=peak=outstanding=0;overflow=false;injected=false;requested=n;fail=n;persistent=all;enabled=true;}
 void* allocate(std::size_t n){
- if(enabled){++calls;if(fail>=0){if(fail==0){if(!persistent)fail=-1;throw std::bad_alloc();}--fail;}}
+ if(enabled){++calls;if(fail>=0){if(fail==0){injected=true;if(!persistent)fail=-1;throw std::bad_alloc();}--fail;}}
  auto p=std::malloc(n?n:1);if(!p)throw std::bad_alloc();
  if(enabled){allocated+=n;live+=n;if(live>peak)peak=live;++outstanding;bool found=false;for(auto& s:slots)if(!s.pointer){s={p,n};found=true;break;}if(!found)overflow=true;}
  return p;
@@ -34,8 +40,20 @@ void operator delete[](void* p)noexcept{probe::release(p);}
 void operator delete(void* p,std::size_t)noexcept{probe::release(p);}
 void operator delete[](void* p,std::size_t)noexcept{probe::release(p);}
 int main(int argc,char** argv){
- std::set_terminate([]{probe::enabled=false;std::fputs("ASSESSMENT_TERMINATE\n",stderr);std::_Exit(86);});
+ std::set_terminate([]{
+  probe::enabled=false;probe::fail=-1;
+  bool bad_allocation=false;
+  try{if(auto error=std::current_exception())std::rethrow_exception(error);}
+  catch(const std::bad_alloc&){bad_allocation=true;}catch(...){}
+  if(bad_allocation&&probe::injected&&probe::debug_iterator_level>0) {
+   std::printf("{\"profile\":\"%s\",\"fail_at\":%ld,\"persistent\":%s,\"outcome\":4,\"calls\":%zu,\"allocated_bytes\":%zu,\"peak_live_bytes\":%zu,\"outstanding\":%zu,\"tracking_overflow\":%s,\"sink\":0,\"unrecoverable_debug_bad_alloc\":true,\"debug_iterator_level\":%d}\n",probe::profile,probe::requested,probe::persistent?"true":"false",probe::calls,probe::allocated,probe::peak,probe::outstanding,probe::overflow?"true":"false",probe::debug_iterator_level);
+   std::fflush(stdout);
+  }else std::fputs("ASSESSMENT_TERMINATE\n",stderr);
+  std::_Exit(86);
+ });
+ if(argc==2&&std::string_view(argv[1])=="--terminate-control")std::terminate();
  if(argc<2)return 2;std::string_view name=argv[1];long fail=argc>2?std::strtol(argv[2],nullptr,10):-1;bool persistent=argc>3&&std::string_view(argv[3])=="persistent";
+ probe::profile=argv[1];
  pugi::set_memory_management_functions(probe::pugi_allocate,probe::pugi_release);
  preloader_l::xml_reader_bridge::Backend tiny;xml_comparison::Backend candidate;
  if(name!="tiny"&&name!="pugi_checked")return 2;
@@ -61,7 +79,12 @@ int main(int argc,char** argv){
  }
  int outcome=0;std::size_t sink=0;
  probe::begin(fail,persistent);
- if(cache) {
+ if(payload=="stl-control") {
+  // No backend call: establish how this standard-library configuration handles
+  // a failed allocation in an empty string's noexcept constructor.
+  try{std::string value;sink=value.max_size();}
+  catch(const std::bad_alloc&){outcome=2;}catch(...){outcome=3;}
+ }else if(cache) {
   auto lookup=[&] {
    auto value=payload=="cache-attribute"?cached_root->attribute("a"):
        std::optional<std::string_view>(nodes.text_003860(*cached_root));
@@ -70,7 +93,7 @@ int main(int argc,char** argv){
   };
   try{lookup();}catch(const std::bad_alloc&){outcome=2;}catch(...){outcome=3;}
   // Lift the injected failure and retry the very same parsed document.
-  probe::fail=-1;probe::persistent=false;
+  probe::fail=-1;probe::persistent=false;probe::injected=false;
   try{lookup();}catch(...){outcome=3;}
   retained.reset();
  }else {

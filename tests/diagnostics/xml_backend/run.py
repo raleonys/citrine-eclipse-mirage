@@ -178,8 +178,15 @@ def main():
         run('timing', [suite, 'benchmark', args.timing_iterations, output / 'timing.csv'])
 
     allocations = []
+    debug_stl_termination_confirmed = False
+    termination_control = run('unknown-termination-control',
+        [binary('comparison_allocations'), '--terminate-control'], allowed=(86,))
+    if b'ASSESSMENT_TERMINATE' not in termination_control.stdout or any(
+            line.startswith(b'{') for line in termination_control.stdout.splitlines()):
+        raise RuntimeError('Unknown termination was misclassified as an injected Debug allocation')
+    report['unknown_termination_control'] = 'REJECTED_AS_EXPECTED'
     for profile in ['tiny', 'pugi_checked']:
-        for payload in ['small', 'rewrite', 'legacy', 'attributes', 'depth', 'error', 'cache-attribute', 'cache-text']:
+        for payload in ['stl-control', 'small', 'rewrite', 'legacy', 'attributes', 'depth', 'error', 'cache-attribute', 'cache-text']:
             command = [binary('comparison_allocations'), profile, '-1', 'once', payload]
             result = run(f'allocation-{profile}-{payload}-control', command)
             control = json.loads(result.stdout)
@@ -188,14 +195,25 @@ def main():
             for mode in ['once', 'persistent']:
                 for failure in range(control['calls']):
                     reference_error = profile == 'tiny' and payload == 'error'
+                    debug_measurement = sys.platform == 'win32' and args.configuration == 'Debug'
+                    allowed = (0, 1, 23) if reference_error else (0,)
+                    if debug_measurement and (payload == 'stl-control' or debug_stl_termination_confirmed):
+                        allowed += (86,)
                     result = run(f'allocation-{profile}-{payload}-{mode}-{failure}',
                                  [binary('comparison_allocations'), profile, failure, mode, payload],
-                                 allowed=(0, 1, 23) if reference_error else (0,),
+                                 allowed=allowed,
                                  reference_oom_measurement=reference_error)
                     record = json.loads(next(line for line in result.stdout.splitlines() if line.startswith(b'{')))
-                    if result.returncode and not (reference_error and record['outcome'] == 2
+                    debug_termination = (result.returncode == 86 and debug_measurement
+                        and record['outcome'] == 4 and record.get('unrecoverable_debug_bad_alloc') is True
+                        and record.get('debug_iterator_level', 0) > 0 and not record['tracking_overflow'])
+                    if debug_termination and payload == 'stl-control':
+                        debug_stl_termination_confirmed = True
+                    if result.returncode and not debug_termination and not (reference_error and record['outcome'] == 2
                             and record['outstanding'] > 0 and not record['tracking_overflow']):
                         raise RuntimeError('Unexpected reference allocator failure')
+                    if debug_termination:
+                        record['recovery_result'] = 'UNRECOVERABLE_DEBUG_OOM_NOT_A_RECOVERY_PASS'
                     record['process_exit_code'] = result.returncode
                     record['payload'] = payload
                     allocations.append(record)
@@ -215,8 +233,12 @@ def main():
             report['differential_mutations'][name] = next(csv.DictReader(stream))
     report['allocations'] = {'processes': len(allocations),
                              'controls': [row for row in allocations if row['fail_at'] < 0],
-                             'reference_oom_failures': [row for row in allocations if row.get('process_exit_code', 0)],
+                             'reference_oom_failures': [row for row in allocations if row.get('process_exit_code', 0) in (1, 23)],
+                             'debug_unrecoverable_allocations': [row for row in allocations if row.get('process_exit_code') == 86],
+                             'debug_stl_control_confirmed': debug_stl_termination_confirmed,
                              'fault_injections': sum(row['fail_at'] >= 0 for row in allocations)}
+    report['allocation_recovery'] = ('UNPROVEN_FOR_MSVC_DEBUG_NOEXCEPT_OOM'
+        if report['allocations']['debug_unrecoverable_allocations'] else 'CANDIDATE_FAULTS_PASS')
     if not args.sanitizers:
         with (output / 'timing.csv').open(encoding='utf-8', newline='') as stream:
             timing = list(csv.DictReader(stream))
