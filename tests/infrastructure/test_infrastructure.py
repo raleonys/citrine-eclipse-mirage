@@ -95,6 +95,57 @@ class PackageTests(unittest.TestCase):
             self.assertEqual({'CMakeLists.txt','src','metadata'}, {Path(name).parts[0] for name in archive.namelist()})
 
 
+    def test_checksum_commit_failure_retains_previous_complete_package(self):
+        previous = packaging.package(self.root, self.zip)
+        sidecar = Path(previous['sha256_file'])
+        original_zip, original_sidecar = self.zip.read_bytes(), sidecar.read_bytes()
+        (self.root / 'src/value.cpp').write_text('int value() { return 9; }\n')
+        inventory.write_manifest(self.root)
+
+        replace = packaging.os.replace
+        def reject_checksum(source, destination):
+            if Path(destination) == sidecar:
+                raise OSError('injected checksum publication error')
+            return replace(source, destination)
+
+        with patch.object(packaging.os, 'replace', side_effect=reject_checksum):
+            with self.assertRaisesRegex(OSError, 'injected checksum publication error'):
+                packaging.package(self.root, self.zip)
+        self.assertEqual(original_zip, self.zip.read_bytes())
+        self.assertEqual(original_sidecar, sidecar.read_bytes())
+        self.assertFalse(list(self.base.glob('.*.partial')))
+        self.assertFalse(list(self.base.glob('.*.rollback')))
+
+        replacement = packaging.package(self.root, self.zip)
+        self.assertNotEqual(previous['sha256'], replacement['sha256'])
+        self.assertEqual(replacement['sha256'] + '  source.zip\n', sidecar.read_text())
+
+    def test_checksum_commit_failure_without_old_pair_removes_new_zip(self):
+        sidecar = Path(str(self.zip) + '.sha256')
+        replace = packaging.os.replace
+        def reject_checksum(source, destination):
+            if Path(destination) == sidecar:
+                raise OSError('injected checksum publication error')
+            return replace(source, destination)
+        with patch.object(packaging.os, 'replace', side_effect=reject_checksum):
+            with self.assertRaisesRegex(OSError, 'injected checksum publication error'):
+                packaging.package(self.root, self.zip)
+        self.assertFalse(self.zip.exists())
+        self.assertFalse(sidecar.exists())
+        self.assertFalse(list(self.base.glob('.*.partial')))
+
+    def test_incomplete_existing_pair_is_not_overwritten(self):
+        self.zip.write_bytes(b'old ZIP without receipt')
+        with self.assertRaisesRegex(ValueError, 'incomplete source ZIP/checksum pair'):
+            packaging.package(self.root, self.zip)
+        self.assertEqual(b'old ZIP without receipt', self.zip.read_bytes())
+        self.zip.unlink()
+        sidecar = Path(str(self.zip) + '.sha256')
+        sidecar.write_text('orphaned receipt\n')
+        with self.assertRaisesRegex(ValueError, 'incomplete source ZIP/checksum pair'):
+            packaging.package(self.root, self.zip)
+        self.assertEqual('orphaned receipt\n', sidecar.read_text())
+
     def test_preexisting_package_partials_cannot_redirect_writes(self):
         victim = self.base / 'unrelated-fixture.txt'
         victim.write_bytes(b'unmodified audit fixture')

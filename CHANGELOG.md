@@ -8,6 +8,7 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Audit C34-F002: stage both source ZIP artifacts before publication, reject existing mismatched pairs, and restore the prior ZIP on checksum publication failure; document crash-atomicity limits.
 - Audit C34-F001: reject pre-existing symlinked source ZIP partials/output paths and use exclusively opened random temporary files for archive and checksum generation.
 
 - Audit C34-F005: reject unrecognized active-source manifest schemas and misleading release-classification fields without reviving obsolete non-release policy.
