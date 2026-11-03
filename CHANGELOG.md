@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Test actual cached-avatar cleanup refusal for an owned nonempty matching directory: propagate the filesystem error and path, preserve its child and unrelated files, then remove the newly empty directory on repaired retry. The fixture makes no traversal-order assumption; production cleanup policy is unchanged.
+
 - Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
 
 - Validate SOURCE_FILES byte counts alongside SHA-256, rejecting missing, malformed and stale sizes. Add matching-hash negative controls for multibyte/CRLF payloads and count-only tampering.
