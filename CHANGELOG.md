@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Run the root-ownership caller-isolation regression through existing portable and Windows Native infrastructure targets. Poison absolute Git selectors in a child process and verify the disposable caller's object store, refs, HEAD, config, index and worktree registry remain unchanged; preserve the underlying fixture-environment fix and all push gates.
+
 - Resolve the Source QA report fixture root before output ancestry checks, matching the real entrypoint and Windows short/long temporary-path aliases. Preserve mandatory hardlink, early rejection and failed-write/replace checks.
 
 - Publish Source QA JSON reports through a closed exclusive temporary file and atomic name replacement, preserving source inodes behind hardlinked report names and the previous complete report after write/replace failure. Validate report destinations before running checks; retain the existing project-build boundary, missing-parent creation and nonzero failed-check result. Runtime, vendor, ABI and mandatory pre-push validation are unchanged.

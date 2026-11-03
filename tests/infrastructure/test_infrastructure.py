@@ -518,6 +518,64 @@ class BranchPushGateTests(unittest.TestCase):
                                       cwd=remote, accept=False).returncode)
 
 
+class GitFixtureIsolationTests(unittest.TestCase):
+    def test_root_fixtures_preserve_an_inherited_callers_repository(self):
+        import shutil
+        if not shutil.which('git'):
+            self.skipTest('Git executable not available')
+        with tempfile.TemporaryDirectory() as tmp:
+            observer = Path(tmp) / 'observer'
+            observer.mkdir()
+            # Independent setup: every poisoned selector below points only to
+            # this disposable observer, never to the real source checkout.
+            environment = {name: value for name, value in os.environ.items()
+                           if not name.startswith('GIT_')}
+            self.assertFalse(any(name.startswith('GIT_') for name in environment))
+            def git(*args):
+                result = subprocess.run(['git', '-C', str(observer), *args],
+                                        env=environment, capture_output=True,
+                                        text=True, timeout=30)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                return result.stdout
+            git('init', '--initial-branch=fixture-owner')
+            self.assertEqual(observer.resolve(), Path(git('rev-parse', '--show-toplevel').strip()).resolve())
+            git('config', 'user.name', 'Observer fixture')
+            git('config', 'user.email', 'observer@example.invalid')
+            git('config', 'commit.gpgsign', 'false')
+            sentinel = observer / 'observer.txt'
+            sentinel.write_bytes(b'owned observer sentinel\n')
+            git('add', 'observer.txt')
+            git('commit', '-m', 'Seed disposable observer')
+            metadata = observer / '.git'
+            def snapshot():
+                return {
+                    'head': git('rev-parse', 'HEAD'),
+                    'refs': git('show-ref'),
+                    'worktrees': git('worktree', 'list', '--porcelain'),
+                    'config': (metadata / 'config').read_bytes(),
+                    'index': (metadata / 'index').read_bytes(),
+                    'objects': {p.relative_to(metadata).as_posix(): p.read_bytes()
+                                for p in (metadata / 'objects').rglob('*') if p.is_file()},
+                }
+            before = snapshot()
+            poisoned = dict(environment, GIT_DIR=str(metadata),
+                            GIT_WORK_TREE=str(observer), GIT_COMMON_DIR=str(metadata),
+                            GIT_INDEX_FILE=str(metadata / 'index'),
+                            GIT_OBJECT_DIRECTORY=str(metadata / 'objects'))
+            result = subprocess.run(
+                [sys.executable, '-B', str(ROOT / 'tests/infrastructure/test_root_ownership.py'),
+                 'RepositoryRootOwnership.test_real_git_worktree_gitfile_is_allowed',
+                 'RepositoryRootOwnership.test_borrowed_valid_worktree_redirect_does_not_claim_another_root'],
+                cwd=ROOT, env=poisoned, capture_output=True, text=True, timeout=45)
+            # Check preservation before checking the child result: even a
+            # rejected fixture run must never mutate the caller's repository.
+            self.assertEqual(before, snapshot())
+            self.assertEqual(b'owned observer sentinel\n', sentinel.read_bytes())
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertIn('Ran 2 tests', result.stderr)
+            self.assertNotIn('skipped', result.stderr)
+
+
 class GovernanceTests(unittest.TestCase):
     def test_resource_assets_require_exact_hash_without_dropping_versioninfo(self):
         import hashlib
