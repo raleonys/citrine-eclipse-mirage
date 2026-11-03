@@ -93,7 +93,7 @@ jobs:
           retention-days: 14
 
   full-windows-portable:
-    name: Windows x64 portable ${{ matrix.configuration }} (31 tests)
+    name: Windows x64 portable ${{ matrix.configuration }} (34 tests)
     runs-on: windows-2022
     timeout-minutes: 45
     strategy:
@@ -126,8 +126,8 @@ jobs:
           $code = $LASTEXITCODE
           $listed | Tee-Object -FilePath "$build/ctest-inventory.log"
           if ($code -ne 0) { throw "CTest inventory failed: $code" }
-          if (-not ($listed -match '^Total Tests:\s+31\s*$')) {
-            throw 'Unexpected Windows portable test inventory (expected exactly 31)'
+          if (-not ($listed -match '^Total Tests:\s+34\s*$')) {
+            throw 'Unexpected Windows portable test inventory (expected exactly 34)'
           }
       - name: Run all Windows portable tests
         shell: pwsh
