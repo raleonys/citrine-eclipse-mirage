@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_cancellation.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 inline constexpr std::uint64_t recycle_limit=0x0666666666666666ULL;
 struct RecycleMap {
     RecycleMap(CancelMap& map,CancelNode& free_sentinel):map(map),free_sentinel(free_sentinel){}
@@ -19,11 +21,11 @@ public:
 // Caller serializes access and supplies initialized circular lists/buckets.
 // The two list subobjects are distinct; no self-splice shortcut is invented.
 void recycle_0283c0(RecycleMap&,CancelNode&,RecycleFailureEffects&);
-class RecoveredCancellationRecycler final:public CancellationRecycler {
+class CancellationRecyclerAdapter final:public CancellationRecycler {
 public:
-    RecoveredCancellationRecycler(std::span<RecycleMap*> maps,RecycleFailureEffects& failures)
+    CancellationRecyclerAdapter(std::span<RecycleMap*> maps,RecycleFailureEffects& failures)
         :maps_(maps),failures_(failures){}
     void recycle_0283c0(CancelMap&,CancelNode&) override;
 private:std::span<RecycleMap*> maps_;RecycleFailureEffects& failures_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

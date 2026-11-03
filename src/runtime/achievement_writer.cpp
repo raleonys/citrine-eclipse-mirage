@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/achievement_writer.hpp"
 #include "preloader_l/core/paths.hpp"
 #include <charconv>
@@ -35,11 +37,11 @@ std::string serialize_ini(const configuration::State& state) {
     return output;
 }
 void write_ini_01f9a0(const configuration::Path& ini_path,
-    const configuration::State& state,Effects& effects,file_recovered::Factory& files) {
+    const configuration::State& state,Effects& effects,file::Factory& files) {
     if(ini_path.empty())return;
-    const auto parent=path_recovered::parent_path_019820(ini_path);
+    const auto parent=path::parent_path_019820(ini_path);
     effects.create_directories_018e00(parent);
     const auto bytes=serialize_ini(state);
-    const file_recovered::FileWrite write{ini_path,bytes};files.replace_atomic({&write,1});
+    const file::FileWrite write{ini_path,bytes};files.replace_atomic({&write,1});
 }
 } // namespace preloader_l::achievement_writer

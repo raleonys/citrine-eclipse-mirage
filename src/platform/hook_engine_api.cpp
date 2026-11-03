@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/hook_engine_api.hpp"
 namespace preloader_l::platform::hook_engine {
 int NativeApi::initialize() {return MH_Initialize();}

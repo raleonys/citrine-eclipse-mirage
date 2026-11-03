@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Preserve the owner's broad Infrastructure mandate and pending runtime boundaries."""
 import hashlib
 import json

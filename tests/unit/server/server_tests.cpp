@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/server.hpp"
 #include <algorithm>
 #include <iostream>
@@ -32,12 +34,12 @@ void operator delete(void* p) noexcept {greeting_lifetime::release(p);}
 void operator delete[](void* p) noexcept {greeting_lifetime::release(p);}
 void operator delete(void* p,std::size_t) noexcept {greeting_lifetime::release(p);}
 void operator delete[](void* p,std::size_t) noexcept {greeting_lifetime::release(p);}
-using namespace preloader_l::server_recovered;
+using namespace preloader_l::server;
 namespace {
 int checks=0;
 void check(bool value,const char* text) {++checks;if(!value)throw std::runtime_error(text);}
 struct Raised {Error error; std::string context;};
-struct FakeExecutionPlatform final : preloader_l::execution_recovered::Platform {
+struct FakeExecutionPlatform final : preloader_l::execution::Platform {
     int acquired=0,released=0;
     std::uint32_t current_thread_id() override {return 7;}
     void acquire_srw_exclusive(std::uintptr_t&) override {++acquired;}
@@ -154,11 +156,11 @@ struct Fixture {
 };
 void server_tests() {
     FakeExecutionPlatform platform;
-    preloader_l::execution_recovered::MutexState mutex{};
-    preloader_l::execution_recovered::initialize_mutex_04a698(mutex,2);
+    preloader_l::execution::MutexState mutex{};
+    preloader_l::execution::initialize_mutex_04a698(mutex,2);
     std::uint8_t first=0,second=0,third=0;
     std::int64_t frequency=0;
-    preloader_l::execution_recovered::Execution execution{mutex,{first,second,third},frequency,platform};
+    preloader_l::execution::Execution execution{mutex,{first,second,third},frequency,platform};
     FakeServer server;server.ready=&first;server.env_result=false;
     std::uint16_t port=0;
     server_start_029ea0(server,port,first,execution);

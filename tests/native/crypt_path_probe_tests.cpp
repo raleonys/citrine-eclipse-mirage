@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/crypt_query.hpp"
 #include <atomic>
 #include <cstdlib>

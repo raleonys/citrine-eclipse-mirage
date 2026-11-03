@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Verify retained reference sources cannot enter the production link/dependency graph."""
 import argparse
 import hashlib
@@ -147,8 +149,26 @@ def codemodel_errors(targets, policy):
                   if s['path'].lower().endswith('.cpp') and not s.get('isGenerated')}
         if actual != set(policy[key]):
             errors.append('Generated target source set differs: ' + name)
-    if 'preloader_l_source_api' in targets and 'preloader_l_reference_objects' not in target_closure(targets, 'preloader_l_source_api'):
-        errors.append('Source API lost the retained reference object payload')
+    if 'preloader_l_source_api' in targets:
+        # MSVC compiles a separate shared-CRT development graph. It must retain
+        # every application, parser, reference and entry source without linking
+        # the shipping static-CRT objects as a shortcut.
+        expected = set().union(*(policy[key] for key in
+                               ('production_object_sources', 'vdf_sources', 'reference_sources', 'dll_entry_sources')))
+        actual = {s['path'].replace('\\', '/') for s in targets['preloader_l_source_api'].get('sources', [])
+                  if s['path'].lower().endswith('.cpp') and not s.get('isGenerated')}
+        closure = target_closure(targets, 'preloader_l_source_api')
+        separate = bool(actual - set(policy['dll_entry_sources']))
+        if separate:
+            if actual != expected:
+                errors.append('Source API lost the retained reference object payload or complete development source set')
+            static_targets = set(policy['production_targets'] + policy['reference_targets'] +
+                                 ['preloader_l_minhook', 'preloader_l_tinyxml2'])
+            overlap = closure & static_targets
+            if overlap:
+                errors.append('Separate source API graph reuses shipping static-CRT targets: ' + ', '.join(sorted(overlap)))
+        elif 'preloader_l_reference_objects' not in closure:
+            errors.append('Source API lost the retained reference object payload')
     for name in policy['reference_test_targets']:
         if name in targets and 'preloader_l_reference_models' not in target_closure(targets, name):
             errors.append('Reference test lost its model library: ' + name)
@@ -164,6 +184,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
     ap.add_argument('--source-only', action='store_true')
+    ap.add_argument('--graph-only', action='store_true', help='Validate generated target sources/dependencies without claiming link or runtime acceptance')
     ap.add_argument('--build-dir', type=Path)
     ap.add_argument('--config', default='')
     ap.add_argument('--map', type=Path)
@@ -176,9 +197,12 @@ def main():
         policy = json.loads((root / POLICY).read_text(encoding='utf-8'))
         errors += source_errors(root, policy)
         if not args.source_only:
-            if not args.build_dir or not args.map or not args.binary:
-                raise ValueError('Build proof requires --build-dir, --map and --binary')
+            if not args.build_dir:
+                raise ValueError('Target graph proof requires --build-dir')
             errors += codemodel_errors(load_generated_graph(args.build_dir, args.config), policy)
+        if not args.source_only and not args.graph_only:
+            if not args.map or not args.binary:
+                raise ValueError('Build proof requires --build-dir, --map and --binary')
             findings, format_name = map_errors(read_map(args.map), policy)
             errors += findings
             if not args.binary.is_file():
@@ -186,10 +210,10 @@ def main():
     except (OSError, ValueError, KeyError, TypeError) as error:
         errors.append(str(error))
     result = {'schema': 'surge.build-partition-check.v1', 'classification': 'NOT_RELEASE',
-              'result': 'FAIL' if errors else 'PASS_SOURCE_PARTITION' if args.source_only else 'PASS_PRODUCTION_BOUNDARY',
+              'result': 'FAIL' if errors else 'PASS_SOURCE_PARTITION' if args.source_only else 'PASS_TARGET_GRAPH' if args.graph_only else 'PASS_PRODUCTION_BOUNDARY',
               'map_format': format_name, 'errors': errors,
               'native_msvc_and_game_acceptance': 'SEPARATE_REQUIRED_EVIDENCE'}
-    if not errors and not args.source_only:
+    if not errors and not args.source_only and not args.graph_only:
         result['binary_sha256'] = hashlib.sha256(args.binary.read_bytes()).hexdigest()
         result['map_sha256'] = hashlib.sha256(args.map.read_bytes()).hexdigest()
     if args.report:

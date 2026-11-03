@@ -1,14 +1,16 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/handlers/content_handlers.hpp"
 #include <atomic>
 #include <deque>
 #include <optional>
 
-namespace preloader_l::event_queue_recovered {
+namespace preloader_l::event_queue {
 inline constexpr std::string_view initial_down_event=
     "<LSX><Event sender=\"EbisuSDK\"><IGOEvent State=\"DOWN\"/></Event></LSX>";
 static_assert(initial_down_event.size()==68);
-using Mutex=content_handlers_recovered::Mutex;
+using Mutex=content_handlers::Mutex;
 enum class Cleanup {queue_07e000,mutex_07e030}; // Identities, not executable VAs.
 struct Guards {std::int32_t mutex_0a3970,queue_0a39a0;}; // Caller-seeded globals.
 class Initialization {
@@ -67,4 +69,4 @@ private:
 struct Context {Guards& guards;Initialization& initialization;Mutex& mutex;Storage& storage;};
 Mutex& mutex_02c620(Context&);
 Storage& queue_02c400(Context&);
-} // namespace preloader_l::event_queue_recovered
+} // namespace preloader_l::event_queue

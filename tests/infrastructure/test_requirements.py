@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Original SURGE directive guards adapted to the current authorized workstream."""
 import json
 from pathlib import Path

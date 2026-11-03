@@ -1,8 +1,12 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Remove only bytecode caches belonging to manifest-owned first-party Python tools."""
 import argparse
 import json
+import os
 from pathlib import Path
 import re
+import tempfile
 
 
 def clear(root):
@@ -30,6 +34,35 @@ def clear(root):
     return sorted(removed)
 
 
+def report_destination(root, path):
+    """Reject any output outside the owned build tree before cleanup starts."""
+    root = Path(root).resolve()
+    build = root / 'build'
+    candidate = Path(path).absolute()
+    resolved = candidate.resolve(strict=False)
+    if candidate.is_symlink() or build not in resolved.parents:
+        raise ValueError('Cache report must be a regular output beneath source build/')
+    if build.is_symlink():
+        raise ValueError('Cache report cannot traverse a symlinked build directory')
+    if not candidate.parent.is_dir():
+        raise ValueError('Cache report parent must be an existing build directory')
+    if candidate.exists() and not candidate.is_file():
+        raise ValueError('Cache report target must be a regular file')
+    return candidate
+
+
+def write_report(path, output):
+    """Publish the complete report through an exclusively created temporary file."""
+    fd, temporary = tempfile.mkstemp(
+        prefix='.' + path.name + '.', suffix='.partial', dir=path.parent)
+    try:
+        with os.fdopen(fd, 'w', encoding='utf-8') as stream:
+            stream.write(output)
+        os.replace(temporary, path)
+    finally:
+        Path(temporary).unlink(missing_ok=True)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
@@ -37,10 +70,11 @@ if __name__ == '__main__':
     parser.add_argument('--report', type=Path, help='Write the detailed cleanup result as JSON')
     args = parser.parse_args()
     try:
+        destination = report_destination(args.root, args.report) if args.report else None
         report = {'result':'CLEARED_KNOWN_GENERATED_CACHE_ONLY','removed':clear(args.root)}
         output = json.dumps(report, indent=2) + '\n'
-        if args.report:
-            args.report.write_text(output, encoding='utf-8')
+        if destination is not None:
+            write_report(destination, output)
         if not args.quiet:
             print(output, end='')
     except (OSError, ValueError, KeyError) as error:

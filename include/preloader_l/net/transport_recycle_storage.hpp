@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_recycle.hpp"
 #include <memory>
 #include <vector>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Explicit host compatibility storage. Native map construction/insert/rehash,
 // allocator/string ABI and teardown are not reconstructed by this backend.
 // Nodes have stable owned addresses; operations are borrowed, not deleted.
@@ -28,4 +30,4 @@ private:
     CancelMap map_;
     RecycleMap metadata_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

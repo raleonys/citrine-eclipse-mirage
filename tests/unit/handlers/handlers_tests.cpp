@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/handlers/handlers.hpp"
 #include <algorithm>
 #include <cstdio>
@@ -6,7 +8,7 @@
 #include <tuple>
 #include <vector>
 
-using namespace preloader_l::handlers_recovered;
+using namespace preloader_l::handlers;
 static unsigned checks;
 static void require(bool v) {++checks;if(!v)throw std::runtime_error("check "+std::to_string(checks));}
 struct Fixture {

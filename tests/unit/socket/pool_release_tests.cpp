@@ -1,12 +1,14 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/pool_release_test_fixture.hpp"
 #include <type_traits>
 using namespace pool_test;
 namespace {
 using G=Graph;
-static_assert(!std::is_copy_constructible_v<s::RecoveredPoolReleaseEffects>);
-static_assert(!std::is_copy_assignable_v<s::RecoveredPoolReleaseEffects>);
-static_assert(!std::is_move_constructible_v<s::RecoveredPoolReleaseEffects>);
-static_assert(!std::is_move_assignable_v<s::RecoveredPoolReleaseEffects>);
+static_assert(!std::is_copy_constructible_v<s::PoolReleaseEffects>);
+static_assert(!std::is_copy_assignable_v<s::PoolReleaseEffects>);
+static_assert(!std::is_move_constructible_v<s::PoolReleaseEffects>);
+static_assert(!std::is_move_assignable_v<s::PoolReleaseEffects>);
 
 // Literal slot bytes from retained node-delete-next-vtables.json, complete
 // read192 at 0x18007fe08, ev_7349a6f3b8db519dad314c7de8d04be1e89ad0c44e1b592d75731e5c20e44706.

@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/event_queue.hpp"
 #include <iostream>
 #include <limits>
 #include <stdexcept>
 #include <vector>
-namespace eq=preloader_l::event_queue_recovered;
+namespace eq=preloader_l::event_queue;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

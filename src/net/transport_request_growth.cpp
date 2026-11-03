@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_request_growth.hpp"
 #include <algorithm>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 void word(std::span<std::uint8_t> bytes,std::uint64_t value){for(unsigned i=0;i<8;++i)bytes[i]=static_cast<std::uint8_t>(value>>(i*8));}
 std::uint64_t word(std::span<const std::uint8_t> bytes){std::uint64_t value=0;for(unsigned i=0;i<8;++i)value|=std::uint64_t{bytes[i]}<<(i*8);return value;}
@@ -46,9 +48,9 @@ ReceiveBufferString& grow_replace_request_02b940(ReceiveBufferString& value,std:
     word(value.storage_00,data); //02bacd final pointer publication after old free
     return value;
 }
-ReceiveBufferString& RecoveredRequestGrowthApi::grow_replace_02b940(ReceiveBufferString& value,
+ReceiveBufferString& RequestGrowthApi::grow_replace_02b940(ReceiveBufferString& value,
     std::uint64_t extra,std::uint64_t hint,std::uint64_t offset,std::uint64_t erase,
     std::uintptr_t source,std::uint64_t insert){
     return grow_replace_request_02b940(value,extra,hint,offset,erase,source,insert,context_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

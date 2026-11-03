@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/message_dispatch_test_fixture.hpp"
 using namespace message_test;
 namespace {

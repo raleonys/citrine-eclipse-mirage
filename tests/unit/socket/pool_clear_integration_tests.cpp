@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/pool_clear_test_fixture.hpp"
 #include <cstring>
 using namespace pool_clear_test;

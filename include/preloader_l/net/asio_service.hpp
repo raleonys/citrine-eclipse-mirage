@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/server.hpp"
 #include "preloader_l/net/session_policy.hpp"
@@ -8,7 +10,7 @@ namespace preloader_l::net {
 class HandlerFactory {
 public:
     virtual ~HandlerFactory() = default;
-    virtual std::unique_ptr<server_recovered::Handler> create() = 0;
+    virtual std::unique_ptr<server::Handler> create() = 0;
     virtual void error(std::string_view operation, std::exception_ptr) noexcept = 0;
 };
 // Concrete adapter for the existing RE server/Session bodies. The caller owns
@@ -21,12 +23,15 @@ public:
 // The port reference is output state after bind, never a requested config port.
 class AsioService final {
 public:
-    AsioService(HandlerFactory&, execution_recovered::Execution&,
-                std::uint16_t& port, std::uint8_t& ready,SessionPolicy policy={});
+    AsioService(HandlerFactory&, execution::Execution&,
+                std::uint16_t& port, std::uint8_t& ready,SessionPolicy policy={},bool defer_accept=false);
     ~AsioService();
     AsioService(const AsioService&) = delete;
     AsioService& operator=(const AsioService&) = delete;
     void start();
+    // Used by Application only: listener is bound before provider/profile readiness,
+    // but early OS-backlog clients are not accepted until readiness is published.
+    void resume_accepts();
     void stop();
 private:
     struct Impl;

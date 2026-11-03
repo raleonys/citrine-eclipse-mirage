@@ -1,13 +1,15 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/router/router.hpp"
 #include <cstdint>
 #include <string>
 #include <string_view>
 
-namespace preloader_l::license_recovered {
+namespace preloader_l::license {
 using Path = configuration::Path;
-using Xml = handlers_recovered::Xml;
-using Node = messages_recovered::XmlNode;
+using Xml = handlers::Xml;
+using Node = messages::XmlNode;
 struct FileStatus { std::int32_t kind; std::int32_t error; };
 
 // Each reference is supplied by the caller. This object has no guessed global
@@ -23,7 +25,7 @@ struct StateReferences {
     const Path& dll_path_0a3bb8;
     const Path& executable_path_0a39e0;
     const Path& license_base_0a3b38;
-    handlers_recovered::Attributes& game_0a3d88;
+    handlers::Attributes& game_0a3d88;
     std::int32_t& attempted_files_0a39bc;
     std::uint8_t& blocked_0a39c0;
 };
@@ -58,7 +60,7 @@ public:
 
 // Application-level reconstruction compatible with the existing router. These
 // are functional bodies, but all unknown OS/token/provider work is mandatory.
-class Handlers final : public dispatch_recovered::LicenseHandlers {
+class Handlers final : public dispatch::LicenseHandlers {
 public:
     Handlers(StateReferences state,Effects& effects):state_(state),effects_(effects){}
     bool auth_code_02e3b0(const Node&,Xml&) override;
@@ -72,4 +74,4 @@ private:
     StateReferences state_;
     Effects& effects_;
 };
-} // namespace preloader_l::license_recovered
+} // namespace preloader_l::license

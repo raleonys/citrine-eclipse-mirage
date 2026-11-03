@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/document_clear.hpp"
 #include "tests/support/socket/native_document_test_fixture.hpp"
 
 namespace clear_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 using document_test::State;using document_test::Failure;
 using response_test::check;using response_test::checks;
 struct Graph {
@@ -41,9 +43,9 @@ struct Nodes:s::NativeNodeClearEffects {
     void remove_parent_003030(std::uintptr_t parent,std::uintptr_t node)override{++parents;calls.push_back({"parent",0,parent,node});event("parent");if(mutate)drop(node);if(after_destroy)after_destroy();}
     void delete_node_003240(std::uintptr_t node)override{++deletes;calls.push_back({"delete",0,node});event("delete");if(mutate)drop(node);if(after_destroy)after_destroy();}
 };
-struct Docs:s::RecoveredDocumentClearEffects {
+struct Docs:s::DocumentClearEffects {
     State& state;Nodes& nodes;document_test::Effects lower;
-    Docs(State& s,Nodes& n,native_message_test::Fixture* native=nullptr):RecoveredDocumentClearEffects(s.memory,n),state(s),nodes(n),lower(s,native){nodes.after_destroy=[this](){lower.reset_parsed();};}
+    Docs(State& s,Nodes& n,native_message_test::Fixture* native=nullptr):DocumentClearEffects(s.memory,n),state(s),nodes(n),lower(s,native){nodes.after_destroy=[this](){lower.reset_parsed();};}
     void set_error_005820(std::uintptr_t p,std::int32_t a,std::uint32_t b,std::uintptr_t c)override{lower.set_error_005820(p,a,b,c);}
     std::uintptr_t allocate_04b100(std::uint64_t n)override{const auto p=lower.allocate_04b100(n);nodes.graph.refresh();return p;}
     void copy_078d30(std::uintptr_t to,std::uintptr_t from,std::uint64_t n)override{lower.copy_078d30(to,from,n);nodes.graph.refresh();}

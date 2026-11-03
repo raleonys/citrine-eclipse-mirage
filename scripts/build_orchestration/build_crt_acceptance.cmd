@@ -1,4 +1,5 @@
 @echo off
+REM SPDX-License-Identifier: GPL-3.0-only
 setlocal EnableExtensions DisableDelayedExpansion
 set "TARGET=%~dp0build_crt_acceptance.ps1"
 set "LABEL=STATIC CRT ACCEPTANCE"

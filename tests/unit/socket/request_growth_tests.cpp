@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/request_growth_test_fixture.hpp"
 using namespace growth_test;
 namespace {

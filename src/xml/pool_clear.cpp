@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/pool_clear.hpp"
 #include <bit>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -34,7 +36,7 @@ void clear_blocks(std::uintptr_t pool,NativePoolClearContext& context){
 void clear_pool_blocks_002d70(std::uintptr_t pool,NativePoolClearContext& context){clear_blocks(pool,context);}
 void clear_pool_blocks_002dc0(std::uintptr_t pool,NativePoolClearContext& context){clear_blocks(pool,context);}
 void clear_pool_blocks_002e10(std::uintptr_t pool,NativePoolClearContext& context){clear_blocks(pool,context);}
-void RecoveredPoolClearEffects::clear_pool_002d70(std::uintptr_t pool){clear_pool_blocks_002d70(pool,pool_clear_);}
-void RecoveredPoolClearEffects::clear_pool_002dc0(std::uintptr_t pool){clear_pool_blocks_002dc0(pool,pool_clear_);}
-void RecoveredPoolClearEffects::clear_pool_002e10(std::uintptr_t pool){clear_pool_blocks_002e10(pool,pool_clear_);}
-} // namespace preloader_l::socket_recovered
+void PoolClearEffects::clear_pool_002d70(std::uintptr_t pool){clear_pool_blocks_002d70(pool,pool_clear_);}
+void PoolClearEffects::clear_pool_002dc0(std::uintptr_t pool){clear_pool_blocks_002dc0(pool,pool_clear_);}
+void PoolClearEffects::clear_pool_002e10(std::uintptr_t pool){clear_pool_blocks_002e10(pool,pool_clear_);}
+} // namespace preloader_l::socket

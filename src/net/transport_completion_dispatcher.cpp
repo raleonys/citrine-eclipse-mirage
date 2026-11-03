@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_completion_dispatcher.hpp"
 #include <algorithm>
 #include <bit>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 CancelOperation* pop(DispatcherQueue& queue){
     auto* const operation=queue.head;
@@ -132,9 +134,9 @@ std::uint64_t dispatch_completion_027c10(DispatcherState& state,std::uint32_t re
         success(result,environment.generic_category);return 0;
     }
 }
-std::uint64_t RecoveredDispatcherWorkerEffects::dispatch_027c10(IocpSchedulerEntry& entry,
+std::uint64_t DispatcherWorkerEffects::dispatch_027c10(IocpSchedulerEntry& entry,
     std::uint32_t timeout,WorkerThreadState& thread,WorkerRunResult& result){
     if(&entry!=&state_.entry)throw UnsupportedInput("Dispatcher bridge is bound to one live scheduler entry");
     return dispatch_completion_027c10(state_,timeout,thread,result,environment_,api_,effects_,worker_api_,errors_,*this);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

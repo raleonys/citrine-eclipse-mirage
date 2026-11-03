@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/protocol/messages.hpp"
 #include <array>
@@ -5,11 +7,11 @@
 #include <span>
 #include <stdexcept>
 
-namespace preloader_l::crypto_recovered {
-using Key=messages_recovered::Key;
+namespace preloader_l::crypto {
+using Key=messages::Key;
 // Outside the source's defined/supported memory domain; not an original error ABI.
 class OutOfEvidenceInput:public std::invalid_argument {public:using std::invalid_argument::invalid_argument;};
-class Cipher final:public messages_recovered::Cipher {
+class Cipher final:public messages::Cipher {
 public:
     Cipher();
     void construct_0423d0_in_place() override;
@@ -31,8 +33,8 @@ private:
     Key iv_{};
     void expand_045ce0(const Key&);
 };
-class CryptoFactory final:public messages_recovered::CryptoFactory {
-public:std::unique_ptr<messages_recovered::Cipher> create_0423d0() override;
+class CryptoFactory final:public messages::CryptoFactory {
+public:std::unique_ptr<messages::Cipher> create_0423d0() override;
 };
 class TimeSource {public:virtual ~TimeSource()=default;virtual std::int64_t unix_seconds_05eeb8()=0;};
 // Calls only the Windows system-time API when explicitly used by an integrator.
@@ -46,7 +48,7 @@ public:
     std::uint32_t state()const noexcept{return state_;}
 private:std::uint32_t state_;
 };
-class Random final:public messages_recovered::Random {
+class Random final:public messages::Random {
 public:
     explicit Random(TimeSource& source):time_(source){}
     // Adapter returns the 16 raw bytes; messages.cpp performs 03d190 once.

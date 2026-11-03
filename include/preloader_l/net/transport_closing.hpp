@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_close.hpp"
 #include "preloader_l/net/transport_lifecycle.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct CancellationEngine {
     explicit CancellationEngine(SocketGate& gate):gate(gate){}
     SocketGate& gate;
@@ -30,4 +32,4 @@ private:
     SocketService& service_;CloseContext& context_;Api& errors_;AcceptorApi& api_;
     CancellationEffects& cancellation_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

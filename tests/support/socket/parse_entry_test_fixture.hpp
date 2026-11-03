@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/parse_entry.hpp"
 #include "tests/support/socket/node_base_test_fixture.hpp"
 
 namespace parse_entry_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 using node_base_test::check;using node_base_test::checks;using node_base_test::word;using node_base_test::put;using node_base_test::Failure;
 using node_base_test::unsupported;using node_base_test::failure;
 struct CoreDocs:s::NativeDocumentEffects {

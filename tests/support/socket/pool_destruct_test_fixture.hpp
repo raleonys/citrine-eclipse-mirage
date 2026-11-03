@@ -1,19 +1,21 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/pool_destruct.hpp"
 #include "tests/support/socket/pool_clear_test_fixture.hpp"
 
 namespace pool_destruct_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 using pool_clear_test::check;using pool_clear_test::checks;using pool_clear_test::word;using pool_clear_test::put;using pool_clear_test::Failure;
 using pool_clear_test::unsupported;using pool_clear_test::failure;using pool_clear_test::types;
 using Backing=pool_clear_test::Backing;using Nodes=pool_clear_test::Nodes;
 inline constexpr std::uintptr_t base_table=0x18007fa18ULL;
 // Order follows allocation source types120/80/112/104.
 inline constexpr std::array<std::uintptr_t,4> type_tables{0x18007fe08ULL,0x18007fe38ULL,0x18007fe68ULL,0x18007fe98ULL};
-struct Docs:s::RecoveredPoolDestructEffects {
+struct Docs:s::PoolDestructEffects {
     std::vector<std::uintptr_t> entered_frees,completed_frees,node_bases;unsigned other_calls=0;
     std::function<void(std::uintptr_t)> before_free,after_free,node_base;
-    Docs(s::ReceiveBufferMemory& memory,Nodes& nodes):RecoveredPoolDestructEffects(memory,nodes){}
+    Docs(s::ReceiveBufferMemory& memory,Nodes& nodes):PoolDestructEffects(memory,nodes){}
     [[noreturn]]void unexpected(){++other_calls;throw std::runtime_error("unexpected document provider in pool destructor test");}
     void set_error_005820(std::uintptr_t,std::int32_t,std::uint32_t,std::uintptr_t)override{unexpected();}
     std::uintptr_t allocate_04b100(std::uint64_t)override{unexpected();}

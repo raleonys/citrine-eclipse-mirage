@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Optionally turn exact locked alias descriptors into symlinks; not needed to build."""
 import argparse
 from pathlib import Path

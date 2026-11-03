@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_service_registry.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct SocketConstructionContext {
     ContextIdentity identity;
     // Typed projection of the context's first native qword; read live at022929.
@@ -39,7 +41,7 @@ std::uint32_t initialize_gate_027be0(CRITICAL_SECTION&,ServiceGateApi&);
 // native exception/unwind guarantee. Projected completion_port is caller-bound,
 // not a native0228e0 store; this body preserves that unrelated projection field.
 SocketServiceEntry* construct_service_0228e0(SocketConstructionContext&,ServiceConstructionEffects&,ServiceGateApi&,Api& errors);
-// Replaces the prior registry's required0228e0 provider with the recovered body.
+// Replaces the prior registry's required 0228e0 provider with its implemented body.
 // RTTI comparator stays abstract; no eager construction, ownership or teardown.
 class ConstructorRegistryEffects:public ServiceRegistryEffects {
 public:
@@ -50,4 +52,4 @@ private:
     SocketConstructionContext& context_;ServiceConstructionEffects& effects_;
     ServiceGateApi& gate_api_;Api& errors_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

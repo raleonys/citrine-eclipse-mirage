@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_worker_startup.hpp"
 #include <limits>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Only defined logical error fields are represented. Native error padding and
 // an unwritten local error are not initialized or interpreted as ABI bytes.
 struct WorkerRunResult {std::optional<Error> error;};
@@ -58,18 +60,18 @@ void run_worker_function_029890(IocpWorkerFunction&,WorkerRunEnvironment,
     WorkerRunApi&,Api& errors,WorkerRunEffects&);
 // Returns an opaque original-this identity, without accessing a deleted object.
 std::uintptr_t delete_worker_function_026320(IocpWorkerFunction&,std::uint32_t flags,WorkerRunEffects&);
-// Actual source composition of02a000/05e8e0/02a4a0 with the two recovered slots.
+// Source composition of 02a000/05e8e0/02a4a0 with two required slots.
 // Allocation, CRT thread effects, dispatcher and native lifetime remain required.
-class RecoveredWorkerFunctionEffects:public RecoveredWorkerStartupEffects {
+class WorkerFunctionEffects:public WorkerStartupEffectsAdapter {
 public:
-    RecoveredWorkerFunctionEffects(WorkerStartupApi& startup,Api& errors,
-        threads_recovered::Effects& threads,WorkerRunEnvironment environment,
+    WorkerFunctionEffects(WorkerStartupApi& startup,Api& errors,
+        threads::Effects& threads,WorkerRunEnvironment environment,
         WorkerRunApi& api,WorkerRunEffects& effects)
-        :RecoveredWorkerStartupEffects(startup,errors,threads),environment_(environment),
+        :WorkerStartupEffectsAdapter(startup,errors,threads),environment_(environment),
          api_(api),errors_(errors),effects_(effects){}
     void delete_function_slot_00(IocpWorkerFunction&,std::uint32_t) final;
     void invoke_function_slot_08(IocpWorkerFunction&) final;
 private:
     WorkerRunEnvironment environment_;WorkerRunApi& api_;Api& errors_;WorkerRunEffects& effects_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

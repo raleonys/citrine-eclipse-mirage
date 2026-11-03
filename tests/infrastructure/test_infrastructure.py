@@ -1,6 +1,9 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Tamper, failure-propagation and source/package identity regressions."""
 from pathlib import Path
 import json
+import os
 import re
 import subprocess
 import sys
@@ -227,6 +230,116 @@ class PackageTests(unittest.TestCase):
         self.assertTrue(any('Duplicate' in e for e in falcion.check(self.root, self.zip)))
 
 
+class BranchPushGateTests(unittest.TestCase):
+    def test_real_pushes_preserve_gates_for_temporary_audits_and_research(self):
+        # All refs, including main, belong to this disposable local fixture.
+        # The QA stub records invocation; it does not impersonate project QA.
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            checkout, remote = base / 'checkout', base / 'remote.git'
+            checkout.mkdir()
+            # A real pre-push hook exports repository-local Git variables.
+            # Do not let them redirect fixture commands into the source repo.
+            environment = os.environ.copy()
+            local_names = subprocess.run(['git', 'rev-parse', '--local-env-vars'],
+                                         cwd=ROOT, capture_output=True, text=True,
+                                         check=True, timeout=30).stdout.splitlines()
+            for name in local_names:
+                environment.pop(name, None)
+
+            def git(*args, accept=True, cwd=checkout):
+                result = subprocess.run(['git', '-C', str(cwd), *args],
+                                        capture_output=True, text=True, timeout=30,
+                                        env=environment)
+                if accept:
+                    self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                return result
+
+            git('init', '--initial-branch=fix/fixture')
+            git('config', 'user.name', 'Push gate fixture')
+            git('config', 'user.email', 'push-gate@example.invalid')
+            git('config', 'core.autocrlf', 'false')
+            git('config', 'commit.gpgsign', 'false')
+            self.assertEqual(checkout.resolve(), Path(git('rev-parse', '--show-toplevel').stdout.strip()).resolve())
+            hooks = checkout / '.github/hooks'
+            hooks.mkdir(parents=True)
+            hook = hooks / 'pre-push'
+            hook.write_bytes((ROOT / '.github/hooks/pre-push').read_bytes())
+            hook.chmod(hook.stat().st_mode | 0o111)
+            (checkout / '.gitignore').write_text('build/\n')
+            (checkout / 'scripts').mkdir()
+            (checkout / 'scripts/run_source_qa.py').write_text(
+                'from pathlib import Path\n'
+                'p = Path("build/qa-ran")\n'
+                'p.parent.mkdir(parents=True, exist_ok=True)\n'
+                'p.write_text("fixture QA invoked")\n')
+            git('add', '.')
+            git('update-index', '--chmod=+x', '.github/hooks/pre-push')
+            git('commit', '-m', 'Seed disposable gate fixture')
+            seed = git('rev-parse', 'HEAD').stdout.strip()
+            git('init', '--bare', str(remote))
+            git('remote', 'add', 'origin', str(remote))
+            git('push', 'origin', 'HEAD:refs/heads/seed')
+            for name in ['main', 'bugfix', 'fix/done']:
+                git('update-ref', 'refs/heads/' + name, seed, cwd=remote)
+            git('config', 'core.hooksPath', hooks.as_posix())
+            (checkout / 'change.txt').write_text('reviewed fixture change\n')
+            git('add', 'change.txt')
+            git('commit', '-m', 'Prepare next fixture commit')
+            head = git('rev-parse', 'HEAD').stdout.strip()
+            marker = checkout / 'build/qa-ran'
+
+            for name in ['bugfix', 'fix/done']:
+                with self.subTest(deletion=name):
+                    git('push', 'origin', '--delete', name)
+                    self.assertNotEqual(0, git('show-ref', '--verify', 'refs/heads/' + name,
+                                              cwd=remote, accept=False).returncode)
+                    self.assertFalse(marker.exists(), 'pure deletion must not run QA')
+
+            for refspec, message in [
+                    ('HEAD:refs/heads/bugfix', 'shared bugfix branch is retired'),
+                    ('HEAD:refs/heads/main', 'main is updated only by owner-reviewed PR merges'),
+                    (':refs/heads/main', 'main is updated only by owner-reviewed PR merges'),
+                    (seed + ':refs/heads/fix/old-tip', 'check out the commit being pushed')]:
+                with self.subTest(rejection=refspec):
+                    rejected = git('push', 'origin', refspec, accept=False)
+                    self.assertNotEqual(0, rejected.returncode)
+                    self.assertIn(message, rejected.stderr)
+                    self.assertFalse(marker.exists(), 'rejection must happen before QA')
+            self.assertEqual(seed, git('rev-parse', 'refs/heads/main', cwd=remote).stdout.strip())
+
+            git('push', 'origin', 'HEAD:refs/heads/fix/new-task')
+            self.assertTrue(marker.exists(), 'fresh PR branch must run the QA gate')
+            self.assertEqual(head, git('rev-parse', 'refs/heads/fix/new-task', cwd=remote).stdout.strip())
+            # The push hook checks source integrity, not the branch's retention
+            # designation: a routine audit is still a temporary PR head.
+            for name in ('audit/one-shot-finding', 'audit/owner-approved-campaign',
+                         'research/reconstruction-package'):
+                with self.subTest(project_branch=name):
+                    marker.unlink()
+                    git('push', 'origin', 'HEAD:refs/heads/' + name)
+                    self.assertTrue(marker.exists(), 'every PR head must pass the same QA gate')
+                    self.assertEqual(head, git('rev-parse', 'refs/heads/' + name,
+                                               cwd=remote).stdout.strip())
+            marker.unlink()
+            git('push', 'origin', '--delete', 'audit/one-shot-finding')
+            self.assertNotEqual(0, git('show-ref', '--verify',
+                                      'refs/heads/audit/one-shot-finding',
+                                      cwd=remote, accept=False).returncode)
+            for retained in ('audit/owner-approved-campaign',
+                             'research/reconstruction-package'):
+                self.assertEqual(head, git('rev-parse', 'refs/heads/' + retained,
+                                           cwd=remote).stdout.strip())
+            self.assertFalse(marker.exists(), 'deleting a temporary audit head must not run QA')
+            (checkout / 'change.txt').write_text('uncommitted fixture change\n')
+            rejected = git('push', 'origin', 'HEAD:refs/heads/fix/dirty', accept=False)
+            self.assertNotEqual(0, rejected.returncode)
+            self.assertIn('commit the reviewed changes', rejected.stderr)
+            self.assertFalse(marker.exists())
+            self.assertNotEqual(0, git('show-ref', '--verify', 'refs/heads/fix/dirty',
+                                      cwd=remote, accept=False).returncode)
+
+
 class GovernanceTests(unittest.TestCase):
     def test_resource_assets_require_exact_hash_without_dropping_versioninfo(self):
         import hashlib
@@ -335,11 +448,65 @@ class GovernanceTests(unittest.TestCase):
             (root / 'metadata').mkdir()
             (root / 'metadata/METADATA_OWNERSHIP.json').write_text(json.dumps({'files': {
                 'METADATA_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'registry', 'role': 'CURRENT_CONTRACT'},
-                'SCRIPT_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'script registry', 'role': 'CURRENT_CONTRACT'}}}))
-            (root / 'metadata/SCRIPT_OWNERSHIP.json').write_text(json.dumps({'files': {}}))
+                'SCRIPT_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'script registry', 'role': 'CURRENT_CONTRACT'}},
+                'schema': ownership.METADATA_SCHEMA}))
+            (root / 'metadata/SCRIPT_OWNERSHIP.json').write_text(json.dumps({'schema': ownership.SCRIPT_SCHEMA, 'files': {}}))
             self.assertEqual([], ownership.check(root))
             (root / 'metadata/unowned.json').write_text('{}')
             self.assertTrue(any('Unowned' in e for e in ownership.check(root)))
+
+
+    def test_ownership_schemas_and_allowed_roles_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'metadata').mkdir()
+            (root / 'scripts').mkdir()
+            (root / 'scripts/audit_tool.py').write_text('pass\n')
+            metadata = {
+                'schema': ownership.METADATA_SCHEMA,
+                'files': {
+                    'METADATA_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'metadata registry',
+                                                'role': 'CURRENT_CONTRACT'},
+                    'SCRIPT_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'script registry',
+                                              'role': 'CURRENT_CONTRACT'},
+                },
+            }
+            scripts = {
+                'schema': ownership.SCRIPT_SCHEMA,
+                'files': {
+                    'scripts/audit_tool.py': {'owner': 'qa', 'purpose': 'fixture script',
+                                              'role': 'PYTHON_TOOL_OR_MODULE'},
+                },
+            }
+            metadata_path = root / 'metadata/METADATA_OWNERSHIP.json'
+            script_path = root / 'metadata/SCRIPT_OWNERSHIP.json'
+            def write_records():
+                metadata_path.write_text(json.dumps(metadata))
+                script_path.write_text(json.dumps(scripts))
+            write_records()
+            self.assertEqual([], ownership.check(root))
+            for ledger, key in ((metadata, 'metadata'), (scripts, 'script')):
+                ledger['schema'] = 'unexpected.audit.schema'
+                write_records()
+                self.assertTrue(any('Unrecognized ' + key + ' ownership schema' in error
+                                    for error in ownership.check(root)))
+                ledger['schema'] = (ownership.METADATA_SCHEMA if key == 'metadata'
+                                    else ownership.SCRIPT_SCHEMA)
+                write_records()
+            for ledger, name in ((metadata, 'METADATA_OWNERSHIP.json'),
+                                 (scripts, 'scripts/audit_tool.py')):
+                record = ledger['files'][name]
+                role = record.pop('role')
+                write_records()
+                self.assertTrue(any('invalid' in error and name in error
+                                    for error in ownership.check(root)))
+                record['role'] = 'UNKNOWN_ROLE'
+                write_records()
+                self.assertTrue(any('invalid' in error and name in error
+                                    for error in ownership.check(root)))
+                record['role'] = role
+                write_records()
+                self.assertEqual([], ownership.check(root))
 
     def test_launcher_result_and_argument_mutations(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -464,6 +631,116 @@ class LocalDistTests(unittest.TestCase):
 
 
 class ToolCacheTests(unittest.TestCase):
+    def cleanup_fixture(self, base):
+        root = base / 'source'
+        (root / 'scripts').mkdir(parents=True)
+        (root / 'metadata').mkdir()
+        (root / 'build').mkdir()
+        (root / 'scripts/helper.py').write_text('value=1\n')
+        victim = root / 'metadata/keep.json'
+        victim.write_bytes(b'owned source sentinel')
+        inventory.write_manifest(root)
+        payload = root / 'scripts/__pycache__/helper.cpython-313.pyc'
+        payload.parent.mkdir()
+        payload.write_bytes(b'owned cache')
+        command = [sys.executable, '-B', str(ROOT / 'scripts/clear_tool_python_cache.py'),
+                   '--root', str(root), '--quiet', '--report']
+        return root, victim, payload, command
+
+    def test_cleanup_report_invalid_targets_preserve_sources_and_cache(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, victim, payload, command = self.cleanup_fixture(Path(tmp))
+            directory = root / 'build/directory'
+            directory.mkdir()
+            protected = {p: p.read_bytes() for p in
+                         [victim, root / inventory.MANIFEST, root / 'scripts/helper.py']}
+            for target in [victim, root / inventory.MANIFEST, root / 'scripts/helper.py',
+                           root / 'build', directory, root / 'build/missing/report.json',
+                           root.parent / 'outside.json', root / 'build/../metadata/keep.json',
+                           Path('metadata/keep.json')]:
+                with self.subTest(target=str(target)):
+                    result = subprocess.run(command + [str(target)], cwd=root,
+                                            capture_output=True, text=True)
+                    self.assertNotEqual(0, result.returncode)
+                    self.assertEqual('', result.stdout)
+                    self.assertIn('TOOL_CACHE_CLEANUP: FAIL:', result.stderr)
+                    self.assertTrue(payload.exists())
+                    for path, before in protected.items():
+                        self.assertEqual(before, path.read_bytes())
+                    self.assertFalse(list((root / 'build').rglob('*.partial')))
+            self.assertFalse((root.parent / 'outside.json').exists())
+
+    def test_cleanup_report_linked_directories_cannot_reach_outside(self):
+        import os
+        for link_root in (True, False):
+            with self.subTest(link_root=link_root), tempfile.TemporaryDirectory() as tmp:
+                base = Path(tmp)
+                root, victim, payload, command = self.cleanup_fixture(base)
+                outside = base / 'outside'
+                outside.mkdir()
+                sentinel = outside / 'report.json'
+                sentinel.write_bytes(b'outside sentinel')
+                link = root / 'build' if link_root else root / 'build/redirect'
+                if link_root:
+                    link.rmdir()
+                if os.name == 'nt':
+                    made = subprocess.run(['cmd.exe', '/d', '/c', 'mklink', '/J',
+                                           str(link), str(outside)], capture_output=True, text=True)
+                    self.assertEqual(0, made.returncode, made.stdout + made.stderr)
+                else:
+                    link.symlink_to(outside, target_is_directory=True)
+                try:
+                    result = subprocess.run(command + [str(link / 'report.json')],
+                                            capture_output=True, text=True)
+                    self.assertNotEqual(0, result.returncode)
+                    self.assertIn('TOOL_CACHE_CLEANUP: FAIL:', result.stderr)
+                    self.assertTrue(payload.exists())
+                    self.assertEqual(b'owned source sentinel', victim.read_bytes())
+                    self.assertEqual(b'outside sentinel', sentinel.read_bytes())
+                    self.assertEqual(['report.json'], sorted(p.name for p in outside.iterdir()))
+                finally:
+                    if os.name == 'nt':
+                        os.rmdir(link)  # Remove the owned junction entry, never its target.
+                    else:
+                        link.unlink()
+                self.assertEqual(b'outside sentinel', sentinel.read_bytes())
+
+    def test_cleanup_report_atomic_replace_preserves_hardlinked_source(self):
+        import os
+        with tempfile.TemporaryDirectory() as tmp:
+            root, victim, payload, command = self.cleanup_fixture(Path(tmp))
+            report = root / 'build/report.json'
+            os.link(victim, report)
+            self.assertTrue(os.path.samefile(victim, report))
+            result = subprocess.run(command + [str(report)], capture_output=True, text=True)
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertEqual('', result.stdout)
+            self.assertEqual(b'owned source sentinel', victim.read_bytes())
+            self.assertFalse(os.path.samefile(victim, report))
+            self.assertFalse(payload.exists())
+            self.assertEqual(['scripts/__pycache__/helper.cpython-313.pyc'],
+                             json.loads(report.read_text())['removed'])
+            self.assertFalse(list(report.parent.glob('.*.partial')))
+
+    def test_cleanup_report_replace_failure_preserves_previous_report(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            report = Path(tmp) / 'report.json'
+            report.write_bytes(b'previous complete report')
+            output = '{"removed": []}\n'
+            def fail_replace(source, target):
+                self.assertEqual(report, target)
+                self.assertEqual(b'previous complete report', report.read_bytes())
+                self.assertEqual(output, Path(source).read_text(encoding='utf-8'))
+                raise OSError('injected report publication failure')
+            with patch.object(tool_cache.os, 'replace', side_effect=fail_replace):
+                with self.assertRaisesRegex(OSError, 'injected report publication failure'):
+                    tool_cache.write_report(report, output)
+            self.assertEqual(b'previous complete report', report.read_bytes())
+            self.assertEqual(['report.json'], sorted(p.name for p in report.parent.iterdir()))
+            tool_cache.write_report(report, output)
+            self.assertEqual(output, report.read_text())
+            self.assertEqual(['report.json'], sorted(p.name for p in report.parent.iterdir()))
+
     def test_quiet_cleanup_keeps_report_and_propagates_failure(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
@@ -488,6 +765,53 @@ class ToolCacheTests(unittest.TestCase):
             cp=subprocess.run(command,capture_output=True,text=True)
             self.assertNotEqual(0,cp.returncode)
             self.assertIn('TOOL_CACHE_CLEANUP: FAIL:',cp.stderr)
+
+
+    def test_cleanup_report_rejects_source_destinations_before_mutation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'scripts').mkdir()
+            (root / 'metadata').mkdir()
+            (root / 'scripts/helper.py').write_text('value=1\n')
+            victim = root / 'metadata/METADATA_OWNERSHIP.json'
+            victim.write_bytes(b'original active record')
+            inventory.write_manifest(root)
+            baseline = victim.read_bytes()
+            cache = root / 'scripts/__pycache__'
+            cache.mkdir()
+            payload = cache / 'helper.cpython-313.pyc'
+            payload.write_bytes(b'fixture')
+
+            command = [sys.executable, '-B', str(ROOT / 'scripts/clear_tool_python_cache.py'),
+                       '--root', str(root), '--quiet', '--report', str(victim)]
+            result = subprocess.run(command, capture_output=True, text=True)
+            self.assertNotEqual(0, result.returncode)
+            self.assertIn('beneath source build/', result.stderr)
+            self.assertEqual(baseline, victim.read_bytes())
+            self.assertTrue(payload.exists())
+
+            build = root / 'build'
+            build.mkdir()
+            linked = build / 'unsafe.json'
+            try:
+                linked.symlink_to(victim)
+            except (OSError, NotImplementedError):
+                pass
+            else:
+                command[-1] = str(linked)
+                result = subprocess.run(command, capture_output=True, text=True)
+                self.assertNotEqual(0, result.returncode)
+                self.assertEqual(baseline, victim.read_bytes())
+                self.assertTrue(payload.exists())
+
+            report = build / 'PYTHON_CACHE_CLEANUP.json'
+            command[-1] = str(report)
+            result = subprocess.run(command, capture_output=True, text=True)
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertEqual(['scripts/__pycache__/helper.cpython-313.pyc'],
+                             json.loads(report.read_text())['removed'])
+            self.assertEqual(baseline, victim.read_bytes())
+            self.assertFalse(list(build.glob('.*.partial')))
 
     def test_cleanup_removes_only_owned_generated_caches_without_refresh(self):
         with tempfile.TemporaryDirectory() as tmp:

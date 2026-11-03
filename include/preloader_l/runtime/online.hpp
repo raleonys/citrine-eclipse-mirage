@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/config/configuration.hpp"
 #include "preloader_l/runtime/status.hpp"
@@ -7,7 +9,7 @@
 #include <string_view>
 #include <vector>
 
-namespace preloader_l::online_recovered {
+namespace preloader_l::online {
 using Path = configuration::Path;
 using Module = std::uintptr_t;
 using Object = std::uintptr_t;
@@ -50,7 +52,7 @@ public:
     virtual const char* user_id_virtual_20(Object) = 0;
     virtual void destroy_virtual_00(Object) = 0;
     virtual bool free_library(Module) = 0;
-    virtual status_recovered::Status status_01ea20(const Path&, std::uint32_t flags) = 0;
+    virtual status::Status status_01ea20(const Path&, std::uint32_t flags) = 0;
     [[noreturn]] virtual void filesystem_error_018130(std::string_view operation,
         std::uint32_t code, const Path&) = 0;
     virtual std::string read_binary_03b3f0(const Path&) = 0;
@@ -70,4 +72,4 @@ std::vector<std::string> split_profile_fields_03cf00(std::string_view);
 void load_online_035bd0(StateRefs, Effects&);
 void cleanup_0366f0(StateRefs, Effects&);
 void worker_035b60(StateRefs, Effects&);
-} // namespace preloader_l::online_recovered
+} // namespace preloader_l::online
