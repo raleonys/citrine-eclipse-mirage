@@ -765,6 +765,23 @@ class GovernanceTests(unittest.TestCase):
                 write_records()
                 self.assertEqual([], ownership.check(root))
 
+            for ledger, name, kind in ((metadata, 'METADATA_OWNERSHIP.json', 'metadata'),
+                                       (scripts, 'scripts/audit_tool.py', 'script')):
+                record = ledger['files'][name]
+                for field, invalid in (('owner', True), ('owner', ['qa']),
+                                       ('owner', ' \t '), ('purpose', {'text': 'qa'}),
+                                       ('purpose', '   '), ('purpose', 42),
+                                       ('role', []), ('role', {}), ('role', True)):
+                    with self.subTest(kind=kind, field=field, value=invalid):
+                        previous = record[field]
+                        record[field] = invalid
+                        write_records()
+                        self.assertIn('Incomplete or invalid ' + kind + ' ownership: ' + name,
+                                      ownership.check(root))
+                        record[field] = previous
+                write_records()
+                self.assertEqual([], ownership.check(root))
+
     def test_launcher_result_and_argument_mutations(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

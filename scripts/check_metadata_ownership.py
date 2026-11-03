@@ -13,6 +13,15 @@ METADATA_ROLES = frozenset({
 SCRIPT_ROLES = frozenset({'AUTOMATION', 'HUMAN_LAUNCHER', 'PYTHON_TOOL_OR_MODULE'})
 
 
+def valid_record(record, roles):
+    """Require meaningful text fields and an allowed string role."""
+    return (isinstance(record, dict)
+            and all(isinstance(record.get(field), str) and record[field].strip()
+                    for field in ('owner', 'purpose'))
+            and isinstance(record.get('role'), str)
+            and record['role'] in roles)
+
+
 def check(root):
     root = Path(root)
     metadata = json.loads((root / 'metadata/METADATA_OWNERSHIP.json').read_text())
@@ -31,16 +40,14 @@ def check(root):
     errors += ['Unowned metadata: ' + n for n in actual - registry.keys()]
     errors += ['Missing owned metadata: ' + n for n in registry.keys() - actual]
     for name, record in registry.items():
-        if (not isinstance(record, dict) or not record.get('owner')
-                or not record.get('purpose') or record.get('role') not in METADATA_ROLES):
+        if not valid_record(record, METADATA_ROLES):
             errors.append('Incomplete or invalid metadata ownership: ' + name)
     actual_scripts = {p.relative_to(root).as_posix() for directory in ['scripts', 'tools']
                       for p in (root / directory).rglob('*') if p.suffix in {'.py', '.ps1', '.cmd'}}
     if actual_scripts != set(script_registry):
         errors.append('Script ownership file-set mismatch')
     for name, record in script_registry.items():
-        if (not isinstance(record, dict) or not record.get('owner')
-                or not record.get('purpose') or record.get('role') not in SCRIPT_ROLES):
+        if not valid_record(record, SCRIPT_ROLES):
             errors.append('Incomplete or invalid script ownership: ' + name)
     return sorted(errors)
 
