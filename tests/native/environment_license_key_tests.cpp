@@ -109,8 +109,8 @@ void complete_bytes_and_counted_values(){
     f.state.content_id=std::string("id\0<&",5);f.state.user_id=std::string("u\0<&",4);
     const std::string key("K\0<&",4);f.environment.apply_license_key_02a830(key);
     const std::string expected=
-        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><License xmlns=\"http://ea.com/license\"><CipherKey>K\0<&</CipherKey><MachineHash>1</MachineHash><ContentId>id\0<&</ContentId><UserId>u\0<&</UserId><GrantTime>2024-01-01T00:00:00Z</GrantTime><StartTime>2024-01-01T00:00:00Z</StartTime></License>"s;
-    require(plaintext(f.calls.bytes)==expected,"key and identity bytes retain NUL and markup without escaping");
+        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><License xmlns=\"http://ea.com/license\"><CipherKey>K\0&lt;&amp;</CipherKey><MachineHash>1</MachineHash><ContentId>id\0&lt;&amp;</ContentId><UserId>u\0&lt;&amp;</UserId><GrantTime>2024-01-01T00:00:00Z</GrantTime><StartTime>2024-01-01T00:00:00Z</StartTime></License>"s;
+    require(plaintext(f.calls.bytes)==expected,"counted NUL bytes are retained and markup follows accepted XML escaping policy");
     require(key==std::string("K\0<&",4),"consumed key view does not modify caller bytes");
 }
 void existing_and_status_failures(){
