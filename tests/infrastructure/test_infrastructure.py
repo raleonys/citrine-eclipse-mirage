@@ -1352,8 +1352,11 @@ exit 0
 
     def run_cmd(self, launcher, code):
         env = dict(os.environ, SURGE_OUTPUT_FIXTURE_EXIT=str(code))
-        command = 'call "' + str(launcher) + r'" -BuildDir "build\fixture path (1)" -Config RelWithDebInfo'
-        return subprocess.run([os.environ.get('COMSPEC', 'cmd.exe'), '/d', '/s', '/c', command],
+        # CMD parses its own quotes; list2cmdline's CRT-style backslash escapes
+        # become literal characters here. /s removes just the outer quote pair.
+        command = ('"' + os.environ.get('COMSPEC', 'cmd.exe') + '" /d /s /c ""' +
+                   str(launcher) + r'" -BuildDir "build\fixture path (1)" -Config RelWithDebInfo"')
+        return subprocess.run(command,
                               input='\n', capture_output=True, text=True, env=env, timeout=25)
 
     @unittest.skipUnless(os.name == 'nt', 'Requires real Windows CMD and Windows PowerShell')
