@@ -48,6 +48,11 @@ source QA, portable tests, native MSVC/Golden checks and real game acceptance.
       the commit SHA and result. A targeted test or manifest-only PASS is insufficient.
 - [ ] The local pre-push hook is installed and was not bypassed; inspect CI for
       this commit before requesting review.
+- [ ] PR creation needs only hosted source integrity. After synchronization,
+      inspect the automatically scheduled full validation; do not duplicate it.
+      If already synchronized with no push, explicitly dispatch full validation
+      only when no successful or active exact-head run exists. Missing full
+      checks remain required before merge; focused diagnostics are manual.
 
 ## Remaining work
 

@@ -200,16 +200,59 @@ protection or establish native Windows/game acceptance.
 
 ## CI and acceptance evidence
 
-The current [CI workflow](../.github/workflows/ci.yml) runs on pull requests,
-main pushes and manual dispatch. Official checkout, Python and artifact actions
-are pinned to verified commit SHAs. Every PR schedules:
+The lightweight [source integrity workflow](../.github/workflows/ci.yml) runs on
+PR creation and updates, accepted-main pushes and manual dispatch. It checks
+source sizes/hashes, the whole-source manifest and exact vendor inputs, without
+compiling or running the full regression suite.
+
+The [full validation workflow](../.github/workflows/msvc-reference-graph.yml)
+retains its existing file path so it can be dispatched before this policy PR
+is merged. Its displayed name is **Full validation after main synchronization**.
+It accepts a PR `synchronize` event or explicit manual dispatch, and checks that
+the selected, still-current head includes the latest default-branch commit.
+Only then does it schedule:
 
 - Source QA and full Linux portable CTest.
 - Windows MSVC Native Release and Debug, Production/Golden Release, CRT Release,
   Debug and Compile Only profiles, using the existing operator scripts.
 - Full Windows portable CTest in Debug and Release.
-- The separate [reference graph workflow](../.github/workflows/msvc-reference-graph.yml).
-  Focused diagnostic workflows also run for their configured changed paths.
+- Windows reference objects and the existing socket/source-host/session checks
+  in Debug and Release, within the same full-validation workflow.
+
+Official actions remain pinned. The eleven required status names are preserved;
+the ruleset is not edited. On initial PR creation, missing full-validation
+checks remain pending and prevent merge. A stale branch update or readiness
+API error produces blocking results on lightweight runners, without allocating
+Windows runners. It does not turn skipped Windows jobs into a false PASS.
+
+GitHub's `synchronize` event means any new PR head, not specifically a merge of
+`main`. Automatic full validation requires an actual transition: current `main`
+was absent from the event's previous head and is present in the new head.
+An ordinary edit on an already synchronized branch waits for explicit manual
+validation, as does a fix after a failed test run. A stale branch must first
+integrate `main`. Tests check out the exact approved head SHA, not a
+moving branch name. A subsequent head update cancels an older in-progress full
+run for that branch. Strict current-main branch protection still applies if
+`main` advances during validation.
+
+After normal synchronization and push, inspect the automatically created run;
+do not immediately dispatch a duplicate. When synchronization makes no commit,
+or a retry is explicitly needed, choose the branch in Actions → **Full
+validation after main synchronization** → **Run workflow**, or use:
+
+```sh
+gh workflow run msvc-reference-graph.yml --ref <pr-branch>
+```
+
+Manual full validation also requires a current branch containing current
+`main`; selecting a tag, stale head or stale branch is rejected. Before merging,
+inspect the exact-head results rather than the lightweight integrity badge.
+Do not manufacture an empty commit merely to trigger testing.
+
+Focused diagnostic workflows remain available through their own **Run workflow**
+button and branch selection. They no longer create automatic parallel runs for
+ordinary PR changes. Weekly release draft validation is unchanged and remains
+independent of unmerged PRs.
 
 Inspect actual conclusions for the exact proposed commit. A skipped Windows job
 is not a PASS, a configured job is not proof of execution, and earlier-head
