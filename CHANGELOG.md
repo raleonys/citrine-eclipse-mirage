@@ -10,6 +10,18 @@ Current development entries are updated alongside their pull requests. They desc
 
 - Escape XML element text for Config2 KeyForLicense, ContentId, and UserId before generating the encrypted license payload. Keep the 65-byte header, AES key/IV, existing-file skip, existing file writer and byte-identical ordinary XML output. Add native Environment/license-file/AES/pugixml round-trip tests proving markup never becomes XML structure. This intentionally hardens the source's original unescaped text behavior and requires owner compatibility approval, including reconciliation of the previous #163 ciphertext fixture.
 
+- Fail closed on Config2 achievement set and SteamAppId values that can escape their intended XML filename or watcher-directory leaf through separators, dot/dot-dot, Windows ADS colon or embedded NUL. Check both before any XML read, path update, epoch conversion or INI write. Add source-linked safe/unsafe and no-partial-effects fixtures while preserving ordinary identifier and conversion order; treat this as a compatibility-sensitive lexical guard, not full Windows reparse-point confinement.
+
+- Stop reading the caller's output-only UTF-16 buffer before native multi-byte decoding; copy only the successfully converted prefix and leave size queries/failures untouched. Preserve native Windows count/error results, compare successful prefix/tail output, and test eight insufficient-capacity/malformed UTF-8 failures with untouched caller buffers and boundary guards. Failed Win32 calls can partially write their temporary destination; those bytes are deliberately not published by the adapter.
+
+- Test complete LSX message processing after syntactically parsed invalid Request roots, missing ids, unregistered first commands and handler refusal in plaintext/encrypted modes: current invalid-message terminal propagates without response encryption or event dequeue, while a subsequent valid request retains its queue. Distinguish this current contract from donor exception-swallowing parity, which remains an owner policy question (A11-09).
+
+- Reject initial full-validation labels unless a later read-only synchronization preparation has completed for the exact PR/head/main before labeling. Support explicit no-change synchronization requests without empty commits, isolate preparation from active full runs, retain automatic real-main integration checks and all eleven required contexts, and forbid agents from preparing/labeling merely at PR creation.
+
+- Audit C35-F002: reject symlinked Golden artifact/sidecar destinations and publish verified output from exclusively opened temporary files; preserve native acceptance boundaries.
+
+- Defer full hosted validation until a PR update newly integrates current main, with explicit `run-full-validation` PR label requests for already synchronized branches. Keep standalone manual dispatch diagnostic: required checks must actually attach to the PR before merge. Keep PR-opening and ordinary edit checks limited to source integrity, consolidate full source/portable/Windows/reference checks, retain all eleven required contexts and gate full jobs before matrix expansion and runner allocation. Waiting jobs are skipped under a distinct QA name that cannot shadow a real required result, not reported as artificial test failures; real Windows results remain required before merge. Make focused diagnostics manual and preserve weekly release validation.
+
 - Correct current XML dependency documentation to name pugixml, identify pre-migration TinyXML2 audit/CSV findings as historical, and record PR #149 as integrated in the owner requirements. Refresh the changelog heading and link recent integrated PRs; retain original archive provenance and external diagnostic-control references.
 
 - [PR #117](https://github.com/raleonys/citrine-eclipse-mirage/pull/117): Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
@@ -126,6 +138,7 @@ Current development entries are updated alongside their pull requests. They desc
 
 - Replace 58 research-era labels in first-party `src/` and `include/` comments and five diagnostic messages with technical wording; enforce a terminology regression check without modifying runtime control flow, file names or ABI identifiers.
 
+- Audit C36-F001: prevent untrusted QueryImage cache owner/width components from reaching online provider paths while preserving normal responses and safe inputs; Windows provider acceptance remains pending.
 - Normalize first-party implementation identifiers, add SPDX ownership headers, place Python before CMake and keep the CI README badge last.
 
 - Audit F-C28-001: retain buffered Debug startup diagnostics across failed log-file opens, with source-linked native recovery and Release no-log regressions.

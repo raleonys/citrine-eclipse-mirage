@@ -14,6 +14,15 @@ std::optional<std::string_view> attribute(const messages::XmlNode& node,std::str
     if(!value)return std::nullopt;
     return value->substr(0,value->find('\0')); // Original attributes are C strings.
 }
+// These Config2 strings become filename/directory components, not paths.
+// Reject lexical escapes and alternate-stream syntax before any filesystem or
+// achievement-state side effect. This is not a symlink/reparse-point guarantee.
+void require_safe_achievement_leaf(std::string_view value) {
+    if(value=="." || value==".." ||
+       value.find_first_of("/\\:")!=std::string_view::npos ||
+       value.find('\0')!=std::string_view::npos)
+        throw std::invalid_argument("Achievement identifier is not one path component");
+}
 }
 bool HostCrtNumbers::is_space(unsigned char c) {return std::isspace(c)!=0;}
 std::optional<std::uint32_t> HostCrtNumbers::scan_decimal(std::string_view raw) {
@@ -52,6 +61,10 @@ configuration::Path append(configuration::Path base,const configuration::Path& c
 }
 }
 void Storage::update_01eb00(configuration::State& state) {
+    // Validate both input components up front: rejecting either must not read
+    // an XML file, update a retained path, or write a watcher INI elsewhere.
+    if(!state.achievements_set.empty())require_safe_achievement_leaf(state.achievements_set);
+    if(!state.steam_app_id.empty())require_safe_achievement_leaf(state.steam_app_id);
     if(!state.achievements_set.empty()) {
         const auto filename="achievement-"+state.achievements_set+".xml";
         const auto component=effects_.filesystem_widen_006d70(filename);
