@@ -61,7 +61,7 @@
     "build_partition": "Owner authorizes audited production/reference/source-API target separation without deleting reference source or changing runtime implementation; retain model tests and prove the production map/dependency boundary",
     "reference_metadata_refresh": "Owner selects the newly supplied reference DLL VERSIONINFO and compilation timestamp under the existing selected-field allowlist; retain public ABI, import order, static CRT and avatar storage policy",
     "exclusive_windows_listener": "Fix the reported native busy-port regression by assigning Windows listener candidates exclusive address ownership before bind; keep the same ascending range and exhaustion rules",
-    "pugixml_migration": "Owner authorizes completing production migration in open PR #149 with the supplied unmodified pugixml archive, first-party XML compatibility and test-only external TinyXML2 oracle."
+    "pugixml_migration": "Owner-authorized production migration was integrated in PR #149 with the supplied unmodified pugixml archive, first-party XML compatibility and test-only external TinyXML2 oracle."
   },
   "previous_five_vendor_requirements": {
     "asio": "REQUIRED_ACTIVE",
