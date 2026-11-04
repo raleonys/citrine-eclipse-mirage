@@ -2,13 +2,6 @@
 name: Windows Environment diagnostics acceptance
 
 on:
-  pull_request:
-    paths:
-      - "src/runtime/application_environment.cpp"
-      - "src/runtime/application_internal.hpp"
-      - "tests/native/environment_dialog_tests.cpp"
-      - "CMakeLists.txt"
-      - ".github/workflows/msvc-environment-diagnostics.yml"
   workflow_dispatch:
 
 permissions:

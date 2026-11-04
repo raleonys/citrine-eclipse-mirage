@@ -1,5 +1,11 @@
 # Donor retirement and validated failure paths
 
+This report records the recovery/comparison checkpoint before the XML vendor
+migration. References below to Yellowfield using TinyXML describe that earlier
+state. The current application uses pugixml with first-party compatibility and
+depth policy; TinyXML2 remains only in the external diagnostic control. See
+[VENDORING.md](VENDORING.md) for the current dependency contract.
+
 **Brownfield and Bluefield have not been retired.** The earlier
 retirement proposal was withdrawn. This pass corrected three proven
 failure paths and continued the comparative review; it does not

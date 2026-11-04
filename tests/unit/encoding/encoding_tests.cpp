@@ -111,6 +111,16 @@ void native() {
     const int query=MultiByteToWideChar(65001,8,"abc",3,nullptr,0);
     const auto query_error=GetLastError();SetLastError(31337);
     check(calls.multi_byte_to_wide(65001,8,"abc",3,nullptr,0)==query&&GetLastError()==query_error,"temporary allocation preserves API entry/exit error state");
+    char16_t query_output=u'?';wchar_t query_reference=L'?';
+    SetLastError(4141);
+    const int direct_size=MultiByteToWideChar(65001,8,"abc",3,&query_reference,0);
+    const DWORD direct_size_error=GetLastError();
+    SetLastError(4141);
+    const int adapted_size=calls.multi_byte_to_wide(65001,8,"abc",3,&query_output,0);
+    check(adapted_size==direct_size&&adapted_size==3&&GetLastError()==direct_size_error,
+          "zero-capacity size query with nonnull output preserves count/error");
+    check(query_output==static_cast<char16_t>(query_reference)&&query_output==u'?',
+          "zero-capacity size query leaves caller storage untouched");
     // Output storage is an output-only destination. On success the adapter must
     // publish precisely the converted prefix, not copy its temporary tail.
     char16_t actual[5]={u'?',u'?',u'?',u'?',u'?'};

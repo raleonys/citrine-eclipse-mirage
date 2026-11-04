@@ -174,10 +174,37 @@ def pipeline(root, dll, build_dir, output_dir):
             report['errors'] = ['Original build DLL changed during Golden execution']
         if report['result'] == 'GOLDEN_PASS':
             target = output_dir / ('preloader_l.' + sha(candidate)[:16] + '.dll')
-            shutil.copy2(candidate, target)
             sidecar = Path(str(target) + '.sha256')
-            sidecar.write_text(sha(target) + '  ' + target.name + '\n', encoding='utf-8')
-            report.update(artifact=str(target), sha256=sha(target), sha256_file=str(sidecar))
+            # Reject attacker-supplied final names before touching either output.
+            # A random exclusively opened temporary file is never written through
+            # the final path and cannot follow its pre-existing symlink target.
+            for destination in (target, sidecar):
+                if destination.is_symlink() or (destination.exists() and not destination.is_file()):
+                    raise ValueError('Unsafe existing Golden output member: ' + destination.name)
+            artifact_fd, artifact_name = tempfile.mkstemp(
+                prefix='.golden-artifact-', suffix='.partial', dir=output_dir)
+            artifact_partial = Path(artifact_name)
+            checksum_partial = None
+            try:
+                with os.fdopen(artifact_fd, 'wb') as stream, candidate.open('rb') as source:
+                    shutil.copyfileobj(source, stream)
+                digest = sha(candidate)
+                if sha(artifact_partial) != digest:
+                    raise ValueError('Golden output copy hash mismatch')
+                checksum_fd, checksum_name = tempfile.mkstemp(
+                    prefix='.golden-checksum-', suffix='.partial', dir=output_dir)
+                checksum_partial = Path(checksum_name)
+                with os.fdopen(checksum_fd, 'w', encoding='utf-8') as stream:
+                    stream.write(digest + '  ' + target.name + '\n')
+                # os.replace replaces an existing final symlink instead of
+                # following it. No partially written destination is exposed.
+                os.replace(artifact_partial, target)
+                os.replace(checksum_partial, sidecar)
+            finally:
+                artifact_partial.unlink(missing_ok=True)
+                if checksum_partial is not None:
+                    checksum_partial.unlink(missing_ok=True)
+            report.update(artifact=str(target), sha256=digest, sha256_file=str(sidecar))
             try:
                 report.update(stage_dist(root, target, report))
             except (OSError, ValueError, KeyError) as error:
