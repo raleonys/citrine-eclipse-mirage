@@ -13,6 +13,37 @@
 #include <cstdlib>
 #include <new>
 
+namespace profile_copy_allocation {
+struct Failure final : std::bad_alloc {};
+struct Observation {
+    std::size_t minimum=0;
+    unsigned hits=0;
+    bool armed=false,fail=false;
+};
+thread_local Observation* active=nullptr;
+class Scope {
+    Observation value_;
+    Observation* previous_=active;
+public:
+    Scope(){active=&value_;}
+    ~Scope(){active=previous_;}
+    Scope(const Scope&)=delete;
+    Scope& operator=(const Scope&)=delete;
+    void arm(std::size_t minimum,bool fail){value_.minimum=minimum;value_.fail=fail;value_.armed=true;}
+    void disarm(){value_.armed=false;}
+    unsigned hits() const{return value_.hits;}
+};
+void observe(std::size_t size){
+    // Arm only after the selected getter's fixture bookkeeping. Smaller MSVC
+    // Debug iterator proxies remain unselected; the next large allocation is
+    // the throwing character-buffer allocation for its prebuilt borrowed text.
+    if(active&&active->armed&&size>=active->minimum&&size<active->minimum*2){
+        active->armed=false;++active->hits;
+        if(active->fail)throw Failure{};
+    }
+}
+}
+
 namespace cookie_lifetime {
 const void* tracked=nullptr;
 const std::uintptr_t* object=nullptr;
@@ -26,7 +57,7 @@ void release(void* pointer) noexcept {
     std::free(pointer);
 }
 }
-void* operator new(std::size_t size){if(auto* p=std::malloc(size?size:1))return p;throw std::bad_alloc();}
+void* operator new(std::size_t size){profile_copy_allocation::observe(size);if(auto* p=std::malloc(size?size:1))return p;throw std::bad_alloc();}
 void* operator new[](std::size_t size){return ::operator new(size);}
 void operator delete(void* p) noexcept {cookie_lifetime::release(p);}
 void operator delete[](void* p) noexcept {cookie_lifetime::release(p);}
@@ -188,6 +219,46 @@ static void live_profile() {
         throws<o::OutOfEvidenceInput>([&]{o::worker_035b60(state.refs(),m);});
         CHECK(state.object==0);CHECK(state.module==41);CHECK(state.online==0);CHECK(!m.called("auth-status"));CHECK(!m.called("finish"));
     }
+}
+static void profile_copy_allocation_failures() {
+    const std::array<const char*,3> getters{"name","persona","user"};
+    const std::array<const char*,19> prefix{"wait","suppress","widen","parent","join","load","restore",
+        "log:online dll found!","flush","resolve:version_check","version","resolve:create_online","create",
+        "auth-status","log:authentication ok","flush","name","persona","user"};
+    for(bool fail:{false,true})for(bool cache:{false,true})for(unsigned selected=0;selected<getters.size();++selected){
+        State state;Mock mock;state.use_last=cache;
+        mock.name=std::string(4096,'N');mock.persona=std::string(8192,'P');mock.user=std::string(12288,'U');
+        const std::array<std::string,3> expected{mock.name,mock.persona,mock.user};
+        const std::array<std::string,3> initial{state.username,state.persona,state.user};
+        mock.statuses[state.cookie]={2,0,0};mock.statuses[state.last_avatar]={2,0,0};
+        profile_copy_allocation::Scope allocation;
+        mock.inspect=[&](std::string_view event){
+            if(event==getters[selected])allocation.arm(expected[selected].size()+1,fail);
+        };
+        bool caught=false;
+        try{o::worker_035b60(state.refs(),mock);}
+        catch(const profile_copy_allocation::Failure&){caught=true;}
+        allocation.disarm(); // Assertions and explicit cleanup must not inject.
+        CHECK(caught==fail);CHECK(allocation.hits()==1);
+        CHECK(state.online==1&&state.object==mock.created&&state.module==mock.loaded);
+        const std::array<std::string,3> copied{state.username,state.persona,state.user};
+        for(unsigned i=0;i<copied.size();++i)CHECK(copied[i]==(fail&&i>=selected?initial[i]:expected[i]));
+        std::vector<std::string> calls(prefix.begin(),prefix.begin()+(fail?17+selected:prefix.size()));
+        if(!fail){
+            calls.emplace_back("status-cookie");calls.emplace_back("status-avatar");
+            if(cache)calls.emplace_back("write");
+            calls.emplace_back("finish");
+            if(cache)CHECK(mock.written==expected[1]+';'+expected[2]+';'+expected[0]);
+        }
+        // Exact failure prefix excludes every later getter/status/cache/ready
+        // effect and any automatic destruction or module release.
+        CHECK(mock.calls==calls);
+        o::cleanup_0366f0(state.refs(),mock);o::cleanup_0366f0(state.refs(),mock);
+        calls.emplace_back("destroy");calls.emplace_back("free");
+        CHECK(mock.calls==calls&&state.object==0&&state.module==0&&state.online==1);
+        CHECK((std::array<std::string,3>{state.username,state.persona,state.user}==copied));
+    }
+    std::cout<<"PASS: profile-copy allocation failure/control at three getters with cache on/off (synthetic effects)\n";
 }
 static void offline_profile() {
     for(auto status:std::array<std::int32_t,4>{1,2,-1,0x7fffffff})
@@ -392,7 +463,7 @@ static void cookie_release_before_status() {
     }
 }
 int main() {
-    try {entry_branches();live_profile();offline_profile();split_cases();status_and_cleanup();exceptions();
+    try {entry_branches();live_profile();profile_copy_allocation_failures();offline_profile();split_cases();status_and_cleanup();exceptions();
 #if !defined(PRELOADER_L_PORTABLE_ONLINE_TESTS)
         composition();
 #endif

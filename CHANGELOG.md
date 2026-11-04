@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Test actual online profile-copy allocation failures at each getter with caching enabled and disabled. Require the tagged payload fault, exact partial profile and call order, retained object/module ownership, and one-time explicit cleanup; keep existing cookie-lifetime and native composition controls unchanged.
+
 - Correct current XML dependency documentation to name pugixml, identify pre-migration TinyXML2 audit/CSV findings as historical, and record PR #149 as integrated in the owner requirements. Refresh the changelog heading and link recent integrated PRs; retain original archive provenance and external diagnostic-control references.
 
 - [PR #117](https://github.com/raleonys/citrine-eclipse-mirage/pull/117): Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
