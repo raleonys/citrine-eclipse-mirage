@@ -1250,8 +1250,8 @@
       "sha256": "759d224a612606bae1d9856adc330994ec0cfe49fe0cf5808be609e254822be8"
     },
     "tests/native/configuration_platform_tests.cpp": {
-      "bytes": 11081,
-      "sha256": "c1c71f5514103ec38be1c48cfaf0ecfab56eff6370496476a04eb5caa8e1e850"
+      "bytes": 12488,
+      "sha256": "33c758b2c07a0cb05052aebf15236c834047b7b2f99cb5f1be5683287edcfd83"
     },
     "tests/native/crypt_path_probe_tests.cpp": {
       "bytes": 7166,
