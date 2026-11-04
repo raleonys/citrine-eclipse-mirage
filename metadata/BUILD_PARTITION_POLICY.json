@@ -304,6 +304,7 @@
     "dll_public_c_consumer",
     "encoding_contracts",
     "environment_dialog_contracts",
+    "environment_license_key_contracts",
     "event_queue_contracts",
     "event_queue_integration_contracts",
     "execution_concurrency_contracts",

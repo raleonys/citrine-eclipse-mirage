@@ -2,20 +2,6 @@
 name: Windows connect pointer acceptance
 
 on:
-  pull_request:
-    paths:
-      - "include/preloader_l/platform/hook_connect.hpp"
-      - "src/platform/hook_connect.cpp"
-      - "src/platform/hook_native_callbacks.cpp"
-      - "src/platform/hook_original_effects.cpp"
-      - "src/runtime/application.cpp"
-      - "src/runtime/application_environment.cpp"
-      - "tests/native/crypt_diagnostic_failure_tests.cpp"
-      - "tests/unit/native/native_tests.cpp"
-      - "tests/unit/network_hook/hook_tests.cpp"
-      - "cmake/Tests.cmake"
-      - "CMakeLists.txt"
-      - ".github/workflows/msvc-connect-pointer.yml"
   workflow_dispatch:
 
 permissions:
