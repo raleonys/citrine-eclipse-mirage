@@ -299,7 +299,7 @@ assert active_import_policy['module_order']==canonical
 assert active_import_policy['required_modules']==canonical
 assert active_import_policy['allowed_modules']==canonical
 assert list(active_import_policy['restricted_named_imports'])==['CRYPT32.DLL','MSWSOCK.DLL']
-dist=json.loads((r/'metadata/LOCAL_DIST_CONTRACT.json').read_text())
+dist=json.loads((r/'metadata/DIST_CONTRACT.json').read_text())
 assert dist['final_import_descriptor_order']==canonical
 fixture_import_policy=cor_policy['import_policy']
 assert fixture_import_policy['required_modules']==['CRYPT32.DLL','WS2_32.DLL','KERNEL32.DLL']

@@ -169,6 +169,12 @@ def check_layout_migration_reference(root, contract):
     return []
 
 
+def declared_application_sources(text):
+    # A vendor path such as third_party/pugixml/src/pugixml.cpp is not
+    # an application-relative src/ path. Keep complete path boundaries.
+    return set(re.findall(r'(?<![A-Za-z0-9_./\\-])src/[A-Za-z0-9_/.-]+\.cpp\b', text))
+
+
 def check(root):
     root = Path(root)
     errors = check_active_identifiers(root)
@@ -188,7 +194,7 @@ def check(root):
             if path.is_file() and len(path.relative_to(base).parts) > 2:
                 errors.append('Nested first-party module directory: ' + path.relative_to(root).as_posix())
     sources = (root / 'cmake/Sources.cmake').read_text() + (root / 'CMakeLists.txt').read_text()
-    declared = set(re.findall(r'\bsrc/[A-Za-z0-9_/.-]+\.cpp\b', sources))
+    declared = declared_application_sources(sources)
     actual = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*.cpp')}
     if declared != actual:
         errors.append('Application CMake source ownership differs: missing=' + str(sorted(actual-declared)) + ', stale=' + str(sorted(declared-actual)))

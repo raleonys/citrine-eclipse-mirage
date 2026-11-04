@@ -1,6 +1,5 @@
 {
   "schema": "surge.build-partition.v1",
-  "classification": "NOT_RELEASE",
   "owner": "Explicit owner approval of audited runtime/reference/source-API separation without deleting source models",
   "production_targets": [
     "preloader_l",
@@ -70,7 +69,9 @@
     "src/runtime/timestamp.cpp",
     "src/xml/memory_printer.cpp",
     "src/xml/reader.cpp",
-    "src/platform/crypt_query_host.cpp"
+    "src/platform/crypt_query_host.cpp",
+    "src/xml/reader_policy.cpp",
+    "src/xml/reader_values.cpp"
   ],
   "vdf_sources": [
     "src/config/parser.cpp"
@@ -363,7 +364,7 @@
     "preloader_l_source_api",
     "preloader_l_source_host",
     "preloader_l_source_minhook",
-    "preloader_l_source_tinyxml2"
+    "preloader_l_source_pugixml"
   ],
   "vendor_comparison_targets": [
     "hook_engine_fixture_tests"
@@ -392,5 +393,11 @@
     "socket_pool_release_integration_contracts"
   ],
   "cross_debug_reference_budget_seconds": 600,
-  "owner_acceptance": "metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json"
+  "owner_acceptance": "metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json",
+  "forbidden_production_source_prefixes": [
+    "third_party/tinyxml2/"
+  ],
+  "forbidden_production_object_stems": [
+    "tinyxml2"
+  ]
 }

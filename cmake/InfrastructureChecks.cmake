@@ -32,3 +32,7 @@ set_tests_properties(infrastructure_size_evidence PROPERTIES TIMEOUT 30)
 add_test(NAME infrastructure_weekly_release
   COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_weekly_release.py")
 set_tests_properties(infrastructure_weekly_release PROPERTIES TIMEOUT 90)
+
+add_test(NAME infrastructure_xml_performance
+  COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_xml_performance.py")
+set_tests_properties(infrastructure_xml_performance PROPERTIES TIMEOUT 30)

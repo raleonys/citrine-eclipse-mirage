@@ -13,9 +13,9 @@ existing archive SHA-256 and complete member hashes:
 
 | Archive | Commit recorded in the supplied archive |
 | --- | --- |
-| Asio | `026dce530a6c39a8aa6d98e5177482310c4a01e5` |
+| Asio | `bdf337ddb1a667c274372a602de5857ad3cb3ed0` |
 | PEGTL | `3b075432e94f6f906425350b43d03cd9cebfa4f1` |
-| TinyXML2 | `8224e427b655b83dae5e2298f1e6919523a78737` |
+| pugixml | `f0a3faa76e04f35110257ca8713363dee3c890e8` |
 | MinHook | `8af6b4acae5a9388fd742b56fa79ece89d96f823` |
 
 These identifiers are evidence from SHA-pinned ZIP comments, not independently
@@ -62,6 +62,21 @@ expected/actual hashes. Reproduction and fresh checks are recorded in
 [HOOK_BUILD_COPY_PORTABILITY.json](../metadata/evidence/HOOK_BUILD_COPY_PORTABILITY.json).
 
 ## Lifecycle contract
+
+The existing `hook_engine::Api` / `BatchApi` boundary exposes application-owned
+integer status codes without including MinHook or Windows headers. `NativeApi`
+owns the MinHook include and compile-time checks for all native-to-application
+status values. Method signatures, numeric diagnostics and the selected native
+engine remain unchanged. Native tests that call MinHook directly include its
+header explicitly; source-included shutdown fixtures include it before their
+function interception macros.
+
+`portable_hook_transaction` runs the same real transaction source and fake-engine
+regressions on Linux and Windows without linking MinHook. It checks staging,
+queued activation, failed rollback, retained ownership, drain and cleanup retries.
+This proves the transaction boundary is independently buildable; it does not
+exercise SAFE-FREEZE, native thread suspension or live patches. Existing native
+engine and lifecycle tests retain those separate responsibilities.
 
 | Requirement | Concrete path |
 | --- | --- |

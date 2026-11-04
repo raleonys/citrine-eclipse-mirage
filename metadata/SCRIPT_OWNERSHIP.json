@@ -3,7 +3,8 @@
   "files": {
     "scripts/audit_translation_units.py": {
       "owner": "SURGE translation-unit audit",
-      "purpose": "Generate reproducible COFF symbol, test and development-API usage matrix without deleting source"
+      "purpose": "Generate reproducible COFF symbol, test and development-API usage matrix without deleting source",
+      "role": "PYTHON_TOOL_OR_MODULE"
     },
     "scripts/build_orchestration/build_common.ps1": {
       "owner": "SURGE build/vendor/QA infrastructure",
@@ -72,7 +73,8 @@
     },
     "scripts/check_build_partition.py": {
       "owner": "SURGE target ownership",
-      "purpose": "Fail closed on reference code or source API contamination of production targets/maps"
+      "purpose": "Fail closed on reference code or source API contamination of production targets/maps",
+      "role": "PYTHON_TOOL_OR_MODULE"
     },
     "scripts/check_cpp_type_identities.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
@@ -135,7 +137,7 @@
       "role": "AUTOMATION"
     },
     "scripts/clear_tool_python_cache.py": {
-      "owner": "SURGE local build hygiene",
+      "owner": "SURGE build hygiene",
       "purpose": "Remove only known generated Python caches for manifest-owned first-party tools; never refresh source manifests",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
@@ -202,7 +204,8 @@
     "scripts/run_wine_test.py": {
       "owner": "SURGE local validation",
       "purpose": "Preserve actual Wine program exit and output without inheriting unrelated service pipe lifetimes",
-      "origin": "New SURGE implementation; regression-tested with ordinary subprocesses"
+      "origin": "New SURGE implementation; regression-tested with ordinary subprocesses",
+      "role": "PYTHON_TOOL_OR_MODULE"
     },
     "scripts/ursynex_golden_finalizer.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
