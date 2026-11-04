@@ -94,8 +94,8 @@ def github_json(endpoint):
 def decide(event_name, event, repository, sha, ref, api=None):
     if api is None:
         api = github_json
-    if event_name == 'workflow_dispatch' and event.get('inputs', {}).get('operation') == 'synchronize-pr':
-        return Decision(False, 'Synchronization preparation does not request full tests')
+    if event_name == 'workflow_dispatch' and event.get('inputs', {}).get('operation') != 'diagnostic':
+        return Decision(False, 'Only an explicit diagnostic operation requests standalone full tests')
     explicit_pr_request = (event_name == 'pull_request' and
                            event.get('action') == 'labeled' and
                            event.get('label', {}).get('name') == VALIDATION_LABEL)

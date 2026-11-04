@@ -50,7 +50,7 @@ jobs:
         run: python3 -B scripts/ci_validation_readiness.py --record-sync
 
   readiness:
-    if: github.event_name != 'workflow_dispatch' || inputs.operation != 'synchronize-pr'
+    if: github.event_name != 'workflow_dispatch' || inputs.operation == 'diagnostic'
     name: Check main synchronization
     runs-on: ubuntu-24.04
     timeout-minutes: 5

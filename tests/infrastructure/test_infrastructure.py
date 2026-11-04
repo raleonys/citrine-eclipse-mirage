@@ -86,6 +86,8 @@ class ValidationReadinessTests(unittest.TestCase):
         self.fail('Unexpected GitHub endpoint: ' + endpoint)
 
     def decision(self, name='pull_request', ref='refs/heads/feature/sync'):
+        if name == 'workflow_dispatch':
+            self.event.setdefault('inputs', {'operation': 'diagnostic'})
         return ci_readiness.decide(name, self.event, self.repository, self.head, ref, self.api)
 
     def test_open_reopen_and_metadata_events_do_not_start_full_tests(self):
@@ -203,6 +205,12 @@ class ValidationReadinessTests(unittest.TestCase):
     def test_preparation_mode_cannot_fall_through_to_full_diagnostics(self):
         self.prepare_sync_request()
         self.assertFalse(self.decision('workflow_dispatch').run_tests)
+        self.assertEqual([], self.calls)
+
+    def test_missing_and_unknown_manual_operations_cannot_start_full_tests(self):
+        for inputs in ({}, {'operation': ''}, {'operation': 'sync'}, {'operation': 'DIAGNOSTIC'}):
+            self.event['inputs'] = inputs
+            self.assertFalse(self.decision('workflow_dispatch').run_tests)
         self.assertEqual([], self.calls)
 
     def test_sync_verification_requires_the_exact_open_owned_branch(self):
@@ -388,6 +396,7 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertFalse(self.decision('workflow_dispatch').changelog_exempt)
 
     def test_bad_commit_and_repository_identities_are_rejected(self):
+        self.event['inputs'] = {'operation': 'diagnostic'}
         with self.assertRaises(ValueError):
             ci_readiness.decide('workflow_dispatch', self.event, '../project', self.head,
                                 'refs/heads/main', self.api)
@@ -429,7 +438,7 @@ class ValidationReadinessTests(unittest.TestCase):
                                  workflow.split('\njobs:\n', 1)[1], re.M | re.S))
         required = {'source-qa', 'windows', 'windows-portable', 'reference-graph'}
         self.assertEqual(required | {'readiness', 'sync-request'}, set(blocks))
-        self.assertIn("if: github.event_name != 'workflow_dispatch' || inputs.operation != 'synchronize-pr'", blocks['readiness'])
+        self.assertIn("if: github.event_name != 'workflow_dispatch' || inputs.operation == 'diagnostic'", blocks['readiness'])
         self.assertIn("if: github.event_name == 'workflow_dispatch' && inputs.operation == 'synchronize-pr'", blocks['sync-request'])
         self.assertIn('scripts/ci_validation_readiness.py --record-sync', blocks['sync-request'])
         self.assertIn("inputs.operation == 'synchronize-pr' && 'sync-request'", workflow)
