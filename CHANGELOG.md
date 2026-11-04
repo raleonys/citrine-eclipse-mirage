@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Preserve the last online-profile cache when a provider-supplied persona ID, user ID or username contains the unescaped semicolon delimiter: the existing offline reader only accepts exactly three fields. Keep the authenticated in-memory identity, normal valid profile cache bytes, and the original offline parser unchanged. Add source-linked online tests for each delimiter position, cache enabled/disabled and safe round-trip inputs; this is deliberate product hardening rather than a claim of donor binary parity.
+
 - Correct current XML dependency documentation to name pugixml, identify pre-migration TinyXML2 audit/CSV findings as historical, and record PR #149 as integrated in the owner requirements. Refresh the changelog heading and link recent integrated PRs; retain original archive provenance and external diagnostic-control references.
 
 - [PR #117](https://github.com/raleonys/citrine-eclipse-mirage/pull/117): Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
