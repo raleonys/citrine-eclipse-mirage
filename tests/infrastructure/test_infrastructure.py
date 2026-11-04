@@ -7,6 +7,7 @@ import io
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -1228,13 +1229,199 @@ class GovernanceTests(unittest.TestCase):
             path = root / entry['launcher']
             path.write_text(original)
             self.assertEqual([], launchers.check(root))
-            for token in ['%*', 'exit /b %RC%', 'ForegroundColor Red', 'Exit code: %RC%', 'pause >nul']:
+            for token in ['%*', '-LauncherOwnsSummary %*', 'exit /b %RC%',
+                          'ForegroundColor Red', 'Exit code: %RC%', 'pause >nul']:
                 path.write_text(original.replace(token, 'REMOVED'))
                 self.assertTrue(launchers.check(root), token)
             path.write_text(original)
             automation=root/entry['automation']
             automation.write_text(automation.read_text().replace('exit $LASTEXITCODE','exit 0'))
             self.assertTrue(any('masks child exit' in e for e in launchers.check(root)))
+
+    def test_launcher_summary_ownership_must_reach_the_profile(self):
+        entries = json.loads((ROOT / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').read_text())['entrypoints']
+        for entry in entries:
+            with self.subTest(launcher=entry['launcher']), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                (root / 'metadata').mkdir()
+                (root / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').write_text(
+                    json.dumps({'entrypoints': [entry]}))
+                for name in (entry['launcher'], entry['automation']):
+                    path = root / name
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes((ROOT / name).read_bytes())
+                self.assertEqual([], launchers.check(root))
+                target = root / entry['automation']
+                original = target.read_text()
+                for token in ('[switch]$LauncherOwnsSummary',
+                              '-LauncherOwnsSummary:$LauncherOwnsSummary'):
+                    target.write_text(original.replace(token, ''))
+                    self.assertTrue(any('summary ownership' in e
+                                        for e in launchers.check(root)), token)
+
+
+class OperatorOutputTests(unittest.TestCase):
+    """Exercise actual wrappers/formatting; fake only the compiler/validator work."""
+
+    def make_fixture(self, tmp):
+        root = Path(tmp) / 'operator fixture (1)'
+        root.mkdir()
+        entries = json.loads((ROOT / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').read_text())['entrypoints']
+        for entry in entries:
+            for name in (entry['launcher'], entry['automation']):
+                target = root / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes((ROOT / name).read_bytes())
+        directory = root / 'scripts/build_orchestration'
+        shutil.copyfile(ROOT / 'scripts/build_orchestration/build_common.ps1',
+                        directory / 'build_common.ps1')
+        # No MSVC build or Golden acceptance is performed by this output fixture.
+        (directory / 'build_profile.ps1').write_text(r'''
+param([string]$Mode,[string]$BuildDir,[string]$Config,[switch]$LauncherOwnsSummary)
+. (Join-Path $PSScriptRoot 'build_common.ps1')
+$code = [int]$env:SURGE_OUTPUT_FIXTURE_EXIT
+$labels = @{Compile='COMPILE ONLY';Debug='DEBUG BUILD';Native='NATIVE ACCEPTANCE';Crt='STATIC CRT ACCEPTANCE';Golden='PRODUCTION BUILD'}
+$record = @{mode=$Mode;build_dir=$BuildDir;configuration=$Config;owns_summary=[bool]$LauncherOwnsSummary}
+Write-Host ('FIXTURE_ARGS:' + ($record | ConvertTo-Json -Compress))
+if ($code -eq 0 -or ($Mode -eq 'Golden' -and $code -eq 3)) {
+    Write-SelectedProfileResult -ProfileLabel $labels[$Mode] -Dll 'fixture/preloader_l.dll' -Sha256 ('a' * 64) -GoldenBlocked:($code -eq 3) -LauncherOwnsSummary:$LauncherOwnsSummary
+} else {
+    Write-Host 'ERROR: injected validation failure'
+}
+exit $code
+''', encoding='ascii')
+        (root / 'entries.json').write_text(json.dumps(entries), encoding='ascii')
+        return root, entries
+
+    @unittest.skipUnless(shutil.which('powershell.exe') or shutil.which('pwsh'),
+                         'PowerShell is required for the output-only fixture')
+    def test_powershell_routes_summary_and_preserves_arguments_and_exit_codes(self):
+        shell = shutil.which('powershell.exe') or shutil.which('pwsh')
+        with tempfile.TemporaryDirectory() as tmp:
+            root, entries = self.make_fixture(tmp)
+            harness = root / 'harness.ps1'
+            harness.write_text(r'''
+param([string]$FixtureRoot)
+$ErrorActionPreference = 'Stop'
+$entries = Get-Content -LiteralPath (Join-Path $FixtureRoot 'entries.json') -Raw | ConvertFrom-Json
+foreach ($entry in $entries) {
+    $codes = @(0,105)
+    if ($entry.mode -eq 'Golden') { $codes += 3 }
+    foreach ($code in $codes) {
+        foreach ($owned in @($false,$true)) {
+            $env:SURGE_OUTPUT_FIXTURE_EXIT = [string]$code
+            $lines = @(& (Join-Path $FixtureRoot $entry.automation) -BuildDir 'build\fixture path (1)' -Config RelWithDebInfo -LauncherOwnsSummary:$owned 6>&1 | ForEach-Object { [string]$_ })
+            $actualCode = $LASTEXITCODE
+            @{mode=$entry.mode;expected_code=$code;actual_code=$actualCode;owned=$owned;lines=$lines} | ConvertTo-Json -Compress -Depth 5
+        }
+    }
+}
+exit 0
+''', encoding='ascii')
+            result = subprocess.run([shell, '-NoLogo', '-NoProfile', '-NonInteractive',
+                                     '-ExecutionPolicy', 'Bypass', '-File', str(harness), str(root)],
+                                    capture_output=True, text=True, timeout=45)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            records = [json.loads(line) for line in result.stdout.splitlines() if line.strip()]
+            self.assertEqual(22, len(records), result.stdout)
+            labels = {entry['mode']: entry['label'] for entry in entries}
+            for record in records:
+                with self.subTest(mode=record['mode'], code=record['expected_code'], owned=record['owned']):
+                    self.assertEqual(record['expected_code'], record['actual_code'])
+                    lines = record['lines']
+                    args = json.loads(next(line.removeprefix('FIXTURE_ARGS:')
+                                           for line in lines if line.startswith('FIXTURE_ARGS:')))
+                    self.assertEqual(record['mode'], args['mode'])
+                    self.assertEqual(r'build\fixture path (1)', args['build_dir'])
+                    self.assertEqual('RelWithDebInfo', args['configuration'])
+                    self.assertEqual(record['owned'], args['owns_summary'])
+                    if record['expected_code'] == 0:
+                        self.assertEqual(0 if record['owned'] else 1,
+                                         lines.count(labels[record['mode']] + ': PASS'))
+                    elif record['expected_code'] == 3:
+                        self.assertEqual(0 if record['owned'] else 1,
+                                         sum('Golden: BLOCKED' in line for line in lines))
+                        self.assertEqual(0 if record['owned'] else 1, lines.count('Exit code 3.'))
+                        self.assertIn('See golden/GOLDEN_REPORT.json. This is not Golden acceptance.', lines)
+                    else:
+                        self.assertIn('ERROR: injected validation failure', lines)
+                        self.assertFalse(any(': PASS' in line for line in lines))
+                    if record['expected_code'] in (0, 3):
+                        self.assertEqual(1, lines.count('DLL: fixture/preloader_l.dll'))
+                        self.assertEqual(1, lines.count('SHA256: ' + 'a' * 64))
+
+    def run_cmd(self, launcher, code):
+        env = dict(os.environ, SURGE_OUTPUT_FIXTURE_EXIT=str(code))
+        command = 'call "' + str(launcher) + r'" -BuildDir "build\fixture path (1)" -Config RelWithDebInfo'
+        return subprocess.run([os.environ.get('COMSPEC', 'cmd.exe'), '/d', '/s', '/c', command],
+                              input='\n', capture_output=True, text=True, env=env, timeout=25)
+
+    @unittest.skipUnless(os.name == 'nt', 'Requires real Windows CMD and Windows PowerShell')
+    def test_cmd_outputs_one_verdict_with_color_and_with_renderer_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, entries = self.make_fixture(tmp)
+            for fallback in (False, True):
+                for entry in entries:
+                    launcher = root / entry['launcher']
+                    if fallback:
+                        text = launcher.read_text(encoding='ascii')
+                        text, replacements = re.subn(
+                            r'^  powershell\.exe -NoLogo -NoProfile -Command .*$',
+                            '  cmd.exe /d /c exit 1', text, flags=re.MULTILINE)
+                        self.assertGreaterEqual(replacements, 2, 'Renderer fault was not injected')
+                        launcher.write_text(text, encoding='ascii')
+                    codes = (0, 105, 3) if entry['mode'] == 'Golden' else (0, 105)
+                    for code in codes:
+                        with self.subTest(mode=entry['mode'], code=code, fallback=fallback):
+                            result = self.run_cmd(launcher, code)
+                            output = result.stdout + result.stderr
+                            self.assertEqual(code, result.returncode, output)
+                            verdict = 'PASS' if code == 0 else ('BLOCKED' if code == 3 else 'FAIL')
+                            self.assertEqual(1, output.count(entry['label'] + ': ' + verdict), output)
+                            self.assertEqual(1, output.count('Exit code: ' + str(code)), output)
+                            self.assertEqual(1, output.count('Press any key to close this operator window.'), output)
+                            args_line = next(line for line in output.splitlines() if line.startswith('FIXTURE_ARGS:'))
+                            args = json.loads(args_line.removeprefix('FIXTURE_ARGS:'))
+                            self.assertTrue(args['owns_summary'])
+                            self.assertEqual(r'build\fixture path (1)', args['build_dir'])
+                            if code in (0, 3):
+                                self.assertEqual(1, output.count('DLL: fixture/preloader_l.dll'), output)
+                                self.assertEqual(1, output.count('SHA256: ' + 'a' * 64), output)
+                            if code == 3:
+                                self.assertNotIn('Golden: BLOCKED', output)
+                                self.assertIn('golden/GOLDEN_REPORT.json', output)
+                            if code == 105:
+                                self.assertIn('ERROR: injected validation failure', output)
+
+    @unittest.skipUnless(os.name == 'nt', 'Requires real Windows CMD and Windows PowerShell')
+    def test_cmd_missing_automation_retains_one_failure_and_exit_two(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, entries = self.make_fixture(tmp)
+            for entry in entries:
+                with self.subTest(mode=entry['mode']):
+                    (root / entry['automation']).unlink()
+                    result = self.run_cmd(root / entry['launcher'], 0)
+                    output = result.stdout + result.stderr
+                    self.assertEqual(2, result.returncode, output)
+                    self.assertEqual(1, output.count(entry['label'] + ': FAIL'), output)
+                    self.assertEqual(1, output.count('Exit code: 2'), output)
+                    self.assertIn('ERROR: Missing target', output)
+                    self.assertNotIn('FIXTURE_ARGS:', output)
+
+    @unittest.skipUnless(os.name == 'nt', 'Requires real Windows CMD and Windows PowerShell')
+    def test_cmd_negative_control_reproduces_the_previous_duplicate(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, entries = self.make_fixture(tmp)
+            entry = next(e for e in entries if e['mode'] == 'Golden')
+            launcher = root / entry['launcher']
+            text = launcher.read_text(encoding='ascii')
+            self.assertIn('-LauncherOwnsSummary %*', text)
+            # Restore the former CMD call: both layers now publish a verdict.
+            launcher.write_text(text.replace('-LauncherOwnsSummary %*', '%*'), encoding='ascii')
+            result = self.run_cmd(launcher, 0)
+            output = result.stdout + result.stderr
+            self.assertEqual(0, result.returncode, output)
+            self.assertEqual(2, output.count('PRODUCTION BUILD: PASS'), output)
 
 
 class BuildWordingTests(unittest.TestCase):

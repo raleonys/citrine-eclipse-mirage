@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Print one selected-profile verdict in each of the five operator CMD windows, with the existing colored exit-code panel owning the summary. Preserve direct PowerShell/CI result lines, artifact paths and hashes, failure diagnostics, Golden blocked status and build/test exit codes. Add regression coverage and an opt-in manual Windows output-fixture job without scheduling builds on PR creation.
+
 - Reject malformed vendor alias tables and non-string symlink targets as controlled source-validation failures; retain valid locked aliases and add regression tests for malformed JSON value types.
 
 - Keep Debug CryptQueryObject diagnostics from terminating the host when logging throws; restore the observer reentry guard and verify actual logger allocation failure, subsequent callback logging and the Release no-allocation path.
