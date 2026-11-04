@@ -870,8 +870,8 @@
       "sha256": "1b1474464ca87f5c2869e2e9dbb569d6d636361ac2f57ca836d695fba3896e71"
     },
     "src/platform/encoding_windows.cpp": {
-      "bytes": 2321,
-      "sha256": "2fd50d41c09985e608e83ece913ef4d0e82d08af2c3fb226642e86b9ba567bd0"
+      "bytes": 2387,
+      "sha256": "5c8065e07c2badfc50c3506a88785b5ad32eb349b3f732e9e1f259bd4ca87209"
     },
     "src/platform/execution_windows.cpp": {
       "bytes": 1253,
@@ -1598,8 +1598,8 @@
       "sha256": "f2376f8af750ae80a925aa6fff675e4395287b500794204c54392d942237d8ca"
     },
     "tests/unit/encoding/encoding_tests.cpp": {
-      "bytes": 10525,
-      "sha256": "16e518abfe1c902b894cc09201e0ca2dfb0a92f6f89b356e23b44428d221f359"
+      "bytes": 11319,
+      "sha256": "137c72e687f1ca1b51d9cbf4c3f89979d6959636c5b793610f6c7047cca9885b"
     },
     "tests/unit/event_queue/integration_tests.cpp": {
       "bytes": 15023,

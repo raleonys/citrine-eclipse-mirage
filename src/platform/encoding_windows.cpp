@@ -24,7 +24,8 @@ int NativeCalls::multi_byte_to_wide(std::uint32_t cp,std::uint32_t flags,const c
         SetLastError(entry_error);
         count=MultiByteToWideChar(cp,flags,input,size,buffer.empty()?nullptr:buffer.data(),capacity);
         saved=GetLastError();
-        // Publish only the characters reported as written; preserve the unused tail.
+        // Win32 may partially fill the temporary on failure; commit only success.
+        // Size queries and failures leave caller storage untouched.
         if(output&&capacity>0&&count>0)std::memcpy(output,buffer.data(),static_cast<std::size_t>(count)*sizeof(char16_t));
     }
     // Preserve API error across compatibility-buffer allocation/destruction.
