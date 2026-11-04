@@ -11,6 +11,12 @@
 
 # Yellowfield / Bluefield comparison
 
+> XML checkpoint: the TinyXML2 implementation and vendor-default statements in
+> this report and its companion CSV describe the October 28 comparison.
+> The current application uses pugixml with first-party compatibility code that
+> preserves the depth boundary (498 nested elements accepted; 499 rejected).
+> See [VENDORING.md](VENDORING.md) for the current contract.
+
 > Historical-snapshot correction: the scalar-only generalization in CFG01/RE11
 > was inaccurate. The complete config_application/FilePass path already existed
 > at this PEGTL-source checkpoint. The current Application uses that path.
