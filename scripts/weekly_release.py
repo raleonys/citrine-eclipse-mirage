@@ -90,8 +90,14 @@ def plan(releases, source, start_tag=''):
 def junit(path):
     tree = ET.parse(path).getroot()
     cases = list(tree.iter('testcase'))
-    if not cases or any(node.tag in ('failure', 'error', 'skipped') for node in tree.iter()):
+    suites = list(tree.iter('testsuite'))
+    if not cases or not suites or any(node.tag in ('failure', 'error', 'skipped') for node in tree.iter()):
         raise ValueError('CTest evidence is empty, failed or skipped')
+    for suite in suites:
+        declared = suite.attrib.get('tests')
+        if (declared is None or not re.fullmatch(r'[0-9]+', declared)
+                or int(declared) != len(list(suite.iter('testcase')))):
+            raise ValueError('CTest suite declared test count differs from testcase nodes')
     for node in tree.iter():
         for key in ('failures', 'errors', 'skipped', 'disabled'):
             if int(node.attrib.get(key, '0')):

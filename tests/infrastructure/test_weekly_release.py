@@ -277,6 +277,30 @@ class PayloadTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.validate('native')
 
+    def test_declared_junit_count_must_match_testcase_nodes(self):
+        path = self.payload / 'native/CTEST_RESULTS.xml'
+        rejected = (
+            '<testsuite tests="2"><testcase name="only"/></testsuite>',
+            '<testsuite tests="0"><testcase name="only"/></testsuite>',
+            '<testsuite><testcase name="only"/></testsuite>',
+            '<testsuite tests="unknown"><testcase name="only"/></testsuite>',
+            '<testcase name="only"/>',
+            '<testsuites><testsuite tests="2"><testcase name="only"/></testsuite></testsuites>',
+        )
+        for xml in rejected:
+            with self.subTest(xml=xml):
+                path.write_text(xml, encoding='utf-8')
+                with self.assertRaises(ValueError):
+                    self.validate('native')
+        for xml, count in (
+            ('<testsuite tests="1"><testcase name="only"/></testsuite>', 1),
+            ('<testsuites><testsuite tests="1"><testcase name="one"/></testsuite>'
+             '<testsuite tests="1"><testcase name="two"/></testsuite></testsuites>', 2),
+        ):
+            with self.subTest(xml=xml):
+                path.write_text(xml, encoding='utf-8')
+                self.assertEqual({'tests': count}, self.validate('native'))
+
     def test_wrong_profile_and_non_msvc_receipts_are_rejected(self):
         path = self.payload / 'native/BUILD_RECEIPT.json'
         original = release.load(path)
