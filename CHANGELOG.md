@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Stop reading the caller's output-only UTF-16 buffer before native multi-byte decoding; copy only the successfully converted prefix and leave size queries/failures untouched. Preserve native Windows count/error results, compare successful prefix/tail output, and test eight insufficient-capacity/malformed UTF-8 failures with untouched caller buffers and boundary guards. Failed Win32 calls can partially write their temporary destination; those bytes are deliberately not published by the adapter.
+
 - Test complete LSX message processing after syntactically parsed invalid Request roots, missing ids, unregistered first commands and handler refusal in plaintext/encrypted modes: current invalid-message terminal propagates without response encryption or event dequeue, while a subsequent valid request retains its queue. Distinguish this current contract from donor exception-swallowing parity, which remains an owner policy question (A11-09).
 
 - Reject initial full-validation labels unless a later read-only synchronization preparation has completed for the exact PR/head/main before labeling. Support explicit no-change synchronization requests without empty commits, isolate preparation from active full runs, retain automatic real-main integration checks and all eleven required contexts, and forbid agents from preparing/labeling merely at PR creation.
