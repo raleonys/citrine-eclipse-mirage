@@ -11,6 +11,9 @@ import subprocess
 from urllib.parse import quote
 
 
+VALIDATION_LABEL = 'run-full-validation'
+
+
 @dataclass(frozen=True)
 class Decision:
     run_tests: bool
@@ -37,7 +40,11 @@ def github_json(endpoint):
 def decide(event_name, event, repository, sha, ref, api=None):
     if api is None:
         api = github_json
-    if event_name == 'pull_request' and event.get('action') != 'synchronize':
+    explicit_pr_request = (event_name == 'pull_request' and
+                           event.get('action') == 'labeled' and
+                           event.get('label', {}).get('name') == VALIDATION_LABEL)
+    if (event_name == 'pull_request' and event.get('action') != 'synchronize' and
+            not explicit_pr_request):
         return Decision(False, 'Await main synchronization or manual validation')
     if event_name not in ('pull_request', 'workflow_dispatch'):
         return Decision(False, 'This event does not request full validation')
@@ -49,7 +56,7 @@ def decide(event_name, event, repository, sha, ref, api=None):
     if event_name == 'pull_request':
         pr = event['pull_request']
         head = _sha(pr['head']['sha'])
-        if _sha(event['after']) != head:
+        if not explicit_pr_request and _sha(event['after']) != head:
             return Decision(False, 'The update payload does not identify the current head')
         number = event['number']
         if type(number) is not int or number <= 0:
@@ -59,6 +66,9 @@ def decide(event_name, event, repository, sha, ref, api=None):
             return Decision(False, 'The requested pull request head is no longer current')
         if current['base']['ref'] != default:
             return Decision(False, 'Full validation requires the default integration branch')
+        if explicit_pr_request and not any(label.get('name') == VALIDATION_LABEL
+                                           for label in current.get('labels', [])):
+            return Decision(False, 'The explicit validation request is no longer present')
     else:
         if not ref.startswith('refs/heads/'):
             return Decision(False, 'Choose a branch for manual validation')
@@ -72,7 +82,7 @@ def decide(event_name, event, repository, sha, ref, api=None):
                 comparison.get('merge_base_commit', {}).get('sha') == base)
     if not included:
         return Decision(False, 'Synchronize this branch with current main before full validation', head, base)
-    if event_name == 'pull_request':
+    if event_name == 'pull_request' and not explicit_pr_request:
         before = _sha(event['before'])
         previous = api(prefix + '/compare/' + base + '...' + before)
         already_included = (previous.get('status') in ('ahead', 'identical') and

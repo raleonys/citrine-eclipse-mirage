@@ -4,7 +4,7 @@ name: Full validation after main synchronization
 
 on:
   pull_request:
-    types: [synchronize]
+    types: [synchronize, labeled]
   workflow_dispatch:
 
 permissions:
@@ -12,7 +12,7 @@ permissions:
   pull-requests: read
 
 concurrency:
-  group: full-validation-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.event.pull_request.head.ref || github.ref_name }}
+  group: full-validation-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.event.pull_request.head.ref || github.ref_name }}-${{ github.event.action == 'labeled' && github.event.label.name != 'run-full-validation' && 'unrequested-label' || 'selected-head' }}
   cancel-in-progress: true
 
 env:

@@ -208,7 +208,8 @@ compiling or running the full regression suite.
 The [full validation workflow](../.github/workflows/msvc-reference-graph.yml)
 retains its existing file path so it can be dispatched before this policy PR
 is merged. Its displayed name is **Full validation after main synchronization**.
-It accepts a PR `synchronize` event or explicit manual dispatch, and checks that
+It accepts a PR `synchronize` event, an explicit `run-full-validation` label
+request, or standalone manual dispatch, and checks that
 the selected, still-current head includes the latest default-branch commit.
 Only then does it schedule:
 
@@ -240,23 +241,37 @@ run for that branch. Strict current-main branch protection still applies if
 `main` advances during validation.
 
 After normal synchronization and push, inspect the automatically created run;
-do not immediately dispatch a duplicate. When synchronization makes no commit,
-or a retry is explicitly needed, choose the branch in Actions → **Full
-validation after main synchronization** → **Run workflow**, or use:
+do not immediately request a duplicate. When synchronization makes no commit,
+or a retry is explicitly needed, add the **run-full-validation** label to the
+open PR using its Labels menu, or use:
 
 ```sh
-gh workflow run msvc-reference-graph.yml --ref <pr-branch>
+gh pr edit <pr-number> --add-label run-full-validation
 ```
 
-Manual full validation also requires a current branch containing current
-`main`; selecting a tag, stale head or stale branch is rejected. Before merging,
-inspect the exact-head results rather than the lightweight integrity badge.
-Do not manufacture an empty commit merely to trigger testing.
+This creates a `pull_request: labeled` run, so the full required checks belong
+to the PR's validation context. Before retrying, verify that no eligible full
+run is active or already successful for this exact head. If the label is
+already present and a new run is needed, remove it and then add it again.
+Removing it alone does not start tests. Other labels do not request tests or
+cancel a requested full run. Keeping the label does not cause subsequent
+ordinary head edits to run the full suite automatically.
 
-Manual runs on a branch differing from main also require changelog coverage.
-The only exemption is the existing owner-reviewed `changelog-exempt` label on
-an open PR with that exact head and integration base. A manual request does
-not waive changelog policy or borrow an exemption from a different commit.
+The live open PR, exact head, label and current main ancestry are verified
+before any full test job starts. A stale branch must first integrate current
+main. Before merging, inspect the PR's actual required check conclusions;
+a successful standalone dispatch that does not satisfy those contexts is not
+merge acceptance. Do not manufacture an empty commit merely to trigger testing.
+
+The Actions **Run workflow** button remains available for standalone diagnostics
+on a selected current branch containing current main. Selecting a tag, stale
+head or stale branch is rejected. Use the PR label request for merge validation,
+rather than relying on a standalone workflow-dispatch run to populate PR checks.
+
+Explicit validation still requires changelog coverage. The only exemption is
+the existing owner-reviewed `changelog-exempt` label on an open PR with that
+exact head and integration base. A manual request does not waive changelog
+policy or borrow an exemption from a different commit.
 
 Focused diagnostic workflows remain available through their own **Run workflow**
 button and branch selection. They no longer create automatic parallel runs for

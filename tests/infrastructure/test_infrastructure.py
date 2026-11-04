@@ -87,6 +87,52 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertNotEqual(self.event['pull_request']['base']['sha'], decision.base_sha)
         self.assertTrue(any(self.base + '...' + self.head in call for call in self.calls))
 
+    def request_pr_validation(self):
+        self.event['action'] = 'labeled'
+        self.event['label'] = {'name': 'run-full-validation'}
+        self.current['labels'] = [{'name': 'run-full-validation'}]
+        # A real labeled webhook has neither synchronization identity field.
+        del self.event['before']
+        del self.event['after']
+
+    def test_explicit_label_requests_tests_in_pr_context_without_a_head_push(self):
+        self.request_pr_validation()
+        decision = self.decision()
+        self.assertTrue(decision.run_tests)
+        self.assertEqual(self.head, decision.head_sha)
+        self.assertEqual(self.base, decision.base_sha)
+        self.assertIn('repos/owner/project/pulls/23', self.calls)
+
+    def test_removed_request_label_cannot_start_full_tests(self):
+        self.request_pr_validation()
+        self.current['labels'] = []
+        self.assertFalse(self.decision().run_tests)
+
+    def test_explicit_label_still_requires_current_main_and_current_open_head(self):
+        self.request_pr_validation()
+        self.comparison = {'status': 'diverged'}
+        self.assertFalse(self.decision().run_tests)
+        self.comparison = {'status': 'ahead', 'merge_base_commit': {'sha': self.base}}
+        self.current['head']['sha'] = 'd' * 40
+        self.assertFalse(self.decision().run_tests)
+        self.current['head']['sha'] = self.head
+        self.current['state'] = 'closed'
+        self.assertFalse(self.decision().run_tests)
+
+    def test_retained_label_does_not_turn_ordinary_edits_into_full_test_requests(self):
+        self.current['labels'] = [{'name': 'run-full-validation'}]
+        self.previous = {'status': 'ahead', 'merge_base_commit': {'sha': self.base}}
+        self.assertFalse(self.decision().run_tests)
+
+    def test_other_label_actions_do_not_request_full_tests(self):
+        self.event['label'] = {'name': 'changelog-exempt'}
+        self.event['action'] = 'labeled'
+        self.assertFalse(self.decision().run_tests)
+        self.event['label'] = {'name': 'run-full-validation'}
+        self.event['action'] = 'unlabeled'
+        self.assertFalse(self.decision().run_tests)
+        self.assertEqual([], self.calls)
+
     def test_regular_commit_on_an_already_synced_branch_waits_for_manual_request(self):
         self.previous = {'status': 'ahead', 'merge_base_commit': {'sha': self.base}}
         self.assertFalse(self.decision().run_tests)
@@ -187,7 +233,8 @@ class ValidationReadinessTests(unittest.TestCase):
     def test_deferred_jobs_are_gated_before_matrices_and_runner_allocation(self):
         workflow = (ROOT / '.github/workflows/msvc-reference-graph.yml').read_text()
         trigger = workflow.split('\npermissions:', 1)[0]
-        self.assertIn('types: [synchronize]', trigger)
+        self.assertIn('types: [synchronize, labeled]', trigger)
+        self.assertIn("github.event.label.name != 'run-full-validation' && 'unrequested-label'", workflow)
         self.assertNotIn('  push:', trigger)
         self.assertNotIn('pull_request_target', workflow)
         blocks = dict(re.findall(r'^  ([a-z-]+):\n(.*?)(?=^  [a-z-]+:|\Z)',
