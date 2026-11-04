@@ -1,15 +1,240 @@
 # SPDX-License-Identifier: GPL-3.0-only
-name: Windows MSVC reference graph acceptance
+
+name: Full validation after main synchronization
 
 on:
   pull_request:
+    types: [synchronize, labeled]
   workflow_dispatch:
 
 permissions:
   contents: read
+  pull-requests: read
+
+concurrency:
+  group: full-validation-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.event.pull_request.head.ref || github.ref_name }}-${{ github.event.action == 'labeled' && github.event.label.name != 'run-full-validation' && 'unrequested-label' || 'selected-head' }}
+  cancel-in-progress: true
+
+env:
+  PYTHONDONTWRITEBYTECODE: "1"
 
 jobs:
+  readiness:
+    name: Check main synchronization
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      run_tests: ${{ steps.policy.outputs.run_tests }}
+      head_sha: ${{ steps.policy.outputs.head_sha }}
+      base_sha: ${{ steps.policy.outputs.base_sha }}
+      reason: ${{ steps.policy.outputs.reason }}
+      changelog_exempt: ${{ steps.policy.outputs.changelog_exempt }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          sparse-checkout: scripts/ci_validation_readiness.py
+          sparse-checkout-cone-mode: false
+      - name: Require the current branch head to include current main
+        id: policy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -B scripts/ci_validation_readiness.py
+
+  source-qa:
+    needs: readiness
+    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
+    # Unrequested label events must not shadow a real required QA result.
+    name: ${{ needs.readiness.outputs.run_tests == 'true' && 'Source QA and portable tests' || 'Source QA deferred' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Preserve exact checkout bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.readiness.outputs.head_sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Require changelog coverage for the selected head
+        if: needs.readiness.outputs.head_sha != needs.readiness.outputs.base_sha && needs.readiness.outputs.changelog_exempt != 'true'
+        shell: bash
+        env:
+          BASE_SHA: ${{ needs.readiness.outputs.base_sha }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin "$BASE_SHA"
+          if ! git diff --name-only "$BASE_SHA" HEAD -- CHANGELOG.md | grep -Fxq CHANGELOG.md; then
+            echo 'CHANGELOG.md must cover this head, or its open PR must carry an owner-reviewed changelog-exempt label.' >&2
+            exit 1
+          fi
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - name: Verify source, vendor and infrastructure contracts
+        run: python -B scripts/run_source_qa.py --report build/qa/github-source-qa.json
+      - name: Configure portable checks
+        run: cmake -S . -B build/portable -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON
+      - name: Build portable checks
+        run: cmake --build build/portable --parallel 2
+      - name: Run portable checks
+        run: |
+          ctest --test-dir build/portable --output-on-failure --output-junit "$GITHUB_WORKSPACE/build/portable/CTEST_RESULTS.xml"
+          test -s "$GITHUB_WORKSPACE/build/portable/CTEST_RESULTS.xml"
+      - name: Retain source validation evidence
+        if: always() && needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: source-validation-evidence
+          path: |
+            build/qa/github-source-qa.json
+            build/portable/CTEST_RESULTS.xml
+            build/portable/Testing/Temporary/LastTest.log
+          if-no-files-found: warn
+          retention-days: 14
+
+  windows:
+    needs: readiness
+    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
+    # Keep these names stable: the main ruleset requires Windows native/production.
+    # Build profiles run only after the readiness check permits full validation.
+    name: Windows ${{ matrix.profile }}
+    runs-on: windows-2022
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - profile: native
+            script: build_native_acceptance.ps1
+            configuration: Release
+          - profile: native-debug
+            script: build_native_acceptance.ps1
+            configuration: Debug
+          - profile: production
+            script: build_production.ps1
+            configuration: Release
+          - profile: crt
+            script: build_crt_acceptance.ps1
+            configuration: Release
+          - profile: debug
+            script: build_debug.ps1
+            configuration: Debug
+          - profile: compile
+            script: build_unstable.ps1
+            configuration: Release
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Preserve exact checkout bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.readiness.outputs.head_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - name: Check build-path pinning before the full native build
+        if: matrix.profile == 'native' || matrix.profile == 'native-debug'
+        timeout-minutes: 1
+        run: |
+          & powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ./tests/infrastructure/test_build_path_reparse.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Run existing Windows profile
+        run: |
+          & "./scripts/build_orchestration/${{ matrix.script }}" -BuildDir "build/ci-${{ matrix.profile }}" -Config '${{ matrix.configuration }}'
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Retain Windows validation evidence
+        if: always() && needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: windows-${{ matrix.profile }}-evidence
+          path: |
+            build/ci-${{ matrix.profile }}/BUILD_TOOLCHAIN_PROVENANCE.log
+            build/ci-${{ matrix.profile }}/BUILD_RECEIPT.json
+            build/ci-${{ matrix.profile }}/PUBLIC_DLL_ABI_CHECK.json
+            build/ci-${{ matrix.profile }}/DLL_RESOURCE_CHECK.json
+            build/ci-${{ matrix.profile }}/CTEST_RESULTS.xml
+            build/ci-${{ matrix.profile }}/production-boundary.*.json
+            build/ci-${{ matrix.profile }}/golden/**/*.json
+            build/ci-${{ matrix.profile }}/Testing/Temporary/*.log
+            build/ci-${{ matrix.profile }}/CMakeCache.txt
+            build/ci-${{ matrix.profile }}/CMakeFiles/CMakeConfigureLog.yaml
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Retain validated Golden candidate
+        if: success() && matrix.profile == 'production'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: golden-candidate
+          path: |
+            dist/preloader_l.dll
+            dist/preloader_l.dll.sha256
+            dist/DIST_RECEIPT.json
+          if-no-files-found: error
+          retention-days: 14
+
+  windows-portable:
+    needs: readiness
+    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
+    name: Windows portable ${{ matrix.configuration }}
+    runs-on: windows-2022
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Preserve exact checkout bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.readiness.outputs.head_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - name: Configure genuine MSVC portable checks
+        run: |
+          $build = 'build/ci-portable-${{ matrix.configuration }}'
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON
+          if ($LASTEXITCODE -ne 0) { throw 'Portable configure failed' }
+      - name: Build all MSVC portable targets
+        run: |
+          $build = 'build/ci-portable-${{ matrix.configuration }}'
+          cmake --build $build --config '${{ matrix.configuration }}' --parallel 2 2>&1 | Tee-Object -FilePath "$build/portable-build.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Portable build failed' }
+      - name: Run complete Windows portable CTest inventory
+        run: |
+          $build = 'build/ci-portable-${{ matrix.configuration }}'
+          $junit = Join-Path (Resolve-Path $build) 'CTEST_RESULTS.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' --no-tests=error --output-on-failure --timeout 180 --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/portable-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Portable CTest failed' }
+          if (-not (Test-Path -LiteralPath $junit -PathType Leaf)) { throw 'Portable JUnit report is missing' }
+      - name: Retain Windows portable evidence
+        if: always() && needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: windows-portable-${{ matrix.configuration }}-evidence
+          path: |
+            build/ci-portable-${{ matrix.configuration }}/portable-build.log
+            build/ci-portable-${{ matrix.configuration }}/portable-ctest.log
+            build/ci-portable-${{ matrix.configuration }}/CTEST_RESULTS.xml
+            build/ci-portable-${{ matrix.configuration }}/Testing/Temporary/*.log
+            build/ci-portable-${{ matrix.configuration }}/CMakeCache.txt
+            build/ci-portable-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
+          if-no-files-found: warn
+          retention-days: 14
+
   reference-graph:
+    needs: readiness
+    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
     name: Windows x64 reference objects ${{ matrix.configuration }}
     runs-on: windows-2022
     timeout-minutes: 60
@@ -22,6 +247,7 @@ jobs:
         run: git config --global core.autocrlf false
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          ref: ${{ needs.readiness.outputs.head_sha }}
           persist-credentials: false
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
@@ -59,7 +285,7 @@ jobs:
           ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(dll_source_smoke|session_flow_contracts|dll_public_xml_contracts)$' --output-on-failure --timeout 120 --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/source-host-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC source API host native smoke failed' }
       - name: Preserve Windows compiler and test evidence
-        if: always()
+        if: always() && needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: msvc-reference-${{ matrix.configuration }}-evidence

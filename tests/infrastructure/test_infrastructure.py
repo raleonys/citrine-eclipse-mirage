@@ -30,7 +30,254 @@ import clear_tool_python_cache as tool_cache
 import check_repository_contract as repository
 import verify_sources as source_verification
 import run_source_qa as source_qa
+import ci_validation_readiness as ci_readiness
 from golden_policy import load_target, PolicyPending
+
+
+class ValidationReadinessTests(unittest.TestCase):
+    head = 'a' * 40
+    base = 'b' * 40
+    repository = 'owner/project'
+
+    def setUp(self):
+        self.event = {'action': 'synchronize', 'number': 23,
+                      'before': 'e' * 40, 'after': self.head,
+                      'repository': {'default_branch': 'main'},
+                      'pull_request': {'head': {'sha': self.head},
+                                       'base': {'sha': 'c' * 40}}}
+        self.current = {'state': 'open', 'head': {'sha': self.head},
+                        'base': {'ref': 'main'}}
+        self.main = self.base
+        self.selected = self.head
+        self.comparison = {'status': 'ahead', 'merge_base_commit': {'sha': self.base}}
+        self.previous = {'status': 'diverged', 'merge_base_commit': {'sha': 'c' * 40}}
+        self.associated = []
+        self.calls = []
+
+    def api(self, endpoint):
+        self.calls.append(endpoint)
+        prefix = 'repos/' + self.repository
+        if endpoint == prefix + '/pulls/23':
+            return self.current
+        if endpoint == prefix + '/pulls?state=open&base=main&head=owner%3Afeature%2Fsync&per_page=100':
+            return self.associated
+        if endpoint == prefix + '/git/ref/heads/main':
+            return {'object': {'sha': self.main}}
+        if endpoint == prefix + '/git/ref/heads/feature%2Fsync':
+            return {'object': {'sha': self.selected}}
+        if endpoint == prefix + '/compare/' + self.main + '...' + self.head:
+            return self.comparison
+        if endpoint == prefix + '/compare/' + self.main + '...' + self.event['before']:
+            return self.previous
+        self.fail('Unexpected GitHub endpoint: ' + endpoint)
+
+    def decision(self, name='pull_request', ref='refs/heads/feature/sync'):
+        return ci_readiness.decide(name, self.event, self.repository, self.head, ref, self.api)
+
+    def test_open_reopen_and_metadata_events_do_not_start_full_tests(self):
+        for action in ('opened', 'reopened', 'edited', 'labeled', 'ready_for_review'):
+            self.event['action'] = action
+            self.assertFalse(self.decision().run_tests)
+        self.assertEqual([], self.calls)
+
+    def test_sync_checks_live_main_instead_of_the_event_base_snapshot(self):
+        decision = self.decision()
+        self.assertTrue(decision.run_tests)
+        self.assertEqual(self.base, decision.base_sha)
+        self.assertNotEqual(self.event['pull_request']['base']['sha'], decision.base_sha)
+        self.assertTrue(any(self.base + '...' + self.head in call for call in self.calls))
+
+    def request_pr_validation(self):
+        self.event['action'] = 'labeled'
+        self.event['label'] = {'name': 'run-full-validation'}
+        self.current['labels'] = [{'name': 'run-full-validation'}]
+        # A real labeled webhook has neither synchronization identity field.
+        del self.event['before']
+        del self.event['after']
+
+    def test_explicit_label_requests_tests_in_pr_context_without_a_head_push(self):
+        self.request_pr_validation()
+        decision = self.decision()
+        self.assertTrue(decision.run_tests)
+        self.assertEqual(self.head, decision.head_sha)
+        self.assertEqual(self.base, decision.base_sha)
+        self.assertIn('repos/owner/project/pulls/23', self.calls)
+
+    def test_removed_request_label_cannot_start_full_tests(self):
+        self.request_pr_validation()
+        self.current['labels'] = []
+        self.assertFalse(self.decision().run_tests)
+
+    def test_explicit_label_still_requires_current_main_and_current_open_head(self):
+        self.request_pr_validation()
+        self.comparison = {'status': 'diverged'}
+        self.assertFalse(self.decision().run_tests)
+        self.comparison = {'status': 'ahead', 'merge_base_commit': {'sha': self.base}}
+        self.current['head']['sha'] = 'd' * 40
+        self.assertFalse(self.decision().run_tests)
+        self.current['head']['sha'] = self.head
+        self.current['state'] = 'closed'
+        self.assertFalse(self.decision().run_tests)
+
+    def test_retained_label_does_not_turn_ordinary_edits_into_full_test_requests(self):
+        self.current['labels'] = [{'name': 'run-full-validation'}]
+        self.previous = {'status': 'ahead', 'merge_base_commit': {'sha': self.base}}
+        self.assertFalse(self.decision().run_tests)
+
+    def test_other_label_actions_do_not_request_full_tests(self):
+        self.event['label'] = {'name': 'changelog-exempt'}
+        self.event['action'] = 'labeled'
+        self.assertFalse(self.decision().run_tests)
+        self.event['label'] = {'name': 'run-full-validation'}
+        self.event['action'] = 'unlabeled'
+        self.assertFalse(self.decision().run_tests)
+        self.assertEqual([], self.calls)
+
+    def test_regular_commit_on_an_already_synced_branch_waits_for_manual_request(self):
+        self.previous = {'status': 'ahead', 'merge_base_commit': {'sha': self.base}}
+        self.assertFalse(self.decision().run_tests)
+        self.assertTrue(self.decision('workflow_dispatch').run_tests)
+
+    def test_missing_previous_head_cannot_claim_a_main_integration(self):
+        del self.event['before']
+        with self.assertRaises(KeyError):
+            self.decision()
+
+    def test_inconsistent_previous_comparison_cannot_start_tests(self):
+        for previous in ({}, {'status': 'ahead', 'merge_base_commit': {'sha': 'c' * 40}},
+                         {'status': 'diverged', 'merge_base_commit': {'sha': self.base}}):
+            self.previous = previous
+            self.assertFalse(self.decision().run_tests)
+
+    def test_update_after_sha_must_match_the_actual_pr_head(self):
+        self.event['after'] = 'd' * 40
+        self.assertFalse(self.decision().run_tests)
+
+    def test_stale_diverged_and_malformed_comparisons_are_not_ready(self):
+        for comparison in ({'status': 'behind'}, {'status': 'diverged'}, {},
+                           {'status': 'ahead', 'merge_base_commit': {'sha': 'c' * 40}}):
+            self.comparison = comparison
+            self.assertFalse(self.decision().run_tests)
+
+    def test_identical_manual_main_is_allowed(self):
+        self.head = self.base
+        self.comparison = {'status': 'identical', 'merge_base_commit': {'sha': self.base}}
+        self.assertTrue(self.decision('workflow_dispatch', 'refs/heads/main').run_tests)
+
+    def test_closed_changed_or_non_main_pr_is_not_ready(self):
+        for current in ({'state': 'closed', 'head': {'sha': self.head}, 'base': {'ref': 'main'}},
+                        {'state': 'open', 'head': {'sha': 'd' * 40}, 'base': {'ref': 'main'}},
+                        {'state': 'open', 'head': {'sha': self.head}, 'base': {'ref': 'research'}}):
+            self.current = current
+            self.assertFalse(self.decision().run_tests)
+
+    def test_manual_dispatch_requires_the_selected_current_branch_head(self):
+        self.assertTrue(self.decision('workflow_dispatch').run_tests)
+        self.selected = 'd' * 40
+        self.assertFalse(self.decision('workflow_dispatch').run_tests)
+        self.assertFalse(self.decision('workflow_dispatch', 'refs/tags/v1').run_tests)
+
+    def test_manual_stale_branch_does_not_allocate_full_tests(self):
+        self.comparison = {'status': 'diverged'}
+        self.assertFalse(self.decision('workflow_dispatch').run_tests)
+
+    def test_changelog_exemption_uses_live_pr_labels(self):
+        self.assertFalse(self.decision().changelog_exempt)
+        self.current['labels'] = [{'name': 'changelog-exempt'}]
+        self.assertTrue(self.decision().changelog_exempt)
+
+    def test_manual_branch_keeps_changelog_requirement_unless_approved(self):
+        self.assertFalse(self.decision('workflow_dispatch').changelog_exempt)
+        self.associated = [self.current]
+        self.assertFalse(self.decision('workflow_dispatch').changelog_exempt)
+        self.current['labels'] = [{'name': 'changelog-exempt'}]
+        self.assertTrue(self.decision('workflow_dispatch').changelog_exempt)
+
+    def test_manual_request_cannot_borrow_exemption_from_another_head(self):
+        self.associated = [{'state': 'open', 'base': {'ref': 'main'},
+                            'head': {'sha': 'd' * 40},
+                            'labels': [{'name': 'changelog-exempt'}]}]
+        self.assertFalse(self.decision('workflow_dispatch').changelog_exempt)
+
+    def test_bad_commit_and_repository_identities_are_rejected(self):
+        with self.assertRaises(ValueError):
+            ci_readiness.decide('workflow_dispatch', self.event, '../project', self.head,
+                                'refs/heads/main', self.api)
+        self.event['pull_request']['head']['sha'] = self.head + '\nrun_tests=true'
+        with self.assertRaises(ValueError):
+            self.decision()
+
+    def test_cli_api_failure_writes_false_and_returns_failure(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            event = root / 'event.json'
+            event.write_text(json.dumps(self.event))
+            output, summary = root / 'output', root / 'summary'
+            argv = ['ci_validation_readiness.py', '--event-name', 'pull_request',
+                    '--event-path', str(event), '--repository', self.repository,
+                    '--output', str(output), '--summary', str(summary)]
+            with patch.object(sys, 'argv', argv), \
+                    patch.object(ci_readiness, 'github_json', side_effect=RuntimeError('API failure')), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(1, ci_readiness.main())
+            self.assertIn('run_tests=false\n', output.read_text())
+            self.assertNotIn('run_tests=true', output.read_text())
+            self.assertIn('could not be verified', summary.read_text())
+
+    def test_new_main_after_a_prior_success_invalidates_eligibility(self):
+        self.assertTrue(self.decision().run_tests)
+        self.main = 'd' * 40
+        self.comparison = {'status': 'diverged', 'merge_base_commit': {'sha': self.base}}
+        self.assertFalse(self.decision().run_tests)
+
+    def test_deferred_jobs_are_gated_before_matrices_and_runner_allocation(self):
+        workflow = (ROOT / '.github/workflows/msvc-reference-graph.yml').read_text()
+        trigger = workflow.split('\npermissions:', 1)[0]
+        self.assertIn('types: [synchronize, labeled]', trigger)
+        self.assertIn("github.event.label.name != 'run-full-validation' && 'unrequested-label'", workflow)
+        self.assertNotIn('  push:', trigger)
+        self.assertNotIn('pull_request_target', workflow)
+        blocks = dict(re.findall(r'^  ([a-z-]+):\n(.*?)(?=^  [a-z-]+:|\Z)',
+                                 workflow.split('\njobs:\n', 1)[1], re.M | re.S))
+        required = {'source-qa', 'windows', 'windows-portable', 'reference-graph'}
+        self.assertEqual(required | {'readiness'}, set(blocks))
+        for name in required:
+            block = blocks[name]
+            self.assertIn("\n    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}", block)
+            self.assertIn('needs: readiness', block)
+            self.assertNotIn('Require verified main synchronization', block)
+            self.assertNotIn('if: ${{ always() }}', block)
+            self.assertIn('ref: ${{ needs.readiness.outputs.head_sha }}', block)
+            if name != 'source-qa':
+                self.assertIn('runs-on: windows-2022', block)
+                self.assertNotIn('ubuntu-24.04', block)
+                self.assertIn('    strategy:\n', block)
+        profiles = set(re.findall(r'- profile: ([a-z-]+)', blocks['windows']))
+        contexts = {'Source QA and portable tests'} | {'Windows ' + p for p in profiles}
+        contexts |= {'Windows portable ' + c for c in ('Debug', 'Release')}
+        contexts |= {'Windows x64 reference objects ' + c for c in ('Debug', 'Release')}
+        self.assertEqual(11, len(contexts))
+        self.assertEqual({'native', 'native-debug', 'production', 'crt', 'debug', 'compile'}, profiles)
+        self.assertIn("name: ${{ needs.readiness.outputs.run_tests == 'true' && 'Source QA and portable tests' || 'Source QA deferred' }}", blocks['source-qa'])
+        self.assertIn("needs.readiness.outputs.changelog_exempt != 'true'", blocks['source-qa'])
+        self.assertIn('needs.readiness.outputs.head_sha != needs.readiness.outputs.base_sha', blocks['source-qa'])
+        self.assertIn('name: Windows ${{ matrix.profile }}', blocks['windows'])
+        self.assertIn('name: Windows portable ${{ matrix.configuration }}', blocks['windows-portable'])
+        self.assertIn('name: Windows x64 reference objects ${{ matrix.configuration }}', blocks['reference-graph'])
+
+    def test_opening_ci_is_integrity_only_and_diagnostics_are_manual(self):
+        fast = (ROOT / '.github/workflows/ci.yml').read_text()
+        self.assertIn('scripts/verify_sources.py', fast)
+        self.assertIn('scripts/check_manifest.py', fast)
+        self.assertNotIn('run_source_qa.py', fast)
+        self.assertNotIn('cmake --', fast)
+        for path in (ROOT / '.github/workflows').glob('*.yml'):
+            if path.name in ('ci.yml', 'msvc-reference-graph.yml', 'weekly-release.yml'):
+                continue
+            trigger = path.read_text().split('\non:\n', 1)[1].split('\npermissions:', 1)[0]
+            self.assertIn('  workflow_dispatch:', trigger, path.name)
+            self.assertNotIn('pull_request:', trigger, path.name)
+            self.assertNotIn('  push:', trigger, path.name)
 
 
 class IdentityBoundaryTests(unittest.TestCase):

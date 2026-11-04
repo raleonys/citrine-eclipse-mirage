@@ -200,16 +200,85 @@ protection or establish native Windows/game acceptance.
 
 ## CI and acceptance evidence
 
-The current [CI workflow](../.github/workflows/ci.yml) runs on pull requests,
-main pushes and manual dispatch. Official checkout, Python and artifact actions
-are pinned to verified commit SHAs. Every PR schedules:
+The lightweight [source integrity workflow](../.github/workflows/ci.yml) runs on
+PR creation and updates, accepted-main pushes and manual dispatch. It checks
+source sizes/hashes, the whole-source manifest and exact vendor inputs, without
+compiling or running the full regression suite.
+
+The [full validation workflow](../.github/workflows/msvc-reference-graph.yml)
+retains its existing file path so it can be dispatched before this policy PR
+is merged. Its displayed name is **Full validation after main synchronization**.
+It accepts a PR `synchronize` event, an explicit `run-full-validation` label
+request, or standalone manual dispatch, and checks that
+the selected, still-current head includes the latest default-branch commit.
+Only then does it schedule:
 
 - Source QA and full Linux portable CTest.
 - Windows MSVC Native Release and Debug, Production/Golden Release, CRT Release,
   Debug and Compile Only profiles, using the existing operator scripts.
 - Full Windows portable CTest in Debug and Release.
-- The separate [reference graph workflow](../.github/workflows/msvc-reference-graph.yml).
-  Focused diagnostic workflows also run for their configured changed paths.
+- Windows reference objects and the existing socket/source-host/session checks
+  in Debug and Release, within the same full-validation workflow.
+
+Official actions remain pinned. The eleven required status names are preserved;
+the ruleset is not edited. On initial PR creation, missing full-validation
+checks remain pending and prevent merge. On an ineligible update, only the
+readiness job runs; full jobs are skipped before their matrices expand or any
+build runner is allocated. Waiting is not a failed product test. Matrix
+placeholders marked skipped are not the required expanded Windows contexts:
+those real contexts remain absent and keep the PR blocked until testing runs.
+A readiness API error fails the readiness job itself, rather than fabricating
+eleven failed test jobs. A skipped entry is never evidence of native PASS.
+
+GitHub's `synchronize` event means any new PR head, not specifically a merge of
+`main`. Automatic full validation requires an actual transition: current `main`
+was absent from the event's previous head and is present in the new head.
+An ordinary edit on an already synchronized branch waits for explicit manual
+validation, as does a fix after a failed test run. A stale branch must first
+integrate `main`. Tests check out the exact approved head SHA, not a
+moving branch name. A subsequent head update cancels an older in-progress full
+run for that branch. Strict current-main branch protection still applies if
+`main` advances during validation.
+
+After normal synchronization and push, inspect the automatically created run;
+do not immediately request a duplicate. When synchronization makes no commit,
+or a retry is explicitly needed, add the **run-full-validation** label to the
+open PR using its Labels menu, or use:
+
+```sh
+gh pr edit <pr-number> --add-label run-full-validation
+```
+
+This creates a `pull_request: labeled` run, so the full required checks belong
+to the PR's validation context. Before retrying, verify that no eligible full
+run is active or already successful for this exact head. If the label is
+already present and a new run is needed, remove it and then add it again.
+Removing it alone does not start tests. Other labels do not request tests or
+cancel a requested full run. Unrequested source QA jobs use the distinct
+`Source QA deferred` name, so a skipped record cannot replace a real required
+QA result for the same head. Keeping the label does not cause subsequent
+ordinary head edits to run the full suite automatically.
+
+The live open PR, exact head, label and current main ancestry are verified
+before any full test job starts. A stale branch must first integrate current
+main. Before merging, inspect the PR's actual required check conclusions;
+a successful standalone dispatch that does not satisfy those contexts is not
+merge acceptance. Do not manufacture an empty commit merely to trigger testing.
+
+The Actions **Run workflow** button remains available for standalone diagnostics
+on a selected current branch containing current main. Selecting a tag, stale
+head or stale branch is rejected. Use the PR label request for merge validation,
+rather than relying on a standalone workflow-dispatch run to populate PR checks.
+
+Explicit validation still requires changelog coverage. The only exemption is
+the existing owner-reviewed `changelog-exempt` label on an open PR with that
+exact head and integration base. A manual request does not waive changelog
+policy or borrow an exemption from a different commit.
+
+Focused diagnostic workflows remain available through their own **Run workflow**
+button and branch selection. They no longer create automatic parallel runs for
+ordinary PR changes. Weekly release draft validation is unchanged and remains
+independent of unmerged PRs.
 
 Inspect actual conclusions for the exact proposed commit. A skipped Windows job
 is not a PASS, a configured job is not proof of execution, and earlier-head
