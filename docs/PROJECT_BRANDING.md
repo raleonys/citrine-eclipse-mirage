@@ -17,7 +17,7 @@ The owner-approved project campaign image is the exact supplied PNG:
 - Git blob SHA-1: `bed9e4dd2663d8303389d4573059422f7952b576`
 - Supplied ZIP SHA-256: `6c427e56bc7916adb2281a513f7913aa941c567a5334cac7e1ae095e477be8b7`
 
-**Integrated:** The 1400 x 1100 PNG supplied in the owner's `citrine-eclipse-mirage _1_.zip` is tracked unchanged and referenced by the existing README hero path. ZIP CRC, complete extracted bytes, PNG header and dimensions were independently checked. This upload supersedes the previous 612724-byte campaign image. Do not generate, resize or re-encode substitutes.
+**Integrated:** The 1400 x 1100 PNG supplied in the owner's `citrine-eclipse-mirage.zip` is tracked unchanged and referenced by the existing README hero path. ZIP CRC, complete extracted bytes, PNG header and dimensions were independently checked. This upload supersedes the previous 612724-byte campaign image. Do not generate, resize or re-encode substitutes.
 
 The campaign artwork is separate from `resources/branding/surge.png`, a runtime/profile avatar that remains unchanged.
 
