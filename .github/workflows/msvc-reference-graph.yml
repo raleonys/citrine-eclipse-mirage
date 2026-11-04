@@ -44,21 +44,11 @@ jobs:
 
   source-qa:
     needs: readiness
-    if: ${{ always() }}
+    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
     name: Source QA and portable tests
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
-      - name: Require verified main synchronization
-        shell: bash
-        env:
-          READY: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
-          REASON: ${{ needs.readiness.outputs.reason }}
-        run: |
-          if [ "$READY" != 'true' ]; then
-            echo "::error::${REASON:-Readiness failed; full validation has not run.}"
-            exit 1
-          fi
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -105,11 +95,11 @@ jobs:
 
   windows:
     needs: readiness
-    if: ${{ always() }}
+    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
     # Keep these names stable: the main ruleset requires Windows native/production.
     # Build profiles run only after the readiness check permits full validation.
     name: Windows ${{ matrix.profile }}
-    runs-on: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' && 'windows-2022' || 'ubuntu-24.04' }}
+    runs-on: windows-2022
     timeout-minutes: 90
     strategy:
       fail-fast: false
@@ -137,16 +127,6 @@ jobs:
       run:
         shell: pwsh
     steps:
-      - name: Require verified main synchronization
-        shell: bash
-        env:
-          READY: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
-          REASON: ${{ needs.readiness.outputs.reason }}
-        run: |
-          if [ "$READY" != 'true' ]; then
-            echo "::error::${REASON:-Readiness failed; full validation has not run.}"
-            exit 1
-          fi
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -198,9 +178,9 @@ jobs:
 
   windows-portable:
     needs: readiness
-    if: ${{ always() }}
+    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
     name: Windows portable ${{ matrix.configuration }}
-    runs-on: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' && 'windows-2022' || 'ubuntu-24.04' }}
+    runs-on: windows-2022
     timeout-minutes: 60
     strategy:
       fail-fast: false
@@ -210,16 +190,6 @@ jobs:
       run:
         shell: pwsh
     steps:
-      - name: Require verified main synchronization
-        shell: bash
-        env:
-          READY: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
-          REASON: ${{ needs.readiness.outputs.reason }}
-        run: |
-          if [ "$READY" != 'true' ]; then
-            echo "::error::${REASON:-Readiness failed; full validation has not run.}"
-            exit 1
-          fi
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -263,25 +233,15 @@ jobs:
 
   reference-graph:
     needs: readiness
-    if: ${{ always() }}
+    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
     name: Windows x64 reference objects ${{ matrix.configuration }}
-    runs-on: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' && 'windows-2022' || 'ubuntu-24.04' }}
+    runs-on: windows-2022
     timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
         configuration: [Debug, Release]
     steps:
-      - name: Require verified main synchronization
-        shell: bash
-        env:
-          READY: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
-          REASON: ${{ needs.readiness.outputs.reason }}
-        run: |
-          if [ "$READY" != 'true' ]; then
-            echo "::error::${REASON:-Readiness failed; full validation has not run.}"
-            exit 1
-          fi
       - name: Preserve repository bytes
         run: git config --global core.autocrlf false
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4

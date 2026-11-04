@@ -221,9 +221,13 @@ Only then does it schedule:
 
 Official actions remain pinned. The eleven required status names are preserved;
 the ruleset is not edited. On initial PR creation, missing full-validation
-checks remain pending and prevent merge. A stale branch update or readiness
-API error produces blocking results on lightweight runners, without allocating
-Windows runners. It does not turn skipped Windows jobs into a false PASS.
+checks remain pending and prevent merge. On an ineligible update, only the
+readiness job runs; full jobs are skipped before their matrices expand or any
+build runner is allocated. Waiting is not a failed product test. Matrix
+placeholders marked skipped are not the required expanded Windows contexts:
+those real contexts remain absent and keep the PR blocked until testing runs.
+A readiness API error fails the readiness job itself, rather than fabricating
+eleven failed test jobs. A skipped entry is never evidence of native PASS.
 
 GitHub's `synchronize` event means any new PR head, not specifically a merge of
 `main`. Automatic full validation requires an actual transition: current `main`

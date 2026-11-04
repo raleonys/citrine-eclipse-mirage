@@ -184,7 +184,7 @@ class ValidationReadinessTests(unittest.TestCase):
         self.comparison = {'status': 'diverged', 'merge_base_commit': {'sha': self.base}}
         self.assertFalse(self.decision().run_tests)
 
-    def test_workflow_required_checks_fail_closed_without_windows_allocation(self):
+    def test_deferred_jobs_are_gated_before_matrices_and_runner_allocation(self):
         workflow = (ROOT / '.github/workflows/msvc-reference-graph.yml').read_text()
         trigger = workflow.split('\npermissions:', 1)[0]
         self.assertIn('types: [synchronize]', trigger)
@@ -196,15 +196,15 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertEqual(required | {'readiness'}, set(blocks))
         for name in required:
             block = blocks[name]
-            self.assertIn('if: ${{ always() }}', block)
+            self.assertIn("\n    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}", block)
             self.assertIn('needs: readiness', block)
-            guard, remainder = block.split('      - name: Preserve', 1)
-            self.assertIn('exit 1', guard)
-            self.assertIn("needs.readiness.result == 'success'", guard)
-            self.assertIn("needs.readiness.outputs.run_tests == 'true'", guard)
-            self.assertIn('ref: ${{ needs.readiness.outputs.head_sha }}', remainder)
+            self.assertNotIn('Require verified main synchronization', block)
+            self.assertNotIn('if: ${{ always() }}', block)
+            self.assertIn('ref: ${{ needs.readiness.outputs.head_sha }}', block)
             if name != 'source-qa':
-                self.assertIn("&& 'windows-2022' || 'ubuntu-24.04'", block)
+                self.assertIn('runs-on: windows-2022', block)
+                self.assertNotIn('ubuntu-24.04', block)
+                self.assertIn('    strategy:\n', block)
         profiles = set(re.findall(r'- profile: ([a-z-]+)', blocks['windows']))
         contexts = {'Source QA and portable tests'} | {'Windows ' + p for p in profiles}
         contexts |= {'Windows portable ' + c for c in ('Debug', 'Release')}
