@@ -17,6 +17,11 @@ using namespace preloader_l::registry;
 namespace {
 int checks=0;
 void check(bool ok) { ++checks; if(!ok) throw std::runtime_error("check "+std::to_string(checks)); }
+template<class F> void rejects_runtime(F operation) {
+    bool caught=false;
+    try {operation();} catch(const std::runtime_error&) {caught=true;}
+    check(caught); // Do not catch check(false) as the expected operation error.
+}
 struct Mock final: Effects {
     std::vector<std::string> events;
     Status open_status=5,query_status=87,close_status=0;
@@ -135,7 +140,7 @@ void query_tests(){
     // Original stores capacity before conversion and re-reads it after conversion.
     n=50;f.e.conversion_effect=[&]{n=0;};check(write_value_a_0091a0(f.values,f.e,b.data(),&n,"Embedded",50)==234);check(n==4);
     f.e.conversion_effect={};f.e.throw_wait=true;f.e.query_type=0;f.e.events.clear();n=50;type=7;
-    try{query_a_00fac0(f.state(),f.e,{8,"Locale",nullptr,&type,b.data(),&n});check(false);}catch(const std::runtime_error&){check(true);}
+    rejects_runtime([&]{query_a_00fac0(f.state(),f.e,{8,"Locale",nullptr,&type,b.data(),&n});});
     check(type==0&&n==777);
     check(std::find(f.e.events.begin(),f.e.events.end(),"copyA")==f.e.events.end());
     check(f.e.events.back()=="wait");
@@ -226,7 +231,7 @@ void abi_cell_tests(){
     check(native_size==777&&native_type==7);
     native_size=50;native_type=99;
     f.e.query_type=0;f.e.throw_wait=true;
-    try{query_a_00fac0(f.state(),f.e,{0x42,"Install",nullptr,type,buffer.data(),size});check(false);}catch(const std::runtime_error&){check(true);}
+    rejects_runtime([&]{query_a_00fac0(f.state(),f.e,{0x42,"Install",nullptr,type,buffer.data(),size});});
     check(native_size==777&&native_type==0);
 }
 }
