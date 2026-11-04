@@ -1261,6 +1261,10 @@
       "bytes": 10413,
       "sha256": "20f2216d5459c6a1b13abf2cb0e240694fbfd5263e227cf14550e13d1678c4c2"
     },
+    "tests/native/environment_path_tests.cpp": {
+      "bytes": 5153,
+      "sha256": "25690a96e9c7653e01fc15ec8507ae0c935355eab17c0fdfef1e5ad581d08fae"
+    },
     "tests/native/extra_library_failure_tests.cpp": {
       "bytes": 10455,
       "sha256": "69089313138ac0b865d463c5c654a989af1b8c8712fd1a3d086fba079819531b"
