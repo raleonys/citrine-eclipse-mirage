@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Pin the complete GetConfig compatibility advertisement through the actual handler, HandlerWriter and MemoryPrinter against a frozen reference-derived XML fixture: all 34 ordered service Name/Facility pairs, attribute spelling/order, balanced output and one trailing NUL. Retain the existing structural checks and prove the strengthened suite rejects middle-table name, facility and ordering drift that those checks miss. This tests the advertised protocol, not complete external service implementations.
+
 - Reject malformed vendor alias tables and non-string symlink targets as controlled source-validation failures; retain valid locked aliases and add regression tests for malformed JSON value types.
 
 - Keep Debug CryptQueryObject diagnostics from terminating the host when logging throws; restore the observer reentry guard and verify actual logger allocation failure, subsequent callback logging and the Release no-allocation path.
