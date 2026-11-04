@@ -2,46 +2,56 @@
 
 This file distinguishes source imports, integrated pull requests and published releases. A GitHub merge is a source change, not an R-numbered release or release tag.
 
-## Unreleased — post-import GitHub development (2026-10-30 to 2026-10-31)
+## Unreleased — GitHub development
 
-The 52 entries below are the merged pull requests verified through PR #62, linked to their individual review records. The GitHub Releases collection was empty at this checkpoint, so these entries must not be read as published releases or evidence of Windows/native/game acceptance.
+Current development entries are updated alongside their pull requests. They describe source changes, including proposed work, rather than published releases or proof of Windows/native/game acceptance. The separately dated merged-PR checkpoint below preserves the earlier history through PR #62.
 
-### Additional unreleased changes
+### Current unreleased changes (updated 2026-11-03)
 
 - Fail closed on Config2 achievement set and SteamAppId values that can escape their intended XML filename or watcher-directory leaf through separators, dot/dot-dot, Windows ADS colon or embedded NUL. Check both before any XML read, path update, epoch conversion or INI write. Add source-linked safe/unsafe and no-partial-effects fixtures while preserving ordinary identifier and conversion order; treat this as a compatibility-sensitive lexical guard, not full Windows reparse-point confinement.
 
-- Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
+- Test complete LSX message processing after syntactically parsed invalid Request roots, missing ids, unregistered first commands and handler refusal in plaintext/encrypted modes: current invalid-message terminal propagates without response encryption or event dequeue, while a subsequent valid request retains its queue. Distinguish this current contract from donor exception-swallowing parity, which remains an owner policy question (A11-09).
 
-- Validate SOURCE_FILES byte counts alongside SHA-256, rejecting missing, malformed and stale sizes. Add matching-hash negative controls for multibyte/CRLF payloads and count-only tampering.
+- Reject initial full-validation labels unless a later read-only synchronization preparation has completed for the exact PR/head/main before labeling. Support explicit no-change synchronization requests without empty commits, isolate preparation from active full runs, retain automatic real-main integration checks and all eleven required contexts, and forbid agents from preparing/labeling merely at PR creation.
 
-- Remove obsolete publication classifications and location labels from operator output, active policies and generated build/Golden reports. Use `BUILD_RECEIPT.json`, `DIST_RECEIPT.json`, `GOLDEN_PASS` and `golden/` consistently across producers, checks and GitHub artifacts; retain draft publication as its own explicit state. Keep Golden/runtime/hash gates, failure codes and rollback behavior, and reject reintroduced labels through Source QA. Preserve vendor bytes and retained historical evidence.
+- Audit C35-F002: reject symlinked Golden artifact/sidecar destinations and publish verified output from exclusively opened temporary files; preserve native acceptance boundaries.
 
-- Extend the actual patched MinHook SAFE-FREEZE native fixture with two distinct hooks and queued/all-hook IP relocation checks: queued enable, queued disable, `MH_EnableHook(MH_ALL_HOOKS)`, `MH_DisableHook(MH_ALL_HOOKS)`, target-byte restoration, peer context writes and final ownership retirement (D326-F0006, Issue #20). No production or vendor changes.
+- Defer full hosted validation until a PR update newly integrates current main, with explicit `run-full-validation` PR label requests for already synchronized branches. Keep standalone manual dispatch diagnostic: required checks must actually attach to the PR before merge. Keep PR-opening and ordinary edit checks limited to source integrity, consolidate full source/portable/Windows/reference checks, retain all eleven required contexts and gate full jobs before matrix expansion and runner allocation. Waiting jobs are skipped under a distinct QA name that cannot shadow a real required result, not reported as artificial test failures; real Windows results remain required before merge. Make focused diagnostics manual and preserve weekly release validation.
 
-- Add automated real-DLL XML equivalence/value/malformed-frame recovery contracts across three TCP lifecycle cycles and run them on finalized Golden output. Strengthen the independent reader benchmark with ten shared fixtures, full-work digests, 20 randomized paired Release rounds, compiler/source receipts, separate allocation measurements and per-fixture uncertainty reports. Reject incomplete or misleading performance receipts in infrastructure tests; production parser/vendor/ABI/CRT behavior is unchanged.
+- Correct current XML dependency documentation to name pugixml, identify pre-migration TinyXML2 audit/CSV findings as historical, and record PR #149 as integrated in the owner requirements. Refresh the changelog heading and link recent integrated PRs; retain original archive provenance and external diagnostic-control references.
 
-- Add an A11-07 actual hook-transaction regression for the MH_ERROR_DISABLED return path: an already-inactive patch does not bypass active-call drain or a failed uninitialize, and later retries skip duplicate disable while preserving original slots and engine ownership. Test-only, no patched MinHook, vendor, ABI or shipping code changes.
+- [PR #117](https://github.com/raleonys/citrine-eclipse-mirage/pull/117): Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
 
-- Remove both obsolete TinyXML2 CMake target aliases at the owner's request. Use only the pugixml target names in active build policy and documentation, and retain the actual pugixml development project in Windows reference artifacts.
+- [PR #155](https://github.com/raleonys/citrine-eclipse-mirage/pull/155): Validate SOURCE_FILES byte counts alongside SHA-256, rejecting missing, malformed and stale sizes. Add matching-hash negative controls for multibyte/CRLF payloads and count-only tampering.
 
-- Complete the owner-authorized pugixml production migration in PR #149: replace the active TinyXML2 tree with the exact supplied pugixml 1.16 archive and MIT notice, retaining retired input provenance and the other three vendor pins. Preserve the XML interface, depth/error/newline and corrected reference-decoding policies behind first-party reader code; keep the production static CRT and separately compiled development shared CRT. Compile that actual reader in differential, sanitizer, allocation, router/AES/license and real-file storage fixtures, and add its reader/corpus/allocation contracts to portable CI. Reject retired TinyXML2 production sources and candidate oracle linkage; retain the independent external control, measured reference-only OOM leak and qualified MSVC Debug noexcept OOM results. DLL ABI and hook behavior are unchanged; native/Golden acceptance must run on the production migration head.
+- [PR #152](https://github.com/raleonys/citrine-eclipse-mirage/pull/152): Remove obsolete publication classifications and location labels from operator output, active policies and generated build/Golden reports. Use `BUILD_RECEIPT.json`, `DIST_RECEIPT.json`, `GOLDEN_PASS` and `golden/` consistently across producers, checks and GitHub artifacts; retain draft publication as its own explicit state. Keep Golden/runtime/hash gates, failure codes and rollback behavior, and reject reintroduced labels through Source QA. Preserve vendor bytes and retained historical evidence.
 
-- Test SAFE-FREEZE's patched MinHook peer-context write failure handling in the existing native fixture: an injected SetThreadContext failure during single-hook enable or disable must reject the transition, retain original/patch bytes and the live peer IP, release owned thread handles, and succeed on exact retry. No product/vendor/engine implementation change.
+- [PR #124](https://github.com/raleonys/citrine-eclipse-mirage/pull/124): Extend the actual patched MinHook SAFE-FREEZE native fixture with two distinct hooks and queued/all-hook IP relocation checks: queued enable, queued disable, `MH_EnableHook(MH_ALL_HOOKS)`, `MH_DisableHook(MH_ALL_HOOKS)`, target-byte restoration, peer context writes and final ownership retirement (D326-F0006, Issue #20). No production or vendor changes.
 
-- Confine MinHook header/status dependencies to the existing native hook-engine adapter, preserving application status values, virtual signatures and SAFE-FREEZE bytes. Compile the existing transaction and fake-engine tests as a portable target on Linux/Windows, and make direct native test dependencies explicit, including the Windows API header used by the native adapter fixture. Vendor inputs, patch output, lifecycle policy, DLL exports and CRT selection remain unchanged.
+- [PR #151](https://github.com/raleonys/citrine-eclipse-mirage/pull/151): Add automated real-DLL XML equivalence/value/malformed-frame recovery contracts across three TCP lifecycle cycles and run them on finalized Golden output. Strengthen the independent reader benchmark with ten shared fixtures, full-work digests, 20 randomized paired Release rounds, compiler/source receipts, separate allocation measurements and per-fixture uncertainty reports. Reject incomplete or misleading performance receipts in infrastructure tests; production parser/vendor/ABI/CRT behavior is unchanged.
 
-- Write CTest JUnit reports to absolute paths matching their artifact and weekly source-package inputs; reject missing reports after otherwise successful tests. Correct the isolated/full Windows portable diagnostic paths and update its strict inventory from 28 to the current 30 tests. Test selection, failure propagation, runtime/vendor sources, ABI and release publication policy are unchanged.
+- [PR #138](https://github.com/raleonys/citrine-eclipse-mirage/pull/138): Add an A11-07 actual hook-transaction regression for the MH_ERROR_DISABLED return path: an already-inactive patch does not bypass active-call drain or a failed uninitialize, and later retries skip duplicate disable while preserving original slots and engine ownership. Test-only, no patched MinHook, vendor, ABI or shipping code changes.
 
-- Run the root-ownership caller-isolation regression through existing portable and Windows Native infrastructure targets. Poison absolute Git selectors in a child process and verify the disposable caller's object store, refs, HEAD, config, index and worktree registry remain unchanged; preserve the underlying fixture-environment fix and all push gates.
+- [PR #150](https://github.com/raleonys/citrine-eclipse-mirage/pull/150): Remove both obsolete TinyXML2 CMake target aliases at the owner's request. Use only the pugixml target names in active build policy and documentation, and retain the actual pugixml development project in Windows reference artifacts.
+
+- [PR #149](https://github.com/raleonys/citrine-eclipse-mirage/pull/149): Complete the owner-authorized pugixml production migration in PR #149: replace the active TinyXML2 tree with the exact supplied pugixml 1.16 archive and MIT notice, retaining retired input provenance and the other three vendor pins. Preserve the XML interface, depth/error/newline and corrected reference-decoding policies behind first-party reader code; keep the production static CRT and separately compiled development shared CRT. Compile that actual reader in differential, sanitizer, allocation, router/AES/license and real-file storage fixtures, and add its reader/corpus/allocation contracts to portable CI. Reject retired TinyXML2 production sources and candidate oracle linkage; retain the independent external control, measured reference-only OOM leak and qualified MSVC Debug noexcept OOM results. DLL ABI and hook behavior are unchanged; native/Golden acceptance must run on the production migration head.
+
+- [PR #135](https://github.com/raleonys/citrine-eclipse-mirage/pull/135): Test SAFE-FREEZE's patched MinHook peer-context write failure handling in the existing native fixture: an injected SetThreadContext failure during single-hook enable or disable must reject the transition, retain original/patch bytes and the live peer IP, release owned thread handles, and succeed on exact retry. No product/vendor/engine implementation change.
+
+- [PR #148](https://github.com/raleonys/citrine-eclipse-mirage/pull/148): Confine MinHook header/status dependencies to the existing native hook-engine adapter, preserving application status values, virtual signatures and SAFE-FREEZE bytes. Compile the existing transaction and fake-engine tests as a portable target on Linux/Windows, and make direct native test dependencies explicit, including the Windows API header used by the native adapter fixture. Vendor inputs, patch output, lifecycle policy, DLL exports and CRT selection remain unchanged.
+
+- [PR #116](https://github.com/raleonys/citrine-eclipse-mirage/pull/116): Write CTest JUnit reports to absolute paths matching their artifact and weekly source-package inputs; reject missing reports after otherwise successful tests. Correct the isolated/full Windows portable diagnostic paths and update its strict inventory from 28 to the current 30 tests. Test selection, failure propagation, runtime/vendor sources, ABI and release publication policy are unchanged.
+
+- [PR #131](https://github.com/raleonys/citrine-eclipse-mirage/pull/131): Run the root-ownership caller-isolation regression through existing portable and Windows Native infrastructure targets. Poison absolute Git selectors in a child process and verify the disposable caller's object store, refs, HEAD, config, index and worktree registry remain unchanged; preserve the underlying fixture-environment fix and all push gates.
 
 - Resolve the Source QA report fixture root before output ancestry checks, matching the real entrypoint and Windows short/long temporary-path aliases. Preserve mandatory hardlink, early rejection and failed-write/replace checks.
 
-- Publish Source QA JSON reports through a closed exclusive temporary file and atomic name replacement, preserving source inodes behind hardlinked report names and the previous complete report after write/replace failure. Validate report destinations before running checks; retain the existing project-build boundary, missing-parent creation and nonzero failed-check result. Runtime, vendor, ABI and mandatory pre-push validation are unchanged.
+- [PR #137](https://github.com/raleonys/citrine-eclipse-mirage/pull/137): Publish Source QA JSON reports through a closed exclusive temporary file and atomic name replacement, preserving source inodes behind hardlinked report names and the previous complete report after write/replace failure. Validate report destinations before running checks; retain the existing project-build boundary, missing-parent creation and nonzero failed-check result. Runtime, vendor, ABI and mandatory pre-push validation are unchanged.
 
-- Isolate disposable root-ownership Git fixtures from repository-local environment variables inherited by hooks. Preserve the caller environment while preventing fixture init/commit/worktree commands from selecting its repository; verify the foreign linked-worktree HEAD, registry, index, config and tracked content remain unchanged. Keep the real worktree/forged-gitfile checks and mandatory push gate intact; runtime, vendor and ABI inputs are unchanged.
+- [PR #127](https://github.com/raleonys/citrine-eclipse-mirage/pull/127): Isolate disposable root-ownership Git fixtures from repository-local environment variables inherited by hooks. Preserve the caller environment while preventing fixture init/commit/worktree commands from selecting its repository; verify the foreign linked-worktree HEAD, registry, index, config and tracked content remain unchanged. Keep the real worktree/forged-gitfile checks and mandatory push gate intact; runtime, vendor and ABI inputs are unchanged.
 
-- Audit C34-F002: stage both source ZIP artifacts before publication, reject existing mismatched pairs, and restore the prior ZIP on checksum publication failure; document crash-atomicity limits.
-- Audit C34-F001: reject pre-existing symlinked source ZIP partials/output paths and use exclusively opened random temporary files for archive and checksum generation.
+- [PR #68](https://github.com/raleonys/citrine-eclipse-mirage/pull/68): Audit C34-F002: stage both source ZIP artifacts before publication, reject existing mismatched pairs, and restore the prior ZIP on checksum publication failure; document crash-atomicity limits.
+- [PR #67](https://github.com/raleonys/citrine-eclipse-mirage/pull/67): Audit C34-F001: reject pre-existing symlinked source ZIP partials/output paths and use exclusively opened random temporary files for archive and checksum generation.
 
 - Audit C34-F005: reject unrecognized active-source manifest schemas and misleading release-classification fields, keeping publication state separate from source identity.
 
@@ -50,6 +60,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 - Replace the README campaign artwork with the exact new owner-supplied 1400 x 1100 RGBA PNG (612724 bytes), preserving transparency and encoded bytes. Update the artwork identity/provenance and active manifest; runtime/profile avatars, production resources, ABI and code are unchanged.
 
 - Audit C34-F004: confine Python cache-cleanup report files to the owned build tree and publish them through exclusive temporary files; reject unsafe, directory and missing-parent destinations before deleting caches. Cover linked-directory escapes, hardlinked sources and failed report publication.
+
+- Exercise the real achievement grant's native XML/INI batch failure/retry with an owned Windows INI handle held without delete sharing: reject a locked second destination, verify both old files and in-memory progress/mutex/event rollback, then unlock and commit exactly one retry without retained staging files. Keep the existing source-included achievement implementation and atomic persistence policy unchanged.
 
 - Preserve the owner-authorized Draft status of existing four-field research PR #81 as a narrow exception to the normal ready-for-review PR rule; record its continuing source-provenance scope without treating the work as a routine audit, production release or automatic merge. Update governance, agent workflow and PR guidance only; no runtime, vendor or ABI change.
 
@@ -122,8 +134,10 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 - Replace 58 research-era labels in first-party `src/` and `include/` comments and five diagnostic messages with technical wording; enforce a terminology regression check without modifying runtime control flow, file names or ABI identifiers.
 
+- Audit C36-F001: prevent untrusted QueryImage cache owner/width components from reaching online provider paths while preserving normal responses and safe inputs; Windows provider acceptance remains pending.
 - Normalize first-party implementation identifiers, add SPDX ownership headers, place Python before CMake and keep the CI README badge last.
 
+- Audit F-C28-001: retain buffered Debug startup diagnostics across failed log-file opens, with source-linked native recovery and Release no-log regressions.
 - Add a CMake 3.20+ README build-system badge linked to the build configuration; avoid unverified release or test-status badges.
 - Add a Python 3.9+ README prerequisites badge linked to the development instructions.
 - Apply the previously approved `GPL-3.0-only` licensing policy with the complete GNU GPLv3 text in the root `LICENSE` and governance; preserve independent vendor licenses and add a README license badge.
@@ -132,6 +146,10 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 - Remove redundant project-name declarations and branding-transition commentary from current documentation; existing independent technical contracts are unchanged.
 - Integrate the owner's final campaign artwork into the README hero, with exact PNG identity pinned in the branding contract and active source manifest.
 - Update repository URLs to the renamed GitHub project.
+
+### Historical merged-PR checkpoint through #62
+
+The following 52 entries were verified through PR #62. The GitHub Releases collection was empty at that checkpoint; this historical count and release observation do not describe the current repository state.
 
 ### 2026-10-31
 

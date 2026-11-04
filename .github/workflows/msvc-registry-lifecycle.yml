@@ -2,19 +2,6 @@
 name: Windows registry lifecycle acceptance
 
 on:
-  pull_request:
-    paths:
-      - "include/preloader_l/platform/registry*.hpp"
-      - "include/preloader_l/platform/callback_lock.hpp"
-      - "include/preloader_l/platform/hook_native_callbacks.hpp"
-      - "src/platform/registry.cpp"
-      - "src/platform/hook_native_callbacks.cpp"
-      - "src/platform/hook_original_effects.cpp"
-      - "src/runtime/application.cpp"
-      - "tests/unit/registry/**"
-      - "cmake/Tests.cmake"
-      - "CMakeLists.txt"
-      - ".github/workflows/msvc-registry-lifecycle.yml"
   workflow_dispatch:
 
 permissions:
