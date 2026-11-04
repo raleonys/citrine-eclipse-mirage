@@ -50,8 +50,10 @@ source QA, portable tests, native MSVC/Golden checks and real game acceptance.
       this commit before requesting review.
 - [ ] PR creation needs only hosted source integrity. After synchronization,
       inspect the automatically scheduled full validation; do not duplicate it.
-      If already synchronized with no push, add the `run-full-validation` PR
-      label only when no successful or active exact-head PR run exists. Missing full
+      Never prepare or label full validation merely at PR creation. On a later
+      synchronization request with no push, complete `operation=synchronize-pr`
+      for this PR/head/current main before adding `run-full-validation`, only
+      when no successful or active exact-head PR run exists. Missing full
       checks remain required before merge; focused diagnostics are manual.
 
 ## Remaining work

@@ -44,8 +44,11 @@ class ValidationReadinessTests(unittest.TestCase):
                       'before': 'e' * 40, 'after': self.head,
                       'repository': {'default_branch': 'main'},
                       'pull_request': {'head': {'sha': self.head},
+                                       'updated_at': '2026-11-04T12:00:00Z',
                                        'base': {'sha': 'c' * 40}}}
-        self.current = {'state': 'open', 'head': {'sha': self.head},
+        self.current = {'state': 'open', 'created_at': '2026-11-04T10:00:00Z',
+                        'head': {'sha': self.head, 'ref': 'feature/sync',
+                                 'repo': {'full_name': self.repository}},
                         'base': {'ref': 'main'}}
         self.main = self.base
         self.selected = self.head
@@ -53,6 +56,8 @@ class ValidationReadinessTests(unittest.TestCase):
         self.previous = {'status': 'diverged', 'merge_base_commit': {'sha': 'c' * 40}}
         self.associated = []
         self.calls = []
+        self.sync_runs = {1: []}
+        self.sync_jobs = {1: []}
 
     def api(self, endpoint):
         self.calls.append(endpoint)
@@ -67,8 +72,17 @@ class ValidationReadinessTests(unittest.TestCase):
             return {'object': {'sha': self.selected}}
         if endpoint == prefix + '/compare/' + self.main + '...' + self.head:
             return self.comparison
-        if endpoint == prefix + '/compare/' + self.main + '...' + self.event['before']:
+        if endpoint == prefix + '/compare/' + self.main + '...' + self.event.get('before', ''):
             return self.previous
+        match = re.fullmatch(re.escape(prefix + '/actions/workflows/msvc-reference-graph.yml/runs?'
+                                       'event=workflow_dispatch&head_sha=' + self.head +
+                                       '&per_page=100&page=') + r'([0-9]+)', endpoint)
+        if match:
+            return {'workflow_runs': self.sync_runs.get(int(match[1]), [])}
+        match = re.fullmatch(re.escape(prefix + '/actions/runs/101/jobs?filter=latest&per_page=100&page=') +
+                             r'([0-9]+)', endpoint)
+        if match:
+            return {'jobs': self.sync_jobs.get(int(match[1]), [])}
         self.fail('Unexpected GitHub endpoint: ' + endpoint)
 
     def decision(self, name='pull_request', ref='refs/heads/feature/sync'):
@@ -87,13 +101,22 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertNotEqual(self.event['pull_request']['base']['sha'], decision.base_sha)
         self.assertTrue(any(self.base + '...' + self.head in call for call in self.calls))
 
-    def request_pr_validation(self):
+    def request_pr_validation(self, verified=True):
         self.event['action'] = 'labeled'
         self.event['label'] = {'name': 'run-full-validation'}
         self.current['labels'] = [{'name': 'run-full-validation'}]
         # A real labeled webhook has neither synchronization identity field.
         del self.event['before']
         del self.event['after']
+        if verified:
+            self.sync_runs[1] = [{'id': 101, 'event': 'workflow_dispatch',
+                                  'path': ci_readiness.VALIDATION_WORKFLOW,
+                                  'head_sha': self.head, 'head_branch': 'feature/sync',
+                                  'status': 'completed', 'conclusion': 'success',
+                                  'created_at': '2026-11-04T11:00:00Z',
+                                  'updated_at': '2026-11-04T11:01:00Z'}]
+            self.sync_jobs[1] = [{'name': ci_readiness.sync_job_name(23, self.base, self.head),
+                                  'status': 'completed', 'conclusion': 'success'}]
 
     def test_explicit_label_requests_tests_in_pr_context_without_a_head_push(self):
         self.request_pr_validation()
@@ -102,6 +125,171 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertEqual(self.head, decision.head_sha)
         self.assertEqual(self.base, decision.base_sha)
         self.assertIn('repos/owner/project/pulls/23', self.calls)
+
+    def test_initial_label_on_a_current_branch_cannot_start_full_tests(self):
+        self.request_pr_validation(verified=False)
+        decision = self.decision()
+        self.assertFalse(decision.run_tests)
+        self.assertIn('subsequent PR synchronization request', decision.reason)
+
+    def test_repeated_initial_labels_cannot_create_their_own_sync_proof(self):
+        self.request_pr_validation(verified=False)
+        for _ in range(3):
+            self.assertFalse(self.decision().run_tests)
+
+    def test_sync_proof_is_bound_to_pr_number_head_and_current_main(self):
+        self.request_pr_validation()
+        for number, base, head in ((24, self.base, self.head),
+                                   (23, 'd' * 40, self.head),
+                                   (23, self.base, 'd' * 40)):
+            self.sync_jobs[1][0]['name'] = ci_readiness.sync_job_name(number, base, head)
+            self.assertFalse(self.decision().run_tests)
+
+    def test_only_a_successful_preparation_job_from_the_selected_workflow_is_proof(self):
+        self.request_pr_validation()
+        original = dict(self.sync_runs[1][0])
+        for key, value in (('event', 'pull_request'), ('path', '.github/workflows/other.yml'),
+                           ('head_sha', 'd' * 40), ('head_branch', 'other'),
+                           ('status', 'in_progress'), ('conclusion', 'failure')):
+            self.sync_runs[1] = [dict(original, **{key: value})]
+            self.assertFalse(self.decision().run_tests)
+        self.sync_runs[1] = [original]
+        for conclusion in ('skipped', 'failure', 'cancelled'):
+            self.sync_jobs[1][0]['conclusion'] = conclusion
+            self.assertFalse(self.decision().run_tests)
+
+    def test_premature_label_cannot_adopt_a_later_sync_request(self):
+        self.request_pr_validation()
+        self.event['pull_request']['updated_at'] = '2026-11-04T10:30:00Z'
+        self.assertFalse(self.decision().run_tests)
+        self.event['pull_request']['updated_at'] = '2026-11-04T12:00:00Z'
+        self.assertTrue(self.decision().run_tests)
+
+    def test_preparation_before_opening_or_after_labeling_is_not_proof(self):
+        self.request_pr_validation()
+        original = dict(self.sync_runs[1][0])
+        for changes in ({'created_at': '2026-11-04T09:00:00Z'},
+                        {'updated_at': '2026-11-04T13:00:00Z'},
+                        {'created_at': '2026-11-04T11:02:00Z'}):
+            self.sync_runs[1] = [dict(original, **changes)]
+            self.assertFalse(self.decision().run_tests)
+
+    def test_sync_proof_search_paginates_runs_and_jobs(self):
+        self.request_pr_validation()
+        self.sync_runs[2] = self.sync_runs[1]
+        self.sync_runs[1] = [{'event': 'push'}] * 100
+        self.sync_jobs[2] = self.sync_jobs[1]
+        self.sync_jobs[1] = [{'name': 'Standalone diagnostic'}] * 100
+        self.assertTrue(self.decision().run_tests)
+        self.assertTrue(any('runs?' in c and c.endswith('page=2') for c in self.calls))
+        self.assertTrue(any('jobs?' in c and c.endswith('page=2') for c in self.calls))
+
+    def prepare_sync_request(self):
+        self.event['inputs'] = {'operation': 'synchronize-pr', 'pr_number': '23',
+                                'sync_base': self.base}
+
+    def record_sync(self, ref='refs/heads/feature/sync'):
+        return ci_readiness.record_sync_request('workflow_dispatch', self.event,
+                                                self.repository, self.head, ref, self.api)
+
+    def test_later_noop_sync_verification_succeeds_without_starting_tests(self):
+        self.prepare_sync_request()
+        decision = self.record_sync()
+        self.assertFalse(decision.run_tests)
+        self.assertEqual(self.head, decision.head_sha)
+        self.assertEqual(self.base, decision.base_sha)
+        self.assertIn('verified', decision.reason)
+
+    def test_preparation_mode_cannot_fall_through_to_full_diagnostics(self):
+        self.prepare_sync_request()
+        self.assertFalse(self.decision('workflow_dispatch').run_tests)
+        self.assertEqual([], self.calls)
+
+    def test_sync_verification_requires_the_exact_open_owned_branch(self):
+        self.prepare_sync_request()
+        for ref in ('refs/heads/main', 'refs/tags/v1'):
+            with self.assertRaises(ValueError):
+                self.record_sync(ref)
+        original = json.loads(json.dumps(self.current))
+        for change in ('closed', 'head', 'fork', 'base'):
+            self.current = json.loads(json.dumps(original))
+            if change == 'closed': self.current['state'] = 'closed'
+            if change == 'head': self.current['head']['sha'] = 'd' * 40
+            if change == 'fork': self.current['head']['repo']['full_name'] = 'other/project'
+            if change == 'base': self.current['base']['ref'] = 'other'
+            with self.assertRaises(ValueError):
+                self.record_sync()
+
+    def test_sync_verification_rejects_stale_main_and_an_unremoved_initial_label(self):
+        self.prepare_sync_request()
+        self.current['labels'] = [{'name': 'run-full-validation'}]
+        with self.assertRaises(ValueError): self.record_sync()
+        self.current['labels'] = []
+        self.event['inputs']['sync_base'] = 'd' * 40
+        with self.assertRaises(ValueError): self.record_sync()
+        self.event['inputs']['sync_base'] = self.base
+        self.comparison = {'status': 'diverged'}
+        with self.assertRaises(ValueError): self.record_sync()
+
+    def test_preparation_validates_operation_pr_number_and_commit_inputs(self):
+        self.prepare_sync_request()
+        for number in ('', '0', '-1', '23/other', '023', 23):
+            self.event['inputs']['pr_number'] = number
+            with self.assertRaises(ValueError): self.record_sync()
+        self.event['inputs']['pr_number'] = '23'
+        self.event['inputs']['operation'] = 'diagnostic'
+        with self.assertRaises(ValueError): self.record_sync()
+
+    def test_bad_sync_receipt_identity_and_timestamp_fail_closed(self):
+        self.request_pr_validation()
+        self.sync_runs[1][0]['id'] = '101/jobs'
+        with self.assertRaises(ValueError): self.decision()
+        self.sync_runs[1][0]['id'] = 101
+        self.sync_runs[1][0]['updated_at'] = '2026-11-04T11:01:00'
+        with self.assertRaises(ValueError): self.decision()
+
+    def run_cli(self, directory, event_name, record=False):
+        root = Path(directory)
+        event = root / 'event.json'
+        event.write_text(json.dumps(self.event))
+        output = root / 'output'
+        argv = ['ci_validation_readiness.py', '--event-name', event_name,
+                '--event-path', str(event), '--repository', self.repository,
+                '--sha', self.head, '--ref', 'refs/heads/feature/sync',
+                '--output', str(output), '--summary', str(root / 'summary')]
+        if record: argv.append('--record-sync')
+        with patch.object(sys, 'argv', argv), \
+                patch.object(ci_readiness, 'github_json', side_effect=self.api), \
+                contextlib.redirect_stdout(io.StringIO()):
+            result = ci_readiness.main()
+        return result, output.read_text()
+
+    def test_cli_preparation_records_current_identity_without_full_test_permission(self):
+        self.prepare_sync_request()
+        with tempfile.TemporaryDirectory() as directory:
+            status, output = self.run_cli(directory, 'workflow_dispatch', record=True)
+        self.assertEqual(0, status)
+        self.assertIn('run_tests=false\n', output)
+        self.assertIn('head_sha=' + self.head + '\n', output)
+        self.assertIn('base_sha=' + self.base + '\n', output)
+        self.assertIn('verified', output)
+
+    def test_cli_premature_label_defers_without_fabricating_a_test_failure(self):
+        self.request_pr_validation(verified=False)
+        with tempfile.TemporaryDirectory() as directory:
+            status, output = self.run_cli(directory, 'pull_request')
+        self.assertEqual(0, status)
+        self.assertIn('run_tests=false\n', output)
+        self.assertNotIn('run_tests=true', output)
+
+    def test_cli_failed_preparation_cannot_create_a_successful_receipt(self):
+        self.prepare_sync_request()
+        self.event['inputs']['sync_base'] = 'd' * 40
+        with tempfile.TemporaryDirectory() as directory:
+            status, output = self.run_cli(directory, 'workflow_dispatch', record=True)
+        self.assertEqual(1, status)
+        self.assertIn('run_tests=false\n', output)
+        self.assertNotIn('head_sha=' + self.head, output)
 
     def test_removed_request_label_cannot_start_full_tests(self):
         self.request_pr_validation()
@@ -240,7 +428,12 @@ class ValidationReadinessTests(unittest.TestCase):
         blocks = dict(re.findall(r'^  ([a-z-]+):\n(.*?)(?=^  [a-z-]+:|\Z)',
                                  workflow.split('\njobs:\n', 1)[1], re.M | re.S))
         required = {'source-qa', 'windows', 'windows-portable', 'reference-graph'}
-        self.assertEqual(required | {'readiness'}, set(blocks))
+        self.assertEqual(required | {'readiness', 'sync-request'}, set(blocks))
+        self.assertIn("if: github.event_name != 'workflow_dispatch' || inputs.operation != 'synchronize-pr'", blocks['readiness'])
+        self.assertIn("if: github.event_name == 'workflow_dispatch' && inputs.operation == 'synchronize-pr'", blocks['sync-request'])
+        self.assertIn('scripts/ci_validation_readiness.py --record-sync', blocks['sync-request'])
+        self.assertIn("inputs.operation == 'synchronize-pr' && 'sync-request'", workflow)
+        self.assertIn("name: 'PR sync #${{ inputs.pr_number }}: ${{ inputs.sync_base }} / ${{ github.sha }}'", blocks['sync-request'])
         for name in required:
             block = blocks[name]
             self.assertIn("\n    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}", block)

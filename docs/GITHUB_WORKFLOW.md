@@ -241,34 +241,54 @@ run for that branch. Strict current-main branch protection still applies if
 `main` advances during validation.
 
 After normal synchronization and push, inspect the automatically created run;
-do not immediately request a duplicate. When synchronization makes no commit,
-or a retry is explicitly needed, add the **run-full-validation** label to the
-open PR using its Labels menu, or use:
+do not request a duplicate. Never add **run-full-validation** or dispatch
+synchronization preparation merely because a new PR was opened. An initial
+label without verification cannot allocate full test runners.
+
+When the owner subsequently requests synchronization and no push is needed,
+or explicitly requests a retry, first check that no successful or active full
+PR validation exists for this exact head. Remove any old/premature validation
+label, then select the PR source branch in Actions and choose the lightweight
+**synchronize-pr** operation. Supply the open PR number and exact current main
+SHA, or use:
+
+```sh
+gh workflow run msvc-reference-graph.yml --ref <pr-branch> \
+  -f operation=synchronize-pr -f pr_number=<pr-number> \
+  -f sync_base=<current-main-sha>
+```
+
+Preparation verifies the live open PR, selected owned branch, exact head and
+main ancestry. It runs one short Ubuntu job, without Source QA, compilation,
+Windows runners or Golden execution. Its successful job name binds the PR
+number, main SHA and head SHA. Wait for this preparation run to complete
+successfully; only then request full tests:
 
 ```sh
 gh pr edit <pr-number> --add-label run-full-validation
 ```
 
-This creates a `pull_request: labeled` run, so the full required checks belong
-to the PR's validation context. Before retrying, verify that no eligible full
-run is active or already successful for this exact head. If the label is
-already present and a new run is needed, remove it and then add it again.
-Removing it alone does not start tests. Other labels do not request tests or
-cancel a requested full run. Unrequested source QA jobs use the distinct
-`Source QA deferred` name, so a skipped record cannot replace a real required
-QA result for the same head. Keeping the label does not cause subsequent
-ordinary head edits to run the full suite automatically.
+The label handler independently checks the completed preparation run and its
+successful matching job. Verification must start after PR creation and finish
+before this label event. Other PRs, heads, main revisions, failed/skipped jobs,
+ordinary diagnostics and later-completing preparations cannot authorize it.
+An early label is not grandfathered: remove it before preparation and add it
+after success. Main can remain unchanged; no empty merge/trigger commit is
+needed for a later explicit synchronization request.
 
-The live open PR, exact head, label and current main ancestry are verified
-before any full test job starts. A stale branch must first integrate current
-main. Before merging, inspect the PR's actual required check conclusions;
-a successful standalone dispatch that does not satisfy those contexts is not
-merge acceptance. Do not manufacture an empty commit merely to trigger testing.
+GitHub does not expose per-phase label permissions: a collaborator may still
+physically add a label, but an ineligible label cannot schedule full tests.
+The waiting verification job is not a native/product test failure or PASS.
+Other labels do not request tests or cancel a full run. Retaining the label
+does not automatically validate later ordinary commits. Preparation has its
+own concurrency group and cannot cancel an active full run. Required test
+names, assertions, timeouts and branch protection remain unchanged.
 
-The Actions **Run workflow** button remains available for standalone diagnostics
-on a selected current branch containing current main. Selecting a tag, stale
-head or stale branch is rejected. Use the PR label request for merge validation,
-rather than relying on a standalone workflow-dispatch run to populate PR checks.
+Standalone diagnostics require an explicit **diagnostic** operation selection;
+preparation is the safe default of **Run workflow**. Diagnostics are not a way
+to bypass initial-PR scheduling policy or a substitute for required PR checks.
+Before merging, inspect actual current-head required conclusions. Skipped QA
+keeps a distinct name and cannot shadow a real required QA result.
 
 Explicit validation still requires changelog coverage. The only exemption is
 the existing owner-reviewed `changelog-exempt` label on an open PR with that

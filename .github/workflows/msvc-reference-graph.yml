@@ -6,20 +6,51 @@ on:
   pull_request:
     types: [synchronize, labeled]
   workflow_dispatch:
+    inputs:
+      operation:
+        description: Prepare a later PR synchronization request, or run standalone diagnostics
+        type: choice
+        options: [synchronize-pr, diagnostic]
+        default: synchronize-pr
+      pr_number:
+        description: Open PR number for synchronization preparation
+        type: string
+      sync_base:
+        description: Exact current main commit for synchronization preparation
+        type: string
 
 permissions:
   contents: read
   pull-requests: read
+  actions: read
 
 concurrency:
-  group: full-validation-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.event.pull_request.head.ref || github.ref_name }}-${{ github.event.action == 'labeled' && github.event.label.name != 'run-full-validation' && 'unrequested-label' || 'selected-head' }}
+  group: full-validation-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.event.pull_request.head.ref || github.ref_name }}-${{ github.event_name == 'workflow_dispatch' && inputs.operation == 'synchronize-pr' && 'sync-request' || (github.event.action == 'labeled' && github.event.label.name != 'run-full-validation' && 'unrequested-label' || 'selected-head') }}
   cancel-in-progress: true
 
 env:
   PYTHONDONTWRITEBYTECODE: "1"
 
 jobs:
+  sync-request:
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'synchronize-pr'
+    name: 'PR sync #${{ inputs.pr_number }}: ${{ inputs.sync_base }} / ${{ github.sha }}'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          sparse-checkout: scripts/ci_validation_readiness.py
+          sparse-checkout-cone-mode: false
+      - name: Verify the explicitly selected PR head and current main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -B scripts/ci_validation_readiness.py --record-sync
+
   readiness:
+    if: github.event_name != 'workflow_dispatch' || inputs.operation != 'synchronize-pr'
     name: Check main synchronization
     runs-on: ubuntu-24.04
     timeout-minutes: 5
