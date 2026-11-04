@@ -10,9 +10,7 @@ function Fail-Build {
     exit $Code
 }
 
-# Local build is not an official release/promotion transaction.
-# No Library access, G0 release intent, or publication receipt is required to compile.
-# Retain toolchain, build-directory confinement, source/build failures and binary QA.
+# Validate prerequisites before configuring the selected build profile.
 function Assert-DevelopmentBuildPreflight {
     $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..\..')).Path
     if (-not (Test-Path -LiteralPath (Join-Path $root 'CMakeLists.txt') -PathType Leaf)) {

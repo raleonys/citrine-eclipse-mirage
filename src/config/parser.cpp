@@ -7,7 +7,7 @@
 
 namespace preloader_l::parser {
 ParseError::ParseError(ErrorRule r,Position p)
- :std::runtime_error("recovered Config2 grammar mismatch"),rule(r),position(p) {}
+ :std::runtime_error("Config2 grammar mismatch"),rule(r),position(p) {}
 const Node* Node::find(std::string_view key) const {
     for(const auto& node:children) if(node.name==key)return &node;
     return nullptr;
@@ -33,6 +33,40 @@ template<> struct VdfAction<vdf::RegularByte> {
         state.accumulator.push_back(input.peek_char());
     }
 };
+// Reject excessive object nesting before PEGTL recursively enters Object.
+// Braces in quoted bytes and comments are not structural grammar tokens.
+constexpr std::size_t max_object_depth=128;
+void check_object_depth(std::string_view raw) {
+    enum class Mode {normal,quoted,line_comment,block_comment};
+    Mode mode=Mode::normal;
+    std::size_t depth=0,line=1,column=1;
+    for(std::size_t i=0;i<raw.size();++i) {
+        const char c=raw[i];
+        const char next=i+1<raw.size()?raw[i+1]:'\0';
+        if(mode==Mode::quoted) {
+            if(c=='\\'&&(next=='"'||next=='\\')) {++i;column+=2;continue;}
+            if(c=='"')mode=Mode::normal;
+        } else if(mode==Mode::line_comment) {
+            if(c=='\n')mode=Mode::normal;
+        } else if(mode==Mode::block_comment) {
+            if(c=='*'&&next=='/') {mode=Mode::normal;++i;column+=2;continue;}
+        } else if(c=='"') {
+            mode=Mode::quoted;
+        } else if(c=='/'&&next=='/') {
+            mode=Mode::line_comment;++i;column+=2;continue;
+        } else if(c=='/'&&next=='*') {
+            mode=Mode::block_comment;++i;column+=2;continue;
+        } else if(c=='{') {
+            if(depth==max_object_depth)
+                throw ParseError(ErrorRule::grammar,{i,line,column});
+            ++depth;
+        } else if(c=='}'&&depth!=0) {
+            --depth;
+        }
+        if(c=='\n') {++line;column=1;}
+        else ++column;
+    }
+}
 void take_accumulator(State& state,std::string& destination) {
     destination=std::move(state.accumulator);state.accumulator.clear();
 }
@@ -93,7 +127,8 @@ configuration::Node convert(const Node& node,const BinaryIterationOrder& orders,
 bool parse(std::string_view raw,State& state) {
     state.removed_utf8_bom=raw.substr(0,3)==std::string_view("\xef\xbb\xbf",3);
     if(state.removed_utf8_bom)raw.remove_prefix(3);
-    // Explicit LF-only counting matches the recovered byte/line/column contract
+    check_object_depth(raw); // No PEGTL actions have executed at this point.
+    // Explicit LF-only counting matches the byte/line/column contract
     // for CR, LF and CRLF on both hosts. Empty views may otherwise have nullptr data.
     peg::text_view_input<peg::ascii::scan::lf> input(raw.empty()?std::string_view(""):raw);
     return peg::parse<vdf::Document,VdfAction,VdfControl>(input,state);

@@ -23,8 +23,8 @@ struct Table:s::IoHandlerVtable{
  void move_slot_10(s::IoHandlerEnvironment& to,s::IoHandlerEnvironment& from)override{++moves;to.payload_00=from.payload_00;to.state_18=from.state_18;}
  std::uintptr_t query_slot_18(s::IoHandlerEnvironment&)override{return 0xabc;}
 };
-struct Effects:s::ComposedWriteEffects{
- using ComposedWriteEffects::ComposedWriteEffects;
+struct Effects:s::ComposedWriteEffectsAdapter{
+ using ComposedWriteEffectsAdapter::ComposedWriteEffectsAdapter;
  s::AsyncSendOperation& project_async_send(s::OperationStorage&)override;
  void construct_environment_023dd0(s::IoHandlerEnvironment&,std::uintptr_t)override;
  void finish_write_025a70(s::SendHandler&,s::Error&)override;

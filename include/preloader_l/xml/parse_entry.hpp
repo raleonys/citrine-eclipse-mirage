@@ -12,7 +12,7 @@ public:
     virtual ~NativeParseEntryEffects()=default;
     virtual std::int32_t classify_051fc0(std::uint32_t byte)=0;
     // The void entry projection discards the tail target's return value. These
-    // are observed register arguments, not a recovered native callee ABI.
+    // are observed register arguments, not a verified native callee ABI.
     virtual void parse_virtual(std::uintptr_t target,std::uintptr_t document,
         std::uintptr_t cursor,std::uintptr_t zero_argument,std::uintptr_t line_counter)=0;
 };

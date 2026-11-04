@@ -43,7 +43,7 @@ struct Fixture {
     static constexpr std::array<std::uintptr_t,4> pool_targets{0x180002b10ULL,0x180002600ULL,0x180002960ULL,0x1800027b0ULL};
     static constexpr std::array<unsigned,5> offsets{0x288,0x288,0x108,0x208,0x288};
     Memory raw;node_parse_test::Nodes nodes;s::NativeErrorArgumentTail arguments{0xf100};PoolLower pool_lower;
-    s::PoolAllocationContext pool_context{raw.memory,pool_lower};s::PoolAllocationEffects selected{pool_context};Recording allocations{selected};
+    s::PoolAllocationContext pool_context{raw.memory,pool_lower};s::PoolAllocationEffectsAdapter selected{pool_context};Recording allocations{selected};
     Effects effects{raw,nodes,arguments,allocations};s::NativeDocumentContext document{raw.memory,effects};s::NativeMessageDocument projection;
     std::array<std::uint8_t,64> copied{};std::array<std::uint8_t,0x88> document_vtable{};
     std::array<std::array<std::uint8_t,0x88>,5> node_vtables{};

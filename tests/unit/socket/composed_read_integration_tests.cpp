@@ -52,10 +52,10 @@ struct Reader:s::ComposedReadEffects {
     s::AsyncSendOperation& project_async_send(s::OperationStorage&)override{r::unexpected();}
     s::Category misc_category_0285b0()override{return {0x3333};}
 };
-struct ReceiveEffects:s::AsyncReceiveEffects {
+struct ReceiveEffects:s::AsyncReceiveEffectsAdapter {
     Memory& memory;
     ReceiveEffects(Memory& memory,s::IoHandlerSentinels sentinels,s::IoEnvironmentConstructorContext& constructor,std::span<s::IoEnvironmentSourceBinding> sources)
-        :AsyncReceiveEffects(sentinels,constructor,sources),memory(memory){}
+        :AsyncReceiveEffectsAdapter(sentinels,constructor,sources),memory(memory){}
     s::AsyncReceiveOperation& project_async_receive(s::OperationStorage&)override;
 };
 struct Routing:s::IoDispatcherEffects {

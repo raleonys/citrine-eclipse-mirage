@@ -7,7 +7,7 @@
 
 namespace preloader_l::event_queue {
 // New composition adapters over one Context, not separate original functions.
-// They add no locking; recovered caller bodies determine lock ordering.
+// They add no locking; caller bodies determine lock ordering.
 class ContentQueue final:public content_handlers::EventQueue {
 public:
     explicit ContentQueue(Context& context):context_(context){}

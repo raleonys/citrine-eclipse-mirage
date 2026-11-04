@@ -98,7 +98,7 @@ void full_chain(){
         Acceptor api;Post completion;completion.fail=failed_post;s::CompletionScheduler scheduler(fallback_gate);scheduler.port=123;s::CancellationState queue;queue.scheduler=&scheduler;queue.wake.socket=errors.wake;
         s::OwnedRecycleMap storage(3);std::array<s::CancelOperation,3> operations;
         for(auto& op:operations){op.overlapped.Internal=0x7788;op.queued=99;storage.append(13,op);}auto* original=&storage.insert(13);queue.maps[0]=storage.map();
-        std::array<s::RecycleMap*,1> metadata{&storage.metadata()};Failure failure;s::CancellationRecycler recycler(metadata,failure);
+        std::array<s::RecycleMap*,1> metadata{&storage.metadata()};Failure failure;s::CancellationRecyclerAdapter recycler(metadata,failure);
         s::QueueCancellationEffects cancellation(engine,queue,recycler,completion,errors);std::array<s::RegistryServiceBinding,1> bindings{{{&entry,&service,&context}}};Executor executor;
         s::RegistryLifecycleEffects bridge(registry,{42},required,bindings,errors,api,cancellation,executor);s::AcceptorState state;s::SocketObject object(state);Factory factory;Runtime runtime(object,{42},bridge,factory);
         executor.expected=&object;executor.token=0x180084928ULL;

@@ -45,6 +45,12 @@ void xml_updates() {
         achievement_storage::Storage storage(probe.paths,proxy,probe.numbers,probe.effects,probe.files);storage.update_01eb00(probe.state);
         require(probe.state.achievements.contains("proxy-id")==!error,"document error state controls import; parser numeric return code ignored");
     }
+    Fixture references;references.paths.xml_path=u"owned-entity-fixture.xml";
+    references.files.input[references.paths.xml_path]=R"(<R><A Id="pre&#x100000000;suffix" Count="4" Name="&amp;&#65;&x1f600;"/><A Id="pre&#0;suffix" Count="2"/></R>)";
+    references.storage.update_01eb00(references.state);
+    require(references.state.achievements.size()==2 && references.state.achievements.at("pre&#x100000000;suffix").field04==4,"oversized reference preserves entire achievement key");
+    require(references.state.achievements.at("pre&#0;suffix").field04==2,"NUL reference cannot truncate an achievement key");
+    require(references.state.achievements.at("pre&#x100000000;suffix").display_name=="&A&x1f600;","unknown entity after compaction cannot corrupt persisted achievement name");
 }
 struct AttributeNode final:messages::XmlNode {
     std::optional<std::string> value;

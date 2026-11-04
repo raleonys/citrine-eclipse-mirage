@@ -4,13 +4,13 @@
 #include <algorithm>
 
 namespace preloader_l::socket {
-void PrefixCipherBlocks::decrypt_ecb_045620(PrefixCipherState& state,std::uintptr_t address){
+void PrefixCipherBlocksAdapter::decrypt_ecb_045620(PrefixCipherState& state,std::uintptr_t address){
     state.schedule.decrypt_block_0458d0(std::span<std::uint8_t,16>(memory_.view(address,16).data(),16));
 }
-void PrefixCipherBlocks::encrypt_ecb_045630(PrefixCipherState& state,std::uintptr_t address){
+void PrefixCipherBlocksAdapter::encrypt_ecb_045630(PrefixCipherState& state,std::uintptr_t address){
     state.schedule.encrypt_block_045670(std::span<std::uint8_t,16>(memory_.view(address,16).data(),16));
 }
-void PrefixCipherBlocks::decrypt_cbc_0454e0(PrefixCipherState& state,std::uintptr_t address,std::uint64_t count){
+void PrefixCipherBlocksAdapter::decrypt_cbc_0454e0(PrefixCipherState& state,std::uintptr_t address,std::uint64_t count){
     if(!count)return;auto remaining=((count-1)>>4)+1;
     do{
         const auto bytes=memory_.view(address,16);crypto::Key original;std::copy(bytes.begin(),bytes.end(),original.begin());
@@ -19,7 +19,7 @@ void PrefixCipherBlocks::decrypt_cbc_0454e0(PrefixCipherState& state,std::uintpt
         state.iv_b4=original;address+=16;
     }while(--remaining);
 }
-void PrefixCipherBlocks::encrypt_cbc_045580(PrefixCipherState& state,std::uintptr_t address,std::uint64_t count){
+void PrefixCipherBlocksAdapter::encrypt_cbc_045580(PrefixCipherState& state,std::uintptr_t address,std::uint64_t count){
     auto previous=state.iv_b4;
     if(count){auto remaining=((count-1)>>4)+1;do{
         const auto bytes=memory_.view(address,16);
