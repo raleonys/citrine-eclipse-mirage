@@ -14,6 +14,11 @@ void require(bool condition, const char* label) {
     ++assertions;
     if (!condition) throw std::runtime_error(label);
 }
+template<class F> void rejects_runtime(F operation,const char* label) {
+    bool caught=false;
+    try {operation();} catch(const std::runtime_error&) {caught=true;}
+    require(caught,label); // The assertion must be outside the operation's catch.
+}
 Path utf16(std::string_view text) { return {text.begin(), text.end()}; }
 std::string ascii(const Path& path) { return preloader_l::test_support::fixture_ascii(path); }
 void fixture_ascii_contract() {
@@ -139,12 +144,10 @@ void helpers() {
     require(paths==std::vector<Path>{u"RESOLVED/first",u"RESOLVED/ spaced "},"CSV skips empties but preserves whitespace");
     apply_csv_paths(paths,",,",u"C:/synthetic/host.exe",m);require(paths.empty(),"nonempty all-empty CSV clears old list");
     m.fail_resolve="bad";
-    try{apply_csv_paths(paths,"good,bad,later",u"C:/synthetic/host.exe",m);require(false,"expected path throw");}
-    catch(const std::runtime_error&){}
+    rejects_runtime([&]{apply_csv_paths(paths,"good,bad,later",u"C:/synthetic/host.exe",m);},"path failure propagates");
     require(paths==std::vector<Path>{u"RESOLVED/good"},"failed path leaves observed partial vector");
     auto s=seeded_state();s.registry_spoof=0;m.fail_widen=true;
-    try{apply_registry_path(s,"synthetic-key",m);require(false,"expected registry conversion throw");}
-    catch(const std::runtime_error&){}
+    rejects_runtime([&]{apply_registry_path(s,"synthetic-key",m);},"registry conversion failure propagates");
     require(s.registry_spoof==1 && s.language_registry_key.empty(),"registry flag precedes conversion");
 }
 Node all_settings() {
@@ -331,10 +334,10 @@ void orchestration() {
     {Mock custom;auto st=seeded_state();st.avatar=u"custom-avatar";
      initialize_configuration(st,custom);require(custom.images.size()==1 && st.avatar==u"custom-avatar","custom avatar avoids user-default write only");}
     {Mock fail;auto st=seeded_state();fail.fail_directory=true;
-     try{initialize_configuration(st,fail);require(false,"expected directory failure");}catch(const std::runtime_error&){}
+     rejects_runtime([&]{initialize_configuration(st,fail);},"directory failure propagates");
      require(fail.loaded.size()==2 && fail.writes.empty() && fail.environment.empty(),"directory failure after configs blocks later work");}
     {Mock fail;auto st=seeded_state();fail.fail_load=true;
-     try{initialize_configuration(st,fail);require(false,"expected load failure");}catch(const std::runtime_error&){}
+     rejects_runtime([&]{initialize_configuration(st,fail);},"load failure propagates");
      require(fail.loaded.size()==1 && fail.events.size()==2,"load failure blocks log override and filesystem work");}
 }
 void streaming_cleanup() {
