@@ -41,6 +41,23 @@ class RepositoryRootOwnership(unittest.TestCase):
         self.assertEqual({'src/xml/reader.cpp', 'src/platform/entry.cpp',
                           'src/runtime/unowned.cpp'}, declared_application_sources(text))
 
+    def test_commented_out_cmake_sources_do_not_satisfy_ownership(self):
+        text = """set(PRELOADER_L_APPLICATION_SOURCES
+          src/core/active.cpp # src/net/disabled.cpp
+          "src/platform/quoted.cpp"
+          "literal # remains quoted" src/handlers/after_quote.cpp
+        )
+        # src/runtime/line_disabled.cpp
+        #[=[
+          src/config/bracket_disabled.cpp
+        ]=]
+        #[[ src/xml/simple_bracket_disabled.cpp ]]
+        """
+        self.assertEqual(
+            {'src/core/active.cpp', 'src/platform/quoted.cpp',
+             'src/handlers/after_quote.cpp'},
+            declared_application_sources(text))
+
     def test_nested_fixtures_preserve_inherited_worktree_repository(self):
         if not shutil.which('git'):
             self.skipTest('Git executable not available')
