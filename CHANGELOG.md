@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Fail closed on Config2 achievement set and SteamAppId values that can escape their intended XML filename or watcher-directory leaf through separators, dot/dot-dot, Windows ADS colon or embedded NUL. Check both before any XML read, path update, epoch conversion or INI write. Add source-linked safe/unsafe and no-partial-effects fixtures while preserving ordinary identifier and conversion order; treat this as a compatibility-sensitive lexical guard, not full Windows reparse-point confinement.
+
 - Stop reading the caller's output-only UTF-16 buffer before native multi-byte decoding; copy only the successfully converted prefix and leave size queries/failures untouched. Preserve native Windows count/error results, compare successful prefix/tail output, and test eight insufficient-capacity/malformed UTF-8 failures with untouched caller buffers and boundary guards. Failed Win32 calls can partially write their temporary destination; those bytes are deliberately not published by the adapter.
 
 - Test complete LSX message processing after syntactically parsed invalid Request roots, missing ids, unregistered first commands and handler refusal in plaintext/encrypted modes: current invalid-message terminal propagates without response encryption or event dequeue, while a subsequent valid request retains its queue. Distinguish this current contract from donor exception-swallowing parity, which remains an owner policy question (A11-09).

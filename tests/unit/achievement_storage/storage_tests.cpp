@@ -78,6 +78,54 @@ void numbers() {
     spy=SpyNumbers{};node.value=std::string("0x10\0ignored",12);
     require(achievement_storage::attribute_003b70(node,"Count",0,spy)==19 && spy.original=="0x10","arbitrary backend attribute obeys original C-string limit");
 }
+void achievement_path_components() {
+    // A11-09: Config2 sets are filenames and Steam app IDs are a single
+    // directory leaf. No original or game files are opened by these fixtures.
+    const std::vector<std::string> unsafe{
+        ".", "..", "../outside", "..\\..\\outside", "nested/../outside",
+        "C:stream", "C:\\victim", "\\\\host\\share", std::string("42\0outside",10)
+    };
+    for(const auto& value:unsafe)for(const bool steam:{false,true}) {
+        Fixture f;
+        f.paths.xml_path=u"kept.xml";f.paths.ini_path=u"kept.ini";
+        f.state.achievements["retained"]=record();
+        if(steam)f.state.steam_app_id=value;
+        else f.state.achievements_set=value;
+        rejects<std::invalid_argument>([&]{f.storage.update_01eb00(f.state);},
+            "path components cannot escape the achievement storage root");
+        require(f.paths.xml_path==u"kept.xml"&&f.paths.ini_path==u"kept.ini"&&
+                f.files.reads.empty()&&f.files.writes.empty()&&
+                f.effects.widened.empty()&&f.effects.status_paths.empty()&&
+                f.effects.directories.empty()&&f.effects.epochs.empty()&&
+                f.state.achievements.at("retained").field70==77,
+            "rejected identifier has zero path, IO, status or achievement side effects");
+    }
+    // A bad second component must not partially import a good XML set.
+    Fixture mixed;
+    mixed.state.achievements_set="legitimate";
+    mixed.state.steam_app_id="..\\..\\outside";
+    mixed.files.input[join(u"USER",u"achievement-legitimate.xml")]=
+        R"(<root><record Id="must-not-load" Count="1"/></root>)";
+    rejects<std::invalid_argument>([&]{mixed.storage.update_01eb00(mixed.state);},
+        "invalid watcher app id is rejected before otherwise-valid XML import");
+    require(mixed.files.reads.empty()&&mixed.paths.xml_path.empty()&&
+            !mixed.state.achievements.contains("must-not-load"),
+        "both identifier guards run before document and state publication");
+
+    Fixture valid;
+    valid.state.achievements_set="legitimate.v1";
+    valid.state.steam_app_id="42-test";
+    const auto xml=join(u"USER",u"achievement-legitimate.v1.xml");
+    const auto ini=join(join(join(u"USER",u"achievement_watcher"),u"42-test"),u"achievements.ini");
+    valid.files.input[xml]="<root/>";
+    valid.storage.update_01eb00(valid.state);
+    require(valid.paths.xml_path==xml&&valid.paths.ini_path==ini&&
+            valid.files.reads==std::vector<Path>{xml}&&
+            valid.effects.widened==std::vector<std::string>{"achievement-legitimate.v1.xml",
+                                                           "achievements.ini","42-test","achievement_watcher"}&&
+            valid.effects.status_paths==std::vector<Path>{ini},
+        "ordinary identifiers retain exact filename, conversion and status order");
+}
 void steam_and_failures() {
     Fixture f;f.state.steam_app_id="42";f.state.achievements["z"]=record();f.state.achievements["a"]=record();f.state.achievements["a"].timestamp="negative";
     f.storage.update_01eb00(f.state);
@@ -111,6 +159,6 @@ void native_fixture(const std::filesystem::path& dir) {
 }
 }
 int main(int argc,char** argv) {
-    try{if(argc!=2)throw std::invalid_argument("requires owned fixture directory");xml_updates();numbers();steam_and_failures();native_fixture(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" achievement storage checks; own fixtures only, no original execution\n";}
+    try{if(argc!=2)throw std::invalid_argument("requires owned fixture directory");xml_updates();numbers();achievement_path_components();steam_and_failures();native_fixture(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" achievement storage checks; own fixtures only, no original execution\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }
