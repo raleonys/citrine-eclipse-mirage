@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Audit C35-F002: reject symlinked Golden artifact/sidecar destinations and publish verified output from exclusively opened temporary files; preserve native acceptance boundaries.
+
 - Defer full hosted validation until a PR update newly integrates current main, with explicit `run-full-validation` PR label requests for already synchronized branches. Keep standalone manual dispatch diagnostic: required checks must actually attach to the PR before merge. Keep PR-opening and ordinary edit checks limited to source integrity, consolidate full source/portable/Windows/reference checks, retain all eleven required contexts and gate full jobs before matrix expansion and runner allocation. Waiting jobs are skipped under a distinct QA name that cannot shadow a real required result, not reported as artificial test failures; real Windows results remain required before merge. Make focused diagnostics manual and preserve weekly release validation.
 
 - Correct current XML dependency documentation to name pugixml, identify pre-migration TinyXML2 audit/CSV findings as historical, and record PR #149 as integrated in the owner requirements. Refresh the changelog heading and link recent integrated PRs; retain original archive provenance and external diagnostic-control references.
