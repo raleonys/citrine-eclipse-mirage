@@ -45,7 +45,8 @@ jobs:
   source-qa:
     needs: readiness
     if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
-    name: Source QA and portable tests
+    # Unrequested label events must not shadow a real required QA result.
+    name: ${{ needs.readiness.outputs.run_tests == 'true' && 'Source QA and portable tests' || 'Source QA deferred' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:

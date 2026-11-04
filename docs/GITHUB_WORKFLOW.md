@@ -254,7 +254,9 @@ to the PR's validation context. Before retrying, verify that no eligible full
 run is active or already successful for this exact head. If the label is
 already present and a new run is needed, remove it and then add it again.
 Removing it alone does not start tests. Other labels do not request tests or
-cancel a requested full run. Keeping the label does not cause subsequent
+cancel a requested full run. Unrequested source QA jobs use the distinct
+`Source QA deferred` name, so a skipped record cannot replace a real required
+QA result for the same head. Keeping the label does not cause subsequent
 ordinary head edits to run the full suite automatically.
 
 The live open PR, exact head, label and current main ancestry are verified

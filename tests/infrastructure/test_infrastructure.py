@@ -258,7 +258,7 @@ class ValidationReadinessTests(unittest.TestCase):
         contexts |= {'Windows x64 reference objects ' + c for c in ('Debug', 'Release')}
         self.assertEqual(11, len(contexts))
         self.assertEqual({'native', 'native-debug', 'production', 'crt', 'debug', 'compile'}, profiles)
-        self.assertIn('name: Source QA and portable tests', blocks['source-qa'])
+        self.assertIn("name: ${{ needs.readiness.outputs.run_tests == 'true' && 'Source QA and portable tests' || 'Source QA deferred' }}", blocks['source-qa'])
         self.assertIn("needs.readiness.outputs.changelog_exempt != 'true'", blocks['source-qa'])
         self.assertIn('needs.readiness.outputs.head_sha != needs.readiness.outputs.base_sha', blocks['source-qa'])
         self.assertIn('name: Windows ${{ matrix.profile }}', blocks['windows'])
