@@ -145,6 +145,38 @@ void actual_environment_logging(preloader_l::application::detail::Environment& e
 #endif
 }
 
+void failed_open_preserves_startup(preloader_l::application::detail::Environment& env,
+                                   preloader_l::configuration::State& state) {
+    namespace fs=std::filesystem;
+    const auto directory=fs::temp_directory_path()/("surge-log-open-retry-"+
+        std::to_string(GetCurrentProcessId())+"-"+std::to_string(GetTickCount64()));
+    require(fs::create_directory(directory),"create isolated Debug log recovery directory");
+    struct Cleanup{fs::path path;~Cleanup(){std::error_code error;fs::remove_all(path,error);}} cleanup{directory};
+    const auto sink=directory/"surge.log";
+    state.user_directory.clear();
+    env.log(std::string_view("buffered-before-open-1"));
+    env.log(std::string_view("buffered-before-open-2"));
+    require(fs::create_directory(sink),"block the logging file with a directory");
+    state.user_directory=directory.u16string();
+    env.log(std::initializer_list<std::string_view>{}); // Attempt the first flush: file open fails.
+    require(fs::is_directory(sink),"the blocked sink must still be a directory");
+    require(fs::remove(sink),"release the blocked sink without touching unrelated paths");
+    env.log(std::string_view("record-after-open-recovery"));
+    env.log(std::initializer_list<std::string_view>{}); // Successful flush must not repeat buffered records.
+#ifndef NDEBUG
+    std::ifstream input(sink,std::ios::binary);
+    require(static_cast<bool>(input),"the recovered Debug log must exist");
+    const std::string bytes((std::istreambuf_iterator<char>(input)),
+                            std::istreambuf_iterator<char>());
+    require(bytes=="buffered-before-open-1\nbuffered-before-open-2\nrecord-after-open-recovery\n",
+            "failed opening must not permanently discard startup diagnostic records");
+    std::cout<<"PASS: Debug open failure retains buffered records through successful retry\n";
+#else
+    require(!fs::exists(sink),"Release must never create a log after a failed Debug-only sink");
+    std::cout<<"PASS: Release logging remains disabled across a blocked sink\n";
+#endif
+}
+
 void unknown_entitlement_is_nonmodal_and_redacted(preloader_l::application::detail::Environment& env,
                                                   preloader_l::configuration::State& state) {
     namespace fs=std::filesystem;
@@ -202,6 +234,9 @@ int main()try{
     configuration::State logging_state{};
     application::detail::Environment logging_env{logging_state,options,files,xml,paths,clock,formatter};
     logging_fixture::actual_environment_logging(logging_env,logging_state);
+    configuration::State recovery_state{};
+    application::detail::Environment recovery_env{recovery_state,options,files,xml,paths,clock,formatter};
+    logging_fixture::failed_open_preserves_startup(recovery_env,recovery_state);
     configuration::State unknown_state{};
     application::detail::Environment unknown_env{unknown_state,options,files,xml,paths,clock,formatter};
     logging_fixture::unknown_entitlement_is_nonmodal_and_redacted(unknown_env,unknown_state);
