@@ -787,8 +787,45 @@ class GovernanceTests(unittest.TestCase):
             automation.write_text(automation.read_text().replace('exit $LASTEXITCODE','exit 0'))
             self.assertTrue(any('masks child exit' in e for e in launchers.check(root)))
 
+    def test_launcher_scan_rejects_unregistered_uppercase_cmd_and_accepts_owned_entry(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'metadata').mkdir()
+            (root / 'scripts').mkdir()
+            registry = root / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json'
+            launcher = root / 'scripts/review.CMD'
+            automation = root / 'scripts/review.ps1'
+            registry.write_text(json.dumps({'entrypoints': []}))
+            launcher.write_text('REM unregistered fixture\n')
+            self.assertIn('Registered launcher set differs from actual CMD set',
+                          launchers.check(root))
+            automation.write_text('-Mode "Native"\nexit $LASTEXITCODE\n')
+            launcher.write_text('\n'.join([
+                '@echo off', '%~dp0review.ps1', '%*',
+                'set "RC=%ERRORLEVEL%"', 'echo Exit code: %RC%',
+                'REM ForegroundColor Green', 'REM ForegroundColor Red',
+                'REM SURGE - %LABEL%', 'pause >nul', 'exit /b %RC%',
+            ]) + '\n')
+            registry.write_text(json.dumps({'entrypoints': [{
+                'launcher': 'scripts/review.CMD',
+                'automation': 'scripts/review.ps1',
+                'mode': 'Native',
+            }]}))
+            self.assertEqual([], launchers.check(root))
+
 
 class BuildWordingTests(unittest.TestCase):
+    def test_uppercase_metadata_json_is_included_in_build_wording_scan(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'metadata').mkdir()
+            policy = root / 'metadata/contract.JSON'
+            policy.write_text('LOCAL_GOLDEN_PASS\n')
+            self.assertEqual(['Obsolete build wording: metadata/contract.JSON:1'],
+                             launchers.check_build_wording(root))
+            policy.write_text('GOLDEN_PASS\n')
+            self.assertEqual([], launchers.check_build_wording(root))
+
     def test_active_operator_tools_and_contracts_reject_retired_labels(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
