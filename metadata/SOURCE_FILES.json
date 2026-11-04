@@ -1702,8 +1702,8 @@
       "sha256": "0fc03c14798265fdab92226b1f19258e9d4a05dcd7e93a44945d6311af7e834c"
     },
     "tests/unit/session/handler_tests.cpp": {
-      "bytes": 5695,
-      "sha256": "fd5298c94544f2b433ade86f10cecd6f9a89d56c4211d89dd610e26a2eebdf73"
+      "bytes": 12756,
+      "sha256": "32ecf2b9216ea2367e25cc59d09d6f23a75a11fc8025ff29f9c81f38801cfacb"
     },
     "tests/unit/session/session_tests.cpp": {
       "bytes": 14897,
