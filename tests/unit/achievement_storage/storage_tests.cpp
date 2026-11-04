@@ -111,6 +111,10 @@ void bounded_numeric_overflow() {
             "optional signs, leading whitespace and trailing content remain compatible");
     require(!host.scan_decimal("  +") && !host.scan_hex("- 0x1"),
             "missing digits and separated sign do not parse");
+    for(const auto* raw:{"++1","-+1","+-0","--0",
+                         "++0x1","-+0x1","+-0x0","--0x0"})
+        require(!host.scan_decimal(raw)&&!host.scan_hex(raw),
+                "a numeric prefix accepts at most one optional sign");
     node.value=std::string("13\0ignored",10);
     require(achievement_storage::attribute_003b70(node,"Count",91,host)==13,
             "existing XML C-string boundary ignores bytes after embedded NUL");
@@ -136,6 +140,54 @@ void bounded_numeric_overflow() {
     require(f.state.achievements.at("normal").field04==12 &&
             f.state.achievements.at("normal").field08==16,
             "ordinary suffixed decimal and prefixed hexadecimal remain unchanged");
+}
+void achievement_path_components() {
+    // A11-09: Config2 sets are filenames and Steam app IDs are a single
+    // directory leaf. No original or game files are opened by these fixtures.
+    const std::vector<std::string> unsafe{
+        ".", "..", "../outside", "..\\..\\outside", "nested/../outside",
+        "C:stream", "C:\\victim", "\\\\host\\share", std::string("42\0outside",10)
+    };
+    for(const auto& value:unsafe)for(const bool steam:{false,true}) {
+        Fixture f;
+        f.paths.xml_path=u"kept.xml";f.paths.ini_path=u"kept.ini";
+        f.state.achievements["retained"]=record();
+        if(steam)f.state.steam_app_id=value;
+        else f.state.achievements_set=value;
+        rejects<std::invalid_argument>([&]{f.storage.update_01eb00(f.state);},
+            "path components cannot escape the achievement storage root");
+        require(f.paths.xml_path==u"kept.xml"&&f.paths.ini_path==u"kept.ini"&&
+                f.files.reads.empty()&&f.files.writes.empty()&&
+                f.effects.widened.empty()&&f.effects.status_paths.empty()&&
+                f.effects.directories.empty()&&f.effects.epochs.empty()&&
+                f.state.achievements.at("retained").field70==77,
+            "rejected identifier has zero path, IO, status or achievement side effects");
+    }
+    // A bad second component must not partially import a good XML set.
+    Fixture mixed;
+    mixed.state.achievements_set="legitimate";
+    mixed.state.steam_app_id="..\\..\\outside";
+    mixed.files.input[join(u"USER",u"achievement-legitimate.xml")]=
+        R"(<root><record Id="must-not-load" Count="1"/></root>)";
+    rejects<std::invalid_argument>([&]{mixed.storage.update_01eb00(mixed.state);},
+        "invalid watcher app id is rejected before otherwise-valid XML import");
+    require(mixed.files.reads.empty()&&mixed.paths.xml_path.empty()&&
+            !mixed.state.achievements.contains("must-not-load"),
+        "both identifier guards run before document and state publication");
+
+    Fixture valid;
+    valid.state.achievements_set="legitimate.v1";
+    valid.state.steam_app_id="42-test";
+    const auto xml=join(u"USER",u"achievement-legitimate.v1.xml");
+    const auto ini=join(join(join(u"USER",u"achievement_watcher"),u"42-test"),u"achievements.ini");
+    valid.files.input[xml]="<root/>";
+    valid.storage.update_01eb00(valid.state);
+    require(valid.paths.xml_path==xml&&valid.paths.ini_path==ini&&
+            valid.files.reads==std::vector<Path>{xml}&&
+            valid.effects.widened==std::vector<std::string>{"achievement-legitimate.v1.xml",
+                                                           "achievements.ini","42-test","achievement_watcher"}&&
+            valid.effects.status_paths==std::vector<Path>{ini},
+        "ordinary identifiers retain exact filename, conversion and status order");
 }
 void steam_and_failures() {
     Fixture f;f.state.steam_app_id="42";f.state.achievements["z"]=record();f.state.achievements["a"]=record();f.state.achievements["a"].timestamp="negative";
@@ -170,6 +222,6 @@ void native_fixture(const std::filesystem::path& dir) {
 }
 }
 int main(int argc,char** argv) {
-    try{if(argc!=2)throw std::invalid_argument("requires owned fixture directory");xml_updates();numbers();bounded_numeric_overflow();steam_and_failures();native_fixture(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" achievement storage checks; own fixtures only, no original execution\n";}
+    try{if(argc!=2)throw std::invalid_argument("requires owned fixture directory");xml_updates();numbers();bounded_numeric_overflow();achievement_path_components();steam_and_failures();native_fixture(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" achievement storage checks; own fixtures only, no original execution\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }

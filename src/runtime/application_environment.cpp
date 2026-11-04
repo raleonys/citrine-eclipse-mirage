@@ -18,6 +18,18 @@
 
 namespace preloader_l::application::detail {
 namespace {
+// Match the existing 65-byte envelope and AES policy while making text
+// fields structurally safe in the XML document before encryption.
+void append_license_xml_text(std::string& output,std::string_view text) {
+    for(char byte:text) {
+        switch(byte) {
+        case '&':output+="&amp;";break;
+        case '<':output+="&lt;";break;
+        case '>':output+="&gt;";break;
+        default:output.push_back(byte);break;
+        }
+    }
+}
 Path environment_path(const wchar_t* name) {
     // RE039bc0 grows a UTF16 buffer in260-code-unit steps and reads the
     // environment. No Shell known-folder allocation or COM allocator is used.
@@ -99,6 +111,8 @@ void Environment::log(std::initializer_list<std::string_view> parts) {
         return;
     }
     std::ofstream out(fs::path(state_.user_directory)/"surge.log",std::ios::binary|std::ios::app);
+    // Do not discard buffered startup diagnostics when the Debug sink cannot open.
+    if(!out)return;
     for(const auto& pending:pending_logs_){out.write(pending.data(),static_cast<std::streamsize>(pending.size()));out.put('\n');}
     pending_logs_.clear();
     if(parts.size()){out.write(event.data(),static_cast<std::streamsize>(event.size()));out.put('\n');}
@@ -197,8 +211,8 @@ void Environment::configure() {
     (void)set_environment_variable("EAGameLocale",state_.game_attributes["INSTALLED_LANGUAGE"]);
 }
 void Environment::apply_license_key_02a830(std::string_view key) {
-    // Independent source projection of supplied FUN_18002a830. Keep its existing
-    // regular file unchanged; original concatenates XML text without escaping.
+    // Preserve original output for ordinary safe values and the existing-file
+    // skip. XML text is escaped before CBC in this product-owned writer.
     auto path=state_.license_directory+filesystem_widen_006d70(".dlf");
     const auto status=status_01ea20(path,3);
     if(status.error&&((static_cast<std::uint32_t>(status.kind)-1U)&0xfffffff7U)!=0)
@@ -208,10 +222,10 @@ void Environment::apply_license_key_02a830(std::string_view key) {
     constexpr std::uint64_t header=0x1020001020630ULL;
     for(unsigned i=0;i<8;++i)document[i]=static_cast<char>(header>>(i*8));
     document+="<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><License xmlns=\"http://ea.com/license\"><CipherKey>";
-    document.append(key);
+    append_license_xml_text(document,key);
     document+="</CipherKey><MachineHash>1</MachineHash><ContentId>";
-    document+=state_.content_id;
-    document+="</ContentId><UserId>";document+=state_.user_id;
+    append_license_xml_text(document,state_.content_id);
+    document+="</ContentId><UserId>";append_license_xml_text(document,state_.user_id);
     document+="</UserId><GrantTime>2024-01-01T00:00:00Z</GrantTime><StartTime>2024-01-01T00:00:00Z</StartTime></License>";
     crypto::Cipher cipher;
     cipher.set_key_and_iv_042760(token::constants::key_084a50,token::constants::iv_084a60);
