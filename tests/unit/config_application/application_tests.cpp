@@ -150,6 +150,38 @@ void partial_failure() {
     s=seed();rejects<std::invalid_argument>([&]{config_application::apply_config2(s,reused,false,deps);},"reused descendant totals failure");
     require(s.achievements.at("a").field00==7 && s.achievements.at("i").field00==1,"positional reuse retains512bucket child table and changes partial-update order");
 }
+
+void log_failure_before_nonempty_apply() {
+    for(bool override_pass:{false,true}) {
+        Effects deps;Files files;auto state=seed();
+        state.content_id="retained-id";
+        state.game_attributes["DISPLAY_NAME"]="retained-game";
+        state.license_directory=u"retained-license";
+        state.content.push_back({"retained-content","retained-name","1","INSTALLED"});
+        files.base=files.over=R"("Config2" {"Game" {"Name" "after-log-game" "ContentId" "after-log-id"} "User" {"Username" "after-log-user"} "Content" {"after-log-content" {}}})";
+        const configuration::Path expected=override_pass?u"C:/fixture/surge_override.cfg":u"C:/fixture/surge.cfg";
+        config_application::Trace denied;
+        deps.fail_log=true;
+        rejects<std::runtime_error>([&]{config_application::load_and_apply(state,override_pass,deps,files,&denied);},"nonempty config log failure propagates");
+        require(files.opened==std::vector<configuration::Path>{expected} && deps.logs==files.opened,"failed log follows the selected input exactly once");
+        require(state.username=="retained" && state.content_id=="retained-id" &&
+                state.game_attributes.at("DISPLAY_NAME")=="retained-game" &&
+                state.license_directory==u"retained-license" &&
+                content_ids(state)==std::vector<std::string>{"retained-content"} && denied.copies.empty(),
+                "failed log must prevent every configuration application prefix");
+        deps.fail_log=false;
+        config_application::load_and_apply(state,override_pass,deps,files);
+        require(files.opened==std::vector<configuration::Path>{expected,expected} && deps.logs==files.opened,"same-state retry reads and logs exactly once more");
+        require(state.username=="after-log-user","repaired logger allows nonempty user assignment");
+        require(state.content_id==(override_pass?"retained-id":"after-log-id") &&
+                state.game_attributes.at("DISPLAY_NAME")==(override_pass?"retained-game":"after-log-game"),
+                "retry preserves base-only scalar rules");
+        require(content_ids(state)==(override_pass?std::vector<std::string>{"retained-content"}:
+                std::vector<std::string>{"retained-content","after-log-content"}),
+                "base retry appends once while override skips base-only collections");
+    }
+}
+
 void file_path_and_native(const std::filesystem::path& dir) {
     Files files;Effects deps;auto s=seed();config_application::Trace trace;
     files.base="\xef\xbb\xbf\"Config2\" {\"User\" {\"Username\" \"base-user\"} \"Content\" {\"a\" {} \"!\" {}}}";
@@ -175,6 +207,6 @@ void file_path_and_native(const std::filesystem::path& dir) {
 }
 }
 int main(int argc,char** argv) {
-    try {if(argc!=2)throw std::invalid_argument("requires own fixture directory");scalar_and_collections();capacity_and_override();obsolete_fixed_settings();partial_failure();file_path_and_native(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" Config2 application checks; no original execution or real user CFG\n";}
+    try {if(argc!=2)throw std::invalid_argument("requires own fixture directory");scalar_and_collections();capacity_and_override();obsolete_fixed_settings();partial_failure();log_failure_before_nonempty_apply();file_path_and_native(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" Config2 application checks; no original execution or real user CFG\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }
