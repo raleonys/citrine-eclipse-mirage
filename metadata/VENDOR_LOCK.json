@@ -3,10 +3,10 @@
   "external_network_download_forbidden": true,
   "production_active_use_required_for_all": true,
   "production_active_use_verified": false,
-  "revision": "2026-10-27",
+  "revision": "2026-11-03",
   "schema": "surge.vendor-lock.v2",
   "upstream_exact_commit_verified": false,
-  "vendor_source_status": "FOUR_ACTIVE_OWNER_ARCHIVES_BYTE_EXACT_GULRAK_REMOVED_BY_OWNER",
+  "vendor_source_status": "FOUR_ACTIVE_OWNER_ARCHIVES_WITH_PUGIXML_REPLACING_TINYXML2",
   "vendors": {
     "asio": {
       "active_build_link_proved": true,
@@ -75,6 +75,41 @@
       "application_owner": "preloader_l_vdf_objects",
       "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification"
     },
+    "pugixml": {
+      "active_build_link_proved": false,
+      "archive": "pugixml-master.zip",
+      "archive_folder": "pugixml-master/",
+      "bytes": 670227,
+      "intended_active_use": "APPLICATION_XML_AND_PERSISTENCE",
+      "license": "MIT (LICENSE.md)",
+      "license_source_retained": true,
+      "member_count": 191,
+      "member_manifest": "metadata/vendor_files/pugixml.sha256",
+      "member_manifest_sha256": "166685a8055b3eb4b41b3c4983599b29a11d60350f666b9d5445042f87054407",
+      "reported_version": "1.16 (PUGIXML_VERSION=1160)",
+      "sha256": "4cd80a72fde87ce1f23eae4ed048446b2e887fc25437793e525367448be2cf81",
+      "source_install_path": "third_party/pugixml",
+      "symlinks": {},
+      "upstream_commit": "f0a3faa76e04f35110257ca8713363dee3c890e8",
+      "installed_member_integrity": "PASS",
+      "production_role": "APPLICATION_XML_AND_PERSISTENCE",
+      "cmake_target": "preloader_l_pugixml",
+      "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT_AND_INDEPENDENT_CORE_FILE_MATCH",
+      "configuration": [
+        "PUGIXML_NO_XPATH"
+      ],
+      "native_acceptance": "Exact-head CI receipts are recorded in PR #149"
+    }
+  },
+  "task": "SURGE-VENDOR-20261028",
+  "archive_location_policy": "Explicit --archive-dir; original input ZIPs are outside the product source package",
+  "compiled_vendor_patches": [
+    "metadata/HOOK_ENGINE_PATCH.json"
+  ],
+  "vendor_defaults_modified": false,
+  "latest_owner_selection": "PR149_OWNER_AUTHORIZED_PRODUCTION_PUGIXML",
+  "upstream_commit_identifiers_recorded": true,
+  "retired_vendor_inputs": {
     "tinyxml2": {
       "active_build_link_proved": true,
       "archive": "tinyxml2-master.zip",
@@ -96,13 +131,5 @@
       "cmake_target": "preloader_l_tinyxml2",
       "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification"
     }
-  },
-  "task": "SURGE-VENDOR-20261028",
-  "archive_location_policy": "Explicit --archive-dir; original input ZIPs are outside the product source package",
-  "compiled_vendor_patches": [
-    "metadata/HOOK_ENGINE_PATCH.json"
-  ],
-  "vendor_defaults_modified": false,
-  "latest_owner_selection": "SURGE-WINDOWS-IO-20261029",
-  "upstream_commit_identifiers_recorded": true
+  }
 }

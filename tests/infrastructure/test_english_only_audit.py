@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Deterministic first-party language audit and exclusion boundary tests."""
 import json
 import re
@@ -103,7 +105,7 @@ class LanguageSignalAuditTests(unittest.TestCase):
                 "Fail-Build \"$Label failed (exit $rc).\" $rc",
             ),
             "scripts/build_orchestration/build_profile.ps1": (
-                "Fail-Build \"Local Golden chain failed (exit $GoldenCode).\" $GoldenCode",
+                "Fail-Build \"Golden chain failed (exit $GoldenCode).\" $GoldenCode",
             ),
         }
         for relative_path, statements in expected.items():

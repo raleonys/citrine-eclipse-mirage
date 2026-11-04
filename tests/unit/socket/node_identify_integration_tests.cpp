@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/node_identify_test_fixture.hpp"
 using namespace node_identify_test;
 namespace {
-struct Effects:s::RecoveredNodeIdentifyEffects {
+struct Effects:s::NodeIdentifyEffects {
     Memory& raw;Constructors constructors;node_parse_test::Lower primitives;
     std::vector<node_parse_test::Lower::Parse> others;std::vector<std::uint32_t> classified;
     std::vector<std::uint64_t> allocations;std::vector<std::uintptr_t> frees;
@@ -9,7 +11,7 @@ struct Effects:s::RecoveredNodeIdentifyEffects {
     std::function<void(std::uintptr_t,std::uintptr_t,std::uint64_t)> copy_hook;
     std::function<std::uintptr_t(const node_parse_test::Lower::Parse&)> other_hook;
     unsigned workspaces=0;
-    Effects(Memory& m,node_parse_test::Nodes& n,const s::NativeErrorArgumentTail& a):RecoveredNodeIdentifyEffects(m.memory,n,a),raw(m),primitives(m){primitives.compare_hook=[](const auto&){return 1;};}
+    Effects(Memory& m,node_parse_test::Nodes& n,const s::NativeErrorArgumentTail& a):NodeIdentifyEffects(m.memory,n,a),raw(m),primitives(m){primitives.compare_hook=[](const auto&){return 1;};}
     s::NativeNodeParseScratch acquire_parse_scratch(std::uintptr_t,std::uintptr_t,std::uintptr_t,std::uintptr_t)override{++workspaces;return {Memory::scratch_address,Memory::pair};}
     std::uintptr_t parse_other_virtual(std::uintptr_t t,std::uintptr_t n,std::uintptr_t c,std::uintptr_t p,std::uintptr_t l)override{others.push_back({t,n,c,p,l});return other_hook?other_hook(others.back()):0;}
     std::uintptr_t materialize_0035e0(std::uintptr_t p)override{return primitives.materialize_0035e0(p);}

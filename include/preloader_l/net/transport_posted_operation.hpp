@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_completion_dispatcher.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct OperationStorage {std::uintptr_t identity=0;std::span<std::byte> bytes;};
 struct OperationStorageBinding {std::uintptr_t identity=0;OperationStorage* storage=nullptr;};
 class PostedFunctor {
@@ -50,4 +52,4 @@ void dispatch_posted_022e40(PostedExecutor&,PostedFunctor*&,PostedEnvironment,
     WorkerRunApi&,DispatcherApi&,PostedMemoryEffects&);
 void complete_posted_027120(std::uintptr_t owner_identity,PostedOperation&,PostedEnvironment,
     WorkerRunApi&,PostedMemoryEffects&);
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

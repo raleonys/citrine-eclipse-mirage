@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Read-only first-party language-signal audit; not automatic translation."""
 import argparse
 import hashlib

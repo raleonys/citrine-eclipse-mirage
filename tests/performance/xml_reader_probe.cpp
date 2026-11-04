@@ -1,5 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/reader.hpp"
 #include <atomic>
+#include <pugixml.hpp>
 #include <chrono>
 #include <cstdio>
 #include <cstdlib>
@@ -42,10 +45,12 @@ void operator delete(void* p,std::size_t) noexcept {std::free(p);}
 void operator delete[](void* p,std::size_t) noexcept {std::free(p);}
 
 namespace {
+void* pugi_allocate(std::size_t size){try{return ::operator new(size);}catch(const std::bad_alloc&){return nullptr;}}
+void pugi_release(void* pointer){::operator delete(pointer);}
 namespace reader=preloader_l::xml_reader_bridge;
 std::atomic<std::size_t> result_sink{0};
 void require(bool value,const char* reason){if(!value)throw std::runtime_error(reason);}
-std::size_t traverse(const preloader_l::messages_recovered::XmlNode* node){
+std::size_t traverse(const preloader_l::messages::XmlNode* node){
     std::size_t result=0;
     for(;node;node=node->next_element()){
         result+=node->name().size();if(auto value=node->attribute("v"))result+=value->size();
@@ -74,8 +79,8 @@ void contracts(){
     try{(void)retry.document->first_element();}catch(const std::bad_alloc&){failed=true;}
     allocation_probe::fail_after=-1;
     require(failed,"wrapper allocation failure is injected");
-    const auto* recovered=retry.document->first_element();
-    require(recovered&&recovered->name()=="R"&&recovered->first_element()->name()=="C","wrapper lookup retries after allocation failure without losing document ownership");
+    const auto* system_services=retry.document->first_element();
+    require(system_services&&system_services->name()=="R"&&system_services->first_element()->name()=="C","wrapper lookup retries after allocation failure without losing document ownership");
     std::printf("PASS: one owned input-sized buffer; repeated wrapper lookups allocate zero times\n");
 }
 void measure(const char* name,const std::string& input,unsigned iterations){
@@ -96,6 +101,7 @@ void measure(const char* name,const std::string& input,unsigned iterations){
 }
 }
 int main(int argc,char** argv)try{
+    pugi::set_memory_management_functions(pugi_allocate,pugi_release);
     if(argc>1&&std::strcmp(argv[1],"--benchmark")==0){
         const unsigned iterations=argc>2?static_cast<unsigned>(std::stoul(argv[2])):1000;
         require(iterations>0&&iterations<=100000,"benchmark iterations outside1..100000");

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
 from pathlib import Path
 import hashlib, struct, sys
 from golden_policy import load_target

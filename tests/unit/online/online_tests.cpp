@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/online.hpp"
-#include "preloader_l/runtime/recovered_effects.hpp"
+#include "preloader_l/runtime/delegating_effects.hpp"
 #include "preloader_l/core/paths.hpp"
 #include <algorithm>
 #include <array>
@@ -31,11 +33,11 @@ void operator delete[](void* p) noexcept {cookie_lifetime::release(p);}
 void operator delete(void* p,std::size_t) noexcept {cookie_lifetime::release(p);}
 void operator delete[](void* p,std::size_t) noexcept {cookie_lifetime::release(p);}
 
-namespace o = preloader_l::online_recovered;
-namespace s = preloader_l::status_recovered;
-namespace f = preloader_l::file_recovered;
-namespace e = preloader_l::encoding_recovered;
-namespace l = preloader_l::recovered::libraries;
+namespace o = preloader_l::online;
+namespace s = preloader_l::status;
+namespace f = preloader_l::file;
+namespace e = preloader_l::encoding;
+namespace l = preloader_l::system_services::libraries;
 static unsigned checks = 0;
 #define CHECK(x) do { ++checks; if (!(x)) throw std::runtime_error("Check failed at line " + std::to_string(__LINE__) + ": " #x); } while(false)
 struct Injected : std::runtime_error { Injected() : std::runtime_error("synthetic failure") {} };
@@ -79,8 +81,8 @@ struct Mock : o::Effects {
         event("widen"); CHECK(value=="preloader_l_online.dll"); CHECK(value.size()==0x16);
         return o::Path(value.begin(),value.end());
     }
-    o::Path parent_path_019820(const o::Path& value) override {event("parent");return preloader_l::path_recovered::parent_path_019820(value);}
-    o::Path join_016b00(const o::Path& a,const o::Path& b) override {event("join");return preloader_l::path_recovered::join_016b00(a,b);}
+    o::Path parent_path_019820(const o::Path& value) override {event("parent");return preloader_l::path::parent_path_019820(value);}
+    o::Path join_016b00(const o::Path& a,const o::Path& b) override {event("join");return preloader_l::path::join_016b00(a,b);}
     o::Module load_copy_0450d0(const o::Path& value) override {event("load");loaded_path=value;return loaded;}
     o::Procedure get_proc_address(o::Module module,std::string_view value) override {
         CHECK(module==loaded);event("resolve:"+std::string(value));
@@ -262,7 +264,18 @@ static void exceptions() {
     for(auto fail:{"widen","parent","join","load"}) {
         State state;Mock m;m.fail=fail;
         throws<Injected>([&]{o::worker_035b60(state.refs(),m);});
-        CHECK(m.mode==0x21);CHECK(!m.called("restore"));CHECK(!m.called("finish"));CHECK(!m.called("free"));
+        CHECK(m.mode==0x20);CHECK(m.called("restore"));CHECK(!m.called("finish"));CHECK(!m.called("free"));
+        CHECK(std::count(m.calls.begin(),m.calls.end(),"restore")==1);
+        CHECK(state.module==0);
+    }
+    {
+        State state;Mock m;m.fail="join";
+        m.inspect=[](std::string_view event) {
+            if(event=="restore")throw std::logic_error("synthetic restoration failure");
+        };
+        // Restoration must not replace the initiating path failure.
+        throws<Injected>([&]{o::worker_035b60(state.refs(),m);});
+        CHECK(m.called("restore"));CHECK(!m.called("finish"));
     }
     for(auto fail:{"resolve:version_check","version","resolve:create_online","create","auth-status","log:authentication ok","name","persona","user","status-cookie"}) {
         State state;Mock m;m.fail=fail;
@@ -340,7 +353,7 @@ static void composition() {
     for(bool success:{false,true}) {
         State state;Mock remaining;LibraryCalls libraries;Stats stats;Encoding encoding;Errors errors;Files files;
         state.use_last=1;remaining.auth_status=success?0:1;
-        o::RecoveredEffects effects(remaining,libraries,stats,encoding,errors,files);
+        o::DelegatingEffects effects(remaining,libraries,stats,encoding,errors,files);
         o::worker_035b60(state.refs(),effects);
         CHECK(libraries.loaded==L"C:\\fixture\\preloader_l_online.dll");CHECK(libraries.mode==0x40);CHECK(encoding.calls==2);
         CHECK(state.online==static_cast<std::uint8_t>(success));CHECK(state.avatar==state.last_avatar);CHECK(remaining.called("finish"));

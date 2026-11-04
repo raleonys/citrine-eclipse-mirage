@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/achievement_runtime.hpp"
 #include "preloader_l/runtime/timestamp.hpp"
 #include "preloader_l/xml/reader.hpp"
@@ -7,11 +9,12 @@
 #include <iterator>
 #include <limits>
 #include <stdexcept>
+#include <windows.h>
 
 namespace ar=preloader_l::achievement_runtime;
-namespace content=preloader_l::content_handlers_recovered;
+namespace content=preloader_l::content_handlers;
 namespace cfg=preloader_l::configuration;
-namespace io=preloader_l::file_recovered;
+namespace io=preloader_l::file;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -166,10 +169,71 @@ void failures_and_empty_paths(const std::filesystem::path& root){
     }
     {Fixture f(root/"empty-paths");f.paths.xml_path.clear();f.paths.ini_path.clear();(void)f.grant("a");require(f.trace.empty() && f.clock.calls==1,"empty persistence paths skip both files without skipping grant");}
 }
-struct StorageEffects final:preloader_l::timestamp_recovered::StorageEffects {
-    explicit StorageEffects(preloader_l::timestamp_recovered::Parser& parser):preloader_l::timestamp_recovered::StorageEffects(parser){}
+// A11-09: actual native XML/INI atomic retry at the achievement grant boundary.
+// The lower atomic file test already holds INI while replacing two files. This
+// test proves the live grant's map/lock rollback and its exact second attempt.
+void native_locked_ini_grant_retry(const std::filesystem::path& root){
+    const auto directory=root/"locked-ini-grant";
+    std::error_code cleanup_error;
+    std::filesystem::remove_all(directory,cleanup_error);
+    require(!cleanup_error,"remove only the owned locked-INI grant fixture directory");
+    Fixture f(directory);
+    const std::filesystem::path xml(f.paths.xml_path),ini(f.paths.ini_path);
+    std::filesystem::create_directories(ini.parent_path());
+    {
+        std::ofstream output(xml,std::ios::binary|std::ios::trunc);
+        output<<"preexisting-xml";
+        require(static_cast<bool>(output),"seed existing XML bytes");
+    }
+    {
+        std::ofstream output(ini,std::ios::binary|std::ios::trunc);
+        output<<"preexisting-ini";
+        require(static_cast<bool>(output),"seed existing INI bytes");
+    }
+    struct ExclusiveReplacementBarrier {
+        HANDLE handle=INVALID_HANDLE_VALUE;
+        explicit ExclusiveReplacementBarrier(const std::filesystem::path& path){
+            handle=CreateFileW(path.c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
+            require(handle!=INVALID_HANDLE_VALUE,"hold real INI destination without FILE_SHARE_DELETE");
+        }
+        void release(){
+            if(handle!=INVALID_HANDLE_VALUE){
+                const HANDLE owned=handle;
+                handle=INVALID_HANDLE_VALUE;
+                require(CloseHandle(owned)!=FALSE,"close exact INI lock before retry");
+            }
+        }
+        ~ExclusiveReplacementBarrier(){if(handle!=INVALID_HANDLE_VALUE)CloseHandle(handle);}
+    } held(ini);
+    rejects<std::runtime_error>([&]{(void)f.grant("a");},
+        "live grant rejects native second-destination replacement while INI is held");
+    require(read(f.paths.xml_path)=="preexisting-xml"&&read(f.paths.ini_path)=="preexisting-ini",
+        "native failed grant restores XML and retains locked INI bytes");
+    const auto& restored=f.state.achievements.at("a");
+    require(restored.field04==0&&restored.field08==0&&restored.field70==0&&
+        restored.timestamp=="0000-00-00T00:00:00"&&!f.mutex.held&&f.events.entries.empty(),
+        "native persistence failure restores in-memory grant and releases mutex without event");
+    require(f.files.writes.empty()&&f.trace==std::vector<std::string>{"mkdir","atomic"},
+        "failed batch publishes no committed fixture writes");
+    held.release();
+    (void)f.grant("a");
+    require(f.state.achievements.at("a").field08==1&&f.state.achievements.at("a").field04==0&&
+        f.state.achievements.at("a").field70==946684800&&!f.mutex.held&&f.events.entries.empty(),
+        "unlocked retry commits exactly one partial achievement increment");
+    require(read(f.paths.xml_path).find("Progress=\"1\"")!=std::string::npos&&
+        read(f.paths.ini_path).find("[100]\r\nAchieved=0\r\nCurProgress=1\r\nMaxProgress=2\r\nUnlockTime=946684800\r\n\r\n")!=std::string::npos,
+        "retry publishes actual XML and INI data through the native atomic owner");
+    require(f.files.writes.size()==2&&f.trace==std::vector<std::string>{"mkdir","atomic","mkdir","atomic"},
+        "only successful native retry records both writes");
+    std::size_t xml_entries=0,ini_entries=0;
+    for(const auto& entry:std::filesystem::directory_iterator(xml.parent_path())){(void)entry;++xml_entries;}
+    for(const auto& entry:std::filesystem::directory_iterator(ini.parent_path())){(void)entry;++ini_entries;}
+    require(xml_entries==2&&ini_entries==1,"no staging or backup files remain after a successful retry");
+}
+struct StorageEffects final:preloader_l::timestamp::StorageEffects {
+    explicit StorageEffects(preloader_l::timestamp::Parser& parser):preloader_l::timestamp::StorageEffects(parser){}
     cfg::Path filesystem_widen_006d70(std::string_view value)override{return {value.begin(),value.end()};}
-    preloader_l::status_recovered::Status status_01ea20(const cfg::Path&,std::uint32_t flags)override{require(flags==3,"roundtrip storage uses flags3");return {2,0,0};}
+    preloader_l::status::Status status_01ea20(const cfg::Path&,std::uint32_t flags)override{require(flags==3,"roundtrip storage uses flags3");return {2,0,0};}
     [[noreturn]]void filesystem_error_018130(std::string_view,std::uint32_t,const cfg::Path&)override{unused();}
     void create_directories_018e00(const cfg::Path&)override{unused();}
 };
@@ -178,10 +242,10 @@ void roundtrip(const std::filesystem::path& root){
     cfg::State restored{};restored.user_directory=f.state.user_directory;restored.steam_app_id="42";
     restored.achievements.emplace("a",cfg::Achievement{2,0,0,"old","","100",999});
     preloader_l::achievement_storage::Paths paths{f.paths.xml_path,{}};preloader_l::xml_reader_bridge::Backend xml;preloader_l::achievement_storage::HostCrtNumbers numbers;
-    preloader_l::timestamp_recovered::ClassicIso parser;StorageEffects effects(parser);io::NativeFactory files;
+    preloader_l::timestamp::ClassicIso parser;StorageEffects effects(parser);io::NativeFactory files;
     preloader_l::achievement_storage::Storage storage(paths,xml,numbers,effects,files);storage.update_01eb00(restored);
     const auto& a=restored.achievements.at("a");require(a.field04==0 && a.field08==1 && a.field70==946684800 && a.timestamp=="2000-01-01T00:00:00" && a.display_name=="A&\"<","runtime write to actual XML reader/storage/parser/calendar roundtrip");
     require(a.field00==2 && a.steam_id=="100","roundtrip import preserves configured total and Steam ID");
 }
 }
-int main(int argc,char** argv){try{if(argc!=2)throw std::invalid_argument("owned fixture directory required");const std::filesystem::path root(argv[1]);bridge_and_partial(root);completion_and_edges(root);failures_and_empty_paths(root);roundtrip(root);std::cout<<"PASS: "<<checks<<" achievement runtime integration checks; own fixtures and controlled clock/locks/events only\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+int main(int argc,char** argv){try{if(argc!=2)throw std::invalid_argument("owned fixture directory required");const std::filesystem::path root(argv[1]);bridge_and_partial(root);completion_and_edges(root);failures_and_empty_paths(root);native_locked_ini_grant_retry(root);roundtrip(root);std::cout<<"PASS: "<<checks<<" achievement runtime integration checks; own fixtures and controlled clock/locks/events only\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

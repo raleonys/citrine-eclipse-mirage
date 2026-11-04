@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/config/application.hpp"
 #include <algorithm>
 #include <filesystem>
@@ -40,11 +42,11 @@ struct Effects final:configuration::Dependencies {
     void update_achievement_storage_01eb00(configuration::State&)override{throw std::logic_error("OS effect forbidden");}
     bool set_environment_variable(std::string_view,std::string_view)override{throw std::logic_error("OS effect forbidden");}
 };
-struct Input final:file_recovered::Input {
+struct Input final:file::Input {
     std::string bytes;bool fail=false;std::uint32_t initial=0;
     Input(std::string b,bool f,std::uint32_t i):bytes(std::move(b)),fail(f),initial(i){}
     std::uint32_t initial_state()const override{return initial;}
-    void seek_03b610(std::int64_t offset,file_recovered::Seek)override{require(offset==0,"seek zero");}
+    void seek_03b610(std::int64_t offset,file::Seek)override{require(offset==0,"seek zero");}
     std::uint64_t position_sum_03ba50()override{return bytes.size();}
     std::int32_t peek_043790()override{throw std::logic_error("unexpected peek");}
     std::size_t read_03b2a0(std::span<std::uint8_t> into)override{
@@ -52,14 +54,14 @@ struct Input final:file_recovered::Input {
     }
     void close_03ae70()override{}
 };
-struct Files final:file_recovered::Factory {
+struct Files final:file::Factory {
     std::string base,over;bool fail=false;std::uint32_t initial=0;
     std::vector<configuration::Path> opened;
-    std::unique_ptr<file_recovered::Input> open_input_039f70(const configuration::Path& p,std::uint32_t mode,std::uint32_t share)override{
+    std::unique_ptr<file::Input> open_input_039f70(const configuration::Path& p,std::uint32_t mode,std::uint32_t share)override{
         require(mode==0x20 && share==0x40,"binary open mode/share");opened.push_back(p);
         return std::make_unique<Input>(p.ends_with(u"surge_override.cfg")?over:base,fail,initial);
     }
-    std::unique_ptr<file_recovered::Output> open_output_03a1a0(const configuration::Path&,std::uint32_t,std::uint32_t)override{throw std::logic_error("write forbidden");}
+    std::unique_ptr<file::Output> open_output_03a1a0(const configuration::Path&,std::uint32_t,std::uint32_t)override{throw std::logic_error("write forbidden");}
 };
 configuration::State seed(){configuration::State s{};s.executable_path=u"C:/fixture/host.exe";s.username="retained";s.server_port=7777;return s;}
 config_hash::Node parsed(std::string_view raw){parser::State p;(void)parser::parse(raw,p);const auto* n=p.root.find("Config2");require(n!=nullptr,"synthetic Config2 present");return config_hash::selected_copy(*n);}
@@ -167,7 +169,7 @@ void file_path_and_native(const std::filesystem::path& dir) {
     files.initial=1;auto empty=config_application::read_config2(u"ignored",files);require(empty.children.empty(),"initial-state failure empty value");files.initial=0;
     std::filesystem::create_directories(dir);const auto path=dir/"application-generated-fixture.cfg";
     {std::ofstream out(path,std::ios::binary|std::ios::trunc);out<<files.over;require(static_cast<bool>(out),"generated native fixture written");}
-    file_recovered::NativeFactory native;auto own=config_application::read_config2(path.u16string(),native);
+    file::NativeFactory native;auto own=config_application::read_config2(path.u16string(),native);
     require(own.lookup("User").lookup("Username").value=="override-user","native own-file stream/parser/copy");
     auto state=seed();config_application::apply_config2(state,own,false,deps);require(state.content.size()==1,"native own fixture reaches collection application");
 }

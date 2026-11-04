@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "../../src/runtime/application_internal.hpp"
 #include "preloader_l/config/application.hpp"
 #include "preloader_l/core/paths.hpp"
@@ -24,7 +26,7 @@ struct Directory {
 struct Fixture {
     configuration::State state{};
     application::Options options;
-    file_recovered::NativeFactory files;
+    file::NativeFactory files;
     xml_reader_bridge::Backend xml;
     achievement_storage::Paths paths;
     achievement_runtime::HostClock clock;
@@ -43,7 +45,7 @@ void paths(){
     };
     for(const auto& [input,expected]:cases){
         require(f.env.resolve_path_0192d0(input,exe,false)==expected,"UTF8 counted path conversion independent of file API codepage");
-        const auto relative=path_recovered::is_absolute_0195b0(expected)?expected:configuration::Path(u"C:\\game\\")+expected;
+        const auto relative=path::is_absolute_0195b0(expected)?expected:configuration::Path(u"C:\\game\\")+expected;
         require(f.env.resolve_path_0192d0(input,exe,true)==relative,"only relative paths receive executable parent");
     }
     require(f.env.resolve_path_0192d0("",exe,false).empty(),"empty nonrelative path");
@@ -53,10 +55,10 @@ void paths(){
     Directory dir;f.state.executable_path=(dir.path/"host.exe").u16string();
     const auto main=dir.path/"surge.cfg",over=dir.path/"surge_override.cfg";
     const std::string text="\"Config2\" { \"User\" { \"Avatar\" \"caf\xc3\xa9.png\" } }";
-    require(file_recovered::write_binary_03c1d0(main.u16string(),text,f.files),"real UTF8 config file write");
+    require(file::write_binary_03c1d0(main.u16string(),text,f.files),"real UTF8 config file write");
     config_application::load_and_apply(f.state,false,f.env,f.files);
     require(f.state.avatar==(dir.path/fs::path(u"caf\u00e9.png")).u16string(),"active file/parser/hash path uses corrected UTF8 resolver");
-    require(file_recovered::write_binary_03c1d0(over.u16string(),"\"Config2\" { \"User\" { \"Avatar\" \"\xe4\xb8\xad.png\" } }",f.files),"override UTF8 fixture");
+    require(file::write_binary_03c1d0(over.u16string(),"\"Config2\" { \"User\" { \"Avatar\" \"\xe4\xb8\xad.png\" } }",f.files),"override UTF8 fixture");
     config_application::load_and_apply(f.state,true,f.env,f.files);
     require(f.state.avatar==(dir.path/fs::path(u"\u4e2d.png")).u16string(),"override path uses same UTF8 boundary");
     auto projected=configuration::State{};projected.executable_path=f.state.executable_path;
@@ -70,11 +72,11 @@ void paths(){
 void avatar(){
     Fixture f;Directory dir;using Image=configuration::EmbeddedPng;
     const auto missing=dir.path/"absent"/"image.png";
-    require(!file_recovered::write_binary_03c1d0(missing.u16string(),"fixture",f.files),"actual initial open failure returns false");
+    require(!file::write_binary_03c1d0(missing.u16string(),"fixture",f.files),"actual initial open failure returns false");
     f.env.write_embedded_png_03c020(missing.u16string(),Image::default_user_1800809d0);
     f.env.write_embedded_png_03c020(missing.u16string(),Image::default_avatar_180082710);
     require(!fs::exists(missing)&&!fs::exists(missing.parent_path()),"ignored initial open failure invents no file or directory");
-    const auto valid=dir.path/"valid.png";require(file_recovered::write_binary_03c1d0(valid.u16string(),"sentinel",f.files),"sentinel fixture");
+    const auto valid=dir.path/"valid.png";require(file::write_binary_03c1d0(valid.u16string(),"sentinel",f.files),"sentinel fixture");
     rejects<std::invalid_argument>([&]{f.env.write_embedded_png_03c020(valid.u16string(),static_cast<Image>(-1));},"unknown image identity rejected");
     require(read(valid)=="sentinel","invalid image identity cannot truncate existing file");
     f.env.write_embedded_png_03c020(valid.u16string(),Image::default_avatar_180082710);
@@ -87,7 +89,7 @@ void avatar(){
 void directory(){
     Fixture f;Directory dir;
     for(const auto* name:{"a_AVATAR_x.png","b_AVATAR_y","lower_avatar_z.png","keep.txt"})
-        require(file_recovered::write_binary_03c1d0((dir.path/name).u16string(),"own fixture",f.files),"owned directory fixture");
+        require(file::write_binary_03c1d0((dir.path/name).u16string(),"own fixture",f.files),"owned directory fixture");
     fs::create_directory(dir.path/"empty_AVATAR_dir");
     configuration::cleanup_cached_avatars(dir.path.u16string(),f.env);
     require(!fs::exists(dir.path/"a_AVATAR_x.png")&&!fs::exists(dir.path/"b_AVATAR_y")&&!fs::exists(dir.path/"empty_AVATAR_dir"),"real streaming cleanup removes matching files and empty directory");
@@ -95,13 +97,13 @@ void directory(){
 }
 void directory_failure(){
     Fixture f;Directory dir;
-    for(int i=0;i<3;++i)file_recovered::write_binary_03c1d0((dir.path/std::to_string(i)).u16string(),"own",f.files);
+    for(int i=0;i<3;++i)file::write_binary_03c1d0((dir.path/std::to_string(i)).u16string(),"own",f.files);
     unsigned calls=0;
     rejects<std::runtime_error>([&]{f.env.visit_directory_entries(dir.path.u16string(),{&calls,[](void* value,const configuration::Path&){++*static_cast<unsigned*>(value);throw std::runtime_error("callback failure");}});},"real visitor exception propagates");
     require(calls==1,"failed callback cannot visit a later entry");
     rejects<std::invalid_argument>([&]{f.env.visit_directory_entries((dir.path/"absent").u16string(),{});},"null visitor rejected before opening nonexistent directory");
     require(f.env.directory_entries(dir.path.u16string()).size()==3,"compatibility collection still available after callback exception");
-    const auto inner=dir.path/"inner";fs::create_directory(inner);file_recovered::write_binary_03c1d0((inner/"child").u16string(),"own",f.files);
+    const auto inner=dir.path/"inner";fs::create_directory(inner);file::write_binary_03c1d0((inner/"child").u16string(),"own",f.files);
     struct Nested {application::detail::Environment& env;configuration::Path inner;unsigned outer=0,child=0;};Nested n{f.env,inner.u16string()};
     f.env.visit_directory_entries(dir.path.u16string(),{&n,[](void* p,const configuration::Path&){
         auto& n=*static_cast<Nested*>(p);++n.outer;
@@ -112,7 +114,7 @@ void directory_failure(){
 void thread_errors(){
     // Binary table at087df0: values are an independent fixed compatibility oracle.
     constexpr std::array<int,7> expected{16,22,3,12,1,36,11};
-    execution_recovered::WindowsPlatform platform{application::detail::thread_error};
+    execution::WindowsPlatform platform{application::detail::thread_error};
     for(int i=0;i<7;++i){
         bool caught=false;try{platform.raise_thread_error_04a648(i);}catch(const std::system_error& e){
             caught=e.code().value()==expected[i]&&e.code().category()==std::generic_category();
@@ -123,8 +125,8 @@ void thread_errors(){
     rejects<std::system_error>([&]{mutex.thread_error_04a648(5);},"event mutex shares structured error policy");
 }
 void event_initializer_retry(){
-    struct Storage final:event_queue_recovered::Storage {
-        event_queue_recovered::OwnedStorage owned;bool first=true;
+    struct Storage final:event_queue::Storage {
+        event_queue::OwnedStorage owned;bool first=true;
         void construct_seed_copy(std::string_view seed)override {
             if(first){first=false;throw std::bad_alloc();}
             owned.construct_seed_copy(seed);
@@ -136,13 +138,13 @@ void event_initializer_retry(){
         void pop_front_locked()override{owned.pop_front_locked();}
     } storage;
     application::detail::Events owner;
-    event_queue_recovered::Context context{owner.guards,owner,owner.mutex,storage};
-    rejects<std::bad_alloc>([&]{event_queue_recovered::queue_02c400(context);},"queue allocation failure propagates");
+    event_queue::Context context{owner.guards,owner,owner.mutex,storage};
+    rejects<std::bad_alloc>([&]{event_queue::queue_02c400(context);},"queue allocation failure propagates");
     require(owner.guards.queue_0a39a0==0,"failed owned initializer resets its in-progress guard");
-    require(&event_queue_recovered::queue_02c400(context)==&storage&&storage.nonempty_locked(),"same owner retries failed initialization");
+    require(&event_queue::queue_02c400(context)==&storage&&storage.nonempty_locked(),"same owner retries failed initialization");
     // Another thread must not remain blocked by the failed first initialization.
-    std::thread peer([&]{event_queue_recovered::queue_02c400(context);});peer.join();
-    require(storage.copy_front_locked()==event_queue_recovered::initial_down_event,"retry seeds exactly one initial event");
+    std::thread peer([&]{event_queue::queue_02c400(context);});peer.join();
+    require(storage.copy_front_locked()==event_queue::initial_down_event,"retry seeds exactly one initial event");
 }
 }
 int main(int argc,char** argv)try{

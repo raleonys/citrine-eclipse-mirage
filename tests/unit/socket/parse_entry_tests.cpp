@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/parse_entry_test_fixture.hpp"
 using namespace parse_entry_test;
 namespace {

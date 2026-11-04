@@ -2,13 +2,135 @@
 
 This file distinguishes source imports, integrated pull requests and published releases. A GitHub merge is a source change, not an R-numbered release or release tag.
 
-## Unreleased — post-import GitHub development (2026-10-30 to 2026-10-31)
+## Unreleased — GitHub development
 
-The 52 entries below are the merged pull requests verified through PR #62, linked to their individual review records. The GitHub Releases collection was empty at this checkpoint, so these entries must not be read as published releases or evidence of Windows/native/game acceptance.
+Current development entries are updated alongside their pull requests. They describe source changes, including proposed work, rather than published releases or proof of Windows/native/game acceptance. The separately dated merged-PR checkpoint below preserves the earlier history through PR #62.
 
-### Additional unreleased changes
+### Current unreleased changes (updated 2026-11-03)
 
 - Audit C35-F002: reject symlinked Golden artifact/sidecar destinations and publish verified output from exclusively opened temporary files; preserve native acceptance boundaries.
+
+- Defer full hosted validation until a PR update newly integrates current main, with explicit `run-full-validation` PR label requests for already synchronized branches. Keep standalone manual dispatch diagnostic: required checks must actually attach to the PR before merge. Keep PR-opening and ordinary edit checks limited to source integrity, consolidate full source/portable/Windows/reference checks, retain all eleven required contexts and gate full jobs before matrix expansion and runner allocation. Waiting jobs are skipped under a distinct QA name that cannot shadow a real required result, not reported as artificial test failures; real Windows results remain required before merge. Make focused diagnostics manual and preserve weekly release validation.
+
+- Correct current XML dependency documentation to name pugixml, identify pre-migration TinyXML2 audit/CSV findings as historical, and record PR #149 as integrated in the owner requirements. Refresh the changelog heading and link recent integrated PRs; retain original archive provenance and external diagnostic-control references.
+
+- [PR #117](https://github.com/raleonys/citrine-eclipse-mirage/pull/117): Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.
+
+- [PR #155](https://github.com/raleonys/citrine-eclipse-mirage/pull/155): Validate SOURCE_FILES byte counts alongside SHA-256, rejecting missing, malformed and stale sizes. Add matching-hash negative controls for multibyte/CRLF payloads and count-only tampering.
+
+- [PR #152](https://github.com/raleonys/citrine-eclipse-mirage/pull/152): Remove obsolete publication classifications and location labels from operator output, active policies and generated build/Golden reports. Use `BUILD_RECEIPT.json`, `DIST_RECEIPT.json`, `GOLDEN_PASS` and `golden/` consistently across producers, checks and GitHub artifacts; retain draft publication as its own explicit state. Keep Golden/runtime/hash gates, failure codes and rollback behavior, and reject reintroduced labels through Source QA. Preserve vendor bytes and retained historical evidence.
+
+- [PR #124](https://github.com/raleonys/citrine-eclipse-mirage/pull/124): Extend the actual patched MinHook SAFE-FREEZE native fixture with two distinct hooks and queued/all-hook IP relocation checks: queued enable, queued disable, `MH_EnableHook(MH_ALL_HOOKS)`, `MH_DisableHook(MH_ALL_HOOKS)`, target-byte restoration, peer context writes and final ownership retirement (D326-F0006, Issue #20). No production or vendor changes.
+
+- [PR #151](https://github.com/raleonys/citrine-eclipse-mirage/pull/151): Add automated real-DLL XML equivalence/value/malformed-frame recovery contracts across three TCP lifecycle cycles and run them on finalized Golden output. Strengthen the independent reader benchmark with ten shared fixtures, full-work digests, 20 randomized paired Release rounds, compiler/source receipts, separate allocation measurements and per-fixture uncertainty reports. Reject incomplete or misleading performance receipts in infrastructure tests; production parser/vendor/ABI/CRT behavior is unchanged.
+
+- [PR #138](https://github.com/raleonys/citrine-eclipse-mirage/pull/138): Add an A11-07 actual hook-transaction regression for the MH_ERROR_DISABLED return path: an already-inactive patch does not bypass active-call drain or a failed uninitialize, and later retries skip duplicate disable while preserving original slots and engine ownership. Test-only, no patched MinHook, vendor, ABI or shipping code changes.
+
+- [PR #150](https://github.com/raleonys/citrine-eclipse-mirage/pull/150): Remove both obsolete TinyXML2 CMake target aliases at the owner's request. Use only the pugixml target names in active build policy and documentation, and retain the actual pugixml development project in Windows reference artifacts.
+
+- [PR #149](https://github.com/raleonys/citrine-eclipse-mirage/pull/149): Complete the owner-authorized pugixml production migration in PR #149: replace the active TinyXML2 tree with the exact supplied pugixml 1.16 archive and MIT notice, retaining retired input provenance and the other three vendor pins. Preserve the XML interface, depth/error/newline and corrected reference-decoding policies behind first-party reader code; keep the production static CRT and separately compiled development shared CRT. Compile that actual reader in differential, sanitizer, allocation, router/AES/license and real-file storage fixtures, and add its reader/corpus/allocation contracts to portable CI. Reject retired TinyXML2 production sources and candidate oracle linkage; retain the independent external control, measured reference-only OOM leak and qualified MSVC Debug noexcept OOM results. DLL ABI and hook behavior are unchanged; native/Golden acceptance must run on the production migration head.
+
+- [PR #135](https://github.com/raleonys/citrine-eclipse-mirage/pull/135): Test SAFE-FREEZE's patched MinHook peer-context write failure handling in the existing native fixture: an injected SetThreadContext failure during single-hook enable or disable must reject the transition, retain original/patch bytes and the live peer IP, release owned thread handles, and succeed on exact retry. No product/vendor/engine implementation change.
+
+- [PR #148](https://github.com/raleonys/citrine-eclipse-mirage/pull/148): Confine MinHook header/status dependencies to the existing native hook-engine adapter, preserving application status values, virtual signatures and SAFE-FREEZE bytes. Compile the existing transaction and fake-engine tests as a portable target on Linux/Windows, and make direct native test dependencies explicit, including the Windows API header used by the native adapter fixture. Vendor inputs, patch output, lifecycle policy, DLL exports and CRT selection remain unchanged.
+
+- [PR #116](https://github.com/raleonys/citrine-eclipse-mirage/pull/116): Write CTest JUnit reports to absolute paths matching their artifact and weekly source-package inputs; reject missing reports after otherwise successful tests. Correct the isolated/full Windows portable diagnostic paths and update its strict inventory from 28 to the current 30 tests. Test selection, failure propagation, runtime/vendor sources, ABI and release publication policy are unchanged.
+
+- [PR #131](https://github.com/raleonys/citrine-eclipse-mirage/pull/131): Run the root-ownership caller-isolation regression through existing portable and Windows Native infrastructure targets. Poison absolute Git selectors in a child process and verify the disposable caller's object store, refs, HEAD, config, index and worktree registry remain unchanged; preserve the underlying fixture-environment fix and all push gates.
+
+- Resolve the Source QA report fixture root before output ancestry checks, matching the real entrypoint and Windows short/long temporary-path aliases. Preserve mandatory hardlink, early rejection and failed-write/replace checks.
+
+- [PR #137](https://github.com/raleonys/citrine-eclipse-mirage/pull/137): Publish Source QA JSON reports through a closed exclusive temporary file and atomic name replacement, preserving source inodes behind hardlinked report names and the previous complete report after write/replace failure. Validate report destinations before running checks; retain the existing project-build boundary, missing-parent creation and nonzero failed-check result. Runtime, vendor, ABI and mandatory pre-push validation are unchanged.
+
+- [PR #127](https://github.com/raleonys/citrine-eclipse-mirage/pull/127): Isolate disposable root-ownership Git fixtures from repository-local environment variables inherited by hooks. Preserve the caller environment while preventing fixture init/commit/worktree commands from selecting its repository; verify the foreign linked-worktree HEAD, registry, index, config and tracked content remain unchanged. Keep the real worktree/forged-gitfile checks and mandatory push gate intact; runtime, vendor and ABI inputs are unchanged.
+
+- [PR #68](https://github.com/raleonys/citrine-eclipse-mirage/pull/68): Audit C34-F002: stage both source ZIP artifacts before publication, reject existing mismatched pairs, and restore the prior ZIP on checksum publication failure; document crash-atomicity limits.
+- [PR #67](https://github.com/raleonys/citrine-eclipse-mirage/pull/67): Audit C34-F001: reject pre-existing symlinked source ZIP partials/output paths and use exclusively opened random temporary files for archive and checksum generation.
+
+- Audit C34-F005: reject unrecognized active-source manifest schemas and misleading release-classification fields, keeping publication state separate from source identity.
+
+- Audit C34-F003: validate both ownership-ledger schemas and explicit role policies, complete three previously untyped script entries, and test missing or unknown roles.
+
+- Replace the README campaign artwork with the exact new owner-supplied 1400 x 1100 RGBA PNG (612724 bytes), preserving transparency and encoded bytes. Update the artwork identity/provenance and active manifest; runtime/profile avatars, production resources, ABI and code are unchanged.
+
+- Audit C34-F004: confine Python cache-cleanup report files to the owned build tree and publish them through exclusive temporary files; reject unsafe, directory and missing-parent destinations before deleting caches. Cover linked-directory escapes, hardlinked sources and failed report publication.
+
+- Exercise the real achievement grant's native XML/INI batch failure/retry with an owned Windows INI handle held without delete sharing: reject a locked second destination, verify both old files and in-memory progress/mutex/event rollback, then unlock and commit exactly one retry without retained staging files. Keep the existing source-included achievement implementation and atomic persistence policy unchanged.
+
+- Preserve the owner-authorized Draft status of existing four-field research PR #81 as a narrow exception to the normal ready-for-review PR rule; record its continuing source-provenance scope without treating the work as a routine audit, production release or automatic merge. Update governance, agent workflow and PR guidance only; no runtime, vendor or ABI change.
+
+- Clarify branch lifecycle governance: ordinary audit findings, bugfixes and other single-PR tasks use temporary branches cleaned up after closure and preservation. Continuing research/reverse-engineering/reconstruction workstreams may retain project branches; only an explicitly owner-designated, scoped long-running audit campaign has the corresponding audit exception. Align governance, agent workflow, PR template and push-gate fixture; note repository-wide automatic head deletion could remove retained project branches. No runtime, vendor or ABI changes.
+
+- Replace the README campaign logo with the exact owner-supplied 1400 x 1100 PNG from the new ZIP, preserving its bytes and updating the artwork identity record. Make `main` the only permanent branch: use a fresh branch per PR and require source-branch deletion after merged or unmerged closure, with prior preservation of needed work. Update contributor guidance, the PR template and the local push gate; document GitHub's merged-branch deletion setting and manual cleanup for unmerged PRs.
+
+- Pin Windows build-output path components before the exclusive lock and retain them through the build profile. Add controlled cross-process junction replacement, rename, ACL-denial, rollback and output-confinement regressions; release pins in reverse order and restore environment state even after cleanup faults. Use directory-list access so Windows enforces the no-delete sharing constraint, and run the same native fixture before long CI builds for early feedback. Document the selected-component trust boundary; runtime and vendor sources are unchanged.
+
+- Exercise the production Registry callbacks and SDK original-call adapters against isolated real Windows HKCU keys in A/W lifecycle tests. Cover native and fabricated opens, query/close overlap during startup waits, binding leases, untracked SDK opens and bounded numeric reuse observations. Preserve runtime behavior and distinguish these callback fixtures from MinHook and Consumer provenance acceptance.
+
+- Recheck the historical Hooks of Pioneering Registry ownership research against accepted main: raw HKEY provenance and retirement remain design/evidence gaps, while prior HeapFree failure receipts do not describe the current operator-new/delete backend. Record a source-linked applicability and proof matrix, synchronized with the allocation/insert rollback accepted in PR #98, without changing hooks, runtime code, tests, vendors or ABI.
+
+- Roll back fabricated Registry key allocation when either owning-set or route-set insertion throws, restoring the caller output and removing only the new ownership entry before releasing the allocation. Preserve successful A/W effect order and cover real container allocation failures, logging exceptions, allocation failure and ordinary close on Linux and Windows; native handle provenance remains separate research.
+
+- Add a reviewed Config2/VDF depth-limit candidate: reject structural nesting beyond 128 before recursive PEGTL actions. Extend boundary, conversion, byte/comment, error-position and retained-State regressions; preserve the frozen VDF corpus. The new input policy requires owner compatibility approval before merge.
+
+- Reconcile all ten B49-B54 source-audit findings with accepted main, distinguishing covered startup/accept/module-lease scenarios from open late-completion and foreign-callback lifetime proof. Preserve the historical donor comparison and identify unavailable donor-byte evidence explicitly; no runtime or test policy changes.
+
+- Add bounded, best-effort IPv4/IPv6 listener owning-PID diagnostics to the public DLL lifecycle test host. Keep diagnostic allocation, API and output failures separate from authoritative shutdown assertions; cover fault paths and table validation in Windows tests. Production code, shutdown budgets and pass/fail criteria are unchanged.
+
+- Extend source-included unload scanner coverage for non-TLS R11 image references, balanced suspension/handle cleanup, cleared references and shutdown-caller exclusion. Preserve the exact validated TLS data-marker exemption and run the added cases in the existing Windows Debug/Release native and shutdown gates without a duplicate workflow; production code is unchanged.
+
+- Cover ordered LSX send completion anomalies with three receipt-safety regressions: over-reported first/final chunk lengths and full-length completions carrying socket errors. Run the session-flow CTest on genuine Windows MSVC Debug/Release in the existing reference acceptance workflow; no production runtime behavior changed.
+
+- Add actual Asio IPv4/IPv6 pending-accept shutdown regression scenarios, with both unconnected and already-connected peers, to distinguish cancellation intent from callback finality and prevent post-stop rearm. Include the native net-failure test in focused Windows MSVC Debug/Release lifecycle CI; no production behavior changed. Continue focused cancellation checks after a lifecycle failure only when the native build succeeded.
+
+- Add a native Windows online-provider physical image-lease regression: after an injected FreeLibrary failure, verify the DLL remains mapped and callable until exact retry succeeds, then verify actual unload and no double release. Separate MSVC Debug/Release acceptance from future foreign-callback concurrency validation; production provider code remains unchanged.
+
+- Repair the reference socket cancellation gate's exception path: release the selected engine gate when category resolution or cancellation rejects unsupported source input, while preserving normal close order and retaining the socket/control state on failure. Add focused injected-failure regression checks with unchanged strong/weak owner counts, and keep active-source terminology within the enforced policy; shipping Asio is unchanged. Add focused Windows Debug/Release execution of socket_closing_contracts to reference CI, and stack this change on the queued shutdown fix in PR #89.
+
+- Defer application-owned Asio accept callbacks until provider/profile startup admission is published, while retaining the early bound listener and OS TCP backlog. Add a source-linked native startup regression proving an early connecting peer stays connected until the subsequent greeting. Standalone Asio services and internal failure-injection fixtures retain immediate admission by default; full native MSVC and Consumer validation remain required.
+
+- Restore the process-wide Windows error mode if optional online-provider path conversion or DLL loading throws, preserving the originating exception even when restoration fails. Extend portable provider failure-injection contracts for the four pre-load stages and restoration fault. The reconstruction packet's factory-failure scenarios informed this review; native/Golden/Consumer acceptance is pending.
+
+- [PR #28](https://github.com/raleonys/citrine-eclipse-mirage/pull/28): Read online-provider object and method-table fields through byte copies, reject missing tables or methods before indirect calls, and match the observed single-object destruction call. Add malformed-slot, unaligned-storage and module-cleanup regressions.
+
+- Restore owner-approved 34-name LUTRAVEX weekly semantic version queue from project Library and Citrine_Eclipse_Mirage_x.y.z_CODENAME.zip naming; retire -RNN prospectively without changing ABI or release history.
+
+- Run actual Windows Native Release/Debug, Production/Golden Release, CRT Release, Debug, Compile Only, full Windows portable Debug/Release, and reference graph automatically for every PR. Keep existing required Windows native/production check names and preserve weekly draft-only publication; no runtime source or ABI change.
+
+- Give the unchanged 192-case socket pool release reference matrix a bounded 180-second native Debug test budget. Preserve its 60-second non-Debug budget, existing Wine Debug override, checked CRT, payloads and failure assertions.
+
+- Fix the MSVC Debug unload scan false positive caused by an idle Windows peer retaining the compiler `_tls_end` data marker in R11. Validate the exact PE TLS endpoint, its non-executable section and actual image page before exempting data registers/stack slots; keep every in-image RIP unsafe. Add native rejection-boundary tests and run unload_guard_contracts alongside repeated lifecycle acceptance.
+
+- Extend queued shutdown acceptance with two persistent cleanup failures: both requests are consumed, the sole owner remains retained, and cleanup resumes only after a third explicit request.
+
+- Fix lost DllShutdown retries when two manual-reset event requests coalesce before the worker reset: consume one atomic request ticket per public call, preserving a separate retry after an incomplete first cleanup. A deterministic real DLL worker fixture reproduced the original failure on Windows Debug and Release before this correction; focused MSVC regression and existing native fault modes must pass on the patched head.
+
+- Fix the owner-scoped native callback error policy lifetime: borrow it only under a live callback lease, keep the lease during terminal exception reporting, and clear the cached policy after successful unbinding. Add isolated Windows post-close and live-throw regressions, including a competing close during error reporting and guarded storage after policy destruction. The external reconstruction packet informed this audit; native/Golden/game acceptance remains pending.
+
+- Add a PR #23 post-merge Windows listener-shutdown follow-up with repeated Debug/Release CTest evidence and an explicit unpinned local Compile Only failure; production runtime remains unchanged.
+
+- Make the native CreateProcessA argument-forwarding fixture use explicit caller buffers for pointer identity, removing its dependence on string-literal pooling in MSVC Debug while retaining all ten argument assertions. Production callbacks and connect behavior are unchanged; fresh native Debug/Release validation remains pending.
+
+- Guard native connect address inspection with a bounded readable snapshot, forwarding malformed addresses to Winsock with their original pointer/length and error behavior. Preserve exact loopback redirection, add portable snapshot/no-listener checks, and register focused Windows Debug/Release callback and real Winsock equivalence coverage; native validation remains pending.
+
+- Audit C36-F003: keep unknown-entitlement diagnostics nonmodal and redacted, repair native test namespace scope, and cover Debug output plus Release preservation of existing logs. Add focused Windows MSVC Debug/Release acceptance; fresh native execution remains pending.
+
+- Correct single-hook disable IP relocation in the pinned MinHook build copy, preserve upstream vendor bytes, and add exact patch, source, and focused Windows MSVC Debug/Release regression checks. The focused fixture passed; genuine suspended-peer and full Native/Golden acceptance remain pending.
+
+- Isolate the MSVC C++ development DLL and host in a shared compiler-CRT graph, including separately compiled vendor dependencies, to avoid cross-module static Debug CRT ownership during parser-state destruction. Production retains its static CRT, sources and three-export ABI; native Debug/Release validation remains required.
+
+- Report source-host smoke success only after local C++ destruction and successful application shutdown; preserve failure codes and Debug timeout diagnostics.
+
+- Investigate the separate Windows MSVC Debug source-host timeout with test-only startup, LSX and shutdown stage markers; do not alter production runtime behavior.
+- Repair 12 PR #71 C++ interface/adapter identity collisions in the source-linked reference graph, add bounded type-identity regression checks and Windows Debug/Release reference-object compilation gates; shipping DLL exports and vendor bytes remain unchanged.
+
+- Correct the Windows MSVC Debug configuration-defaults test harness by injecting allocation failures at throwing map insertion boundaries while preserving non-MSVC-Debug constructor coverage; retain diagnostic probes and add full Windows x64 Debug/Release portable CTest acceptance (28/28 each). No production, DLL ABI, native release or game acceptance is implied.
+
+- Replace 58 research-era labels in first-party `src/` and `include/` comments and five diagnostic messages with technical wording; enforce a terminology regression check without modifying runtime control flow, file names or ABI identifiers.
+
+- Normalize first-party implementation identifiers, add SPDX ownership headers, place Python before CMake and keep the CI README badge last.
+
+- Audit F-C28-001: retain buffered Debug startup diagnostics across failed log-file opens, with source-linked native recovery and Release no-log regressions.
 - Add a CMake 3.20+ README build-system badge linked to the build configuration; avoid unverified release or test-status badges.
 - Add a Python 3.9+ README prerequisites badge linked to the development instructions.
 - Apply the previously approved `GPL-3.0-only` licensing policy with the complete GNU GPLv3 text in the root `LICENSE` and governance; preserve independent vendor licenses and add a README license badge.
@@ -17,6 +139,10 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 - Remove redundant project-name declarations and branding-transition commentary from current documentation; existing independent technical contracts are unchanged.
 - Integrate the owner's final campaign artwork into the README hero, with exact PNG identity pinned in the branding contract and active source manifest.
 - Update repository URLs to the renamed GitHub project.
+
+### Historical merged-PR checkpoint through #62
+
+The following 52 entries were verified through PR #62. The GitHub Releases collection was empty at that checkpoint; this historical count and release observation do not describe the current repository state.
 
 ### 2026-10-31
 
@@ -192,4 +318,4 @@ The following sections are preserved verbatim from the R24 source-import changel
 - Remove whole preloader/version and private CRT research packages from build.
 - Decouple the approved hook-11 selector from the preloader project.
 - Add an actual development DLL target and a dynamically linked source host.
-- Adapt Brownfield local build launchers; keep publication and Golden acceptance separate.
+- Adapt Brownfield build launchers; keep publication and Golden acceptance separate.

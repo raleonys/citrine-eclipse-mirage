@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 // Standard compiler CRT probe; no recovered/custom CRT implementation.
 #include <atomic>
 #include <cstdlib>

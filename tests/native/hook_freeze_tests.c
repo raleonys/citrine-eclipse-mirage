@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 /* Exercise the actual patched engine, injecting only peer-thread OS failures. */
 #include <windows.h>
 #include <tlhelp32.h>
@@ -7,9 +9,11 @@
 #include <MinHook.h>
 
 static int checks, enumeration, resumes, closes, cursor_closes;
-static BOOL unavailable, fail_resume, fail_close, fail_heap, fail_context, fail_suspend, fail_cursor, fail_array;
+static BOOL unavailable, fail_resume, fail_close, fail_heap, fail_context, fail_set_context, fail_suspend, fail_cursor, fail_array;
 static HANDLE cursor_handle = (HANDLE)(ULONG_PTR)0x4321;
 static HANDLE peer_handle = (HANDLE)(ULONG_PTR)0x4322;
+static DWORD64 peer_ip;
+static int context_writes;
 static void require(BOOL ok, const char* message) {
     ++checks;
     if (!ok) { fprintf(stderr, "FAIL: %s\n", message); exit(1); }
@@ -44,8 +48,12 @@ static BOOL WINAPI close_peer(HANDLE thread) {
     return CloseHandle(thread);
 }
 static BOOL WINAPI context_peer(HANDLE thread,LPCONTEXT context) {
-    if(thread==peer_handle){if(fail_context){SetLastError(ERROR_ACCESS_DENIED);return FALSE;}context->Rip=0;return TRUE;}
+    if(thread==peer_handle){if(fail_context){SetLastError(ERROR_ACCESS_DENIED);return FALSE;}context->Rip=peer_ip;return TRUE;}
     return GetThreadContext(thread,context);
+}
+static BOOL WINAPI update_context_peer(HANDLE thread,const CONTEXT* context) {
+    if(thread==peer_handle){if(fail_set_context){SetLastError(ERROR_ACCESS_DENIED);return FALSE;}peer_ip=context->Rip;++context_writes;return TRUE;}
+    return SetThreadContext(thread,context);
 }
 static BOOL WINAPI exit_code(HANDLE thread,LPDWORD code) {
     if(thread==peer_handle){*code=STILL_ACTIVE;return TRUE;}
@@ -66,6 +74,7 @@ static LPVOID WINAPI allocate_heap(HANDLE heap,DWORD flags,SIZE_T bytes) {
 #define ResumeThread resume_peer
 #define CloseHandle close_peer
 #define GetThreadContext context_peer
+#define SetThreadContext update_context_peer
 #define GetExitCodeThread exit_code
 #define HeapFree release_heap
 #define HeapAlloc allocate_heap
@@ -73,7 +82,83 @@ static LPVOID WINAPI allocate_heap(HANDLE heap,DWORD flags,SIZE_T bytes) {
 #include "hook.c"
 
 static void reset_faults(void) {
-    unavailable=fail_resume=fail_close=fail_heap=fail_context=fail_suspend=fail_cursor=fail_array=FALSE;
+    unavailable=fail_resume=fail_close=fail_heap=fail_context=fail_set_context=fail_suspend=fail_cursor=fail_array=FALSE;
+}
+static void single_hook_ip_relocation(void) {
+    unsigned char* target=(unsigned char*)VirtualAlloc(NULL,64,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE);
+    LPVOID trampoline=NULL;
+    int writes;
+    require(target!=NULL,"allocate executable hook fixture; never execute its bytes");
+    memset(target,0x90,64);target[16]=0xc3;target[32]=0xc3;
+    require(MH_CreateHook(target,target+32,&trampoline)==MH_OK&&trampoline!=NULL,"create actual single hook and trampoline");
+    peer_ip=(DWORD64)(ULONG_PTR)(target+2);writes=context_writes;
+    fail_set_context=TRUE;
+    require(MH_EnableHook(target)==MH_ERROR_MEMORY_PROTECT,"failed peer SetThreadContext rejects single enable");
+    require(target[0]==0x90&&peer_ip==(DWORD64)(ULONG_PTR)(target+2)&&context_writes==writes&&
+        !HasRetainedThreadOwnership(),"failed enable does not publish patch, relocate IP or leak peer");
+    fail_set_context=FALSE;
+    require(MH_EnableHook(target)==MH_OK,"enable actual single hook after SetThreadContext retry");
+    require(peer_ip==(DWORD64)(ULONG_PTR)((unsigned char*)trampoline+2)&&context_writes==writes+1,"single enable maps target IP to trampoline");
+    require(target[0]==0xe9,"single enable patches target");
+    fail_context=TRUE;
+    require(MH_DisableHook(target)==MH_ERROR_MEMORY_PROTECT,"unresolved peer context rejects single disable");
+    require(target[0]==0xe9&&peer_ip==(DWORD64)(ULONG_PTR)((unsigned char*)trampoline+2),"failed disable preserves live patch and peer IP");
+    fail_context=FALSE;writes=context_writes;
+    fail_set_context=TRUE;
+    require(MH_DisableHook(target)==MH_ERROR_MEMORY_PROTECT,"failed peer SetThreadContext rejects single disable");
+    require(target[0]==0xe9&&peer_ip==(DWORD64)(ULONG_PTR)((unsigned char*)trampoline+2)&&
+        context_writes==writes&&!HasRetainedThreadOwnership(),
+        "failed disable retains live patch and peer IP without leaking thread owners");
+    fail_set_context=FALSE;
+    require(MH_DisableHook(target)==MH_OK,"disable actual single hook after context retry");
+    require(peer_ip==(DWORD64)(ULONG_PTR)(target+2)&&context_writes==writes+1,"single disable maps trampoline IP back to target");
+    require(target[0]==0x90,"single disable restores target bytes");
+    require(!HasRetainedThreadOwnership(),"single disable drains peer ownership");
+    require(MH_RemoveHook(target)==MH_OK,"remove disabled hook after relocation");
+    require(VirtualFree(target,0,MEM_RELEASE),"release hook fixture after removal");
+    peer_ip=0;
+}
+static void queued_and_all_hook_ip_relocation(void) {
+    unsigned char* memory=(unsigned char*)VirtualAlloc(NULL,128,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE);
+    unsigned char* first=memory;
+    unsigned char* second;
+    LPVOID first_trampoline=NULL, second_trampoline=NULL;
+    int writes;
+    require(memory!=NULL,"allocate executable two-hook fixture; never call it");
+    second=memory+64;
+    memset(memory,0x90,128);
+    first[16]=0xc3;first[32]=0xc3;second[16]=0xc3;second[32]=0xc3;
+    require(MH_CreateHook(first,first+32,&first_trampoline)==MH_OK&&first_trampoline!=NULL,
+        "create first queued hook");
+    require(MH_CreateHook(second,second+32,&second_trampoline)==MH_OK&&second_trampoline!=NULL,
+        "create second queued hook");
+    peer_ip=(DWORD64)(ULONG_PTR)(first+2);writes=context_writes;
+    require(MH_QueueEnableHook(first)==MH_OK&&MH_QueueEnableHook(second)==MH_OK,
+        "queue enable for two distinct hooks");
+    require(MH_ApplyQueued()==MH_OK,"apply queued two-hook enable");
+    require(peer_ip==(DWORD64)(ULONG_PTR)((unsigned char*)first_trampoline+2)&&
+        context_writes==writes+1&&first[0]==0xe9&&second[0]==0xe9,
+        "queued enable maps suspended peer into the first trampoline");
+    writes=context_writes;
+    require(MH_QueueDisableHook(MH_ALL_HOOKS)==MH_OK,"queue disable for both hooks");
+    require(MH_ApplyQueued()==MH_OK,"apply queued all-hook disable");
+    require(peer_ip==(DWORD64)(ULONG_PTR)(first+2)&&context_writes==writes+1&&
+        first[0]==0x90&&second[0]==0x90,
+        "queued all-hook disable returns peer to original target");
+    peer_ip=(DWORD64)(ULONG_PTR)(second+2);writes=context_writes;
+    require(MH_EnableHook(MH_ALL_HOOKS)==MH_OK,"enable all existing hooks");
+    require(peer_ip==(DWORD64)(ULONG_PTR)((unsigned char*)second_trampoline+2)&&
+        context_writes==writes+1,"all-hook enable relocates the second target IP");
+    writes=context_writes;
+    require(MH_DisableHook(MH_ALL_HOOKS)==MH_OK,"disable all existing hooks");
+    require(peer_ip==(DWORD64)(ULONG_PTR)(second+2)&&context_writes==writes+1&&
+        first[0]==0x90&&second[0]==0x90,
+        "all-hook disable restores second IP and both targets");
+    require(!HasRetainedThreadOwnership(),"queued and all-hook transitions drain thread owners");
+    require(MH_RemoveHook(first)==MH_OK&&MH_RemoveHook(second)==MH_OK,
+        "remove both disabled hooks without duplicate relocation");
+    require(VirtualFree(memory,0,MEM_RELEASE),"release both hook fixture targets");
+    peer_ip=0;
 }
 int main(void) {
     FROZEN_THREADS threads;
@@ -106,6 +191,8 @@ int main(void) {
     require(!HasRetainedThreadOwnership(),"failed preparation resumes and closes peers");
     fail_context=FALSE;fail_suspend=TRUE;
     require(Freeze(&threads,ALL_HOOKS_POS,ACTION_ENABLE)==MH_ERROR_MEMORY_PROTECT,"failed live peer suspension rejects patching");
-    reset_faults();require(MH_Uninitialize()==MH_OK&&g_hHeap==NULL,"engine releases only after successful cleanup");
+    reset_faults();single_hook_ip_relocation();
+    reset_faults();queued_and_all_hook_ip_relocation();
+    require(MH_Uninitialize()==MH_OK&&g_hHeap==NULL,"engine releases only after successful cleanup");
     printf("PASS: %d actual SAFE-FREEZE failure and retry checks\n",checks);return 0;
 }

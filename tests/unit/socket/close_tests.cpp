@@ -1,11 +1,13 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_close.hpp"
 #include <deque>
 #include <functional>
 #include <iostream>
 #include <vector>
 
-namespace sock=preloader_l::socket_recovered;
-namespace srv=preloader_l::server_recovered;
+namespace sock=preloader_l::socket;
+namespace srv=preloader_l::server;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

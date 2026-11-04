@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_iocp_constructor.hpp"
 #include <bit>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 IocpSchedulerEntry& construct_iocp_024990(IocpSchedulerEntry& entry,std::uintptr_t owner,
     std::uint32_t hint,std::uint8_t own_thread,IocpConstructorApi& api,ServiceGateApi& gates,Api& errors,IocpConstructionEffects& effects){
     entry.key.type=0;entry.key.id=0;entry.owner_context=owner;entry.next=nullptr;
@@ -52,4 +54,4 @@ ServiceEntry* IocpSchedulerRegistryEffects::construct_scheduler_024990(ServiceEn
     if(!entry)throw UnsupportedInput("Scheduler allocation has no live IOCP entry projection");
     return &construct_iocp_024990(*entry,owner,hint,own_thread,api_,gates_,errors_,effects_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

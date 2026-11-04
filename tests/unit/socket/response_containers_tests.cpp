@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/response_containers_test_fixture.hpp"
 using namespace container_test;
 namespace {

@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/protocol/messages.hpp"
 #include <limits>
 #include <stdexcept>
 
-namespace preloader_l::messages_recovered {
+namespace preloader_l::messages {
 std::uint64_t EventQueue::reserve_front_locked(){throw std::logic_error("Event queue lacks delivery reservations");}
 bool EventDelivery::finish(bool success) noexcept {
     if(!token_)return true;
@@ -126,7 +128,7 @@ std::string process_message_033d70(State state,std::string& input,XmlBackend& xm
                 return {};
             }
         }
-        // tinyxml2 gets a C string with size_t(-1), so embedded NUL ends parsing.
+        // The project XML interface preserves C-string semantics: embedded NUL ends parsing.
         auto parsed=xml.parse_c_string(std::string_view(input.c_str()));
         if(!parsed.has_error) {
             if(state.show_lsx_0a3ef0)effects.log_received(input);
@@ -177,4 +179,4 @@ std::string process_message_033d70(State state,std::string& input,XmlBackend& xm
         return {};
     }
 }
-} // namespace preloader_l::messages_recovered
+} // namespace preloader_l::messages

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
 """Offline, pinned, fail-closed materialization of the active owner-provided vendor ZIPs.
 
 Preserves every member payload, with portable exact descriptors for locked aliases.
@@ -16,7 +17,7 @@ import re
 import tempfile
 import zipfile
 
-VENDORS = ('asio','minhook','pegtl','tinyxml2')
+VENDORS = ('asio','minhook','pegtl','pugixml')
 MAX_ARCHIVE_BYTES = 100 * 1024 * 1024
 MAX_MEMBER_BYTES = 32 * 1024 * 1024
 

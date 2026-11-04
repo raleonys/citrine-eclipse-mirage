@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_lifecycle.hpp"
 #include <windows.h>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct GateImports {
     decltype(&::EnterCriticalSection) enter=&::EnterCriticalSection;
     decltype(&::LeaveCriticalSection) leave=&::LeaveCriticalSection;
@@ -17,4 +19,4 @@ public:
     void leave() override;
 private:CRITICAL_SECTION& section_;GateImports imports_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

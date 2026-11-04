@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #ifndef NOMINMAX
 #define NOMINMAX
@@ -10,14 +12,14 @@
 #include <optional>
 #include <stdexcept>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 using Socket=std::uintptr_t;
 using Buffer=WSABUF; // Actual SDK type; no aliasing cast from a guessed layout.
 struct Category {
     // Opaque identity of the category's vtable+8 name function, not its object.
     // Tokens are compared only; they are never called or treated as image VAs.
     std::uintptr_t name_identity=0;
-    server_recovered::ErrorCategory logical=server_recovered::ErrorCategory::system;
+    server::ErrorCategory logical=server::ErrorCategory::system;
 };
 struct Error {std::int32_t value=0;Category category{};};
 struct Conversion {std::int32_t result=0;std::optional<std::wstring> text;};
@@ -45,17 +47,17 @@ std::int64_t send_02a200(Socket,std::uint8_t state,std::span<Buffer>,
     std::uint32_t flags,bool all_empty,Error&,Api&);
 // New partial source bridges. Remaining ASIO/socket ownership methods are
 // abstract; these classes do not create a socket, context or listener.
-class AddressBackend:public server_recovered::ServerBackend {
+class AddressBackend:public server::ServerBackend {
 public:
     explicit AddressBackend(Api& api):api_(api){}
-    server_recovered::ParsedAddress parse_address_028690(std::uint16_t,std::string_view) final;
+    server::ParsedAddress parse_address_028690(std::uint16_t,std::string_view) final;
 private:Api& api_;
 };
-class SynchronousTransport:public server_recovered::Transport {
+class SynchronousTransport:public server::Transport {
 public:
     SynchronousTransport(const Socket& socket,const std::uint8_t& state,Api& api)
         :socket_(socket),state_(state),api_(api){}
-    server_recovered::WriteResult synchronous_send(std::span<const char>) final;
+    server::WriteResult synchronous_send(std::span<const char>) final;
 private:const Socket& socket_;const std::uint8_t& state_;Api& api_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

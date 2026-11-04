@@ -1,6 +1,5 @@
 {
   "schema": "surge.session-transport.v1",
-  "classification": "NOT_RELEASE",
   "owner": "Explicit owner adoption of bounded asynchronous session transport",
   "documentation": "docs/SESSION_TRANSPORT.md",
   "defaults": {

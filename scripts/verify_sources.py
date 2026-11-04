@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Check the declared application/test/vendor source bytes and layout boundary."""
 from pathlib import Path
 import hashlib
@@ -36,7 +38,13 @@ def verify(root):
         if root.resolve() not in p.resolve().parents:
             errors.append('Missing/unsafe source: '+name)
             continue
-        if hashlib.sha256(source_payload(p)).hexdigest()!=entry['sha256']:
+        payload=source_payload(p)
+        size=entry.get('bytes')
+        if type(size) is not int or size<0:
+            errors.append('Invalid source size: '+name)
+        elif len(payload)!=size:
+            errors.append('Source size differs: '+name)
+        if hashlib.sha256(payload).hexdigest()!=entry['sha256']:
             errors.append('Source differs: '+name)
     for name in actual:
         if not name.startswith('third_party/') and any(part.endswith('-source') or part=='recovered' for part in Path(name).parts):

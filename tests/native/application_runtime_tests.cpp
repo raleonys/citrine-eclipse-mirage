@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/application.hpp"
 #include "preloader_l/core/binary_io.hpp"
 #include "preloader_l/hash/hash.hpp"
@@ -10,6 +12,7 @@
 #include "preloader_l/platform/execution_windows.hpp"
 #include "../../src/runtime/application_internal.hpp"
 #include <asio.hpp>
+#include <MinHook.h>
 #include <filesystem>
 #include <iostream>
 #include <stdexcept>
@@ -60,29 +63,29 @@ public:
     }
     std::string encrypted_request(std::string_view id,std::string_view command) {
         auto bytes="<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>";
-        crypto_recovered::Cipher cipher;cipher.set_fixed_key_084c98();require(cipher.encrypt_042610(bytes),"client encrypt");
-        messages_recovered::hex_encode_03d190(bytes);send(bytes);return encrypted_frame();
+        crypto::Cipher cipher;cipher.set_fixed_key_084c98();require(cipher.encrypt_042610(bytes),"client encrypt");
+        messages::hex_encode_03d190(bytes);send(bytes);return encrypted_frame();
     }
     std::string encrypted_frame() {
-        auto bytes=frame();messages_recovered::hex_decode_03ce30(bytes);
-        crypto_recovered::Cipher cipher;cipher.set_fixed_key_084c98();require(cipher.decrypt_042480(bytes),"client decrypt");return bytes;
+        auto bytes=frame();messages::hex_decode_03ce30(bytes);
+        crypto::Cipher cipher;cipher.set_fixed_key_084c98();require(cipher.decrypt_042480(bytes),"client decrypt");return bytes;
     }
 };
 struct GreetingFixture final:net::HandlerFactory {
     std::promise<void> entered;
-    struct Handler final:server_recovered::Handler {
+    struct Handler final:server::Handler {
         GreetingFixture& fixture;
         explicit Handler(GreetingFixture& f):fixture(f){}
         void reset_02bc70() override {} // Intentional test-only handler.
         std::string initial_message_02d540() override {std::string bytes(8*1024*1024,'x');fixture.entered.set_value();return bytes;}
         std::string process_message_033d70(std::string_view) override {throw std::logic_error("Greeting fixture cannot process requests");}
     };
-    std::unique_ptr<server_recovered::Handler> create() override{return std::make_unique<Handler>(*this);}
+    std::unique_ptr<server::Handler> create() override{return std::make_unique<Handler>(*this);}
     void error(std::string_view,std::exception_ptr) noexcept override {} // Expected cancellation diagnostic.
 };
 void event_mutex_contract(){
     application::detail::Events owner;
-    auto& mutex=event_queue_recovered::mutex_02c620(owner.context);
+    auto& mutex=event_queue::mutex_02c620(owner.context);
     require(mutex.lock_04a6ac()==0&&mutex.count_4c()==1,"event mutex first acquisition");
     const auto second=mutex.lock_04a6ac();
     const auto count=mutex.count_4c();
@@ -102,11 +105,11 @@ void event_mutex_contract(){
 }
 void stop_blocked_greeting() {
     GreetingFixture fixture;auto entered=fixture.entered.get_future();
-    execution_recovered::MutexState mutex{};execution_recovered::initialize_mutex_04a698(mutex,2);
+    execution::MutexState mutex{};execution::initialize_mutex_04a698(mutex,2);
     std::uint8_t first=0,second=0,third=0;std::uint16_t port=0;
-    execution_recovered::WindowsPlatform platform(+[](int){throw std::runtime_error("fixture thread error");});
+    execution::WindowsPlatform platform(+[](int){throw std::runtime_error("fixture thread error");});
     auto frequency=platform.query_performance_frequency();
-    execution_recovered::Execution execution(mutex,{first,second,third},frequency,platform);
+    execution::Execution execution(mutex,{first,second,third},frequency,platform);
     net::AsioService service(fixture,execution,port,first);service.start();
     asio::io_context io;asio::ip::tcp::socket peer(io);peer.open(asio::ip::tcp::v4());
     peer.set_option(asio::socket_base::receive_buffer_size(1024));
@@ -125,16 +128,16 @@ void stop_blocked_greeting() {
 int main(int argc,char** argv) try {
     event_mutex_contract();
     Directory directory;
-    file_recovered::NativeFactory files;
+    file::NativeFactory files;
     const auto cfg=directory.path/"surge.cfg";
     std::string text=R"("Config2" {"Game" {"ContentId" "fixture-id" "KeyForLicense" "fixture-key"} "User" {"Username" "fixture-user"} "Emulator" {"SDK" "99.88.77.66-main"} "Content" {)";
     for(int i=0;i<25;++i)text+='"'+std::to_string(i)+R"(" {"Name" "fixture-content"})";
     text+=R"(} "Entitlements" {"fixture-offer" {"Group" "fixture-group"}} "Achievements" {"AchievementsSet" "fixture-set" "AchievementNames" {"award" "fixture-award"} "AchievementTotals" {"award" "10"}} })";
-    require(file_recovered::write_binary_03c1d0(cfg.u16string(),text,files),"real standard IO config write");
-    require(file_recovered::write_binary_03c1d0((directory.path/"surge_override.cfg").u16string(),R"("Config2" {"Emulator" {"SDK" "0.0.0.0-override"} "User" {"Username" "fixture-override"}})",files),"override write");
+    require(file::write_binary_03c1d0(cfg.u16string(),text,files),"real standard IO config write");
+    require(file::write_binary_03c1d0((directory.path/"surge_override.cfg").u16string(),R"("Config2" {"Emulator" {"SDK" "0.0.0.0-override"} "User" {"Username" "fixture-override"}})",files),"override write");
     auto unicode=directory.path/fs::path(u"dosya-\u0131\u015f-\u4e2d.dat");
-    require(file_recovered::write_binary_03c1d0(unicode.u16string(),std::string_view("a\0b",3),files),"unicode binary write");
-    require(file_recovered::read_binary_03b3f0(unicode.u16string(),files)==std::string("a\0b",3),"unicode binary read");
+    require(file::write_binary_03c1d0(unicode.u16string(),std::string_view("a\0b",3),files),"unicode binary write");
+    require(file::read_binary_03b3f0(unicode.u16string(),files)==std::string("a\0b",3),"unicode binary read");
     application::Application app({(directory.path/"host.exe").u16string(),(directory.path/"data").u16string(),false,(directory.path/"program-data").u16string()});
     app.start();const auto& state=app.configuration();
     require(state.username=="fixture-override","real main then override");
@@ -142,18 +145,18 @@ int main(int argc,char** argv) try {
     require(state.entitlements.size()==1,"entitlements applied");
     require(state.achievements.at("award").field00==10,"achievement total applied");
     require(state.server_port>=net::listener_policy::first_port&&state.server_port<=net::listener_policy::last_port,"real bounded automatic listener port");
-    auto license=file_recovered::read_binary_03b3f0(state.license_directory+u".dlf",files);
+    auto license=file::read_binary_03b3f0(state.license_directory+u".dlf",files);
     require(license.size()>0x41&&static_cast<unsigned char>(license[0])==0x30,"02a830 actual file/header");
-    crypto_recovered::Cipher license_cipher;
-    license_cipher.set_key_and_iv_042760(token_recovered::constants::key_084a50,token_recovered::constants::iv_084a60);
+    crypto::Cipher license_cipher;
+    license_cipher.set_key_and_iv_042760(token::constants::key_084a50,token::constants::iv_084a60);
     require(license_cipher.decrypt_with_offset(license,0x41),"02a830 recovered crypto binding");
     require(license.find("<CipherKey>fixture-key</CipherKey>")!=std::string::npos&&license.find("<ContentId>fixture-id</ContentId>")!=std::string::npos,"02a830 configured state to actual file");
     require(state.user_directory==(directory.path/"data").u16string(),"single supplied data owner");
-    auto png=file_recovered::read_binary_03b3f0(state.avatar,files);
+    auto png=file::read_binary_03b3f0(state.avatar,files);
     require(argc==5,"provider, independent avatar assets and showLSX supplied");
-    require(png==file_recovered::read_binary_03b3f0(fs::path(argv[2]).u16string(),files),"default profile avatar equals exact supplied image data");
-    const auto fallback=file_recovered::read_binary_03b3f0(state.default_avatar,files);
-    require(fallback==file_recovered::read_binary_03b3f0(fs::path(argv[3]).u16string(),files)&&fallback!=png,"separate recovered fallback avatar data preserved");
+    require(png==file::read_binary_03b3f0(fs::path(argv[2]).u16string(),files),"default profile avatar equals exact supplied image data");
+    const auto fallback=file::read_binary_03b3f0(state.default_avatar,files);
+    require(fallback==file::read_binary_03b3f0(fs::path(argv[3]).u16string(),files)&&fallback!=png,"separate recovered fallback avatar data preserved");
     require(!FindResourceW(GetModuleHandleW(nullptr),MAKEINTRESOURCEW(101),MAKEINTRESOURCEW(10)),"PNG is not a PE resource");
 #ifdef NDEBUG
     require(!fs::exists(directory.path/"data"/"surge.log"),"Release disk log absent");
@@ -177,7 +180,7 @@ int main(int argc,char** argv) try {
             Peer encrypted(state.server_port);(void)encrypted.frame();
             require(encrypted.request("handshake","<ChallengeResponse key='fixture-key' version='2'/>").find("ChallengeAccepted")!=std::string::npos,"real challenge response");
             require(encrypted.encrypted_request("encrypted-profile","<GetProfile index='0'/>").find("fixture-override")!=std::string::npos,"actual encrypted LSX round trip");
-            require(encrypted.encrypted_frame()==event_queue_recovered::initial_down_event,"actual encrypted event queue path");
+            require(encrypted.encrypted_frame()==event_queue::initial_down_event,"actual encrypted event queue path");
             encrypted.send("4e4f542d414553"); // Valid hex, invalid AES length: NOT-AES.
             require(encrypted.encrypted_request("after-bad-cipher","<GetProfile index='0'/>").find("fixture-override")!=std::string::npos,"decryption failure leaves the session usable");
         }
@@ -190,13 +193,13 @@ int main(int argc,char** argv) try {
 #ifdef NDEBUG
     require(!fs::exists(directory.path/"data"/"surge.log"),"Release payload diagnostics never create a log");
 #else
-    const auto diagnostics=file_recovered::read_binary_03b3f0((directory.path/"data"/"surge.log").u16string(),files);
+    const auto diagnostics=file::read_binary_03b3f0((directory.path/"data"/"surge.log").u16string(),files);
     const auto cfg_utf8=cfg.u8string();
     require(diagnostics.find("config loaded: "+std::string(cfg_utf8.begin(),cfg_utf8.end()))!=std::string::npos,"Debug preserves actual config path loaded before data directory creation");
     require(diagnostics.find("surge_override.cfg")!=std::string::npos,"Debug preserves override config path");
     require(diagnostics.find("message received: <LSX><Request id='profile'")!=std::string::npos,"Debug preserves actual request bytes");
     require(diagnostics.find("message response: <LSX>")!=std::string::npos&&diagnostics.find("fixture-override")!=std::string::npos,"Debug preserves response contents");
-    require(diagnostics.find("message event: "+std::string(event_queue_recovered::initial_down_event))!=std::string::npos,"Debug preserves queued event bytes");
+    require(diagnostics.find("message event: "+std::string(event_queue::initial_down_event))!=std::string::npos,"Debug preserves queued event bytes");
     xml_reader_bridge::Backend diagnostic_xml;
     const auto malformed=diagnostic_xml.parse_c_string("<LSX>broken");
     require(malformed.has_error&&!malformed.document->error_name().empty()&&
@@ -245,7 +248,7 @@ int main(int argc,char** argv) try {
         Peer peer(online.configuration().server_port);(void)peer.frame();
         require(peer.request("provider-auth","<GetAuthCode ClientId='fixture'/>").find("fixture-auth")!=std::string::npos,"RE provider auth method bound");
         require(peer.request("provider-avatar","<QueryImage Width='416' Height='416' ImageId='AVATAR:fixture-user-id'/>").find("_AVATAR_")!=std::string::npos,"RE provider avatar method bound");
-        require(file_recovered::read_binary_03b3f0(online.configuration().last_avatar_path,files)=="fixture-provider-avatar","real provider avatar cache/copy path");
+        require(file::read_binary_03b3f0(online.configuration().last_avatar_path,files)=="fixture-provider-avatar","real provider avatar cache/copy path");
         online.stop();require(destroyed()==1,"RE provider destructor called exactly once after session drain");
     }
     mode(1);
@@ -256,19 +259,19 @@ int main(int argc,char** argv) try {
     FreeLibrary(provider_module);
     const auto hook_dir=directory.path/"hooks";fs::create_directories(hook_dir);
     fs::copy_file(fs::path(argv[1]),hook_dir/"fixture-extra.dll");
-    require(file_recovered::write_binary_03c1d0((hook_dir/"surge.cfg").u16string(),R"("Config2" {"Emulator" {"Documents" "fixture-documents" "BlockReruns" "true" "LoadExtraDLLsFromMain" "fixture-extra.dll" "LoadExtraDLLs" "fixture-extra.dll"}})",files),"all conditional hooks config");
+    require(file::write_binary_03c1d0((hook_dir/"surge.cfg").u16string(),R"("Config2" {"Emulator" {"Documents" "fixture-documents" "BlockReruns" "true" "LoadExtraDLLsFromMain" "fixture-extra.dll" "LoadExtraDLLs" "fixture-extra.dll"}})",files),"all conditional hooks config");
     require(MH_Initialize()==MH_OK,"external engine initialized for ownership failure test");
     bool rejected_owner=false;
     try {
         application::Application conflict({(hook_dir/"host.exe").u16string(),(hook_dir/"conflict-data").u16string(),true});
         conflict.start();
     }catch(const std::runtime_error&){rejected_owner=true;}
-    require(rejected_owner&&!native_recovered::is_bound(),"failed engine ownership rolls back server/native binding");
+    require(rejected_owner&&!native::is_bound(),"failed engine ownership rolls back server/native binding");
     require(MH_Initialize()==MH_ERROR_ALREADY_INITIALIZED,"rollback leaves external engine initialized");
     require(MH_Uninitialize()==MH_OK,"external engine remains releasable by its owner");
     {
         application::Application hooked({(hook_dir/"host.exe").u16string(),(hook_dir/"data").u16string(),true});hooked.start();
-        require(native_recovered::is_bound(),"actual native callback owner published");
+        require(native::is_bound(),"actual native callback owner published");
         require(GetModuleHandleW(L"fixture-extra.dll")!=nullptr,"actual main/worker extra-library source phases loaded module");
         const char* names[]={"connect","RegOpenKeyExA","RegOpenKeyExW","RegCloseKey","RegQueryValueExA","RegQueryValueExW","CreateProcessA","CreateProcessW","SHGetFolderPathA","SHGetFolderPathW","CryptQueryObject"};
         const wchar_t* modules[]={L"crypt32.dll",L"ws2_32.dll",L"kernel32.dll",L"shell32.dll",L"KernelBase.dll",L"advapi32.dll"};
@@ -289,7 +292,7 @@ int main(int argc,char** argv) try {
         wchar_t client[4096]{};DWORD size=sizeof(client),type=0;
         require(RegQueryValueExW(key,L"ClientPath",nullptr,&type,reinterpret_cast<BYTE*>(client),&size)==ERROR_SUCCESS&&std::wstring(client)==exe,"real registry query reaches source values and original trampolines");
         require(RegCloseKey(key)==ERROR_SUCCESS,"real registry close releases tracked handle");
-        hooked.stop();require(!native_recovered::is_bound(),"hook owner closes binding after actual patch removal");
+        hooked.stop();require(!native::is_bound(),"hook owner closes binding after actual patch removal");
         require(GetModuleHandleW(L"fixture-extra.dll")==nullptr,"extra-library leases released after actual source unload");
     }
     stop_blocked_greeting();

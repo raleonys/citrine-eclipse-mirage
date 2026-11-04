@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Explicitly refresh or verify the SURGE source identity."""
 import argparse
 from pathlib import Path

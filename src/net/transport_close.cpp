@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_close.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 Error capture(Api& errors){
     const auto category=errors.system_category_028620();
@@ -33,4 +35,4 @@ std::int32_t close_026e50(Socket socket,std::uint8_t& state,bool destroying,
     else error=capture(errors);
     return result;
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

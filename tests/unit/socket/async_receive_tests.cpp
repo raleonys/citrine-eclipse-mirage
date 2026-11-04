@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/async_receive_test_fixture.hpp"
 using namespace receive_test;
 namespace {
