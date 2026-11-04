@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Document the existing MinHook and PEGTL upstream snapshot identifiers and all four supplied vendor archive SHA-256 pins in the vendoring guide, distinguishing archive identity from Git commit verification without changing vendor inputs.
+
 - Update the project logo with the exact owner-supplied 1400 x 1100 RGBA PNG (613004 bytes), preserving transparency and the existing README image path. Refresh artwork provenance and active source hashes.
 
 - Test complete LSX message processing after syntactically parsed invalid Request roots, missing ids, unregistered first commands and handler refusal in plaintext/encrypted modes: current invalid-message terminal propagates without response encryption or event dequeue, while a subsequent valid request retains its queue. Distinguish this current contract from donor exception-swallowing parity, which remains an owner policy question (A11-09).
