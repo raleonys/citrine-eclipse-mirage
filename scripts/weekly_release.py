@@ -89,7 +89,25 @@ def plan(releases, source, start_tag=''):
 
 def junit(path):
     tree = ET.parse(path).getroot()
-    cases = list(tree.iter('testcase'))
+    if tree.tag == 'testsuite':
+        suites = [tree]
+    elif tree.tag == 'testsuites':
+        suites = list(tree)
+    else:
+        raise ValueError('CTest JUnit root must be testsuite or testsuites')
+    if not suites or any(suite.tag != 'testsuite' for suite in suites):
+        raise ValueError('CTest evidence has no valid test suites')
+    cases = []
+    for suite in suites:
+        suite_cases = list(suite.findall('testcase'))
+        count = suite.get('tests')
+        if count is None or not count.isdecimal() or int(count) != len(suite_cases):
+            raise ValueError('CTest declared tests do not match testcases')
+        cases.extend(suite_cases)
+    if tree.tag == 'testsuites' and tree.get('tests') is not None:
+        count = tree.get('tests')
+        if not count.isdecimal() or int(count) != len(cases):
+            raise ValueError('CTest aggregate tests do not match testcases')
     if not cases or any(node.tag in ('failure', 'error', 'skipped') for node in tree.iter()):
         raise ValueError('CTest evidence is empty, failed or skipped')
     for node in tree.iter():

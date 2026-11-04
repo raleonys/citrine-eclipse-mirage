@@ -272,6 +272,32 @@ class PayloadTests(unittest.TestCase):
             with self.subTest(body=body), self.assertRaises(ValueError):
                 self.validate('native')
 
+    def test_junit_declared_counts_and_root_match_actual_cases(self):
+        path = self.payload / 'native/CTEST_RESULTS.xml'
+        valid = [
+            ('single', '<testsuite tests="1" failures="0"><testcase name="fixture"/></testsuite>', 1),
+            ('aggregate', '<testsuites tests="2"><testsuite tests="1"><testcase name="a"/></testsuite><testsuite tests="1"><testcase name="b"/></testsuite></testsuites>', 2),
+        ]
+        invalid = [
+            ('underreported', '<testsuite tests="0"><testcase name="fixture"/></testsuite>'),
+            ('overreported', '<testsuite tests="2"><testcase name="fixture"/></testsuite>'),
+            ('missing-count', '<testsuite><testcase name="fixture"/></testsuite>'),
+            ('wrong-root', '<report><testcase name="fixture"/></report>'),
+            ('aggregate-mismatch', '<testsuites tests="2"><testsuite tests="1"><testcase name="fixture"/></testsuite></testsuites>'),
+            ('extra-case', '<testsuite tests="1"><testcase name="a"/><testcase name="b"/></testsuite>'),
+            ('negative-count', '<testsuite tests="-1"><testcase name="fixture"/></testsuite>'),
+        ]
+        for name, xml, expected in valid:
+            with self.subTest(valid=name):
+                path.write_text(xml)
+                self.assertEqual(expected, release.junit(path))
+                self.assertEqual({'tests': expected}, self.validate('native'))
+        for name, xml in invalid:
+            with self.subTest(invalid=name):
+                path.write_text(xml)
+                with self.assertRaises(ValueError):
+                    self.validate('native')
+
     def test_empty_junit_is_not_a_successful_native_run(self):
         (self.payload / 'native/CTEST_RESULTS.xml').write_text('<testsuite tests="0"/>')
         with self.assertRaises(ValueError):
