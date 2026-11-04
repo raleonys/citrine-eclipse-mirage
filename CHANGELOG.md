@@ -130,6 +130,7 @@ Current development entries are updated alongside their pull requests. They desc
 
 - Replace 58 research-era labels in first-party `src/` and `include/` comments and five diagnostic messages with technical wording; enforce a terminology regression check without modifying runtime control flow, file names or ABI identifiers.
 
+- Audit C36-F001: prevent untrusted QueryImage cache owner/width components from reaching online provider paths while preserving normal responses and safe inputs; Windows provider acceptance remains pending.
 - Normalize first-party implementation identifiers, add SPDX ownership headers, place Python before CMake and keep the CI README badge last.
 
 - Audit F-C28-001: retain buffered Debug startup diagnostics across failed log-file opens, with source-linked native recovery and Release no-log regressions.
