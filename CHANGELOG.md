@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Escape XML element text for Config2 KeyForLicense, ContentId, and UserId before generating the encrypted license payload. Keep the 65-byte header, AES key/IV, existing-file skip, existing file writer and byte-identical ordinary XML output. Add native Environment/license-file/AES/pugixml round-trip tests proving markup never becomes XML structure. This intentionally hardens the source's original unescaped text behavior and requires owner compatibility approval, including reconciliation of the previous #163 ciphertext fixture.
+
 - Fail closed on Config2 achievement set and SteamAppId values that can escape their intended XML filename or watcher-directory leaf through separators, dot/dot-dot, Windows ADS colon or embedded NUL. Check both before any XML read, path update, epoch conversion or INI write. Add source-linked safe/unsafe and no-partial-effects fixtures while preserving ordinary identifier and conversion order; treat this as a compatibility-sensitive lexical guard, not full Windows reparse-point confinement.
 
 - Stop reading the caller's output-only UTF-16 buffer before native multi-byte decoding; copy only the successfully converted prefix and leave size queries/failures untouched. Preserve native Windows count/error results, compare successful prefix/tail output, and test eight insufficient-capacity/malformed UTF-8 failures with untouched caller buffers and boundary guards. Failed Win32 calls can partially write their temporary destination; those bytes are deliberately not published by the adapter.
