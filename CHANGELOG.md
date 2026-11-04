@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Keep Debug CryptQueryObject diagnostics from terminating the host when logging throws; restore the observer reentry guard and verify actual logger allocation failure, subsequent callback logging and the Release no-allocation path.
+
 - Test the actual Environment license-key body with complete header/XML bytes, an independent AES ciphertext answer, counted NUL values, accepted XML escaping, live Config2 identity ordering, existing-file skip and status/directory/write failure prefixes. Preserve the ordinary-value ciphertext oracle and source-selected ignored-write policy while aligning markup expectations with merged PR #223.
 
 - Escape XML element text for Config2 KeyForLicense, ContentId, and UserId before generating the encrypted license payload. Keep the 65-byte header, AES key/IV, existing-file skip, existing file writer and byte-identical ordinary XML output. Add native Environment/license-file/AES/pugixml round-trip tests proving markup never becomes XML structure. This intentionally hardens the source's original unescaped text behavior and requires owner compatibility approval, including reconciliation of the previous #163 ciphertext fixture.

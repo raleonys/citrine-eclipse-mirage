@@ -974,8 +974,8 @@
       "sha256": "d4018b757421f9638861a4ac889f4a2393eb79d689860ba26710b8b2f2c9a605"
     },
     "src/runtime/application.cpp": {
-      "bytes": 29158,
-      "sha256": "83cd2049f9e36a99c62735e06b5455b38e6e7a222ecbcfb8299d0949deb6c866"
+      "bytes": 29327,
+      "sha256": "50918ff34362b62afeda1d99a1df39b0c9e7d1dc71d47d6af0acca4ce20c0e66"
     },
     "src/runtime/application_defaults.cpp": {
       "bytes": 2261,
@@ -1252,6 +1252,10 @@
     "tests/native/configuration_platform_tests.cpp": {
       "bytes": 14498,
       "sha256": "790a296c9058bc6be9be829d16f4c61652999021207b744c86eb151772d430ca"
+    },
+    "tests/native/crypt_diagnostic_failure_tests.cpp": {
+      "bytes": 3657,
+      "sha256": "e615d0e61e6ad9fd3af85aa742e20f558adcd64552d9b8c582eea1200352d321"
     },
     "tests/native/crypt_path_probe_tests.cpp": {
       "bytes": 7166,
