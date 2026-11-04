@@ -249,6 +249,11 @@ Manual full validation also requires a current branch containing current
 inspect the exact-head results rather than the lightweight integrity badge.
 Do not manufacture an empty commit merely to trigger testing.
 
+Manual runs on a branch differing from main also require changelog coverage.
+The only exemption is the existing owner-reviewed `changelog-exempt` label on
+an open PR with that exact head and integration base. A manual request does
+not waive changelog policy or borrow an exemption from a different commit.
+
 Focused diagnostic workflows remain available through their own **Run workflow**
 button and branch selection. They no longer create automatic parallel runs for
 ordinary PR changes. Weekly release draft validation is unchanged and remains

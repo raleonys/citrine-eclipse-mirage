@@ -51,6 +51,7 @@ class ValidationReadinessTests(unittest.TestCase):
         self.selected = self.head
         self.comparison = {'status': 'ahead', 'merge_base_commit': {'sha': self.base}}
         self.previous = {'status': 'diverged', 'merge_base_commit': {'sha': 'c' * 40}}
+        self.associated = []
         self.calls = []
 
     def api(self, endpoint):
@@ -58,6 +59,8 @@ class ValidationReadinessTests(unittest.TestCase):
         prefix = 'repos/' + self.repository
         if endpoint == prefix + '/pulls/23':
             return self.current
+        if endpoint == prefix + '/pulls?state=open&base=main&head=owner%3Afeature%2Fsync&per_page=100':
+            return self.associated
         if endpoint == prefix + '/git/ref/heads/main':
             return {'object': {'sha': self.main}}
         if endpoint == prefix + '/git/ref/heads/feature%2Fsync':
@@ -132,6 +135,24 @@ class ValidationReadinessTests(unittest.TestCase):
         self.comparison = {'status': 'diverged'}
         self.assertFalse(self.decision('workflow_dispatch').run_tests)
 
+    def test_changelog_exemption_uses_live_pr_labels(self):
+        self.assertFalse(self.decision().changelog_exempt)
+        self.current['labels'] = [{'name': 'changelog-exempt'}]
+        self.assertTrue(self.decision().changelog_exempt)
+
+    def test_manual_branch_keeps_changelog_requirement_unless_approved(self):
+        self.assertFalse(self.decision('workflow_dispatch').changelog_exempt)
+        self.associated = [self.current]
+        self.assertFalse(self.decision('workflow_dispatch').changelog_exempt)
+        self.current['labels'] = [{'name': 'changelog-exempt'}]
+        self.assertTrue(self.decision('workflow_dispatch').changelog_exempt)
+
+    def test_manual_request_cannot_borrow_exemption_from_another_head(self):
+        self.associated = [{'state': 'open', 'base': {'ref': 'main'},
+                            'head': {'sha': 'd' * 40},
+                            'labels': [{'name': 'changelog-exempt'}]}]
+        self.assertFalse(self.decision('workflow_dispatch').changelog_exempt)
+
     def test_bad_commit_and_repository_identities_are_rejected(self):
         with self.assertRaises(ValueError):
             ci_readiness.decide('workflow_dispatch', self.event, '../project', self.head,
@@ -191,6 +212,8 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertEqual(11, len(contexts))
         self.assertEqual({'native', 'native-debug', 'production', 'crt', 'debug', 'compile'}, profiles)
         self.assertIn('name: Source QA and portable tests', blocks['source-qa'])
+        self.assertIn("needs.readiness.outputs.changelog_exempt != 'true'", blocks['source-qa'])
+        self.assertIn('needs.readiness.outputs.head_sha != needs.readiness.outputs.base_sha', blocks['source-qa'])
         self.assertIn('name: Windows ${{ matrix.profile }}', blocks['windows'])
         self.assertIn('name: Windows portable ${{ matrix.configuration }}', blocks['windows-portable'])
         self.assertIn('name: Windows x64 reference objects ${{ matrix.configuration }}', blocks['reference-graph'])

@@ -17,6 +17,7 @@ class Decision:
     reason: str
     head_sha: str = ''
     base_sha: str = ''
+    changelog_exempt: bool = False
 
 
 def _sha(value):
@@ -81,13 +82,27 @@ def decide(event_name, event, repository, sha, ref, api=None):
         previous_base = previous.get('merge_base_commit', {}).get('sha')
         if previous.get('status') not in ('behind', 'diverged') or _sha(previous_base) == base:
             return Decision(False, 'A new integration of current main could not be verified', head, base)
-    return Decision(True, 'The selected head includes current main', head, base)
+    if event_name == 'pull_request':
+        relevant = [current]
+    elif head != base:
+        query = ('/pulls?state=open&base=' + quote(default, safe='') + '&head=' +
+                 quote(repository.split('/')[0] + ':' + ref[len('refs/heads/'):], safe='') +
+                 '&per_page=100')
+        relevant = api(prefix + query)
+    else:
+        relevant = []
+    exempt = any(pr['state'] == 'open' and pr['head']['sha'] == head and
+                 pr['base']['ref'] == default and
+                 any(label.get('name') == 'changelog-exempt' for label in pr.get('labels', []))
+                 for pr in relevant)
+    return Decision(True, 'The selected head includes current main', head, base, exempt)
 
 
 def write_decision(decision, output, summary):
     # Values written to Actions outputs are fixed messages and validated hashes.
     values = {'run_tests': str(decision.run_tests).lower(), 'reason': decision.reason,
-              'head_sha': decision.head_sha, 'base_sha': decision.base_sha}
+              'head_sha': decision.head_sha, 'base_sha': decision.base_sha,
+              'changelog_exempt': str(decision.changelog_exempt).lower()}
     if output:
         with Path(output).open('a', encoding='utf-8') as stream:
             for key, value in values.items():
