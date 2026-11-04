@@ -1586,8 +1586,8 @@
       "sha256": "47fdd6a091d3c40613da92d81e2ed789f9257e1930110543bbcd980b97509a56"
     },
     "tests/unit/content_handlers/content_handlers_tests.cpp": {
-      "bytes": 22463,
-      "sha256": "9c3a0fa4775f17103a4be97bc33ffb1fe3a10326c0c8ea91f6a8c6532685d715"
+      "bytes": 26760,
+      "sha256": "778767149634233cd86e8ce745c371d9d844fe5d59b5c5a75f3f9197d28f30e8"
     },
     "tests/unit/crypto/crypto_tests.cpp": {
       "bytes": 9783,
