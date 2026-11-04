@@ -1,5 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
+add_executable(dll_attach_failure_contracts tests/native/dll_attach_failure_tests.cpp)
+target_include_directories(dll_attach_failure_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
+target_link_libraries(dll_attach_failure_contracts PRIVATE preloader_l_core)
+add_test(NAME dll_attach_failure_contracts COMMAND dll_attach_failure_contracts)
+set_tests_properties(dll_attach_failure_contracts PROPERTIES TIMEOUT 30)
+
 add_executable(configuration_defaults_contracts tests/unit/config_defaults/defaults_tests.cpp src/runtime/application_defaults.cpp)
 target_include_directories(configuration_defaults_contracts PRIVATE include)
 add_test(NAME configuration_defaults_contracts COMMAND configuration_defaults_contracts)

@@ -1257,6 +1257,10 @@
       "bytes": 7166,
       "sha256": "4dd291bb6d380f3e01ba041c67a79df928a5584a6cc366a865044e0a2cb112aa"
     },
+    "tests/native/dll_attach_failure_tests.cpp": {
+      "bytes": 3985,
+      "sha256": "f5a6c2dd5236649a00143e99cc28681f7c2a52c77fe155e5bc1b6a2d704d5796"
+    },
     "tests/native/environment_dialog_tests.cpp": {
       "bytes": 10413,
       "sha256": "20f2216d5459c6a1b13abf2cb0e240694fbfd5263e227cf14550e13d1678c4c2"
