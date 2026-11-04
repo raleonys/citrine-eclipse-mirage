@@ -21,7 +21,9 @@ This is the active governance authority. Historical task orders remain accessibl
 
 ## Quality assurance
 
-Pull request creation runs lightweight source/hash integrity without scheduling builds or the full regression suite. Full validation is deferred until a PR head update newly integrates current `main`, or is explicitly requested on a synchronized branch. Required checks must finish successfully before a normal merge. Failed product checks are resolved on the pull request, not merged in anticipation of a revert.
+Pull request creation runs lightweight source/hash integrity without scheduling builds or the full regression suite. Full validation is deferred until a PR head update newly integrates current `main`, or is requested by a label after a successful later synchronization verification. An initial label alone does not authorize full validation. Required checks must finish successfully before a normal merge. Failed product checks are resolved on the pull request, not merged in anticipation of a revert.
+
+A manual synchronization preparation verifies the live open PR, selected branch head and exact current main without scheduling full tests. Its successful workflow job records the PR number, head SHA and main SHA. The validation label is accepted only after that job and its preparation run have completed, after PR creation and before the label event. A premature label cannot adopt a later verification: remove it before preparation and re-add it after success. This supports a later explicit synchronization request even when main has not changed and no merge commit is needed. Agents must not prepare or label a new PR merely to obtain initial green checks.
 
 A skipped check is not a PASS. CI infrastructure failures may be rerun or repaired without being classified as product defects. Source changes are checked against exact source and dependency identities; no test evidence is automatically inherited from a different commit.
 
