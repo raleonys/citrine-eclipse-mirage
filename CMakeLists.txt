@@ -179,6 +179,7 @@ if(BUILD_TESTING)
   target_include_directories(application_runtime_contracts PRIVATE resources)
   target_link_libraries(application_runtime_contracts PRIVATE preloader_l_core advapi32)
   add_library(online_provider_fixture SHARED tests/support/runtime/online_fixture.cpp)
+  target_link_libraries(online_provider_fixture PRIVATE advapi32)
   set_target_properties(online_provider_fixture PROPERTIES OUTPUT_NAME "preloader_l_online" PREFIX "")
   set_target_properties(online_provider_fixture PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/fixtures"
