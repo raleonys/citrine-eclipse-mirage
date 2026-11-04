@@ -1,5 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
+add_executable(application_worker_launch_contracts tests/native/application_worker_launch_tests.cpp resources/surge.rc)
+target_include_directories(application_worker_launch_contracts PRIVATE "${PROJECT_SOURCE_DIR}" resources)
+target_link_libraries(application_worker_launch_contracts PRIVATE preloader_l_core advapi32)
+add_test(NAME application_worker_launch_contracts COMMAND application_worker_launch_contracts)
+set_tests_properties(application_worker_launch_contracts PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
+
 add_executable(configuration_defaults_contracts tests/unit/config_defaults/defaults_tests.cpp src/runtime/application_defaults.cpp)
 target_include_directories(configuration_defaults_contracts PRIVATE include)
 add_test(NAME configuration_defaults_contracts COMMAND configuration_defaults_contracts)
