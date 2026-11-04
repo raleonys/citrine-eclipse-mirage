@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Update the project logo with the exact owner-supplied 1400 x 1100 RGBA PNG (613004 bytes), preserving transparency and the existing README image path. Refresh artwork provenance and active source hashes.
+
 - Test complete LSX message processing after syntactically parsed invalid Request roots, missing ids, unregistered first commands and handler refusal in plaintext/encrypted modes: current invalid-message terminal propagates without response encryption or event dequeue, while a subsequent valid request retains its queue. Distinguish this current contract from donor exception-swallowing parity, which remains an owner policy question (A11-09).
 
 - Reject initial full-validation labels unless a later read-only synchronization preparation has completed for the exact PR/head/main before labeling. Support explicit no-change synchronization requests without empty commits, isolate preparation from active full runs, retain automatic real-main integration checks and all eleven required contexts, and forbid agents from preparing/labeling merely at PR creation.

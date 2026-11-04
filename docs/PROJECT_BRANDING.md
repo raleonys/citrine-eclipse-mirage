@@ -12,12 +12,12 @@ The owner-approved project campaign image is the exact supplied PNG:
 
 - Repository path: `resources/branding/citrine-eclipse-mirage.png`
 - Format: PNG RGBA, 1400 x 1100 pixels, 8 bits per channel
-- Exact byte length: **612724**
-- SHA-256: `8daed3e7be28b50cf7d6a29a76c3dc13f48c1d5a57fa36d8b9b756f7bfe58c0a`
-- Git blob SHA-1: `ceb3ce5307740e5604c60a6eb8cc184453896577`
-- Supplied ZIP SHA-256: `abf0dea8612ed4d612be3f214b3d86e5c509d2b894eddc7039069ae046a18746`
+- Exact byte length: **613004**
+- SHA-256: `0037d2e3535d5175a08ca3ed62999555448282910d6538d590f78974133dc2ef`
+- Git blob SHA-1: `bed9e4dd2663d8303389d4573059422f7952b576`
+- Supplied ZIP SHA-256: `6c427e56bc7916adb2281a513f7913aa941c567a5334cac7e1ae095e477be8b7`
 
-**Integrated:** The 1400 x 1100 PNG supplied in the owner's `citrine-eclipse-mirage.zip` is tracked unchanged and referenced by the existing README hero path. ZIP CRC, complete extracted bytes, PNG header and dimensions were independently checked. This upload supersedes the earlier 604287-byte campaign image. Do not generate, resize or re-encode substitutes.
+**Integrated:** The 1400 x 1100 PNG supplied in the owner's `citrine-eclipse-mirage _1_.zip` is tracked unchanged and referenced by the existing README hero path. ZIP CRC, complete extracted bytes, PNG header and dimensions were independently checked. This upload supersedes the previous 612724-byte campaign image. Do not generate, resize or re-encode substitutes.
 
 The campaign artwork is separate from `resources/branding/surge.png`, a runtime/profile avatar that remains unchanged.
 
