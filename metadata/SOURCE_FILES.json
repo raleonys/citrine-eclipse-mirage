@@ -1121,10 +1121,6 @@
       "bytes": 3018,
       "sha256": "f281028b52e5d2d338938d9d4c8f269e6214c78872b973705745cc16739f27fd"
     },
-    "tests/diagnostics/xml_backend/CMakeLists.txt": {
-      "bytes": 8576,
-      "sha256": "d92bc591d7d5ccd7ffccf893e7d53ee72b4a7dc67a879aea9e383cb12c3c7581"
-    },
     "tests/diagnostics/xml_backend/allocation.cpp": {
       "bytes": 7130,
       "sha256": "49cb867bae5d1b3b8e375e197bedb9b13eef67ad0ea8c29ed6480317adf619bf"
@@ -1136,6 +1132,10 @@
     "tests/diagnostics/xml_backend/benchmark_cases.hpp": {
       "bytes": 2183,
       "sha256": "6a6174a006f53712b4ae3bb15087b5fab176f7c62d27f931a3d5c04e2d01bbb4"
+    },
+    "tests/diagnostics/xml_backend/CMakeLists.txt": {
+      "bytes": 8576,
+      "sha256": "d92bc591d7d5ccd7ffccf893e7d53ee72b4a7dc67a879aea9e383cb12c3c7581"
     },
     "tests/diagnostics/xml_backend/performance.py": {
       "bytes": 7463,
@@ -1696,14 +1696,6 @@
     "tests/unit/path/path_tests.cpp": {
       "bytes": 5600,
       "sha256": "4ee002e5d0639d2472f660523bc2eeb63f6c50c7ddc22c10113802bbf8e03aa9"
-    },
-    "tests/unit/registry/allocation_failure_tests.cpp": {
-      "bytes": 7294,
-      "sha256": "6068f347c704b21b97c326585a015dce845398ed32925c6e12dfdb710f6a59aa"
-    },
-    "tests/unit/registry/native_lifecycle_tests.cpp": {
-      "bytes": 18013,
-      "sha256": "b60cb1679f801f4676f6942df38790d0142a3ca56911dadaa30ba6f01b42d846"
     },
     "tests/unit/registry/registry_tests.cpp": {
       "bytes": 14875,
@@ -12475,29 +12467,13 @@
       "bytes": 30,
       "sha256": "4c6841a59295c0b56a449ccd59f5a915529f2dd533da83dc3734fb59747b07ff"
     },
-    "third_party/pugixml/CMakeLists.txt": {
-      "bytes": 11416,
-      "sha256": "fce9c23bf4de889b8d1198e26ed3b772ab191a92b16339f1a505ed951c262942"
-    },
-    "third_party/pugixml/LICENSE.md": {
-      "bytes": 1079,
-      "sha256": "90974fbb120e966b452654eaae3ba6ee55f3647db3b28918a7649733ee99da97"
-    },
-    "third_party/pugixml/Makefile": {
-      "bytes": 2533,
-      "sha256": "c115a2f3abb0a7ea47a8acef0add83b8a26b05565829fb749ec4c2e1049ec51d"
-    },
-    "third_party/pugixml/README.md": {
-      "bytes": 3917,
-      "sha256": "27552643272be024a83fcc5af184726337f77556940dfaaaa2a5b3a5f40d034b"
-    },
-    "third_party/pugixml/SECURITY.md": {
-      "bytes": 312,
-      "sha256": "b84bf8ac679f89de57057e46ced665186ac0d75e1ae87f6580621f6b0b952861"
-    },
     "third_party/pugixml/appveyor.yml": {
       "bytes": 3185,
       "sha256": "2185e0bad2c49e8ab0eb2db0a055f0cfdbdaa8904fa4bfcb5ceb6a3980d2f6db"
+    },
+    "third_party/pugixml/CMakeLists.txt": {
+      "bytes": 11416,
+      "sha256": "fce9c23bf4de889b8d1198e26ed3b772ab191a92b16339f1a505ed951c262942"
     },
     "third_party/pugixml/docs/config.adoc": {
       "bytes": 185,
@@ -12687,6 +12663,18 @@
       "bytes": 1094,
       "sha256": "cd3d29d2e3444757900f9b864c9cb2e56078ffb03f758fa4bb8af82ad4a3ac55"
     },
+    "third_party/pugixml/LICENSE.md": {
+      "bytes": 1079,
+      "sha256": "90974fbb120e966b452654eaae3ba6ee55f3647db3b28918a7649733ee99da97"
+    },
+    "third_party/pugixml/Makefile": {
+      "bytes": 2533,
+      "sha256": "c115a2f3abb0a7ea47a8acef0add83b8a26b05565829fb749ec4c2e1049ec51d"
+    },
+    "third_party/pugixml/README.md": {
+      "bytes": 3917,
+      "sha256": "27552643272be024a83fcc5af184726337f77556940dfaaaa2a5b3a5f40d034b"
+    },
     "third_party/pugixml/readme.txt": {
       "bytes": 2094,
       "sha256": "13cb6e414ef051fff6daac85fa018a415e63a54f8ba3f76778bc69d60640e20a"
@@ -12834,6 +12822,10 @@
     "third_party/pugixml/scripts/sbom.cdx.json": {
       "bytes": 946,
       "sha256": "0af0bc2b53c1c573932c2fd27f9d8cee121562d3e5ae57672770dccbcf1b4742"
+    },
+    "third_party/pugixml/SECURITY.md": {
+      "bytes": 312,
+      "sha256": "b84bf8ac679f89de57057e46ced665186ac0d75e1ae87f6580621f6b0b952861"
     },
     "third_party/pugixml/src/pugiconfig.hpp": {
       "bytes": 3060,
@@ -13206,6 +13198,14 @@
     "third_party/pugixml/tests/writer_string.hpp": {
       "bytes": 997,
       "sha256": "1f61e5da0d3e19d5b35d8a746db6907c8dc82ec15e23e1ea3e6d531996d3466e"
+    },
+    "tests/unit/registry/allocation_failure_tests.cpp": {
+      "bytes": 7294,
+      "sha256": "6068f347c704b21b97c326585a015dce845398ed32925c6e12dfdb710f6a59aa"
+    },
+    "tests/unit/registry/native_lifecycle_tests.cpp": {
+      "bytes": 18013,
+      "sha256": "b60cb1679f801f4676f6942df38790d0142a3ca56911dadaa30ba6f01b42d846"
     }
   }
 }
