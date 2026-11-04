@@ -172,7 +172,36 @@ def check_layout_migration_reference(root, contract):
 def declared_application_sources(text):
     # A vendor path such as third_party/pugixml/src/pugixml.cpp is not
     # an application-relative src/ path. Keep complete path boundaries.
-    return set(re.findall(r'(?<![A-Za-z0-9_./\\-])src/[A-Za-z0-9_/.-]+\.cpp\b', text))
+    # Exclude CMake line/bracket comments before source-path matching: a
+    # commented-out source must never satisfy the actual ownership inventory.
+    # Quoted arguments remain visible, including quoted source filenames.
+    active = []
+    index = 0
+    quoted = False
+    while index < len(text):
+        char = text[index]
+        if char == '\\' and quoted and index + 1 < len(text):
+            active.extend((char, text[index + 1]))
+            index += 2
+            continue
+        if char == '"':
+            quoted = not quoted
+        if char == '#' and not quoted:
+            bracket = re.match(r'#\[(=*)\[', text[index:])
+            if bracket:
+                closing = ']' + bracket.group(1) + ']'
+                end = text.find(closing, index + bracket.end())
+                active.append(' ')
+                index = len(text) if end < 0 else end + len(closing)
+                continue
+            end = text.find('\n', index)
+            active.append(' ')
+            index = len(text) if end < 0 else end
+            continue
+        active.append(char)
+        index += 1
+    return set(re.findall(r'(?<![A-Za-z0-9_./\\-])src/[A-Za-z0-9_/.-]+\.cpp\b',
+                          ''.join(active)))
 
 
 def check(root):
