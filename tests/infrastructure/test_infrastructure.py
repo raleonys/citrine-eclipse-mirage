@@ -118,6 +118,75 @@ class PackageTests(unittest.TestCase):
             self.assertIn('CMakeLists.txt', archive.namelist())
             self.assertEqual({'CMakeLists.txt','src','metadata'}, {Path(name).parts[0] for name in archive.namelist()})
 
+    @contextlib.contextmanager
+    def ansi_default_text_reads(self):
+        read_text = Path.read_text
+        reads = []
+        def ansi_read_text(path, encoding=None, errors=None, **kwargs):
+            reads.append(path)
+            return read_text(path, encoding=encoding or 'cp1252', errors=errors, **kwargs)
+        with patch.object(Path, 'read_text', ansi_read_text):
+            yield reads
+
+    def unicode_source_metadata(self, selected, ascii_only):
+        member = 'src/file_\u00e4\u00f6\u00fc\U0001d11e_data.txt'
+        (self.root / member).write_bytes(b'owned Unicode-path source fixture\r\n')
+        contract = {'required_files': ['CMakeLists.txt', member],
+                    'source_directories': ['src', 'metadata']}
+        contract_path = self.root / 'metadata/REPOSITORY_CONTRACT.json'
+        contract_path.write_bytes(json.dumps(contract).encode('utf-8'))
+        manifest = inventory.write_manifest(self.root)
+        document = manifest if selected == inventory.MANIFEST else contract
+        (self.root / selected).write_bytes(
+            (json.dumps(document, ensure_ascii=ascii_only) + '\n').encode('utf-8'))
+        if selected != inventory.MANIFEST:
+            inventory.write_manifest(self.root)
+        return member
+
+    def test_utf8_package_metadata_is_independent_of_ansi_default(self):
+        for selected in [inventory.MANIFEST, 'metadata/REPOSITORY_CONTRACT.json']:
+            for ascii_only in [True, False]:
+                with self.subTest(selected=selected, ascii_only=ascii_only):
+                    member = self.unicode_source_metadata(selected, ascii_only)
+                    with self.ansi_default_text_reads() as reads:
+                        self.assertEqual([], inventory.verify_manifest(self.root))
+                        self.assertEqual([], falcion.check(self.root))
+                        receipt = packaging.package(self.root, self.zip)
+                        self.assertEqual([], falcion.check(self.root, self.zip))
+                    self.assertIn(self.root / inventory.MANIFEST, reads)
+                    self.assertIn(self.root / 'metadata/REPOSITORY_CONTRACT.json', reads)
+                    self.assertEqual(receipt['sha256'], inventory.digest(self.zip.read_bytes()))
+                    with zipfile.ZipFile(self.zip) as archive:
+                        for name in [member, inventory.MANIFEST, 'metadata/REPOSITORY_CONTRACT.json']:
+                            self.assertEqual((self.root / name).read_bytes(), archive.read(name))
+
+    def test_invalid_utf8_metadata_cannot_replace_a_complete_package(self):
+        for selected in [inventory.MANIFEST, 'metadata/REPOSITORY_CONTRACT.json']:
+            with self.subTest(selected=selected):
+                self.unicode_source_metadata(selected, True)
+                packaging.package(self.root, self.zip)
+                sidecar = Path(str(self.zip) + '.sha256')
+                prior = self.zip.read_bytes(), sidecar.read_bytes()
+                path = self.root / selected
+                original = path.read_bytes()
+                document = json.loads(original)
+                document['fixture_note'] = 'placeholder'
+                path.write_bytes(json.dumps(document).encode('utf-8').replace(
+                    b'"fixture_note": "placeholder"', b'"fixture_note": "\xff"'))
+                if selected != inventory.MANIFEST:
+                    inventory.write_manifest(self.root)
+                with self.ansi_default_text_reads():
+                    with self.assertRaises(UnicodeDecodeError):
+                        falcion.check(self.root)
+                    with self.assertRaises(UnicodeDecodeError):
+                        packaging.package(self.root, self.zip)
+                self.assertEqual(prior, (self.zip.read_bytes(), sidecar.read_bytes()))
+                self.assertFalse(list(self.base.glob('.*.partial')))
+                self.assertFalse(list(self.base.glob('.*.rollback')))
+                path.write_bytes(original)
+                inventory.write_manifest(self.root)
+                self.assertEqual([], falcion.check(self.root))
+
 
     def test_checksum_commit_failure_retains_previous_complete_package(self):
         previous = packaging.package(self.root, self.zip)
