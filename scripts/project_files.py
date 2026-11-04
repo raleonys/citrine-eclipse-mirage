@@ -51,7 +51,12 @@ def vendor_symlinks(root):
         base=record['source_install_path']
         if base!='third_party/'+name:
             raise ValueError('Vendor root is not owned by its declared name')
-        for rel,target in record.get('symlinks',{}).items():
+        aliases=record.get('symlinks',{})
+        if not isinstance(aliases,dict):
+            raise ValueError('Malformed vendor symlink table')
+        for rel,target in aliases.items():
+            if not isinstance(rel,str) or not isinstance(target,str):
+                raise ValueError('Malformed vendor symlink entry')
             safe_member(rel)
             if not target or target.startswith('/') or any(c in target for c in ['\\',':','\x00']):
                 raise ValueError('Unsafe vendor symlink target')
