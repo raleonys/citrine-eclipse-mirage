@@ -241,6 +241,48 @@ class RepositoryRootOwnership(unittest.TestCase):
             self.assertIn('Forbidden legacy evidence directory: docs/evidence',
                           check_archived_evidence(root))
 
+    def test_historical_evidence_links_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            archive = root / 'metadata/evidence'
+            archive.mkdir(parents=True)
+            data = b'original owner evidence'
+            pinned = archive / 'original.json'
+            pinned.write_bytes(data)
+            readme = archive / 'README.md'
+            readme.write_text('immutable historical records')
+            (root / 'metadata/EVIDENCE_RETENTION_POLICY.json').write_text(json.dumps({
+                'schema': 'surge.evidence-retention.v1',
+                'retained_count': 1,
+                'retained_files': {'original.json': hashlib.sha256(data).hexdigest()},
+            }))
+            unpinned = root / 'outside.json'
+            unpinned.write_bytes(b'changed and unpinned bytes')
+            self.assertEqual([], check_archived_evidence(root))
+            try:
+                pinned.unlink()
+                pinned.symlink_to(unpinned)
+            except (OSError, NotImplementedError) as error:
+                self.skipTest(f'Symlinks unavailable: {error}')
+            self.assertIn('Historical evidence link is forbidden: original.json',
+                          check_archived_evidence(root))
+            pinned.unlink()
+            pinned.write_bytes(data)
+            self.assertEqual([], check_archived_evidence(root))
+            readme.unlink()
+            readme.symlink_to(unpinned)
+            self.assertIn('Historical evidence link is forbidden: README.md',
+                          check_archived_evidence(root))
+            readme.unlink()
+            readme.write_text('immutable historical records')
+            archive.rename(root / 'relocated-evidence')
+            try:
+                archive.symlink_to(root / 'relocated-evidence', target_is_directory=True)
+            except (OSError, NotImplementedError) as error:
+                self.skipTest(f'Directory symlinks unavailable: {error}')
+            self.assertIn('Historical evidence archive is a link',
+                          check_archived_evidence(root))
+
     def test_archived_provenance_labels_do_not_exempt_active_metadata(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

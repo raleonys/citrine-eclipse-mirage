@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Audit: reject symlinked/junction-backed retained evidence files, historical README aliases and redirected evidence archive roots instead of silently skipping the pinned content hashes; add local negative path fixtures. Production source, ABI, vendor pins and release metadata remain unchanged.
+
 - Correct current XML dependency documentation to name pugixml, identify pre-migration TinyXML2 audit/CSV findings as historical, and record PR #149 as integrated in the owner requirements. Refresh the changelog heading and link recent integrated PRs; retain original archive provenance and external diagnostic-control references.
 
 - [PR #117](https://github.com/raleonys/citrine-eclipse-mirage/pull/117): Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.

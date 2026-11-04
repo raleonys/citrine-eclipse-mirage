@@ -129,6 +129,9 @@ def check_archived_evidence(root):
                 name.startswith('/') or '\\' in name or
                 any(part in ('', '.', '..') for part in name.split('/'))):
             return errors + ['Unsafe historical evidence entry']
+    # Do not traverse an archive root redirected to an unpinned directory.
+    if archive.is_symlink() or getattr(archive, 'is_junction', lambda: False)():
+        return errors + ['Historical evidence archive is a link']
     actual = {p.relative_to(archive).as_posix()
               for p in archive.rglob('*') if p.is_file() or p.is_symlink()} if archive.is_dir() else set()
     expected = set(retained) | {'README.md'}
@@ -136,6 +139,13 @@ def check_archived_evidence(root):
         errors.append('Historical evidence file-set mismatch: missing='
                       + str(sorted(expected - actual)) + ', unrecorded='
                       + str(sorted(actual - expected)))
+    # A link can retain a pinned filename while bypassing its byte hash.
+    # Reject links anywhere in the retained tree, including its README.
+    if archive.is_dir():
+        for path in archive.rglob('*'):
+            if path.is_symlink() or getattr(path, 'is_junction', lambda: False)():
+                errors.append('Historical evidence link is forbidden: ' +
+                              path.relative_to(archive).as_posix())
     for name, digest in retained.items():
         path = archive / name
         if path.is_symlink() or not path.is_file():
