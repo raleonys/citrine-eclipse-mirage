@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Audit F-C24-001: route license-ticket output through opt-in write/close status checks so nonthrowing late failures cannot report ticket success. Preserve the recovered initial-open-only legacy writer, other file-write callers and public DLL ABI; add deterministic failure coverage and a portable file-I/O target. Isolate the checked-write native fixture from the existing 8193-byte partial-read/EOF fixture so both scenarios retain their own input bytes.
+
 - Audit C36-F002: reject unsafe Config2 ContentId filename components before license-path construction, and reject empty-ID license writes before the license callback. Preserve supported ASCII IDs and no-license empty-ID configurations; retain source-linked boundary regressions. This conservative input policy still requires owner compatibility review; lexical checks do not establish reparse-safe filesystem confinement.
 
 - Reject an invalid native binary-input `tellg()` position instead of converting its failure sentinel into a huge unsigned file length; add EOF-state regression coverage using the existing generated file fixture.
