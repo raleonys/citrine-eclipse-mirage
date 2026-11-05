@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-05)
 
+- Prevent MemoryPrinter use-after-free when its public XML output view is reused as a borrowed element name, attribute name/value, escaped text or CDATA: snapshot only self-aliased source bytes before any output growth. Extend the existing concrete XML printer tests with four exact-output large-buffer alias cases; ordinary input remains zero-copy and serialization formatting remains unchanged.
+
 - Keep PEGTL grammar implementation private under `src/config` while preserving the public parser interface, grammar bytes and behavior. Build an isolated public-header consumer with no vendor/runtime link dependencies and rejecting PEGTL include names in portable and Windows test builds, so implementation includes cannot leak through the parser facade. Retain existing parser/state/depth and frozen-corpus regressions; vendor inputs and runtime policy are unchanged.
 
 Accepted-main checkpoint: `bef33e52` includes the 2026-11-05 integrations of PRs #205, #216, #229, #206, #203 and #188. These integrations are source changes; no release or tag is implied.
