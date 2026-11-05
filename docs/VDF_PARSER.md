@@ -96,7 +96,7 @@ The former implementation is not added back to the product tree.
 The baseline check compiled the same test harness with the earlier
 parser and configuration source as a separate executable. Normal
 CTest compares the new PEGTL parser against the pinned observations.
-Current raw results are in
+Historical binding results are in
 [VDF_PARSER_STATUS.json](../metadata/evidence/VDF_PARSER_STATUS.json).
 
 Current runtime binding:
@@ -104,10 +104,10 @@ Current runtime binding:
 here are historical snapshot evidence; new application tests are
 tracked in [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json).
 
-## C25-F001 depth exhaustion mitigation candidate
+## Integrated C25-F001 depth exhaustion policy
 
 A linear lexical preflight rejects the 129th simultaneously open structural
-object before PEGTL recursively enters its Object rules. The candidate limit
+object before PEGTL recursively enters its Object rules. The implemented limit
 is 128, including the root object, across the entire raw VDF document (also
 subtrees that a later Config2 selection might ignore). Adjacent or repeated
 root objects do not accumulate depth. Quoted braces, supported quote/backslash
@@ -120,7 +120,7 @@ post-BOM byte, LF-counted line and column. No PEGTL actions run: prior AST,
 open frames, accumulator, key and value remain untouched; the BOM flag still
 reflects the attempted input. Because the whole input is scanned first, an
 over-depth suffix takes precedence over earlier syntax errors or otherwise
-completed objects. This behavior is part of the proposed policy, not historical
+completed objects. This behavior is part of the integrated product policy, not historical
 RE error-order parity. Inputs below the limit still use only the real PEGTL
 parser, including its existing partial-action and syntax-error semantics.
 
@@ -132,9 +132,10 @@ VDF corpus and expected full-state fingerprint remain unchanged. Native MSVC
 Debug/Release must execute the boundary and conversion/destruction checks;
 portable or Wine execution alone does not establish Windows stack headroom.
 
-**Compatibility decision:** 128 is a new product input restriction, not a
-recovered RE limit. Owner review/approval of this explicit policy and real
-configuration compatibility is required before merge. Passing synthetic tests
-and the existing corpus does not prove every Consumer configuration or arbitrary
-host-thread stack size. No DLL export, error-enum layout or CFG path precedence
-change is proposed. Exact-head validation and its limits are tracked in PR #77.
+**Compatibility decision:** the owner integrated this input restriction in
+[PR #77](https://github.com/raleonys/citrine-eclipse-mirage/pull/77).
+The 128-level limit is product policy, not a recovered RE limit. Passing
+synthetic tests and the existing corpus does not prove every Consumer
+configuration or arbitrary host-thread stack size. DLL exports, error-enum
+layout and CFG path precedence are unchanged. Validation remains tied to the
+exact tested source; the merged PR does not certify all real configurations.
