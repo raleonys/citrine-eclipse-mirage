@@ -1,6 +1,6 @@
 # PR #23 post-merge listener shutdown acceptance
 
-**Status: DRAFT / TEST_ONLY / NOT_RELEASE.** The follow-up baseline is merged PR #23: `f121ecf99d275376fdc045e93a5873066c30fd11`, incorporated into `main` by merge commit `d9c860d17769738fd6f03a58a7f3c4b9f875b067` on 2026-11-01.
+**Status: test plan; execution evidence remains separately required.** The follow-up baseline is merged PR #23: `f121ecf99d275376fdc045e93a5873066c30fd11`, incorporated into `main` by merge commit `d9c860d17769738fd6f03a58a7f3c4b9f875b067` on 2026-11-01.
 
 ## Observed local Windows evidence (not source-commit-pinned)
 

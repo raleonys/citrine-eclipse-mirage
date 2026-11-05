@@ -60,6 +60,8 @@ set(PRELOADER_L_APPLICATION_SOURCES
   src/runtime/timestamp.cpp
   src/xml/memory_printer.cpp
   src/xml/reader.cpp
+  src/xml/reader_policy.cpp
+  src/xml/reader_values.cpp
 )
 
 # Retained for reference contracts and the optional C++ development DLL only.

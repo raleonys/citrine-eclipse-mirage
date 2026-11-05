@@ -138,6 +138,7 @@ public:
     std::int64_t timestamp_to_epoch_041e10(std::string_view) override;
     void log_profile_name_084f48(std::string_view) override;
     std::string current_time_041b60() override;
+    std::string ticket_time_041b60();
     std::int32_t atoi_05ee08(std::string_view) override;
     void unknown_entitlement_field(std::string_view) override;
     bool online_avatar_virtual_28(const Path&) override;

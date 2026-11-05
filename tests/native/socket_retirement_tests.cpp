@@ -379,7 +379,7 @@ void delayed_send_completion(){
         [output,&stale_callbacks](server::Error,std::size_t){++stale_callbacks;});
     output.reset();
     require(late_completion::target!=nullptr&&late_completion::buffer!=nullptr&&
-            late_completion::submitted!=SOCKET_ERROR || 
+            late_completion::submitted!=SOCKET_ERROR ||
             (late_completion::target!=nullptr&&late_completion::buffer!=nullptr&&
              late_completion::submit_error==WSA_IO_PENDING),
         "actual overlapped WSASend was submitted through the native adapter");

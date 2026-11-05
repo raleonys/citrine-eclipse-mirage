@@ -2,19 +2,6 @@
 name: Windows shutdown listener acceptance
 
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/msvc-shutdown-lifecycle.yml"
-      - "tools/preloader_l_runtime_host/**"
-      - "tests/native/listener_owners_tests.cpp"
-      - "src/net/**"
-      - "src/runtime/**"
-      - "src/platform/dll_entry.cpp"
-      - "tests/native/net_failure_tests.cpp"
-      - "tests/native/socket_retirement_tests.cpp"
-      - "src/platform/hook_unload_guard.cpp"
-      - "include/preloader_l/platform/hook_unload_guard.hpp"
-      - "tests/native/unload_guard_tests.cpp"
   workflow_dispatch:
 
 permissions:

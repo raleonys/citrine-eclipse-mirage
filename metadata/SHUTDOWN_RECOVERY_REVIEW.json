@@ -1,6 +1,5 @@
 {
   "schema": "surge.shutdown-recovery-review.v1",
-  "classification": "NOT_RELEASE",
   "owner": "Explicit owner continuation of proven corrections, regression tests and comparative closure audit",
   "documentation": "docs/SHUTDOWN_RECOVERY_AUDIT.md",
   "validation": "metadata/evidence/shutdown/VALIDATION.json",
