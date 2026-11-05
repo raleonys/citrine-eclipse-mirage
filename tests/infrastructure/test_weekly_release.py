@@ -272,31 +272,96 @@ class PayloadTests(unittest.TestCase):
             with self.subTest(body=body), self.assertRaises(ValueError):
                 self.validate('native')
 
-    def test_junit_declared_counts_and_root_match_actual_cases(self):
-        path = self.payload / 'native/CTEST_RESULTS.xml'
+    def assert_junit_rejected_by_candidate_paths(self, xml):
+        native = self.payload / 'native/CTEST_RESULTS.xml'
+        native.write_text(xml, encoding='utf-8')
+        with self.assertRaises(ValueError):
+            release.junit(native)
+        with self.assertRaises(ValueError):
+            self.validate('native')
+        self.xml(native)
+        (self.payload / 'PORTABLE_CTEST.xml').write_text(xml, encoding='utf-8')
+        output = self.base / 'assets'
+        with patch.object(release, 'head', return_value=SOURCE), self.assertRaises(ValueError):
+            release.bundle(ROOT, self.payload, output)
+        self.assertFalse(output.exists())
+
+    def test_junit_valid_flat_and_nested_suites_count_each_case_once(self):
+        leaf = '<testsuite tests="1"><testcase name="a"/></testsuite>'
+        nested = ('<testsuite tests="3"><testcase name="direct"/>'
+                  '<testsuite tests="2"><testcase name="a"/><testcase name="b"/>'
+                  '</testsuite></testsuite>')
         valid = [
-            ('single', '<testsuite tests="1" failures="0"><testcase name="fixture"/></testsuite>', 1),
-            ('aggregate', '<testsuites tests="2"><testsuite tests="1"><testcase name="a"/></testsuite><testsuite tests="1"><testcase name="b"/></testsuite></testsuites>', 2),
+            ('single', leaf, 1),
+            ('aggregate', '<testsuites tests="2">' + leaf * 2 + '</testsuites>', 2),
+            ('optional-aggregate', '<testsuites>' + leaf * 2 + '</testsuites>', 2),
+            ('nested-single', nested, 3),
+            ('nested-aggregate', '<testsuites tests="4">' + nested + leaf + '</testsuites>', 4),
+            ('empty-sibling', '<testsuites>' + leaf + '<testsuite tests="0"/></testsuites>', 1),
+            ('metadata', '<testsuite tests="01"><properties><property name="x" value="y"/>'
+             '</properties><testcase/><system-out>&lt;testcase/&gt;</system-out></testsuite>', 1),
         ]
-        invalid = [
-            ('underreported', '<testsuite tests="0"><testcase name="fixture"/></testsuite>'),
-            ('overreported', '<testsuite tests="2"><testcase name="fixture"/></testsuite>'),
-            ('missing-count', '<testsuite><testcase name="fixture"/></testsuite>'),
-            ('wrong-root', '<report><testcase name="fixture"/></report>'),
-            ('aggregate-mismatch', '<testsuites tests="2"><testsuite tests="1"><testcase name="fixture"/></testsuite></testsuites>'),
-            ('extra-case', '<testsuite tests="1"><testcase name="a"/><testcase name="b"/></testsuite>'),
-            ('negative-count', '<testsuite tests="-1"><testcase name="fixture"/></testsuite>'),
-        ]
+        path = self.payload / 'native/CTEST_RESULTS.xml'
         for name, xml, expected in valid:
             with self.subTest(valid=name):
-                path.write_text(xml)
+                path.write_text(xml, encoding='utf-8')
                 self.assertEqual(expected, release.junit(path))
                 self.assertEqual({'tests': expected}, self.validate('native'))
-        for name, xml in invalid:
-            with self.subTest(invalid=name):
-                path.write_text(xml)
-                with self.assertRaises(ValueError):
-                    self.validate('native')
+
+    def test_junit_rejects_inconsistent_counts_in_native_and_portable_candidates(self):
+        leaf = '<testsuite tests="1"><testcase/></testsuite>'
+        invalid_counts = ('', '-1', '+1', ' 1', '1 ', '1.0', '0x1', 'one', '\u0661', '\u00b2', '0', '2')
+        for count in invalid_counts:
+            for scope, xml in (
+                    ('suite', '<testsuite tests="' + count + '"><testcase/></testsuite>'),
+                    ('aggregate', '<testsuites tests="' + count + '">' + leaf + '</testsuites>')):
+                with self.subTest(count=count, scope=scope):
+                    self.assert_junit_rejected_by_candidate_paths(xml)
+        for xml in (
+                '<testsuite><testcase/></testsuite>',
+                '<testsuite tests="1"><testcase/><testcase/></testsuite>',
+                '<testsuite tests="1">' + leaf + '<testcase/></testsuite>',
+                '<testsuite tests="1"><testsuite tests="2"><testcase/></testsuite></testsuite>',
+                '<testsuite tests="1">' + leaf + '<testsuite tests="99"/></testsuite>',
+                '<testsuite tests="1">' + leaf + '<testsuite/></testsuite>'):
+            with self.subTest(xml=xml):
+                self.assert_junit_rejected_by_candidate_paths(xml)
+
+    def test_junit_rejects_wrong_roots_and_hidden_or_orphan_nodes(self):
+        leaf = '<testsuite tests="1"><testcase/></testsuite>'
+        for xml in (
+                '<report>' + leaf + '</report>', '<testcase/>', '<testsuites/>',
+                '<testsuite tests="0"/>',
+                '<testsuites tests="2">' + leaf + '<testcase/></testsuites>',
+                '<testsuites><wrapper>' + leaf + '</wrapper></testsuites>',
+                '<testsuite tests="1"><wrapper><testcase/></wrapper></testsuite>',
+                '<testsuite tests="2"><testcase><testcase/></testcase></testsuite>',
+                '<testsuite tests="1"><wrapper>' + leaf + '</wrapper></testsuite>',
+                '<testsuite tests="1"><testcase><testsuite tests="0"/></testcase></testsuite>',
+                '<testsuite tests="1"><testcase/><wrapper><testsuite tests="0"/></wrapper></testsuite>',
+                '<testsuite tests="1"><testsuites>' + leaf + '</testsuites></testsuite>'):
+            with self.subTest(xml=xml):
+                self.assert_junit_rejected_by_candidate_paths(xml)
+
+    def test_junit_nested_failure_statuses_still_reject_candidates(self):
+        for marker in ('failure', 'error', 'skipped'):
+            xml = ('<testsuites tests="1"><testsuite tests="1"><testsuite tests="1">'
+                   '<testcase><' + marker + '/></testcase></testsuite></testsuite></testsuites>')
+            with self.subTest(marker=marker):
+                self.assert_junit_rejected_by_candidate_paths(xml)
+        for status in ('failures', 'errors', 'skipped', 'disabled'):
+            xml = ('<testsuites tests="1"><testsuite tests="1"><testsuite tests="1" '
+                   + status + '="1"><testcase/></testsuite></testsuite></testsuites>')
+            with self.subTest(status=status):
+                self.assert_junit_rejected_by_candidate_paths(xml)
+
+    def test_junit_deep_suites_do_not_recurse_or_double_count(self):
+        depth = 1200
+        xml = '<testsuite tests="1">' * depth + '<testcase/>' + '</testsuite>' * depth
+        path = self.payload / 'native/CTEST_RESULTS.xml'
+        path.write_text(xml, encoding='utf-8')
+        self.assertEqual(1, release.junit(path))
+        self.assertEqual({'tests': 1}, self.validate('native'))
 
     def test_empty_junit_is_not_a_successful_native_run(self):
         (self.payload / 'native/CTEST_RESULTS.xml').write_text('<testsuite tests="0"/>')
