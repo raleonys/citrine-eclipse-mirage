@@ -6,7 +6,9 @@ This file distinguishes source imports, integrated pull requests and published r
 
 Current development entries are updated alongside their pull requests. They describe source changes, including proposed work, rather than published releases or proof of Windows/native/game acceptance. The separately dated merged-PR checkpoint below preserves the earlier history through PR #62.
 
-### Current unreleased changes (updated 2026-11-03)
+### Current unreleased changes (updated 2026-11-05)
+
+- Consolidate weekly release JUnit validation: require suite roots, direct suite/testcase ownership and unsigned ASCII counts; reconcile nested suite and optional aggregate totals without double counting or recursive traversal. Reject malformed, hidden, orphaned, empty, failed and skipped evidence in native and portable candidate paths; cover valid flat/nested reports and deeply nested suites. Supersede the overlapping PR #217 approach in PR #216 without changing runtime, vendor or release policy.
 
 - Bound host achievement XML Count/Progress parsing to representable 32-bit signed decimal and unsigned hexadecimal values, avoiding undefined out-of-range `sscanf` assignments. Retain whitespace, sign, prefix/suffix and signed low-bit contracts for supported input; use existing attribute fallback on overflow. Extend the real storage regression with exact limits, maliciously long values, embedded-NUL and end-to-end XML import checks. Donor CRT overflow parity remains unproven and is not asserted. Reject repeated numeric signs such as ++1 and -+1, with eight source-linked syntax regressions; retain the accepted achievement path-component guards.
 
