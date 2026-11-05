@@ -123,8 +123,10 @@ void native(const std::filesystem::path& directory) {
         check(io::read_binary_03b3f0(file,factory)==value,"native fixture binary roundtrip");
         check(std::filesystem::file_size(std::filesystem::path(file))==size,"native writer truncation");
     }
-    check(io::write_binary_checked(file,bytes,factory),"native checked file write");
-    check(io::read_binary_03b3f0(file,factory)==bytes,"native checked file bytes");
+    // Preserve the 8193-byte fixture for the partial-read and EOF checks below.
+    const auto checked_file=(root/std::filesystem::path(u"checked-ticket_\u00e7\u0131\u015f.bin")).u16string();
+    check(io::write_binary_checked(checked_file,bytes,factory),"native checked file write");
+    check(io::read_binary_03b3f0(checked_file,factory)==bytes,"native checked file bytes");
     const auto missing=(root/"missing-directory"/"file.bin").u16string();
     check(io::read_binary_03b3f0(missing,factory).empty(),"missing input empty");
     check(!io::write_binary_03c1d0(missing,"x",factory),"writer does not create parent directories");
