@@ -23,5 +23,6 @@
   "stop": "CANCEL_TIMERS_AND_SOCKETS_DISCARD_QUEUED_JOIN_RUNNING_DRAIN_IO",
   "public_abi": "UNCHANGED_THREE_EXPORTS",
   "vendor_changes": false,
-  "validation": "metadata/evidence/SESSION_TRANSPORT.json"
+  "validation": "metadata/evidence/SESSION_TRANSPORT.json",
+  "no_response": "CATCH_SHARED_TYPED_TERMINAL_ONLY; NO_WIRE_FRAME_OR_EVENT_SELECTION; SAME_CONNECTION_CONTINUES"
 }

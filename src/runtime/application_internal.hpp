@@ -2,6 +2,7 @@
 
 #pragma once
 #include "preloader_l/runtime/application.hpp"
+#include "preloader_l/protocol/messages.hpp"
 #include "preloader_l/codec/encoding.hpp"
 #include "preloader_l/core/license_files.hpp"
 #include "preloader_l/runtime/achievement_runtime.hpp"
@@ -23,7 +24,7 @@ using Path=configuration::Path;
 namespace fs=std::filesystem;
 inline std::wstring wide(std::u16string_view p){return {p.begin(),p.end()};}
 inline Path utf16(std::wstring_view p){return {p.begin(),p.end()};}
-struct NoResponse:std::runtime_error {NoResponse():std::runtime_error("RE no-response") {}};
+using NoResponse=messages::NoResponseRequiredError;
 [[noreturn]] inline void thread_error(int index){
     struct Spec {int code;const char* context;};
     static constexpr std::array<Spec,7> errors{{

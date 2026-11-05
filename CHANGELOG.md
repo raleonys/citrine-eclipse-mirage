@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Restore the owner-selected reference NoResponse behavior: consume only the shared typed no-response terminal before response framing/encryption/event selection, keep the connection open and admit its next command. Bind both Application emitters to that type, retain unrelated error handling, and test consecutive silent commands, sequential/coalesced plaintext/encrypted frames, event retention/delivery and a valid same-session follow-up. Native Windows sockets/Golden and real Consumer acceptance remain separate from portable source tests.
+
 - Audit C36-F002: reject unsafe Config2 ContentId filename components before license-path construction, and reject empty-ID license writes before the license callback. Preserve supported ASCII IDs and no-license empty-ID configurations; retain source-linked boundary regressions. This conservative input policy still requires owner compatibility review; lexical checks do not establish reparse-safe filesystem confinement.
 
 - Reject an invalid native binary-input `tellg()` position instead of converting its failure sentinel into a huge unsigned file length; add EOF-state regression coverage using the existing generated file fixture.
