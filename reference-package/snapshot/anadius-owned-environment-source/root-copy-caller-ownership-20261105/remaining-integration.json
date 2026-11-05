@@ -1,0 +1,143 @@
+{
+  "schema": "parallel-handler-remaining-integration.v13",
+  "recorded_at": "2026-11-05T17:32:09.179227+00:00",
+  "status": "SELECTED_ROOT_COPY_CALLER_OWNERSHIP_IMPLEMENTED_ACTUAL_SCOPED_RUNTIME_AND_CHILD_TAIL_PENDING",
+  "source_checkpoint": {
+    "path": "outputs/anadius-owned-environment-source/root-copy-caller-ownership-20261105/evidence.json",
+    "sha256": "02782cfc2cf92c70a521ea895af032b27b5cc7ede8cf9bb7be116977ac00b021"
+  },
+  "pending_source_count": 122,
+  "added_dependency_headers": [
+    "anadius-socket-source/memory_lookup.hpp",
+    "anadius-application-io-source/call.hpp"
+  ],
+  "bookkeeping_recorder": "work/record-focused-source-stage-v3.py",
+  "actual_production_policy": "Serialized; no OriginalConcurrentActors production selection",
+  "native_behavior_gap_closed": false,
+  "completed_prerequisites": [
+    {
+      "scope": "Per-actor Parent/JobPermit/PTD/JobScope records, exact byte/header/map catalog pins, per-attempt allocator rollback and sibling reap metadata",
+      "proof": {
+        "path": "outputs/anadius-session-memory-source/actor-catalog-foundation-20261105/evidence.json",
+        "sha256": "f13662c6370f7bd64c2ff51e6344e3ed150cd700935ba16e4f4bcf50d88a6811"
+      }
+    },
+    {
+      "scope": "Stable Record IO owner resolvers, generation-specific unlocked effect/callback lifetimes, known/unknown completion prefixes and mode-aware consumer/current-capacity wiring",
+      "proof": {
+        "path": "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/evidence.json",
+        "sha256": "f93751e53ea7e6a190545a4b319be4535e92110fad5a68c46c4934326c08240c"
+      }
+    },
+    {
+      "scope": "Stateless authoritative string headers, exact producer last-use/SDK-and-foreign view retention, per-call deque growth and residual header destructors",
+      "proof": {
+        "path": "outputs/anadius-session-profile-source/parallel-string-deque-ownership-20261105/evidence.json",
+        "sha256": "020efa1a8f4c1ca55cc8faabbc50c37df8ea7ec51f16592354108a27a8baf07d"
+      }
+    },
+    {
+      "scope": "Per-message NativeProfile registry/explicit call Dependencies/private-inline exact-Parent composite and active-versus-failed observations; actual Prepared same-session typed GetConfig source fixture authored, not executed",
+      "proof": {
+        "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/evidence.json",
+        "sha256": "537190da6b9da89254bcb7e00913dd1bd82ffdc72f6d81114f922ea5af359569"
+      }
+    },
+    {
+      "scope": "Immutable actual-child CallContext and Information/Content registered call views with independent guarded files/execution over same roots and shared failed-owner health; realPrepared normal/retained-file704 source cases authored, not executed",
+      "proof": {
+        "path": "outputs/anadius-application-io-source/provider-call-views-20261105/evidence.json",
+        "sha256": "9a704af5678931118ac08afa00048246aa6bb7149dc7d3b8d6b86002d3ef6b56"
+      }
+    },
+    {
+      "scope": "Registered nested Licensing Handler/Core views sharing one stable immutable Context/health and actual prebound auth/AttemptState/token/Runtime roots; private files/executor, root binding history and known-control/owned Online delegation; realPrepared parallel/retained705 assertions authored, not executed",
+      "proof": {
+        "path": "outputs/anadius-licensing-effects-source/nested-call-views-20261105/evidence.json",
+        "sha256": "da9c1f783850c7feaa3605e0ee0efe717087471b8dd85b1ed904d3cc4de31336"
+      }
+    },
+    {
+      "scope": "Graph exact registered per-message Context/adapters/writers and three concrete provider views through explicit NativeProfile dependencies; same real queue/mutex/roots with native shared relaxed count and producer last-use transfer. Actual sequential seventy-message Graph and committed-pop-unknown-unlock assertions authored, not executed.",
+      "proof": {
+        "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/evidence.json",
+        "sha256": "d54501d7f7bc21a89f5c7831e031a84d858f6cd526ec0a89c88a502d1800abe2"
+      }
+    },
+    {
+      "scope": "Owner-only live mutex atomic_ref projection with short temporary lifetime and unchanged actual SRW/raw layout/count/error behavior; real shared-SRW two-actor source assertions authored, not executed.",
+      "proof": {
+        "path": "outputs/anadius-execution-source/atomic-owner-projection-20261105/evidence.json",
+        "sha256": "3a0eebb4e8b8234b5e4137d45f07a146d71db11dd0e723ef2d734a7ca852ae05"
+      }
+    },
+    {
+      "scope": "Stable prelaunch Profile captured Job/Slot/closure/control/Logic records, own call epochs and early-Submitting child authority, healthy Root growth/retirement and per-child Policy actual current-thread cleanup. Same real owning Backend Parent policy is explicitly configurable, default Serialized. Actual prepared Graph/IOCP controlled-jobs same-session/early-B/Policy-overlap assertions authored, not run.",
+      "proof": {
+        "path": "outputs/anadius-session-profile-source/per-job-call-records-20261105/evidence.json",
+        "sha256": "3cf1fce0b9a7d5bad0cd13e480389883d83792017d460c38a184042fffc5d0d2"
+      }
+    },
+    {
+      "scope": "Actual NativeJobs barrier-free per-row launch/execution/post/physical-maintenance capture, exact early-return and handle prefixes, plus existing Serialized Parent nonblocking busy-aware original-worker reap. Actual SAME/DISTINCT NativeJobs Graph held-Unknown/GetConfig and receipt-before-post-return assertions plus actual Parent busy/invalid-controller assertions authored and independently reviewed, NOT RUN. Production defaults remain Serialized.",
+      "proof": {
+        "path": "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/evidence.json",
+        "sha256": "bb638e670352e166e5c1f3da2ada5074cf061097141d7bf8d21feb422f436716"
+      }
+    },
+    {
+      "scope": "Policy exact pending/registered work release membership, copied child permits/owned callback/source backing, immediate durable consumed prefix and unchanged synchronous native old1 stop, Concurrent healthy foreign/root progress and same-actor cross-registry rejection. Synthetic Policy component copy/destructor/unknown/no-replay assertions authored and independently reviewed, NOT RUN. OwnedEnvironment/Runtime sources unchanged.",
+      "proof": {
+        "path": "outputs/anadius-session-policy-source/per-call-work-release-20261105/evidence.json",
+        "sha256": "a9afbf46f69af744b70a950515eec93ac098d1081bb7a365c35933cb9ab6b3ef"
+      }
+    },
+    {
+      "scope": "Explicit JobScope immutable CallContext/stable source/row/effect claims, scoped constructor/move/copy/destroy with exact real tracked release proof, actual Profile clone route and whole Root move pre-prefix hook; canonical empty address-only ownership and native field/callback ordering preserved. Bounded component/routing tests and known-input/rawcopy executor regressions authored and reviewed, NOT RUN. Raw Root slot08 whole-caller/actual two-scope Runtime/full child-tail remain open.",
+      "proof": {
+        "path": "outputs/anadius-owned-environment-source/scoped-projection-calls-20261105/evidence.json",
+        "sha256": "7eeaa46b83dbe3e4294591ad0e8eba08655ca9e42568c9cceee78c74bae44e5d"
+      }
+    },
+    {
+      "scope": "Actual first/second message028d30 copies use the owning whole-caller body/slot seam. Same registered effect holds exact source/destination claims from before prefix until after LIVE executor tail. Raw slot08 remains partial, no native reorder. Four production/two test files statically reviewed, assertions NOT RUN.",
+      "proof": {
+        "path": "outputs/anadius-owned-environment-source/root-copy-caller-ownership-20261105/evidence.json",
+        "sha256": "02782cfc2cf92c70a521ea895af032b27b5cc7ede8cf9bb7be116977ac00b021"
+      }
+    }
+  ],
+  "remaining": [
+    {
+      "order": 1,
+      "scope": "Build meaningful actual ONE-selected-Environment PreparedMemory/NativeThreads/Runtime tracked-family two-scope scenarios: A held after a genuine decrement, B independent source/native-FLS exit/reap, exact shared protected source/own temporary lineage and natural drain, plus a naturally established returned-child-old1 path. Current Graph owns its default Environment privately, and initial OriginalDefault clone is empty/no work: do not add a duplicate/shadow owner, fake JobPermit/counter reset, test getter or change NativeJobs body solely for a test. Use legitimate existing composition or a dedicated real Runtime source fixture."
+    },
+    {
+      "order": 2,
+      "scope": "Integrate explicit actor-bound prepare40/response20/88 through their actual HandlerTaskContext/handler_dispatch and message/response consumers, then actual Worker/dispatcher/posted-memory authority before child scheduling. Current scope projection API intentionally grants no handler/response scheduling. Preserve callback ownership handoff before consumed task/environment access ends."
+    },
+    {
+      "order": 3,
+      "scope": "Audit actual OwnedAccept body/SDK gates, mutable packet publication and shared token/AttemptState/map/Online/runtime scalar mutations. Preserve actual narrow native locks and same business roots; per-scope projection is not arbitrary concurrent allocator/foreign-provider safety."
+    },
+    {
+      "order": 4,
+      "scope": "Resolve full native028d30 child response-tail ownership and the unchanged child033d70 followed by original-worker response021770 split. After coherent actual tracked/IO/shared/accept/packet/tail integration and meaningful source validation, select intended immutable production Parent policy; production still Serialized. All source-only authored scenarios require an explicitly authorized consistent rebuild/runtime verification."
+    }
+  ],
+  "validation_limits": [
+    "Four production/two test files independently statically reviewed; no compiler/project tests/link/DLL/ZIP. Source assertions are not runtime PASS.",
+    "One fresh complete analyzed Ghidra12.1.4 body supports exact caller prefix/slot/LIVE-executor order, with three noncontiguous ranges and provider terminal-call limitations. HOST hook is not native ABI or extra function credit.",
+    "Selected actual message whole-copy caller gap closes at source level. Direct legacy raw slot08 caller-tail obligations and raw global Empty trusted low-level boundary remain explicit.",
+    "Actual ONE-selected-Environment two-Scope tracked-family Runtime/B native-FLS-Parent reap and natural returned-child-old1 remain open. Controlled Environment component is not real prepared child/Runtime proof.",
+    "Actor prepare/response/Worker/dispatcher/shared/accept/packet and full native child-tail integration remain open; production Parent stays Serialized.",
+    "122 pending sources/headers, including the two existing added headers, need explicitly authorized consistent rebuild. Original and historical delivery unchanged. No overall percentage from file counts."
+  ],
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "overall_completion_percentage": null,
+  "continuous_goal_active": true
+}

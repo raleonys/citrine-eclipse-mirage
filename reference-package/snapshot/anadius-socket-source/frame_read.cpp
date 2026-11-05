@@ -34,13 +34,11 @@ void destroy_message(ReceiveBufferString& message,FrameReadContext& context){
     auto address=receive_buffer_address(message);
     auto bytes=capacity+std::uint64_t{1};
     if(bytes>=4096){
-        bytes+=39;std::uintptr_t base=0;bool matched=false;
-        for(const auto& item:context.allocation_headers){
-            if(item.address!=address-std::uintptr_t{8})continue;
-            if(matched)throw UnsupportedInput("Frame allocation header is ambiguous");
-            matched=true;base=item.allocation_base;
-        }
-        if(!matched)throw UnsupportedInput("Frame allocation header leaves projection");
+        bytes+=39;std::uintptr_t base=0;
+        const auto match=lookup_allocation_header(address-std::uintptr_t{8},context.allocation_headers,
+            context.allocation_header_resolver,base);
+        if(match==MemoryLookup::Ambiguous)throw UnsupportedInput("Frame allocation header is ambiguous");
+        if(match!=MemoryLookup::Found)throw UnsupportedInput("Frame allocation header leaves projection");
         if(address-base-std::uintptr_t{8}>31)context.api.invalid_parameter_05c974();
         address=base;
     }

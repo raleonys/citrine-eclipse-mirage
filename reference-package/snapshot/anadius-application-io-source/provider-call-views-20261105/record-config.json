@@ -1,0 +1,87 @@
+{
+  "schema": "original-provider-call-views.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_INFORMATION_CONTENT_CALL_VIEW_PREREQUISITE",
+  "pending_before": "before/pending-source-status.json",
+  "added_source_baseline": "before-manifest.json",
+  "scope": "Explicit immutable child CallContext and owner-registered Information/Content execution views, independent guarded file/clock/engine ownership over the SAME original business/provider roots, shared failed-owner health and creator backing retirement. Actual Original production unchanged.",
+  "sources": [
+    {
+      "path": "anadius-information-effects-source/effects.hpp",
+      "before": "before/anadius-information-effects-source__effects.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-information-effects-source/effects.cpp",
+      "before": "before/anadius-information-effects-source__effects.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-information-effects-source/effects_tests.cpp",
+      "before": "before/anadius-information-effects-source__effects_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-content-effects-source/effects.hpp",
+      "before": "before/anadius-content-effects-source__effects.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-content-effects-source/effects.cpp",
+      "before": "before/anadius-content-effects-source__effects.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-content-effects-source/effects_tests.cpp",
+      "before": "before/anadius-content-effects-source__effects_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "before": "before/anadius-worker-handoff-source__handoff_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-application-io-source/call.hpp",
+      "before": null,
+      "role": "production",
+      "added": true
+    }
+  ],
+  "reviews": [
+    "information-and-context-independent-review.md",
+    "content-and-fixture-independent-review.md",
+    "root-independent-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "native-findings.md",
+    "information-implementation.md",
+    "content-implementation.md",
+    "sdk-fixture-implementation.md"
+  ],
+  "native_replies": [
+    "instructions-18003c1d0.json",
+    "instructions-180041b60.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-application-io-source/provider-call-views-20261105/native-evidence-index.json",
+    "outputs/anadius-native-profile-source/per-message-invocations-20261105/evidence.json",
+    "outputs/anadius-native-profile-source/per-message-invocations-20261105/remaining-integration.json",
+    "outputs/anadius-native-profile-source/per-message-invocations-20261105/next-provider-call-view-plan.md",
+    "outputs/anadius-native-profile-source/per-message-invocations-20261105/next-graph-assembly-plan.md",
+    "outputs/anadius-native-profile-source/per-message-invocations-20261105/next-profile-implementation-plan.md"
+  ],
+  "limits": [
+    "No compiler, project tests, link, DLL execution or ZIP update. Three test sources contain authored normal/isolated assertions, none executed.",
+    "Actual production remains Serialized. Licensing nested Handler/Core, Graph MessageCall/adapters/writers, Profile stable Job/Slot admission, Policy cleanup and NativeJobs selection remain coupled prerequisites.",
+    "Views share actual Runtime/configuration/Paths/Online/Options/raw factories and clock identities. Arbitrary shared mutable business roots, custom providers, same-file writes and foreign SDK concurrency are not certified by independent execution metadata.",
+    "CallContext borrows raw checkpoint backing and expires with the exact Operation. Normal explicit close is required before Operation exit; closed handles may later destroy metadata only. Unknown file/provider prefixes remain retained and poison the shared owner, without guessed cleanup or retry.",
+    "The realPrepared normal file/UTC overlap and isolated failed-file retention cases are source fixtures, not measured execution or actual Graph/NativeJobs/network progress.",
+    "New header is recorded added_since_build/build_sha256:null without rewriting historical source inventory. Consistent rebuilding needs a new explicit user instruction.",
+    "Original binaries, historical source/build/link/DLL/ZIP proofs unchanged; native stream/CRT/EH/ABI equivalence and full end-state verification remain open. No invented completion percentage."
+  ],
+  "completed_note": "SOURCE_ONLY2freshcompleteREAfunctioninstructionrecords;5production(includingnewtypedcontextheader)+3testfiles implementexplicitInformation/Contentper-callviewsandexactownerhealth/filelifetimes. RealPreparednormalBbeforeAreleaseandisolatedunknownrawretentionassertionsNOTRUN; actualSerialized.",
+  "observation": "AlignedREA6.8.0/Ghidra12.1.4 complete03c1d0/041b60 instructionEvidence exportedclosed/originalhashunchanged. Three useful implementation/test/review subagents and scoped independent reviews; source-only.",
+  "next_scope": "Implement nested Licensing Handler/Core same-context facades over same authentication/AttemptState/Runtime roots; then Graph MessageCall/router/writer/locks and Profile stable job/session metadata admission, Policy current-thread cleanup, actual accept/packet and child-tail ownership. Remove NativeJobs body gate and enable immutable actual policy only after coherent integration, with real same-session/distinct-session progress cases. No build authorization."
+}

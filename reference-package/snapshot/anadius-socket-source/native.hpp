@@ -2,8 +2,30 @@
 #include "operations.hpp"
 #include <ws2tcpip.h>
 #include <windows.h>
+#include <system_error>
+#include <string>
+#include <functional>
 
 namespace anadius::socket_recovered {
+// Shared source value/category projection. Native MSVC string/exception/vtable
+// ABI is not adopted. Unknown int32 codes use the exact common native fallback.
+std::string misc_message_020a80(std::int32_t);
+const std::error_category& misc_error_category();
+struct SystemMessageImports {
+    decltype(&::FormatMessageA) format_message=&::FormatMessageA;
+    decltype(&::LocalFree) local_free=&::LocalFree;
+};
+// Stable for this module's ordinary CRT lifetime, keyed by the immutable SDK
+// function pair. This is a typed category/value projection, not native vtable
+// layout or a guarantee that external code may call after module teardown.
+// The inherited base default_error_condition/equivalent signatures implement
+// the observed identity/value domain; no compiler Win32->generic mapping.
+const std::error_category& system_error_category_028620(SystemMessageImports={});
+// Caller-retained unknown SDK prefix, not native string/allocator/EH storage.
+// No automatic free or retry: a throwing call leaves its entered phase intact.
+struct SystemMessageState {char* buffer=nullptr;bool entered=false,release_entered=false;};
+std::string system_message_020950(std::int32_t,SystemMessageState&,SystemMessageImports={},
+    const std::function<void()>& nonmutating_checkpoint={});
 class CategoryProvider {
 public:
     virtual ~CategoryProvider()=default;

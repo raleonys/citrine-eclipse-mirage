@@ -1,0 +1,80 @@
+
+Disassembly of section .text$_ZNSt3__112_GLOBAL__N_114make_error_strERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE:
+
+0000000000000000 <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)>:
+       0: 56                           	pushq	%rsi
+       1: 57                           	pushq	%rdi
+       2: 53                           	pushq	%rbx
+       3: 48 83 ec 40                  	subq	$0x40, %rsp
+       7: 4c 89 c6                     	movq	%r8, %rsi
+       a: 48 89 cf                     	movq	%rcx, %rdi
+       d: 44 8b 02                     	movl	(%rdx), %r8d
+      10: 45 85 c0                     	testl	%r8d, %r8d
+      13: 0f 84 8b 00 00 00            	je	0xa4 <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0xa4>
+      19: 48 89 d3                     	movq	%rdx, %rbx
+      1c: 0f b6 06                     	movzbl	(%rsi), %eax
+      1f: a8 01                        	testb	$0x1, %al
+      21: 74 0b                        	je	0x2e <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0x2e>
+      23: 48 8b 46 08                  	movq	0x8(%rsi), %rax
+      27: 48 85 c0                     	testq	%rax, %rax
+      2a: 75 09                        	jne	0x35 <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0x35>
+      2c: eb 1f                        	jmp	0x4d <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0x4d>
+      2e: d1 e8                        	shrl	%eax
+      30: 48 85 c0                     	testq	%rax, %rax
+      33: 74 18                        	je	0x4d <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0x4d>
+      35: 48 8d 15 00 00 00 00         	leaq	(%rip), %rdx            # 0x3c <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0x3c>
+		0000000000000038:  IMAGE_REL_AMD64_REL32	.str.6
+      3c: 41 b8 02 00 00 00            	movl	$0x2, %r8d
+      42: 48 89 f1                     	movq	%rsi, %rcx
+      45: e8 00 00 00 00               	callq	0x4a <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0x4a>
+		0000000000000046:  IMAGE_REL_AMD64_REL32	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendEPKcy
+      4a: 44 8b 03                     	movl	(%rbx), %r8d
+      4d: 48 8b 53 08                  	movq	0x8(%rbx), %rdx
+      51: 48 8b 02                     	movq	(%rdx), %rax
+      54: 48 8b 40 30                  	movq	0x30(%rax), %rax
+      58: 48 8d 4c 24 28               	leaq	0x28(%rsp), %rcx
+      5d: ff 15 00 00 00 00            	callq	*(%rip)                 # 0x63 <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0x63>
+		000000000000005f:  IMAGE_REL_AMD64_REL32	__guard_dispatch_icall_fptr
+      63: 44 0f b6 44 24 28            	movzbl	0x28(%rsp), %r8d
+      69: 44 89 c0                     	movl	%r8d, %eax
+      6c: 48 8d 54 24 29               	leaq	0x29(%rsp), %rdx
+      71: 41 d1 e8                     	shrl	%r8d
+      74: a8 01                        	testb	$0x1, %al
+      76: 48 0f 45 54 24 38            	cmovneq	0x38(%rsp), %rdx
+      7c: 4c 0f 45 44 24 30            	cmovneq	0x30(%rsp), %r8
+      82: 48 89 f1                     	movq	%rsi, %rcx
+      85: e8 00 00 00 00               	callq	0x8a <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0x8a>
+		0000000000000086:  IMAGE_REL_AMD64_REL32	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendEPKcy
+      8a: f6 44 24 28 01               	testb	$0x1, 0x28(%rsp)
+      8f: 74 13                        	je	0xa4 <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0xa4>
+      91: 48 8b 54 24 28               	movq	0x28(%rsp), %rdx
+      96: 48 8b 4c 24 38               	movq	0x38(%rsp), %rcx
+      9b: 48 83 e2 fe                  	andq	$-0x2, %rdx
+      9f: e8 00 00 00 00               	callq	0xa4 <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0xa4>
+		00000000000000a0:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+      a4: 48 8b 46 10                  	movq	0x10(%rsi), %rax
+      a8: 48 89 47 10                  	movq	%rax, 0x10(%rdi)
+      ac: 0f 10 06                     	movups	(%rsi), %xmm0
+      af: 0f 11 07                     	movups	%xmm0, (%rdi)
+      b2: 0f 57 c0                     	xorps	%xmm0, %xmm0
+      b5: 0f 11 06                     	movups	%xmm0, (%rsi)
+      b8: 48 c7 46 10 00 00 00 00      	movq	$0x0, 0x10(%rsi)
+      c0: 48 83 c4 40                  	addq	$0x40, %rsp
+      c4: 5b                           	popq	%rbx
+      c5: 5f                           	popq	%rdi
+      c6: 5e                           	popq	%rsi
+      c7: c3                           	retq
+      c8: 48 89 c6                     	movq	%rax, %rsi
+      cb: f6 44 24 28 01               	testb	$0x1, 0x28(%rsp)
+      d0: 74 13                        	je	0xe5 <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0xe5>
+      d2: 48 8b 54 24 28               	movq	0x28(%rsp), %rdx
+      d7: 48 8b 4c 24 38               	movq	0x38(%rsp), %rcx
+      dc: 48 83 e2 fe                  	andq	$-0x2, %rdx
+      e0: e8 00 00 00 00               	callq	0xe5 <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0xe5>
+		00000000000000e1:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+      e5: 48 89 f1                     	movq	%rsi, %rcx
+      e8: e8 00 00 00 00               	callq	0xed <std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)+0xed>
+		00000000000000e9:  IMAGE_REL_AMD64_REL32	_Unwind_Resume
+      ed: cc                           	int3
+
+Disassembly of section .text$_ZNSt3__112system_errorC2ENS_10error_codeEPKc:

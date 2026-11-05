@@ -1,0 +1,64 @@
+{
+  "status": "COMPLETE_SELECTED_ANALYZED_BODY_WITH_NONCONTIGUOUS_RANGES",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "relevant_fresh_records": [
+    {
+      "path": "outputs/anadius-owned-environment-source/root-copy-caller-ownership-20261105/instructions-180028d30.json",
+      "sha256": "8e50f9631602f1837e41efbe7c6e06cae15464aff1242d34e22194ea938fb3da",
+      "evidence_id": "ev_c1e35ff0c5c57064a1ddf6f2ba08016bd1eecedf05e9c21ef99d15c95c75e2c7",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x180028d30"
+      },
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0x180028d30",
+            "end": "0x180028faf"
+          },
+          {
+            "start": "0x180028fb1",
+            "end": "0x180028fbb"
+          },
+          {
+            "start": "0x180028fbd",
+            "end": "0x180028fc1"
+          }
+        ],
+        "total_bytes": 656,
+        "span_bytes": 658,
+        "non_contiguous": true,
+        "contains_entry": true
+      },
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "This fast path reads only the requested function and does not invoke the decompiler or whole-program string/name inventories.",
+        "Instruction text is Ghidra-specific and does not claim textual equivalence with Hopper output.",
+        "Ghidra Listing reports a terminal call at 0x180028fab to 0x18005c974 FUN_18005c974 (external=false, thunk=false, hasNoReturn=true); fallthrough is excluded by Ghidra's flow model. This records Ghidra's FunctionManager flag, not an independent verification that the callee cannot return.",
+        "Ghidra Listing reports a terminal call at 0x180028fb7 to 0x18005c974 FUN_18005c974 (external=false, thunk=false, hasNoReturn=true); fallthrough is excluded by Ghidra's flow model. This records Ghidra's FunctionManager flag, not an independent verification that the callee cannot return.",
+        "Ghidra Listing reports a terminal call at 0x180028fbd to 0x18005c974 FUN_18005c974 (external=false, thunk=false, hasNoReturn=true); fallthrough is excluded by Ghidra's flow model. This records Ghidra's FunctionManager flag, not an independent verification that the callee cannot return.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically."
+      ]
+    }
+  ],
+  "open_reply": {
+    "path": "outputs/anadius-owned-environment-source/root-copy-caller-ownership-20261105/open-binary.json",
+    "sha256": "5b7ea33ba76688b393f2b34c4db25d8280fa94041da1053093eb3bc18527e599"
+  },
+  "exported_bundle": {
+    "path": "outputs/anadius-owned-environment-source/root-copy-caller-ownership-20261105/rea-evidence-bundle.json",
+    "sha256": "accf3146a2d6c075a3eb744b0f0024945e4edbbb368760d3ea9692c21d8f01bd"
+  },
+  "exported_records": 1,
+  "session_closed": true,
+  "original_hash_verified_after_close": true,
+  "runtime_observation": false,
+  "new_recovered_function_credit": 0
+}

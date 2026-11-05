@@ -1,5 +1,6 @@
 #include "factory.hpp"
 #include "../anadius-shared-log-source/stream.hpp"
+#include "../anadius-module-reference-source/reference.hpp"
 #include <bit>
 #include <filesystem>
 #include <mutex>
@@ -17,8 +18,8 @@ const char* literal(std::string_view value){
 }
 bool empty(const online_version::Snapshot& s){return !s.module&&!s.procedure&&!s.active&&!s.poisoned&&!s.code_retained&&!s.factory&&!s.object&&!s.object_unknown&&!s.factory_code_retained;}
 Options checked(bootstrap_backend::CallbackStateView view,Options& options){
-    if(!options.stream||!options.dialog||!options.os||!options.encoding||!options.errors||!options.stats||!options.files||!options.get_proc||!options.code_lease||!options.foreign_quiescent)
-        throw std::invalid_argument("Complete owned online leaves, real code lease and explicit foreign finality required");
+    if(!options.stream||!options.dialog||!options.os||!options.encoding||!options.errors||!options.stats||!options.files||!options.get_proc||!options.code_lease||!lifetime_configuration_valid(options))
+        throw std::invalid_argument("Complete owned online leaves, real code lease and selected lifetime configuration required");
     if(view.runtime.online_module||view.runtime.online_object)
         throw std::invalid_argument("New online binding cannot adopt seeded foreign module/object handles");
     return take_options(options);
@@ -29,7 +30,20 @@ template<class F,class G>auto managed(F&& fn,G&& invoke){
 }
 }
 Options take_options(Options& o){
-    return Options{std::move(o.lifetime),std::move(o.stream),std::move(o.dialog),std::move(o.os),std::move(o.encoding),std::move(o.errors),std::move(o.stats),std::move(o.files),std::exchange(o.get_proc,nullptr),take_function(o.code_lease),take_function(o.foreign_quiescent)};
+    return Options{std::move(o.lifetime),std::move(o.stream),std::move(o.dialog),std::move(o.os),std::move(o.encoding),std::move(o.errors),std::move(o.stats),std::move(o.files),std::exchange(o.get_proc,nullptr),take_function(o.code_lease),take_function(o.foreign_quiescent),o.lifetime_profile};
+}
+bool lifetime_configuration_valid(const Options& o)noexcept{
+    switch(o.lifetime_profile){
+    case LifetimeProfile::Cooperative:return bool(o.foreign_quiescent);
+    case LifetimeProfile::OriginalCrt:return !o.foreign_quiescent;
+    }return false;
+}
+void select_native_original_online(Options& o){
+    Error error;const auto vacant=[&]{return o.lifetime_profile==LifetimeProfile::Cooperative&&!o.code_lease&&!o.foreign_quiescent;};
+    if(!vacant())throw std::invalid_argument("Unselected Online lifetime and empty lease/foreign-proof slots required");
+    auto lease=module_reference::make_code_lease();
+    if(!vacant())throw std::logic_error("Online selection changed during native lease construction");
+    o.code_lease.swap(lease);o.lifetime_profile=LifetimeProfile::OriginalCrt;
 }
 struct Online::Impl {
     bootstrap_backend::CallbackStateView view;Options options;
@@ -40,7 +54,8 @@ struct Online::Impl {
     mutable std::mutex gate;Phase phase=Phase::Open;std::size_t active=0;bool used=false;
     Impl(Online& owner,bootstrap_backend::CallbackStateView v,Options&& o):view(v),options(checked(v,o)),
         recovered(owner,*options.os,*options.stats,*options.encoding,*options.errors,*options.files){
-        binding=std::make_unique<online_version::Binding>(std::move(options.code_lease));
+        binding=std::make_unique<online_version::Binding>(std::move(options.code_lease),
+            options.lifetime_profile==LifetimeProfile::OriginalCrt?online_version::QueryPolicy::Concurrent:online_version::QueryPolicy::Serialized);
         // Binding is adopted and Options still owns all backing before an SBO
         // donor's destructor can call the still-unattached facade.
         options.code_lease={};
@@ -86,7 +101,10 @@ bool Online::close_after_cleanup(){
     {std::lock_guard lock(v.gate);if(v.phase==Phase::Closed)return true;if(v.phase==Phase::Retiring)throw std::logic_error("Online facade is retiring");if(v.phase==Phase::Checking){v.phase=Phase::Poisoned;throw std::logic_error("Online close reentry");}if(v.phase==Phase::Poisoned||v.active)return false;v.phase=Phase::Checking;}
     try{
         if(!v.actual_empty()){std::lock_guard lock(v.gate);if(v.phase==Phase::Checking)v.phase=Phase::Open;return false;}
-        const bool final=v.options.foreign_quiescent();
+        // Original profile still requires actual local module/object/binding
+        // emptiness and zero active calls above; it adds no external proof
+        // callback or arbitrary image-unload guarantee.
+        const bool final=v.options.lifetime_profile==LifetimeProfile::OriginalCrt||v.options.foreign_quiescent();
         const bool still_empty=v.actual_empty();
         {std::lock_guard lock(v.gate);if(v.phase!=Phase::Checking)return false;if(!still_empty){v.phase=Phase::Poisoned;return false;}v.phase=final?Phase::Closed:Phase::Open;}
         return final;

@@ -1,0 +1,12 @@
+DIAG entering strings_contract
+DIAG entering strings_registered_header_growth
+DIAG entering profile_dependencies
+DIAG entering profile_selected_environment_owner
+DIAG entering profile_identity
+DIAG entering profile_slots
+DIAG entering profile_session_growth
+DIAG entering deferred_jobs
+DIAG entering deferred_job_growth
+DIAG entering job_handoff_preflight
+DIAG entering deferred_completion_reuses_slot
+PASS: 5519 session-profile core checks; growing owner generations, string headers, deferred jobs/handoff preflight and ten isolated retention prefixes

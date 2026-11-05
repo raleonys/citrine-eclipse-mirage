@@ -1,0 +1,62 @@
+[
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.cpp",
+    "sha256": "67f6f5fb57dc02b977edd9780df73a4a2637409f759e806847b33cd0af11caf7",
+    "bytes": 13191
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.hpp",
+    "sha256": "8d1cfd8f5c20c1c365aada4538532d01a268e7bbb273c176d8189184cd9c2194",
+    "bytes": 11027
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.cpp",
+    "sha256": "5502502c72d7ebfe309c450cf61ca0cf36ca85cbe969ee04b6bfdbc526ba83ed",
+    "bytes": 21556
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.hpp",
+    "sha256": "b9f28fe3a1cc579581ed54e8bdf5fee5cdc7e7d86ba173b138c35196f8a0b87b",
+    "bytes": 7525
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign_tests.cpp",
+    "sha256": "0355d678ea1f60d3d3c31a1e75214a53c8c0c963a49de68f90e9cf43d2b51b17",
+    "bytes": 25220
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign_integration_tests.cpp",
+    "sha256": "233a79b92f1ec58d3478013f535e8fa60e01a76db78c517bf494447964463dac",
+    "bytes": 39915
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-host-platform-source\\assembly.cpp",
+    "sha256": "6e7e393dec531fe5c50ace97c75eeac568470e631922bde404e2c05ab2e28d9a",
+    "bytes": 6766
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-startup-publication-source\\publication.cpp",
+    "sha256": "7b7a50a8b28541b5b3461439c6918a7055acd8af054344c212e7cb5650bace82",
+    "bytes": 4660
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-execution-source\\execution.cpp",
+    "sha256": "03946d42e546072f0e875c4a45327b63a24419303e9b4b23325f79b55f75b705",
+    "bytes": 7086
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\connect.cpp",
+    "sha256": "73659fea38e311c87dd91e3311321f421483cf0f0ea9061d7e266f5469867f9d",
+    "bytes": 4154
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-callback-policy-source\\policy.cpp",
+    "sha256": "74c88a3d3d592f325b025b6f0b400c826e89ac0a42082885ad0a93f3cc980c69",
+    "bytes": 9460
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-context-source\\context.hpp",
+    "sha256": "8c93154d154bed66605178cfe190f9c87e8c709f4946bfe2a7a77a771b9923ab",
+    "bytes": 3560
+  }
+]

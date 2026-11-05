@@ -1,0 +1,236 @@
+DIAG check tid4800: Parallel Profile controller initializes actual Domain
+DIAG check tid4800: Actual parallel fixture owns finite SDK handshake events
+DIAG check tid4800: Parallel fixture launches an actual same-Domain native wrapper
+DIAG ParallelThread body tid21696
+DIAG check tid21696: Parallel source owns real Runtime TLS selector
+DIAG check tid21696: Worker provider aliases borrow exact live bound configuration/Execution
+DIAG check tid21696: Owned context requests WSA2.2
+DIAG check tid21696: Actual024990 forwards observed selected IOCP construction arguments
+DIAG check tid21696: Concrete NativeApi forwards ACP exact loopback C string and bounded10 wide conversion
+DIAG check tid21696: Concrete NativeApi forwards persistent converted text, null protocol and initialized128byte sockaddr capacity
+DIAG check tid21696: Concrete NativeApi forwards ACP exact loopback C string and bounded10 wide conversion
+DIAG check tid21696: Concrete NativeApi forwards persistent converted text, null protocol and initialized128byte sockaddr capacity
+DIAG check tid21696: Actual020e20 opens selected family through synthetic socket SDK boundary
+DIAG check tid21696: Actual acceptor/accepted transfer attaches selected socket to same owned kernel completion port
+DIAG check tid21696: Acceptor enables source reuse-address option
+DIAG check tid21696: Actual bind lower receives family-specific initialized sockaddr length
+DIAG check tid21696: Actual listen uses observed INT_MAX backlog
+DIAG check tid21696: Local endpoint uses actual owned acceptor token and initialized SDK buffer
+DIAG check tid21696: Bound port environment publication precedes source readiness flag
+DIAG check tid21696: Controlled Jobs binds SAME actual concurrent Backend Parent and Runtime environment capability
+DIAG check tid21696: Profile integration uses exact injected AcceptEx boundary with distinct201/202/203 sockets and90+90 endpoints
+DIAG check tid21696: Concrete Profile/native flow retains next accept SDK loan alongside active session
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid21696: Parallel fixture launches an actual same-Domain native wrapper
+DIAG ParallelThread body tid17380
+DIAG probe0 acquiring
+DIAG probe0 acquired
+DIAG probe0 Operation
+DIAG probe0 permit
+DIAG probe0 target locked
+DIAG probe0 target registered
+DIAG check tid21696: Parallel fixture launches an actual same-Domain native wrapper
+DIAG ParallelThread body tid7724
+DIAG probe1 acquiring
+DIAG probe1 acquired
+DIAG probe1 Operation
+DIAG probe1 permit
+DIAG probe1 target locked
+DIAG probe1 target registered
+DIAG check tid7724: Actual current-thread04a47c releases only this child's registered native wait target
+DIAG check tid7724: Policy probe returns its actual prepared child offer
+DIAG check tid21696: Actual parallel native/FLS exit joins before own handle retirement
+DIAG check tid21696: B actual Policy cleanup/native exit progresses while A exact cleanup checkpoint and target remain live
+DIAG check tid21696: Actual original Policy call and passives progress without cleaning foreign A target
+DIAG check tid17380: Actual current-thread04a47c releases only this child's registered native wait target
+DIAG check tid17380: Policy probe returns its actual prepared child offer
+DIAG check tid21696: Actual parallel native/FLS exit joins before own handle retirement
+DIAG check tid21696: Two actual child cleanups plus one original cleanup finish without fake count reset
+DIAG beforeQCS incoming0 observed126
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Observed completion releases accept loan before native endpoint address extraction
+DIAG check tid21696: Native0271a0 updates accepted context with captured listener pointer value and exact option700b/size8
+DIAG check tid21696: Actual acceptor/accepted transfer attaches selected socket to same owned kernel completion port
+DIAG check tid21696: Socket source destructor supplies selected executor identity
+DIAG check tid21696: Graph prepare callback receives actual023000 owner after second native reset and supplies NOlogic/context graph
+DIAG check tid21696: Actual Graph owns Policy before first session publication
+DIAG check tid21696: Concrete NativeApi synchronous greeting uses exact WSASend one-buffer/zeroDWORD/flags0/nullOV/nullcallback imports
+DIAG check tid21696: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid21696: Actual parallel session has one real SDK receive loan
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Profile integration uses exact injected AcceptEx boundary with distinct201/202/203 sockets and90+90 endpoints
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid21696: Actual parallel session has one real SDK receive loan
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid21696: Actual parallel session has one real SDK receive loan
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid21696: Actual parallel session has one real SDK receive loan
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid21696: Actual parallel session has one real SDK receive loan
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid21696: Actual parallel session has one real SDK receive loan
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid21696: Actual parallel session has one real SDK receive loan
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid21696: Actual parallel session has one real SDK receive loan
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Actual source start uses exact bound Application
+DIAG check tid21696: Prelaunch capture uses actual submitting Profile job/session identities
+DIAG check tid21696: Real delegated job owns its source-return event
+DIAG check tid21696: Actual delegated job retains distinct source/detach and native join handles
+DIAG check tid13204: Actual parallel Graph callback retains its exact Session and real child actor
+DIAG check tid13204: Held A uses the original actual session
+DIAG check tid13204: Actual Graph unknown diagnostic reaches concrete Licensing/Dialog from held A
+DIAG check tid21696: A really enters unknown diagnostic BEFORE lower start returns or detach
+DIAG check tid21696: Exact actual source handle detaches after early child eligibility
+DIAG check tid21696: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid21696: Actual parallel session has one real SDK receive loan
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid21696: Actual parallel session has one real SDK receive loan
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid21696: Actual parallel session has one real SDK receive loan
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Actual source start uses exact bound Application
+DIAG check tid21696: Prelaunch capture uses actual submitting Profile job/session identities
+DIAG check tid21696: Real delegated job owns its source-return event
+DIAG check tid21696: Actual delegated job retains distinct source/detach and native join handles
+DIAG check tid21696: Initial job capacity1 grows while exact A submitting capture remains live
+DIAG check tid17888: Actual parallel Graph callback retains its exact Session and real child actor
+DIAG check tid17888: B receives exact separate real XML on selected same/distinct Session
+DIAG check tid17888: Actual parallel Graph callback retains its exact Session and real child actor
+DIAG check tid17888: Only B emits actual GetConfig response while supported Unknown A stays held
+DIAG check tid21696: B actual message body AND memory return finish BEFORE lower start returns and before detach
+DIAG check tid21696: Exact actual source handle detaches after early child eligibility
+DIAG check tid21696: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid21696: Actual parallel session has one real SDK receive loan
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Actual Runtime receipt selects one exact controlled source row
+DIAG check tid21696: Receipt validates actual current generation and returned detached claim once
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Actual consumed job completes native/FLS exit independently of A's body
+DIAG check tid21696: Actual joined/barrier handles close only after physical child exit
+DIAG check tid21696: Actual prepared backing has reaped B and both policy probes while only held A's source row remains
+DIAG check tid21696: Default NativeAsyncSendApi forwards exact WSASend one-buffer/zeroDWORD/flags0/realOV/nullcallback signature
+DIAG check tid21696: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Actual SDK send packet follows its one pending loan
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Actual prepared backing has reaped B and both policy probes while only held A's source row remains
+DIAG check tid21696: B normal original response retires one grown source job while A same-session call remains live; Root passives progress
+DIAG check tid21696: Held A actual Parent request survives B processing, response and job retirement
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid21696: B source response and physical reap progress are observed before releasing A outside Parent
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Actual prepared backing has reaped B and both policy probes while only held A's source row remains
+DIAG check tid13204: A continues only after real B response and native/FLS/reap progress
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Actual Runtime receipt selects one exact controlled source row
+DIAG check tid21696: Receipt validates actual current generation and returned detached claim once
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Actual consumed job completes native/FLS exit independently of A's body
+DIAG check tid21696: Actual joined/barrier handles close only after physical child exit
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Socket source destructor supplies selected executor identity
+DIAG check tid21696: Natural final pending accept keeps its actual typed packet
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid21696: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid21696: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid21696: Profile integration uses exact injected AcceptEx boundary with distinct201/202/203 sockets and90+90 endpoints
+DIAG check tid21696: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid21696: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG exit254 line642 tid4800

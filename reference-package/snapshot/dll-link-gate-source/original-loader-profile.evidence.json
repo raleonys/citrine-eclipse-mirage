@@ -1,0 +1,257 @@
+{
+  "schema": "original-loader-profile.source.v1",
+  "client_date": "2026-11-03",
+  "recorded_at": "2026-11-03T16:40:05.562467+00:00",
+  "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+  "user_decision": "Preserve original behavior, do not extend work with extra safe-unload requirements, focus on the two loader functions, no build.",
+  "native_authority": {
+    "path": "outputs/dll-critical-path/original-detach-profile.audit.json",
+    "sha256": "61e5424ce5c997d2f098e7c7c6a45d322958a7d2eda7afcc1e5f8269037a8507",
+    "scope": "Previous REA6.8/Ghidra12.1.4 seven-body static assembly slice; no fresh binary access this stage."
+  },
+  "detach": {
+    "symbol": "require_loader_detach_quiescence",
+    "status": "SOURCE_DEFINED_NOT_COMPILED",
+    "source": "outputs/dll-link-gate-source/entry.cpp",
+    "native_address": "0x180038870",
+    "meaning": "Observed application reason0 has no action. The source helper intentionally performs no application detach work; the historical name makes no quiescence guarantee. Compiler CRT retains real registered exit-callback dispatch; no duplicate source cleanup/join/Runtime.close is invoked."
+  },
+  "attach": {
+    "symbol": "require_loader_attach_runtime",
+    "status": "UNDEFINED",
+    "required": "Real per-image providers/roots and complete synchronous actual application attach using existing fresh Runtime/default seeds; no success/null implementation or fallback added."
+  },
+  "removed": "Mandatory pre_cleanup_quiescence, CallbackCleanupPrerequisite and its matched attachment ordering adapter from the preceding unbuilt stage. Four files returned exactly to the frozen full-build source bytes; Resources fixture restored exactly to its pre-barrier hash with earlier pending work retained.",
+  "cooperative_helpers": "Existing Runtime.close, pre_unload Controller and optional lifecycle/Stop proof helpers remain separate source APIs. They are not original application detach requirements.",
+  "step_source_changes": [
+    {
+      "path": "anadius-bootstrap-backend-source/backend.cpp",
+      "before_sha256": "85bf20f32a36d2b501209d733edfa58bac93b07a270c6e78c9b4318fa3f180f1",
+      "current_sha256": "11369cb3f9880dea5d2780134c5a31f29db21f2b6165302acef9f9898bca9abc",
+      "restored_to_last_full_build": true
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend.hpp",
+      "before_sha256": "3bee41f0b8102f590ed2ac43472d491cdd7cd35594a73643c8d197c9201ea95d",
+      "current_sha256": "a1bc5f66bd35a638e48f97ef5e220f4dbac975bd3fab5af59db124ba731a60f3",
+      "restored_to_last_full_build": true
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.cpp",
+      "before_sha256": "b12cefdac29f6a57510e967b641fa33227675d37c695f7602d78d302175f1ebb",
+      "current_sha256": "c85f94375c69155361288a18def122fde9b47db2ae0090ac909489ec622fe120",
+      "restored_to_last_full_build": true
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.hpp",
+      "before_sha256": "afde0d485d520a47a681d0ff34baecc8cd94ae3916eb649a5ed755383e338d5f",
+      "current_sha256": "42cd6806b1a2641bb1fb85771dbccca54848fda90709f42941f62455053b78d9",
+      "restored_to_last_full_build": true
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "before_sha256": "10338f139699056536f5dbebad57f65f45af836d6f07d8da9edb4281edcf0539",
+      "current_sha256": "d919b4b8b13dde2a751e727b10f12a26c7e9b7db2af3c468d5a374792a69637c",
+      "restored_to_last_full_build": false
+    },
+    {
+      "path": "dll-link-gate-source/entry.cpp",
+      "before_sha256": "af21559c039f7f723e96a32e0e1f30474071ef8740dcf47af919360bc9c3b5f3",
+      "current_sha256": "ff45b4e481d3b62a467a1031132e17b5f2e27f1709c4ba9c12820477218ca6b6",
+      "restored_to_last_full_build": false
+    },
+    {
+      "path": "dll-link-gate-source/production_image.hpp",
+      "before_sha256": "cf8681ad700ca65d201d42aadd514f332ca4140de93bc1adbd86bfe72d30d34c",
+      "current_sha256": "7a85dca25e3566d876e1b7de909d047ff6b46dedb92035d34341b54e593ce8a9",
+      "restored_to_last_full_build": false
+    }
+  ],
+  "auxiliary_source_changes": [
+    {
+      "path": "outputs/dll-link-gate-source/target.cmake",
+      "sha256": "4c6612f6d51e7ecc823c115763b990a030a3a034bca390cf1a38bc770ecaddbf"
+    },
+    {
+      "path": "outputs/dll-link-gate-source/build-link-gate.ps1",
+      "sha256": "9a3dd4aee33f1b177d60d3188ded72a00a187b80d27cdd00ea50230d7ebcac32"
+    },
+    {
+      "path": "outputs/dll-link-gate-source/verify-link-gate.py",
+      "sha256": "8cb2a135ee048a7272b219dabb4533568a19a36ca61e62d1a44d11b0327ba3e5"
+    }
+  ],
+  "future_link_expectation": "Source now defines detach and still declares undefined attach. Diagnostic expects attach only on the next authorized build. This is source inspection, NOT a new linker observation. Frozen last link still records two undefined symbols.",
+  "all_pending_sources_since_last_full_build": [
+    {
+      "path": "anadius-accept-stop-source/stop.cpp",
+      "last_built_sha256": "02687d1f84a3867933214f2e5d7219fca7e76cfd260f2bf41c50e1b5c5c1a429",
+      "current_sha256": "3eaf863ba73616e0931f3e9ed2819bec6faab092e87288297152a9fa096953e6"
+    },
+    {
+      "path": "anadius-accept-stop-source/stop.hpp",
+      "last_built_sha256": "e38b367b263588382293119fa4bd7e20680644f57d4efeb55807d048db1fda14",
+      "current_sha256": "c4d538812fa3c347221cd8ff208069156486ca008a20bfe9232a704a5e32716c"
+    },
+    {
+      "path": "anadius-accept-stop-source/stop_tests.cpp",
+      "last_built_sha256": "5a48bbf709b6981b26ae0d126939a9ec53c8b1ec3a97ac4b024da4f704084b62",
+      "current_sha256": "f7321b2f8e7b8d4178e02b2095ee2b9efd42d66d86415d5d7ff963610cec7988"
+    },
+    {
+      "path": "anadius-application-graph-source/graph.cpp",
+      "last_built_sha256": "ede4d43b8181ebd1290808665611ed67be549f51b11561afb6eff2fd81b92a1e",
+      "current_sha256": "cf5c2aab9ec4d01b67f8ef818f356a3f6c4bf69aabe0b9e52c0b377cf846274f"
+    },
+    {
+      "path": "anadius-application-graph-source/graph.hpp",
+      "last_built_sha256": "aad916291049c9acd82ae22a9b956f94c1a6a3df3d9a7e55801c9061c1635746",
+      "current_sha256": "923f5873a1f5720eadbcb40640a20103dc1fc4c82a251e1bb0f29d0a059bf803"
+    },
+    {
+      "path": "anadius-application-worker-source/worker.cpp",
+      "last_built_sha256": "1be46fdd4478f5214c37a29f1c0fe098e9dd572bf1076ab387710e192523bbe1",
+      "current_sha256": "d3c5be1377c5d33f2900802d2bc916ab46b1a738b8008d38e3e2dfd334c96500"
+    },
+    {
+      "path": "anadius-application-worker-source/worker.hpp",
+      "last_built_sha256": "74cdfb121625ae484b547ba7224c28f2bb6a507cb7f24be7863512720c9d3c68",
+      "current_sha256": "38d0a0423c9ebb12927ec05cfa6451ed5b33b155f48a3ade9e062df113530820"
+    },
+    {
+      "path": "anadius-owned-server-source/server.cpp",
+      "last_built_sha256": "66dfcc98d896c2f985cdfdf026fa56263fe03ff59c927642dccbc8975bc61dc0",
+      "current_sha256": "cc380dce58ba4a3ac4b39ae4548203ec645322f9178fe9a9fa2061828a75a01d"
+    },
+    {
+      "path": "anadius-owned-server-source/server.hpp",
+      "last_built_sha256": "2b1ae850c2e05deae282e7978255c8fb86f5d7ab527b4d5506e5a5bb8941f634",
+      "current_sha256": "e443560ea43c6da9a578a1f80451ff372860d1b2439d80c44b3ed36236acc25b"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.cpp",
+      "last_built_sha256": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77",
+      "current_sha256": "2653388e3e007376b9e038648b3a3f34d29daa45e604cc7dd11f4455c7664d25"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.hpp",
+      "last_built_sha256": "a9d1da810c6a94d4033cb9aa6973dfd9ccaf5f46e8b21f3173211129bf502ccb",
+      "current_sha256": "d4feb92ad786738bfa22f818ddff9e814576f4b8bcda21cf3934210f112e699e"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown_tests.cpp",
+      "last_built_sha256": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c",
+      "current_sha256": "b23cb1b4f6880051f2a7efe37cb4b4a9ff6f20338f602597a3475494e19de8e8"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "last_built_sha256": "a33af361f391a03658ccdcd9f16ee7474ca636bec48280309bf6f68bd29d26bb",
+      "current_sha256": "13e05cfafd6c9b816416c4f4bcf20c7a28c4987977f724ee6e537e8cc2c15618"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.hpp",
+      "last_built_sha256": "e3e7fef3dea236a09225b19bc4ed6e92ea35172eb62c059fa322cc35a4f6f3a9",
+      "current_sha256": "1da5652ab1e13bc41f49109a312e1bbf3ec4015847fa5b04bdfa79783be4a2f1"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "last_built_sha256": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253",
+      "current_sha256": "d919b4b8b13dde2a751e727b10f12a26c7e9b7db2af3c468d5a374792a69637c"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.cpp",
+      "last_built_sha256": "5ed95fda012839341bcc830935b0d62cb3ce2b5485e2241c66846fe36c93a8c6",
+      "current_sha256": "edbad4b1340b7030b7ca1be617b075c559238e6dfc3eee68cc2980526628b674"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.hpp",
+      "last_built_sha256": "d14d02a1ecb5358646f52b97227c2f09a7b91137d86ad4600ea791b18ecff3a0",
+      "current_sha256": "4a812868a4cca1919508f3f19d1b89006003001b9fd891b743fa1121b950a662"
+    },
+    {
+      "path": "anadius-session-policy-source/policy_tests.cpp",
+      "last_built_sha256": "da28e677ca025af2860acc0ac03e1e5ac0300baca85e0afbc4812c7706d4ccc9",
+      "current_sha256": "d21d42a8cec6dfe404c38a1e002bd08d23961e77a5cd040209cb22107ed4e67a"
+    },
+    {
+      "path": "anadius-socket-move-source/move.cpp",
+      "last_built_sha256": "af73b49ea83cfc61bead66a631dcc65580657281d648b7535329de2598a85a92",
+      "current_sha256": "a190efa2630a4f43de29a432236c34dbe5562029acc9145d1b2f6794a5faf39a"
+    },
+    {
+      "path": "anadius-socket-move-source/move.hpp",
+      "last_built_sha256": "5322308f915fdae733183bcdea2adfe860cee02002686a1744dbd07feb0cfb59",
+      "current_sha256": "252d7cdbe5cbec6767258f1ca1d831e22cd7cc0f65fbc69e1afcf6afc53907c3"
+    },
+    {
+      "path": "anadius-socket-move-source/move_tests.cpp",
+      "last_built_sha256": "fdbdd1d69bef9b179f879d4ca6340dc45a042d2a62f05e60512f289bf81e0807",
+      "current_sha256": "d9cdb93336e715e777b99b4afb43d2ff7e356ea3979107330d040b1a956be16f"
+    },
+    {
+      "path": "anadius-socket-source/closing.cpp",
+      "last_built_sha256": "9906439500ae4e19f64d73248083acbfc2cc22ad02e9099ec14ab741085a7669",
+      "current_sha256": "9a9167bc94b7d3fd3a0b2583a6a1f81e4d9a81e5dccc45a3b5535c24fb38e0dd"
+    },
+    {
+      "path": "anadius-socket-source/closing.hpp",
+      "last_built_sha256": "10a3da0a64117e1d197d5a1eac9818a802d83e1f7ed46b9e25d8f5a0860458d5",
+      "current_sha256": "513c72437d9095f3229ac45ca08fe2877176dcf55e0f8c53e7a950a37ab06ae3"
+    },
+    {
+      "path": "anadius-socket-source/closing_tests.cpp",
+      "last_built_sha256": "0ef67ff44a57ea0a0fdee04d786f74a32455a9a87e8bd74c9daa2a3872b4674c",
+      "current_sha256": "95959f1edf3e53262b67b051856d50ce924c1dca237b343ffb8d250b055c662c"
+    },
+    {
+      "path": "dll-link-gate-source/entry.cpp",
+      "last_built_sha256": "98ad93b7314b5715ed5e19dc775259981947784f19f04167da233dfb659e974d",
+      "current_sha256": "ff45b4e481d3b62a467a1031132e17b5f2e27f1709c4ba9c12820477218ca6b6"
+    },
+    {
+      "path": "dll-link-gate-source/production_image.hpp",
+      "last_built_sha256": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866",
+      "current_sha256": "7a85dca25e3566d876e1b7de909d047ff6b46dedb92035d34341b54e593ce8a9"
+    }
+  ],
+  "restored_source_files": [
+    "anadius-bootstrap-backend-source/backend.cpp",
+    "anadius-bootstrap-backend-source/backend.hpp",
+    "anadius-host-platform-source/assembly.cpp",
+    "anadius-host-platform-source/assembly.hpp"
+  ],
+  "compiled": false,
+  "tests_added": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "DLL_executed": false,
+  "package_rebuilt": false,
+  "original_binary_accessed": false,
+  "original_modified": false,
+  "documentation": {
+    "path": "outputs/dll-link-gate-source/original-loader-profile.md",
+    "sha256": "1d554e0f6d59f67392a598039b5e92ecb0b7e3680e85405d91ce1b495f91cbe2"
+  },
+  "frozen_build_link_receipt_hashes": [
+    {
+      "path": "outputs/source-workspace/source-snapshot.json",
+      "sha256": "6692f545193c79fbdb0aea659a061ae5e3fd2cd2935747b55de3d4e023da2037"
+    },
+    {
+      "path": "outputs/source-workspace/build-record.json",
+      "sha256": "cbb21eb0137b9b43b4330ca0ad234a695e9cbcaa79022e27eeaead355377b394"
+    },
+    {
+      "path": "outputs/source-workspace/full-build-verification.json",
+      "sha256": "7f3e90cc3dfec32201053c493bbd2325df0047e71418af835ffade5deb9773c6"
+    },
+    {
+      "path": "outputs/package-receipt.json",
+      "sha256": "993c03d94fe13a5009dc2e55bfa87b93ed8be5b34b2f2ed6e29b0ea9477e165d"
+    },
+    {
+      "path": "outputs/dll-link-gate-source/current-full-link.json",
+      "sha256": "f43048fdeb233da4ae2fbbb45bc14f446d4658d71d783e88366c7f1219726328"
+    }
+  ]
+}

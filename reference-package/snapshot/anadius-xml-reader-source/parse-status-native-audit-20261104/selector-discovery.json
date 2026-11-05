@@ -1,0 +1,30 @@
+{
+  "provenance": "analyst-inference; readonly PE RTTI/vtable discovery used only to choose fresh Ghidra query selectors",
+  "artifact": "C:/Users/Skysect/Downloads/anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "algorithm": "Find MSVC .?AVXMLDocument/XMLText/XMLElement@tinyxml2@@ TypeDescriptors; resolve x64 CompleteObjectLocator pTypeDescriptor and pSelf RVAs; locate COL VA pointer; read vftable slot +0x80.",
+  "candidates": [
+    {
+      "type": "XMLDocument",
+      "type_descriptor": "0x1800a27e0",
+      "vftable": "0x18007fec8",
+      "parse_deep": "0x180004970"
+    },
+    {
+      "type": "XMLText",
+      "type_descriptor": "0x1800a28c8",
+      "vftable": "0x18007fb28",
+      "parse_deep": "0x180004ea0"
+    },
+    {
+      "type": "XMLElement",
+      "type_descriptor": "0x1800a2838",
+      "vftable": "0x18007fd78",
+      "parse_deep": "0x1800048b0"
+    }
+  ],
+  "limitations": [
+    "Discovery is not a REA Evidence record; behavioral findings rely on the saved fresh function replies.",
+    "No target code was executed and no original bytes were written."
+  ]
+}

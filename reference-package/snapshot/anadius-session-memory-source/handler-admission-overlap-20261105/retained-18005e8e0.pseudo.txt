@@ -1,0 +1,46 @@
+/* 0x18005e8e0 FUN_18005e8e0; Evidence ev_06d02d032bc19f80b5602d3d24b5ce1d432c5a742d8014e2c0f45f08f084deea */
+
+HANDLE FUN_18005e8e0(LPSECURITY_ATTRIBUTES param_1,uint param_2,LPCWSTR param_3,undefined8 param_4,
+                    DWORD param_5,DWORD *param_6)
+
+{
+  DWORD DVar1;
+  ulong *puVar2;
+  undefined8 *lpParameter;
+  HANDLE pvVar3;
+  DWORD local_res18 [2];
+  
+  if (param_3 == (LPCWSTR)0x0) {
+    puVar2 = __doserrno();
+    *puVar2 = 0x16;
+    FUN_18005c954();
+    pvVar3 = (HANDLE)0x0;
+  }
+  else {
+    lpParameter = FUN_18005e87c(param_3,param_4);
+    pvVar3 = (HANDLE)0x0;
+    if (lpParameter != (undefined8 *)0x0) {
+      pvVar3 = CreateThread(param_1,(ulonglong)param_2,FUN_18005e7a8,lpParameter,param_5,local_res18
+                           );
+      if (pvVar3 == (HANDLE)0x0) {
+        DVar1 = GetLastError();
+        FUN_18005d698(DVar1);
+        if ((HANDLE)lpParameter[2] != (HANDLE)0x0) {
+          CloseHandle((HANDLE)lpParameter[2]);
+        }
+        if ((HMODULE)lpParameter[3] != (HMODULE)0x0) {
+          FreeLibrary((HMODULE)lpParameter[3]);
+        }
+        FUN_1800668c0(lpParameter);
+        pvVar3 = (HANDLE)0x0;
+      }
+      else if (param_6 != (DWORD *)0x0) {
+        *param_6 = local_res18[0];
+      }
+    }
+  }
+  return pvVar3;
+}
+
+
+

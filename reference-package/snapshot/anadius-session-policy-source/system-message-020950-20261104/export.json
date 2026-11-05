@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"path\":\"C:\\\\Users\\\\Skysect\\\\Documents\\\\Codex\\\\2026-10-16\\\\mcp\\\\outputs\\\\anadius-session-policy-source\\\\system-message-020950-20261104\\\\rea-evidence-bundle.json\",\"bytes\":31261,\"records\":6,\"unknowns\":0}}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\system-message-020950-20261104\\rea-evidence-bundle.json",
+      "bytes": 31261,
+      "records": 6,
+      "unknowns": 0
+    }
+  }
+}

@@ -1,5 +1,6 @@
 #pragma once
 #include "worker_run.hpp"
+#include "memory_lookup.hpp"
 
 namespace anadius::socket_recovered {
 struct DispatcherQueue {CancelOperation* head=nullptr;CancelOperation* tail=nullptr;};
@@ -21,11 +22,29 @@ struct DispatcherOperationBinding {
     // Rebinding requires replacing this identity together with operation.
     OVERLAPPED* overlapped_identity=operation?&operation->overlapped:nullptr;
 };
+class DispatcherOperationResolver {
+public:
+    virtual ~DispatcherOperationResolver()=default;
+    // Exact live owner-row lookup; output changes only on Found. The returned
+    // packet address is stable across registry growth. The owner must admit
+    // the caller and retain the actual operation through its consumer call;
+    // the descriptor alone supplies neither authority nor a lifetime pin.
+    virtual MemoryLookup lookup_operation(OVERLAPPED*,DispatcherOperationBinding*&)=0;
+    virtual MemoryLookup lookup_operation(CancelOperation*,DispatcherOperationBinding*&)=0;
+};
 struct DispatcherState {
     IocpSchedulerEntry& entry;
     DispatcherService* services_88=nullptr;
     std::uintptr_t timer_enabled_48=0,timer_50=0;
     std::span<DispatcherOperationBinding> operations;
+    // Borrowed owner field survives table growth and by-value state copies.
+    const std::span<DispatcherOperationBinding>* live_operations=nullptr;
+    std::span<DispatcherOperationBinding> current_operations()const noexcept{return live_operations?*live_operations:operations;}
+    // Authoritative when present: Miss/Ambiguous never search legacy spans.
+    // Integrating owners compare exact resolver identity before dispatch.
+    DispatcherOperationResolver* operation_resolver=nullptr;
+    MemoryLookup lookup_operation(OVERLAPPED*,DispatcherOperationBinding*&)const;
+    MemoryLookup lookup_operation(CancelOperation*,DispatcherOperationBinding*&)const;
 };
 struct DispatcherEnvironment {
     std::int32_t& guard_epoch_a38e8;
@@ -61,6 +80,14 @@ public:
     [[noreturn]]virtual void rethrow_029880(std::array<std::uintptr_t,2>&)=0;
     // Operation may end its lifetime here; caller never accesses it afterwards.
     virtual void complete(IocpSchedulerEntry* owner,CancelOperation&,const Error&,std::uint32_t bytes)=0;
+};
+// Selected HOST notification packet, distinct from original0/1/2 keys. A key
+// alone grants no work release: the optional receiver validates its exact
+// outstanding receipt before one pinned work unit is consumed by dispatcher.
+inline constexpr std::uintptr_t prepared_job_completion_key=0x504a4f42U;
+class DispatcherJobNotifications {
+public:virtual ~DispatcherJobNotifications()=default;
+    virtual void returned_job(std::uint32_t receipt)=0;
 };
 std::int64_t dispatcher_timer_due(std::int32_t wait);
 std::uint64_t dispatch_completion_027c10(DispatcherState&,std::uint32_t requested_timeout,

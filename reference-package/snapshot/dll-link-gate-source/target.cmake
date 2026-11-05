@@ -1,5 +1,5 @@
 # Included only when RECOVERED_ENABLE_DLL_LINK_GATE is explicitly enabled.
-# This is a blocked production-integration gate, not a working replacement DLL.
+# Source image integration; a linked artifact still needs runtime validation.
 if(NOT MINGW OR NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   message(FATAL_ERROR "DLL link gate currently requires the recorded LLVM-MinGW Clang toolchain")
 endif()
@@ -12,7 +12,8 @@ add_library(anadius64_reconstruction SHARED
   "${OUT}/anadius-services-factory-source/factory.cpp"
   "${OUT}/anadius-online-factory-source/factory.cpp")
 # Direct source selects the production factory for diagnostic linkage only.
-# It does not define require_loader_* or prove loader-time Resources assembly.
+# entry.cpp defines both loader helpers and the real native image assembly.
+# Building this target does not invoke those factories or execute the DLL.
 target_link_libraries(anadius64_reconstruction PRIVATE anadius_core_partial)
 set_target_properties(anadius64_reconstruction PROPERTIES
   PREFIX "" OUTPUT_NAME "anadius64.reconstruction"
@@ -21,5 +22,5 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
   target_link_options(anadius64_reconstruction PRIVATE -static
     "-Wl,--exclude-all-symbols,-Map,${CMAKE_CURRENT_BINARY_DIR}/anadius64.reconstruction.map")
 endif()
-# Two deliberately undefined require_loader_* functions prevent an export-only
-# image or an unused static archive from being reported as a completed DLL.
+# Real application roots are referenced by the entry implementation; no
+# deliberately undefined loader symbols remain in the source strategy.

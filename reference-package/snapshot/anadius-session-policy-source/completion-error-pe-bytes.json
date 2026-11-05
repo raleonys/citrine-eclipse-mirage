@@ -1,0 +1,27 @@
+{
+  "authority": "Independent read-only PE file mapping, separate from fresh Ghidra Evidence",
+  "path": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "span_matches_rea": true,
+  "span_file_offset": "0x82dc8",
+  "items": [
+    {
+      "address": "0x1800845c8",
+      "file_offset": "0x82dc8",
+      "bytes_hex": "52656164206572726f723a2000",
+      "value": "Read error: "
+    },
+    {
+      "address": "0x1800845d8",
+      "file_offset": "0x82dd8",
+      "bytes_hex": "5772697465206572726f723a2000",
+      "value": "Write error: "
+    },
+    {
+      "address": "0x1800845f8",
+      "file_offset": "0x82df8",
+      "bytes_hex": "457863657074696f6e3a2000",
+      "value": "Exception: "
+    }
+  ]
+}

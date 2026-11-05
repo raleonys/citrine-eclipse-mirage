@@ -1,0 +1,306 @@
+#include "graph.hpp"
+#include "../anadius-thread-domain-source/domain_test_fixture.hpp"
+#include "../anadius-socket-source/worker_run_native.hpp"
+#include "../anadius-socket-source/message_core_bridge.hpp"
+#include "../anadius-config-source/configuration.hpp"
+#include <algorithm>
+#include <bit>
+#include <iostream>
+#include <optional>
+#include <sstream>
+#include <thread>
+namespace {
+namespace g=anadius::application_graph;namespace s=anadius::socket_recovered;namespace sp=anadius::session_profile;namespace rt=anadius::server_runtime;namespace o=anadius::owned_server;namespace cp=anadius::session_policy;namespace m=anadius::messages_recovered;
+unsigned checks=0;
+void require(bool v,const char* text){++checks;if(!v)throw std::runtime_error(text);}
+[[noreturn]]void unused(std::source_location at=std::source_location::current()){throw std::logic_error(std::string("Unselected graph core lower effect: ")+at.function_name());}
+template<class E=std::exception,class F>void rejects(F f,const char* text){bool seen=false;try{f();}catch(const E&){seen=true;}require(seen,text);}
+void* WINAPI heap_allocate(HANDLE heap,DWORD flags,SIZE_T bytes){
+ auto& state=*b6_core_test::observed;++state.allocations;if(heap!=::GetProcessHeap()||(flags!=0&&flags!=HEAP_ZERO_MEMORY))unused();
+ auto* raw=::HeapAlloc(heap,flags,bytes);const auto error=::GetLastError();if(raw)state.blocks.emplace(raw,bytes);::SetLastError(error);return raw;
+}
+struct NativeDomain {
+ b6_core_test::Observation memory;b6_core_test::RuntimeState runtime;std::shared_ptr<anadius::thread_domain::DomainStorage> root;
+ NativeDomain(){if(b6_core_test::observed||b6_core_test::runtime_state)unused();b6_core_test::observed=&memory;b6_core_test::runtime_state=&runtime;
+  auto apis=b6_core_test::apis();apis.heap.heap_alloc=heap_allocate;root=anadius::thread_domain::DomainStorage::create(b6_core_test::seed(),apis);if(!root->initialize())unused();}
+ ~NativeDomain(){if(root){try{if(!root->close())std::terminate();}catch(...){std::terminate();}root.reset();}b6_core_test::observed=nullptr;b6_core_test::runtime_state=nullptr;}
+};
+struct State {
+ unsigned information_scopes=0,information_clears=0;
+ unsigned licensing_scopes=0,licensing_clears=0,licensing_calls=0;bool licensing_mode=false;
+ unsigned content_scopes=0,content_clears=0;
+ bool avatar_mode=false;unsigned avatar_calls=0;anadius::configuration::Path avatar_path;std::string avatar_owner;std::int32_t avatar_size=0;
+ unsigned starts=0,cleanups=0,gate_inits=0,gate_deletes=0,ports_created=0,ports_closed=0,factory_calls=0,moves=0,gets=0,posts=0,wait_scopes=0,initial_waits=0,executor_cleanups=0,cancellations=0;
+ unsigned external_calls=0;bool ipv6=false, encrypted=false, terminal=false,shutdown=false,worker_done=false,queue_drained=false;
+ std::uint8_t* ready=nullptr;std::uintptr_t port=0;unsigned information_calls=0,content_calls=0;unsigned sdk_accepts=0,received=0,responses=0,sends=0,accept_completions=0,time_calls=0,prepares=0;
+ std::vector<std::string> order, requests,response_logs,event_logs;std::vector<s::Socket> closed;std::vector<std::byte> bound;
+ std::string environment_key,environment_value,wire,response_wire,greeting;std::size_t cursor=0;std::vector<OVERLAPPED*> accept_packets;
+ std::optional<o::ServerView> view_value;o::ServerView* view=nullptr;sp::Application* application=nullptr;sp::SessionToken token{};g::Graph* graph=nullptr;
+ std::shared_ptr<anadius::configuration::State> configuration=std::make_shared<anadius::configuration::State>();std::uint8_t online=0;std::int32_t saved=0;anadius::configuration::Path achievement_file=u"synthetic-memory-only";
+ s::SessionCipher client;bool events_queued=false,updated=false;std::function<void()> prepare_hook,log_hook,after_hook,external_hook,information_hook,content_hook,time_hook;bool attest=true;
+};
+State* running=nullptr;
+int WSAAPI startup(WORD version,LPWSADATA data){auto& st=*running;require(version==MAKEWORD(2,2),"Owned context requests WSA2.2");++st.starts;st.order.push_back("startup");return ::WSAStartup(version,data);}
+int WSAAPI cleanup(){auto& st=*running;++st.cleanups;st.order.push_back("cleanup");return ::WSACleanup();}
+int WSAAPI local_name(SOCKET socket,sockaddr* output,int* bytes){
+ require(socket==200&&*bytes>=28,"Local endpoint uses actual owned acceptor token and initialized SDK buffer");auto& st=*running;std::memset(output,0,*bytes);
+ output->sa_family=st.ipv6?23:2;reinterpret_cast<unsigned char*>(output)[2]=0x30;reinterpret_cast<unsigned char*>(output)[3]=0x39;*bytes=28;st.order.push_back("local");return 0;
+}
+BOOL WINAPI environment(LPCSTR key,LPCSTR value){auto& st=*running;require(st.ready&&!*st.ready,"Bound port environment publication precedes source readiness flag");st.environment_key=key;st.environment_value=value;st.order.push_back("environment");return FALSE;}
+BOOL WINAPI gate_initialize(LPCRITICAL_SECTION section,DWORD spin){++running->gate_inits;return ::InitializeCriticalSectionAndSpinCount(section,spin);}
+VOID WINAPI gate_delete(LPCRITICAL_SECTION section){++running->gate_deletes;running->order.push_back("delete-gate");::DeleteCriticalSection(section);}
+HANDLE WINAPI create_port(HANDLE file,HANDLE previous,ULONG_PTR key,DWORD threads){
+ require(file==INVALID_HANDLE_VALUE&&!previous&&!key&&threads==0xffffffffU,"Actual024990 forwards observed selected IOCP construction arguments");
+ auto* port=::CreateIoCompletionPort(file,previous,key,threads);if(port){++running->ports_created;running->port=reinterpret_cast<std::uintptr_t>(port);}return port;
+}
+BOOL WINAPI close_port(HANDLE port){require(reinterpret_cast<std::uintptr_t>(port)==running->port,"Owned teardown closes the same actual kernel IOCP handle");++running->ports_closed;running->order.push_back("close-port");return ::CloseHandle(port);}
+BOOL PASCAL accept_sdk(SOCKET listener,SOCKET accepted,PVOID buffer,DWORD receive,DWORD local,DWORD remote,LPDWORD bytes,LPOVERLAPPED ov){auto& st=*running;require(listener==200&&accepted==201+st.sdk_accepts&&buffer&&receive==0&&local==0x90&&remote==0x90,"Injected AcceptEx receives exact source endpoints and consecutive synthetic accepted sockets");st.accept_packets.push_back(ov);if(++st.sdk_accepts==1)require(::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(st.port),0,0,ov)!=0,"Own IOCP publishes first observed accept packet");*bytes=999;::WSASetLastError(997);return FALSE;}
+VOID PASCAL accept_addresses(PVOID buffer,DWORD received,DWORD local_size,DWORD remote_size,sockaddr** local,int* local_bytes,sockaddr** remote,int* remote_bytes){require(!received&&local_size==0x90&&remote_size==0x90,"Native addresses use exact 90+90 source spans");auto* bytes=static_cast<std::byte*>(buffer);std::fill_n(bytes,288,std::byte{});bytes[0]=std::byte{2};bytes[144]=std::byte{2};*local=reinterpret_cast<sockaddr*>(bytes);*remote=reinterpret_cast<sockaddr*>(bytes+144);*local_bytes=*remote_bytes=16;}
+int WSAAPI update_context(SOCKET socket,int level,int option,const char* value,int length){s::Socket listener=0;std::memcpy(&listener,value,sizeof(listener));require(socket==201&&level==65535&&option==0x700b&&length==8&&listener==200,"Native completion updates accepted socket with exact captured listener option");return 0;}
+int WINAPI convert_sdk(UINT page,DWORD flags,LPCCH text,int bytes,LPWSTR output,int capacity){require(page==0&&!flags&&bytes==-1&&capacity==10&&std::string_view(text)=="127.0.0.1","Policy forwards exact loopback conversion");std::memcpy(output,L"127.0.0.1",10*sizeof(wchar_t));return 10;}
+INT WSAAPI parse_sdk(LPWSTR,INT family,LPWSAPROTOCOL_INFOW info,LPSOCKADDR address,LPINT size){require(!info&&*size==128,"Policy address parser initializes exact SDK capacity");if(family==23){::WSASetLastError(10022);return SOCKET_ERROR;}require(family==2,"Selected synthetic parser family2");std::memset(address,0,*size);address->sa_family=2;*size=16;return 0;}
+int WSAAPI sync_send_sdk(SOCKET socket,LPWSABUF b,DWORD count,LPDWORD out,DWORD flags,LPWSAOVERLAPPED ov,LPWSAOVERLAPPED_COMPLETION_ROUTINE callback){require(socket==201&&count==1&&b&&out&&!*out&&!flags&&!ov&&!callback,"Synchronous native greeting uses exact injected one-buffer signature");running->greeting.append(b->buf,b->len);*out=b->len;return 0;}
+int WSAAPI select_sdk(int,fd_set*,fd_set*,fd_set*,const timeval*){unused();}
+struct Sockets:s::AcceptorApi {
+ State& state;explicit Sockets(State& s):state(s){}
+ s::Socket create_socket(std::int32_t family)override{require(family==(state.ipv6?23:2),"Actual020e20 opens selected family through synthetic socket SDK boundary");state.order.push_back("socket");return 200;}
+ std::uintptr_t attach_completion_port(s::Socket socket,std::uintptr_t port)override{require((socket==200||socket==201||socket==202)&&port==state.port,"Actual acceptor/accepted transfer attaches selected socket to same owned kernel completion port");return port;}
+ std::uint32_t get_win32_error()override{return ::GetLastError();}
+ std::int32_t set_option(s::Socket socket,std::int32_t level,std::int32_t option,std::int32_t value)override{
+  if(level==41){require(state.ipv6&&socket==200&&option==27&&value==0,"Actual IPv6 acceptor clears IPV6_V6ONLY before IOCP attachment");return 0;}
+  require(socket==200&&level==65535&&option==4&&value==1,"Acceptor enables source reuse-address option");return 0;
+ }
+ std::int32_t bind_socket(s::Socket socket,std::span<const std::byte> address,std::int32_t size)override{require(socket==200&&size==(state.ipv6?28:16),"Actual bind lower receives family-specific initialized sockaddr length");state.bound.assign(address.begin(),address.begin()+size);return 0;}
+ std::int32_t listen_socket(s::Socket socket,std::int32_t backlog)override{require(socket==200&&backlog==INT_MAX,"Actual listen uses observed INT_MAX backlog");return 0;}
+ std::int32_t close_socket(s::Socket socket)override{state.closed.push_back(socket);state.order.push_back("socket-close");return 0;}
+ std::int32_t set_nonblocking(s::Socket,std::uint32_t,std::uint32_t&)override{unused();}
+};
+struct Cancel:s::CancellationEffects {State& state;explicit Cancel(State& s):state(s){}void cancel_026aa0(s::CancellationEngine&,s::Socket,const s::Error&)override{++state.cancellations;unused();}};
+struct Executor:s::RegistryExecutorEffects {State& state;explicit Executor(State& s):state(s){}void executor_cleanup(s::SocketObject&,std::uintptr_t table)override{require(table!=0,"Socket source destructor supplies selected executor identity");++state.executor_cleanups;}};
+struct Dispatcher:s::DispatcherApi {
+ State& state;explicit Dispatcher(State& s):state(s){}
+ void set_last_error(std::uint32_t n)override{::SetLastError(n);}std::uint32_t get_last_error()override{return ::GetLastError();}
+ std::int32_t get(std::uintptr_t port,std::uint32_t& bytes,std::uintptr_t& key,OVERLAPPED*& operation,std::uint32_t timeout)override{
+  require(port==state.port,"Every physical wait belongs to own concrete Runtime IOCP");
+  if(state.view){
+  bool released=false;try{(void)state.view->memory.buffer_context();}catch(const std::logic_error&){released=true;}
+  require(released,"AdmittedDispatcherApi releases root admission before physical SDK wait");
+  {auto independent=state.view->memory.enter();++state.wait_scopes;}
+  }else ++state.initial_waits;
+  ++state.gets;DWORD transferred=0;ULONG_PTR token=0;LPOVERLAPPED raw=nullptr;
+  auto result=::GetQueuedCompletionStatus(reinterpret_cast<HANDLE>(port),&transferred,&token,&raw,timeout);
+  bytes=transferred;key=token;operation=raw;return result;
+ }
+ std::int32_t post(std::uintptr_t port,std::uint32_t bytes,std::uintptr_t key,OVERLAPPED* operation)override{++state.posts;return ::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(port),bytes,key,operation);}
+ std::int32_t set_timer(std::uintptr_t,LARGE_INTEGER&,std::int32_t,PTIMERAPCROUTINE,void*,std::int32_t)override{unused();}
+};
+struct WorkerApi:s::WorkerRunApi {
+ std::uint32_t index;s::DispatcherApi& admitted;s::NativeWorkerRunApi native;
+ WorkerApi(std::uint32_t i,s::DispatcherApi& a):index(i),admitted(a){}
+ void* tls_get(std::uint32_t i)override{if(i!=index)unused();return native.tls_get(i);}std::int32_t tls_set(std::uint32_t i,void* p)override{if(i!=index)unused();return native.tls_set(i,p);}
+ std::int32_t post_stop(std::uintptr_t p,std::uint32_t bytes,std::uintptr_t key,OVERLAPPED* raw)override{return admitted.post(p,bytes,key,raw);}
+ std::uint32_t get_last_error()override{return admitted.get_last_error();}
+};
+struct Information final:anadius::handlers_recovered::Effects,anadius::content_handlers_recovered::CheckedCalls {
+    anadius::content_handlers_recovered::CallCheckpoint checkpoint{};
+    void bind_content_checkpoint(anadius::content_handlers_recovered::CallCheckpoint c)override{require(!checkpoint.check&&c.context&&c.check,"Graph lends one synchronous Information checkpoint");c.check(c.context);checkpoint=c;++running->information_scopes;}
+    void clear_content_checkpoint()noexcept override{checkpoint={};++running->information_clears;}
+    void log_profile_name_084f48(std::string_view text)override{require(checkpoint.check!=nullptr,"Information lower receives Graph checkpoint");++running->information_calls;if(running->information_hook)running->information_hook();checkpoint.check(checkpoint.context);require(text=="updated-user","Narrow supplied information effect receives actual updated profile name");}
+    std::string current_time_041b60()override{require(checkpoint.check!=nullptr,"System time lower receives Graph checkpoint");checkpoint.check(checkpoint.context);return "2000-01-01T00:00:00";}
+};
+struct ContentEffects final:anadius::content_handlers_recovered::Effects,anadius::content_handlers_recovered::AvatarRequest,anadius::content_handlers_recovered::CheckedCalls {
+    anadius::content_handlers_recovered::CallCheckpoint checkpoint{};
+    void bind_content_checkpoint(anadius::content_handlers_recovered::CallCheckpoint c)override{require(!checkpoint.check&&c.context&&c.check,"Graph lends one synchronous content checkpoint");c.check(c.context);checkpoint=c;++running->content_scopes;}
+    void clear_content_checkpoint()noexcept override{checkpoint={};++running->content_clears;}
+    std::int32_t atoi_05ee08(std::string_view text)override{if(!running->avatar_mode)unused();require(text=="416","Actual avatar request width reaches selected atoi boundary");return 416;}
+    void unknown_entitlement_field(std::string_view)override{++running->content_calls;if(running->content_hook)running->content_hook();else unused();if(checkpoint.check)checkpoint.check(checkpoint.context);}
+    std::string utc_time_041b60(std::uint64_t&)override{unused();}
+    std::unique_ptr<anadius::content_handlers_recovered::DocumentWriter> printer_0019b0()override{unused();}
+    void write_xml_03c1d0(const anadius::content_handlers_recovered::Path&,std::string_view)override{unused();}
+    void save_steam_01f9a0(const anadius::content_handlers_recovered::AchievementMap&)override{unused();}
+    anadius::content_handlers_recovered::Path filesystem_widen_006d70(std::string_view text)override{if(!running->avatar_mode)unused();return {text.begin(),text.end()};}
+    anadius::content_handlers_recovered::Path path_append_016b50(const anadius::content_handlers_recovered::Path& a,const anadius::content_handlers_recovered::Path& b)override{if(!running->avatar_mode)unused();return a+u"/"+b;}
+    bool online_avatar_virtual_28(const anadius::content_handlers_recovered::Path&)override{unused();}
+    bool request_online_avatar(const anadius::content_handlers_recovered::Path& path,const char* owner,std::int32_t size)override{if(!running->avatar_mode)unused();require(checkpoint.check!=nullptr,"Complete avatar lower receives live Graph caller checkpoint");checkpoint.check(checkpoint.context);++running->avatar_calls;running->avatar_path=path;running->avatar_owner=owner;running->avatar_size=size;return true;}
+    bool copy_overwrite_048d20(const anadius::content_handlers_recovered::Path&,const anadius::content_handlers_recovered::Path&)override{unused();}
+    std::string path_to_utf8_031ca0(const anadius::content_handlers_recovered::Path& path)override{if(!running->avatar_mode)unused();return {path.begin(),path.end()};}
+    void log_saved_size_085530(std::int32_t)override{unused();}
+};
+struct LicenseBoundary final:anadius::dispatch_recovered::LicenseHandlers,anadius::content_handlers_recovered::CheckedCalls {
+    anadius::content_handlers_recovered::CallCheckpoint checkpoint{};
+    void bind_content_checkpoint(anadius::content_handlers_recovered::CallCheckpoint c)override{require(!checkpoint.check&&c.context&&c.check,"Graph lends one synchronous licensing checkpoint");c.check(c.context);checkpoint=c;++running->licensing_scopes;}
+    void clear_content_checkpoint()noexcept override{checkpoint={};++running->licensing_clears;}
+    unsigned calls=0;
+    bool respond(anadius::handlers_recovered::Xml& xml,const char* name){++calls;if(!running->licensing_mode)unused();require(checkpoint.check!=nullptr,"Licensing handler receives active Graph checkpoint");checkpoint.check(checkpoint.context);++running->licensing_calls;xml.open_004080(name,true);xml.attribute_005560("Source","synthetic");xml.close_virtual_48(true);checkpoint.check(checkpoint.context);return true;}
+    bool auth_code_02e3b0(const m::XmlNode&,anadius::handlers_recovered::Xml& xml)override{return respond(xml,"GetAuthCodeResponse");}
+    bool request_license_0320c0(const m::XmlNode&,anadius::handlers_recovered::Xml& xml)override{return respond(xml,"RequestLicenseResponse");}
+    bool invalidate_license_030c50(const m::XmlNode&,anadius::handlers_recovered::Xml& xml)override{return respond(xml,"InvalidateLicenseResponse");}
+};
+
+struct Time:anadius::crypto_recovered::TimeSource {State* state=nullptr;std::int64_t unix_seconds_05eeb8()override{if(state){++state->time_calls;if(state->time_hook)state->time_hook();}return 123456789;}};
+SOCKET WSAAPI open_socket(int family,int type,int protocol,LPWSAPROTOCOL_INFOW info,GROUP group,DWORD flags){require(family==2&&type==1&&protocol==6&&!info&&!group&&flags==1,"Actual socket factory SDK forwards retained family/type/protocol/overlapped flags");return 200+ ++running->factory_calls;}
+BOOL WINAPI cancel_sdk(HANDLE,LPOVERLAPPED){unused();}
+void move_executor(void* p,s::ExecutorFields& out,s::ExecutorFields& source,std::uintptr_t table){require(table==0x180084928ULL,"Native factory uses retained executor table");++static_cast<State*>(p)->moves;out.context=source.context;out.zero_74=source.zero_74;out.self_reference_80=true;}
+int WSAAPI receive_sdk(SOCKET socket,LPWSABUF b,DWORD count,LPDWORD out,LPDWORD flags,LPWSAOVERLAPPED ov,LPWSAOVERLAPPED_COMPLETION_ROUTINE cb){auto& st=*running;require(socket==201&&b&&count==1&&out&&!*out&&flags&&!*flags&&ov&&!cb&&st.application,"Native receive uses actual owner socket and exact injected SDK pointers");auto n=std::min<std::size_t>(b->len,st.wire.size()-st.cursor);if(n)std::memcpy(b->buf,st.wire.data()+st.cursor,n);st.cursor+=n;auto ports=st.application->ports();require(ports.completion.post(st.port,static_cast<DWORD>(n),0,ov)!=0,"Injected receive publishes observed bytes/EOF to own IOCP");::WSASetLastError(997);return SOCKET_ERROR;}
+int WSAAPI send_sdk(SOCKET socket,LPWSABUF b,DWORD count,LPDWORD out,DWORD flags,LPWSAOVERLAPPED ov,LPWSAOVERLAPPED_COMPLETION_ROUTINE cb){auto& st=*running;require(socket==201&&b&&count==1&&out&&!*out&&!flags&&ov&&!cb,"Native send uses exact injected async SDK boundary");st.response_wire.append(b->buf,b->len);++st.sends;require(st.application->ports().completion.post(st.port,b->len,0,ov)!=0,"Observed SDK send completion posted to own IOCP");::WSASetLastError(997);return SOCKET_ERROR;}
+
+g::Options options(const std::shared_ptr<State>& st){
+ g::Options opt;opt.state={st,st->configuration.get(),&st->online,&st->saved,&st->achievement_file};opt.policy.stream=anadius::shared_log::make_stream(std::make_shared<std::stringbuf>());opt.policy.imports={::WSASetLastError,::WSAGetLastError,convert_sdk,parse_sdk,sync_send_sdk,select_sdk};opt.policy.lifecycle.lifetime=st;
+ opt.policy.lifecycle.select_owner=[st](sp::Application& app,s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& error,std::uint32_t){
+  st->application=&app;auto ports=app.ports();if(!st->view_value){st->view_value.emplace(ports.view);st->view=&*st->view_value;}
+  if(ports.accept.contains(&op)){++st->accept_completions;if(st->shutdown){require(error.value==995&&app.snapshot().live_sessions==0,"Terminal observed accept995 arrives only after actual session reaping");st->terminal=true;return static_cast<s::IocpSchedulerEntry*>(nullptr);}}
+  return owner;
+ };
+ opt.policy.lifecycle.after=[st](sp::Application& app){auto ports=app.ports();if(st->after_hook)st->after_hook();if(st->terminal){st->terminal=false;return;}
+  if(!st->shutdown&&app.snapshot().live_sessions==0&&st->responses==st->requests.size()){
+   st->shutdown=true;const auto h=ports.accept.handle_for(st->accept_packets.back());ports.accept.note_cancel_requested(h);auto errors=st->graph->policy()->errors();bool found=false;
+   for(auto& b:ports.accept.dispatcher_bindings())if(b.overlapped_identity==st->accept_packets.back()){found=true;s::publish_send_status_028b50(ports.view.scheduler,*b.operation,b,995,0,ports.completion,*errors);}require(found,"Terminal cancellation selects exact live owned accept binding");
+  }
+ };
+ opt.policy.lifecycle.returned=[st](sp::Application& app,std::uint64_t n,const s::WorkerRunResult& r){require(n>0&&r.error&&r.error->value==0&&!app.snapshot().live_sessions&&!app.snapshot().live_jobs,"Actual native worker returns successful and every Profile owner/job has retired");st->worker_done=true;};
+ opt.policy.lifecycle.external_drained=[st](o::ServerView view,sp::Application& app){++st->external_calls;bool outside=false;try{(void)view.memory.buffer_context();}catch(const std::logic_error&){outside=true;}require(outside&&st->worker_done&&!app.snapshot().live_sessions&&!app.snapshot().live_jobs,"External proof is requested outside Root after observed native worker/session/job drain");if(st->external_hook)st->external_hook();if(!st->attest)return false;
+  unsigned relays=0;for(;;){DWORD bytes=0;ULONG_PTR key=0;OVERLAPPED* ov=nullptr;const auto got=::GetQueuedCompletionStatus(reinterpret_cast<HANDLE>(st->port),&bytes,&key,&ov,0);if(!got){require(::GetLastError()==WAIT_TIMEOUT&&!ov,"External own IOCP proof observes timeout after stop relay");break;}require(!bytes&&!key&&!ov,"External drain accepts only actual stop relay after final operation");++relays;}require(relays==(st->external_calls==1?1U:0U),"Each genuine external proof independently observes its remaining actual stop relay or empty timeout");st->queue_drained=true;return true;};
+ opt.information=std::make_shared<Information>();opt.content=std::make_shared<ContentEffects>();opt.licensing=std::make_shared<LicenseBoundary>();auto time=std::make_shared<Time>();time->state=st.get();opt.time=time;
+ opt.profile.sessions=2;opt.profile.jobs_capacity=4;opt.profile.headers=128;opt.profile.environment_capacity=512;opt.profile.receive={receive_sdk,::WSAGetLastError};opt.profile.send={send_sdk,::WSAGetLastError};opt.version="synthetic-graph-1";opt.show_lsx=1;opt.event_capacity=16;
+ opt.prepare_session=[st](sp::SessionView view){++st->prepares;st->token=view.token;require(view.owner.identity()!=0&&view.owner.socket_state.socket==201,"Concrete graph Logic receives actual factory owner and source socket");require(st->graph->retained(view.token)==false,"New session has no retained native prefix before first invocation");if(st->encrypted){view.owner.cipher.set_fixed_key_084c98();view.owner.cipher.encrypted_c4=1;st->client.set_fixed_key_084c98();}
+  for(const auto& request:st->requests){auto text=request;if(st->encrypted){require(st->client.encrypt_042610(text),"Independent client encrypts source request");m::hex_encode_03d190(text);}st->wire+=text;st->wire.push_back(0);}if(st->prepare_hook)st->prepare_hook();
+ };
+ opt.observe_log=[st](sp::SessionView view,g::Log kind,std::string_view a,std::string_view){require(view.token==st->token&&st->graph->retained(view.token),"Graph observer sees exact matched token and live Native033d70 prefix");auto snap=st->graph->snapshot();require(snap.live_logics==1&&snap.parent_bound,"Log metadata pins one real bound NativeLogic");
+  if(kind==g::Log::Received)++st->received;else if(kind==g::Log::Response){++st->responses;st->response_logs.emplace_back(a);}else if(kind==g::Log::Event){require(snap.event_locked&&snap.queued_events>0,"Native event observer executes while exact source queue front and mutex remain live");st->event_logs.emplace_back(a);}else unused();if(st->log_hook)st->log_hook();
+ };
+ return opt;
+}
+struct Fixture {
+ NativeDomain native;std::shared_ptr<State> state=std::make_shared<State>();std::shared_ptr<g::Graph> graph;anadius::bootstrap_backend::Resources resources;std::uint32_t tls=TLS_OUT_OF_INDEXES;std::uint8_t ready=0;
+ explicit Fixture(bool encrypted=false){running=state.get();state->ready=&ready;state->encrypted=encrypted;tls=::TlsAlloc();require(tls!=TLS_OUT_OF_INDEXES,"Own graph fixture allocates real source worker TLS index");}
+ void create(std::function<void(g::Options&)> customize={}){auto opt=options(state);if(customize)customize(opt);graph=g::Graph::create(std::move(opt));state->graph=graph.get();}
+ std::pair<o::Dependencies,rt::Dependencies> deps(){auto sockets=std::make_shared<Sockets>(*state);auto dispatcher=std::make_shared<Dispatcher>(*state);auto worker=std::make_shared<WorkerApi>(tls,*dispatcher);o::Dependencies d;d.state_lifetime=state;d.sockets=sockets;d.dispatcher=dispatcher;s::IocpConstructorImports imports;imports.create_completion_port=create_port;imports.close_handle=close_port;d.iocp=std::make_shared<s::NativeIocpConstructorApi>(imports);d.gates=std::make_shared<s::NativeServiceGateApi>(s::ServiceGateImports{gate_initialize,::GetLastError});d.cancellation=std::make_shared<Cancel>(*state);d.executor=std::make_shared<Executor>(*state);d.kernel={startup,cleanup,local_name,environment,gate_delete};
+  rt::Dependencies r;r.state_lifetime=state;r.sockets=sockets;r.dispatcher=dispatcher;r.worker=worker;r.accept=std::make_shared<s::NativeAsyncAcceptApi>(s::AsyncAcceptImports{accept_sdk,accept_addresses,update_context,::WSAGetLastError});r.factory=std::make_shared<s::NativeSocketFactoryApi>(s::SocketFactoryImports{open_socket});r.cancel=std::make_shared<s::NativeRetryCancelApi>(cancel_sdk);r.tls_index=&tls;r.executor={state.get(),move_executor};r.capacity=32;return{std::move(d),std::move(r)};
+ }
+ void install(){auto [d,r]=deps();graph->install_server(resources,native.root,std::move(d),std::move(r));}
+ void initialize(){resources.server->initialize_context_0241b0();auto parsed=resources.server->parse_address_028690(2,"127.0.0.1");require(parsed.error.value==0,"Graph Policy concrete NativeApi parses injected loopback");anadius::server_recovered::Endpoint endpoint{2,0,parsed.bytes,parsed.scope_id};resources.server->construct_acceptor_020e20(endpoint,true,INT_MAX);resources.server->initialize_pending_socket_0211b0();resources.server->async_accept_021b00();}
+ void run(){auto result=resources.server->run_context_0298b0();require(result.value==0,"Concrete graph executes actual source worker with successful result");}
+ void close(){resources.server->destroy_pending_socket_024db0();resources.server->destroy_acceptor_024db0();resources.server->destroy_context();state->application=nullptr;state->view=nullptr;state->view_value.reset();}
+ ~Fixture(){resources.server.reset();graph.reset();state.reset();if(tls!=TLS_OUT_OF_INDEXES&&!::TlsFree(tls))std::terminate();running=nullptr;}
+};
+std::string request(std::string_view node,unsigned id=1){return "<LSX><Request id=\"core"+std::to_string(id)+"\" recipient=\"EbisuSDK\">"+std::string(node)+"</Request></LSX>";}
+struct AchievementPlatform final:anadius::execution_recovered::Platform {
+ anadius::execution_recovered::MutexState& root;unsigned threads=0,acquires=0,releases=0;std::uintptr_t* acquired=nullptr;std::uintptr_t* released=nullptr;
+ explicit AchievementPlatform(anadius::execution_recovered::MutexState& state):root(state){}
+ std::uint32_t current_thread_id()override{++threads;return ::GetCurrentThreadId();}
+ void acquire_srw_exclusive(std::uintptr_t& lock)override{require(&lock==&root.srw_10&&root.type==2&&root.owner_48==0xffffffffU&&!root.count_4c,"Achievement acquire receives exact shared root SRW in initialized idle type2 state");acquired=&lock;++acquires;::AcquireSRWLockExclusive(reinterpret_cast<PSRWLOCK>(&lock));}
+ void release_srw_exclusive(std::uintptr_t& lock)override{require(&lock==&root.srw_10&&acquires==releases+1&&root.type==2&&root.owner_48==0xffffffffU&&!root.count_4c,"Recovered achievement unlock clears root owner/count before releasing SAME SRW");released=&lock;++releases;::ReleaseSRWLockExclusive(reinterpret_cast<PSRWLOCK>(&lock));}
+ std::int64_t query_performance_frequency()override{unused();}std::int64_t query_performance_counter()override{unused();}void sleep_milliseconds(std::uint32_t)override{unused();}[[noreturn]]void raise_thread_error_04a648(int)override{unused();}
+};
+void shared_achievement_mutex(){
+ namespace e=anadius::execution_recovered;e::MutexState root{};e::initialize_mutex_04a698(root,2);root.reserved_04=0x42842842;root.reserved_18[0]=std::byte{0x5a};AchievementPlatform platform(root);
+ auto state=std::make_shared<State>();auto fresh=g::Graph::create(options(state));
+ auto invalid=[&](auto change){auto bad=root;change(bad);rejects<std::invalid_argument>([&]{fresh->bind_achievement_mutex(bad,platform);},"Noninitialized/nonidle shared achievement mutex rejects before binding");require(fresh->snapshot().phase==g::Phase::Fresh&&!platform.threads&&!platform.acquires&&!platform.releases,"Rejected bind remains Fresh and invokes no Platform effect");};
+ invalid([](auto& m){m.type=1;});invalid([](auto& m){m.owner_48=::GetCurrentThreadId();});invalid([](auto& m){m.count_4c=1;});invalid([](auto& m){m.srw_10=1;});invalid([](auto& m){m.storage_08=1;});
+ fresh->bind_achievement_mutex(root,platform);rejects<std::logic_error>([&]{fresh->bind_achievement_mutex(root,platform);},"Shared achievement binding rejects same-root repeat while Fresh");
+ require(!platform.threads&&!platform.acquires&&!platform.releases&&!state->time_calls,"Successful one-shot Fresh binding is passive");fresh.reset();state.reset();
+ {
+  auto* late=new Fixture;late->create();late->install();rejects<std::logic_error>([&]{late->graph->bind_achievement_mutex(root,platform);},"Previously unbound Installed graph rejects late achievement mutex binding");require(!platform.threads&&!platform.acquires&&!platform.releases&&!late->state->starts,"Late rejection precedes Platform or server initialization effects");late->graph->close_unstarted();delete late;
+ }
+ auto* f=new Fixture;f->state->requests={request("<QueryAchievements All=\"true\"/>")};auto& config=*f->state->configuration;config.achievements_set="root-set";config.achievements.emplace("root-only",anadius::configuration::Achievement{5,0,2,"2000-01-01T00:00:00","shared achievement",{},0});
+ f->create();f->graph->bind_achievement_mutex(root,platform);f->install();f->initialize();f->run();f->close();
+ require(f->state->responses==1&&f->state->response_logs[0].find("AchievementSets")!=std::string::npos&&f->state->response_logs[0].find("Name=\"root-set\"")!=std::string::npos&&f->state->response_logs[0].find("Id=\"root-only\"")!=std::string::npos,"Actual Graph/XML/Router QueryAchievements reads the authoritative shared achievement map");
+ require(platform.threads==1&&platform.acquires==1&&platform.releases==1&&platform.acquired==&root.srw_10&&platform.released==&root.srw_10,"Actual QueryAchievements uses recovered lock/unlock with exact caller-owned root SRW identity once");
+ require(root.type==2&&root.owner_48==0xffffffffU&&!root.count_4c&&!root.srw_10&&!root.storage_08&&root.reserved_04==0x42842842&&root.reserved_18[0]==std::byte{0x5a},"Successful handler restores idle owner/count/SRW and preserves unrelated shared mutex bytes");
+ require(f->graph->snapshot().phase==g::Phase::Closed&&!f->native.root->provider_leases(),"Shared-lock query follows existing observed source drain and normal graph closure");delete f;
+ // Opaque/XML exception cleanup is intentionally not claimed: the existing
+ // poisoned source prefix can deny Guard destruction and retain/terminate.
+}
+void complete_avatar_pipeline(){
+ auto* f=new Fixture;f->state->avatar_mode=true;f->state->online=1;f->state->configuration->user_id="local";f->state->configuration->user_directory=u"cache";
+ f->state->requests={request("<QueryImage Width=\"416\" Height=\"999\" ImageId=\"avatar:remote:tail\"/>")};
+ f->create();f->install();f->initialize();f->run();f->close();
+ require(f->state->avatar_calls==1&&f->state->avatar_path==u"cache/_AVATAR_remote:tail_416"&&f->state->avatar_owner=="remote:tail"&&f->state->avatar_size==2,"Actual Graph/Router carries cache, complete owner suffix and width/208 to complete avatar provider");
+ require(f->state->responses==1&&f->state->response_logs[0].find("ResourcePath=\"cache/_AVATAR_remote:tail_416\"")!=std::string::npos,"Actual QueryImage success returns path selected by complete avatar route");
+ require(f->state->content_scopes>=5&&f->state->content_scopes==f->state->content_clears,"Graph releases every lent content checkpoint before normal provider retirement");
+ delete f;
+}
+void licensing_checkpoint_pipeline(){
+ auto* f=new Fixture;f->state->licensing_mode=true;f->state->requests={request("<GetAuthCode ClientId=\"own\"/>",1),request("<RequestLicense/>",2),request("<InvalidateLicense/>",3)};
+ f->create();f->install();f->initialize();f->run();f->close();
+ require(f->state->licensing_calls==3&&f->state->licensing_scopes==3&&f->state->licensing_clears==3,"All three actual Graph/Router licensing routes lend and clear exactly one provider checkpoint");
+ require(f->state->responses==3&&f->state->response_logs[0].find("GetAuthCodeResponse")!=std::string::npos&&f->state->response_logs[1].find("RequestLicenseResponse")!=std::string::npos&&f->state->response_logs[2].find("InvalidateLicenseResponse")!=std::string::npos,"Graph guarded XML preserves each synthetic licensing response through actual dispatch");
+ delete f;
+}
+void passive_validation(){
+ auto st=std::make_shared<State>();auto base=options(st);unsigned callbacks=0;base.prepare_session=[&](sp::SessionView){++callbacks;};base.observe_log=[&](sp::SessionView,g::Log,std::string_view,std::string_view){++callbacks;};
+ auto valid=g::Graph::create(base);require(valid->snapshot().phase==g::Phase::Fresh&&!valid->snapshot().parent_bound&&!valid->snapshot().event_initialized&&!valid->snapshot().queued_events&&!callbacks&&!st->time_calls,"Graph construction is passive: no session, time/random, seed, Parent lease or host callback");require(!valid->profile()&&!valid->policy(),"Fresh options remain passive before concrete Policy/Profile are installed");
+ auto bad=[&](auto edit){auto copy=base;edit(copy);rejects<std::invalid_argument>([&]{(void)g::Graph::create(std::move(copy));},"Incomplete or conflicting graph options rejected before source work");};
+ bad([](auto& x){x.state.lifetime.reset();});bad([](auto& x){x.state.configuration=nullptr;});bad([](auto& x){x.state.online=nullptr;});bad([](auto& x){x.state.saved_avatar_size=nullptr;});bad([](auto& x){x.state.achievement_file=nullptr;});bad([](auto& x){x.information.reset();});bad([](auto& x){x.content.reset();});bad([](auto& x){x.licensing.reset();});bad([](auto& x){x.policy.stream.reset();});bad([](auto& x){x.policy.lifecycle.after={};});bad([](auto& x){x.policy.lifecycle.select_owner={};});bad([](auto& x){x.policy.lifecycle.returned={};});bad([](auto& x){x.policy.lifecycle.external_drained={};});bad([](auto& x){static std::int32_t epoch=0;x.policy.guard_epoch=&epoch;});bad([](auto& x){x.event_capacity=0;});bad([](auto& x){x.event_capacity=3;});bad([](auto& x){x.profile.receive.receive=nullptr;});bad([](auto& x){x.policy.imports.set_last_error=nullptr;});bad([](auto& x){x.policy.imports.get_last_error=nullptr;});bad([](auto& x){x.policy.imports.convert=nullptr;});bad([](auto& x){x.policy.imports.parse=nullptr;});bad([](auto& x){x.policy.imports.send=nullptr;});bad([](auto& x){x.policy.imports.select_write=nullptr;});bad([](auto& x){x.policy.maximum_message_bytes=0;});bad([](auto& x){x.policy.maximum_message_bytes=1048577;});bad([](auto& x){x.policy.accept_prefix=std::string("A\0B",3);});
+
+}
+void unstarted_and_foreign(){
+ auto* raw=new Fixture;auto& f=*raw;f.create();auto initial=f.graph->snapshot();require(initial.phase==g::Phase::Fresh,"Uninstalled graph Fresh");auto [d,r]=f.deps();std::int32_t mixed_epoch=0;r.guard_epoch=&mixed_epoch;rejects<std::invalid_argument>([&]{f.graph->install_server(f.resources,f.native.root,d,r);},"Mixed concrete NativeApi/runtime errors rejected before publication");require(!f.resources.server&&!f.state->starts,"Rejected installation publishes no server and invokes no startup import");
+ f.install();require(f.resources.server&&f.graph->snapshot().phase==g::Phase::Installed&&f.graph->backend().snapshot().phase==o::Phase::Constructed&&!f.state->starts&&!f.state->ports_created&&!f.state->factory_calls,"Graph installs real server component passively before socket/IOCP/WinSock startup");
+ bool rejected=false;auto* server=f.resources.server.get();std::thread foreign([&]{try{server->initialize_context_0241b0();}catch(const std::logic_error&){rejected=true;}});foreign.join();require(rejected&&!f.state->starts&&!f.state->ports_created,"Foreign worker wrapper rejects before ANY initialization SDK side effect");
+ bool snapshot_rejected=false;std::thread metadata([&]{try{(void)f.graph->snapshot();}catch(const std::logic_error&){snapshot_rejected=true;}});metadata.join();require(snapshot_rejected,"Foreign graph metadata inspection rejects before mutable owner state");
+ ::SetLastError(0x46c0);(void)f.graph->snapshot();require(::GetLastError()==0x46c0,"Graph metadata inspection preserves caller LastError");
+ f.graph->close_unstarted();require(f.graph->snapshot().phase==g::Phase::Closed&&f.graph->backend().snapshot().phase==o::Phase::Closed,"Explicit unstarted close retires factory ownership without initializing backend");delete raw;
+}
+void original_install_and_unstarted_close(){
+ Fixture f;f.create([](g::Options& options){
+  options.policy.lifecycle.mode=anadius::session_policy::LifecycleMode::OriginalApplication;
+  options.policy.lifecycle.select_owner={};options.policy.lifecycle.external_drained={};
+ });f.install();
+ require(f.graph->snapshot().phase==g::Phase::Installed&&f.graph->policy()->snapshot().phase==anadius::session_policy::Phase::Fresh&&!f.state->external_calls,"Actual original Graph installation keeps external proof empty and constructs Policy/Runtime/owned server");
+ f.graph->close_unstarted();
+ require(f.graph->snapshot().phase==g::Phase::Closed&&!f.state->external_calls,"Known unstarted original Graph closes through its actual source route without an external proof");
+}
+
+void pipeline(bool encrypted){
+ auto* f=new Fixture(encrypted);f->state->requests={request("<GetGameInfo GameInfoId=\"DISPLAY_NAME\"/>",1),request("<GetGameInfo GameInfoId=\"DISPLAY_NAME\"/>",2),request("<QueryContent/>",3),request("<GetInternetConnectedState/>",4),request("<GetProfile index=\"0\"/>",5)};if(encrypted){f->state->requests.clear();for(unsigned i=1;i<=8;++i)f->state->requests.push_back(request(i==8?"<ShowIGO/>":"<GetConfig/>",i));}
+ f->state->configuration->game_attributes["DISPLAY_NAME"]="before";f->state->configuration->username="synthetic-name";f->state->configuration->content={{"old","oldname","1","installed"}};f->create();f->install();
+ f->state->after_hook=[f]{if(f->state->encrypted&&!f->state->events_queued){f->graph->enqueue("sso-event");f->graph->enqueue(std::string(15,'a'));f->graph->enqueue(std::string(16,'b'));f->graph->enqueue(std::string(4094,'c'));f->graph->enqueue(std::string(4095,'d'));f->graph->enqueue(std::string(5000,'L'));f->graph->enqueue(std::string_view("n\0ul",4));f->state->events_queued=true;auto q=f->graph->snapshot();require(q.event_initialized&&q.queued_events==8,"First authoritative queue use creates actual DOWN seed plus small and large Parent-owned events");}};
+ auto seed=std::move(f->state->after_hook);f->state->after_hook=[f,seed]{seed();if(!f->state->encrypted&&!f->state->updated&&f->state->responses==1){f->state->updated=true;f->graph->update([&](g::StateView live){require(live.configuration==f->state->configuration.get()&&live.online==&f->state->online&&live.saved_avatar_size==&f->state->saved&&live.achievement_file==&f->state->achievement_file,"Update exposes exact supplied live state objects");live.configuration->game_attributes["DISPLAY_NAME"]="after<&";live.configuration->username="updated-user";live.configuration->content.assign({{"new-id","fresh-vector","9","ready"}});*live.online=1;});}};
+ try{f->initialize();f->run();f->close();}catch(const std::exception& e){std::cerr<<"PIPELINE: "<<e.what()<<'\n'<<std::flush;::ExitProcess(190);}
+ require(f->state->prepares==1&&f->state->received==f->state->requests.size()&&f->state->responses==f->state->requests.size(),"Actual owned graph invokes factory once and real XML routes once for each complete native frame");require(f->state->greeting.find("synthetic-graph-1")!=std::string::npos&&f->state->greeting.find("cb5eef9215f50add9b6fbe9c0e45f02f")!=std::string::npos&&f->state->time_calls==1,"Default NativeLogic/XML/Crypto/Random greeting uses supplied version and actual time-seeded challenge");
+ if(!encrypted){require(f->state->response_logs[0].find("before")!=std::string::npos&&f->state->response_logs[1].find("after&lt;&amp;")!=std::string::npos,"Fresh Router views observe controlled shared map changes and actual XML escaping");require(f->state->response_logs[2].find("new-id")!=std::string::npos&&f->state->response_logs[2].find("fresh-vector")!=std::string::npos&&f->state->response_logs[2].find("oldname")==std::string::npos,"Dispatch rebuilds content spans after real vector replacement");require(f->state->response_logs[3].find("connected=\"1\"")!=std::string::npos&&f->state->response_logs[4].find("updated-user")!=std::string::npos,"Online and profile fields come from exact authoritative live state");}
+ else{require(f->state->response_logs[0].find("GetConfigResponse")!=std::string::npos,"Default concrete XML/Router returns actual 34service GetConfig response");require(f->state->event_logs.size()==8&&f->state->event_logs[0].find("IGOEvent State=\"DOWN\"")!=std::string::npos,"Typed native033d70 pops exactly one seeded FIFO event per request under authoritative mutex");require(f->state->event_logs[1]=="sso-event"&&f->state->event_logs[2]==std::string(15,'a')&&f->state->event_logs[3]==std::string(16,'b')&&f->state->event_logs[4]==std::string(4094,'c')&&f->state->event_logs[5]==std::string(4095,'d')&&f->state->event_logs[6]==std::string(5000,'L')&&f->state->event_logs[7]==std::string("n\0ul",4),"Authoritative event ring preserves FIFO/embeddedNUL/SSO15/heap16/large4095header boundaries through real native copy/pop");
+ std::vector<std::string> frames;for(std::size_t at=0;at<f->state->response_wire.size();){auto end=f->state->response_wire.find('\0',at);require(end!=std::string::npos,"Encrypted SDK output retains NUL frame delimiters");auto text=f->state->response_wire.substr(at,end-at);m::hex_decode_03ce30(text);require(f->state->client.decrypt_042480(text),"Independent client decrypts each actual native prefix output");frames.push_back(std::move(text));at=end+1;}require(frames.size()==16,"Eight encrypted requests produce eight separate response/event frame pairs");for(std::size_t i=0;i<8;++i)require(frames[i*2]==f->state->response_logs[i]&&frames[i*2+1]==f->state->event_logs[i],"Exact encrypted wire preserves independently decoded logged response and FIFO event bytes");}
+ require((encrypted?f->state->information_scopes==0:f->state->information_scopes>0)&&f->state->information_scopes==f->state->information_clears,"Graph clears Information checkpoints; encrypted GetConfig-only scenario makes no Information call");
+ auto snap=f->graph->snapshot();require(snap.phase==g::Phase::Closed&&!snap.live_logics&&!snap.queued_events&&!snap.active&&!snap.event_locked&&!snap.parent_bound,"External true drains source-owned logics and remaining known queue strings before Parent lease release");require(f->state->queue_drained&&f->state->worker_done&&!f->native.root->provider_leases(),"Actual Runtime/Profile/jobs/environment/deque/graph close retires every provider lease");require(f->native.root->close()&&f->native.memory.blocks.empty()&&f->native.memory.allocations==f->native.memory.frees,"Explicit real Domain retirement releases every Parent event/header/frame/block/control and final PTD allocation");require(f->state->closed.size()==3&&f->state->closed.back()==200&&f->state->starts==1&&f->state->cleanups==1,"Known synthetic accepted/pending/listener sockets and WinSock context close exactly once");std::weak_ptr<g::Graph> weak=f->graph;std::weak_ptr<State> weak_state=f->state;std::weak_ptr<cp::Policy> weak_policy=f->graph->policy();std::weak_ptr<sp::Profile> weak_profile=f->graph->profile();f->state->after_hook={};f->state->prepare_hook={};delete f;require(weak.expired()&&weak_state.expired()&&weak_policy.expired()&&weak_profile.expired(),"Closed server/default Profile/native factory graph and exact live state have no strong owner cycle");
+}
+
+void repeated_true_drain(){
+ auto* f=new Fixture(true);f->state->requests={request("<GetConfig/>")};f->create();f->install();f->state->after_hook=[f]{if(!f->state->events_queued){f->state->events_queued=true;f->graph->enqueue(std::string(5000,'z'));}};f->initialize();f->run();
+ require(f->graph->snapshot().queued_events==1&&f->graph->snapshot().parent_bound,"Known large host event and provider lease remain after one native seeded event pop");
+ std::uintptr_t extra=0;f->graph->backend().with_operation([&](o::ServerView& view){auto& strings=view.memory.buffer_context();extra=strings.api.allocate_04b0bc(73);strings.api.fill_bytes(extra,0x5a,73);});
+ require(extra!=0,"Real unrelated Parent allocation remains live for deliberate first close refusal");
+ const auto first=f->graph->profile()->external_quiescent(*f->state->view,*f->state->application);
+ require(!first&&f->state->external_calls==1&&f->state->queue_drained,"First genuine external true is preserved while concrete Profile refuses an actual unrelated live allocation");
+ auto mid=f->graph->snapshot();require(mid.phase==g::Phase::Drained&&!mid.parent_bound&&!mid.queued_events&&!mid.live_logics&&f->graph->profile()->snapshot().phase==sp::Phase::Closing,"First graph drain retires known event/header and its lease before later provider close returns false");
+ f->graph->backend().with_operation([&](o::ServerView& view){const auto snapshot=view.memory.snapshot();require(snapshot.allocations==1&&snapshot.buffers==1,"Only deliberate unrelated Parent byte allocation survives known graph event retirement");auto bytes=view.memory.buffer_context().memory.view(extra,73);require(std::all_of(bytes.begin(),bytes.end(),[](auto b){return b==0x5a;}),"Unrelated live bytes remain intact across first true proof and partial provider close");view.memory.free_sized_04b0f8(extra,73);});
+ f->close();require(f->state->external_calls==2&&f->graph->snapshot().phase==g::Phase::Closed&&!f->native.root->provider_leases(),"Second genuine external proof after actual free closes Drained graph and complete Profile/Runtime/server");require(f->native.root->close()&&f->native.memory.blocks.empty()&&f->native.memory.allocations==f->native.memory.frees,"Repeated explicit proof retires every actual own allocation without double event/header free");f->state->after_hook={};delete f;
+}
+struct HookBuffer final:std::stringbuf {std::function<void()> hook;unsigned writes=0,syncs=0;std::streamsize xsputn(const char* text,std::streamsize n)override{++writes;if(hook){auto call=std::move(hook);call();}return std::stringbuf::xsputn(text,n);}int sync()override{++syncs;return std::stringbuf::sync();}};
+void retained_child(std::string_view mode){
+ auto* f=new Fixture(mode=="false"||mode=="external"||mode=="overflow");f->state->requests={request("<GetConfig/>")};auto buffer=std::make_shared<HookBuffer>();f->create([&](g::Options& opt){if(mode=="overflow")opt.event_capacity=2;if(mode=="stream")opt.policy.stream=anadius::shared_log::make_stream(buffer);});f->install();
+ auto swallowed=[f]{rejects<std::logic_error>([&]{f->graph->update([](g::StateView){});},"Opaque provider catches attempted Graph reentry before outer checkpoint");};
+ if(mode=="information"){f->state->requests={request("<GetProfile index=\"0\"/>")};f->state->configuration->username="updated-user";f->state->information_hook=swallowed;}
+ if(mode=="content"){f->state->requests={request("<QueryEntitlements Foo=\"x\" Bar=\"y\"/>")};f->state->content_hook=swallowed;}
+ if(mode=="time")f->state->time_hook=swallowed;
+ if(mode=="stream")buffer->hook=swallowed;
+ if(mode=="fiber"){auto* fiber=::ConvertThreadToFiber(nullptr);require(fiber!=nullptr,"Own fixture creates a different same-thread fiber identity");rejects<std::logic_error>([&]{f->resources.server->initialize_context_0241b0();},"Foreign fiber rejects server initialization");rejects<std::logic_error>([&]{(void)f->graph->snapshot();},"Foreign fiber rejects metadata access");require(!f->state->starts&&!f->state->ports_created,"Same-thread foreign-fiber rejection precedes ANY configured startup SDK import");::ExitProcess(608);}
+ if(mode=="prepare")f->state->prepare_hook=[](){throw std::runtime_error("Selected opaque preparation failure");};
+ if(mode=="log")f->state->log_hook=[](){throw std::runtime_error("Selected opaque observer failure");};
+ if(mode=="false"){f->state->attest=false;f->state->after_hook=[f]{if(!f->state->events_queued){f->state->events_queued=true;f->graph->enqueue(std::string(5000,'r'));}};}
+ if(mode=="external"){f->state->after_hook=[f]{if(!f->state->events_queued){f->state->events_queued=true;f->graph->enqueue(std::string(5000,'r'));}};f->state->external_hook=[](){throw std::runtime_error("Selected unknown external proof");};}
+ if(mode=="overflow")f->state->after_hook=[f]{f->graph->enqueue("first");f->graph->enqueue("overflow");};
+ if(mode=="reentry")f->state->after_hook=[f]{if(f->state->responses==1)f->graph->update([f](g::StateView){require(f->graph->snapshot().active,"Reentrant metadata snapshot observes active graph update");rejects<std::logic_error>([&]{f->graph->update([](g::StateView){});},"Nested lifecycle mutation is rejected before inner callback");});};
+ if(mode=="update")f->state->after_hook=[f]{if(f->state->responses==1)f->graph->update([](g::StateView){throw std::runtime_error("Unknown state update prefix");});};
+ bool caught=false;try{f->initialize();f->run();f->close();}catch(const std::exception&){caught=true;}
+ require(caught,"Selected opaque/capacity failure propagates without guessed normal cleanup");auto snap=f->graph->snapshot();
+ if(mode=="false"){require(snap.parent_bound&&snap.queued_events==1&&snap.phase!=g::Phase::Drained,"False external proof retains remaining large queue string and Parent lease");require(f->state->worker_done&&f->native.root->provider_leases()>0&&!f->native.memory.blocks.empty(),"Observed return and zero live sessions do not synthesize external drain");::ExitProcess(601);}
+ if(mode=="external"){require(snap.parent_bound&&snap.queued_events==1&&snap.phase==g::Phase::Poisoned,"Unknown external callback retains known event allocation and poisons graph");::ExitProcess(602);}
+ require(snap.phase==g::Phase::Poisoned&&f->native.root->provider_leases()>0,"Unknown source prefix seals graph and retains owned allocation lifetime");
+ if(mode=="information"){require(f->state->information_calls==1&&!f->state->responses&&!f->state->sends&&f->graph->retained(f->state->token),"Swallowed information reentry stops source before response serialization/log/send and retains invocation");::ExitProcess(609);}if(mode=="content"){require(f->state->content_calls==1&&!f->state->responses&&!f->state->sends&&f->graph->retained(f->state->token),"Swallowed content reentry prevents second unknown-field callback and all response effects");::ExitProcess(610);}if(mode=="time"){require(f->state->time_calls==1&&f->state->greeting.empty()&&!f->state->received&&!f->state->responses,"Swallowed opaque clock reentry stops native greeting before any synchronous SDK send");::ExitProcess(611);}if(mode=="stream"){require(buffer->writes==1&&!buffer->syncs&&buffer->str()=="Received: "&&!f->state->received&&!f->state->responses&&!f->state->sends,"Swallowed streambuf reentry stops after prefix primitive before body/newline/flush/observer");::ExitProcess(612);}
+ if(mode=="prepare")::ExitProcess(603);if(mode=="log"){require(f->graph->retained(f->state->token),"Unknown observer leaves actual Native invocation retained");::ExitProcess(604);}if(mode=="overflow"){require(snap.queued_events==2,"Ring overflow preserves seed and admitted first event");::ExitProcess(605);}if(mode=="update")::ExitProcess(606);if(mode=="reentry")::ExitProcess(607);::ExitProcess(699);
+}
+void isolated(std::wstring mode,DWORD expected){std::array<wchar_t,32768> path{};auto n=::GetModuleFileNameW(nullptr,path.data(),static_cast<DWORD>(path.size()));require(n&&n<path.size(),"Own graph fixture EXE located");std::wstring command=L"\""+std::wstring(path.data(),n)+L"\" --"+mode;STARTUPINFOW startup{};startup.cb=sizeof(startup);PROCESS_INFORMATION process{};require(::CreateProcessW(nullptr,command.data(),nullptr,nullptr,FALSE,CREATE_NO_WINDOW,nullptr,nullptr,&startup,&process)!=0,"Isolated retained graph fixture launched");DWORD exit=0;auto wait=::WaitForSingleObject(process.hProcess,30000);require(wait==WAIT_OBJECT_0&&::GetExitCodeProcess(process.hProcess,&exit)&&exit==expected,"Graph child reaches exact retained-prefix assertions");::CloseHandle(process.hThread);::CloseHandle(process.hProcess);}
+}
+int main(int argc,char** argv){try{if(argc==2)retained_child(std::string_view(argv[1]).substr(2));passive_validation();unstarted_and_foreign();original_install_and_unstarted_close();shared_achievement_mutex();complete_avatar_pipeline();licensing_checkpoint_pipeline();pipeline(false);pipeline(true);repeated_true_drain();isolated(L"false",601);isolated(L"external",602);isolated(L"prepare",603);isolated(L"log",604);isolated(L"overflow",605);isolated(L"update",606);isolated(L"reentry",607);isolated(L"fiber",608);isolated(L"information",609);isolated(L"content",610);isolated(L"time",611);isolated(L"stream",612);std::cout<<"PASS: "<<checks<<" application-graph core checks\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

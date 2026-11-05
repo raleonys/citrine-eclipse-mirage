@@ -31,7 +31,19 @@ struct MessageDispatchContext {
     std::span<MessageEnvironmentCopyBinding> copies;
     std::span<MessageClosureBinding> closures;
 };
+// Two inline native028d30 copy segments share this exact ordering: header
+// prefix, function lookup, slot08, then LIVE source executor reload. Owning
+// providers may reserve before the first write through the optional HOST hook.
+IoHandlerEnvironment& copy_message_environment_028d30(IoHandlerEnvironment&,IoHandlerEnvironment&,
+    std::span<const MessageEnvironmentCopyBinding>);
+inline IoHandlerEnvironment& copy_message_environment_028d30(IoHandlerEnvironment& out,IoHandlerEnvironment& source,
+    MessageDispatchContext& context){return copy_message_environment_028d30(out,source,context.copies);}
 void dispatch_message_028d30(std::uintptr_t owner,ReceiveBufferString& request,MessageDispatchContext&);
+// Selected HOST continuation after an already completed033d70. Both prefixes
+// remain caller-owned until this normal-return tail consumes them. No initial
+// empty-request shortcut and no second message processing; not a new native ABI.
+void dispatch_prepared_response(std::uintptr_t owner,ReceiveBufferString& response,
+    ReceiveBufferString& request,MessageDispatchContext&);
 using FrameMessageInvoker=void(*)(std::uintptr_t function,std::uintptr_t owner,ReceiveBufferString&,MessageDispatchContext&);
 // Pure token router; never executes an image VA. Default selects actual028d30.
 void invoke_frame_message(std::uintptr_t,std::uintptr_t,ReceiveBufferString&,MessageDispatchContext&);

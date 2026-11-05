@@ -3,13 +3,32 @@
 #include "../anadius-shared-log-source/stream.hpp"
 #include <algorithm>
 #include <climits>
+#include <cstddef>
+#include <cstdlib>
 #include <functional>
 #include <iostream>
 #include <map>
+#include <new>
 #include <sstream>
 #include <system_error>
 #include <thread>
 #include <type_traits>
+
+namespace config_failure_test {thread_local std::ptrdiff_t allocations_before_failure=-1;}
+// Only this synthetic test executable replaces allocation. Arm after all
+// fixture inputs are ready; fail exactly one allocation, then disarm before
+// any provider destructor/log bookkeeping can allocate.
+void* operator new(std::size_t bytes){
+    auto& remaining=config_failure_test::allocations_before_failure;
+    if(remaining>=0&&remaining--==0){remaining=-1;throw std::bad_alloc();}
+    if(auto* p=std::malloc(bytes?bytes:1))return p;
+    throw std::bad_alloc();
+}
+void* operator new[](std::size_t bytes){return ::operator new(bytes);}
+void operator delete(void* p)noexcept{std::free(p);}
+void operator delete[](void* p)noexcept{std::free(p);}
+void operator delete(void* p,std::size_t)noexcept{std::free(p);}
+void operator delete[](void* p,std::size_t)noexcept{std::free(p);}
 
 namespace {
 using namespace anadius;
@@ -137,6 +156,18 @@ struct Fixture {
     explicit Fixture(achievement_storage::Paths paths={}){config=std::make_unique<cf::Configuration>(inputs(state),std::move(paths),std::make_unique<License>(*state),std::make_unique<Document>(*state));}
     ~Fixture(){config.reset();current=nullptr;}
 };
+void scalar_document_source(){
+    rejects<std::invalid_argument>([]{(void)cf::make_scalar_documents({});},"Scalar reader requires an owned real file boundary");
+    State state;state.input[u"scalar.cfg"]="\xef\xbb\xbf\"Config2\" { \"User\" { \"Username\" \"first\" \"Username\" \"last\" } }";
+    auto reader=cf::make_scalar_documents(std::make_unique<Files>(state));require(state.reads.empty(),"Source reader construction performs no file read");
+    auto document=reader->read(u"scalar.cfg");require(document.child("Config2").child("User").text("Username")=="last"&&state.reads.size()==1,"Actual file/parser/hash reader strips one BOM and preserves completed duplicate assignment");
+    state.input[u"scalar.cfg"]="\"Config2\" { \"Content\" { \"id\" { \"Name\" \"own\" } } }";
+    rejects<std::logic_error>([&]{(void)reader->read(u"scalar.cfg");},"Legacy scalar route cannot silently use first-copy order for later ordered collection consumers");
+    state.input[u"scalar.cfg"]="\"Config2\" { \"User\" {";
+    rejects<std::runtime_error>([&]{(void)reader->read(u"scalar.cfg");},"Actual parser failure propagates without stale document reuse");
+    state.input[u"scalar.cfg"]="\"Other\" { \"Username\" \"unused\" }";
+    require(reader->read(u"scalar.cfg").child("Config2").children.empty()&&document.child("Config2").child("User").text("Username")=="last","Missing Config2 uses actual empty selection and earlier returned document remains owned");
+}
 void passive_and_required(){
     static_assert(!std::is_abstract_v<cf::Configuration>);
     static_assert(!std::is_copy_constructible_v<cf::Configuration>&&!std::is_move_constructible_v<cf::Configuration>);
@@ -243,5 +274,78 @@ void attached_retirement(){
     require(result->phases==9&&result->document&&result->license&&result->stream&&result->backing&&weak.expired(),"both narrow effects, persistence/core providers, stream and backing actually retire under attached facade");
     require(!result->unexpected&&result->attempts==60&&result->rejected==result->attempts,"all21 methods plus paths and each retirement phase reject reentry before provider use");current=nullptr;
 }
+struct FailureLifetime {
+    bool backing_alive=false,valid=true;
+    unsigned documents=0,licenses=0,source_calls=0;
+};
+struct FailureBacking {
+    FailureLifetime& result;
+    explicit FailureBacking(FailureLifetime& r):result(r){result.backing_alive=true;}
+    ~FailureBacking(){result.backing_alive=false;}
+};
+struct FailureLicense final:cf::LicenseEffects {
+    FailureLifetime& result;
+    explicit FailureLicense(FailureLifetime& r):result(r){}
+    ~FailureLicense(){result.valid&=result.backing_alive;++result.licenses;}
+    void apply(std::string_view)override{++result.source_calls;throw std::logic_error("no startup in allocation fixture");}
+};
+struct FailureDocument final:cf::LegacyDocumentReader {
+    FailureLifetime& result;
+    explicit FailureDocument(FailureLifetime& r):result(r){}
+    ~FailureDocument(){result.valid&=result.backing_alive;++result.documents;}
+    configuration::Node read(const Path&)override{++result.source_calls;throw std::logic_error("no read in allocation fixture");}
+};
+cf::Inputs failure_inputs(FailureLifetime& result){
+    cf::Inputs in;in.lifetime=std::make_shared<FailureBacking>(result);
+    in.stream=std::make_shared<std::ostringstream>();return in;
 }
-int main(){try{passive_and_required();paths_crt_environment();encoding_and_logging();files_and_streaming();managed_log_boundary();narrow_effects_and_storage();installation_lifetime_and_thread();attached_retirement();std::cout<<"PASS: "<<checks<<" configuration-factory core checks; all21 required routes and streaming, owned synthetic effects, passive validation, prefix/errors and serialized cross-thread lifetime; original targets never loaded\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+void failed_construction_ownership(){
+    // Six public routes: custom/native constructors, factories and installers.
+    // Direct constructors have no facade allocation: fail Impl/Persistence.
+    // Factory/install routes also fail facade allocation before parameter move.
+    for(unsigned route=0;route<6;++route){
+        const bool native=(route%2)!=0;
+        for(unsigned allocation=0;allocation<(route<2?2U:3U);++allocation){
+            FailureLifetime result;auto in=failure_inputs(result);
+            std::weak_ptr<void> weak=in.lifetime;
+            std::unique_ptr<cf::LicenseEffects> license;
+            if(!native)license=std::make_unique<FailureLicense>(result);
+            std::unique_ptr<cf::LegacyDocumentReader> document=std::make_unique<FailureDocument>(result);
+            bootstrap_backend::Resources resources{};
+            std::unique_ptr<configuration::Dependencies> built;
+            bool failed=false;
+            config_failure_test::allocations_before_failure=allocation;
+            try{
+                if(route==0){cf::Configuration value(std::move(in),{},std::move(license),std::move(document));}
+                else if(route==1){cf::Configuration value(std::move(in),{},std::move(document));}
+                else if(route==2)built=cf::make_configuration(std::move(in),{},std::move(license),std::move(document));
+                else if(route==3)built=cf::make_configuration(std::move(in),{},std::move(document));
+                else if(route==4)cf::install_configuration(resources,std::move(in),{},std::move(license),std::move(document));
+                else cf::install_configuration(resources,std::move(in),{},std::move(document));
+            }catch(const std::bad_alloc&){failed=true;}
+            catch(...){config_failure_test::allocations_before_failure=-1;throw;}
+            config_failure_test::allocations_before_failure=-1;
+            require(failed&&!built&&!resources.configuration,"allocation prefix fails before publishing a facade or Resources slot");
+            require(result.valid&&result.documents==1&&result.licenses==(native?0U:1U)&&!result.backing_alive&&weak.expired(),
+                "document/license owners retire exactly once while Inputs backing still lives across allocation failure");
+            require(!result.source_calls,"allocation prefix never invokes document/license source work");
+        }
+    }
+    Fixture occupied;bootstrap_backend::Resources resources{};resources.configuration=std::move(occupied.config);
+    auto* const identity=resources.configuration.get();
+    for(bool native:{false,true}){
+        FailureLifetime result;auto in=failure_inputs(result);std::weak_ptr<void> weak=in.lifetime;
+        std::unique_ptr<cf::LicenseEffects> license;
+        if(!native)license=std::make_unique<FailureLicense>(result);
+        std::unique_ptr<cf::LegacyDocumentReader> document=std::make_unique<FailureDocument>(result);
+        rejects<std::invalid_argument>([&]{
+            if(native)cf::install_configuration(resources,std::move(in),{},std::move(document));
+            else cf::install_configuration(resources,std::move(in),{},std::move(license),std::move(document));
+        },"occupied installer rejects after ordered ownership adoption");
+        require(resources.configuration.get()==identity&&result.valid&&result.documents==1&&result.licenses==(native?0U:1U)&&weak.expired()&&!result.source_calls,
+            "occupied-slot rejection preserves existing provider and retires rejected captures before backing");
+    }
+    resources.configuration.reset();current=nullptr;
+}
+}
+int main(){try{scalar_document_source();passive_and_required();paths_crt_environment();encoding_and_logging();files_and_streaming();managed_log_boundary();narrow_effects_and_storage();installation_lifetime_and_thread();attached_retirement();failed_construction_ownership();std::cout<<"PASS: "<<checks<<" configuration-factory core checks; all21 required routes and streaming, owned synthetic effects, passive validation, prefix/errors and serialized cross-thread lifetime; original targets never loaded\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

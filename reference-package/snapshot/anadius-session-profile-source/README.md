@@ -1,5 +1,18 @@
 # B40 — Somut session profili ve kaynak grafiği
 
+**Güncel kaynak adımı, henüz derlenmedi:** `JobHandoff` gerçek iş/oturum nesli,
+closure ve kontrol bloğunu hazırlanmış Parent bellek yetkisine bağlar. Çocuk
+worker kimliği denetleyebilir, açık izinle çıktı Deque kapasitesini büyütebilir
+ve sınırlı Environment kopyasını oluşturup yok edebilir. Ayrıca somut Policy
+üzerinden yalnız kendi thread'inin owned exit-wait kayıtlarını temizleyebilir;
+mesaj yürütmez. Temizleme ayrıntısı:
+`../anadius-session-policy-source/job-exit-cleanup.md`.
+Açık kayıt eski runner'ı tutar. Environment ayrıntısı:
+`../anadius-owned-environment-source/job-environment.md`.
+Yeni preflight test kaynakları çalıştırılmadı; pozitif gerçek prepared-Profile
+round trip hâlâ doğrulama bekliyor. Ayrıntı: `job-handoff.md`. Aşağıdaki sonuçlar
+önceki kaynak sürümünün tarihsel doğrulamasıdır.
+
 `Profile` ve `Application`, frame/read/write/response/message bağlamlarını ve sabit kapasiteli session kayıtlarını kurar. Çağıran kod tüm bağlam grafiğini kurmaz; mesaj mantığı, SDK, ortam/scheduler, hata ve harici sonlanma alt sağlayıcılarını verir.
 
 Her session ayrı slot, generation, logic, IO ve environment kaydına sahiptir. Yalnız aynı domain içindeki gerçek factory owner/control çifti kaydedilir. Slot temizliğinde tüm bindingler ve owner’a referans veren logic nesnesi silindikten sonra observer weak bırakılır. Ertelenmiş iş Policy hook içinde bitmişse slot aynı callback sonunda yeniden kullanılabilir. Kapasite aşımı bilinmeyen native factory prefix’ini geri almaz; kaynakları tutup durur.

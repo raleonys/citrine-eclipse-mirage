@@ -1,5 +1,9 @@
 # Cooperative pre-unload controller
 
+Current source checkpoint: **unbuilt/unexecuted Domain provenance binding**.
+Compilation, tests and linking require an explicit user rebuild instruction.
+The older evidence.json and full-build ZIP apply to their prior source snapshot.
+
 This implements a callable HOST shutdown path outside DllMain, using the
 existing Runtime and Domain closure algorithms. It does not move startup,
 define either require_loader_* hook, change original ordinals or publish a new
@@ -17,10 +21,17 @@ if (!entry(shutdown->context())) {
 }
 ```
 
-take() validates nonnull Runtime/Ready Domain, allocates bookkeeping and its
-shared control block before consuming donors, and transfers without starting,
-publishing or closing anything. The supplied Domain must actually be the one
-used by Runtime: Ready validation alone does not establish that identity.
+take() validates nonnull Runtime/Ready Domain and exact certified thread-provider
+root identity, then allocates bookkeeping and its shared control block before
+consuming donors. It transfers without starting, publishing or closing anything.
+DomainStorage::make_threads alone sets the private NativeThreads root. Runtime
+captures that owner before its Resources sink is consumed and retains it through
+all provider and registry retirement. A custom/legacy thread provider with no
+certified root, or a different Ready Domain, rejects before donor consumption.
+This does not attest that every other Resources provider uses that same Domain;
+existing assembly identity checks and caller obligations still apply. Public
+Runtime construction with custom thread providers remains supported, but that
+Runtime cannot be adopted by this checked cooperative controller.
 All Runtime/Domain-affine operations must share their original controller and
 fiber. Both roots and caller controls/code must remain valid during invocation.
 
@@ -53,14 +64,28 @@ joins and source exit cleanup; it cannot be moved into DLL_PROCESS_DETACH.
 Process termination/failed attach need separate policies, not a guessed call to
 this controller. Natural CRT callbacks remain registered after logical finish.
 
-Validation separates two scopes. The unit uses actual Runtime source with
-controlled b4 lower providers and a real initial-locale Domain; it covers live
-Runtime false/retry, retirement, provider-blocked Domain close, wrong controller,
-idempotency and three isolated unknown/reentrant/live-destruction prefixes.
-The full Resources test supplies its actual same Domain/Runtime after the
-Runtime's earlier successful close, then verifies provider retirement and real
-Domain closure through this callback. It does not rerun the whole live Resources
-stop prefix through the new controller.
+Pending validation separates two scopes. The updated unit source uses actual
+Runtime with controlled b4 lower providers and the real Domain native thread
+provider, publishes the Runtime without invoking application attach, and starts
+no workers. It includes missing/unknown Domain rejection, source false/retry,
+retirement, provider-blocked Domain close, wrong controller, idempotency and
+three isolated unknown/reentrant/live-destruction prefixes. The full Resources
+test source supplies its actual same Domain/Runtime after Runtime's earlier
+successful close, then follows provider retirement and Domain closure through
+this callback. It explicitly releases Assembly's new stopped_sources receipt
+alongside its callback/milestone aliases before requiring zero Domain leases.
+Neither updated test was compiled or run. No live full Resources stop prefix
+through the new controller is claimed.
+
+Different-Ready-root rejection is currently inspected in source only. The
+native FLS Binding reserves one image-wide callback owner at construction, so
+two real native Domains cannot coexist for that scenario. No synthetic pointer,
+extra live root or callback-binding bypass was introduced to claim coverage.
+
+NativeThreads and Runtime HOST object layouts gained shared owner fields;
+rebuild every allocating/passing/embedding consumer together when authorized.
+No virtual slot, export, shutdown callback ABI or loader hook was added. The
+certified root is an ownership/identity record, not kernel/foreign finality.
 
 See evidence.json for hashes and retained compiler receipts. The accompanying
 ../dll-critical-path/loader-context-map.json records the remaining synchronous

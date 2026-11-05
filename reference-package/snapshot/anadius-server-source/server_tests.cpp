@@ -52,6 +52,25 @@ struct FakeServer final : ServerBackend {
     void destroy_context() override {events.emplace_back("destroy_context");}
     [[noreturn]] void raise_error(Error error,std::string_view context) override {throw Raised{error,std::string(context)};}
 };
+struct PortObserver final:anadius::execution_recovered::Publication {
+    const void* identity=nullptr;FakeServer* server=nullptr;std::uint8_t* ready=nullptr;bool valid=true;unsigned payloads=0,finishes=0;
+    void bind(const void* value,anadius::execution_recovered::FlagReferences)override{identity=value;}
+    void server_port_published(std::uint16_t port,const void* issuer)noexcept override{
+        valid=valid&&issuer==identity&&port==12345&&ready&&!*ready&&server&&!server->events.empty()&&server->events.back()=="environment";++payloads;
+    }
+    void published(anadius::execution_recovered::ReadyStage stage,const void* issuer)noexcept override{
+        valid=valid&&issuer==identity&&stage==anadius::execution_recovered::ReadyStage::Server&&payloads==1&&ready&&*ready==1&&server&&!server->events.empty()&&server->events.back()=="environment";++finishes;
+    }
+};
+void server_payload_order(){
+    namespace ex=anadius::execution_recovered;
+    FakeExecutionPlatform platform;ex::MutexState mutex{};ex::initialize_mutex_04a698(mutex,2);
+    std::uint8_t server_ready=0,online=0,libraries=0;std::int64_t frequency=0;PortObserver observer;
+    ex::Execution execution(mutex,{server_ready,online,libraries},frequency,platform,&observer);
+    FakeServer server;server.ready=&server_ready;server.env_result=false;observer.server=&server;observer.ready=&server_ready;
+    std::uint16_t port=0;construct_server_024480(server,port,server_ready,execution);
+    check(observer.valid&&observer.payloads==1&&observer.finishes==1&&server.events.back()=="accept", "actual server constructor publishes bound payload after ignored-false environment call, before flag event and accept");
+}
 struct FakeScheduling final : Scheduling {
     std::deque<std::function<void()>> io,workers,write_dispatch;
     std::vector<std::string> errors;
@@ -145,10 +164,18 @@ void server_tests() {
         if(mode==1)broken.local.error={0x2719,ErrorCategory::system};
         if(mode==2)broken.local.returned_size=129;
         try {construct_server_024480(broken,port,first,execution);check(false,"expected startup failure");}
-        catch(const Raised& e){check(e.error.value!=0,"startup preserves nonzero error");}
+        catch(const Raised& e){
+            check(e.error.value==(mode==0?7:mode==1?0x2719:0x2726),"startup preserves the selected native error value");
+            check(e.error.category==(mode==0?ErrorCategory::other:ErrorCategory::system),"startup preserves the logical error category");
+            check(e.context==(mode==1?"local_endpoint":""),"Only local_endpoint uses028240 operation context; parse and oversize use028210");
+        }
         check(first==0&&port==11,"failed startup does not publish readiness/port");
         check(std::find(broken.events.begin(),broken.events.end(),"accept")==broken.events.end(),"failed startup does not accept");
     }
+    FakeServer failed_run;failed_run.run_error={4,ErrorCategory::asio_misc};first=0;port=11;
+    try {server_start_029ea0(failed_run,port,first,execution);check(false,"expected context run failure");}
+    catch(const Raised& e){check(e.error.value==4&&e.error.category==ErrorCategory::asio_misc&&e.context.empty(),"029ea0 forwards run error to028210 without an invented operation");}
+    check(first==1&&port==12345&&failed_run.events.back()=="run","Run error occurs after readiness and bypasses normal destroy sequence");
 }
 void read_tests() {
     Fixture f;check(f.handler.resets==1,"session constructor initializes Handler");
@@ -236,7 +263,7 @@ void sizing_and_accept_tests() {
 }
 }
 int main() {
-    try{server_tests();read_tests();write_tests();sizing_and_accept_tests();std::cout<<"PASS "<<checks<<" synthetic checks; no socket/network/original target execution\n";return 0;}
+    try{server_tests();server_payload_order();read_tests();write_tests();sizing_and_accept_tests();std::cout<<"PASS "<<checks<<" synthetic checks; no socket/network/original target execution\n";return 0;}
     catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}
     catch(const Raised& e){std::cerr<<"FAIL unexpected Raised "<<e.context<<'\n';return 1;}
 }

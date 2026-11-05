@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-11-04T18:47:25.558075+00:00",
+  "continuous_goal_active": true,
+  "pending_source_count": 44,
+  "count_is_completion_percentage": false,
+  "latest_source_milestone": {
+    "path": "outputs/anadius-owned-environment-source/native-environment-targets-20261104/evidence.json",
+    "sha256": "cd89de526e4a67db8a8933c394509b3c539b45f831f0e22ba40d7b76e84f2b96"
+  },
+  "decisions": [
+    {
+      "path": "outputs/dll-critical-path/persistence-source-triage-20261104.md",
+      "sha256": "4aaf5c436c87ae20f8b7aed03ab8d1c3298e5fab5dd2643b69ad0dd849d25e3d"
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/tracked-executor-design-20261104/design-review.md",
+      "sha256": "86db8b1dbe54ced062e0e3c935c29b086b55b3955f755722e9ea0cf5c093a568"
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/tracked-executor-design-20261104/source-plan.md",
+      "sha256": "decdd25a3ea2ef940d60e1b63dd3558baed4dd9862b0c3a3dd7c959d835d052e"
+    }
+  ],
+  "tracked_family_decision": "Mapped native bodies remain SOURCE-unmapped; current selected OriginalDefault IO/message response paths do not create tracked input. Defer new actor/stop interfaces without a selected caller.",
+  "persistence_decision": "XML/INI BOOL-discard candidate already matched by retained native evidence; no repeat REA or rollback/retry patch.",
+  "awaiting_explicit_rebuild_instruction": true,
+  "async_question_pending": true,
+  "no_answer_is_not_approval": true,
+  "independent_static_work_in_progress": null,
+  "next_build_if_explicitly_requested": "Consistent full source compile, appropriate project tests and production DLL link; DLL execution/ZIP update require their own requested scope.",
+  "remaining_validation_limits": [
+    "Current44-file source delta is not compiled/tested/linked.",
+    "Actual native loader/runtime/ABI equivalence remains unproven.",
+    "OriginalApplication full-session integration/retirement coverage is not inferred from first-dispatch or explicit-host scenarios."
+  ],
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "production_provider_audit": {
+    "path": "outputs/dll-critical-path/production-provider-source-audit-20261104.md",
+    "sha256": "625ef8d048d5b7295762a5de06385fbd9b94817b4194642fb0b1931fdaf7c6a9",
+    "status": "BOUNDED_SOURCE_AUDIT_NO_NEW_GAP"
+  },
+  "current_validation_gate": {
+    "reason": "Latest44-file source delta requires a newly explicit compile/test/link instruction. No new selected production gap was established in the bounded provider audit.",
+    "first_recorded_at": "2026-11-04T18:48:48.722260+00:00",
+    "consecutive_goal_turns_at_impasse": 1,
+    "no_repeat_question": true
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "schema": "authorized-rebuild.v1",
+  "recorded_at": "2026-11-05T19:37:49.253117+00:00",
+  "client_date": "2026-11-05",
+  "client_timezone": "Europe/Istanbul",
+  "status": "BUILD_AND_LINK_PASS_NOT_RUNTIME_VALIDATED",
+  "run": "work/rebuild-20261105T182000Z",
+  "scope": "Explicit user-authorized clean common build/tests, actual whole-archive production DLL link; no production DLL loading/execution",
+  "source_evidence_previous": {
+    "path": "outputs/anadius-application-graph-source/scoped-runtime-integration-20261105/evidence.json",
+    "sha256": "5d875de3602debb98d4454fb039c4005c557facd3f234bddea1fed7b1f95bde2"
+  },
+  "canonical_sources": 1017,
+  "additional_dependency_headers": [
+    {
+      "path": "anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.h",
+      "sha256": "aed790f764e4663f6cb99839648dd642c7e7a730d12c67d3ab7ca075f0ac67c0"
+    },
+    {
+      "path": "anadius-application-io-source/call.hpp",
+      "sha256": "2d2fd2f4bfc1b4abaad932a88b93dd1ad9f03240ce3cc5561b252d733ab096d4"
+    },
+    {
+      "path": "anadius-socket-source/memory_lookup.hpp",
+      "sha256": "9daeaaf4e5431039a178288a52ee6ee6dd19775fef12e288bb6618d8f8c0c851"
+    }
+  ],
+  "all_pending_sources_since_last_full_build": [],
+  "current_source_matches_last_full_build": true,
+  "compiled": true,
+  "tests_executed": true,
+  "link_attempted": true,
+  "dll_link_succeeded": true,
+  "DLL_executed": false,
+  "original_modified": false,
+  "original_binary_accessed": false,
+  "new_normal_native_body_recoveries": 0,
+  "new_native_ABI_closures": 0,
+  "overall_completion_percentage": null,
+  "full_build": {
+    "path": "outputs/source-workspace/full-build-verification.json",
+    "sha256": "17adf10282ffcc203606bdfa421af13cd2666e30b16445c8abd9a8600271f4d9"
+  },
+  "production_link": {
+    "path": "outputs/dll-link-gate-source/current-full-link.json",
+    "sha256": "0cb6b7f6a5333510d2d99eb988c79ea7e4ce636cde9a4a1a7fff411f6bf126d5"
+  },
+  "source_repairs": [
+    {
+      "path": "anadius-session-policy-source/policy.hpp",
+      "before_sha256": "178f03f81fd2f8b1a2a7133b416ae122d3de671283e53aaf20587829fb9e1527",
+      "after_sha256": "72e3b5fbca153d29aad38485f7e6be1a4cbcb43da9aab91f4d2b6e937d089cd4",
+      "reason": "clang23 -Werror,-Winconsistent-missing-override: existing inherited virtual finish_environment_work must be explicitly marked override; no algorithm change.",
+      "backup": "work/rebuild-20261105T182000Z/source-repairs/001-policy.hpp.before"
+    },
+    {
+      "path": "anadius-owned-jobs-source/jobs.cpp",
+      "before_sha256": "79888e8d3797ce94c2305a5391ddf35d7700cacd666e6d1efd0273b573a4c437",
+      "after_sha256": "f89d7b77e00acc7e72a589a1af046f3c9e53b61ab16bc52368c1d31ee223e7ba",
+      "reason": "Compiler rejects std::exception_ptr member swap; use standard nonmember std::swap with explicit utility include. Preserves empty-slot first-failure adoption and outside-lock exception retirement.",
+      "backup": "work/rebuild-20261105T182000Z/source-repairs/002-jobs.cpp.before"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign_integration_tests.cpp",
+      "before_sha256": "6ccb3eff5fd7f2fd773f24f265723b4b7191f8822207e618c9e051acc7f518ea",
+      "after_sha256": "1adc4b4e469695a4de0359918a56b57e938ac198fbd4afd0f886584cbc69669b",
+      "reason": "Update direct Effects test invocation to the existing alias-safe registry HandleCell ABI; native HKEY storage remains identical and output writes stay immediate. Compiler cannot implicitly convert HKEY* to unsigned HandleCell.",
+      "backup": "work/rebuild-20261105T182000Z/source-repairs/003-foreign_integration_tests.cpp.before"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.cpp",
+      "before_sha256": "c0649435800d5297f664f03c5c99a7f2c07c7de1803525e9560494790a7ab777",
+      "after_sha256": "c228ccca75778c55797609812635ffd7931acb3a1f8466a382c9a1a871c6231c",
+      "reason": "Actual application_effects pipeline exposed Policy::external_quiescent application/storage validation outside any admitted Parent Operation. Move only that validation into the existing local_idle Parent Operation; release still precedes physical/external proofs. Diagnostic copies passed all65 application-effects assertions and4 retained-prefix children without assertion changes.",
+      "backup": "work/rebuild-20261105T182000Z/source-repairs/004-policy.cpp.before"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "before_sha256": "992842d88053a6bb70621a080aa4d51132ab39ecf73a1cca5d7bede53f36b093",
+      "after_sha256": "95ba6653d17c2450933c4941536d81f6f51cf75f2412f72da1c7296d6da3e82c",
+      "reason": "Replace obsolete fixed64 prepared-offer capacity rejection with actual passive initial-capacity65 NativeJobs selection, matching the documented growable ledger. Separate Inputs preserve zero/lifecycle/null-thread/replacement negative cases and do not fabricate any child offer or scheduler pin. Independently reviewed against jobs.hpp43-44 and factory.cpp115-122.",
+      "backup": "work/rebuild-20261105T182000Z/source-repairs/005-factory_tests.cpp.before"
+    },
+    {
+      "path": "anadius-session-profile-source/profile_tests.cpp",
+      "before_sha256": "91d359de8fc878baffcac3b8bdeec7570b292cfc1724d1324cd4d99967f3d4ba",
+      "after_sha256": "6f42c2ce5ff6fc412506398004e4ab1eff733f6e450fe709f53b5a3b81a3835c",
+      "reason": "Correct stale wrong-storage negative fixture: current Runtime PostedEnvironment resolves authoritative live_storage, so clearing only fallback storage was still a valid exact projection and created an unclosed Application. Clear live_storage too to exercise the intended actual invalid-storage rejection. Diagnostic test copy passed5519checks and10 isolated cases unchanged.",
+      "backup": "work/rebuild-20261105T182000Z/source-repairs/006-profile_tests.cpp.before"
+    },
+    {
+      "path": "anadius-application-graph-source/graph_integration_tests.cpp",
+      "before_sha256": "36a43bce9074211ba5f577ef7ac77c9b07cd8db37482962d8a38efd85b568ed8",
+      "after_sha256": "b4f27e4b6d76785f53a36656e475d4abf305d090b183bfda56c894735d3c11ba",
+      "reason": "Repair actual parallel/scoped synthetic SDK fixture setup: launch Policy probe outside Accept callback lock, guard pre-session lifecycle, preserve incoming LastError before GQCS, and select real Runtime AcceptOnly Stop with truthful passive completed-source facts/exact injected accept995 receipt. All original A/B early/receipt/FLS/projection/work assertions retained; four focused scenarios passed in clean candidate, independently reviewed. No production algorithm change. Preserve canonical CRLF on adoption. Existing policy-probe joins remain inside its brief Parent scope; business A/B/Scope physical maintenance stays outside Parent.",
+      "backup": "work/rebuild-20261105T182000Z/source-repairs/007-graph_integration_tests.cpp.before",
+      "reviewed_proposal_sha256": "17e4c63bdfa168151cad7ed5ab2c03dd30a2648c74324e51612ee8a997272f59",
+      "repair_plan": {
+        "path": "work/rebuild-20261105T182000Z/diagnostics/application-graph-parallel/repair-plan.json",
+        "sha256": "9a59fea12083b672adfca7cb484d509fa275d3f803572ab9de9e26a802fe44ab"
+      },
+      "line_ending_normalization": "Mixed inserted newlines normalized to original canonical CRLF; no C++ token/line changes."
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_integration_tests.cpp",
+      "before_sha256": "d2eb5c962e85876bc0551974a684797546c1a901e30ec689c1cb8c9f02ab4f5f",
+      "after_sha256": "6d779ebe92cb34a50dd5977e445aaa129cbafcf7dadbc96376ed60df3a4edc8e",
+      "reason": "Update stale original-stop failure assertion to retained per-call Policy WorkCall semantics: failed consumed record remains active in aggregate Snapshot, preserving poisoned/busy prefix. All saved77-before-clobber/error/category/consumption/native-stop assertions unchanged. Diagnostic observed Parent1/Poisoned/active1 and exact expected terminal137 after this one expectation fix.",
+      "backup": "work/rebuild-20261105T182000Z/source-repairs/008-handoff_integration_tests.cpp.before"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch_tests.cpp",
+      "before_sha256": "edaaa9c3601fa6ee5f6e973ab959f8d3b9c73c6a46be6fb1c322d0751ce6a5f5",
+      "after_sha256": "c56ca60308c42a8f59abb26a34b26f6273080de31fa54cf3c84dd82a0c6df308",
+      "reason": "Make the CopyCallerObservation trace vector's existing empty default explicit, eliminating three -Werror,-Wmissing-field-initializers diagnostics at aggregate fixture construction. No assertion or runtime ordering change.",
+      "backup": "work/rebuild-20261105T182000Z/source-repairs/009-message_dispatch_tests.cpp.before"
+    },
+    {
+      "path": "anadius-application-graph-source/graph_integration_tests.cpp",
+      "before_sha256": "b4f27e4b6d76785f53a36656e475d4abf305d090b183bfda56c894735d3c11ba",
+      "after_sha256": "d0022481e5427132614b62c26a409e5c8d269b120d7dbce41c0a55523efba6e4",
+      "reason": "Fix observed scoped test flake: current address lookup can resolve receive allocation reusing/overlapping freed greeting. Scope-only same actual Domain HeapFree observer forwards real call/result/LastError, records exact captured live greeting raw argument successful free once, disarms old allocation, and verifies event before first receive. Positive address-reuse fixed case passed; all Scope/EOF/Stop assertions retained. No production code, allocator pin or lifetime getter. Independently reviewed; observed bytes mean actual sent extent, not HeapAlloc capacity.",
+      "backup": "work/rebuild-20261105T182000Z/source-repairs/010-graph_integration_tests.cpp.before",
+      "repair_plan": {
+        "path": "work/rebuild-20261105T182000Z/diagnostics/scoped-greeting-lifetime/repair-plan.json",
+        "sha256": "e69e875e507e0c2d6d0f99aa58f03b6eb14e33282b9cbaaa78569784599d77a7"
+      }
+    }
+  ],
+  "previous_proofs_preserved": [
+    {
+      "previous_path": "outputs/source-workspace/source-snapshot.json",
+      "path": "work/rebuild-20261105T182000Z/historical-common/source-snapshot.json",
+      "sha256": "b7362cf518727f6fc997bfc1377bc4d83e2751903ead78cf376251cb0bf87e6d"
+    },
+    {
+      "previous_path": "outputs/source-workspace/build-record.json",
+      "path": "work/rebuild-20261105T182000Z/historical-common/build-record.json",
+      "sha256": "b9b5bd714c6b5744f379961b6ad60e7eb037a00c1677723bf7bcea6a664d4573"
+    },
+    {
+      "previous_path": "outputs/source-workspace/full-build-verification.json",
+      "path": "work/rebuild-20261105T182000Z/historical-common/full-build-verification.json",
+      "sha256": "6cbded372c77eeb2a35b332dbe75fbc9bc6cfbd24da3b967bfaa03b124087e12"
+    },
+    {
+      "previous_path": "outputs/dll-critical-path/static-source-milestone-20261104.json",
+      "path": "work/rebuild-20261105T182000Z/metadata-before-build-status/static-source-milestone-20261104.json",
+      "sha256": "91fa5a2f0b8f9f84d94e6599a16d0364f0b142b6ea252b1e364d29aa6f4fcba7"
+    },
+    {
+      "path": "work/rebuild-20261105T182000Z/historical-package-receipt.json",
+      "sha256": "35ca916ac996decc75abc35e6ebe0d7c6e33db9d1ffc9860693d27d176d3bd32"
+    },
+    {
+      "path": "work/rebuild-20261105T182000Z/historical-full-link.json",
+      "sha256": "70d9d9dcbaed784530bee67928fe0ebbe27dbe931b07219545cd6988f50e4755"
+    }
+  ],
+  "frozen_build_link_receipt_hashes": [
+    {
+      "path": "outputs/source-workspace/build-record.json",
+      "sha256": "359927eea05c1d1f6dddc99be05a4a4f0df393ff82ac4bc9e5e2355a15ad7252"
+    },
+    {
+      "path": "outputs/source-workspace/source-snapshot.json",
+      "sha256": "9199f873c0285d6614d033675d844e1e691c73ca686d3bef365b38923f077a90"
+    },
+    {
+      "path": "outputs/source-workspace/full-build-verification.json",
+      "sha256": "17adf10282ffcc203606bdfa421af13cd2666e30b16445c8abd9a8600271f4d9"
+    },
+    {
+      "path": "outputs/dll-link-gate-source/current-full-link.json",
+      "sha256": "0cb6b7f6a5333510d2d99eb988c79ea7e4ce636cde9a4a1a7fff411f6bf126d5"
+    }
+  ],
+  "package_receipt_note": "Package receipt is issued externally after ZIP verification; excluded here to avoid an archive/receipt hash cycle. Prior receipt retained in run history.",
+  "additional_dependency_header_count": 3,
+  "total_verified_source_files": 1020
+}

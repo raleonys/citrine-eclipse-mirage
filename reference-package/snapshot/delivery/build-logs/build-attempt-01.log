@@ -1,0 +1,45 @@
+**********************
+PowerShell transcript start
+Start time: 20261105212155
+Username: HeonhideDeluxe\Skysect
+RunAs User: HeonhideDeluxe\Skysect
+Configuration Name: 
+Machine: HEONHIDEDELUXE (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Users\Skysect\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+& 'C:/Users/Skysect/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe' -X utf8 'work/repair-build-override-20261105.py'
+& './work/reset-build-header-checkpoint-20261105.ps1'
+& './work/continue-rebuild-20261104.ps1'
+Process ID: 14516
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+PS>TerminatingError(): "C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-owned-jobs-source\jobs.cpp:126:97: error: no member named 'swap' in 'std::exception_ptr'
+  126 |         {std::unique_lock lock(gate);if(row.generation==generation){if(!row.failure)row.failure.swap(failure);row.stage=Stage::Unknown;}phase=Phase::Poisoned;}
+      |                                                                                     ~~~~~~~~~~~ ^
+1 error generated.
+Exit code: 1
+Failed: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\toolchain\extracted\llvm-mingw-20261020-ucrt-x86_64\bin\clang++.exe"
+>> TerminatingError(): "C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-owned-jobs-source\jobs.cpp:126:97: error: no member named 'swap' in 'std::exception_ptr'
+  126 |         {std::unique_lock lock(gate);if(row.generation==generation){if(!row.failure)row.failure.swap(failure);row.stage=Stage::Unknown;}phase=Phase::Poisoned;}
+      |                                                                                     ~~~~~~~~~~~ ^
+1 error generated.
+Exit code: 1
+Failed: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\toolchain\extracted\llvm-mingw-20261020-ucrt-x86_64\bin\clang++.exe"
+Exception: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\source-workspace\fresh-run-checkpoint.ps1:63
+Line |
+  63 |  … CODE -ne 0){throw (($result -join "`n")+"`nExit code: $LASTEXITCODE`n …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-owned-jobs-source\jobs.cpp:126:97: error: no
+     | member named 'swap' in 'std::exception_ptr'   126 |         {std::unique_lock
+     | lock(gate);if(row.generation==generation){if(!row.failure)row.failure.swap(failure);row.stage=Stage::Unknown;}phase=Phase::Poisoned;}       |                                                                                     ~~~~~~~~~~~ ^ 1 error generated. Exit code: 1 Failed: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\toolchain\extracted\llvm-mingw-20261020-ucrt-x86_64\bin\clang++.exe
+**********************
+PowerShell transcript end
+End time: 20261105212326
+**********************

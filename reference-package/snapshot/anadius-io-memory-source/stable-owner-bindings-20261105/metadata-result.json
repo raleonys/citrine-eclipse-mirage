@@ -1,0 +1,30 @@
+{
+  "pending_source_count": 90,
+  "frozen_build_and_delivery_unchanged": true,
+  "updated_records": [
+    {
+      "path": "outputs/dll-critical-path/pending-source-status.json",
+      "sha256": "030cbc000a4318a59ec9cde0c4046bc055c132f49ba34abb41ec569c311efad0"
+    },
+    {
+      "path": "outputs/dll-critical-path/active-work-plan.json",
+      "sha256": "d940b75bae1f88f9ad2c3e2fd5cb483dd775fa03b0b7751dbe6ea1dcda1542bc"
+    },
+    {
+      "path": "outputs/dll-critical-path/blockers.json",
+      "sha256": "cbba234e424ee8236a25f25806a1e92b92db7c420b8bf7812105b94bfb3ea1a8"
+    },
+    {
+      "path": "outputs/dll-critical-path/validation.json",
+      "sha256": "ed2016a574d573f7bc005ffbc11ca0d59cb99407b633e53b7b3a0148ffc147d5"
+    },
+    {
+      "path": "outputs/dll-critical-path/static-source-milestone-20261104.json",
+      "sha256": "9e55aba507e708432de29a47f0d2d2eb88e1720516a365a6e8af10014d1b4e0b"
+    }
+  ],
+  "integration_plan": {
+    "path": "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/remaining-integration.json",
+    "sha256": "84c7e0f9c4f6e9a2f3ee43334872ce46a99d3f5181383ef7976f62f5b0feff43"
+  }
+}

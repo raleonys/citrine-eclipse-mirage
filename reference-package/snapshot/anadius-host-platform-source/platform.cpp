@@ -65,8 +65,21 @@ bool HostPlatform::verify_version(const host_init_recovered::VersionRequest& v,s
 std::int32_t HostPlatform::initialize_engine_046a20(){return bridge_.initialize_engine_046a20();}
 std::uintptr_t HostPlatform::get_module_handle(std::u16string_view name){return domain_->module(name);}
 std::uintptr_t HostPlatform::get_proc_address(std::uintptr_t module,std::string_view name){return domain_->procedure(module,name);}
-std::int32_t HostPlatform::create_hook_0466e0(std::uintptr_t target,host_init_recovered::Callback callback,std::uintptr_t& original){return bridge_.create_hook_0466e0(target,callback,original);}
-std::int32_t HostPlatform::enable_hook_046a10(std::uintptr_t target){return bridge_.enable_hook_046a10(target);}
+std::int32_t HostPlatform::create_hook_0466e0(std::uintptr_t target,host_init_recovered::Callback callback,std::uintptr_t& original){
+    auto publication=domain_->resources_.original_publication;
+    if(!publication)return bridge_.create_hook_0466e0(target,callback,original);
+    publication->before_create(callback,target,original);
+    try{
+        const auto result=bridge_.create_hook_0466e0(target,callback,original);
+        publication->after_create(callback,target,original,result);return result;
+    }catch(...){publication->unknown();throw;}
+}
+std::int32_t HostPlatform::enable_hook_046a10(std::uintptr_t target){
+    auto publication=domain_->resources_.original_publication;
+    if(!publication)return bridge_.enable_hook_046a10(target);
+    publication->before_enable(target);
+    try{return bridge_.enable_hook_046a10(target);}catch(...){publication->unknown();throw;}
+}
 void HostPlatform::log_text_006880(std::string_view value){domain_->text(value);}
 void HostPlatform::log_integer_00af90(std::int32_t value){domain_->integer(value);}
 void HostPlatform::finish_log_0088e0(){domain_->finish();}

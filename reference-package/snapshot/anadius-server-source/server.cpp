@@ -1,4 +1,5 @@
 #include "server.hpp"
+#include "../anadius-network-hook-source/connect.hpp"
 #include <algorithm>
 #include <limits>
 #include <utility>
@@ -11,9 +12,11 @@ std::uint16_t network_port_to_host(std::uint16_t value) {
 }
 void construct_server_024480(ServerBackend& backend, std::uint16_t& port,
                             std::uint8_t& ready, execution_recovered::Execution& execution) {
+    // Native029eca captures the constructor input before address parsing.
+    const auto requested_port = network_hook_recovered::load_server_port_0a3c90(port);
     const auto ipv6 = backend.parse_address_028690(23, "127.0.0.1");
     Endpoint endpoint;
-    endpoint.port_host_order = port;
+    endpoint.port_host_order = requested_port;
     if (ipv6.error.value == 0) {
         endpoint.family = 23;
         if (ipv6.conversion_result > 0) {
@@ -22,7 +25,7 @@ void construct_server_024480(ServerBackend& backend, std::uint16_t& port,
         }
     } else {
         const auto ipv4 = backend.parse_address_028690(2, "127.0.0.1");
-        if (ipv4.error.value != 0) backend.raise_error(ipv4.error, "address");
+        if (ipv4.error.value != 0) backend.raise_error(ipv4.error, {}); //028210: no operation context
         endpoint.family = 2;
         if (ipv4.conversion_result > 0) std::copy_n(ipv4.bytes.begin(), 4, endpoint.address.begin());
     }
@@ -30,11 +33,12 @@ void construct_server_024480(ServerBackend& backend, std::uint16_t& port,
     backend.initialize_pending_socket_0211b0();
     const auto local = backend.local_endpoint();
     if (local.error.value != 0) backend.raise_error(local.error, "local_endpoint");
-    if (local.returned_size > 128) backend.raise_error({0x2726, ErrorCategory::system}, "endpoint_size");
-    port = network_port_to_host(local.port_network_order);
+    if (local.returned_size > 128) backend.raise_error({0x2726, ErrorCategory::system}, {}); //028210
+    const auto bound_port = network_port_to_host(local.port_network_order);
+    network_hook_recovered::store_server_port_0a3c90(port,bound_port);
     // 02466d..0246e4 writes the actual bound port; BOOL result is ignored.
-    backend.set_environment_variable("EALsxPort", std::to_string(port));
-    execution.finish_flag_036820(ready);
+    backend.set_environment_variable("EALsxPort", std::to_string(bound_port));
+    execution.finish_server_startup(ready,bound_port);
     backend.async_accept_021b00();
 }
 void server_start_029ea0(ServerBackend& backend, std::uint16_t& port,
@@ -42,7 +46,7 @@ void server_start_029ea0(ServerBackend& backend, std::uint16_t& port,
     backend.initialize_context_0241b0();
     construct_server_024480(backend, port, ready, execution);
     const auto error = backend.run_context_0298b0();
-    if (error.value != 0) backend.raise_error(error, "io_context::run");
+    if (error.value != 0) backend.raise_error(error, {}); //028210, before normal cleanup
     backend.destroy_pending_socket_024db0();
     backend.destroy_acceptor_024db0();
     backend.destroy_context();

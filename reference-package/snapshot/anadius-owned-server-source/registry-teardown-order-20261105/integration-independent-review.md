@@ -1,0 +1,13 @@
+# Independent teardown integration-source review
+
+No blocking source defect found in `outputs/anadius-owned-server-source/server_integration_tests.cpp` SHA256 `45e4627b42d3463fb0ae879168d7115e811d0b97289d001e38ab32e837c37e68`, compared against this stage's captured before file SHA256 `87bf17d709d9a9f508bb3f85489b6ef6ae4ec974f5d0f11db90dc58d0c908e8a`. No compilation, tests, child process, linking, DLL execution or packaging was run. Production review is recorded separately.
+
+The new instrumentation records the actual initialized CRITICAL_SECTION addresses. Initialization order is registry, scheduler, service; each Original deletion requires address indexes 2, 1, 0, so identical event names cannot hide a wrong gate order. Port close requires the first two deletions already occurred, and the final assertion places the last registry deletion after close. Existing WSA-before-deletion observation remains.
+
+The retained scheduler pointer references embedded Core storage, not the borrowed stack ServerView. After actual worker/queue drain, the fixture captures low wake one and requires work zero; it explicitly seeds high32 to `0x5a5a5a5a`, preserving low32. Gate deletion callbacks then require high32 exactly one and the original low32 value, detecting an incorrect OR or whole-word overwrite. The seed is a disclosed fixture mutation of the public typed projection, not evidence native execution naturally produces that prior high value or an atomic/concurrent native ABI test.
+
+The close wrapper first requires successful physical closure of its own kernel IOCP, then returns FALSE for Original and sets an error. The actual source must ignore that result. Separate IocpConstructorImports::get_last_error instrumentation must remain unused on this successful constructor/ignored-close path. This safely exercises the returned BOOL contract without leaking the fixture's OS resource; it does not establish physical closure when a real provider returns FALSE.
+
+The tiny Constructed Original case closes an actual never-initialized backend and requires no startup, cleanup, gates, port attempts or error queries; provider leases return to zero before the initialized scenario. It therefore covers live-flag guards against touching uninitialized critical sections. Existing Host order/check contracts and isolated diagnostic/retained-failure modes remain intact.
+
+Limit: NativeSocketGate's actual empty service enter/leave round-trip is not separately intercepted by this test; its presence and position were independently reviewed in production source against `029a30`. Source Closed/drained assertions await execution and are not runtime PASS evidence. Generic hidden-worker/timer/custom-registry branches and DLL/CRT behavior are not covered here.

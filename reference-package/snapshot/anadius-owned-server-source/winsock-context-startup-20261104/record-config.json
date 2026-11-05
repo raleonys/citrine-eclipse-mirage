@@ -1,0 +1,29 @@
+{
+  "schema": "original-shared-winsock-context.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_PRODUCTION_CONTEXT_LIFECYCLE_CORRECTION",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Explicit Original context with registry gate before shared acquire/check, WORD0002 first-owner startup/cached status and last-owner ignored cleanup before service retirement; DLL-only compiler-CRT initial owner. HOST profile preserved. Source-only, not compiled/run.",
+  "sources": [
+    {"path":"anadius-owned-server-source/server.cpp","before":"before/anadius-owned-server-source__server.cpp","role":"production"},
+    {"path":"anadius-owned-server-source/server.hpp","before":"before/anadius-owned-server-source__server.hpp","role":"production"},
+    {"path":"anadius-resources-factory-source/factory.cpp","before":"before/anadius-resources-factory-source__factory.cpp","role":"production"},
+    {"path":"dll-link-gate-source/entry.cpp","before":"before/dll-link-gate-source__entry.cpp","role":"production"},
+    {"path":"anadius-owned-server-source/server_tests.cpp","before":"before/anadius-owned-server-source__server_tests.cpp","role":"test"},
+    {"path":"anadius-owned-server-source/server_integration_tests.cpp","before":"before/anadius-owned-server-source__server_integration_tests.cpp","role":"test"},
+    {"path":"anadius-resources-factory-source/factory_tests.cpp","before":"before/anadius-resources-factory-source__factory_tests.cpp","role":"test"}
+  ],
+  "reviews": ["production-independent-review.md", "root-primitive-test-review.md", "integration-factory-independent-review.md"],
+  "reports": ["native-findings.md", "implementation.md", "test-source-notes.md", "compiler-portability-note.md"],
+  "native_replies": ["bytes-18007df30.json", "bytes-18007f660.json", "bytes-180084500.json", "global-release-containing.json", "global-release-first-instruction.json", "initializer-xrefs.json", "instruction-18007df35.json", "instruction-18007df3d.json", "instruction-18007df40.json", "instruction-18007df42.json", "instruction-18007df49.json", "instructions-180001310.json", "instructions-180023f30.json", "instructions-1800241b0.json", "instructions-180029ea0.json", "pseudo-180001310.json", "pseudo-180023f30.json", "pseudo-1800241b0.json", "pseudo-180029ea0.json"],
+  "supplementary": ["outputs/anadius-owned-server-source/winsock-crt-order-followup-20261105/findings.md", "outputs/anadius-owned-server-source/winsock-crt-order-followup-20261105/retained-crt-order.assembly.txt", "outputs/anadius-owned-server-source/winsock-crt-order-followup-20261105/retained-crt-order.pseudo.txt", "outputs/anadius-owned-server-source/winsock-crt-order-followup-20261105/retained-table-selection.json", "outputs/anadius-owned-server-source/winsock-crt-order-followup-20261105/manifest.json", "outputs/anadius-session-policy-source/native-stop-diagnostic-20261104/evidence.json"],
+  "limits": [
+    "No compiler/project tests/link/DLL execution/ZIP update. Primitive, own-child, Native backend and factory assertions remain unexecuted.",
+    "DLL initial owner/atexit integration is source-level with static original CRT ordering proof; emitted compiler callback/pointer/runtime behavior is not validated.",
+    "No startup-completion wait, retry, unknown-constructor rollback, extra unload condition, native class/registry/stream/EH/allocator/ABI completion is claimed.",
+    "The internal socket-service/scheduler deletion order and exact shutdown effects remain a concrete separate follow-up, now supported by fresh10-record audit."
+  ],
+  "completed_note": "SOURCE_ONLY19freshREA/Ghidra records plus retainedCRTdispatch bind Original shared WSA ownership/cachedstatus/WORD2, registry-before-contextacquire and last-owner ignoredcleanup with DLL-only firstclaim.4production/3testfiles independentlyreviewed NOT RUN; passive import-capture refinement included without compilation.",
+  "observation": "Original-only REA19record session exported/closed, hashunchanged; retainedCRT ordering separately resolved before implementation. Parallel fresh10record teardown audit found next concrete order/error-contract correction; no ceremonial repeated native queries.",
+  "next_scope": "Project Original fixed socket-service/scheduler shutdown and deletion order: service gate round-trip; upper32word38 shutdown=1; delete service gate then scheduler gate then IOCP ignored BOOL/no GetLastError, registry gate last. Preserve existing HOST contract and bounded zero-work/no-hidden-worker/no-timer selection; no build/test/link/DLL/ZIP."
+}

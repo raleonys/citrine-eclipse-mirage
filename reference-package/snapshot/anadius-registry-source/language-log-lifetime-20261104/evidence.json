@@ -1,0 +1,118 @@
+{
+  "schema": "registry-language-lifetime.v1",
+  "client_date": "2026-11-04",
+  "recorded_at": "2026-11-04T15:19:56.736142+00:00",
+  "status": "SOURCE_IMPLEMENTED_STATIC_REVIEWED_NOT_COMPILED",
+  "scope": "C++ narrow language log temporary retired before A/W replacement writer; no CRT ABI or runtime equivalence claim",
+  "source_changes": [
+    {
+      "path": "anadius-registry-source/registry.cpp",
+      "build_sha256": "757e2ffb52077852d9ca509635a10bc5191f2176f6d05a1dd8c88131965680f5",
+      "current_sha256": "be3a6151a754397231909e4fea9f2ade1e5e3512c3a48fabcb67f12da3701176"
+    }
+  ],
+  "pending_source_count": 1,
+  "fresh_REA_evidence": [
+    {
+      "path": "outputs/anadius-registry-source/language-log-lifetime-20261104/instructions-180009520.json",
+      "sha256": "40ce5faf2b9875a3ac2b77fdbc056dd786c107b92bc5422365dc0b8d6ea8b5c0",
+      "evidence_id": "ev_2a6d6256910c15f981440b8b5402baac6934973ec9cd2735ee7a745d06aa4fd1",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x180009520"
+      }
+    },
+    {
+      "path": "outputs/anadius-registry-source/language-log-lifetime-20261104/instructions-180009850.json",
+      "sha256": "f2f5488ec646a8d4f0184493515f8a314105c663889fc595dc61df9dff3da841",
+      "evidence_id": "ev_14017dc1d6f2610c5b312c69c1966c49395e7b1fce29ea68803d1216ac80abf4",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x180009850"
+      }
+    },
+    {
+      "path": "outputs/anadius-registry-source/language-log-lifetime-20261104/pseudo-1800091a0.json",
+      "sha256": "f893597c5270f15e7b3f153613f684f82d60304347f5a38a8acc9a6b4460a704",
+      "evidence_id": "ev_a47bdb97cd807fb393c770e2f92618a6871f41e0423626acfeccae3667b5180e",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x1800091a0"
+      }
+    },
+    {
+      "path": "outputs/anadius-registry-source/language-log-lifetime-20261104/pseudo-1800093a0.json",
+      "sha256": "ef7bd030b8effd55b7145674580841728d8f80e21d81975338c9d51b406e1531",
+      "evidence_id": "ev_74e676db579fc8effedeed9b27af8c92035316c6aee66c218b5d4e5299e8f8b4",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x1800093a0"
+      }
+    },
+    {
+      "path": "outputs/anadius-registry-source/language-log-lifetime-20261104/pseudo-180009520.json",
+      "sha256": "a85a29ce96a24916bc8a0b23a5d3fa69233c8c5eaf8bdfefa90c82b9598f26d7",
+      "evidence_id": "ev_0133c29b07af397b0366084067df78274739e38ffb83f770e0a154f5608ba196",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x180009520"
+      }
+    },
+    {
+      "path": "outputs/anadius-registry-source/language-log-lifetime-20261104/pseudo-180009850.json",
+      "sha256": "a78fc7677696f4ecdec94614736339bb220ecfa175e555f648f8d4219c3df44f",
+      "evidence_id": "ev_1bed980bee9e1fc1acd7acf27f0a51162b32fcde42b4729462fc05e592e65067",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x180009850"
+      }
+    }
+  ],
+  "independent_static_review": {
+    "path": "outputs/anadius-registry-source/language-log-lifetime-20261104/review.md",
+    "sha256": "3ef1b17eb70e7facf440c10287e55bcc20a1247ad98fe53a68a3b810021bbc4e"
+  },
+  "report": {
+    "path": "outputs/anadius-registry-source/language-log-lifetime-20261104/report.md",
+    "sha256": "e4c764ff2ac7f39b53f1219cb35f6a8553f41888e44a54fd4dfd467ba5ff10cc"
+  },
+  "native_session_closed": true,
+  "compile": false,
+  "project_tests": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "original_unchanged": true,
+  "frozen_proofs_and_delivery": [
+    {
+      "path": "outputs/source-workspace/build-record.json",
+      "sha256": "b9b5bd714c6b5744f379961b6ad60e7eb037a00c1677723bf7bcea6a664d4573"
+    },
+    {
+      "path": "outputs/source-workspace/source-snapshot.json",
+      "sha256": "b7362cf518727f6fc997bfc1377bc4d83e2751903ead78cf376251cb0bf87e6d"
+    },
+    {
+      "path": "outputs/source-workspace/full-build-verification.json",
+      "sha256": "6cbded372c77eeb2a35b332dbe75fbc9bc6cfbd24da3b967bfaa03b124087e12"
+    },
+    {
+      "path": "outputs/dll-link-gate-source/current-full-link.json",
+      "sha256": "70d9d9dcbaed784530bee67928fe0ebbe27dbe931b07219545cd6988f50e4755"
+    },
+    {
+      "path": "outputs/package-receipt.json",
+      "sha256": "35ca916ac996decc75abc35e6ebe0d7c6e33db9d1ffc9860693d27d176d3bd32"
+    },
+    {
+      "path": "outputs/dll-link-gate-source/build-current-full/anadius64.reconstruction.dll",
+      "sha256": "44bc309127e7cec7db7ed5c62ff6664a22e257b4edf3ed977a0fa8fa109b290b"
+    },
+    {
+      "path": "outputs/dll-reverse-engineering.zip",
+      "sha256": "790b71bbf92d02ff05a391d2985fdab4eaad3ab72f34de29ea51e79be13b267c"
+    }
+  ],
+  "overall_completion_percentage": null,
+  "new_native_body_recoveries": 0
+}

@@ -2,6 +2,7 @@
 #include "../anadius-crt-glue-source/crt_glue.hpp"
 #include <memory>
 
+namespace anadius::thread_domain {class DomainStorage;}
 namespace anadius::bootstrap_providers {
 struct ThreadDomain;
 // No per-image route and no raw provider global: each launch envelope carries
@@ -14,6 +15,9 @@ public:
     NativeThreads(std::unique_ptr<threads_recovered::Effects>,thread_native::Api=thread_native::native_api(),std::shared_ptr<void> domain_lifetime={});
     ~NativeThreads() noexcept;
     NativeThreads(const NativeThreads&)=delete;NativeThreads& operator=(const NativeThreads&)=delete;
+    // Set only by DomainStorage::make_threads. Legacy standalone adapters have
+    // no certified root. This identifies the thread provider, not all Resources.
+    std::shared_ptr<thread_domain::DomainStorage> memory_domain() const noexcept{return domain_;}
     threads_recovered::Context* calloc_context_066848() override;
     void free_0668c0(threads_recovered::Context*) override;
     bool get_module_handle_ex_w(std::uint32_t,std::uintptr_t,threads_recovered::Handle*) override;
@@ -33,9 +37,11 @@ public:
     [[noreturn]] void free_library_and_exit_thread(threads_recovered::Handle,std::uint32_t) override;
     [[noreturn]] void exit_thread(std::uint32_t) override;
 private:
+    friend class thread_domain::DomainStorage;
     friend std::unique_ptr<NativeThreads> make_recovered_threads(ThreadDomain,thread_native::Api);
     struct Launch;
     static DWORD WINAPI start(void*) noexcept;
+    std::shared_ptr<thread_domain::DomainStorage> domain_; // root retires last
     std::shared_ptr<void> lifetime_; // destroyed after lower provider
     std::unique_ptr<threads_recovered::Effects> lower_;thread_native::Api api_;
 };

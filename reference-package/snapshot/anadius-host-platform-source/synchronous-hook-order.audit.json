@@ -1,0 +1,180 @@
+{
+  "schema": "synchronous-hook-order.native-and-source-audit.v1",
+  "recorded_at": "2026-11-02T18:25:41.139582+00:00",
+  "status": "NATIVE_ORDER_MATCHES_BOUNDED_SCOPE_STARTUP_ADMISSION_GAP_OPEN",
+  "authority": "REA/Ghidra static observations plus author source inference; no target execution or compiled verification.",
+  "reviewer": "author only; no independent agent review",
+  "native_bundle": {
+    "path": "outputs/anadius-host-platform-source/synchronous-hook-order.native.json",
+    "sha256": "811e81bb42e8f2cd09f79d278459da938e23b84cf614bb050ea4ba2a320756ab",
+    "records": 5,
+    "evidence_ids": [
+      "ev_2e6fe3f4fb3ea3c8c61e9391e3000efc173a148ec843b7ec0d6deda38c2e2fb5",
+      "ev_4ee9b85e8791d2665402e6beb7b69444e92a96567c389d2a2ce4f6049dfd95ba",
+      "ev_779c6e404f576eb39d9c5db3e8ed4c634bd231aa88d953265f1e2560c9842e63",
+      "ev_a4fdb1d0a5baa3ec3e9629881f8eaa3c4fd8068df510b7d0bda67104c2a4642c",
+      "ev_ca8bbbec9f153d0e150c7087ea7d3f011de34eb8ea32899b8aa117af32aacb9f"
+    ]
+  },
+  "snapshot": {
+    "path": "outputs/anadius-host-platform-source/synchronous-hook-order.snapshot.json",
+    "sha256": "96ee84b0aa2c046375a13e711c872c946b387f4dad995bfeb8712f13d41f3f42"
+  },
+  "session_selected_fields": {
+    "path": "outputs/anadius-host-platform-source/synchronous-hook-order.session.json",
+    "sha256": "1caedb490e64171e91f1e555fd71aee5b428c11c9822d327453d45e4bb408bf0"
+  },
+  "report": {
+    "path": "outputs/anadius-host-platform-source/synchronous-hook-order.md",
+    "sha256": "09ffcb7e488bc9789a9fe925b3a50ba28eb9631c0b6878f37b88195fc29875e2"
+  },
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "pseudo_procedures": [
+    "0x18000f120",
+    "0x1800466e0",
+    "0x180046a10",
+    "0x180046230",
+    "0x18000fd00",
+    "0x180038970",
+    "0x18000e310"
+  ],
+  "assembly_procedures": [
+    "0x180046a10",
+    "0x18000f120",
+    "0x18000fd00"
+  ],
+  "source_evidence": [
+    {
+      "path": "outputs/anadius-host-init-source/host_init.cpp",
+      "sha256": "ee60b84bfe1fc6cf1f480561ee9f3fad232c98a901362cc1b77f6bb86bc1f52b",
+      "line": 21,
+      "anchor": "status = effects.enable_hook_046a10(target);"
+    },
+    {
+      "path": "outputs/hook-engine-source/adapters.cpp",
+      "sha256": "c43e3fc13ceb60833324c880725d7e6ed6b0f668ed82e077b9b28d4f47a7ac5d",
+      "line": 15,
+      "anchor": "original = reinterpret_cast<std::uintptr_t>(output);"
+    },
+    {
+      "path": "outputs/hook-engine-source/vendor/minhook/src/hook.c",
+      "sha256": "edcce4c81985d7dd5b73feae96d6498c8f749b1bca4c3d2d9926ea9a17a84755",
+      "line": 634,
+      "anchor": "*ppOriginal = pHook->pTrampoline;"
+    },
+    {
+      "path": "outputs/hook-engine-source/vendor/minhook/src/hook.c",
+      "sha256": "edcce4c81985d7dd5b73feae96d6498c8f749b1bca4c3d2d9926ea9a17a84755",
+      "line": 742,
+      "anchor": "status = Freeze(&threads, pos, ACTION_ENABLE);"
+    },
+    {
+      "path": "outputs/anadius-source/bootstrap.cpp",
+      "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+      "line": 39,
+      "anchor": "deps_.between_workers_00e310();"
+    },
+    {
+      "path": "outputs/anadius-source/bootstrap.cpp",
+      "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+      "line": 42,
+      "anchor": "start_detached(ThreadEntry::no_argument_0388a0, second);"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "sha256": "11369cb3f9880dea5d2780134c5a31f29db21f2b6165302acef9f9898bca9abc",
+      "line": 310,
+      "anchor": "v.callback_attachment->host_setup_complete();"
+    },
+    {
+      "path": "outputs/anadius-native-context-source/context.cpp",
+      "sha256": "68fad4a9c382b271219656736216c15b304e51d0bb18b57306acbb2810d6f3f6",
+      "line": 48,
+      "anchor": "if(admission_)admission_->host_setup_complete();"
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/foreign.cpp",
+      "sha256": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4",
+      "line": 38,
+      "anchor": "(void)activate_foreign();"
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/foreign.cpp",
+      "sha256": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4",
+      "line": 64,
+      "anchor": "if(!ready_&&::GetCurrentThreadId()!=controller_)throw Rejected(Fault::Warming);"
+    },
+    {
+      "path": "outputs/anadius-startup-publication-source/publication.cpp",
+      "sha256": "8b3136826699324edd0f0a44ee9b44927cc5617f180753828be5844c04cbc5bf",
+      "line": 26,
+      "anchor": "return bits_.load(std::memory_order_acquire)==15"
+    },
+    {
+      "path": "outputs/anadius-startup-publication-source/publication.cpp",
+      "sha256": "8b3136826699324edd0f0a44ee9b44927cc5617f180753828be5844c04cbc5bf",
+      "line": 36,
+      "anchor": "return milestones->observed_all()&&proof();"
+    },
+    {
+      "path": "outputs/anadius-startup-publication-source/publication.hpp",
+      "sha256": "516975cfb72c687d23d2e1253608a63dde70243e8026bb4ba738bb4b8257a3e4",
+      "line": 27,
+      "anchor": "milestone arrival never invokes or schedules activation on a worker."
+    },
+    {
+      "path": "outputs/anadius-startup-publication-source/publication_integration_tests.cpp",
+      "sha256": "8237e950c20c318e72fb3483ba8602ee0f1da7c341a2d312457a71646845bf37",
+      "line": 82,
+      "anchor": "worker events alone do not activate foreign callbacks on worker threads"
+    },
+    {
+      "path": "outputs/anadius-native-source/native_callbacks.cpp",
+      "sha256": "e3da2e8c5aca2d0d768adb48238db45dc4f71c232fb281a8ebdb9b96c22de1e8",
+      "line": 35,
+      "anchor": "AdmissionLease admission(*lease.context,callback);"
+    },
+    {
+      "path": "outputs/anadius-network-hook-source/connect.cpp",
+      "sha256": "28ed74cee63c7a2432336629595ad771ea573efbe33b9f9721f9d1b524378b6f",
+      "line": 23,
+      "anchor": "effects.wait_steps_036880(-1);"
+    },
+    {
+      "path": "outputs/anadius-original-provider-source/originals.cpp",
+      "sha256": "36b2db119c7a96c02afe7dcf97385ca940f7af5f8588ece79b894c999c23f71a",
+      "line": 24,
+      "anchor": "Original provider is not published for this caller"
+    }
+  ],
+  "historical_selected_engine_comparison": {
+    "path": "outputs/hook-engine-source/anadius-comparison.json",
+    "sha256": "725abb912a3bcd0d8bd91a591c11c28ca9466bdbc3f7dd91e8e6fddbacb4329c"
+  },
+  "findings": [
+    "Native original-write/create -> enable -> success-only enabled-target append matches observed selected source sequence. Native enable is a tail transfer with EDX1; decompiler void inference is not a void ABI proof. No action-worthy change in that bounded motor sequence.",
+    "Normal038970 calls host setup before creating Online and library workers. Source host_setup_complete attempts all-four-event activation at that earlier point, so the observed normal event chain cannot satisfy it.",
+    "Later source milestones only update atomic bits; they do not call/schedule controller activation. Current production source leaves a later explicit retry to caller. Existing scenario source expects all milestones with foreign-ready false until manual retry; it was not rerun.",
+    "Native00fd00 forwards unrecognized sockaddr combinations and skips global startup wait on80/443; wait(-1) occurs only in another recognized branch. Source connect body matches, but blanket native AdmissionLease precedes that body and can reject warming foreign calls before native branch selection.",
+    "Setup-phase OriginalProvider rejects non-controller loads. Per-hook original publication and callback-specific startup dependencies must be designed together; removing global gate or seeding readiness would not establish correctness.",
+    "This is a missing production startup/admission binding, not an observed crash or proof that the deliberate restricted source profile violated its own tests. Original synchronous startup remains selected."
+  ],
+  "next_source_target": "Per-hook original publication before enable and callback-specific startup dependency mapping, retaining code ownership/stop discipline and original synchronous startup without new Initialize requirement.",
+  "production_sources_changed_this_step": 0,
+  "test_sources_changed_this_step": 0,
+  "pending_source_count": 73,
+  "original_binary_accessed_statically": true,
+  "original_modified": false,
+  "version_input_accessed": false,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "target_executed": false,
+  "package_rebuilt": false,
+  "analysis_session_closed": true,
+  "limits": [
+    "Pseudocode/assembly is static provider evidence, not original C++, execution or full upstream equivalence; export preserves all tool limitations.",
+    "No production code edit or DLL completion percentage credit.73 source/header deltas remain uncompiled.",
+    "Analysis concerns normal source attach sequencing; arbitrary custom providers/cached entries/external scheduling are not characterized. Loader hooks and image/foreign/CRT finality remain OPEN."
+  ]
+}

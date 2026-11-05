@@ -1,0 +1,32 @@
+{
+  "status": "PRE_EDIT_SOURCE_SNAPSHOT",
+  "files": [
+    {
+      "path": "anadius-native-profile-source/native.hpp",
+      "exists": true,
+      "sha256": "fbf8c0e31f5df3479ce8a15e550194443750416f52ee30843a57a096f11958fa",
+      "before": "before/anadius-native-profile-source__native.hpp"
+    },
+    {
+      "path": "anadius-native-profile-source/native.cpp",
+      "exists": true,
+      "sha256": "750f958bdc0d8209bafbc98f00325b8081892eb10ae0fe2ed63d8c3ccb933758",
+      "before": "before/anadius-native-profile-source__native.cpp"
+    },
+    {
+      "path": "anadius-native-profile-source/native_tests.cpp",
+      "exists": true,
+      "sha256": "28b26d25c72bf98be7f570185bb065adbf742d32fc3d0189cce2a70bff6a96c9",
+      "before": "before/anadius-native-profile-source__native_tests.cpp"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "exists": true,
+      "sha256": "714af17f024cd4143874e969e2f27bf75e6d00142adbc3584758ae26cf8ee94d",
+      "before": "before/anadius-worker-handoff-source__handoff_tests.cpp"
+    }
+  ],
+  "pending_source_count": 98,
+  "compile": false,
+  "tests_run": false
+}

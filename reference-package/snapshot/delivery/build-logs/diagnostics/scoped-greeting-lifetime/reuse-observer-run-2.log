@@ -1,0 +1,2 @@
+DIAG firstreceive old_current_address_visible=0 actual_free_count=1 captured_base=2381fb80140 accepted_free_arg=2381fb80140
+DIAG final greeting_gone=1 eof_seen=1 eof_posted=1 receive_waiting=0 response_size=0 received_logs=0 response_logs=0 closed_size=3 closed_back=200 ports_closed=1 cleanups=1 greeting_base=2381fb80140 tail=2381fb801e0 receive_base=2381fb814e0

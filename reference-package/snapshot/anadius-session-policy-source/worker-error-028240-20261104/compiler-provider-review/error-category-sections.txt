@@ -1,0 +1,79 @@
+
+error_category.cpp.obj:	file format coff-x86-64
+Contents of section .text$_ZNSt3__114error_categoryD2Ev:
+ 0000 c3                                   .
+Contents of section .text$unlikely$_ZNSt3__114error_categoryD0Ev:
+ 0000 0f0b                                 ..
+Contents of section .text$_ZNKSt3__114error_category23default_error_conditionEi:
+ 0000 4889c844 89014889 5108c3             H..D..H.Q..
+Contents of section .text$_ZNKSt3__114error_category10equivalentEiRKNS_15error_conditionE:
+ 0000 564883ec 304c89c6 4189d048 89ca488b  VH..0L..A..H..H.
+ 0010 01488b40 18488d4c 2420ff15 00000000  .H.@.H.L$ ......
+ 0020 488b4424 28483b46 080f94c1 8b063944  H.D$(H;F......9D
+ 0030 24200f94 c020c848 83c4305e c3        $ ... .H..0^.
+Contents of section .xdata$_ZNKSt3__114error_category10equivalentEiRKNS_15error_conditionE:
+ 0000 01050200 05520160                    .....R.`
+Contents of section .text$_ZNKSt3__114error_category10equivalentERKNS_10error_codeEi:
+ 0000 483b4a08 0f94c144 39020f94 c020c8c3  H;J....D9.... ..
+Contents of section .rdata$_ZTVNSt3__114error_categoryE:
+ 0000 00000000 00000000 00000000 00000000  ................
+ 0010 00000000 00000000 00000000 00000000  ................
+ 0020 00000000 00000000 00000000 00000000  ................
+ 0030 00000000 00000000 00000000 00000000  ................
+ 0040 00000000 00000000                    ........
+Contents of section .rdata$_ZTINSt3__114error_categoryE:
+ 0000 10000000 00000000 00000000 00000000  ................
+Contents of section .rdata$_ZTSNSt3__114error_categoryE:
+ 0000 4e537433 5f5f3131 34657272 6f725f63  NSt3__114error_c
+ 0010 61746567 6f727945 00                 ategoryE.
+Contents of section .drectve:
+ 0000 202d6578 636c7564 652d7379 6d626f6c   -exclude-symbol
+ 0010 733a5f5a 4e537433 5f5f3131 34657272  s:_ZNSt3__114err
+ 0020 6f725f63 61746567 6f727944 32457620  or_categoryD2Ev 
+ 0030 2d657863 6c756465 2d73796d 626f6c73  -exclude-symbols
+ 0040 3a5f5a4e 5374335f 5f313134 6572726f  :_ZNSt3__114erro
+ 0050 725f6361 7465676f 72794430 4576202d  r_categoryD0Ev -
+ 0060 6578636c 7564652d 73796d62 6f6c733a  exclude-symbols:
+ 0070 5f5a4e4b 5374335f 5f313134 6572726f  _ZNKSt3__114erro
+ 0080 725f6361 7465676f 72793233 64656661  r_category23defa
+ 0090 756c745f 6572726f 725f636f 6e646974  ult_error_condit
+ 00a0 696f6e45 69202d65 78636c75 64652d73  ionEi -exclude-s
+ 00b0 796d626f 6c733a5f 5a4e4b53 74335f5f  ymbols:_ZNKSt3__
+ 00c0 31313465 72726f72 5f636174 65676f72  114error_categor
+ 00d0 79313065 71756976 616c656e 74456952  y10equivalentEiR
+ 00e0 4b4e535f 31356572 726f725f 636f6e64  KNS_15error_cond
+ 00f0 6974696f 6e45202d 6578636c 7564652d  itionE -exclude-
+ 0100 73796d62 6f6c733a 5f5a4e4b 5374335f  symbols:_ZNKSt3_
+ 0110 5f313134 6572726f 725f6361 7465676f  _114error_catego
+ 0120 72793130 65717569 76616c65 6e744552  ry10equivalentER
+ 0130 4b4e535f 31306572 726f725f 636f6465  KNS_10error_code
+ 0140 4569202d 6578636c 7564652d 73796d62  Ei -exclude-symb
+ 0150 6f6c733a 5f5a5456 4e537433 5f5f3131  ols:_ZTVNSt3__11
+ 0160 34657272 6f725f63 61746567 6f727945  4error_categoryE
+ 0170 202d6578 636c7564 652d7379 6d626f6c   -exclude-symbol
+ 0180 733a5f5a 54494e53 74335f5f 31313465  s:_ZTINSt3__114e
+ 0190 72726f72 5f636174 65676f72 7945202d  rror_categoryE -
+ 01a0 6578636c 7564652d 73796d62 6f6c733a  exclude-symbols:
+ 01b0 5f5a5453 4e537433 5f5f3131 34657272  _ZTSNSt3__114err
+ 01c0 6f725f63 61746567 6f727945 202d6578  or_categoryE -ex
+ 01d0 636c7564 652d7379 6d626f6c 733a5f5a  clude-symbols:_Z
+ 01e0 4e537433 5f5f3131 34657272 6f725f63  NSt3__114error_c
+ 01f0 61746567 6f727944 314576             ategoryD1Ev
+Contents of section .debug$S:
+ 0000 04000000 f1000000 90000000 0a000111  ................
+ 0010 00000000 00000000 82003c11 01000000  ..........<.....
+ 0020 d0001700 01000400 0000e659 00000000  ...........Y....
+ 0030 0000636c 616e6720 76657273 696f6e20  ..clang version 
+ 0040 32332e31 2e342028 68747470 733a2f2f  23.1.4 (https://
+ 0050 67697468 75622e63 6f6d2f6c 6c766d2f  github.com/llvm/
+ 0060 6c6c766d 2d70726f 6a656374 2e676974  llvm-project.git
+ 0070 20376139 34316466 62323837 37613062   7a941dfb2877a0b
+ 0080 38636633 30333233 66656661 38356164  8cf30323fefa85ad
+ 0090 30313965 30623066 35290000           019e0b0f5)..
+Contents of section .gfids$y:
+ 0000 08000000 0b000000 0e000000 11000000  ................
+ 0010 16000000 30000000                    ....0...
+Contents of section .pdata$_ZNKSt3__114error_category10equivalentEiRKNS_15error_conditionE:
+ 0000 00000000 3d000000 00000000           ....=.......
+Contents of section .llvm_addrsig:
+ 0000 1c311f2f                             .1./

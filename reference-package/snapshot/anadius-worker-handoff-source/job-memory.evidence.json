@@ -1,0 +1,220 @@
+{
+  "schema": "explicit-job-memory.source-only.v1",
+  "recorded_at": "2026-11-01T19:45:57.153244+00:00",
+  "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+  "authority": "Selected HOST memory/worker ownership composition; no new recovered native function, compiled result or execution proof.",
+  "user_execution_policy": "No compilation, tests, link or binary execution without explicit user rebuild request.",
+  "production_sources_changed_this_step": 2,
+  "test_sources_changed_not_run": 1,
+  "source_files_changed_this_step": [
+    "anadius-worker-handoff-source/handoff.hpp",
+    "anadius-worker-handoff-source/handoff.cpp",
+    "anadius-worker-handoff-source/handoff_tests.cpp"
+  ],
+  "all_pending_sources_since_last_full_build": [
+    {
+      "path": "anadius-application-worker-source/worker.cpp",
+      "last_built_sha256": "a3502562d95b6f7d7d4182ac6c2f37f2ae64a19f448092d0fc2f31ab743572a9",
+      "current_sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "anadius-application-worker-source/worker.hpp",
+      "last_built_sha256": "923514f18bf5d32ecfa2487e982e571117d0809e0892f171803c06ae915408f1",
+      "current_sha256": "6cf84342444f3724c02dda3727d54569e7cf3fcecf3d972be71c65f48fb9aea5"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend_tests.cpp",
+      "last_built_sha256": "65005e8082e9fadfc06fb89a00539deda014ea710f00c3fadd0e718077410414",
+      "current_sha256": "8d653c11159bf39152d18a5709a0bc45bf5927ab267987016a181a978bf8c27c"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "last_built_sha256": "31fc08d0311ed281465d9ffe7e255581c6848a5f83c67f2b435e17084efc8573",
+      "current_sha256": "56ed1a15c770804607c3bf911a9401a6d18c5f03638eca0672e612444d43f973"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/tracked_threads.hpp",
+      "last_built_sha256": "414a94314cecedd2908a073a6206a0adfdb7847e80df75911d0ba29e792277a7",
+      "current_sha256": "1688b459b3585703989e902f1378609abcdc3d40a2296e7eddf58e0b117e086f"
+    },
+    {
+      "path": "anadius-bootstrap-providers-source/native_threads.hpp",
+      "last_built_sha256": "243bf515118b795e9bf8004d79f5b923bf40f0ad98ff7d68946ebe4fd264cac7",
+      "current_sha256": "b9f2cade216f3333614fb0d94ce25ca6e7a41a6c228f9bd38c4994eca41cfbfe"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.cpp",
+      "last_built_sha256": "be831aeeaf94ab99a75981613a124f522e9cffc8e35590c898ffc8e6af27dcca",
+      "current_sha256": "271861dbf9a661eee658ae4de200317010adbae341dbcb368305f3b2e0040435"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.hpp",
+      "last_built_sha256": "d55494573dc515eacdcf2197c5213d67893aecfb46466e835d07de4e3add99eb",
+      "current_sha256": "b6864109663f3b1894be37f1142b5a72802f66e4616379ed0d167770ce92b20d"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.cpp",
+      "last_built_sha256": "6db0b7461cae29db4ad1cb0a09eb02ef6426628b80d4ca1706acd9ca3a7363c2",
+      "current_sha256": "365d05409246c1e97c551590c1ddd0b907c7bf4f4b374ad0bd73eff5f509fd78"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.hpp",
+      "last_built_sha256": "c24b4a64d9be048f998531979fa7bba54173d51dc313c9359887daedd5811346",
+      "current_sha256": "e182db10c6487a270e2f040fdbcc144daff18790cc7e23270b69999a3e604fbd"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.cpp",
+      "last_built_sha256": "fed670a3e0937ff56cc0cf001d19873c5d068b546ddf8b7f7de7f878a1547849",
+      "current_sha256": "d3a5eb1687024a15aa7e031b4960aaa5d6e3ee6b7cc992f039fca367f068d85a"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.hpp",
+      "last_built_sha256": "e127429b9bebd195cc7cd6e1d1ef81743547a1602431b41baf98baf4e16734f8",
+      "current_sha256": "e3f55458b5943b0db9f7662b8b591bfb818923898cf4f9ab5a03c4756d79ffa4"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.cpp",
+      "last_built_sha256": "50193ac5c84e279207831100ae38bfa480626892cf237ddc401e7ca61eef1893",
+      "current_sha256": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.hpp",
+      "last_built_sha256": "865208b224507f1b708e0d7aea7bf3fff1433f9fe5d52260bcc0c1c6c4b136ca",
+      "current_sha256": "a9d1da810c6a94d4033cb9aa6973dfd9ccaf5f46e8b21f3173211129bf502ccb"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown_tests.cpp",
+      "last_built_sha256": "8f42a649fb93c1e74d477521f23ff5a702a63c54cc37a8cdb19ac85a768752bb",
+      "current_sha256": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "last_built_sha256": "dec7a66e5120e0c7064d95c53aa250d678160913486abf76409de08a4082d150",
+      "current_sha256": "a33af361f391a03658ccdcd9f16ee7474ca636bec48280309bf6f68bd29d26bb"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.hpp",
+      "last_built_sha256": "8b3afb7a69b6a7d99a992b3dbc767845a5dfef49784b0500f157d76c499e2704",
+      "current_sha256": "e3e7fef3dea236a09225b19bc4ed6e92ea35172eb62c059fa322cc35a4f6f3a9"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "last_built_sha256": "23ed92f55c5bb8f6f70002a86f770aa242f72ddc9f148f22243d0a0d1c9d95ef",
+      "current_sha256": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "last_built_sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a",
+      "current_sha256": "31a36ff7c7e65a909e4e5a712113d67a565b6418edb50a4a38c02aa4ac4e04a5"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff.cpp",
+      "last_built_sha256": "8e2bb730bdf8d8ec1471ea6c8d0ea22a85450101c67d61d194a351bae2b696d7",
+      "current_sha256": "7339c0208227d2d51d121a7d78af244cb3b20fb2d24008c8b42c997e4483d40e"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff.hpp",
+      "last_built_sha256": "76c23df3621ce30be07f678decbf713ba655c783b5b4f658c3b0292f397c4049",
+      "current_sha256": "eb1297e097f4c85170c78e0325d94a7995cdb686a8579703be6182ad6013b9e4"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "last_built_sha256": "6da9b872b45ab2a1ca8bf7ad5ba69183142908e6f77baafb54878645989be65f",
+      "current_sha256": "1fc7753c666b32593f44ba351cd873efe8e1acb14f7e175d0c46c3067c40eee3"
+    }
+  ],
+  "implementation": [
+    "Move-only JobMemory from original PreparedMemory::Borrow passively offers exact controller-owned backing to one distinct actual same-Domain NativeThreads sibling. Pinned unique shared JobState nodes avoid reused-index/ABA identity; bound64 unreaped nodes is selected HOST policy.",
+    "Acquire atomically reserves Offered->Acquiring, verifies distinct actual FLS/PTD/NativeThreads marker and retains actual self-thread duplicate outside mutex. Adopt handle before postcheck; known duplicate failure restores Offered, unknown admission retains poison/handle.",
+    "Acquired memory validates exact child thread/fiber/PTD/root. Return invalidates token but may transfer a live allocation to original source owner. Main Borrow refuses logical return while any child offer/acquire/borrow is pending or backing allocation/poison remains.",
+    "Original worker reap_jobs polls only returned child handles with zero timeout, and closes/recycles only after actual OS/FLS exit. Timeout retains; failed/unknown outcome poisons. Per-call reservation, root/exact-handle postchecks and null committed closed prefixes prevent replay.",
+    "Controller close waits original and every admitted child exit before releasing backing, with one shared finite wait budget across all handles. Default one-worker path remains and no Parent/Profile/Graph affinity is removed.",
+    "New source tests describe capacity/cancel/reuse, move/controller/original/foreign/double-acquire rejection, two exited-child recycling rounds, live allocation transfer, logical versus physical exit and isolated abandoned-job retention. None compiled/run."
+  ],
+  "source_evidence": [
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.hpp",
+      "line": 48,
+      "anchor": "class JobMemory final",
+      "sha256": "eb1297e097f4c85170c78e0325d94a7995cdb686a8579703be6182ad6013b9e4"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+      "line": 100,
+      "anchor": "PreparedMemory::Borrow::prepare_job()",
+      "sha256": "7339c0208227d2d51d121a7d78af244cb3b20fb2d24008c8b42c997e4483d40e"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+      "line": 130,
+      "anchor": "Job worker admission changed while retaining",
+      "sha256": "7339c0208227d2d51d121a7d78af244cb3b20fb2d24008c8b42c997e4483d40e"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+      "line": 137,
+      "anchor": "state_->job_locked(*job_)",
+      "sha256": "7339c0208227d2d51d121a7d78af244cb3b20fb2d24008c8b42c997e4483d40e"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+      "line": 178,
+      "anchor": "Job reaping changed during wait",
+      "sha256": "7339c0208227d2d51d121a7d78af244cb3b20fb2d24008c8b42c997e4483d40e"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+      "line": 159,
+      "anchor": "for(const auto& job:held->jobs)if(job->phase",
+      "sha256": "7339c0208227d2d51d121a7d78af244cb3b20fb2d24008c8b42c997e4483d40e"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+      "line": 212,
+      "anchor": "const auto remaining=[&]()",
+      "sha256": "7339c0208227d2d51d121a7d78af244cb3b20fb2d24008c8b42c997e4483d40e"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff_tests.cpp",
+      "line": 78,
+      "anchor": "void job_memory_handoff()",
+      "sha256": "1fc7753c666b32593f44ba351cd873efe8e1acb14f7e175d0c46c3067c40eee3"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff_tests.cpp",
+      "line": 154,
+      "anchor": "void abandoned_job_child()",
+      "sha256": "1fc7753c666b32593f44ba351cd873efe8e1acb14f7e175d0c46c3067c40eee3"
+    }
+  ],
+  "independent_static_review": {
+    "reviewer": "/root/b22_provider_audit",
+    "result": "STATIC_PASS_NO_REMAINING_REQUIRED_ISSUE",
+    "reviewed_source_hashes": {
+      "anadius-worker-handoff-source/handoff.hpp": "eb1297e097f4c85170c78e0325d94a7995cdb686a8579703be6182ad6013b9e4",
+      "anadius-worker-handoff-source/handoff.cpp": "7339c0208227d2d51d121a7d78af244cb3b20fb2d24008c8b42c997e4483d40e",
+      "anadius-worker-handoff-source/handoff_tests.cpp": "1fc7753c666b32593f44ba351cd873efe8e1acb14f7e175d0c46c3067c40eee3"
+    },
+    "corrected_during_source_review": [
+      "New test event/task/token owners moved outside fail-fast catch to prevent closing wait handles while sibling still runs after assertion/join failure.",
+      "Task::join unsuccessful OS waits now stop process before inner Task/token stack unwinding; actual signaled-thread error propagation remains."
+    ],
+    "reviewer_edits_or_compilation_tests_link_binary_execution": false
+  },
+  "limits": [
+    "Backing-memory permission only; not yet a SessionMemoryDomain Parent Operation capability. Profile/Graph/Policy and default InlineJobs remain unchanged.",
+    "Each token transfer/method must be serialized. Raw backing references cannot be mechanically revoked; caller forbids use after retire and serializes allocator/fallback/OOM/new-handler and shared source effects.",
+    "One job worker may hold multiple distinct offers, each with separate real self handle. Cancellation requires excluding pending token users/launches and independent joining of any already-launched thread.",
+    "This class launches no worker or source runner and provides no actual message dispatch, native EH/ABI, CRT/image/foreign/kernel finality or loader-hook implementation.",
+    "Unexecuted scenarios are source assertions only. SDK failure/PTD/fiber/timeout and finite shared-budget runtime checks remain pending."
+  ],
+  "new_native_function_definitions": 0,
+  "new_translation_units": 0,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "target_executed": false,
+  "original_access_or_modification": false,
+  "package_rebuilt": false,
+  "REA_queries_this_step": false
+}

@@ -20,6 +20,9 @@ HostApi native_host_api() noexcept;
 // BEFORE releasing providers or the native Binding. Natural process exit alone
 // does not establish worker quiescence. Image unloading/loader-lock safety is a
 // separate host contract: permanent CRT thunks must remain executable.
+// Paused/finished exit thunks return through a statically initialized lock-free
+// admission check before accessing the hub. A dispatcher already past that
+// check still rechecks under the hub mutex; pause is not its join/barrier.
 class CallbackRegistry final {
 public:
     explicit CallbackRegistry(HostApi = native_host_api());

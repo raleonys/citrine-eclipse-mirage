@@ -1,0 +1,18 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "method": "Direct bounded read-only PE mapping after exact SHA check; this is not new REA Evidence",
+  "table_name": "cpp_initializers",
+  "begin": "0x18007f5d0",
+  "end": "0x18007f6d0",
+  "bytes": 256,
+  "table_sha256": "1420f7e3594b8ab4966480b8a2c11cc25678113da5d28c80969d0d8cec604721",
+  "slot19": {
+    "index": 19,
+    "callback": {
+      "va": "0x180001310",
+      "symbol": "FUN_180001310",
+      "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+    }
+  },
+  "source_file_sha256": "c5af6f3fa9b7d798359499309555146029ff94ad03b82ac217141dbe9e6c6682"
+}

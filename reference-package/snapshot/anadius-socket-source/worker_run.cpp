@@ -2,7 +2,7 @@
 #include <bit>
 
 namespace anadius::socket_recovered {
-void stop_worker_02a190(IocpSchedulerEntry& scheduler,WorkerRunApi& api,Api& errors,WorkerRunEffects& effects){
+void stop_worker_02a190(IocpSchedulerEntry& scheduler,WorkerStopApi& api,Api& errors,WorkerStopEffects& effects){
     if(effects.exchange_stop_34(scheduler,1)!=0)return;
     if(effects.exchange_wake_38(scheduler,1)!=0)return;
     if(api.post_stop(scheduler.completion.port,0,0,nullptr)!=0)return;

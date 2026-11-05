@@ -1,0 +1,75 @@
+{
+  "schema": "native-system-diagnostics.source.v1",
+  "kind": "SOURCE_IMPLEMENTATION_WITH_TWO_FRESH_NATIVE_SUBSTAGES",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Native asio.system module category, exact020950 messages, same-identity conditions, complete stop/write what values and code0 helper connected in all three selected Policy throws. Source-only; native exception ABI and whole DLL remain open.",
+  "sources": [
+    {
+      "path": "anadius-socket-source/native.hpp",
+      "before": "before/native.hpp.before.txt",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/native.cpp",
+      "before": "before/native.cpp.before.txt",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.cpp",
+      "before": "before/policy.cpp.before.txt",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/native_tests.cpp",
+      "before": "before/native_tests.cpp.before.txt",
+      "role": "test"
+    },
+    {
+      "path": "anadius-session-policy-source/policy_tests.cpp",
+      "before": "before/policy_tests.cpp.before.txt",
+      "role": "test"
+    }
+  ],
+  "reviews": [
+    "production-independent-review.md",
+    "root-independent-review.md"
+  ],
+  "reports": [
+    "report.md",
+    "implementation.md",
+    "test-source-notes.md",
+    "compiler-zero-constructor-proof.md"
+  ],
+  "native_replies": [
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\native-system-category-20261104\\bytes-180084248.json",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\native-system-category-20261104\\pseudo-18000d120.json",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\native-system-category-20261104\\instructions-18000d120.json",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\native-system-category-20261104\\pseudo-18000e0c0.json",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\native-system-category-20261104\\instructions-18000e0c0.json",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\native-system-category-20261104\\pseudo-18000e0e0.json",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\native-system-category-20261104\\instructions-18000e0e0.json",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\write-diagnostic-20261104\\bytes-180084720.json",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\write-diagnostic-20261104\\pseudo-180025720.json",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\write-diagnostic-20261104\\instructions-180025720.json",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\write-diagnostic-20261104\\pseudo-18002a200.json",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\write-diagnostic-20261104\\instructions-18002a200.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-session-policy-source/native-system-category-20261104/native-evidence-index.json",
+    "outputs/anadius-session-policy-source/native-system-category-20261104/native-findings.md",
+    "outputs/anadius-session-policy-source/write-diagnostic-20261104/native-findings.md",
+    "outputs/anadius-session-policy-source/system-message-020950-20261104/evidence.json",
+    "outputs/anadius-session-policy-source/worker-error-028240-20261104/evidence.json",
+    "outputs/anadius-session-policy-source/worker-error-028240-20261104/compiler-provider-review/manifest.json",
+    "outputs/anadius-session-policy-source/worker-error-028240-20261104/compiler-provider-review/findings.md"
+  ],
+  "limits": [
+    "Current source/tests not compiled, linked or executed.",
+    "Native exception/class/vtable/RTTI/EH and allocator/SSO/module teardown parity remain unproven.",
+    "Generic-provider equivalence and every028240 caller are not certified by selected system diagnostic paths.",
+    "Actual Runtime failed-post/latch integration, child tracked-row end-to-end, full original application lifecycle and whole-DLL behavior remain open."
+  ],
+  "completed_note": "SOURCE_ONLY three production+two test sources bind native systemcategory for stop and selected greeting-write diagnostics. Module lifetime, per-call concurrent/failure state, own-identity conditions and zero-code once-format helper independently reviewed. Twelve fresh native supporting records in two retained/exported/closed substages; no duplicate-query claim.",
+  "observation": "Fresh native system-category18/20/28 signatures self-identity/value + greeting-write025720/02a200 nonzero system lineage/write literal. Prior exact020950 and current compiler-provider mismatch/zero-overload proof support full selected diagnostic values.",
+  "next_scope": "Author actual Runtime original-serving failed-post saved-error integration using a real admitted Parent and natural final work pin; retain existing native scope and review remaining compiler-system provider uses from full source/evidence ledger. Full DLL objective remains active."
+}

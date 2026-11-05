@@ -1,0 +1,21 @@
+{
+  "reviewer": "author static source inspection; no independent agent review",
+  "result": "STATIC_SCENARIO_SOURCE_INSPECTED_NOT_COMPILED_OR_EXECUTED",
+  "reviewed_source_hashes": {
+    "anadius-application-graph-source/graph_integration_tests.cpp": "e34cc14baf2bf925ad85769026cb1f7d2371f034bd6be4c5494b9d44d8a6b1b7"
+  },
+  "findings": [
+    "One test translation unit changed; production Worker/NativeJobs/Profile/Runtime/Stop sources unchanged. Existing contracts appear to support logical source/IO drain while physical child termination defers close; compiler/runtime evidence is absent.",
+    "New fixture uses actual concrete Worker.create/run_server/PreparedMemory/TLS/Graph assembly and actual same-Domain NativeJobs child source paths, with SessionIoPrepared and finite Worker close policy. Controller supplies only lower Inputs; protected Graph state/TLS remain Worker-owned.",
+    "First child gated immediately before ExitThread, after source body/receipt return; independent proof-join driver skips that child until controller release. Source/IO drain and physically pending row are asserted separately. This is not a gate inside an actual FLS callback or FreeLibraryAndExitThread.",
+    "Controller waits actual WaitingClose epoch1, checks only Worker/NativeJobs/Stop metadata, atomic fixture observations and own proof HANDLE, never worker Parent views. prepare_join through ApplicationJoinContinuation retries before child exit; epoch2 must retain owners without external proof/provider retirement.",
+    "After controller releases gate and independently joins child proof, second prepare_join lets original actor reap/attest/close. Actual original join precedes controller finish_after_join, independent proof/event closes, provider/Domain release. Expected exactly two close epochs/retries and one external proof.",
+    "ConcreteProviders aliased owners pin original-created Online/Content/Licensing/auth/views through Graph retirement. No controller owns this wrapper; atomic retire-thread observation expects its destructor on original worker before returned. Exact bound configuration/Execution views required.",
+    "Timeout source203 deliberately leaves child live: original exits after close wait deadline, Worker Poisoned/pending retained, no external proof/provider destruction, no prepare_join/finish success. Process exits without guessed controller cleanup.",
+    "Existing direct Graph fixture retains explicit Policy snapshot assertions. New private Worker fixture does not bypass encapsulation to read Policy; normal return validation is delegated to production Worker/Profile/Policy, with independent body/receipt/IO/owner observations."
+  ],
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

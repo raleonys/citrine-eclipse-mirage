@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"path\":\"C:\\\\Users\\\\Skysect\\\\Documents\\\\Codex\\\\2026-10-16\\\\mcp\\\\outputs\\\\anadius-owned-server-source\\\\registry-teardown-order-20261105\\\\native-evidence-bundle.json\",\"bytes\":64211,\"records\":10,\"unknowns\":0}}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-owned-server-source\\registry-teardown-order-20261105\\native-evidence-bundle.json",
+      "bytes": 64211,
+      "records": 10,
+      "unknowns": 0
+    }
+  }
+}

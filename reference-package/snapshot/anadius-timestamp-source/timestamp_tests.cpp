@@ -120,7 +120,18 @@ void classic_native_branch() {
     calendar_recovered::BrokenDown fields{77,77,77,77,77,77,77,77,77};
     require(parser.extract_03d310("2024-13",timestamp_recovered::format,fields)==3 && fields.month==77 && fields.year==124,"failed numeric destination unchanged after earlier successful year");
     rejects<std::invalid_argument>([&]{(void)parser.extract_03d310("2000","%Y",fields);},"unrecovered format explicit domain rejection");
-    rejects<std::invalid_argument>([&]{(void)timestamp_recovered::timestamp_to_epoch_041e10(std::string("2000-01-01T00:00:00")+char(0x80),parser);},"nonASCII including trailing bytes explicit domain rejection");
+    for(unsigned suffix=0;suffix<256;++suffix){
+        const auto raw=std::string("2000-01-01T00:00:00")+static_cast<char>(suffix);
+        calendar_recovered::BrokenDown parsed{};
+        require(parser.extract_03d310(raw,timestamp_recovered::format,parsed)==0&&same_fields(parsed,{0,0,0,1,0,100,0,0,0}),"completed fixed-width format ignores any trailing byte including NUL and high-bit bytes without EOF/failure");
+        require(timestamp_recovered::timestamp_to_epoch_041e10(raw,parser)==946684800,"unconsumed suffix byte does not invalidate the completed timestamp epoch");
+    }
+    for(const unsigned byte:{0x80U,0xffU}){
+        const auto raw=std::string("2000-01-")+static_cast<char>(byte)+"T00:00:00";
+        calendar_recovered::BrokenDown partial{};
+        require((parser.extract_03d310(raw,timestamp_recovered::format,partial)&timestamp_recovered::fail_bit)!=0&&partial.year==100&&partial.month==0&&partial.day==0,"byte outside the classic day grammar fails the required field while retaining earlier fields");
+        require(timestamp_recovered::timestamp_to_epoch_041e10(raw,parser)==0,"required-field mismatch remains a failed timestamp rather than an ignored suffix");
+    }
     for(const auto& [text,epoch]:std::vector<std::pair<std::string,std::int64_t>>{
         {"1970-01-01T00:00:00",0},{"1969-12-31T23:59:59",-1},
         {"2000-02-29t0:0:0",951782400},{"2000-02-31T0:0:0",951955200},
@@ -142,7 +153,7 @@ void storage_native_fixture(const std::filesystem::path& directory) {
     const auto xml=directory/"achievement-timestamp-fixture.xml";
     {
         std::ofstream out(xml,std::ios::binary|std::ios::trunc);
-        out<<R"(<root><entry Id="d" Count="4" Grant="invalid"/><entry Id="b" Count="2" Grant="2000-01-01T00:00:00"/><entry Id="a" Count="1" Grant="1970-01-01T00:00:00"/><entry Id="c" Count="3" Grant="1969-12-31T23:59:59"/></root>)";
+        out<<R"(<root><entry Id="d" Count="4" Grant="invalid"/><entry Id="b" Count="2" Grant="2000-01-01T00:00:00)"<<"\xc3\xa9"<<R"("/><entry Id="a" Count="1" Grant="1970-01-01T00:00:00"/><entry Id="c" Count="3" Grant="1969-12-31T23:59:59"/></root>)";
         require(static_cast<bool>(out),"own timestamp XML fixture written");
     }
     const auto ini_directory=directory/"achievement_watcher"/"42";
@@ -153,6 +164,7 @@ void storage_native_fixture(const std::filesystem::path& directory) {
     achievement_storage::Storage storage(paths,reader,numbers,effects,files);storage.update_01eb00(state);
     require(state.achievements.size()==4,"actual XML/storage imports four timestamp records");
     require(state.achievements.at("a").field70==0 && state.achievements.at("b").field70==946684800,"actual epoch helper reaches achievement field70");
+    require(state.achievements.at("b").timestamp==std::string("2000-01-01T00:00:00")+"\xc3\xa9","XML Grant retains UTF-8 suffix bytes while the native-shaped timestamp parser converts only its completed ISO prefix");
     require(state.achievements.at("c").field70==0xffffffffffffffffULL && state.achievements.at("d").field70==0,"negative epoch low64 and failed parse zero stored");
     require(state.achievements.at("a").steam_id.empty(),"new XML IDs keep original empty Steam ID");
     require(effects.status_paths.size()==1 && effects.created.size()==1,"status and actual writer reached after conversions");

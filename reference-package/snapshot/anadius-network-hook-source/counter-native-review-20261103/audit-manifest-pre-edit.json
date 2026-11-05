@@ -1,0 +1,83 @@
+{
+  "kind": "counter-native-review",
+  "date": "2026-11-03",
+  "role": "independent-read-only-audit",
+  "targetSha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "sourceHashesPreParentEdit": {
+    "outputs/anadius-network-hook-source/connect.cpp": "8b9b5f8fb58fb105910a250ac7179d2140a878cf908cbda0471a6d536c1c461c",
+    "outputs/anadius-network-hook-source/connect.hpp": "f0149621953b65ddd456dbc01cdb24451dec32bccea13a573433ecaf80b702b6",
+    "outputs/anadius-native-context-source/context.hpp": "8c93154d154bed66605178cfe190f9c87e8c709f4946bfe2a7a77a771b9923ab",
+    "outputs/anadius-native-context-source/context.cpp": "f62b9f3de5b59b1cd4e2f253fcdf00f94cc188c75616c5da3e34574d2838f5c1",
+    "outputs/anadius-native-source/native_callbacks.cpp": "67f6f5fb57dc02b977edd9780df73a4a2637409f759e806847b33cd0af11caf7",
+    "outputs/anadius-initial-cells-source/defaults.cpp": "50af98d5f977ca079ddde4af9b3c927d5641083c58b1e3d79bdc09ede79010fb"
+  },
+  "evidence": [
+    {
+      "file": "instructions-fd00-success.json",
+      "evidenceId": "ev_839077f99c02612bc8d409358a72a00b4078cf9a201c931361fd8e1c4381c349"
+    },
+    {
+      "file": "bytes-fdc0-success.json",
+      "evidenceId": "ev_2c123225d73c1d6658e7511d29381e3e29841c9cbc05314f94b00a96a0b2d5f4"
+    },
+    {
+      "file": "counter-3888-success.json",
+      "evidenceId": "ev_bbcb055b706e65599e7e17c9d99baf4f7085db8bc0e0768db452874ab08a2d85"
+    },
+    {
+      "file": "xrefs-3888-success.json",
+      "evidenceId": "ev_49d332bd5c806367f1a57004291fc820b4ab5beb0a5e6832598e99841dccea68"
+    },
+    {
+      "file": "typed-references-3888-success.json",
+      "evidenceId": "ev_3507636da5f2b51a5c219e0f319b7c1218851bf24520f3391108fb0108255989"
+    }
+  ],
+  "nativeObservation": {
+    "counter": "0x1800a3888",
+    "initializedBytes": "00000000",
+    "bytes19": "8b05c23a0900ffc08905ba3a090083f80f7436",
+    "sequence": [
+      [
+        "0x18000fdc0",
+        "MOV EAX,dword ptr [0x1800a3888]"
+      ],
+      [
+        "0x18000fdc6",
+        "INC EAX"
+      ],
+      [
+        "0x18000fdc8",
+        "MOV dword ptr [0x1800a3888],EAX"
+      ],
+      [
+        "0x18000fdce",
+        "CMP EAX,0xf"
+      ],
+      [
+        "0x18000fdd1",
+        "JZ 0x18000fe09"
+      ]
+    ],
+    "exactIncomingReferences": [
+      {
+        "from": "0x18000fdc0",
+        "kind": "READ"
+      },
+      {
+        "from": "0x18000fdc8",
+        "kind": "WRITE"
+      }
+    ]
+  },
+  "minimalRecommendation": "atomic_ref<uint32_t> load(relaxed); compute cached uint32_t updated with wrap; store(updated,relaxed); compare cached updated==15; enforce lock-free and sufficient alignment; no locked RMW",
+  "limitations": [
+    "Static initialized analysis memory is not runtime state.",
+    "Xrefs cover exact analyzer-visible references, not unknown aliases, indirect computed writes, overlapping wider stores, or runtime instrumentation.",
+    "Native MOV/INC/MOV is a split operation and permits lost updates; distinct threads may each trigger15 after observing14.",
+    "C++ relaxed atomic load/store provides a defined portable source model, not a proof of all x86 memory ordering or exact code generation.",
+    "All postpublication accesses must use compatible atomic_ref accesses unless quiescent; retained external plain writers remain excluded.",
+    "Counter change does not prove other shared state or stream accesses safe, grant concurrent admission, or remove existing Domain overlap rejection.",
+    "No compilation, linking, tests, target execution, binary mutation, or ZIP changes occurred."
+  ]
+}

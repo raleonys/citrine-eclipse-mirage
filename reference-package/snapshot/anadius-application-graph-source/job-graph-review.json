@@ -1,0 +1,30 @@
+{
+  "reviewer": "/root/b22_provider_audit",
+  "result": "STATIC_PASS_NO_REMAINING_REQUIRED_ISSUE",
+  "scope": "Four current source/header/test files; narrow Graph JobLogic scope and optional Jobs selection, not complete child execution.",
+  "reviewed_source_hashes": {
+    "anadius-native-profile-source/native.hpp": "fbf8c0e31f5df3479ce8a15e550194443750416f52ee30843a57a096f11958fa",
+    "anadius-application-graph-source/graph.hpp": "aad916291049c9acd82ae22a9b956f94c1a6a3df3d9a7e55801c9061c1635746",
+    "anadius-application-graph-source/graph.cpp": "05b03b26c4ad663e9407e75cb78073746a5807860fe9c1a9d9c8b06ba3cc523b",
+    "anadius-application-graph-source/graph_integration_tests.cpp": "f2a6638e1184576531943b8b73fefd09e3fc859eb65f0b17407bc36321cc604a"
+  },
+  "findings": [
+    "Permit validation precedes Graph binding/session reads; exact Logic/token/owner/control rechecked around source and caller admission. Caller must retain exact claim/session strong/Logic/prefix lifetimes.",
+    "Shared JobCall pins Impl/Parent lease; weak Graph backreference avoids normal cycle. job_binding precedes opaque callable transfer and seals retirement. checking rejects recursive admission/provider effects.",
+    "Per-session Effects enforce selected session. Public mutations preserve original affinity; getter/snapshot/retained/lifecycle scope rejection precedes mutable field reads.",
+    "Normal end requires no retained invocation, active/router/opaque/event/achievement lock or writer residue. Invalidate, retire target and postcheck before unpublish. Unknown prefixes poison/retain without guessed unlock/replay.",
+    "Optional shared Jobs selection reaches Profile Dependencies; empty value preserves InlineJobs. Explicit selection alone grants no child authority.",
+    "Two sequential source fixture runs describe default and synthetic same-worker selected backend with18 starts/detaches and ownership retirement. Not compiled/run; no child Graph integration coverage.",
+    "ProfileSettings/Options HOST layout and private Graph Logic layout changed; all consumers await explicit authorized rebuild. Existing public Logic/SessionLogic virtual slots unchanged."
+  ],
+  "limits": [
+    "Concrete Information/Content/Licensing remain original-worker only; no full child request backend closure.",
+    "No Profile dispatch, request/response/closure completion, native scheduler or physical thread/FLS exit wiring added."
+  ],
+  "required_issues_remaining": 0,
+  "edits_by_reviewer": false,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

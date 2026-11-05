@@ -1,0 +1,26 @@
+{
+  "status": "PRE_EDIT_SOURCE_SNAPSHOT",
+  "pending_source_count": 113,
+  "files": [
+    {
+      "path": "anadius-execution-source/execution.hpp",
+      "exists": true,
+      "sha256": "f044c252ab791b02d7b00fadf5ac4c484dac2804ec6b64c2e543cbc72e371fcc",
+      "before": "before/anadius-execution-source__execution.hpp"
+    },
+    {
+      "path": "anadius-execution-source/execution.cpp",
+      "exists": true,
+      "sha256": "03946d42e546072f0e875c4a45327b63a24419303e9b4b23325f79b55f75b705",
+      "before": "before/anadius-execution-source__execution.cpp"
+    },
+    {
+      "path": "anadius-execution-source/execution_tests.cpp",
+      "exists": true,
+      "sha256": "6dd51e5471d32f12d13c093f5627f7e8e7760fbef49b5495d4389c13568f2a25",
+      "before": "before/anadius-execution-source__execution_tests.cpp"
+    }
+  ],
+  "compile": false,
+  "tests_run": false
+}

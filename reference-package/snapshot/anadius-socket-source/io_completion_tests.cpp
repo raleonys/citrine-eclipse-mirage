@@ -37,9 +37,13 @@ struct Table:s::IoHandlerVtable{
  unsigned destroys=0,moves=0,queries=0;
  std::function<void(s::IoHandlerEnvironment&)> destroy,query;
  std::function<void(s::IoHandlerEnvironment&,s::IoHandlerEnvironment&)> move;
+ std::function<bool(s::IoHandlerEnvironment&,s::IoHandlerEnvironment&,const s::IoHandlerSentinels&)> whole_move;
+ std::function<bool(s::IoHandlerEnvironment&,s::IoHandlerEnvironment&,const s::IoHandlerSentinels&,s::IoEnvironmentPrepareBody&)> whole_prepare;
  void destroy_slot_00(s::IoHandlerEnvironment& env)override{++destroys;if(destroy)destroy(env);}
  void move_slot_10(s::IoHandlerEnvironment& to,s::IoHandlerEnvironment& from)override{++moves;if(move)move(to,from);else{to.payload_00=from.payload_00;to.state_18=from.state_18;}}
  std::uintptr_t query_slot_18(s::IoHandlerEnvironment& env)override{++queries;if(query)query(env);return 0xabc;}
+ bool try_move_environment_023cb0(s::IoHandlerEnvironment& to,s::IoHandlerEnvironment& from,const s::IoHandlerSentinels& sentinels)override{return whole_move?whole_move(to,from,sentinels):false;}
+ bool try_prepare_environment_40(s::IoHandlerEnvironment& to,s::IoHandlerEnvironment& from,const s::IoHandlerSentinels& sentinels,s::IoEnvironmentPrepareBody& body)override{return whole_prepare?whole_prepare(to,from,sentinels,body):false;}
 };
 struct Ref:s::IoReference{
  unsigned disposes=0,deletes=0;std::function<void()> dispose,erase;
@@ -68,6 +72,46 @@ struct Fixture{
  Fixture(){bytes.fill(std::byte{0xa5});other_bytes.fill(std::byte{0x5a});receive.environment_b0={ {11,12},&original,0,0x456,&executor};send.environment_a0=receive.environment_b0;receive.handler.words_60_78={1,2,3,4};receive.handler.byte_80=0x81;receive.handler.dword_84=0x12345678;receive.handler.words_88_98={5,6,7};receive.handler.object_a0=0x1234;send.handler.words_60_78={8,9,10,11};send.handler.dword_80=0x87654321;send.handler.word_88=12;send.handler.object_90=0x9876;}
  s::IoCompletionEnvironment env(){return {{index,{}},{&empty,0x846e8,&sentinel_executor,0x777}};}
 };
+bool same_prepare_fields(const s::IoHandlerEnvironment& a,const s::IoHandlerEnvironment& b){return a.payload_00==b.payload_00&&a.operations_10==b.operations_10&&a.state_18==b.state_18&&a.schedule_20==b.schedule_20&&a.executor_28==b.executor_28;}
+struct PrepareObservation {Fixture& fixture;s::IoHandlerEnvironment* temporary=nullptr;unsigned factories=0;bool fail_factory=false;};
+PrepareObservation* preparation_observation=nullptr;
+void prepare_caller_factory(s::IoHandlerEnvironment& out,std::uintptr_t query,s::IoPrepareScratch&){auto& p=*preparation_observation;++p.factories;check(query==0xabc&&(!p.temporary||p.temporary==&out),"Actual cached40 constructs the helper's one real temporary after exact query");p.temporary=&out;out={{77,78},&p.fixture.temporary,55,0x7788,&p.fixture.changed_executor};if(p.fail_factory)throw std::runtime_error("Unknown factory40 outcome");}
+struct PrepareOperations final:s::IoEnvironmentPrepareOperations {
+ bool& held;unsigned queries=0,factories=0,moves=0,destroys=0;
+ explicit PrepareOperations(bool& h):held(h){}
+ std::uintptr_t query_slot_18(s::IoHandlerEnvironment& source)override{check(held,"Private prepare query remains inside the owning caller");++queries;return source.operations_10->query_slot_18(source);}
+ void construct_slot_40(s::IoPrepareFunction cached,s::IoHandlerEnvironment& out,std::uintptr_t query,s::IoPrepareScratch& scratch)override{check(held&&cached==&prepare_caller_factory,"Private prepare bridge receives the exact function cached before query deletes executor");++factories;cached(out,query,scratch);}
+ s::IoHandlerEnvironment& move_023cb0(s::IoHandlerEnvironment& out,s::IoHandlerEnvironment& from,s::IoHandlerSentinels sentinels)override{check(held,"Private prepare move retains whole caller ownership");++moves;return s::move_io_environment_023cb0(out,from,sentinels);}
+ void destroy_slot_00(s::IoHandlerEnvironment& value)override{check(held,"Private prepare guard destruction precedes owning caller completion");++destroys;value.operations_10->destroy_slot_00(value);}
+};
+void preparation_caller_boundaries(){
+ for(unsigned mode=0;mode<3;++mode){
+  Fixture f;PrepareObservation p{f};preparation_observation=&p;auto executor=std::make_unique<s::IoHandlerExecutor>(s::IoHandlerExecutor{&prepare_caller_factory});auto source=f.receive.environment_b0;source.executor_28=executor.get();s::IoHandlerEnvironment out{{99,98},&f.alternate,19,0x123,&f.sentinel_executor};const auto before_source=source,before_out=out;bool held=false;unsigned entries=0;PrepareOperations operations(held);
+  f.original.query=[&](auto& value){if(executor){check(value.executor_28==executor.get(),"Prepare query sees its live original executor before deletion");executor.reset();value.executor_28=nullptr;}};
+  f.temporary.move=[&](auto& destination,auto& from){destination.payload_00=from.payload_00;destination.state_18=from.state_18;from.operations_10=&f.alternate;from.executor_28=&f.executor;};
+  f.alternate.destroy=[&](auto& value){check(!value.state_18&&value.executor_28==&f.sentinel_executor&&out.payload_00==std::array<std::uintptr_t,2>{77,78},"Prepare guard reads the LIVE post-move temporary target after native state/executor tail");};
+  f.original.whole_prepare=[&](auto& destination,auto& from,const auto&,auto& body){++entries;check(same_prepare_fields(out,before_out)&&same_prepare_fields(source,before_source)&&&destination==&out&&&from==&source,"Prepare owning hook precedes source executor/query effects and destination writes");p.temporary=&body.temporary();check(p.temporary!=&out&&p.temporary!=&source,"Preparation body exposes only its distinct actual temporary address before admission");if(mode==0)return false;held=true;check(&body.run(&operations)==&out&&operations.queries==1&&operations.factories==1&&operations.moves==1&&operations.destroys==1,"One admitted prepare body includes factory/move and live guard destruction before returning");held=false;if(mode==2){f.executor.prepare_slot_40=&prepare_caller_factory;source.executor_28=&f.executor;return false;}return true;};
+  if(mode==2)rejects([&]{s::prepare_io_environment_40(out,source,f.env().sentinels);});else check(&s::prepare_io_environment_40(out,source,f.env().sentinels)==&out,"Prepare helper returns its exact caller-owned output");
+  check(entries==1&&!held&&!executor&&p.factories==1&&f.original.queries==1&&f.temporary.moves==1&&f.alternate.destroys==1&&out.state_18==55&&out.executor_28==&f.executor,"Fallback, handled body and malformed run-then-false each execute at most one native query/factory/move/guard sequence with no replay");
+ }
+ struct Refusal final:s::IoEnvironmentPreparation {unsigned entries=0;s::IoHandlerEnvironment& prepare(s::IoHandlerEnvironment&,s::IoHandlerEnvironment&,const s::IoHandlerSentinels&,s::IoEnvironmentPrepareBody&)override{++entries;throw s::UnsupportedInput("Explicit prepare refusal");}} refusal;
+ Fixture f;s::IoHandlerEnvironment source,out{{91,92},&f.alternate,31,0x456,&f.changed_executor};const auto before=out;rejects([&]{s::prepare_io_environment_40(out,source,f.env().sentinels,&refusal);});check(refusal.entries==1&&same_prepare_fields(out,before)&&!source.operations_10&&!source.executor_28&&!f.original.queries,"Explicit preparation rejects before any source table/executor read, body attempt or destination write");
+ preparation_observation=nullptr;
+}
+void preparation_unknown_prefixes(){
+ for(unsigned phase=0;phase<4;++phase){
+  Fixture f;PrepareObservation p{f};preparation_observation=&p;f.executor.prepare_slot_40=&prepare_caller_factory;auto source=f.receive.environment_b0;s::IoHandlerEnvironment out{{99,98},&f.alternate,19,0x123,&f.sentinel_executor};const auto before=out;
+  if(phase==0)f.original.query=[](auto&){throw std::runtime_error("Unknown query outcome");};p.fail_factory=phase==1;
+  f.temporary.move=[&](auto& destination,auto& from){check(from.operations_10==&f.empty&&from.schedule_20==0x846e8,"Prepare move failure boundary follows the actual native header prefix");if(phase==2)throw std::runtime_error("Unknown move outcome");destination.payload_00=from.payload_00;destination.state_18=from.state_18;from.operations_10=&f.alternate;from.executor_28=&f.executor;};
+  f.alternate.destroy=[](auto& value){check(!value.state_18,"Throwing live temporary destroy follows the actual completed move tail");throw std::runtime_error("Unknown destroy outcome");};
+  throws([&]{s::prepare_io_environment_40(out,source,f.env().sentinels);});
+  check(f.original.queries==1&&p.factories==(phase==0?0U:1U)&&f.temporary.moves==(phase>=2?1U:0U)&&f.alternate.destroys==(phase==3?1U:0U)&&!f.original.destroys&&!f.temporary.destroys,"Unknown query/factory/move/guard results stop at their actual entered prefix without invented source/output cleanup");
+  if(phase<2)check(same_prepare_fields(out,before),"Query or factory exception cannot commit the later destination move");
+  else if(phase==2)check(out.operations_10==&f.temporary&&out.schedule_20==0x7788&&out.payload_00==before.payload_00&&out.state_18==before.state_18&&out.executor_28==before.executor_28,"Move exception retains header prefix only and never invents normal payload/state/executor tail");
+  else check(out.operations_10==&f.temporary&&out.payload_00==std::array<std::uintptr_t,2>{77,78}&&out.state_18==55&&out.executor_28==&f.executor,"Destroy exception retains the completed move output without invented rollback or another destroy");
+ }
+ preparation_observation=nullptr;
+}
 void move_environment(){
  Fixture f;s::IoHandlerEnvironment source=f.receive.environment_b0,destination;destination.payload_00={99,98};
  f.original.move=[&](auto& to,auto& from){check(&to==&destination&&&from==&source,"move callback receives actual distinct destination and source");check(to.operations_10==&f.original&&to.schedule_20==0x456,"destination table and scheduler copied before callback");check(from.operations_10==&f.empty&&from.schedule_20==0x846e8&&from.state_18==27,"source table and scheduler reset before callback; state remains live");check(to.payload_00==std::array<std::uintptr_t,2>{99,98},"move helper does not invent payload memcpy");to.payload_00=from.payload_00;to.state_18=43;from.state_18=91;from.executor_28=&f.changed_executor;};
@@ -75,6 +119,28 @@ void move_environment(){
  check(&result==&destination&&destination.payload_00==std::array<std::uintptr_t,2>{11,12}&&destination.state_18==43,"move callback owns payload and destination state");check(!source.state_18&&source.executor_28==&f.sentinel_executor&&destination.executor_28==&f.changed_executor,"state reset and executor live reload follow callback");
  Fixture broken;auto source2=broken.receive.environment_b0;s::IoHandlerEnvironment dest2;source2.operations_10=nullptr;rejects([&]{s::move_io_environment_023cb0(dest2,source2,broken.env().sentinels);});check(source2.operations_10==&broken.empty&&dest2.operations_10==nullptr&&source2.executor_28==&broken.executor,"failed move leaves native preceding assignments; no rollback");
  Fixture failed;auto from=failed.receive.environment_b0;s::IoHandlerEnvironment to;from.state_18=7;failed.original.move=[](auto&,auto&){throw std::runtime_error("move");};throws([&]{s::move_io_environment_023cb0(to,from,failed.env().sentinels);});check(from.state_18==7&&from.executor_28==&failed.executor&&from.operations_10==&failed.empty,"throwing move does not invent normal tail resets");
+}
+void owning_move_boundary(){
+ struct Slot final:s::IoEnvironmentMoveSlot {
+  Table& original;bool& claimed;unsigned calls=0;
+  Slot(Table& t,bool& c):original(t),claimed(c){}
+  void move_slot_10(s::IoHandlerEnvironment& to,s::IoHandlerEnvironment& from)override{check(claimed,"Private move slot runs only inside its whole-operation claim");++calls;original.move_slot_10(to,from);}
+ };
+ Fixture f;auto source=f.receive.environment_b0;s::IoHandlerEnvironment destination{{99,98},&f.alternate,55,0x123,&f.sentinel_executor};bool claimed=false;unsigned entries=0;Slot slot(f.original,claimed);
+ f.original.whole_move=[&](auto& to,auto& from,const auto& sentinels){
+  ++entries;check(!claimed&&&to==&destination&&&from==&source&&from.operations_10==&f.original&&from.schedule_20==0x456&&to.operations_10==&f.alternate&&to.schedule_20==0x123,"Owning move entry observes exact full source and untouched destination before native header writes");claimed=true;
+  auto& result=s::move_io_environment_023cb0(to,from,sentinels,&slot);
+  check(&result==&to&&from.state_18==0&&from.executor_28==&f.sentinel_executor&&to.executor_28==&f.changed_executor,"Whole-operation claim outlives native state reset and live executor reload");claimed=false;return true;
+ };
+ f.original.move=[&](auto& to,auto& from){check(claimed&&to.operations_10==&f.original&&from.operations_10==&f.empty&&from.schedule_20==0x846e8,"Private slot sees the native committed headers after the whole claim");to.payload_00=from.payload_00;to.state_18=37;from.executor_28=&f.changed_executor;};
+ check(&s::move_io_environment_023cb0(destination,source,f.env().sentinels)==&destination&&entries==1&&slot.calls==1&&f.original.moves==1&&!claimed&&destination.state_18==37,"Handled whole move invokes one admitted slot without recursively dispatching or replaying the native body");
+ Fixture rejected;auto from=rejected.receive.environment_b0;s::IoHandlerEnvironment to{{77,78},&rejected.alternate,19,0x101,&rejected.changed_executor};
+ rejected.original.whole_move=[](auto&,auto&,const auto&)->bool{throw s::UnsupportedInput("Rejected full move claim");};
+ rejects([&]{s::move_io_environment_023cb0(to,from,rejected.env().sentinels);});
+ check(from.operations_10==&rejected.original&&from.schedule_20==0x456&&from.executor_28==&rejected.executor&&from.payload_00==std::array<std::uintptr_t,2>{11,12}&&to.operations_10==&rejected.alternate&&to.schedule_20==0x101&&to.state_18==19&&to.payload_00==std::array<std::uintptr_t,2>{77,78}&&!rejected.original.moves,"Rejected whole claim performs no source/destination prefix write or native slot callback");
+ Fixture failed;auto pending=failed.receive.environment_b0;s::IoHandlerEnvironment partial;bool held=true;Slot failed_slot(failed.original,held);pending.state_18=7;failed.original.move=[](auto&,auto&){throw std::runtime_error("Admitted slot outcome unknown");};
+ throws([&]{s::move_io_environment_023cb0(partial,pending,failed.env().sentinels,&failed_slot);});
+ check(failed_slot.calls==1&&pending.operations_10==&failed.empty&&pending.schedule_20==0x846e8&&pending.state_18==7&&pending.executor_28==&failed.executor&&partial.operations_10==&failed.original,"Unknown admitted-slot outcome retains native preceding writes and executes no normal state/executor tail");
 }
 void storage_release(){
  for(std::uint64_t size=0;size<=1021;++size)for(unsigned occupancy=0;occupancy<3;++occupancy){Fixture f;f.bytes[size]=std::byte{0x39};if(occupancy)f.state.cache_00[0]=0x111;if(occupancy==2)f.state.cache_00[1]=0x222;f.worker.get=[&](){return &f.context;};s::release_io_storage_026a00(f.storage,size,f.env().storage,f.worker,f.memory);check(f.worker.indices==std::vector<std::uint32_t>{17},"every release reads current TLS exactly once before size decision");if(size<=1020&&occupancy<2){check(f.memory.frees.empty()&&f.state.cache_00[occupancy]==f.storage.identity&&f.bytes[0]==std::byte{0x39},"eligible bounded size copies marker and uses first empty two-slot cache");check(f.state.cache_00[2]==0,"cache never uses third or later free slot");}else check(f.memory.frees==std::vector<std::uintptr_t>{0x10000},"oversize or full first-two slots always call mandatory free provider");}
@@ -150,4 +216,4 @@ void polymorphic_receive(){
  Fixture sendthrow;sendthrow.send.environment_a0.state_18=1;sendthrow.effects.schedule_send=[](auto&,auto&){throw std::runtime_error("schedule");};throws([&]{s::complete_send_027a20(1,sendthrow.send,{},8,sendthrow.env(),sendthrow.worker,sendthrow.memory,sendthrow.errors,sendthrow.effects);});check(sendthrow.memory.frees.size()==1&&!sendthrow.original.destroys,"throwing send scheduler has no fabricated final environment cleanup");
 }
 }
-int main(){try{move_environment();storage_release();cleanup<true>();cleanup<false>();direct_helpers();error_matrix<true>();error_matrix<false>();live_error_and_release();polymorphic_receive();std::cout<<"PASS: "<<checks<<" socket IO completion checks; eight retained normal bodies, defined-field error mapping, live environment/reference mutations, unsigned counters, two-slot storage and polymorphic factory sequencing\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+int main(){try{preparation_caller_boundaries();preparation_unknown_prefixes();move_environment();owning_move_boundary();storage_release();cleanup<true>();cleanup<false>();direct_helpers();error_matrix<true>();error_matrix<false>();live_error_and_release();polymorphic_receive();std::cout<<"PASS: "<<checks<<" socket IO completion checks; eight retained normal bodies, defined-field error mapping, live environment/reference mutations, unsigned counters, two-slot storage and polymorphic factory sequencing\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

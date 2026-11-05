@@ -47,7 +47,30 @@
       "comparison": "docs/RE_PACKAGE_COMPARISONS.md",
       "child_pr": null,
       "resolution": null,
-      "validation": "Source comparison only; no donor native tests rerun. Detailed caller/error/requirement review remains open."
+      "validation": "Source comparison only; no donor native tests rerun. Detailed caller/error/requirement review remains open.",
+      "delivery_recheck": {
+        "delivery_label": "archive-12",
+        "archive_sha256": "539fc80596bfa058afdfe74b01cee95c1c1b807be3e983127510e4dc170acb6d",
+        "status": "pending_changed_donor_review",
+        "current_donor_files": [
+          {
+            "path": "anadius-execution-source/execution.hpp",
+            "bytes": 5198,
+            "sha256": "eb6c3dd0fd279ee9aecafef33c60ba184ab424b3e003143b5271f91ce818ab55"
+          },
+          {
+            "path": "anadius-execution-source/execution.cpp",
+            "bytes": 7897,
+            "sha256": "c9a30ba892a526b9b00068d7e8d15927a60e2ecf7eda8d23a02bbfa2576f6884"
+          },
+          {
+            "path": "anadius-startup-publication-source/publication_tests.cpp",
+            "bytes": 10215,
+            "sha256": "7af4e858d48fc91b64989dde02db2fa4cc67de25995cf4c9681e435c78dccd4b"
+          }
+        ],
+        "note": "All three donor files changed. Historical comparison and source identities are retained; intake does not resolve the finding."
+      }
     }
   ]
 }

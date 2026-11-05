@@ -6,10 +6,17 @@
 #include <functional>
 #include <stdexcept>
 
+namespace anadius::owned_environment {class Environment;}
+
 namespace anadius::session_profile {
 namespace rt=server_runtime;namespace o=owned_server;
 struct SessionToken {std::size_t slot=0;std::uint64_t generation=0;bool operator==(const SessionToken&)const=default;};
 struct JobToken {std::size_t slot=0;std::uint64_t generation=0;bool operator==(const JobToken&)const=default;};
+struct JobIdentity {
+    JobToken job;SessionToken session;
+    std::uintptr_t closure=0,owner=0,function=0,control=0;
+};
+struct JobHandoffState;
 struct SessionView {SessionToken token;s::SessionOwner& owner;};
 class SessionLogic {
 public:virtual ~SessionLogic()=default;
@@ -17,6 +24,7 @@ public:virtual ~SessionLogic()=default;
     virtual std::string process(std::string& request)=0;
 };
 using LogicFactory=std::function<std::unique_ptr<SessionLogic>(SessionView)>;
+class Application;
 // Backend controls execution only, not frame/message context construction.
 // Runner must be invoked exactly once on the bound worker thread/fiber under
 // this parent's whole Operation. Inline or deferred same-worker execution is
@@ -27,7 +35,18 @@ public:virtual ~Jobs()=default;
     virtual s::FrameThreadHandle start(JobToken,std::function<void()> runner)=0;
     virtual std::int32_t detach(const s::FrameThreadHandle&)=0;
 };
-class Application;
+// Independent opt-in HOST interface; legacy Jobs virtual slots stay unchanged.
+// Original worker/whole Parent except quiescent_prepared, which polls actual
+// thread exit OUTSIDE Parent. Returned receipts each transfer one source-work
+// pin to the dispatcher; none of these counts attest external/kernel drain.
+class PreparedJobs {
+public:virtual ~PreparedJobs()=default;
+    virtual void bind_prepared(Application&,rt::Ports,std::function<void()> admission)=0;
+    virtual s::FrameThreadHandle start_prepared(Application&,JobToken)=0;
+    virtual void returned_prepared(Application&,std::uint32_t receipt)=0;
+    virtual bool quiescent_prepared(Application&)=0;
+    virtual bool close_prepared(Application&,bool externally_drained)=0;
+};
 class Policy:public rt::WorkerControl,public s::FrameReadTerminal,public s::QueuedWriteTerminal {
 public:
     [[noreturn]]virtual void bad_weak_ptr_026860()override=0;
@@ -70,12 +89,25 @@ struct Dependencies {
     std::shared_ptr<Jobs> jobs;LogicFactory logic;
     Environment environment;std::vector<CategoryProvider> categories;
     s::Category success{},misc{};
+    // Host registry counts are initial storage, not live session/job/header limits.
     std::size_t sessions=16,jobs_capacity=64,headers=256,initial_output_slots=8;
     std::size_t environment_capacity=4096;
+    // Only the automatically supplied provider's initial Slot-source classifier;
+    // custom environments and tracked native executor families stay explicit.
+    bool original_default_environment=false;
     // Used only when the corresponding receive/send provider is empty.
     s::AsyncReceiveImports receive_imports{};s::AsyncSendImports send_imports{};
+    // Optional explicit ownership of the ONE selected fresh provider. Legacy
+    // environment must be entirely empty; Profile exports/binds this same
+    // object through its existing owned-provider path. Classifier/capacity are
+    // deliberate on that object, independent of automatic-default settings.
+    // One Profile/Graph binds it once: configuration() is not a reservation.
+    // Retaining this pointer grants no Parent/child scope permission.
+    std::shared_ptr<owned_environment::Environment> environment_owner;
 };
 enum class Phase {Fresh,Bound,Open,Closing,Closed,Poisoned,Retiring};
+// active_calls is aggregate root/preparation/child membership, not a permission
+// requiring exactly one caller in OriginalConcurrentActors mode.
 struct Snapshot {Phase phase;std::size_t live_sessions,live_jobs,active_calls;};
 struct RegistryView {
     std::span<const s::FrameReadOwnerBinding> frames;
@@ -88,11 +120,12 @@ struct RegistryView {
     std::span<const s::IoEnvironmentSourceBinding> environments;
 };
 class Profile;
-// Owns contexts and every fixed-capacity binding array. Session records originate
-// only from actual023000 owners in greeting. Overflow retains/poisons the known
-// prefix; it is not a guessed native admission/rollback path.
-class Application final:public rt::Application {
+// Owns contexts and session binding arrays that can grow without moving live
+// session records. Session records originate only from actual023000 owners in
+// greeting. Other selected resource limits and failure-prefix rules remain.
+class Application final:public rt::Application,public rt::PreparedJobNotifications,public rt::PreparedJobMaintenance,public rt::PreparedJobSourceDrain {
 public:
+    class JobHandoff;
     ~Application()noexcept;
     rt::Bindings bindings()override;
     void construct_accept_environment(s::IoHandlerEnvironment&,std::uintptr_t)override;
@@ -101,18 +134,73 @@ public:
     [[noreturn]]void raise_write(s::Error&,std::uintptr_t)override;
     s::IocpSchedulerEntry* completion_owner(s::IocpSchedulerEntry*,s::CancelOperation&,const s::Error&,std::uint32_t)override;
     void after_completion()override;
+    void returned_job(std::uint32_t receipt)override;
+    void maintain_jobs()override;
+    bool pending_prepared_jobs()override;
     void worker_returned(std::uint64_t,const s::WorkerRunResult&)override;
     void reap(); // existing Operation; clear bindings/logic BEFORE observer drop
     Snapshot snapshot()const;
-    // Metadata spans on the bound worker; safe also during native free callbacks.
-    // They confer no permission to dereference a retired owner/control.
+    // Borrowed metadata snapshots on the bound worker, including native free
+    // callbacks. Reacquire after greeting can grow the registry; copied spans
+    // do not follow relocation or permit dereferencing retired owner/control.
     RegistryView registry()const;
     rt::Ports ports()const;
     SessionView session(SessionToken)const;
     void run_job(JobToken); // narrow runner used by Jobs; never an image VA
+    // Original worker under its Parent Operation. Captures stable exact
+    // Job/Slot/closure/logic/control records before the backend launches a child,
+    // then publishes the prepared Parent memory offer. Concurrent children do
+    // not traverse the original worker's growable registries.
+    // Nonexecuting handoff: no native message provider becomes eligible here.
+    JobHandoff prepare_job(JobToken);
+    // Cancel unacquired offer, or release an UNPROCESSED child-returned offer,
+    // after exact identity revalidation. Restores legacy runner eligibility.
+    void release_job(JobHandoff&);
+    // Original worker + whole Parent Operation, after return_memory. Consume
+    // a prepared child result through existing response/021770 closure cleanup.
+    // after_completion also consumes ready returned results before Policy's
+    // opaque lifecycle hook. Neither route attests physical child/thread exit
+    // or runs033d70 again; a scheduler must notify the original IOCP worker.
+    void complete_job(JobHandoff&);
 private:
     friend class Profile;struct Impl;std::unique_ptr<Impl> impl_;
     explicit Application(std::unique_ptr<Impl>);
+};
+class Application::JobHandoff final {
+public:
+    JobHandoff(JobHandoff&&)noexcept;
+    JobHandoff& operator=(JobHandoff&&)=delete;
+    JobHandoff(const JobHandoff&)=delete;JobHandoff& operator=(const JobHandoff&)=delete;
+    ~JobHandoff()noexcept; // unresolved claim poisons/retains source and backing
+    JobIdentity identity()const; // numeric snapshot only, no live access proof
+    void acquire(); // distinct actual same-Domain job worker
+    // Exact captured records + live Parent permit; no message execution.
+    // Concurrent Submitting jobs can run before begin_thread returns/detach;
+    // the immutable captured source and acquired JobMemory supply authority.
+    // Serialized retains its prior returned-start/detach inspection contract.
+    JobIdentity inspect();
+    // Actual existing026670 on this job's exact session queue under a live
+    // child Parent permit. This grows capacity only; no message/body dispatch.
+    void grow_output(std::uint64_t extra);
+    // Actual023dd0 owned Environment clone/query/temporary destruction only.
+    // No handler/response scheduling or message Logic/Policy/Graph execution.
+    void clone_environment();
+    // Selected concrete Policy's existing04a47c for the current child's waits.
+    // No message execution, closure release, job completion or exit proof.
+    void cleanup_exit_waits();
+    // Exact child Parent Operation -> optional JobLogic033d70 once + current
+    // child's04a47c, retaining response + mutated request in this claim. No child
+    // scheduling/closure cleanup. Return memory then notify the original worker
+    // for complete_job/after_completion; release_job cannot restore its runner.
+    // Concurrent permits distinct job records on the same Session/Logic; it
+    // introduces no session-wide body gate and does not certify all lower
+    // providers/concrete NativeJobs ready for concurrent composition.
+    void process_message();
+    void return_memory(); // child, only after its inspections/source access end
+private:
+    friend class Application;
+    explicit JobHandoff(std::shared_ptr<JobHandoffState>)noexcept;
+    std::shared_ptr<JobHandoffState> state_;
 };
 class Profile final:public rt::Profile {
 public:

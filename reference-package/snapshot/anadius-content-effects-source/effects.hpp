@@ -2,8 +2,12 @@
 #include "../anadius-achievement-runtime-source/runtime.hpp"
 #include "../anadius-config-storage-source/filesystem.hpp"
 #include "../anadius-online-factory-source/factory.hpp"
+#include "../anadius-session-memory-source/memory.hpp"
+#include "../anadius-application-io-source/call.hpp"
 #include <cstdlib>
+#include <optional>
 #include <type_traits>
+#include <utility>
 
 namespace anadius::content_effects {
 struct Options {
@@ -20,14 +24,49 @@ struct Options {
     decltype(&::CopyFileW) copy_file=::CopyFileW;
 };
 // Concrete content/image/achievement effects, without a giant Effects lower.
-// Construct/use/retire on the Graph worker/fiber. Actual State, authoritative
+// Default use and construction/retirement stay on the Graph worker/fiber.
+// Explicit synchronous child scopes require a live Parent permit/admission.
+// Actual State, authoritative
 // Paths and matching Online must outlive this provider; lifetime is not a pin
 // proof for these borrowed roots. Native SDK/file/CRT compatibility contracts
 // remain explicit. Construction does no I/O/publication/provider operations.
 class Content final:public content_handlers_recovered::Effects,
                     public content_handlers_recovered::AvatarRequest,
                     public content_handlers_recovered::CheckedCalls {
+    struct Impl;
+    struct JobAction {void* context;void (*call)(void*);};
 public:
+    // One explicit invocation owns its own guarded files and persistence
+    // engine. The copied context does not extend its Parent Operation or the
+    // borrowed Runtime/Paths/Online/checkpoint lifetimes. Close normally while
+    // that exact Operation is live; a closed handle is metadata-only thereafter.
+    class CallView final:public content_handlers_recovered::Effects,
+                         public content_handlers_recovered::AvatarRequest {
+    public:
+        ~CallView()noexcept override;
+        CallView(const CallView&)=delete;CallView& operator=(const CallView&)=delete;
+        void close();
+        std::int32_t atoi_05ee08(std::string_view)override;
+        void unknown_entitlement_field(std::string_view)override;
+        std::string utc_time_041b60(std::uint64_t&)override;
+        std::unique_ptr<content_handlers_recovered::DocumentWriter> printer_0019b0()override;
+        void write_xml_03c1d0(const configuration::Path&,std::string_view)override;
+        void save_steam_01f9a0(const content_handlers_recovered::AchievementMap&)override;
+        configuration::Path filesystem_widen_006d70(std::string_view)override;
+        configuration::Path path_append_016b50(const configuration::Path&,const configuration::Path&)override;
+        bool online_avatar_virtual_28(const configuration::Path&)override;
+        bool request_online_avatar(const configuration::Path&,const char*,std::int32_t)override;
+        bool copy_overwrite_048d20(const configuration::Path&,const configuration::Path&)override;
+        std::string path_to_utf8_031ca0(const configuration::Path&)override;
+        void log_saved_size_085530(std::int32_t)override;
+    private:
+        friend class Content;
+        CallView(std::shared_ptr<Impl>,std::shared_ptr<Impl>);
+        std::shared_ptr<Impl> owner_;
+        std::shared_ptr<Impl> impl_;
+        template<class F>auto invoke(F&&)->std::invoke_result_t<F>;
+    };
+    std::shared_ptr<CallView> make_call_view(const application_io::CallContext&);
     Content(bootstrap_backend::CallbackStateView,const achievement_storage::Paths&,
             online_factory::Online&,Options);
     ~Content()noexcept override;
@@ -49,9 +88,26 @@ public:
     void log_saved_size_085530(std::int32_t)override;
     void bind_content_checkpoint(content_handlers_recovered::CallCheckpoint)override;
     void clear_content_checkpoint()noexcept override;
+    // No owned callable transfer: caller retains action, facade, checkpoint,
+    // Runtime/Paths/Online and all lower backing throughout this whole call.
+    // The copied permit never extends the caller's Parent Operation.
+    template<class F>auto with_job(socket_recovered::SessionMemoryDomain& parent,
+        const socket_recovered::SessionMemoryDomain::JobPermit& permit,
+        content_handlers_recovered::CallCheckpoint checkpoint,F&& action)->std::invoke_result_t<F&>{
+        using R=std::invoke_result_t<F&>;static_assert(!std::is_reference_v<R>);
+        if constexpr(std::is_void_v<R>){
+            struct Payload {F& action;static void run(void* p){static_cast<Payload*>(p)->action();}} payload{action};
+            run_job_action(parent,permit,checkpoint,{&payload,Payload::run});
+        }else{
+            struct Payload {F& action;std::optional<R> result;static void run(void* p){auto& v=*static_cast<Payload*>(p);v.result.emplace(v.action());}} payload{action,{}};
+            run_job_action(parent,permit,checkpoint,{&payload,Payload::run});return std::move(*payload.result);
+        }
+    }
 private:
-    struct Impl;std::unique_ptr<Impl> impl_;
+    std::shared_ptr<Impl> impl_;
     Impl& attached()const;
     template<class F>auto invoke(F&&)->std::invoke_result_t<F>;
+    void run_job_action(socket_recovered::SessionMemoryDomain&,
+        const socket_recovered::SessionMemoryDomain::JobPermit&,content_handlers_recovered::CallCheckpoint,JobAction);
 };
 }

@@ -1,5 +1,10 @@
 # B33 — Somut session allocator/free/context domain
 
+**Güncel kaynak adımı, henüz derlenmedi:** `enter(job)` açık yetkiyle tam Parent
+işlemine giriş sağlar; yetki işlem boyunca sabit kayda tutunur ve erken iade
+edilemez. Varsayılan girişin worker denetimleri korunur. Yeni test kaynakları
+çalıştırılmadı. Ayrıntı: `job-parent.md`; aşağıdaki sonuçlar tarihsel sürüme aittir.
+
 `SessionMemoryDomain` artık session kontrol bloğu, proxy, deque blokları/map'i ve
 receive/message tamponlarını **aynı gerçek ApplicationMemory heap/PTD domain'i**
 üzerinde sahiplenir. Bu yeni bir kaynak bileşimidir; yeni native yordam veya

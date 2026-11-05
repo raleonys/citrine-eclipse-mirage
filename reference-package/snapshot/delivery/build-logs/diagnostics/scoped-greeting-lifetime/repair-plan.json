@@ -1,0 +1,61 @@
+{
+  "before_sha256": "b4f27e4b6d76785f53a36656e475d4abf305d090b183bfda56c894735d3c11ba",
+  "archive_edits": false,
+  "canonical_source_edits": false,
+  "limitations": "Focused synthetic SDK fixture evidence; it preserves actual source ownership/Scope/Runtime execution but does not claim real network cancellation, original DLL equivalence, or complete child old1 path. Root owns canonical repair, full suite and ZIP.",
+  "production_edits": false,
+  "proposed_encoding": "UTF-8 without BOM, CRLF",
+  "task": "Repair10 scoped greeting lifetime flake in fresh full suite",
+  "proposed_source": "work/rebuild-20261105T182000Z/diagnostics/scoped-greeting-lifetime/graph_integration_tests.proposed.cpp",
+  "canonical_source": "outputs/anadius-application-graph-source/graph_integration_tests.cpp",
+  "cause": "Historical greeting allocation lifetime was inferred from a later current-address lookup miss. Heap reuse makes its old tail belong to another live receive allocation, so successful release can produce a lookup hit and greeting_gone=false.",
+  "diff": "proposed-source.diff",
+  "after_sha256": "d0022481e5427132614b62c26a409e5c8d269b120d7dbce41c0a55523efba6e4",
+  "validation": {
+    "fixed_reuse_runs": "5/5 focused scoped runs EXIT0, positive obsolete-lookup hit at5; search stopped (reuse-observer-run-commands.json)",
+    "clean_proposal_run_exit": 0,
+    "clean_proposal_duration_ms": 49,
+    "clean_proposal_compile_exit": 0,
+    "clean_run": "proposed-run-command.json",
+    "observer_runs": "24/24 focused scoped runs EXIT0 (observer2-run-commands.json)",
+    "clean_compile": "proposed-compile-command.json"
+  },
+  "fixed_reuse_evidence": {
+    "captured_base": "0x24a92e81cf0",
+    "old_current_address_visible": true,
+    "meaning": "New receive allocation starts at a different base but covers the old greeting tail; obsolete lookup predicate would fail, while the exact successful-free lifetime event remains true.",
+    "actual_free_count": 1,
+    "exit": 0,
+    "new_receive_base": "0x24a92e81ca0",
+    "accepted_heap_free_argument": "0x24a92e81cf0",
+    "file": "reuse-observer-run-5.log",
+    "greeting_tail": "0x24a92e81d90"
+  },
+  "baseline_evidence": {
+    "ports_closed": 1,
+    "bounded_runs": "Initial12 PASS, then repeat7 PASS and failure at8; stop after direct repro.",
+    "file": "field-repeat-8.log",
+    "exit": 254,
+    "eof_seen": true,
+    "response_logs": 0,
+    "greeting_base": "0x231e3290270",
+    "eof_posted": true,
+    "receive_base": "0x231e3290270",
+    "received_logs": 0,
+    "greeting_tail": "0x231e3290310",
+    "response_size": 0,
+    "closed_back": 200,
+    "cleanups": 1,
+    "receive_waiting": false,
+    "greeting_gone": false,
+    "closed_size": 3
+  },
+  "semantic_patch": [
+    "Only scoped mode selects observation-only heap_free import in its SAME actual Domain Api; every call forwards unchanged to real HeapFree. Other modes keep default heap imports.",
+    "Arm one historical allocation identity at first actual scoped sync WSASend; require nonzero extent below4096 and no previous armed/free event.",
+    "Real HeapFree success records its raw argument and one accepted-free event only if exact captured pointer matches. Disarm on first success; later address reuse/free cannot count toward that historical allocation.",
+    "Preserve incoming LastError until real HeapFree call, capture exact return and LastError immediately, restore that result after atomic observations. No throwing SDK callback, allocations, blocking, retain/pin or added business root.",
+    "Before first actual scoped receive require released event, accepted raw argument equals captured live greeting_data, actual first-send byte extent equals greeting_wire length, exactly one accepted free and unarmed state; do not query freed address.",
+    "Controller stack observer stays published through original/child native/FLS joins and actual Domain.close, then is removed. Existing natural source/Scope/work/EOF/Stop/closed checks remain unchanged."
+  ]
+}

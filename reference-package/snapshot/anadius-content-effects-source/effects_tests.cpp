@@ -2,6 +2,9 @@
 #include "../anadius-online-platform-source/platform_test_fixture.hpp"
 #include "../anadius-bootstrap-runtime-source/runtime_test_fixture.hpp"
 #include "../anadius-config-storage-source/storage_test_fixture.hpp"
+#include "../anadius-session-memory-source/memory.hpp"
+#include <atomic>
+#include <exception>
 #include <bit>
 #include <cstring>
 #include <cwchar>
@@ -15,7 +18,7 @@
 namespace {
 using namespace anadius;namespace ce=content_effects;namespace ch=content_handlers_recovered;namespace of=online_factory;
 using Path=configuration::Path;
-unsigned checks=0;
+std::atomic<unsigned> checks=0;
 void require(bool value,const char* text){++checks;if(!value)throw std::runtime_error(text);}
 template<class E,class F>void rejects(F&& f,const char* text){bool caught=false;try{f();}catch(const E&){caught=true;}require(caught,text);}
 struct Buffer final:std::stringbuf {
@@ -122,6 +125,116 @@ void primitive_checkpoints(){
     {Fixture f;f.checkpoint();f.trace.time_hook=[&]{f.trace.deny=true;};std::uint64_t epoch=99;rejects<std::logic_error>([&]{(void)f.content->utc_time_041b60(epoch);},"Clock primitive postcheck stops UTC sequence");require(f.trace.time==1&&!f.trace.gmtime&&!f.trace.formatted&&epoch==99,"Denied time callback cannot reach gmtime/format or assign epoch");}
     {Fixture f;f.checkpoint();f.trace.directory_hook=[&]{f.trace.deny=true;};rejects<std::logic_error>([&]{f.content->save_steam_01f9a0(f.config.achievements);},"Directory SDK postcheck stops source prefix traversal");require(f.sdk.creates.size()==1&&f.memory->writes.empty(),"First directory callback denial prevents next CreateDirectory prefix and file open");}
 }
+struct ChildEvent {
+    HANDLE handle=::CreateEventW(nullptr,TRUE,FALSE,nullptr);
+    ChildEvent(){require(handle!=nullptr,"Prepared Content test event created");}
+    ~ChildEvent(){if(handle)::CloseHandle(handle);}
+    void signal(){require(::SetEvent(handle)!=0,"Prepared Content event signaled");}
+    void wait(){require(::WaitForSingleObject(handle,10000)==WAIT_OBJECT_0,"Prepared Content event observed within finite bound");}
+};
+BOOL WINAPI child_no_module(DWORD flags,LPCWSTR address,HMODULE* module){if(flags!=4||!address||!module)std::terminate();*module=nullptr;::SetLastError(ERROR_MOD_NOT_FOUND);return FALSE;}
+struct ChildTask {
+    std::function<void()> action;std::exception_ptr error;HANDLE handle=nullptr;std::uint32_t id=0;
+    static unsigned __stdcall run(void* p){auto& task=*static_cast<ChildTask*>(p);try{task.action();}catch(...){task.error=std::current_exception();}return 67;}
+    void launch(bootstrap_providers::NativeThreads& threads,std::function<void()> f){action=std::move(f);handle=reinterpret_cast<HANDLE>(threads_recovered::begin_thread_05e8e0(nullptr,0,reinterpret_cast<std::uintptr_t>(&run),reinterpret_cast<std::uintptr_t>(this),0,&id,threads));require(handle&&id,"Own Content test uses actual same-Domain NativeThreads");}
+    void join(){if(!handle||::WaitForSingleObject(handle,10000)!=WAIT_OBJECT_0){std::cerr<<"Retain active Content wait/token owners\n"<<std::flush;::ExitProcess(1);}DWORD code=0;require(::GetExitCodeThread(handle,&code)&&code==67,"Content worker exits through actual wrapper/FLS path");require(::CloseHandle(handle)!=0,"Joined Content worker handle closed");handle=nullptr;if(error)std::rethrow_exception(error);}
+};
+struct ChildLife final:socket_recovered::LifecycleEffects {
+    socket_recovered::SocketService& resolve_service_0239c0(socket_recovered::ContextIdentity)override{throw std::logic_error("No Content fixture socket selected");}
+    void close_and_cancel_026fb0(socket_recovered::SocketService&,socket_recovered::SocketObject&)override{throw std::logic_error("No Content fixture socket close");}
+    void executor_cleanup(socket_recovered::SocketObject&,std::uintptr_t)override{throw std::logic_error("No Content fixture executor cleanup");}
+};
+struct ChildAdmission {
+    Trace& trace;std::function<void()> hook;
+    static void check(void* p){auto& c=*static_cast<ChildAdmission*>(p);Trace::checkpoint(&c.trace);if(c.hook)c.hook();}
+    ch::CallCheckpoint callback(){return {this,check};}
+};
+void prepared_content_child(std::string_view mode={}){
+    namespace sm=socket_recovered;namespace wh=worker_handoff;
+    auto identity=std::make_shared<std::array<std::byte,8>>();
+    auto domain=thread_domain::DomainStorage::create({0x31c872450ab966d1ULL,0,nullptr,nullptr,1,reinterpret_cast<std::uintptr_t>(identity->data()),identity});
+    require(domain->initialize(),"Own Content Domain initializes real heap/FLS/PTD");auto api=thread_native::native_api();api.get_module=child_no_module;auto threads=domain->make_threads(api);
+    auto prepared=wh::PreparedMemory::prepare(domain),other=wh::PreparedMemory::prepare(domain);
+    std::shared_ptr<sm::SessionMemoryDomain> parent,foreign;std::optional<wh::PreparedMemory::JobMemory> offer;std::optional<sm::SessionMemoryDomain::JobPermit> retained;
+    std::unique_ptr<Fixture> fixture;std::unique_ptr<ce::Content> reentrant;ChildEvent ready,returned,exit;ChildTask worker,child;
+    try{
+        worker.launch(*threads,[&]{
+            auto borrow=prepared->acquire();parent=std::make_shared<sm::SessionMemoryDomain>(std::move(borrow),std::make_shared<ChildLife>());
+            auto wrong=other->acquire();foreign=std::make_shared<sm::SessionMemoryDomain>(std::move(wrong),std::make_shared<ChildLife>());
+            {auto operation=parent->enter();fixture=std::make_unique<Fixture>();fixture->adopt();reentrant=std::make_unique<ce::Content>(fixture->view(),fixture->paths,*fixture->online,fixture->options());offer.emplace(parent->prepare_job());}
+            ready.signal();returned.wait();
+            {auto operation=parent->enter();require(fixture->content->atoi_05ee08("7")==7,"Original Content worker resumes default route after child scope");reentrant.reset();fixture.reset();}
+            require(parent->close()&&foreign->close(),"Content job scope retains no provider lease/active permission");parent.reset();foreign.reset();
+        });
+        ready.wait();child.launch(*threads,[&]{
+            offer->acquire();auto& f=*fixture;
+            std::optional<application_io::CallContext> retained_context;
+            {
+                auto operation=parent->enter(*offer);auto permit=operation.job_permit();retained.emplace(permit);ChildAdmission admission{f.trace,{}};
+                retained_context.emplace(*parent,permit,admission.callback());
+                if(mode=="view-initial"||mode=="view-open"||mode=="view-reentry"){
+                    application_io::CallContext context(*parent,permit,admission.callback());
+                    auto view=f.content->make_call_view(context);
+                    if(mode=="view-reentry"){
+                        auto idle=f.content->make_call_view(context);unsigned swallowed=0;bool lower=false;
+                        f.trace.time_hook=[&]{try{(void)idle->atoi_05ee08("91");lower=true;}catch(const std::logic_error&){++swallowed;}};
+                        bool caught=false;std::uint64_t epoch=99;try{(void)view->utc_time_041b60(epoch);}catch(const std::logic_error&){caught=true;}
+                        if(caught&&swallowed==1&&!lower&&f.trace.time==1&&!f.trace.gmtime&&!f.trace.atoi_calls&&epoch==99)std::_Exit(177);
+                        std::_Exit(239);
+                    }
+                    if(mode=="view-initial")f.trace.initial_hook=[&]{f.trace.deny=true;};else f.trace.deny_after_open=true;
+                    bool caught=false;try{view->write_xml_03c1d0(u"MEM\\view-prefix.xml","payload");}catch(const std::logic_error&){caught=true;}
+                    const auto before=f.trace.checks;bool unavailable=false;try{(void)f.content->make_call_view(context);}catch(const std::logic_error&){unavailable=true;}
+                    if(caught&&unavailable&&f.trace.checks==before&&f.trace.initial==(mode=="view-initial"?1U:0U)&&!f.trace.output_destroyed&&!f.trace.output_closed&&f.memory->events==std::vector<std::string>{"open"}&&f.memory->outputs.empty())std::_Exit(mode=="view-initial"?175:176);
+                    std::_Exit(239);
+                }
+                if(!mode.empty()){
+                    if(mode=="initial")f.trace.initial_hook=[&]{f.trace.deny=true;};else f.trace.deny_after_open=true;
+                    bool caught=false;try{f.content->with_job(*parent,permit,admission.callback(),[&]{f.content->write_xml_03c1d0(u"MEM\\child-prefix.xml","payload");});}catch(const std::logic_error&){caught=true;}
+                    if(caught&&f.trace.initial==(mode=="initial"?1U:0U)&&!f.trace.output_destroyed&&!f.trace.output_closed&&f.memory->events==std::vector<std::string>{"open"}&&f.memory->outputs.empty())std::_Exit(mode=="initial"?173:174);
+                    std::_Exit(239);
+                }
+                rejects<std::logic_error>([&]{(void)f.content->atoi_05ee08("unreached");},"Default Content rejects child outside explicit scope");
+                rejects<std::invalid_argument>([&]{f.content->with_job(*foreign,permit,admission.callback(),[]{throw std::runtime_error("wrong-root action ran");});},"Content rejects different Parent before action");
+                ChildTask outsider;outsider.launch(*threads,[&]{rejects<std::logic_error>([&]{f.content->with_job(*parent,permit,admission.callback(),[]{throw std::runtime_error("wrong-actor action ran");});},"Wrong Content actor rejects before held Parent gate");});outsider.join();
+                require(!f.trace.atoi_calls&&!f.trace.time&&!f.trace.checks&&f.memory->writes.empty(),"Denied Content calls perform no lower actions");
+                f.trace.copy_success=true;
+                ::SetLastError(0x47f2);const auto result=f.content->with_job(*parent,permit,admission.callback(),[&]{
+                    require(f.content->atoi_05ee08("416")==416,"Child Content uses configured atoi");std::uint64_t epoch=0;require(f.content->utc_time_041b60(epoch)=="2020-01-01T00:00:00"&&epoch==1577836800,"Child Content keeps existing UTC/epoch algorithm");
+                    auto document=f.content->printer_0019b0();document->xml().open_004080("Own",false);document->xml().attribute_005560("text","a<&");document->xml().close_virtual_48(false);f.content->write_xml_03c1d0(f.paths.xml_path,document->c_string_without_nul());
+                    f.config.achievements.emplace("one",configuration::Achievement{5,1,3,"2020-01-01T00:00:00","name","steam-1",17});f.content->save_steam_01f9a0(f.config.achievements);
+                    require(f.content->filesystem_widen_006d70("utf8-\xc3\xa9")==u"utf8-\u00e9"&&f.content->path_to_utf8_031ca0(u"wide-\u00e9")=="wide-\xc3\xa9","Child Content uses existing encoding leaves");
+                    require(f.content->request_online_avatar(u"MEM\\child-avatar","owner",2)&&f.content->copy_overwrite_048d20(u"MEM\\source",u"MEM\\destination"),"Child Content reaches own Online slot28 and injected CopyFile only");f.content->log_saved_size_085530(2);return 73;
+                });
+                require(result==73&&::GetLastError()==0x47f2&&f.trace.avatars==1&&f.trace.copies==1&&f.trace.output_closed==2&&f.trace.output_destroyed==2,"Content returns value/LastError only after both raw outputs retire normally");
+                require(f.memory->outputs.at(f.paths.xml_path).find("a&lt;&amp;")!=std::string::npos&&f.memory->outputs.at(f.paths.ini_path).find("UnlockTime=17")!=std::string::npos&&!f.sdk.creates.empty(),"Child source writes only owned memory XML/INI and injected directories");
+                {
+                    application_io::CallContext context(*parent,permit,admission.callback());
+                    auto first=f.content->make_call_view(context),second=f.content->make_call_view(context);
+                    const auto before=f.trace.checks;ChildTask outsider;
+                    outsider.launch(*threads,[&]{rejects<std::logic_error>([&]{(void)f.content->make_call_view(context);},"CallView factory rejects copied context on a foreign actor before admission");});outsider.join();
+                    require(f.trace.checks==before,"Foreign CallView preparation does not execute checkpoint or poison healthy views");
+                    auto document=first->printer_0019b0();document->xml().open_004080("View",false);document->xml().attribute_005560("value","<&");document->xml().close_virtual_48(false);
+                    first->write_xml_03c1d0(u"MEM\\first-view.xml",document->c_string_without_nul());document.reset();
+                    const std::string counted("v\0z",3);second->write_xml_03c1d0(u"MEM\\second-view.xml",counted);
+                    std::uint64_t epoch=0;require(second->utc_time_041b60(epoch)=="2020-01-01T00:00:00"&&epoch==1577836800,"Explicit CallView uses actual UTC pipeline");
+                    require(f.memory->outputs.at(u"MEM\\first-view.xml").find("&lt;&amp;")!=std::string::npos&&f.memory->outputs.at(u"MEM\\second-view.xml")==counted&&f.trace.output_closed==4&&f.trace.output_destroyed==4,"Independent CallView engines own and normally retire their actual counted XML file writes");
+                    first->close();first->close();rejects<std::logic_error>([&]{(void)first->atoi_05ee08("93");},"Closed view rejects further effects without poisoning its sibling");
+                    require(second->path_append_016b50(u"MEM",u"view")==u"MEM\\view","Healthy sibling remains usable after closed-handle rejection");second->close();
+                }
+                rejects<std::logic_error>([&]{(void)f.content->atoi_05ee08("unreached");},"Content child authority does not escape synchronous action");
+                unsigned swallowed=0;bool ran=false;ChildAdmission recursive{f.trace,{}};recursive.hook=[&]{try{reentrant->with_job(*parent,permit,recursive.callback(),[&]{ran=true;});}catch(const std::logic_error&){++swallowed;}};
+                rejects<std::logic_error>([&]{reentrant->with_job(*parent,permit,recursive.callback(),[&]{ran=true;});},"Swallowed Content scope admission reentry remains poisoned");require(swallowed==1&&!ran,"Recursive Content admission reaches neither action body");
+            }
+            ChildAdmission expired{f.trace,{}};const auto before=f.trace.checks;
+            rejects<std::logic_error>([&]{(void)f.content->make_call_view(*retained_context);},"Expired CallView context rejects before its stale borrowed checkpoint");require(f.trace.checks==before,"Expired context does not execute former checkpoint backing");
+            rejects<std::logic_error>([&]{f.content->with_job(*parent,*retained,expired.callback(),[]{throw std::runtime_error("expired action ran");});},"Content copied permit expires with exact Operation");require(f.trace.checks==before,"Expired Content proof reaches no checkpoint");
+            {auto operation=parent->enter(*offer);auto fresh=operation.job_permit();ChildAdmission admission{f.trace,{}};rejects<std::logic_error>([&]{f.content->with_job(*parent,*retained,admission.callback(),[]{throw std::runtime_error("old seal action ran");});},"Old Content seal remains invalid in new Operation");require(f.content->with_job(*parent,fresh,admission.callback(),[&]{return f.content->path_append_016b50(u"MEM",u"child");})==u"MEM\\child","Content scope returns owned Path by value");f.content->with_job(*parent,fresh,admission.callback(),[&]{f.content->log_saved_size_085530(3);});require(f.buffer->str()=="saved size: 2\nsaved size: 3\n","Void Content scope keeps exact logging order");}
+            require(offer->retire(),"Content descriptor ends before logical child return");returned.signal();exit.wait();
+        });
+        worker.join();require(!prepared->close(0)&&other->close(10000),"Content action completion does not imply physical child exit");exit.signal();child.join();require(prepared->close(10000),"Native child/FLS exit permits Content backing retirement");retained.reset();offer.reset();other.reset();prepared.reset();threads.reset();require(domain->close(),"Own Content Domain closes after all leases/threads retire");domain.reset();
+    }catch(const std::exception& e){std::cerr<<"Prepared Content source scenario: "<<e.what()<<'\n'<<std::flush;::ExitProcess(1);}catch(...){::ExitProcess(2);}
+}
 [[noreturn]]void file_initial_denial_child(){
     // Unknown file ownership is deliberately retained. Do not unwind the
     // fail-closed provider or claim a successful cleanup of this prefix.
@@ -141,4 +254,21 @@ void primitive_checkpoints(){
     std::_Exit(239);
 }
 }
-int main(int argc,char** argv){try{if(argc==2&&std::string_view(argv[1])=="--file-initial-denial")file_initial_denial_child();if(argc==2&&std::string_view(argv[1])=="--file-open-denial")file_open_denial_child();query_image_and_routes();persistence_and_utc();ownership_identity_and_affinity();primitive_checkpoints();require(_spawnl(_P_WAIT,argv[0],argv[0],"--file-initial-denial",static_cast<const char*>(nullptr))==171,"Own child proves initial-state denial retains raw output without write/close/destructor");require(_spawnl(_P_WAIT,argv[0],argv[0],"--file-open-denial",static_cast<const char*>(nullptr))==172,"Own child proves open-return denial retains adopted raw output before initial_state/write/close/destructor");std::cout<<"PASS: "<<checks<<" content effects checks; own slot28/memory persistence and 2 retained-prefix children\n";}catch(const std::exception& error){std::cerr<<"FAIL: "<<error.what()<<'\n';return 1;}}
+int main(int argc,char** argv){try{
+    if(argc==2&&std::string_view(argv[1])=="--file-initial-denial")file_initial_denial_child();
+    if(argc==2&&std::string_view(argv[1])=="--file-open-denial")file_open_denial_child();
+    if(argc==2&&std::string_view(argv[1])=="--job-file-initial-denial")prepared_content_child("initial");
+    if(argc==2&&std::string_view(argv[1])=="--job-file-open-denial")prepared_content_child("open");
+    if(argc==2&&std::string_view(argv[1])=="--view-file-initial-denial")prepared_content_child("view-initial");
+    if(argc==2&&std::string_view(argv[1])=="--view-file-open-denial")prepared_content_child("view-open");
+    if(argc==2&&std::string_view(argv[1])=="--view-reentry")prepared_content_child("view-reentry");
+    query_image_and_routes();persistence_and_utc();ownership_identity_and_affinity();primitive_checkpoints();prepared_content_child();
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--file-initial-denial",static_cast<const char*>(nullptr))==171,"Own child proves initial-state denial retains raw output without write/close/destructor");
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--file-open-denial",static_cast<const char*>(nullptr))==172,"Own child proves open-return denial retains adopted raw output before initial_state/write/close/destructor");
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--job-file-initial-denial",static_cast<const char*>(nullptr))==173,"Prepared child source retains initial-state denial raw file");
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--job-file-open-denial",static_cast<const char*>(nullptr))==174,"Prepared child source retains adopted open-return denial raw file");
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--view-file-initial-denial",static_cast<const char*>(nullptr))==175,"Explicit CallView retains unknown initial-state raw file and blocks new sibling publication");
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--view-file-open-denial",static_cast<const char*>(nullptr))==176,"Explicit CallView adopts unknown open-return raw file without destructor replay");
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--view-reentry",static_cast<const char*>(nullptr))==177,"Already-created idle view cannot bypass same-actor active-call reentry guard");
+    std::cout<<"PASS: "<<checks<<" content effects checks; owned memory persistence, prepared scopes/views and7retained-prefix children\n";
+}catch(const std::exception& error){std::cerr<<"FAIL: "<<error.what()<<'\n';return 1;}}

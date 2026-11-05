@@ -19,6 +19,9 @@ struct AcceptMemorySnapshot {std::size_t projections=0,pending=0,active_calls=0;
 // caller obligation. No SessionControl is invented for a pending accept.
 // A checked inert Posted projection reserves the base allocation/generation;
 // its packet is replaced with a distinct accept operation, never a receive/send.
+// capacity is the positive starting row count (at most 65536), not a live limit.
+// Appended rows preserve operation/Task addresses; base packet-table growth
+// repairs the registered packet field before releasing its old table.
 // Route accept packets through AcceptDispatcherEffects before the base router.
 class OwnedAcceptMemory final:public PostedMemoryEffects,public AsyncAcceptEffects {
 public:
@@ -42,8 +45,13 @@ public:
     void complete(AcceptHandle,std::uintptr_t owner,const Error&);
     void note_cancel_requested(AcceptHandle); // intent never drops a kernel loan
     void free_cached_identity(std::uintptr_t);
-    std::span<OperationStorageBinding> storage_bindings();
-    std::span<DispatcherOperationBinding> dispatcher_bindings();
+    std::span<OperationStorageBinding> storage_bindings(); // borrowed until base growth
+    std::span<DispatcherOperationBinding> dispatcher_bindings(); // same lifetime
+    // Admit the existing Parent/accept route without traversing a mutable
+    // union table. Concurrent bindings require this exact base IO resolver.
+    OperationStorageResolver& storage_resolver();
+    bool matches_storage(const PostedEnvironment&);
+    std::size_t storage_capacity(); // current base registry coverage, no union span
     AcceptMemorySnapshot snapshot()const;
     bool close(); // all base IO/cache work and provider calls must be drained
     OperationStorage& allocate_04b0bc(std::uint64_t n)override{return allocate(n);}

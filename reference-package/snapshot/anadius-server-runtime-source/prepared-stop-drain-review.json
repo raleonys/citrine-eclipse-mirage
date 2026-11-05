@@ -1,0 +1,24 @@
+{
+  "reviewer": "author static source inspection; no independent agent review",
+  "result": "STATIC_SOURCE_INSPECTED_NOT_COMPILED_OR_EXECUTED",
+  "reviewed_source_hashes": {
+    "anadius-server-runtime-source/runtime.hpp": "381c16ad55acabc88a81cabccdcc16f466bdb101535af053958ae6cdde66e205",
+    "anadius-server-runtime-source/runtime.cpp": "2f270b4cd8a7a4dcf3cefaffb84291afe97dcbbb07862741f39edea1258f9549",
+    "anadius-session-profile-source/profile.hpp": "50ce41d21902a4c56ec8b0e9e7f605c3b759b15772198e9ee261b8cc8e47b65d",
+    "anadius-session-profile-source/profile.cpp": "5428a7616fc900a934d51dbae3521709a240c3cb15acea70342aedb01dc895bd",
+    "anadius-application-graph-source/graph_integration_tests.cpp": "d4ce968e178313f4f293bba1001174a487790fa762b81e867fc8944d01592feb"
+  },
+  "findings": [
+    "Prior early-stop scenario195 was unreachable as described: Profile.Application.worker_returned rejects live_jobs before invoking Policy/NativeHooks.returned. Source expectations now correctly assert terminal retained Profile/Runtime/backend/Graph poisoning before the hook, without claiming Quiescing/Closing normal deferral.",
+    "Independent PreparedJobSourceDrain implemented by concrete Profile.Application performs original Parent admission and requires selected PreparedJobs before inspecting source live_jobs. No permission to execute or consume a job is conferred by this boolean.",
+    "Runtime.Dependencies.prepared_stop_timeout_ms defaults0 and rejects INFINITE. Opt-in selection preflights the drain interface/PreparedJobs. Runtime Router masks an observed nonzero stop only while source jobs remain; scheduler stop flag and generic dispatcher/native stop bodies stay unchanged.",
+    "Current original run_worker remains initialized and admitted while awaiting exact HOST receipts. Existing NativeJobs validation/completion and dispatcher single work decrement are reused. Last acknowledged source job posts one raw empty stop wake; no synthetic operation, duplicate message body or guessed physical/IO drain.",
+    "One finite deadline from first deferred stop clamps physical GQCS waits; immediate SDK status captured before deadline/proof effects. Missing receipt expires retaining owners. Failed resume post occurs before dispatcher work transfer, retaining that pin and aborting without fabricated finish or cleanup.",
+    "New source modes197 receipt-drain then honest remaining-IO deferral;198 controlled proxy withholds ready packet and deadline aborts;199 resume wake returns false after consumed body and work pin remains unchanged. Existing195 default source rejection corrected. Nothing executed.",
+    "Positive197 intentionally keeps live session/receive/send/accept ownership and external proof false. Receipt drain is not complete SessionIo stop integration, production unload, or a completed DLL. Existing default/legacy policy remains unchanged."
+  ],
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

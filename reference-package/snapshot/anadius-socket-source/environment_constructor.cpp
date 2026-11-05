@@ -28,38 +28,48 @@ IoEnvironmentFactory factory(IoHandlerExecutor* identity,IoEnvironmentConstructo
     if(!identity || !found)throw UnsupportedInput("Environment constructor factory has no projection");
     return found;
 }
-void destroy_if_non_guard(IoHandlerEnvironment& value,IoHandlerSentinels sentinels){
+void destroy(IoHandlerEnvironment& value,IoEnvironmentConstructorContext& context){
+    if(context.calls)context.calls->destroy_slot_00(value);
+    else operations(value).destroy_slot_00(value);
+}
+void destroy_if_non_guard(IoHandlerEnvironment& value,IoHandlerSentinels sentinels,IoEnvironmentConstructorContext& context){
     auto& live=operations(value);
-    if(live.destroy_identity!=sentinels.guard_destroy_017a30)live.destroy_slot_00(value);
+    if(live.destroy_identity!=sentinels.guard_destroy_017a30)destroy(value,context);
 }
 }
 IoHandlerEnvironment& construct_io_environment_023dd0(IoHandlerEnvironment& destination,
     IoHandlerEnvironment& source,IoHandlerSentinels sentinels,IoEnvironmentConstructorContext& context){
     const auto type=type_query(source.schedule_20,context)();
     // Native ADD8 uses address-width arithmetic; no host type_info cast.
-    if(context.types.compare_type_names_04d2d0(type+std::uintptr_t{8},0x1800a25c8ULL)==0){
+    const auto comparison=context.calls?context.calls->compare_type_names_04d2d0(type+std::uintptr_t{8},0x1800a25c8ULL):
+        context.types.compare_type_names_04d2d0(type+std::uintptr_t{8},0x1800a25c8ULL);
+    const auto move=[&](IoHandlerEnvironment& out,IoHandlerEnvironment& from)->IoHandlerEnvironment&{
+        return context.calls?context.calls->move_023cb0(out,from,sentinels):move_io_environment_023cb0(out,from,sentinels);
+    };
+    if(comparison==0){
         IoHandlerEnvironment temporary;
         temporary.operations_10=sentinels.empty_operations_846c8;
         temporary.state_18=0;
         temporary.schedule_20=sentinels.empty_schedule_846e8;
         temporary.executor_28=sentinels.empty_executor_84770;
-        move_io_environment_023cb0(destination,temporary,sentinels);
-        destroy_if_non_guard(temporary,sentinels);
+        move(destination,temporary);
+        destroy_if_non_guard(temporary,sentinels,context);
     }else{
         // Cache slot58 FUNCTION before query_slot18 may change/delete executor.
         const auto construct=factory(source.executor_28,context);
-        const auto query=operations(source).query_slot_18(source);
+        const auto query=context.calls?context.calls->query_slot_18(source):operations(source).query_slot_18(source);
         IoHandlerEnvironment prepared;
         IoEnvironmentConstructorScratch scratch;
-        construct(prepared,query,scratch);
+        if(context.calls)context.calls->construct_slot_58(construct,prepared,query,scratch);
+        else construct(prepared,query,scratch);
         IoHandlerEnvironment intermediate;
         // The original first move is inlined, byte-for-byte equivalent to the
         // already recovered023cb0 defined-field ordering used here.
-        move_io_environment_023cb0(intermediate,prepared,sentinels);
-        destroy_if_non_guard(prepared,sentinels);
-        move_io_environment_023cb0(destination,intermediate,sentinels);
+        move(intermediate,prepared);
+        destroy_if_non_guard(prepared,sentinels,context);
+        move(destination,intermediate);
         // Unlike the first cleanup, native does not guard this destroy.
-        operations(intermediate).destroy_slot_00(intermediate);
+        destroy(intermediate,context);
     }
     return destination;
 }

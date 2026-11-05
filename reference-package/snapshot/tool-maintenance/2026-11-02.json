@@ -1,0 +1,125 @@
+{
+  "recorded_at": "2026-11-01T21:34:30.554923+00:00",
+  "status": "UPDATED_WITH_GHIDRA_COMPATIBILITY_PIN_AND_PYTHON_INSTALL_BLOCK",
+  "installed": {
+    "rea": {
+      "from": "6.5.0",
+      "to": "6.8.0",
+      "path": "C:/tools/rea-6.8.0/node_modules/rea-agents/scripts/rea.mjs"
+    },
+    "rea_skill": {
+      "from": "42",
+      "to": "49",
+      "tool_count": 229
+    },
+    "node": {
+      "from": "24.20.0",
+      "to": "26.13.0 LTS",
+      "path": "C:/tools/node-v26.13.0-win-x64/node.exe"
+    },
+    "npm": {
+      "from": "11.19.0",
+      "to": "12.2.1",
+      "path": "C:/tools/node-v26.13.0-win-x64/npm.cmd"
+    },
+    "java": {
+      "from": "21.0.12.1",
+      "to": "25.0.5+8-LTS",
+      "path": "C:/tools/jdk-25.0.5+8"
+    },
+    "ghidra_standalone": {
+      "from": "12.1.4",
+      "to": "12.2",
+      "path": "C:/tools/ghidra_12.2_PUBLIC",
+      "headless_help_checked": true
+    },
+    "llvm_mingw": {
+      "from": "20261006 / clang 23.1.3",
+      "to": "20261020 / clang 23.1.4",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64"
+    }
+  },
+  "ghidra_rea_active": {
+    "version": "12.1.4",
+    "path": "C:/tools/ghidra_12.1.4_PUBLIC",
+    "reason": "REA6.8.0 rejects12.2: unsupported_version; accepts12.1.x verified12.1.4. Release check was not bypassed."
+  },
+  "python": {
+    "version": "3.12.14",
+    "upgrade_completed": false,
+    "attempted_version": "3.15.2",
+    "reason": "Automatic approval rejected installer command: blocked by policy. No retry/bypass; managed Python unchanged."
+  },
+  "activation": {
+    "shell": "work/use-tools.ps1",
+    "machine_path_modified": false,
+    "codex_config": "C:\\Users\\Skysect\\.codex\\config.toml",
+    "unrelated_config_and_approval_settings_preserved": true,
+    "codex_mcp_restart_required": true,
+    "detail": "Fresh independent MCP6.8 session verified aligned/229tools/Ghidraavailable. Existing chat connection remains6.5 until restart."
+  },
+  "optional_packages": "npm did not approve frida install script; unused dynamic-analysis capability not claimed as installed/verified.",
+  "managed_tools_unchanged": [
+    "Codex-managed Python3.12.14",
+    "Codex-managed Git/runtime"
+  ],
+  "downloads": {
+    "node": {
+      "file": "node-v26.13.0-win-x64.zip",
+      "url": "https://nodejs.org/dist/v26.13.0/node-v26.13.0-win-x64.zip",
+      "version": "v26.13.0",
+      "sha256": "dcc60d59a0746999f99064a01c020445d54d84228c691cdbf25b49ac3b59150a"
+    },
+    "jdk": {
+      "file": "OpenJDK25U-jdk_x64_windows_hotspot_25.0.5_8.zip",
+      "url": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_x64_windows_hotspot_25.0.5_8.zip",
+      "version": "25.0.5+8-LTS",
+      "sha256": "636bdc13dc649ddc7d5921c5c7d23cca6e44fd19d662b45cc9c02135a6c96c42"
+    },
+    "ghidra": {
+      "file": "ghidra_12.2_PUBLIC_20261016.zip",
+      "url": "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_12.2_build/ghidra_12.2_PUBLIC_20261016.zip",
+      "version": "Ghidra_12.2_build",
+      "sha256": "2c2cd776db3c1f6a097ba418922378ac3649cadd5e844a6f5f088ae628a7be67"
+    },
+    "llvm": {
+      "file": "llvm-mingw-20261020-ucrt-x86_64.zip",
+      "url": "https://github.com/mstorsjo/llvm-mingw/releases/download/20261020/llvm-mingw-20261020-ucrt-x86_64.zip",
+      "version": "20261020",
+      "sha256": "fd5462b7f5d93b2ff981fcd3f9c7e427e47f3203c64ea91c27bcc444eebd74cd"
+    }
+  },
+  "official_sources": {
+    "rea": "https://www.npmjs.com/package/rea-agents/v/6.8.0",
+    "ghidra": "https://github.com/NationalSecurityAgency/ghidra/releases/tag/Ghidra_12.2_build",
+    "llvm_mingw": "https://github.com/mstorsjo/llvm-mingw/releases/tag/20261020",
+    "node": "https://nodejs.org/dist/v26.13.0/SHASUMS256.txt",
+    "java": "https://github.com/adoptium/temurin25-binaries/releases/tag/jdk-25.0.5%2B8"
+  },
+  "validation": {
+    "kind": "Tool versions, official archive SHA256, CLI doctor, fresh MCP binary_session only",
+    "doctor_healthy": true,
+    "fresh_mcp_tools": 229,
+    "target_opened": false,
+    "project_compiled": false,
+    "project_tests_run": false,
+    "link_run": false,
+    "DLL_executed": false,
+    "ZIP_rebuilt": false,
+    "cpp_sources_changed_since_frozen_build": 32
+  },
+  "backups": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\tool-upgrade-backups-20261102",
+  "common_build_script": {
+    "path": "outputs/source-workspace/build.ps1",
+    "old_sha256": "70a055feb4dc1171a9b7873214ec7c05e95662ecdb1f686d390e0fa07e887455",
+    "new_sha256": "3e82a74544e8c0a6df6d57a64aaebc9934160d95e9bd8617810c8c094742be21",
+    "change": "Default latest installed toolchain, explicit parameter/env override retained; not executed."
+  },
+  "proof_files": {
+    "work/tool-upgrade-doctor-after.json": "e24fcc2b5e46a45db03302178a0ea15dfecacebb496da0b0f95c1f933e911be7",
+    "work/tool-upgrade-mcp-check.json": "b55908b94be5b52a31d60a1b6fdafe82e0896e87536c668c2686c937fda58702",
+    "work/tool-upgrade-ghidra122-check.json": "7c34840818fbdb7f39594b135c99032b6538329820bfab1f80ff8b128b94fb0d",
+    "work/use-tools.ps1": "17c3538fba14460a34168d93d49d1b981646b95ca2798332b740800ee5dc2aef",
+    "AGENTS.md": "c238d65fdc471c95dddf9e36d4656ccff038f644e4efa5631b100f87c2f57bb1"
+  }
+}

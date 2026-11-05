@@ -1,0 +1,129 @@
+
+error_category.cpp.obj:
+00000800 a @feat.00
+00000000 T std::__1::error_category::equivalent(std::__1::error_code const&, int) const
+00000000 T std::__1::error_category::equivalent(int, std::__1::error_condition const&) const
+00000000 T std::__1::error_category::default_error_condition(int) const
+00000000 T std::__1::error_category::~error_category()
+00000000 T std::__1::error_category::~error_category()
+00000000 T std::__1::error_category::~error_category()
+00000000 R typeinfo for std::__1::error_category
+00000000 R typeinfo name for std::__1::error_category
+         U vtable for __cxxabiv1::__class_type_info
+00000000 R vtable for std::__1::error_category
+         U __cxa_pure_virtual
+         U __guard_dispatch_icall_fptr
+
+system_error.cpp.obj:
+00000000 R .refptr._ZTVSt12length_error
+00000000 r .str
+00000000 r .str.1
+00000000 r .str.2
+00000000 r .str.3
+00000000 r .str.4
+00000000 r .str.5
+00000000 r .str.6
+00000800 a @feat.00
+00000010 r GCC_except_table10
+00000010 r GCC_except_table11
+00000018 r GCC_except_table12
+00000010 r GCC_except_table13
+00000010 r GCC_except_table14
+00000018 r GCC_except_table15
+00000010 r GCC_except_table16
+00000010 r GCC_except_table20
+00000010 r GCC_except_table25
+00000014 r GCC_except_table5
+         U _Unwind_Resume
+00000000 b guard variable for std::__1::system_category()::helper
+00000000 b guard variable for std::__1::generic_category()::helper
+         U std::runtime_error::what() const
+00000000 T std::__1::error_code::message() const
+00000000 T std::__1::__do_message::message(int) const
+         U std::__1::error_category::equivalent(std::__1::error_code const&, int) const
+         U std::__1::error_category::equivalent(int, std::__1::error_condition const&) const
+         U std::__1::error_category::default_error_condition(int) const
+00000000 T std::__1::error_condition::message() const
+00000000 T std::__1::__system_error_category::default_error_condition(int) const
+00000000 T std::__1::__system_error_category::name() const
+00000000 T std::__1::__system_error_category::message(int) const
+00000000 T std::__1::__generic_error_category::name() const
+00000000 T std::__1::__generic_error_category::message(int) const
+         U std::logic_error::logic_error(char const*)
+00000000 T std::length_error::length_error[abi:nqe230104](char const*)
+         U std::length_error::~length_error()
+         U std::runtime_error::runtime_error(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)
+         U std::runtime_error::~runtime_error()
+00000000 t std::__1::(anonymous namespace)::make_error_str(std::__1::error_code const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)
+00000000 T std::__1::__do_message::~__do_message()
+00000000 T std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::__throw_length_error[abi:nqe230104]()
+00000000 T std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::__init_copy_ctor_external(char const*, unsigned long long)
+         U std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::append(char const*, unsigned long long)
+00000000 T std::__1::system_error::system_error(std::__1::error_code)
+00000000 T std::__1::system_error::system_error(std::__1::error_code, char const*)
+00000000 T std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)
+00000000 T std::__1::system_error::system_error(int, std::__1::error_category const&)
+00000000 T std::__1::system_error::system_error(int, std::__1::error_category const&, char const*)
+00000000 T std::__1::system_error::system_error(int, std::__1::error_category const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)
+00000000 T std::__1::system_error::system_error(std::__1::error_code)
+00000000 T std::__1::system_error::system_error(std::__1::error_code, char const*)
+00000000 T std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)
+00000000 T std::__1::system_error::system_error(int, std::__1::error_category const&)
+00000000 T std::__1::system_error::system_error(int, std::__1::error_category const&, char const*)
+00000000 T std::__1::system_error::system_error(int, std::__1::error_category const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)
+00000000 T std::__1::system_error::~system_error()
+00000000 T std::__1::system_error::~system_error()
+00000000 T std::__1::system_error::~system_error()
+         U std::__1::error_category::~error_category()
+00000000 T std::__1::system_category()
+00000000 T std::__1::generic_category()
+00000000 T std::__1::__throw_length_error[abi:nqe230104](char const*)
+00000000 T std::__1::__throw_system_error[abi:nqe230104](std::__1::error_code, char const*)
+00000000 T std::__1::__throw_system_error(int, char const*)
+00000000 T std::__1::__system_error_category::~__system_error_category()
+00000000 T std::__1::__generic_error_category::~__generic_error_category()
+00000000 R typeinfo for std::__1::__do_message
+00000000 R typeinfo for std::__1::system_error
+00000000 R typeinfo for std::__1::error_category
+00000000 R typeinfo for std::__1::__system_error_category
+00000000 R typeinfo for std::__1::__generic_error_category
+00000000 R typeinfo for std::logic_error
+00000000 R typeinfo for std::length_error
+00000000 R typeinfo for std::runtime_error
+00000000 R typeinfo for std::exception
+00000000 R typeinfo name for std::__1::__do_message
+00000000 R typeinfo name for std::__1::system_error
+00000000 R typeinfo name for std::__1::error_category
+00000000 R typeinfo name for std::__1::__system_error_category
+00000000 R typeinfo name for std::__1::__generic_error_category
+00000000 R typeinfo name for std::logic_error
+00000000 R typeinfo name for std::length_error
+00000000 R typeinfo name for std::runtime_error
+00000000 R typeinfo name for std::exception
+         U vtable for __cxxabiv1::__class_type_info
+         U vtable for __cxxabiv1::__si_class_type_info
+00000000 R vtable for std::__1::__do_message
+00000000 R vtable for std::__1::system_error
+00000000 R vtable for std::__1::__system_error_category
+00000000 R vtable for std::__1::__generic_error_category
+         U vtable for std::length_error
+00000000 d std::__1::system_category()::helper
+00000000 d std::__1::generic_category()::helper
+         U operator delete(void*, unsigned long long)
+         U operator new(unsigned long long)
+         U __cxa_allocate_exception
+         U __cxa_free_exception
+         U __cxa_guard_acquire
+         U __cxa_guard_release
+         U __cxa_pure_virtual
+         U __cxa_throw
+         U __guard_dispatch_icall_fptr
+         U __gxx_personality_seh0
+         U __imp_FormatMessageA
+         U __imp_LocalFree
+         U __imp___sys_nerr
+         U __imp_strerror_s
+         U __mingw_snprintf
+         U memcpy
+         U memmove
+         U strlen

@@ -3,6 +3,7 @@
 #include <functional>
 #include <memory>
 #include <mutex>
+#include <cstddef>
 #include "../anadius-online-object-source/object.hpp"
 #include "../anadius-online-query-source/query.hpp"
 
@@ -13,6 +14,7 @@ using Object=online_recovered::Object;
 // Selected observed Win64 call shape, not a recovered complete foreign header.
 using VersionFunction=std::int32_t(*)();
 using CodeLease=std::function<std::shared_ptr<void>(Module)>;
+enum class QueryPolicy {Serialized,Concurrent};
 struct Snapshot {
     Module module;Procedure procedure;bool active,poisoned,code_retained;
     Procedure factory;Object object;bool object_unknown,factory_code_retained;
@@ -22,9 +24,11 @@ struct Snapshot {
 // No implicit raw-module FreeLibrary, object destroy, DLL load or blind retry.
 // Managed load/resolve/call/free reject overlap/reentry BEFORE lower effects;
 // metadata snapshots are allowed during calls. No mutex spans lower/lease/SDK.
+// Concurrent permits same-object queries to overlap; lifecycle/export changes
+// still require zero queries. The immutable default preserves HOST serial use.
 class Binding final {
 public:
-    explicit Binding(CodeLease);
+    explicit Binding(CodeLease,QueryPolicy=QueryPolicy::Serialized);
     ~Binding() noexcept;
     Binding(const Binding&)=delete;Binding& operator=(const Binding&)=delete;
     Module load(const std::function<Module()>&);
@@ -54,6 +58,7 @@ public:
 private:
     struct QueryUse;
     CodeLease lease_;
+    const QueryPolicy query_policy_;
     mutable std::mutex gate_;
     Module module_=0;Procedure procedure_=0;
     std::shared_ptr<void> code_;
@@ -61,6 +66,7 @@ private:
     std::shared_ptr<void> factory_code_;
     bool object_unknown_=false;
     bool active_=false,poisoned_=false;
+    std::size_t queries_=0;
     void begin_object(Object);
     void end_object()noexcept;
 };

@@ -1,0 +1,26 @@
+{
+  "pending_source_count": 64,
+  "frozen_build_and_delivery_unchanged": true,
+  "updated_records": [
+    {
+      "path": "outputs/dll-critical-path/pending-source-status.json",
+      "sha256": "03f6bee83abef337f6010e3d8efcf7e17f3749e74d01a952788d41f512a5e053"
+    },
+    {
+      "path": "outputs/dll-critical-path/active-work-plan.json",
+      "sha256": "80fa4b7969b9d666f13654a25432e266fba453b9664844d4660ec54441b16511"
+    },
+    {
+      "path": "outputs/dll-critical-path/blockers.json",
+      "sha256": "cf5adddbec82da1ef813523f358f34ae7cf6a7a6b0ca96235aab33a36ae650c8"
+    },
+    {
+      "path": "outputs/dll-critical-path/validation.json",
+      "sha256": "5211ccae582f907876db1d656d12dc2cb66608fc8370c6ee8308b9ce58ea1167"
+    },
+    {
+      "path": "outputs/dll-critical-path/static-source-milestone-20261104.json",
+      "sha256": "7234198ef793099f779384eb6ae37852543b4492bc0db66f2075a53d62aac253"
+    }
+  ]
+}

@@ -42,7 +42,7 @@ run = Path(v["run_directory"])
 require(not (run / "anadius64.reconstruction.dll").exists(), "DLL unexpectedly exists")
 log = (run / "link.log").read_text(encoding="utf-8-sig")
 undefined = sorted(set(re.findall(r"(?m)^.*undefined symbol: (.+)$", log)))
-require(undefined == sorted(v["undefined_symbols"]) and len(undefined) == 2, "Unexpected linker failures")
+require(undefined == sorted(v["undefined_symbols"]) and len(undefined) == len(v["expected_missing_production_hooks"]), "Unexpected linker failures")
 for symbol in v["expected_missing_production_hooks"]:
     require(sum(symbol in item for item in undefined) == 1, "Missing required production blocker")
 require("-entry:DllMainCRTStartup" in log, "Compiler CRT entry was not selected")

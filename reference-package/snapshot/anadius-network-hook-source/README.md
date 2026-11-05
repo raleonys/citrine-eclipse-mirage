@@ -1,3 +1,7 @@
+<!-- PENDING-SOURCE-CHANGES -->
+2026-11-05: Kullanıcının açık isteğiyle güncel tam ortak derleme ve testler geçti. Üretim DLL linki başarılı; DLL yüklenmedi/çalıştırılmadı. 296 nesne, 356 test grubu ve 19 framework terminal senaryosu doğrulandı. Güncel kaynakların son tam derlemeye göre bekleyen farkı 0. Bu sonuç tam davranış/loader/native ABI eşdeğerliği kanıtı değildir. Kanıt: `dll-critical-path/current-rebuild.evidence.json`. Önceki aşama metinleri tarihseldir; ZIP sonucu ayrı paket kaydındadır.
+<!-- END-PENDING-SOURCE-CHANGES -->
+
 # Connect callback'i ve hook temizliği
 
 Bu klasör, anadius64.dll SHA-256 `9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c` için kayıtlı REA/Ghidra statik kanıtından iki C++20 gövdesi içerir. Kaynak özgün ABI veya tam DLL değildir. Gerçek socket, hook, UI veya süreç çıkışı testlerde çalıştırılmaz.

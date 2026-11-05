@@ -1,0 +1,30 @@
+{
+  "pending_source_count": 113,
+  "frozen_build_and_delivery_unchanged": true,
+  "updated_records": [
+    {
+      "path": "outputs/dll-critical-path/pending-source-status.json",
+      "sha256": "79204b05ca743cb0e40c620e4e83f501acd45222f62d212393aefef567f6f463"
+    },
+    {
+      "path": "outputs/dll-critical-path/active-work-plan.json",
+      "sha256": "1e76d65b679b137770689b64e366b993095cba966573666334b34eb050738f08"
+    },
+    {
+      "path": "outputs/dll-critical-path/blockers.json",
+      "sha256": "e106f7894b06ca47eada09e5c244aa9db6fee7a66acf8aea697ba13c68501b7a"
+    },
+    {
+      "path": "outputs/dll-critical-path/validation.json",
+      "sha256": "687500f3824ca2d89ba8c78407557f8e7a23ec19876ef20d0083ce115097991a"
+    },
+    {
+      "path": "outputs/dll-critical-path/static-source-milestone-20261104.json",
+      "sha256": "e40c4f22e1c022f0f20950e3edce7cfd37463f785a7b0f49dab3141e885cb623"
+    }
+  ],
+  "remaining_integration": {
+    "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/remaining-integration.json",
+    "sha256": "c0bc4c93e88d651e8efd436ba0f7c43c12620154b021fa397cf161451a144905"
+  }
+}

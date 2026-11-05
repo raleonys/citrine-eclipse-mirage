@@ -2,6 +2,8 @@
 #include <exception>
 #include <mutex>
 #include <optional>
+#include <algorithm>
+#include <system_error>
 #include <type_traits>
 
 namespace anadius::server_runtime {
@@ -71,6 +73,58 @@ struct Runtime::Impl {
             service{&v.scheduler,reinterpret_cast<std::uintptr_t>(&retry_engine)},
             pending{v.pending,&v.scheduler},retry_engine{&v.scheduler}{}
     };
+    struct EnvironmentWork final:EnvironmentWorkStop {
+        Impl& v;explicit EnvironmentWork(Impl& value):v(value){}
+        bool matches(const s::SessionMemoryDomain& parent,const s::IocpSchedulerEntry& scheduler)const noexcept override{
+            try{PreserveError error;std::lock_guard lock(v.gate);return v.graph && &v.graph->view.memory==&parent && &v.graph->view.scheduler==&scheduler;}catch(...){return false;}
+        }
+        Graph& validate(s::IocpSchedulerEntry& scheduler,const s::SessionMemoryDomain::JobPermit* job){
+            PreserveError error;Graph* selected=nullptr;
+            {std::lock_guard lock(v.gate);
+                if(!v.graph||!v.graph->bindings||(v.phase!=Phase::Ready&&v.phase!=Phase::Running&&v.phase!=Phase::Returned&&v.phase!=Phase::Quiescing))throw std::logic_error("Tracked work Runtime is unavailable");
+                if(*v.deps.tls_index!=v.index)throw std::logic_error("Tracked work Runtime TLS binding changed");
+                if(&scheduler!=&v.graph->view.scheduler)throw std::invalid_argument("Tracked work requires exact Runtime scheduler");
+                if(!job&&(v.thread!=::GetCurrentThreadId()||v.fiber!=::GetCurrentFiber()))throw std::logic_error("Original work release requires bound Runtime actor");
+                selected=v.graph.get();
+            }
+            if(job)job->check(selected->view.memory);else (void)selected->view.memory.buffer_context();
+            const auto backend=selected->view.backend.snapshot().phase;
+            if((backend!=o::Phase::Ready&&backend!=o::Phase::Running&&backend!=o::Phase::Returned&&backend!=o::Phase::Quiescing)||selected->view.io.snapshot().phase!=s::IoMemoryPhase::Open||selected->accept->snapshot().poisoned)
+                throw std::logic_error("Tracked work Parent/backend source is unavailable");
+            return *selected;
+        }
+        struct StopApi final:s::WorkerStopApi {
+            EnvironmentWork& owner;s::IocpSchedulerEntry& scheduler;const s::SessionMemoryDomain::JobPermit* job;
+            s::DispatcherApi& target;const std::function<void()>& checkpoint;
+            bool saved=false;std::uint32_t status=0;
+            StopApi(EnvironmentWork& c,s::IocpSchedulerEntry& e,const s::SessionMemoryDomain::JobPermit* proof,s::DispatcherApi& lower,const std::function<void()>& source):owner(c),scheduler(e),job(proof),target(lower),checkpoint(source){}
+            void admit(){owner.validate(scheduler,job);checkpoint();owner.validate(scheduler,job);}
+            std::int32_t post_stop(std::uintptr_t port,std::uint32_t bytes,std::uintptr_t key,OVERLAPPED* operation)override{
+                admit();
+                if(saved||port!=scheduler.completion.port||bytes||key||operation)throw std::invalid_argument("Tracked capability permits only its exact native zero stop packet");
+                const auto result=target.post(port,0,0,nullptr);
+                if(!result){status=target.get_last_error();saved=true;}
+                admit();return result;
+            }
+            std::uint32_t get_last_error()override{
+                admit();if(!saved)throw std::logic_error("Tracked stop has no unconsumed failed-post status");
+                const auto result=status;saved=false;admit();return result;
+            }
+        };
+        void finish(s::IocpSchedulerEntry& scheduler,const s::SessionMemoryDomain::JobPermit* job,const std::function<void()>& checkpoint,bool& consumed){
+            auto& selected=validate(scheduler,job);bool cleanup;
+            {PreserveError error;std::lock_guard lock(v.gate);cleanup=v.phase==Phase::Returned||v.phase==Phase::Quiescing;}
+            // Serving original calls retain the current admitted API. A child,
+            // or the explicitly checked returned original cleanup actor, gets
+            // only this private zero-packet operation over the retained lower.
+            auto& target=(job||cleanup)?*v.deps.dispatcher:v.completion.target();
+            StopApi api(*this,scheduler,job,target,checkpoint);
+            try{selected.bindings->worker.finish_environment_work(scheduler,job,api,*v.deps.errors,checkpoint,consumed);validate(scheduler,job);}
+            catch(...){v.poison();throw;}
+        }
+        void finish_original(s::IocpSchedulerEntry& scheduler,const std::function<void()>& checkpoint,bool& consumed)override{finish(scheduler,nullptr,checkpoint,consumed);}
+        void finish_job(s::IocpSchedulerEntry& scheduler,const s::SessionMemoryDomain::JobPermit& job,const std::function<void()>& checkpoint,bool& consumed)override{finish(scheduler,&job,checkpoint,consumed);}
+    } environment_work{*this};
     Dependencies deps;mutable std::mutex gate;Phase phase=Phase::Fresh;
     std::size_t active=0;std::uint64_t handled=0;DWORD thread=0;void* fiber=nullptr;
     std::uint32_t index=0;std::optional<Identity> identity;std::unique_ptr<Graph> graph;
@@ -122,11 +176,11 @@ struct Runtime::Impl {
            &receive.memory!=&g.memory->posted()||&receive.effects!=g.memory.get()||
            &receive.completion!=&completion||&receive.errors!=deps.errors.get()||
            &receive.environment.storage.tls_index!=deps.tls_index||
-           receive.environment.storage.storage.data()!=g.accept->storage_bindings().data()||
-           receive.environment.storage.storage.size()!=g.accept->storage_bindings().size())
+           !g.accept->matches_storage(receive.environment.storage))
             throw std::invalid_argument("Read/receive must use coherent memory and the exact runtime APIs/storage");
         if(auto* write=b.write;write&&(&write->worker!=&worker||&write->memory!=&g.memory->posted()||
-            &write->completion!=&completion||&write->errors!=deps.errors.get()||&write->environment.storage.tls_index!=deps.tls_index))
+            &write->completion!=&completion||&write->errors!=deps.errors.get()||&write->environment.storage.tls_index!=deps.tls_index||
+            (g.view.memory.operation_policy()==s::OperationPolicy::OriginalConcurrentActors&&!g.accept->matches_storage(write->environment.storage))))
             throw std::invalid_argument("Write must use coherent memory and the exact runtime APIs");
     }
     bool drained(std::size_t leases){
@@ -139,7 +193,9 @@ struct Runtime::Impl {
             !g.view.scheduler.work_count_30.load()&&!g.view.scheduler.completion.head&&!g.view.scheduler.completion.tail;
     }
     void bind(o::ServerView& view){
-        if(view.io.storage_bindings().size()!=deps.capacity||!view.identity.value)
+        const bool concurrent=view.memory.operation_policy()==s::OperationPolicy::OriginalConcurrentActors;
+        const auto capacity=concurrent?view.io.registry_capacity():view.io.storage_bindings().size();
+        if(capacity!=deps.capacity||!view.identity.value)
             throw std::invalid_argument("Runtime capacity and nonzero context identity must match the owned base");
         // Publish the empty record before any opaque factory or mandatory-close
         // provider exists. Later failures retain this graph; no constructor unwind.
@@ -153,8 +209,11 @@ struct Runtime::Impl {
         g.retry=std::make_unique<s::BoundedAcceptRetryApi>(g.accept->prearmed_api());
         g.retry_bindings[0]={g.service.retry_engine_identity,&g.retry_engine,g.retry.get(),deps.cancel.get()};
         g.memory=std::make_unique<s::CoherentIoMemory>(*g.accept,view.io,g.environment->sentinels,g.environment->constructor,g.environment->sources);
-        s::IoCompletionEnvironment environment{{*deps.tls_index,g.accept->storage_bindings()},g.environment->sentinels};
-        g.application=deps.profile->create(Ports{view,*g.accept,*g.memory,worker,completion,environment,g.server_identity});expect(Phase::Binding);
+        s::PostedEnvironment storage{*deps.tls_index,{}};
+        if(concurrent)storage.storage_resolver=&g.accept->storage_resolver();
+        else{storage.storage=g.accept->storage_bindings();storage.live_storage=view.io.storage_view();}
+        s::IoCompletionEnvironment environment{storage,g.environment->sentinels};
+        g.application=deps.profile->create(Ports{view,*g.accept,*g.memory,worker,completion,environment,g.server_identity,&environment_work});expect(Phase::Binding);
         if(!g.application)throw std::invalid_argument("Application factory returned no owned contexts");
         g.bindings.emplace(g.application->bindings());expect(Phase::Binding);verify_bindings();
         g.accept_context=std::make_unique<s::AsyncAcceptContext>(s::AsyncAcceptContext{environment,worker,*g.accept,
@@ -165,7 +224,15 @@ struct Runtime::Impl {
         g.servers[0]={g.server_identity,g.flow_server.get()};
         g.flow=std::make_unique<s::FlowContext>(s::FlowContext{*g.flow_api,view.memory.buffer_context(),g.bindings->frame,
             *deps.errors,g.bindings->logging,g.servers,g.bindings->categories,deps.generic_category});
-        if(deps.accept_stop)deps.accept_stop->bind(view,*g.accept);
+        if(deps.accept_stop){
+            const bool managed=deps.accept_stop->scope()==accept_stop::Scope::SessionIoPrepared;
+            if(managed){
+                auto* source=dynamic_cast<PreparedJobSourceDrain*>(g.application.get());
+                if(!source||!deps.prepared_stop_timeout_ms)throw std::invalid_argument("Prepared SessionIo requires finite source-job drain selection");
+                (void)source->pending_prepared_jobs();expect(Phase::Binding);
+            }
+            deps.accept_stop->bind(view,*g.accept,managed);
+        }
         expect(Phase::Binding);{std::lock_guard lock(gate);phase=Phase::Ready;}
     }
 };
@@ -178,7 +245,8 @@ s::ReceiveBufferString& Runtime::Impl::FlowApplication::greeting(s::SessionOwner
 void Runtime::Impl::FlowApplication::raise_write(s::Error& e,std::uintptr_t p){v.checkpoint();v.graph->application->raise_write(e,p);std::terminate();}
 Runtime::Runtime(Dependencies d){
     if(!d.errors||!d.sockets||!d.dispatcher||!d.worker||!d.accept||!d.factory||!d.cancel||!d.profile||
-       !d.tls_index||*d.tls_index==TLS_OUT_OF_INDEXES||!d.guard_epoch||!d.capacity||d.capacity>65536||!d.executor.move)
+       !d.tls_index||*d.tls_index==TLS_OUT_OF_INDEXES||!d.guard_epoch||!d.capacity||d.capacity>65536||!d.executor.move||d.prepared_stop_timeout_ms==INFINITE||
+       (d.accept_stop&&d.accept_stop->scope()==accept_stop::Scope::SessionIoPrepared&&!d.prepared_stop_timeout_ms))
         throw std::invalid_argument("Complete runtime providers, stable TLS/epoch/executor and bounded capacity required");
     impl_=std::make_unique<Impl>(std::move(d));
 }
@@ -203,44 +271,91 @@ server_recovered::Error Runtime::run(o::ServerView& view,o::AdmittedDispatcherAp
     auto& v=*impl_;Impl::Call call(v,{Phase::Ready});v.matching(view);
     {std::lock_guard lock(v.gate);v.phase=Phase::Running;}
     struct Unbind {Impl::Completion& proxy;~Unbind(){proxy.admitted=nullptr;}} unbind{v.completion};v.completion.admitted=&admitted;
+    struct ClearWait {o::AdmittedDispatcherApi& admitted;bool bound=false;~ClearWait(){if(bound)admitted.clear_wait_maintenance();}} clear_wait{admitted};
     try{
         v.checkpoint();
         auto& g=*v.graph;auto& b=*g.bindings;
+        struct StopDrain {
+            Impl& v;PreparedJobSourceDrain* source=nullptr;bool draining=false;std::optional<ULONGLONG> begin{};
+            bool pending(){
+                const bool jobs=v.policy([&]{return source->pending_prepared_jobs();});
+                bool io=false;
+                if(v.deps.accept_stop&&v.deps.accept_stop->scope()==accept_stop::Scope::SessionIoPrepared){
+                    v.policy([&]{v.deps.accept_stop->pump();io=v.deps.accept_stop->session_io_pending();});
+                }
+                return jobs||io;
+            }
+            DWORD timeout(DWORD requested){
+                if(!draining)return requested;
+                const auto elapsed=::GetTickCount64()-*begin;
+                if(elapsed>=v.deps.prepared_stop_timeout_ms)throw std::runtime_error("Prepared stop receipt drain deadline expired; owners retained");
+                return (std::min)(requested,v.deps.prepared_stop_timeout_ms-static_cast<DWORD>(elapsed));
+            }
+            std::uint32_t read_stop(std::uint32_t value){
+                if(!value||!source)return value;
+                if(!pending())return value;
+                if(!begin)begin=::GetTickCount64();
+                draining=true;(void)timeout(INFINITE);return 0;
+            }
+            void progress(s::DispatcherApi& api){
+                if(!draining)return;
+                (void)timeout(INFINITE);
+                if(pending())return;
+                // Managed job and selected IO receipts have completed. This wake
+                // carries no work decrement and is not a synthetic IO receipt.
+                const auto posted=api.post(v.graph->view.scheduler.completion.port,0,0,nullptr);
+                if(!posted){const auto error=api.get_last_error();throw std::system_error(static_cast<int>(error),std::system_category(),"Prepared stop resume wake failed");}
+                v.checkpoint();draining=false;
+            }
+        } stop_drain{v};
+        if(v.deps.prepared_stop_timeout_ms){
+            stop_drain.source=dynamic_cast<PreparedJobSourceDrain*>(g.application.get());
+            if(!stop_drain.source)throw std::invalid_argument("Selected prepared stop policy requires source drain interface");
+            (void)v.policy([&]{return stop_drain.source->pending_prepared_jobs();});
+        }
+        if(auto* maintenance=dynamic_cast<PreparedJobMaintenance*>(g.application.get())){admitted.bind_wait_maintenance({maintenance,[](void* p){static_cast<PreparedJobMaintenance*>(p)->maintain_jobs();}});clear_wait.bound=true;}
         struct Admitted final:s::DispatcherApi {
-            Impl& v;o::AdmittedDispatcherApi& lower;
+            Impl& v;o::AdmittedDispatcherApi& lower;StopDrain& stop;
             bool saved=false;std::uint32_t status=0;
-            Admitted(Impl& v,o::AdmittedDispatcherApi& l):v(v),lower(l){}
+            Admitted(Impl& v,o::AdmittedDispatcherApi& l,StopDrain& s):v(v),lower(l),stop(s){}
             void set_last_error(std::uint32_t n)override{v.policy([&]{lower.set_last_error(n);});}
             std::uint32_t get_last_error()override{return v.policy([&]{if(saved){saved=false;return status;}return lower.get_last_error();});}
             std::int32_t get(std::uintptr_t p,std::uint32_t& n,std::uintptr_t& k,OVERLAPPED*& o,std::uint32_t t)override{
-                if(!v.deps.accept_stop)return v.policy([&]{return lower.get(p,n,k,o,t);});
+                if(!v.deps.accept_stop&&!stop.source)return v.policy([&]{return lower.get(p,n,k,o,t);});
                 return v.policy([&]{
                     if(saved)throw std::logic_error("Previous physical packet status was not consumed");
-                    v.deps.accept_stop->pump();
+                    if(v.deps.accept_stop)v.deps.accept_stop->pump();
                     for(;;){
-                        lower.set_last_error(0);const auto received=lower.get(p,n,k,o,t);
+                        const auto bounded=stop.timeout(t);lower.set_last_error(0);const auto received=lower.get(p,n,k,o,bounded);
                         const auto immediate=lower.get_last_error();
-                        if(v.deps.accept_stop->physical(received,n,k,o,immediate)){v.deps.accept_stop->pump();continue;}
+                        (void)stop.timeout(t); // error was captured before deadline/proof effects
+                        if(v.deps.accept_stop&&v.deps.accept_stop->physical(received,n,k,o,immediate)){v.deps.accept_stop->pump();stop.progress(*this);continue;}
                         status=immediate;saved=true;return received;
                     }
                 });
             }
             std::int32_t post(std::uintptr_t p,std::uint32_t n,std::uintptr_t k,OVERLAPPED* o)override{return v.policy([&]{return lower.post(p,n,k,o);});}
             std::int32_t set_timer(std::uintptr_t t,LARGE_INTEGER& d,std::int32_t p,PTIMERAPCROUTINE f,void* a,std::int32_t r)override{return v.policy([&]{return lower.set_timer(t,d,p,f,a,r);});}
-        } admitted_api{v,admitted};
+        } admitted_api{v,admitted,stop_drain};
         s::CoherentIoDispatcher coherent(*g.accept,view.io,*g.memory,g.accept_context->environment,v.worker,*v.deps.errors,b.completion,b.guard);
-        struct Router final:s::DispatcherEffects {
-            Impl& v;s::CoherentIoDispatcher& coherent;
-            Router(Impl& v,s::CoherentIoDispatcher& c):v(v),coherent(c){}
+        struct Router final:s::DispatcherEffects,s::DispatcherJobNotifications {
+            Impl& v;s::CoherentIoDispatcher& coherent;StopDrain& stop;s::DispatcherApi& api;
+            Router(Impl& v,s::CoherentIoDispatcher& c,StopDrain& s,s::DispatcherApi& a):v(v),coherent(c),stop(s),api(a){}
             s::DispatcherEffects& guard(){return v.graph->bindings->guard;}
             std::uintptr_t capture_tls_slot()override{return v.policy([&]{return guard().capture_tls_slot();});}
             std::int32_t thread_epoch(std::uintptr_t p)override{return v.policy([&]{return guard().thread_epoch(p);});}
             void guard_header_04b838(std::int32_t& n)override{v.policy([&]{guard().guard_header_04b838(n);});}
             void register_atexit_04b770(std::uintptr_t p)override{v.policy([&]{guard().register_atexit_04b770(p);});}
             void guard_footer_04b7cc(std::int32_t& n)override{v.policy([&]{guard().guard_footer_04b7cc(n);});}
-            std::uint32_t read_stop_34(s::IocpSchedulerEntry& e)override{return v.policy([&]{return guard().read_stop_34(e);});}
+            std::uint32_t read_stop_34(s::IocpSchedulerEntry& e)override{return stop.read_stop(v.policy([&]{return guard().read_stop_34(e);}));}
             std::array<std::uintptr_t,2>& copy_exception_024100(std::array<std::uintptr_t,2>& a,const std::array<std::uintptr_t,2>& b)override{return v.policy([&]() -> std::array<std::uintptr_t,2>&{return guard().copy_exception_024100(a,b);});}
             [[noreturn]]void rethrow_029880(std::array<std::uintptr_t,2>& p)override{v.checkpoint();guard().rethrow_029880(p);std::terminate();}
+            void returned_job(std::uint32_t receipt)override{
+                v.checkpoint();auto* jobs=dynamic_cast<PreparedJobNotifications*>(v.graph->application.get());
+                if(!jobs)throw std::logic_error("Application has no prepared-job receipt channel");
+                jobs->returned_job(receipt);v.checkpoint();v.graph->application->after_completion();v.checkpoint();
+                stop.progress(api);
+            }
             void complete(s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& error,std::uint32_t bytes)override{
                 v.checkpoint();auto* const operation=&op;auto* const overlapped=&op.overlapped;
                 const auto before=v.graph->view.io.handle_for(overlapped);
@@ -248,17 +363,24 @@ server_recovered::Error Runtime::run(o::ServerView& view,o::AdmittedDispatcherAp
                 if(v.deps.accept_stop)receipt=v.deps.accept_stop->before(owner,op,error,bytes);
                 auto* selected=receipt.drop_owner?nullptr:v.graph->application->completion_owner(owner,op,error,bytes);v.checkpoint();
                 const auto after=v.graph->view.io.handle_for(overlapped);
-                const auto& packet=v.graph->accept->dispatcher_bindings()[before.slot];
-                if(before.slot!=after.slot||before.generation!=after.generation||packet.operation!=operation||packet.overlapped_identity!=overlapped)
+                s::DispatcherOperationBinding* packet=nullptr;
+                auto match=s::MemoryLookup::Found;
+                if(v.graph->view.memory.operation_policy()==s::OperationPolicy::OriginalConcurrentActors)
+                    match=v.graph->view.io.dispatcher_resolver().lookup_operation(overlapped,packet);
+                else packet=&v.graph->accept->dispatcher_bindings()[before.slot];
+                if(before.slot!=after.slot||before.generation!=after.generation||match!=s::MemoryLookup::Found||!packet||packet->operation!=operation||packet->overlapped_identity!=overlapped)
                     throw std::logic_error("Completion policy retired or replaced the observed operation");
                 v.verify_bindings();
                 if(selected&&selected!=owner)throw std::invalid_argument("Completion policy selected a foreign owner");
                 coherent.complete(selected,op,error,bytes); // op may end here
                 v.checkpoint();v.graph->application->after_completion();v.checkpoint();
                 if(v.deps.accept_stop)v.deps.accept_stop->after(receipt);
+                stop.progress(api); // receipt lease has ended; late IO may now be drained
             }
-        } router{v,coherent};
-        s::DispatcherState state{view.scheduler,nullptr,0,0,g.accept->dispatcher_bindings()};
+        } router{v,coherent,stop_drain,admitted_api};
+        s::DispatcherState state{view.scheduler,nullptr,0,0,{}};
+        if(view.memory.operation_policy()==s::OperationPolicy::OriginalConcurrentActors)state.operation_resolver=&view.io.dispatcher_resolver();
+        else{state.operations=g.accept->dispatcher_bindings();state.live_operations=view.io.dispatcher_view();}
         struct Worker final:s::RecoveredDispatcherWorkerEffects {
             Impl& v;
             Worker(Impl& v,s::DispatcherState& state,s::DispatcherEnvironment env,s::DispatcherApi& api,s::DispatcherEffects& effects)

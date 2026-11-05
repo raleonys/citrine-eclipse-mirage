@@ -1,0 +1,23 @@
+{
+  "package": "B31",
+  "result": "PASS_EXPECTED_LINK_BLOCKER",
+  "production_dll_readiness": "BLOCKED",
+  "zip": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-B31.zip",
+  "zip_sha256": "fd04e8601734e09fcded0693592bd98e0f0ceca786393cc78932370820166766",
+  "bytes": 177153,
+  "entries": 33,
+  "all_entries_hash_verified": true,
+  "base_B30_archive_preserved": true,
+  "frozen_B30_sources_verified": 846,
+  "canonical_inventory_files_unchanged": [
+    "reconstruction-inventory/functions.json",
+    "reconstruction-inventory/dependencies.json",
+    "reconstruction-inventory/summary.json"
+  ],
+  "new_native_ABI_provider_closures": 0,
+  "originals_read_modified_or_executed": false,
+  "rebuilt_DLL_executed": false,
+  "overall_completion_percentage": null,
+  "next_package": "B32",
+  "next_priority": 1
+}

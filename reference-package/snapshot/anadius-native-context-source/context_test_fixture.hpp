@@ -78,7 +78,7 @@ struct Driver {
     b::RuntimeSeed runtime{};configuration::State configuration{};b2_test::Events events;
     b4_test::Execution platform{events};execution_recovered::Execution execution;
     std::shared_ptr<Probe> probe=std::make_shared<Probe>();
-    Driver():execution(runtime.execution_mutex,{runtime.server_ready,runtime.online_ready,runtime.libraries_ready},runtime.frequency_cache,platform){
+    Driver(execution_recovered::Publication* publication=nullptr):execution(runtime.execution_mutex,{runtime.server_ready,runtime.online_ready,runtime.libraries_ready},runtime.frequency_cache,platform,publication){
         execution_recovered::initialize_mutex_04a698(runtime.execution_mutex,2);runtime.server_ready=runtime.online_ready=runtime.libraries_ready=1;runtime.frequency_cache=10000000;
         runtime.originals=originals();
         configuration.server_port=6000;configuration.registry_spoof=1;active_probe=probe.get();

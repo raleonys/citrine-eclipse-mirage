@@ -1,0 +1,57 @@
+{
+  "schema": "typed-socket-native-diagnostic.source.v1",
+  "kind": "SOURCE_INTEGRATION_OF_ESTABLISHED_NATIVE_PROVIDER_NOT_NEW_NATIVE_ANALYSIS",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Explicit native category projection for measured nonzero acceptor open/set_option/bind/listen and socket-service mutex effects, retaining default HOST and misc behavior. Source-only, uncompiled and unexecuted.",
+  "sources": [
+    {
+      "path": "anadius-owned-server-source/server.cpp",
+      "before": "before/server.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-owned-server-source/server.hpp",
+      "before": "before/server.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-owned-server-source/server_tests.cpp",
+      "before": "before/server_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-owned-server-source/server_integration_tests.cpp",
+      "before": "before/server_integration_tests.cpp",
+      "role": "test"
+    }
+  ],
+  "reviews": [
+    "root-production-review.md",
+    "root-test-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "evidence-links.md",
+    "test-source-notes.md"
+  ],
+  "supplementary": [
+    "outputs/anadius-owned-server-source/iocp-error-diagnostic-20261104/evidence.json",
+    "outputs/anadius-session-policy-source/native-stop-diagnostic-20261104/evidence.json",
+    "outputs/anadius-all-functions.pseudo.c",
+    "outputs/anadius-all-functions.asm.txt",
+    "outputs/anadius-socket-source/acceptor-evidence.json",
+    "outputs/anadius-socket-source/acceptor-evidence.pseudo.c.txt",
+    "outputs/anadius-socket-source/acceptor-evidence.asm.txt",
+    "outputs/anadius-socket-source/service-constructor-evidence.json",
+    "outputs/anadius-socket-source/service-constructor-evidence.asm.txt",
+    "work/acceptor-context-strings.json"
+  ],
+  "limits": [
+    "No new native query is represented: this stage integrates already-established caller/category/provider evidence, with exact retained records identified in evidence-links.md.",
+    "No compiler/project test/link/DLL execution/ZIP update; authored assertions remain unexecuted.",
+    "Only measured nonzero system/error-context effects are bound; zero, arbitrary HOST categories/operations, native ABI/EH/RTTI/allocator and complete behavior equivalence remain outside this source stage."
+  ],
+  "completed_note": "SOURCE_ONLY explicit category SourceError constructor and measured nonzero acceptor/service-gate Native diagnostics integrated; retained native evidence reused explicitly, production/test review and future fault-source scenarios authored without execution.",
+  "observation": "Already-established0228e0/020e20 error pairs and exact labels reused with fresh preceding IOCP/provider records; no ceremonial repeat native analysis. Independent nonCRT algorithm-gap investigation remains active.",
+  "next_scope": "Continue bounded nonCRT native/source behavioral-gap triage using retained full-function inventory and fresh REA/Ghidra only for unresolved questions; implement confirmed missing behavior with independent review. Full DLL reconstruction goal remains active."
+}

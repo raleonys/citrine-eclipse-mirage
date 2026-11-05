@@ -1,0 +1,59 @@
+/* 0x1800239c0 FUN_1800239c0; Evidence ev_c935d546ffcfd9a015759eba276b6b86808a598ce42947d5ddbe6ef939153abb */
+
+undefined8 * FUN_1800239c0(LPCRITICAL_SECTION param_1,undefined8 *param_2)
+
+{
+  longlong lVar1;
+  longlong lVar2;
+  uint uVar3;
+  undefined8 *puVar4;
+  undefined8 *puVar5;
+  undefined8 local_28;
+  undefined8 uStack_20;
+  LPCRITICAL_SECTION local_18;
+  undefined1 local_10;
+  
+  local_28 = 0;
+  uStack_20 = 0;
+  FUN_180022fa0(&local_28);
+  local_18 = param_1;
+  EnterCriticalSection(param_1);
+  lVar2 = uStack_20;
+  lVar1 = local_28;
+  local_10 = 1;
+  for (puVar5 = *(undefined8 **)&param_1[1].LockCount; puVar5 != (undefined8 *)0x0;
+      puVar5 = (undefined8 *)puVar5[4]) {
+    if ((((puVar5[2] != 0) && (lVar2 != 0)) && (puVar5[2] == lVar2)) ||
+       (((puVar5[1] != 0 && (lVar1 != 0)) &&
+        (uVar3 = __std_type_info_compare(puVar5[1] + 8,lVar1 + 8), uVar3 == 0))))
+    goto LAB_180023b17;
+  }
+  LeaveCriticalSection(param_1);
+  local_10 = 0;
+  puVar4 = FUN_1800228e0(param_2);
+  *(undefined4 *)(puVar4 + 1) = (undefined4)local_28;
+  *(undefined4 *)((longlong)puVar4 + 0xc) = local_28._4_4_;
+  *(undefined4 *)(puVar4 + 2) = (undefined4)uStack_20;
+  *(undefined4 *)((longlong)puVar4 + 0x14) = uStack_20._4_4_;
+  EnterCriticalSection(param_1);
+  puVar5 = *(undefined8 **)&param_1[1].LockCount;
+  while( true ) {
+    if (puVar5 == (undefined8 *)0x0) {
+      puVar4[4] = *(undefined8 *)&param_1[1].LockCount;
+      *(undefined8 **)&param_1[1].LockCount = puVar4;
+      LeaveCriticalSection(param_1);
+      return puVar4;
+    }
+    if ((((puVar5[2] != 0) && (lVar2 != 0)) && (puVar5[2] == lVar2)) ||
+       (((puVar5[1] != 0 && (lVar1 != 0)) &&
+        (uVar3 = __std_type_info_compare(puVar5[1] + 8,lVar1 + 8), uVar3 == 0)))) break;
+    puVar5 = (undefined8 *)puVar5[4];
+  }
+  (**(code **)*puVar4)(puVar4,1);
+LAB_180023b17:
+  LeaveCriticalSection(param_1);
+  return puVar5;
+}
+
+
+

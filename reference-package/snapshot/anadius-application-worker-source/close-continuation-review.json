@@ -1,0 +1,21 @@
+{
+  "reviewer": "author static source inspection; no independent agent review",
+  "result": "STATIC_SOURCE_INSPECTED_NOT_COMPILED_OR_EXECUTED",
+  "reviewed_source_hashes": {
+    "anadius-application-worker-source/worker.hpp": "f35fea3544567f6e929476c9db57affd2104b7a99bcee9517fced98fa088f629",
+    "anadius-application-worker-source/worker.cpp": "45976dd7e93d2feab7ae781775c87e64648ab96d84ddeb91448a9f77dd979693",
+    "anadius-application-worker-source/worker_tests.cpp": "4fdcf93bc33898acc0cc36f0195c208933c0fb0d8e5cc6b9f6bf1b1abbcbc6af"
+  },
+  "findings": [
+    "Optional Settings.close_retry_timeout_ms defaults0. Infinite is rejected. take_settings exchanges donor to0; field added at end, all Settings/Snapshot consumers require rebuild. WaitingClose appended to Phase without renumbering old values.",
+    "Proxy retries only destroy_pending_socket after typed QuiescenceDeferred. It keeps the original call stack and whole Pending/Graph/Inputs/Resources/TLS alive; wait_close_retry rechecks same worker/fiber/PTD and exact Graph/backend known-deferral state before waiting outside Parent.",
+    "WaitingClose publishes nonzero monotonically increasing epoch under Worker gate. Only retry_close(current_epoch) on original controller/fiber sets one coalesced requested flag and event. Zero/stale/nonwaiting calls deny; startup/stop event signals cannot authorize retry. No opaque callback under Worker gate.",
+    "One finite wait budget starts at first known false drain and spans repeated waits/rechecks. Deadline checked before accepting a requested retry. Timeout, unknown exception, invalid state/PTD or explicit poison retain attempt through existing run_server catch; no guessed cleanup or source restart.",
+    "Five isolated scenario sources: normal two false/epoch1/epoch2 then true with exact actor/PTD and one source start; timeout821, disabled822, opaque typed exception823 and poisoned wait824. Normal scenario includes foreign controller denial, stale/zero/future epochs, stop/startup spurious wakes and actual native/FLS join before controller finish.",
+    "Only worker.hpp/worker.cpp and worker_tests.cpp changed. Prior Graph/server correction unchanged. Policy is selected in synthetic test source only; no production controller stop/join binding or early-stop receipt-drain implementation added."
+  ],
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

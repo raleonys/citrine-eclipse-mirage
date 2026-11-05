@@ -1,0 +1,43 @@
+[
+  {
+    "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang++.exe",
+    "arguments": [
+      "-std=c++20",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I",
+      "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-application-worker-source",
+      "-c",
+      "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\application-effects\\worker-diagnostic.cpp",
+      "-o",
+      "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\application-effects\\worker-diagnostic.o"
+    ],
+    "exit": 0
+  },
+  {
+    "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang++.exe",
+    "arguments": [
+      "-std=c++20",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-static",
+      "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-application-effects-source\\factory_tests.cpp",
+      "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\application-effects\\worker-diagnostic.o",
+      "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+      "-lws2_32",
+      "-lmswsock",
+      "-o",
+      "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\application-effects\\application-effects-diagnostic.exe"
+    ],
+    "exit": 0
+  },
+  {
+    "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\application-effects\\application-effects-diagnostic.exe",
+    "arguments": [],
+    "exit": 1
+  }
+]

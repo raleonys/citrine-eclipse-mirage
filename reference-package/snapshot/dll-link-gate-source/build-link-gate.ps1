@@ -109,7 +109,7 @@ $dll=Join-Path $run 'anadius64.reconstruction.dll'
 $map=Join-Path $run 'anadius64.reconstruction.map'
 $linkArgs=@('-shared','-static',$entry,$leaf,$factoryObject,$servicesFactoryObject,$onlineFactoryObject,(Join-Path $PSScriptRoot 'anadius64.def'),
     $archives['anadius_core_partial.a'],$archives['hook_engine_compat.a'],
-    '-lkernel32','-luser32','-lshell32','-lws2_32',
+    '-lkernel32','-luser32','-lshell32','-lws2_32','-lmswsock',
     '-Wl,--exclude-all-symbols,--no-insert-timestamp,--verbose',"-Wl,-Map,$map",'-o',$dll)
 $linkExit=Invoke-Tool $compiler $linkArgs 'link.log'
 if((Hash $factoryObject) -ne $factoryHash){throw 'Factory object changed through link.'}
@@ -117,19 +117,20 @@ if((Hash $servicesFactoryObject) -ne $servicesFactoryHash){throw 'Services facto
 if((Hash $onlineFactoryObject) -ne $onlineFactoryHash){throw 'Online factory object changed through link.'}
 $linkText=Get-Content -LiteralPath (Join-Path $run 'link.log') -Raw
 $undefined=@([regex]::Matches($linkText,'(?m)^.*undefined symbol: (.+)$') | ForEach-Object {$_.Groups[1].Value.Trim()} | Sort-Object -Unique)
-$required=@('require_loader_attach_runtime','require_loader_detach_quiescence')
-$expectedBlocked=$linkExit -ne 0 -and $undefined.Count -eq 2
+$required=@()
+$expectedBlocked=$required.Count -gt 0 -and $linkExit -ne 0 -and $undefined.Count -eq $required.Count
 foreach($symbol in $required){if(@($undefined | Where-Object {$_ -match $symbol}).Count -ne 1){$expectedBlocked=$false}}
 $created=Test-Path -LiteralPath $dll
 if($created){$expectedBlocked=$false}
+$linked=$linkExit -eq 0 -and $created -and $undefined.Count -eq 0
 $sourceFiles=@('production_image.hpp','entry.cpp','export_leaf.S','anadius64.def','target.cmake','build-link-gate.ps1','verify-link-gate.py')
 $hashes=[ordered]@{}
 foreach($name in $sourceFiles){$hashes[$name]=Hash (Join-Path $PSScriptRoot $name)}
 $record=[ordered]@{
     schema='dll-link-gate.validation.v1';package='B31';checked_at=(Get-Date).ToUniversalTime().ToString('o')
     invocation_mode=$(if($Diagnose){'diagnose'}else{'normal-build'})
-    diagnostic_validation=$(if($expectedBlocked){'PASS_EXPECTED_BLOCKER'}else{'FAIL'})
-    production_dll_readiness='BLOCKED';dll_link_attempted=$true;dll_link_succeeded=($linkExit -eq 0)
+    diagnostic_validation=$(if($linked){'LINKED_NOT_EXECUTED'}elseif($expectedBlocked){'PASS_EXPECTED_BLOCKER'}else{'FAIL'})
+    production_dll_readiness=$(if($linked){'LINKED_NOT_RUNTIME_VALIDATED'}else{'BLOCKED'});dll_link_attempted=$true;dll_link_succeeded=($linkExit -eq 0)
     link_exit_code=$linkExit;dll_created=$created;dll_loaded_or_executed=$false;originals_accessed=$false
     frozen_source_files_verified=@($snapshot.sources).Count;common_test_groups_rerun=0
     baseline_common_build_record_sha256=Hash $buildRecordPath;baseline_source_snapshot_sha256=Hash $snapshotPath
@@ -157,12 +158,12 @@ $record=[ordered]@{
         cmake_direct_source_configured=$true;cmake_target_executed=$false
     }
     undefined_symbols=$undefined;expected_missing_production_hooks=$required
-    candidate_entry_strategy='compiler CRT once, then recovered application layer; production loader-context implementation absent'
+    candidate_entry_strategy='compiler CRT once, concrete synchronous source image/application; never executed by this build'
     new_native_ABI_provider_closures=0;overall_completion_percentage=$null
     run_directory=$run;map_created=(Test-Path -LiteralPath $map);commands=@($commands)
 }
 $record | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $run 'validation.json') -Encoding utf8
 $record | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $PSScriptRoot 'validation.json') -Encoding utf8
 [pscustomobject]$record | Select-Object diagnostic_validation,production_dll_readiness,link_exit_code,dll_created,undefined_symbols,run_directory | ConvertTo-Json -Depth 4
-if(!$expectedBlocked){throw 'Unexpected gate result; do not interpret this as a usable DLL.'}
-if(!$Diagnose){exit 1} # A normal build remains red while production symbols are missing.
+if(!$expectedBlocked -and !$linked){throw 'Unexpected link result; inspect the retained link log.'}
+if(!$Diagnose -and !$linked){exit 1}

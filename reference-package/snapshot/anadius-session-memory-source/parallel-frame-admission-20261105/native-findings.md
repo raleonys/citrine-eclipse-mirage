@@ -1,0 +1,30 @@
+# Fresh capture-site reference check — parallel frame admission
+
+2026-11-05. This new reverse-engineering stage verifies the actual callback/thread capture producers and owner identity through focused fresh cross-reference/instruction/type observations. The previously established whole-body/FH4 evidence is supplementary, not re-queried or relabeled fresh. No production/test/status edit, compilation, tests, linking, target execution, packaging or original mutation occurred.
+
+Own REA6.8.0 session verified configured server `C:/tools/rea-6.8.0/node_modules/rea-agents/scripts/rea.mjs` and supported available Ghidra12.1.4 before opening the immutable original x64 PE. Original SHA256 at open and after export/normal close remains `9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c`. Export contains **12 fresh records / 57080 bytes / zero unknown records**. Full structured replies/EIDs/file hashes are in `native-evidence-index.json`.
+
+## Fresh reference inventory: no second static capture producer found
+
+- `xrefs(0x180028d30)` returns **025526,02552d,0a84e4**, EID `ev_f2219187e705c0c21ee569a2fcbd777981301d6b50c3524079db2ecab3c7ba63`.
+- Fresh instruction025526 is `LEA RAX,[0x180028d30]`, and02552d is `MOV [R9+28],RAX`; both belong to025480. Ghidra propagates the code-address DATA reference to the store, so these are two observations of **one producer/capture**, not two callers. EIDs `ev_443049b1f624f07cd5f9510558af73e54544899c6317a9c31034fa184c05a78b` and `ev_818f1722c8fdd6b3c9e44e027fa7d441ca27bf560b5c72e39d1b63dcd8278851`.
+- `xrefs(0x180021770)` returns **02554b,0a7c38**, EID `ev_e8ce758c056bb2e23d5bf96d49fb6d84f3d16169791f9cd571694b2927645fbd`. Fresh02554b is `LEA R8,[0x180021770]` in that same025480 producer, EID `ev_9d17759d7a46f6bcdcde08bde67f16b1a8583524c45c6d23c2de652f48eae696`.
+- Fresh instruction checks classify **0a84e4 and0a7c38 as data**, not code. Fresh type inspection identifies each as a12-byte `/PE/_IMAGE_RUNTIME_FUNCTION_ENTRY`, with BeginAddress at0, EndAddress at4 and UnwindInfoAddressOrData at8. These are function metadata references, not another runtime closure/thread capture. Type EIDs `ev_9397e17322852e6e2d9137c8a02f258b028867ae7d2962f1e446ee3838810ba8` and `ev_99bb69b1535a3e5708a0d52f5c4ef6856c9e7934280ad35ec4dcff3eba6f6783`; separate data-status replies are also retained.
+
+This is the provider's **observed static exact-address reference inventory**. It does not exclude arbitrary computed/address-interior references unavailable to this query or prove every possible runtime producer. Within this inventory, no additional callback installation/entry route expands the selected frame scenario.
+
+## Fresh owner capture is an argument-derived value, not a global Application
+
+Three fresh exact instructions establish:0254a5 `MOV RSI,RCX` caches the incoming frame-handler argument;02551f `MOV RAX,[RSI]` loads that handler's owner value;025522 `MOV [R9+20],RAX` stores it into the newly allocated closure beside the measured+28 callback. EIDs `ev_9c9e7baceed8ec9270fcd1cf16bef1d5e0604c4777ffbee8f52ecd58c618f6cf`, `ev_06aef172023926609711b43d3fc439b5e162be75642fd1211f1ba8c4e87b42c2`, `ev_dfd9082671795a775f70f9d2f584de9054851c7393adbe271be5a7e1c82f5942`. The capture is not an immediate/global DAT address and the source variable/register name alone is not used as a type proof.
+
+The retained owner chain supplies the semantic identity: per-session start_read0280d0 seeds its local receive handler's callback-owner slot with its incoming session pointer (`local_40=param_1`), while its socket/request pointers are param_1+2 and param_1+0x15. Composed receive025c40 passes that handler's embedded+0x38 subobject to025480 at026084–02608d; its first field is the owner just described.023000 allocates each accepted session separately and initializes that session's request/cipher/self-control fields. Full retained pseudo/instruction extracts for these three bodies and their EIDs/source hashes are in `retained-owner-index.json`. No new whole-body query was required to reinterpret an already resolved install.
+
+Therefore distinct live accepted sessions yield distinct argument-derived owner captures. The shared code target028d30 is **not** evidence that owners share a global Application/handler lock. Keeping both established connections alive avoids using a speculative stale-owner schedule.
+
+## Relation to the observable progress gap
+
+The retained chain in `../handler-admission-overlap-20261105/caller-proof.md` establishes that021770 invokes the captured028d30;028d30 calls033d70 **before** per-session response-environment scheduling021420. The CRT thread wrapper invokes the supplied entry after its per-thread initialization, without a caller-held whole-handler gate. Existing exact FH4/funclet evidence then establishes the supported UnknownMessage diagnostic's synchronous MessageBoxW, after its log/flush calls returned.
+
+For two established/warmed sessions after startup, A can remain in that diagnostic dialog while B's plain GetConfig (showLSX=false, empty event queue) executes and produces a response. This uses no foreign-SDK-internals assumption, shared cipher state, malformed pointer or lazy handler-registry race. The reconstructed Original NativeJobs instead retains source_gate plus the one Parent Operation throughout A's body; Profile/Graph/provider singleton reservations rely on that global exclusivity. B cannot advance through that source path until A returns. This is an additional observable wait dependency, not a claim of an unconditional permanent deadlock or measured latency/runtime occurrence.
+
+The narrow fresh reference check confirms the selected producer/owner premise; it does not justify unlocking one mutex in isolation. `../handler-admission-overlap-20261105/source-gate-review.md` and caller-proof map the multiple source layers requiring a separate coherent design. No new readiness barrier, SDK serialization, generic concurrency framework or unload requirement is proposed here. Current source stays frozen pending root's decision.

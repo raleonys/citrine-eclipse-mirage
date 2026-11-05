@@ -1,0 +1,745 @@
+{
+  "schema": "early-connect-redirect-body.source-only.v1",
+  "recorded_at": "2026-11-02T19:28:26.957900+00:00",
+  "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+  "authority": "Author static source inspection with retained native assembly; no observed compiled behavior, complete startup equivalence or loader safety proof.",
+  "reviewer": "author only; no independent agent review",
+  "production_cpp_logic_files_changed": 5,
+  "production_header_files_changed": 6,
+  "scenario_cpp_files_changed_not_run": 3,
+  "source_files_changed_this_step": [
+    "anadius-network-hook-source/connect.cpp",
+    "anadius-network-hook-source/connect.hpp",
+    "anadius-network-hook-source/hook_tests.cpp",
+    "anadius-native-source/native_callbacks.cpp",
+    "anadius-native-source/native_callbacks.hpp",
+    "anadius-callback-policy-source/policy.cpp",
+    "anadius-callback-policy-source/policy.hpp",
+    "anadius-foreign-callback-source/foreign.cpp",
+    "anadius-foreign-callback-source/foreign.hpp",
+    "anadius-foreign-callback-source/foreign_tests.cpp",
+    "anadius-foreign-callback-source/foreign_integration_tests.cpp",
+    "anadius-host-platform-source/assembly.cpp",
+    "anadius-host-platform-source/assembly.hpp",
+    "anadius-native-context-source/context.hpp"
+  ],
+  "reviewed_source_hashes": {
+    "anadius-network-hook-source/connect.cpp": "8b9b5f8fb58fb105910a250ac7179d2140a878cf908cbda0471a6d536c1c461c",
+    "anadius-network-hook-source/connect.hpp": "f0149621953b65ddd456dbc01cdb24451dec32bccea13a573433ecaf80b702b6",
+    "anadius-network-hook-source/hook_tests.cpp": "7ed10257d15f344d43e6cbf9e03c3fbe00f0a44cce9370fab95afddb85453008",
+    "anadius-native-source/native_callbacks.cpp": "e51dca6788737dbe052e5e4fbf9463c8bd2e1362f33a53ac76d9f5c21b30c5f1",
+    "anadius-native-source/native_callbacks.hpp": "3af1dde58c986509529c4b57185ecbe87d644b1a5ee70713283bfa76127a1538",
+    "anadius-callback-policy-source/policy.cpp": "2c84468448e5e6321ceb563afc5f11d08dc8e9f935a8aee77a7a94cef200b45a",
+    "anadius-callback-policy-source/policy.hpp": "c4170b94e1491eb10dafd654ff7645265170e101484083b26fbdf0b87d425bbb",
+    "anadius-foreign-callback-source/foreign.cpp": "b7b603328f565906cd9288ea5b5c2b33426872ed794185aa38781bf51e56c1f9",
+    "anadius-foreign-callback-source/foreign.hpp": "0a098f77328c820f34f92f2ad31993718d2e5a69b3cf6a8f471c84c85ca017d4",
+    "anadius-foreign-callback-source/foreign_tests.cpp": "f1d3384a29e2bfdf192ae2fa2dfc6eec157862cbb32fe47733ee7289e04d3c70",
+    "anadius-foreign-callback-source/foreign_integration_tests.cpp": "07fba23926e448b41349fb0e19be296676d078025aca482d3f7fea8058ea01c8",
+    "anadius-host-platform-source/assembly.cpp": "c85f94375c69155361288a18def122fde9b47db2ae0090ac909489ec622fe120",
+    "anadius-host-platform-source/assembly.hpp": "42cd6806b1a2641bb1fb85771dbccca54848fda90709f42941f62455053b78d9",
+    "anadius-native-context-source/context.hpp": "f262879dd3523a72c7964be57d2e2e1ebdc08c4cf37a35159a4d474346575752"
+  },
+  "all_pending_sources_since_last_full_build": [
+    {
+      "path": "anadius-accept-stop-source/stop.cpp",
+      "last_built_sha256": "0359be032d026c8fd0dbdd56807eada0500c93f86f0511ba913d4cce00a7353f",
+      "current_sha256": "02687d1f84a3867933214f2e5d7219fca7e76cfd260f2bf41c50e1b5c5c1a429"
+    },
+    {
+      "path": "anadius-accept-stop-source/stop.hpp",
+      "last_built_sha256": "6d4854d3640568c5ec08eaa23b4abbb4b40d5c529be3bc6825f017f62702a94b",
+      "current_sha256": "e38b367b263588382293119fa4bd7e20680644f57d4efeb55807d048db1fda14"
+    },
+    {
+      "path": "anadius-application-graph-source/graph.cpp",
+      "last_built_sha256": "993510629595bcd0eb580510c5b7d99b37e6a9d5d5e3f3ce7f00ccba63e8d488",
+      "current_sha256": "ede4d43b8181ebd1290808665611ed67be549f51b11561afb6eff2fd81b92a1e"
+    },
+    {
+      "path": "anadius-application-graph-source/graph.hpp",
+      "last_built_sha256": "b5bd0d35be5a225c5741c17a0afd2e98f68a100ea150ebdefd29fd9808041eb9",
+      "current_sha256": "aad916291049c9acd82ae22a9b956f94c1a6a3df3d9a7e55801c9061c1635746"
+    },
+    {
+      "path": "anadius-application-graph-source/graph_integration_tests.cpp",
+      "last_built_sha256": "fea7a9cc1f625e426c614d43eedeb261338e3674f9459177c34352eaab0e7703",
+      "current_sha256": "e34cc14baf2bf925ad85769026cb1f7d2371f034bd6be4c5494b9d44d8a6b1b7"
+    },
+    {
+      "path": "anadius-application-worker-source/worker.cpp",
+      "last_built_sha256": "a3502562d95b6f7d7d4182ac6c2f37f2ae64a19f448092d0fc2f31ab743572a9",
+      "current_sha256": "1be46fdd4478f5214c37a29f1c0fe098e9dd572bf1076ab387710e192523bbe1"
+    },
+    {
+      "path": "anadius-application-worker-source/worker.hpp",
+      "last_built_sha256": "923514f18bf5d32ecfa2487e982e571117d0809e0892f171803c06ae915408f1",
+      "current_sha256": "74cdfb121625ae484b547ba7224c28f2bb6a507cb7f24be7863512720c9d3c68"
+    },
+    {
+      "path": "anadius-application-worker-source/worker_integration_tests.cpp",
+      "last_built_sha256": "d61beff5f47d18fd4389680d3760b157746a76469575fdbc041575bb3014dd55",
+      "current_sha256": "db9c744fa148fd131f66f8df8d2ef7e41d910f505123d5d4e0c34a085231e7c8"
+    },
+    {
+      "path": "anadius-application-worker-source/worker_tests.cpp",
+      "last_built_sha256": "0382d7763f8143477719affff8907c81a6de3cdfa1ea8a3dfa9659491727a9d0",
+      "current_sha256": "e0088535c8c7157e99e34208fa7d471bacad323d465fd588b7dd660665e72e86"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend.cpp",
+      "last_built_sha256": "48ab2ad86683eea97d265a603ce405700141a9ddb9995095a75eb9755fc26f1a",
+      "current_sha256": "11369cb3f9880dea5d2780134c5a31f29db21f2b6165302acef9f9898bca9abc"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend.hpp",
+      "last_built_sha256": "412f8d9432c4822e02002c12db8bf0c5c2d0707371d5ecf984a5032bfc009667",
+      "current_sha256": "a1bc5f66bd35a638e48f97ef5e220f4dbac975bd3fab5af59db124ba731a60f3"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend_integration_tests.cpp",
+      "last_built_sha256": "7519ec0a3bb13b65c1d506fca8df937d84ca790a11e4adea440830644220b5a7",
+      "current_sha256": "145e22c6c18e3bc18b464d2cfca59fc16ab802359d82cfa9818a873927802412"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend_tests.cpp",
+      "last_built_sha256": "65005e8082e9fadfc06fb89a00539deda014ea710f00c3fadd0e718077410414",
+      "current_sha256": "27220e37e6cfdc3af94b56052a7f18e491c56cfeef731f31d8afc4673aafdc08"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "last_built_sha256": "31fc08d0311ed281465d9ffe7e255581c6848a5f83c67f2b435e17084efc8573",
+      "current_sha256": "8e418eceb1b7ea36913ef0c226e40f56bb263e26a06f360a5e24fbb6831ebae9"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/tracked_threads.hpp",
+      "last_built_sha256": "414a94314cecedd2908a073a6206a0adfdb7847e80df75911d0ba29e792277a7",
+      "current_sha256": "74df67223d335de1cf696d2d8a880bf89645f9eeb4836b2f86e42104ab4c8e06"
+    },
+    {
+      "path": "anadius-bootstrap-providers-source/native_threads.hpp",
+      "last_built_sha256": "243bf515118b795e9bf8004d79f5b923bf40f0ad98ff7d68946ebe4fd264cac7",
+      "current_sha256": "b9f2cade216f3333614fb0d94ce25ca6e7a41a6c228f9bd38c4994eca41cfbfe"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/callbacks.cpp",
+      "last_built_sha256": "9d78696ae360140c0fcb30a185671a5755532e22c2aa15e128f5b09fa5ee426c",
+      "current_sha256": "94f888ea627af417fd70845dd526627a1fc744330de732553f246d24a19de2b8"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/callbacks.hpp",
+      "last_built_sha256": "0f15b4031dc4e71f32e52c0ef6b7061fb1ec8c9e0b2c7df424f0ee4fd72d13e4",
+      "current_sha256": "abca37b5724e11cecb3574fa8d6a142d523a58fd4165eff1d444edd5f656e72c"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/callbacks_tests.cpp",
+      "last_built_sha256": "ad6f8848d7f1879babb0ce563106ecdbed56908a060009c341fbd76bc229ca9d",
+      "current_sha256": "699d536149aac0c0156fe60cae57c4638d56eb04b94bded22c1b1c19881a2de4"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.cpp",
+      "last_built_sha256": "be831aeeaf94ab99a75981613a124f522e9cffc8e35590c898ffc8e6af27dcca",
+      "current_sha256": "271861dbf9a661eee658ae4de200317010adbae341dbcb368305f3b2e0040435"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.hpp",
+      "last_built_sha256": "d55494573dc515eacdcf2197c5213d67893aecfb46466e835d07de4e3add99eb",
+      "current_sha256": "b6864109663f3b1894be37f1142b5a72802f66e4616379ed0d167770ce92b20d"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.cpp",
+      "last_built_sha256": "fafe5f4fc734029058a3a039887db58dd3a0f9d8b2ad42b075512187945f10ad",
+      "current_sha256": "2c84468448e5e6321ceb563afc5f11d08dc8e9f935a8aee77a7a94cef200b45a"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.hpp",
+      "last_built_sha256": "44d32c453c03618eff2f4abe83addffc1662efbde0ef5db44850109a4a761f02",
+      "current_sha256": "c4170b94e1491eb10dafd654ff7645265170e101484083b26fbdf0b87d425bbb"
+    },
+    {
+      "path": "anadius-configuration-factory-source/factory.cpp",
+      "last_built_sha256": "19a164fe401cf4c32680219e94aa7290e1eed853abacb95c85291063eb7bed63",
+      "current_sha256": "da2b7d178de233bd948dd33c9e69d8df80165642f9c27843f35efac7a3e2e8bb"
+    },
+    {
+      "path": "anadius-configuration-factory-source/factory.hpp",
+      "last_built_sha256": "b2e47a4e9ccc13b6081011b36e5533df9a007c84da5d75ae5173b27abafde0d7",
+      "current_sha256": "02ff52e8cbdd1f4b9beaee632cd122e7488e847255985386c0ace5e3531e4089"
+    },
+    {
+      "path": "anadius-configuration-factory-source/factory_tests.cpp",
+      "last_built_sha256": "bc50fcd58014aa1660780c18e369549486ed507543a1a0c3e5361dcb839a2d30",
+      "current_sha256": "eae62f964a8ea8c26e5d7a14bc26508a390ac97dfefee14f64e5a696021da22b"
+    },
+    {
+      "path": "anadius-content-effects-source/effects.cpp",
+      "last_built_sha256": "5d77daa2a39ef2474bf0301118d146c4a41265ad8f3e7a769284dac60664fb27",
+      "current_sha256": "8224ff1c1b10c5a3bb3d91aa8762f574a657a17dc4a83dee59dc19b745e5a510"
+    },
+    {
+      "path": "anadius-content-effects-source/effects.hpp",
+      "last_built_sha256": "b265873a5ed74589253de3f5c3311c399c2b50e798aa4e6a266d975f1b199486",
+      "current_sha256": "b387ca6756b1898abe60f672bfdfa467de6a16117c33bcdb6333509630312242"
+    },
+    {
+      "path": "anadius-content-effects-source/effects_tests.cpp",
+      "last_built_sha256": "961ded529a986ff2d25f9820d9fbde01e0beef634fa305e46c47ee572eac67b9",
+      "current_sha256": "39388e93eb14ac57ea87e89c04e1453170b801b24528e53c113d46f3b4cf615e"
+    },
+    {
+      "path": "anadius-execution-source/execution.cpp",
+      "last_built_sha256": "30588a008c6c45a9d3f0424ef6c2e7c6a850d008ea41b18453acbc6c2a44da43",
+      "current_sha256": "03946d42e546072f0e875c4a45327b63a24419303e9b4b23325f79b55f75b705"
+    },
+    {
+      "path": "anadius-execution-source/execution.hpp",
+      "last_built_sha256": "0c426c4b10ddc2a6cebf27a7da966d797d7de8ada73fd60650a2c234c9fb1b62",
+      "current_sha256": "f044c252ab791b02d7b00fadf5ac4c484dac2804ec6b64c2e543cbc72e371fcc"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign.cpp",
+      "last_built_sha256": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4",
+      "current_sha256": "b7b603328f565906cd9288ea5b5c2b33426872ed794185aa38781bf51e56c1f9"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign.hpp",
+      "last_built_sha256": "353327a7367fe9579e5207c97394f64c64426a70f3365136719305e3722cc992",
+      "current_sha256": "0a098f77328c820f34f92f2ad31993718d2e5a69b3cf6a8f471c84c85ca017d4"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign_integration_tests.cpp",
+      "last_built_sha256": "5f2aecf7c756c5c237d257ee016fde21ec4ab73a9614fc9f841623a655609953",
+      "current_sha256": "07fba23926e448b41349fb0e19be296676d078025aca482d3f7fea8058ea01c8"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign_test_fixture.hpp",
+      "last_built_sha256": "8a5d457cf5f5cedebca7e28281713a247fc72dd2aef2cff46fec533890a8fd45",
+      "current_sha256": "0a8d13ce6e248c61d20da1f7831f2f84caa6a6589498df5f366f74e0b9b5c0a4"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign_tests.cpp",
+      "last_built_sha256": "459be79d037c4ab86f15752eeaea59514f610bd53a4473bb8d5116ef0b2d8282",
+      "current_sha256": "f1d3384a29e2bfdf192ae2fa2dfc6eec157862cbb32fe47733ee7289e04d3c70"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.cpp",
+      "last_built_sha256": "6db0b7461cae29db4ad1cb0a09eb02ef6426628b80d4ca1706acd9ca3a7363c2",
+      "current_sha256": "c85f94375c69155361288a18def122fde9b47db2ae0090ac909489ec622fe120"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.hpp",
+      "last_built_sha256": "c24b4a64d9be048f998531979fa7bba54173d51dc313c9359887daedd5811346",
+      "current_sha256": "42cd6806b1a2641bb1fb85771dbccca54848fda90709f42941f62455053b78d9"
+    },
+    {
+      "path": "anadius-host-platform-source/platform.cpp",
+      "last_built_sha256": "6f56ff3d99b288f1280602a00951328ea2f4b0dd6fc0739d21039ce8492f59b0",
+      "current_sha256": "14d612b065b0ce0fafab4035450261f0bcc745aa6b6104cd43dafe8e7c7dac81"
+    },
+    {
+      "path": "anadius-host-platform-source/platform.hpp",
+      "last_built_sha256": "cb7e7bc72b71cc5a62e47bd49aa218ab4b6b57936b1c6d18ba09817204a002b8",
+      "current_sha256": "89cff137465975b02208a6f868a8032a5d850b37dbbed41e719b4baf1ec43f9a"
+    },
+    {
+      "path": "anadius-host-platform-source/platform_integration_tests.cpp",
+      "last_built_sha256": "2a536b293587c3acd1a490395f8d3ef22f7f739ac4cc7b07ae760e41a53e03af",
+      "current_sha256": "24a24546a77fc22986a997ec3876922818537d4472504c7616fca4c7880a3a02"
+    },
+    {
+      "path": "anadius-host-platform-source/platform_test_fixture.hpp",
+      "last_built_sha256": "c0022af0fc1041252b523260f62fd31115ebb06018997542354cb82ad71fe3a8",
+      "current_sha256": "7974b0e6350258c49d0f3bbef1d9162d385faa6871068b65827e99edf29370b4"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.cpp",
+      "last_built_sha256": "fed670a3e0937ff56cc0cf001d19873c5d068b546ddf8b7f7de7f878a1547849",
+      "current_sha256": "d3a5eb1687024a15aa7e031b4960aaa5d6e3ee6b7cc992f039fca367f068d85a"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.hpp",
+      "last_built_sha256": "e127429b9bebd195cc7cd6e1d1ef81743547a1602431b41baf98baf4e16734f8",
+      "current_sha256": "e3f55458b5943b0db9f7662b8b591bfb818923898cf4f9ab5a03c4756d79ffa4"
+    },
+    {
+      "path": "anadius-information-effects-source/effects.cpp",
+      "last_built_sha256": "810ee2ec4b9a31d8289496bd89afc160788c0e9aa14d0f9d9c0334209bac37d7",
+      "current_sha256": "11ae43c5d32eb83d9cd1768fef6d789d7db69ea200a5392bdf731905ab7a0e51"
+    },
+    {
+      "path": "anadius-information-effects-source/effects.hpp",
+      "last_built_sha256": "9142250131c5a8b4f2ce6ef639db459bfa32c5c7032fa8edeb01d43df0db2a8b",
+      "current_sha256": "78f57e125b0f648ace5a42a875a91b6ceb8f792f528d7b67858d48f315b0b739"
+    },
+    {
+      "path": "anadius-licensing-effects-source/effects.cpp",
+      "last_built_sha256": "b66525f0897fadbf3cc1b91ce3e9732680233639e2b511d500a494a34602cdda",
+      "current_sha256": "c66cf34ed9b2e23772c48e834810e5afca0200083dd14b30e0eb508547e7e5d9"
+    },
+    {
+      "path": "anadius-licensing-effects-source/effects.hpp",
+      "last_built_sha256": "be8513ea600f1299c2c6bc93a2319a6b9e579215502cdfd4e1c633812276a228",
+      "current_sha256": "7a84578546cecb74312818a094cdccdabbb641ab67f0c63787e7bfdf56684d07"
+    },
+    {
+      "path": "anadius-licensing-effects-source/effects_tests.cpp",
+      "last_built_sha256": "1780b34cc5ae7ae191c438eee22ed15048e22e505a19100cc2d26f3893cfe2de",
+      "current_sha256": "2489299510b081ea8f83c0becbfaa92509378c7beeef6e9b6fa590251fe72e5e"
+    },
+    {
+      "path": "anadius-native-context-source/context.hpp",
+      "last_built_sha256": "2db86f5b03ca300179a8042e5a287a3b80299b416af4a72b33adcf719b3ce9e3",
+      "current_sha256": "f262879dd3523a72c7964be57d2e2e1ebdc08c4cf37a35159a4d474346575752"
+    },
+    {
+      "path": "anadius-native-context-source/context_test_fixture.hpp",
+      "last_built_sha256": "b9790357fa207d33e2e972bf0812ca8e3768029090d2b3343a5c8011b4aee952",
+      "current_sha256": "917c960f958252cc92e4e41ed8546ee4c804d57d141430d466610b1463225419"
+    },
+    {
+      "path": "anadius-native-profile-source/native.hpp",
+      "last_built_sha256": "29055e78e5c3c72aa007556f3bbaef4fa717b6364da451f11ec1097e84b4584b",
+      "current_sha256": "fbf8c0e31f5df3479ce8a15e550194443750416f52ee30843a57a096f11958fa"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.cpp",
+      "last_built_sha256": "e3da2e8c5aca2d0d768adb48238db45dc4f71c232fb281a8ebdb9b96c22de1e8",
+      "current_sha256": "e51dca6788737dbe052e5e4fbf9463c8bd2e1362f33a53ac76d9f5c21b30c5f1"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.hpp",
+      "last_built_sha256": "6b8ca61ae92cafd0a218f042f97c9b10110125e42924546bde7d5c6823ea0e5f",
+      "current_sha256": "3af1dde58c986509529c4b57185ecbe87d644b1a5ee70713283bfa76127a1538"
+    },
+    {
+      "path": "anadius-network-hook-source/connect.cpp",
+      "last_built_sha256": "28ed74cee63c7a2432336629595ad771ea573efbe33b9f9721f9d1b524378b6f",
+      "current_sha256": "8b9b5f8fb58fb105910a250ac7179d2140a878cf908cbda0471a6d536c1c461c"
+    },
+    {
+      "path": "anadius-network-hook-source/connect.hpp",
+      "last_built_sha256": "f6afcdaf8d2437c1dbb1b71d0d6496a3b653c445619baa60646268be828bafc4",
+      "current_sha256": "f0149621953b65ddd456dbc01cdb24451dec32bccea13a573433ecaf80b702b6"
+    },
+    {
+      "path": "anadius-network-hook-source/hook_tests.cpp",
+      "last_built_sha256": "6a88808475d66d6df4d42e4cd9003f00408c42cfd99ac27f7c5c2d54555c3dc0",
+      "current_sha256": "7ed10257d15f344d43e6cbf9e03c3fbe00f0a44cce9370fab95afddb85453008"
+    },
+    {
+      "path": "anadius-original-provider-source/originals.cpp",
+      "last_built_sha256": "36b2db119c7a96c02afe7dcf97385ca940f7af5f8588ece79b894c999c23f71a",
+      "current_sha256": "794aca9eed3c31ab9dbe06a2b1df968bc690c99177003c3f6e8db9cc99be0339"
+    },
+    {
+      "path": "anadius-original-provider-source/originals.hpp",
+      "last_built_sha256": "16fdd05304bae761dad4c2f491f1ac82b5842118eccbeb644a18f639bd4b6d94",
+      "current_sha256": "0818080931c1f913f499b917c65f6a6ab70608261e7140d5cc986aa09cb37ed7"
+    },
+    {
+      "path": "anadius-original-provider-source/originals_tests.cpp",
+      "last_built_sha256": "83374bd4fc5cbe5f16f19d5d1d39f14f80d822f54895207a0766b29f78d24e0a",
+      "current_sha256": "925a5b44ec12d78b625699d43ae457e5979cd556576b69f28de4267e80b18035"
+    },
+    {
+      "path": "anadius-owned-deque-source/deque.cpp",
+      "last_built_sha256": "459121324082f143c42cb6d70a95fa2eb9e44558a0e1487163a6400aa9545219",
+      "current_sha256": "b26400d2f592d6231610c997695786cf3798e59446e588e22c15368bc2869cac"
+    },
+    {
+      "path": "anadius-owned-deque-source/deque.hpp",
+      "last_built_sha256": "8a1321d225469fdd1fd29c0f7a31f5fc0c1da79a270dc822421ade972b3bc3d0",
+      "current_sha256": "7d12537b67ba147f4e902e745366636e0f9b787284c94113164fba83fbc2434d"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment.cpp",
+      "last_built_sha256": "9585e1894d5e3752bb00522388557082b058bbe274c93212167eb11095a98ec8",
+      "current_sha256": "fe8b080bc5b0eae4a58f7afd158cbeb86b2a21f1767664c015de044899648c18"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment.hpp",
+      "last_built_sha256": "e44cded137e816436a5ffc2ddd5ee68c230c9501212f0711f94a7f7f26af09c3",
+      "current_sha256": "cbb3048100274a1710b458ea5f1aa8a73528a8cd9cccd6510db2134c5cac887f"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment_tests.cpp",
+      "last_built_sha256": "a137384bdf4f4d73dc21db4d096e4c0ebf0b7d3924e3d37565a53d776dc8ef65",
+      "current_sha256": "570631227d1e8b4628c214f59a64326fa677e6b5fa95f8c5529986c333574cf8"
+    },
+    {
+      "path": "anadius-owned-jobs-source/jobs.cpp",
+      "last_built_sha256": "e096445632dae1b9796387547ee1180991bd646a2c2be0350fbd0b2cf0cb4d07",
+      "current_sha256": "7cbbc391e62372ffb695bcac941e0a066be7e118a1e32597e5e612cd3eac3065"
+    },
+    {
+      "path": "anadius-owned-jobs-source/jobs.hpp",
+      "last_built_sha256": "f7669fbfdec697920811a17b289c88316f80c250f3ae7c2012ddbc26234be58b",
+      "current_sha256": "0523929e8731ef5b7e9a09b42b3449894cce10f6a49579d9dfaa879ea7c9f171"
+    },
+    {
+      "path": "anadius-owned-jobs-source/jobs_tests.cpp",
+      "last_built_sha256": "d1dc3d4b8e7d183e16cd414641d43e6aca8dba5601eefc6d02129e1f1d3e0a55",
+      "current_sha256": "70c8dd764df4136ba06f0f180daaed416485d4049ade966a038d5a7d458422ad"
+    },
+    {
+      "path": "anadius-owned-server-source/server.cpp",
+      "last_built_sha256": "110fc90931f0f7cb7b4d0ae003a7488529533c31c254e0e0992e243a1f9d449d",
+      "current_sha256": "66dfcc98d896c2f985cdfdf026fa56263fe03ff59c927642dccbc8975bc61dc0"
+    },
+    {
+      "path": "anadius-owned-server-source/server.hpp",
+      "last_built_sha256": "8122afc2c001e9c97d945200419b1fc5067908a7d83278130c738e6ae0969134",
+      "current_sha256": "2b1ae850c2e05deae282e7978255c8fb86f5d7ab527b4d5506e5a5bb8941f634"
+    },
+    {
+      "path": "anadius-owned-server-source/server_tests.cpp",
+      "last_built_sha256": "c2a696f54c29f72e0439d67433e4355af15cd7f049ce11de4d6374bf9389c5a4",
+      "current_sha256": "7625891fc6a64aa640afa3e7c90c6aa33c42d187f1a171741ef10bbf9cd6c598"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.cpp",
+      "last_built_sha256": "50193ac5c84e279207831100ae38bfa480626892cf237ddc401e7ca61eef1893",
+      "current_sha256": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.hpp",
+      "last_built_sha256": "865208b224507f1b708e0d7aea7bf3fff1433f9fe5d52260bcc0c1c6c4b136ca",
+      "current_sha256": "a9d1da810c6a94d4033cb9aa6973dfd9ccaf5f46e8b21f3173211129bf502ccb"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown_tests.cpp",
+      "last_built_sha256": "8f42a649fb93c1e74d477521f23ff5a702a63c54cc37a8cdb19ac85a768752bb",
+      "current_sha256": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "last_built_sha256": "dec7a66e5120e0c7064d95c53aa250d678160913486abf76409de08a4082d150",
+      "current_sha256": "a33af361f391a03658ccdcd9f16ee7474ca636bec48280309bf6f68bd29d26bb"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.hpp",
+      "last_built_sha256": "8b3afb7a69b6a7d99a992b3dbc767845a5dfef49784b0500f157d76c499e2704",
+      "current_sha256": "e3e7fef3dea236a09225b19bc4ed6e92ea35172eb62c059fa322cc35a4f6f3a9"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "last_built_sha256": "23ed92f55c5bb8f6f70002a86f770aa242f72ddc9f148f22243d0a0d1c9d95ef",
+      "current_sha256": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253"
+    },
+    {
+      "path": "anadius-server-runtime-source/runtime.cpp",
+      "last_built_sha256": "c1378812ed7b4446270c67be5ec64a68678aa189e26c9798ccacea649969048b",
+      "current_sha256": "474bfec679077f826220ee7e4d98f71cbe1454417791a32e091ccec9a4f0fd03"
+    },
+    {
+      "path": "anadius-server-runtime-source/runtime.hpp",
+      "last_built_sha256": "c4a7ab815196c513b46d8312888a6210b78818f8aa77284eb013e655a3365ac0",
+      "current_sha256": "342e932853ddd15644a9885fc0f2be00f07a0380bd688c66d49f07636ca3d7bf"
+    },
+    {
+      "path": "anadius-server-source/server.cpp",
+      "last_built_sha256": "bb01c186792e12adfd121772a8201cd727421beb546ac35e5f65533201763fda",
+      "current_sha256": "658493dd13db22ed94ce934ec5050e6883220512762e0f19b23b02a1e68453e0"
+    },
+    {
+      "path": "anadius-server-source/server_tests.cpp",
+      "last_built_sha256": "1bdf3882b8889e71a3417e8022a93bbc11593a3f77199c63b32b4460b31365fd",
+      "current_sha256": "52a346a5fd07eeac8d58a8c18ccd20d7bdd35b3e9103a286f44df9cb3c6ccc55"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.cpp",
+      "last_built_sha256": "905a59dd2e705056c072e5e72ebbd22566667f904a746ae0c9a45196239e37c4",
+      "current_sha256": "2422204139a19f2c1f49dfe3067b7472e9ce480c102dacca0c9d96b430f940ec"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.hpp",
+      "last_built_sha256": "76b2a60370a20084228ab75fc0ce1450323f081e26aa2359b7a6a3080a1cfe3d",
+      "current_sha256": "37bda367481217537e0501baacbded0fadf17b0ab32ebcdf4db1e53256a83dce"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.cpp",
+      "last_built_sha256": "da35f76e1c414f24bdc6efda4d7ecc0ec814a3d63e64a01f9ef5ead63cdd4c24",
+      "current_sha256": "5ed95fda012839341bcc830935b0d62cb3ce2b5485e2241c66846fe36c93a8c6"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.hpp",
+      "last_built_sha256": "06e2d9033ae8307ea2d87be0267d48e33bb353b87c4f23d34ec56abcfb5f41e2",
+      "current_sha256": "d14d02a1ecb5358646f52b97227c2f09a7b91137d86ad4600ea791b18ecff3a0"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.cpp",
+      "last_built_sha256": "8554bd2ddca2043fe7c199b9d058885879053bbbab7a58edfc539107c004b913",
+      "current_sha256": "5428a7616fc900a934d51dbae3521709a240c3cb15acea70342aedb01dc895bd"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.hpp",
+      "last_built_sha256": "b6a4412bc258ef7d47f63cfe8f889ec8ddd18170b1c334e6f127dd93ab1a2bef",
+      "current_sha256": "50ce41d21902a4c56ec8b0e9e7f605c3b759b15772198e9ee261b8cc8e47b65d"
+    },
+    {
+      "path": "anadius-session-profile-source/profile_tests.cpp",
+      "last_built_sha256": "60884c7e7e9b3aa495e9eea32db00486ec9debd8e73d9c37800bb07c0ca51b6b",
+      "current_sha256": "3f67b09f3984c54f59f0b98602f0a179c5bc3dae87274dac4867da5c3f5ea1d0"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher.cpp",
+      "last_built_sha256": "16be30efd052e5392d95b69669d0caacba0bfb08b18dbe4094c409012e702952",
+      "current_sha256": "a87ef40713eb11cef6cf06e7d4d150429a372e903505bf9531efe0d507303e6d"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher.hpp",
+      "last_built_sha256": "fc956c1b9be86b46934afe11bfdc380e9c5c5264d773756cb09f5db331431955",
+      "current_sha256": "f1878bfa7ab828cb58d8ab601e6bccd161326e61029d4b1bed226ded04345a20"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher_tests.cpp",
+      "last_built_sha256": "867c851b2b69a7954c7e0d47eac65296700267b2d34250776ba819fdf801ddcf",
+      "current_sha256": "2acf5f118216bfd13a52ee8d9362a601d17ff0949595d89fff9eb4ce15446e67"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch.cpp",
+      "last_built_sha256": "a8ca45a775c0fcd6bd485075ad3d459f8fd208a4922ade32e521c37bc2870014",
+      "current_sha256": "47efc10e32430961cd3f78f5604537cec1aa46a7848b48c1cf4b41dab259ca23"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch.hpp",
+      "last_built_sha256": "e29de315e311d2d5bf8129db745102415609fb140de1f74ea121150efa142e01",
+      "current_sha256": "c27d27ca92546a74ed6fe540494506d1692cfa95a8842dc4f1986ce46c266aec"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch_tests.cpp",
+      "last_built_sha256": "9708f14c02f4a1171811fb2c715319bf95925aa1cc76d7658a5017475d83107c",
+      "current_sha256": "cb7d3de14a5a5f61a0d38e41fac9e8297da8b3dfc19eaacabf08bd3544af3a80"
+    },
+    {
+      "path": "anadius-startup-publication-source/publication.cpp",
+      "last_built_sha256": "8b3136826699324edd0f0a44ee9b44927cc5617f180753828be5844c04cbc5bf",
+      "current_sha256": "7b7a50a8b28541b5b3461439c6918a7055acd8af054344c212e7cb5650bace82"
+    },
+    {
+      "path": "anadius-startup-publication-source/publication.hpp",
+      "last_built_sha256": "516975cfb72c687d23d2e1253608a63dde70243e8026bb4ba738bb4b8257a3e4",
+      "current_sha256": "1730351414779c51b586d05c8b4cd6c0b4a4638cea303a344ded1aba91255ccd"
+    },
+    {
+      "path": "anadius-startup-publication-source/publication_tests.cpp",
+      "last_built_sha256": "72ecae626427fd8176937cd6490975243652b168809e456cdad3ee2e12564082",
+      "current_sha256": "7af4e858d48fc91b64989dde02db2fa4cc67de25995cf4c9681e435c78dccd4b"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "last_built_sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a",
+      "current_sha256": "31a36ff7c7e65a909e4e5a712113d67a565b6418edb50a4a38c02aa4ac4e04a5"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff.cpp",
+      "last_built_sha256": "8e2bb730bdf8d8ec1471ea6c8d0ea22a85450101c67d61d194a351bae2b696d7",
+      "current_sha256": "944914b063fceb4b7ef4ebfc9d9898394a367e7a05091a0357160186de192ef0"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff.hpp",
+      "last_built_sha256": "76c23df3621ce30be07f678decbf713ba655c783b5b4f658c3b0292f397c4049",
+      "current_sha256": "417165442cf848da4a4897284c2b041c734bfd89d6a0d0b4857db531c26f45d8"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "last_built_sha256": "6da9b872b45ab2a1ca8bf7ad5ba69183142908e6f77baafb54878645989be65f",
+      "current_sha256": "1a290c071e319cadca0a5d59d742d96cefd9c7558f46a7477172eb77a981c67f"
+    }
+  ],
+  "prior_implementation_evidence": {
+    "path": "anadius-foreign-callback-source/connect-wait-passthrough.evidence.json",
+    "sha256": "f4f4b978524fa9d6aef6b19db782e38ca701bc369dac92dfb922ac286f7c394d"
+  },
+  "report": {
+    "path": "outputs/anadius-foreign-callback-source/connect-redirect-body.md",
+    "sha256": "21b721d3ec7c1f5a54e79738f8ba487731c25d2b30808575bc2629f9f5749841"
+  },
+  "source_evidence": [
+    {
+      "path": "outputs/anadius-network-hook-source/connect.cpp",
+      "line": 19,
+      "anchor": "void redirect_body_00fd00(",
+      "sha256": "8b9b5f8fb58fb105910a250ac7179d2140a878cf908cbda0471a6d536c1c461c"
+    },
+    {
+      "path": "outputs/anadius-network-hook-source/connect.cpp",
+      "line": 47,
+      "anchor": "if(redirect)redirect_body_00fd00(",
+      "sha256": "8b9b5f8fb58fb105910a250ac7179d2140a878cf908cbda0471a6d536c1c461c"
+    },
+    {
+      "path": "outputs/anadius-native-source/native_callbacks.cpp",
+      "line": 88,
+      "anchor": "}else if(c.admission->connect_redirect_begin(port))",
+      "sha256": "e51dca6788737dbe052e5e4fbf9463c8bd2e1362f33a53ac76d9f5c21b30c5f1"
+    },
+    {
+      "path": "outputs/anadius-native-source/native_callbacks.cpp",
+      "line": 90,
+      "anchor": "auto published_port=c.admission->connect_redirect_ready()",
+      "sha256": "e51dca6788737dbe052e5e4fbf9463c8bd2e1362f33a53ac76d9f5c21b30c5f1"
+    },
+    {
+      "path": "outputs/anadius-native-source/native_callbacks.cpp",
+      "line": 92,
+      "anchor": "c.admission->connect_redirect_complete()",
+      "sha256": "e51dca6788737dbe052e5e4fbf9463c8bd2e1362f33a53ac76d9f5c21b30c5f1"
+    },
+    {
+      "path": "outputs/anadius-callback-policy-source/policy.hpp",
+      "line": 62,
+      "anchor": "std::function<bool()> connect_body_scope{}",
+      "sha256": "c4170b94e1491eb10dafd654ff7645265170e101484083b26fbdf0b87d425bbb"
+    },
+    {
+      "path": "outputs/anadius-callback-policy-source/policy.cpp",
+      "line": 91,
+      "anchor": "void Policy::check_connect_body()",
+      "sha256": "2c84468448e5e6321ceb563afc5f11d08dc8e9f935a8aee77a7a94cef200b45a"
+    },
+    {
+      "path": "outputs/anadius-callback-policy-source/policy.cpp",
+      "line": 142,
+      "anchor": "void Policy::log_finish_0088e0(){check_connect_body();",
+      "sha256": "2c84468448e5e6321ceb563afc5f11d08dc8e9f935a8aee77a7a94cef200b45a"
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/foreign.cpp",
+      "line": 99,
+      "anchor": "bool Domain::connect_redirect_begin(",
+      "sha256": "b7b603328f565906cd9288ea5b5c2b33426872ed794185aa38781bf51e56c1f9"
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/foreign.cpp",
+      "line": 120,
+      "anchor": "std::uint16_t Domain::redirect_checkpoint(",
+      "sha256": "b7b603328f565906cd9288ea5b5c2b33426872ed794185aa38781bf51e56c1f9"
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/foreign.cpp",
+      "line": 136,
+      "anchor": "mode_=completed?Mode::OriginalOnly:Mode::RedirectBody;",
+      "sha256": "b7b603328f565906cd9288ea5b5c2b33426872ed794185aa38781bf51e56c1f9"
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/foreign.cpp",
+      "line": 210,
+      "anchor": "if(domain->requires_managed_log()",
+      "sha256": "b7b603328f565906cd9288ea5b5c2b33426872ed794185aa38781bf51e56c1f9"
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/foreign.cpp",
+      "line": 215,
+      "anchor": "resources.connect_body_scope=[domain]",
+      "sha256": "b7b603328f565906cd9288ea5b5c2b33426872ed794185aa38781bf51e56c1f9"
+    },
+    {
+      "path": "outputs/anadius-host-platform-source/assembly.cpp",
+      "line": 45,
+      "anchor": "auto redirect_proof=[milestones=lifetime->milestones]",
+      "sha256": "c85f94375c69155361288a18def122fde9b47db2ae0090ac909489ec622fe120"
+    },
+    {
+      "path": "outputs/anadius-native-context-source/context.hpp",
+      "line": 14,
+      "anchor": "Attempts belongs to this stable owner",
+      "sha256": "f262879dd3523a72c7964be57d2e2e1ebdc08c4cf37a35159a4d474346575752"
+    },
+    {
+      "path": "outputs/anadius-network-hook-source/hook_tests.cpp",
+      "line": 126,
+      "anchor": "void test_redirect_body_split()",
+      "sha256": "7ed10257d15f344d43e6cbf9e03c3fbe00f0a44cce9370fab95afddb85453008"
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/foreign_tests.cpp",
+      "line": 137,
+      "anchor": "void redirect_permissions()",
+      "sha256": "f1d3384a29e2bfdf192ae2fa2dfc6eec157862cbb32fe47733ee7289e04d3c70"
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/foreign_integration_tests.cpp",
+      "line": 130,
+      "anchor": "void staged_redirect_connect(",
+      "sha256": "07fba23926e448b41349fb0e19be296676d078025aca482d3f7fea8058ea01c8"
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/foreign_integration_tests.cpp",
+      "line": 123,
+      "anchor": "[[noreturn]]void terminal_redirect_exit(",
+      "sha256": "07fba23926e448b41349fb0e19be296676d078025aca482d3f7fea8058ea01c8"
+    },
+    {
+      "path": "outputs/anadius-shared-log-source/stream.cpp",
+      "line": 40,
+      "anchor": "selected->gate_.lock();",
+      "sha256": "2e2fc657fff9bf6bed5c19428a5f8c11f22d704ee12b22337a3f6e2eec5265d4"
+    }
+  ],
+  "retained_native_evidence": {
+    "assembly_id": "ev_2e6fe3f4fb3ea3c8c61e9391e3000efc173a148ec843b7ec0d6deda38c2e2fb5",
+    "assembly_anchors": [
+      {
+        "path": "outputs/anadius-all-functions.asm.txt",
+        "line": 16177,
+        "anchor": "0x18000fd7c: LEA RDX, [0x180080478]",
+        "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+      },
+      {
+        "path": "outputs/anadius-all-functions.asm.txt",
+        "line": 16190,
+        "anchor": "0x18000fdbb: CALL 0x1800088e0",
+        "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+      },
+      {
+        "path": "outputs/anadius-all-functions.asm.txt",
+        "line": 16193,
+        "anchor": "0x18000fdc8: MOV dword ptr [0x1800a3888], EAX",
+        "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+      },
+      {
+        "path": "outputs/anadius-all-functions.asm.txt",
+        "line": 16194,
+        "anchor": "0x18000fdce: CMP EAX, 0xf",
+        "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+      },
+      {
+        "path": "outputs/anadius-all-functions.asm.txt",
+        "line": 16198,
+        "anchor": "0x18000fde0: MOV word ptr [RBX + 0x2], AX",
+        "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+      },
+      {
+        "path": "outputs/anadius-all-functions.asm.txt",
+        "line": 16208,
+        "anchor": "0x18000fe02: JMP qword ptr [0x1800a3838]",
+        "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+      }
+    ]
+  },
+  "findings": [
+    "Recovered redirect sequence extracted into shared SOURCE helper with no wait/original. Full core retains live port ref/reread semantics; early wrapper uses published immutable local port and private Context-owned counter.",
+    "Same-owner successful-create and same-Execution Server snapshot allow foreign3216/matching-port redirect. Non-web grants wait-only first; web skips wait. Before body and SDK completion, snapshot/original eligibility is rechecked.",
+    "RedirectBody capability grants only network log/port/flush/dialog/exit Policy methods. General/registry/allocation/wait/original permission stays closed; SDK dispatch follows completion checkpoint only.",
+    "Early redirect factory requires owned shared_log::Stream; selected Host uses same managed log root. Per-operation leases do not span wait/dialog/original and do not make whole messages atomic.",
+    "Three scenario sources amended for extracted-body bounds/effect/terminal order, capability isolation and unmanaged log rejection, concrete native Owner/Policy/Publication/Milestones own SDK redirect matrix and expected terminal191 UI/exit observer. None compiled or executed."
+  ],
+  "limits": [
+    "Source profile still excludes controller warming and pre-Server/absent-original calls. Snapshot source contracts require immutable port, private counter writer, safe SDK callbacks and exact code owner.",
+    "Single-active overlap/reentry remains, including worker hooks and callbacks from log/dialog/original. General post-milestone activation and production equivalence remain OPEN.",
+    "Stop retains in-flight owner; it does not cancel indefinite wait/modal UI. Failure after body keeps already-performed log/counter/port prefix, not invented rollback or SDK success.",
+    "Native scenarios use controlled platform/SDK and finish calls, not full selected Assembly, actual worker graph, engine/socket or original target execution.",
+    "Admission vtable, Resources/Domain/containing source layout/signatures changed; rebuild consumers. SDK callback signatures unchanged.",
+    "Both loader hooks, attach rollback, image/foreign/CRT finality remain OPEN. No new native body, percentage credit, observed PASS or production DLL."
+  ],
+  "new_native_definitions_this_change": 0,
+  "connect_redirect_body_source_present": true,
+  "warming_callback_admission_closed": false,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "target_executed": false,
+  "package_rebuilt": false,
+  "original_access_or_modification": false,
+  "REA_queries_this_step": false
+}

@@ -1,5 +1,11 @@
 # B42 — Somut yanıt deque büyütme
 
+**Güncel kaynak adımı, henüz derlenmedi:** Canlı çocuk Parent işlemine bağlı
+`JobPermit` ve açık yetkili Deque büyütme yolu eklendi. `JobHandoff.grow_output`
+yalnız eşleşen oturum kuyruğunu mevcut026670 ile büyütür. Varsayılan worker ve
+kapatma denetimleri korunur. Yeni test kaynakları çalıştırılmadı; ayrıntı:
+`job-deque.md`. Aşağıdaki derleme sonuçları tarihsel kaynak sürümüne aittir.
+
 `Profile`, kuyruk büyümesini artık uygulamadan beklenen Policy callback’i yerine `owned_deque::Deques` üzerinden mevcut `0x180026670` gövdesine bağlar. Eski override’lar derlenmeye devam eder; yeni yol bunları çağırmaz ve override gerektirmez.
 
 Map allocation’ları Parent içinde gerçek C++ pointer array olarak başlar. Küçük/büyük native boyutlar ve 32-byte hizalama aynı allocation/header üzerinden sağlanır. Kopyalama, sıfırlama, eski map’i free etme, canlı map_size okuması ve yeni pointer yayın sırası kurtarılmış gövdede kalır.

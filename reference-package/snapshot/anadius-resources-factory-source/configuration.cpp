@@ -2,6 +2,16 @@
 #include <stdexcept>
 
 namespace anadius::resources_factory {
+void install_native_configuration_console(bootstrap_backend::Resources& r,std::shared_ptr<shared_log::Stream> stream){
+    const DWORD error=::GetLastError();
+    struct Error {DWORD value;~Error(){::SetLastError(value);}} preserve{error};
+    if(!stream||r.configuration||r.console)
+        throw std::invalid_argument("Managed image stream and vacant configuration/console slots required");
+    ConfigurationInputs in;
+    in.stream=std::move(stream);
+    in.documents=configuration_factory::make_scalar_documents();
+    install_configuration_console(r,in);
+}
 void install_configuration_console(bootstrap_backend::Resources& r,ConfigurationInputs& in){
     if(in.consumed_)throw std::logic_error("Configuration/console inputs already consumed");
     if(r.configuration||r.console)throw std::invalid_argument("Configuration and console target slots must be empty");

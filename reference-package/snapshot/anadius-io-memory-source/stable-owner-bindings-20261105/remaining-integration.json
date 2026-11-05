@@ -1,0 +1,71 @@
+{
+  "schema": "parallel-handler-remaining-integration.v2",
+  "recorded_at": "2026-11-04T23:16:10.170483+00:00",
+  "status": "PARENT_AND_STABLE_IO_FOUNDATIONS_IMPLEMENTED_ACTUAL_ORIGINAL_PARALLEL_ROUTE_PENDING",
+  "source_checkpoint": {
+    "path": "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/evidence.json",
+    "sha256": "f93751e53ea7e6a190545a4b319be4535e92110fad5a68c46c4934326c08240c"
+  },
+  "pending_source_count": 90,
+  "added_dependency_headers": [
+    "anadius-socket-source/memory_lookup.hpp"
+  ],
+  "bookkeeping_recorder": "work/record-focused-source-stage-v3.py",
+  "actual_production_policy": "Serialized; no OriginalConcurrentActors production selection",
+  "native_behavior_gap_closed": false,
+  "completed_prerequisites": [
+    {
+      "scope": "Per-actor Parent/JobPermit/PTD/JobScope records, exact byte/header/map catalog pins, per-attempt allocator rollback and sibling reap metadata",
+      "proof": {
+        "path": "outputs/anadius-session-memory-source/actor-catalog-foundation-20261105/evidence.json",
+        "sha256": "f13662c6370f7bd64c2ff51e6344e3ed150cd700935ba16e4f4bcf50d88a6811"
+      }
+    },
+    {
+      "scope": "Stable Record IO owner resolvers, generation-specific unlocked effect/callback lifetimes, known/unknown completion prefixes and mode-aware consumer/current-capacity wiring",
+      "proof": {
+        "path": "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/evidence.json",
+        "sha256": "f93751e53ea7e6a190545a4b319be4535e92110fad5a68c46c4934326c08240c"
+      }
+    }
+  ],
+  "remaining": [
+    {
+      "order": 1,
+      "scope": "Strings exact owner header lookup/prune and transfer without global mutable header ledger; Deques per-call growth/map context. Migrate owned_response.cpp::destroy direct FrameReadContext.allocation_headers scan as well as profile/frame/write consumers."
+    },
+    {
+      "order": 2,
+      "scope": "Per-message Profile admission/job/slot records and NativeProfile independent Invocation/private-window composite resolver with explicit call Dependencies. Same-session healthy invocations may overlap; retain exact failed prefixes and actual shared cipher identity."
+    },
+    {
+      "order": 3,
+      "scope": "Per-message Graph router/adapters/writers/checkpoint/lock bookkeeping; Content/Information/Licensing concrete call views over the same actual Runtime/config/Online/AttemptState roots. Keep real event/achievement mutexes."
+    },
+    {
+      "order": 4,
+      "scope": "Audit actual source actor ownership of accept-body/SDK gates and mutable packet publications/readers. Stable pointer lookup alone is not concurrent packet-payload synchronization; resolve any actual-route conflicts without a new whole-handler/session strand."
+    },
+    {
+      "order": 5,
+      "scope": "After all lower/upper consumers cohere remove selected Original NativeJobs source_gate, keep receipt/work/closure/generation ownership and response completion before physical native/FLS reap; wire the one immutable Parent policy into actual production composition."
+    },
+    {
+      "order": 6,
+      "scope": "Author actual NativeJobs/Graph/IO warmed plaintext A supported UnknownMessage dialog held/B GetConfig response-before-release cases, BOTH same session and distinct sessions. No fake readiness/work counters, duplicate Parents or cloned business roots."
+    }
+  ],
+  "validation_limits": [
+    "22 current-stage files statically reviewed; four test files authored, no tests/compiler/link/DLL/ZIP operation.",
+    "Posted/heap lower fixture is not actual Runtime/Graph/kernel-receive or full Native interleaving coverage. Existing HOST pending-loan tests not rerun.",
+    "Header addition recorded as added_since_build with build_sha256:null. Historical build/source snapshot/DLL/ZIP unchanged; future consistent explicitly authorized rebuild/source inventory required.",
+    "Public packet metadata and arbitrary same-operation writes/foreign SDK/CRT fallback/native ABI/EH/fault behavior remain qualified."
+  ],
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "overall_completion_percentage": null,
+  "continuous_goal_active": true
+}

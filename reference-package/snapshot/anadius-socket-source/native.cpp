@@ -2,8 +2,112 @@
 #include <cstring>
 #include <limits>
 #include <memory>
+#include <list>
+#include <mutex>
 
 namespace anadius::socket_recovered {
+std::string misc_message_020a80(std::int32_t code){
+    // Retained pseudo ev_f52c22ab6d0482e58f7ca56d36cbfec5a1c0913b03e9f41689c3a3276162843d,
+    // asm ev_604360fb740f3377313684b0bfdc1e461a65ae4fedb7995928d16dbc8f4448c0.
+    switch(code){
+    case 1:return "Already open";
+    case 2:return "End of file";
+    case 3:return "Element not found";
+    case 4:return "The descriptor does not fit into the select call's fd_set";
+    default:return "asio.misc error";
+    }
+}
+const std::error_category& misc_error_category(){
+    class Misc final:public std::error_category {
+    public:
+        const char* name()const noexcept override{return "asio.misc";}
+        std::string message(int code)const override{return misc_message_020a80(code);}
+    };
+    static const Misc category;return category;
+}
+std::string system_message_020950(std::int32_t code,SystemMessageState& state,SystemMessageImports imports,
+    const std::function<void()>& checkpoint){
+    if(!imports.format_message||!imports.local_free)throw std::invalid_argument("Complete system-message SDK imports required");
+    if(state.buffer||state.entered||state.release_entered)throw std::logic_error("System-message SDK prefix is already retained");
+    const auto check=[&]{
+        if(checkpoint){
+            const auto saved=::GetLastError();struct Error {DWORD value;~Error(){::SetLastError(value);}} error{saved};
+            checkpoint(); // metadata only; imported SDK error effects stay live
+        }
+    };
+    state.entered=true;check();
+    auto count=imports.format_message(0x1300,nullptr,static_cast<DWORD>(code),0x400,
+        reinterpret_cast<LPSTR>(&state.buffer),0,nullptr);
+    auto* const buffer=state.buffer;check();
+    bool use_message=count!=0;
+    if(use_message&&buffer[count-1]=='\n'){buffer[--count]=0;use_message=count!=0;}
+    if(use_message&&buffer[count-1]=='\r'){buffer[--count]=0;use_message=count!=0;}
+    // Native scans C strlen after the counted trim. A leading/embedded NUL
+    // can shorten success without selecting the fallback.
+    std::string result=use_message?std::string(buffer):std::string("asio.system error");
+    check();state.release_entered=true;
+    (void)imports.local_free(reinterpret_cast<HLOCAL>(buffer)); // including NULL; return ignored
+    check();state={};return result;
+}
+namespace {
+struct MessageMetadataError {DWORD value=::GetLastError();~MessageMetadataError(){::SetLastError(value);}};
+class NativeSystemCategory final:public std::error_category {
+    struct Attempt {SystemMessageState state;};
+    const SystemMessageImports imports_;
+    mutable std::mutex gate_;
+    // Each call owns an independent stable row. Failed SDK prefixes remain
+    // passive here; another call neither retries nor retires that row.
+    mutable std::list<Attempt> attempts_;
+public:
+    explicit NativeSystemCategory(SystemMessageImports imports):imports_(imports){}
+    bool matches(SystemMessageImports imports)const noexcept{return imports_.format_message==imports.format_message&&imports_.local_free==imports.local_free;}
+    const char* name()const noexcept override{return "asio.system";}
+    std::string message(int code)const override{
+        std::list<Attempt> prepared;
+        {
+            MessageMetadataError error;
+            prepared.emplace_back(); // allocation/new-handler outside gate
+        }
+        const auto attempt=prepared.begin();
+        {
+            MessageMetadataError error;std::lock_guard lock(gate_);
+            attempts_.splice(attempts_.end(),prepared,attempt);
+        }
+        // No mutex or shared busy flag spans SDK/string effects. A throw leaves
+        // this call's row retained; there is no guessed native EH buffer free.
+        auto result=system_message_020950(code,attempt->state,imports_);
+        {
+            MessageMetadataError error;
+            {std::lock_guard lock(gate_);prepared.splice(prepared.end(),attempts_,attempt);}
+            prepared.clear(); // retirement outside gate preserves the SDK error
+        }
+        return result;
+    }
+};
+struct SystemCategoryPool {
+    std::mutex gate;
+    std::list<std::unique_ptr<NativeSystemCategory>> rows;
+};
+SystemCategoryPool& system_category_pool(){static SystemCategoryPool pool;return pool;}
+}
+const std::error_category& system_error_category_028620(SystemMessageImports imports){
+    MessageMetadataError error;
+    if(!imports.format_message||!imports.local_free)throw std::invalid_argument("Complete system-category SDK imports required");
+    auto& pool=system_category_pool();
+    {std::lock_guard lock(pool.gate);for(const auto& row:pool.rows)if(row->matches(imports))return *row;}
+    // Both the category and its physical registry node are prepared outside the
+    // metadata gate. A reentrant/concurrent lookup may publish the same pair.
+    std::list<std::unique_ptr<NativeSystemCategory>> prepared;
+    prepared.push_back(std::make_unique<NativeSystemCategory>(imports));
+    const NativeSystemCategory* selected=nullptr;
+    {
+        std::lock_guard lock(pool.gate);
+        for(const auto& row:pool.rows)if(row->matches(imports)){selected=row.get();break;}
+        if(!selected){selected=prepared.front().get();pool.rows.splice(pool.rows.end(),prepared);}
+    }
+    // Unpublished duplicate candidates also retire outside the metadata gate.
+    return *selected;
+}
 static_assert(sizeof(Socket)==8 && sizeof(SOCKET)==8);
 static_assert(sizeof(wchar_t)==2 && sizeof(DWORD)==4);
 static_assert(AF_INET==2 && AF_INET6==23 && sizeof(sockaddr_storage)==128);

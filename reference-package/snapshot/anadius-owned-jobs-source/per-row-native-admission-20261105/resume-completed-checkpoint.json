@@ -1,0 +1,82 @@
+{
+  "status": "RESUMED_PAUSE_STAGE_RECORDED_SOURCE_ONLY",
+  "recorded_at": "2026-11-05T15:35:09.111539+00:00",
+  "prior_pause": {
+    "path": "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/pause-checkpoint.json",
+    "sha256": "c44f729f6d37582d15dfebb0f5b1c120544fe46c2d89d26d974bca66c27dc639"
+  },
+  "last_recorded_checkpoint": {
+    "path": "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/evidence.json",
+    "sha256": "bb638e670352e166e5c1f3da2ada5074cf061097141d7bf8d21feb422f436716"
+  },
+  "remaining_integration": {
+    "path": "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/remaining-integration.json",
+    "sha256": "55fc8723a46349e14b6704018fe2cfa1de68f12126da96148e727636d15e413c"
+  },
+  "source_changes": [
+    {
+      "path": "outputs/anadius-owned-jobs-source/jobs.hpp",
+      "sha256": "f7f4194daea473156c401f3f88da0d61cc04d8a0faaf335bcb4b67cd351ab67d",
+      "before": {
+        "path": "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/before/anadius-owned-jobs-source__jobs.hpp",
+        "sha256": "a2a1f920550b3d9ef9112aa0e312733c8430dc1617141082595e2bfbf944743d"
+      },
+      "role": "production",
+      "added_since_prior_stage": false
+    },
+    {
+      "path": "outputs/anadius-owned-jobs-source/jobs.cpp",
+      "sha256": "79888e8d3797ce94c2305a5391ddf35d7700cacd666e6d1efd0273b573a4c437",
+      "before": {
+        "path": "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/before/anadius-owned-jobs-source__jobs.cpp",
+        "sha256": "8973b5c6b1346fce65fcbf417f5b011919abc9f4bfd3cc9673a692552da3bfbf"
+      },
+      "role": "production",
+      "added_since_prior_stage": false
+    },
+    {
+      "path": "outputs/anadius-application-graph-source/graph_integration_tests.cpp",
+      "sha256": "0d65bfb6d588b571eb4bdb62c8bda3fd0ec31c2eabbd588bbcdb19c96c4c9f23",
+      "before": {
+        "path": "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/before/anadius-application-graph-source__graph_integration_tests.cpp",
+        "sha256": "b80e0d82a7ee1c2a09f2ecd588148f7891d04936b9b7dd0f702ed757e1088354"
+      },
+      "role": "test",
+      "added_since_prior_stage": false
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/memory.hpp",
+      "sha256": "73bb13f7c083b0546b6e45e52e67fa5fbdd8aadbc761217fa5af55f7bfbb5392",
+      "before": {
+        "path": "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/before/anadius-session-memory-source__memory.hpp",
+        "sha256": "32e37805f2b01e992b4607a25bdff114dcac3f71d43280c3b48ffaed21dcdc19"
+      },
+      "role": "production",
+      "added_since_prior_stage": false
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/memory.cpp",
+      "sha256": "2ca6df7d1ed04b7e32cf0db904824729fdfac20c735d1f07624b76f5073ae73a",
+      "before": {
+        "path": "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/before/anadius-session-memory-source__memory.cpp",
+        "sha256": "84cb386fa4f0093c431376bf14e292e379c19777ec2f9d51577e6a7769987276"
+      },
+      "role": "production",
+      "added_since_prior_stage": false
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff_tests.cpp",
+      "sha256": "de2dbd557873984bdae5dbd5a2704ca19f87d6400e5974ab5f4d4e6e907be2b0",
+      "before": {
+        "path": "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/before/anadius-worker-handoff-source__handoff_tests.cpp",
+        "sha256": "931b2f1218829c58858916451e8740b80273a6309715e97a35523cba6a5ecc31"
+      },
+      "role": "test",
+      "added_since_prior_stage": false
+    }
+  ],
+  "pending_source_count": 116,
+  "original_unchanged": true,
+  "build_tests_link_dll_execution_zip_update": false,
+  "goal_work_authorized_by_explicit_user_resume": true
+}

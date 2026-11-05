@@ -1,0 +1,25 @@
+{
+  "reviewer": "author static source inspection; no independent agent review",
+  "result": "STATIC_SOURCE_INSPECTED_NOT_COMPILED_OR_EXECUTED",
+  "reviewed_source_hashes": {
+    "anadius-bootstrap-backend-source/backend.hpp": "86bb05123067de948765ebb573a0d31ea261a999da3fa84a630c0efe300d55cc",
+    "anadius-bootstrap-backend-source/backend.cpp": "2ef04a8061eee14b3578890261f3e3f6d0791596822547acec304100ffbda40a",
+    "anadius-application-worker-source/worker.hpp": "74cdfb121625ae484b547ba7224c28f2bb6a507cb7f24be7863512720c9d3c68",
+    "anadius-application-worker-source/worker.cpp": "1be46fdd4478f5214c37a29f1c0fe098e9dd572bf1076ab387710e192523bbe1",
+    "anadius-application-worker-source/worker_tests.cpp": "e0088535c8c7157e99e34208fa7d471bacad323d465fd588b7dd660665e72e86",
+    "anadius-application-worker-source/worker_integration_tests.cpp": "db9c744fa148fd131f66f8df8d2ef7e41d910f505123d5d4e0c34a085231e7c8"
+  },
+  "findings": [
+    "Independent ApplicationJoinContinuation seam preserves existing ApplicationWorker virtual slots and Resources field layout. Concrete Worker gains a secondary base; all allocating/crosscasting/deleting consumers require rebuild.",
+    "SourceBackend invokes optional prepare_join after successful stop_sources, Worker.request_stop and attachment.pause_before_cleanup. False performs TrackingThreads.stop_and_join(0) to seal new creates/poll actual exits, then returns false without unpublishing routes, marking stopped or calling Worker.finish.",
+    "Enabled Worker.prepare_join runs on original controller/fiber, wakes only current WaitingClose epoch and returns false for active/waiting/poisoned attempts. Prepared/Returned/Closed allow the existing native join path. Disabled policy preserves legacy behavior; wake is never proof.",
+    "Successful preparation still needs configured native join, zero active source leases/unpublication and Worker.finish_after_join. RuntimeOwner/factory retain stopping owners across false and perform library/online/hook/application cleanup only after source stop/join succeeds.",
+    "Core route source verifies false preparation uses wait0 and no finish, later true uses configured timeout7, native ticket completion and one finish; completed calls are idempotent. Legacy RouteWorker without the new interface remains covered.",
+    "Full isolated --join-continuation scenario selects finite Worker budget in actual Runtime factory. Stop lower publishes terminal packet once and returns at WaitingClose instead of waiting for Returned. Controller only repeats Runtime.close; SourceBackend supplies epoch wake. Second external proof drains actual empty own IOCP; final three native/FLS joins, payload/Online/hook cleanup and Domain balances remain required expectations.",
+    "No scenario executed. Full integration uses same-worker inline message Jobs and synthetic own providers/IOCP, not the separate NativeJobs child fixture or production foreign DLL/loader behavior. Early-stop unconsumed NativeJobs receipt drain remains unresolved."
+  ],
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

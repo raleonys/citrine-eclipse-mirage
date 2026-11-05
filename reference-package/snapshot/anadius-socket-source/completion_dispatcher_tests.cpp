@@ -40,12 +40,60 @@ std::uint32_t Worker::exchange_stop_34(s::IocpSchedulerEntry& e,std::uint32_t v)
 std::uint32_t Worker::exchange_wake_38(s::IocpSchedulerEntry& e,std::uint32_t v){check(&e==&f.entry,"wake exact scheduler");auto prior=static_cast<std::uint32_t>(e.word_38);e.word_38=(e.word_38&0xffffffff00000000ULL)|v;f.event(v?"wake1":"wake0");return prior;}
 void Worker::initialize_04a240(std::array<std::uintptr_t,2>& p){check(p==std::array<std::uintptr_t,2>{},"outer run initializes zero context");p={11,12};f.event("initialize");}void Worker::finish_04a2cc(std::array<std::uintptr_t,2>& p){check(p==std::array<std::uintptr_t,2>{11,12},"outer run finishes original context");f.event("finish");}[[noreturn]]void Worker::raise_028240(s::Error e,std::uintptr_t id){check(e.value!=0 && id==0x180084530ULL,"actual stop raise keeps message");f.event("raise");throw Raised{};}
 struct Service:s::DispatcherService{std::function<void(s::DispatcherQueue&)> collect;std::function<std::int32_t(std::int32_t)> wait;void collect_slot_20(s::DispatcherQueue& q)override{if(collect)collect(q);}std::int32_t wait_slot_18(std::int32_t v)override{return wait?wait(v):v;}};
+struct PacketOwner final:s::DispatcherOperationResolver {
+ s::DispatcherOperationBinding* packet=nullptr;s::MemoryLookup result=s::MemoryLookup::Found;unsigned calls=0;
+ s::MemoryLookup lookup_operation(OVERLAPPED* identity,s::DispatcherOperationBinding*& output)override{
+  ++calls;if(result!=s::MemoryLookup::Found)return result;
+  if(!packet||packet->overlapped_identity!=identity)return s::MemoryLookup::Miss;
+  output=packet;return s::MemoryLookup::Found;
+ }
+ s::MemoryLookup lookup_operation(s::CancelOperation* identity,s::DispatcherOperationBinding*& output)override{
+  ++calls;if(result!=s::MemoryLookup::Found)return result;
+  if(!packet||packet->operation!=identity)return s::MemoryLookup::Miss;
+  output=packet;return s::MemoryLookup::Found;
+ }
+};
+void authoritative_packets(){
+ for(auto key:{0ULL,2ULL}){
+  F f;s::CancelOperation op,stale;op.queued=stale.queued=1;f.bind(stale);f.bindings[0].overlapped_identity=&op.overlapped;
+  s::DispatcherOperationBinding packet{&op,{-99,{0x5555}},777,&op.overlapped};PacketOwner owner;owner.packet=&packet;f.state.operation_resolver=&owner;
+  f.packets={{1,13,42,key,&op.overlapped}};
+  f.completion=[&](auto* scheduler,auto& live,const auto& error,auto bytes){
+   check(scheduler==&f.entry&&&live==&op&&error.value==(key==2?-99:13)&&bytes==(key==2?777U:42U),"actual dispatcher uses authoritative operation and packet metadata instead of stale same-OVERLAPPED row");
+  };
+  check(f.run()==1&&owner.calls==1&&f.completed==1&&f.entry.work_count_30==1,"owner-routed dispatch keeps ordinary callback/work accounting");
+  check(f.bindings[0].transferred_14==0&&f.bindings[0].packet_error.value==0,"authoritative dispatch never rewrites unrelated legacy packet metadata");
+ }
+ for(auto result:{s::MemoryLookup::Miss,s::MemoryLookup::Ambiguous}){
+  F f;s::CancelOperation op;op.queued=1;f.bind(op);PacketOwner owner;owner.result=result;f.state.operation_resolver=&owner;
+  f.packets={{1,13,42,0,&op.overlapped}};bool denied=false;try{(void)f.run();}catch(const s::UnsupportedInput&){denied=true;}
+  check(denied&&owner.calls==1&&!f.completed&&op.queued==1&&f.entry.work_count_30==2&&f.bindings[0].transferred_14==0,"owner miss/ambiguity rejects before packet mutation/CAS/callback/work release despite valid legacy fallback");
+ }
+ F legacy;s::CancelOperation first,second;first.queued=second.queued=1;legacy.bind(first);legacy.bind(second,1);legacy.bindings[1].overlapped_identity=&first.overlapped;
+ legacy.packets={{1,0,0,0,&first.overlapped}};legacy.completion=[&](auto*,auto& live,const auto&,auto){check(&live==&first,"legacy packet lookup retains first matching row");};
+ check(legacy.run()==1,"legacy duplicate-match behavior remains usable under null resolver");
+}
 void null_paths(){
  for(auto status:{0U,1U,257U,259U,0x80000000U,0xffffffffU})for(auto requested:{0U,17U,0x80000000U,0xffffffffU}){F f;f.requested=requested;f.packets={{0,status}};f.hook=[&](auto name){if(name=="seterror"){f.entry.timeout_40=3;f.entry.completion.port=123;}if(name=="category")f.status=0;};check(!f.run() && f.result.error && std::bit_cast<std::uint32_t>(f.result.error->value)==status && f.result.error->category.name_identity==0x3333,"null failure uses cached full32 status and system category including0");check(f.categories==1 && f.captures==1 && !f.epochs && f.trace==std::vector<std::string>{"capture","seterror","get","error","category"},"last error immediate and no TLS epoch on null completion");}
  for(auto req:{0U,1U,0xfffffffeU}){F f;f.requested=req;check(!f.run() && f.result.error->value==0 && f.result.error->category.name_identity==0x1111 && !f.categories,"finite timeout generic success");}
  F infinite;infinite.requested=0xffffffffU;infinite.packets={{0,258},{1,0,0,1},{0,7}};check(!infinite.run() && infinite.gets==3 && infinite.captures==1 && infinite.categories==1,"infinite timeout and key1 retry without recapturing TLS");
  for(auto stop:{0U,1U,0xffffffffU})for(auto prior:{0U,1U,0x80000000U})for(auto post:{0,1,-1}){F f;f.entry.high_34=stop;f.entry.word_38=0xaabbccdd00000000ULL|9;f.post_result=post;f.packets={{1,9,0,77}};if(!stop)f.packets.push_back({0,258});f.hook=[&](auto name){if(name=="readstop")f.entry.word_38=0xaabbccdd00000000ULL|prior;if(name=="relay")f.status=0x80000009U;};check(!f.run(),"null wake returns0");check(f.entry.word_38==(0xaabbccdd00000000ULL|(stop?1U:prior)),"wake changes low32 preserving high32");check(f.posts==((stop && !prior)?1U:0U),"relay posted only stopped and second exchange old0");if(stop && !prior && !post)check(f.result.error && std::bit_cast<std::uint32_t>(f.result.error->value)==0x80000009U && f.categories==1,"failed relay fetches fresh status then category");else check(f.result.error && !f.result.error->value && !f.categories,"wake success generic and no category");}
  for(auto status:{0U,0xffffffffU}){F f;f.entry.high_34=1;f.packets={{1,123}};f.post_result=0;f.hook=[&](auto n){if(n=="relay")f.status=status;if(n=="category")f.status=17;};check(!f.run() && std::bit_cast<std::uint32_t>(f.result.error->value)==status && f.categories==1,"relay error0 still system category and cached status");}
+}
+void prepared_notices(){
+ struct Notices final:Effects,s::DispatcherJobNotifications {
+  unsigned accepted=0;explicit Notices(F& f):Effects(f){}
+  void returned_job(std::uint32_t receipt)override{if(receipt!=73||accepted)throw s::UnsupportedInput("Unknown/duplicate synthetic native receipt");++accepted;f.event("job-returned");}
+ };
+ auto run=[](F& f,Notices& notices){return s::dispatch_completion_027c10(f.state,f.requested,f.thread,f.result,f.env(),f.api,notices,f.worker_api,f.errors,f.worker);};
+ {F f;Notices notices(f);f.packets={{1,0,73,s::prepared_job_completion_key},{1,0,73,s::prepared_job_completion_key}};
+  check(run(f,notices)==1&&notices.accepted==1&&f.entry.work_count_30==1&&!f.completed&&!f.epochs&&f.result.error&&f.result.error->value==0,"exact HOST receipt consumes one work pin without borrowing any OVERLAPPED/native operation");
+  bool denied=false;try{(void)run(f,notices);}catch(const s::UnsupportedInput&){denied=true;}check(denied&&f.entry.work_count_30==1&&notices.accepted==1,"duplicate receipt rejects before a second work decrement");}
+ {F f;Notices notices(f);f.packets={{1,0,99,s::prepared_job_completion_key}};bool denied=false;try{(void)run(f,notices);}catch(const s::UnsupportedInput&){denied=true;}check(denied&&f.entry.work_count_30==2&&!notices.accepted,"foreign receipt cannot consume scheduler work");}
+ {F f;f.packets={{1,0,73,s::prepared_job_completion_key}};bool denied=false;try{(void)f.run();}catch(const s::UnsupportedInput&){denied=true;}check(denied&&f.entry.work_count_30==2,"notification key alone grants no receiver/permission");}
+ {F f;Notices notices(f);f.entry.work_count_30=1;f.packets={{1,0,73,s::prepared_job_completion_key}};f.hook=[&](auto name){if(name=="stop")check(f.result.error&&f.result.error->value==0&&f.entry.work_count_30==0,"HOST last-work stop sees success and consumed counter in existing order");};check(run(f,notices)==1&&f.stops==1,"last acknowledged job pin uses existing worker stop path");}
+ {F f;Notices notices(f);f.entry.work_count_30=0;f.packets={{1,0,73,s::prepared_job_completion_key}};bool denied=false;try{(void)run(f,notices);}catch(const s::UnsupportedInput&){denied=true;}check(denied&&f.entry.work_count_30==0,"missing HOST work pin cannot underflow into UINTMAX");}
+ {F f;Notices notices(f);f.thread.pending_50=1;f.thread.context_58={11,12};f.packets={{1,0,73,s::prepared_job_completion_key}};bool terminal=false;try{(void)run(f,notices);}catch(const Terminal&){terminal=true;}check(terminal&&notices.accepted==1&&!f.thread.pending_50&&f.copies==2&&f.entry.work_count_30==2&&!f.result.error,"pending exception after HOST callback preserves existing rethrow-before-work-drop order");}
 }
 void operations(){
  for(auto ok:{0,1,-1})for(auto key:{0ULL,1ULL,2ULL,0xffffffffffffffffULL})for(auto previous:{0U,1U,2U,0x80000000U,0xffffffffU}){F f;s::CancelOperation op;op.queued=previous;op.error={91,{0x4444}};f.bind(op);f.bindings[0].packet_error={-99,{0x5555}};f.bindings[0].transferred_14=777;f.packets={{ok,0x80000005U,42,key,&op.overlapped}};f.hook=[&](auto name){if(name=="epoch")f.status=123;};if(previous!=1)f.packets.push_back({0,258});f.completion=[&](auto* owner,auto& live,const auto& error,auto bytes){check(owner==&f.entry && &live==&op,"operation callback gets same live scheduler/operation");check(error.value==(key==2?-99:std::bit_cast<std::int32_t>(0x80000005U)) && error.category.name_identity==(key==2?0x5555U:0x2222U) && bytes==(key==2?777U:42U),"selected cached packet or wait metadata independent of BOOL");const auto cached=error.value;const auto category=error.category.name_identity;f.bindings[0].packet_error={23,{0}};f.bindings[0].transferred_14=999;check(error.value==cached && error.category.name_identity==category && bytes==(key==2?777U:42U),"callback metadata mutation cannot change cached error/bytes arguments");};auto returned=f.run();check(returned==(previous==1) && f.completed==(previous==1) && op.queued==(previous==0?1:previous),"callback only prior queued1; CAS0 publishes1 and other values unchanged");check(op.error.value==91 && op.error.category.name_identity==0x4444,"packet metadata never overwrites cancellation reason");if(previous!=1)check(f.bindings[0].packet_error.value==(key==2?-99:std::bit_cast<std::int32_t>(0x80000005U)) && f.bindings[0].transferred_14==(key==2?777U:42U),"packet metadata selection occurs before unsuccessful queued test");check(!f.categories && f.captures==1 && f.epochs==1 && f.entry.work_count_30==(previous==1?1U:2U),"success/error packet bypasses category accessor and decrements only completed work");}
@@ -74,7 +122,7 @@ void integration(){
  F mismatch;Gate gate;CRITICAL_SECTION cs{};Entry other(gate,cs);bool caught=false;try{mismatch.worker.dispatch_027c10(other,1,mismatch.thread,mismatch.result);}catch(const s::UnsupportedInput&){caught=true;}check(caught && mismatch.trace.empty(),"source bridge enforces exact borrowed scheduler identity before effects");
 }
 }
-int main(){try{null_paths();operations();queue_and_timer();integration();std::cout<<"PASS: "<<checks<<" socket completion dispatcher checks; full027c10 queue/timer/TLS/metadata/CAS/exception/status/stop flow and actual cancellation/worker source integration\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+int main(){try{null_paths();prepared_notices();operations();queue_and_timer();integration();authoritative_packets();std::cout<<"PASS: "<<checks<<" socket completion dispatcher checks; full027c10 queue/timer/TLS/metadata/CAS/exception/status/stop flow, HOST receipt source cases and actual cancellation/worker source integration\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
 
 
 

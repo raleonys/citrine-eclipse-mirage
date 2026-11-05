@@ -1,0 +1,87 @@
+{
+  "schema": "original-profile-prepublished-call-records.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_PROFILE_STABLE_CAPTURE_POLICY_CLEANUP_AND_ACTUAL_COMPOSITION",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Exact prelaunch stable Profile Job/Slot/closure/control/Logic capture and per-call child admission/epoch, Concurrent root progress and safe metadata growth/retirement; Policy per-child actual current-thread cleanup and immutable actual Backend Parent policy composition. Existing production callers remain Serialized.",
+  "sources": [
+    {
+      "path": "anadius-session-profile-source/profile.hpp",
+      "before": "before/anadius-session-profile-source__profile.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.cpp",
+      "before": "before/anadius-session-profile-source__profile.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.hpp",
+      "before": "before/anadius-session-policy-source__policy.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.cpp",
+      "before": "before/anadius-session-policy-source__policy.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-application-graph-source/graph_integration_tests.cpp",
+      "before": "before/anadius-application-graph-source__graph_integration_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-owned-server-source/server.hpp",
+      "before": "before/anadius-owned-server-source__server.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-owned-server-source/server.cpp",
+      "before": "before/anadius-owned-server-source__server.cpp",
+      "role": "production"
+    }
+  ],
+  "reviews": [
+    "profile-policy-and-fixture-independent-review.md",
+    "policy-and-composition-independent-review.md",
+    "root-profile-independent-review.md",
+    "root-fixture-independent-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "native-findings.md",
+    "profile-implementation.md",
+    "policy-and-composition-implementation.md",
+    "sdk-fixture-implementation.md"
+  ],
+  "native_replies": [
+    "instruction-180025522.json",
+    "instruction-18002552d.json",
+    "instruction-180025543.json",
+    "instruction-180025556.json",
+    "instruction-18002557f.json",
+    "instruction-1800217aa.json",
+    "instruction-1800217ac.json",
+    "instructions-18004a47c.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-session-profile-source/per-job-call-records-20261105/native-evidence-index.json",
+    "outputs/anadius-execution-source/atomic-owner-projection-20261105/evidence.json",
+    "outputs/anadius-execution-source/atomic-owner-projection-20261105/remaining-integration.json",
+    "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/next-profile-code-plan-v2.md",
+    "outputs/anadius-native-profile-source/per-message-invocations-20261105/next-profile-implementation-plan.md"
+  ],
+  "limits": [
+    "No compiler, project tests, link, reconstructed/original DLL execution or ZIP update. Authored assertions and source reviews are not runtime PASS.",
+    "Existing production callers still default Serialized. The actual owning Backend has a validated immutable Parent policy selection; only explicit fixture composition selects Concurrent. NativeJobs production source/body gate is unchanged.",
+    "Native child may run before start returns/detach. Concurrent authority is exact prepublished Submitting/Pending capture with actual acquired JobMemory/JobPermit and owned generations/control, not an invented readiness wait. Earlier plan detach-as-permission clause is superseded.",
+    "Captured child records avoid deque structural reads; actual Root append/rollback briefly rejects original reentry while children/passive counters continue. Whole-application lifecycle idle checks do not become whole-session message admission.",
+    "Policy cleanup retains actual current-thread ExitWaitRegistry critical section and effects, but private actor/permit/checkpoint registry replaces global active in Concurrent mode. Unknown prefixes remain owned/failed; no guessed cleanup/replay.",
+    "OwnedEnvironment singleton job/checking/releasing and Policy finish_environment_work remain open for tracked-family concurrent operations. This stage does not certify arbitrary clone_environment/work release, shared licensing/business mutation or foreign SDK thread safety.",
+    "Current response split remains child033d70 plus original-worker response/021770 tail. Full native028d30 child ordering is still open. Seven selected instructions plus retained bodies and complete04a47c establish bounded source constraints, not ABI/EH/runtime equivalence or new function credit.",
+    "Historical source/build/link/DLL/ZIP proofs and original binaries unchanged. All pending sources and two added headers need an explicitly authorized consistent rebuild. No invented overall completion percentage."
+  ],
+  "completed_note": "SOURCE_ONLY8freshREArecords;6productionfilesimplementprepublishedProfilecapturedcallrecords/earlySubmittingchildauthorityandpercallPolicycleanup, plusactualBackendimmutableParentselection. RealGraph/PreparedfixtureassertionsauthoredNOTRUN; productionNativeJobsgateunchanged.",
+  "observation": "AlignedREA6.8.0/Ghidra12.1.4 freshclosurepublication/launch/detach/childcleanupEvidence exportedclosed/originalhashunchanged. Three useful production/test/independent-review agents corrected inventedearlychildreadiness, Rootcontainerallocatorreentry, exactcallmembership and Policyclose/return/counterraces.",
+  "next_scope": "Replace actual NativeJobs source/body/reap gate and invented detach readiness with exact prepublished per-row execution/maintenance reservations, preserving actual handles/receipts/work/FLS and early-child return, while production Parent remains default Serialized; author actual NativeJobs same/distinct-session heldUnknown/GetConfig progress. OwnedEnvironment/tracked work, accept/packet/shared mutation and full028d30 child response ownership stay separate open integration before production Concurrent selection. No build authorization."
+}

@@ -1,0 +1,210 @@
+{
+  "schema": "selected-socket-executor.native-and-source.v1",
+  "client_date": "2026-11-03",
+  "recorded_at": "2026-11-03T15:52:51.253833+00:00",
+  "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+  "authority": "REA/Ghidra static artifact observations plus author typed-source reconstruction; not project compile/test or runtime behavior.",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "native_evidence": {
+    "path": "outputs/anadius-socket-move-source/selected-executor.native.json",
+    "sha256": "30b05ffaeca52a3f4d9dc2abebf9fd60c22eef53b647be59a5bd0d452058a5d7",
+    "records": 17,
+    "vtable_evidence": "ev_fca0c1a71592a13412e7a2714bac9ce0457e13fab1b374e7e06fe0a823ec707c",
+    "cleanup_ret_evidence": "ev_d9bc244620f54fda4e60a5b576518e8af0ef29e9866ac6baeb940dba3ce3f05c",
+    "move_instruction_evidence": [
+      "ev_8fa91787ff7452ab0fbd332f6a0b82cd6461de209320499ca81e7f1310c4cb8f",
+      "ev_813de40bd031ebf41217e607bcfceaa1c2701f98826f5d65dd14b588b681eb27",
+      "ev_9056361c53d4d171e6fd978f7e39f54e146ef72894c00a8f79ecd5ad1b33a2cb",
+      "ev_288de706cb6dd300685a9c1203775f93bc7517dd6ac92b1980da7b1da2e92a1a",
+      "ev_447982944d0b3a0870ea5f8c34cd8d23936b8b3b81cb3a762bdefcc23c5b52aa",
+      "ev_7d9a29bd2c0938e7113986ac51e062737aba7557d7f08e70c227752bdd12a07d"
+    ]
+  },
+  "session": {
+    "path": "outputs/anadius-socket-move-source/selected-executor.session.json",
+    "sha256": "762f10fa65b25b7b752b86d30db1fe5ab264775627f1effe97bb013c4b0105ab",
+    "server_identity_aligned": true,
+    "REA": "6.8.0",
+    "Ghidra": "12.1.4",
+    "analysis_session_closed": true
+  },
+  "snapshot": {
+    "path": "outputs/anadius-socket-move-source/selected-executor.snapshot.json",
+    "sha256": "46668c41a660a28ae349878fd50df794e05599ab86d60edc6fefd0212a29b84f"
+  },
+  "native_normal_body_added": {
+    "address": "0x1800228c0",
+    "source": "outputs/anadius-socket-move-source/move.cpp",
+    "symbol": "move_executor_0228c0",
+    "scope": "Context/+0xc dword copies and destination self reference; source untouched, no table/owner/SDK work. Return register and native class ABI are not modeled.",
+    "provider_procedure_definition": "Unavailable at this address; six decoded instructions including RET used instead. No unchanged decompile retry."
+  },
+  "production_dependency": "require_loader_attach_runtime Resources: selected084928 move and cleanup provider; optional absent-engine branch of owned server close.",
+  "implementation": [
+    "RecoveredSocketExecutor admits only exact084928 source/destination/dispatch table identities. Its cleanup models observed slot0->017a30 RET0 and cannot silently clean foreign tables.",
+    "select_recovered_socket_executor commits actual Runtime move effect and Server cleanup owner together after empty-slot validation; no generic no-op executor is used.",
+    "OwnedServer private CloseContext has no engine-install route. Graph/OwnedServer no longer require a fictitious cancellation provider for that null-engine branch. The low-level nullable overload rejects live engine plus absent provider before engine gate, SDK close, reset or owner release. Existing reference-provider path is retained.",
+    "Native CancelIoEx accept/IO adapters and real external cancellation/drain obligations are unchanged. This does not implement arbitrary cancellation-map ownership/recycling.",
+    "Existing owning Runtime/three-worker Resources scenario uses selected source move/cleanup and no fake CancellationEffects or executor. Lower source cases cover empty-engine close, live-engine rejection/retention, valid-provider completion and selected executor guards."
+  ],
+  "step_source_changes": [
+    {
+      "path": "anadius-socket-move-source/move.hpp",
+      "before_sha256": "5322308f915fdae733183bcdea2adfe860cee02002686a1744dbd07feb0cfb59",
+      "current_sha256": "252d7cdbe5cbec6767258f1ca1d831e22cd7cc0f65fbc69e1afcf6afc53907c3"
+    },
+    {
+      "path": "anadius-socket-move-source/move.cpp",
+      "before_sha256": "af73b49ea83cfc61bead66a631dcc65580657281d648b7535329de2598a85a92",
+      "current_sha256": "a190efa2630a4f43de29a432236c34dbe5562029acc9145d1b2f6794a5faf39a"
+    },
+    {
+      "path": "anadius-socket-move-source/move_tests.cpp",
+      "before_sha256": "fdbdd1d69bef9b179f879d4ca6340dc45a042d2a62f05e60512f289bf81e0807",
+      "current_sha256": "d9cdb93336e715e777b99b4afb43d2ff7e356ea3979107330d040b1a956be16f"
+    },
+    {
+      "path": "anadius-socket-source/closing.hpp",
+      "before_sha256": "10a3da0a64117e1d197d5a1eac9818a802d83e1f7ed46b9e25d8f5a0860458d5",
+      "current_sha256": "513c72437d9095f3229ac45ca08fe2877176dcf55e0f8c53e7a950a37ab06ae3"
+    },
+    {
+      "path": "anadius-socket-source/closing.cpp",
+      "before_sha256": "9906439500ae4e19f64d73248083acbfc2cc22ad02e9099ec14ab741085a7669",
+      "current_sha256": "9a9167bc94b7d3fd3a0b2583a6a1f81e4d9a81e5dccc45a3b5535c24fb38e0dd"
+    },
+    {
+      "path": "anadius-socket-source/closing_tests.cpp",
+      "before_sha256": "0ef67ff44a57ea0a0fdee04d786f74a32455a9a87e8bd74c9daa2a3872b4674c",
+      "current_sha256": "95959f1edf3e53262b67b051856d50ce924c1dca237b343ffb8d250b055c662c"
+    },
+    {
+      "path": "anadius-owned-server-source/server.hpp",
+      "before_sha256": "2b1ae850c2e05deae282e7978255c8fb86f5d7ab527b4d5506e5a5bb8941f634",
+      "current_sha256": "e443560ea43c6da9a578a1f80451ff372860d1b2439d80c44b3ed36236acc25b"
+    },
+    {
+      "path": "anadius-owned-server-source/server.cpp",
+      "before_sha256": "66dfcc98d896c2f985cdfdf026fa56263fe03ff59c927642dccbc8975bc61dc0",
+      "current_sha256": "cc380dce58ba4a3ac4b39ae4548203ec645322f9178fe9a9fa2061828a75a01d"
+    },
+    {
+      "path": "anadius-application-graph-source/graph.cpp",
+      "before_sha256": "ede4d43b8181ebd1290808665611ed67be549f51b11561afb6eff2fd81b92a1e",
+      "current_sha256": "cf5c2aab9ec4d01b67f8ef818f356a3f6c4bf69aabe0b9e52c0b377cf846274f"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.hpp",
+      "before_sha256": "92ce93c2ba1d048f368c87a0ff88b6b14fa31185557e28a1fbdab2752def80a4",
+      "current_sha256": "aafc61cfb25823ee4d1261f7473ebed27bccd9b59f51f3262db639fa4ec2289c"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "before_sha256": "788236c2eefac7471f9bfddf15fe8e6407abb57cf383b66f42754d08eb67d475",
+      "current_sha256": "6f6312be18482bade38a2f835c4042430d4977b61f12821855a9bb38d653608d"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "before_sha256": "400ff979330d30699bbd2bd33e62891c3ac982496580bd2141eeab3295b65558",
+      "current_sha256": "e337071e0d5969d298f94e6aa9ec281b77935c196254d811317d318cd0d570d8"
+    }
+  ],
+  "all_pending_sources_since_last_full_build": [
+    {
+      "path": "anadius-application-graph-source/graph.cpp",
+      "last_built_sha256": "ede4d43b8181ebd1290808665611ed67be549f51b11561afb6eff2fd81b92a1e",
+      "current_sha256": "cf5c2aab9ec4d01b67f8ef818f356a3f6c4bf69aabe0b9e52c0b377cf846274f"
+    },
+    {
+      "path": "anadius-owned-server-source/server.cpp",
+      "last_built_sha256": "66dfcc98d896c2f985cdfdf026fa56263fe03ff59c927642dccbc8975bc61dc0",
+      "current_sha256": "cc380dce58ba4a3ac4b39ae4548203ec645322f9178fe9a9fa2061828a75a01d"
+    },
+    {
+      "path": "anadius-owned-server-source/server.hpp",
+      "last_built_sha256": "2b1ae850c2e05deae282e7978255c8fb86f5d7ab527b4d5506e5a5bb8941f634",
+      "current_sha256": "e443560ea43c6da9a578a1f80451ff372860d1b2439d80c44b3ed36236acc25b"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.cpp",
+      "last_built_sha256": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77",
+      "current_sha256": "2653388e3e007376b9e038648b3a3f34d29daa45e604cc7dd11f4455c7664d25"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.hpp",
+      "last_built_sha256": "a9d1da810c6a94d4033cb9aa6973dfd9ccaf5f46e8b21f3173211129bf502ccb",
+      "current_sha256": "d4feb92ad786738bfa22f818ddff9e814576f4b8bcda21cf3934210f112e699e"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown_tests.cpp",
+      "last_built_sha256": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c",
+      "current_sha256": "b23cb1b4f6880051f2a7efe37cb4b4a9ff6f20338f602597a3475494e19de8e8"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "last_built_sha256": "a33af361f391a03658ccdcd9f16ee7474ca636bec48280309bf6f68bd29d26bb",
+      "current_sha256": "6f6312be18482bade38a2f835c4042430d4977b61f12821855a9bb38d653608d"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.hpp",
+      "last_built_sha256": "e3e7fef3dea236a09225b19bc4ed6e92ea35172eb62c059fa322cc35a4f6f3a9",
+      "current_sha256": "aafc61cfb25823ee4d1261f7473ebed27bccd9b59f51f3262db639fa4ec2289c"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "last_built_sha256": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253",
+      "current_sha256": "e337071e0d5969d298f94e6aa9ec281b77935c196254d811317d318cd0d570d8"
+    },
+    {
+      "path": "anadius-socket-move-source/move.cpp",
+      "last_built_sha256": "af73b49ea83cfc61bead66a631dcc65580657281d648b7535329de2598a85a92",
+      "current_sha256": "a190efa2630a4f43de29a432236c34dbe5562029acc9145d1b2f6794a5faf39a"
+    },
+    {
+      "path": "anadius-socket-move-source/move.hpp",
+      "last_built_sha256": "5322308f915fdae733183bcdea2adfe860cee02002686a1744dbd07feb0cfb59",
+      "current_sha256": "252d7cdbe5cbec6767258f1ca1d831e22cd7cc0f65fbc69e1afcf6afc53907c3"
+    },
+    {
+      "path": "anadius-socket-move-source/move_tests.cpp",
+      "last_built_sha256": "fdbdd1d69bef9b179f879d4ca6340dc45a042d2a62f05e60512f289bf81e0807",
+      "current_sha256": "d9cdb93336e715e777b99b4afb43d2ff7e356ea3979107330d040b1a956be16f"
+    },
+    {
+      "path": "anadius-socket-source/closing.cpp",
+      "last_built_sha256": "9906439500ae4e19f64d73248083acbfc2cc22ad02e9099ec14ab741085a7669",
+      "current_sha256": "9a9167bc94b7d3fd3a0b2583a6a1f81e4d9a81e5dccc45a3b5535c24fb38e0dd"
+    },
+    {
+      "path": "anadius-socket-source/closing.hpp",
+      "last_built_sha256": "10a3da0a64117e1d197d5a1eac9818a802d83e1f7ed46b9e25d8f5a0860458d5",
+      "current_sha256": "513c72437d9095f3229ac45ca08fe2877176dcf55e0f8c53e7a950a37ab06ae3"
+    },
+    {
+      "path": "anadius-socket-source/closing_tests.cpp",
+      "last_built_sha256": "0ef67ff44a57ea0a0fdee04d786f74a32455a9a87e8bd74c9daa2a3872b4674c",
+      "current_sha256": "95959f1edf3e53262b67b051856d50ce924c1dca237b343ffb8d250b055c662c"
+    },
+    {
+      "path": "dll-link-gate-source/entry.cpp",
+      "last_built_sha256": "98ad93b7314b5715ed5e19dc775259981947784f19f04167da233dfb659e974d",
+      "current_sha256": "af21559c039f7f723e96a32e0e1f30474071ef8740dcf47af919360bc9c3b5f3"
+    },
+    {
+      "path": "dll-link-gate-source/production_image.hpp",
+      "last_built_sha256": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866",
+      "current_sha256": "cf8681ad700ca65d201d42aadd514f332ca4140de93bc1adbd86bfe72d30d34c"
+    }
+  ],
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "package_rebuilt": false,
+  "original_binary_accessed_statically": true,
+  "original_modified": false,
+  "still_open": [
+    "Both production loader hooks are undefined.",
+    "Actual completion-owner/lifecycle/external-drain decisions and the supported synchronous loader profile remain required.",
+    "Original ASIO context/foreign/native class ABI and broader callback concurrency are not certified by these typed projections."
+  ]
+}

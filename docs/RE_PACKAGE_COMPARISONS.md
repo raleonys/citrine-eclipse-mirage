@@ -3,6 +3,12 @@
 These partial inspections are not completed file or module reviews. Exact source
 identities and state are in [the file ledger](RE_PACKAGE_FILE_REVIEWS.json).
 
+Archive 12 intake: all three donor files discussed below changed. The importer
+reset their current rows to `pending` and preserved these partial Archive 11
+reviews in `prior_reviews`. The following comparison remains historical;
+`RPK-0001` is open and requires rechecking against the new donor hashes. See
+[the delivery update](RE_ARCHIVE12_UPDATE.md).
+
 ## RPK-0001: concurrent cold frequency initialization differs
 
 Classification: observed contract difference; product defect not established.

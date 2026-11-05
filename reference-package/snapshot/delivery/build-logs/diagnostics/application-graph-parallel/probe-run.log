@@ -1,0 +1,41 @@
+DIAG check tid6268: Parallel Profile controller initializes actual Domain
+DIAG check tid6268: Actual parallel fixture owns finite SDK handshake events
+DIAG check tid6268: Parallel fixture launches an actual same-Domain native wrapper
+DIAG ParallelThread body tid17656
+DIAG check tid17656: Parallel source owns real Runtime TLS selector
+DIAG check tid17656: Worker provider aliases borrow exact live bound configuration/Execution
+DIAG check tid17656: Owned context requests WSA2.2
+DIAG check tid17656: Actual024990 forwards observed selected IOCP construction arguments
+DIAG check tid17656: Concrete NativeApi forwards ACP exact loopback C string and bounded10 wide conversion
+DIAG check tid17656: Concrete NativeApi forwards persistent converted text, null protocol and initialized128byte sockaddr capacity
+DIAG check tid17656: Concrete NativeApi forwards ACP exact loopback C string and bounded10 wide conversion
+DIAG check tid17656: Concrete NativeApi forwards persistent converted text, null protocol and initialized128byte sockaddr capacity
+DIAG check tid17656: Actual020e20 opens selected family through synthetic socket SDK boundary
+DIAG check tid17656: Actual acceptor/accepted transfer attaches selected socket to same owned kernel completion port
+DIAG check tid17656: Acceptor enables source reuse-address option
+DIAG check tid17656: Actual bind lower receives family-specific initialized sockaddr length
+DIAG check tid17656: Actual listen uses observed INT_MAX backlog
+DIAG check tid17656: Local endpoint uses actual owned acceptor token and initialized SDK buffer
+DIAG check tid17656: Bound port environment publication precedes source readiness flag
+DIAG check tid17656: Controlled Jobs binds SAME actual concurrent Backend Parent and Runtime environment capability
+DIAG check tid17656: Profile integration uses exact injected AcceptEx boundary with distinct201/202/203 sockets and90+90 endpoints
+DIAG check tid17656: Concrete Profile/native flow retains next accept SDK loan alongside active session
+DIAG check tid17656: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid17656: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid17656: Physical source/FLS maintenance uses exact bound Application
+DIAG check tid17656: Physical source/FLS maintenance runs outside original Parent Operation
+DIAG check tid17656: Observed completion releases accept loan before native endpoint address extraction
+DIAG check tid17656: Native0271a0 updates accepted context with captured listener pointer value and exact option700b/size8
+DIAG check tid17656: Actual acceptor/accepted transfer attaches selected socket to same owned kernel completion port
+DIAG check tid17656: Socket source destructor supplies selected executor identity
+DIAG check tid17656: Graph prepare callback receives actual023000 owner after second native reset and supplies NOlogic/context graph
+DIAG check tid17656: Actual Graph owns Policy before first session publication
+DIAG check tid17656: Parallel fixture launches an actual same-Domain native wrapper
+DIAG ParallelThread body tid15332
+DIAG probe0 acquiring
+DIAG probe0 acquired
+DIAG probe0 Operation
+DIAG probe0 permit
+DIAG probe0 target locked
+DIAG probe0 target registered
+DIAG exit254 line642 tid6268

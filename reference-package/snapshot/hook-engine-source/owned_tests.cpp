@@ -52,6 +52,12 @@ void statuses_and_retirement(){
     bool wrong_thread=false;std::thread thread([&]{try{engine->disable(nullptr);}catch(const std::logic_error&){wrong_thread=true;}});thread.join();require(wrong_thread&&s.calls[3]==1&&engine->empty(),"wrong controller rejected before lower or empty-state mutation");
     ::SetLastError(0x9999);engine.reset();require(s.retirement==std::vector<int>{1,2}&&s.valid&&::GetLastError()==0x9999,"lower retires before code with facade snapshot live and LastError preserved");s.owner=nullptr;
 }
+void original_selection(){
+    State s;auto engine=make(s);hp::AssemblyInputs in;::SetLastError(0x7472);hp::select_original_owned_engine(in,engine);
+    require(::GetLastError()==0x7472&&in.engine==engine&&in.code_lifetime==engine&&!in.providers_ready&&!in.external_quiescence&&in.closure_profile==anadius::native_context::ClosureProfile::OriginalCrt&&engine->empty(),"Original host selection retains exact actual engine/code without executing it or installing proof callbacks");
+    rejects<std::invalid_argument>([&]{hp::select_original_owned_engine(in,engine);},"Original host engine selection cannot replace committed owners");
+    std::exception_ptr failure;std::thread crt([&]{try{require(engine->initialize()==MH_OK&&engine->uninitialize()==MH_OK,"Original engine performs actual lower initialize/cleanup on a distinct serialized CRT actor");}catch(...){failure=std::current_exception();}});crt.join();if(failure)std::rethrow_exception(failure);require(engine->empty()&&s.calls[0]==1&&s.calls[4]==1,"Distinct original cleanup actor preserves actual native statuses and empty engine state");
+}
 void matched_selection(){
     State s;auto engine=make(s);hp::AssemblyInputs in;
     rejects<std::invalid_argument>([&]{hp::select_owned_engine(in,engine);},"missing external proof rejected");require(!in.engine&&!in.code_lifetime,"rejected selection is passive");
@@ -74,4 +80,4 @@ int child(std::string_view mode){
     std::_Exit(1997);
 }
 }
-int main(int argc,char** argv){if(argc==2)return child(argv[1]);try{allocation_prefixes();statuses_and_retirement();matched_selection();for(const char* mode:{"initialize","create","enable","disable","uninitialize","reentry"})require(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==1461,"unknown/reentrant lower outcomes poison and retain exact owners");for(const char* mode:{"live-delete","failed-delete"})require(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==1462,"live/failed cleanup cannot silently retire owners");std::cout<<"PASS: "<<checks<<" owned-engine checks; allocation prefixes, exact status/output/error forwarding, matched external proof, owner order and eight isolated retained/terminal prefixes\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';std::_Exit(1);}}
+int main(int argc,char** argv){if(argc==2)return child(argv[1]);try{allocation_prefixes();statuses_and_retirement();original_selection();matched_selection();for(const char* mode:{"initialize","create","enable","disable","uninitialize","reentry"})require(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==1461,"unknown/reentrant lower outcomes poison and retain exact owners");for(const char* mode:{"live-delete","failed-delete"})require(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==1462,"live/failed cleanup cannot silently retire owners");std::cout<<"PASS: "<<checks<<" owned-engine checks; allocation prefixes, exact status/output/error forwarding, matched external proof, owner order and eight isolated retained/terminal prefixes\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';std::_Exit(1);}}

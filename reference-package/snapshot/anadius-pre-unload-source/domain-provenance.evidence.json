@@ -1,0 +1,191 @@
+{
+  "schema": "pre-unload-domain-provenance.source-only.v1",
+  "recorded_at": "2026-11-01T19:22:16.897733+00:00",
+  "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+  "authority": "Existing reconstructed source inspection/composition only; no new native algorithm or execution result.",
+  "user_execution_policy": "No compilation, tests, link or binary execution unless explicitly requested by the user.",
+  "source_files_changed_this_step": [
+    "anadius-bootstrap-providers-source/native_threads.hpp",
+    "anadius-thread-domain-source/domain.cpp",
+    "anadius-bootstrap-runtime-source/factory.hpp",
+    "anadius-bootstrap-runtime-source/factory.cpp",
+    "anadius-pre-unload-source/shutdown.hpp",
+    "anadius-pre-unload-source/shutdown.cpp",
+    "anadius-pre-unload-source/shutdown_tests.cpp",
+    "anadius-resources-factory-source/factory_tests.cpp"
+  ],
+  "production_sources_changed_this_step": 6,
+  "test_sources_changed_not_run": 2,
+  "all_pending_sources_since_last_full_build": [
+    {
+      "path": "anadius-application-worker-source/worker.cpp",
+      "last_built_sha256": "a3502562d95b6f7d7d4182ac6c2f37f2ae64a19f448092d0fc2f31ab743572a9",
+      "current_sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "anadius-application-worker-source/worker.hpp",
+      "last_built_sha256": "923514f18bf5d32ecfa2487e982e571117d0809e0892f171803c06ae915408f1",
+      "current_sha256": "6cf84342444f3724c02dda3727d54569e7cf3fcecf3d972be71c65f48fb9aea5"
+    },
+    {
+      "path": "anadius-bootstrap-providers-source/native_threads.hpp",
+      "last_built_sha256": "243bf515118b795e9bf8004d79f5b923bf40f0ad98ff7d68946ebe4fd264cac7",
+      "current_sha256": "b9f2cade216f3333614fb0d94ce25ca6e7a41a6c228f9bd38c4994eca41cfbfe"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.cpp",
+      "last_built_sha256": "be831aeeaf94ab99a75981613a124f522e9cffc8e35590c898ffc8e6af27dcca",
+      "current_sha256": "271861dbf9a661eee658ae4de200317010adbae341dbcb368305f3b2e0040435"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.hpp",
+      "last_built_sha256": "d55494573dc515eacdcf2197c5213d67893aecfb46466e835d07de4e3add99eb",
+      "current_sha256": "b6864109663f3b1894be37f1142b5a72802f66e4616379ed0d167770ce92b20d"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.cpp",
+      "last_built_sha256": "6db0b7461cae29db4ad1cb0a09eb02ef6426628b80d4ca1706acd9ca3a7363c2",
+      "current_sha256": "365d05409246c1e97c551590c1ddd0b907c7bf4f4b374ad0bd73eff5f509fd78"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.hpp",
+      "last_built_sha256": "c24b4a64d9be048f998531979fa7bba54173d51dc313c9359887daedd5811346",
+      "current_sha256": "e182db10c6487a270e2f040fdbcc144daff18790cc7e23270b69999a3e604fbd"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.cpp",
+      "last_built_sha256": "fed670a3e0937ff56cc0cf001d19873c5d068b546ddf8b7f7de7f878a1547849",
+      "current_sha256": "d3a5eb1687024a15aa7e031b4960aaa5d6e3ee6b7cc992f039fca367f068d85a"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.hpp",
+      "last_built_sha256": "e127429b9bebd195cc7cd6e1d1ef81743547a1602431b41baf98baf4e16734f8",
+      "current_sha256": "e3f55458b5943b0db9f7662b8b591bfb818923898cf4f9ab5a03c4756d79ffa4"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.cpp",
+      "last_built_sha256": "50193ac5c84e279207831100ae38bfa480626892cf237ddc401e7ca61eef1893",
+      "current_sha256": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.hpp",
+      "last_built_sha256": "865208b224507f1b708e0d7aea7bf3fff1433f9fe5d52260bcc0c1c6c4b136ca",
+      "current_sha256": "a9d1da810c6a94d4033cb9aa6973dfd9ccaf5f46e8b21f3173211129bf502ccb"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown_tests.cpp",
+      "last_built_sha256": "8f42a649fb93c1e74d477521f23ff5a702a63c54cc37a8cdb19ac85a768752bb",
+      "current_sha256": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "last_built_sha256": "dec7a66e5120e0c7064d95c53aa250d678160913486abf76409de08a4082d150",
+      "current_sha256": "a33af361f391a03658ccdcd9f16ee7474ca636bec48280309bf6f68bd29d26bb"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.hpp",
+      "last_built_sha256": "8b3afb7a69b6a7d99a992b3dbc767845a5dfef49784b0500f157d76c499e2704",
+      "current_sha256": "e3e7fef3dea236a09225b19bc4ed6e92ea35172eb62c059fa322cc35a4f6f3a9"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "last_built_sha256": "23ed92f55c5bb8f6f70002a86f770aa242f72ddc9f148f22243d0a0d1c9d95ef",
+      "current_sha256": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "last_built_sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a",
+      "current_sha256": "31a36ff7c7e65a909e4e5a712113d67a565b6418edb50a4a38c02aa4ac4e04a5"
+    }
+  ],
+  "implementation": [
+    "DomainStorage::make_threads privately certifies its NativeThreads provider with the actual shared root. Standalone recovered/custom provider construction remains unproven/null.",
+    "Runtime captures this exact NativeThreads root before Resources is consumed. Its first-declared shared root outlives registry and backend/provider retirement, with no provider-lease count fabrication.",
+    "Controller::take requires its Ready Domain pointer to equal Runtime certified thread-provider root, before allocations or either donor move. Unknown custom provenance rejects; custom Runtime construction itself remains supported.",
+    "NativeThreads/Runtime HOST object layouts changed. No base vtable, native ABI, shutdown Entry signature, export or loader hook changed.",
+    "Pending unit source now uses actual Domain thread provider with published unstarted Runtime, avoiding worker launch. It covers missing Domain/custom provenance preflight and retains stop false/retry/unknown-prefix source scenarios.",
+    "Resources integration source releases new Assembly.stopped_sources receipt before final zero-provider-lease expectation, alongside callback/milestone aliases."
+  ],
+  "source_evidence": [
+    {
+      "path": "outputs/anadius-bootstrap-providers-source/native_threads.hpp",
+      "line": 40,
+      "anchor": "friend class thread_domain::DomainStorage",
+      "sha256": "b9f2cade216f3333614fb0d94ce25ca6e7a41a6c228f9bd38c4994eca41cfbfe"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-providers-source/native_threads.hpp",
+      "line": 44,
+      "anchor": "root retires last",
+      "sha256": "b9f2cade216f3333614fb0d94ce25ca6e7a41a6c228f9bd38c4994eca41cfbfe"
+    },
+    {
+      "path": "outputs/anadius-thread-domain-source/domain.cpp",
+      "line": 360,
+      "anchor": "threads->domain_=shared_from_this()",
+      "sha256": "31a36ff7c7e65a909e4e5a712113d67a565b6418edb50a4a38c02aa4ac4e04a5"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+      "line": 128,
+      "anchor": "domain_(runtime_domain(resources))",
+      "sha256": "271861dbf9a661eee658ae4de200317010adbae341dbcb368305f3b2e0040435"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.hpp",
+      "line": 73,
+      "anchor": "std::shared_ptr<thread_domain::DomainStorage> domain_",
+      "sha256": "b6864109663f3b1894be37f1142b5a72802f66e4616379ed0d167770ce92b20d"
+    },
+    {
+      "path": "outputs/anadius-pre-unload-source/shutdown.cpp",
+      "line": 11,
+      "anchor": "runtime->memory_domain()!=domain.get()",
+      "sha256": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77"
+    },
+    {
+      "path": "outputs/anadius-pre-unload-source/shutdown_tests.cpp",
+      "line": 33,
+      "anchor": "Two real native Domains cannot coexist",
+      "sha256": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c"
+    },
+    {
+      "path": "outputs/anadius-resources-factory-source/factory_tests.cpp",
+      "line": 220,
+      "anchor": "installed_host.stopped_sources.reset()",
+      "sha256": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253"
+    }
+  ],
+  "independent_static_review": {
+    "reviewer": "/root/b22_provider_audit",
+    "final_result": "STATIC_PASS_NO_REMAINING_REQUIRED_BUG",
+    "reviewed_source_hashes": {
+      "anadius-bootstrap-providers-source/native_threads.hpp": "b9f2cade216f3333614fb0d94ce25ca6e7a41a6c228f9bd38c4994eca41cfbfe",
+      "anadius-thread-domain-source/domain.cpp": "31a36ff7c7e65a909e4e5a712113d67a565b6418edb50a4a38c02aa4ac4e04a5",
+      "anadius-bootstrap-runtime-source/factory.hpp": "b6864109663f3b1894be37f1142b5a72802f66e4616379ed0d167770ce92b20d",
+      "anadius-bootstrap-runtime-source/factory.cpp": "271861dbf9a661eee658ae4de200317010adbae341dbcb368305f3b2e0040435",
+      "anadius-pre-unload-source/shutdown.hpp": "a9d1da810c6a94d4033cb9aa6973dfd9ccaf5f46e8b21f3173211129bf502ccb",
+      "anadius-pre-unload-source/shutdown.cpp": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77",
+      "anadius-pre-unload-source/shutdown_tests.cpp": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c",
+      "anadius-resources-factory-source/factory_tests.cpp": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253"
+    },
+    "issue_found_and_corrected_before_execution": "Initial test attempted two real Domains; native FLS Binding reserves one callback owner at construction. Removed second root, added missing/unknown donor rejection and explicit static-only different-Ready-root coverage.",
+    "compiler_tests_link_or_binary_execution": false,
+    "reviewer_edits": false
+  },
+  "limits": [
+    "Only exact thread-provider provenance is established; other provider consistency, all borrowed state and original controller/fiber remain caller/assembly requirements.",
+    "Different-Ready-root mismatch check is statically inspected only; two real native Domains cannot coexist in this image. No fake pointer, extra root or Binding bypass is used.",
+    "Updated test sources are not compiled or executed; prior pre-unload evidence.json/results apply to prior source snapshot.",
+    "Root identity/ownership is not raw-job, foreign-call, kernel-packet, executable-image or CRT-thunk finality. Existing mandatory proofs remain.",
+    "Both production loader hooks remain undefined. Cooperative callback still lacks production export/context/image wiring. This source step does not establish a compiled DLL or an overall percentage."
+  ],
+  "new_native_function_definitions": 0,
+  "native_REA_queries": false,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "target_executed": false,
+  "original_access_or_modification": false,
+  "package_rebuilt": false
+}

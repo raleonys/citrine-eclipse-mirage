@@ -1,0 +1,59 @@
+{
+  "scope": "Complete selected function slices from retained static listings, not fresh REA/native observation",
+  "functions": [
+    {
+      "address": "0x180020a70",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "source_line": 26396,
+      "path": "outputs/dll-critical-path/current-application-map/selected-native/0x180020a70.pseudo.c",
+      "sha256": "67158a7fc625cbf4131e62d98e613ce2177ea35b545612fb8c868188c6f40099",
+      "evidence_id": "ev_81efd15da6f38aaae6b99327baf908cfb3d32ef3712357a92427da91645e00d8"
+    },
+    {
+      "address": "0x180020a80",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "source_line": 26406,
+      "path": "outputs/dll-critical-path/current-application-map/selected-native/0x180020a80.pseudo.c",
+      "sha256": "8fda880672f69e2fa1c16934003bab5c9373c94384dca15cbf539a6da988c428",
+      "evidence_id": "ev_f52c22ab6d0482e58f7ca56d36cbfec5a1c0913b03e9f41689c3a3276162843d"
+    },
+    {
+      "address": "0x1800285b0",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "source_line": 33734,
+      "path": "outputs/dll-critical-path/current-application-map/selected-native/0x1800285b0.pseudo.c",
+      "sha256": "31b143ae3452f6461fb8a3618cc63c34d7898dbafe433ddde0cc1d042f308f15",
+      "evidence_id": "ev_0d416758bef1cb136be764bc42d61b6806ad330bc40b244b4ca7798197b53f2e"
+    },
+    {
+      "address": "0x180020a70",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "source_line": 33343,
+      "path": "outputs/dll-critical-path/current-application-map/selected-native/0x180020a70.asm.txt",
+      "sha256": "86cb16c0e24192782e5be16d4b154a99ade7469ff026c5c296d1078e3a1e7f44",
+      "evidence_id": "ev_200659dfb1735e092f454fd8755684f38dfb44dc816b702bb10f8b5ce3fedb1f"
+    },
+    {
+      "address": "0x180020a80",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "source_line": 33347,
+      "path": "outputs/dll-critical-path/current-application-map/selected-native/0x180020a80.asm.txt",
+      "sha256": "028ec174e4c33081b5977c930a85caee6617b3dc4460eb9c3edac91adbc5c46b",
+      "evidence_id": "ev_604360fb740f3377313684b0bfdc1e461a65ae4fedb7995928d16dbc8f4448c0"
+    },
+    {
+      "address": "0x1800285b0",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "source_line": 41540,
+      "path": "outputs/dll-critical-path/current-application-map/selected-native/0x1800285b0.asm.txt",
+      "sha256": "11360d54507fc46608325a8a7ece847a522d14bd7309635cd7aec43acc842039",
+      "evidence_id": "ev_7504fc233bdbccda061b68f98284e32855d51c5f9468d39aa085eb40520e1f77"
+    }
+  ]
+}

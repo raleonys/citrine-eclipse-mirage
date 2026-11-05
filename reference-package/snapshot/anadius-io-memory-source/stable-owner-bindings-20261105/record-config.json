@@ -1,0 +1,165 @@
+{
+  "schema": "original-stable-io-owner-foundation.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_STABLE_IO_OWNER_PREREQUISITE",
+  "pending_before": "before/pending-source-status.json",
+  "added_source_baseline": "before-manifest.json",
+  "scope": "Stable Concurrent IO Record-owned storage/packet resolvers, unlocked per-generation effect/callback transactions, faithful known/unknown completion ownership prefixes and policy-aware actual consumer/capacity wiring; actual Original production remains Serialized. Source only, not compiled or executed.",
+  "sources": [
+    {
+      "path": "anadius-io-memory-source/io_memory.hpp",
+      "before": "before/anadius-io-memory-source__io_memory.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-io-memory-source/io_memory.cpp",
+      "before": "before/anadius-io-memory-source__io_memory.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-io-memory-source/io_memory_tests.cpp",
+      "before": "before/anadius-io-memory-source__io_memory_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "before": "before/anadius-worker-handoff-source__handoff_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-socket-source/posted_operation.hpp",
+      "before": "before/anadius-socket-source__posted_operation.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/posted_operation.cpp",
+      "before": "before/anadius-socket-source__posted_operation.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher.hpp",
+      "before": "before/anadius-socket-source__completion_dispatcher.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher.cpp",
+      "before": "before/anadius-socket-source__completion_dispatcher.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/handler_dispatch.cpp",
+      "before": "before/anadius-socket-source__handler_dispatch.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/write_finish.hpp",
+      "before": "before/anadius-socket-source__write_finish.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/posted_operation_tests.cpp",
+      "before": "before/anadius-socket-source__posted_operation_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher_tests.cpp",
+      "before": "before/anadius-socket-source__completion_dispatcher_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-server-runtime-source/runtime.cpp",
+      "before": "before/anadius-server-runtime-source__runtime.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.cpp",
+      "before": "before/anadius-session-profile-source__profile.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.cpp",
+      "before": "before/anadius-session-policy-source__policy.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment.cpp",
+      "before": "before/anadius-owned-environment-source__environment.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-owned-jobs-source/jobs.cpp",
+      "before": "before/anadius-owned-jobs-source__jobs.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-accept-source/owned.hpp",
+      "before": "before/anadius-accept-source__owned.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-accept-source/owned.cpp",
+      "before": "before/anadius-accept-source__owned.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-flow-source/coherent_io.cpp",
+      "before": "before/anadius-session-flow-source__coherent_io.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/memory_lookup.hpp",
+      "before": null,
+      "role": "production",
+      "added": true
+    },
+    {
+      "path": "anadius-accept-stop-source/stop.cpp",
+      "before": "before/anadius-accept-stop-source__stop.cpp",
+      "role": "production"
+    }
+  ],
+  "reviews": [
+    "root-independent-review.md",
+    "root-sources-independent-review.md",
+    "io-production-independent-review.md",
+    "sdk-combined-independent-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "native-findings.md",
+    "socket-resolver-implementation.md",
+    "io-implementation.md",
+    "test-source-notes.md"
+  ],
+  "native_replies": [
+    "instruction-180022f26.json",
+    "instruction-180027153.json",
+    "instruction-180027167.json",
+    "instruction-180027ed4.json",
+    "instruction-180027f5a.json",
+    "instruction-180027f62.json",
+    "instruction-180027f68.json",
+    "instruction-180027f6a.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/native-evidence-index.json",
+    "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/socket-resolver-source-hashes.json",
+    "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/sdk-review-source-hashes.json",
+    "outputs/anadius-session-memory-source/actor-catalog-foundation-20261105/evidence.json",
+    "outputs/anadius-session-memory-source/actor-catalog-foundation-20261105/remaining-integration.json",
+    "outputs/anadius-socket-source/completion-dispatcher-evidence.json",
+    "outputs/anadius-socket-source/posted-operation-evidence.json"
+  ],
+  "limits": [
+    "No compilation/project tests/link/DLL execution/ZIP update; four test files authored, no assertions executed.",
+    "Actual Original policy remains Serialized. Confirmed NativeJobs/Profile/Graph whole-body progress gap is NOT closed by this prerequisite.",
+    "Strings/Deque/header consumers including owned_response direct header scan, per-message upper providers/Graph/Profile/NativeProfile and NativeJobs actual selection/real A/B cases remain mandatory.",
+    "Stable metadata identity is not packet-payload synchronization; existing OwnedAccept body/SDK gate and concrete mutable packet publishers/caller/generation/kernel ownership need actual-route audit before enabling. Arbitrary same-operation writes/foreign kernel or SDK behavior are not claimed safe.",
+    "New constructor/private layout/aggregate fields and memory_lookup.hpp require consistent future rebuilding and source inventory; v3 records addition without modifying historical build snapshot.",
+    "Direct Posted/allocator concurrent fixtures are not actual Runtime/Graph/GetConfig or concurrent kernel-receive coverage. Existing HOST pending-loan cases are separate and also not rerun.",
+    "Native ABI/EH/fault behavior, arbitrary reentrant CRT/fallback domains and full binary equivalence remain unverified; no artificial DLL completion percentage."
+  ],
+  "completed_note": "SOURCE_ONLY8freshREAinstructionrecords;18production+4testunits (newneutraldependencyheaderincluded) implementstableIOowner/generation-scopedunlockedcallbacks, exactconsumer/currentcapacitywiring; independentreviewsfixedlostpin/duplicatepreflight/postCASpoisonregressions. RealPreparedconcurrentPosted/heapandselfchildassertions NOTRUN; actualOriginalparallelroute STILLPENDING.",
+  "observation": "REA6.8/Ghidra12.1.4 identityaligned;8freshselectedinstructionrecords exported/closed/originalhashunchanged with explicitly retainedfullbodycontext;3subagents implementation/test/independentreview, no Nativebodyrepeat/functioncredit.",
+  "next_scope": "Continue remaining Original concurrency prerequisites: Strings authoritative header ownership/prune and Deques call-scoped maps/growth including owned_response destructor; then per-message Profile/NativeProfile/private composite/Graph/provider views over actual shared roots, NativeJobs gate removal and actual Original policy selection. Audit accept-body and packet publisher ownership during actual route. Author real same-session/distinct-session modal/GetConfig response-before-release cases; no new build authorization."
+}

@@ -1,6 +1,51 @@
 #include "message_dispatch_test_fixture.hpp"
 using namespace message_test;
 namespace {
+bool same_copy_fields(const s::IoHandlerEnvironment& a,const s::IoHandlerEnvironment& b){return a.payload_00==b.payload_00&&a.operations_10==b.operations_10&&a.state_18==b.state_18&&a.schedule_20==b.schedule_20&&a.executor_28==b.executor_28;}
+struct CopyCallerTable final:s::IoHandlerVtable {
+    unsigned entries=0;std::function<bool(s::IoHandlerEnvironment&,s::IoHandlerEnvironment&,s::IoEnvironmentCopyBody&)> hook;
+    CopyCallerTable():IoHandlerVtable(0x778){}
+    void destroy_slot_00(s::IoHandlerEnvironment&)override{throw Failure{91};}
+    void move_slot_10(s::IoHandlerEnvironment&,s::IoHandlerEnvironment&)override{throw Failure{92};}
+    std::uintptr_t query_slot_18(s::IoHandlerEnvironment&)override{throw Failure{93};}
+    bool try_copy_environment_028d30(s::IoHandlerEnvironment& out,s::IoHandlerEnvironment& source,s::IoEnvironmentCopyBody& body)override{++entries;return hook?hook(out,source,body):false;}
+};
+struct CopyCallerObservation {
+    s::IoHandlerEnvironment *out=nullptr,*source=nullptr;s::IoHandlerExecutor *placeholder=nullptr,*changed=nullptr;
+    unsigned slots=0,bridges=0;bool throwing=false;std::vector<std::string> trace{};
+};
+CopyCallerObservation* copy_caller_observation=nullptr;
+void caller_copy_payload(s::IoHandlerEnvironment& out,s::IoHandlerEnvironment& source){
+    auto& p=*copy_caller_observation;check(&out==p.out&&&source==p.source&&out.operations_10==source.operations_10&&out.schedule_20==source.schedule_20&&out.executor_28==p.placeholder,"cached raw slot sees exact caller-written header and uncommitted executor tail");
+    ++p.slots;p.trace.push_back("slot");out.payload_00=source.payload_00;out.state_18=source.state_18;source.executor_28=p.changed;if(p.throwing)throw Failure{94};
+}
+struct CopyCallerBridge final:s::IoEnvironmentCopySlot {
+    CopyCallerObservation& observation;explicit CopyCallerBridge(CopyCallerObservation& p):observation(p){}
+    void copy_slot_08(s::IoEnvironmentCopyFunction cached,s::IoHandlerEnvironment& out,s::IoHandlerEnvironment& source)override{++observation.bridges;observation.trace.push_back("bridge");check(cached==&caller_copy_payload,"admitted bridge receives the exact callback looked up after the native header prefix");cached(out,source);}
+};
+void copy_caller_boundaries(){
+    for(unsigned mode=0;mode<3;++mode){
+        Fixture f;CopyCallerTable table,prior; s::IoHandlerExecutor original,changed,placeholder;
+        s::IoHandlerEnvironment source{{11,12},&table,3,0x456,&original},out{{21,22},&prior,7,0x789,&placeholder};const auto before_source=source,before_out=out;
+        CopyCallerObservation p{&out,&source,&placeholder,&changed};copy_caller_observation=&p;CopyCallerBridge bridge(p);std::array<s::MessageEnvironmentCopyBinding,1> bindings{{{&table,&caller_copy_payload}}};f.context.copies=bindings;
+        table.hook=[&](auto& destination,auto& from,auto& body){p.trace.push_back("enter");check(&destination==&out&&&from==&source&&same_copy_fields(out,before_out)&&same_copy_fields(source,before_source)&&!p.slots,"owning copy hook enters before lookup, native prefix or slot effects");if(mode==2)throw Failure{95};if(mode==0)return false;check(&body.run(&bridge)==&out&&p.slots==1&&out.executor_28==&changed,"one admitted body returns only after live source executor reload");p.trace.push_back("leave");return true;};
+        if(mode==2){rejects<Failure>([&]{s::copy_message_environment_028d30(out,source,f.context);});check(table.entries==1&&!p.slots&&!p.bridges&&same_copy_fields(out,before_out)&&same_copy_fields(source,before_source),"pre-prefix owner refusal preserves both complete original projections without a body or slot call");}
+        else{s::copy_message_environment_028d30(out,source,f.context);check(table.entries==1&&p.slots==1&&p.bridges==(mode==1?1U:0U)&&out.payload_00==before_source.payload_00&&out.state_18==before_source.state_18&&out.operations_10==&table&&out.schedule_20==before_source.schedule_20&&source.executor_28==&changed&&out.executor_28==&changed,"declined-hook fallback and handled-hook route each execute exactly one native body and its live tail");check(p.trace==(mode==1?std::vector<std::string>{"enter","bridge","slot","leave"}:std::vector<std::string>{"enter","slot"}),"handled owner keeps its reservation across the one body; no default fallback duplicates a successful slot");}
+    }
+    for(unsigned kind=0;kind<3;++kind){
+        Fixture f;CopyCallerTable table,prior;s::IoHandlerExecutor original,changed,placeholder;
+        s::IoHandlerEnvironment source{{31,32},&table,4,0xabc,&original},out{{41,42},&prior,8,0xdef,&placeholder};const auto before_source=source,before_out=out;
+        CopyCallerObservation p{&out,&source,&placeholder,&changed};copy_caller_observation=&p;
+        std::array<s::MessageEnvironmentCopyBinding,2> bindings{{{&table,kind==1?nullptr:&caller_copy_payload},{&table,&caller_copy_payload}}};f.context.copies=kind==0?std::span<s::MessageEnvironmentCopyBinding>{}:std::span<s::MessageEnvironmentCopyBinding>{bindings}.first(kind==1?1:2);
+        rejects<s::UnsupportedInput>([&]{s::copy_message_environment_028d30(out,source,f.context);});check(table.entries==1&&!p.slots&&!p.bridges&&out.operations_10==&table&&out.schedule_20==source.schedule_20&&out.payload_00==before_out.payload_00&&out.state_18==before_out.state_18&&out.executor_28==before_out.executor_28&&same_copy_fields(source,before_source),"missing, null or duplicate raw slot lookup fails AFTER native header commit and BEFORE payload or executor tail");
+    }
+    {
+        Fixture f;CopyCallerTable table,prior;s::IoHandlerExecutor original,changed,placeholder;s::IoHandlerEnvironment source{{51,52},&table,5,0x123,&original},out{{61,62},&prior,9,0x234,&placeholder};
+        CopyCallerObservation p{&out,&source,&placeholder,&changed};p.throwing=true;copy_caller_observation=&p;std::array<s::MessageEnvironmentCopyBinding,1> bindings{{{&table,&caller_copy_payload}}};f.context.copies=bindings;
+        rejects<Failure>([&]{s::copy_message_environment_028d30(out,source,f.context);});check(table.entries==1&&p.slots==1&&!p.bridges&&out.operations_10==&table&&out.schedule_20==source.schedule_20&&out.payload_00==source.payload_00&&out.state_18==source.state_18&&source.executor_28==&changed&&out.executor_28==&placeholder,"throwing slot retains its actual header/payload/source mutation prefix and never runs the caller's executor tail");
+    }
+    copy_caller_observation=nullptr;
+}
 void normal(){
     for(auto request_cap:{15ULL,16ULL,4094ULL,4095ULL})for(auto response_cap:{15ULL,16ULL,4095ULL})for(auto text:{std::string{},std::string("reply"),std::string("a\0b",3)}){
         Fixture f;f.seed(f.request,"request",request_cap);f.seed(f.response,text,response_cap);f.dispatch();
@@ -10,6 +55,19 @@ void normal(){
         check(f.frees.size()==static_cast<unsigned>((request_cap>15)+(response_cap>15)),"only live residual task response and input heaps freed");
     }
     for(auto cap:{15ULL,16ULL,4095ULL}){Fixture f;f.seed(f.request,"",cap);f.context.owners={};f.context.copies={};f.base.projection.control_08=nullptr;f.dispatch();check(f.api.empty==1&&!f.api.processes&&!f.copy_calls&&!f.api.schedules&&f.request.value.capacity_18==15,"empty request only delegates00aa50; no owner/weak/executor dependency");}
+}
+void prepared_response(){
+    // Source-only until an explicit rebuild. A previously nonempty message may
+    // be empty after033d70; continuation must still send its prepared response.
+    for(auto request_cap:{15ULL,31ULL,4095ULL})for(auto response_cap:{15ULL,31ULL,4095ULL})for(auto bytes:{std::string{},std::string("a\0b",3)}){
+        Fixture f;f.seed(f.request,"",request_cap);f.seed(f.response,bytes,response_cap);
+        s::dispatch_prepared_response(0x12000,f.response.value,f.request.value,f.context);
+        check(!f.api.processes&&!f.api.empty&&f.api.schedules==1&&f.scheduled==bytes,"prepared tail sends counted response even when processed request is empty; no repeated033d70 or empty-message shortcut");
+        const std::vector<std::string> prefix{"copy1","copy2","schedule","destroy-b","destroy-b"};check(f.trace.size()>=prefix.size()&&std::equal(prefix.begin(),prefix.end(),f.trace.begin()),"prepared tail preserves original copy/schedule/destruction prefix");
+        check(f.base.owner.strong_08==1&&f.copy_calls==2&&f.response.value.size_10==0&&f.response.value.capacity_18==15&&f.request.value.size_10==0&&f.request.value.capacity_18==15,"prepared tail consumes both prefixes and balances original acquired reference");
+        check(f.frees.size()==static_cast<unsigned>((request_cap>15)+(response_cap>15)),"prepared tail frees each retained heap once");
+    }
+    {Fixture f;rejects<s::UnsupportedInput>([&]{s::dispatch_prepared_response(0x12000,f.request.value,f.request.value,f.context);});check(!f.api.processes&&!f.api.schedules&&!f.copy_calls&&f.request.value.size_10==7,"prepared alias rejects before owner acquisition, transfer or scheduling");}
 }
 void lifetimes(){
     Fixture f;f.copy_hook=[&](auto& to,auto& from,unsigned n){if(n==1){from.executor_28=&f.other_executor;to.schedule_20=0x999;}else{check(from.executor_28==&f.other_executor,"owner executor reloaded AFTER first copy");from.executor_28=&f.executor;to.operations_10=&f.c;}};
@@ -53,5 +111,33 @@ void trampoline(){
         rejects<s::UnsupportedInput>([&]{s::message_thread_entry_021770(*f.memory.closure,f.context);});check(f.memory.closure->message_00.size_10==0&&!f.api.cleanups,"unknown function token rejected at invocation after native move/reset prefix");}
     for(unsigned mode=0;mode<4;++mode){Fixture f;f.memory.closure=std::make_unique<s::FrameMessageClosure>();const auto ptr=reinterpret_cast<std::uintptr_t>(f.memory.closure.get());f.closures[0]={ptr,f.memory.closure.get()};if(mode==0)f.context.closures={};if(mode==1)f.closures[1]=f.closures[0];if(mode==2)f.closures[0].closure=nullptr;rejects<s::UnsupportedInput>([&]{s::route_message_thread_entry(mode==3?0x123:0x180021770ULL,ptr,f.context);});check(!f.api.processes&&!f.api.cleanups&&f.frees.empty(),"opaque router rejects missing/duplicate/wrong entry without dereferencing image VAs");}
 }
+void prepared_trampoline(){
+    Fixture f;f.seed(f.request,"",31);f.seed(f.response,std::string("reply\0bytes",11),4095);
+    f.memory.closure=std::make_unique<s::FrameMessageClosure>();auto* closure=f.memory.closure.get();closure->message_00=f.request.value;closure->owner_20=0x12000;closure->function_28=0x180028d30ULL;
+    invoke=[&](auto function,auto owner,auto& request,auto& context){check(function==0x180028d30ULL&&owner==0x12000&&!request.size_10&&request.capacity_18==31,"021770 passes the already processed empty heap request without an invented sentinel");s::dispatch_prepared_response(owner,f.response.value,request,context);};
+    check(!s::message_thread_entry_021770(*closure,f.context,&capture)&&!f.memory.closure,"prepared continuation uses actual021770 and frees closure normally");
+    check(!f.api.processes&&!f.api.empty&&f.api.schedules==1&&f.api.cleanups==1&&f.scheduled==std::string("reply\0bytes",11),"prepared source processes zero additional times, sends exact NUL bytes and cleans original-thread waits once");
+    check(f.trace[f.trace.size()-2]=="exit-waits"&&f.trace.back()=="free-closure"&&f.frees.size()==3&&f.frees.back().second==48,"prepared response/request free before original wait cleanup and closure48 free");invoke={};
 }
-int main(){try{normal();lifetimes();acquisition_and_failures();header_bounds();trampoline();std::cout<<"PASS: "<<checks<<" socket message dispatch core checks; actual021770/028d30 normal bodies, two executor copies, live delete target, precise string/control/closure ownership and bounded call-prefix tests\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}
+}
+namespace {
+struct HeaderOwner final:s::AllocationHeaderResolver {
+    std::span<const s::WriteFinishAllocationHeader> headers;s::MemoryLookup result=s::MemoryLookup::Found;unsigned calls=0;
+    s::MemoryLookup lookup_header(std::uintptr_t header,std::uintptr_t& output)override{
+        ++calls;if(result!=s::MemoryLookup::Found)return result;
+        return s::lookup_allocation_header(header,headers,nullptr,output);
+    }
+};
+void authoritative_headers(){
+    Fixture f;f.seed(f.request,"request",4095);f.seed(f.response,"reply",4095);HeaderOwner owner;owner.headers=f.headers;
+    auto stale=f.headers;for(auto& header:stale)if(header.address)header.allocation_base=header.address+8;
+    f.frame.allocation_headers=stale;f.frame.allocation_header_resolver=&owner;f.dispatch();
+    check(owner.calls==2&&f.frees.size()==2&&f.api.schedules==1&&f.request.value.capacity_18==15,"actual message cleanup resolves both moved response and consumed request headers without stale catalog use");
+    for(auto result:{s::MemoryLookup::Miss,s::MemoryLookup::Ambiguous}){
+        Fixture g;g.seed(g.response,"reply",4095);HeaderOwner rejected;rejected.headers=g.headers;rejected.result=result;g.frame.allocation_header_resolver=&rejected;
+        rejects<s::UnsupportedInput>([&]{g.dispatch();});
+        check(rejected.calls==1&&g.api.schedules==1&&g.frees.empty()&&g.request.value.size_10==7,"authoritative message header miss/ambiguity retains scheduled prefix before request cleanup without legacy fallback/free");
+    }
+}
+}
+int main(){try{copy_caller_boundaries();normal();prepared_response();lifetimes();acquisition_and_failures();header_bounds();trampoline();prepared_trampoline();authoritative_headers();std::cout<<"PASS: "<<checks<<" socket message dispatch core checks; actual021770/028d30 normal bodies and prepared response continuation source, two executor copies, live delete target, precise string/control/closure ownership and bounded call-prefix tests\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}

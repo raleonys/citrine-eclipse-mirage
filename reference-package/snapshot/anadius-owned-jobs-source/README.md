@@ -1,4 +1,14 @@
+<!-- PENDING-SOURCE-CHANGES -->
+2026-11-05: Kullanıcının açık isteğiyle güncel tam ortak derleme ve testler geçti. Üretim DLL linki başarılı; DLL yüklenmedi/çalıştırılmadı. 296 nesne, 356 test grubu ve 19 framework terminal senaryosu doğrulandı. Güncel kaynakların son tam derlemeye göre bekleyen farkı 0. Bu sonuç tam davranış/loader/native ABI eşdeğerliği kanıtı değildir. Kanıt: `dll-critical-path/current-rebuild.evidence.json`. Önceki aşama metinleri tarihseldir; ZIP sonucu ayrı paket kaydındadır.
+<!-- END-PENDING-SOURCE-CHANGES -->
+
 # B44 — Somut inline işler ve SDK varsayılanları
+
+**Güncel kaynak incelemesi:** Native mesaj worker yolu ile mevcut aynı-worker
+politikası arasındaki fark ve fiziksel join istisnası düzeltmesi
+`native-job-gap.md` içinde kayıtlıdır. Bu adımda derleme/test/link çalıştırılmadı;
+aşağıdaki B44 doğrulamaları önceki kaynak sürümüne aittir. Native mesaj
+worker'ına bağlam aktarımı henüz uygulanmış değildir.
 
 Profile’ın Jobs/receive/send dependency’leri boş olduğunda artık somut sağlayıcılar seçilir. Jobs için `InlineJobs`, taşıma için mevcut `NativeAsyncReceiveApi`/`NativeAsyncSendApi` kullanılır. SDK importları typed konfigürasyonla verilebilir; constructor hiçbir SDK çağrısı yapmaz. Açıkça verilen eski provider’lar korunur.
 

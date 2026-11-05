@@ -3,9 +3,19 @@
 #include "../anadius-session-flow-source/coherent_io.hpp"
 #include "../anadius-accept-helpers-source/bindings.hpp"
 #include "../anadius-accept-stop-source/stop.hpp"
+#include <functional>
+#include <stdexcept>
 
 namespace anadius::server_runtime {
 namespace s=socket_recovered;namespace o=owned_server;
+// Narrow tracked-executor work release. The Runtime binds one exact Parent and
+// scheduler; job permission never grants general dispatcher/TLS/lifecycle access.
+class EnvironmentWorkStop {
+public:virtual ~EnvironmentWorkStop()=default;
+    virtual bool matches(const s::SessionMemoryDomain&,const s::IocpSchedulerEntry&)const noexcept=0;
+    virtual void finish_original(s::IocpSchedulerEntry&,const std::function<void()>& checkpoint,bool& consumed)=0;
+    virtual void finish_job(s::IocpSchedulerEntry&,const s::SessionMemoryDomain::JobPermit&,const std::function<void()>& checkpoint,bool& consumed)=0;
+};
 class WorkerControl {
 public:virtual ~WorkerControl()=default;
     virtual std::uint32_t exchange_stop(s::IocpSchedulerEntry&,std::uint32_t)=0;
@@ -13,6 +23,9 @@ public:virtual ~WorkerControl()=default;
     virtual void initialize(std::array<std::uintptr_t,2>&)=0;
     virtual void finish(std::array<std::uintptr_t,2>&)=0;
     [[noreturn]]virtual void raise(s::Error,std::uintptr_t)=0;
+    // Actual selected Policy supplies the narrowly admitted native work-drop
+    // body. Legacy custom WorkerControl implementations retain explicit refusal.
+    virtual void finish_environment_work(s::IocpSchedulerEntry&,const s::SessionMemoryDomain::JobPermit*,s::WorkerStopApi&,s::Api&,const std::function<void()>&,bool&){throw std::logic_error("Tracked environment work requires the selected worker control");}
 };
 struct Environment {
     s::IoHandlerSentinels sentinels;s::IoEnvironmentConstructorContext& constructor;
@@ -23,6 +36,7 @@ struct Ports {
     s::OwnedAcceptMemory& accept;s::CoherentIoMemory& memory;
     s::WorkerRunApi& worker;s::DispatcherApi& completion;
     s::IoCompletionEnvironment environment;std::uintptr_t server_identity;
+    EnvironmentWorkStop* environment_work_stop=nullptr;
 };
 struct Bindings {
     s::FrameReadContext& frame;s::WriteFinishApi& logging;
@@ -30,6 +44,23 @@ struct Bindings {
     std::span<s::WriteFinishCategoryBinding> categories;
     std::span<s::AcceptScheduleBinding> accept_schedules;
     s::ComposedWriteContext* write=nullptr;
+};
+// Optional independent HOST channel for an observed prepared-job IOCP receipt.
+// Exact one-shot validation belongs to the selected Application/Jobs provider.
+class PreparedJobNotifications {
+public:virtual ~PreparedJobNotifications()=default;
+    virtual void returned_job(std::uint32_t receipt)=0;
+};
+class PreparedJobMaintenance {
+public:virtual ~PreparedJobMaintenance()=default;
+    virtual void maintain_jobs()=0; // original worker, OUTSIDE Parent Operation
+};
+// Optional source-only stop deferral. Whole original Parent Operation required.
+// True means at least one prepared source job still needs acknowledgement;
+// false is NOT physical exit, socket/IO drain or external unload attestation.
+class PreparedJobSourceDrain {
+public:virtual ~PreparedJobSourceDrain()=default;
+    virtual bool pending_prepared_jobs()=0;
 };
 // Owned application contexts/registries have stable capacity and outlive all
 // packets/jobs. No submit/run/complete algorithm is delegated to this interface.
@@ -72,6 +103,12 @@ struct Dependencies {
     // finality remains independently required. By-value HOST layout changed;
     // all dependent factories/Graph/Worker translation units must be rebuilt.
     std::shared_ptr<anadius::accept_stop::Stop> accept_stop{};
+    // Explicit HOST policy, disabled0; finite budget from first deferred stop.
+    // Keeps original dispatcher alive for prepared receipts, then reissues one
+    // stop wake. Requires PreparedJobSourceDrain + selected prepared Jobs.
+    // Explicit Stop::SessionIoPrepared also gates tracked session IO; unmanaged
+    // IO/foreign finality stays separate. HOST layout changes: rebuild users.
+    DWORD prepared_stop_timeout_ms=0;
 };
 enum class Phase {Fresh,Binding,Ready,Running,Returned,Quiescing,Closed,Poisoned,Retiring};
 struct Snapshot {Phase phase;std::size_t active_calls;bool graph_present;std::uint64_t handled;};

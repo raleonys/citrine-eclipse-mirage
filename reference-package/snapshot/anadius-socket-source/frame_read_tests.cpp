@@ -50,6 +50,29 @@ void logging(){
         check(!f.api.restarts&&!f.copy.calls,"invalid header never erases/rearms");
     }
 }
+struct HeaderOwner final:s::AllocationHeaderResolver {
+    std::uintptr_t header=0,base=0;s::MemoryLookup result=s::MemoryLookup::Found;unsigned calls=0;
+    s::MemoryLookup lookup_header(std::uintptr_t address,std::uintptr_t& output)override{
+        ++calls;check(address==header,"frame resolves exact data-8 header");
+        if(result==s::MemoryLookup::Found)output=base;return result;
+    }
+};
+void authoritative_headers(){
+    {
+        Fixture f;f.base.incoming.value=3;f.copied_seed(4095,2);HeaderOwner owner;
+        owner.header=f.headers[0].address;owner.base=f.headers[0].allocation_base;
+        f.headers[0].allocation_base=owner.header+8; // deliberately invalid stale descriptor
+        f.context.allocation_header_resolver=&owner;f.finish(0);
+        check(owner.calls==1&&f.api.frees==std::vector<std::pair<std::uintptr_t,std::uint64_t>>{{owner.base,4135}},"actual frame error-message destruction resolves owned header despite invalid stale catalog");
+        check(f.api.trace.back()=="free"&&!f.api.restarts&&!f.copy.calls,"frame owner lookup preserves logging/free and no consume/rearm");
+    }
+    for(auto result:{s::MemoryLookup::Miss,s::MemoryLookup::Ambiguous}){
+        Fixture f;f.base.incoming.value=3;f.copied_seed(4095,2);HeaderOwner owner;
+        owner.header=f.headers[0].address;owner.result=result;f.context.allocation_header_resolver=&owner;
+        rejects<s::UnsupportedInput>([&]{f.finish(0);});
+        check(owner.calls==1&&f.api.frees.empty()&&f.api.trace.back()=="flush"&&!f.api.restarts&&!f.copy.calls,"owner miss/ambiguity after frame flush never uses stale valid header or frees unknown storage");
+    }
+}
 void acquisition(){
     for(auto initial:{1U,2U,0x7fffffffU,0x80000000U,UINT32_MAX}){Fixture f;f.owner.strong_08=initial;
         start_capture=[&](auto& h,const auto& e,auto n,auto flag,auto& ctx,auto call){
@@ -68,4 +91,4 @@ void acquisition(){
     for(unsigned mode=0;mode<4;++mode){Fixture f;if(mode==0)f.context.owners={};if(mode==1)f.owners[0].owner=nullptr;if(mode==2)f.owners[1]=f.owners[0];if(mode==3)f.context.read=nullptr;rejects<s::UnsupportedInput>([&]{f.start();});check(f.owner.strong_08==(mode==3?2U:1U),"projection failure keeps exact acquisition prefix");}
 }
 }
-int main(){try{success();failures();live_owner();logging();acquisition();std::cout<<"PASS: "<<checks<<" socket frame read core checks; addressed025480/0280d0 normal flow, independent payload/error/ownership oracles and controlled provider/lifetime mutations\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}
+int main(){try{success();failures();live_owner();logging();authoritative_headers();acquisition();std::cout<<"PASS: "<<checks<<" socket frame read core checks; addressed025480/0280d0 normal flow, independent payload/error/ownership oracles and controlled provider/lifetime mutations\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}

@@ -1,0 +1,135 @@
+{
+  "schema": "worker-stop-binding.source-only.v1",
+  "recorded_at": "2026-11-01T18:56:22.088458+00:00",
+  "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+  "authority": "Source changes and independent static inspection only; no native algorithm newly recovered, compiled proof or runtime result.",
+  "user_execution_policy": "Do not compile, test, link or execute artifacts unless user explicitly requests rebuild.",
+  "new_native_function_definitions": 0,
+  "source_paths_modified": [
+    {
+      "path": "anadius-application-worker-source/worker.cpp",
+      "last_built_sha256": "a3502562d95b6f7d7d4182ac6c2f37f2ae64a19f448092d0fc2f31ab743572a9",
+      "current_sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "anadius-application-worker-source/worker.hpp",
+      "last_built_sha256": "923514f18bf5d32ecfa2487e982e571117d0809e0892f171803c06ae915408f1",
+      "current_sha256": "6cf84342444f3724c02dda3727d54569e7cf3fcecf3d972be71c65f48fb9aea5"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "last_built_sha256": "dec7a66e5120e0c7064d95c53aa250d678160913486abf76409de08a4082d150",
+      "current_sha256": "c9393a92d80ac90a10502e21feba86aed7a149296e3ba0c621dbc15279de1cb3"
+    }
+  ],
+  "implementation": [
+    "Settings owns optional controller/fiber-created Fresh accept_stop::Stop before configure. take_settings moves that shared owner; Resources and Worker preflight reject nonfresh selection. HOST Settings/embedding Inputs layout changes require all consumers rebuilt together.",
+    "After opaque configure, reject a distinct runtime.accept_stop; bind the same Settings pointer before Graph/server installation. Configure-only legacy providers retain their own request obligations when no Settings provider is selected.",
+    "request_stop preserves existing marker/startup policy, copies selected shared owner and reserves stop_requesting under Worker gate; Stop::request/proof/post and local owner retirement run outside that gate. Reservation spans the local shared owner.",
+    "Known false (not running, routing overlap, unmet prerequisite) retains existing stop/join retry. Poisoned/Retiring Stop snapshot after request is not conflated with benign false; exceptions or managed reentry poison Worker and retain ownership.",
+    "Request TRUE only admits wake. No IO loan/OV/socket is freed and no Graph/kernel/source-finality check is bypassed; admitted Runtime worker retains actual CancelIoEx/packet/acknowledgement and joined-exit logic. Started pre-admission/unknown startup prefixes do not attempt an inferred SDK cancellation binding.",
+    "finish/destructor reject active request; same-controller readiness mutation during opaque request poisons. Ordinary background worker routing/readiness remains possible; existing Stop route-epoch checks still apply. Configure captures retire before Stop, then effects/state/lifetime."
+  ],
+  "source_evidence": [
+    {
+      "path": "outputs/anadius-application-worker-source/worker.hpp",
+      "line": 38,
+      "anchor": "std::shared_ptr<accept_stop::Stop> accept_stop",
+      "sha256": "6cf84342444f3724c02dda3727d54569e7cf3fcecf3d972be71c65f48fb9aea5"
+    },
+    {
+      "path": "outputs/anadius-application-worker-source/worker.cpp",
+      "line": 16,
+      "anchor": "std::move(s.accept_stop)",
+      "sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "outputs/anadius-resources-factory-source/factory.cpp",
+      "line": 28,
+      "anchor": "w.accept_stop->snapshot().phase",
+      "sha256": "c9393a92d80ac90a10502e21feba86aed7a149296e3ba0c621dbc15279de1cb3"
+    },
+    {
+      "path": "outputs/anadius-application-worker-source/worker.cpp",
+      "line": 222,
+      "anchor": "Configured Runtime stop differs",
+      "sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "outputs/anadius-application-worker-source/worker.cpp",
+      "line": 223,
+      "anchor": "p.inputs.runtime.accept_stop=v.settings.accept_stop",
+      "sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "outputs/anadius-application-worker-source/worker.cpp",
+      "line": 304,
+      "anchor": "(void)selected->request()",
+      "sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "outputs/anadius-application-worker-source/worker.cpp",
+      "line": 306,
+      "anchor": "phase==accept_stop::Phase::Poisoned",
+      "sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "outputs/anadius-application-worker-source/worker.cpp",
+      "line": 112,
+      "anchor": "stop_requesting){phase=Phase::Poisoned",
+      "sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "outputs/anadius-application-worker-source/worker.cpp",
+      "line": 192,
+      "anchor": "retiring.accept_stop.reset()",
+      "sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/runtime.cpp",
+      "line": 275,
+      "anchor": "deps.accept_stop->running()",
+      "sha256": "c1378812ed7b4446270c67be5ec64a68678aa189e26c9798ccacea649969048b"
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/runtime.cpp",
+      "line": 294,
+      "anchor": "deps.accept_stop->close_worker()",
+      "sha256": "c1378812ed7b4446270c67be5ec64a68678aa189e26c9798ccacea649969048b"
+    }
+  ],
+  "independent_review": {
+    "reviewer": "/root/b22_provider_audit",
+    "result": "STATIC_ONLY_NO_REQUIRED_BUG_FOUND",
+    "reviewed_source_hashes": {
+      "anadius-application-worker-source/worker.hpp": "6cf84342444f3724c02dda3727d54569e7cf3fcecf3d972be71c65f48fb9aea5",
+      "anadius-application-worker-source/worker.cpp": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589",
+      "anadius-resources-factory-source/factory.cpp": "c9393a92d80ac90a10502e21feba86aed7a149296e3ba0c621dbc15279de1cb3"
+    },
+    "compiler_or_tests_run": false,
+    "binary_or_target_execution": false,
+    "reviewer_edits": false
+  },
+  "not_yet_verified": [
+    "Compilation/types/ABI of changed Settings and all embedding consumers.",
+    "Exact pointer installation, conflicts, move-donor clearing and no selected Stop legacy path at runtime.",
+    "Known false retry, failed/throwing post, proof exceptions, swallowed reentry and capture retirement under actual invocation.",
+    "Real own overlapped IOCP cancellation/success995/ERROR_NOT_FOUND/Posted+receive+send acknowledgements and exact Domain-worker join/FLS.",
+    "Full Resources/pre-unload integration with selected controller Stop and independent new-admission/raw-job prerequisite."
+  ],
+  "limits": [
+    "Source only; no test checks are claimed. Prior green full build and ZIP apply to their frozen source snapshot, which now differs in3files.",
+    "Stop must be created on the original controller/fiber and exclusively belong to this server; Fresh alone does not prove identity or executable backing.",
+    "stop_sources must exclude new external/application/raw-job admission and finish independent raw/deferred work without waiting for tracked cancellation triggered by the later Worker request. No real external proof body is fabricated.",
+    "Cancellation scope and capacity remain caller-selected. Unknown startup/SDK/late-finality/loader behavior is not repaired by this binding.",
+    "Both production loader hooks and actual image/CRT lifetime/unregistered foreign drain remain open."
+  ],
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "target_executed": false,
+  "original_access": false,
+  "original_modified": false,
+  "package_rebuilt": false,
+  "native_REA_queries": false
+}

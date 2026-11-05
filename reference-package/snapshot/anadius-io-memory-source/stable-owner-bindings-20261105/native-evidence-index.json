@@ -1,0 +1,107 @@
+{
+  "scope": "Fresh selected instruction ownership/callback lifetime boundary plus explicitly retained complete source bodies",
+  "original_sha256_after_close": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "records": [
+    {
+      "path": "instruction-180022f26.json",
+      "sha256": "6b82a4b1d2278d5326d71882d88db6ed55712cec3cd35a1a201cb21b3649ddc1",
+      "evidence_id": "ev_57f1f764332011c87054786ed2ac24ea63bd4ba54970d85751d971f9f4297347",
+      "operation": "inspect_native_instruction",
+      "parameters": {
+        "address": "0x180022f26"
+      }
+    },
+    {
+      "path": "instruction-180027153.json",
+      "sha256": "53fc9cb07ed7438cf83a26933564b231b9467e18af31fc564f57350778a4c230",
+      "evidence_id": "ev_a46d00409474b6a7d04b71b679e8069c921bd3654d6ab5556b9c42db89bf49d9",
+      "operation": "inspect_native_instruction",
+      "parameters": {
+        "address": "0x180027153"
+      }
+    },
+    {
+      "path": "instruction-180027167.json",
+      "sha256": "19776c346ccd8d48b2e803d67f75938720738c0e32225f89fb5c8c771802e2b2",
+      "evidence_id": "ev_4bff8fc1f83cd91512e0d4572a10362eeffa7aa089b8018fe8c3d30b8f9a624d",
+      "operation": "inspect_native_instruction",
+      "parameters": {
+        "address": "0x180027167"
+      }
+    },
+    {
+      "path": "instruction-180027ed4.json",
+      "sha256": "772a7ac7f306c7e58ea935d0e676c3b29fccb6082fff05a5460263add9ada672",
+      "evidence_id": "ev_2868ab1d4e96d433a2cba245fffb27496e0335c941e998e207bdceff2be6009b",
+      "operation": "inspect_native_instruction",
+      "parameters": {
+        "address": "0x180027ed4"
+      }
+    },
+    {
+      "path": "instruction-180027f5a.json",
+      "sha256": "baab6a73e2373b77a0b9ef11312ad464a1c2c3bc00be9eabb49a987b55078c5e",
+      "evidence_id": "ev_f709969a88579b07252da35633665be7c07924363d041bf6eb7a4c700bf529a5",
+      "operation": "inspect_native_instruction",
+      "parameters": {
+        "address": "0x180027f5a"
+      }
+    },
+    {
+      "path": "instruction-180027f62.json",
+      "sha256": "209e2c2616ca70b3cfcff4dbf9c4dc0dcc7d71f079fa6d695ed9347f1d21f9aa",
+      "evidence_id": "ev_3aa41c09dccdac930446e0cee94d8e4eaca6b16a3442ae2159863ae9b8a100d6",
+      "operation": "inspect_native_instruction",
+      "parameters": {
+        "address": "0x180027f62"
+      }
+    },
+    {
+      "path": "instruction-180027f68.json",
+      "sha256": "d8646e63e675749d9c3ebc668474075b7cbd60832c74090086798e95cad07b63",
+      "evidence_id": "ev_3baf697df601243f2a01441d2f61ff4e0f2d96d8c8cc0e71535a78a0c4f24e38",
+      "operation": "inspect_native_instruction",
+      "parameters": {
+        "address": "0x180027f68"
+      }
+    },
+    {
+      "path": "instruction-180027f6a.json",
+      "sha256": "56a1b432364aef40921df313b47088cedf808f9174b0b4fd7d8d2514a4f070ca",
+      "evidence_id": "ev_7805190ebdb79475041beacf3778c36fc884ac084737ced2bd3057bf3604be93",
+      "operation": "inspect_native_instruction",
+      "parameters": {
+        "address": "0x180027f6a"
+      }
+    }
+  ],
+  "retained_complete_bodies_not_new_records": [
+    {
+      "path": "outputs/anadius-socket-source/completion-dispatcher-evidence.json",
+      "sha256": "d11df92166732971c7d37be6351a763a0ebc85fe5a7a0b81a6ab2d36be0990a9"
+    },
+    {
+      "path": "outputs/anadius-socket-source/completion-dispatcher-evidence.asm.txt",
+      "sha256": "dd41ec2b940aa41b101cc5f4de137d05f3bf4abaae60cbf3996d875a591c1060"
+    },
+    {
+      "path": "outputs/anadius-socket-source/completion-dispatcher-evidence.pseudo.c.txt",
+      "sha256": "5705415b605aa6f9247a58d4d6b5e7fadf61b6e27c0ec5eae3f67e2525523fd1"
+    },
+    {
+      "path": "outputs/anadius-socket-source/posted-operation-evidence.json",
+      "sha256": "c16db83a077634d153d9c59260ade758ceaeb01db63772797bec7a5c37bbb1f8"
+    },
+    {
+      "path": "outputs/anadius-socket-source/posted-operation-evidence.asm.txt",
+      "sha256": "0da87b059d1384dc76be0546788a9be40caf32c55386497b4594ca5346d6cbbf"
+    },
+    {
+      "path": "outputs/anadius-socket-source/posted-operation-evidence.pseudo.c.txt",
+      "sha256": "bfaa2c14bb505e1abd31842841e56e513a729dbfb251d1c88962758e88011e89"
+    }
+  ],
+  "session_exported": true,
+  "session_closed": true,
+  "target_executed": false
+}

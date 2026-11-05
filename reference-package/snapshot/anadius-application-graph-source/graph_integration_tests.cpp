@@ -1,4 +1,5 @@
 #include "graph.hpp"
+#include "../anadius-application-worker-source/worker.hpp"
 #include <sstream>
 #include "../anadius-native-profile-source/native.hpp"
 #include "../anadius-server-runtime-source/resources.hpp"
@@ -7,23 +8,46 @@
 #include "../anadius-owned-server-source/server.hpp"
 #include "../anadius-thread-domain-source/domain_test_fixture.hpp"
 #include "../anadius-socket-source/worker_run_native.hpp"
+#include "../anadius-owned-jobs-source/jobs.hpp"
+#include "../anadius-owned-environment-source/environment.hpp"
+#include "../anadius-information-effects-source/effects.hpp"
+#include "../anadius-content-effects-source/effects.hpp"
+#include "../anadius-licensing-effects-source/effects.hpp"
+#include "../anadius-config-storage-source/storage_test_fixture.hpp"
+#include "../anadius-online-platform-source/platform_test_fixture.hpp"
 #include <algorithm>
+#include <atomic>
 #include <bit>
 #include <cstring>
 #include <cstdlib>
 #include <exception>
 #include <iostream>
+#include <mutex>
+#include <process.h>
 #include <vector>
 
 namespace {
 namespace s=anadius::socket_recovered;namespace o=anadius::owned_server;namespace server=anadius::server_recovered;
 namespace m=anadius::messages_recovered;namespace rt=anadius::server_runtime;namespace sp=anadius::session_profile;namespace np=anadius::native_profile;namespace cp=anadius::session_policy;namespace ag=anadius::application_graph;
-unsigned checks=0;
+namespace ast=anadius::accept_stop;
+namespace aw=anadius::application_worker;
+std::atomic<unsigned> checks=0;
 void require(bool value,const char* text){++checks;if(!value){std::cerr<<"FAILED: "<<text<<'\n';throw std::runtime_error(text);}}
 [[noreturn]]void unused(){throw std::logic_error("Unselected owned-server integration dependency");}
 void* WINAPI heap_allocate(HANDLE heap,DWORD flags,SIZE_T bytes){
  auto& state=*b6_core_test::observed;++state.allocations;if(heap!=::GetProcessHeap()||(flags!=0&&flags!=HEAP_ZERO_MEMORY))unused();
  auto* raw=::HeapAlloc(heap,flags,bytes);const auto error=::GetLastError();if(raw)state.blocks.emplace(raw,bytes);::SetLastError(error);return raw;
+}
+// Observation only: capture one live greeting allocation, then observe its
+// successful native free; later allocations may legitimately reuse its address.
+struct ScopedGreetingFree {std::atomic<std::uintptr_t> address=0,freed_address=0;std::atomic<std::size_t> bytes=0;std::atomic<bool> armed=false,released=false;std::atomic<unsigned> frees=0;};
+std::atomic<ScopedGreetingFree*> scoped_greeting_free=nullptr;
+BOOL WINAPI scoped_greeting_heap_free(HANDLE heap,DWORD flags,PVOID raw){
+ const auto incoming=::GetLastError();auto* observed=scoped_greeting_free.load(std::memory_order_acquire);
+ const bool target=observed&&observed->armed.load(std::memory_order_acquire)&&observed->address.load(std::memory_order_acquire)==reinterpret_cast<std::uintptr_t>(raw);
+ ::SetLastError(incoming);const auto result=::HeapFree(heap,flags,raw);const auto error=::GetLastError();
+ if(result&&target){bool expected=true;if(observed->armed.compare_exchange_strong(expected,false)){observed->freed_address=reinterpret_cast<std::uintptr_t>(raw);++observed->frees;observed->released.store(true,std::memory_order_release);}}
+ ::SetLastError(error);return result;
 }
 struct NativeDomain {
  b6_core_test::Observation memory;b6_core_test::RuntimeState runtime;std::shared_ptr<anadius::thread_domain::DomainStorage> root;
@@ -35,7 +59,18 @@ struct Connection {
  unsigned received_logs=0,response_logs=0,event_logs=0;bool live_request_seen=false,auto_decrypted=false;std::string expected_response;std::string expected_request;std::vector<std::string> requests,expected_requests;std::string receive_wire;std::size_t cursor=0;bool receive_waiting=false,eof_posted=false;s::Buffer receive_buffer{};OVERLAPPED* receive_ov=nullptr;bool send_waiting=false,send_posted=false;OVERLAPPED* send_ov=nullptr;std::uint32_t send_bytes=0;unsigned completed_sends=0;
  s::Socket socket=0;sp::SessionToken token{};std::uintptr_t owner_id=0,greeting_data=0,greeting_tail=0;bool encrypted=false,greeting_gone=false,eof_seen=false,logic_destroyed=false;unsigned receives=0,sends=0,sync_calls=0,processed=0;std::uint32_t max_sync=0;s::SessionCipher client;std::string greeting_wire,response_wire,event_text;
 };
+struct NativeTrace;
+struct ParallelProbe;
+struct ScopedRuntimeProbe;
 struct State {
+ std::shared_ptr<ParallelProbe> parallel;
+ std::shared_ptr<ScopedRuntimeProbe> scoped;
+ bool native_mode=false,native_call_views=false,native_call_events_seen=false;DWORD original_thread=0;std::string native_failure;std::shared_ptr<NativeTrace> native_trace;std::shared_ptr<anadius::owned_jobs::NativeJobs> native_jobs;
+ unsigned native_notices=0,native_delivered=0;std::uint32_t native_before_wait_work=0,delayed_before_decrement_work=0;bool delayed_acknowledged=false,delayed_retention_checked=false;
+ unsigned native_external_calls=0;bool pending_close_retried=false;std::shared_ptr<anadius::services_completion::WaitTarget> close_wait;
+ bool drain_resume_posted=false,drain_counter_checked=false,resume_denied=false;std::uint32_t drain_before_decrement_work=0,resume_failed_work=0;
+ std::shared_ptr<ast::Stop> session_stop;std::vector<OVERLAPPED*> session_cancel_packets;unsigned session_cancel_calls=0;
+ std::atomic<bool> worker_source_io_drained=false;std::atomic<unsigned> worker_provider_retirements=0,worker_external_proofs=0;std::atomic<DWORD> provider_retired_thread=0;
  anadius::configuration::State configuration{};std::uint8_t online=0;std::int32_t saved=0;anadius::configuration::Path achievement_file;std::weak_ptr<ag::Graph> graph;
  unsigned sdk_pending=0,sdk_expected_error=0,receive_error_calls=0,send_error_calls=0,receive_success=0,send_success=0;std::vector<char> sdk_trace;
  unsigned receive_packets=0,zero_receive_packets=0,send_packets=0,posted_packets=0,accept_completions=0;
@@ -47,6 +82,21 @@ struct State {
  Connection& connection(s::Socket socket){if(socket<201||socket>202||!connections[socket-201])unused();return *connections[socket-201];}
 };
 State* running=nullptr;
+void join_native_children(State&);
+void native_receive(State&,Connection&,s::Buffer,OVERLAPPED*);
+void native_observe(State&,sp::SessionView,ag::Log,std::string_view,std::string_view);
+void parallel_receive(State&,Connection&,s::Buffer,OVERLAPPED*);
+void parallel_observe(State&,sp::SessionView,ag::Log,std::string_view,std::string_view);
+void parallel_maintenance(State&);void request_fixture_stop(State&);void parallel_policy_probe(ParallelProbe&,cp::Policy&,rt::Ports);
+void parallel_packet(State&,OVERLAPPED*,std::uint32_t);
+bool parallel_eof_ready(State&);
+unsigned parallel_accept_limit(State&);
+void parallel_duplicate_observe(State&,HANDLE);
+void parallel_post_observe(State&,DWORD);
+void scoped_runtime_receive(State&,Connection&,s::Buffer,OVERLAPPED*);
+void scoped_runtime_maintenance(State&);
+bool scoped_runtime_eof_ready(State&);
+void scoped_runtime_packet(State&,OVERLAPPED*,std::uint32_t);
 int WSAAPI startup(WORD version,LPWSADATA data){auto& st=*running;require(version==MAKEWORD(2,2),"Owned context requests WSA2.2");++st.starts;st.order.push_back("startup");return ::WSAStartup(version,data);}
 int WSAAPI cleanup(){auto& st=*running;++st.cleanups;st.order.push_back("cleanup");return ::WSACleanup();}
 int WSAAPI local_name(SOCKET socket,sockaddr* output,int* bytes){
@@ -66,7 +116,7 @@ BOOL WINAPI close_port(HANDLE port){require(reinterpret_cast<std::uintptr_t>(por
 BOOL PASCAL accept_sdk(SOCKET listener,SOCKET accepted,PVOID buffer,DWORD receive,DWORD local,DWORD remote,LPDWORD bytes,LPOVERLAPPED ov){
  auto& st=*running;st.accept_pending=true;require(listener==200&&accepted==201+st.sdk_accepts&&buffer&&!receive&&local==0x90&&remote==0x90,"Profile integration uses exact injected AcceptEx boundary with distinct201/202/203 sockets and90+90 endpoints");
  st.accept_packets.push_back(ov);++st.sdk_accepts;
- if(st.sdk_accepts<=2){if(st.application){auto ports=st.application->ports();require(ports.accept.snapshot().pending==1,"Concrete Profile/native flow retains next accept SDK loan alongside active session");if(!ports.completion.post(st.port,0,0,ov))unused();}else if(!::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(st.port),0,0,ov))unused();}
+ if(st.sdk_accepts<=(st.parallel?parallel_accept_limit(st):(st.native_mode?1U:2U))){if(st.application){auto ports=st.application->ports();require(ports.accept.snapshot().pending==1,"Concrete Profile/native flow retains next accept SDK loan alongside active session");if(!ports.completion.post(st.port,0,0,ov))unused();}else if(!::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(st.port),0,0,ov))unused();}
  *bytes=0x4567;::WSASetLastError(997);return FALSE;
 }
 VOID PASCAL accept_addresses(PVOID buffer,DWORD received,DWORD local_size,DWORD remote_size,sockaddr** local,int* local_bytes,sockaddr** remote,int* remote_bytes){
@@ -89,7 +139,7 @@ INT WSAAPI parse_sdk(LPWSTR text,INT family,LPWSAPROTOCOL_INFOW info,LPSOCKADDR 
  std::memset(address,0,*size);if(family==23){sockaddr_in6 value{};value.sin6_family=23;value.sin6_addr.u.Byte[15]=1;value.sin6_scope_id=9;std::memcpy(address,&value,sizeof(value));*size=sizeof(value);}else{if(family!=2)unused();sockaddr_in value{};value.sin_family=2;reinterpret_cast<unsigned char*>(&value.sin_addr)[0]=127;reinterpret_cast<unsigned char*>(&value.sin_addr)[3]=1;std::memcpy(address,&value,sizeof(value));*size=sizeof(value);}::WSASetLastError(0);return 0;
 }
 int WSAAPI sync_send_sdk(SOCKET socket,LPWSABUF buffers,DWORD count,LPDWORD transferred,DWORD flags,LPWSAOVERLAPPED ov,LPWSAOVERLAPPED_COMPLETION_ROUTINE callback){
- auto& c=running->connection(socket);require(buffers&&count==1&&transferred&&!*transferred&&!flags&&!ov&&!callback,"Concrete NativeApi synchronous greeting uses exact WSASend one-buffer/zeroDWORD/flags0/nullOV/nullcallback imports");auto& b=buffers[0];c.max_sync=std::max(c.max_sync,static_cast<std::uint32_t>(b.len));if(!c.sync_calls)c.greeting_data=reinterpret_cast<std::uintptr_t>(b.buf);
+ auto& c=running->connection(socket);require(buffers&&count==1&&transferred&&!*transferred&&!flags&&!ov&&!callback,"Concrete NativeApi synchronous greeting uses exact WSASend one-buffer/zeroDWORD/flags0/nullOV/nullcallback imports");auto& b=buffers[0];c.max_sync=std::max(c.max_sync,static_cast<std::uint32_t>(b.len));if(!c.sync_calls){c.greeting_data=reinterpret_cast<std::uintptr_t>(b.buf);if(running->scoped){auto* observed=scoped_greeting_free.load(std::memory_order_acquire);require(observed&&c.greeting_data&&b.len&&b.len<4096&&!observed->address&&!observed->freed_address&&!observed->armed&&!observed->released&&!observed->frees,"Scoped greeting arms only its actual live first WSASend allocation");observed->address=c.greeting_data;observed->bytes=b.len;observed->armed.store(true,std::memory_order_release);}}
  const auto n=c.sync_calls==0?std::min(static_cast<std::uint32_t>(b.len),30000U):c.sync_calls==1?0U:b.len;++c.sync_calls;c.greeting_wire.append(b.buf,n);if(n)c.greeting_tail=reinterpret_cast<std::uintptr_t>(b.buf)+n-1;*transferred=n;::WSASetLastError(0);return 0;
 }
 int WSAAPI select_sdk(int,fd_set*,fd_set*,fd_set*,const timeval*){unused();}
@@ -112,18 +162,32 @@ struct Executor:s::RegistryExecutorEffects {State& state;explicit Executor(State
 struct Dispatcher:s::DispatcherApi {
  State& state;explicit Dispatcher(State& s):state(s){}
  void set_last_error(std::uint32_t n)override{::SetLastError(n);}std::uint32_t get_last_error()override{return ::GetLastError();}
- std::int32_t get(std::uintptr_t port,std::uint32_t& bytes,std::uintptr_t& key,OVERLAPPED*& operation,std::uint32_t timeout)override{
+ std::int32_t get(std::uintptr_t port,std::uint32_t& bytes,std::uintptr_t& key,OVERLAPPED*& operation,std::uint32_t timeout)override{const auto incoming_error=::GetLastError();
   require(port==state.port,"Every physical wait belongs to own concrete Runtime IOCP");
   if(state.view){
   bool released=false;try{(void)state.view->memory.buffer_context();}catch(const std::logic_error&){released=true;}
   require(released,"AdmittedDispatcherApi releases root admission before physical SDK wait");
   {auto independent=state.view->memory.enter();++state.wait_scopes;}
   }else ++state.initial_waits;
+  if(state.scoped)scoped_runtime_maintenance(state);else if(state.parallel)parallel_maintenance(state);else if(state.native_mode)join_native_children(state);
   ++state.gets;DWORD transferred=0;ULONG_PTR token=0;LPOVERLAPPED raw=nullptr;
-  auto result=::GetQueuedCompletionStatus(reinterpret_cast<HANDLE>(port),&transferred,&token,&raw,timeout);
-  bytes=transferred;key=token;operation=raw;return result;
+  ::SetLastError(incoming_error);auto result=::GetQueuedCompletionStatus(reinterpret_cast<HANDLE>(port),&transferred,&token,&raw,state.native_mode&&timeout==INFINITE?10000:timeout);auto error=::GetLastError();
+  // This fixture's sockets/CancelIoEx are injected. The own IOCP preserves
+  // packet identity; this scripted SDK result is not a real kernel cancel.
+  if(raw){const auto found=std::find(state.session_cancel_packets.begin(),state.session_cancel_packets.end(),raw);if(found!=state.session_cancel_packets.end()){state.session_cancel_packets.erase(found);result=FALSE;error=ERROR_OPERATION_ABORTED;}}
+  if(state.native_mode){if(!result&&error==WAIT_TIMEOUT&&timeout==INFINITE)::ExitProcess(245);if(token==s::prepared_job_completion_key&&!raw)++state.native_notices;}
+  if(state.parallel&&raw)parallel_packet(state,raw,transferred);
+  if(state.scoped&&raw)scoped_runtime_packet(state,raw,transferred);
+  bytes=transferred;key=token;operation=raw;::SetLastError(error);return result;
  }
- std::int32_t post(std::uintptr_t port,std::uint32_t bytes,std::uintptr_t key,OVERLAPPED* operation)override{++state.posts;return ::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(port),bytes,key,operation);}
+ std::int32_t post(std::uintptr_t port,std::uint32_t bytes,std::uintptr_t key,OVERLAPPED* operation)override{
+  ++state.posts;
+  if(state.native_failure.starts_with("early-drain")&&!bytes&&!key&&!operation&&state.native_notices==1&&!state.drain_resume_posted&&state.native_jobs->snapshot().completed==1){
+   state.drain_resume_posted=true;state.drain_before_decrement_work=state.view->scheduler.work_count_30.load();
+   if(state.native_failure=="early-drain-resume-fail"){state.resume_denied=true;state.resume_failed_work=state.drain_before_decrement_work;::SetLastError(ERROR_INVALID_HANDLE);return FALSE;}
+  }
+  return ::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(port),bytes,key,operation);
+ }
  std::int32_t set_timer(std::uintptr_t,LARGE_INTEGER&,std::int32_t,PTIMERAPCROUTINE,void*,std::int32_t)override{unused();}
 };
 struct WorkerApi:s::WorkerRunApi {
@@ -160,10 +224,13 @@ struct LicenseBoundary final:anadius::dispatch_recovered::LicenseHandlers {
 
 struct Time final:anadius::crypto_recovered::TimeSource {std::int64_t unix_seconds_05eeb8()override{return 1000000000;}};
 void prepare_peer(State& state,sp::SessionView view){
- const auto socket=view.owner.socket_state.socket;if(socket<201||socket>202||state.connections[socket-201])unused();auto c=std::make_unique<Connection>();c->socket=socket;c->token=view.token;c->owner_id=view.owner.identity();c->encrypted=socket==202;c->expected_response=c->encrypted?"GetConfigResponse":"QueryEntitlementsResponse";
+ const auto socket=view.owner.socket_state.socket;if(socket<201||socket>202||state.connections[socket-201])unused();auto c=std::make_unique<Connection>();c->socket=socket;c->token=view.token;c->owner_id=view.owner.identity();c->encrypted=socket==202&&!state.parallel;c->expected_response=c->encrypted?"GetConfigResponse":"QueryEntitlementsResponse";
  require(view.owner.cipher.encrypted_c4==0&&view.owner.cipher.unknown_c5==0&&view.owner.cipher.native().mode_00==0,"Graph prepare callback receives actual023000 owner after second native reset and supplies NOlogic/context graph");if(c->encrypted){view.owner.cipher.set_fixed_key_084c98();view.owner.cipher.encrypted_c4=1;c->client.set_fixed_key_084c98();}state.connections[socket-201]=std::move(c);
 }
 void observe(State& state,sp::SessionView view,ag::Log kind,std::string_view text,std::string_view error){
+ if(state.scoped)unused(); // this source scenario sends no native XML jobs
+ if(state.parallel){parallel_observe(state,view,kind,text,error);return;}
+ if(state.native_mode){native_observe(state,view,kind,text,error);return;}
  auto& c=state.connection(view.owner.socket_state.socket);auto graph=state.graph.lock();if(!graph||view.token!=c.token||view.owner.identity()!=c.owner_id)unused();
  require(error.empty()&&graph->retained(view.token),"Graph observer runs on exact retained typed native invocation without caller MessageEffects/Logic");
  if(kind==ag::Log::Received){
@@ -177,7 +244,7 @@ void observe(State& state,sp::SessionView view,ag::Log kind,std::string_view tex
 
 void deliver_receive(State& state,Connection& c){
  if(!c.receive_waiting)unused();auto ports=state.application->ports();const auto left=c.receive_wire.size()-c.cursor;
- if(!left&&c.socket==201&&state.plain_stage<2)return;
+ if(!left&&(c.socket==201||state.parallel||state.scoped)&&(state.scoped?!scoped_runtime_eof_ready(state):(state.parallel?!parallel_eof_ready(state):(state.native_mode?c.completed_sends<70:state.plain_stage<2))))return;
  const auto count=std::min<std::size_t>(left,c.receive_buffer.len);if(count)std::memcpy(c.receive_buffer.buf,c.receive_wire.data()+c.cursor,count);else{if(c.eof_posted)unused();c.eof_posted=true;}
  c.cursor+=count;c.receive_waiting=false;if(!ports.completion.post(state.port,static_cast<std::uint32_t>(count),0,c.receive_ov))unused();
 }
@@ -185,10 +252,12 @@ void post_send(State& state,Connection& c){if(!c.send_waiting||c.send_posted)unu
 int WSAAPI receive_sdk(SOCKET socket,LPWSABUF buffers,DWORD count,LPDWORD transferred,LPDWORD flags,LPWSAOVERLAPPED ov,LPWSAOVERLAPPED_COMPLETION_ROUTINE callback){
  auto& state=*running;require(!state.sdk_pending&&buffers&&count==1&&transferred&&!*transferred&&flags&&!*flags&&ov&&!callback,"Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature");auto& buffer=buffers[0];
   if(!state.application)unused();auto& c=state.connection(socket);auto& app=*state.application;auto ports=app.ports();++c.receives;
+  if(state.native_mode){if(state.scoped)scoped_runtime_receive(state,c,buffer,ov);else if(state.parallel)parallel_receive(state,c,buffer,ov);else native_receive(state,c,buffer,ov);*flags=0xface;state.sdk_pending=1;state.sdk_expected_error=997;state.sdk_trace.push_back('R');::WSASetLastError(997);return SOCKET_ERROR;}
   if(c.receives==1){
    auto session=app.session(c.token);require(session.owner.identity()==c.owner_id&&ports.view.memory.owns_control(session.owner.weak_self.control_08),"Profile session token resolves actual023000 control, not a caller-prepared owner");
    try{(void)ports.view.memory.buffer_context().memory.view(c.greeting_tail,1);}catch(const s::UnsupportedInput&){c.greeting_gone=true;}
-   if(socket==202){auto registry=app.registry();const auto& first=state.connection(201);require(app.snapshot().live_sessions==2&&ports.view.memory.snapshot().controls==2&&registry.frames.size()==2&&registry.frames[0].owner&&registry.frames[1].owner&&registry.strings[0].string&&registry.strings[1].string&&registry.reads[0].implementation&&registry.reads[1].implementation&&registry.writes[0].implementation&&registry.writes[1].implementation&&registry.finish[0].owner&&registry.finish[1].owner&&registry.queued[0].owner&&registry.queued[1].owner&&registry.messages[0].owner&&registry.messages[1].owner&&registry.environments[0].source&&registry.environments[1].source&&app.session(first.token).owner.weak_self.control_08->strong_08>0,"Two actual sessions overlap with all Profile-owned fixed registries live while plain read/send retains its real owner");state.overlap_seen=true;}
+    if(socket==201)require(app.registry().frames.size()==1,"First Graph peer uses initial1 Profile slot and native Logic row before growth");
+    if(socket==202){auto registry=app.registry();const auto& first=state.connection(201);require(app.snapshot().live_sessions==2&&ports.view.memory.snapshot().controls==2&&registry.frames.size()==2&&registry.frames[0].owner&&registry.frames[1].owner&&registry.strings[0].string&&registry.strings[1].string&&registry.reads[0].implementation&&registry.reads[1].implementation&&registry.writes[0].implementation&&registry.writes[1].implementation&&registry.finish[0].owner&&registry.finish[1].owner&&registry.queued[0].owner&&registry.queued[1].owner&&registry.messages[0].owner&&registry.messages[1].owner&&registry.environments[0].source&&registry.environments[1].source&&app.session(first.token).owner.identity()==first.owner_id&&app.session(first.token).owner.weak_self.control_08->strong_08>0,"Two actual Graph peers force Profile and native Logic row growth from initial1 while retaining the first plain peer's exact owner and live read/send contexts");require(ports.view.io.storage_bindings().size()>1&&ports.environment.storage.current_storage().data()==ports.view.io.storage_bindings().data()&&ports.environment.storage.current_storage().size()==ports.view.io.storage_bindings().size(),"Runtime I/O tables grow from initial1 while copied Ports follow the current owner view for both overlapping peers");state.overlap_seen=true;}
    const auto build=[&](unsigned index){return "<LSX><Request "+std::string()+"id=\"conn"+std::to_string(socket-200)+(c.encrypted?"":"-"+std::to_string(index))+"\" recipient=\"EbisuSDK\">"+std::string(c.encrypted?"<GetConfig/>":"<QueryEntitlements Group=\"synthetic-group\"><FilterOffers>synthetic-offer</FilterOffers></QueryEntitlements>")+"</Request></LSX>";};
    for(unsigned i=0;i<(c.encrypted?1U:17U);++i){auto request=build(i);auto expected=request;c.requests.push_back(request);c.expected_requests.push_back(expected);}
    c.expected_request=c.expected_requests[0];for(unsigned i=0;i<(c.encrypted?1U:7U);++i){auto request=c.requests[i];if(c.encrypted){if(!c.client.encrypt_042610(request))unused();m::hex_encode_03d190(request);}request.push_back(0);c.receive_wire+=request;}
@@ -199,7 +268,7 @@ int WSAAPI receive_sdk(SOCKET socket,LPWSABUF buffers,DWORD count,LPDWORD transf
  state.sdk_pending=1;state.sdk_expected_error=success?1234U:997U;state.sdk_trace.push_back('R');::WSASetLastError(state.sdk_expected_error);return success?0:SOCKET_ERROR;
 }
 int WSAAPI send_sdk(SOCKET socket,LPWSABUF buffers,DWORD count,LPDWORD transferred,DWORD flags,LPWSAOVERLAPPED ov,LPWSAOVERLAPPED_COMPLETION_ROUTINE callback){
- auto& state=*running;require(!state.sdk_pending&&buffers&&count==1&&transferred&&!*transferred&&!flags&&ov&&!callback,"Default NativeAsyncSendApi forwards exact WSASend one-buffer/zeroDWORD/flags0/realOV/nullcallback signature");auto& buffer=buffers[0];auto& c=state.connection(socket);if(c.send_waiting)unused();++c.sends;c.response_wire.append(buffer.buf,buffer.len);c.send_waiting=true;c.send_posted=false;c.send_ov=ov;c.send_bytes=buffer.len;if(c.encrypted)post_send(state,c);
+ auto& state=*running;require(!state.sdk_pending&&buffers&&count==1&&transferred&&!*transferred&&!flags&&ov&&!callback,"Default NativeAsyncSendApi forwards exact WSASend one-buffer/zeroDWORD/flags0/realOV/nullcallback signature");auto& buffer=buffers[0];auto& c=state.connection(socket);if(c.send_waiting)unused();++c.sends;c.response_wire.append(buffer.buf,buffer.len);c.send_waiting=true;c.send_posted=false;c.send_ov=ov;c.send_bytes=buffer.len;if(c.encrypted||state.native_mode)post_send(state,c);
  const bool success=socket==202&&c.sends==1;if(success){++state.send_success;*transferred=buffer.len;}state.sdk_pending=2;state.sdk_expected_error=success?1234U:997U;state.sdk_trace.push_back('S');::WSASetLastError(state.sdk_expected_error);return success?0:SOCKET_ERROR;
 }
 int error_sdk(unsigned kind){auto& state=*running;const auto error=::WSAGetLastError();require(state.sdk_pending==kind&&static_cast<unsigned>(error)==state.sdk_expected_error,"Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result");state.sdk_pending=0;state.sdk_trace.push_back('E');if(kind==1)++state.receive_error_calls;else ++state.send_error_calls;return error;}
@@ -261,7 +330,698 @@ BOOL WINAPI cancel_sdk(HANDLE,LPOVERLAPPED){unused();}
 void move_executor(void* p,s::ExecutorFields& out,s::ExecutorFields& source,std::uintptr_t table){if(table!=0x180084928ULL)unused();++static_cast<State*>(p)->moves;out.context=source.context;out.zero_74=source.zero_74;out.self_reference_80=true;}
 struct ExecutionPlatform:anadius::execution_recovered::Platform {unsigned locks=0,unlocks=0;std::uint32_t current_thread_id()override{return ::GetCurrentThreadId();}void acquire_srw_exclusive(std::uintptr_t&)override{++locks;}void release_srw_exclusive(std::uintptr_t&)override{++unlocks;}std::int64_t query_performance_frequency()override{unused();}std::int64_t query_performance_counter()override{unused();}void sleep_milliseconds(std::uint32_t)override{unused();}[[noreturn]]void raise_thread_error_04a648(int)override{unused();}};
 
-void concrete_profile(){
+// Source-only prepared/native fixture. Its actual native threads, heap/PTD/FLS
+// and own IOCP are isolated in child test processes when explicitly authorized.
+// All sockets/files/configuration/provider inputs are synthetic and owned.
+struct NativeTrace {
+ struct Launch {HANDLE original,joined,proof;DWORD id;bool original_closed=false,joined_closed=false;};
+ std::mutex gate;std::vector<Launch> launches;std::vector<std::pair<std::uint32_t,DWORD>> receipts;
+ bool valid=true,post_denied=false,wait_denied=false,close_denied=false;unsigned post_calls=0,private_closes=0,event_calls=0,event_set_calls=0;DWORD delayed_id=0;
+ HANDLE exit_entered=nullptr,exit_release=nullptr;bool delay_first_exit=false,exit_released=false;
+ bool grow_pending_rows=false,pending_growth_seen=false;
+ HANDLE session_entered=nullptr,session_release=nullptr;
+ bool hold_exit_until_close=false;
+};
+// Controller owns this pointer through actual original/child thread termination.
+// The original clears running before its wrapper calls exit, so do not use it.
+NativeTrace* exit_trace=nullptr;
+DECLSPEC_NORETURN void WINAPI delayed_native_exit(DWORD code){
+ try{auto* trace=exit_trace;bool delay=false;if(trace){std::lock_guard lock(trace->gate);if(trace->delay_first_exit&&code==0){if(!trace->delayed_id)trace->delayed_id=::GetCurrentThreadId();delay=trace->delayed_id==::GetCurrentThreadId();}}
+  if(delay){if(code||!::SetEvent(trace->exit_entered)||::WaitForSingleObject(trace->exit_release,trace->hold_exit_until_close?30000U:10000U)!=WAIT_OBJECT_0)::ExitProcess(245);}
+ }catch(...){::ExitProcess(245);}::ExitThread(code);
+}
+HANDLE WINAPI native_event(LPSECURITY_ATTRIBUTES security,BOOL manual,BOOL initial,LPCWSTR name){
+ (void)security;(void)manual;(void)initial;(void)name;{std::lock_guard lock(running->native_trace->gate);++running->native_trace->event_calls;}::ExitProcess(246);
+}
+BOOL WINAPI native_set_event(HANDLE){std::lock_guard lock(running->native_trace->gate);++running->native_trace->event_set_calls;::ExitProcess(246);}
+BOOL WINAPI native_duplicate(HANDLE source_process,HANDLE source,HANDLE target_process,LPHANDLE out,DWORD access,BOOL inherit,DWORD flags){
+ try{const auto result=::DuplicateHandle(source_process,source,target_process,out,access,inherit,flags);const auto error=::GetLastError();
+  if(result){HANDLE proof=nullptr;if(!::DuplicateHandle(::GetCurrentProcess(),*out,::GetCurrentProcess(),&proof,0,FALSE,DUPLICATE_SAME_ACCESS))::ExitProcess(246);auto& trace=*running->native_trace;std::lock_guard lock(trace.gate);trace.valid&=out&&*out&&proof&&flags==DUPLICATE_SAME_ACCESS&&!access&&!inherit;trace.launches.push_back({source,*out,proof,::GetThreadId(source)});}
+  if(result&&running->parallel)parallel_duplicate_observe(*running,source);::SetLastError(error);return result;
+ }catch(...){::ExitProcess(246);}
+}
+BOOL WINAPI native_close(HANDLE handle){
+ try{if(running->native_failure=="close"){auto& trace=*running->native_trace;std::lock_guard lock(trace.gate);for(const auto& row:trace.launches)if(row.joined==handle&&!row.joined_closed&&!trace.close_denied){trace.close_denied=true;::SetLastError(ERROR_INVALID_HANDLE);return FALSE;}}
+  const auto result=::CloseHandle(handle);const auto error=::GetLastError();if(result){auto& trace=*running->native_trace;std::lock_guard lock(trace.gate);bool found=false;for(auto it=trace.launches.rbegin();it!=trace.launches.rend()&&!found;++it){if(it->original==handle&&!it->original_closed){it->original_closed=true;found=true;}else if(it->joined==handle&&!it->joined_closed){it->joined_closed=true;++trace.private_closes;found=true;}}trace.valid&=found;}::SetLastError(error);return result;}catch(...){::ExitProcess(246);}
+}
+DWORD WINAPI native_wait(HANDLE handle,DWORD timeout){
+ try{if(timeout==0&&running->native_failure=="wait"){auto& trace=*running->native_trace;std::lock_guard lock(trace.gate);for(const auto& row:trace.launches)if(row.joined==handle&&!row.joined_closed&&!trace.wait_denied){trace.wait_denied=true;::SetLastError(ERROR_INVALID_HANDLE);return WAIT_FAILED;}}return ::WaitForSingleObject(handle,timeout);}catch(...){::ExitProcess(246);}
+}
+BOOL WINAPI native_post(HANDLE port,DWORD receipt,ULONG_PTR key,LPOVERLAPPED operation){
+ try{auto& state=*running;{std::lock_guard lock(state.native_trace->gate);auto& trace=*state.native_trace;++trace.post_calls;trace.valid&=port==reinterpret_cast<HANDLE>(state.port)&&receipt&&key==s::prepared_job_completion_key&&!operation&&::GetCurrentThreadId()!=state.original_thread;trace.receipts.emplace_back(receipt,::GetCurrentThreadId());if(state.native_failure=="post"){trace.post_denied=true;::SetLastError(ERROR_INVALID_HANDLE);return FALSE;}}
+  if(state.native_failure=="early-stop"||state.native_failure.starts_with("early-drain")||state.native_failure.starts_with("session-")){std::atomic_ref(state.view->scheduler.high_34).store(1);if(!::PostQueuedCompletionStatus(port,0,0,nullptr))::ExitProcess(246);}
+  if(state.native_failure.starts_with("session-")){auto& trace=*state.native_trace;if(!::SetEvent(trace.session_entered)||::WaitForSingleObject(trace.session_release,10000)!=WAIT_OBJECT_0)::ExitProcess(244);}
+  if(state.native_failure=="early-drain-timeout")return TRUE; // controlled proxy withholds the ready packet; not an observed kernel post
+  const auto result=::PostQueuedCompletionStatus(port,receipt,key,operation);const auto error=::GetLastError();if(result&&state.native_failure=="duplicate")if(!::PostQueuedCompletionStatus(port,receipt,key,operation))::ExitProcess(246);if(result&&state.parallel)parallel_post_observe(state,receipt);::SetLastError(error);return result;
+ }catch(...){::ExitProcess(246);}
+}
+void join_native_children(State& state){
+ // This test driver joins independent proof handles OUTSIDE Parent. It makes
+ // scheduling deterministic without replacing NativeJobs' own physical polls.
+ auto& trace=*state.native_trace;
+ if(trace.delay_first_exit&&!trace.hold_exit_until_close&&state.delayed_acknowledged&&!state.delayed_retention_checked){
+  require(!state.view->memory.operation_on_this_thread(),"Delayed physical maintenance runs outside Parent");
+  const auto work=state.view->scheduler.work_count_30.load();require(state.delayed_before_decrement_work>0&&work==state.delayed_before_decrement_work-1,"Receipt drops exactly one work pin before the next physical wait");
+  require(!state.native_jobs->quiescent_prepared(*state.application),"Receipt consumption cannot reap a child blocked before ExitThread/FLS");
+  const auto jobs=state.native_jobs->snapshot();
+  require(jobs.phase==anadius::owned_jobs::Phase::Bound&&jobs.pending==1&&jobs.completed==1&&!trace.private_closes&&trace.event_calls==0&&trace.event_set_calls==0,"Live physical child retains capacity1 private handle after source completion");
+  require(state.view->scheduler.work_count_30.load()==work,"Unsignaled physical maintenance cannot consume another source work pin");
+  if(!trace.grow_pending_rows){if(!::SetEvent(trace.exit_release))::ExitProcess(245);std::lock_guard lock(trace.gate);trace.exit_released=true;}
+  state.delayed_retention_checked=true;
+ }
+ std::vector<std::pair<HANDLE,DWORD>> handles;{std::lock_guard lock(trace.gate);for(std::size_t i=0;i<trace.launches.size();++i){if(trace.delay_first_exit&&!trace.exit_released&&i==0)continue;const auto& row=trace.launches[i];handles.emplace_back(row.proof,row.id);}}
+ for(const auto& [handle,id]:handles){if(!id||::WaitForSingleObject(handle,10000)!=WAIT_OBJECT_0)::ExitProcess(247);DWORD code=STILL_ACTIVE;if(!::GetExitCodeThread(handle,&code)||code!=(state.native_failure=="post"?1U:0U))::ExitProcess(247);}
+ if(trace.grow_pending_rows&&!trace.exit_released){
+  HANDLE first_proof=nullptr;bool second_exited=false;
+  {std::lock_guard lock(trace.gate);if(trace.launches.size()==2){
+    const auto& first=trace.launches[0];const auto& second=trace.launches[1];
+    require(first.original_closed&&second.original_closed&&!first.joined_closed&&!second.joined_closed&&first.id!=second.id&&trace.receipts.size()==2,
+      "Growing NativeJobs retains first private handle and distinct second native actor until source receipts are consumed");
+    first_proof=first.proof;second_exited=true;
+  }}
+  if(second_exited){
+   require(!state.view->memory.operation_on_this_thread()&&state.delayed_acknowledged&&state.delayed_retention_checked,"Second child physical proof is observed only at the existing outside-Parent wait point");
+   DWORD code=0;require(::WaitForSingleObject(first_proof,0)==WAIT_TIMEOUT&&::GetExitCodeThread(first_proof,&code)&&code==STILL_ACTIVE,"First consumed child remains physically held while the second grown row has completed its native/FLS exit");
+   const auto jobs=state.native_jobs->snapshot();
+   require(jobs.phase==anadius::owned_jobs::Phase::Bound&&jobs.pending==2&&jobs.started==2&&jobs.detached==2&&jobs.completed==1&&state.native_notices==1&&state.processed==2&&!trace.private_closes&&trace.event_calls==0&&trace.event_set_calls==0,
+     "Initial NativeJobs1 grows to two retained physical rows while first ready receipt is consumed and second ready receipt is still queued");
+   if(!::SetEvent(trace.exit_release))::ExitProcess(245);
+   {std::lock_guard lock(trace.gate);trace.exit_released=true;trace.pending_growth_seen=true;}
+  }
+ }
+ if(state.view)state.native_before_wait_work=state.view->scheduler.work_count_30.load();
+ if(state.native_failure=="early-drain"&&state.drain_resume_posted&&!state.drain_counter_checked){require(state.drain_before_decrement_work&&state.native_before_wait_work==state.drain_before_decrement_work-1,"Deferred stop receipt still transfers exactly one scheduler pin before resumed stop");state.drain_counter_checked=true;}
+ if(state.native_failure=="post"&&!handles.empty()){
+  const auto jobs=state.native_jobs->snapshot();require(state.native_trace->post_denied&&state.native_trace->post_calls==1&&jobs.phase==anadius::owned_jobs::Phase::Poisoned&&jobs.pending==1&&jobs.started==1&&jobs.detached==1&&!jobs.completed,"Denied native ready post retains its row/work pin without retry or acknowledgement");
+  require(state.processed==1&&state.application->snapshot().live_jobs==1&&state.view->memory.snapshot().controls==1&&state.native_before_wait_work>=2&&!state.native_notices&&!state.native_trace->private_closes&&state.native_trace->event_calls==0&&state.native_trace->event_set_calls==0,"Post-denial prefix keeps source closure/control/IO and physical handles despite child logical return and actual exit");std::_Exit(191);
+ }
+}
+std::string native_body(unsigned index){switch(index%5){case 0:return "<GetProfile index=\"0\"/>";case 1:return "<GetAllGameInfo/>";case 2:return "<GrantAchievement AchievementId=\"one\" Progress=\"1\"/>";case 3:return "<GetAuthCode ClientId=\"owned-client\"/>";default:return "<QueryEntitlements Group=\"synthetic-group\"><FilterOffers>synthetic-offer</FilterOffers></QueryEntitlements>";}}
+std::string_view native_response(unsigned index){static constexpr std::string_view names[]{"GetProfileResponse","GetAllGameInfoResponse","Achievement","AuthCode","QueryEntitlementsResponse"};return names[index%5];}
+void native_receive(State& state,Connection& c,s::Buffer buffer,OVERLAPPED* ov){
+ if(c.receives==1){try{(void)state.view->memory.buffer_context().memory.view(c.greeting_tail,1);}catch(const s::UnsupportedInput&){c.greeting_gone=true;}
+  for(unsigned i=0;i<70;++i){auto text="<LSX><Request id=\"native-"+std::to_string(i)+"\" recipient=\"EbisuSDK\">"+native_body(i)+"</Request></LSX>";c.requests.push_back(text);c.expected_requests.push_back(text);}c.receive_wire=c.requests[0];c.receive_wire.push_back(0);state.native_delivered=1;
+ }
+ require(!c.receive_waiting,"Prepared source has one SDK receive loan at a time");c.receive_waiting=true;c.receive_buffer=buffer;c.receive_ov=ov;deliver_receive(state,c);
+}
+void native_observe(State& state,sp::SessionView view,ag::Log kind,std::string_view text,std::string_view error){
+ auto& c=state.connection(view.owner.socket_state.socket);require(error.empty()&&view.token==c.token&&view.owner.identity()==c.owner_id&&::GetCurrentThreadId()!=state.original_thread,"Prepared Graph observer belongs to exact session on a distinct real child actor");
+ if(kind==ag::Log::Received){require(text==c.expected_requests.at(c.processed),"Child033d70 observes exact Parent-backed request in sequence");(void)state.view->memory.buffer_context();++c.received_logs;}
+ else if(kind==ag::Log::Response){
+  const bool valid=text.find(native_response(c.processed))!=std::string_view::npos&&text.find("id=\"native-"+std::to_string(c.processed)+"\"")!=std::string_view::npos;
+  if(!valid)std::cerr<<"Prepared response index="<<c.processed<<" expected="<<native_response(c.processed)<<" actual="<<text<<'\n'<<std::flush;
+  require(valid,"Concrete child Router preserves response kind and request id before original-worker continuation");++c.response_logs;++c.processed;++state.processed;
+ }
+ else unused(); // plain peer and non-completing achievement emit no events
+}
+int WINAPI native_message(HWND,LPCWSTR,LPCWSTR,UINT){::ExitProcess(248);}
+BOOL WINAPI session_cancel(HANDLE handle,LPOVERLAPPED operation){
+ try{auto& state=*running;++state.session_cancel_calls;
+  require(state.native_failure.starts_with("session-")&&state.view->memory.operation_on_this_thread(),"Prepared session cancellation executes only on original admitted worker");
+  if(state.native_failure=="session-cancel-fail"){::SetLastError(ERROR_ACCESS_DENIED);return FALSE;}
+  auto& c=state.connection(201);
+  if(operation==c.send_ov&&c.send_posted){require(handle==reinterpret_cast<HANDLE>(201),"Already-posted synthetic send retains exact source socket");::SetLastError(ERROR_NOT_FOUND);return FALSE;}
+  const bool receive=operation==c.receive_ov&&c.receive_waiting;
+  require((receive&&handle==reinterpret_cast<HANDLE>(201))||(operation==state.accept_packets.back()&&handle==reinterpret_cast<HANDLE>(200)),"Synthetic cancel targets exact pending accept/receive loan");
+  if(receive){c.receive_waiting=false;if(state.native_failure=="session-missing-io")return TRUE;}
+  state.session_cancel_packets.push_back(operation);if(!::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(state.port),0,0,operation))::ExitProcess(246);return TRUE;
+ }catch(...){::ExitProcess(246);}
+}
+struct FixtureClock final:anadius::achievement_runtime::Clock {
+ std::int64_t time_05eeb8()override{return 1577836800;}
+ std::optional<anadius::achievement_runtime::BrokenDown> gmtime_05fffc(std::int64_t value)override{require(value==1577836800,"Prepared concrete providers use controlled own clock");return anadius::achievement_runtime::BrokenDown{0,0,0,1,0,120,3,0,0};}
+};
+struct FixtureFormatter final:anadius::achievement_runtime::Formatter {std::string put_time_03d610(const anadius::achievement_runtime::BrokenDown&,std::string_view)override{return "2020-01-01T00:00:00";}};
+struct ConcreteProviders {
+ State& state;anadius::bootstrap_backend::RuntimeSeed runtime{};anadius::achievement_storage::Paths paths{};anadius::license_recovered::AuthenticationCode authentication;
+ const DWORD root_thread=::GetCurrentThreadId();void* const root_fiber=::GetCurrentFiber();bool root_sentinels=false;unsigned root_checkpoints=0;
+ std::shared_ptr<std::stringbuf> buffer=std::make_shared<std::stringbuf>();std::shared_ptr<std::ostream> stream=std::make_shared<std::ostream>(buffer.get());
+ std::shared_ptr<anadius::library_effects::Dialog> dialog;
+ std::shared_ptr<b8_test::MemoryFilesState> files=std::make_shared<b8_test::MemoryFilesState>();
+ std::unique_ptr<anadius::online_factory::Online> online;std::shared_ptr<anadius::information_effects::Information> information;std::shared_ptr<anadius::content_effects::Content> content;std::shared_ptr<anadius::licensing_effects::Handlers> licensing;
+ ConcreteProviders(State& state,anadius::execution_recovered::Execution& execution,const anadius::bootstrap_backend::CallbackStateView* exact=nullptr,anadius::library_effects::DialogApi dialog_api={::MultiByteToWideChar,native_message}):state(state){
+  dialog=std::make_shared<anadius::library_effects::Dialog>(dialog_api);
+  require(!exact||(&exact->configuration==&state.configuration&&&exact->execution==&execution),"Worker provider aliases borrow exact live bound configuration/Execution");
+  state.configuration.fake_auth=1;state.configuration.username="prepared-user";state.configuration.achievements.emplace("one",anadius::configuration::Achievement{1000,0,0,"0000-00-00T00:00:00","own","steam-own",0});
+  const auto view=exact?*exact:anadius::bootstrap_backend::CallbackStateView{state.configuration,runtime,execution};anadius::online_factory::Options o;o.stream=stream;o.dialog=dialog;o.os=std::make_unique<b12_test::Os>();o.files=std::make_unique<b8_test::MemoryFiles>(files);o.code_lease=[](auto){return std::shared_ptr<void>{};};o.foreign_quiescent=[]{return true;};online=std::make_unique<anadius::online_factory::Online>(view,std::move(o));
+  auto clock=std::make_shared<FixtureClock>();auto formatter=std::make_shared<FixtureFormatter>();anadius::information_effects::Options i;i.stream=stream;i.clock=clock;i.formatter=formatter;information=std::make_shared<anadius::information_effects::Information>(i);
+  anadius::content_effects::Options c;c.stream=stream;c.dialog=dialog;c.files=std::make_shared<b8_test::MemoryFiles>(files);c.clock=clock;c.formatter=formatter;content=std::make_shared<anadius::content_effects::Content>(view,paths,*online,c);
+  anadius::licensing_effects::Options l;l.stream=stream;l.dialog=dialog;l.files=std::make_shared<b8_test::MemoryFiles>(files);l.clock=clock;l.formatter=formatter;licensing=std::make_shared<anadius::licensing_effects::Handlers>(view,*online,std::make_shared<anadius::licensing_effects::AttemptState>(anadius::licensing_effects::AttemptState{0,0}),l);licensing->bind_authentication_code(authentication);
+ }
+ static void root_checkpoint(void* p){auto& v=*static_cast<ConcreteProviders*>(p);require(::GetCurrentThreadId()==v.root_thread&&::GetCurrentFiber()==v.root_fiber,"Call-view mode cannot fall back to a legacy provider checkpoint on a child actor");++v.root_checkpoints;}
+ void bind_root_sentinels(){require(!root_sentinels&&state.original_thread==root_thread,"Call-view sentinels bind once on the actual original worker after authentication binding");const anadius::content_handlers_recovered::CallCheckpoint checkpoint{this,root_checkpoint};information->bind_content_checkpoint(checkpoint);content->bind_content_checkpoint(checkpoint);licensing->bind_content_checkpoint(checkpoint);root_sentinels=true;}
+ ~ConcreteProviders(){if(root_sentinels){licensing->clear_content_checkpoint();content->clear_content_checkpoint();information->clear_content_checkpoint();}licensing.reset();content.reset();information.reset();if(!online->close_after_cleanup())std::terminate();online.reset();state.provider_retired_thread=::GetCurrentThreadId();++state.worker_provider_retirements;}
+};
+struct NativeHooks {
+ State& state;Dispatcher& dispatcher;cp::Policy* policy=nullptr;s::Api* errors=nullptr;
+ s::IocpSchedulerEntry* completion_owner(sp::Application& application,s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& error,std::uint32_t){
+  state.application=&application;auto ports=application.ports();if(!state.view_value){state.view_value.emplace(ports.view);state.view=&*state.view_value;if(state.native_call_views)require(ports.view.memory.operation_policy()==s::OperationPolicy::Serialized,"Call-view Graph integration keeps the actual runtime Parent policy Serialized");}
+  if(ports.accept.contains(&op)){++state.accept_completions;if(state.shutdown_posted&&&op.overlapped==state.accept_packets.back()){require(error.value==995&&!application.snapshot().live_sessions&&!application.snapshot().live_jobs,"Native fixture selects terminal pending accept only after source ownership drain");state.terminal_selected=true;return nullptr;}}
+  else{const auto handle=ports.view.io.handle_for(&op);const auto kind=ports.view.io.kind(handle);if(kind==s::IoMemoryKind::Posted)++state.posted_packets;
+   if(kind==s::IoMemoryKind::Send){++state.send_packets;auto& c=state.connection(201);require(c.send_waiting&&c.send_posted&&c.send_ov==&op.overlapped,"Prepared response completes its exact actual SDK send loan");c.send_waiting=c.send_posted=false;++c.completed_sends;}
+   if(kind==s::IoMemoryKind::Receive)++state.receive_packets;
+  }return owner;
+ }
+ void after_completion(sp::Application& application){
+  auto ports=application.ports();if(state.terminal_selected){state.terminal_selected=false;state.shutdown_done=true;state.accept_pending=false;}
+  if(state.native_failure.starts_with("session-"))return; // selected Stop owns terminal IO; do not feed request2
+  auto& trace=*state.native_trace;
+  if(trace.delay_first_exit&&!state.delayed_acknowledged&&state.native_jobs->snapshot().completed==1){
+   if(::WaitForSingleObject(trace.exit_entered,10000)!=WAIT_OBJECT_0)::ExitProcess(245);
+   HANDLE proof=nullptr;{std::lock_guard lock(trace.gate);require(trace.launches.size()==1&&trace.receipts.size()==1&&!trace.exit_released,"First real child reaches exit gate after one ready publication");proof=trace.launches.front().proof;}
+   DWORD code=0;require(::WaitForSingleObject(proof,0)==WAIT_TIMEOUT&&::GetExitCodeThread(proof,&code)&&code==STILL_ACTIVE,"Acknowledged child is still physically live before actual ExitThread/FLS");
+   require(state.native_notices==1&&!application.snapshot().live_jobs&&state.native_jobs->snapshot().pending==1&&state.processed==1,"Source handoff retires once while its physical NativeJobs row remains occupied");state.delayed_before_decrement_work=ports.view.scheduler.work_count_30.load();state.delayed_acknowledged=true;
+  }
+  auto& c=state.connection(201);
+  if(state.native_call_views&&!state.native_call_events_seen&&c.completed_sends==3){auto graph=state.graph.lock();require(static_cast<bool>(graph),"Actual call-view Graph remains owned through first completed achievement");const auto queue=graph->snapshot();require(queue.event_initialized&&!queue.event_locked&&queue.queued_events==2,"Actual private Content writer and semantic event adapters leave DOWN plus one achievement after first completion");state.native_call_events_seen=true;}
+  if(c.completed_sends&&c.completed_sends==state.native_delivered&&c.completed_sends==c.processed&&c.receive_waiting&&c.cursor==c.receive_wire.size()&&!c.eof_posted){
+   if(trace.grow_pending_rows&&c.completed_sends==1&&!trace.exit_released){
+    const auto jobs=state.native_jobs->snapshot();
+    require(state.delayed_acknowledged&&state.delayed_retention_checked&&jobs.pending==1&&jobs.completed==1&&!trace.pending_growth_seen,
+      "Only the separate growth scenario feeds request2 while the first consumed physical row remains occupied");
+   }else require(state.native_jobs->snapshot().pending==0,"Known physical/FLS reaping makes capacity1 reusable before the next native message");
+   if(c.completed_sends<70){c.receive_wire+=c.requests[c.completed_sends];c.receive_wire.push_back(0);++state.native_delivered;}deliver_receive(state,c);
+  }
+  if(!application.snapshot().live_sessions&&state.processed==70&&!state.shutdown_posted){require(clear(application.registry())&&!application.snapshot().live_jobs&&state.native_jobs->snapshot().completed==70,"Seventy real child jobs drain all source registries before fixture stop");state.shutdown_posted=true;const auto h=ports.accept.handle_for(state.accept_packets.back());ports.accept.note_cancel_requested(h);for(auto& binding:ports.accept.dispatcher_bindings())if(binding.overlapped_identity==state.accept_packets.back())s::publish_send_status_028b50(ports.view.scheduler,*binding.operation,binding,995,0,ports.completion,*errors);}
+ }
+ void returned(sp::Application& application,std::uint64_t,const s::WorkerRunResult& result){
+  auto ports=application.ports();const auto jobs=state.native_jobs->snapshot();auto& c=state.connection(201);
+  if(state.native_failure.starts_with("session-")){
+   const auto held=state.native_trace->hold_exit_until_close;
+   if(held){if(::WaitForSingleObject(state.native_trace->exit_entered,10000)!=WAIT_OBJECT_0)::ExitProcess(245);}
+   const auto stop=state.session_stop->snapshot();require(result.error&&!result.error->value&&state.native_notices==1&&state.processed==1&&jobs.started==1&&jobs.completed==1&&jobs.pending==(held?1U:0U)&&!application.snapshot().live_jobs&&!application.snapshot().live_sessions&&!ports.view.io.snapshot().allocations&&ports.view.memory.snapshot().controls_destroyed==1&&!ports.view.scheduler.work_count_30.load(),"Combined stop drains source job/IO while keeping physically live child row distinct");
+   require(stop.phase==ast::Phase::Draining&&stop.kernel_packets>=2&&stop.acknowledged==stop.kernel_packets+stop.software_packets&&!stop.receipts,"Every selected late IO route is observed and acknowledged once before worker return");
+   if(policy)require(policy->snapshot().exit_cleanups==2&&policy->snapshot().worker_initializations==1&&policy->snapshot().worker_finishes==1,"Direct Graph fixture observes exact Policy cleanup/init/finish counts");
+   state.worker_done=true;state.worker_source_io_drained=true;return;
+  }
+  if(state.native_failure=="early-drain"){
+   require(result.error&&!result.error->value&&jobs.phase==anadius::owned_jobs::Phase::Bound&&jobs.started==1&&jobs.detached==1&&jobs.completed==1&&!jobs.pending&&state.native_notices==1&&state.processed==1&&state.drain_counter_checked,"Selected early stop consumes exact ready receipt before original worker finish without body replay");
+   require(!application.snapshot().live_jobs&&application.snapshot().live_sessions==1&&ports.view.memory.snapshot().controls==1&&ports.view.scheduler.work_count_30.load()&&state.native_trace->private_closes==1&&state.native_trace->event_calls==0&&state.native_trace->event_set_calls==0&&policy->snapshot().exit_cleanups==2&&policy->snapshot().worker_initializations==1&&policy->snapshot().worker_finishes==1,"Receipt drain completes child/original source cleanup and physical reap while unrelated session IO remains explicitly owned");state.worker_done=true;return;
+  }
+  require(result.error&&!result.error->value&&state.shutdown_done&&state.native_notices==70&&c.received_logs==70&&c.response_logs==70&&c.completed_sends==70&&jobs.started==70&&jobs.detached==70&&jobs.completed==70&&!jobs.pending,"Prepared NativeJobs executes and acknowledges70 child bodies exactly once, with capacity1 physical reuse");
+  require(!application.snapshot().live_jobs&&!application.snapshot().live_sessions&&clear(application.registry())&&!ports.view.io.snapshot().allocations&&ports.view.memory.snapshot().controls_destroyed==1&&!ports.view.scheduler.work_count_30.load(),"Real021770/response/control/IO/work cleanup completes before native worker return");
+  std::size_t cursor=0;for(unsigned i=0;i<70;++i){const auto end=c.response_wire.find('\0',cursor);require(end!=std::string::npos,"Every original-worker SDK response has a native frame terminator");const auto frame=std::string_view(c.response_wire).substr(cursor,end-cursor);require(frame.find(native_response(i))!=std::string_view::npos&&frame.find("id=\"native-"+std::to_string(i)+"\"")!=std::string_view::npos,"Original continuation preserves exact native response FIFO ids without reprocessing");cursor=end+1;}require(cursor==c.response_wire.size()&&state.configuration.achievements.at("one").field08==(state.native_call_views?1:14),"No duplicate responses or repeated Content achievement mutations");
+  require(policy->snapshot().exit_cleanups==140&&policy->snapshot().worker_initializations==1&&policy->snapshot().worker_finishes==1,"Each current child04a47c and original02177004a47c runs once for distinct actor scopes");
+  if(state.native_failure=="late-close"){state.close_wait=std::make_shared<anadius::services_completion::WaitTarget>(2,0);state.close_wait->lock();policy->exit_waits().register_current_thread(state.close_wait);require(policy->exit_waits().active()==1,"Owned original-thread registration deliberately defers final Policy close after NativeJobs closes");}state.worker_done=true;
+ }
+ bool external(o::ServerView view,sp::Application& application){
+  require(!view.memory.operation_on_this_thread()&&state.worker_done&&!application.snapshot().live_jobs&&!state.native_jobs->snapshot().pending,"External attestation follows independently observed child FLS exit and source drain outside Parent");
+  ++state.worker_external_proofs;
+  if(state.native_failure=="early-drain"){++state.native_external_calls;return false;} // unrelated owned IO has no external drain proof
+  ++state.native_external_calls;if(state.native_failure=="unknown-external")throw o::QuiescenceDeferred(); // an opaque exception is never a known false return
+  unsigned relays=0;for(;;){std::uint32_t bytes=0;std::uintptr_t key=0;OVERLAPPED* op=nullptr;const auto got=dispatcher.get(view.scheduler.completion.port,bytes,key,op,0);const auto error=dispatcher.get_last_error();if(!got){require(error==WAIT_TIMEOUT&&!op,"Own native IOCP drains to actual timeout");break;}require(!bytes&&!key&&!op,"Only source stop relay remains after native receipt/IO drain");++relays;}require(relays==(state.queue_drained?0U:1U),"Native fixture consumes stop relay once and rechecks actual timeout on retry");state.queue_drained=true;return true;
+ }
+};
+BOOL WINAPI own_native_module(DWORD flags,LPCWSTR address,HMODULE* module){if(flags!=4||!address||!module)::ExitProcess(249);*module=nullptr;::SetLastError(ERROR_MOD_NOT_FOUND);return FALSE;}
+void run_prepared_native(std::shared_ptr<anadius::thread_domain::DomainStorage> domain,anadius::worker_handoff::PreparedMemory& prepared,std::shared_ptr<anadius::bootstrap_providers::NativeThreads> threads,std::shared_ptr<NativeTrace> trace,std::string failure,std::shared_ptr<ast::Stop> session_stop={},bool call_views=false){
+ auto borrow=prepared.acquire();auto state=std::make_shared<State>();state->native_mode=true;state->native_call_views=call_views;state->original_thread=::GetCurrentThreadId();state->native_trace=std::move(trace);state->native_failure=std::move(failure);running=state.get();
+ state->session_stop=std::move(session_stop);
+ state->configuration.entitlements.push_back({"synthetic-offer","synthetic-group","synthetic-version","synthetic-type","synthetic-tag"});
+ std::uint32_t index=::TlsAlloc();require(index!=TLS_OUT_OF_INDEXES,"Prepared native fixture owns one original IOCP TLS selector");
+ ExecutionPlatform platform;anadius::execution_recovered::MutexState mutex{},achievement_mutex{};anadius::execution_recovered::initialize_mutex_04a698(mutex,2);anadius::execution_recovered::initialize_mutex_04a698(achievement_mutex,2);
+ std::uint8_t ready=0,other=0,last=0;std::int64_t frequency=0;anadius::execution_recovered::Execution execution{mutex,{ready,other,last},frequency,platform};state->ready=&ready;
+ auto providers=std::make_unique<ConcreteProviders>(*state,execution);
+ if(call_views){state->configuration.achievements.at("one").field00=1;providers->paths.xml_path=u"MEM\\call-views.xml";providers->bind_root_sentinels();}
+ {
+  auto sockets=std::make_shared<Sockets>(*state);auto dispatcher=std::make_shared<Dispatcher>(*state);auto worker=std::make_shared<WorkerApi>(index,*dispatcher);auto hooks=std::make_shared<NativeHooks>(NativeHooks{*state,*dispatcher});
+  anadius::owned_jobs::NativeJobApi api;api.create_event=native_event;api.set_event=native_set_event;api.duplicate=native_duplicate;api.close=native_close;api.wait=native_wait;api.post=native_post;state->native_jobs=std::make_shared<anadius::owned_jobs::NativeJobs>(threads,1,api);
+  auto log_buffer=std::make_shared<std::stringbuf>();ag::Options options;options.state={state,&state->configuration,&state->online,&state->saved,&state->achievement_file};options.policy.stream=anadius::shared_log::make_stream(log_buffer);options.policy.imports={::WSASetLastError,::WSAGetLastError,convert_sdk,parse_sdk,sync_send_sdk,select_sdk};options.policy.lifecycle.lifetime=hooks;
+  if(call_views)options.state.achievement_file=&providers->paths.xml_path;
+  options.policy.lifecycle.select_owner=[h=hooks.get()](sp::Application& app,s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& error,std::uint32_t bytes){return h->completion_owner(app,owner,op,error,bytes);};
+  options.policy.lifecycle.after=[h=hooks.get()](sp::Application& app){h->after_completion(app);};options.policy.lifecycle.returned=[h=hooks.get()](sp::Application& app,std::uint64_t n,const s::WorkerRunResult& result){h->returned(app,n,result);};options.policy.lifecycle.external_drained=[h=hooks.get()](o::ServerView view,sp::Application& app){return h->external(view,app);};
+  options.information=providers->information;options.content=providers->content;options.licensing=providers->licensing;options.time=std::make_shared<Time>();options.version="prepared-native";options.show_lsx=1;options.event_capacity=8;options.profile.sessions=1;options.profile.jobs_capacity=1;options.profile.headers=128;options.profile.initial_output_slots=8;options.profile.jobs=state->native_jobs;options.profile.receive={receive_sdk,receive_error_sdk};options.profile.send={send_sdk,send_error_sdk};
+  options.prepare_session=[state](sp::SessionView view){prepare_peer(*state,view);};options.observe_log=[state](sp::SessionView view,ag::Log kind,std::string_view text,std::string_view error){observe(*state,view,kind,text,error);};
+  auto graph=ag::Graph::create(std::move(options));graph->bind_achievement_mutex(achievement_mutex,platform);state->graph=graph;
+  o::Dependencies server_deps;server_deps.state_lifetime=state;server_deps.sockets=sockets;server_deps.dispatcher=dispatcher;s::IocpConstructorImports imports;imports.create_completion_port=create_port;imports.close_handle=close_port;server_deps.iocp=std::make_shared<s::NativeIocpConstructorApi>(imports);server_deps.gates=std::make_shared<s::NativeServiceGateApi>(s::ServiceGateImports{gate_initialize,::GetLastError});server_deps.cancellation=std::make_shared<Cancel>(*state);server_deps.executor=std::make_shared<Executor>(*state);server_deps.kernel={startup,cleanup,local_name,environment,gate_delete};
+  rt::Dependencies runtime_deps;runtime_deps.state_lifetime=state;runtime_deps.sockets=sockets;runtime_deps.dispatcher=dispatcher;runtime_deps.worker=worker;runtime_deps.accept=std::make_shared<s::NativeAsyncAcceptApi>(s::AsyncAcceptImports{accept_sdk,accept_addresses,update_context,::WSAGetLastError});runtime_deps.factory=std::make_shared<s::NativeSocketFactoryApi>(s::SocketFactoryImports{open_socket});runtime_deps.cancel=std::make_shared<s::NativeRetryCancelApi>(cancel_sdk);runtime_deps.tls_index=&index;runtime_deps.executor={state.get(),move_executor};runtime_deps.capacity=32;
+  if(state->native_failure.starts_with("early-drain"))runtime_deps.prepared_stop_timeout_ms=state->native_failure=="early-drain-timeout"?200U:5000U;
+  if(state->session_stop){runtime_deps.accept_stop=state->session_stop;runtime_deps.prepared_stop_timeout_ms=state->native_failure=="session-missing-io"?200U:5000U;}
+  anadius::bootstrap_backend::Resources resources{};graph->install_server_prepared(resources,domain,std::move(borrow),std::move(server_deps),std::move(runtime_deps));hooks->policy=graph->policy().get();hooks->errors=graph->policy()->errors().get();
+  require(state->native_jobs->snapshot().phase==anadius::owned_jobs::Phase::Fresh&&state->native_trace->launches.empty(),"Prepared Graph installation publishes no native job/event before source start");
+  std::uint16_t port=0;
+  try{server::server_start_029ea0(*resources.server,port,ready,execution);}
+  catch(const o::QuiescenceDeferred&){
+   const auto backend=graph->backend().snapshot();
+   require(backend.phase==o::Phase::Quiescing&&!backend.quiescence_attested&&backend.acceptor_initialized&&backend.pending_initialized&&!backend.active_calls&&!state->ports_closed&&!state->cleanups,"Known false drain retains live sockets/context and clears Graph/server call admission for retry");
+   if(state->native_failure=="early-drain"){
+    const auto jobs=state->native_jobs->snapshot();require(graph->snapshot().phase==ag::Phase::Bound&&graph->profile()->snapshot().phase==sp::Phase::Closing&&jobs.phase==anadius::owned_jobs::Phase::Bound&&!jobs.pending&&jobs.completed==1&&state->native_external_calls==1&&state->application->snapshot().live_sessions==1&&!state->application->snapshot().live_jobs&&state->drain_counter_checked,"Prepared receipt drain permits known later IO deferral; it cannot attest remaining session/SDK ownership");std::_Exit(197);
+   }
+   require(state->native_failure=="late-close"&&graph->snapshot().phase==ag::Phase::Drained&&graph->profile()->snapshot().phase==sp::Phase::Closing&&graph->policy()->snapshot().phase==cp::Phase::Bound&&state->native_jobs->snapshot().phase==anadius::owned_jobs::Phase::Closed&&state->native_external_calls==1&&state->close_wait&&state->close_wait->registered(),"Late Policy deferral preserves already-closed NativeJobs and Drained Graph for explicit pending-destruction retry");
+   const auto before=state->native_jobs->snapshot();const auto private_closes=state->native_trace->private_closes,event_calls=state->native_trace->event_calls;
+   // Resolve only our deliberately added registration on its actual owner.
+   // Do not replay worker start, child processing, source04a47c or server_start.
+   graph->policy()->exit_waits().cleanup_current_thread();require(!state->close_wait->registered()&&!state->close_wait->is_locked()&&state->close_wait->ready_value_quiescent()==1,"Actual original owner resolves only its deliberate close blocker");state->close_wait.reset();
+   resources.server->destroy_pending_socket_024db0();resources.server->destroy_acceptor_024db0();resources.server->destroy_context();state->pending_close_retried=true;
+   const auto after=state->native_jobs->snapshot();require(after.started==before.started&&after.completed==before.completed&&after.detached==before.detached&&state->native_trace->private_closes==private_closes&&state->native_trace->event_calls==event_calls&&state->native_trace->event_set_calls==0&&state->native_external_calls==2&&graph->policy()->snapshot().exit_cleanups==140,"Close retry rechecks external proof without replaying jobs/04a47c or closing native handles twice");
+  }catch(const std::exception& error){
+   const auto jobs=state->native_jobs->snapshot();
+   if(state->native_failure=="session-cancel-fail"||state->native_failure=="session-missing-io"){
+    const bool missing=state->native_failure=="session-missing-io";const auto stop=state->session_stop->snapshot();
+    require(graph->snapshot().phase==ag::Phase::Poisoned&&graph->backend().snapshot().phase==o::Phase::Poisoned&&!state->worker_done&&!state->ports_closed&&!state->cleanups&&!graph->policy()->snapshot().worker_finishes&&state->view->io.snapshot().pending&&state->view->memory.snapshot().controls==1,"Combined stop SDK/deadline failure retains source session/IO/backing without invented worker finish or port close");
+    if(missing)require(stop.phase==ast::Phase::Draining&&stop.acknowledged>=1&&jobs.completed==1&&!state->application->snapshot().live_jobs&&state->native_notices==1,"Missing scripted IO completion remains pending even after prepared receipt and other observed packets retire");
+    else require(stop.phase==ast::Phase::Poisoned&&stop.cancel_calls==1&&!stop.acknowledged&&!jobs.completed&&state->application->snapshot().live_jobs==1,"Cancel denial preserves every unobserved IO loan and prepared source claim");std::_Exit(missing?202:201);
+   }
+   if(state->native_failure=="early-stop"){
+    require(graph->snapshot().phase==ag::Phase::Poisoned&&graph->backend().snapshot().phase==o::Phase::Poisoned&&graph->profile()->snapshot().phase==sp::Phase::Poisoned&&jobs.phase==anadius::owned_jobs::Phase::Bound&&jobs.pending==1&&!jobs.completed&&state->application->snapshot().live_jobs==1&&!state->worker_done&&!state->native_external_calls&&!state->native_trace->private_closes&&state->native_trace->event_calls==0&&state->native_trace->event_set_calls==0,"Default early stop is rejected by Profile before Policy worker_returned; unconsumed job ownership remains terminally retained");std::_Exit(195);
+   }
+   if(state->native_failure=="early-drain-timeout"||state->native_failure=="early-drain-resume-fail"){
+    const bool timeout=state->native_failure=="early-drain-timeout";
+    require(graph->snapshot().phase==ag::Phase::Poisoned&&graph->backend().snapshot().phase==o::Phase::Poisoned&&graph->profile()->snapshot().phase==sp::Phase::Open&&jobs.phase==anadius::owned_jobs::Phase::Bound&&jobs.pending==1&&jobs.started==1&&!state->worker_done&&!state->native_external_calls&&!state->native_trace->private_closes&&state->native_trace->event_calls==0&&state->native_trace->event_set_calls==0&&graph->policy()->snapshot().worker_active&&!graph->policy()->snapshot().worker_finishes,"Missing receipt/deferred-stop wake failure aborts current run without invented finish, replay, physical cleanup or quiescence");
+    if(timeout)require(!jobs.completed&&!state->native_notices&&state->application->snapshot().live_jobs==1&&!state->drain_resume_posted,"Finite prepared stop deadline retains unacknowledged source work when controlled proxy withholds ready packet");
+    else require(jobs.completed==1&&state->native_notices==1&&!state->application->snapshot().live_jobs&&state->resume_denied&&state->view->scheduler.work_count_30.load()==state->resume_failed_work,"Failed resumed-stop post retains dispatcher work pin after one consumed response; no second continuation/decrement");std::_Exit(timeout?198:199);
+   }
+   if(state->native_failure=="unknown-external"){
+    require(graph->snapshot().phase==ag::Phase::Poisoned&&graph->backend().snapshot().phase==o::Phase::Poisoned&&graph->profile()->snapshot().phase==sp::Phase::Poisoned&&graph->policy()->snapshot().phase==cp::Phase::Poisoned&&jobs.phase==anadius::owned_jobs::Phase::Bound&&!jobs.pending&&jobs.completed==70&&state->native_external_calls==1&&!state->ports_closed&&!state->cleanups,"Opaque lower exception with deferral type still poisons every active layer and never permits cleanup retry");std::_Exit(196);
+   }
+   if(state->native_failure=="duplicate"||state->native_failure=="wait"||state->native_failure=="close"){
+    require(jobs.phase==anadius::owned_jobs::Phase::Poisoned&&jobs.started==1&&jobs.detached==1&&jobs.completed==1&&graph->profile()->snapshot().phase==sp::Phase::Poisoned&&!state->application->snapshot().live_jobs&&state->view->scheduler.work_count_30.load()==state->native_before_wait_work,"Duplicate receipt or failed physical poll poisons without second body/work decrement");
+    if(state->native_failure=="duplicate")require(state->native_notices==2&&state->native_trace->post_calls==1&&state->processed==1,"Duplicate is one child publication delivered twice, with no message replay");
+    else require((state->native_failure=="wait"?state->native_trace->wait_denied:state->native_trace->close_denied)&&jobs.pending==1&&!state->native_trace->private_closes&&state->native_trace->event_calls==0&&state->native_trace->event_set_calls==0,"Failed physical wait/close retains private handle without speculative close or replay");
+    std::_Exit(state->native_failure=="duplicate"?192:state->native_failure=="wait"?193:194);
+   }
+   std::cerr<<"Prepared Graph/native source failure: "<<error.what()<<'\n'<<std::flush;::ExitProcess(250);
+  }
+  if(state->native_failure=="session-drain"){
+   const auto jobs=state->native_jobs->snapshot();require(jobs.phase==anadius::owned_jobs::Phase::Closed&&!jobs.pending&&jobs.started==1&&jobs.completed==1&&jobs.detached==1&&graph->snapshot().phase==ag::Phase::Closed&&graph->profile()->snapshot().phase==sp::Phase::Closed&&state->session_stop->snapshot().phase==ast::Phase::Closed&&state->queue_drained,"Selected prepared/SessionIo stop reaches closed Graph/Profile/NativeJobs/Stop after observed packets and independent external proof");
+   require(state->session_cancel_packets.empty()&&state->session_cancel_calls>=2&&state->closed.size()==3&&state->closed.back()==200&&state->ports_closed==1&&state->cleanups==1&&state->native_trace->launches.size()==1&&state->native_trace->private_closes==1&&state->native_trace->event_calls==0&&state->native_trace->event_set_calls==0,"Synthetic cancel receipt queue and all session/native/kernel owners retire once without replay");
+  }else{
+  require(state->native_failure.empty()||(state->native_failure=="late-close"&&state->pending_close_retried),"Injected failure must reach its retained prefix or explicit known close retry");const auto jobs=state->native_jobs->snapshot();
+  require(port==12345&&ready==1&&!other&&!last&&state->starts==1&&state->cleanups==1&&state->ports_closed==1&&state->closed.size()==3&&state->closed.back()==200&&state->sdk_accepts==2&&state->address_reads==1,"Prepared source initializes, accepts one synthetic peer, drains terminal pending202 and retires owned kernel context once");
+  require(jobs.phase==anadius::owned_jobs::Phase::Closed&&!jobs.pending&&jobs.started==70&&jobs.completed==70&&jobs.detached==70&&graph->snapshot().phase==ag::Phase::Closed&&graph->profile()->snapshot().phase==sp::Phase::Closed&&graph->policy()->snapshot().phase==cp::Phase::Closed&&state->queue_drained,"Actual selected native Jobs/Profile/Graph/Policy reach closed after physical and source drain");
+  require(state->native_trace->valid&&state->native_trace->launches.size()==70&&state->native_trace->receipts.size()==70&&state->native_trace->private_closes==70&&state->native_trace->event_calls==0&&state->native_trace->event_set_calls==0&&state->connections[0]->greeting_gone,"Seventy actual native starts/receipts and private handle retires reuse capacity1 beyond64 total jobs");
+  require(!state->native_trace->delay_first_exit||(state->delayed_acknowledged&&state->delayed_retention_checked&&state->native_trace->exit_released),"Delayed first child completes receipt-before-exit retention then physical reaping before capacity reuse");
+  require(!state->native_trace->grow_pending_rows||state->native_trace->pending_growth_seen,"Separate initial1 NativeJobs growth scenario observed two retained rows before releasing the first physical exit");
+  for(const auto& row:state->native_trace->launches)require(row.original_closed&&row.joined_closed&&row.id!=state->original_thread,"Detach and physical close each consume exact native ownership on distinct child actors");
+  if(call_views){require(state->native_call_events_seen&&providers->root_sentinels&&providers->root_checkpoints>=3&&providers->paths.ini_path.empty()&&providers->files->reads.empty()&&providers->files->writes==std::vector<anadius::configuration::Path>{providers->paths.xml_path}&&providers->files->outputs.size()==1,"Call-view mode executes all actual provider routes without legacy child checkpoint fallback and writes one real memory XML path");const auto& xml=providers->files->outputs.at(providers->paths.xml_path);require(xml.find("Achievement")!=std::string::npos&&xml.find("one")!=std::string::npos&&xml.find("2020-01-01T00:00:00")!=std::string::npos&&providers->buffer->str().find("prepared-user")!=std::string::npos,"Actual private writer/persistence keeps the SAME Paths cell and completed achievement timestamp alongside Information logging");}
+  else require(providers->files->reads.empty()&&providers->files->writes.empty()&&providers->files->outputs.empty()&&providers->buffer->str().find("prepared-user")!=std::string::npos,"Concrete child provider path logs own profile and performs no real/synthetic file I/O in empty-path achievement scenario");
+  }state->application=nullptr;
+ }
+ providers.reset();state->native_jobs.reset();require(::TlsFree(index)!=FALSE,"Original fixture TLS remains live until all concrete graph providers retire");running=nullptr;
+}
+void prepared_native_profile(std::string failure={},bool delay_exit=false,bool grow_pending_rows=false,bool call_views=false){
+ namespace d=anadius::thread_domain;namespace wh=anadius::worker_handoff;
+ auto identity=std::make_shared<std::array<std::byte,8>>();auto domain=d::DomainStorage::create({0x31c872450ab966d1ULL,0,nullptr,nullptr,1,reinterpret_cast<std::uintptr_t>(identity->data()),identity});require(domain->initialize(),"Prepared native controller initializes real heap/FLS/PTD Domain");
+ auto trace=std::make_shared<NativeTrace>();trace->launches.reserve(70);trace->receipts.reserve(70);trace->delay_first_exit=delay_exit;trace->grow_pending_rows=grow_pending_rows;
+ std::shared_ptr<ast::Stop> session_stop;
+ if(failure.starts_with("session-")){
+  trace->session_entered=::CreateEventW(nullptr,TRUE,FALSE,nullptr);trace->session_release=::CreateEventW(nullptr,TRUE,FALSE,nullptr);if(!trace->session_entered||!trace->session_release)::ExitProcess(244);
+  ast::Options options;options.lifetime=trace;options.scope=ast::Scope::SessionIoPrepared;options.capacity=128;options.imports.cancel=session_cancel;
+  options.other_work_drained=[]{return true;}; // explicit synthetic fixture assumption: no unmanaged raw/foreign work or new external admission
+  session_stop=ast::Stop::create(std::move(options));
+ }
+ if(delay_exit){trace->exit_entered=::CreateEventW(nullptr,TRUE,FALSE,nullptr);trace->exit_release=::CreateEventW(nullptr,TRUE,FALSE,nullptr);if(!trace->exit_entered||!trace->exit_release)::ExitProcess(245);exit_trace=trace.get();}
+ auto api=anadius::thread_native::native_api();api.get_module=own_native_module;if(delay_exit)api.exit=delayed_native_exit;std::shared_ptr<anadius::bootstrap_providers::NativeThreads> threads=domain->make_threads(api);auto prepared=wh::PreparedMemory::prepare(domain);
+ struct Original {
+  std::function<void()> action;HANDLE handle=nullptr;std::uint32_t id=0;
+  static unsigned __stdcall entry(void* p){auto& self=*static_cast<Original*>(p);try{self.action();}catch(const std::exception& error){std::cerr<<error.what()<<'\n'<<std::flush;::ExitProcess(251);}catch(...){::ExitProcess(251);}return 67;}
+ } original;
+ original.action=[&]{run_prepared_native(domain,*prepared,threads,trace,failure,session_stop,call_views);};original.handle=reinterpret_cast<HANDLE>(anadius::threads_recovered::begin_thread_05e8e0(nullptr,0,reinterpret_cast<std::uintptr_t>(&Original::entry),reinterpret_cast<std::uintptr_t>(&original),0,&original.id,*threads));
+ if(session_stop){if(::WaitForSingleObject(trace->session_entered,10000)!=WAIT_OBJECT_0||!session_stop->request()||!::SetEvent(trace->session_release))::ExitProcess(244);}
+ if(!original.handle||!original.id||::WaitForSingleObject(original.handle,120000)!=WAIT_OBJECT_0)::ExitProcess(252);DWORD code=STILL_ACTIVE;require(::GetExitCodeThread(original.handle,&code)&&code==67,"Actual original wrapper returns after concrete server and FLS teardown");require(::CloseHandle(original.handle)!=FALSE,"Controller closes exact joined original handle");original.handle=nullptr;
+ require(prepared->close(10000)&&prepared->snapshot().worker_exit_verified,"Prepared controller independently observes original and all child physical exits before backing release");
+ for(const auto& row:trace->launches)require(::CloseHandle(row.proof)!=FALSE,"Independent test proof handle closes only after physical original/child drain");
+ if(delay_exit){require(::CloseHandle(trace->exit_entered)&&::CloseHandle(trace->exit_release),"Controller closes owned exit gates after actual original/child termination");trace->exit_entered=trace->exit_release=nullptr;}exit_trace=nullptr;
+ if(session_stop){require(session_stop->snapshot().phase==ast::Phase::Closed&&::CloseHandle(trace->session_entered)&&::CloseHandle(trace->session_release),"Controller retains Stop and receipt handshake until actual native/FLS join");session_stop.reset();trace->session_entered=trace->session_release=nullptr;}
+ original.action={};prepared.reset();threads.reset();require(domain->provider_leases()==0&&domain->close(),"Controller retires final Domain only after borrowed backing and all thread providers are gone");domain.reset();
+}
+
+struct ParallelThread {
+ std::function<void()> body;HANDLE handle=nullptr;std::uint32_t id=0;
+ static unsigned __stdcall entry(void* raw){try{static_cast<ParallelThread*>(raw)->body();}catch(const std::exception& e){std::cerr<<"Parallel source child: "<<e.what()<<'\n'<<std::flush;::ExitProcess(254);}catch(...){::ExitProcess(254);}return 0;}
+ void launch(anadius::bootstrap_providers::NativeThreads& threads,std::function<void()> action){body=std::move(action);handle=reinterpret_cast<HANDLE>(anadius::threads_recovered::begin_thread_05e8e0(nullptr,0,reinterpret_cast<std::uintptr_t>(&entry),reinterpret_cast<std::uintptr_t>(this),0,&id,threads));require(handle&&id,"Parallel fixture launches an actual same-Domain native wrapper");}
+ void join(){if(!handle||::WaitForSingleObject(handle,10000)!=WAIT_OBJECT_0)::ExitProcess(254);DWORD code=1;require(::GetExitCodeThread(handle,&code)&&code==0&&::CloseHandle(handle),"Actual parallel native/FLS exit joins before own handle retirement");handle=nullptr;body={};}
+};
+// This SDK scenario permits real overlapping source actors. Use the same SRW
+// word as Execution; its observation counters must not race either.
+struct ParallelExecutionPlatform final:anadius::execution_recovered::Platform {
+ std::atomic<unsigned> locks=0,unlocks=0;
+ std::uint32_t current_thread_id()override{return ::GetCurrentThreadId();}
+ void acquire_srw_exclusive(std::uintptr_t& value)override{::AcquireSRWLockExclusive(reinterpret_cast<PSRWLOCK>(&value));++locks;}
+ void release_srw_exclusive(std::uintptr_t& value)override{++unlocks;::ReleaseSRWLockExclusive(reinterpret_cast<PSRWLOCK>(&value));}
+ std::int64_t query_performance_frequency()override{LARGE_INTEGER value{};if(!::QueryPerformanceFrequency(&value))unused();return value.QuadPart;}
+ std::int64_t query_performance_counter()override{LARGE_INTEGER value{};if(!::QueryPerformanceCounter(&value))unused();return value.QuadPart;}
+ void sleep_milliseconds(std::uint32_t value)override{::Sleep(value);}
+ [[noreturn]]void raise_thread_error_04a648(int)override{unused();}
+};
+struct ScopedRuntimeProbe {
+ std::shared_ptr<anadius::bootstrap_providers::NativeThreads> threads;
+ std::shared_ptr<anadius::owned_environment::Environment> environment;sp::Environment configuration;
+ anadius::worker_handoff::PreparedMemory* prepared=nullptr;std::optional<rt::Ports> ports;sp::Application* application=nullptr;
+ std::optional<sp::SessionView> session;s::IoHandlerEnvironment* source=nullptr;s::IoHandlerEnvironment original_source{};std::uintptr_t source_cap=0;s::IoEnvironmentFactory factory=nullptr;s::IoReference* retained_strong=nullptr;
+ std::array<std::optional<anadius::worker_handoff::PreparedMemory::JobMemory>,2> offers;std::array<ParallelThread,2> actors;
+ HANDLE a_entered=::CreateEventW(nullptr,TRUE,FALSE,nullptr),a_release_event=::CreateEventW(nullptr,TRUE,FALSE,nullptr),b_returned=::CreateEventW(nullptr,TRUE,FALSE,nullptr);
+ std::atomic<bool> a_armed=false,a_held=false,a_released=false,b_launched=false,b_physical=false,root_progress=false,finished=false;
+ std::atomic<bool> a_closed=false,b_closed=false,a_returned=false,b_memory_returned=false;
+ std::atomic<std::uint32_t> before_a_drop=0,observed_a_drop=0,a_resume_work=0;bool started=false,native_closed=false;std::uint64_t root_cleanups=0;
+ ScopedRuntimeProbe(){require(a_entered&&a_release_event&&b_returned,"Actual Scope fixture owns finite observation events");}
+ ~ScopedRuntimeProbe(){::CloseHandle(a_entered);::CloseHandle(a_release_event);::CloseHandle(b_returned);}
+};
+struct ScopedRuntimeJobs final:sp::Jobs,sp::PreparedJobs {
+ State& state;ScopedRuntimeProbe& probe;std::shared_ptr<anadius::owned_jobs::NativeJobs> native;
+ ScopedRuntimeJobs(State& s,ScopedRuntimeProbe& p,std::shared_ptr<anadius::owned_jobs::NativeJobs> n):state(s),probe(p),native(std::move(n)){}
+ void bind_prepared(sp::Application& app,rt::Ports ports,std::function<void()> checkpoint)override{require(ports.view.memory.operation_policy()==s::OperationPolicy::OriginalConcurrentActors&&ports.environment_work_stop&&ports.environment_work_stop->matches(ports.view.memory,ports.view.scheduler),"Actual Scope fixture captures the SAME concurrent Parent and genuine Runtime work capability");state.application=&app;state.view_value.emplace(ports.view);state.view=&*state.view_value;probe.application=&app;probe.ports.emplace(ports);native->bind_prepared(app,ports,std::move(checkpoint));}
+ s::FrameThreadHandle start(sp::JobToken token,std::function<void()> run)override{return native->start(token,std::move(run));}
+ s::FrameThreadHandle start_prepared(sp::Application& app,sp::JobToken token)override{return native->start_prepared(app,token);}
+ std::int32_t detach(const s::FrameThreadHandle& h)override{return native->detach(h);}
+ void returned_prepared(sp::Application& app,std::uint32_t receipt)override{native->returned_prepared(app,receipt);}
+ bool quiescent_prepared(sp::Application& app)override{return native->quiescent_prepared(app);}
+ bool close_prepared(sp::Application& app,bool external)override{const auto closed=native->close_prepared(app,external);if(closed){probe.native_closed=true;probe.ports.reset();}return closed;}
+};
+bool scoped_source_equal(const s::IoHandlerEnvironment& a,const s::IoHandlerEnvironment& b){return a.payload_00==b.payload_00&&a.operations_10==b.operations_10&&a.state_18==b.state_18&&a.schedule_20==b.schedule_20&&a.executor_28==b.executor_28;}
+void scoped_runtime_actor(const std::shared_ptr<ScopedRuntimeProbe>& p,unsigned actor){
+ auto& memory=p->ports->view.memory;auto& scheduler=p->ports->view.scheduler;auto& offer=*p->offers[actor];offer.acquire();
+ {
+  auto operation=memory.enter(offer);auto permit=operation.job_permit();
+  const std::function<void()> checkpoint=[p,permit,actor]{
+   auto& parent=p->ports->view.memory;permit.check(parent);(void)parent.buffer_context();
+   if(actor==0&&p->a_armed.load()&&p->ports->view.scheduler.work_count_30.load()==p->before_a_drop.load()-1&&p->a_armed.exchange(false)){
+    require(!p->b_launched&&p->before_a_drop>1,"A's sole actual tracked release changes N to N-1 before B is launched; this is a nonfinal native drop");p->observed_a_drop=p->ports->view.scheduler.work_count_30.load();p->a_held=true;
+    if(!::SetEvent(p->a_entered)||::WaitForSingleObject(p->a_release_event,10000)!=WAIT_OBJECT_0)::ExitProcess(254);
+    require(p->a_released&&p->b_physical&&p->root_progress,"A genuine Runtime/Policy post-drop checkpoint continues only after B physical reap and ordinary original progress");p->a_resume_work=p->ports->view.scheduler.work_count_30.load();require(p->a_resume_work>1,"Actual pending IO keeps A's remaining tracked release nonfinal after unrelated original progress");p->a_held=false;
+   }
+   permit.check(parent);
+  };
+  auto scope=p->environment->enter_job(*p->source,*p->session,permit,checkpoint);auto& operations=scope.operations();s::IoHandlerEnvironment tracked,copy,moved,prepared;s::IoEnvironmentConstructorScratch scratch;
+  const auto baseline=scheduler.work_count_30.load();const auto cap=operations.query_slot_18(*p->source);require(cap==p->source_cap,"Both real Scope actors use the exact SAME protected source capability/session");
+  operations.construct_slot_58(p->factory,tracked,cap,scratch);require(scheduler.work_count_30.load()==baseline+1,"Actual canonical58 initial-to-tracked factory contributes one genuine scheduler work retain");
+  scope.copy(copy,tracked);require(scheduler.work_count_30.load()==baseline+2,"Actual scoped tracked copy contributes its own genuine work retain");
+  operations.move_023cb0(moved,copy,p->configuration.sentinels);operations.destroy_slot_00(copy);require(scheduler.work_count_30.load()==baseline+2,"Actual scoped move and moved-from empty cleanup transfer rather than add/drop the retained pin");
+  if(actor==1){scope.prepare_40(prepared,tracked,p->configuration.sentinels);require(scheduler.work_count_30.load()==baseline+3,"B actual explicit Scope prepare40 adds one real tracked retain under its three-address caller claim");operations.destroy_slot_00(prepared);require(scheduler.work_count_30.load()==baseline+2,"B prepared output destruction releases exactly that actual Runtime-owned family pin");}
+  if(actor==0){p->before_a_drop=scheduler.work_count_30.load();p->a_armed=true;}
+  operations.destroy_slot_00(moved);require(scheduler.work_count_30.load()==(actor==0?p->a_resume_work.load():baseline+1),"Actual scoped moved-copy destruction consumes one native work retain without replay across unrelated original IO progress");
+  if(actor==0)require(p->observed_a_drop==p->before_a_drop.load()-1&&p->a_released&&!p->a_armed,"A's pause was observed after its real decrement and is never armed or replayed again");
+  operations.destroy_slot_00(tracked);require(scheduler.work_count_30.load()==(actor==0?p->a_resume_work.load()-1:baseline),"This actor's remaining actual tracked retain drains from its genuine current counter without a synthetic reset");scope.close();if(actor==0)p->a_closed=true;else p->b_closed=true;
+ }
+ require(offer.retire(),"Actual Scope offer returns only after Scope close and whole Parent Operation exit");if(actor==0)p->a_returned=true;else{p->b_memory_returned=true;if(!::SetEvent(p->b_returned))::ExitProcess(254);}
+}
+void scoped_runtime_start(State& state,sp::SessionView view){
+ auto p=state.scoped;require(!p->started&&p->ports&&p->application&&p->environment->snapshot().phase==anadius::owned_environment::Phase::Bound,"Exactly one selected Environment was bound by the actual Profile before Scope actors start");p->session.emplace(view);
+ for(const auto& binding:p->application->registry().environments)if(binding.allocator_identity==view.owner.identity()+0x78){require(!p->source&&binding.source,"Public Profile source registry resolves one exact stable session environment address");p->source=binding.source;}
+ require(p->source&&p->source->payload_00[0]==p->environment->snapshot().token,"Captured source belongs to the injected selected Environment, with no second business root");p->original_source=*p->source;p->source_cap=p->source->operations_10->query_slot_18(*p->source);
+ for(const auto& binding:p->configuration.factories)if(binding.executor_identity==p->source->executor_28){require(!p->factory&&binding.construct_slot_58,"Selected source has one canonical actual58 factory");p->factory=binding.construct_slot_58;}require(p->factory,"Canonical initial source factory exists before any child launch");
+ p->retained_strong=view.owner.weak_self.control_08;auto strong=p->retained_strong->strong_08.load();for(;;){require(strong&&strong<UINT32_MAX,"Fixture retains a real existing session strong owner through both manual Scope actors");if(p->retained_strong->strong_08.compare_exchange_weak(strong,strong+1))break;}
+ for(auto& offer:p->offers)offer.emplace(p->ports->view.memory.prepare_job());p->started=true;
+ p->actors[0].launch(*p->threads,[p]{scoped_runtime_actor(p,0);});if(::WaitForSingleObject(p->a_entered,10000)!=WAIT_OBJECT_0)::ExitProcess(254);require(p->a_held&&p->observed_a_drop==p->before_a_drop.load()-1,"Original observes actual A release suspended after decrement, before launching B");
+ p->b_launched=true;p->actors[1].launch(*p->threads,[p]{scoped_runtime_actor(p,1);});
+ // Only a source-return EVENT is awaited here under the original Operation.
+ // Physical native/FLS join and backing reaping happen outside Parent later.
+ if(::WaitForSingleObject(p->b_returned,10000)!=WAIT_OBJECT_0)::ExitProcess(254);require(p->a_held&&p->b_closed&&p->b_memory_returned,"B real Scope work and logical memory return complete while A's exact work release is held");
+}
+bool scoped_runtime_eof_ready(State& state){return state.scoped->finished.load();}
+void scoped_runtime_receive(State& state,Connection& c,s::Buffer buffer,OVERLAPPED* ov){
+ require(c.socket==201&&c.receives==1&&!c.receive_waiting&&!c.eof_posted,"Scope fixture holds one actual source SDK receive loan and sends no XML input");auto* observed=scoped_greeting_free.load(std::memory_order_acquire);require(state.scoped&&observed&&observed->address==c.greeting_data&&observed->released.load(std::memory_order_acquire)&&observed->freed_address==c.greeting_data&&observed->bytes==c.greeting_wire.size()&&observed->frees==1&&!observed->armed,"Actual successful native free retires the captured greeting allocation BEFORE first receive, including when its address is reused");c.greeting_gone=true;c.receive_wire.clear();c.cursor=0;c.receive_waiting=true;c.receive_buffer=buffer;c.receive_ov=ov;
+}
+void scoped_runtime_packet(State& state,OVERLAPPED* operation,std::uint32_t bytes){if(!state.connections[0])return;auto& c=state.connection(201);if(operation==c.receive_ov&&bytes==0&&c.eof_posted)c.eof_seen=true;}
+void scoped_runtime_maintenance(State& state){
+ request_fixture_stop(state);auto p=state.scoped;if(!p->started||p->finished)return;auto& memory=p->ports->view.memory;require(!memory.operation_on_this_thread()&&p->a_held,"Manual Scope physical maintenance runs outside ANY original Parent Operation while A is held");
+ p->actors[1].join();(void)memory.reap_jobs();require(p->b_closed&&p->b_memory_returned&&p->prepared->outstanding_jobs()==1&&p->a_held,"B's actual wrapper/FLS exit and Parent reaping leave only A's live borrowed offer");p->b_physical=true;
+ {
+  auto operation=memory.enter();require(scoped_source_equal(*p->source,p->original_source)&&p->source->operations_10->query_slot_18(*p->source)==p->source_cap&&p->application->session(p->session->token).owner.identity()==p->session->owner.identity(),"Ordinary original Parent/Environment/Profile calls retain the exact Ready source/session while A work release remains live");
+  auto policy=state.graph.lock()->policy();const auto before=policy->snapshot().exit_cleanups;policy->cleanup_exit_waits();p->root_cleanups=policy->snapshot().exit_cleanups;require(p->root_cleanups==before+1&&policy->snapshot().phase==cp::Phase::Bound&&p->a_held&&p->prepared->outstanding_jobs()==1,"Actual original Policy cleanup progresses once without consuming foreign A's scoped release");p->root_progress=true;
+ }
+ p->a_released=true;if(!::SetEvent(p->a_release_event))::ExitProcess(254);p->actors[0].join();(void)memory.reap_jobs();require(p->a_closed&&p->a_returned&&!p->a_held&&!p->prepared->outstanding_jobs(),"Only A's actual Scope/Operation return and native/FLS exit retire its final prepared offer");
+ {
+  auto operation=memory.enter();require(scoped_source_equal(*p->source,p->original_source)&&p->source->operations_10->query_slot_18(*p->source)==p->source_cap,"Both actual scoped families drain without altering the protected original source");const auto strong=p->retained_strong->strong_08.fetch_sub(1);require(strong>1,"Actual pending SDK receive retains the session when the fixture's real strong hold is released");p->retained_strong=nullptr;
+ }
+ p->offers[0].reset();p->offers[1].reset();p->source=nullptr;p->session.reset();p->finished=true;auto& c=state.connection(201);require(c.receive_waiting&&!c.eof_posted&&c.receive_ov,"The actual source receive loan remains pending until both Scope actors are physically reaped");c.receive_waiting=false;c.eof_posted=true;if(!::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(state.port),0,0,c.receive_ov))::ExitProcess(254);
+}
+struct ParallelJobs;
+struct ParallelProbe {
+ std::shared_ptr<anadius::bootstrap_providers::NativeThreads> threads;std::shared_ptr<ParallelJobs> jobs;
+ anadius::worker_handoff::PreparedMemory* prepared=nullptr; // controller owner outlives every actor and native join
+ bool actual_native=false,distinct_sessions=false,native_closed=false,early_b=false;std::optional<rt::Ports> native_ports;std::array<sp::JobToken,2> native_tokens{};unsigned native_starts=0;
+ HANDLE a_entered=::CreateEventW(nullptr,TRUE,FALSE,nullptr),a_release=::CreateEventW(nullptr,TRUE,FALSE,nullptr),b_posted=::CreateEventW(nullptr,TRUE,FALSE,nullptr),b_post_release=::CreateEventW(nullptr,TRUE,FALSE,nullptr),cleanup_entered=::CreateEventW(nullptr,TRUE,FALSE,nullptr),cleanup_release=::CreateEventW(nullptr,TRUE,FALSE,nullptr);
+ std::atomic<bool> a_held=false,a_released=false,b_response=false,b_physical=false,policy_done=false,policy_reaped=false;
+ std::atomic<bool> b_post_waiting=false,b_post_released=false,receipt_before_post_return=false;
+ std::mutex trace;unsigned a_received=0,b_received=0,responses=0;bool root_progress=false;
+ std::array<std::optional<anadius::worker_handoff::PreparedMemory::JobMemory>,2> policy_offers;std::array<ParallelThread,2> policy_threads;std::array<std::shared_ptr<anadius::services_completion::WaitTarget>,2> targets;
+ const std::string id_a="parallel-A-"+std::string(5000,'a'),id_b="parallel-B-"+std::string(6000,'b');
+ const std::string wire_a="<LSX><Request id=\""+id_a+"\" recipient=\"EbisuSDK\"><UnknownParallel/></Request></LSX>",wire_b="<LSX><Request id=\""+id_b+"\" recipient=\"EbisuSDK\"><GetConfig/></Request></LSX>";
+ ParallelProbe(){require(a_entered&&a_release&&b_posted&&b_post_release&&cleanup_entered&&cleanup_release,"Actual parallel fixture owns finite SDK handshake events");}
+ ~ParallelProbe(){::CloseHandle(a_entered);::CloseHandle(a_release);::CloseHandle(b_posted);::CloseHandle(b_post_release);::CloseHandle(cleanup_entered);::CloseHandle(cleanup_release);}
+};
+struct ParallelJobs final:sp::Jobs,sp::PreparedJobs {
+ struct Row {ParallelJobs* owner=nullptr;sp::JobToken token;std::optional<sp::Application::JobHandoff> handoff;HANDLE original=nullptr,joined=nullptr,returned_event=nullptr;std::uint32_t id=0,receipt=0;std::atomic<bool> returned=false,detached=false,notified=false,start_returned=false,early_body=false;bool work=false,consumed=false,physical=false;std::uintptr_t request=0;std::uint64_t size=0;};
+ State& state;ParallelProbe& probe;std::optional<rt::Ports> ports;sp::Application* application=nullptr;std::function<void()> checkpoint;std::shared_ptr<void> lease;std::vector<std::unique_ptr<Row>> rows;unsigned completed=0;bool closed=false;
+ ParallelJobs(State& s,ParallelProbe& p):state(s),probe(p){}
+ void bind_prepared(sp::Application& app,rt::Ports p,std::function<void()> admit)override{require(!ports&&admit&&p.view.memory.operation_policy()==s::OperationPolicy::OriginalConcurrentActors&&p.environment_work_stop&&p.environment_work_stop->matches(p.view.memory,p.view.scheduler),"Controlled Jobs binds SAME actual concurrent Backend Parent and Runtime environment capability");application=&app;ports.emplace(p);checkpoint=std::move(admit);lease=p.view.memory.acquire_provider_lease_from_operation();state.application=&app;state.view_value.emplace(p.view);state.view=&*state.view_value;}
+ s::FrameThreadHandle start(sp::JobToken,std::function<void()>)override{unused();}
+ static unsigned __stdcall entry(void* raw){auto& row=*static_cast<Row*>(raw);auto& v=*row.owner;try{row.handoff->acquire();row.handoff->process_message();row.early_body=!row.start_returned.load()&&!row.detached.load();row.handoff->return_memory();row.returned=true;if(!::SetEvent(row.returned_event)||!::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(v.state.port),row.receipt,s::prepared_job_completion_key,nullptr))::ExitProcess(254);row.notified=true;}catch(const std::exception& e){std::cerr<<"Controlled PreparedJobs: "<<e.what()<<'\n'<<std::flush;::ExitProcess(254);}catch(...){::ExitProcess(254);}return 0;}
+ s::FrameThreadHandle start_prepared(sp::Application& app,sp::JobToken token)override{
+  require(&app==application&&ports&&!closed,"Actual source start uses exact bound Application");checkpoint();auto next=std::make_unique<Row>();next->owner=this;next->token=token;next->receipt=static_cast<std::uint32_t>(rows.size()+1);next->handoff.emplace(app.prepare_job(token));const auto identity=next->handoff->identity();require(identity.job==token&&identity.session==state.connection(201).token,"Prelaunch capture uses actual submitting Profile job/session identities");const auto* closure=reinterpret_cast<const s::FrameMessageClosure*>(identity.closure);next->request=s::receive_buffer_address(closure->message_00);next->size=closure->message_00.size_10;
+  auto* row=next.get();rows.push_back(std::move(next));auto work=ports->view.scheduler.work_count_30.load();for(;;){if(!work||work==UINT32_MAX)unused();if(ports->view.scheduler.work_count_30.compare_exchange_weak(work,work+1))break;}row->work=true;
+  row->returned_event=::CreateEventW(nullptr,TRUE,FALSE,nullptr);require(row->returned_event!=nullptr,"Real delegated job owns its source-return event");row->original=reinterpret_cast<HANDLE>(anadius::threads_recovered::begin_thread_05e8e0(nullptr,0,reinterpret_cast<std::uintptr_t>(&entry),reinterpret_cast<std::uintptr_t>(row),0,&row->id,*probe.threads));require(row->original&&row->id&&::DuplicateHandle(::GetCurrentProcess(),row->original,::GetCurrentProcess(),&row->joined,0,FALSE,DUPLICATE_SAME_ACCESS),"Actual delegated job retains distinct source/detach and native join handles");
+  if(rows.size()==1){if(::WaitForSingleObject(probe.a_entered,10000)!=WAIT_OBJECT_0)::ExitProcess(254);require(probe.a_held&&!row->detached&&!row->start_returned,"A really enters unknown diagnostic BEFORE lower start returns or detach");}
+  else{require(rows.size()==2&&rows[0]->token.slot!=token.slot&&rows[0]->token.generation&&token.generation&&app.snapshot().live_jobs==2,"Initial job capacity1 grows while exact A submitting capture remains live");if(::WaitForSingleObject(row->returned_event,10000)!=WAIT_OBJECT_0)::ExitProcess(254);require(row->early_body&&row->returned&&!row->detached&&!row->start_returned&&probe.a_held,"B actual message body AND memory return finish BEFORE lower start returns and before detach");}
+  checkpoint();row->start_returned=true;return {reinterpret_cast<std::uintptr_t>(row->original),row->id};
+ }
+ std::int32_t detach(const s::FrameThreadHandle& handle)override{for(auto& row:rows)if(reinterpret_cast<std::uintptr_t>(row->original)==handle.handle&&row->id==handle.id){require(!row->detached&&row->joined&&::CloseHandle(row->original),"Exact actual source handle detaches after early child eligibility");row->original=nullptr;row->detached=true;return 0;}unused();}
+ void returned_prepared(sp::Application& app,std::uint32_t receipt)override{require(&app==application&&receipt&&receipt<=rows.size(),"Actual Runtime receipt selects one exact controlled source row");auto& row=*rows[receipt-1];require(row.receipt==receipt&&row.returned&&row.detached&&row.work&&!row.consumed&&row.handoff->identity().job==row.token,"Receipt validates actual current generation and returned detached claim once");app.complete_job(*row.handoff);row.consumed=true;row.work=false;++completed; /* Actual dispatcher owns this job pin's one decrement. */}
+ bool quiescent_prepared(sp::Application& app)override{
+  require(&app==application,"Physical source/FLS maintenance uses exact bound Application");if(closed)return true;require(ports&&!ports->view.memory.operation_on_this_thread(),"Physical source/FLS maintenance runs outside original Parent Operation");bool pending=false;
+  for(auto& row:rows){if(row->physical)continue;if(!row->consumed){pending=true;continue;}if(::WaitForSingleObject(row->joined,10000)!=WAIT_OBJECT_0)::ExitProcess(254);DWORD code=1;require(::GetExitCodeThread(row->joined,&code)&&code==0&&row->notified&&row->detached&&!row->original&&!row->work,"Actual consumed job completes native/FLS exit independently of A's body");require(::CloseHandle(row->joined)&&::CloseHandle(row->returned_event),"Actual joined/barrier handles close only after physical child exit");row->joined=row->returned_event=nullptr;row->handoff.reset();row->physical=true;if(row->receipt==2)probe.b_physical=true;}
+  (void)ports->view.memory.reap_jobs();if(probe.policy_done&&!probe.policy_reaped){probe.policy_offers[0].reset();probe.policy_offers[1].reset();probe.policy_reaped=true;}if(probe.b_physical&&probe.a_held)require(probe.prepared&&probe.policy_reaped&&probe.prepared->outstanding_jobs()==1,"Actual prepared backing has reaped B and both policy probes while only held A's source row remains");return !pending;
+ }
+ bool close_prepared(sp::Application& app,bool attested)override{require(&app==application&&attested,"Controlled Jobs closes only on actual source/external retirement");if(closed)return true;require(ports.has_value(),"Live controlled source retains its exact Ports until close");for(const auto& row:rows)if(!row->physical||row->work||row->handoff||row->joined||row->original)return false;checkpoint={};lease.reset();ports.reset();closed=true;return true;}
+};
+// Observation only: every execution/claim/work/receipt/retirement decision is
+// delegated to ONE actual NativeJobs owner, without introducing a body gate.
+struct NativeJobsObservation final:sp::Jobs,sp::PreparedJobs {
+ State& state;ParallelProbe& probe;std::shared_ptr<anadius::owned_jobs::NativeJobs> native;
+ NativeJobsObservation(State& s,ParallelProbe& p,std::shared_ptr<anadius::owned_jobs::NativeJobs> n):state(s),probe(p),native(std::move(n)){}
+ void bind_prepared(sp::Application& app,rt::Ports ports,std::function<void()> checkpoint)override{require(ports.view.memory.operation_policy()==s::OperationPolicy::OriginalConcurrentActors&&ports.environment_work_stop&&ports.environment_work_stop->matches(ports.view.memory,ports.view.scheduler),"Actual NativeJobs observes SAME concurrent Parent/Runtime capability at bind");state.application=&app;state.view_value.emplace(ports.view);state.view=&*state.view_value;probe.native_ports.emplace(ports);native->bind_prepared(app,ports,std::move(checkpoint));}
+ s::FrameThreadHandle start(sp::JobToken token,std::function<void()> runner)override{return native->start(token,std::move(runner));}
+ s::FrameThreadHandle start_prepared(sp::Application& app,sp::JobToken token)override{require(probe.native_starts<2,"Bounded actual NativeJobs fixture launches exactly two messages");probe.native_tokens[probe.native_starts++]=token;return native->start_prepared(app,token);}
+ std::int32_t detach(const s::FrameThreadHandle& h)override{return native->detach(h);}
+ void returned_prepared(sp::Application& app,std::uint32_t receipt)override{native->returned_prepared(app,receipt);}
+ bool quiescent_prepared(sp::Application& app)override{return native->quiescent_prepared(app);}
+ bool close_prepared(sp::Application& app,bool external)override{const auto closed=native->close_prepared(app,external);if(closed){probe.native_closed=true;probe.native_ports.reset();}return closed;}
+};
+unsigned parallel_accept_limit(State& state){return state.parallel->distinct_sessions?2U:1U;}
+void parallel_duplicate_observe(State& state,HANDLE source){auto& p=*state.parallel;if(!p.actual_native)return;std::size_t count=0;{std::lock_guard lock(state.native_trace->gate);count=state.native_trace->launches.size();require(state.native_trace->launches.back().original==source&&!state.native_trace->launches.back().original_closed,"Actual duplicate observes its still-undetached source handle");}if(count==1){if(::WaitForSingleObject(p.a_entered,10000)!=WAIT_OBJECT_0)::ExitProcess(254);require(p.a_held&&state.native_jobs->snapshot().detached==0,"Actual NativeJobs A body reaches concrete Dialog before DuplicateHandle/start returns or detach");}else{require(count==2&&p.native_starts==2&&p.native_tokens[0].slot!=p.native_tokens[1].slot&&p.native_tokens[0].generation&&p.native_tokens[1].generation&&state.application->snapshot().live_jobs==2,"Actual NativeJobs initial1 source/physical registries grow while A remains live");if(::WaitForSingleObject(p.b_posted,10000)!=WAIT_OBJECT_0)::ExitProcess(254);const auto snapshot=state.native_jobs->snapshot();require(p.a_held&&snapshot.pending==2&&snapshot.detached==1&&!p.a_released,"Actual NativeJobs B body/return/real receipt post finish BEFORE duplicate/start returns and BEFORE B detach");p.early_b=true;}}
+void parallel_post_observe(State& state,DWORD receipt){
+ auto& p=*state.parallel;if(!p.actual_native)return;DWORD first=0;
+ {std::lock_guard lock(state.native_trace->gate);require(!state.native_trace->launches.empty(),"Held A's actual launch is published before either source receipt");first=state.native_trace->launches.front().id;}
+ require(receipt!=0,"Actual NativeJobs post owns a nonzero source receipt");
+ if(::GetCurrentThreadId()!=first){
+  // The real IOCP packet is ALREADY queued. Hold only this injected SDK
+  // return, so receipt consumption is independent from notified publication.
+  p.b_post_waiting=true;if(!::SetEvent(p.b_posted)||::WaitForSingleObject(p.b_post_release,10000)!=WAIT_OBJECT_0)::ExitProcess(254);
+  require(p.b_post_released&&p.receipt_before_post_return&&p.a_held,"B native post returns only after actual original receipt and outside-Parent retention observation");p.b_post_waiting=false;
+ }
+}
+int WINAPI parallel_dialog(HWND window,LPCWSTR text,LPCWSTR title,UINT flags){auto& p=*running->parallel;require(!window&&text&&std::wstring_view(title)==L"UNKNOWN MESSAGE"&&flags==0x10&&std::wstring_view(text).find(L"UnknownParallel")!=std::wstring_view::npos,"Actual Graph unknown diagnostic reaches concrete Licensing/Dialog from held A");p.a_held=true;if(!::SetEvent(p.a_entered)||::WaitForSingleObject(p.a_release,10000)!=WAIT_OBJECT_0)::ExitProcess(254);require(p.a_released&&p.b_response&&p.b_physical,"A continues only after real B response and native/FLS/reap progress");p.a_held=false;return IDOK;}
+bool parallel_eof_ready(State& state){return state.parallel->a_released.load();}
+void parallel_receive(State& state,Connection& c,s::Buffer buffer,OVERLAPPED* ov){auto& p=*state.parallel;if(c.receives==1){try{(void)state.view->memory.buffer_context().memory.view(c.greeting_tail,1);}catch(const s::UnsupportedInput&){c.greeting_gone=true;}c.receive_wire=p.distinct_sessions?(c.socket==201?p.wire_a:p.wire_b):p.wire_a;c.receive_wire.push_back(0);if(!p.distinct_sessions){c.receive_wire+=p.wire_b;c.receive_wire.push_back(0);}}require(!c.receive_waiting,"Actual parallel session has one real SDK receive loan");c.receive_waiting=true;c.receive_buffer=buffer;c.receive_ov=ov;if(!(p.actual_native&&p.distinct_sessions&&c.socket==202&&!p.a_held))deliver_receive(state,c);}
+void parallel_observe(State& state,sp::SessionView view,ag::Log kind,std::string_view text,std::string_view error){auto& p=*state.parallel;const auto socket=view.owner.socket_state.socket;require(error.empty()&&view.token==state.connection(socket).token&&::GetCurrentThreadId()!=state.original_thread,"Actual parallel Graph callback retains its exact Session and real child actor");std::lock_guard lock(p.trace);if(kind==ag::Log::Received){if(text==p.wire_a){require(socket==201,"Held A uses the original actual session");++p.a_received;}else{require(text==p.wire_b&&socket==(p.distinct_sessions?202U:201U),"B receives exact separate real XML on selected same/distinct Session");++p.b_received;}}else if(kind==ag::Log::Response){require(text.find("GetConfigResponse")!=std::string_view::npos&&text.find(p.id_b)!=std::string_view::npos&&p.a_held,"Only B emits actual GetConfig response while supported Unknown A stays held");++p.responses;}else unused();}
+void parallel_packet(State& state,OVERLAPPED* packet,std::uint32_t bytes){for(auto& connection:state.connections)if(connection){auto& c=*connection;if(c.send_waiting&&packet==c.send_ov){require(c.send_posted,"Actual SDK send packet follows its one pending loan");c.send_waiting=c.send_posted=false;++c.completed_sends;}if(c.eof_posted&&packet==c.receive_ov&&bytes==0)c.eof_seen=true;}}
+void parallel_maintenance(State& state){
+ request_fixture_stop(state);auto& p=*state.parallel;
+ if(!p.policy_done){auto operation=state.view->memory.enter();parallel_policy_probe(p,*state.graph.lock()->policy(),state.application->ports());}
+ if(p.actual_native){
+  require(!state.view->memory.operation_on_this_thread(),"Actual NativeJobs physical progress is tested outside Parent while A remains inside its body");
+  const auto before=state.native_jobs->snapshot();
+  if(before.completed==1&&!p.b_post_released){
+   HANDLE proof=nullptr;{std::lock_guard lock(state.native_trace->gate);require(state.native_trace->launches.size()==2,"Queued B receipt belongs to the second actual native launch");proof=state.native_trace->launches[1].proof;}
+   require(p.early_b&&p.a_held&&p.b_post_waiting&&::WaitForSingleObject(proof,0)==WAIT_TIMEOUT&&before.pending==2&&state.native_notices==1,"Runtime has consumed B's actual queued receipt while the native post callback is still held before return/FLS");
+   require(!state.native_jobs->quiescent_prepared(*state.application),"Physical maintenance skips B's active post reservation without waiting or poisoning");
+   const auto held=state.native_jobs->snapshot();require(held.phase==anadius::owned_jobs::Phase::Bound&&held.pending==2&&held.completed==1&&state.application->snapshot().live_jobs==1,"Receipt-before-post-return retains only physical B and live source A, without a second acknowledgement");
+   {std::lock_guard lock(state.native_trace->gate);require(!state.native_trace->private_closes&&!state.native_trace->event_calls&&!state.native_trace->event_set_calls,"No active post/native row closes and no production detach event is synthesized");}
+   p.receipt_before_post_return=true;p.b_post_released=true;if(!::SetEvent(p.b_post_release))::ExitProcess(254);
+  }
+  if(p.b_response&&!p.b_physical){
+   HANDLE proof=nullptr;{std::lock_guard lock(state.native_trace->gate);require(state.native_trace->launches.size()==2,"Actual NativeJobs owns two physical launches");proof=state.native_trace->launches[1].proof;}
+   if(::WaitForSingleObject(proof,10000)!=WAIT_OBJECT_0)::ExitProcess(254);DWORD code=1;require(::GetExitCodeThread(proof,&code)&&code==0,"Actual B native wrapper and FLS exit complete before A is released");
+   require(!state.native_jobs->quiescent_prepared(*state.application),"Actual NativeJobs physical maintenance progresses without waiting for held A's body");
+   if(p.policy_done&&!p.policy_reaped){p.policy_offers[0].reset();p.policy_offers[1].reset();p.policy_reaped=true;}
+   const auto jobs=state.native_jobs->snapshot();require(jobs.phase==anadius::owned_jobs::Phase::Bound&&jobs.pending==1&&jobs.started==2&&jobs.detached==2&&jobs.completed==1&&p.prepared->outstanding_jobs()==1,"Actual NativeJobs and PreparedMemory retire B while only held A's exact row remains");
+   {std::lock_guard lock(state.native_trace->gate);require(state.native_trace->launches[1].joined_closed&&!state.native_trace->launches[0].joined_closed&&state.native_trace->private_closes==1,"Actual B private native handle retires independently of live A");}p.b_physical=true;
+  }
+ }
+ if(p.b_response&&p.b_physical&&!p.a_released){require(p.root_progress&&p.a_held&&!state.view->memory.operation_on_this_thread(),"B source response and physical reap progress are observed before releasing A outside Parent");p.a_released=true;if(!::SetEvent(p.a_release))::ExitProcess(254);for(auto& connection:state.connections)if(connection&&connection->receive_waiting){auto& c=*connection;c.receive_waiting=false;c.eof_posted=true;if(!::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(state.port),0,0,c.receive_ov))::ExitProcess(254);}}
+ if(p.actual_native&&p.a_released){
+  // After the independent-B observation has released A, retain deterministic
+  // source-test teardown through our own proof handle, never a source gate.
+  HANDLE proof=nullptr;{std::lock_guard lock(state.native_trace->gate);proof=state.native_trace->launches.front().proof;}
+  if(::WaitForSingleObject(proof,10000)!=WAIT_OBJECT_0)::ExitProcess(254);DWORD code=1;require(::GetExitCodeThread(proof,&code)&&code==0,"Released A reaches actual native/FLS exit outside Parent before the fixture's final drain");
+ }
+}
+void parallel_policy_probe(ParallelProbe& p,cp::Policy& policy,rt::Ports ports){
+ for(unsigned n=0;n<2;++n){p.policy_offers[n].emplace(ports.view.memory.prepare_job());p.targets[n]=std::make_shared<anadius::services_completion::WaitTarget>(2,0);}
+ for(unsigned n=0;n<2;++n){p.policy_threads[n].launch(*p.threads,[&,n]{auto& offer=*p.policy_offers[n];offer.acquire();{auto operation=ports.view.memory.enter(offer);auto permit=operation.job_permit();p.targets[n]->lock();policy.exit_waits().register_current_thread(p.targets[n]);bool first=true;policy.cleanup_job_exit_waits(permit,[&]{permit.check(ports.view.memory);if(n==0&&first){first=false;if(!::SetEvent(p.cleanup_entered)||::WaitForSingleObject(p.cleanup_release,10000)!=WAIT_OBJECT_0)::ExitProcess(254);}permit.check(ports.view.memory);});require(!p.targets[n]->registered()&&!p.targets[n]->is_locked()&&p.targets[n]->ready_value_quiescent()==1,"Actual current-thread04a47c releases only this child's registered native wait target");}require(offer.retire(),"Policy probe returns its actual prepared child offer");});if(n==0&&::WaitForSingleObject(p.cleanup_entered,10000)!=WAIT_OBJECT_0)::ExitProcess(254);}
+ p.policy_threads[1].join();require(policy.snapshot().exit_cleanups==1&&p.targets[0]->registered()&&p.targets[0]->is_locked()&&policy.exit_waits().active()==1,"B actual Policy cleanup/native exit progresses while A exact cleanup checkpoint and target remain live");policy.cleanup_exit_waits();require(policy.snapshot().exit_cleanups==2&&p.targets[0]->registered()&&p.targets[0]->is_locked()&&policy.exit_waits().active()==1&&policy.errors()&&policy.generic_category().name_identity,"Actual original Policy call and passives progress without cleaning foreign A target");if(!::SetEvent(p.cleanup_release))::ExitProcess(254);p.policy_threads[0].join();require(policy.snapshot().exit_cleanups==3&&policy.exit_waits().active()==0,"Two actual child cleanups plus one original cleanup finish without fake count reset");p.policy_done=true;
+}
+bool fixture_source_drained(State& state){
+ // Closed synthetic source: no unmanaged actors; inspect only owned passive facts.
+ if(!state.shutdown_posted||!state.application)return false;
+ const auto app=state.application->snapshot();if(app.live_sessions||app.live_jobs||app.active_calls)return false;
+ if(state.parallel){auto& p=*state.parallel;if(!p.a_released||!p.b_physical||!p.policy_done||!p.policy_reaped||p.prepared->outstanding_jobs())return false;
+  if(p.actual_native){const auto jobs=state.native_jobs->snapshot();if(jobs.pending||jobs.completed!=2)return false;}
+  else{if(!p.jobs||p.jobs->completed!=2)return false;for(const auto& row:p.jobs->rows)if(!row->physical||row->work||row->handoff)return false;}
+ }else if(state.scoped){auto& p=*state.scoped;if(!p.finished||!p.b_physical||!p.a_returned||!p.b_memory_returned||p.retained_strong||p.prepared->outstanding_jobs())return false;const auto jobs=state.native_jobs->snapshot();if(jobs.pending||jobs.started)return false;}else return false;
+ return true;
+}
+BOOL WINAPI fixture_accept_cancel(HANDLE handle,LPOVERLAPPED operation){try{auto& state=*running;
+ require((state.parallel||state.scoped)&&state.shutdown_posted&&state.view->memory.operation_on_this_thread()&&handle==reinterpret_cast<HANDLE>(200)&&!state.application->snapshot().live_sessions&&!state.application->snapshot().live_jobs&&operation==state.accept_packets.back()&&!state.session_cancel_calls&&state.session_cancel_packets.empty(),"Synthetic AcceptOnly cancellation targets exactly one actual pending accept after source/physical drain");
+ const auto ports=state.application->ports();const auto loan=ports.accept.loan(ports.accept.handle_for(operation));require(loan.pending&&!loan.consumed&&loan.listener==200&&loan.overlapped==operation,"Selected real Stop cancels the current owned pending accept generation once");
+ ++state.session_cancel_calls;state.session_cancel_packets.push_back(operation);if(!::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(state.port),0,0,operation))::ExitProcess(246);return TRUE;
+ }catch(...){::ExitProcess(246);}}
+std::shared_ptr<ast::Stop> fixture_accept_stop(const std::shared_ptr<State>& state,const std::shared_ptr<void>& lifetime){ast::Options options;options.lifetime=lifetime;options.scope=ast::Scope::AcceptOnly;options.capacity=1;options.imports.cancel=fixture_accept_cancel;options.other_work_drained=[weak=std::weak_ptr<State>(state)]{const auto held=weak.lock();return held&&fixture_source_drained(*held);};return ast::Stop::create(std::move(options));}
+void request_fixture_stop(State& state){if(!state.shutdown_posted)return;require(state.session_stop&&state.view&&!state.view->memory.operation_on_this_thread()&&fixture_source_drained(state),"AcceptOnly Stop request follows actual session/job/prepared/native retirement outside Parent");require(state.session_stop->request(),"Actual original Stop controller requests only its naturally drained pending accept");}
+void prepared_profile_parallel(){
+ namespace d=anadius::thread_domain;namespace wh=anadius::worker_handoff;auto identity=std::make_shared<std::array<std::byte,8>>();auto domain=d::DomainStorage::create({0x31c872450ab966d1ULL,0,nullptr,nullptr,1,reinterpret_cast<std::uintptr_t>(identity->data()),identity});require(domain->initialize(),"Parallel Profile controller initializes actual Domain");auto api=anadius::thread_native::native_api();api.get_module=own_native_module;std::shared_ptr<anadius::bootstrap_providers::NativeThreads> threads=domain->make_threads(api);auto prepared=wh::PreparedMemory::prepare(domain);auto probe=std::make_shared<ParallelProbe>();probe->threads=threads;probe->prepared=prepared.get();ParallelThread original;
+ original.launch(*threads,[&]{auto borrowed=prepared->acquire();auto state=std::make_shared<State>();state->native_mode=true;state->parallel=probe;state->original_thread=::GetCurrentThreadId();running=state.get();state->session_stop=fixture_accept_stop(state,identity);std::uint32_t index=::TlsAlloc();require(index!=TLS_OUT_OF_INDEXES,"Parallel source owns real Runtime TLS selector");ExecutionPlatform platform;anadius::execution_recovered::MutexState mutex{},achievement{};anadius::execution_recovered::initialize_mutex_04a698(mutex,2);anadius::execution_recovered::initialize_mutex_04a698(achievement,2);std::uint8_t ready=0,other=0,last=0;std::int64_t frequency=0;anadius::execution_recovered::Execution execution{mutex,{ready,other,last},frequency,platform};state->ready=&ready;auto providers=std::make_unique<ConcreteProviders>(*state,execution,nullptr,anadius::library_effects::DialogApi{::MultiByteToWideChar,parallel_dialog});
+  {
+   auto sockets=std::make_shared<Sockets>(*state);auto dispatcher=std::make_shared<Dispatcher>(*state);auto worker=std::make_shared<WorkerApi>(index,*dispatcher);auto jobs=std::make_shared<ParallelJobs>(*state,*probe);probe->jobs=jobs;ag::Options options;options.state={state,&state->configuration,&state->online,&state->saved,&state->achievement_file};auto log=std::make_shared<std::stringbuf>();options.policy.stream=anadius::shared_log::make_stream(log);options.policy.imports={::WSASetLastError,::WSAGetLastError,convert_sdk,parse_sdk,sync_send_sdk,select_sdk};options.policy.lifecycle.mode=cp::LifecycleMode::OriginalApplication;
+   options.policy.lifecycle.after=[state,probe](sp::Application& app){if(!state->connections[0])return;auto ports=app.ports();auto& c=state->connection(201);if(c.completed_sends&&!probe->b_response){require(probe->a_held&&app.snapshot().live_jobs==1&&app.snapshot().active_calls>=1&&app.session(c.token).owner.identity()==c.owner_id&&probe->jobs->completed==1,"B normal original response retires one grown source job while A same-session call remains live; Root passives progress");const auto& row=*probe->jobs->rows[0];auto bytes=ports.view.memory.buffer_context().memory.view(row.request,row.size);require(std::equal(bytes.begin(),bytes.end(),probe->wire_a.begin(),probe->wire_a.end()),"Held A actual Parent request survives B processing, response and job retirement");probe->root_progress=true;probe->b_response=true;}if(!app.snapshot().live_sessions&&!app.snapshot().live_jobs&&!state->shutdown_posted){state->shutdown_posted=true;const auto handle=ports.accept.handle_for(state->accept_packets.back());(void)handle;s::DispatcherOperationBinding* packet=nullptr;require(ports.view.io.dispatcher_resolver().lookup_operation(state->accept_packets.back(),packet)==s::MemoryLookup::Found&&packet,"Natural final pending accept keeps its actual typed packet");(void)packet;}};
+   options.policy.lifecycle.returned=[state,probe](sp::Application& app,std::uint64_t,const s::WorkerRunResult& result){require(result.error&&!result.error->value&&!app.snapshot().live_sessions&&!app.snapshot().live_jobs&&probe->a_released&&probe->root_progress&&probe->jobs->completed==2&&probe->jobs->rows[1]->early_body&&state->native_notices==2,"Actual Runtime consumes two real job receipts/pins and all source owners before normal worker return");state->worker_done=true;};
+   options.information=providers->information;options.content=providers->content;options.licensing=providers->licensing;options.time=std::make_shared<Time>();options.version="parallel-profile";options.show_lsx=1;options.profile.sessions=1;options.profile.jobs_capacity=1;options.profile.jobs=jobs;options.profile.receive={receive_sdk,receive_error_sdk};options.profile.send={send_sdk,send_error_sdk};
+   std::weak_ptr<ag::Graph> weak;options.prepare_session=[state,&weak](sp::SessionView view){prepare_peer(*state,view);auto graph=weak.lock();require(static_cast<bool>(graph),"Actual Graph owns Policy before first session publication");};options.observe_log=[state](sp::SessionView view,ag::Log kind,std::string_view text,std::string_view error){observe(*state,view,kind,text,error);};auto graph=ag::Graph::create(std::move(options));weak=graph;state->graph=graph;graph->bind_achievement_mutex(achievement,platform);
+   o::Dependencies server_deps;server_deps.state_lifetime=state;server_deps.sockets=sockets;server_deps.dispatcher=dispatcher;server_deps.operation_policy=s::OperationPolicy::OriginalConcurrentActors;s::IocpConstructorImports imports;imports.create_completion_port=create_port;imports.close_handle=close_port;server_deps.iocp=std::make_shared<s::NativeIocpConstructorApi>(imports);server_deps.gates=std::make_shared<s::NativeServiceGateApi>(s::ServiceGateImports{gate_initialize,::GetLastError});server_deps.cancellation=std::make_shared<Cancel>(*state);server_deps.executor=std::make_shared<Executor>(*state);server_deps.kernel={startup,cleanup,local_name,environment,gate_delete};rt::Dependencies runtime;runtime.state_lifetime=state;runtime.sockets=sockets;runtime.dispatcher=dispatcher;runtime.worker=worker;runtime.accept=std::make_shared<s::NativeAsyncAcceptApi>(s::AsyncAcceptImports{accept_sdk,accept_addresses,update_context,::WSAGetLastError});runtime.factory=std::make_shared<s::NativeSocketFactoryApi>(s::SocketFactoryImports{open_socket});runtime.cancel=std::make_shared<s::NativeRetryCancelApi>(cancel_sdk);runtime.tls_index=&index;runtime.executor={state.get(),move_executor};runtime.capacity=1;runtime.accept_stop=state->session_stop;
+   anadius::bootstrap_backend::Resources resources{};graph->install_server_prepared(resources,domain,std::move(borrowed),std::move(server_deps),std::move(runtime));std::uint16_t port=0;server::server_start_029ea0(*resources.server,port,ready,execution);const auto stop_snapshot=state->session_stop->snapshot();require(stop_snapshot.phase==ast::Phase::Closed&&stop_snapshot.cancel_calls==1&&stop_snapshot.kernel_packets==1&&stop_snapshot.acknowledged==1&&!stop_snapshot.receipts&&!stop_snapshot.active_posts&&state->session_cancel_calls==1&&state->session_cancel_packets.empty(),"Selected real AcceptOnly Stop closes after one exact injected cancellation packet and acknowledged source receipt");require(graph->snapshot().phase==ag::Phase::Closed&&graph->profile()->snapshot().phase==sp::Phase::Closed&&graph->policy()->snapshot().phase==cp::Phase::Closed&&graph->policy()->snapshot().exit_cleanups==7&&jobs->closed&&probe->policy_reaped&&state->worker_done,"Actual Concurrent Profile/Policy Graph closes after seven real cleanups and physical prepared source drain");auto& c=state->connection(201);require(c.greeting_gone&&c.response_wire.size()>6000&&c.response_wire.back()==0&&std::count(c.response_wire.begin(),c.response_wire.end(),0)==1&&c.response_wire.find(probe->id_b)!=std::string::npos&&c.response_wire.find(probe->id_a)==std::string::npos,"Only actual B GetConfig emits one nonempty framed response; supported Unknown A emits no fabricated XML response");require(probe->a_received==1&&probe->b_received==1&&probe->responses==1,"Each actual concurrent XML route is selected exactly once on the SAME Session/Logic");state->application=nullptr;probe->jobs.reset();
+  }
+  providers.reset();require(::TlsFree(index)!=FALSE,"Parallel Runtime TLS outlives all actual providers");running=nullptr;
+ });original.join();require(prepared->close(10000),"Controller observes actual original/child native/FLS exits before prepared backing closes");probe->threads.reset();probe.reset();prepared.reset();threads.reset();require(domain->provider_leases()==0&&domain->close(),"All actual concurrent fixture native providers and Domain owners retire naturally");
+}
+void prepared_native_parallel(bool distinct_sessions){
+ namespace d=anadius::thread_domain;namespace wh=anadius::worker_handoff;
+ auto identity=std::make_shared<std::array<std::byte,8>>();auto domain=d::DomainStorage::create({0x31c872450ab966d1ULL,0,nullptr,nullptr,1,reinterpret_cast<std::uintptr_t>(identity->data()),identity});require(domain->initialize(),"Actual NativeJobs parallel controller initializes its one real Domain");
+ auto api=anadius::thread_native::native_api();api.get_module=own_native_module;std::shared_ptr<anadius::bootstrap_providers::NativeThreads> threads=domain->make_threads(api);auto prepared=wh::PreparedMemory::prepare(domain);
+ auto trace=std::make_shared<NativeTrace>();trace->launches.reserve(2);trace->receipts.reserve(2);auto probe=std::make_shared<ParallelProbe>();probe->actual_native=true;probe->distinct_sessions=distinct_sessions;probe->threads=threads;probe->prepared=prepared.get();ParallelThread original;
+ original.launch(*threads,[&]{
+  auto borrowed=prepared->acquire();auto state=std::make_shared<State>();state->native_mode=true;state->native_trace=trace;state->parallel=probe;state->original_thread=::GetCurrentThreadId();running=state.get();state->session_stop=fixture_accept_stop(state,identity);
+  std::uint32_t index=::TlsAlloc();require(index!=TLS_OUT_OF_INDEXES,"Actual NativeJobs concurrent original owns real Runtime TLS");ParallelExecutionPlatform platform;anadius::execution_recovered::MutexState mutex{},achievement{};anadius::execution_recovered::initialize_mutex_04a698(mutex,2);anadius::execution_recovered::initialize_mutex_04a698(achievement,2);std::uint8_t ready=0,other=0,last=0;std::int64_t frequency=0;anadius::execution_recovered::Execution execution{mutex,{ready,other,last},frequency,platform};state->ready=&ready;
+  auto providers=std::make_unique<ConcreteProviders>(*state,execution,nullptr,anadius::library_effects::DialogApi{::MultiByteToWideChar,parallel_dialog});
+  {
+   auto sockets=std::make_shared<Sockets>(*state);auto dispatcher=std::make_shared<Dispatcher>(*state);auto worker=std::make_shared<WorkerApi>(index,*dispatcher);
+   anadius::owned_jobs::NativeJobApi jobs_api;jobs_api.create_event=native_event;jobs_api.set_event=native_set_event;jobs_api.duplicate=native_duplicate;jobs_api.close=native_close;jobs_api.wait=native_wait;jobs_api.post=native_post;
+   state->native_jobs=std::make_shared<anadius::owned_jobs::NativeJobs>(threads,1,jobs_api);auto observer=std::make_shared<NativeJobsObservation>(*state,*probe,state->native_jobs);
+   ag::Options options;options.state={state,&state->configuration,&state->online,&state->saved,&state->achievement_file};auto log=std::make_shared<std::stringbuf>();options.policy.stream=anadius::shared_log::make_stream(log);options.policy.imports={::WSASetLastError,::WSAGetLastError,convert_sdk,parse_sdk,sync_send_sdk,select_sdk};options.policy.lifecycle.mode=cp::LifecycleMode::OriginalApplication;
+   options.policy.lifecycle.after=[state,probe](sp::Application& app){
+    if(!state->connections[0])return;auto ports=app.ports();
+    if(probe->distinct_sessions&&probe->a_held&&state->connections[1]){auto& b=state->connection(202);if(b.receive_waiting&&!b.cursor&&!b.eof_posted)deliver_receive(*state,b);}
+    const auto b_index=probe->distinct_sessions?1U:0U;
+    if(state->connections[b_index]&&state->connections[b_index]->completed_sends&&!probe->b_response){
+     auto& b=*state->connections[b_index];
+     const auto jobs=state->native_jobs->snapshot();auto& a=state->connection(201);require(probe->a_held&&app.snapshot().live_jobs==1&&app.snapshot().active_calls>=1&&app.session(a.token).owner.identity()==a.owner_id&&jobs.completed==1&&probe->early_b,"B actual original response retires one source job while held A's exact live session/call and ordinary Root metadata remain usable");
+     if(probe->distinct_sessions)require(a.token!=b.token&&a.owner_id!=b.owner_id&&app.snapshot().live_sessions==2&&app.registry().frames.size()==2,"Distinct-session source fixture grows the SAME Profile/native Logic registries while A is executing");
+     else require(app.snapshot().live_sessions==1&&app.session(b.token).owner.identity()==a.owner_id,"Same-session source fixture uses the exact shared Session/Logic, without a cloned business root");
+     probe->root_progress=true;probe->b_response=true;
+    }
+    if(!app.snapshot().live_sessions&&!app.snapshot().live_jobs&&!state->shutdown_posted){state->shutdown_posted=true;const auto handle=ports.accept.handle_for(state->accept_packets.back());(void)handle;s::DispatcherOperationBinding* packet=nullptr;require(ports.view.io.dispatcher_resolver().lookup_operation(state->accept_packets.back(),packet)==s::MemoryLookup::Found&&packet,"Final actual pending accept retains its typed SDK packet until the scripted995 completion");(void)packet;}
+   };
+   options.policy.lifecycle.returned=[state,probe](sp::Application& app,std::uint64_t,const s::WorkerRunResult& result){const auto jobs=state->native_jobs->snapshot();require(result.error&&!result.error->value&&!app.snapshot().live_sessions&&!app.snapshot().live_jobs&&probe->a_released&&probe->root_progress&&probe->early_b&&probe->receipt_before_post_return&&probe->b_post_released&&!probe->b_post_waiting&&jobs.started==2&&jobs.detached==2&&jobs.completed==2&&!jobs.pending&&state->native_notices==2,"Actual Runtime consumes each real NativeJobs receipt/work pin once and drains both physical rows before normal original return");state->worker_done=true;};
+   options.information=providers->information;options.content=providers->content;options.licensing=providers->licensing;options.time=std::make_shared<Time>();options.version="parallel-native-jobs";options.show_lsx=1;options.profile.sessions=1;options.profile.jobs_capacity=1;options.profile.jobs=observer;options.profile.receive={receive_sdk,receive_error_sdk};options.profile.send={send_sdk,send_error_sdk};
+   std::weak_ptr<ag::Graph> weak;options.prepare_session=[state,&weak](sp::SessionView view){prepare_peer(*state,view);auto graph=weak.lock();require(static_cast<bool>(graph),"Actual NativeJobs Graph owns Policy before session publication");};options.observe_log=[state](sp::SessionView view,ag::Log kind,std::string_view text,std::string_view error){observe(*state,view,kind,text,error);};auto graph=ag::Graph::create(std::move(options));weak=graph;state->graph=graph;graph->bind_achievement_mutex(achievement,platform);
+   o::Dependencies server_deps;server_deps.state_lifetime=state;server_deps.sockets=sockets;server_deps.dispatcher=dispatcher;server_deps.operation_policy=s::OperationPolicy::OriginalConcurrentActors;s::IocpConstructorImports imports;imports.create_completion_port=create_port;imports.close_handle=close_port;server_deps.iocp=std::make_shared<s::NativeIocpConstructorApi>(imports);server_deps.gates=std::make_shared<s::NativeServiceGateApi>(s::ServiceGateImports{gate_initialize,::GetLastError});server_deps.cancellation=std::make_shared<Cancel>(*state);server_deps.executor=std::make_shared<Executor>(*state);server_deps.kernel={startup,cleanup,local_name,environment,gate_delete};
+   rt::Dependencies runtime;runtime.state_lifetime=state;runtime.sockets=sockets;runtime.dispatcher=dispatcher;runtime.worker=worker;runtime.accept=std::make_shared<s::NativeAsyncAcceptApi>(s::AsyncAcceptImports{accept_sdk,accept_addresses,update_context,::WSAGetLastError});runtime.factory=std::make_shared<s::NativeSocketFactoryApi>(s::SocketFactoryImports{open_socket});runtime.cancel=std::make_shared<s::NativeRetryCancelApi>(cancel_sdk);runtime.tls_index=&index;runtime.executor={state.get(),move_executor};runtime.capacity=1;runtime.accept_stop=state->session_stop;
+   anadius::bootstrap_backend::Resources resources{};graph->install_server_prepared(resources,domain,std::move(borrowed),std::move(server_deps),std::move(runtime));std::uint16_t port=0;server::server_start_029ea0(*resources.server,port,ready,execution);const auto stop_snapshot=state->session_stop->snapshot();require(stop_snapshot.phase==ast::Phase::Closed&&stop_snapshot.cancel_calls==1&&stop_snapshot.kernel_packets==1&&stop_snapshot.acknowledged==1&&!stop_snapshot.receipts&&!stop_snapshot.active_posts&&state->session_cancel_calls==1&&state->session_cancel_packets.empty(),"Selected real AcceptOnly Stop closes after one exact injected cancellation packet and acknowledged source receipt");
+   require(graph->snapshot().phase==ag::Phase::Closed&&graph->profile()->snapshot().phase==sp::Phase::Closed&&graph->policy()->snapshot().phase==cp::Phase::Closed&&graph->policy()->snapshot().exit_cleanups==7&&probe->native_closed&&!probe->native_ports&&probe->policy_reaped&&state->worker_done,"Actual NativeJobs/Profile/Policy closes after two child, two original and three explicit probe cleanups");
+   auto& b=state->connection(distinct_sessions?202:201);require(b.greeting_gone&&b.response_wire.size()>6000&&b.response_wire.back()==0&&std::count(b.response_wire.begin(),b.response_wire.end(),0)==1&&b.response_wire.find(probe->id_b)!=std::string::npos&&b.response_wire.find(probe->id_a)==std::string::npos,"Actual B GetConfig emits exactly one framed response with its own long id; supported Unknown A emits none");if(distinct_sessions)require(state->connection(201).response_wire.empty()&&state->connection(201).greeting_gone,"Separate actual A session has no fabricated response and retires its real greeting");
+   require(probe->a_received==1&&probe->b_received==1&&probe->responses==1&&trace->valid&&trace->launches.size()==2&&trace->receipts.size()==2&&trace->private_closes==2&&!trace->event_calls&&!trace->event_set_calls,"Both actual routes/native handles/real receipts retire once with no NativeJobs detach event call");for(const auto& row:trace->launches)require(row.original_closed&&row.joined_closed&&row.id!=state->original_thread,"Actual NativeJobs detaches and closes each private physical handle on its exact child");state->application=nullptr;
+  }
+  providers.reset();state->native_jobs.reset();require(::TlsFree(index)!=FALSE,"Actual concurrent NativeJobs TLS outlives all concrete providers");running=nullptr;
+ });
+ original.join();require(prepared->close(10000)&&prepared->snapshot().worker_exit_verified,"Controller observes actual original and both NativeJobs native/FLS exits before backing release");for(const auto& row:trace->launches)require(::CloseHandle(row.proof)!=FALSE,"Controller retires only its independent native proof handles after actual source close");probe->threads.reset();probe.reset();prepared.reset();threads.reset();require(domain->provider_leases()==0&&domain->close(),"Actual concurrent NativeJobs source fixture releases its one Domain naturally");
+}
+void prepared_scoped_runtime(){
+ namespace d=anadius::thread_domain;namespace wh=anadius::worker_handoff;namespace oe=anadius::owned_environment;
+ ScopedGreetingFree greeting_observation;require(!scoped_greeting_free.exchange(&greeting_observation),"Scoped heap observation belongs to this isolated actual Domain only");d::Apis domain_api;domain_api.heap.heap_free=scoped_greeting_heap_free;auto identity=std::make_shared<std::array<std::byte,8>>();auto domain=d::DomainStorage::create({0x31c872450ab966d1ULL,0,nullptr,nullptr,1,reinterpret_cast<std::uintptr_t>(identity->data()),identity},domain_api);require(domain->initialize(),"Actual two-Scope controller initializes its one real Domain");auto api=anadius::thread_native::native_api();api.get_module=own_native_module;std::shared_ptr<anadius::bootstrap_providers::NativeThreads> threads=domain->make_threads(api);auto prepared=wh::PreparedMemory::prepare(domain);auto probe=std::make_shared<ScopedRuntimeProbe>();probe->threads=threads;probe->prepared=prepared.get();ParallelThread original;
+ original.launch(*threads,[&]{
+  auto borrowed=prepared->acquire();auto state=std::make_shared<State>();state->native_mode=true;state->scoped=probe;state->native_trace=std::make_shared<NativeTrace>();state->original_thread=::GetCurrentThreadId();running=state.get();state->session_stop=fixture_accept_stop(state,identity);probe->environment=std::make_shared<oe::Environment>(1,oe::ClassifierProfile::OriginalDefault);probe->configuration=probe->environment->configuration();
+  std::uint32_t index=::TlsAlloc();require(index!=TLS_OUT_OF_INDEXES,"Actual two-Scope original owns real Runtime TLS");ParallelExecutionPlatform platform;anadius::execution_recovered::MutexState mutex{},achievement{};anadius::execution_recovered::initialize_mutex_04a698(mutex,2);anadius::execution_recovered::initialize_mutex_04a698(achievement,2);std::uint8_t ready=0,other=0,last=0;std::int64_t frequency=0;anadius::execution_recovered::Execution execution{mutex,{ready,other,last},frequency,platform};state->ready=&ready;auto providers=std::make_unique<ConcreteProviders>(*state,execution);
+  {
+   auto sockets=std::make_shared<Sockets>(*state);auto dispatcher=std::make_shared<Dispatcher>(*state);auto worker=std::make_shared<WorkerApi>(index,*dispatcher);
+   anadius::owned_jobs::NativeJobApi jobs_api;jobs_api.create_event=native_event;jobs_api.set_event=native_set_event;jobs_api.duplicate=native_duplicate;jobs_api.close=native_close;jobs_api.wait=native_wait;jobs_api.post=native_post;state->native_jobs=std::make_shared<anadius::owned_jobs::NativeJobs>(threads,1,jobs_api);auto jobs=std::make_shared<ScopedRuntimeJobs>(*state,*probe,state->native_jobs);
+   ag::Options options;options.state={state,&state->configuration,&state->online,&state->saved,&state->achievement_file};auto log=std::make_shared<std::stringbuf>();options.policy.stream=anadius::shared_log::make_stream(log);options.policy.imports={::WSASetLastError,::WSAGetLastError,convert_sdk,parse_sdk,sync_send_sdk,select_sdk};options.policy.lifecycle.mode=cp::LifecycleMode::OriginalApplication;
+   options.policy.lifecycle.after=[state,probe](sp::Application& app){
+    if(!state->connections[0])return;auto ports=app.ports();
+    if(!probe->started&&state->connections[0]&&state->connection(201).receive_waiting){require(probe->session.has_value(),"Given prepare_session view is captured before the actual ready-session callback");const auto ready_session=app.session(probe->session->token);require(ready_session.owner.identity()==probe->session->owner.identity(),"Scope actors begin only after actual greeting publication and a pending source receive protect the same Ready Session");scoped_runtime_start(*state,ready_session);}
+    if(!app.snapshot().live_sessions&&!app.snapshot().live_jobs&&!state->shutdown_posted){require(probe->finished&&!probe->retained_strong&&!probe->prepared->outstanding_jobs(),"Final pending accept is completed only after both real Scope/native offers and the actual session hold drain");state->shutdown_posted=true;const auto handle=ports.accept.handle_for(state->accept_packets.back());(void)handle;s::DispatcherOperationBinding* packet=nullptr;require(ports.view.io.dispatcher_resolver().lookup_operation(state->accept_packets.back(),packet)==s::MemoryLookup::Found&&packet,"Natural Scope fixture drain retains its real typed pending accept packet until scripted995");(void)packet;}
+   };
+   options.policy.lifecycle.returned=[state,probe](sp::Application& app,std::uint64_t,const s::WorkerRunResult& result){const auto ports=app.ports();const auto jobs=state->native_jobs->snapshot();require(result.error&&!result.error->value&&probe->finished&&probe->b_physical&&probe->root_progress&&probe->a_closed&&probe->b_closed&&probe->a_returned&&probe->b_memory_returned&&!probe->prepared->outstanding_jobs()&&!app.snapshot().live_sessions&&!app.snapshot().live_jobs&&!ports.view.scheduler.work_count_30.load()&&!ports.view.io.snapshot().allocations&&ports.view.memory.snapshot().controls_destroyed==1,"Actual Runtime/Policy source work, IO, both real Scope actors and the session/control naturally drain before original return");require(!jobs.started&&!jobs.completed&&!jobs.detached&&!jobs.pending&&!state->native_notices&&state->native_trace->launches.empty(),"Manual genuine prepared Scope actors are not represented as fabricated NativeJobs message jobs or scheduler pins");state->worker_done=true;};
+   options.information=providers->information;options.content=providers->content;options.licensing=providers->licensing;options.time=std::make_shared<Time>();options.version="actual-scoped-runtime";options.show_lsx=1;options.profile.sessions=1;options.profile.jobs_capacity=1;options.profile.environment_owner=probe->environment;options.profile.environment_capacity=0;options.profile.jobs=jobs;options.profile.receive={receive_sdk,receive_error_sdk};options.profile.send={send_sdk,send_error_sdk};
+   options.prepare_session=[state,probe](sp::SessionView view){require(!probe->session,"Actual scoped source fixture accepts exactly one original session");prepare_peer(*state,view);probe->session.emplace(view);};options.observe_log=[state](sp::SessionView view,ag::Log kind,std::string_view text,std::string_view error){observe(*state,view,kind,text,error);};auto graph=ag::Graph::create(std::move(options));state->graph=graph;graph->bind_achievement_mutex(achievement,platform);
+   o::Dependencies server_deps;server_deps.state_lifetime=state;server_deps.sockets=sockets;server_deps.dispatcher=dispatcher;server_deps.operation_policy=s::OperationPolicy::OriginalConcurrentActors;s::IocpConstructorImports imports;imports.create_completion_port=create_port;imports.close_handle=close_port;server_deps.iocp=std::make_shared<s::NativeIocpConstructorApi>(imports);server_deps.gates=std::make_shared<s::NativeServiceGateApi>(s::ServiceGateImports{gate_initialize,::GetLastError});server_deps.cancellation=std::make_shared<Cancel>(*state);server_deps.executor=std::make_shared<Executor>(*state);server_deps.kernel={startup,cleanup,local_name,environment,gate_delete};
+   rt::Dependencies runtime;runtime.state_lifetime=state;runtime.sockets=sockets;runtime.dispatcher=dispatcher;runtime.worker=worker;runtime.accept=std::make_shared<s::NativeAsyncAcceptApi>(s::AsyncAcceptImports{accept_sdk,accept_addresses,update_context,::WSAGetLastError});runtime.factory=std::make_shared<s::NativeSocketFactoryApi>(s::SocketFactoryImports{open_socket});runtime.cancel=std::make_shared<s::NativeRetryCancelApi>(cancel_sdk);runtime.tls_index=&index;runtime.executor={state.get(),move_executor};runtime.capacity=1;runtime.accept_stop=state->session_stop;
+   anadius::bootstrap_backend::Resources resources{};graph->install_server_prepared(resources,domain,std::move(borrowed),std::move(server_deps),std::move(runtime));std::uint16_t port=0;server::server_start_029ea0(*resources.server,port,ready,execution);const auto stop_snapshot=state->session_stop->snapshot();require(stop_snapshot.phase==ast::Phase::Closed&&stop_snapshot.cancel_calls==1&&stop_snapshot.kernel_packets==1&&stop_snapshot.acknowledged==1&&!stop_snapshot.receipts&&!stop_snapshot.active_posts&&state->session_cancel_calls==1&&state->session_cancel_packets.empty(),"Selected real AcceptOnly Stop closes after one exact injected cancellation packet and acknowledged source receipt");
+   const auto env=probe->environment->snapshot();const auto policy=graph->policy()->snapshot();require(port==12345&&ready&&!other&&!last&&graph->snapshot().phase==ag::Phase::Closed&&graph->profile()->snapshot().phase==sp::Phase::Closed&&policy.phase==cp::Phase::Closed&&env.phase==oe::Phase::Closed&&!env.environments&&!env.active_calls&&probe->native_closed&&!probe->ports&&state->worker_done&&policy.exit_cleanups==probe->root_cleanups&&probe->root_cleanups==1&&policy.worker_initializations==1&&policy.worker_finishes==1,"The SAME explicitly injected Environment/Policy/Profile/Runtime close normally after one real original cleanup and complete actor/source retirement");
+   auto& c=state->connection(201);require(c.greeting_gone&&c.eof_seen&&c.eof_posted&&!c.receive_waiting&&c.response_wire.empty()&&!c.received_logs&&!c.response_logs&&state->closed.size()==3&&state->closed.back()==200&&state->ports_closed==1&&state->cleanups==1,"Actual pending receive EOF and typed accept995 drain the injected SDK source without fabricated XML jobs or responses");state->application=nullptr;probe->application=nullptr;
+  }
+  providers.reset();state->native_jobs.reset();require(::TlsFree(index)!=FALSE,"Original TLS and actual providers outlive all Scope actors and source retirement");running=nullptr;
+ });
+ original.join();require(prepared->close(10000)&&prepared->snapshot().worker_exit_verified&&!prepared->outstanding_jobs(),"Controller observes the original and both actual Scope actor native/FLS exits before prepared backing release");probe->configuration={};probe->environment.reset();probe->threads.reset();probe.reset();prepared.reset();threads.reset();require(domain->provider_leases()==0&&domain->close(),"One real Domain and all selected providers retire after actual Scope/Runtime drain");require(greeting_observation.released&&greeting_observation.frees==1&&!greeting_observation.armed&&scoped_greeting_free.exchange(nullptr)==&greeting_observation,"Greeting observation outlives actual original/child FLS/Domain close and records exactly one native allocation retirement");
+}
+// Actual concrete Worker owns Graph/PreparedMemory/TLS and all source teardown.
+// Provider aliases keep their owning Online/views alive until original-worker
+// retirement; the controller deliberately owns NO ConcreteProviders instance.
+void configure_delayed_worker(const std::shared_ptr<State>& state,const std::shared_ptr<anadius::bootstrap_providers::NativeThreads>& threads,anadius::bootstrap_backend::CallbackStateView view,aw::Inputs& input){
+ state->original_thread=::GetCurrentThreadId();running=state.get();
+ auto providers=std::make_shared<ConcreteProviders>(*state,view.execution,&view);
+ auto sockets=std::make_shared<Sockets>(*state);auto dispatcher=std::make_shared<Dispatcher>(*state);auto hooks=std::make_shared<NativeHooks>(NativeHooks{*state,*dispatcher});
+ anadius::owned_jobs::NativeJobApi api;api.create_event=native_event;api.set_event=native_set_event;api.duplicate=native_duplicate;api.close=native_close;api.wait=native_wait;api.post=native_post;state->native_jobs=std::make_shared<anadius::owned_jobs::NativeJobs>(threads,1,api);
+ auto& options=input.graph;options.policy.stream=anadius::shared_log::make_stream(std::make_shared<std::stringbuf>());options.policy.imports={::WSASetLastError,::WSAGetLastError,convert_sdk,parse_sdk,sync_send_sdk,select_sdk};options.policy.lifecycle.lifetime=hooks;
+ options.policy.lifecycle.select_owner=[h=hooks.get()](sp::Application& app,s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& error,std::uint32_t bytes){return h->completion_owner(app,owner,op,error,bytes);};
+ options.policy.lifecycle.after=[h=hooks.get()](sp::Application& app){h->after_completion(app);};options.policy.lifecycle.returned=[h=hooks.get()](sp::Application& app,std::uint64_t count,const s::WorkerRunResult& result){h->returned(app,count,result);};options.policy.lifecycle.external_drained=[h=hooks.get()](o::ServerView view,sp::Application& app){return h->external(view,app);};
+ options.information=std::shared_ptr<anadius::handlers_recovered::Effects>(providers,providers->information.get());
+ options.content=std::shared_ptr<anadius::content_handlers_recovered::Effects>(providers,providers->content.get());
+ options.licensing=std::shared_ptr<anadius::dispatch_recovered::LicenseHandlers>(providers,providers->licensing.get());
+ options.time=std::make_shared<Time>();options.version="prepared-worker-delay";options.show_lsx=1;options.event_capacity=8;options.profile.sessions=1;options.profile.jobs_capacity=1;options.profile.headers=128;options.profile.initial_output_slots=8;options.profile.jobs=state->native_jobs;options.profile.receive={receive_sdk,receive_error_sdk};options.profile.send={send_sdk,send_error_sdk};
+ options.prepare_session=[state](sp::SessionView session){prepare_peer(*state,session);};options.observe_log=[state](sp::SessionView session,ag::Log kind,std::string_view text,std::string_view error){observe(*state,session,kind,text,error);};
+ auto& server=input.server;server.state_lifetime=state;server.sockets=sockets;server.dispatcher=dispatcher;s::IocpConstructorImports imports;imports.create_completion_port=create_port;imports.close_handle=close_port;server.iocp=std::make_shared<s::NativeIocpConstructorApi>(imports);server.gates=std::make_shared<s::NativeServiceGateApi>(s::ServiceGateImports{gate_initialize,::GetLastError});server.cancellation=std::make_shared<Cancel>(*state);server.executor=std::make_shared<Executor>(*state);server.kernel={startup,cleanup,local_name,environment,gate_delete};
+ auto& runtime=input.runtime;runtime.state_lifetime=state;runtime.sockets=sockets;runtime.dispatcher=dispatcher;runtime.accept=std::make_shared<s::NativeAsyncAcceptApi>(s::AsyncAcceptImports{accept_sdk,accept_addresses,update_context,::WSAGetLastError});runtime.factory=std::make_shared<s::NativeSocketFactoryApi>(s::SocketFactoryImports{open_socket});runtime.cancel=std::make_shared<s::NativeRetryCancelApi>(cancel_sdk);runtime.executor={state.get(),move_executor};runtime.capacity=32;runtime.prepared_stop_timeout_ms=5000;
+ // Protected graph.state and runtime.tls_index stay empty: Worker installs them.
+}
+void prepared_worker_session_delay(bool timeout=false){
+ namespace td=anadius::thread_domain;namespace bb=anadius::bootstrap_backend;
+ auto identity=std::make_shared<std::array<std::byte,8>>();auto domain=td::DomainStorage::create({0x31c872450ab966d1ULL,0,nullptr,nullptr,1,reinterpret_cast<std::uintptr_t>(identity->data()),identity});require(domain->initialize(),"Controller initializes own Domain for concrete Worker/native child close continuation");
+ auto state=std::make_shared<State>();state->native_mode=true;state->native_failure=timeout?"session-worker-timeout":"session-worker-delay";
+ auto trace=std::make_shared<NativeTrace>();trace->launches.reserve(1);trace->receipts.reserve(1);trace->delay_first_exit=true;trace->hold_exit_until_close=true;state->native_trace=trace;
+ trace->exit_entered=::CreateEventW(nullptr,TRUE,FALSE,nullptr);trace->exit_release=::CreateEventW(nullptr,TRUE,FALSE,nullptr);trace->session_entered=::CreateEventW(nullptr,TRUE,FALSE,nullptr);trace->session_release=::CreateEventW(nullptr,TRUE,FALSE,nullptr);if(!trace->exit_entered||!trace->exit_release||!trace->session_entered||!trace->session_release)::ExitProcess(244);exit_trace=trace.get();
+ auto thread_api=anadius::thread_native::native_api();thread_api.get_module=own_native_module;thread_api.exit=delayed_native_exit;std::shared_ptr<anadius::bootstrap_providers::NativeThreads> threads=domain->make_threads(thread_api);
+ ast::Options stop_options;stop_options.lifetime=trace;stop_options.scope=ast::Scope::SessionIoPrepared;stop_options.capacity=128;stop_options.imports.cancel=session_cancel;stop_options.other_work_drained=[]{return true;}; // closed fixture has no unmanaged work
+ auto stop=ast::Stop::create(std::move(stop_options));state->session_stop=stop;
+ bb::RuntimeSeed seed{};ExecutionPlatform platform;anadius::execution_recovered::initialize_mutex_04a698(seed.execution_mutex,2);anadius::execution_recovered::Execution execution{seed.execution_mutex,{seed.server_ready,seed.online_ready,seed.libraries_ready},seed.frequency_cache,platform};state->ready=&seed.server_ready;
+ const bb::CallbackStateView view{state->configuration,seed,execution};aw::Settings settings;settings.lifetime=state;settings.state=aw::Settings::StateSeed{0,{}};settings.accept_stop=stop;settings.close_retry_timeout_ms=timeout?2000U:5000U;settings.configure=[state,threads,view](aw::Inputs& input){configure_delayed_worker(state,threads,view,input);};
+ auto worker=aw::Worker::create(domain,view,aw::take_settings(settings));anadius::execution_recovered::MutexState achievement_mutex{};anadius::execution_recovered::initialize_mutex_04a698(achievement_mutex,2);worker->bind_achievement_mutex(achievement_mutex,platform);
+ struct Original {std::function<void()> action;HANDLE handle=nullptr;std::uint32_t id=0;static unsigned __stdcall entry(void* raw){auto& self=*static_cast<Original*>(raw);self.action();return 67;}} original;
+ original.action=[&]{worker->run_server(state->configuration.server_port,seed.server_ready,execution);};original.handle=reinterpret_cast<HANDLE>(anadius::threads_recovered::begin_thread_05e8e0(nullptr,0,reinterpret_cast<std::uintptr_t>(&Original::entry),reinterpret_cast<std::uintptr_t>(&original),0,&original.id,*threads));if(!original.handle||!original.id)::ExitProcess(244);
+ auto wait_phase=[&](aw::Phase phase,std::uint64_t epoch=0){for(unsigned i=0;i<5000;++i){const auto snap=worker->snapshot();if(snap.phase==phase&&(!epoch||snap.close_epoch==epoch))return snap;if(snap.phase==aw::Phase::Poisoned)break;::Sleep(1);}::ExitProcess(243);};
+ (void)wait_phase(aw::Phase::WaitingStartup);worker->startup_complete(anadius::execution_recovered::ReadyStage::Online,&execution);worker->startup_complete(anadius::execution_recovered::ReadyStage::Host,&execution);
+ if(::WaitForSingleObject(trace->session_entered,10000)!=WAIT_OBJECT_0||!stop->request()||!::SetEvent(trace->session_release))::ExitProcess(244);
+ const auto first=wait_phase(aw::Phase::WaitingClose,1);HANDLE proof=nullptr;{std::lock_guard lock(trace->gate);require(trace->launches.size()==1&&!trace->private_closes&&trace->event_calls==0&&trace->event_set_calls==0,"Physical native ownership remains retained after source and IO drain");proof=trace->launches.front().proof;}
+ const auto jobs=state->native_jobs->snapshot();DWORD code=0;
+ require(first.pending_retained&&first.memory.phase==anadius::worker_handoff::Phase::Borrowed&&state->worker_source_io_drained&&jobs.phase==anadius::owned_jobs::Phase::Bound&&jobs.pending==1&&jobs.completed==1&&::WaitForSingleObject(proof,0)==WAIT_TIMEOUT&&::GetExitCodeThread(proof,&code)&&code==STILL_ACTIVE&&!state->worker_external_proofs&&!state->worker_provider_retirements,"Controller sees logical job/IO completion with real live child; no external proof/provider retirement can bypass physical drain");
+ require(!worker->finish_after_join()&&!worker->cancel_unpublished(),"Controller cannot close prepared backing while child and original close waiter are live");
+ if(!timeout){
+  bb::ApplicationJoinContinuation& continuation=*worker;require(!continuation.prepare_join(),"Production controller seam only signals current close epoch without claiming native join");
+  const auto second=wait_phase(aw::Phase::WaitingClose,2);require(second.close_retries==1&&state->native_jobs->snapshot().pending==1&&!state->worker_external_proofs&&!state->worker_provider_retirements&&::WaitForSingleObject(original.handle,0)==WAIT_TIMEOUT,"A retry before physical exit preserves all owners and publishes a new wait epoch");
+  if(!::SetEvent(trace->exit_release))::ExitProcess(245);{std::lock_guard lock(trace->gate);trace->exit_released=true;}
+  if(::WaitForSingleObject(proof,10000)!=WAIT_OBJECT_0||!::GetExitCodeThread(proof,&code)||code)::ExitProcess(247);
+  require(!continuation.prepare_join(),"After independent child/FLS join, controller requests original-thread physical reap and close continuation");
+ }
+ if(::WaitForSingleObject(original.handle,10000)!=WAIT_OBJECT_0||!::GetExitCodeThread(original.handle,&code)||code!=67)::ExitProcess(252);require(::CloseHandle(original.handle)!=FALSE,"Actual original wrapper/FLS join precedes controller finish");original.handle=nullptr;
+ const auto final=worker->snapshot();
+ if(timeout){require(final.phase==aw::Phase::Poisoned&&final.pending_retained&&final.memory.phase==anadius::worker_handoff::Phase::Borrowed&&state->native_jobs->snapshot().pending==1&&!state->worker_external_proofs&&!state->worker_provider_retirements&&!worker->prepare_join()&&!worker->finish_after_join()&&::WaitForSingleObject(proof,0)==WAIT_TIMEOUT,"Close-wait deadline retains providers/borrow/physical child even after original exits; no controller destruction fallback");std::_Exit(203);}
+ require(final.phase==aw::Phase::Returned&&!final.pending_retained&&final.close_epoch==2&&final.close_retries==2&&state->native_jobs->snapshot().phase==anadius::owned_jobs::Phase::Closed&&state->worker_external_proofs==1&&state->worker_provider_retirements==1&&state->provider_retired_thread==original.id&&stop->snapshot().phase==ast::Phase::Closed,"Original actor reaps child, rechecks external proof and retires providers/Graph/TLS once before returning");
+ require(worker->finish_after_join()&&worker->snapshot().memory.worker_exit_verified,"Controller releases prepared backing only after actual original and child termination");
+ original.action={};worker.reset();state->application=nullptr;running=nullptr;exit_trace=nullptr;state->native_jobs.reset();state->session_stop.reset();stop.reset();
+ require(::CloseHandle(proof)&&::CloseHandle(trace->exit_entered)&&::CloseHandle(trace->exit_release)&&::CloseHandle(trace->session_entered)&&::CloseHandle(trace->session_release),"Controller closes owned independent proof/events after complete worker/child retirement");state.reset();threads.reset();require(domain->provider_leases()==0&&domain->close(),"Last native provider/Domain retires only after all concrete Worker lifetimes drain");domain.reset();
+}
+struct SelectedJobCounts {unsigned starts=0,detaches=0;};
+// Explicit synthetic same-worker tickets for binding coverage; no native jobs.
+struct SelectedJobs final:sp::Jobs {
+ std::shared_ptr<SelectedJobCounts> counts;
+ explicit SelectedJobs(std::shared_ptr<SelectedJobCounts> p):counts(std::move(p)){}
+ s::FrameThreadHandle start(sp::JobToken,std::function<void()> runner)override{
+  const auto id=++counts->starts;runner();runner={};return {0x90000+id,id};
+ }
+ std::int32_t detach(const s::FrameThreadHandle& handle)override{
+  require(handle.id&&handle.handle==0x90000+handle.id,"Explicit selected Jobs receives its matching source ticket at detach");++counts->detaches;return 0;
+ }
+};
+void concrete_profile(bool use_selected_jobs=false){
+ auto selected_counts=std::make_shared<SelectedJobCounts>();std::weak_ptr<SelectedJobs> selected_lifetime;
  NativeDomain native;auto state=std::make_shared<State>();running=state.get();auto* observed=state.get();std::weak_ptr<State> lifetime=state;state->configuration.entitlements.push_back({"synthetic-offer","synthetic-group","synthetic-version","synthetic-type","synthetic-tag"});
  std::uint32_t index=::TlsAlloc();if(index==TLS_OUT_OF_INDEXES)unused();std::weak_ptr<ag::Graph> graph_lifetime;std::weak_ptr<Hooks> weak_hooks;
  ExecutionPlatform platform;anadius::execution_recovered::MutexState mutex{};anadius::execution_recovered::initialize_mutex_04a698(mutex,2);std::uint8_t ready=0,other=0,last=0;std::int64_t frequency=0;anadius::execution_recovered::Execution execution{mutex,{ready,other,last},frequency,platform};observed->ready=&ready;
@@ -271,22 +1031,59 @@ void concrete_profile(){
   options.policy.lifecycle.select_owner=[h=hooks.get()](sp::Application& a,s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& error,std::uint32_t bytes){return h->completion_owner(a,owner,op,error,bytes);};
   options.policy.lifecycle.after=[h=hooks.get()](sp::Application& a){h->after_completion(a);};options.policy.lifecycle.returned=[h=hooks.get()](sp::Application& a,std::uint64_t n,const s::WorkerRunResult& r){h->worker_returned(a,n,r);};options.policy.lifecycle.external_drained=[h=hooks.get()](o::ServerView v,sp::Application& a){return h->external_quiescent(v,a);};
   options.information=std::make_shared<Information>();options.content=std::make_shared<ContentEffects>();options.licensing=std::make_shared<LicenseBoundary>();options.time=std::make_shared<Time>();options.version=std::string(70000,'a');options.show_lsx=1;options.event_capacity=8;
-  options.profile.receive={receive_sdk,receive_error_sdk};options.profile.send={send_sdk,send_error_sdk};options.profile.sessions=2;options.profile.jobs_capacity=4;options.profile.headers=128;options.profile.initial_output_slots=8;
+   options.profile.receive={receive_sdk,receive_error_sdk};options.profile.send={send_sdk,send_error_sdk};options.profile.sessions=1;options.profile.jobs_capacity=4;options.profile.headers=128;options.profile.initial_output_slots=8;
+  if(use_selected_jobs){auto jobs=std::make_shared<SelectedJobs>(selected_counts);selected_lifetime=jobs;options.profile.jobs=std::move(jobs);}
   options.prepare_session=[keep=state](sp::SessionView view){prepare_peer(*keep,view);};options.observe_log=[keep=state](sp::SessionView view,ag::Log kind,std::string_view text,std::string_view error){observe(*keep,view,kind,text,error);};
   auto graph=ag::Graph::create(std::move(options));graph_lifetime=graph;state->graph=graph;
   o::Dependencies server_deps;server_deps.state_lifetime=state;server_deps.sockets=sockets;server_deps.dispatcher=dispatcher;s::IocpConstructorImports imports;imports.create_completion_port=create_port;imports.close_handle=close_port;server_deps.iocp=std::make_shared<s::NativeIocpConstructorApi>(imports);server_deps.gates=std::make_shared<s::NativeServiceGateApi>(s::ServiceGateImports{gate_initialize,::GetLastError});server_deps.cancellation=std::make_shared<Cancel>(*state);server_deps.executor=std::make_shared<Executor>(*state);server_deps.kernel={startup,cleanup,local_name,environment,gate_delete};
-  rt::Dependencies runtime_deps;runtime_deps.state_lifetime=state;runtime_deps.sockets=sockets;runtime_deps.dispatcher=dispatcher;runtime_deps.worker=worker;runtime_deps.accept=std::make_shared<s::NativeAsyncAcceptApi>(s::AsyncAcceptImports{accept_sdk,accept_addresses,update_context,::WSAGetLastError});runtime_deps.factory=std::make_shared<s::NativeSocketFactoryApi>(s::SocketFactoryImports{open_socket});runtime_deps.cancel=std::make_shared<s::NativeRetryCancelApi>(cancel_sdk);runtime_deps.tls_index=&index;runtime_deps.executor={observed,move_executor};runtime_deps.capacity=32;
+  rt::Dependencies runtime_deps;runtime_deps.state_lifetime=state;runtime_deps.sockets=sockets;runtime_deps.dispatcher=dispatcher;runtime_deps.worker=worker;runtime_deps.accept=std::make_shared<s::NativeAsyncAcceptApi>(s::AsyncAcceptImports{accept_sdk,accept_addresses,update_context,::WSAGetLastError});runtime_deps.factory=std::make_shared<s::NativeSocketFactoryApi>(s::SocketFactoryImports{open_socket});runtime_deps.cancel=std::make_shared<s::NativeRetryCancelApi>(cancel_sdk);runtime_deps.tls_index=&index;runtime_deps.executor={observed,move_executor};runtime_deps.capacity=1;
   anadius::bootstrap_backend::Resources resources{};graph->install_server(resources,native.root,std::move(server_deps),std::move(runtime_deps));hooks->policy=graph->policy().get();hooks->errors=graph->policy()->errors().get();
   require(resources.server&&graph->profile()->snapshot().phase==sp::Phase::Fresh&&!observed->starts&&!observed->factory_calls&&graph->policy()->snapshot().worker_initializations==0&&graph->policy()->snapshot().exit_cleanups==0,"Concrete Graph installs Resources.server passively with NOcaller XML/Logic/Router/Random/event/context/Policy graph");
   sockets.reset();dispatcher.reset();worker.reset();hooks.reset();graph.reset();state.reset();require(!lifetime.expired()&&!graph_lifetime.expired(),"Server wrapper retains concrete Graph and all required SDK/state/lifecycle lifetimes after external owners drop");
+  require(!selected_counts->starts&&!selected_counts->detaches&&(!use_selected_jobs||!selected_lifetime.expired()),"Explicit Jobs is retained by Graph/Profile without executing work during installation");
   std::uint16_t port=0;
   try{server::server_start_029ea0(*resources.server,port,ready,execution);}catch(const std::exception& e){std::cerr<<"SOURCE EXCEPTION: "<<e.what()<<"\n"<<std::flush;::ExitProcess(111);}
   for(const auto& c:observed->connections)require(c->greeting_gone&&c->sync_calls==3&&c->max_sync==65536&&c->greeting_wire.find(std::string(70000,'a'))!=std::string::npos&&c->greeting_wire.find("<Challenge")!=std::string::npos&&c->greeting_wire.back()==0&&c->greeting_wire.size()>65536,"Concrete Profile builds/owns large actualMessageHandler greeting and native025720 frees it before per-session receive");
   require(port==12345&&ready==1&&!other&&!last&&platform.locks==1&&platform.unlocks==1&&observed->environment_key=="EALsxPort"&&observed->environment_value=="12345","Actual SourceBackend server component publishes ready/port through existing native source path");
   require(observed->closed.size()==4&&observed->closed.back()==200&&std::count(observed->closed.begin(),observed->closed.end(),201)==1&&std::count(observed->closed.begin(),observed->closed.end(),202)==1&&std::count(observed->closed.begin(),observed->closed.end(),203)==1&&observed->moves==4&&observed->ports_closed==1&&observed->gate_deletes==2&&observed->starts==1&&observed->cleanups==1,"Two actual023000 factories and both native disposals close201/202 plus terminal203/listener exactly once before own port/gate/WSA teardown");
   const auto final=graph_lifetime.lock()->backend().snapshot();require(final.phase==o::Phase::Closed&&final.quiescence_attested&&observed->queue_drained&&!native.root->provider_leases()&&graph_lifetime.lock()->profile()->snapshot().phase==sp::Phase::Closed&&graph_lifetime.lock()->snapshot().phase==ag::Phase::Closed,"Runtime and concrete Profile retire owned graphs only after explicit external drain plus actual source counts");const auto policy_final=graph_lifetime.lock()->policy()->snapshot();require(policy_final.phase==cp::Phase::Closed&&!policy_final.active&&!policy_final.worker_active&&policy_final.worker_initializations==1&&policy_final.worker_finishes==1&&policy_final.exit_cleanups==18,"Concrete policy closes dedicated exit registry after one real native worker initialize/finish and18 inline job cleanups");require(graph_lifetime.lock()->policy()->exit_waits().active()==0&&graph_lifetime.lock()->policy()->exit_waits().blocks()==1&&!weak_hooks.expired(),"Dedicated selected exit registry has zero registrations and only its fixed inline head while lifecycle hooks remain retained through closed graph");observed->application=nullptr;
+  require(use_selected_jobs?(selected_counts->starts==18&&selected_counts->detaches==18):(!selected_counts->starts&&!selected_counts->detaches),"Explicit Jobs handles all18 real source message starts/detaches; empty selection preserves default backend");
  }
+ require(selected_lifetime.expired(),"Explicit Jobs backing retires with closed Graph/Profile owners");
  require(lifetime.expired()&&graph_lifetime.expired()&&weak_hooks.expired(),"Closed server/Runtime/Profile/Policy destruction releases all captured per-session logic/SDK/lifecycle hooks without ownership cycle");running=nullptr;require(::TlsFree(index)!=FALSE,"Borrowed TLS selector remains valid until complete concrete graph destruction");require(native.root->close()&&native.memory.blocks.empty()&&native.memory.allocations==native.memory.frees&&native.memory.slot_releases==1,"Real process heap/PTD/FLS domain drains every Profile frame/string/map/block/control/IO allocation");
 }
 }
-int main(){try{concrete_profile();std::cout<<"PASS: "<<checks<<" application-graph integration checks; concrete Graph owns NativeLogic/XML/Router/Random/eventqueue/Policy/Profile/defaultjobs/environment/transports, real ownheap/FLS/IOCP and nativeplain+AES/wrapped8to16/FIFO17; only SDK/packetdriver/externaldrain decisions remain selected; no nativeABI/kernelquiescence claim\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"Unexpected deque integration exception\n";return 1;}}
+int main(int argc,char** argv){try{
+ if(argc==2&&std::string_view(argv[1])=="--prepared-scoped-runtime"){prepared_scoped_runtime();return 0;}
+ if(argc==2&&std::string_view(argv[1])=="--prepared-native-parallel-same"){prepared_native_parallel(false);return 0;}
+ if(argc==2&&std::string_view(argv[1])=="--prepared-native-parallel-distinct"){prepared_native_parallel(true);return 0;}
+ if(argc==2&&std::string_view(argv[1])=="--prepared-profile-parallel"){prepared_profile_parallel();return 0;}
+ if(argc==2&&std::string_view(argv[1])=="--prepared-native-call-views"){prepared_native_profile({},false,false,true);return 0;}
+ if(argc==2&&std::string_view(argv[1])=="--prepared-native-growth"){prepared_native_profile({},true,true);return 0;}
+ if(argc==2){const std::string_view mode=argv[1];if(mode=="--prepared-worker-session-delay"){prepared_worker_session_delay();return 0;}if(mode=="--prepared-worker-session-timeout"){prepared_worker_session_delay(true);return 1;}if(mode=="--prepared-native"){prepared_native_profile();return 0;}if(mode=="--prepared-native-delayed-exit"){prepared_native_profile({},true);return 0;}if(mode=="--prepared-native-late-close"){prepared_native_profile("late-close");return 0;}if(mode=="--prepared-native-session-drain"){prepared_native_profile("session-drain");return 0;}if(mode=="--prepared-native-session-cancel-fail"){prepared_native_profile("session-cancel-fail");return 1;}if(mode=="--prepared-native-session-missing-io"){prepared_native_profile("session-missing-io");return 1;}if(mode=="--prepared-native-early-stop"){prepared_native_profile("early-stop");return 1;}if(mode=="--prepared-native-early-drain"){prepared_native_profile("early-drain");return 1;}if(mode=="--prepared-native-early-drain-timeout"){prepared_native_profile("early-drain-timeout");return 1;}if(mode=="--prepared-native-early-drain-resume-fail"){prepared_native_profile("early-drain-resume-fail");return 1;}if(mode=="--prepared-native-unknown-external"){prepared_native_profile("unknown-external");return 1;}if(mode=="--prepared-native-post"){prepared_native_profile("post");return 1;}if(mode=="--prepared-native-duplicate"){prepared_native_profile("duplicate");return 1;}if(mode=="--prepared-native-wait"){prepared_native_profile("wait");return 1;}if(mode=="--prepared-native-close"){prepared_native_profile("close");return 1;}return 2;}
+ concrete_profile();concrete_profile(true);
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-profile-parallel",static_cast<const char*>(nullptr))==0,"Own isolated actual Concurrent Backend/Profile/Policy source scenario uses two same-session prepared jobs, early child return, real B response and physical reap while A remains held");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-scoped-runtime",static_cast<const char*>(nullptr))==0,"Own isolated actual selected Environment/Runtime source scenario holds A after genuine work drop while B scoped factory/copy/move/prepare, native/FLS exit and Parent reaping finish before normal source drain");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-parallel-same",static_cast<const char*>(nullptr))==0,"Own isolated actual NativeJobs same-session source scenario covers early B body, receipt-before-post-return and real B response/FLS/reap while supported Unknown A is held");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-parallel-distinct",static_cast<const char*>(nullptr))==0,"Own isolated actual NativeJobs distinct-session source scenario grows the same original registries and retires B independently of held A");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native",static_cast<const char*>(nullptr))==0,"Own isolated source scenario covers prepared Graph/Profile/NativeJobs70messages with actual child/FLS exit and capacity1 reuse");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-call-views",static_cast<const char*>(nullptr))==0,"Own isolated real Graph call-view source mode covers seventy actual native jobs, original-only root checkpoint sentinels, owned content writers/events and one memory XML write");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-delayed-exit",static_cast<const char*>(nullptr))==0,"Own isolated delayed-exit source scenario retains physical ownership after receipt consumption before actual ExitThread/FLS");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-growth",static_cast<const char*>(nullptr))==0,"Own isolated initial1 NativeJobs scenario grows while first consumed child is physically held, then drains the same seventy native receipts/FLS exits exactly once");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-late-close",static_cast<const char*>(nullptr))==0,"Own isolated late Policy-close deferral retries pending teardown after NativeJobs closed without replay");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-early-stop",static_cast<const char*>(nullptr))==195,"Own isolated explicit early stop retains unconsumed ready receipt and source/native ownership");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-session-drain",static_cast<const char*>(nullptr))==0,"Own combined prepared/SessionIo source scenario closes all tracked job/IO owners after observed packets and actual thread joins");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-worker-session-delay",static_cast<const char*>(nullptr))==0,"Own concrete Worker/native child source scenario spans IO drain, live physical child, two controller close epochs and original provider retirement");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-worker-session-timeout",static_cast<const char*>(nullptr))==203,"Own concrete Worker close deadline retains providers/borrow and live child without controller cleanup fallback");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-session-cancel-fail",static_cast<const char*>(nullptr))==201,"Own combined cancel-denial prefix retains every unobserved loan without cleanup");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-session-missing-io",static_cast<const char*>(nullptr))==202,"Own combined missing-IO receipt deadline retains source/kernel ownership after prepared body completes");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-early-drain",static_cast<const char*>(nullptr))==197,"Own selected early-stop receipt drain consumes job once, resumes stop and retains unrelated IO without attestation");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-early-drain-timeout",static_cast<const char*>(nullptr))==198,"Own selected finite receipt deadline retains work if controlled proxy withholds ready packet");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-early-drain-resume-fail",static_cast<const char*>(nullptr))==199,"Own selected resumed-stop post failure retains untransferred dispatcher work pin without replay");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-unknown-external",static_cast<const char*>(nullptr))==196,"Own isolated opaque exception using deferral type remains poisoned without cleanup retry");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-post",static_cast<const char*>(nullptr))==191,"Own isolated post-denial source prefix retains job/control/work/handles without retry");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-duplicate",static_cast<const char*>(nullptr))==192,"Own isolated duplicate-notice source prefix never repeats body/work decrement");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-wait",static_cast<const char*>(nullptr))==193,"Own isolated failed-physical-wait source prefix retains joined handle");
+ require(_spawnl(_P_WAIT,argv[0],argv[0],"--prepared-native-close",static_cast<const char*>(nullptr))==194,"Own isolated failed-physical-close source prefix retains joined handle without replay");
+ std::cout<<"PASS: "<<checks<<" application-graph integration source checks; prepared native normal/late-close, early-stop receipt drain and retained SDK/deadline prefixes; no original nativeABI claim\n";return 0;
+ }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"Unexpected graph integration exception\n";return 1;}}

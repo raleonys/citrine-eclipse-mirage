@@ -1,0 +1,310 @@
+[
+  {
+    "address": "0x18000f800",
+    "kind": "instructions",
+    "file": "18000f800-instructions.json",
+    "evidenceId": "ev_5bc8e3f46648e5c4684b4bd1726110badbb537e4e3c67e85801dbdbac1794501",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000f800",
+    "kind": "pseudo",
+    "file": "18000f800-pseudo.json",
+    "evidenceId": "ev_697548b0200dac8169896bbd27db3db68fd82b4872646fbcd07c9a06005bc6e5",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000f960",
+    "kind": "instructions",
+    "file": "18000f960-instructions.json",
+    "evidenceId": "ev_2adcffaafdff8f9db21ebfc85a2e2fe3db00bbcb10a7fbb882dc89949695e08d",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000f960",
+    "kind": "pseudo",
+    "file": "18000f960-pseudo.json",
+    "evidenceId": "ev_10cb413993d406fc9db2e773654e64e89c1a7178c129e852d95aed22055f41d4",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000f3f0",
+    "kind": "instructions",
+    "file": "18000f3f0-instructions.json",
+    "evidenceId": "ev_ea138b58e610635455e86a34df8bde7e8d43064cc962ea005e2a100c50fafeae",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000f3f0",
+    "kind": "pseudo",
+    "file": "18000f3f0-pseudo.json",
+    "evidenceId": "ev_2ad421317f889934ac8afed65dfc935e445a68f251d062f52187454d7e18843b",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000f4d0",
+    "kind": "instructions",
+    "file": "18000f4d0-instructions.json",
+    "evidenceId": "ev_a2f89fc553fbc7b88087831601050fa5b6ce227552f31829507c7e7c8f5d9fb0",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000f4d0",
+    "kind": "pseudo",
+    "file": "18000f4d0-pseudo.json",
+    "evidenceId": "ev_dfd578004099e4b257d5b859dabb2e3e44863764d84c5b15c4f90eabc5023215",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000fc00",
+    "kind": "instructions",
+    "file": "18000fc00-instructions.json",
+    "evidenceId": "ev_285bdba09e6414e11d06e882c817973f64d1cc33c202f5f4bf14268005348a0c",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000fc00",
+    "kind": "pseudo",
+    "file": "18000fc00-pseudo.json",
+    "evidenceId": "ev_05260c251a88b5fb92d13debfe4b8c97245ed1d5cfe45c93f2c0a25f3e216ca1",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000fc80",
+    "kind": "instructions",
+    "file": "18000fc80-instructions.json",
+    "evidenceId": "ev_52551a80c0629b8486e6e8fa11a1608299b8c53665ec74f4b5c8595288cd4144",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000fc80",
+    "kind": "pseudo",
+    "file": "18000fc80-pseudo.json",
+    "evidenceId": "ev_4e7ab5548304b91f9665783896bc1980e6ba2ca303417b91d0f881eaabf6779d",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x1800086b0",
+    "kind": "instructions",
+    "file": "1800086b0-instructions.json",
+    "evidenceId": "ev_4915d1f6e5f6cd7baa83b70959c7f67ccf0dbf07b80c7913cb59eef6a19c61a3",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x1800086b0",
+    "kind": "pseudo",
+    "file": "1800086b0-pseudo.json",
+    "evidenceId": "ev_a0ca7f866ce035ecf2c0cf3a2d36b37163a3b1061391fabb6970ad965a6fd068",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x1800087f0",
+    "kind": "instructions",
+    "file": "1800087f0-instructions.json",
+    "evidenceId": "ev_a306697b7447b2079aae3be623751914fc53254b82c1988ffb706263d6a1b72b",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x1800087f0",
+    "kind": "pseudo",
+    "file": "1800087f0-pseudo.json",
+    "evidenceId": "ev_4f98270be1a412d34ac2c70d19f8da485d74a410fd72431ada9e60780fd29faf",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x180008db0",
+    "kind": "instructions",
+    "file": "180008db0-instructions.json",
+    "evidenceId": "ev_09b60a72d7a579f21551ab4c7cfc385681f849d276c4123c20ddc3272bb7f9ed",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x180008db0",
+    "kind": "pseudo",
+    "file": "180008db0-pseudo.json",
+    "evidenceId": "ev_16a4239dccf54c9efd33459c23115d911f8971b38fa5366463fb58fc6509ac81",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x180008fa0",
+    "kind": "instructions",
+    "file": "180008fa0-instructions.json",
+    "evidenceId": "ev_a0ceee016cb6611352598058c6af3b8c985a93fb37282aa1cc870243c4fbc712",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x180008fa0",
+    "kind": "pseudo",
+    "file": "180008fa0-pseudo.json",
+    "evidenceId": "ev_038b9a56c118a699e9ddbd18150c92f4a3aae7a5730f36945bc351d9c4cc69d7",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000aa50",
+    "kind": "instructions",
+    "file": "18000aa50-instructions.json",
+    "evidenceId": "ev_da581b282fc722c86d0b694756fe550083ecf335b5bb9b615a2efc94181d9478",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  },
+  {
+    "address": "0x18000aa50",
+    "kind": "pseudo",
+    "file": "18000aa50-pseudo.json",
+    "evidenceId": "ev_ed66c51633e265ea3fac53817520c91d709fe99450c96b409f9fea60ebe779a3",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "status": "success",
+    "collection": "fresh MCP query, 2026-11-04",
+    "authority": "shipped-artifact"
+  }
+]

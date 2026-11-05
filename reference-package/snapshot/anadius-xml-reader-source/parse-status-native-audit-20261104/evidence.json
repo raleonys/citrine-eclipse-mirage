@@ -1,0 +1,148 @@
+{
+  "schema": "xml-parse-status-native-audit.v1",
+  "recorded_at": "2026-11-04T17:39:10.696584+00:00",
+  "status": "CANDIDATE_CLOSED_NO_PRODUCTION_CHANGE",
+  "scope": "Fresh native numeric7attribute and8text producers and033d70 protocol consumers match current pinned parser/source; malformed-input universal equivalence and embedded release remain unproven.",
+  "fresh_REA_evidence": [
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/instructions-180004370.json",
+      "sha256": "0af0b04abd0b63140c230d17e7d01cf2d271f672d11896964bf3f1eb0ad712bd",
+      "evidence_id": "ev_f63af54ede39fc1df1197edb7f9a7865dcc2356de7bcce9d5c0c5eb303ac2849",
+      "parameters": {
+        "procedure": "0x180004370"
+      }
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/instructions-180004ea0.json",
+      "sha256": "80d7705378964b118b6abb15bf40f8a939c1f331ce58835f930e4f18a5b915ec",
+      "evidence_id": "ev_96900d0fe1d492a3871fc15f663d6d2bd7f400482a3e557b243ec5c7261ef716",
+      "parameters": {
+        "procedure": "0x180004ea0"
+      }
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/instructions-180033d70.json",
+      "sha256": "6482eceecf515c6f226b2c9bb212a74ebabe452bc60501a14ec6b4452c29556b",
+      "evidence_id": "ev_4470b55e68a26f1c364675e1e592813753e285529837d06b074ddc3854004d46",
+      "parameters": {
+        "procedure": "0x180033d70"
+      }
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/pseudo-180001830.json",
+      "sha256": "f54207adab9eadacad467e39873d43dc5688cce76244ddd755023b6c3ea83e54",
+      "evidence_id": "ev_33d474ce59dc540e525881e601baecdba1b1baa88683b16ba4a54fc16adc6b03",
+      "parameters": {
+        "procedure": "0x180001830"
+      }
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/pseudo-1800032d0.json",
+      "sha256": "ee38f4c43521a41f463a219ae4878ff3fbf76ccd65529cc4f33191cb486dae46",
+      "evidence_id": "ev_45841199a92e13a86765d97f8da70936d887d99fbc99b08c57e7fdf364952d4d",
+      "parameters": {
+        "procedure": "0x1800032d0"
+      }
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/pseudo-1800041b0.json",
+      "sha256": "3e3815aef1bf0eb09423799d650bfb8e9a6bd752de1d8117f2689cef9b077952",
+      "evidence_id": "ev_9297f27b74fa18a5ff1e29dc29b6d654d819d9f56879c643671b94749796414c",
+      "parameters": {
+        "procedure": "0x1800041b0"
+      }
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/pseudo-180004280.json",
+      "sha256": "2b5685bc045fec04c4fe70bd1903e76311a86626a49725158772cb639e41d0e5",
+      "evidence_id": "ev_dbe6a134b333e4863c4757777a1f474c05ad6608f142cb31cdf85d17f2a9d78c",
+      "parameters": {
+        "procedure": "0x180004280"
+      }
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/pseudo-180004370.json",
+      "sha256": "a0841001b5ca16ab67621260733b9a86fcf563ac37869634145edc6ea0281a8a",
+      "evidence_id": "ev_08c398e2a94fb6a5ac9e02e22da9b3a13570c81d4a360c1757fa3b0a2e814579",
+      "parameters": {
+        "procedure": "0x180004370"
+      }
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/pseudo-1800048b0.json",
+      "sha256": "8e53ee8ced6f97ac9a115cb0c4c9219444ce4bf36368a5769982d9e480fd3312",
+      "evidence_id": "ev_934aecdfc4ebd711b7e6f2297056c118df2c84f8b0bd9e5e91fe4a65b065130f",
+      "parameters": {
+        "procedure": "0x1800048b0"
+      }
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/pseudo-180004ea0.json",
+      "sha256": "2bad710b30f1db92d9afe7dfc0dbc31f204bdf3f3ed4a1121d1b12a72f9e7dcb",
+      "evidence_id": "ev_ecae12fd5d81771e551f0e3f2caaff259d43840d65fbcef940df2ade6a42ff9a",
+      "parameters": {
+        "procedure": "0x180004ea0"
+      }
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/pseudo-180033d70.json",
+      "sha256": "4d0d4a955243ded81448ef69ce832825e0db98a8e57922944dd31187929a3703",
+      "evidence_id": "ev_5639af3e8455b548a57d80c017576f5410353d221f993955d97e95571e124517",
+      "parameters": {
+        "procedure": "0x180033d70"
+      }
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/pseudo-180034730.json",
+      "sha256": "240f5444c5260c5efd985b75fa088c059c988980eb4a60d07913e6a2d8c49d71",
+      "evidence_id": "ev_9ace592be68c655d2007e7e480824476229ced0b3aec6faf4ea3c5326922c86a",
+      "parameters": {
+        "procedure": "0x180034730"
+      }
+    }
+  ],
+  "report": {
+    "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/report.md",
+    "sha256": "b641d32f5b7d6bc98a27655d98296c9696110de0b66ceec00535d88adbcbdafe"
+  },
+  "reviewed_unchanged_sources": [
+    {
+      "path": "outputs/anadius-xml-reader-source/reader.cpp",
+      "sha256": "0c80c24764ad925ada9ca2c485a984ba490f07d7a596db1eb12c2f18af817d66"
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/reader.hpp",
+      "sha256": "f73003ab563784f7dbc51db9bf853b28f08c80f2cc398a67c49145a3a7bd118e"
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.h",
+      "sha256": "aed790f764e4663f6cb99839648dd642c7e7a730d12c67d3ab7ca075f0ac67c0"
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.cpp",
+      "sha256": "95f64e4cb06c9e147d5b12e8860c88898944858dfbc38fed92ebf918f1436554"
+    },
+    {
+      "path": "outputs/anadius-native-profile-source/native.cpp",
+      "sha256": "750f958bdc0d8209bafbc98f00325b8081892eb10ae0fe2ed63d8c3ccb933758"
+    },
+    {
+      "path": "outputs/anadius-socket-source/native_message.cpp",
+      "sha256": "362b81b7980cd9146564a4ead2618f6f8327b3fe10126b5fb4610b2cc92298cd"
+    },
+    {
+      "path": "outputs/anadius-messages-source/messages.cpp",
+      "sha256": "2eda8d8cdd82a783b694ef1c8f7ad97b643d3b50589694a76239c14e1a970f9c"
+    }
+  ],
+  "production_changes_for_this_audit": 0,
+  "initial_isolation_errors_preserved": 4,
+  "native_session_closed": true,
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "other_work_note": "Root IO registry source implementation is a separate concurrent stage; this audit does not freeze or validate those changed files.",
+  "overall_completion_percentage": null
+}

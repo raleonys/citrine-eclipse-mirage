@@ -9,6 +9,10 @@ namespace anadius::native_context {
 // Explicit caller seed for the remaining callback state. These are source
 // values, not guessed native image initializers. The owner retains these sets
 // and counters at stable addresses through successful binding shutdown.
+// Lengths are seed constants: Policy factories may choose them before Context
+// construction, but must not retain a writer or change them after publication.
+// Attempts belongs to this stable owner; after publish only admitted network
+// callback bodies may mutate it. External retained writers are excluded.
 struct CallbackSeed {
     registry_recovered::Handles client,language,fabricated;
     std::int32_t ipv4_length,ipv6_length;
@@ -20,14 +24,19 @@ using PolicyFactory=std::function<std::unique_ptr<native_recovered::OriginalEffe
 // admissions, including cached entry pointers. In-flight leases may remain;
 // they keep close false. A count snapshot or lifetime token is not this proof.
 using Quiescence=std::function<bool()>;
+enum class ClosureProfile {Cooperative,OriginalCrt};
+// OriginalCrt has no external proof callback. Closure still pauses admitted
+// bodies and closes the actual native Binding; no image-unload promise follows.
+bool closure_configuration_valid(ClosureProfile,const Quiescence&)noexcept;
 class Owner final:public bootstrap_backend::CallbackAttachment {
 public:
     // Optional source admission is owned at a stable address through native
     // Binding/Context shutdown. Context layout and this constructor extension
     // require rebuilding all consumers; SDK entry signatures are unchanged.
+    // ClosureProfile is appended to the source constructor/factory ABI.
     Owner(bootstrap_backend::CallbackStateView,CallbackSeed,PolicyFactory,
         native_recovered::Errors& permanent_errors,Quiescence,
-        std::unique_ptr<native_recovered::Admission> = {});
+        std::unique_ptr<native_recovered::Admission> = {},ClosureProfile=ClosureProfile::Cooperative);
     ~Owner() noexcept override;
     Owner(const Owner&)=delete;Owner& operator=(const Owner&)=delete;
     Owner(Owner&&)=delete;Owner& operator=(Owner&&)=delete;
@@ -40,6 +49,7 @@ private:
     bootstrap_backend::CallbackStateView state_;
     CallbackSeed callbacks_;
     Quiescence quiescence_;
+    ClosureProfile closure_profile_;
     native_recovered::Errors& errors_;
     std::unique_ptr<native_recovered::Admission> admission_;
     std::unique_ptr<native_recovered::OriginalEffects> effects_;
@@ -51,5 +61,5 @@ private:
 // Permanent errors outlive all future callback entry attempts, even after close.
 bootstrap_backend::CallbackAttachmentFactory make_factory(CallbackSeed,PolicyFactory,
     native_recovered::Errors& permanent_errors,Quiescence,
-    std::unique_ptr<native_recovered::Admission> = {});
+    std::unique_ptr<native_recovered::Admission> = {},ClosureProfile=ClosureProfile::Cooperative);
 } // namespace anadius::native_context

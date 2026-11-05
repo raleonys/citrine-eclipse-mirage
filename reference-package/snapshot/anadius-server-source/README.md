@@ -1,3 +1,7 @@
+<!-- PENDING-SOURCE-CHANGES -->
+2026-11-05: Kullanıcının açık isteğiyle güncel tam ortak derleme ve testler geçti. Üretim DLL linki başarılı; DLL yüklenmedi/çalıştırılmadı. 296 nesne, 356 test grubu ve 19 framework terminal senaryosu doğrulandı. Güncel kaynakların son tam derlemeye göre bekleyen farkı 0. Bu sonuç tam davranış/loader/native ABI eşdeğerliği kanıtı değildir. Kanıt: `dll-critical-path/current-rebuild.evidence.json`. Önceki aşama metinleri tarihseldir; ZIP sonucu ayrı paket kaydındadır.
+<!-- END-PENDING-SOURCE-CHANGES -->
+
 # Sunucu ve session uygulama çekirdeği
 
 `server.cpp/.hpp`, `anadius64.dll` içindeki port duyurusu, session çerçeveleme ve yazma kuyruğu mantığını okunabilir C++20 olarak yeniden kurar. ASIO/IOCP ağı ve protokol Handler'ı zorunlu, türlenmiş bağımlılıklardır. Bu klasör tek başına yüklenebilir bir DLL değildir; gerçek socket açan bir backend içermez.

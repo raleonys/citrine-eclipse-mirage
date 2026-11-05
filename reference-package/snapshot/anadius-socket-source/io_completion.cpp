@@ -26,16 +26,58 @@ Error map_error(const Error& input,IoReference* weak,Api& api){
 }
 }
 IoHandlerEnvironment& move_io_environment_023cb0(IoHandlerEnvironment& destination,
-    IoHandlerEnvironment& source,IoHandlerSentinels sentinels){
+    IoHandlerEnvironment& source,IoHandlerSentinels sentinels,IoEnvironmentMoveSlot* admitted_slot){
+    if(!admitted_slot&&source.operations_10&&source.operations_10->try_move_environment_023cb0(destination,source,sentinels))return destination;
     destination.operations_10=source.operations_10;
     destination.schedule_20=source.schedule_20;
     source.operations_10=sentinels.empty_operations_846c8;
     source.schedule_20=sentinels.empty_schedule_846e8;
-    table(destination).move_slot_10(destination,source);
+    if(admitted_slot)admitted_slot->move_slot_10(destination,source);
+    else table(destination).move_slot_10(destination,source);
     source.state_18=0;
     destination.executor_28=source.executor_28; // live reload AFTER callback
     source.executor_28=sentinels.empty_executor_84770;
     return destination;
+}
+IoHandlerEnvironment& prepare_io_environment_40(IoHandlerEnvironment& destination,
+    IoHandlerEnvironment& source,IoHandlerSentinels sentinels,IoEnvironmentPreparation* explicit_call){
+    struct Body final:IoEnvironmentPrepareBody {
+        IoHandlerEnvironment& out;IoHandlerEnvironment& from;IoHandlerSentinels sentinels;
+        IoHandlerEnvironment scratch_environment;
+        bool attempted=false,returned=false;
+        Body(IoHandlerEnvironment& a,IoHandlerEnvironment& b,IoHandlerSentinels s):out(a),from(b),sentinels(s){}
+        IoHandlerEnvironment& temporary()noexcept override{return scratch_environment;}
+        IoHandlerEnvironment& run(IoEnvironmentPrepareOperations* admitted)override{
+            if(attempted)throw UnsupportedInput("Native prepare body cannot be replayed");
+            attempted=true; // also consume an attempt that later throws
+            auto* const executor=from.executor_28;
+            if(!executor)throw UnsupportedInput("Native prepare executor has no live projection");
+            const auto cached=executor->prepare_slot_40; // cache BEFORE query may delete executor
+            if(!cached)throw UnsupportedInput("Native prepare executor slot40 has no live projection");
+            const auto query=admitted?admitted->query_slot_18(from):table(from).query_slot_18(from);
+            IoPrepareScratch scratch;
+            if(admitted)admitted->construct_slot_40(cached,scratch_environment,query,scratch);
+            else cached(scratch_environment,query,scratch);
+            if(admitted)admitted->move_023cb0(out,scratch_environment,sentinels);
+            else move_io_environment_023cb0(out,scratch_environment,sentinels);
+            // Native reads the temporary's LIVE destroy target after move.
+            if(table(scratch_environment).destroy_identity!=sentinels.guard_destroy_017a30){
+                if(admitted)admitted->destroy_slot_00(scratch_environment);
+                else table(scratch_environment).destroy_slot_00(scratch_environment);
+            }
+            returned=true;return out;
+        }
+    } body(destination,source,sentinels);
+    if(explicit_call){
+        auto& result=explicit_call->prepare(destination,source,sentinels,body);
+        if(&result!=&destination||!body.returned)throw UnsupportedInput("Explicit prepare did not finish its exact body");
+        return result;
+    }
+    if(source.operations_10&&source.operations_10->try_prepare_environment_40(destination,source,sentinels,body)){
+        if(!body.returned)throw UnsupportedInput("Owned prepare did not finish its body");
+        return destination;
+    }
+    return body.run(nullptr);
 }
 void release_io_storage_026a00(OperationStorage& storage,std::uint64_t size,
     PostedEnvironment environment,WorkerRunApi& api,PostedMemoryEffects& memory){
@@ -125,17 +167,8 @@ void complete_receive_027710(std::uintptr_t owner,ReceiveIoOperation& operation,
         else{
             // Inline native nested executor preparation, environment move,
             // conditional temporary destroy, dispatch and unconditional destroy.
-            auto* const executor=local_environment.executor_28;
-            if(!executor)throw UnsupportedInput("Native receive executor has no live projection");
-            const auto prepare=executor->prepare_slot_40; // cached function, not executor-this
-            if(!prepare)throw UnsupportedInput("Native receive executor slot40 has no live projection");
-            const auto query=table(local_environment).query_slot_18(local_environment);
-            IoPrepareScratch scratch;IoHandlerEnvironment temporary;
-            prepare(temporary,query,scratch);
             IoHandlerEnvironment nested;
-            move_io_environment_023cb0(nested,temporary,environment.sentinels);
-            if(table(temporary).destroy_identity!=environment.sentinels.guard_destroy_017a30)
-                table(temporary).destroy_slot_00(temporary);
+            prepare_io_environment_40(nested,local_environment,environment.sentinels);
             effects.schedule_receive_022c60(nested,handler);
             table(nested).destroy_slot_00(nested);
         }

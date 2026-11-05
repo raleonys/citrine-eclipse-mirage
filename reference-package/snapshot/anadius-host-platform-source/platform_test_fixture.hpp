@@ -3,6 +3,7 @@
 #include "../anadius-online-platform-source/platform_test_fixture.hpp"
 #include <cstring>
 #include <iomanip>
+#include <functional>
 
 namespace b14_test {
 using namespace anadius;namespace hp=host_platform;namespace hi=host_init_recovered;
@@ -37,6 +38,7 @@ struct Engine final:recovered_hooks::Api {
     std::vector<std::string> events;std::vector<std::uintptr_t> targets,detours,enabled,disabled;
     std::int32_t init=0,uninit=0;std::map<std::size_t,int> create_results,enable_results,disable_results;
     unsigned init_calls=0,uninit_calls=0;bool throw_create=false,throw_enable=false,throw_disable=false,throw_uninit=false;
+    std::function<void(std::uintptr_t)> on_enable;
     int initialize()override{events.emplace_back("init");++init_calls;return init;}
     int create(void* target,void* detour,void** original)override{
         const auto index=targets.size();targets.push_back(reinterpret_cast<std::uintptr_t>(target));detours.push_back(reinterpret_cast<std::uintptr_t>(detour));events.emplace_back("create");
@@ -45,6 +47,7 @@ struct Engine final:recovered_hooks::Api {
         const auto found=create_results.find(index);return found==create_results.end()?0:found->second;
     }
     int enable(void* target)override{
+        if(on_enable)on_enable(reinterpret_cast<std::uintptr_t>(target));
         const auto index=enabled.size();enabled.push_back(reinterpret_cast<std::uintptr_t>(target));events.emplace_back("enable");
         if(throw_enable)throw std::runtime_error("controlled enable outcome");
         const auto found=enable_results.find(index);return found==enable_results.end()?0:found->second;

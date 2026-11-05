@@ -1,0 +1,79 @@
+{
+  "schema": "original-graph-per-message-contexts.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_GRAPH_PER_MESSAGE_CONTEXT_AND_SHARED_QUEUE_PREREQUISITE",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Graph registered exact per-message calls with explicit NativeProfile dependencies and concrete Information/Content/Licensing views, private execution/writers/lock bookkeeping over SAME roots and true mutexes; one shared relaxed event count with native pre/postlock ordering. Actual production stays Serialized.",
+  "sources": [
+    {
+      "path": "anadius-application-graph-source/graph.hpp",
+      "before": "before/anadius-application-graph-source__graph.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-application-graph-source/graph.cpp",
+      "before": "before/anadius-application-graph-source__graph.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-application-graph-source/graph_integration_tests.cpp",
+      "before": "before/anadius-application-graph-source__graph_integration_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-socket-source/native_message.hpp",
+      "before": "before/anadius-socket-source__native_message.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/native_message_tests.cpp",
+      "before": "before/anadius-socket-source__native_message_tests.cpp",
+      "role": "test"
+    }
+  ],
+  "reviews": [
+    "graph-and-count-independent-review.md",
+    "sdk-fixture-independent-review.md",
+    "root-independent-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "native-findings.md",
+    "graph-implementation.md",
+    "count-test-source-notes.md",
+    "sdk-fixture-implementation.md",
+    "native-mutex-concurrency-audit.md"
+  ],
+  "native_replies": [
+    "instruction-1800342fc.json",
+    "instruction-180034317.json",
+    "instruction-180034332.json",
+    "instruction-180034337.json",
+    "instruction-18003451b.json",
+    "instruction-180034522.json",
+    "instruction-180034528.json",
+    "instruction-180034573.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/native-evidence-index.json",
+    "outputs/anadius-licensing-effects-source/nested-call-views-20261105/evidence.json",
+    "outputs/anadius-licensing-effects-source/nested-call-views-20261105/remaining-integration.json",
+    "outputs/anadius-licensing-effects-source/nested-call-views-20261105/next-graph-code-plan.md",
+    "outputs/anadius-licensing-effects-source/nested-call-views-20261105/next-graph-locks-review.md",
+    "outputs/anadius-licensing-effects-source/nested-call-views-20261105/next-graph-fixture-plan.md"
+  ],
+  "limits": [
+    "No compiler, project tests, link, DLL execution or ZIP update. Two test files contain authored assertions, none executed. graph_tests.cpp is unchanged and not counted.",
+    "Actual production Parent remains Serialized; Profile stable Job/Slot admission, Policy cleanup and actual NativeJobs gate/policy selection remain pending. This private Graph assembly is not full production concurrent routing.",
+    "All actual business roots, event map/payload/count, Strings/Parent lease and real event/achievement mutexes remain shared. General simultaneous token/AttemptState/map/Online/configuration mutations and arbitrary foreign SDK/providers are not certified.",
+    "Selected event count wrapper is a lock-free relaxed C++ projection; native map/offset/payload accesses require actual lock. No queue snapshot/merge or new pre-peek wait. No raw MSVC class ABI overlay claim.",
+    "Producer relinquish drops only its own temporary whole-ticket view before event count publication. It does not drop SDK/foreign pins or create a deferred free.",
+    "Known pre-enable gap: actual achievement execution mutex owner_48 has plain pre-lock reads versus owner writes. Read-only audit specifies an atomic_ref owner projection; it is NOT implemented by this Graph stage and must precede actual concurrent selection.",
+    "Real Graph seventy-message call-view scenario authors original-only default-provider sentinels, actual content writer/event insertion and one memory XML write, sequentially. It is not held-A/B or actual game/network/Online reservation proof.",
+    "Eight fresh selected instructions plus explicitly retained complete033d70 context establish bounded event ordering only, not full new function/EH/runtime equivalence. Actual accept/packet/full028d30 child-tail ownership remains open.",
+    "Historical source/build/link/DLL/ZIP and original binaries unchanged. Prior added headers remain build_sha256:null pending an explicitly authorized rebuild. No invented overall completion percentage."
+  ],
+  "completed_note": "SOURCE_ONLY8freshREAinstructionrecords;3production+2testfiles implementregisteredGraphMessageCall/privateadapters/explicitproviderViewsandsharednativeeventcount. Actual70-requestGraphandcommittedpop-on-unknownunlockassertionsauthoredNOTRUN; actualSerialized.",
+  "observation": "REA6.8.0/Ghidra12.1.4 fresh8eventorderingEvidence exportedclosed/originalhashunchanged. Three useful author/SDK/independent-review agents fixed singularfieldaliases, passivesnapshotlockobservation, ownLogicpendingguards and producerpayloadlastuse. No new business clone/bodymutex.",
+  "next_scope": "Implement audited mutex owner_48 atomic projection without changing actual SRW/count/layout, then Profile stable prelaunch Job/Slot capture/admission and Policy per-child cleanup. Resolve accept/packet/sharedbusiness and full028d30 child response-tail ownership before removing actual NativeJobs gate/selecting immutable policy; author actual same-session/distinct-session heldA/GetConfigB progress. No build authorization."
+}

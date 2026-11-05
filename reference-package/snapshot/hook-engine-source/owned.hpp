@@ -35,6 +35,10 @@ public:
     // MH_OK/MH_ERROR_NOT_INITIALIZED result proves the selected engine empty.
     // NOT a callback/foreign-source quiescence or image-unload proof.
     bool empty() const;
+    // Original CRT may run cleanup on a different serialized loader actor.
+    // Select once on the creator, in Fresh before any engine operation. Keeps
+    // real overlap/reentry/unknown-outcome guards; changes no SDK call/order.
+    void select_original_callers();
 private:
     struct Impl;std::unique_ptr<Impl> impl_;
     template<class F>int run(Operation,F&&);

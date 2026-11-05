@@ -1,0 +1,55 @@
+{
+  "schema": "original-mutex-owner-projection.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_OWNER_ONLY_ATOMIC_PROJECTION_PREREQUISITE",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Live mutex owner_48 pre-lock reads and owner stores use short-lived relaxed lock-free atomic_ref projection over unchanged raw fields/actual SRW/count; documented quiescent borrower contract and actual two-actor shared-SRW assertions authored only. Production remains Serialized.",
+  "sources": [
+    {
+      "path": "anadius-execution-source/execution.hpp",
+      "before": "before/anadius-execution-source__execution.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-execution-source/execution.cpp",
+      "before": "before/anadius-execution-source__execution.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-execution-source/execution_tests.cpp",
+      "before": "before/anadius-execution-source__execution_tests.cpp",
+      "role": "test"
+    }
+  ],
+  "reviews": [
+    "owner-and-contention-independent-review.md",
+    "root-test-independent-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "native-findings.md",
+    "test-implementation.md"
+  ],
+  "native_replies": [
+    "instructions-18004a6ac.json",
+    "instructions-18004a6d4.json",
+    "instructions-18004a6b4.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-execution-source/atomic-owner-projection-20261105/native-evidence-index.json",
+    "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/evidence.json",
+    "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/remaining-integration.json",
+    "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/native-mutex-concurrency-audit.md"
+  ],
+  "limits": [
+    "No compiler, project tests, linker, executable/DLL execution or ZIP update. Actual SRW contention assertions are authored source only, not observed passing behavior.",
+    "Raw layout/count/type/SRW address unchanged. Atomic_ref projections require exact static alignment and lock-free target support and expire before SDK callbacks. Plain initialization/borrowing requires documented quiescent or nonoverlapping actual owning access.",
+    "Only owner_48 live helper access is projected. Count remains protected by actual SRW/same-actor recursion, preserving Graph signed reference. This does not certify arbitrary raw inspection or SDK/provider concurrency.",
+    "Three fresh complete function instruction records establish selected null-deadline owner/count/release order. Timed/try paths, native class ABI/EH and runtime equivalence remain outside this change; no additional recovered-function credit.",
+    "Actual production remains Serialized. Profile captured stable Job/Slot admission, Policy independent cleanup, shared business/accept/packet/full child response ordering and NativeJobs gate/policy integration remain pending.",
+    "Historical source/build/link/DLL/ZIP and original binaries unchanged. Pending sources and two added headers need an explicitly authorized consistent rebuild; no invented overall completion percentage."
+  ],
+  "completed_note": "SOURCE_ONLY3freshcompleteREAinstructionrecords;2production+1testfiles implementowneronlyshort-livedatomic_refprojectionandrealsharedSRWtwoactorassertionsNOTRUN; actualSerialized.",
+  "observation": "AlignedREA6.8.0/Ghidra12.1.4 fresh04a6ac/04a6d4/04a6b4 instructionEvidence exportedclosed/originalhashunchanged; useful independent test/review/planning agents. Actual SRW/count/native error order preserved; no new gate.",
+  "next_scope": "Implement coherent Profile stable prelaunch Job/Slot captures/admission and Policy per-child cleanup using exact generations/claims/Parent permits. Audit shared business and actual accept/packet/full028d30 child response ownership before actual NativeJobs gate/policy selection; author actual same/distinct-session heldA/GetConfigB response-before-release. No build authorization."
+}

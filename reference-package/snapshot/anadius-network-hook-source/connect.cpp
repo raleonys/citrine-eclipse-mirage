@@ -1,46 +1,61 @@
 #include "connect.hpp"
+#include <atomic>
 
 namespace anadius::network_hook_recovered {
 namespace {
-std::uint16_t little_word(std::span<std::byte> buffer, std::size_t offset) {
+std::uint16_t little_word(std::span<const std::byte> buffer, std::size_t offset) {
     if (offset + 2 > buffer.size())
         throw OutOfEvidenceInput("00fd00 accesses an unreadable sockaddr prefix");
     return static_cast<std::uint16_t>(std::to_integer<unsigned>(buffer[offset]) |
         (std::to_integer<unsigned>(buffer[offset+1]) << 8));
 }
 }
-std::int32_t connect_00fd00(StateRefs state, Effects& effects, Socket socket,
-    std::span<std::byte> address, std::int32_t supplied_length) {
-    if (!((supplied_length == state.ipv4_length_0a10d0 && little_word(address,0) == 2) ||
-          (supplied_length == state.ipv6_length_0a10d4 && little_word(address,0) == 23)))
-        return effects.original_connect_0a3838(socket,address,supplied_length);
-    const auto network_word = little_word(address,2);
-    const auto port = static_cast<std::uint16_t>((network_word >> 8) | (network_word << 8));
-    bool redirect;
-    if (port == 443 || port == 80) {
-        redirect = port == state.server_port_0a3c90;
-    } else {
-        effects.wait_steps_036880(-1);
-        redirect = port == 3216 || port == state.server_port_0a3c90;
-    }
-    if (redirect) {
+bool original_only_00fd00(std::int32_t v4,std::int32_t v6,std::span<const std::byte> address,std::int32_t length){
+    return !((length==v4&&little_word(address,0)==2)||(length==v6&&little_word(address,0)==23));
+}
+std::uint16_t requested_port_00fd00(std::span<const std::byte> address){
+    const auto word=little_word(address,2);
+    return static_cast<std::uint16_t>((word>>8)|(word<<8));
+}
+void redirect_body_00fd00(Effects& effects,std::span<std::byte> address,std::uint16_t port,
+    std::uint16_t& server_port,std::uint32_t& attempts){
+        if(address.size()<4)throw OutOfEvidenceInput("00fd00 redirect requires writable port prefix");
         effects.log_literal_006880("game connected on port ");
         effects.log_port_00ad70(port);
         effects.log_literal_006880("; redirecting to ");
-        effects.log_port_00ad70(state.server_port_0a3c90);
+        effects.log_port_00ad70(load_server_port_0a3c90(server_port));
         effects.log_finish_0088e0();
-        ++state.attempts_0a3888; // unsigned INC preserves low32 wrap
-        if (state.attempts_0a3888 == 15) {
+        // Native00fdc0..00fdce: MOV/INC/MOV, then CMP of cached EAX.
+        // Keep distinct relaxed load/store: fetch_add would replace the
+        // original unlocked update with a stronger indivisible RMW.
+        static_assert(std::atomic_ref<std::uint32_t>::is_always_lock_free);
+        static_assert(std::atomic_ref<std::uint32_t>::required_alignment<=alignof(std::uint32_t));
+        std::uint32_t updated;
+        {
+            auto counter=std::atomic_ref<std::uint32_t>(attempts);
+            updated=counter.load(std::memory_order_relaxed)+std::uint32_t{1};
+            counter.store(updated,std::memory_order_relaxed);
+        }
+        if (updated == 15) {
             // This is a target UI literal, not operational advice to the user.
             effects.dialog_038bc0("error",
                 "The game tried to connect to the crack 15 times already. Most probably your firewall or anti-virus blocks it. Disable them and try again.",
                 0x10);
             effects.exit_05cdc0(0xffffffffu);
         }
-        const auto replacement = state.server_port_0a3c90; // read again after effects
+        const auto replacement = load_server_port_0a3c90(server_port); // read again after effects
         address[2] = static_cast<std::byte>(replacement >> 8);
         address[3] = static_cast<std::byte>(replacement & 255);
-    }
+}
+std::int32_t connect_00fd00(StateRefs state, Effects& effects, Socket socket,
+    std::span<std::byte> address, std::int32_t supplied_length) {
+    if (original_only_00fd00(state.ipv4_length_0a10d0,state.ipv6_length_0a10d4,address,supplied_length))
+        return effects.original_connect_0a3838(socket,address,supplied_length);
+    const auto port = requested_port_00fd00(address);
+    bool redirect;
+    if (port == 443 || port == 80)redirect = port == load_server_port_0a3c90(state.server_port_0a3c90);
+    else {effects.wait_steps_036880(-1);redirect = port == 3216 || port == load_server_port_0a3c90(state.server_port_0a3c90);}
+    if(redirect)redirect_body_00fd00(effects,address,port,state.server_port_0a3c90,state.attempts_0a3888);
     // Original is an indirect tail JMP: retain its int32 Winsock result.
     return effects.original_connect_0a3838(socket,address,supplied_length);
 }

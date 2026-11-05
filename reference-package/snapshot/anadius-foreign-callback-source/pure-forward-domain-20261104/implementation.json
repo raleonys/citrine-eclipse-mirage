@@ -1,0 +1,62 @@
+{
+  "task": "Domain implementation of counted nested pure-original forwarding",
+  "date": "2026-11-04",
+  "changed_production_files": [
+    "outputs/anadius-foreign-callback-source/foreign.cpp",
+    "outputs/anadius-foreign-callback-source/foreign.hpp"
+  ],
+  "external_contract": "Root owns native_callbacks.hpp/.cpp and automatic OriginalForwardFrame in nonmoved native AdmissionLease; argument-only predicates are implemented in those wrappers.",
+  "hashes": "source-hashes.json",
+  "implemented": [
+    "Six enum allowlist only: RegOpenKeyExA/W, CreateProcessA/W, SHGetFolderPathA/W. Only selected HookPublication profile returns true; unsupported enum/profile returns false without taking a frame.",
+    "TLS linked top frame plus cached top callback. Reservation increments original_forward_calls_ and installs admitted=false checking metadata before opaque per-hook publication proof.",
+    "Pure entry allows nesting over same-actor Full/connect wait/redirect/original/checking and pure frames, with no added SDK-only phase gate. Parent metadata stays untouched.",
+    "Every permission probe sees any current pure frame first. Only matching owner, admitted top, current thread/fiber, matching callback, positive count and unpoisoned Domain grant original_scope. General/wait/body/probe permissions remain false and CallbackThreads is not probed.",
+    "False publication rejects Warming and pops/restores parent/count/token without poison. Concurrent stop rejects Stopped with same cleanup. Publication exception poisons Domain, then restores parent/count/token. Reservation identity changes poison. Exact LIFO leave validates token owner/admitted/count/thread/fiber/callback and clears token.",
+    "Pure current frame blocks ordinary/connect admission. Connect pending/probe queries return false; mutable Original and Cooperative connect checkpoint/routing methods throw before touching suspended state. Ordinary leave aborts if called while a pure child remains current.",
+    "Forward count participates in destructor, active(), port-binding, begin(), both activation guards and pause/drain checks. Host setup complete preserves its existing Original-profile ability to observe already admitted work, matching existing connect behavior.",
+    "Existing Error RAII preserves WinLastError across entry/proof/leave/checkpoint bookkeeping. No gate spans publication, SDK, wait, provider, or PTD calls.",
+    "No private CallbackThreads enter/leave, allocation, map/fabricated-handle access, generic CRT expansion, extra wait, or constructor/factory behavior changes were added."
+  ],
+  "source_inspection": {
+    "status": "Reviewed source paths and declarations; no compile or project test execution.",
+    "checks": [
+      "Header override signatures match root native Admission API.",
+      "All existing original_connect_calls_ quiescence guards mirror original_forward_calls_.",
+      "Try-enter owns count only after clean token/actor/control checks; catch balances that count and uses saved parent/callback.",
+      "Initial failed admission throws before native wrapper owns a true token; exact leave only for successful admission.",
+      "Normal/exceptional pop restores outer Full/connect permission computation and leaves outer callback/thread/fiber/port/counter/phase fields unchanged.",
+      "Checking frame also masks outer permission during reentrant publication proof callbacks.",
+      "Same-thread different-fiber suspended parent rejects; other actor forward frames retain separate TLS and shared count under gate.",
+      "Publication stop while already admitted does not erase successful original permission before exact leave; new entries reject closing.",
+      "Generic mutable connect APIs cannot use a pure scope to transition suspended outer phase."
+    ]
+  },
+  "edge_cases": [
+    "Clean token can be reused after exact leave; dirty/already-owned token rejects. Root was informed; test author was informed.",
+    "Invalid LIFO leave, owner/callback/thread/fiber mismatch, ordinary parent leave while child active, or leaked child reservation are fatal contract violations, following existing nonthrowing leave style.",
+    "Unknown publication proof exceptions poison even if no SDK ran; this preserves the requested unknown-outcome policy. Cleanup still pops/counts current frame.",
+    "Parent frames may be checking/admitted, and separate Domains can nest on the same valid actor; scope only grants top owner. Normal native binding still supplies one Context/Domain.",
+    "Automatic token metadata is Domain-owned while admitted; external raw mutation of its parent link/fields is outside the token contract.",
+    "No claim that Windows APIs actually reenter hooks. The implementation permits the six statically proven pure-forward selections without granting shared general-body access."
+  ],
+  "native_basis": {
+    "retained_audit": "outputs/anadius-foreign-callback-source/general-callback-native-review-20261103/review.json",
+    "complete_evidence": "outputs/anadius-foreign-callback-source/general-callback-native-review-20261103/rea-evidence-bundle.json",
+    "facts": [
+      "RegOpenKeyEx null subkey: native original first;86b0/87f0 return1 before maps/CRT; local SSO cleanup only.",
+      "CreateProcess null application: same null branch avoids configured ClientPath resolution and forwards original.",
+      "SHGetFolderPath exact id!=5:8db0/8fa0 branch before maps/copy.",
+      "Close/query have no argument-only classification established and remain ordinary."
+    ]
+  },
+  "constraints_observed": {
+    "production_files_outside_assignment_edited": false,
+    "build": false,
+    "tests_executed": false,
+    "link": false,
+    "target_execution": false,
+    "zip": false,
+    "original_binary_modified": false
+  }
+}

@@ -34,7 +34,7 @@ struct Fixture {
     std::shared_ptr<td::ApplicationMemory> memory;
     std::shared_ptr<std::ostringstream> output=std::make_shared<std::ostringstream>();
     std::shared_ptr<b16_test::ConvertState> conversion=std::make_shared<b16_test::ConvertState>();b12_test::Ui ui;
-    Fixture(){
+    Fixture(execution_recovered::Publication* publication=nullptr):driver(publication){
         deny_set_nonnull=deny_set_sentinel=deny_set_null=deny_root_free=throw_alloc=throw_free=throw_construct=false;
         heap.domain.reset();auto apis=b6_core_test::apis();
         apis.heap={b6_core_test::get_heap,alloc,::HeapReAlloc,free,::HeapSize,::GetLastError};apis.fls.set=set;apis.locks.enter=enter_lock;

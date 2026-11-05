@@ -1,0 +1,205 @@
+{
+  "task": "Read-only next-stage native audit of general callback overlap/reentry",
+  "date": "2026-11-03",
+  "target": {
+    "path": "C:/Users/Skysect/Downloads/anadius64.dll",
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "provider": "Ghidra12.1.4",
+    "rea": "6.8.0",
+    "analysis_profile_digest": "64922283ade10fadf28df5d1689f74f28ec027c5180b774a9d26635c0e69c554"
+  },
+  "scope": {
+    "source_changes": false,
+    "target_execution": false,
+    "compilation": false,
+    "linking": false,
+    "project_tests": false,
+    "packaging": false,
+    "isolated_session_closed_after_export": true
+  },
+  "sources": "source-hashes.json",
+  "complete_evidence": "rea-evidence-bundle.json",
+  "conclusion": "A counted per-actor nested original-only lane is a concrete bounded fidelity improvement for six argument-classified callbacks: null-subkey registry open A/W, null-application process A/W, and exact folder-id!=5 folder A/W. It can overlap one ordinary general body without accessing or sharing fabricated-handle membership. Close/query and nonnull/matching general paths remain outside this lane.",
+  "native_observations": [
+    {
+      "subject": "RegOpenKeyExA/W",
+      "procedures": [
+        "0x18000f800",
+        "0x18000f960"
+      ],
+      "claim": "Native unconditionally calls original first atf823/f983. It then compares input subkey with configured ClientKey/ClientKey2 and optionally LanguageKey; matches fabricate on original error and insert the returned handle. Null input makes each86b0/87f0 comparison return1 before value resolution or CRT comparison. Local key names are SSO strings(length9/10/11,capacity15);00aa50 cleanup takes no free branch for these. Null-subkey execution still reads language-enabled bytea3ad1 atf8b7/fa17, but cannot match or write any shared set. The proposed direct source shortcut omits this inert config read and local SSO bookkeeping while preserving original call/result/output.",
+      "evidence": [
+        "ev_697548b0200dac8169896bbd27db3db68fd82b4872646fbcd07c9a06005bc6e5",
+        "ev_10cb413993d406fc9db2e773654e64e89c1a7178c129e852d95aed22055f41d4",
+        "ev_5bc8e3f46648e5c4684b4bd1726110badbb537e4e3c67e85801dbdbac1794501",
+        "ev_2adcffaafdff8f9db21ebfc85a2e2fe3db00bbcb10a7fbb882dc89949695e08d",
+        "ev_a0ca7f866ce035ecf2c0cf3a2d36b37163a3b1061391fabb6970ad965a6fd068",
+        "ev_4f98270be1a412d34ac2c70d19f8da485d74a410fd72431ada9e60780fd29faf",
+        "ev_ed66c51633e265ea3fac53817520c91d709fe99450c96b409f9fea60ebe779a3"
+      ]
+    },
+    {
+      "subject": "null comparison branch",
+      "claim": "86b0 TEST RCX at86d7; null calls SSO cleanup86df, produces1 at86e4, jumps over value resolver and_stricmp.87f0 TEST at8817; null cleanup881f, produces1 at8824, jumps over resolver and_wcsicmp. No original DLL CRT compare/map/encoding/PTD access is needed for these caller-specific null paths.",
+      "evidence": [
+        "ev_4915d1f6e5f6cd7baa83b70959c7f67ccf0dbf07b80c7913cb59eef6a19c61a3",
+        "ev_a306697b7447b2079aae3be623751914fc53254b82c1988ffb706263d6a1b72b"
+      ]
+    },
+    {
+      "subject": "CreateProcessA/W",
+      "procedures": [
+        "0x18000f3f0",
+        "0x18000f4d0"
+      ],
+      "claim": "Native compares application name to configured ClientPath before original. Equality suppresses original with zero result. Null application follows the pure null comparison above and dispatches original atf4ac/f58c. Command line and all other pointers/scalars are forwarded untouched; no need to inspect command line to classify. Nonnull application, including empty string, is not argument-only: missing configured ClientPath can resolve to empty, and comparison uses maps/conversion/CRT.",
+      "evidence": [
+        "ev_2ad421317f889934ac8afed65dfc935e445a68f251d062f52187454d7e18843b",
+        "ev_dfd578004099e4b257d5b859dabb2e3e44863764d84c5b15c4f90eabc5023215",
+        "ev_ea138b58e610635455e86a34df8bde7e8d43064cc962ea005e2a100c50fafeae",
+        "ev_a2f89fc553fbc7b88087831601050fa5b6ce227552f31829507c7e7c8f5d9fb0"
+      ]
+    },
+    {
+      "subject": "SHGetFolderPathA/W",
+      "procedures": [
+        "0x18000fc00",
+        "0x18000fc80",
+        "0x180008db0",
+        "0x180008fa0"
+      ],
+      "claim": "Helpers compare folder id exactly with5 at8dfb/8feb and branch around value lookup/copy for every other integer. Thus id!=5 forwards original without reading/writing caller output in the reconstructed body. Do not mask CSIDL flag bits or broaden id5 using an empty path guess; native compares the complete supplied integer.",
+      "evidence": [
+        "ev_05260c251a88b5fb92d13debfe4b8c97245ed1d5cfe45c93f2c0a25f3e216ca1",
+        "ev_4e7ab5548304b91f9665783896bc1980e6ba2ca303417b91d0f881eaabf6779d",
+        "ev_16a4239dccf54c9efd33459c23115d911f8971b38fa5366463fb58fc6509ac81",
+        "ev_038b9a56c118a699e9ddbd18150c92f4a3aae7a5730f36945bc351d9c4cc69d7",
+        "ev_09b60a72d7a579f21551ab4c7cfc385681f849d276c4123c20ddc3272bb7f9ed",
+        "ev_a0ceee016cb6611352598058c6af3b8c985a93fb37282aa1cc870243c4fbc712"
+      ]
+    },
+    {
+      "subject": "RegCloseKey",
+      "procedure": "0x18000f5b0",
+      "claim": "Always searches fabricated seta3800 before dispatching original atf6bb. Fabricated path erases entry,frees4-byte token,logs. Original failure returns immediately, but only after membership test; success erases client/language sets. No argument-only native close classification was established. Ordinary-looking or OS-like handle values cannot be assumed absent from tracked/fabricated sets.",
+      "evidence": [
+        "ev_dd6d31303d6019a89089ebac778854ae34a72eeb8a97778a38566ea408aca4a8",
+        "ev_53ea0232e00feb8377671c784fc87cb11e026238ff49a22c0f90fbe83dbc7f37"
+      ]
+    },
+    {
+      "subject": "RegQueryValueExA/W",
+      "procedures": [
+        "0x18000fac0",
+        "0x18000fb60",
+        "0x180009520",
+        "0x180009850"
+      ],
+      "claim": "Captures caller capacity if nonnull, invokes original, then helper always searches client/language sets and eventually fabricated set when no replacement. Null value name prevents string matches but does not prevent set access or fabricated-handle fallback(log+error2). Null output pointers and original failure do not prove pure forwarding.",
+      "evidence": [
+        "ev_d5aca5817e269383ac8f691bc4153f395c142b10140989e261e20d4d1b1442f4",
+        "ev_82f1c74de63eb3c80576d6448bd364d6360a22d180702a5b2e919d44ec6db786",
+        "ev_0133c29b07af397b0366084067df78274739e38ffb83f770e0a154f5608ba196",
+        "ev_1bed980bee9e1fc1acd7acf27f0a51162b32fcde42b4729462fc05e592e65067"
+      ]
+    },
+    {
+      "subject": "reentry evidence boundary",
+      "claim": "Examined native hook instructions contain ordinary original calls plus their native processing, with no source-style Domain admission rejection. This does not establish that any Windows implementation calls another hooked API, that recursion actually occurs, or that arbitrary full-body concurrency/reentry is safe."
+    }
+  ],
+  "source_observations": [
+    {
+      "files": [
+        "native_callbacks.cpp:21",
+        "native_callbacks.cpp:33",
+        "native_callbacks.cpp:145",
+        "native_callbacks.cpp:153",
+        "native_callbacks.cpp:156",
+        "native_callbacks.cpp:164",
+        "native_callbacks.cpp:172"
+      ],
+      "claim": "Native Context Lease already counts concurrent/nested wrapper invocations and retains Context through admission leave. Only connect uses invoke_selected direct-original selection; all other wrappers enter ordinary admission before their callback logic, including the pure predicates above."
+    },
+    {
+      "files": [
+        "foreign.cpp:39",
+        "foreign.cpp:193",
+        "foreign.cpp:201",
+        "foreign.cpp:290",
+        "foreign.cpp:295",
+        "foreign.cpp:314"
+      ],
+      "claim": "One thread-local OriginalConnectLane cannot represent nested callbacks. connect try_enter rejects any existing actor lane or same-thread general active reservation. Ordinary enter rejects actor lane and any active general body. leave identifies only connect lane or one globally stored general callback; it needs an exact frame/token for nested direct calls."
+    },
+    {
+      "files": [
+        "domain.cpp:233",
+        "domain.cpp:261",
+        "domain.cpp:299"
+      ],
+      "claim": "CallbackThreads has one active thread/fiber/PTD scope, rejects second enter, and makes nested permission-probe checking sticky poison. A direct original-only nested lane must not call CallbackThreads enter/leave or perform general permission probes. Outer ordinary owner retains and later validates its own actual FLS/PTD identity."
+    },
+    {
+      "files": [
+        "native_callbacks.hpp:177",
+        "original_effects.cpp",
+        "originals.cpp:117",
+        "checkpoint.hpp",
+        "checkpoint.cpp"
+      ],
+      "claim": "OriginalEffects preserves SDK typing and raw caller storage, verifies permission before virtual provider resolution and again around actual SDK invocation, validates exact slots, and retains provider/code owner. Publication load uses short metadata lock and sealed successful-create receipt per hook. These existing objects can serve the narrow lane; no new untyped raw trampoline bypass is warranted."
+    },
+    {
+      "files": [
+        "registry.cpp:13",
+        "registry.cpp:18",
+        "registry.cpp:63",
+        "registry.cpp:77",
+        "registry.cpp:127",
+        "callbacks.cpp:4",
+        "callbacks.cpp:16",
+        "provider.cpp:83",
+        "foreign.cpp:355"
+      ],
+      "claim": "Source short circuits agree with native null/id predicates. Other open/process predicates may resolve values/conversion/CRT. General CRT and encoding are guarded by callback_scope; nested direct scope must mask that permission so it cannot inherit a Full outer callback's general access."
+    }
+  ],
+  "proposed_plan": [
+    {
+      "step": 1,
+      "action": "Add an explicit callback selection descriptor for pure-original predicates before ordinary admission under existing native Context lease. Select RegOpenA/W only on subkey==nullptr, ProcessA/W only application==nullptr, FolderA/W only exact id!=5. Fall back unchanged for every other general path. Connect retains its observed wait/redirect decisions."
+    },
+    {
+      "step": 2,
+      "action": "Generalize counted Original-only metadata into per-actor stack-linked frames retained on native wrapper/SDK-call stack. Each frame stores Domain owner, exact callback/token, same thread/fiber, parent pointer, and phase. Check target hook successful-create publication; restore exact parent on normal/exceptional leave and preserve WinLastError bookkeeping. Root frames contribute to existing admission drain count. Automatic frames avoid synthetic private PTD/allocation."
+    },
+    {
+      "step": 3,
+      "action": "For the first bounded nested profile, accept nested pure-forward entries during an admitted actual Original SDK invocation. Mark SDK invocation after provider resolution/checkpoint, and clear it before returning to caller checks. Keep provider-resolution/checking, recovered CRT/encoding, managed stream callbacks, waits, redirect effects and non-pure general bodies outside nested permission. This phase restriction is a deliberate source policy, not an observed native gate."
+    },
+    {
+      "step": 4,
+      "action": "Topmost original-only frame grants only original_scope. Deny callback_scope, connect_wait_scope and connect_body_scope while it is current, even if parent is Full/Waiting/Redirect. Do not acquire CallbackThreads or inspect registry/map/handle state. Pop restores outer scope and its existing postchecks, including actual PTD validation for an outer general body."
+    },
+    {
+      "step": 5,
+      "action": "Dispatch selected paths only through existing typed OriginalEffects methods and publication provider. Forward all caller arguments/output cells and exact lower return bits; preserve lower exception/postcheck behavior. Existing binding count covers every native callback, including nested entries. Do not synthesize Win32 results."
+    },
+    {
+      "step": 6,
+      "action": "Keep close/query/non-null open/process/id5 folder bodies exclusive with their existing map/fabricated-handle ownership; no fake-handle snapshot or unsynchronized membership test in direct selector."
+    },
+    {
+      "step": 7,
+      "action": "Later validation should use source-level injected SDK fixtures to exercise nested pure-original calls, scope masking, restored outer reservation/FLS, exact argument/result forwarding, failed publication, denial of close/query/matching bodies, multiple actors, and balanced counts on exceptions. No fixture was compiled/run in this audit. Such synthetic reentry verifies the new source policy only; it cannot demonstrate Windows itself reenters hooks."
+    }
+  ],
+  "limitations": [
+    "All behavioral claims are static shipped-artifact observations or explicitly labeled source design inferences. No original or rebuilt DLL was executed.",
+    "Complete Evidence25 records retains every native body and all Ghidra limitations. Pseudocode return typing is heuristic; SDK signatures come from existing typed source and instruction sites.",
+    "No blanket general callback, shared fabricated-handle, CRT/PTD, or arbitrary Windows internal reentry support is claimed.",
+    "Source hashes identify this audit's inspected redirect-stage snapshot; future edits must be distinguished from these hashes.",
+    "No new unload protocol or speculative Windows requirement is proposed; existing task constraints and admission lifetime ownership remain."
+  ]
+}

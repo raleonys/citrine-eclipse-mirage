@@ -41,6 +41,10 @@ struct State {
     Path license_directory, denuvo_dll, language_registry_key;
     std::uint8_t language_from_arguments, registry_spoof;
     Path documents;
+    // Native a3c90: ordinary startup parser writes precede worker/hook entry.
+    // Once live, use network_hook_recovered's relaxed atomic_ref port helpers
+    // for every access; plain reads/writes and State copies require quiescence.
+    // Keep this cell at the same address until workers/callbacks have drained.
     std::uint16_t server_port;
     std::uint8_t pretend_connected, fake_auth, block_reruns;
     std::string sdk;

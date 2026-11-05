@@ -1,0 +1,103 @@
+{
+  "task": "Independent read-only live server-port audit",
+  "date": "2026-11-03",
+  "target": "C:/Users/Skysect/Downloads/anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": "Ghidra12.1.4",
+  "session": "Own isolated immutable session; closed successfully",
+  "evidence": [
+    {
+      "file": "instructions-00fd00.json",
+      "id": "ev_839077f99c02612bc8d409358a72a00b4078cf9a201c931361fd8e1c4381c349"
+    },
+    {
+      "file": "instructions-024480.json",
+      "id": "ev_4e8773ec4bcaae1dbadc4f0ef3ba6465ed4df416f35cdf6cc0f9d1a5444a8d2f"
+    },
+    {
+      "file": "xrefs-a3c90.json",
+      "id": "ev_428c49259e2143faad6bdac9a8767e4ae061b71dc5bc4a316344461061e300fe"
+    },
+    {
+      "file": "initial-a3c90.json",
+      "id": "ev_2578c8fd7c805fe4009ff79f50c16dd3b7bf2fade20e4a1e72574d08c01d0806"
+    },
+    {
+      "file": "containing-01a516.json",
+      "id": "ev_53dc5d68e2b2303502ee3d06e16f8d24c5defed32bd2fc139037646b46707f17"
+    },
+    {
+      "file": "typed-a3c90.json",
+      "id": "ev_afc5c75bd9f7deae42be2664dc9dd14d0f680948b60c4987de25a7b9c7a02b5e"
+    },
+    {
+      "file": "instructions-029ea0.json",
+      "id": "ev_875cf78952cc594dcb532411ad3a7808330fabe6372fbb126f62bff806f11043"
+    },
+    {
+      "file": "instructions-019ad0.json",
+      "id": "ev_abaf2c82c268413aba6598278f889fc8fde09a62e88dd0256ce12cfa7137e3f0"
+    },
+    {
+      "file": "callers-019ad0.json",
+      "id": "ev_f2ecf76dc20663f2169ee3afe58b5ba0c171d9e0ec1baa906c8635bfa2f9ddbc"
+    },
+    {
+      "file": "callers-01c870.json",
+      "id": "ev_24c523262b0760edba522ca72a5d380acafd505f26b125089c09b9140a22d365"
+    },
+    {
+      "file": "instructions-01c870.json",
+      "id": "ev_b4cc6a9568013d8519443e1f3ab818ea43db24c82864aa427be8333402c84ef4"
+    },
+    {
+      "file": "instructions-038970.json",
+      "id": "ev_3d7de1704f039245efc370ccfeeac36afcf6d505a03851d803acb8f63f2404a7"
+    }
+  ],
+  "findings": [
+    {
+      "confidence": "observed",
+      "claim": "Exact Ghidra xrefs contain 4reads and3writes; three network reads are distinct native accesses.",
+      "addresses": [
+        "0x18000fd73",
+        "0x18000fda9",
+        "0x18000fdd3",
+        "0x180029eca",
+        "0x18001a516",
+        "0x18001a52a",
+        "0x180024676"
+      ]
+    },
+    {
+      "confidence": "observed",
+      "claim": "Configuration writes reside in019ad0.019ad0 is called twice by01c870 before038970 starts server worker and invokes host initialization."
+    },
+    {
+      "confidence": "derived",
+      "claim": "Startup-only configuration assignment may remain plain if no live port atomic_ref object/access and no target hook/thread access exists yet. Normal source startup meets ordering."
+    },
+    {
+      "confidence": "observed",
+      "claim": "Native bound-port MOV at024676 precedes environment export and finish036820 call02472c."
+    },
+    {
+      "confidence": "derived",
+      "claim": "Original profile should bind exact CallbackStateView.configuration.server_port before Context publish; native web path can read scalar before server completion, so publication snapshot is a stronger admission constraint."
+    },
+    {
+      "confidence": "derived",
+      "claim": "All live scalar reads and bound-port write require compatible relaxed atomic_ref<uint16_t>; changing only readers leaves a C++ race."
+    },
+    {
+      "confidence": "derived",
+      "claim": "Original body must receive live Context port reference and perform separate reads for log/final rewrite. Do not require scalar equality at completion after a prior native route decision."
+    }
+  ],
+  "limits": [
+    "Static analysis does not observe runtime scheduling or prove all aliases/wider overlapping writes absent.",
+    "Relaxed atomics model scalar access without a new ready protocol; this is not a whole-callback concurrency proof.",
+    "Need sufficient alignment, lock-free implementation, object lifetime, exact-cell identity, and exclusion of plain external accesses during live periods.",
+    "No compiling, linking, tests, DLL execution, source edits, binary mutation, or ZIP changes by auditor."
+  ]
+}

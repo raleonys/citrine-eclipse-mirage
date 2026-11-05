@@ -1,0 +1,242 @@
+{
+  "schema": "explicit-job-parent-operation.source-only.v1",
+  "recorded_at": "2026-11-01T20:04:30.198685+00:00",
+  "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+  "authority": "Selected HOST source ownership/admission composition; no new native procedure or execution proof.",
+  "user_execution_policy": "No compiler, tests, linker or binary execution without explicit user rebuild request.",
+  "production_sources_changed_this_step": 4,
+  "test_sources_changed_not_run": 1,
+  "source_files_changed_this_step": [
+    "anadius-worker-handoff-source/handoff.hpp",
+    "anadius-worker-handoff-source/handoff.cpp",
+    "anadius-session-memory-source/memory.hpp",
+    "anadius-session-memory-source/memory.cpp",
+    "anadius-worker-handoff-source/handoff_tests.cpp"
+  ],
+  "all_pending_sources_since_last_full_build": [
+    {
+      "path": "anadius-application-worker-source/worker.cpp",
+      "last_built_sha256": "a3502562d95b6f7d7d4182ac6c2f37f2ae64a19f448092d0fc2f31ab743572a9",
+      "current_sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "anadius-application-worker-source/worker.hpp",
+      "last_built_sha256": "923514f18bf5d32ecfa2487e982e571117d0809e0892f171803c06ae915408f1",
+      "current_sha256": "6cf84342444f3724c02dda3727d54569e7cf3fcecf3d972be71c65f48fb9aea5"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend_tests.cpp",
+      "last_built_sha256": "65005e8082e9fadfc06fb89a00539deda014ea710f00c3fadd0e718077410414",
+      "current_sha256": "8d653c11159bf39152d18a5709a0bc45bf5927ab267987016a181a978bf8c27c"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "last_built_sha256": "31fc08d0311ed281465d9ffe7e255581c6848a5f83c67f2b435e17084efc8573",
+      "current_sha256": "56ed1a15c770804607c3bf911a9401a6d18c5f03638eca0672e612444d43f973"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/tracked_threads.hpp",
+      "last_built_sha256": "414a94314cecedd2908a073a6206a0adfdb7847e80df75911d0ba29e792277a7",
+      "current_sha256": "1688b459b3585703989e902f1378609abcdc3d40a2296e7eddf58e0b117e086f"
+    },
+    {
+      "path": "anadius-bootstrap-providers-source/native_threads.hpp",
+      "last_built_sha256": "243bf515118b795e9bf8004d79f5b923bf40f0ad98ff7d68946ebe4fd264cac7",
+      "current_sha256": "b9f2cade216f3333614fb0d94ce25ca6e7a41a6c228f9bd38c4994eca41cfbfe"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.cpp",
+      "last_built_sha256": "be831aeeaf94ab99a75981613a124f522e9cffc8e35590c898ffc8e6af27dcca",
+      "current_sha256": "271861dbf9a661eee658ae4de200317010adbae341dbcb368305f3b2e0040435"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.hpp",
+      "last_built_sha256": "d55494573dc515eacdcf2197c5213d67893aecfb46466e835d07de4e3add99eb",
+      "current_sha256": "b6864109663f3b1894be37f1142b5a72802f66e4616379ed0d167770ce92b20d"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.cpp",
+      "last_built_sha256": "6db0b7461cae29db4ad1cb0a09eb02ef6426628b80d4ca1706acd9ca3a7363c2",
+      "current_sha256": "365d05409246c1e97c551590c1ddd0b907c7bf4f4b374ad0bd73eff5f509fd78"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.hpp",
+      "last_built_sha256": "c24b4a64d9be048f998531979fa7bba54173d51dc313c9359887daedd5811346",
+      "current_sha256": "e182db10c6487a270e2f040fdbcc144daff18790cc7e23270b69999a3e604fbd"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.cpp",
+      "last_built_sha256": "fed670a3e0937ff56cc0cf001d19873c5d068b546ddf8b7f7de7f878a1547849",
+      "current_sha256": "d3a5eb1687024a15aa7e031b4960aaa5d6e3ee6b7cc992f039fca367f068d85a"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.hpp",
+      "last_built_sha256": "e127429b9bebd195cc7cd6e1d1ef81743547a1602431b41baf98baf4e16734f8",
+      "current_sha256": "e3f55458b5943b0db9f7662b8b591bfb818923898cf4f9ab5a03c4756d79ffa4"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.cpp",
+      "last_built_sha256": "50193ac5c84e279207831100ae38bfa480626892cf237ddc401e7ca61eef1893",
+      "current_sha256": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.hpp",
+      "last_built_sha256": "865208b224507f1b708e0d7aea7bf3fff1433f9fe5d52260bcc0c1c6c4b136ca",
+      "current_sha256": "a9d1da810c6a94d4033cb9aa6973dfd9ccaf5f46e8b21f3173211129bf502ccb"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown_tests.cpp",
+      "last_built_sha256": "8f42a649fb93c1e74d477521f23ff5a702a63c54cc37a8cdb19ac85a768752bb",
+      "current_sha256": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "last_built_sha256": "dec7a66e5120e0c7064d95c53aa250d678160913486abf76409de08a4082d150",
+      "current_sha256": "a33af361f391a03658ccdcd9f16ee7474ca636bec48280309bf6f68bd29d26bb"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.hpp",
+      "last_built_sha256": "8b3afb7a69b6a7d99a992b3dbc767845a5dfef49784b0500f157d76c499e2704",
+      "current_sha256": "e3e7fef3dea236a09225b19bc4ed6e92ea35172eb62c059fa322cc35a4f6f3a9"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "last_built_sha256": "23ed92f55c5bb8f6f70002a86f770aa242f72ddc9f148f22243d0a0d1c9d95ef",
+      "current_sha256": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.cpp",
+      "last_built_sha256": "905a59dd2e705056c072e5e72ebbd22566667f904a746ae0c9a45196239e37c4",
+      "current_sha256": "4e638e4192b888b889836a84a45daf817855fd27b301ebec88334dad6ea82ee6"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.hpp",
+      "last_built_sha256": "76b2a60370a20084228ab75fc0ce1450323f081e26aa2359b7a6a3080a1cfe3d",
+      "current_sha256": "78c2608914e82f761d0c0ac42a35eb5dbf5b84e138acf30d281aab448f8527f5"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "last_built_sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a",
+      "current_sha256": "31a36ff7c7e65a909e4e5a712113d67a565b6418edb50a4a38c02aa4ac4e04a5"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff.cpp",
+      "last_built_sha256": "8e2bb730bdf8d8ec1471ea6c8d0ea22a85450101c67d61d194a351bae2b696d7",
+      "current_sha256": "944914b063fceb4b7ef4ebfc9d9898394a367e7a05091a0357160186de192ef0"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff.hpp",
+      "last_built_sha256": "76c23df3621ce30be07f678decbf713ba655c783b5b4f658c3b0292f397c4049",
+      "current_sha256": "417165442cf848da4a4897284c2b041c734bfd89d6a0d0b4857db531c26f45d8"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "last_built_sha256": "6da9b872b45ab2a1ca8bf7ad5ba69183142908e6f77baafb54878645989be65f",
+      "current_sha256": "1655669001898051fe283a4d2a07ce7df8c0c61b3ee5088f0b31c0dd2d634bf8"
+    }
+  ],
+  "implementation": [
+    "Borrow::pin_job compares exact shared prepared State and pins the stable shared JobState with a noncopyable/nonmovable JobScope, checking actual child identity/PTD. JobMemory logical return atomically refuses nonzero pin count.",
+    "SessionMemoryDomain::enter(job) owns stable heap scope independently of movable token address; Parent publishes active scope only after full admission. Constructor failure releases provisional pin. Default enter retains original-worker-only behavior.",
+    "Source effects validate active scope/exact backing/PTD. Operation exit validates permission/PTD, clears published pointer/activity before scope release while Parent gate remains held. Parent->root lock order is consistent; no root callback into Parent.",
+    "Parent prepare_job uses existing whole normal Operation and original Borrow worker. Parent reap_jobs uses existing mutation reservation across unlocked OS polling; close/enter/lease cannot retire underlying Borrow mid-call. Unknown outcomes poison.",
+    "Parent.close checks logical child completion/no pins before owner/lifecycle movement. Pending jobs leave open Parent and all owners intact. Post-retirement catch/postcheck cannot overwrite poisoned prefix with Closed.",
+    "Job-scope loss/token abandonment retains root and row, rejects later source effects and poisons Parent. Source closure remains logical Borrow return; actual original+child OS/FLS exit is still required by PreparedMemory.close before backing release."
+  ],
+  "source_evidence": [
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+      "line": 144,
+      "anchor": "if(job_->scopes)return false",
+      "sha256": "944914b063fceb4b7ef4ebfc9d9898394a367e7a05091a0357160186de192ef0"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+      "line": 181,
+      "anchor": "PreparedMemory::Borrow::pin_job(",
+      "sha256": "944914b063fceb4b7ef4ebfc9d9898394a367e7a05091a0357160186de192ef0"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+      "line": 183,
+      "anchor": "state_!=job.state_",
+      "sha256": "944914b063fceb4b7ef4ebfc9d9898394a367e7a05091a0357160186de192ef0"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+      "line": 186,
+      "anchor": "PreparedMemory::Borrow::jobs_returned()",
+      "sha256": "944914b063fceb4b7ef4ebfc9d9898394a367e7a05091a0357160186de192ef0"
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/memory.cpp",
+      "line": 182,
+      "anchor": "job_scope_=v.borrowed_backing->pin_job",
+      "sha256": "4e638e4192b888b889836a84a45daf817855fd27b301ebec88334dad6ea82ee6"
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/memory.cpp",
+      "line": 188,
+      "anchor": "v.active=true;v.job_scope=job_scope_.get()",
+      "sha256": "4e638e4192b888b889836a84a45daf817855fd27b301ebec88334dad6ea82ee6"
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/memory.cpp",
+      "line": 194,
+      "anchor": "state_.job_scope=nullptr;state_.active=false",
+      "sha256": "4e638e4192b888b889836a84a45daf817855fd27b301ebec88334dad6ea82ee6"
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/memory.cpp",
+      "line": 368,
+      "anchor": "if(!v.borrowed_backing->jobs_returned())return false",
+      "sha256": "4e638e4192b888b889836a84a45daf817855fd27b301ebec88334dad6ea82ee6"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff_tests.cpp",
+      "line": 135,
+      "anchor": "void parent_job_borrow()",
+      "sha256": "1655669001898051fe283a4d2a07ce7df8c0c61b3ee5088f0b31c0dd2d634bf8"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff_tests.cpp",
+      "line": 215,
+      "anchor": "void abandoned_parent_job_child()",
+      "sha256": "1655669001898051fe283a4d2a07ce7df8c0c61b3ee5088f0b31c0dd2d634bf8"
+    }
+  ],
+  "independent_static_review": {
+    "reviewer": "/root/b22_provider_audit",
+    "result": "STATIC_PASS_NO_REQUIRED_BUG_FOUND",
+    "reviewed_source_hashes": {
+      "anadius-worker-handoff-source/handoff.hpp": "417165442cf848da4a4897284c2b041c734bfd89d6a0d0b4857db531c26f45d8",
+      "anadius-worker-handoff-source/handoff.cpp": "944914b063fceb4b7ef4ebfc9d9898394a367e7a05091a0357160186de192ef0",
+      "anadius-session-memory-source/memory.hpp": "78c2608914e82f761d0c0ac42a35eb5dbf5b84e138acf30d281aab448f8527f5",
+      "anadius-session-memory-source/memory.cpp": "4e638e4192b888b889836a84a45daf817855fd27b301ebec88334dad6ea82ee6",
+      "anadius-worker-handoff-source/handoff_tests.cpp": "1655669001898051fe283a4d2a07ce7df8c0c61b3ee5088f0b31c0dd2d634bf8"
+    },
+    "reviewer_edits_or_compile_tests_link_binary_execution": false
+  },
+  "unexecuted_test_source": [
+    "Two prepared roots in ONE real Domain; wrong-root rejection without poisoning otherwise open Parent. Default sibling entry still rejects.",
+    "Pending offer preserves empty open Parent; typed child allocation retains Parent without poison until original worker frees it.",
+    "Scope pin blocks early return and survives token move; nested entry/child job preparation/reaping reject; actual typed buffer route inside explicit Operation.",
+    "Logical Parent closure and actual original/child OS/FLS exit remain separate; controller backing remains retained through live child.",
+    "Isolated mode703 destroys token under active scope: Parent/root poison, stable retained scope/row and exact live allocation. No scenario executed."
+  ],
+  "limits": [
+    "Parent-only permission extension. Profile, Graph, Policy, native job scheduling/message dispatch/closure ownership and thread-exit cleanup integration remain open. Default InlineJobs unchanged.",
+    "Parent Operation HOST size changed; every allocating/passing/embedding consumer requires future authorized rebuild. Opaque Parent/PreparedMemory facade sizes and virtual interfaces unchanged.",
+    "Caller still serializes token transfers, source/code lifetimes, shared allocator/fallback/OOM/new-handler and external effects. No references after permission retirement; no untracked direct backing allocation once Parent owns tickets.",
+    "No passing dynamic checks, original native ABI/EH/CRT/image/kernel/foreign finality or loader-hook closure inferred from static source."
+  ],
+  "new_native_function_definitions": 0,
+  "new_translation_units": 0,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "target_executed": false,
+  "original_access_or_modification": false,
+  "package_rebuilt": false,
+  "REA_queries_this_step": false
+}

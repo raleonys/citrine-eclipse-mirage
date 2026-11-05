@@ -9,6 +9,9 @@
 #include <iostream>
 #include <process.h>
 #include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <chrono>
 
 namespace {
 using namespace anadius;namespace of=online_factory;namespace online=online_recovered;
@@ -27,15 +30,16 @@ struct Trace {
     bool throw_load=false,throw_factory=false,throw_destroy=false,throw_free=false,throw_query=false,throw_version=false;
     bool swallowed_lookup=false,poison_proof=false;std::int32_t version=2,status=0;
     HANDLE entered=nullptr,release=nullptr;bool block_query=false;
+    std::mutex query_gate;std::condition_variable query_changed;bool slow_username=false,username_entered=false,username_release=false;
     std::exception_ptr failure=std::make_exception_ptr(Fault{});
     online::Object object(){return reinterpret_cast<online::Object>(bytes.data()+1);}
 };
 Trace* current=nullptr;
 struct Pin {Trace& trace;~Pin(){++trace.pin_deletes;::SetLastError(0xdddd);}};
 std::int32_t version(){auto& t=*current;++t.versions;t.events.push_back("version");t.valid=t.valid&&t.owner->snapshot().binding.active;::SetLastError(0x5151);if(t.throw_version)std::rethrow_exception(t.failure);return t.version;}
-void observe(void* object){auto& t=*current;++t.queries;const auto s=t.owner->snapshot();t.valid=t.valid&&object==reinterpret_cast<void*>(t.object())&&s.binding.active&&!s.binding.object_unknown&&s.binding.object==t.object();if(t.block_query){::SetEvent(t.entered);if(::WaitForSingleObject(t.release,10000)!=WAIT_OBJECT_0)throw std::runtime_error("query release timeout");}::SetLastError(0x7171);if(t.throw_query)std::rethrow_exception(t.failure);}
+void observe(void* object){auto& t=*current;const auto s=t.owner->snapshot();{std::lock_guard lock(t.query_gate);++t.queries;t.valid=t.valid&&object==reinterpret_cast<void*>(t.object())&&s.binding.active&&!s.binding.object_unknown&&s.binding.object==t.object();}if(t.block_query){::SetEvent(t.entered);if(::WaitForSingleObject(t.release,10000)!=WAIT_OBJECT_0)throw std::runtime_error("query release timeout");}::SetLastError(0x7171);if(t.throw_query)std::rethrow_exception(t.failure);}
 std::int32_t status(void* object){observe(object);return current->status;}
-const char* username(void* object){observe(object);return current->username.c_str();}
+const char* username(void* object){observe(object);auto& t=*current;if(t.slow_username){std::unique_lock lock(t.query_gate);t.username_entered=true;t.query_changed.notify_all();if(!t.query_changed.wait_for(lock,std::chrono::seconds(10),[&]{return t.username_release;}))throw std::runtime_error("startup username release timeout");lock.unlock();::SetLastError(0x7171);}return t.username.c_str();}
 const char* persona(void* object){observe(object);return current->persona.c_str();}
 const char* uid(void* object){observe(object);return current->uid.c_str();}
 std::uint8_t avatar(void* object,const char16_t* path,const char* owner,std::int32_t size){current->avatar_path=path;current->avatar_owner=owner;current->avatar_size=size;observe(object);return 0x80;}
@@ -73,6 +77,14 @@ struct Fixture {
     void cleanup(){online::cleanup_0366f0(refs(),*owner);}
     ~Fixture(){if(owner){try{if(owner->snapshot().phase==of::Phase::Open){if(runtime.online_module||runtime.online_object)cleanup();trace->finality=true;if(!owner->close_after_cleanup())std::terminate();}owner.reset();}catch(...){std::terminate();}}current=nullptr;b12_test::ui=nullptr;}
 };
+void original_online_lifetime(){
+    of::Options native;::SetLastError(0x7471);of::select_native_original_online(native);require(::GetLastError()==0x7471&&native.code_lease&&!native.foreign_quiescent&&of::lifetime_configuration_valid(native)&&native.lifetime_profile==of::LifetimeProfile::OriginalCrt,"Native original Online selects actual module lease with no external proof callback or module call");
+    rejects<std::invalid_argument>([&]{of::select_native_original_online(native);},"Original Online selector cannot replace a selected lifetime/lease");
+    Fixture f(false);auto options=f.options();options.foreign_quiescent={};options.lifetime_profile=of::LifetimeProfile::OriginalCrt;
+    f.owner.reset(static_cast<of::Online*>(of::make_online(f.view(),options).release()));f.trace->owner=f.owner.get();
+    online::worker_035b60(f.refs(),*f.owner);require(f.runtime.online_module&&f.runtime.online_object&&!f.owner->close_after_cleanup()&&!f.trace->proofs,"Original lifetime cannot retire a real live Online module/object");
+    f.cleanup();f.trace->finality=false;require(f.owner->close_after_cleanup()&&f.owner->close_after_cleanup()&&!f.trace->proofs&&f.trace->destroys==1&&f.trace->pin_deletes==2,"Actual source destroy/free/code-lease retirement permits local closure without foreign callback substitution");
+}
 void passive_validation_identity(){
     Fixture f(false);auto o=f.options();require(f.trace->events.empty()&&!f.trace->leases&&!f.trace->proofs&&f.ui.messages.empty(),"preparing owned leaves does not load/query/dialog");
     auto owner=of::make_online(f.view(),o);auto* selected=static_cast<of::Online*>(owner.get());f.trace->owner=selected;
@@ -116,6 +128,23 @@ void real_worker_and_query_lease(){
     f.trace->entered=::CreateEventW(nullptr,TRUE,FALSE,nullptr);f.trace->release=::CreateEventW(nullptr,TRUE,FALSE,nullptr);require(f.trace->entered&&f.trace->release,"own query synchronization events created");f.trace->block_query=true;std::string result;std::exception_ptr failure;
     std::thread worker([&]{try{result=f.owner->copy_username(f.runtime.online_object);}catch(...){failure=std::current_exception();}});
     require(::WaitForSingleObject(f.trace->entered,10000)==WAIT_OBJECT_0&&f.owner->snapshot().binding.active&&f.owner->snapshot().active_calls==1,"real own worker holds Binding reservation through copied getter");require(!f.owner->close_after_cleanup()&&!f.trace->proofs,"active source/getter lease prevents close before callback proof");::SetEvent(f.trace->release);worker.join();if(failure)std::rethrow_exception(failure);f.trace->block_query=false;require(result==f.trace->username&&!f.owner->snapshot().active_calls,"normal getter return balances lease and completes real copy");::CloseHandle(f.trace->entered);::CloseHandle(f.trace->release);f.cleanup();require(f.owner->close_after_cleanup(),"joined getter and actual source cleanup leave component closable");
+}
+void original_startup_query_overlap(){
+    Fixture f(false);auto options=f.options();options.lifetime_profile=of::LifetimeProfile::OriginalCrt;options.foreign_quiescent={};f.owner.reset(static_cast<of::Online*>(of::make_online(f.view(),options).release()));auto& t=*f.trace;t.owner=f.owner.get();t.slow_username=true;f.config.use_last_online_profile=0;
+    const auto initial_username=f.config.username,initial_persona=f.config.persona_id,initial_uid=f.config.user_id;std::exception_ptr worker_failure,body_failure;
+    std::thread startup([&]{try{online::worker_035b60(f.refs(),*f.owner);}catch(...){worker_failure=std::current_exception();}});
+    try{
+        {std::unique_lock lock(t.query_gate);require(t.query_changed.wait_for(lock,std::chrono::seconds(10),[&]{return t.username_entered;}),"actual OriginalCrt worker reached its slow FIRST username getter after online publication");}
+        require(f.runtime.online==1&&!f.runtime.online_ready&&f.runtime.server_ready&&f.runtime.online_object==t.object()&&f.config.username==initial_username&&f.config.persona_id==initial_persona&&f.config.user_id==initial_uid,"Controlled startup window precedes first profile-field write and OnlineReady without changing native readiness flags");
+        require(f.owner->avatar_virtual_28(f.runtime.online_object,u"MEM-avatar-remote-416","remote",2)&&t.avatar_path==u"MEM-avatar-remote-416"&&t.avatar_owner=="remote"&&t.avatar_size==2,"Actual OriginalCrt Online dispatches eligible avatar slot28 while startup getter remains in foreign code");
+        require(f.owner->copy_user_id(f.runtime.online_object).empty(),"A third owned query remains usable after the avatar sibling returns");
+        const auto held=f.owner->snapshot();require(held.phase==of::Phase::Open&&held.active_calls==1&&held.binding.active&&!held.binding.poisoned&&held.binding.factory_code_retained&&!t.pin_deletes&&t.pins.size()==2&&!t.pins[0].expired()&&!t.pins[1].expired(),"Completed siblings do not release the first startup query or poison the concrete facade/code leases");
+        require(!f.owner->close_after_cleanup()&&!t.proofs,"Actual active startup/query keeps controller close nonfinal without a foreign proof callback");
+    }catch(...){body_failure=std::current_exception();}
+    {std::lock_guard lock(t.query_gate);t.username_release=true;t.query_changed.notify_all();}startup.join();t.slow_username=false;
+    if(body_failure||worker_failure){std::cerr<<"Original startup overlap regression failed after releasing/joining worker\n";std::_Exit(1);} // retain unknown facade prefix instead of inventing cleanup
+    require(f.runtime.online_ready&&f.config.username==t.username&&f.config.persona_id=="person"&&f.config.user_id.empty()&&f.owner->snapshot().phase==of::Phase::Open&&!f.owner->snapshot().active_calls&&!f.owner->snapshot().binding.active&&t.valid&&t.queries==6,"Original profile copy/OnlineReady completes normally after the held getter returns with every query counted once");
+    f.cleanup();require(t.destroys==1&&t.pin_deletes==2&&f.owner->close_after_cleanup()&&!t.proofs,"Quiescent actual source cleanup retires object/code once under OriginalCrt without a fabricated ready barrier");
 }
 bootstrap_backend::Resources backend_resources(b2_test::Track& t){
     bootstrap_backend::Resources r{};r.configuration=std::make_unique<b2_test::Effects>(t.events);r.files=std::make_unique<b2_test::Files>(t.events);r.input=std::make_unique<b2_test::InputPlatform>(t.events);r.console=std::make_unique<b2_test::Console>(t.events);r.threads=std::make_unique<b3_tracking_test::Lower>();r.remaining=std::make_unique<b2_test::Backend>(t);r.execution=std::make_unique<b4_test::Execution>(t.events);r.server=std::make_unique<b4_test::Server>(t.events);r.library_os=std::make_unique<b4_test::LibraryOS>(t.events);r.library_effects=std::make_unique<b4_test::LibraryEffects>();r.host=std::make_unique<b4_test::Host>(t.events);r.hook_cleanup=std::make_unique<b4_test::Cleanup>(t.events);r.stop_sources=[]{return true;};r.join_api=bootstrap_backend::native_join_api();return r;
@@ -181,4 +210,4 @@ int child(std::string_view mode){::SetErrorMode(SEM_FAILCRITICALERRORS|SEM_NOGPF
     ::ExitProcess(1399);
 }
 }
-int main(int argc,char** argv){if(argc==2)return child(argv[1]);try{passive_validation_identity();exact_routes_and_errors();real_worker_and_query_lease();backend_identity_and_install();attached_retirement();for(const auto item:{ChildExit{"proof-reentry",1301},{"load",1302},{"swallowed",1303},{"factory",1304},{"destroy",1305},{"query",1306},{"free",1307},{"version",1308}})require(_spawnl(_P_WAIT,argv[0],argv[0],item.mode,static_cast<const char*>(nullptr))==item.code,"isolated unknown prefixes retain exact owners without retry or unwind");std::cout<<"PASS: "<<checks<<" online-factory core checks; actual bound Execution/ready, typed own-EXE exports, source cleanup/leases and eight isolated retained prefixes\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+int main(int argc,char** argv){if(argc==2)return child(argv[1]);try{original_online_lifetime();passive_validation_identity();exact_routes_and_errors();real_worker_and_query_lease();original_startup_query_overlap();backend_identity_and_install();attached_retirement();for(const auto item:{ChildExit{"proof-reentry",1301},{"load",1302},{"swallowed",1303},{"factory",1304},{"destroy",1305},{"query",1306},{"free",1307},{"version",1308}})require(_spawnl(_P_WAIT,argv[0],argv[0],item.mode,static_cast<const char*>(nullptr))==item.code,"isolated unknown prefixes retain exact owners without retry or unwind");std::cout<<"PASS: "<<checks<<" online-factory core checks; actual Original startup/query overlap, typed own-EXE exports, source cleanup/leases and eight isolated retained prefixes\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

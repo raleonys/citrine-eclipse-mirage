@@ -1,0 +1,30 @@
+{
+  "pending_source_count": 116,
+  "frozen_build_and_delivery_unchanged": true,
+  "updated_records": [
+    {
+      "path": "outputs/dll-critical-path/pending-source-status.json",
+      "sha256": "2cd2c16ebbc1e119301e017f6e2e2d78c33a07ed03421882fb071542973e126b"
+    },
+    {
+      "path": "outputs/dll-critical-path/active-work-plan.json",
+      "sha256": "e82f4af2b2076449a29e5d43a2454fdc269043c74717450f8b2dd9330041e43f"
+    },
+    {
+      "path": "outputs/dll-critical-path/blockers.json",
+      "sha256": "285fcc8c915302c4d094a5bec0d2e7471571e8f886ff8b0d3ec3b7bc7b74d02d"
+    },
+    {
+      "path": "outputs/dll-critical-path/validation.json",
+      "sha256": "a93ccd72674b281922c384d8a3e8199eb04636d1f1827681933f2d915744b26e"
+    },
+    {
+      "path": "outputs/dll-critical-path/static-source-milestone-20261104.json",
+      "sha256": "b3f4d259b6ccfddc56ec30997a865d757b37dcd4cc4128c2d1b1111ac7020594"
+    }
+  ],
+  "remaining_integration": {
+    "path": "outputs/anadius-execution-source/atomic-owner-projection-20261105/remaining-integration.json",
+    "sha256": "a456b840b5c6542e7b5ce1b63ddb07557c441693be5fb31f923125c6fef7c4c9"
+  }
+}

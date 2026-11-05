@@ -1,0 +1,34 @@
+{
+  "pending_source_count": 122,
+  "frozen_build_and_delivery_unchanged": true,
+  "updated_records": [
+    {
+      "path": "outputs/dll-critical-path/pending-source-status.json",
+      "sha256": "082c11826938697180608ce9c0cbdab87272b2436426e3123b7203bf5e5b106b"
+    },
+    {
+      "path": "outputs/dll-critical-path/active-work-plan.json",
+      "sha256": "e6944c73cc95e421378943202bfe4fd91e39ff16189b7a2a35e54ba86cfae50c"
+    },
+    {
+      "path": "outputs/dll-critical-path/blockers.json",
+      "sha256": "c0c9f6043bf9589f60d30e417d298f35c441de1a5a08e509f581a677bfbb0bf8"
+    },
+    {
+      "path": "outputs/dll-critical-path/validation.json",
+      "sha256": "d6931b9f51a6560bc8c409deaccd0ab1a52f872d93c788af8dc809b772bcbc25"
+    },
+    {
+      "path": "outputs/dll-critical-path/static-source-milestone-20261104.json",
+      "sha256": "d66f164964c892bfe0b5a067ca33ca408a32fa9566e0b33a1bd8b449e0e81620"
+    }
+  ],
+  "remaining_integration": {
+    "path": "outputs/anadius-owned-environment-source/root-copy-caller-ownership-20261105/remaining-integration.json",
+    "sha256": "e7289704592644fb9f8b2f9370386f0fbe8666270263076cb07c3f3195cc81a5"
+  },
+  "finalizer": {
+    "path": "work/finalize-root-copy-plan-20261105.py",
+    "sha256": "1b5d9ae717e20cf54dac796a0c9d71b01555b2b4b9a6f7358f4827c61e6e9efd"
+  }
+}

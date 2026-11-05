@@ -1,0 +1,231 @@
+{
+  "schema": "raw-job-join-unknown.source-only.v1",
+  "recorded_at": "2026-11-01T19:31:27.522021+00:00",
+  "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+  "authority": "Source correction and retained native-path comparison. No new native procedure, compiled proof or runtime result.",
+  "user_execution_policy": "No compilation, tests, link or binary execution unless explicitly requested by user.",
+  "source_files_changed_this_step": [
+    "anadius-bootstrap-backend-source/tracked_threads.hpp",
+    "anadius-bootstrap-backend-source/tracked_threads.cpp",
+    "anadius-bootstrap-backend-source/backend_tests.cpp"
+  ],
+  "all_pending_sources_since_last_full_build": [
+    {
+      "path": "anadius-application-worker-source/worker.cpp",
+      "last_built_sha256": "a3502562d95b6f7d7d4182ac6c2f37f2ae64a19f448092d0fc2f31ab743572a9",
+      "current_sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "anadius-application-worker-source/worker.hpp",
+      "last_built_sha256": "923514f18bf5d32ecfa2487e982e571117d0809e0892f171803c06ae915408f1",
+      "current_sha256": "6cf84342444f3724c02dda3727d54569e7cf3fcecf3d972be71c65f48fb9aea5"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend_tests.cpp",
+      "last_built_sha256": "65005e8082e9fadfc06fb89a00539deda014ea710f00c3fadd0e718077410414",
+      "current_sha256": "8d653c11159bf39152d18a5709a0bc45bf5927ab267987016a181a978bf8c27c"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "last_built_sha256": "31fc08d0311ed281465d9ffe7e255581c6848a5f83c67f2b435e17084efc8573",
+      "current_sha256": "56ed1a15c770804607c3bf911a9401a6d18c5f03638eca0672e612444d43f973"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/tracked_threads.hpp",
+      "last_built_sha256": "414a94314cecedd2908a073a6206a0adfdb7847e80df75911d0ba29e792277a7",
+      "current_sha256": "1688b459b3585703989e902f1378609abcdc3d40a2296e7eddf58e0b117e086f"
+    },
+    {
+      "path": "anadius-bootstrap-providers-source/native_threads.hpp",
+      "last_built_sha256": "243bf515118b795e9bf8004d79f5b923bf40f0ad98ff7d68946ebe4fd264cac7",
+      "current_sha256": "b9f2cade216f3333614fb0d94ce25ca6e7a41a6c228f9bd38c4994eca41cfbfe"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.cpp",
+      "last_built_sha256": "be831aeeaf94ab99a75981613a124f522e9cffc8e35590c898ffc8e6af27dcca",
+      "current_sha256": "271861dbf9a661eee658ae4de200317010adbae341dbcb368305f3b2e0040435"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.hpp",
+      "last_built_sha256": "d55494573dc515eacdcf2197c5213d67893aecfb46466e835d07de4e3add99eb",
+      "current_sha256": "b6864109663f3b1894be37f1142b5a72802f66e4616379ed0d167770ce92b20d"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.cpp",
+      "last_built_sha256": "6db0b7461cae29db4ad1cb0a09eb02ef6426628b80d4ca1706acd9ca3a7363c2",
+      "current_sha256": "365d05409246c1e97c551590c1ddd0b907c7bf4f4b374ad0bd73eff5f509fd78"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.hpp",
+      "last_built_sha256": "c24b4a64d9be048f998531979fa7bba54173d51dc313c9359887daedd5811346",
+      "current_sha256": "e182db10c6487a270e2f040fdbcc144daff18790cc7e23270b69999a3e604fbd"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.cpp",
+      "last_built_sha256": "fed670a3e0937ff56cc0cf001d19873c5d068b546ddf8b7f7de7f878a1547849",
+      "current_sha256": "d3a5eb1687024a15aa7e031b4960aaa5d6e3ee6b7cc992f039fca367f068d85a"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.hpp",
+      "last_built_sha256": "e127429b9bebd195cc7cd6e1d1ef81743547a1602431b41baf98baf4e16734f8",
+      "current_sha256": "e3f55458b5943b0db9f7662b8b591bfb818923898cf4f9ab5a03c4756d79ffa4"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.cpp",
+      "last_built_sha256": "50193ac5c84e279207831100ae38bfa480626892cf237ddc401e7ca61eef1893",
+      "current_sha256": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.hpp",
+      "last_built_sha256": "865208b224507f1b708e0d7aea7bf3fff1433f9fe5d52260bcc0c1c6c4b136ca",
+      "current_sha256": "a9d1da810c6a94d4033cb9aa6973dfd9ccaf5f46e8b21f3173211129bf502ccb"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown_tests.cpp",
+      "last_built_sha256": "8f42a649fb93c1e74d477521f23ff5a702a63c54cc37a8cdb19ac85a768752bb",
+      "current_sha256": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "last_built_sha256": "dec7a66e5120e0c7064d95c53aa250d678160913486abf76409de08a4082d150",
+      "current_sha256": "a33af361f391a03658ccdcd9f16ee7474ca636bec48280309bf6f68bd29d26bb"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.hpp",
+      "last_built_sha256": "8b3afb7a69b6a7d99a992b3dbc767845a5dfef49784b0500f157d76c499e2704",
+      "current_sha256": "e3e7fef3dea236a09225b19bc4ed6e92ea35172eb62c059fa322cc35a4f6f3a9"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "last_built_sha256": "23ed92f55c5bb8f6f70002a86f770aa242f72ddc9f148f22243d0a0d1c9d95ef",
+      "current_sha256": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "last_built_sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a",
+      "current_sha256": "31a36ff7c7e65a909e4e5a712113d67a565b6418edb50a4a38c02aa4ac4e04a5"
+    }
+  ],
+  "implementation": [
+    "TrackingThreads::stop_and_join catches exceptions from injected wait/close boundaries and poisons under mutex before rethrow. Unknown current/suffix records remain; already joined/closed prefix is committed once.",
+    "Drain reservation clears on unwind; poison survives. Future stop attempts return false before SDK wait/close, avoiding speculative reuse of a possibly closed/reused numeric HANDLE.",
+    "Known WAIT_TIMEOUT/WAIT_FAILED/close FALSE paths retain prior retry behavior. PreserveError still restores control caller incoming LastError. No class-layout/vtable/export change.",
+    "Four unexecuted source child scenarios cover wait/close throw at first record or after successful first prefix; poison/one retained suffix/LastError/no replay/terminal destruction described, not dynamically verified."
+  ],
+  "source_evidence": [
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "line": 103,
+      "anchor": "An injected boundary may throw AFTER",
+      "sha256": "56ed1a15c770804607c3bf911a9401a6d18c5f03638eca0672e612444d43f973"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "line": 83,
+      "anchor": "if(s.draining||s.poison)return false",
+      "sha256": "56ed1a15c770804607c3bf911a9401a6d18c5f03638eca0672e612444d43f973"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend_tests.cpp",
+      "line": 82,
+      "anchor": "int join_terminal(",
+      "sha256": "8d653c11159bf39152d18a5709a0bc45bf5927ab267987016a181a978bf8c27c"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "line": 87,
+      "anchor": "Session profile requires its bound worker thread/fiber",
+      "sha256": "8554bd2ddca2043fe7c199b9d058885879053bbbab7a58edfc539107c004b913"
+    },
+    {
+      "path": "outputs/anadius-application-graph-source/graph.cpp",
+      "line": 48,
+      "anchor": "Application graph requires its original controller/worker fiber",
+      "sha256": "993510629595bcd0eb580510c5b7d99b37e6a9d5d5e3f3ce7f00ccba63e8d488"
+    },
+    {
+      "path": "outputs/anadius-session-policy-source/policy.cpp",
+      "line": 36,
+      "anchor": "Session policy requires its original worker/fiber",
+      "sha256": "da35f76e1c414f24bdc6efda4d7ecc0ec814a3d63e64a01f9ef5ead63cdd4c24"
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+      "line": 74,
+      "anchor": "state_->worker_locked();return *state_->backing",
+      "sha256": "8e2bb730bdf8d8ec1471ea6c8d0ea22a85450101c67d61d194a351bae2b696d7"
+    }
+  ],
+  "retained_native_evidence": {
+    "target_sha256_historical": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "scope": "Historical listings reused and hashed, not fresh target analysis; no original file read this step.",
+    "full_listings": {
+      "assembly": {
+        "path": "anadius-all-functions.asm.txt",
+        "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+        "matches_historical_listing_hash": true
+      },
+      "pseudo": {
+        "path": "anadius-all-functions.pseudo.c",
+        "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+        "matches_historical_listing_hash": true
+      }
+    },
+    "extracted_files": {
+      "anadius-socket-source/frame-read-evidence.asm.txt": "e3a7e76f98a9b440f790d9c1b5c42c757259c80b46a7cfd7efcb9f68a453c432",
+      "anadius-socket-source/frame-read-evidence.pseudo.c.txt": "ece0aeaa07578458f1828cf91b6f5ac9d7f48ecebf131f394aad1060a37e2022",
+      "anadius-socket-source/frame-read-evidence.json": "684c895517a84e1f5592197010ce770c186ea15b781a2df424805a6d42f2ced3",
+      "anadius-thread-source/evidence.json": "cb4f734a49e75e94007a07cd06c768d96706552fa8b3b3d02451e25333729d5a"
+    },
+    "anchors": [
+      {
+        "va": "0x18002554b",
+        "instruction": "LEA R8,[0x180021770]",
+        "evidence": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31"
+      },
+      {
+        "va": "0x180025556",
+        "instruction": "CALL 0x18005e8e0",
+        "evidence": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31"
+      },
+      {
+        "va": "0x18002557f",
+        "instruction": "CALL 0x18004a458",
+        "evidence": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31"
+      }
+    ]
+  },
+  "REA_readiness_only": {
+    "operation": "binary_session",
+    "open": false,
+    "server": "rea",
+    "version": "6.5.0",
+    "provider": "ghidra",
+    "provider_version": "12.1.4",
+    "provider_available": true,
+    "target_opened_or_analyzed": false
+  },
+  "independent_static_review": {
+    "reviewer": "/root/b22_provider_audit",
+    "result": "STATIC_PASS_NO_REQUIRED_BUG_FOUND",
+    "reviewed_source_hashes": {
+      "anadius-bootstrap-backend-source/tracked_threads.hpp": "1688b459b3585703989e902f1378609abcdc3d40a2296e7eddf58e0b117e086f",
+      "anadius-bootstrap-backend-source/tracked_threads.cpp": "56ed1a15c770804607c3bf911a9401a6d18c5f03638eca0672e612444d43f973",
+      "anadius-bootstrap-backend-source/backend_tests.cpp": "8d653c11159bf39152d18a5709a0bc45bf5927ab267987016a181a978bf8c27c"
+    },
+    "edits_or_compiler_tests_link_binary_execution": false
+  },
+  "limits": [
+    "Physical join failure handling only. Does not supply a native message-worker backend or claim raw-job drain.",
+    "Default Profile InlineJobs and same-worker deferred contract remain. Profile/Graph/Policy affinity and prepared-memory capability exclude new raw native message workers.",
+    "Need explicit message-worker admission/capability and exact closure/session ownership, matching Graph/Policy serialization, actual thread-exit cleanup and physical worker/FLS finality. No affinity bypass or always-true completion proof added.",
+    "Four new test modes have not been compiled/run; historical test results do not validate this patch. Production loader hooks and image/CRT lifetime remain open."
+  ],
+  "new_native_function_definitions": 0,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "target_executed": false,
+  "original_access_or_modification": false,
+  "package_rebuilt": false
+}

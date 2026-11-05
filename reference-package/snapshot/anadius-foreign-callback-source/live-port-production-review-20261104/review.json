@@ -1,0 +1,177 @@
+{
+  "task": "Independent source-only review of live server-port integration",
+  "date": "2026-11-04",
+  "result": "No concrete production defect found within the requested change boundary.",
+  "scope": {
+    "production_edits": false,
+    "builds": false,
+    "project_tests": false,
+    "linking": false,
+    "dll_execution": false,
+    "zip_changes": false,
+    "new_REA_session": false
+  },
+  "exact_source_snapshot": "final-source-hashes.json",
+  "native_evidence_references": "evidence-refs.json",
+  "observations": [
+    {
+      "subject": "Exact binding before publication",
+      "source": [
+        "foreign.cpp:32",
+        "foreign.cpp:364",
+        "foreign.cpp:367",
+        "native-context/context.cpp:26",
+        "native-context/context.cpp:31",
+        "bootstrap-backend/backend.cpp:219",
+        "bootstrap-backend/backend.cpp:262",
+        "bootstrap-owner/owner.cpp:54"
+      ],
+      "conclusion": "Foreign attachment wrapper binds view.configuration.server_port before invoking native Owner factory. Context initialization later uses the same reference. RuntimeOwner first moves configuration into nonmovable owner, then bind_state invokes passive factory; publish/hooks occur later. Bind stores only pointer under metadata lock, no scalar value or persistent atomic_ref, preserving later startup parser assignments."
+    },
+    {
+      "subject": "Absent/mismatched cell",
+      "source": [
+        "foreign.cpp:200",
+        "native_callbacks.cpp:26"
+      ],
+      "conclusion": "AdmissionLease passes Context.network.server_port_0a3c90 explicitly. Original Domain compares its address against once-bound pointer before incrementing calls or loading scalar. Missing/mismatched cell throws before body/wait/SDK permission."
+    },
+    {
+      "subject": "All reviewed live scalar conflicts",
+      "source": [
+        "connect.hpp:18",
+        "connect.hpp:21",
+        "connect.cpp:26",
+        "connect.cpp:46",
+        "connect.cpp:56",
+        "connect.cpp:57",
+        "foreign.cpp:220",
+        "foreign.cpp:258",
+        "server.cpp:16",
+        "server.cpp:38"
+      ],
+      "conclusion": "Every production live scalar load/store found by bounded server_port/port_0a3c90/server_port_0a3c90 search now uses transient relaxed atomic_ref<uint16_t>. Lock-free and required-alignment static assertions are present. Reference forwarding/address comparison sites do not load scalar values. Separate startup publication snapshot is not this cell."
+    },
+    {
+      "subject": "Remaining plain startup assignments",
+      "source": [
+        "config-application/application.cpp:70",
+        "config-application/application.cpp:71",
+        "config-application/application.cpp:72",
+        "config/configuration.cpp:161",
+        "config/configuration.cpp:162",
+        "config/configuration.cpp:163",
+        "configuration.hpp:44",
+        "owner.hpp:99"
+      ],
+      "conclusion": "Parser writes remain plain before worker/hooks in the selected startup order; binding does not retain atomic_ref. State and RuntimeOwner accessor document stable-cell lifetime and quiescence for plain accesses/copies. External concurrent raw field access remains outside reviewed source contract."
+    },
+    {
+      "subject": "Native branch order",
+      "source": [
+        "foreign.cpp:217",
+        "foreign.cpp:220",
+        "foreign.cpp:242",
+        "foreign.cpp:255",
+        "foreign.cpp:258",
+        "connect.cpp:56",
+        "connect.cpp:57",
+        "native_callbacks.cpp:83"
+      ],
+      "conclusion": "Original web80/443 compares live word immediately after successful hook receipt; no Server milestone or fallback. Nonweb admission grants wait without reading shared word; complete_wait runs after actual recovered wait.3216 short-circuits scalar comparison and enters redirect. Other nonweb compares only after wait. Core path has equivalent short-circuit order.",
+      "native": [
+        "0x18000fd54",
+        "0x18000fd59",
+        "0x18000fd64",
+        "0x18000fd6e",
+        "0x18000fd71",
+        "0x18000fd73"
+      ]
+    },
+    {
+      "subject": "Separate log/final loads and no rollback",
+      "source": [
+        "native_callbacks.cpp:89",
+        "foreign.cpp:274",
+        "connect.cpp:26",
+        "connect.cpp:39",
+        "connect.cpp:46"
+      ],
+      "conclusion": "Original redirect receives exact live Context cell, not local snapshot. Body loads live port for log after two literal insertions/requested-port insertion, then flushes and updates cached counter. Terminal15 dialog/exit precedes final rewrite. Nonterminal performs distinct late port reread. Completion checks actor/publication/poison only and does not undo earlier route because scalar changed.",
+      "native": [
+        "0x18000fda9",
+        "0x18000fdbb",
+        "0x18000fdc0",
+        "0x18000fdce",
+        "0x18000fdd3",
+        "0x18000fde0",
+        "0x18000fe48",
+        "0x18000fe52"
+      ]
+    },
+    {
+      "subject": "Server capture/store/export",
+      "source": [
+        "server.cpp:16",
+        "server.cpp:19",
+        "server.cpp:37",
+        "server.cpp:38",
+        "server.cpp:40",
+        "server.cpp:41"
+      ],
+      "conclusion": "Input capture follows context initialization and precedes address parsing. Actual bound port uses relaxed store before environment export and startup completion. Cached bound_port feeds environment/publication, matching native use of AX after shared store and avoiding accidental shared rereads.",
+      "native": [
+        "0x180029ec4",
+        "0x180029eca",
+        "0x180024676",
+        "0x18002467d",
+        "0x1800246e4",
+        "0x18002472c"
+      ]
+    },
+    {
+      "subject": "Actor/scope preservation",
+      "source": [
+        "foreign.cpp:46",
+        "foreign.cpp:200",
+        "foreign.cpp:242",
+        "foreign.cpp:274",
+        "foreign.cpp:321",
+        "policy.hpp:108"
+      ],
+      "conclusion": "Existing TLS actor/fiber ownership and phase-specific permissions remain: Waiting grants wait only, Redirect grants narrow network effects, Original grants SDK only. Live scalar availability does not grant general callback/allocator/registry/private recovered PTD permission. Same-thread reentry and other forbidden scopes remain rejected."
+    },
+    {
+      "subject": "Exception/count/LastError safety",
+      "source": [
+        "foreign.cpp:10",
+        "foreign.cpp:200",
+        "foreign.cpp:242",
+        "foreign.cpp:274",
+        "foreign.cpp:321",
+        "native_callbacks.cpp:21",
+        "native_callbacks.cpp:33"
+      ],
+      "conclusion": "Binding/admission/completion bookkeeping restores incoming WinLastError. Failed exact-cell checks own no count; failed initial reservation clears TLS/count. Completion exceptions leave admitted actor for existing AdmissionLease destructor to release; provider unknown exceptions retain poison. Native Context lease remains through admission leave. Final body/SDK error state is preserved around metadata cleanup. Existing no-fiber-migration and provider contracts were not broadened."
+    },
+    {
+      "subject": "Original/Cooperative separation",
+      "source": [
+        "foreign.cpp:26",
+        "assembly.cpp:52",
+        "assembly.cpp:57",
+        "foreign.cpp:364"
+      ],
+      "conclusion": "Original constructor rejects Cooperative proof/snapshot mixture; assembly supplies only per-hook publication and passively binds exact cell. Cooperative keeps its separate immutable milestone/snapshot behavior. No new milestone/equality gate was introduced in Original route."
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    "Source inspection only. No compilation, linking, project tests or target execution verifies emitted code or runtime schedules.",
+    "Native references are previously retained complete structured replies from root and peer; this reviewer did not rerun native analysis or change any REA session.",
+    "Search is bounded to production outputs C++ headers/sources, excluding tests/fixtures; unknown downstream aliases, raw field access, overlapping copies/writes, or injected providers are outside this review.",
+    "Ordinary startup parser writes remain valid under the documented before-workers/hooks ordering; external reconfiguration or copying a live State requires synchronization/quiescence.",
+    "This result covers live-port integration; it is not a new general callback reentry or CRT concurrency claim."
+  ],
+  "final_hash_note": "Original source-hashes.json retained. Final hashes include root comment-only updates to foreign.hpp and native_callbacks.hpp re-read by reviewer; no production logic changed during review. owner.hpp comment was already current at initial capture."
+}

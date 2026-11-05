@@ -1,0 +1,75 @@
+{
+  "schema": "original-detach-profile.static-audit.v1",
+  "client_date": "2026-11-03",
+  "recorded_at": "2026-11-03T16:31:00.092083+00:00",
+  "status": "STATIC_NATIVE_AUDIT_NO_SOURCE_CHANGE",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "session": {
+    "server_command": "C:/tools/rea-6.8.0/node_modules/rea-agents/scripts/rea.mjs",
+    "package_version": "6.8.0",
+    "identity_alignment": "aligned",
+    "Ghidra": "12.1.4",
+    "closed": true,
+    "qualification": "Selected binary_session fields observed live; this is not a hash of the raw session response."
+  },
+  "bundle": {
+    "path": "outputs/dll-critical-path/original-detach-profile.native.json",
+    "sha256": "9a88817915993cc0638e7bcce2e68078c8e53d56d5db346853e0ec14af75a395",
+    "records": 7
+  },
+  "snapshot": {
+    "path": "outputs/dll-critical-path/original-detach-profile.snapshot.json",
+    "sha256": "95cf4697d9911c10b3908b420dad1028f03482214f2b740135abdeb3cbf19a97"
+  },
+  "observations": [
+    {
+      "address": "0x180038870",
+      "evidence_id": "ev_3ea611db41a998c56cf48184f54bb740e940b29ac46c60842bf52bd4c53da0ea",
+      "finding": "Application DllMain compares EDX with1, calls038970 only on equality, then returns EAX=1. No application detach action in this body."
+    },
+    {
+      "address": "0x18004b9e0",
+      "evidence_id": "ev_deb31dc7a0a7b20eb93d871e273e09ee7e24a13c9b0233020012e6c336e6e5df",
+      "finding": "Reason0 tests R8, SETNZ CL, then tail-jumps04bb48. Windows reserved is converted to a terminating bool."
+    },
+    {
+      "address": "0x18004bb48",
+      "evidence_id": "ev_756d335dcb5fc6894b75ad1faaca804c84c8b38c8d7c435ab4386eb57afedbd9",
+      "finding": "After valid attach-count/state checks, CALL04b540 occurs at04bb88 without a terminating-flag branch. The saved flag is passed later to04b708 at04bba7..04bbaa."
+    },
+    {
+      "address": "0x18004b540",
+      "evidence_id": "ev_3392203fbb19f60bae35815e792b1710e0ac457768adee0254c9a758d7a873ab",
+      "finding": "C cleanup selects an onexit-table path via04bfd8 or calls05cd9c if05cdb8 says termination not complete. No reserved parameter is used here. Execution/state may make cleanup already complete."
+    },
+    {
+      "address": "0x180038950",
+      "evidence_id": "ev_fb53dc954eac46bb1b9c6274e8a586984fc9b8ea632dbfcd021781d4bffd412d",
+      "finding": "Registered source exit body calls035ab0 then0366f0 and tail-jumps0102b0 (library/online/hooks in existing source reconstruction)."
+    },
+    {
+      "address": "0x18004bbc8",
+      "evidence_id": "ev_85c0cb284173dc13f80439843ab97023639a65733ff0f324f48b389450bfd161",
+      "finding": "Application DllMain called at04bc52; reason0/3 subsequently calls CRT reason dispatch at04bca9. Failed attach explicitly calls app reason0 and04bb48; these are distinct observed paths."
+    }
+  ],
+  "inference": "Original has ordinary attach/detach CRT dispatch with termination context; it is not shown here to require a cooperative pre-unload API. Presence of a detach path is not proof that arbitrary live FreeLibrary is safe.",
+  "unknowns": [
+    "Whether the actual host normally calls FreeLibrary on this image or keeps it for process lifetime.",
+    "Whole-image absence of module pinning or another external admission protocol; only the seven named functions were inspected in this slice.",
+    "Runtime races, native hot-unload safety, and production replacement behavior."
+  ],
+  "primary_document": {
+    "url": "https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain",
+    "supports": "reserved is NULL for FreeLibrary/failed load and non-NULL for process termination; detach need not use attach thread; process termination may leave process resources inconsistent."
+  },
+  "project_implication": "Previously added pre/post external proof contracts are requirements of the selected stronger source composition, not established original API obligations. Lifetime profile choice remains pending; do not silently change source behavior or implement fake true proofs.",
+  "source_files_changed": 0,
+  "pending_source_files": 30,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "DLL_executed": false,
+  "package_rebuilt": false,
+  "original_modified": false
+}

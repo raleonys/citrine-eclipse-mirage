@@ -1,0 +1,32 @@
+{
+  "proposed_sha256": "572b6c072e6fb2a88b50b7a146c93f30622a6bedd0ed06354180f90738a8459d",
+  "archive_edits": false,
+  "validation": {
+    "compile": "compile-link.log",
+    "diagnostic_source_sha256": "be1f968580d76ff934c4e314bef49f36ee0b3bbe8cbb779646da0ac18ba88925",
+    "commands": "commands.json",
+    "baseline": "baseline-command.json / baseline-run.log",
+    "output": "run.log"
+  },
+  "production_edits": false,
+  "canonical_source": "outputs/anadius-worker-handoff-source/handoff_integration_tests.cpp",
+  "task": "Fresh worker_handoff_integration original serving stop failure terminal",
+  "proposed_source": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\worker-handoff-original-stop\\handoff_integration_tests.proposed.cpp",
+  "limitations": "Focused isolated synthetic source diagnostic only. Diagnostic copy adds observation print; clean proposed source removes it. Root owns canonical patch and full suite.",
+  "preserved": "All59 normalpacket prerequisites, exact Runtime serving-original failed zero-post, one genuine work decrement/consumed, flags, one raw77 error read before checkpoint clobber, owned native020950 FormatMessage/LocalFree diagnostic, same admitted Parent and poisoned source retention.",
+  "minimal_patch": {
+    "before": "require(ports.view.memory.operation_on_this_thread()&&probe.policy->snapshot().phase==cp::Phase::Poisoned&&!probe.policy->snapshot().active,\"Failure retains actual admitted Parent and poisoned Policy prefix without pretending normal cache/thread/Graph teardown\");",
+    "after": "require(ports.view.memory.operation_on_this_thread()&&probe.policy->snapshot().phase==cp::Phase::Poisoned&&probe.policy->snapshot().active,\"Failure retains actual admitted Parent and poisoned active WorkCall membership without pretending normal cache/thread/Graph teardown\");"
+  },
+  "root_cause": "Old negative assertion expected inactive Policy after a failed tracked original work drop. New durable per-call work registry retains the failed WorkCall; Snapshot.active aggregates retained call membership.",
+  "canonical_edits": false,
+  "observed": {
+    "diagnostic_fixed_exit": 137,
+    "parent_admitted": true,
+    "fixed_duration_ms": 152,
+    "policy_active": true,
+    "baseline_exit": 111,
+    "policy_phase": "Poisoned (3)"
+  },
+  "canonical_before_sha256": "d2eb5c962e85876bc0551974a684797546c1a901e30ec689c1cb8c9f02ab4f5f"
+}

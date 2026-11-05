@@ -1,0 +1,13 @@
+# Independent production integration review
+
+Result: no blocking source finding in the measured nonzero socket diagnostics. This is a static source review, not native ABI or executed validation.
+
+Reviewed server.cpp SHA256 **7aa4b341b8ef7e96e62833f320f5d30ad43386aa869155a4275e28a7b5bd2343** and server.hpp SHA256 **b847284e3498e43e34213ec84125197111bd27aff3d3aa9ffcaf16db540e98f1** against the recorded stage/before files, unchanged acceptor.cpp/service_constructor.cpp caller algorithms, and the established native category/provider evidence. This stage integrates previously measured callers; it does not claim fresh native queries.
+
+The added public overload takes a typed error_category reference explicitly and initializes the ordinary system_error base plus the existing owned source/operation/address members. It neither adds object fields nor guesses a native category from arbitrary name tokens. Its category lifetime contract is explicit. The existing contextual constructor delegates with its unchanged bounded IOCP selector; the context-free constructor is untouched. The selected module-owned category outlives these ordinary module-lifetime exceptions and copies. External calls after module teardown are not supported by this claim.
+
+Only two private source Effects bind the native provider: AcceptRuntime's nonzero logical-system open/set_option/bind/listen errors and Construction's nonzero logical-system mutex error. The latter is the0228e0 socket-service gate producer; its context address stays0 because that interface transports a measured string rather than the IOCP interface's opaque address. The preceding stage's scheduler-gate84428 and port84528 mappings remain intact.
+
+The acceptor caller retains the cached raw WSA/Win32 statuses, ordered category/error reads, native natural close on failed IOCP attachment, and nonzero guards. The service constructor still obtains its category after initialize_gate and raises only nonzero status. No SDK operation, cleanup, retry, zero-code formatting helper, dependencies or unload condition was added. Misc already-open and unknown/other HOST operation projections preserve their prior paths.
+
+Ordinary nonzero system_error construction uses the supplied native provider and owns the resulting what string, as established by the retained compiler/provider proof. The added overload does not promise exact native exception allocation/RTTI/EH/ABI or hypothetical zero-code parity. Existing public HOST calls remain separate from the measured private Effects. Tests and actual OS effects require separately authorized execution; the source assertions are reviewed independently and remain unexecuted.

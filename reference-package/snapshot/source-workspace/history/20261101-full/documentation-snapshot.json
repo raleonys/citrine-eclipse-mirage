@@ -1,0 +1,1595 @@
+{
+  "recorded_at": "2026-11-01T18:35:16.689528+00:00",
+  "scope": "Documentation accompanying fresh full common build; prior B54 documentation snapshot retained in history",
+  "build_record_sha256": "e6112b9ade9c32c6dba2b4bec33ae09c2e8a8d3593b99c0db97fb29b836a66d6",
+  "documents": [
+    {
+      "path": "DLL-ANALIZ-RAPORU.md",
+      "sha256": "4cf72f2fdde4e2cef9fa8bcdf4056110b0d0e5838b4a7e73bbc4a436d1adf9a5"
+    },
+    {
+      "path": "KAYNAK-DURUMU.md",
+      "sha256": "9dce1c81a7a220b5a6474a08ab916a3e45fc8e46da4a62889e64e8044c2ef31d"
+    },
+    {
+      "path": "KOD-REHBERI.md",
+      "sha256": "fbc9f304367029508a9069cc129cd51cd61681cc70569595c5012a581d6862a8"
+    },
+    {
+      "path": "TAMAMLANMA-TAHMINI.md",
+      "sha256": "9ab69e4e3d7609960197ccaecd798c7777a735cb3fc913fe43dfbe9d9feca111"
+    },
+    {
+      "path": "YOL-HARITASI.md",
+      "sha256": "6da847fe684d0eb1c01f93edcf19cc4cfcd769f9233f28ae73d56a51b3d58b77"
+    },
+    {
+      "path": "anadius-accept-helpers-source/README.md",
+      "sha256": "42df3d9683a187932ae02a2259c87caee1ce406189a9753ac26cdd86e1a6e23b"
+    },
+    {
+      "path": "anadius-accept-helpers-source/architecture-review.md",
+      "sha256": "4de72003813ff6fb92e77b20c75ae1deb3a859ff800f1889f99cebdbcb7d460a"
+    },
+    {
+      "path": "anadius-accept-source/README.md",
+      "sha256": "e0730a414cc62dba7d80349d48df55a3ec8090c92e6d85948d50995f467ad6d6"
+    },
+    {
+      "path": "anadius-accept-source/architecture-review.md",
+      "sha256": "745982dec57aad33cc9e053800814bacb55a3aa07b2c26be1ae4e20fa7208ccb"
+    },
+    {
+      "path": "anadius-accept-stop-source/README.md",
+      "sha256": "2bcc46b15cb205ec326fe3f7cf46f2aa9933f954a78c893cfae7e8c84bed463f"
+    },
+    {
+      "path": "anadius-accept-stop-source/architecture-review.md",
+      "sha256": "09dcae808feb27441713dd89109c65949568725c6224c2306640e4dcdc3198e4"
+    },
+    {
+      "path": "anadius-achievement-runtime-source/README.md",
+      "sha256": "ca7cdcdded6014eb24c4240432a818e6d3d69999ff733fa9bbdb9afb6979779f"
+    },
+    {
+      "path": "anadius-achievement-runtime-source/flow-audit.md",
+      "sha256": "3d3960ee478e4390bebe69db60299a925832f051d231227ceb65444f537ee122"
+    },
+    {
+      "path": "anadius-achievement-runtime-source/review.md",
+      "sha256": "3595ace50837fbc346535559c7e9538db5ebf84ba9a2d38f2d811211aa66b6ff"
+    },
+    {
+      "path": "anadius-achievement-storage-source/README.md",
+      "sha256": "3954991c683824c6345afe3d1dd2d78ff8b711f9117a673e6004fcfe50e147fc"
+    },
+    {
+      "path": "anadius-achievement-storage-source/review.md",
+      "sha256": "47050e2d2b23fedaf04de98cc9e730f0964122ede8822a65c31ae73343a36279"
+    },
+    {
+      "path": "anadius-achievement-storage-source/storage-audit.md",
+      "sha256": "16461c44dde143717c4c17d74b58d7b744ee3b861d6657b90295f6a70eddfedf"
+    },
+    {
+      "path": "anadius-achievement-writer-source/README.md",
+      "sha256": "1038afa07bc3e36c0ec116b0352b7a6579f57f3385d8bff1170c2996d424997c"
+    },
+    {
+      "path": "anadius-achievement-writer-source/review-storage.md",
+      "sha256": "a4eab9603be6b2ce78fe4ec020287d6bf66976e331a43efd4d43d1b947a2673c"
+    },
+    {
+      "path": "anadius-application-admission-source/README.md",
+      "sha256": "ef85c5a5fd02efb64f9f48a19b17b0eba0b0447a33c33458565c21ece1e37914"
+    },
+    {
+      "path": "anadius-application-admission-source/architecture-review.md",
+      "sha256": "53e4c0d933333bfe03c9e0cc6c2b499a629c7b35334ce9c302b3777060c68591"
+    },
+    {
+      "path": "anadius-application-graph-source/README.md",
+      "sha256": "25775391e36550e3a297cb899a3225a4ab9eb627fa04d9c8207d651c6ad40021"
+    },
+    {
+      "path": "anadius-application-graph-source/architecture-review.md",
+      "sha256": "045625f5ddc09dbc28fa8f607998d8bc8a75492ded4e65a1e8a54ffa455aefaa"
+    },
+    {
+      "path": "anadius-application-worker-source/README.md",
+      "sha256": "310c1a8f9b0e0abfd91a93a55e7ea19c561085ec6b7d9c02fd283b8528a33ae4"
+    },
+    {
+      "path": "anadius-application-worker-source/architecture-review.md",
+      "sha256": "5d85d56a133b89e97f28120ab6a8b7494ffde0608329fb317685f5006dcbb55b"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/README.md",
+      "sha256": "b3e0fefc3e86392b96a66bc97610ccc0b2eac589be9ad151194a8bb381c990b2"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/architecture-review.md",
+      "sha256": "c1a198619311933dbbbb50e9c49734c09a0979cfbb830bc547c72127cf69a21a"
+    },
+    {
+      "path": "anadius-bootstrap-native-source/README.md",
+      "sha256": "6b94265e81e38bb8a4edb384016136928ba4ce2446ec4114b288286051582753"
+    },
+    {
+      "path": "anadius-bootstrap-owner-source/README.md",
+      "sha256": "a1b309288fadae138484e94a6fe15c3337d5e885c927997bdd06efbe88b22ada"
+    },
+    {
+      "path": "anadius-bootstrap-owner-source/architecture-review.md",
+      "sha256": "c8444d0b000d0aea312d5f00562108140c4242655d83e1474b3f3a54dd465676"
+    },
+    {
+      "path": "anadius-bootstrap-policies-source/README.md",
+      "sha256": "c07d042d0b4cd436792a37086d0528812565653991aa5486360f0bcd376eb0d0"
+    },
+    {
+      "path": "anadius-bootstrap-policies-source/architecture-review.md",
+      "sha256": "7bdfce3530feeb57505e46ef09eb9cfa15e8f348485c1174a8d9a47650c6c427"
+    },
+    {
+      "path": "anadius-bootstrap-policies-source/scope-config.md",
+      "sha256": "7d43895fd37ce8a2bd6a3620d461a51dedd8a20558fbfff22aed63849f9f3c15"
+    },
+    {
+      "path": "anadius-bootstrap-policies-source/scope-services.md",
+      "sha256": "80a70eba7e65e90e9e198eccdd2635cb92526dd1f9eed3d9b33b0f702b74cabc"
+    },
+    {
+      "path": "anadius-bootstrap-providers-source/README.md",
+      "sha256": "3b4114d8557363a1e6355eb0865c622798b1daedbca9bc906d7929fdf16894cc"
+    },
+    {
+      "path": "anadius-bootstrap-providers-source/architecture-review.md",
+      "sha256": "0e414596b88619e7d05f61b8331c8d2db06b1e2ffb18b932ed1dc7bcf224544a"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/README.md",
+      "sha256": "483882fde83c46180eadd2c6a25e9433e919f6dad131d95b164ce25e55cf0932"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/architecture-review.md",
+      "sha256": "0f326582c054746319ddd09669bca6048fe60691911befb66dfcfacac3b79ac5"
+    },
+    {
+      "path": "anadius-calendar-source/README.md",
+      "sha256": "9be789d2313ac65568a5af3304f8c179d1cae915875b96d94ab8f2e89a409f34"
+    },
+    {
+      "path": "anadius-callback-admission-source/README.md",
+      "sha256": "096e4aa9db10d8b791f3cb18d29f4db554e4c3844e2e22e174f061c076a44cbc"
+    },
+    {
+      "path": "anadius-callback-admission-source/architecture-review.md",
+      "sha256": "908a2e14df7e77b48d3f029e6d7ab6e0f3ec9b65b8f86d87a980d4ffbb9dd410"
+    },
+    {
+      "path": "anadius-callback-identity-source/README.md",
+      "sha256": "080b06127ac4957d7fd9db9d717cf7eda25b8d7751bd418f2b8defe327768abb"
+    },
+    {
+      "path": "anadius-callback-identity-source/architecture-review.md",
+      "sha256": "caabd13119f97c7d74d8b30108a287878331c3fcbd4ec255b79d5d366ca94b54"
+    },
+    {
+      "path": "anadius-callback-policy-source/README.md",
+      "sha256": "47b345d4ad8433b015cb0b4854649c661e21c14be87f515e9689c7e8fd88e11d"
+    },
+    {
+      "path": "anadius-callback-policy-source/architecture-review.md",
+      "sha256": "3f72a01fb2ecfbb291d58811a4573ca4fd0ecb9cfe3bcf6d680c3c4986fe1234"
+    },
+    {
+      "path": "anadius-callback-provider-source/README.md",
+      "sha256": "1a964a99b269345b8cc12b230ad3a15c6707fa4dffb30c5a1ed2e2cda80f6c27"
+    },
+    {
+      "path": "anadius-callback-provider-source/architecture-review.md",
+      "sha256": "58d3e5d11f95aea4f83a81a2b6be58bb8fab998e1bd56776d2cf48b59be9d4af"
+    },
+    {
+      "path": "anadius-config-application-source/README.md",
+      "sha256": "af48536b8dc7167eae2ecad7f9d27d73432f7822ed049e767da8ad42ea8c6852"
+    },
+    {
+      "path": "anadius-config-application-source/consumer-audit.md",
+      "sha256": "e3a1a36d44f78a19e171a40c6276084c9f10355207a8b2bb835df66c28edfb88"
+    },
+    {
+      "path": "anadius-config-application-source/review.md",
+      "sha256": "2cb24e0bf9475dea104fdcacbe84043e3b5e66d8132e0dee53376aaaa02f2683"
+    },
+    {
+      "path": "anadius-config-defaults-source/README.md",
+      "sha256": "f9735922ac987c94ae642b84394ccab29509a16805aea65620a5d6b786c0edd3"
+    },
+    {
+      "path": "anadius-config-defaults-source/application-gap-audit.md",
+      "sha256": "a53fc9f18a91e926ac33b51472b0c8e06ef55d853bea78bbdb990566c199abd3"
+    },
+    {
+      "path": "anadius-config-defaults-source/architecture-review.md",
+      "sha256": "201d644190c6bed778473d091006f639f4b1cd8833295fb8c4e1fc2b3b9a1e48"
+    },
+    {
+      "path": "anadius-config-defaults-source/message-chain-gap-audit.md",
+      "sha256": "89b295936cf4fc6bcde5e9168e714f80b5283bf47cbc2b081f765452dc3b0bbe"
+    },
+    {
+      "path": "anadius-config-hash-source/README.md",
+      "sha256": "992f59224511be89995324201c543daf418f8e59cc03fdd898506847a8fb0804"
+    },
+    {
+      "path": "anadius-config-hash-source/review-application.md",
+      "sha256": "eea6b23878a4b4298e58683294dfc19967eb76b5df9a42d9b4a78ec27bb89841"
+    },
+    {
+      "path": "anadius-config-iteration-source/README.md",
+      "sha256": "65654b19e8bb27b06373a1e9dbf794e13f65675d11c16072237502acc40e2714"
+    },
+    {
+      "path": "anadius-config-iteration-source/architecture-review.md",
+      "sha256": "cc6146f627a3297a53b9363a571640487865e5cdbd1646d9f53931b29a8ab78e"
+    },
+    {
+      "path": "anadius-config-iteration-source/scope-iteration.md",
+      "sha256": "69d2e70e62201ada2f99e7520786bb143ecc5502d29b73fdd768d542fa51a9a3"
+    },
+    {
+      "path": "anadius-config-iteration-source/scope-thread-error.md",
+      "sha256": "503418d022bc0c6c688a694a88a97faaca968a5fc02293c754156a7621e061e8"
+    },
+    {
+      "path": "anadius-config-logging-source/README.md",
+      "sha256": "cc66ac15fb4985affb57e613878fe428a232be19c60295bb051b4b21e009ae9f"
+    },
+    {
+      "path": "anadius-config-logging-source/architecture-review.md",
+      "sha256": "965f6f95895eaacfa3371476604247ee42c6a58e87f261e90211b52451d331d4"
+    },
+    {
+      "path": "anadius-config-logging-source/resources-audit.md",
+      "sha256": "bbc4ea61c161b2c06af765388a1f2e50a330829a31ece4b512d60fe886b22e53"
+    },
+    {
+      "path": "anadius-config-order-source/README.md",
+      "sha256": "21d5c14bd691ab8e42b81e5704165014aced9fa18510f324a626b8fc79467f28"
+    },
+    {
+      "path": "anadius-config-order-source/review-pipeline.md",
+      "sha256": "b69597612e7f0f353883b535525d79f446ba4c0bd06c06054a6aba9859c8ceb3"
+    },
+    {
+      "path": "anadius-config-pipeline-source/README.md",
+      "sha256": "74cfb9b447a5ced645e04b06f102be88eb39c62b0356e0c64c618b3f98855590"
+    },
+    {
+      "path": "anadius-config-pipeline-source/file-pipeline-audit.md",
+      "sha256": "ae3acf4695fd984733481fd9ceb7e12cb6d82e1476761f9c843c9a88cf5c9b76"
+    },
+    {
+      "path": "anadius-config-pipeline-source/review.md",
+      "sha256": "e426f9c2ef481954c58435969e8ff87003718ca1299ace2ef12239549f094a09"
+    },
+    {
+      "path": "anadius-config-source/README.md",
+      "sha256": "73b3db9e89a5264eeaba3ef8868a415b74b6b2aa58adca5d50b64f3c3a5e9ec6"
+    },
+    {
+      "path": "anadius-config-startup-source/README.md",
+      "sha256": "59a9ea0063f60ba6870a29720695f1fcdf0dc25feb7c06648e91232040450daa"
+    },
+    {
+      "path": "anadius-config-startup-source/review.md",
+      "sha256": "debea5b9d50fb3bc67a001b37d2b7151f15bccc5380fdcb2e1a64116cc022021"
+    },
+    {
+      "path": "anadius-config-startup-source/startup-audit.md",
+      "sha256": "1da7e110124b38dc1cee021c13d3f2ce38aeaae591ff63ec58e57a55ff2fd5cd"
+    },
+    {
+      "path": "anadius-config-storage-source/README.md",
+      "sha256": "ba5c93e293788573b691f9d5603a094cf4500f61446425663a1e1660ec5d0282"
+    },
+    {
+      "path": "anadius-config-storage-source/architecture-review.md",
+      "sha256": "aecfd0997e88283ddf02a9bdbcc129be81ea50abda1c0f312b4b4571cef69d63"
+    },
+    {
+      "path": "anadius-config-storage-source/scope-filesystem.md",
+      "sha256": "bfc66003b196cf0de11b36c95062825a8b0e80000cb2ddac6b7a39292ea98ee7"
+    },
+    {
+      "path": "anadius-config-storage-source/scope-persistence.md",
+      "sha256": "8bf51c3c6cbde77af6ae33f9e6caf8da8cf0b5d1796782811f4f88dbb700deb5"
+    },
+    {
+      "path": "anadius-configuration-factory-source/README.md",
+      "sha256": "ef0fe29fe3af96e81884244ea856e5cf172da7f4f92bc37acd1186895caa7383"
+    },
+    {
+      "path": "anadius-configuration-factory-source/architecture-review.md",
+      "sha256": "c9caec27a682c1dd5d44ec9a333368462cefdcebcec27261c4f41f7f60afd803"
+    },
+    {
+      "path": "anadius-content-handlers-source/README.md",
+      "sha256": "1fab35da1619550e421903acaddda91a100469d24994126bbad57cc8261a874d"
+    },
+    {
+      "path": "anadius-crt-argv-bridge-source/README.md",
+      "sha256": "c649a7006d4aefccfa667d9b2594dba3ffac2e184544952188bc5a724d90b510"
+    },
+    {
+      "path": "anadius-crt-argv-parser-source/README.md",
+      "sha256": "4dc3c31524ebc80ef26f707504870a18a75ca63741365aa13768cbb14901bd3b"
+    },
+    {
+      "path": "anadius-crt-argv-source/README.md",
+      "sha256": "60e2ca68eb56203837cd82be0f13ef4c69fd69e71b71e27350ea8488e2be3336"
+    },
+    {
+      "path": "anadius-crt-atomic-native-source/README.md",
+      "sha256": "d272a79fa6551ca066a737be36e1f587c8236c20fd8839d5ee790ad8f73526c8"
+    },
+    {
+      "path": "anadius-crt-byteclass-source/README.md",
+      "sha256": "26d07e2fb8ba5aa2186f89047b1e87144dbbf4a03bc0fdd90d79017c1989d57c"
+    },
+    {
+      "path": "anadius-crt-cache-source/README.md",
+      "sha256": "9e136851dc200457dafe1d0c114a2acfe05e56eff1d3d5513d0604ac296f18b0"
+    },
+    {
+      "path": "anadius-crt-conversion-api-source/README.md",
+      "sha256": "21dbac5672abaa43d82b58c81e04ccf9228ccda2c5c3c255cf6f642b199a338a"
+    },
+    {
+      "path": "anadius-crt-conversion-bridge-source/README.md",
+      "sha256": "f461174404af48763f548880a7f6c57bed3f738f2a04b9b68d196f2433ff84a1"
+    },
+    {
+      "path": "anadius-crt-conversion-source/README.md",
+      "sha256": "d59f4e59ef665679f21b92d098cb64c007860d3209893d87cacf6f3d5025d4ad"
+    },
+    {
+      "path": "anadius-crt-counter-native-source/README.md",
+      "sha256": "b130c8bd65baa761bd32c9ab52fe970b968587c7d2004886680152135a340804"
+    },
+    {
+      "path": "anadius-crt-cpu-source/README.md",
+      "sha256": "248e503da7c1d719c61e3d707c4a2b7ed32b445d01a3278ad0734fb5f21a70b5"
+    },
+    {
+      "path": "anadius-crt-entry-source/README.md",
+      "sha256": "2a65eb080ea5f09be9cc5d8aeac03dd49b6f91b6900501561936d946a9f4d8a0"
+    },
+    {
+      "path": "anadius-crt-environment-cleanup-source/README.md",
+      "sha256": "df45ddb95e35b3b71b39f7102bcc7efd77a04ef85f0ee88b7fe9971c9f3d6f11"
+    },
+    {
+      "path": "anadius-crt-environment-source/README.md",
+      "sha256": "fc8d86cc62dae718f3a5fd510a001f1c1f191feabe5428e00e35c7f28c19b37a"
+    },
+    {
+      "path": "anadius-crt-error-source/README.md",
+      "sha256": "22b90e57d2a60b7e82360d0ed6b15df53d159db43e49e32862a27190479710bb"
+    },
+    {
+      "path": "anadius-crt-find-bridge-source/README.md",
+      "sha256": "ebcd76b77ebd0209ae5260a9231944893de59642ee619f3381b177409b7d6843"
+    },
+    {
+      "path": "anadius-crt-find-native-source/README.md",
+      "sha256": "53b1b8734de832c8cfc56d3a743cc7a4507628155250a7c9e83ac69808ad9fc0"
+    },
+    {
+      "path": "anadius-crt-fls-native-source/README.md",
+      "sha256": "7ed4ca215f62f143651dbee5ebe683cebdf2e9b112ac1be21b551caf3131e18a"
+    },
+    {
+      "path": "anadius-crt-glue-source/README.md",
+      "sha256": "ba1f454bb105d79e33d35a3af41ff3895dc90edd9b16d6686e8fd9f425cacab9"
+    },
+    {
+      "path": "anadius-crt-heap-native-bridge-source/README.md",
+      "sha256": "eea5d8fb178da198b5af8ea8aa3e23e43999017ea0ba7095ade564acab59f486"
+    },
+    {
+      "path": "anadius-crt-heap-native-source/README.md",
+      "sha256": "ff01248a4de4daadaf1d9afee8961679b21a23dd21b2cd92ff0a869ab1f1b035"
+    },
+    {
+      "path": "anadius-crt-heap-source/README.md",
+      "sha256": "39cec71ad31b7f1ffb868af93fd289efc6d047177bc8372cc25b352ae3cf7b1d"
+    },
+    {
+      "path": "anadius-crt-initial-locale-source/README.md",
+      "sha256": "b924d985aa33f1dd225984b269491e53db1c5766420322251477bc45c5b258fc"
+    },
+    {
+      "path": "anadius-crt-initial-multibyte-source/README.md",
+      "sha256": "a117b31c233b535c25a6a46e4d6841f2d4fa8bfed946c592b93cea8358950b35"
+    },
+    {
+      "path": "anadius-crt-initial-state-source/README.md",
+      "sha256": "d801f4ff806b54b453d4c4e7322ff5d76435043b57ecd457e47b93510a9600af"
+    },
+    {
+      "path": "anadius-crt-initializers-source/README.md",
+      "sha256": "2b071e6c4d7d8b4cff5a02b772d3bd69c67b0b2e8f4750251ffc4cf7c32ddc8a"
+    },
+    {
+      "path": "anadius-crt-invalid-source/README.md",
+      "sha256": "0165eb5441d3cc8866debbdb0ad407dc8347125689fa1581c4a90010e0926a83"
+    },
+    {
+      "path": "anadius-crt-lcmap-source/README.md",
+      "sha256": "bf92909c4ea0ed082efb71326708c4068e97a95b3fb1d8540fb52ada40f74a1c"
+    },
+    {
+      "path": "anadius-crt-lifecycle-callbacks-source/README.md",
+      "sha256": "2f03dee70ec8f1413f2028db7dacf630b5b6915a1cb7ba467655ab262b9fcf3a"
+    },
+    {
+      "path": "anadius-crt-lifecycle-callbacks-source/multibyte-shutdown-audit.md",
+      "sha256": "fcb2116aa888f38435f85cb5a851e3e96a4c233df3208ee3419ad09a025d78bd"
+    },
+    {
+      "path": "anadius-crt-locale-bridge-source/README.md",
+      "sha256": "4d87a4d113da5e9eb4a0c463c4f884b1555eb51b1a3a376b2d9b25270f7ec186"
+    },
+    {
+      "path": "anadius-crt-locale-free-source/README.md",
+      "sha256": "686073d5b1c50c68b8bbd4f97bf08807f8d7a8757b03aab14db65f01a7103d20"
+    },
+    {
+      "path": "anadius-crt-locale-names-source/README.md",
+      "sha256": "0f35bdb0268a0c1653e63eac3bc722e909c9c84c9a8c883e4e227dea3c35ab6a"
+    },
+    {
+      "path": "anadius-crt-locale-native-source/README.md",
+      "sha256": "40022db722cbc0fe1cd2278b8a54c8e99bfa081ca7daa9f3d26f9541155f66f7"
+    },
+    {
+      "path": "anadius-crt-locale-ref-source/README.md",
+      "sha256": "94a0cb84118fc577c263f9f90362776af855667007990bcf860527cc4a7d505a"
+    },
+    {
+      "path": "anadius-crt-locale-resource-bridge-source/README.md",
+      "sha256": "731f2b0f55b146374b74ac2798192d623f866c2f4cd6f9c55fb50837d2907393"
+    },
+    {
+      "path": "anadius-crt-locale-startup-source/README.md",
+      "sha256": "5b73f9ac124709d6863f5ee090d928f27daf46665455c19ee69032c08b7eb870"
+    },
+    {
+      "path": "anadius-crt-locale-startup-source/multibyte-startup-audit.md",
+      "sha256": "623d7782c455aae0caa3c60c46ceb7cc7e00b1a653aab6374320d88f6f17d618"
+    },
+    {
+      "path": "anadius-crt-locale-startup-source/static-startup-audit.md",
+      "sha256": "708395dcfe61bde3ff811f4298ed1136b33d5020014bd6c00a8f0a1f806ed7d1"
+    },
+    {
+      "path": "anadius-crt-locale-thread-source/README.md",
+      "sha256": "9bf91666f540dda42002ced2d36961641e1ae665de21fd2efc9a929bf9e21646"
+    },
+    {
+      "path": "anadius-crt-locale-update-source/README.md",
+      "sha256": "cbb352feab72598d733d2b8298cbbd56d480994c8eafa47834b7b475a90e4807"
+    },
+    {
+      "path": "anadius-crt-lock-native-source/README.md",
+      "sha256": "823bd48cb2d7cc00858085e7159f40e87f47aa405319cafb251e93baf11efa00"
+    },
+    {
+      "path": "anadius-crt-lock-source/README.md",
+      "sha256": "90de8222514ca154a74e8ad05cfae3daf1133d8aefbf3e8c770f4d255bf9817b"
+    },
+    {
+      "path": "anadius-crt-lowio-lifecycle-source/README.md",
+      "sha256": "56eb7d5bbbfd76eb14760bfce57e99b81328c37b695924f16211ae2a86c61da0"
+    },
+    {
+      "path": "anadius-crt-lowio-lifecycle-source/pair-bindings-audit.md",
+      "sha256": "e0e9dc14d883d4e361d8ffa060110fdcbfd52ce11515393dbb7c31cfbfe78efe"
+    },
+    {
+      "path": "anadius-crt-module-path-source/README.md",
+      "sha256": "6dc2aba374bb386bd7bee79788a2045110ba23c8959b64dc72c66a4c365c265f"
+    },
+    {
+      "path": "anadius-crt-multibyte-bridge-source/README.md",
+      "sha256": "413af0eae0aab7ff222ee5e091cd3b2aae3a9e0f901232f1cb9b150f846647fa"
+    },
+    {
+      "path": "anadius-crt-multibyte-builder-source/README.md",
+      "sha256": "43f28549226f6b119e64582f68ff8b97a8b45457ff6573035d4044432e70856f"
+    },
+    {
+      "path": "anadius-crt-multibyte-control-source/README.md",
+      "sha256": "a16a6099199c545ddce33d731e7f862db107b719d7044ba7292a4f91d70cac4c"
+    },
+    {
+      "path": "anadius-crt-multibyte-record-bridge-source/README.md",
+      "sha256": "2660dc5434d5b3f6c0b9e311a26823c2ec22aaf0cddc4c029752be180744cfa5"
+    },
+    {
+      "path": "anadius-crt-multibyte-support-source/README.md",
+      "sha256": "d31de826844b4f606b3411478d98155ecd8b52519ba8421a217e683c45130f81"
+    },
+    {
+      "path": "anadius-crt-multibyte-tables-source/README.md",
+      "sha256": "53be55039870da57300e560931df623856df81347fab70630a3f2707cb0dc4b5"
+    },
+    {
+      "path": "anadius-crt-nls-bridge-source/README.md",
+      "sha256": "a5ac2614993558e45cd0b1938b3e91d0e51838c58880459a74e3b53fce763c66"
+    },
+    {
+      "path": "anadius-crt-nls-dispatch-bridge-source/README.md",
+      "sha256": "75cda99d690433d8bf810e16d0ecf34229ef0a688546ace2e3aec2794ae7de64"
+    },
+    {
+      "path": "anadius-crt-nls-dispatch-native-source/README.md",
+      "sha256": "9b8af9c40781239376a31b6ceaa5fafb5a1f3adbac4034bfd0819d9d9713edf9"
+    },
+    {
+      "path": "anadius-crt-nls-dispatch-source/README.md",
+      "sha256": "e6ca6732f527a739a27790698f189412292e72c1646d857e78f5f1ccd215d2c1"
+    },
+    {
+      "path": "anadius-crt-nls-native-bridge-source/README.md",
+      "sha256": "cf814eedf1b1437da5e48eab9632cb832164b68e39d1aac1ca9617bb50969d37"
+    },
+    {
+      "path": "anadius-crt-nls-native-source/README.md",
+      "sha256": "3eafba9670de4445f33601ddfd79ca12b6a911c0b5560dc8a5139a4cc2712ae5"
+    },
+    {
+      "path": "anadius-crt-onexit-source/README.md",
+      "sha256": "58bb1b9e3dc40f175995d80a36daf2339ec83b0d2ca518b7dee858ac106c6207"
+    },
+    {
+      "path": "anadius-crt-pair-bindings-source/README.md",
+      "sha256": "962653f1e5e7ce0262def3b8b98f4d2175c30331bdd8a9a4abf074aa374b2bdb"
+    },
+    {
+      "path": "anadius-crt-pair-bindings-source/design-audit.md",
+      "sha256": "3b8c1ed27ca998835d0763c8dd515520378b8509c4efb73e44be57dc6bc47c80"
+    },
+    {
+      "path": "anadius-crt-pair-leaves-source/README.md",
+      "sha256": "422ca94aad519823078b36cd409c9cec81e32ed8726013d107a055ec3f1f0fbb"
+    },
+    {
+      "path": "anadius-crt-ptd-data-source/README.md",
+      "sha256": "9ae9d5b87102367bad9431e8b36aec5aca8d7ea59fc3f08c8a0f49127b644e87"
+    },
+    {
+      "path": "anadius-crt-ptd-source/README.md",
+      "sha256": "ed6f77bb685b0ab30e00804b01e932e06fe3b6fea5bdc0b31c86732973da530b"
+    },
+    {
+      "path": "anadius-crt-realloc-source/README.md",
+      "sha256": "842bf0e213177fe7f6192c255e5c80842c980ddf0ea00303205baafc8a3a76be"
+    },
+    {
+      "path": "anadius-crt-recalloc-bridge-source/README.md",
+      "sha256": "e95c44169a007167afc960054ae5e4ab056d09172b1b4ffbb304cbf1b657d93e"
+    },
+    {
+      "path": "anadius-crt-recalloc-source/README.md",
+      "sha256": "eb998e5903afb71e029500ab5aef37e6f3aa266e31262b57b32060c27b19f71d"
+    },
+    {
+      "path": "anadius-crt-runtime-source/README.md",
+      "sha256": "3d67c5e0d7cbed2a05eac47440e4fc2008d83e010bd8084411e1c575b96f3c40"
+    },
+    {
+      "path": "anadius-crt-sort-source/README.md",
+      "sha256": "1ad680b7a29e62bad7e888da204e58006745250216ec79c269e86bf35bad8f81"
+    },
+    {
+      "path": "anadius-crt-startup-bridge-source/README.md",
+      "sha256": "4b6e924a2a0d7526dd343700a8203d3ac97f880e05321ce930936ff605dfd6d9"
+    },
+    {
+      "path": "anadius-crt-string-type-source/README.md",
+      "sha256": "4dbf48276c7e037cab8e0ce533d27db00f300ba4022b9c727857f2e7142ceefe"
+    },
+    {
+      "path": "anadius-crt-support-source/README.md",
+      "sha256": "112e4983e2c2f8db6bc5670449004ef0890444c4c27c8f68beb4b510ffe7eab2"
+    },
+    {
+      "path": "anadius-crt-sync-bridge-source/README.md",
+      "sha256": "2aac42169f3f74d576879946c2d3f0969fb5aff3e002fe4dfdc125a8505a48cb"
+    },
+    {
+      "path": "anadius-crt-termination-source/README.md",
+      "sha256": "ba9858266f98ef79250406dc444b916e91ec7fae6374a4187053c685d54dde10"
+    },
+    {
+      "path": "anadius-crt-wildcard-search-source/README.md",
+      "sha256": "19e5293cf87854420df284bb6c46166fddf77c448e4ad6485e911665287b04d5"
+    },
+    {
+      "path": "anadius-crt-wildcard-source/README.md",
+      "sha256": "88f6af53a4328181619113deae93e7ed08f6b3bbd880390a7c81f7856b3851f2"
+    },
+    {
+      "path": "anadius-crt-wildcard-storage-source/README.md",
+      "sha256": "6f1e42838cacda9e73083680fa24acd6dbfa8165524355ba36c849b0ef9740db"
+    },
+    {
+      "path": "anadius-crypto-source/README.md",
+      "sha256": "0e085c3c4b3518fead9dd091dfbafdec85d61d8623218987d85c18cd7618af50"
+    },
+    {
+      "path": "anadius-dispatch-source/README.md",
+      "sha256": "4748246f35b7bb700d5145f44aeafc73b8449ab1b1deea222e3ff830e9708c3f"
+    },
+    {
+      "path": "anadius-encoding-source/README.md",
+      "sha256": "9e9f8719c639aed60622f4286767d8a55c2e2d1b47d4577850c27bca1171331b"
+    },
+    {
+      "path": "anadius-event-queue-source/README.md",
+      "sha256": "c7265816f0e9a05f690ea0c245b593d7870421ccec053717c59f6e6d386682bd"
+    },
+    {
+      "path": "anadius-event-queue-source/flow-audit.md",
+      "sha256": "b4c6d1bf9586d203ed0e07dcdd9fafd62c610067309484d4d3096b1e4678b69f"
+    },
+    {
+      "path": "anadius-event-queue-source/review.md",
+      "sha256": "b5b5f96b94a3891e263209d4aab2eedd6fa909a15aa065c6ad8e7fd528a519fd"
+    },
+    {
+      "path": "anadius-execution-source/README.md",
+      "sha256": "591a341b17647a0b116369fbeadbf943689c917e148ffd66e0e78753d04be99d"
+    },
+    {
+      "path": "anadius-file-source/README.md",
+      "sha256": "d3be9f356436a863c270480e4e97ff688c1e1c80f5fa00f3005d7a44d6c965b4"
+    },
+    {
+      "path": "anadius-file-source/io-evidence.md",
+      "sha256": "7bca704b203dbed30c1d35ac5104690ee4323ac9d70f01828b054c6f78b9f023"
+    },
+    {
+      "path": "anadius-foreign-callback-source/README.md",
+      "sha256": "69fa81cf595ef5f43a722956b9dd6d4493e20ecc83e2570e67b41e0434c4cfa1"
+    },
+    {
+      "path": "anadius-foreign-callback-source/architecture-review.md",
+      "sha256": "c1451a69cdbe9b165b19b821f86b748d7aef507d53786a4602901457de37f661"
+    },
+    {
+      "path": "anadius-foreign-callback-source/ptd-review.md",
+      "sha256": "87bba9bb27473415ff9ae2ef4a2646f0ab9b08b259c58c0076f531ed0cd8d58d"
+    },
+    {
+      "path": "anadius-handlers-source/README.md",
+      "sha256": "0e40cfe72d73d671b50fb9ba88717ed0e2dbd56d2a71c03609e3d470b83d5bb0"
+    },
+    {
+      "path": "anadius-hash-source/README.md",
+      "sha256": "88107f370c0fb6d0549a2bc058969ee5ef5a768712f96a8fb1b6a9fb2515a16e"
+    },
+    {
+      "path": "anadius-host-callbacks-source/README.md",
+      "sha256": "3b948eb6b0f4fa4b1642bade18f05c988c4e97d1f852c9fa4729dfa2aee46857"
+    },
+    {
+      "path": "anadius-host-init-source/README.md",
+      "sha256": "7ed7bab2855bc8d577839b774a87e065f40cd7e686b8d61061b94422fd6d9da4"
+    },
+    {
+      "path": "anadius-host-platform-source/README.md",
+      "sha256": "d3ed136336e1fd1eea779d81894afecee1fce041063b566cd1fed3b82deb6958"
+    },
+    {
+      "path": "anadius-host-platform-source/architecture-review.md",
+      "sha256": "82b158cadc8edc93e018191a8a9e6f610a3a0f39c5e0fb24a071205ca19f5555"
+    },
+    {
+      "path": "anadius-io-memory-source/README.md",
+      "sha256": "9237baab587eb5d4ddfc0a8ac5974365f5bbbcf916c68d6bc57eff8ebdfd2b00"
+    },
+    {
+      "path": "anadius-io-memory-source/architecture-review.md",
+      "sha256": "e0392ef5f5bb6d2462889ca6c0f7495d99756d222093cd7490f11ba18c728039"
+    },
+    {
+      "path": "anadius-libraries-source/README.md",
+      "sha256": "c104a86dfa102d836fb6b2d0d103eaac8b44c2048a8594d7933c58189205d50b"
+    },
+    {
+      "path": "anadius-library-effects-source/README.md",
+      "sha256": "d0e463bcb1a1fc0d7972ee7ff2ef37bfc1379da138d897cee3eba48eea345607"
+    },
+    {
+      "path": "anadius-library-effects-source/architecture-review.md",
+      "sha256": "49057e8753e895cf39d8ae8c2fc822fc6261994698d9a24736692cabe7eef940"
+    },
+    {
+      "path": "anadius-license-source/README.md",
+      "sha256": "d8a7bdd40da4aa6aab972a4ec3858106a668737b13d172c26e00d1d45d0aa195"
+    },
+    {
+      "path": "anadius-messages-source/README.md",
+      "sha256": "276ac34bb31f01d7686e1a87a616dec1a0287509c544d005de35c0bf37966074"
+    },
+    {
+      "path": "anadius-misc-handlers-source/README.md",
+      "sha256": "2285e9d438a996e7fe3cc9b55d6104497f9ea3019d7ae9842c4e7683d8d69eb7"
+    },
+    {
+      "path": "anadius-misc-handlers-source/xml-printer-review.md",
+      "sha256": "cd4d82d5fc78db0636b75a7548f6448c7555cb17facc953982ee412104e97c3a"
+    },
+    {
+      "path": "anadius-module-reference-source/README.md",
+      "sha256": "890869f1bf87568b3674821f37c689e68b692c193a8ab48df5ad4192e4f92257"
+    },
+    {
+      "path": "anadius-native-context-source/README.md",
+      "sha256": "2a32be8c8f5b20c04b222a62b6db31b764bafe559661d947e68de69f3014ab80"
+    },
+    {
+      "path": "anadius-native-context-source/architecture-review.md",
+      "sha256": "a44f93765ddfee454ae762a1215a0947f3931b055063d9cae591ce008088dba4"
+    },
+    {
+      "path": "anadius-native-profile-source/README.md",
+      "sha256": "dd711a28cd0e3886c28f31c757e88fcb3f2cca43855b80a227c4970d91c83f94"
+    },
+    {
+      "path": "anadius-native-profile-source/architecture-review.md",
+      "sha256": "2a1cdf5a8ee846f63dad3b8604c53128745ddaf76e5e6b341f1b3dd5dbc6dcd5"
+    },
+    {
+      "path": "anadius-native-source/README.md",
+      "sha256": "e52b1896a640eb53df9f5f50a6d40d7a4f9aef9b563793c6a22a51664d528075"
+    },
+    {
+      "path": "anadius-network-hook-source/README.md",
+      "sha256": "df4ed0fb4975b3a71cf2ee2a0b604cf2bd0fc15d31e961cd3137508b0604c479"
+    },
+    {
+      "path": "anadius-online-factory-source/README.md",
+      "sha256": "4482ce4bad17dfb986c2f75c5f772631a4afa590f0a546abbf21f77b61b3a221"
+    },
+    {
+      "path": "anadius-online-factory-source/architecture-review.md",
+      "sha256": "1dc9d91df381809b7b428cf14a5c5f30fb9b3b2722dbab2e653e90fa5899e9d7"
+    },
+    {
+      "path": "anadius-online-object-source/README.md",
+      "sha256": "9629e1ec0efd6dbfe3c148cba43cc4c01c9932fc8f2d162ea07878a43375aba1"
+    },
+    {
+      "path": "anadius-online-object-source/architecture-review.md",
+      "sha256": "02ef66e0438ae7c6755c5320a72c16a13feb327ca306bd4ec23488578c5e10d7"
+    },
+    {
+      "path": "anadius-online-platform-source/README.md",
+      "sha256": "1f4e404922573fa3a4b47e40b66b624778d38fca683d1a757fd5bb3d151f3f94"
+    },
+    {
+      "path": "anadius-online-platform-source/architecture-review.md",
+      "sha256": "5d48d737be73afa4bf6659bd83e11c8739c7078ad817903b020da16f5438b100"
+    },
+    {
+      "path": "anadius-online-platform-source/foreign-call-audit.md",
+      "sha256": "99260cdbaf184a04e4580d03c7c35ca824d843fa2d158efb43c55216576f6cc5"
+    },
+    {
+      "path": "anadius-online-query-source/README.md",
+      "sha256": "546e67b01b4acfce7d1a8889bb30ae733a53090fb0f5bc7ea960571d5bf65af2"
+    },
+    {
+      "path": "anadius-online-query-source/architecture-review.md",
+      "sha256": "0b430740690c0182430857d91be94f9e2c41371ec69b8a2220c1fefec0bbf88f"
+    },
+    {
+      "path": "anadius-online-source/README.md",
+      "sha256": "d9f0acb77ce8fe3a1a4082e53f0c12db446f9cb209c9c5bcb980d261b65a713e"
+    },
+    {
+      "path": "anadius-online-version-source/README.md",
+      "sha256": "b7cce9b43bd3c20aebebf30ff3d4f7dd6fbac2dc9f303b964c9cdaf54ab50cb5"
+    },
+    {
+      "path": "anadius-online-version-source/architecture-review.md",
+      "sha256": "a54ce37a82a7f8f4307b92772fe62f8cc5fec072dd5048b5ec9d949411d91759"
+    },
+    {
+      "path": "anadius-original-checkpoint-source/README.md",
+      "sha256": "770526d216e3cef2d2c42148ab7f2c2fb0bddb4ffe1155deafd5bd6e9fe44480"
+    },
+    {
+      "path": "anadius-original-checkpoint-source/architecture-review.md",
+      "sha256": "a58452cf4c8c5d79c25402195d12a069b07b6a94395ede291c0262531cf1b618"
+    },
+    {
+      "path": "anadius-original-provider-source/README.md",
+      "sha256": "6b42eebbfc0a00f7aeb5db1d74acd1677ba225a9d43f2da937b96966649bda86"
+    },
+    {
+      "path": "anadius-original-provider-source/architecture-review.md",
+      "sha256": "7bcfaf6d40a52d92606b5a2898aa8e94828544501b4d01ff23b8955f723d2604"
+    },
+    {
+      "path": "anadius-owned-deque-source/README.md",
+      "sha256": "aefc760c85b7703651cf2da8375ac88e0bf8501fb77b9717b70cb7bf376d67be"
+    },
+    {
+      "path": "anadius-owned-deque-source/architecture-review.md",
+      "sha256": "af8481bfe1101a308d80a94273f4a99150b91dd1c4fd17872883c7fc70b766f8"
+    },
+    {
+      "path": "anadius-owned-environment-source/README.md",
+      "sha256": "aac6e46e82a311cc2ccf0e682742e6e4545dbc08e2863ef9f1297dc42f3943f8"
+    },
+    {
+      "path": "anadius-owned-environment-source/architecture-review.md",
+      "sha256": "6384bf4fcf9524b76d1f207007dfde7663876c519de4d27d16f231c9a4ff0330"
+    },
+    {
+      "path": "anadius-owned-jobs-source/README.md",
+      "sha256": "ce8fef60a4203085482eb8654898cbe50b99c141b3c9642e49b132d9bb126c57"
+    },
+    {
+      "path": "anadius-owned-jobs-source/architecture-review.md",
+      "sha256": "5725a4a30b3bf2b10b3f17dd3b5b7157fc75cdd4460c2a977bed1024bd332add"
+    },
+    {
+      "path": "anadius-owned-server-source/README.md",
+      "sha256": "3c21284e501d65771bd3c78944d8a119cafdf56bab9bc01ac762ce256ec517fc"
+    },
+    {
+      "path": "anadius-owned-server-source/architecture-review.md",
+      "sha256": "c43a2f8eb0585e525316df917a130aa289c1ee04345b958e26dcd3bb88d7a02e"
+    },
+    {
+      "path": "anadius-parser-source/README.md",
+      "sha256": "06082f2656bcc86097b67e5ed265713992aec221ac3611fbb497d485858ef149"
+    },
+    {
+      "path": "anadius-path-source/README.md",
+      "sha256": "680cfab2e0f1889916cbc214f937ffb0bcfcbbd843b0b45b0c3684c967d19002"
+    },
+    {
+      "path": "anadius-permanent-errors-source/README.md",
+      "sha256": "cadf4daca239dced2ef264463689e3c0ca180d7e07e0db8fb85ecf7ec52dc306"
+    },
+    {
+      "path": "anadius-pre-unload-source/README.md",
+      "sha256": "777e3b404b3d7230c19d1cac0c7a90455afadbb6bb23d0dbcd66de2a478bc67a"
+    },
+    {
+      "path": "anadius-registry-source/README.md",
+      "sha256": "ddc65f2c14720251899bb9d33c62f1af00b64853c205ca890876d0e0c2b40e93"
+    },
+    {
+      "path": "anadius-server-runtime-source/README.md",
+      "sha256": "725c7fd2d4f1b537dc34f1304f93fbeb6df7fb7dbdb65e74119e62a6f5e8fb2c"
+    },
+    {
+      "path": "anadius-server-runtime-source/architecture-review.md",
+      "sha256": "748773c643cecbb492899ef00c6d4adb215cd7bad09d279c50cd15843dde77b8"
+    },
+    {
+      "path": "anadius-server-source/README.md",
+      "sha256": "a41dff22ac2687db649aea6764c9304c58945c20702500c465eae371c55d28c7"
+    },
+    {
+      "path": "anadius-services-completion-source/README.md",
+      "sha256": "3541199da36b9ecab31a712ef1540835a2cb2d741ab7be1a2a26c6d0a76c10bb"
+    },
+    {
+      "path": "anadius-services-completion-source/architecture-review.md",
+      "sha256": "569a930dd9967a61bcd510c3b88a1c34c9c8d8585423c4764010921256e3739c"
+    },
+    {
+      "path": "anadius-services-completion-source/scope-completion.md",
+      "sha256": "e950e9dca7205bee49733445e51fa1fef7250b7c56b439e763d7578dcfb4ba8e"
+    },
+    {
+      "path": "anadius-services-completion-source/scope-exit-wait.md",
+      "sha256": "4866b1a3e009561688040fac0bcad61337371ba1421add79b979a763076837d1"
+    },
+    {
+      "path": "anadius-services-factory-source/README.md",
+      "sha256": "6a699a0c0b9bf934ca60dc8f95b81c5ef9a0d78591296fa65b69404caa8c8e72"
+    },
+    {
+      "path": "anadius-services-factory-source/architecture-review.md",
+      "sha256": "7fa532bb88b2d2d904e3cb958d00460ff379cfd0291f367ff3d0da453e37188e"
+    },
+    {
+      "path": "anadius-session-dispose-source/README.md",
+      "sha256": "fac5da5655f7d5ec08010e362f8eddddde899207a69dd1e0edce021d4576826b"
+    },
+    {
+      "path": "anadius-session-dispose-source/architecture-review.md",
+      "sha256": "499bec6c2419721f55ea91c518293844e06e01688f4e0c51414d9cd134b13919"
+    },
+    {
+      "path": "anadius-session-dispose-source/source-audit.md",
+      "sha256": "32f33ad17e3abb6dcb7a4b933a1d10ec3df450c0c5ce9eea7d29224f15920e58"
+    },
+    {
+      "path": "anadius-session-flow-source/README.md",
+      "sha256": "9028be635428d64131e7f7a2167e9b29d653690186e6644e6e6a891063df1b8a"
+    },
+    {
+      "path": "anadius-session-flow-source/architecture-review.md",
+      "sha256": "6ac8c946113a2131b29449c7be7c55b76bd03f3016b91b19e1f2abc5dd8165de"
+    },
+    {
+      "path": "anadius-session-memory-source/README.md",
+      "sha256": "2ea1a08695f153502fd46bbeb1e04e664fe13506e225d7ff194ba24ce95b0aaf"
+    },
+    {
+      "path": "anadius-session-memory-source/architecture-review.md",
+      "sha256": "fc9643271411015d0e120142bcf27abcc1261338174955b294003f32f3931be9"
+    },
+    {
+      "path": "anadius-session-owner-source/README.md",
+      "sha256": "e3003eea4ac9ae9f1ad84ee1b35e1d44306be3df453a261337062321f4af3161"
+    },
+    {
+      "path": "anadius-session-owner-source/architecture-review.md",
+      "sha256": "c564077362250046d7eaf8ee5696db19bfeaaf6aa3fb0f985a6346f967b5d39e"
+    },
+    {
+      "path": "anadius-session-owner-source/source-audit.md",
+      "sha256": "54a146460657bc667a50d7a26ba22e1b40ec8cae801f6cd7dbf4e44e971abecd"
+    },
+    {
+      "path": "anadius-session-policy-source/README.md",
+      "sha256": "db722e16863503ed2833dc25f5c43534a8de9137b849c6b51ba98feff4524708"
+    },
+    {
+      "path": "anadius-session-policy-source/architecture-review.md",
+      "sha256": "12334838955a3582cfa2d1932888fa9ba8d861208057dcd458d45c1cc55e101e"
+    },
+    {
+      "path": "anadius-session-profile-source/README.md",
+      "sha256": "dd905d07cced28fca47af51bc25e9b0a1c98f4b2a24a59b89f794288a0943e85"
+    },
+    {
+      "path": "anadius-session-profile-source/architecture-review.md",
+      "sha256": "6374e9c89fd198756b0714729ef5881786f692d8a836beaa4e15ed966170b69a"
+    },
+    {
+      "path": "anadius-session-source/README.md",
+      "sha256": "0a023d92e7becf593cfd489b817dd69c95aa6d9f589fbcecf39ab4f1fdb29247"
+    },
+    {
+      "path": "anadius-session-source/flow-audit.md",
+      "sha256": "e14630a73b4501d9070e9570dc6ac015a6284d39217d0c240a6129da0082653d"
+    },
+    {
+      "path": "anadius-session-source/review.md",
+      "sha256": "bd9d93c9a14a68d3617c01832c6f384c88aca9cf897bf7ae83c315f28d8abacd"
+    },
+    {
+      "path": "anadius-session-stop-source/README.md",
+      "sha256": "0ff430e44c97336639dbf62497c39611d3b177e93ae70e070d8379206f71dca4"
+    },
+    {
+      "path": "anadius-session-stop-source/architecture-review.md",
+      "sha256": "91cf8c5148513c0458cd7e53c292120d055479e57b735e04112e9994b8cba770"
+    },
+    {
+      "path": "anadius-shared-log-source/README.md",
+      "sha256": "b3eaf92942f503e6adb7f9c87c1f2701f274e342f8b137742e90bd8c5be6473a"
+    },
+    {
+      "path": "anadius-shared-log-source/architecture-review.md",
+      "sha256": "35f3b47179453f6eca57fecf0ed071a9d2764536caeb106c6031c35f98f3ee1b"
+    },
+    {
+      "path": "anadius-socket-move-source/README.md",
+      "sha256": "5f827e860be52561295bab0f761b9c145a56da00e5c3747e72b151de47d6ad04"
+    },
+    {
+      "path": "anadius-socket-move-source/architecture-review.md",
+      "sha256": "29bd5e549a556dc6d86bef9ad001a4128b305c35fa1c2feb2305eb878630ffec"
+    },
+    {
+      "path": "anadius-socket-move-source/source-audit.md",
+      "sha256": "18a6a09d9c9a05e9a8f7bd08380f9938fd78fa88d9edd03c4186c8c686038669"
+    },
+    {
+      "path": "anadius-socket-source/README.md",
+      "sha256": "0dadab0132d2d07355eee14d7e4d8374c46b535422b4d3c0e99d6a965a7c391b"
+    },
+    {
+      "path": "anadius-socket-source/acceptor-flow-audit.md",
+      "sha256": "7dbccc3cdef3539b1e8d373dd587b465ed2729e64eaebe0da98e7cc6dcb1d7bc"
+    },
+    {
+      "path": "anadius-socket-source/acceptor-review.md",
+      "sha256": "ae9599a16a04a3e344ae33e2aac4a1c1761f935599c365534da9e40f5352a12a"
+    },
+    {
+      "path": "anadius-socket-source/append-growth-flow-audit.md",
+      "sha256": "9622b9c4941a54ad6c43faed195ce2db27a9067377174ce1c5bb40037f0c806f"
+    },
+    {
+      "path": "anadius-socket-source/async-receive-flow-audit.md",
+      "sha256": "e131dacd2eea8893c70f2ec89af5cbaae46fa8920b64f8bf5e7bba94f91cec89"
+    },
+    {
+      "path": "anadius-socket-source/cancellation-flow-audit.md",
+      "sha256": "ea45b0992a1a00833468bea4a9235c1b431cf03be279333eefa0eeac9573aac4"
+    },
+    {
+      "path": "anadius-socket-source/cancellation-review.md",
+      "sha256": "d9bd9fec5bb7cf5d20aece4fa301e8cd7c600464522d761e5650d765abfeee05"
+    },
+    {
+      "path": "anadius-socket-source/cipher-session-flow-audit.md",
+      "sha256": "f01b91780ae0928e340c6c3f0e33d9c534fdbfd02ad7b1749563a01720058f75"
+    },
+    {
+      "path": "anadius-socket-source/close-flow-audit.md",
+      "sha256": "baccec2ba0baea66db77a61dc79a19506cee4b86e9154c67e1d6f0e6a76e04d5"
+    },
+    {
+      "path": "anadius-socket-source/close-review.md",
+      "sha256": "d64ddb7e6c6290a79d8f097f958c2d7778f72338a728080b1b70eb1478156db6"
+    },
+    {
+      "path": "anadius-socket-source/completion-dispatcher-flow-audit.md",
+      "sha256": "db9748737e9c535a88e22b88573f9757f39afcd7c07c99619ae866514aa76f8f"
+    },
+    {
+      "path": "anadius-socket-source/completion-dispatcher-review.md",
+      "sha256": "4b61ebcd0e5620ce0a024906014a53555a990bbe716cab35e5932de443eb0d53"
+    },
+    {
+      "path": "anadius-socket-source/composed-read-flow-audit.md",
+      "sha256": "e36796e3a8ead00e49ac613afa6fdbb239687652bdecf78b9683924a7c1a79f8"
+    },
+    {
+      "path": "anadius-socket-source/composed-write-flow-audit.md",
+      "sha256": "57aaa31c2154dc093cbd1697a144d223e170c8af648f968c6d91a14ee732b38d"
+    },
+    {
+      "path": "anadius-socket-source/composed-write-review.md",
+      "sha256": "be6eb21e18bec9bfa33ba0906af363650a76d763dc5e0fa9114c1c8acc753445"
+    },
+    {
+      "path": "anadius-socket-source/document-clear-flow-audit.md",
+      "sha256": "33fd087118c0b340919feffebdf4aa607532c1d91a2f8ad5aaf049ac7e391dcd"
+    },
+    {
+      "path": "anadius-socket-source/document-error-flow-audit.md",
+      "sha256": "149a855919c7d24d7bf945a209bf2f186c92637d920cd18b62fb883f3f22cda0"
+    },
+    {
+      "path": "anadius-socket-source/environment-constructor-flow-audit.md",
+      "sha256": "82252fba410e6f40c2e2ad2351fd1a4e3956819c0c7ef07b0e6ce4e0903ecad2"
+    },
+    {
+      "path": "anadius-socket-source/environment-constructor-review.md",
+      "sha256": "746c55d78ff454e98053a15b436d58efc2e6d7eebd6bd94be5568d504a682b3e"
+    },
+    {
+      "path": "anadius-socket-source/flow-audit.md",
+      "sha256": "0450cbc023152e66e5a80c83919b0d61d6e0384160e0fec2a2d0d68f8ddca742"
+    },
+    {
+      "path": "anadius-socket-source/frame-read-flow-audit.md",
+      "sha256": "c6fb8ab5de765560cc404dd857188038677681e2474eaaac5f6e35622ec3f1b4"
+    },
+    {
+      "path": "anadius-socket-source/handler-dispatch-flow-audit.md",
+      "sha256": "7e508f122b2dbc8459b0330a28187d3608d8575e5f979fcfafdac7b67f79b1e0"
+    },
+    {
+      "path": "anadius-socket-source/handler-dispatch-review.md",
+      "sha256": "0c71ca358b00004b09aa681502fb3eab4d16f379b8c4c906d201e1711a45240c"
+    },
+    {
+      "path": "anadius-socket-source/io-completion-flow-audit.md",
+      "sha256": "77cf229537e6f5281e5d8b6d6d61748bd99bfc5af2289380d3cec7af34aa8f8e"
+    },
+    {
+      "path": "anadius-socket-source/io-completion-review.md",
+      "sha256": "2aae92dd0c4c24a27c23d62f31d936881627208e54c3c3cea26cc1d17c6c5d94"
+    },
+    {
+      "path": "anadius-socket-source/iocp-constructor-flow-audit.md",
+      "sha256": "b166dbe959db6090589dd84e0cb76d74399d48e39749623a2f64bec6157c5b8b"
+    },
+    {
+      "path": "anadius-socket-source/iocp-constructor-review.md",
+      "sha256": "c0f7bd652d672f1d20806ae46f5f032aabfc396bcabea95da093c139152e4ba2"
+    },
+    {
+      "path": "anadius-socket-source/lifecycle-flow-audit.md",
+      "sha256": "130335a16738b9d30c7e0ac36842202020f622cfe4be6c40b3f60d31f267eeb5"
+    },
+    {
+      "path": "anadius-socket-source/lifecycle-review.md",
+      "sha256": "95900060ef39a5cfe172de08457b52919a68301106f19f61efa1586793a4e555"
+    },
+    {
+      "path": "anadius-socket-source/message-core-bridge-flow-audit.md",
+      "sha256": "2216fe87b73b85d708167cd216262cb8b950921dc806a423f3b2789f3d02112b"
+    },
+    {
+      "path": "anadius-socket-source/message-dispatch-flow-audit.md",
+      "sha256": "1656d7f0a92c6d50d895740207574b3731c8d702b25f23434111b7f4d9da6abb"
+    },
+    {
+      "path": "anadius-socket-source/native-dispatch-flow-audit.md",
+      "sha256": "f21a54147d83497a9883f8e10c07003dd6b483c32bfe6a7ffd34f5c01e217d91"
+    },
+    {
+      "path": "anadius-socket-source/native-document-flow-audit.md",
+      "sha256": "32878e4d443286f4784f89b368351364aa4c7f452342cfdf9d300beae6b55aa4"
+    },
+    {
+      "path": "anadius-socket-source/native-message-flow-audit.md",
+      "sha256": "d80bf5e3cee7b1828872804c2f2498ed8b31e98384ae804bd5053ee8be6cd74c"
+    },
+    {
+      "path": "anadius-socket-source/node-base-flow-audit.md",
+      "sha256": "dedcf6756802de070bbc02591b8ccc4b0275f663811e9ee513cab6dc51933432"
+    },
+    {
+      "path": "anadius-socket-source/node-constructors-flow-audit.md",
+      "sha256": "504db6a2119d2d4887e5d9b27077fb7a5daa89741f76ebbbccef65c57eee89ff"
+    },
+    {
+      "path": "anadius-socket-source/node-delete-flow-audit.md",
+      "sha256": "ab3fce53bb79bd0ac077b4ea104ea3121524e98bffbb33b408646e661fec61a9"
+    },
+    {
+      "path": "anadius-socket-source/node-identify-flow-audit.md",
+      "sha256": "eba8cf608c57e050e3b9893a93f344e46644d451409c80a3588facd4f0e760b7"
+    },
+    {
+      "path": "anadius-socket-source/node-insertion-flow-audit.md",
+      "sha256": "6bdaa06ed651116d14f8fc0ace5591e8c3da5ea45411bf4d0a6ae17dd9b84a51"
+    },
+    {
+      "path": "anadius-socket-source/node-parse-flow-audit.md",
+      "sha256": "80c1baaf8bef8a3d7dffa33a177edf7f85430aceb829f652dee1feef1d485cb5"
+    },
+    {
+      "path": "anadius-socket-source/node-string-flow-audit.md",
+      "sha256": "3f3157321d3fccde57054c7eb6d9980c97515b1ab21e5145a89506e16c0c4414"
+    },
+    {
+      "path": "anadius-socket-source/owned-response-flow-audit.md",
+      "sha256": "f1b9d7048254b271260a78ca11153c4bac8d1573f964a43e13038f4f6d2c6fdc"
+    },
+    {
+      "path": "anadius-socket-source/parse-entry-flow-audit.md",
+      "sha256": "7910f993920ccb4bb482125eb6eb1a5f867b89d3f7d423f51186d9573ac6ef62"
+    },
+    {
+      "path": "anadius-socket-source/pool-allocation-flow-audit.md",
+      "sha256": "44bc5cb905115bef0f8ee0639e79777094ea7b0e08958ca882be6cb62957b6c2"
+    },
+    {
+      "path": "anadius-socket-source/pool-append-flow-audit.md",
+      "sha256": "c70dfec73108c9b24c7026f9f2c66703788ff5c44a70d4715b91b45caf84f69c"
+    },
+    {
+      "path": "anadius-socket-source/pool-clear-flow-audit.md",
+      "sha256": "c10e71defeffb80cab39c4c051d0cf3f0fc992614a891baa70ab7ca4b707e206"
+    },
+    {
+      "path": "anadius-socket-source/pool-destruct-flow-audit.md",
+      "sha256": "d5a2b651aeaa9e4fa8b95be51eb19091bb3bd9fd4505eff53822c9f198381833"
+    },
+    {
+      "path": "anadius-socket-source/pool-release-flow-audit.md",
+      "sha256": "c37beea315e28decdaeeb6ef1ce08122a0ffaa535f9a8e74eddb6179d6ab3123"
+    },
+    {
+      "path": "anadius-socket-source/posted-operation-flow-audit.md",
+      "sha256": "686f4c03d848aecc358b2e75a8fbc8b1d6a919e7ed3bb799523f5e7ebf97c51b"
+    },
+    {
+      "path": "anadius-socket-source/posted-operation-review.md",
+      "sha256": "1ef5459847f9e4ec741bb077d1b0576c7937901d7a65284db58ef773324c583e"
+    },
+    {
+      "path": "anadius-socket-source/prefix-cipher-flow-audit.md",
+      "sha256": "18e7eada0ff0c6a1965f7c955dfc2ca80e269300cc6cb36090f1661ce9a03684"
+    },
+    {
+      "path": "anadius-socket-source/queued-write-flow-audit.md",
+      "sha256": "3546600d85795f557565ae97db61dd8b2dff520430bbdc9c3ec0a65a55db9324"
+    },
+    {
+      "path": "anadius-socket-source/queued-write-review.md",
+      "sha256": "1e3628ff1194e32db868903b7c77eadd8cf45d2f41a0c4ac782b6be3af59a45b"
+    },
+    {
+      "path": "anadius-socket-source/receive-buffer-flow-audit.md",
+      "sha256": "7bc8509599c612a2d00734a417d0f450457f32a7019bba2ddd14090682428180"
+    },
+    {
+      "path": "anadius-socket-source/recycle-flow-audit.md",
+      "sha256": "2d6e90288b883cf76a65e49d0c2421471ffc88b530386a1e1449900d461ed045"
+    },
+    {
+      "path": "anadius-socket-source/recycle-review.md",
+      "sha256": "3941872732feee3f49ece0f8b11f6b2872d3afb65ff49e783c18ac1f1a2ab48b"
+    },
+    {
+      "path": "anadius-socket-source/request-growth-flow-audit.md",
+      "sha256": "fc274b7e3d188cbd5cab205c26017092db913b0b3996e4dd1a375b210287e507"
+    },
+    {
+      "path": "anadius-socket-source/request-mutation-flow-audit.md",
+      "sha256": "9bed41519602449314556558efb56fd4470f9d01a04fefa0d0f87566f6e1a9b6"
+    },
+    {
+      "path": "anadius-socket-source/response-containers-flow-audit.md",
+      "sha256": "4fefb8cecdbb15739dbeb9bfff486e4c1294b405ea557367ff05414b41d3c3bb"
+    },
+    {
+      "path": "anadius-socket-source/response-dispatch-flow-audit.md",
+      "sha256": "53f7e5f59c0c8b24988a066549ffcd9b49de38fc8a15f63eb01a25fdc2904905"
+    },
+    {
+      "path": "anadius-socket-source/response-hex-flow-audit.md",
+      "sha256": "55e03d8125ef12e8b44cbf82ee401371fc5d01dde3003e455acd69be92195038"
+    },
+    {
+      "path": "anadius-socket-source/review.md",
+      "sha256": "c6f52ac96eb1b4f0e72c69da782c7d83f8b361aeda2fad89db952ee2c39050a6"
+    },
+    {
+      "path": "anadius-socket-source/scheduler-registry-flow-audit.md",
+      "sha256": "9c6c2e8bb7f4769e12ed8f3eb28700c4118b2b0f39db425504fd0518f8c4249a"
+    },
+    {
+      "path": "anadius-socket-source/scheduler-registry-review.md",
+      "sha256": "f0d87a1eda69007975c4224c76661765be9b5daff0fbb0b65d98dc9641a2e8a3"
+    },
+    {
+      "path": "anadius-socket-source/service-constructor-flow-audit.md",
+      "sha256": "c2b2f1b85e254d0de669deacd0e713ac54100bbd9727cb54a2ba71ea41020f48"
+    },
+    {
+      "path": "anadius-socket-source/service-constructor-review.md",
+      "sha256": "4873f0799603acee339857d2d0583e003bbde436bb9d74e0c2ddf5818929c024"
+    },
+    {
+      "path": "anadius-socket-source/service-registry-flow-audit.md",
+      "sha256": "60dae6001a1ad4dc954047b2a9ef50a9e236b1fd2697860bd83d1ed614aa6d6d"
+    },
+    {
+      "path": "anadius-socket-source/service-registry-review.md",
+      "sha256": "8e59a701d9c0912f8ba41a26974ea01cbc37c54e16eb05483585dbbdeb0b807b"
+    },
+    {
+      "path": "anadius-socket-source/worker-run-flow-audit.md",
+      "sha256": "65bc98f81489a761c1a18c939d3a883beb22a46154bb641e7cd7ba608e920643"
+    },
+    {
+      "path": "anadius-socket-source/worker-run-review.md",
+      "sha256": "16f882745ed6b96367df3cb47f8b69ef62ab4aedd981b3aab0165081e3a0dcca"
+    },
+    {
+      "path": "anadius-socket-source/worker-startup-flow-audit.md",
+      "sha256": "65d132d26b0bc50b77d0d5809a937f6b303a97c6ac724586e835eb104c50009c"
+    },
+    {
+      "path": "anadius-socket-source/worker-startup-review.md",
+      "sha256": "5ff21ef18168297d6c7dce90f0964480d16a33862aa211acda44fd84ef076358"
+    },
+    {
+      "path": "anadius-socket-source/write-finish-flow-audit.md",
+      "sha256": "28c952e4bd8d7f766e0f8f97cc1c2e6fdcc16463fdbfe41749c9bfa452bc39da"
+    },
+    {
+      "path": "anadius-socket-source/write-finish-review.md",
+      "sha256": "2cdeffd4b271c20dc2baa2625e2234a2d085c16ba57d648193f2b1a1be053a4a"
+    },
+    {
+      "path": "anadius-source/README.md",
+      "sha256": "4fe3d0e1c94aef9d9f99079a2dd923374beccc42e6255a61cdc8d4261896a31d"
+    },
+    {
+      "path": "anadius-startup-publication-source/README.md",
+      "sha256": "d88d1823021c05819d9f8642ddd80d252faaeb312c328c666a18a58e6e0cc0b8"
+    },
+    {
+      "path": "anadius-startup-publication-source/architecture-review.md",
+      "sha256": "f846e2cf40749bcbf4c58f521cd445501df0365c0f660e4bf0a130a14fc38749"
+    },
+    {
+      "path": "anadius-startup-publication-source/execution-review.md",
+      "sha256": "577b1a1680b35c8b1bf64899a11bbb7b7342c0b2dfb1aa8e043b823080d80170"
+    },
+    {
+      "path": "anadius-startup-source/README.md",
+      "sha256": "e166fc77de244ba82f1046c7a4daca6c060108309460717f1fb1e1004032099d"
+    },
+    {
+      "path": "anadius-status-source/README.md",
+      "sha256": "e968693a6b50b0a753381e40818bd820de0e705c2794b4c5658123e5d9172ba7"
+    },
+    {
+      "path": "anadius-thread-domain-source/README.md",
+      "sha256": "8c1792172c81cf0a4948f787ad9b85a5cb5989ee4169057e21d960592bad7c1a"
+    },
+    {
+      "path": "anadius-thread-domain-source/architecture-review.md",
+      "sha256": "73cb16498460329c994a1f46470cfd729b9f974bc430cf8d352d2312343ee69d"
+    },
+    {
+      "path": "anadius-thread-domain-source/factory.README.md",
+      "sha256": "5e72c53380417328d2ae17983aaed86aa54be01a43f465cd069fb46c916857c9"
+    },
+    {
+      "path": "anadius-thread-native-source/README.md",
+      "sha256": "c103fbf8e67ea43e013aefc53c0a96e1f351a3cf64d73224b2a681d123f58963"
+    },
+    {
+      "path": "anadius-thread-source/README.md",
+      "sha256": "9973baedb7d13d44ed48d340f3f7c5aae75f3877a8ab295563357e044a864aaa"
+    },
+    {
+      "path": "anadius-timestamp-source/README.md",
+      "sha256": "88028baba72ebaf1111b1249a3aa5f2f938bac6421beb5be00e2c742150495a5"
+    },
+    {
+      "path": "anadius-timestamp-source/parse-audit.md",
+      "sha256": "e1fdfdfb39f7c27b3bef9601a50228fd21d3f3a444273bdd128c623b8c25aec6"
+    },
+    {
+      "path": "anadius-timestamp-source/review.md",
+      "sha256": "bda198b4d3d9c70471074c238f9626719b4fb03a4de7557ff213d4763c9a6355"
+    },
+    {
+      "path": "anadius-token-source/README.md",
+      "sha256": "edd08bee8e3109ee5ef568d2d943c7d5bb65cb579972e3f0f2a3e8373a1e6b51"
+    },
+    {
+      "path": "anadius-type-recovery/README.md",
+      "sha256": "63ebb3ca9a03edaa129d57943283057acde83f63cad130f2db4c9c660b44ea3a"
+    },
+    {
+      "path": "anadius-vcrt-api-source/README.md",
+      "sha256": "94f8136c9d8d8df3307e38efce341daf8422adf7ce01f222924d551bb703cbe5"
+    },
+    {
+      "path": "anadius-vcrt-bridge-source/README.md",
+      "sha256": "5e8d92bc695c88e136c82cf1fd9e0ae6cd604691a13049eab4a8486d818e65ff"
+    },
+    {
+      "path": "anadius-vcrt-ptd-source/README.md",
+      "sha256": "168fd020f5fa89ea6117809a4e9daab8a5d1babc5ab3b9cf567972ddad6ffdfd"
+    },
+    {
+      "path": "anadius-windows-source/README.md",
+      "sha256": "055f7527472fa2d94368bb4de2f5585164ee02b9a25b535cef33197431f86fd3"
+    },
+    {
+      "path": "anadius-worker-handoff-source/README.md",
+      "sha256": "23a8f814b2d7ec460f39291a1ed74937e3fa293dcc328249d1ffaf67e34a2fd5"
+    },
+    {
+      "path": "anadius-worker-handoff-source/architecture-review.md",
+      "sha256": "7bcd73027a235508510621bf98aa3376ae3b56490abcc254546602c40af2f59b"
+    },
+    {
+      "path": "anadius-xml-reader-source/README.md",
+      "sha256": "1a1f893964fd7e46a5cd263637c93922110843df436cbff5f56c7e2e251ec3ad"
+    },
+    {
+      "path": "anadius-xml-source/README.md",
+      "sha256": "8d27b6e45b886742b143be4c7906d5c572f7c2753b5e6ce161f026165c081619"
+    },
+    {
+      "path": "anadius-xml-source/reader-evidence.md",
+      "sha256": "44434a36c370d5b2f47e2b51e5dc070b5099260f32b24cfbca52c308ec1930d8"
+    },
+    {
+      "path": "dll-integration-audit/README.md",
+      "sha256": "3561c4347f2ad2204f216c71eea5b3aa4bc8217f9a9f699543b92559d0ad5e91"
+    },
+    {
+      "path": "dll-integration-audit/entry-roots.md",
+      "sha256": "71a6f18d0681c1682d2d556d0169342427fa7b8cb5d09a077c479d2412edfdfc"
+    },
+    {
+      "path": "dll-integration-audit/provider-blockers.md",
+      "sha256": "1059051c059a03b6218fbe9fd3b7dbea9ce006d9cdc775fe3b63efaa953fbd72"
+    },
+    {
+      "path": "dll-link-gate-source/README.md",
+      "sha256": "5b82ee921a3b12a56f358a6a97c12a0da4d3a1520f44229865c9849c6d1fa975"
+    },
+    {
+      "path": "dll-link-gate-source/baseline/B30-source-workspace-README.md",
+      "sha256": "cff07e2a8335fd562765a67656cb419cbfa17202a44fb77f3b1c852a87758519"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B31-README.md",
+      "sha256": "618bffcd13eabf5e2148e0fe1831655a2bb2bec436284d1de23b8a8c7188dff6"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B32-README.md",
+      "sha256": "9dcdb8bfdba7cd306455a1e86065cf07de17faf152cd4258cbab4511cc452082"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B33-README.md",
+      "sha256": "faa1b7848247a5bb6644a04d6546e4b52da6ecf83c02db8ceb50c229efbe5b81"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B34-README.md",
+      "sha256": "7e10c2670321228196a474e617ea8faabf4a15408fbafaa685d21d27d5919d24"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B35-README.md",
+      "sha256": "2d0bed8b7f8f9a4775eef8a7d0d59fead27b0db2a992d8e3e8ea3a068c70bfa9"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B36-README.md",
+      "sha256": "9830816ec3ed0831c4226be077dcec20db5a4cc40e7f41b3c765a7eab755e1b1"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B37-README.md",
+      "sha256": "922f62b3d5d2425c9e06ab6cd4cd60789d81f8f5d89595e80cbd95e96a299385"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B38-README.md",
+      "sha256": "5b52ece5ade34124b6646cbb3d1a83bae06b0061491792d2c6b9c7ceea331816"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B39-README.md",
+      "sha256": "2a1bd3dbf006100e1da332b7eb2dafd87d8eb9205b824407ab9571cd3c01a205"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B40-README.md",
+      "sha256": "7ee2f4872f4d9251841b917335b88b437a366239328705b54786e5b441eb7302"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B41-README.md",
+      "sha256": "cf4c28c8c3123976caf05664f342c1fb3950f7830aee726db697a62db6337259"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B42-README.md",
+      "sha256": "598af8eec10e68cc52ace6accf68297a1700f84dbaefcfd66a18f4732710ca65"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B43-README.md",
+      "sha256": "00a5b804d551b31d2e74c0b529b611cdd80d30058b99a8fc5235d106776f7f3a"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B44-README.md",
+      "sha256": "cfaff689170a15c74cf4c1dccfd431465b8815fb93ab05c219f06b925905f5fd"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B45-README.md",
+      "sha256": "758ae11b332751db94fa37851bef6b9a492bac984c886f2491f26e7260c3fba6"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B46-README.md",
+      "sha256": "d93aa40adb8e7e851bf0f27890938eebde4092c14ceea43cfa1fb02fc0245774"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B47-README.md",
+      "sha256": "20cb1e875c11e64786fb8c6f13c9a2d3dd4b65e03d24cb143f7072da7c60b079"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B48-README.md",
+      "sha256": "76234291df41cf38b853b1ffd2a9aa8c15416fc7a60525030de1b274bbb829e0"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B49-README.md",
+      "sha256": "9e685cfb4c7fb519c8b4200eed6a8f07d35b1fd0c209a747adec9ada5629c5d8"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B50-README.md",
+      "sha256": "03b0eac108642aa01fe778fcdc366cb8500d1ad1201016a38e582f09b5b89ee4"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B51-README.md",
+      "sha256": "cc4a8d7055ce5b16f3aca51ee26fb07c263d2be239af58b5c96b2f1548996d9d"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B52-README.md",
+      "sha256": "a683a74b5b7c5a11bb4345ed849cff346cb849cfb1512bf4f1383271ff78b748"
+    },
+    {
+      "path": "dll-link-gate-source/historical/B53-README.md",
+      "sha256": "16c22499051c08c85bf00079aa8d1347e882d9a7cf419ed20e7c5c357e55ce95"
+    },
+    {
+      "path": "dll-link-gate-source/production-root-review.md",
+      "sha256": "928deac4154908305461a1983e4174bbfc97acf5c02389f7d86948a68082b559"
+    },
+    {
+      "path": "hook-engine-source/README.md",
+      "sha256": "186e3747d5ca748f95eba444388aed029795b3912f6638a636620ae261333bbc"
+    },
+    {
+      "path": "hook-engine-source/anadius-comparison.md",
+      "sha256": "b31b3a9ef7e1b2c41426d00e5ebfb6d1740542daac37bb7b18228f987da35012"
+    },
+    {
+      "path": "hook-engine-source/owned.README.md",
+      "sha256": "49c75e1650273e77d51525a44c42a0100106721843013812b6e1c2532e4497f6"
+    },
+    {
+      "path": "hook-engine-source/preloader-comparison.md",
+      "sha256": "b228c90b121ae8e91824ec46f21cfbcc0ed4a04f06a5505ef0f06afc361bbde3"
+    },
+    {
+      "path": "hook-engine-source/testing/README.md",
+      "sha256": "502b0b87ca77b00473142951a10bf8d42e8ffe3294f10de677a833682e9a9aae"
+    },
+    {
+      "path": "host-compatibility/CFG-README.md",
+      "sha256": "ee28e521320214e14b362c5a58725311b426bb9f72074be72f71db453ba1bb9d"
+    },
+    {
+      "path": "host-compatibility/README.md",
+      "sha256": "0d67c109897a781df8897b615daacf447b91aaab478e1bb02231387c83959c1f"
+    },
+    {
+      "path": "mac-symbol-comparison/README.md",
+      "sha256": "438c61bb99776b652475cc9cff86094b696709bd9c4fff944952202be52c750b"
+    },
+    {
+      "path": "preloader-analysis/README.md",
+      "sha256": "d8d2165fc73d3df586a41d3469e1e255975bbd9a3ef61355a0e183b3e1e37716"
+    },
+    {
+      "path": "preloader-native-source/README.md",
+      "sha256": "234dc38eda8a2177ebc66e6dbd91d7e3ce68cc5e78bfd701356e88393c7c2b7e"
+    },
+    {
+      "path": "preloader-source/README.md",
+      "sha256": "1d463568c053316d241daadf4ebb51f0cce4994eb10670d745ef40b647b3797d"
+    },
+    {
+      "path": "reconstruction-inventory/README.md",
+      "sha256": "b8b699aed5ed17a4e7ab2a48c1fe47a902adaf74c19509a823c6f645b2d1a0b0"
+    },
+    {
+      "path": "reconstruction-inventory/dependency-audit.md",
+      "sha256": "dcb2d5a803b607c823c65b6ddb5cd82609109857d50bce05f2cb9e8ad3b0f284"
+    },
+    {
+      "path": "reconstruction-inventory/mapping-audit.md",
+      "sha256": "a854da84053d1be36a7c991e7795f0ebb3d36c9bec62d0890e45e42d2bbdcc4d"
+    },
+    {
+      "path": "source-workspace/README.md",
+      "sha256": "e6668d9304b318ea14217abc01ab0afc7de59a0647c5863c0df39211bb683bfa"
+    },
+    {
+      "path": "version-build-verification/README.md",
+      "sha256": "fbe280a0f85a8b035be37a601352b9d9fc478bcf87b0ee52ef4947a8fd3a7004"
+    },
+    {
+      "path": "version-rebuild/README.md",
+      "sha256": "d9d0fec914c17d1cca19f0b3fe8b1aa57973f0c1c9d200f0e42e6daa52eace3b"
+    }
+  ]
+}

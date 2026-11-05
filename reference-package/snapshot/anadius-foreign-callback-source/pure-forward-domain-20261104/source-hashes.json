@@ -1,0 +1,17 @@
+[
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.cpp",
+    "sha256": "8f649acdd515ac92869a92bad574cfdc856942e8ff93ebb014f727f83ba8abc5",
+    "bytes": 30566
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.hpp",
+    "sha256": "583889b75bfff12518aef490cd8aa66ef927095c7aac07dd134832f1ec150d75",
+    "bytes": 8869
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.hpp",
+    "sha256": "270b9ea85daee64225f18106e2df54833902ed19ea2f0fef9ea587ec8546a29e",
+    "bytes": 12437
+  }
+]

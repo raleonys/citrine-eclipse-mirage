@@ -1,0 +1,134 @@
+{
+  "schema": "original-parallel-actor-catalog-foundation.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_DISABLED_LOWER_CONCURRENCY_FOUNDATION",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Stable explicitly admitted Parent actor/permit records, exact pinned byte/header/map owner resolvers and allocator/reaper metadata outside gates. Actual production remains Serialized; upper parallel-message progress gap remains open. Source-only, uncompiled and unexecuted.",
+  "sources": [
+    {
+      "path": "anadius-session-memory-source/memory.hpp",
+      "before": "before/anadius-session-memory-source__memory.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.cpp",
+      "before": "before/anadius-session-memory-source__memory.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "before": "before/anadius-thread-domain-source__domain.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/receive_buffer.hpp",
+      "before": "before/anadius-socket-source__receive_buffer.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/receive_buffer.cpp",
+      "before": "before/anadius-socket-source__receive_buffer.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/receive_buffer_tests.cpp",
+      "before": "before/anadius-socket-source__receive_buffer_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-socket-source/write_finish.hpp",
+      "before": "before/anadius-socket-source__write_finish.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/write_finish.cpp",
+      "before": "before/anadius-socket-source__write_finish.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/write_finish_tests.cpp",
+      "before": "before/anadius-socket-source__write_finish_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-socket-source/frame_read.hpp",
+      "before": "before/anadius-socket-source__frame_read.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/frame_read.cpp",
+      "before": "before/anadius-socket-source__frame_read.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/frame_read_tests.cpp",
+      "before": "before/anadius-socket-source__frame_read_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-socket-source/response_containers.hpp",
+      "before": "before/anadius-socket-source__response_containers.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/response_containers.cpp",
+      "before": "before/anadius-socket-source__response_containers.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/response_containers_tests.cpp",
+      "before": "before/anadius-socket-source__response_containers_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "before": "before/anadius-worker-handoff-source__handoff_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff.cpp",
+      "before": "before/anadius-worker-handoff-source__handoff.cpp",
+      "role": "production"
+    }
+  ],
+  "reviews": [
+    "root-independent-review.md",
+    "root-sources-independent-review.md",
+    "parent-production-independent-review.md",
+    "combined-lower-independent-review.md",
+    "independent-socket-review.md"
+  ],
+  "reports": [
+    "native-findings.md",
+    "implementation.md",
+    "parent-implementation.md",
+    "socket-resolver-implementation.md",
+    "loweractor-test-source-notes.md"
+  ],
+  "native_replies": [
+    "xrefs-033d70.json",
+    "instruction-028d99.json",
+    "instruction-033d70.json",
+    "data-type-0a8a90.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-session-memory-source/parallel-frame-admission-20261105/native-evidence-index.json",
+    "outputs/anadius-session-memory-source/parallel-frame-admission-20261105/integration-plan.json",
+    "outputs/anadius-session-memory-source/parallel-frame-admission-20261105/memory-design-review.md",
+    "outputs/anadius-session-memory-source/handler-admission-overlap-20261105/caller-proof.md",
+    "outputs/anadius-session-memory-source/actor-catalog-foundation-20261105/native-evidence-index.json",
+    "outputs/anadius-session-memory-source/actor-catalog-foundation-20261105/socket-resolver-source-hashes.json"
+  ],
+  "limits": [
+    "No compiler/project tests/link/DLL execution/ZIP update; all new assertions are authored and unexecuted.",
+    "OriginalConcurrentActors is selected only by a lower fixture. All actual production defaults/compositions remain Serialized; NativeJobs/Profile/Graph parallel-message gap is NOT closed.",
+    "Stable authoritative IO bindings, Strings/Deque call state, per-message NativeProfile/Profile/Graph/providers, NativeJobs gate removal and actual Original selection/actual A/B fixtures remain mandatory coherent integration.",
+    "Exact ticket pins establish storage retirement protection, not safe shared payload writes, arbitrary foreign SDK/fallback behavior, or native EH/atomic/container ABI.",
+    "Same-session and distinct-session native interleavings remain required; per-session strand, cloned business/Online roots and extra readiness/SDK/unload barriers are not substitutes.",
+    "Changed constructors/private layouts/aggregate sizes require a consistent explicitly authorized rebuild before any new compiled/runtime claim. Historical successful build/DLL/ZIP proofs remain unchanged.",
+    "Preexisting Prepared invalid-argument diagnostic construction/unsupported reentrant CRT/fallback domains are not closed by moving the healthy-path snapshot reserve outside its gate."
+  ],
+  "completed_note": "SOURCE_ONLY4freshentry-referenceREA records;12production+5test units adddisabledParentactor/exactcatalogfoundation, per-attemptallocatorrollback and siblingreapmetadata; independentstaticreviews, realPreparedchild/sourceassertions NOTRUN; actualOriginalparallelroute STILLPENDING.",
+  "observation": "REA6.8/Ghidra12.1.4 original-only4recordsession exported/closed/hashunchanged;3usefulindependentsubagents implemented/reviewed separate scopes. CapturedNativeentrycode/pdata distinguished; no duplicate whole-body decompilation or function credit.",
+  "next_scope": "Continue confirmed Original parallel-message gap coherently: stable authoritative IO bindings/no metadata gate across Parent effects, exact Strings/Deque call contexts, per-message Profile/NativeProfile/Graph/provider ownership over shared real business roots; only then remove NativeJobs source_gate/selectOriginalConcurrentActors and author actual same-session/distinct-session diagnostic/GetConfig response-before-release fixtures. Lower foundation is not final behavior closure; no new build authorization."
+}

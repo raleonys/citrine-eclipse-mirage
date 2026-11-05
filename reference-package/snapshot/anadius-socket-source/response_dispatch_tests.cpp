@@ -54,4 +54,24 @@ void borrowed_entry(){Fixture f;f.task.function_00=0xabc;f.task.object_28=0xdef;
     s::invoke_borrowed_response_022240(f.task,f.context,&write);check(f.m.text(f.task.response_08)=="owned"&&f.task.response_08.capacity_18==31&&f.task.control_30==&f.m.base.owner&&f.m.base.owner.strong_08==2,"borrowed invoke preserves source response and reference for outer cleanup");f.m.free_string(f.task.response_08);
 }
 }
-int main(){try{dispatch_paths();callbacks();queue_matrix();queue_live();borrowed_entry();std::cout<<"PASS: "<<checks<<" socket response dispatch core checks; actual021420/028270/022240 bodies, factory caching/three environment moves, borrowed/owned ownership, deque wrap/live allocation reload and response residual cleanup\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}
+namespace {
+struct HeaderOwner final:s::AllocationHeaderResolver {
+    std::span<const s::WriteFinishAllocationHeader> headers;s::MemoryLookup result=s::MemoryLookup::Found;unsigned calls=0;
+    s::MemoryLookup lookup_header(std::uintptr_t header,std::uintptr_t& output)override{
+        ++calls;if(result!=s::MemoryLookup::Found)return result;
+        return s::lookup_allocation_header(header,headers,nullptr,output);
+    }
+};
+void authoritative_headers(){
+    Fixture f;f.m.seed(f.m.response,"reply",4095);f.task.response_08=f.m.response.value;HeaderOwner owner;owner.headers=f.m.headers;
+    auto stale=f.m.headers;for(auto& header:stale)if(header.address)header.allocation_base=header.address+8;
+    f.m.frame.allocation_headers=stale;f.m.frame.allocation_header_resolver=&owner;f.run();
+    check(owner.calls==1&&f.m.frees.size()==1&&f.m.base.owner.strong_08==1,"actual borrowed response dispatch frees residual heap through exact owner after environment/control cleanup");
+    for(auto result:{s::MemoryLookup::Miss,s::MemoryLookup::Ambiguous}){
+        Fixture g;g.m.seed(g.m.response,"reply",4095);g.task.response_08=g.m.response.value;HeaderOwner rejected;rejected.headers=g.m.headers;rejected.result=result;g.m.frame.allocation_header_resolver=&rejected;
+        rejects<s::UnsupportedInput>([&]{g.run();});
+        check(rejected.calls==1&&g.m.frees.empty()&&g.m.base.owner.strong_08==1&&g.task.response_08.capacity_18==15,"authoritative response header rejection keeps completed move/control prefix and never falls back or invents payload cleanup");
+    }
+}
+}
+int main(){try{dispatch_paths();callbacks();queue_matrix();queue_live();borrowed_entry();authoritative_headers();std::cout<<"PASS: "<<checks<<" socket response dispatch core checks; actual021420/028270/022240 bodies, factory caching/three environment moves, borrowed/owned ownership, deque wrap/live allocation reload and response residual cleanup\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}

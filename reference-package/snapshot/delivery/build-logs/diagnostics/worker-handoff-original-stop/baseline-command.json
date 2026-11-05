@@ -1,0 +1,9 @@
+{
+  "arguments": [
+    "--original-stop-failure"
+  ],
+  "exit": 111,
+  "duration_ms": 135,
+  "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\worker_handoff_integration_mock_tests.exe",
+  "exe_sha256": "2d2102ed4c127b06b4d71c5951c4770ef1d39b5fb288bbeceeb0622de932a7df"
+}

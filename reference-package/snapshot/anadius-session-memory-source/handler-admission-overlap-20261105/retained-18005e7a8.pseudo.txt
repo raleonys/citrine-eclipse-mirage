@@ -1,0 +1,33 @@
+/* 0x18005e7a8 FUN_18005e7a8; Evidence ev_5e71c9771b4ee41eabb165b637fe2731b56aa25a4607e88aa0466f7c42c11285 */
+
+/* WARNING: Function: _guard_dispatch_icall replaced with injection: guard_dispatch_icall */
+
+void FUN_18005e7a8(undefined8 *param_1)
+
+{
+  DWORD dwExitCode;
+  int iVar1;
+  uint uVar2;
+  UINT UVar3;
+  __acrt_ptd *p_Var4;
+  
+  if (param_1 == (undefined8 *)0x0) {
+    dwExitCode = GetLastError();
+                    /* WARNING: Subroutine does not return */
+    ExitThread(dwExitCode);
+  }
+  p_Var4 = FUN_180064b90();
+  *(undefined8 **)(p_Var4 + 0x3c0) = param_1;
+  iVar1 = FUN_18006c0d0();
+  if (iVar1 == 2) {
+    iVar1 = FUN_180067320(1);
+    *(bool *)(param_1 + 4) = iVar1 == 0;
+  }
+  uVar2 = (*(code *)*param_1)(param_1[1]);
+  UVar3 = FUN_18005e9bc(uVar2);
+  FUN_18005cdac(UVar3);
+  return;
+}
+
+
+

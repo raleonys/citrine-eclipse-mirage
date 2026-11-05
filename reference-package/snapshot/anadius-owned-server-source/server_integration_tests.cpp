@@ -1,4 +1,5 @@
 #include "server.hpp"
+#include "../anadius-socket-source/native.hpp"
 #include "../anadius-thread-domain-source/domain_test_fixture.hpp"
 #include "../anadius-socket-source/worker_run_native.hpp"
 #include <algorithm>
@@ -8,6 +9,7 @@
 #include <exception>
 #include <iostream>
 #include <vector>
+#include <array>
 
 namespace {
 namespace s=anadius::socket_recovered;namespace o=anadius::owned_server;namespace server=anadius::server_recovered;
@@ -26,32 +28,41 @@ struct NativeDomain {
   auto apis=b6_core_test::apis();apis.heap.heap_alloc=heap_allocate;root=anadius::thread_domain::DomainStorage::create(b6_core_test::seed(),apis);if(!root->initialize())unused();}
  ~NativeDomain(){if(root){try{if(!root->close())std::terminate();}catch(...){std::terminate();}root.reset();}b6_core_test::observed=nullptr;b6_core_test::runtime_state=nullptr;}
 };
+enum class Fault {None,ServiceGate,Open,Attach,Reuse,Bind,Listen};
+enum class ContextCase {Host,Original,CachedFailure,RegistryFailure};
 struct State {
+ bool native_context=false,initial_winsock=false,initial_winsock_held=false;int startup_status=0;std::shared_ptr<o::WinsockModuleState> winsock;
+ Fault fault=Fault::None;std::string diagnostic_trace;std::uint32_t diagnostic_read=0;
  bool ipv6=false,accept_pending=false,job_done=false,worker_done=false,queue_drained=false,session_deleted=false,accept_packets_drained=false,swallow_quiescent_poison=false;
  std::uint8_t* ready=nullptr;o::ServerView* view=nullptr;
- unsigned starts=0,cleanups=0,gate_inits=0,gate_deletes=0,ports_created=0,ports_closed=0,submits=0,moves=0,gets=0,posts=0,wait_scopes=0,quiescent_calls=0,executor_cleanups=0,cancellations=0,functor_calls=0,cache_frees=0;
+ s::IocpSchedulerEntry* retirement_scheduler=nullptr;std::uint32_t retirement_wake=0;std::vector<CRITICAL_SECTION*> initialized_gates,deleted_gates;unsigned port_error_queries=0,physical_port_closes=0,false_port_closes=0;
+ unsigned starts=0,cleanups=0,gate_inits=0,gate_deletes=0,port_attempts=0,ports_created=0,ports_closed=0,categories=0,submits=0,moves=0,gets=0,posts=0,wait_scopes=0,quiescent_calls=0,executor_cleanups=0,cancellations=0,functor_calls=0,cache_frees=0;
  std::vector<int> families;std::vector<s::Socket> closed;std::vector<std::string> order;
  std::string environment_key,environment_value;std::vector<std::byte> bound;std::uintptr_t port=0;s::SocketObject* pending_identity=nullptr;unsigned swallowed=0;
 };
 State* running=nullptr;
-int WSAAPI startup(WORD version,LPWSADATA data){auto& st=*running;require(version==MAKEWORD(2,2),"Owned context requests WSA2.2");++st.starts;st.order.push_back("startup");return ::WSAStartup(version,data);}
-int WSAAPI cleanup(){auto& st=*running;++st.cleanups;st.order.push_back("cleanup");return ::WSACleanup();}
+void diagnostic_failure(State& state,std::uint32_t error){state.diagnostic_trace="F";::SetLastError(error);}
+std::uint32_t diagnostic_code(Fault fault){switch(fault){case Fault::Open:return 10013;case Fault::Attach:return ERROR_ACCESS_DENIED;case Fault::Reuse:return 10022;case Fault::Bind:return 10048;case Fault::Listen:return 10045;default:return ERROR_NOT_ENOUGH_MEMORY;}}
+int WSAAPI startup(WORD version,LPWSADATA data){auto& st=*running;require(version==(st.native_context?WORD{2}:MAKEWORD(2,2)),"Explicit context profile requests its selected native WORD2 or HOST2.2");if(st.native_context)require(st.gate_inits==(st.initial_winsock?0U:1U),"Cold context startup follows its registry gate; unchecked image claim may precede the context");++st.starts;st.order.push_back("startup");return st.startup_status?st.startup_status: ::WSAStartup(version,data);}
+int WSAAPI cleanup(){auto& st=*running;++st.cleanups;st.order.push_back("cleanup");const auto result=::WSACleanup();return st.native_context?SOCKET_ERROR:result;}
 int WSAAPI local_name(SOCKET socket,sockaddr* output,int* bytes){
  require(socket==200&&*bytes>=28,"Local endpoint uses actual owned acceptor token and initialized SDK buffer");auto& st=*running;std::memset(output,0,*bytes);
  output->sa_family=st.ipv6?23:2;reinterpret_cast<unsigned char*>(output)[2]=0x30;reinterpret_cast<unsigned char*>(output)[3]=0x39;*bytes=28;st.order.push_back("local");return 0;
 }
 BOOL WINAPI environment(LPCSTR key,LPCSTR value){auto& st=*running;require(st.ready&&!*st.ready,"Bound port environment publication precedes source readiness flag");st.environment_key=key;st.environment_value=value;st.order.push_back("environment");return FALSE;}
-BOOL WINAPI gate_initialize(LPCRITICAL_SECTION section,DWORD spin){++running->gate_inits;return ::InitializeCriticalSectionAndSpinCount(section,spin);}
-VOID WINAPI gate_delete(LPCRITICAL_SECTION section){++running->gate_deletes;running->order.push_back("delete-gate");::DeleteCriticalSection(section);}
+BOOL WINAPI gate_initialize(LPCRITICAL_SECTION section,DWORD spin){++running->gate_inits;running->initialized_gates.push_back(section);if(running->native_context)running->order.push_back("init-gate");if(running->fault==Fault::ServiceGate&&running->gate_inits==2){require(section&&spin==0x80000000U&&running->ports_created==1,"Service gate failure follows actual scheduler gate and owned port creation");::SetLastError(ERROR_NOT_ENOUGH_MEMORY);return FALSE;}return ::InitializeCriticalSectionAndSpinCount(section,spin);}
+VOID WINAPI gate_delete(LPCRITICAL_SECTION section){auto& state=*running;if(state.native_context){require(state.retirement_scheduler&&state.initialized_gates.size()==3&&state.deleted_gates.size()<3,"Native gate deletion observes a still-live actual Core scheduler and three exact gate identities");const auto index=state.deleted_gates.size();const auto expected=index==0?2U:index==1?1U:0U;require(section==state.initialized_gates[expected]&&static_cast<std::uint32_t>(state.retirement_scheduler->word_38>>32)==1&&static_cast<std::uint32_t>(state.retirement_scheduler->word_38)==state.retirement_wake,"Native deletes service then scheduler then registry while shutdown+3c is exact1 and low wake is preserved");}state.deleted_gates.push_back(section);++state.gate_deletes;state.order.push_back("delete-gate");::DeleteCriticalSection(section);}
 HANDLE WINAPI create_port(HANDLE file,HANDLE previous,ULONG_PTR key,DWORD threads){
+ ++running->port_attempts;
  require(file==INVALID_HANDLE_VALUE&&!previous&&!key&&threads==0xffffffffU,"Actual024990 forwards observed selected IOCP construction arguments");
  auto* port=::CreateIoCompletionPort(file,previous,key,threads);if(port){++running->ports_created;running->port=reinterpret_cast<std::uintptr_t>(port);}return port;
 }
-BOOL WINAPI close_port(HANDLE port){require(reinterpret_cast<std::uintptr_t>(port)==running->port,"Owned teardown closes the same actual kernel IOCP handle");++running->ports_closed;running->order.push_back("close-port");return ::CloseHandle(port);}
+BOOL WINAPI close_port(HANDLE port){auto& state=*running;require(reinterpret_cast<std::uintptr_t>(port)==state.port,"Owned teardown closes the same actual kernel IOCP handle");++state.ports_closed;state.order.push_back("close-port");const auto result=::CloseHandle(port);const auto error=::GetLastError();if(result)++state.physical_port_closes;if(state.native_context){require(result&&state.deleted_gates.size()==2,"Native closes its actual IOCP successfully after deleting the service/scheduler gates");++state.false_port_closes;::SetLastError(ERROR_ACCESS_DENIED);return FALSE;}::SetLastError(error);return result;}
+DWORD WINAPI port_error(){const auto error=::GetLastError();++running->port_error_queries;return error;}
 struct Errors:s::Api {
  State& state;explicit Errors(State& s):state(s){}
- void set_last_error(std::int32_t n)override{::SetLastError(n);}std::int32_t get_last_error()override{return static_cast<std::int32_t>(::GetLastError());}
- s::Category system_category_028620()override{return {0x2222,server::ErrorCategory::system};}
+ void set_last_error(std::int32_t n)override{::SetLastError(n);}std::int32_t get_last_error()override{const auto error=::GetLastError();if(!state.diagnostic_trace.empty()){state.diagnostic_trace+='E';state.diagnostic_read=error;}return static_cast<std::int32_t>(error);}
+ s::Category system_category_028620()override{const auto error=::GetLastError();++state.categories;if(!state.diagnostic_trace.empty())state.diagnostic_trace+='C';::SetLastError(error);return {0x2222,server::ErrorCategory::system};}
  s::Conversion convert_acp(const char* text,std::int32_t size)override{require(std::string_view(text)=="127.0.0.1"&&size==10,"Actual address source passes exact loopback C string and bounded conversion");return {10,std::wstring(L"127.0.0.1")};}
  s::AddressCall string_to_address(s::Conversion& text,std::int32_t family,std::int32_t size)override{
   require(text.text==L"127.0.0.1"&&size==128,"Address parser lower receives defined owned wide string and sockaddr capacity");state.families.push_back(family);
@@ -62,16 +73,16 @@ struct Errors:s::Api {
 };
 struct Sockets:s::AcceptorApi {
  State& state;explicit Sockets(State& s):state(s){}
- s::Socket create_socket(std::int32_t family)override{require(family==(state.ipv6?23:2),"Actual020e20 opens selected family through synthetic socket SDK boundary");state.order.push_back("socket");return 200;}
- std::uintptr_t attach_completion_port(s::Socket socket,std::uintptr_t port)override{require(socket==200&&port==state.port,"Acceptor uses same concrete owned kernel completion port");return port;}
- std::uint32_t get_win32_error()override{return ::GetLastError();}
+ s::Socket create_socket(std::int32_t family)override{require(family==(state.ipv6?23:2),"Actual020e20 opens selected family through synthetic socket SDK boundary");state.order.push_back("socket");if(state.fault==Fault::Open){diagnostic_failure(state,diagnostic_code(state.fault));return s::invalid_socket;}return 200;}
+ std::uintptr_t attach_completion_port(s::Socket socket,std::uintptr_t port)override{require(socket==200&&port==state.port,"Acceptor uses same concrete owned kernel completion port");if(state.fault==Fault::Attach){diagnostic_failure(state,diagnostic_code(state.fault));return 0;}return port;}
+ std::uint32_t get_win32_error()override{const auto error=::GetLastError();if(!state.diagnostic_trace.empty()){state.diagnostic_trace+='G';state.diagnostic_read=error;}return error;}
  std::int32_t set_option(s::Socket socket,std::int32_t level,std::int32_t option,std::int32_t value)override{
   if(level==41){require(state.ipv6&&socket==200&&option==27&&value==0,"Actual IPv6 acceptor clears IPV6_V6ONLY before IOCP attachment");return 0;}
-  require(socket==200&&level==65535&&option==4&&value==1,"Acceptor enables source reuse-address option");return 0;
+  require(socket==200&&level==65535&&option==4&&value==1,"Acceptor enables source reuse-address option");if(state.fault==Fault::Reuse){diagnostic_failure(state,diagnostic_code(state.fault));return -1;}return 0;
  }
- std::int32_t bind_socket(s::Socket socket,std::span<const std::byte> address,std::int32_t size)override{require(socket==200&&size==(state.ipv6?28:16),"Actual bind lower receives family-specific initialized sockaddr length");state.bound.assign(address.begin(),address.begin()+size);return 0;}
- std::int32_t listen_socket(s::Socket socket,std::int32_t backlog)override{require(socket==200&&backlog==INT_MAX,"Actual listen uses observed INT_MAX backlog");return 0;}
- std::int32_t close_socket(s::Socket socket)override{state.closed.push_back(socket);state.order.push_back("socket-close");return 0;}
+ std::int32_t bind_socket(s::Socket socket,std::span<const std::byte> address,std::int32_t size)override{require(socket==200&&size==(state.ipv6?28:16),"Actual bind lower receives family-specific initialized sockaddr length");state.bound.assign(address.begin(),address.begin()+size);if(state.fault==Fault::Bind){diagnostic_failure(state,diagnostic_code(state.fault));return -1;}return 0;}
+ std::int32_t listen_socket(s::Socket socket,std::int32_t backlog)override{require(socket==200&&backlog==INT_MAX,"Actual listen uses observed INT_MAX backlog");if(state.fault==Fault::Listen){diagnostic_failure(state,diagnostic_code(state.fault));return -1;}return 0;}
+ std::int32_t close_socket(s::Socket socket)override{state.closed.push_back(socket);state.order.push_back("socket-close");if(!state.diagnostic_trace.empty())state.diagnostic_trace+='X';return 0;}
  std::int32_t set_nonblocking(s::Socket,std::uint32_t,std::uint32_t&)override{unused();}
 };
 struct Cancel:s::CancellationEffects {State& state;explicit Cancel(State& s):state(s){}void cancel_026aa0(s::CancellationEngine&,s::Socket,const s::Error&)override{++state.cancellations;unused();}};
@@ -138,6 +149,7 @@ struct Runtime:o::Runtime {
   state.accept_pending=true;++state.submits;state.order.push_back("accept");
  }
  server::Error run(o::ServerView& view,o::AdmittedDispatcherApi& admitted)override{
+  if(state.native_context)state.retirement_scheduler=&view.scheduler; // embedded Core storage, not this borrowed stack view
   state.view=&view;require(state.accept_pending&&view.pending.state.socket==s::invalid_socket,"Mandatory accept provider retains separate pending state before synthetic final accept result");
   state.accept_pending=false;view.pending.state.socket=201;view.pending.state.socket_state=0x10;
   auto pair=view.construct_accepted({&state,move});auto* control=pair.control;auto* object=pair.object;control->weak_0c.fetch_add(1);
@@ -166,6 +178,7 @@ struct Runtime:o::Runtime {
   require(::TlsFree(index)!=0,"Own worker TLS slot released after real worker exit");
   state.accept_pending=false;state.accept_packets_drained=true;state.view=nullptr;
   require(!view.memory.snapshot().allocations&&view.io.snapshot().active_calls==0&&view.service.head==&view.pending&&view.pending.next==&view.acceptor,"Observed worker/job/session drains leave only source pending and acceptor list nodes");
+  if(state.native_context){state.retirement_wake=static_cast<std::uint32_t>(view.scheduler.word_38);require(state.retirement_wake==1&&!view.scheduler.work_count_30,"Native teardown fixture records the real drained worker wake without altering work or low wake");view.scheduler.word_38=0x5a5a5a5a00000000ULL|state.retirement_wake;} // explicit high32 fixture seed tests replacement rather than OR
   return {};
  }
  bool quiescent(o::ServerView& view)override{
@@ -185,19 +198,55 @@ struct ExecutionPlatform:anadius::execution_recovered::Platform {
  void acquire_srw_exclusive(std::uintptr_t&)override{++locks;}void release_srw_exclusive(std::uintptr_t&)override{++unlocks;}
  std::int64_t query_performance_frequency()override{unused();}std::int64_t query_performance_counter()override{unused();}void sleep_milliseconds(std::uint32_t)override{unused();}[[noreturn]]void raise_thread_error_04a648(int)override{unused();}
 };
-void normal_server(bool ipv6,bool sticky_child=false){
- NativeDomain native;auto state=std::make_shared<State>();state->ipv6=ipv6;running=state.get();State* observed=state.get();std::weak_ptr<State> lifetime=state;
+HANDLE WINAPI rejected_port(HANDLE file,HANDLE previous,ULONG_PTR key,DWORD threads){++running->port_attempts;require(file==INVALID_HANDLE_VALUE&&!previous&&!key&&threads==0xffffffffU,"Rejected port receives exact native024990 SDK arguments");::SetLastError(ERROR_ACCESS_DENIED);return nullptr;}
+BOOL WINAPI rejected_gate(LPCRITICAL_SECTION section,DWORD spin){++running->gate_inits;require(section&&spin==0x80000000U&&running->gate_inits==1,"First selected context gate receives exact native027be0 initialize arguments");::SetLastError(ERROR_NOT_ENOUGH_MEMORY);return FALSE;}
+void normal_server(bool ipv6,bool sticky_child=false,bool error_child=false,bool gate_child=false,Fault fault=Fault::None,ContextCase context_case=ContextCase::Host){
+ NativeDomain native;auto state=std::make_shared<State>();state->ipv6=ipv6;state->fault=fault;state->native_context=context_case!=ContextCase::Host;running=state.get();State* observed=state.get();std::weak_ptr<State> lifetime=state;
+ if(state->native_context){state->winsock=std::make_shared<o::WinsockModuleState>(o::WinsockImports{startup,cleanup});require(!state->starts&&!state->cleanups,"Explicit native shared state constructs passively");if(context_case==ContextCase::CachedFailure){state->startup_status=10091;state->initial_winsock=true;state->winsock->acquire(state->initial_winsock_held);state->initial_winsock=false;require(state->initial_winsock_held&&state->starts==1&&state->winsock->cached_status()==10091,"Unchecked image owner keeps its cached startup failure before any context gate");}}
  ExecutionPlatform platform;anadius::execution_recovered::MutexState mutex{};anadius::execution_recovered::initialize_mutex_04a698(mutex,2);
  std::uint8_t ready=0,other=0,last=0;std::int64_t frequency=0;anadius::execution_recovered::Execution execution{mutex,{ready,other,last},frequency,platform};observed->ready=&ready;
  {
   auto errors=std::make_shared<Errors>(*state);o::Dependencies dependencies;dependencies.state_lifetime=state;dependencies.errors=errors;dependencies.sockets=std::make_shared<Sockets>(*state);
-  s::IocpConstructorImports port_imports;port_imports.create_completion_port=create_port;port_imports.close_handle=close_port;
-  dependencies.iocp=std::make_shared<s::NativeIocpConstructorApi>(port_imports);dependencies.gates=std::make_shared<s::NativeServiceGateApi>(s::ServiceGateImports{gate_initialize,::GetLastError});
+  s::IocpConstructorImports port_imports;port_imports.create_completion_port=create_port;port_imports.close_handle=close_port;port_imports.get_last_error=port_error;
+  if(error_child)port_imports.create_completion_port=rejected_port;
+  dependencies.iocp=std::make_shared<s::NativeIocpConstructorApi>(port_imports);dependencies.gates=std::make_shared<s::NativeServiceGateApi>(s::ServiceGateImports{gate_child||context_case==ContextCase::RegistryFailure?rejected_gate:gate_initialize,::GetLastError});
   dependencies.dispatcher=std::make_shared<Dispatcher>(*state);dependencies.cancellation=std::make_shared<Cancel>(*state);dependencies.executor=std::make_shared<Executor>(*state);dependencies.runtime=std::make_shared<Runtime>(*state,*errors);
   dependencies.kernel={startup,cleanup,local_name,environment,gate_delete};
+  if(state->native_context){dependencies.context_profile=o::ContextProfile::Original;dependencies.winsock_module=state->winsock.get();}
+  if(context_case==ContextCase::Original){for(const unsigned kind:{0U,1U,2U,3U}){auto invalid=dependencies;if(kind==0)invalid.winsock_module=nullptr;if(kind==1)invalid.context_profile=o::ContextProfile::Host;if(kind==2)invalid.winsock_module=&o::native_winsock_module();if(kind==3)invalid.context_profile=static_cast<o::ContextProfile>(99);bool rejected=false;try{o::OwnedServerBackend bad(native.root,std::move(invalid),16);}catch(const std::invalid_argument&){rejected=true;}require(rejected&&!state->starts&&!state->cleanups&&!state->gate_inits&&native.root->provider_leases()==0,"Missing/foreign state, HOST/native mixing and unknown profile reject passively before a backend claim/provider lease");}}
+  if(context_case==ContextCase::Original){{o::OwnedServerBackend unpublished(native.root,dependencies,16);unpublished.destroy_context();require(unpublished.snapshot().phase==o::Phase::Closed&&!state->starts&&!state->cleanups&&!state->gate_inits&&!state->gate_deletes&&!state->port_attempts&&!state->port_error_queries&&state->initialized_gates.empty()&&state->deleted_gates.empty(),"Never-initialized Original Core cancels without touching an uninitialized gate, scheduler or Winsock claim");}require(native.root->provider_leases()==0,"Constructed Original cancellation releases its actual Parent/provider before the initialized scenario");}
   o::OwnedServerBackend backend(native.root,std::move(dependencies),16);errors.reset();state.reset();
   require(!lifetime.expired()&&native.root->provider_leases()==1,"Backend dependency state and dedicated real ApplicationMemory lease own their required provider graph");
   std::uint16_t port=ipv6?7777:0;
+  if(context_case==ContextCase::CachedFailure||context_case==ContextCase::RegistryFailure){
+   const bool cached=context_case==ContextCase::CachedFailure;const int code=cached?10091:ERROR_NOT_ENOUGH_MEMORY;const std::string operation=cached?"winsock":"mutex";const auto address=cached?0x180084500ULL:0x180084428ULL;const auto& category=s::system_error_category_028620();const auto expected=operation+": "+category.message(code);bool caught=false;
+   try{backend.initialize_context_0241b0();}catch(const o::SourceError& error){caught=error.code().value()==code&&&error.code().category()==&category&&error.source_error().value==code&&error.source_error().category.name_identity==0x2222&&error.operation()==operation&&error.context_address()==address&&std::string(error.what())==expected;}
+   require(caught&&backend.snapshot().phase==o::Phase::Poisoned&&observed->gate_inits==1&&observed->starts==unsigned(cached)&&observed->categories==(cached?2U:1U)&&!observed->port_attempts&&!observed->ports_created&&!observed->ports_closed&&!observed->gate_deletes&&!observed->cleanups,"Native registry-gate/cached Winsock failure retains exact typed prefix before scheduler and performs no rollback");
+   if(cached){observed->winsock->release(observed->initial_winsock_held);bool extra=false;observed->winsock->acquire(extra);require(!observed->initial_winsock_held&&extra&&observed->starts==1&&!observed->cleanups&&observed->winsock->cached_status()==10091,"Failed checked context retained its own increment after image claim release; another owner sees cached failure without retry");observed->winsock->release(extra);require(!extra&&!observed->cleanups,"Actual poisoned context claim remains after all explicit fixture claims retire");}
+   ::ExitProcess(0);
+  }
+  if(fault!=Fault::None){
+   const auto code=diagnostic_code(fault);const std::string operation=fault==Fault::ServiceGate?"mutex":fault==Fault::Open||fault==Fault::Attach?"open":fault==Fault::Reuse?"set_option":fault==Fault::Bind?"bind":"listen";const auto& category=s::system_error_category_028620();const auto expected=operation+": "+category.message(static_cast<int>(code));
+   bool caught=false;try{backend.initialize_context_0241b0();if(fault!=Fault::ServiceGate){server::Endpoint endpoint{};endpoint.family=2;endpoint.port_host_order=12345;backend.construct_acceptor_020e20(endpoint,true,INT_MAX);}}
+   catch(const o::SourceError& error){const o::SourceError copy=error;const std::system_error base=error;const std::runtime_error sliced=error;caught=error.code().value()==static_cast<int>(code)&&&error.code().category()==&category&&error.source_error().value==static_cast<int>(code)&&error.source_error().category.name_identity==0x2222&&error.source_error().category.logical==server::ErrorCategory::system&&error.operation()==operation&&!error.context_address()&&std::string(error.what())==expected&&std::string(copy.what())==expected&&std::string(base.what())==expected&&std::string(sliced.what())==expected&&!copy.context_address();}
+   require(caught&&backend.snapshot().phase==o::Phase::Poisoned&&observed->starts==1&&observed->gate_inits==2&&observed->port_attempts==1&&observed->ports_created==1&&!observed->ports_closed&&!observed->gate_deletes&&!observed->cleanups&&!observed->submits,"Actual service/acceptor nonzero error retains native typed diagnostic and initialized scheduler/port/WSA prefix without synthetic cleanup");
+   if(fault==Fault::ServiceGate)require(observed->categories==2&&observed->diagnostic_trace.empty()&&observed->closed.empty()&&observed->order==std::vector<std::string>{"startup"},"Second service gate fails only after scheduler gate/port and retains context0 mutex without entering socket construction");
+   else{
+    const auto trace=fault==Fault::Attach?"FGCX":"FCE";require(observed->diagnostic_trace==trace&&observed->diagnostic_read==code&&observed->categories==3,"Actual WinSock category-before-error and Win32 error-before-category/close retain their distinct exact failure suffixes");
+    require(observed->closed==(fault==Fault::Attach?std::vector<s::Socket>{200}:std::vector<s::Socket>{})&&observed->bound.size()==((fault==Fault::Bind||fault==Fault::Listen)?16U:0U),"Only native attachment failure closes its temporary socket; later operation failures retain their existing ownership prefix");
+   }
+   ::ExitProcess(0); // retained selected failure prefix; no guessed unwinding
+  }
+  if(error_child||gate_child){
+   const auto code=gate_child?ERROR_NOT_ENOUGH_MEMORY:ERROR_ACCESS_DENIED;const auto address=gate_child?0x180084428ULL:0x180084528ULL;const std::string operation=gate_child?"mutex":"iocp";const auto& category=s::system_error_category_028620();
+   // One independent default-native SDK oracle; constructor formatting itself
+   // is not injected/counted, and no second code.message() is requested below.
+   const auto expected=operation+": "+category.message(static_cast<int>(code));
+   bool caught=false;try{backend.initialize_context_0241b0();}
+   catch(const o::SourceError& error){const o::SourceError copied=error;const std::system_error base=error;const std::runtime_error sliced=error;caught=error.code().value()==static_cast<int>(code)&&&error.code().category()==&category&&error.source_error().value==static_cast<int>(code)&&error.source_error().category.name_identity==0x2222&&error.source_error().category.logical==server::ErrorCategory::system&&error.operation()==operation&&error.context_address()==address&&std::string(error.what())==expected&&std::string(copied.what())==expected&&std::string(base.what())==expected&&std::string(sliced.what())==expected&&copied.context_address()==address;}
+   require(caught&&backend.snapshot().phase==o::Phase::Poisoned&&observed->starts==1&&observed->gate_inits==1&&observed->port_attempts==(gate_child?0U:1U)&&observed->categories==(gate_child?1U:2U)&&!observed->ports_created&&!observed->ports_closed&&!observed->gate_deletes&&!observed->cleanups,"Actual024990 nonzero gate/port failure retains native mutex/iocp text, typed source code/category/address and ordered initialized prefix without fabricated cleanup");
+   ::ExitProcess(0); // own retained-prefix child; no unknown-owner unwinding
+  }
   if(sticky_child){
    backend.initialize_context_0241b0();server::construct_server_024480(backend,port,ready,execution);
    const auto result=backend.run_context_0298b0();require(!result.value&&observed->worker_done&&observed->session_deleted&&observed->queue_drained,"Sticky child completes actual native worker/session/cache drain before adversarial quiescence lower");
@@ -224,22 +273,23 @@ void normal_server(bool ipv6,bool sticky_child=false){
   require(observed->environment_key=="EALsxPort"&&observed->environment_value=="12345","Actual server path publishes decimal bound port despite ignored FALSE environment result");
   require(observed->families==(ipv6?std::vector<int>{23}:std::vector<int>{23,2}),"Actual source address selection uses IPv6 success or IPv4 fallback without network operations");
   require(observed->bound.size()==(ipv6?28U:16U)&&std::to_integer<unsigned char>(observed->bound[0])==(ipv6?23:2)&&std::to_integer<unsigned char>(observed->bound[2])==(ipv6?0x1e:0)&&std::to_integer<unsigned char>(observed->bound[3])==(ipv6?0x61:0),"Actual acceptor constructs exact family/initial-port sockaddr bytes");
-  require(observed->closed==std::vector<s::Socket>({201,200})&&observed->starts==1&&observed->cleanups==1&&observed->ports_created==1&&observed->ports_closed==1&&observed->gate_inits==2&&observed->gate_deletes==2,"Accepted session and listener close once; real IOCP, owned gates and WSA scope tear down after attested drain");
+  const auto gates=observed->native_context?3U:2U;require(observed->closed==std::vector<s::Socket>({201,200})&&observed->starts==1&&observed->cleanups==1&&observed->ports_created==1&&observed->ports_closed==1&&observed->gate_inits==gates&&observed->gate_deletes==gates,"Accepted session and listener close once with exact selected context gates and one startup/cleanup");
   const auto snapshot=backend.snapshot();require(snapshot.phase==o::Phase::Closed&&!snapshot.active_calls&&!snapshot.acceptor_initialized&&!snapshot.pending_initialized&&snapshot.quiescence_attested&&observed->quiescent_calls==1,"Full actual029ea0 source teardown reaches Closed only after explicit trusted lower quiescence");
   require(native.root->provider_leases()==0&&observed->executor_cleanups==4&&!observed->cancellations,"Source lifecycle destroys temporary/session/pending/acceptor while no invented cancellation engine exists");
   auto close=std::find(observed->order.begin(),observed->order.end(),"close-port"),clean=std::find(observed->order.begin(),observed->order.end(),"cleanup");
-  require(close!=observed->order.end()&&clean>close&&std::count(close,clean,"delete-gate")==2,"Actual resource order closes IOCP before both owned gates and WSA cleanup");
+  if(observed->native_context)require(close!=observed->order.end()&&clean<close&&observed->order.size()>1&&observed->order[0]=="init-gate"&&observed->order[1]=="startup"&&std::count(clean,close,"delete-gate")==2&&std::count(close,observed->order.end(),"delete-gate")==1&&observed->deleted_gates==std::vector<CRITICAL_SECTION*>{observed->initialized_gates[2],observed->initialized_gates[1],observed->initialized_gates[0]}&&observed->false_port_closes==1&&observed->physical_port_closes==1&&!observed->port_error_queries,"Native releases WSA then deletes service/scheduler gates, ignores false port-close BOOL without error query, and deletes registry gate last");else require(close!=observed->order.end()&&clean>close&&std::count(close,clean,"delete-gate")==2,"HOST resource order retains port then two gates then per-Core WSA cleanup");
  }
  require(lifetime.expired(),"State lifetime root outlives dependent providers and is released after closed backend destruction");running=nullptr;
  require(native.root->close()&&native.memory.blocks.empty()&&native.memory.allocations==native.memory.frees&&native.memory.slot_releases==1,"Backing actual process heap/PTD/FLS domain has no leaked session/IO/provider resources");
 }
-void sticky_quiescence_child(){
+void integration_child(const wchar_t* mode){
  wchar_t executable[32768]{};const auto count=::GetModuleFileNameW(nullptr,executable,32768);require(count>0&&count<32768,"Own regression child executable path is bounded");
- std::wstring command=L"\""+std::wstring(executable)+L"\" --sticky-quiescent";STARTUPINFOW startup_info{};startup_info.cb=sizeof(startup_info);PROCESS_INFORMATION process{};
+ std::wstring command=L"\""+std::wstring(executable)+L"\" "+mode;STARTUPINFOW startup_info{};startup_info.cb=sizeof(startup_info);PROCESS_INFORMATION process{};
  require(::CreateProcessW(executable,command.data(),nullptr,nullptr,FALSE,CREATE_NO_WINDOW,nullptr,nullptr,&startup_info,&process)!=0,"Own sticky-quiescence regression child starts without original targets");
  const auto wait=::WaitForSingleObject(process.hProcess,30000);if(wait!=WAIT_OBJECT_0){(void)::TerminateProcess(process.hProcess,250);(void)::WaitForSingleObject(process.hProcess,5000);}
  DWORD code=251;const auto queried=::GetExitCodeProcess(process.hProcess,&code);::CloseHandle(process.hThread);::CloseHandle(process.hProcess);
- require(wait==WAIT_OBJECT_0&&queried&&code==0,"Own child proves caught quiescence poison blocks teardown and retains exact failed prefix before explicit process exit");
+ require(wait==WAIT_OBJECT_0&&queried&&code==0,"Own integration child observes its selected retained source prefix before explicit process exit");
 }
+Fault diagnostic_mode(std::string_view mode){if(mode=="--service-gate-error")return Fault::ServiceGate;if(mode=="--open-error")return Fault::Open;if(mode=="--attach-error")return Fault::Attach;if(mode=="--reuse-error")return Fault::Reuse;if(mode=="--bind-error")return Fault::Bind;if(mode=="--listen-error")return Fault::Listen;return Fault::None;}
 }
-int main(int argc,char** argv){try{if(argc==2&&std::string_view(argv[1])=="--sticky-quiescent"){normal_server(false,true);return 252;}normal_server(false);normal_server(true);sticky_quiescence_child();std::cout<<"PASS: "<<checks<<" owned-server integration checks; actual029ea0/024990/0228e0/023000/022e40/0298b0/027c10/027120/disposal, real own IOCP/heap/FLS/TLS, synthetic accept/socket/runtime boundaries; own retained sticky-poison child\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"Unexpected owned server integration exception\n";return 1;}}
+int main(int argc,char** argv){try{if(argc==2&&std::string_view(argv[1])=="--native-context"){normal_server(false,false,false,false,Fault::None,ContextCase::Original);return 0;}if(argc==2&&std::string_view(argv[1])=="--native-cached-error"){normal_server(false,false,false,false,Fault::None,ContextCase::CachedFailure);return 253;}if(argc==2&&std::string_view(argv[1])=="--native-registry-error"){normal_server(false,false,false,false,Fault::None,ContextCase::RegistryFailure);return 254;}if(argc==2){const auto fault=diagnostic_mode(argv[1]);if(fault!=Fault::None){normal_server(false,false,false,false,fault);return 255;}}if(argc==2&&std::string_view(argv[1])=="--constructor-error"){normal_server(false,false,true);return 253;}if(argc==2&&std::string_view(argv[1])=="--gate-error"){normal_server(false,false,false,true);return 254;}if(argc==2&&std::string_view(argv[1])=="--sticky-quiescent"){normal_server(false,true);return 252;}normal_server(false);normal_server(true);normal_server(false,false,false,false,Fault::None,ContextCase::Original);integration_child(L"--native-cached-error");integration_child(L"--native-registry-error");integration_child(L"--sticky-quiescent");integration_child(L"--constructor-error");integration_child(L"--gate-error");for(const auto* mode:std::array<const wchar_t*,6>{L"--service-gate-error",L"--open-error",L"--attach-error",L"--reuse-error",L"--bind-error",L"--listen-error"})integration_child(mode);std::cout<<"PASS: "<<checks<<" owned-server integration checks; actual029ea0/024990/0228e0/023000/022e40/0298b0/027c10/027120/disposal, real own IOCP/heap/FLS/TLS, synthetic accept/socket/runtime boundaries; retained sticky-poison and native mutex/iocp diagnostic children\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"Unexpected owned server integration exception\n";return 1;}}

@@ -1,0 +1,308 @@
+﻿address,name,old_presence,current_presence,source_locations,direct_callers,mapped_callers
+0x180020940,FUN_180020940,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180020950,FUN_180020950,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180020a70,FUN_180020a70,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180020a80,FUN_180020a80,no_definition_mapping,tagged_or_explicit_source_present,outputs/anadius-socket-source/native.cpp:7:misc_message_020a80,0,0
+0x180020c10,FUN_180020c10,no_definition_mapping,not_mapped_requires_review,,5,0
+0x180020c80,FUN_180020c80,no_definition_mapping,not_mapped_requires_review,,6,0
+0x180020cb0,FUN_180020cb0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/owned_response.cpp:39:make_owned_response_020cb0 | outputs/anadius-socket-source/owned_response.cpp:80:RecoveredOwnedResponseApi::make_owned_response_020cb0,1,1
+0x180020e20,FUN_180020e20,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/acceptor.cpp:39:acceptor_020e20 | outputs/anadius-socket-source/acceptor.cpp:94:AcceptorBackend::construct_acceptor_020e20,1,1
+0x1800211b0,FUN_1800211b0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/lifecycle.cpp:23:initialize_0211b0 | outputs/anadius-socket-source/lifecycle.cpp:72:LifecycleRuntime::initialize_0211b0,2,2
+0x1800212d0,FUN_1800212d0,no_definition_mapping,not_mapped_requires_review,,2,1
+0x180021420,FUN_180021420,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/response_dispatch.cpp:65:dispatch_response_021420 | outputs/anadius-socket-source/response_dispatch.cpp:142:RecoveredResponseDispatchApi::dispatch_response_021420,1,1
+0x180021770,FUN_180021770,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/message_dispatch.cpp:101:message_thread_entry_021770,0,0
+0x180021820,FUN_180021820,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/posted_operation.cpp:20:allocate_cached_021820,1,1
+0x180021900,FUN_180021900,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/handler_dispatch.cpp:47:allocate_handler_cached_021900,4,4
+0x1800219d0,FUN_1800219d0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/owned_response.cpp:52:invoke_owned_response_0219d0,1,1
+0x180021a10,FUN_180021a10,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-session-flow-source/flow.cpp:85:invoke_accept_handler_021a10,2,1
+0x180021a40,FUN_180021a40,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/io_completion.cpp:82:invoke_receive_021a40,2,2
+0x180021a80,FUN_180021a80,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/io_completion.cpp:86:invoke_send_021a80,2,2
+0x180021ac0,FUN_180021ac0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/posted_operation.cpp:48:consume_functor_021ac0,2,2
+0x180021b00,FUN_180021b00,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-accept-source/accept.cpp:60:start_async_accept_021b00,2,2
+0x180021d10,FUN_180021d10,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/async_receive.cpp:22:start_async_receive_021d10,1,1
+0x180021fd0,FUN_180021fd0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/composed_write.cpp:55:start_async_send_021fd0,2,2
+0x180022240,FUN_180022240,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/response_dispatch.cpp:131:invoke_borrowed_response_022240,0,0
+0x180022280,FUN_180022280,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/owned_response.cpp:59:call_owned_response_022280,0,0
+0x180022500,FUN_180022500,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180022520,FUN_180022520,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180022640,FUN_180022640,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/handler_dispatch.cpp:74:invoke_borrowed_receive_022640,0,0
+0x180022670,FUN_180022670,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/handler_dispatch.cpp:99:call_receive_task_022670,0,0
+0x180022780,FUN_180022780,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/handler_dispatch.cpp:78:invoke_borrowed_send_022780,0,0
+0x1800227b0,FUN_1800227b0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/handler_dispatch.cpp:112:call_send_task_0227b0,0,0
+0x1800228e0,FUN_1800228e0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/service_constructor.cpp:9:construct_service_0228e0 | outputs/anadius-socket-source/service_constructor.cpp:28:ConstructorRegistryEffects::create_socket_service_0228e0,1,1
+0x1800229a0,FUN_1800229a0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800229d0,FUN_1800229d0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/handler_dispatch.cpp:153:schedule_send_handler_0229d0 | outputs/anadius-socket-source/handler_dispatch_bridge.cpp:3:RecoveredHandlerDispatchEffects::schedule_send_0229d0,1,1
+0x180022c60,FUN_180022c60,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/handler_dispatch.cpp:126:schedule_receive_handler_022c60 | outputs/anadius-socket-source/handler_dispatch_bridge.cpp:6:RecoveredHandlerDispatchEffects::schedule_receive_022c60,1,1
+0x180022e40,FUN_180022e40,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/posted_operation.cpp:89:dispatch_posted_022e40,0,0
+0x180022fa0,FUN_180022fa0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/service_registry.cpp:18:initialize_service_key_022fa0,1,1
+0x180022fd0,FUN_180022fd0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/scheduler_registry.cpp:16:initialize_scheduler_key_022fd0,2,1
+0x180023000,FUN_180023000,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-session-owner-source/owner.cpp:13:construct_session_owner_023000,1,1
+0x1800231b0,FUN_1800231b0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023200,FUN_180023200,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023220,FUN_180023220,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023270,FUN_180023270,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800232c0,FUN_1800232c0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023310,FUN_180023310,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023360,FUN_180023360,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800233a0,FUN_1800233a0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023400,FUN_180023400,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023460,FUN_180023460,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800234c0,FUN_1800234c0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023520,FUN_180023520,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023580,FUN_180023580,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800235d0,FUN_1800235d0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023630,FUN_180023630,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023640,FUN_180023640,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180023680,FUN_180023680,no_definition_mapping,not_mapped_requires_review,,1,0
+0x1800236b0,FUN_1800236b0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023700,FUN_180023700,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023750,FUN_180023750,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180023790,FUN_180023790,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800237d0,FUN_1800237d0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800237e0,FUN_1800237e0,no_definition_mapping,not_mapped_requires_review,,1,0
+0x1800237f0,FUN_1800237f0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/lifecycle.cpp:47:replace_owner_0237f0 | outputs/anadius-socket-source/lifecycle.cpp:76:LifecycleRuntime::reset_cancellation_0237f0,2,2
+0x1800238a0,FUN_1800238a0,no_definition_mapping,not_mapped_requires_review,,1,1
+0x1800238d0,FUN_1800238d0,no_definition_mapping,not_mapped_requires_review,,2,0
+0x180023900,FUN_180023900,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180023930,FUN_180023930,no_definition_mapping,composition_only,,1,1
+0x180023960,FUN_180023960,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180023990,FUN_180023990,no_definition_mapping,not_mapped_requires_review,,2,0
+0x1800239c0,FUN_1800239c0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/service_registry.cpp:21:resolve_service_0239c0 | outputs/anadius-socket-source/service_registry.cpp:42:RegistryLifecycleEffects::resolve_service_0239c0,1,1
+0x180023b30,FUN_180023b30,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/scheduler_registry.cpp:17:resolve_scheduler_023b30 | outputs/anadius-socket-source/scheduler_registry.cpp:41:SchedulerConstructionEffects::resolve_scheduler_023b30,1,1
+0x180023cb0,FUN_180023cb0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/io_completion.cpp:28:move_io_environment_023cb0,5,4
+0x180023d20,FUN_180023d20,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-move-source/move.cpp:59:move_socket_023d20,2,1
+0x180023dd0,FUN_180023dd0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/async_receive.cpp:74:RecoveredAsyncReceiveEffects::construct_environment_023dd0 | outputs/anadius-socket-source/environment_constructor.cpp:36:construct_io_environment_023dd0 | outputs/anadius-socket-source/environment_constructor.cpp:66:RecoveredConstructedWriteEffects::construct_environment_023dd0,3,3
+0x180023f30,FUN_180023f30,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180023fe0,FUN_180023fe0,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180024020,FUN_180024020,no_definition_mapping,not_mapped_requires_review,,1,1
+0x180024040,FUN_180024040,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180024080,FUN_180024080,no_definition_mapping,not_mapped_requires_review,,2,0
+0x1800240a0,FUN_1800240a0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800240e0,FUN_1800240e0,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180024100,FUN_180024100,module_record_only,composition_only,,2,1
+0x180024120,FUN_180024120,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180024160,FUN_180024160,no_definition_mapping,not_mapped_requires_review,,1,0
+0x1800241b0,FUN_1800241b0,no_definition_mapping,composition_only,,1,1
+0x180024350,FUN_180024350,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180024390,FUN_180024390,no_definition_mapping,composition_only,,2,1
+0x1800243e0,FUN_1800243e0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180024420,FUN_180024420,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180024480,FUN_180024480,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-server-source/server.cpp:12:construct_server_024480,1,1
+0x180024820,FUN_180024820,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180024860,FUN_180024860,no_definition_mapping,not_mapped_requires_review,,1,0
+0x1800248b0,FUN_1800248b0,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180024990,FUN_180024990,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/iocp_constructor.cpp:5:construct_iocp_024990 | outputs/anadius-socket-source/iocp_constructor.cpp:49:IocpSchedulerRegistryEffects::construct_scheduler_024990,2,1
+0x180024bf0,FUN_180024bf0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180024c50,FUN_180024c50,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180024c70,FUN_180024c70,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180024cc0,FUN_180024cc0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180024d10,FUN_180024d10,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180024d70,FUN_180024d70,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180024d90,FUN_180024d90,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180024db0,FUN_180024db0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/lifecycle.cpp:59:destroy_024db0 | outputs/anadius-socket-source/lifecycle.cpp:80:LifecycleRuntime::destroy_socket_024db0,5,3
+0x180024e90,FUN_180024e90,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180024f30,FUN_180024f30,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180024f60,FUN_180024f60,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180024fb0,FUN_180024fb0,no_definition_mapping,not_mapped_requires_review,,2,1
+0x180025060,FUN_180025060,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180025140,FUN_180025140,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800251d0,FUN_1800251d0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800251f0,FUN_1800251f0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180025230,FUN_180025230,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180025260,FUN_180025260,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800252b0,FUN_1800252b0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800252c0,FUN_1800252c0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800252d0,FUN_1800252d0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800252e0,FUN_1800252e0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180025310,FUN_180025310,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/acceptor.cpp:23:close_025310,4,2
+0x1800253d0,FUN_1800253d0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800253f0,FUN_1800253f0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180025440,KERNEL32.DLL::DeleteCriticalSection,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180025450,FUN_180025450,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180025480,FUN_180025480,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-server-source/server.cpp:94:Session::frame_completed_025480 | outputs/anadius-socket-source/frame_read.cpp:75:finish_frame_read_025480 | outputs/anadius-socket-source/frame_read.cpp:118:RecoveredFrameReadApi::finish_frame_025480,1,1
+0x180025720,FUN_180025720,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-server-source/server.cpp:60:Session::start_025720 | outputs/anadius-server-source/server.cpp:136:accept_completion_025720 | outputs/anadius-session-flow-source/flow.cpp:49:accept_session_025720,2,1
+0x180025a70,FUN_180025a70,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-server-source/server.cpp:131:Session::write_completed_025a70 | outputs/anadius-socket-source/write_finish.cpp:57:finish_write_025a70 | outputs/anadius-socket-source/write_finish.cpp:91:RecoveredFinishedWriteEffects::finish_write_025a70,1,1
+0x180025c40,FUN_180025c40,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/composed_read.cpp:52:composed_receive_025c40 | outputs/anadius-socket-source/composed_read.cpp:107:RecoveredComposedReadEffects::receive_body_025c40,3,3
+0x1800261d0,FUN_1800261d0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-server-source/server.cpp:125:Session::send_completed_0261d0 | outputs/anadius-socket-source/composed_write.cpp:103:composed_write_0261d0 | outputs/anadius-socket-source/composed_write.cpp:123:RecoveredComposedWriteEffects::send_body_0261d0,2,2
+0x180026290,FUN_180026290,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-session-dispose-source/dispose.cpp:72:delete_session_control_026290,0,0
+0x1800262c0,FUN_1800262c0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800262f0,FUN_1800262f0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180026320,FUN_180026320,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/worker_run.cpp:50:delete_worker_function_026320,0,0
+0x180026350,FUN_180026350,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800263a0,FUN_1800263a0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800263d0,FUN_1800263d0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180026420,FUN_180026420,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180026570,FUN_180026570,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-session-dispose-source/dispose.cpp:54:dispose_session_control_026570,0,0
+0x180026640,FUN_180026640,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180026670,FUN_180026670,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/response_containers.cpp:79:grow_response_deque_026670 | outputs/anadius-socket-source/response_containers.cpp:127:RecoveredResponseQueueApi::grow_deque_026670,3,3
+0x180026860,FUN_180026860,no_definition_mapping,composition_only,,3,3
+0x180026880,FUN_180026880,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-session-dispose-source/dispose.cpp:27:clear_session_output_026880,3,1
+0x1800269b0,FUN_1800269b0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/composed_write.cpp:30:allocate_io_storage_0269b0,3,3
+0x180026a00,FUN_180026a00,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/io_completion.cpp:40:release_io_storage_026a00,4,3
+0x180026a80,FUN_180026a80,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180026aa0,FUN_180026aa0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/cancellation.cpp:12:cancel_queue_026aa0 | outputs/anadius-socket-source/cancellation.cpp:64:QueueCancellationEffects::cancel_026aa0,2,1
+0x180026d10,FUN_180026d10,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180026e50,FUN_180026e50,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/close.cpp:10:close_026e50,2,1
+0x180026fb0,FUN_180026fb0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/closing.cpp:4:cancel_and_close_026fb0 | outputs/anadius-socket-source/closing.cpp:8:cancel_and_close_026fb0 | outputs/anadius-socket-source/closing.cpp:37:ClosingLifecycleEffects::close_and_cancel_026fb0 | outputs/anadius-socket-source/service_registry.cpp:49:RegistryLifecycleEffects::close_and_cancel_026fb0,1,1
+0x1800270e0,FUN_1800270e0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-session-flow-source/flow.cpp:45:rearm_accept_0270e0,1,1
+0x180027120,FUN_180027120,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/posted_operation.cpp:124:complete_posted_027120,0,0
+0x1800271a0,FUN_1800271a0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-accept-source/accept.cpp:85:complete_async_accept_0271a0,0,0
+0x180027710,FUN_180027710,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/io_completion.cpp:109:complete_receive_027710,0,0
+0x180027a20,FUN_180027a20,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/io_completion.cpp:90:complete_send_027a20,0,0
+0x180027be0,FUN_180027be0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/service_constructor.cpp:5:initialize_gate_027be0,3,2
+0x180027c10,FUN_180027c10,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/completion_dispatcher.cpp:29:dispatch_completion_027c10 | outputs/anadius-socket-source/completion_dispatcher.cpp:150:RecoveredDispatcherWorkerEffects::dispatch_027c10,2,1
+0x1800280d0,FUN_1800280d0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-server-source/server.cpp:75:Session::do_read_0280d0 | outputs/anadius-socket-source/frame_read.cpp:50:start_frame_read_0280d0,2,2
+0x180028210,FUN_180028210,no_definition_mapping,not_mapped_requires_review,,3,2
+0x180028240,FUN_180028240,no_definition_mapping,composition_only,,18,7
+0x180028270,FUN_180028270,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-server-source/server.cpp:110:Session::do_write_028270 | outputs/anadius-socket-source/response_dispatch.cpp:104:enqueue_response_028270,0,0
+0x1800283c0,FUN_1800283c0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/recycle.cpp:4:recycle_0283c0 | outputs/anadius-socket-source/recycle.cpp:41:RecoveredCancellationRecycler::recycle_0283c0,1,1
+0x1800284b0,FUN_1800284b0,no_definition_mapping,not_mapped_requires_review,,1,0
+0x1800285b0,FUN_1800285b0,module_record_only,composition_only,,7,6
+0x180028620,FUN_180028620,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/native.cpp:33:NativeApi::system_category_028620,70,20
+0x180028690,FUN_180028690,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/operations.cpp:7:address_028690 | outputs/anadius-socket-source/operations.cpp:67:AddressBackend::parse_address_028690,2,1
+0x180028850,FUN_180028850,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/cancellation.cpp:4:wake_028850,1,1
+0x1800288c0,FUN_1800288c0,no_definition_mapping,not_mapped_requires_review,,3,0
+0x180028950,FUN_180028950,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-move-source/move.cpp:32:transfer_socket_028950,1,1
+0x180028ab0,FUN_180028ab0,no_definition_mapping,not_mapped_requires_review,,1,1
+0x180028b50,FUN_180028b50,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/composed_write.cpp:37:publish_send_status_028b50,11,4
+0x180028c00,FUN_180028c00,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/composed_write.cpp:45:publish_send_started_028c00,4,4
+0x180028ca0,FUN_180028ca0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/posted_operation.cpp:75:enqueue_posted_028ca0,1,1
+0x180028d30,FUN_180028d30,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-server-source/server.cpp:105:Session::process_message_028d30 | outputs/anadius-socket-source/message_dispatch.cpp:47:dispatch_message_028d30,0,0
+0x180028fd0,FUN_180028fd0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/posted_operation.cpp:52:cleanup_posted_028fd0,4,2
+0x180029080,FUN_180029080,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180029120,FUN_180029120,no_definition_mapping,not_mapped_requires_review,,0,0
+0x1800291c0,FUN_1800291c0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/handler_dispatch.cpp:87:cleanup_receive_task_0291c0,2,1
+0x1800292a0,FUN_1800292a0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/handler_dispatch.cpp:93:cleanup_send_task_0292a0,2,1
+0x180029380,FUN_180029380,no_definition_mapping,not_mapped_requires_review,,1,0
+0x1800293f0,FUN_1800293f0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/io_completion.cpp:56:cleanup_receive_0293f0,4,2
+0x1800294c0,FUN_1800294c0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/io_completion.cpp:69:cleanup_send_0294c0,4,2
+0x180029590,FUN_180029590,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-accept-helpers-source/helpers.cpp:50:reset_socket_holder_029590,4,2
+0x180029660,FUN_180029660,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-accept-helpers-source/helpers.cpp:64:retry_accept_029660,1,1
+0x180029880,FUN_180029880,module_record_only,composition_only,,1,1
+0x180029890,FUN_180029890,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/worker_run.cpp:43:run_worker_function_029890,0,0
+0x1800298b0,FUN_1800298b0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/worker_run.cpp:13:run_worker_0298b0,2,2
+0x180029a30,FUN_180029a30,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180029ba0,FUN_180029ba0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180029df0,FUN_180029df0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-accept-helpers-source/helpers.cpp:39:create_socket_029df0,1,1
+0x180029ea0,FUN_180029ea0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-server-source/server.cpp:40:server_start_029ea0,0,0
+0x18002a000,FUN_18002a000,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/worker_startup.cpp:5:start_worker_02a000 | outputs/anadius-socket-source/worker_startup.cpp:48:WorkerStartupEffects::start_worker_02a000,2,1
+0x18002a190,FUN_18002a190,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/worker_run.cpp:5:stop_worker_02a190,8,2
+0x18002a200,FUN_18002a200,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/operations.cpp:35:send_02a200,1,1
+0x18002a460,FUN_18002a460,no_definition_mapping,not_mapped_requires_review,,0,0
+0x18002a470,FUN_18002a470,no_definition_mapping,not_mapped_requires_review,,0,0
+0x18002a480,FUN_18002a480,no_definition_mapping,not_mapped_requires_review,,0,0
+0x18002a490,FUN_18002a490,no_definition_mapping,not_mapped_requires_review,,0,0
+0x18002a4a0,FUN_18002a4a0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/worker_startup.cpp:38:worker_entry_02a4a0,0,0
+0x18002a500,FUN_18002a500,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-server-source/server.cpp:114:Session::write_loop_02a500 | outputs/anadius-socket-source/queued_write.cpp:32:start_queued_write_02a500 | outputs/anadius-socket-source/queued_write.cpp:72:RecoveredQueuedWriteApi::next_write_02a500,3,2
+0x18002a690,FUN_18002a690,no_definition_mapping,not_mapped_requires_review,,1,1
+0x18002a830,FUN_18002a830,no_definition_mapping,tagged_or_explicit_source_present,outputs/anadius-license-source/key_processor.cpp:31:apply_license_key_02a830,1,0
+0x18002af30,FUN_18002af30,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-license-source/license.cpp:71:Handlers::token_path_02af30,3,2
+0x18002afa0,FUN_18002afa0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-file-source/license_files.cpp:58:LicenseFiles::load_token_02afa0 | outputs/anadius-licensing-effects-source/effects.cpp:100:Core::load_token_02afa0 | outputs/anadius-token-source/token.cpp:19:load_token_02afa0 | outputs/anadius-windows-source/windows_effects.cpp:21:WindowsEffects::load_token_02afa0,2,1
+0x18002b300,FUN_18002b300,no_definition_mapping,not_mapped_requires_review,,4,4
+0x18002b3b0,FUN_18002b3b0,no_definition_mapping,not_mapped_requires_review,,1,1
+0x18002b3f0,FUN_18002b3f0,no_definition_mapping,not_mapped_requires_review,,1,1
+0x18002b480,FUN_18002b480,no_definition_mapping,not_mapped_requires_review,,3,0
+0x18002b540,FUN_18002b540,no_definition_mapping,not_mapped_requires_review,,9,1
+0x18002b600,FUN_18002b600,no_definition_mapping,not_mapped_requires_review,,3,2
+0x18002b940,FUN_18002b940,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/request_growth.cpp:13:grow_replace_request_02b940 | outputs/anadius-socket-source/request_growth.cpp:49:RecoveredRequestGrowthApi::grow_replace_02b940,1,1
+0x18002bb10,FUN_18002bb10,no_definition_mapping,not_mapped_requires_review,,4,1
+0x18002bc10,FUN_18002bc10,module_record_only,not_mapped_requires_review,,1,1
+0x18002bc70,FUN_18002bc70,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-messages-source/messages.cpp:6:reset_02bc70 | outputs/anadius-session-source/handler.cpp:4:MessageHandler::reset_02bc70 | outputs/anadius-socket-source/cipher_session.cpp:20:reset_session_cipher_02bc70,2,2
+0x18002bc90,FUN_18002bc90,no_definition_mapping,not_mapped_requires_review,,0,0
+0x18002bcd0,FUN_18002bcd0,no_definition_mapping,not_mapped_requires_review,,2,2
+0x18002bcf0,FUN_18002bcf0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x18002bd30,FUN_18002bd30,no_definition_mapping,not_mapped_requires_review,,2,1
+0x18002bdc0,FUN_18002bdc0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x18002bdf0,FUN_18002bdf0,no_definition_mapping,not_mapped_requires_review,,0,0
+0x18002be30,FUN_18002be30,no_definition_mapping,not_mapped_requires_review,,1,0
+0x18002be90,FUN_18002be90,no_definition_mapping,not_mapped_requires_review,,0,0
+0x18002bf10,FUN_18002bf10,no_definition_mapping,not_mapped_requires_review,,0,0
+0x18002bf60,FUN_18002bf60,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-content-handlers-source/content_handlers.cpp:94:achievement_set_header_02bf60,2,2
+0x18002c080,FUN_18002c080,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-content-handlers-source/content_handlers.cpp:99:achievement_element_02c080,3,2
+0x18002c2d0,FUN_18002c2d0,no_definition_mapping,not_mapped_requires_review,,1,1
+0x18002c350,FUN_18002c350,no_definition_mapping,not_mapped_requires_review,,7,1
+0x18002c370,FUN_18002c370,no_definition_mapping,not_mapped_requires_review,,11,1
+0x18002c390,FUN_18002c390,no_definition_mapping,not_mapped_requires_review,,1,1
+0x18002c400,FUN_18002c400,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-event-queue-source/adapters.cpp:17:IgoQueue::acquire_event_queue_02c400 | outputs/anadius-event-queue-source/queue.cpp:18:queue_02c400,3,3
+0x18002c620,FUN_18002c620,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-event-queue-source/adapters.cpp:5:ContentQueue::mutex_02c620 | outputs/anadius-event-queue-source/queue.cpp:5:mutex_02c620,3,3
+0x18002c6a0,FUN_18002c6a0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-content-handlers-source/content_handlers.cpp:51:parse_entitlement_filters_02c6a0,1,1
+0x18002d540,FUN_18002d540,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-messages-source/messages.cpp:55:initial_message_02d540 | outputs/anadius-session-source/handler.cpp:7:MessageHandler::initial_message_02d540,1,1
+0x18002d7e0,FUN_18002d7e0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-messages-source/messages.cpp:67:challenge_response_02d7e0,1,1
+0x18002d9e0,FUN_18002d9e0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:92:permission_02d9e0,0,0
+0x18002da30,FUN_18002da30,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:85:voip_02da30,0,0
+0x18002da90,FUN_18002da90,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-handlers-source/handlers.cpp:96:get_all_game_info_02da90,0,0
+0x18002e3b0,FUN_18002e3b0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-license-source/license.cpp:38:Handlers::auth_code_02e3b0 | outputs/anadius-licensing-effects-source/effects.cpp:211:Handlers::auth_code_02e3b0,0,0
+0x18002e5a0,FUN_18002e5a0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:84:block_list_02e5a0,0,0
+0x18002e5f0,FUN_18002e5f0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-handlers-source/handlers.cpp:6:get_config_02e5f0,0,0
+0x18002efd0,FUN_18002efd0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-handlers-source/handlers.cpp:79:get_game_info_02efd0,0,0
+0x18002f270,FUN_18002f270,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:55:group_info_02f270,0,0
+0x18002f2d0,FUN_18002f2d0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-handlers-source/handlers.cpp:58:get_connected_02f2d0,0,0
+0x18002f330,FUN_18002f330,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:23:presence_02f330,0,0
+0x18002f4e0,FUN_18002f4e0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:20:presence_visibility_02f4e0,0,0
+0x18002f530,FUN_18002f530,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-handlers-source/handlers.cpp:34:get_profile_02f530,0,0
+0x18002f7c0,FUN_18002f7c0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-handlers-source/handlers.cpp:76:get_setting_02f7c0,0,0
+0x18002fa60,FUN_18002fa60,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-handlers-source/handlers.cpp:83:get_settings_02fa60,0,0
+0x18002fea0,FUN_18002fea0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:93:utc_time_02fea0,0,0
+0x18002ff60,FUN_18002ff60,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:88:wallet_02ff60,0,0
+0x18002ffb0,FUN_18002ffb0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:19:success_02ffb0,0,0
+0x180030010,FUN_180030010,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-content-handlers-source/content_handlers.cpp:113:grant_achievement_030010,0,0
+0x180030c50,FUN_180030c50,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-license-source/license.cpp:56:Handlers::invalidate_license_030c50 | outputs/anadius-licensing-effects-source/effects.cpp:213:Handlers::invalidate_license_030c50,0,0
+0x180030cd0,FUN_180030cd0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:58:progressive_available_030cd0,0,0
+0x180030d30,FUN_180030d30,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-content-handlers-source/content_handlers.cpp:105:query_achievements_030d30,0,0
+0x180030eb0,FUN_180030eb0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:65:query_chunk_status_030eb0,0,0
+0x180030ee0,FUN_180030ee0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-content-handlers-source/content_handlers.cpp:70:query_content_030ee0,0,0
+0x180031030,FUN_180031030,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-content-handlers-source/content_handlers.cpp:79:query_entitlements_031030,0,0
+0x1800314f0,FUN_1800314f0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-content-handlers-source/content_handlers.cpp:147:query_image_0314f0,0,0
+0x180031ec0,FUN_180031ec0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:115:query_offers_031ec0,0,0
+0x180031ef0,FUN_180031ef0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:35:query_presence_031ef0,0,0
+0x1800320c0,FUN_1800320c0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-license-source/license.cpp:123:Handlers::request_license_0320c0 | outputs/anadius-licensing-effects-source/effects.cpp:212:Handlers::request_license_0320c0,0,0
+0x180032ab0,FUN_180032ab0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:89:restart_game_032ab0,0,0
+0x180032b10,FUN_180032b10,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:100:show_igo_032b10,0,0
+0x180032ca0,FUN_180032ca0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-misc-handlers-source/misc_handlers.cpp:112:start_download_032ca0,0,0
+0x180032d00,FUN_180032d00,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-messages-source/messages.cpp:11:registrations_032d00 | outputs/anadius-messages-source/messages.cpp:85:dispatch_032d00 | outputs/anadius-socket-source/native_dispatch.cpp:13:dispatch_native_032d00 | outputs/anadius-socket-source/native_dispatch.cpp:59:RecoveredMessageDispatchApi::dispatch_032d00,1,1
+0x180033d70,FUN_180033d70,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-messages-source/messages.cpp:112:process_message_033d70 | outputs/anadius-session-source/handler.cpp:10:MessageHandler::process_message_033d70 | outputs/anadius-socket-source/message_core_bridge.cpp:39:CompatibleMessageCoreApi::process_message_033d70 | outputs/anadius-socket-source/native_message.cpp:43:process_native_message_033d70 | outputs/anadius-socket-source/native_message.cpp:134:RecoveredNativeMessageApi::process_message_033d70,1,1
+0x180034660,FUN_180034660,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-event-queue-source/adapters.cpp:14:ContentQueue::push_locked_034660 | outputs/anadius-event-queue-source/adapters.cpp:18:IgoQueue::enqueue_034660 | outputs/anadius-event-queue-source/queue.cpp:56:OwnedStorage::push_move_034660,2,2
+0x180034730,FUN_180034730,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-socket-source/request_mutation.cpp:27:replace_request_034730,1,1
+0x1800348d0,FUN_1800348d0,module_record_only,not_mapped_requires_review,,5,2
+0x1800349a0,FUN_1800349a0,no_definition_mapping,not_mapped_requires_review,,1,1
+0x180034af0,FUN_180034af0,no_definition_mapping,not_mapped_requires_review,,1,1
+0x180034ba0,FUN_180034ba0,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180034c30,FUN_180034c30,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-crypto-source/crypto.cpp:107:Random::key_from_response_034c30,1,1
+0x180034cf0,FUN_180034cf0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-crypto-source/crypto.cpp:98:Random::challenge_bytes_034cf0 | outputs/anadius-crypto-source/crypto.cpp:102:Random::challenge_hex_034cf0,1,1
+0x180034de0,FUN_180034de0,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180034e60,FUN_180034e60,no_definition_mapping,not_mapped_requires_review,,1,1
+0x1800350f0,FUN_1800350f0,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180035120,FUN_180035120,no_definition_mapping,not_mapped_requires_review,,1,1
+0x180035190,FUN_180035190,no_definition_mapping,not_mapped_requires_review,,2,0
+0x1800351d0,FUN_1800351d0,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180035260,FUN_180035260,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-libraries-source/libraries.cpp:52:load_list_035260,2,1
+0x180035850,FUN_180035850,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-libraries-source/libraries.cpp:76:load_phase_035850,1,1
+0x180035ab0,FUN_180035ab0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-libraries-source/libraries.cpp:85:unload_035ab0,1,1
+0x180035b00,FUN_180035b00,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-online-source/online.cpp:4:exists_035b00,4,1
+0x180035b60,FUN_180035b60,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-online-source/online.cpp:117:worker_035b60,0,0
+0x180035bd0,FUN_180035bd0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-online-source/online.cpp:38:load_online_035bd0,1,1
+0x1800366f0,FUN_1800366f0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-online-source/online.cpp:106:cleanup_0366f0,1,1
+0x180036740,FUN_180036740,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-execution-source/execution.cpp:159:Execution::now_nanoseconds_036740,1,1
+0x180036820,FUN_180036820,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-execution-source/execution.cpp:121:Execution::finish_flag_036820 | outputs/anadius-library-effects-source/bound.cpp:40:BoundLibrary::finish_flag_036820 | outputs/anadius-online-source/recovered_effects.cpp:66:RecoveredEffects::finish_flag_036820,2,2
+0x180036880,FUN_180036880,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-execution-source/execution.cpp:177:Execution::wait_steps_036880 | outputs/anadius-library-effects-source/bound.cpp:39:BoundLibrary::wait_steps_036880 | outputs/anadius-network-hook-source/connect.cpp:51:ExecutionEffects::wait_steps_036880 | outputs/anadius-online-source/recovered_effects.cpp:65:RecoveredEffects::wait_steps_036880,5,3
+0x180036ac0,FUN_180036ac0,no_definition_mapping,not_mapped_requires_review,,2,1
+0x180036b40,FUN_180036b40,no_definition_mapping,not_mapped_requires_review,,4,1
+0x180036bc0,FUN_180036bc0,no_definition_mapping,not_mapped_requires_review,,2,1
+0x180036d20,FUN_180036d20,no_definition_mapping,tagged_or_explicit_source_present,outputs/anadius-bootstrap-runtime-source/observed_runtime.cpp:7:make_observed_runtime_036d20,1,0
+0x180037b20,FUN_180037b20,no_definition_mapping,not_mapped_requires_review,,1,1
+0x180037b60,FUN_180037b60,no_definition_mapping,not_mapped_requires_review,,0,0
+0x180037b90,FUN_180037b90,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180037ce0,FUN_180037ce0,no_definition_mapping,not_mapped_requires_review,,1,0
+0x180037d90,FUN_180037d90,no_definition_mapping,not_mapped_requires_review,,1,1
+0x180037e20,FUN_180037e20,no_definition_mapping,not_mapped_requires_review,,1,1
+0x180037ee0,FUN_180037ee0,no_definition_mapping,not_mapped_requires_review,,2,1
+0x180037f70,FUN_180037f70,no_definition_mapping,tagged_or_explicit_source_present,outputs/anadius-config-defaults-source/teardown.cpp:29:release_aggregate_storage_037f70,0,0
+0x180038760,FUN_180038760,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-config-startup-source/startup.cpp:22:BootstrapConfiguration::setup_console_038760 | outputs/anadius-startup-source/startup.cpp:84:setup_console_038760,1,1
+0x180038870,FUN_180038870,module_record_only,tagged_or_explicit_source_present,outputs/anadius-source/bootstrap.cpp:6:Bootstrap::application_dll_main,2,1
+0x180038890,FUN_180038890,module_record_only,tagged_or_explicit_source_present,outputs/anadius-source/bootstrap.cpp:76:Bootstrap::on_terminate,0,0
+0x1800388a0,FUN_1800388a0,module_record_only,tagged_or_explicit_source_present,outputs/anadius-source/bootstrap.cpp:53:Bootstrap::run_no_argument,0,0
+0x1800388d0,FUN_1800388d0,module_record_only,tagged_or_explicit_source_present,outputs/anadius-source/bootstrap.cpp:61:Bootstrap::run_boolean,0,0
+0x180038920,FUN_180038920,no_definition_mapping,composition_only,,1,1
+0x180038950,FUN_180038950,module_record_only,tagged_or_explicit_source_present,outputs/anadius-source/bootstrap.cpp:69:Bootstrap::on_exit,0,0
+0x180038970,FUN_180038970,module_record_only,tagged_or_explicit_source_present,outputs/anadius-source/bootstrap.cpp:25:Bootstrap::initialize,1,1
+0x180038bc0,FUN_180038bc0,source_definition_mapped,tagged_or_explicit_source_present,outputs/anadius-file-source/license_files.cpp:77:LicenseFiles::dialog_038bc0 | outputs/anadius-library-effects-source/bound.cpp:36:BoundLibrary::message_038bc0 | outputs/anadius-licensing-effects-source/effects.cpp:111:Core::dialog_038bc0 | outputs/anadius-network-hook-source/connect.cpp:55:ExecutionEffects::dialog_038bc0 | outputs/anadius-online-source/recovered_effects.cpp:62:RecoveredEffects::dialog_038bc0 | outputs/anadius-windows-source/windows_effects.cpp:27:WindowsEffects::dialog_038bc0,18,6

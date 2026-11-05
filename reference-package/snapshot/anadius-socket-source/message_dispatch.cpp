@@ -7,13 +7,11 @@ void destroy(ReceiveBufferString& value,MessageDispatchContext& context){
     const auto capacity=value.capacity_18;if(capacity<=15)return;
     auto data=receive_buffer_address(value);auto bytes=capacity+std::uint64_t{1};
     if(bytes>=4096){
-        bytes+=39;std::uintptr_t base=0;bool found=false;
-        for(const auto& binding:context.frame.allocation_headers){
-            if(binding.address!=data-std::uintptr_t{8})continue;
-            if(found)throw UnsupportedInput("Message allocation header is ambiguous");
-            found=true;base=binding.allocation_base;
-        }
-        if(!found)throw UnsupportedInput("Message allocation header is unbound");
+        bytes+=39;std::uintptr_t base=0;
+        const auto match=lookup_allocation_header(data-std::uintptr_t{8},context.frame.allocation_headers,
+            context.frame.allocation_header_resolver,base);
+        if(match==MemoryLookup::Ambiguous)throw UnsupportedInput("Message allocation header is ambiguous");
+        if(match!=MemoryLookup::Found)throw UnsupportedInput("Message allocation header is unbound");
         if(data-base-std::uintptr_t{8}>31)context.frame.api.invalid_parameter_05c974();
         data=base;
     }
@@ -29,9 +27,9 @@ MessageDispatchOwner& owner_at(std::uintptr_t identity,MessageDispatchContext& c
     if(!found || !found->lifetime)throw UnsupportedInput("Message owner has no live shared projection");
     return *found;
 }
-MessageEnvironmentCopy copy_at(IoHandlerVtable* table,MessageDispatchContext& context){
+MessageEnvironmentCopy copy_at(IoHandlerVtable* table,std::span<const MessageEnvironmentCopyBinding> copies){
     MessageEnvironmentCopy found=nullptr;bool matched=false;
-    for(const auto& binding:context.copies){
+    for(const auto& binding:copies){
         if(binding.table!=table)continue;
         if(matched)throw UnsupportedInput("Message copy slot is ambiguous");
         matched=true;found=binding.copy_slot_08;
@@ -44,10 +42,31 @@ IoHandlerVtable& table_of(IoHandlerEnvironment& env){
     return *env.operations_10;
 }
 }
+IoHandlerEnvironment& copy_message_environment_028d30(IoHandlerEnvironment& destination,IoHandlerEnvironment& source,
+    std::span<const MessageEnvironmentCopyBinding> copies){
+    struct Body final:IoEnvironmentCopyBody {
+        IoHandlerEnvironment& out;IoHandlerEnvironment& from;std::span<const MessageEnvironmentCopyBinding> copies;
+        Body(IoHandlerEnvironment& a,IoHandlerEnvironment& b,std::span<const MessageEnvironmentCopyBinding> c):out(a),from(b),copies(c){}
+        IoHandlerEnvironment& run(IoEnvironmentCopySlot* admitted_slot)override{
+            out.operations_10=from.operations_10;out.schedule_20=from.schedule_20;
+            const auto cached=copy_at(out.operations_10,copies); // native lookup AFTER the prefix
+            if(admitted_slot)admitted_slot->copy_slot_08(cached,out,from);
+            else cached(out,from);
+            out.executor_28=from.executor_28; // native LIVE reload AFTER slot08 returns
+            return out;
+        }
+    } body(destination,source,copies);
+    if(source.operations_10&&source.operations_10->try_copy_environment_028d30(destination,source,body))return destination;
+    return body.run(nullptr);
+}
 void dispatch_message_028d30(std::uintptr_t identity,ReceiveBufferString& request,MessageDispatchContext& context){
     if(!request.size_10){context.api.destroy_empty_message_00aa50(request);return;}
     ReceiveBufferString response;
     context.api.process_message_033d70(identity+std::uintptr_t{0xf0},response,request);
+    dispatch_prepared_response(identity,response,request,context);
+}
+void dispatch_prepared_response(std::uintptr_t identity,ReceiveBufferString& response,ReceiveBufferString& request,MessageDispatchContext& context){
+    if(&response==&request)throw UnsupportedInput("Prepared response aliases its request");
     auto& owner=owner_at(identity,context);
     auto* const acquisition=owner.lifetime->control_08;
     if(!acquisition)context.frame.terminal.bad_weak_ptr_026860();
@@ -63,15 +82,9 @@ void dispatch_message_028d30(std::uintptr_t identity,ReceiveBufferString& reques
     auto* source=owner.environment_78;
     if(!source)throw UnsupportedInput("Message owner environment is unbound");
     IoHandlerEnvironment first;
-    first.operations_10=source->operations_10;first.schedule_20=source->schedule_20;
-    const auto first_copy=copy_at(first.operations_10,context);
-    first_copy(first,*source);
-    first.executor_28=source->executor_28; // live after first copy
+    copy_message_environment_028d30(first,*source,context);
     IoHandlerEnvironment second;
-    second.operations_10=first.operations_10;second.schedule_20=first.schedule_20;
-    const auto second_copy=copy_at(second.operations_10,context);
-    second_copy(second,first);
-    second.executor_28=first.executor_28; // live after second copy
+    copy_message_environment_028d30(second,first,context);
     context.api.dispatch_response_021420(second,task,0,0);
     table_of(second).destroy_slot_00(second);
     table_of(first).destroy_slot_00(first);

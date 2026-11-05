@@ -1,0 +1,31 @@
+{
+  "schema": "original-online-startup-query-overlap.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_ORIGINAL_QUERY_ADMISSION_CORRECTION",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "OriginalCrt concurrent exact-object Online queries with independent reservations and retained lifecycle/code ownership; remove extra startup/avatar busy rejection without adding OnlineReady wait. Serialized HOST default preserved. Source-only, uncompiled and unexecuted.",
+  "sources": [
+    {"path":"anadius-online-version-source/version.hpp","before":"before/anadius-online-version-source__version.hpp","role":"production"},
+    {"path":"anadius-online-version-source/version.cpp","before":"before/anadius-online-version-source__version.cpp","role":"production"},
+    {"path":"anadius-online-object-source/object.cpp","before":"before/anadius-online-object-source__object.cpp","role":"production"},
+    {"path":"anadius-online-query-source/query.cpp","before":"before/anadius-online-query-source__query.cpp","role":"production"},
+    {"path":"anadius-online-factory-source/factory.cpp","before":"before/anadius-online-factory-source__factory.cpp","role":"production"},
+    {"path":"anadius-online-query-source/query_tests.cpp","before":"before/anadius-online-query-source__query_tests.cpp","role":"test"},
+    {"path":"anadius-online-factory-source/factory_tests.cpp","before":"before/anadius-online-factory-source__factory_tests.cpp","role":"test"}
+  ],
+  "reviews": ["production-independent-review.md", "tests-independent-review.md"],
+  "reports": ["native-findings.md", "implementation.md", "test-source-notes.md", "source-reachability-review.md", "fresh-reachability-addendum.md"],
+  "native_replies": ["instructions-0x18000fd00.json", "instructions-0x180024480.json", "instructions-0x1800314f0.json", "instructions-0x180035b60.json", "instructions-0x180035bd0.json", "instructions-0x180036880.json", "pseudo-0x18000fd00.json", "pseudo-0x180024480.json", "pseudo-0x1800314f0.json", "pseudo-0x180035b60.json", "pseudo-0x180035bd0.json", "pseudo-0x180036880.json"],
+  "supplementary": ["outputs/anadius-online-query-source/startup-overlap-20261105/source-hashes.json", "outputs/anadius-online-query-source/startup-overlap-20261105/source-reachability-review.json", "outputs/anadius-online-query-source/startup-overlap-20261105/source-design-review.md", "outputs/dll-critical-path/active-config-values-audit-20261105.md", "outputs/dll-critical-path/calendar-utc-input-domain-audit-20261105.md"],
+  "limits": [
+    "No compiler/project tests/link/DLL execution/ZIP update; controlled query/startup/own-child source assertions remain unexecuted.",
+    "Eligible native window is direct/unhooked listener ingress or proved no-wait routes; ordinary hooked3216/nonweb waits all-ready and may mask the window.",
+    "Typed avatar fixture does not execute real sockets/Graph QueryImage end-to-end; static native/source reachability supplies that caller mapping.",
+    "Foreign SDK internal thread safety/result-buffer lifetime, full class/RTTI/EH ABI and arbitrary plain shared-State publication/string races remain unverified; no new barrier/serialization is substituted.",
+    "Binding constructor/private layout changed; all affected consumers require a consistent explicit rebuild before new link/runtime claims.",
+    "Separate NativeJobs/Parent/Profile/Graph whole-body serialization question remains under native/source investigation; this provider reservation correction does not claim it solved."
+  ],
+  "completed_note": "SOURCE_ONLY12freshREA/Ghidra records prove eligible Original startup/avatar overlap;5production+2test files independentlyreviewed addOriginal concurrentquerycount with lifecycle guards/own-unwind, ownedcopy/thirdquery/invalidlayout193 and actualslow-firstusername/avatar sourcecases NOT RUN.",
+  "observation": "REA6.8.0/Ghidra12.1.4 original-only12record session exported/closed/hashunchanged; independent ingress qualification and production/test review. Config-value/calendar audits closed bounded candidates without ceremonial Native calls or completion credit.",
+  "next_scope": "Confirm exact native detached frame receiver/fork/lock path against reconstructed whole-body NativeJobs source_gate, shared Parent Operation and Profile/Graph reservations. Use actual independent-session modal-diagnostic or slow-persistence interleaving, not throughput alone; no one-lock removal or safer serialization substitute before proof. Preserve full reconstruction goal and explicit rebuild requirement."
+}

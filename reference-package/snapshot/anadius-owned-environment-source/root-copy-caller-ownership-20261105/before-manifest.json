@@ -1,0 +1,44 @@
+{
+  "status": "PRE_EDIT_SOURCE_SNAPSHOT",
+  "pending_source_count": 121,
+  "files": [
+    {
+      "path": "anadius-socket-source/io_completion.hpp",
+      "exists": true,
+      "sha256": "94d68e926e43e34d74f227c1e1624312013a914d78bb38ef48de89d4be575015",
+      "before": "before/anadius-socket-source__io_completion.hpp"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch.hpp",
+      "exists": true,
+      "sha256": "c27d27ca92546a74ed6fe540494506d1692cfa95a8842dc4f1986ce46c266aec",
+      "before": "before/anadius-socket-source__message_dispatch.hpp"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch.cpp",
+      "exists": true,
+      "sha256": "a406a1c96205865e25a13be944ba77a1a0404c0455022661e2a2e5fe4c69acaf",
+      "before": "before/anadius-socket-source__message_dispatch.cpp"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch_tests.cpp",
+      "exists": true,
+      "sha256": "5980c32365669191912281ec39e7ccbc74dc9cddff27a53e43313504694f87e2",
+      "before": "before/anadius-socket-source__message_dispatch_tests.cpp"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment.cpp",
+      "exists": true,
+      "sha256": "0c8e4c43442fe1471720e8bfb48cc78b7b19f7e20ba912e2d9bfac212f3539e5",
+      "before": "before/anadius-owned-environment-source__environment.cpp"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment_tests.cpp",
+      "exists": true,
+      "sha256": "9ded4933d9eb592638113835228d0ee1257e9e3906f4243dd33ff15a3036f934",
+      "before": "before/anadius-owned-environment-source__environment_tests.cpp"
+    }
+  ],
+  "compile": false,
+  "tests_run": false
+}

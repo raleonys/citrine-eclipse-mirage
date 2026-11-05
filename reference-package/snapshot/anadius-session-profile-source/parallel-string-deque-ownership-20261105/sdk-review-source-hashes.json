@@ -1,0 +1,72 @@
+[
+  {
+    "path": "outputs\\anadius-session-profile-source\\strings.hpp",
+    "before_sha256": "18db9bc458ab1e14f50bbba812d4928ef8a02c7fb4b25d7b9fb860845caec7a5",
+    "sha256": "444f6d71099926110e8781309f2fca9398dad5350ff6e6d0bfd34f9c3577053c"
+  },
+  {
+    "path": "outputs\\anadius-session-profile-source\\strings.cpp",
+    "before_sha256": "48da5ac125507c245caf3cf7ba56b94112c79e27e4e327d954b4d30f9603d797",
+    "sha256": "ac810821216394fcfbb741e5639f866fded3dc15ef2d3179d86a15d4eff52bed"
+  },
+  {
+    "path": "outputs\\anadius-session-memory-source\\memory.hpp",
+    "before_sha256": "9dabf8e664583ee13973522382d8023a8dd31b57b85c7274e66e2e9f8f523c71",
+    "sha256": "32e37805f2b01e992b4607a25bdff114dcac3f71d43280c3b48ffaed21dcdc19"
+  },
+  {
+    "path": "outputs\\anadius-session-memory-source\\memory.cpp",
+    "before_sha256": "ad221cc300d5bfdf1c2b17391fc7b999e86513b3c818b05fdd6cca846f91abb0",
+    "sha256": "84cb386fa4f0093c431376bf14e292e379c19777ec2f9d51577e6a7769987276"
+  },
+  {
+    "path": "outputs\\anadius-owned-deque-source\\deque.hpp",
+    "before_sha256": "7d12537b67ba147f4e902e745366636e0f9b787284c94113164fba83fbc2434d",
+    "sha256": "cf38e757e6189ca3a6a2cd3c9016c504401c6941b7a50cff10c1f225aa3cb35e"
+  },
+  {
+    "path": "outputs\\anadius-owned-deque-source\\deque.cpp",
+    "before_sha256": "b26400d2f592d6231610c997695786cf3798e59446e588e22c15368bc2869cac",
+    "sha256": "35bcec259f98a2f65e136f6d257b36cdf1be699dba689d6b814b50cc7474d10d"
+  },
+  {
+    "path": "outputs\\anadius-session-profile-source\\profile.cpp",
+    "before_sha256": "dc40777b05ffce8698fafea48734b0c876df995a824deaa1aa4385e5ddfa42ba",
+    "sha256": "7413d158e406bdcdca2b308f495dbc4a71db265df313566f17e741f4cb892676"
+  },
+  {
+    "path": "outputs\\anadius-worker-handoff-source\\handoff_tests.cpp",
+    "before_sha256": "b676e53f01d240846fd0e0a3d268e38b8381110b2354d81525162b1a4fea1604",
+    "sha256": "714af17f024cd4143874e969e2f27bf75e6d00142adbc3584758ae26cf8ee94d"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\message_dispatch.cpp",
+    "before_sha256": "47efc10e32430961cd3f78f5604537cec1aa46a7848b48c1cf4b41dab259ca23",
+    "sha256": "a406a1c96205865e25a13be944ba77a1a0404c0455022661e2a2e5fe4c69acaf"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\response_dispatch.cpp",
+    "before_sha256": "9b8659bdbaa95afc66e3759152168ad1add30bf5e856210e159f5e9f553401d0",
+    "sha256": "20a45675686aaaa6fcc243de1b5ff7350277dac6f21f2dc01fd911c48e6e0214"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\owned_response.cpp",
+    "before_sha256": "a9125c30bf6d551a3eb32435ab088c8266a60f421e545e5e211c4fd34a7c821c",
+    "sha256": "59f6e5610bb81faab3df29a31211e45a77bb8cd3e2f0985320dcc34239af019c"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\message_dispatch_tests.cpp",
+    "before_sha256": "cb7d3de14a5a5f61a0d38e41fac9e8297da8b3dfc19eaacabf08bd3544af3a80",
+    "sha256": "5980c32365669191912281ec39e7ccbc74dc9cddff27a53e43313504694f87e2"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\response_dispatch_tests.cpp",
+    "before_sha256": "c7c7ca0d8158e91185c34b10882a540d4c25e0f0efe4a555b6decdd89f34ea3a",
+    "sha256": "b35b224166ecc0403fa64f0e61c218db0ed2be2c46bb79e71af7f14cf47ac0a4"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\owned_response_tests.cpp",
+    "before_sha256": "77fb307cf79f5b503bc136c45e30ee2091e89d72e114382b07871bfa80a2ee2e",
+    "sha256": "a8d5a1ca491d13081ad693ab9ae5513fb4450f65d7e8548e2cf65621e38a90be"
+  }
+]

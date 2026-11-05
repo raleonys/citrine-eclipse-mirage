@@ -1,0 +1,82 @@
+{
+  "schema": "parallel-handler-remaining-integration.v4",
+  "recorded_at": "2026-11-04T23:55:43.372403+00:00",
+  "status": "LOWER_OWNERSHIP_AND_NATIVE_PROFILE_FOUNDATIONS_IMPLEMENTED_ACTUAL_ORIGINAL_PARALLEL_ROUTE_PENDING",
+  "source_checkpoint": {
+    "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/evidence.json",
+    "sha256": "537190da6b9da89254bcb7e00913dd1bd82ffdc72f6d81114f922ea5af359569"
+  },
+  "pending_source_count": 101,
+  "added_dependency_headers": [
+    "anadius-socket-source/memory_lookup.hpp"
+  ],
+  "bookkeeping_recorder": "work/record-focused-source-stage-v3.py",
+  "actual_production_policy": "Serialized; no OriginalConcurrentActors production selection",
+  "native_behavior_gap_closed": false,
+  "completed_prerequisites": [
+    {
+      "scope": "Per-actor Parent/JobPermit/PTD/JobScope records, exact byte/header/map catalog pins, per-attempt allocator rollback and sibling reap metadata",
+      "proof": {
+        "path": "outputs/anadius-session-memory-source/actor-catalog-foundation-20261105/evidence.json",
+        "sha256": "f13662c6370f7bd64c2ff51e6344e3ed150cd700935ba16e4f4bcf50d88a6811"
+      }
+    },
+    {
+      "scope": "Stable Record IO owner resolvers, generation-specific unlocked effect/callback lifetimes, known/unknown completion prefixes and mode-aware consumer/current-capacity wiring",
+      "proof": {
+        "path": "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/evidence.json",
+        "sha256": "f93751e53ea7e6a190545a4b319be4535e92110fad5a68c46c4934326c08240c"
+      }
+    },
+    {
+      "scope": "Stateless authoritative string headers, exact producer last-use/SDK-and-foreign view retention, per-call deque growth and residual header destructors",
+      "proof": {
+        "path": "outputs/anadius-session-profile-source/parallel-string-deque-ownership-20261105/evidence.json",
+        "sha256": "020efa1a8f4c1ca55cc8faabbc50c37df8ea7ec51f16592354108a27a8baf07d"
+      }
+    },
+    {
+      "scope": "Per-message NativeProfile registry/explicit call Dependencies/private-inline exact-Parent composite and active-versus-failed observations; actual Prepared same-session typed GetConfig source fixture authored, not executed",
+      "proof": {
+        "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/evidence.json",
+        "sha256": "537190da6b9da89254bcb7e00913dd1bd82ffdc72f6d81114f922ea5af359569"
+      }
+    }
+  ],
+  "remaining": [
+    {
+      "order": 1,
+      "scope": "Profile per-message admission and synchronized stable Job/Slot publication/identity/retirement. Keep existing tokens/strong owners; use NativeProfile failed-prefix versus healthy-active observations and explicit per-call dependencies without a Session strand. Policy current-thread exit cleanup needs independent child reservations."
+    },
+    {
+      "order": 2,
+      "scope": "Graph per-message router/adapters/writers/checkpoint/lock bookkeeping; Content/Information/Licensing explicit facades over SAME Runtime/config/Online/AttemptState roots. Keep actual native event/achievement mutexes and invocation-owned NativeProfile dependency snapshots."
+    },
+    {
+      "order": 3,
+      "scope": "Audit actual accept-body/SDK gates and mutable packet publications/readers. Stable metadata is not payload synchronization. OwnedEnvironment actor-scoped authority is required if concurrent cloning/full028d30 child response tail is selected; current Root-prepared response split is not full native child ordering proof."
+    },
+    {
+      "order": 4,
+      "scope": "After all lower and upper consumers cohere, remove actual Original NativeJobs body/source gate with brief per-row reservations, preserve offers/receipts/work/closure/generations and response completion before physical FLS reap, and select one immutable Parent policy in actual production."
+    },
+    {
+      "order": 5,
+      "scope": "Actual NativeJobs/Graph/IO warmed plaintext held supported UnknownMessage A and GetConfig B response-before-release source cases, BOTH same-session and distinct sessions; also verify full child response-tail ordering. No fabricated readiness/work counters or cloned business roots."
+    }
+  ],
+  "validation_limits": [
+    "Four current-stage source/header files independently statically reviewed; two test sources contain authored unexecuted assertions. No compiler/tests/link/DLL/ZIP operation.",
+    "Actual Original remains Serialized. NativeProfile lower fixture is not actual Graph/NativeJobs/IOCP/network or full028d30 child-tail ordering coverage.",
+    "Every async ownership publication needs actual last-use/control lifetime audit; exact Parent views do not synchronize arbitrary shared cipher/business/provider writes.",
+    "Unknown retained native/provider prefixes remain nonreplayable; native ABI/EH, arbitrary reentrant CRT/fallback and foreign SDK behavior are not closed.",
+    "101 pending source/header files including the prior added dependency require a consistent explicitly authorized rebuild. Historical source snapshot/build/DLL/ZIP remain unchanged."
+  ],
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "overall_completion_percentage": null,
+  "continuous_goal_active": true
+}

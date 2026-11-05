@@ -1,5 +1,6 @@
 #pragma once
 #include "environment_constructor.hpp"
+#include "memory_lookup.hpp"
 
 namespace anadius::socket_recovered {
 // Bounded defined-field projection of the native string. The first sixteen
@@ -30,6 +31,17 @@ struct WriteFinishAllocationHeader {
     std::uintptr_t address=0; // native data-8 header address token
     std::uintptr_t allocation_base=0;
 };
+class AllocationHeaderResolver {
+public:
+    virtual ~AllocationHeaderResolver()=default;
+    // Pure owner metadata lookup; write base only for Found. No native
+    // allocation, explicit SDK/application effect, alignment terminal or free.
+    // Owner borrow metadata may allocate outside its metadata gate.
+    // Admission may throw. The actual owner and its payload pin remain live.
+    virtual MemoryLookup lookup_header(std::uintptr_t header,std::uintptr_t& base)=0;
+};
+MemoryLookup lookup_allocation_header(std::uintptr_t header,
+    std::span<const WriteFinishAllocationHeader>,AllocationHeaderResolver*,std::uintptr_t& base);
 struct WriteFinishStream {
     std::uintptr_t identity=0;
     std::int32_t virtual_base_offset_04=0; // live signed field in native vtable
@@ -54,6 +66,10 @@ struct WriteFinishContext {
     std::span<WriteFinishOwnerBinding> owners;
     std::span<WriteFinishCategoryBinding> categories;
     std::span<WriteFinishAllocationHeader> allocation_headers;
+    // Optional authoritative owner lookup; old aggregate prefixes keep their
+    // bounded span behavior when null. Pointer identity/provenance must be
+    // checked by the integrating owner; a returned base is not that proof.
+    AllocationHeaderResolver* allocation_header_resolver=nullptr;
 };
 // Normal body only. Providers keep all projected owners/strings/categories
 // alive through the native last use. Uninitialized local string bytes become

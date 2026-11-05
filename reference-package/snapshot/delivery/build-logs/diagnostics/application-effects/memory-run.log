@@ -1,0 +1,24 @@
+DIAG memory frame 0 RVA 0x201a5
+DIAG memory frame 1 RVA 0x1f266
+DIAG memory frame 2 RVA 0x1ccc0
+DIAG memory frame 3 RVA 0x3b364
+DIAG memory frame 4 RVA 0x3a688
+DIAG memory frame 5 RVA 0x10e962
+DIAG memory frame 6 RVA 0x10c8ec
+DIAG memory frame 7 RVA 0x73533
+DIAG memory frame 8 RVA 0x15914f
+DIAG memory frame 9 RVA 0x6804f
+DIAG memory frame 10 RVA 0x66abf
+DIAG memory frame 11 RVA 0x525e6
+DIAG memory frame 12 RVA 0x510c6
+DIAG memory frame 13 RVA 0x17e9d
+DIAG memory frame 14 RVA 0x3653c
+DIAG memory frame 15 RVA 0x157ae
+DIAG memory frame 16 RVA 0xb060
+DIAG memory frame 17 RVA 0xa231
+DIAG memory frame 18 RVA 0x5c00a
+DIAG memory frame 19 RVA 0x5ee26
+DIAG memory frame 20 RVA 0x48e4ddda7
+DIAG memory frame 21 RVA 0x48f49ee4c
+DIAG Worker cause: Session memory requires an explicitly admitted thread/fiber Operation
+Worker retained unknown composition/handler prefix

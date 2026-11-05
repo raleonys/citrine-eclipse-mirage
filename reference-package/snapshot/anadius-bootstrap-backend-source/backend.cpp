@@ -26,7 +26,10 @@ Resources take_resources(Resources& r){
         std::move(r.execution),std::move(r.server),std::move(r.online),std::move(r.library_os),
         std::move(r.library_effects),std::move(r.host),std::move(r.hook_cleanup),take_function(r.stop_sources),
         std::exchange(r.join_api,JoinApi{}),std::exchange(r.join_timeout_ms,0),take_function(r.callback_attachment),
-        std::move(r.startup_publication),take_function(r.application_worker),take_function(r.remaining_factory),take_function(r.online_factory)};
+        std::move(r.startup_publication),take_function(r.application_worker),take_function(r.remaining_factory),take_function(r.online_factory),r.lifetime_profile};
+}
+bool lifetime_configuration_valid(const Resources& r)noexcept{
+    switch(r.lifetime_profile){case LifetimeProfile::Cooperative:return bool(r.stop_sources);case LifetimeProfile::OriginalCrt:return true;}return false;
 }
 namespace {
 struct Selection {
@@ -40,8 +43,8 @@ Selection checked(Resources& resources,std::unique_ptr<RemainingPolicies> narrow
        (static_cast<bool>(r.remaining)==static_cast<bool>(selected.narrow))||r.remaining_factory||
        !r.execution||(static_cast<bool>(r.server)==static_cast<bool>(r.application_worker))||
        (static_cast<bool>(r.online)==static_cast<bool>(r.online_factory))||!r.library_os||!r.library_effects||
-       !r.host||!r.hook_cleanup||!r.stop_sources)
-        throw std::invalid_argument("All bootstrap backend providers and stop_sources are required");
+       !r.host||!r.hook_cleanup||!lifetime_configuration_valid(r))
+        throw std::invalid_argument("Complete bootstrap providers and selected lifetime configuration required");
     return selected;
 }
 void sync_paths(configuration::State* config,recovered::libraries::State& state,bool main){
@@ -118,7 +121,7 @@ struct SourceBackend::Impl {
     std::unique_ptr<CallbackAttachment> callback_attachment;
     std::unique_ptr<ApplicationWorker> application_worker;
     bool stopped=false,control_busy=false,routes_published=false,ever_published=false,worker_finished=false,retiring=false;
-    bool online_binding=false,online_poisoned=false;
+    bool factory_binding=false,factory_poisoned=false;
     bool providers_retired=false,aggregate_released=false;
     inline static std::mutex gate;inline static Impl* current=nullptr;inline static std::size_t calls=0;
     Impl(RuntimeSeed s,Selection&& selected):state(std::move(s)),narrow(std::move(selected.narrow)),resources(take_resources(selected.resources)),
@@ -130,7 +133,7 @@ struct SourceBackend::Impl {
     }
     void retire(){
         {std::lock_guard lock(gate);if(providers_retired)return;if(retiring||current==this)std::terminate();retiring=true;}
-        if(threads.tracked_jobs()||threads.poisoned()||online_poisoned||online_binding)std::terminate();
+        if(threads.tracked_jobs()||threads.poisoned()||factory_poisoned||factory_binding)std::terminate();
         if(application_worker&&!worker_finished){
             if(ever_published||!application_worker->cancel_unpublished())std::terminate();
         }
@@ -148,10 +151,18 @@ struct SourceBackend::Impl {
     ~Impl(){std::lock_guard lock(gate);if(!retiring||current==this)std::terminate();}
     void alive(){
         if(retiring)throw std::logic_error("Backend provider retirement has sealed source admission");
-        if(online_binding){online_poisoned=true;throw std::logic_error("Online factory reentered Backend source admission");}
-        if(online_poisoned)throw std::logic_error("Online factory has an unknown Backend prefix");
+        if(factory_binding){factory_poisoned=true;throw std::logic_error("Provider factory reentered Backend source admission");}
+        if(factory_poisoned)throw std::logic_error("Provider factory has an unknown Backend prefix");
     }
-    CallbackStateView view(){if(!config)throw std::logic_error("Backend shared state is not bound");return {*config,state,execution};}
+    void binding_ok()const{if(factory_poisoned)throw std::logic_error("Provider factory lost Backend admission");}
+    template<class F>void bind_provider(F&& f){
+        alive();factory_binding=true;
+        struct Binding {bool& active;~Binding(){active=false;}} binding{factory_binding};
+        // Keep the reservation across factory return, result adoption, opaque
+        // donor retirement and dependent identity/binding virtual calls.
+        f();binding_ok();
+    }
+    CallbackStateView view(){if(!config)throw std::logic_error("Backend shared state is not bound");return {*config,state,execution,console[0]};}
     online_recovered::Effects& online_effects(){
         alive();
         if(online_component){if(!online_component->matches(view()))throw std::logic_error("Online component view identity changed");return *online_component;}
@@ -169,7 +180,7 @@ struct SourceBackend::Impl {
         if(current&&current!=this)throw std::logic_error("Another backend owns worker routes");
         current=this;routes_published=true;ever_published=true;
     }
-    void require_routes(){std::lock_guard lock(gate);if(current!=this||stopped||retiring)throw std::logic_error("Worker routes are not published");}
+    void require_routes(){alive();std::lock_guard lock(gate);if(current!=this||stopped||retiring)throw std::logic_error("Worker routes are not published");}
     online_recovered::StateRefs online_state(){
         if(!config)throw std::logic_error("Backend shared state is not bound");
         return {config->executable_path,config->cookie_path,config->last_profile_path,config->last_avatar_path,
@@ -206,50 +217,54 @@ void SourceBackend::retire_owned_state_037f70() noexcept {
 bootstrap_owner::Providers SourceBackend::providers(){impl_->alive();auto& r=impl_->resources;
     return {*r.configuration,*r.files,*r.input,*r.console,impl_->threads,*this};}
 void SourceBackend::bind_state(configuration::State& state,config_startup::ConsoleFlags flags){
-    impl_->alive();
-    if(impl_->config||impl_->stopped)throw std::logic_error("Backend shared state can only be bound once");
-    impl_->config=&state;impl_->console={&flags.show_lsx,&flags.show_console,&flags.no_console};
-    if(auto* binding=dynamic_cast<library_effects::PhaseBinding*>(impl_->resources.library_effects.get()))
-        binding->bind_library_phase(impl_->execution,impl_->state.libraries_ready);
-    if(auto* binding=dynamic_cast<configuration::StateBinding*>(impl_->resources.configuration.get()))
-        binding->bind_configuration_state(state);
-    if(auto* binding=dynamic_cast<achievement_storage::PathBinding*>(impl_->resources.configuration.get())){
-        binding->bind_achievement_paths(impl_->achievement_paths);
-        impl_->shared_achievement_paths=true;
-    }
-    if(impl_->resources.online_factory){
-        auto& v=*impl_;v.online_binding=true;
-        try{
+    auto& v=*impl_;v.alive();
+    if(v.config||v.stopped)throw std::logic_error("Backend shared state can only be bound once");
+    v.bind_provider([&]{
+        v.config=&state;v.console={&flags.show_lsx,&flags.show_console,&flags.no_console};
+        if(auto* binding=dynamic_cast<library_effects::PhaseBinding*>(v.resources.library_effects.get())){
+            binding->bind_library_phase(v.execution,v.state.libraries_ready);v.binding_ok();
+        }
+        if(auto* binding=dynamic_cast<configuration::StateBinding*>(v.resources.configuration.get())){
+            binding->bind_configuration_state(state);v.binding_ok();
+        }
+        if(auto* binding=dynamic_cast<achievement_storage::PathBinding*>(v.resources.configuration.get())){
+            binding->bind_achievement_paths(v.achievement_paths);v.binding_ok();
+            v.shared_achievement_paths=true;
+        }
+        if(v.resources.online_factory){
             // Adopt before inspecting identity or retiring any SBO donor capture.
             v.online_component=v.resources.online_factory(v.view());
             v.resources.online_factory={};
-            if(v.online_poisoned)throw std::logic_error("Online factory lost Backend admission");
+            v.binding_ok();
             const bool matched=v.online_component&&v.online_component->matches(v.view());
-            if(v.online_poisoned)throw std::logic_error("Online identity check lost Backend admission");
-            v.online_binding=false;
+            v.binding_ok();
             if(!matched)throw std::invalid_argument("Online factory returned a null or foreign-view component");
-        }catch(...){v.online_binding=false;throw;}
-    }
-    if(impl_->resources.application_worker){
-        auto worker=impl_->resources.application_worker({state,impl_->state,impl_->execution});
-        if(!worker)throw std::invalid_argument("Application worker factory returned null");
-        impl_->application_worker=std::move(worker);
-        if(impl_->online_component)
-            if(auto* binding=dynamic_cast<application_effects::OnlineBinding*>(impl_->application_worker.get()))
-                binding->bind_effects_online(*impl_->online_component);
-        if(auto* binding=dynamic_cast<achievement_runtime::MutexBinding*>(impl_->application_worker.get()))
-            binding->bind_achievement_mutex(impl_->achievement_mutex,*impl_->resources.execution);
-        if(auto* binding=dynamic_cast<license_recovered::AuthenticationBinding*>(impl_->application_worker.get()))
-            binding->bind_authentication_code(*impl_->authentication_code);
-        if(impl_->shared_achievement_paths)
-            if(auto* binding=dynamic_cast<achievement_storage::PathBinding*>(impl_->application_worker.get()))
-                binding->bind_achievement_paths(impl_->achievement_paths);
-    }
-    if(impl_->resources.callback_attachment){
-        auto attachment=impl_->resources.callback_attachment({state,impl_->state,impl_->execution});
-        if(!attachment)throw std::invalid_argument("Callback attachment factory returned null");
-        impl_->callback_attachment=std::move(attachment);
-    }
+        }
+        if(v.resources.application_worker){
+            v.application_worker=v.resources.application_worker(v.view());
+            v.binding_ok();
+            if(!v.application_worker)throw std::invalid_argument("Application worker factory returned null");
+            if(v.online_component)
+                if(auto* binding=dynamic_cast<application_effects::OnlineBinding*>(v.application_worker.get())){
+                    binding->bind_effects_online(*v.online_component);v.binding_ok();
+                }
+            if(auto* binding=dynamic_cast<achievement_runtime::MutexBinding*>(v.application_worker.get())){
+                binding->bind_achievement_mutex(v.achievement_mutex,*v.resources.execution);v.binding_ok();
+            }
+            if(auto* binding=dynamic_cast<license_recovered::AuthenticationBinding*>(v.application_worker.get())){
+                binding->bind_authentication_code(*v.authentication_code);v.binding_ok();
+            }
+            if(v.shared_achievement_paths)
+                if(auto* binding=dynamic_cast<achievement_storage::PathBinding*>(v.application_worker.get())){
+                    binding->bind_achievement_paths(v.achievement_paths);v.binding_ok();
+                }
+        }
+        if(v.resources.callback_attachment){
+            v.callback_attachment=v.resources.callback_attachment(v.view());
+            v.binding_ok();
+            if(!v.callback_attachment)throw std::invalid_argument("Callback attachment factory returned null");
+        }
+    });
 }
 bool SourceBackend::stop_and_join(){
     auto& v=*impl_;
@@ -258,9 +273,15 @@ bool SourceBackend::stop_and_join(){
     struct Control {bool& b;explicit Control(bool& x):b(x){b=true;}~Control(){b=false;}} control(v.control_busy);
     auto finish_worker=[&]{if(!v.application_worker||v.worker_finished)return true;if(!v.application_worker->finish_after_join())return false;v.worker_finished=true;return true;};
     if(v.stopped){if(v.callback_attachment&&!v.callback_attachment->pause_before_cleanup())return false;return finish_worker();}
-    if(!v.resources.stop_sources())return false;
+    if(!v.resources.stop_sources||!v.resources.stop_sources())return false;
     if(v.application_worker)v.application_worker->request_stop();
     if(v.callback_attachment&&!v.callback_attachment->pause_before_cleanup())return false;
+    if(auto* continuation=dynamic_cast<ApplicationJoinContinuation*>(v.application_worker.get());continuation&&!continuation->prepare_join()){
+        // Seal NEW native creates even when the worker needs this controller
+        // to signal a later close recheck. Do not block the signaling actor or
+        // infer source/provider retirement from a successful physical poll.
+        (void)v.threads.stop_and_join(0);return false;
+    }
     if(!v.threads.stop_and_join(v.resources.join_timeout_ms))return false;
     {
         std::lock_guard lock(Impl::gate);

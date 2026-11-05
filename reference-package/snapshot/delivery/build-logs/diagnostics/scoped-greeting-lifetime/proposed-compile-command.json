@@ -1,0 +1,21 @@
+{
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-I",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-application-graph-source",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\scoped-greeting-lifetime\\graph_integration_tests.proposed.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+    "-lws2_32",
+    "-lmswsock",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\scoped-greeting-lifetime\\scoped-greeting-proposed.exe"
+  ],
+  "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang++.exe",
+  "exit": 0,
+  "source_sha256": "d0022481e5427132614b62c26a409e5c8d269b120d7dbce41c0a55523efba6e4"
+}

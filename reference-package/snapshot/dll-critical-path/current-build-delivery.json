@@ -1,0 +1,449 @@
+{
+  "schema": "fresh-rebuild-delivery.20261104.v1",
+  "recorded_at": "2026-11-03T21:58:16.514158+00:00",
+  "run": "work/rebuild-20261103T213020Z",
+  "full_common_build_run": true,
+  "common_build_result": "PASS",
+  "objects": 296,
+  "normal_executables": 355,
+  "normal_groups": 356,
+  "framework_terminal_cases": 19,
+  "current_source_count": 1017,
+  "additional_dependency_header_count": 1,
+  "additional_dependency_headers": [
+    {
+      "path": "anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.h",
+      "sha256": "aed790f764e4663f6cb99839648dd642c7e7a730d12c67d3ab7ca075f0ac67c0"
+    }
+  ],
+  "compiler": "clang version 23.1.4 (https://github.com/llvm/llvm-project.git 7a941dfb2877a0b8cf30323fefa85ad019e0b0f5)",
+  "generated_test_fixture_data": {
+    "scope": "Own fresh common-build cfg/ini/png/extensionless test data; not raw original inputs",
+    "count": 79,
+    "files": [
+      {
+        "path": "source-workspace/build/achievement-runtime-fixtures/completion/watcher/achievements.ini",
+        "bytes": 246,
+        "sha256": "ed6eae6e4015c0dfdebbaa3048580947ff541bc3d368a20dbeae547ee546b4c5"
+      },
+      {
+        "path": "source-workspace/build/achievement-runtime-fixtures/gmtime-failure/watcher/achievements.ini",
+        "bytes": 166,
+        "sha256": "7ca190efa95fcb3a746c40d523bfb83a41e853b4769d97c7aea5894aa97aca3a"
+      },
+      {
+        "path": "source-workspace/build/achievement-runtime-fixtures/partial/watcher/achievements.ini",
+        "bytes": 174,
+        "sha256": "eebafadc033fac2502248c6f223d3b0d3d2673a5aff3b83bfb97dbc1d0843e4d"
+      },
+      {
+        "path": "source-workspace/build/achievement-runtime-fixtures/roundtrip/watcher/achievements.ini",
+        "bytes": 73,
+        "sha256": "fbc30ed3adbfb3ffdecd7a5bcf42d4b96ca4263f83d95176909fb93ed6a42182"
+      },
+      {
+        "path": "source-workspace/build/achievement-storage-fixtures/achievement_watcher/42/achievements.ini",
+        "bytes": 33,
+        "sha256": "083145d8956ef9038a4f2a88598df70567253807b402770e5c942dbaa2d023a2"
+      },
+      {
+        "path": "source-workspace/build/achievement-writer-fixtures/achievement-writer-generated.ini",
+        "bytes": 80,
+        "sha256": "ad264dbcc346dd0c7f5d6e9ff279d7a6586d7af1694212907f0f59248a93ba87"
+      },
+      {
+        "path": "source-workspace/build/b11-fixtures/logging-15396-22330609/anadius.cfg",
+        "bytes": 231,
+        "sha256": "25df8affecfb79870eea7a161b216125ffd62ea01b0734130d6d1d8eae55b00a"
+      },
+      {
+        "path": "source-workspace/build/b11-fixtures/logging-15396-22330609/anadius_override.cfg",
+        "bytes": 86,
+        "sha256": "62a822df8cdb839bcb18ccf16f99220cfd88b7e14b276562ea4d1c809ffe7e5d"
+      },
+      {
+        "path": "source-workspace/build/b11-fixtures/logging-8556-22753046/anadius.cfg",
+        "bytes": 231,
+        "sha256": "25df8affecfb79870eea7a161b216125ffd62ea01b0734130d6d1d8eae55b00a"
+      },
+      {
+        "path": "source-workspace/build/b11-fixtures/logging-8556-22753046/anadius_override.cfg",
+        "bytes": 86,
+        "sha256": "62a822df8cdb839bcb18ccf16f99220cfd88b7e14b276562ea4d1c809ffe7e5d"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-19980-22314343/blocked-config/data/anadius",
+        "bytes": 18,
+        "sha256": "e8227dd48cf4866bd4f6d86669b06a3acabb680e7c814c54552c510319e8dde8"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-19980-22314343/blocked-config/game/anadius.cfg",
+        "bytes": 319,
+        "sha256": "c1a46adb86d6e4fb6ea0db5f12acf5903e204fb18809c86c83833ac54394ae76"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-19980-22314343/blocked-config/game/anadius_override.cfg",
+        "bytes": 51,
+        "sha256": "3d62719365499ee60eb85f9266426044882e2808344d12dc7da2550d7ec551e0"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-19980-22314343/blocked-persistence/achievement_watcher",
+        "bytes": 11,
+        "sha256": "26738686827195d3c060c9e81e99b20b3c4c1f83999a07c12823ed8e45f10913"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-19980-22314343/data/anadius/LSX emu/anadius.png",
+        "bytes": 7488,
+        "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-19980-22314343/data/anadius/LSX emu/default.png",
+        "bytes": 3882,
+        "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-19980-22314343/data/anadius/LSX emu/keep_avatar_fixture.png",
+        "bytes": 20,
+        "sha256": "a9480208e8c4c556f9bd66e51717f3560a666a5ce2c81664bc77b431b6671df4"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-19980-22314343/data/anadius/LSX emu/achievement_watcher/42/achievements.ini",
+        "bytes": 22,
+        "sha256": "d7097ce9a27373e1abb38f46ba588a9a3445790d7bd9df69cf57a0a6e172c3b7"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-19980-22314343/game/anadius.cfg",
+        "bytes": 319,
+        "sha256": "c1a46adb86d6e4fb6ea0db5f12acf5903e204fb18809c86c83833ac54394ae76"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-19980-22314343/game/anadius_override.cfg",
+        "bytes": 51,
+        "sha256": "3d62719365499ee60eb85f9266426044882e2808344d12dc7da2550d7ec551e0"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-19980-22314343/native-filesystem/blocker",
+        "bytes": 8,
+        "sha256": "823a4e0e9545c41f3c2f7119719f6fd9a27a3d80533d8b8d37b4b652144d62fd"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-24360-22752734/blocked-config/data/anadius",
+        "bytes": 18,
+        "sha256": "e8227dd48cf4866bd4f6d86669b06a3acabb680e7c814c54552c510319e8dde8"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-24360-22752734/blocked-config/game/anadius.cfg",
+        "bytes": 319,
+        "sha256": "c1a46adb86d6e4fb6ea0db5f12acf5903e204fb18809c86c83833ac54394ae76"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-24360-22752734/blocked-config/game/anadius_override.cfg",
+        "bytes": 51,
+        "sha256": "3d62719365499ee60eb85f9266426044882e2808344d12dc7da2550d7ec551e0"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-24360-22752734/blocked-persistence/achievement_watcher",
+        "bytes": 11,
+        "sha256": "26738686827195d3c060c9e81e99b20b3c4c1f83999a07c12823ed8e45f10913"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-24360-22752734/data/anadius/LSX emu/anadius.png",
+        "bytes": 7488,
+        "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-24360-22752734/data/anadius/LSX emu/default.png",
+        "bytes": 3882,
+        "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-24360-22752734/data/anadius/LSX emu/keep_avatar_fixture.png",
+        "bytes": 20,
+        "sha256": "a9480208e8c4c556f9bd66e51717f3560a666a5ce2c81664bc77b431b6671df4"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-24360-22752734/data/anadius/LSX emu/achievement_watcher/42/achievements.ini",
+        "bytes": 22,
+        "sha256": "d7097ce9a27373e1abb38f46ba588a9a3445790d7bd9df69cf57a0a6e172c3b7"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-24360-22752734/game/anadius.cfg",
+        "bytes": 319,
+        "sha256": "c1a46adb86d6e4fb6ea0db5f12acf5903e204fb18809c86c83833ac54394ae76"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-24360-22752734/game/anadius_override.cfg",
+        "bytes": 51,
+        "sha256": "3d62719365499ee60eb85f9266426044882e2808344d12dc7da2550d7ec551e0"
+      },
+      {
+        "path": "source-workspace/build/b8-fixtures/integration-24360-22752734/native-filesystem/blocker",
+        "bytes": 8,
+        "sha256": "823a4e0e9545c41f3c2f7119719f6fd9a27a3d80533d8b8d37b4b652144d62fd"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/late/data/anadius/LSX emu/anadius.png",
+        "bytes": 7488,
+        "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/late/data/anadius/LSX emu/default.png",
+        "bytes": 3882,
+        "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/late/game/anadius.cfg",
+        "bytes": 142,
+        "sha256": "237cd2a618c04a02c856c2699456271b15e03a56251e49cca45688a3a2ce17ec"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/late/game/anadius_override.cfg",
+        "bytes": 42,
+        "sha256": "898b276cd2bdb8c790ad33f8aef321fe79613f0e168aaff65fd8c4cc66edf642"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/narrow/data/anadius/LSX emu/anadius.png",
+        "bytes": 7488,
+        "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/narrow/data/anadius/LSX emu/default.png",
+        "bytes": 3882,
+        "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/narrow/data/anadius/LSX emu/early_AVATAR_fixture.png",
+        "bytes": 18,
+        "sha256": "c23f467116503d80bbb891a2cd224b7342fa2216ca30fb489cfc1d54ea266f6b"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/narrow/game/anadius.cfg",
+        "bytes": 142,
+        "sha256": "237cd2a618c04a02c856c2699456271b15e03a56251e49cca45688a3a2ce17ec"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/narrow/game/anadius_override.cfg",
+        "bytes": 42,
+        "sha256": "898b276cd2bdb8c790ad33f8aef321fe79613f0e168aaff65fd8c4cc66edf642"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/remove/data/anadius/LSX emu/anadius.png",
+        "bytes": 7488,
+        "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/remove/data/anadius/LSX emu/default.png",
+        "bytes": 3882,
+        "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/remove/data/anadius/LSX emu/early_AVATAR_fixture.png",
+        "bytes": 18,
+        "sha256": "c23f467116503d80bbb891a2cd224b7342fa2216ca30fb489cfc1d54ea266f6b"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/remove/game/anadius.cfg",
+        "bytes": 142,
+        "sha256": "237cd2a618c04a02c856c2699456271b15e03a56251e49cca45688a3a2ce17ec"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/remove/game/anadius_override.cfg",
+        "bytes": 42,
+        "sha256": "898b276cd2bdb8c790ad33f8aef321fe79613f0e168aaff65fd8c4cc66edf642"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/success/data/anadius/LSX emu/anadius.png",
+        "bytes": 7488,
+        "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/success/data/anadius/LSX emu/default.png",
+        "bytes": 3882,
+        "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/success/game/anadius.cfg",
+        "bytes": 142,
+        "sha256": "237cd2a618c04a02c856c2699456271b15e03a56251e49cca45688a3a2ce17ec"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-12672-22320640/success/game/anadius_override.cfg",
+        "bytes": 42,
+        "sha256": "898b276cd2bdb8c790ad33f8aef321fe79613f0e168aaff65fd8c4cc66edf642"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/late/data/anadius/LSX emu/anadius.png",
+        "bytes": 7488,
+        "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/late/data/anadius/LSX emu/default.png",
+        "bytes": 3882,
+        "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/late/game/anadius.cfg",
+        "bytes": 142,
+        "sha256": "237cd2a618c04a02c856c2699456271b15e03a56251e49cca45688a3a2ce17ec"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/late/game/anadius_override.cfg",
+        "bytes": 42,
+        "sha256": "898b276cd2bdb8c790ad33f8aef321fe79613f0e168aaff65fd8c4cc66edf642"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/narrow/data/anadius/LSX emu/anadius.png",
+        "bytes": 7488,
+        "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/narrow/data/anadius/LSX emu/default.png",
+        "bytes": 3882,
+        "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/narrow/data/anadius/LSX emu/early_AVATAR_fixture.png",
+        "bytes": 18,
+        "sha256": "c23f467116503d80bbb891a2cd224b7342fa2216ca30fb489cfc1d54ea266f6b"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/narrow/game/anadius.cfg",
+        "bytes": 142,
+        "sha256": "237cd2a618c04a02c856c2699456271b15e03a56251e49cca45688a3a2ce17ec"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/narrow/game/anadius_override.cfg",
+        "bytes": 42,
+        "sha256": "898b276cd2bdb8c790ad33f8aef321fe79613f0e168aaff65fd8c4cc66edf642"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/remove/data/anadius/LSX emu/anadius.png",
+        "bytes": 7488,
+        "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/remove/data/anadius/LSX emu/default.png",
+        "bytes": 3882,
+        "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/remove/data/anadius/LSX emu/early_AVATAR_fixture.png",
+        "bytes": 18,
+        "sha256": "c23f467116503d80bbb891a2cd224b7342fa2216ca30fb489cfc1d54ea266f6b"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/remove/game/anadius.cfg",
+        "bytes": 142,
+        "sha256": "237cd2a618c04a02c856c2699456271b15e03a56251e49cca45688a3a2ce17ec"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/remove/game/anadius_override.cfg",
+        "bytes": 42,
+        "sha256": "898b276cd2bdb8c790ad33f8aef321fe79613f0e168aaff65fd8c4cc66edf642"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/success/data/anadius/LSX emu/anadius.png",
+        "bytes": 7488,
+        "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/success/data/anadius/LSX emu/default.png",
+        "bytes": 3882,
+        "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/success/game/anadius.cfg",
+        "bytes": 142,
+        "sha256": "237cd2a618c04a02c856c2699456271b15e03a56251e49cca45688a3a2ce17ec"
+      },
+      {
+        "path": "source-workspace/build/b9-fixtures/iteration-1600-22752843/success/game/anadius_override.cfg",
+        "bytes": 42,
+        "sha256": "898b276cd2bdb8c790ad33f8aef321fe79613f0e168aaff65fd8c4cc66edf642"
+      },
+      {
+        "path": "source-workspace/build/config-application-fixtures/application-generated-fixture.cfg",
+        "bytes": 72,
+        "sha256": "c248f9698e100af9a4d8c60ba2c1b3a5671ff02160f2bf45537cd03c97ab98d2"
+      },
+      {
+        "path": "source-workspace/build/config-pipeline-fixtures/config-pipeline-generated-fixture.cfg",
+        "bytes": 58,
+        "sha256": "09095c5380d6532ec635854e893f54b8e5f1e34f90262aeb11ad3fae5372ad27"
+      },
+      {
+        "path": "source-workspace/build/config-startup-fixtures/anadius.cfg",
+        "bytes": 332,
+        "sha256": "ed1c9dceadafc9110bc609cecfc3ffee4cfceb7cca8694811eb80d1193d08986"
+      },
+      {
+        "path": "source-workspace/build/config-startup-fixtures/anadius_override.cfg",
+        "bytes": 79,
+        "sha256": "2312898b4312692cae1cb20257357bf090a5f430b66db05966c528b4ac136098"
+      },
+      {
+        "path": "source-workspace/build/file-io-fixtures/hash-artifact.bin",
+        "bytes": 3,
+        "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      },
+      {
+        "path": "source-workspace/build/file-io-fixtures/roundtrip_çış.bin",
+        "bytes": 8193,
+        "sha256": "db8e82fcacaeceb336ecb8be90fad31da698c72a6c10fd1ea68a2e5874b78b17"
+      },
+      {
+        "path": "source-workspace/build/file-io-fixtures/synthetic-license.dlf",
+        "bytes": 113,
+        "sha256": "8ba9a2e56c5a8ffdb05d0a00a36e1778f258a6d6454179e99a8930cd42b395dd"
+      },
+      {
+        "path": "source-workspace/build/file-io-fixtures/synthetic-license_cached.dlf",
+        "bytes": 113,
+        "sha256": "ca370f8ae54d6b52188d6331063412b9f96fb1a56680b5a215457ccb435c2434"
+      },
+      {
+        "path": "source-workspace/build/timestamp-fixtures/achievement_watcher/42/achievements.ini",
+        "bytes": 155,
+        "sha256": "7aa31d46a3842e8277b1d2fc5e450865ca07fcd6fb7e1d60bb7b47cf1657213b"
+      },
+      {
+        "path": "source-workspace/build/windows-fixtures/artifact_ç_Ω.bin",
+        "bytes": 3,
+        "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      },
+      {
+        "path": "source-workspace/build/windows-fixtures/license_ç_Ω.dlf",
+        "bytes": 113,
+        "sha256": "5db0191def39d008e3ce289069aeff747a2a44bbb6fa95dbc66df4a0bb8e60d6"
+      }
+    ]
+  },
+  "full_build_proof": {
+    "path": "source-workspace/full-build-verification.json",
+    "sha256": "6cbded372c77eeb2a35b332dbe75fbc9bc6cfbd24da3b967bfaa03b124087e12"
+  },
+  "source_snapshot": {
+    "path": "source-workspace/source-snapshot.json",
+    "sha256": "b7362cf518727f6fc997bfc1377bc4d83e2751903ead78cf376251cb0bf87e6d"
+  },
+  "production_DLL_link": {
+    "path": "dll-link-gate-source/current-full-link.json",
+    "sha256": "70d9d9dcbaed784530bee67928fe0ebbe27dbe931b07219545cd6988f50e4755",
+    "link_succeeded": true,
+    "dll_created": true,
+    "readiness": "LINKED_NOT_RUNTIME_VALIDATED",
+    "undefined_symbols": []
+  },
+  "runtime_or_loader_equivalence_established": false,
+  "production_DLL_loaded_or_executed": false,
+  "original_inputs_accessed": false,
+  "blocked_version_files_accessed": false,
+  "toolchain_bundled": false,
+  "fixture_DLL_scope": "owned_reference_fixture.dll is a synthetic test fixture, not the production reconstruction",
+  "historical_records_scope": "Dated old text retains its original toolchain/result; current status is this fresh run",
+  "fresh_artifact_roots": [
+    "source-workspace/build",
+    "hook-engine-source/testing/build",
+    "dll-link-gate-source/build-current-full"
+  ]
+}

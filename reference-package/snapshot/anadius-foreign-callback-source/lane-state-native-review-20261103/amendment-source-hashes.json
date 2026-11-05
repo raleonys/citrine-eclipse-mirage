@@ -1,0 +1,56 @@
+[
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.cpp",
+    "sha256": "7eb43063c67266775b94ff2c9f1509433e3114f326240f2e24cec309bd97569a",
+    "lastWriteTimeUtc": "2026-11-03T20:32:05.1118163Z",
+    "bytes": 13735
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.hpp",
+    "sha256": "da6aaa24680ba75fac335fcd341005c867cb260a545340556d0ebe4a79e34f66",
+    "lastWriteTimeUtc": "2026-11-03T20:32:05.1118163Z",
+    "bytes": 11254
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.cpp",
+    "sha256": "dccc6e3b30be4a26d2e5f1633f959089c4f16c29448d47947594ac73d68b65cd",
+    "lastWriteTimeUtc": "2026-11-03T20:32:05.1108164Z",
+    "bytes": 24596
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.hpp",
+    "sha256": "226e095b97f46bb083db6e87f35229bfd3d44b0b6eecc0a273bbff3a982a5e0d",
+    "lastWriteTimeUtc": "2026-11-03T20:32:05.1108164Z",
+    "bytes": 7780
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\connect.cpp",
+    "sha256": "73659fea38e311c87dd91e3311321f421483cf0f0ea9061d7e266f5469867f9d",
+    "lastWriteTimeUtc": "2026-11-03T20:28:17.1601153Z",
+    "bytes": 4154
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-context-source\\context_tests.cpp",
+    "sha256": "eb18023734604d8e14e98e8c9b3e5a5f8ef4d58b1adbe2d2a5aed180040412b2",
+    "lastWriteTimeUtc": "2026-11-03T17:22:58.2792782Z",
+    "bytes": 8606
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-context-source\\context_test_fixture.hpp",
+    "sha256": "917c960f958252cc92e4e41ed8546ee4c804d57d141430d466610b1463225419",
+    "lastWriteTimeUtc": "2026-11-02T19:01:48.7592503Z",
+    "bytes": 7073
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-resources-factory-source\\factory_tests.cpp",
+    "sha256": "10a94d4a88c51b6b2ef9decd7806e10cd0e2e9f929cbda647c66ec09343321b1",
+    "lastWriteTimeUtc": "2026-11-03T18:44:06.9820246Z",
+    "bytes": 56120
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-original-provider-source\\originals_integration_tests.cpp",
+    "sha256": "812734fd0b55ce80c2b23ede7c102314f30f1d894f3db9836bdc868e6da0a855",
+    "lastWriteTimeUtc": "2026-10-30T13:33:29.6883755Z",
+    "bytes": 15214
+  }
+]

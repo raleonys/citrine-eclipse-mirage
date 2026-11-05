@@ -1,0 +1,375 @@
+#include "profile.hpp"
+#include "../anadius-thread-domain-source/domain_test_fixture.hpp"
+#include <algorithm>
+#include <deque>
+#include <functional>
+#include <iostream>
+#include <optional>
+#include <thread>
+
+namespace sp=anadius::session_profile;namespace s=anadius::socket_recovered;namespace o=anadius::owned_server;namespace r=anadius::server_runtime;namespace b=b6_core_test;
+namespace {
+unsigned checks=0;
+void check(bool v,const char* why){++checks;if(!v){std::cerr<<"FAIL: "<<why<<'\n';throw std::runtime_error(why);}}
+[[noreturn]]void unused(){throw std::logic_error("Unselected isolated runtime dependency");}
+template<class E,class F>void rejects(F fn,const char* why){bool caught=false;try{fn();}catch(const E&){caught=true;}check(caught,why);}
+void* WINAPI heap_allocate(HANDLE heap,DWORD flags,SIZE_T bytes){auto& state=*b::observed;++state.allocations;check(heap==::GetProcessHeap()&&(flags==0||flags==HEAP_ZERO_MEMORY),"owned source heap allocation preserves zero or uninitialized policy");auto* raw=::HeapAlloc(heap,flags,bytes);const auto error=::GetLastError();if(raw)state.blocks.emplace(raw,bytes);::SetLastError(error);return raw;}
+std::function<void(void*)> before_heap_free;
+BOOL WINAPI heap_release(HANDLE heap,DWORD flags,void* raw){if(before_heap_free)before_heap_free(raw);return b::free_heap(heap,flags,raw);}
+struct NativeDomain {
+ b::Observation observation;b::RuntimeState runtime;std::shared_ptr<anadius::thread_domain::DomainStorage> root;
+ NativeDomain(){if(b::observed||b::runtime_state)unused();b::observed=&observation;b::runtime_state=&runtime;auto api=b::apis();api.heap.heap_alloc=heap_allocate;api.heap.heap_free=heap_release;root=anadius::thread_domain::DomainStorage::create(b::seed(),api);check(root->initialize(),"own controlled FLS/heap domain initialized");}
+ ~NativeDomain(){if(root){if(!root->close())std::terminate();root.reset();}b::observed=nullptr;b::runtime_state=nullptr;}
+};
+struct Packet {std::uint32_t bytes;std::uintptr_t key;OVERLAPPED* operation;std::uint32_t error;};
+struct State {
+ std::uint32_t index=17;std::int32_t epoch=0;void* tls=nullptr;std::uint32_t last=0;
+ unsigned environment=0,created=0,destroyed=0,bindings=0,accepts=0,factories=0,posts=0,gets=0,after=0,returned=0,external=0,init=0,finish=0,starts=0,cleanups=0,ports_closed=0;
+ std::uint64_t handled=0;bool attested=false,poison_reentry=false,poison_backend=false,invalid_bindings=false,reentered=false;s::OwnedAcceptMemory* accept_memory=nullptr;
+ std::optional<r::Ports> ports;std::optional<o::ServerView> view;r::Runtime* runtime=nullptr;std::function<void(std::string_view)> hook;std::vector<std::string> order;
+ std::deque<Packet> packets;std::vector<s::Socket> closed;std::vector<std::uint32_t> tls_indices;
+ void event(std::string_view name){order.emplace_back(name);if(hook)hook(name);}
+};
+State* active=nullptr;
+int WSAAPI startup(WORD version,LPWSADATA){check(version==MAKEWORD(2,2),"server init requests exact WSA2.2 without real WSAStartup");++active->starts;return 0;}
+int WSAAPI cleanup(){++active->cleanups;return 0;}
+int WSAAPI local_name(SOCKET,sockaddr*,int*){unused();}
+BOOL WINAPI environment(LPCSTR,LPCSTR){unused();}
+VOID WINAPI delete_gate(LPCRITICAL_SECTION section){::DeleteCriticalSection(section);}
+struct Errors final:s::Api {
+ std::shared_ptr<State> state;explicit Errors(std::shared_ptr<State> p):state(std::move(p)){}
+ s::Category system_category_028620()override{return {0x2222};}std::int32_t get_last_error()override{return static_cast<std::int32_t>(state->last);}void set_last_error(std::int32_t n)override{state->last=static_cast<std::uint32_t>(n);}
+ s::Conversion convert_acp(const char*,std::int32_t)override{unused();}s::AddressCall string_to_address(s::Conversion&,std::int32_t,std::int32_t)override{unused();}s::SendCall wsa_send(s::Socket,std::span<s::Buffer>,std::uint32_t)override{unused();}std::int32_t select_write(s::Socket,std::int32_t)override{unused();}
+};
+struct Sockets final:s::AcceptorApi {
+ std::shared_ptr<State> state;explicit Sockets(std::shared_ptr<State> p):state(std::move(p)){}
+ s::Socket create_socket(std::int32_t family)override{check(family==2,"source acceptor uses selected IPv4 family");return 200;}
+ std::uintptr_t attach_completion_port(s::Socket socket,std::uintptr_t port)override{check(socket==200&&port==0x900,"initial acceptor attaches selected fake kernel handle");return port;}
+ std::uint32_t get_win32_error()override{return state->last;}
+ std::int32_t set_option(s::Socket,int level,int name,int value)override{check(level==65535&&name==4&&value==1,"initial reuse option preserved");return 0;}
+ std::int32_t bind_socket(s::Socket socket,std::span<const std::byte>,std::int32_t size)override{check(socket==200&&size==16,"source bind stays at controlled SDK token");return 0;}
+ std::int32_t listen_socket(s::Socket socket,std::int32_t backlog)override{check(socket==200&&backlog==INT_MAX,"source listen passes native INTMAX");return 0;}
+ std::int32_t close_socket(s::Socket socket)override{state->closed.push_back(socket);state->event("socket.close");return 0;}
+ std::int32_t set_nonblocking(s::Socket,std::uint32_t,std::uint32_t&)override{unused();}
+};
+struct Iocp final:s::IocpConstructorApi {
+ std::shared_ptr<State> state;explicit Iocp(std::shared_ptr<State> p):state(std::move(p)){}
+ std::uint64_t set_version_mask(std::uint64_t mask,std::uint32_t type,std::uint8_t condition)override{check(!mask&&type==2&&condition==3,"source version-mask args");return 0x55;}
+ std::int32_t verify_version(OSVERSIONINFOEXA& v,std::uint32_t type,std::uint64_t mask)override{check(v.dwMajorVersion==6&&type==2&&mask==0x55,"source IOCP version predicate");return 1;}
+ std::uintptr_t create_completion_port(std::uintptr_t file,std::uintptr_t prior,std::uintptr_t key,std::uint32_t threads)override{check(file==~std::uintptr_t{0}&&!prior&&!key&&threads==UINT32_MAX,"source IOCP creation arguments to synthetic handle");return 0x900;}
+ std::uint32_t get_last_error()override{return state->last;}std::int32_t close_handle(std::uintptr_t h)override{check(h==0x900,"owned server closes matching synthetic IOCP");++state->ports_closed;return 1;}
+};
+struct Gates final:s::ServiceGateApi {std::int32_t initialize(CRITICAL_SECTION& cs,std::uint32_t spin)override{return ::InitializeCriticalSectionAndSpinCount(&cs,spin);}std::uint32_t get_last_error()override{return ::GetLastError();}};
+struct Cancellation final:s::CancellationEffects {void cancel_026aa0(s::CancellationEngine&,s::Socket,const s::Error&)override{unused();}};
+struct Executor final:s::RegistryExecutorEffects {void executor_cleanup(s::SocketObject&,std::uintptr_t)override{}}
+;
+struct Dispatcher final:s::DispatcherApi {
+ std::shared_ptr<State> state;explicit Dispatcher(std::shared_ptr<State> p):state(std::move(p)){}
+ void set_last_error(std::uint32_t n)override{state->last=n;}std::uint32_t get_last_error()override{return state->last;}
+ std::int32_t post(std::uintptr_t port,std::uint32_t bytes,std::uintptr_t key,OVERLAPPED* op)override{check(port==0x900,"runtime publication stays on exact server port");++state->posts;state->packets.push_back({bytes,key,op,0});state->event("post");return 1;}
+ std::int32_t get(std::uintptr_t port,std::uint32_t& bytes,std::uintptr_t& key,OVERLAPPED*& op,std::uint32_t timeout)override{check(port==0x900&&timeout==UINT32_MAX&&!state->packets.empty(),"actual worker waits through selected deterministic queue");bool outside=false;try{(void)state->view->memory.buffer_context();}catch(const std::logic_error&){outside=true;}check(outside,"admitted dispatcher releases root before physical wait");{auto independent=state->view->memory.enter();}auto packet=state->packets.front();state->packets.pop_front();bytes=packet.bytes;key=packet.key;op=packet.operation;state->last=packet.error;++state->gets;state->event("get");return packet.error?0:1;}
+ std::int32_t set_timer(std::uintptr_t,LARGE_INTEGER&,std::int32_t,PTIMERAPCROUTINE,void*,std::int32_t)override{unused();}
+};
+struct Worker final:s::WorkerRunApi {
+ std::shared_ptr<State> state;std::function<void()> on_destroy;explicit Worker(std::shared_ptr<State> p):state(std::move(p)){}~Worker()override{if(on_destroy)on_destroy();}
+ void* tls_get(std::uint32_t index)override{check(index==state->index,"worker uses stable externally retained TLS slot");state->tls_indices.push_back(index);return state->tls;}
+ std::int32_t tls_set(std::uint32_t index,void* value)override{check(index==state->index,"worker restores same TLS binding");state->tls=value;return 1;}
+ std::int32_t post_stop(std::uintptr_t,std::uint32_t,std::uintptr_t,OVERLAPPED*)override{unused();}std::uint32_t get_last_error()override{unused();}
+};
+struct Accept final:s::AsyncAcceptApi {
+ std::shared_ptr<State> state;explicit Accept(std::shared_ptr<State> p):state(std::move(p)){}
+ s::AcceptExResult accept(s::Socket listener,s::Socket accepted,std::span<std::byte> buffer,OVERLAPPED& ov)override{check(listener==200&&accepted==201+state->accepts&&buffer.size()==288,"actual runtime021b00/helper factory reaches bounded fakeAcceptEx");++state->accepts;state->packets.push_back({0,0,&ov,995});state->event("accept");return {0,997};}
+ s::AcceptAddresses addresses(std::span<std::byte>)override{unused();}std::int32_t update_context(s::Socket,s::Socket&)override{unused();}
+};
+struct Factory final:s::SocketFactoryApi {std::shared_ptr<State> state;explicit Factory(std::shared_ptr<State> p):state(std::move(p)){}s::Socket open(std::int32_t family,std::int32_t type,std::int32_t protocol)override{++state->factories;check(family==2&&type==1&&protocol==6,"actual029df0 uses pending protocol/type/TCP lower");return 201+state->accepts;}};
+struct Cancel final:s::RetryCancelApi {std::int32_t cancel(s::Socket,OVERLAPPED&)override{unused();}};
+struct Table final:s::IoHandlerVtable {Table():IoHandlerVtable(0x777){}void destroy_slot_00(s::IoHandlerEnvironment&)override{}void move_slot_10(s::IoHandlerEnvironment& to,s::IoHandlerEnvironment& from)override{to.payload_00=from.payload_00;to.state_18=from.state_18;}std::uintptr_t query_slot_18(s::IoHandlerEnvironment&)override{unused();}};
+struct Types final:s::IoEnvironmentTypeApi {std::int32_t compare_type_names_04d2d0(std::uintptr_t,std::uintptr_t)override{unused();}};
+struct Completion final:s::IoCompletionEffects {s::Category misc_category_0285b0()override{return {0x3333,anadius::server_recovered::ErrorCategory::asio_misc};}void receive_body_025c40(s::ReceiveHandler&,s::Error&,std::uint64_t,std::uint32_t)override{unused();}void send_body_0261d0(s::SendHandler&,s::Error&,std::uint64_t,std::uint32_t)override{unused();}void schedule_send_0229d0(s::IoHandlerEnvironment&,s::SendHandler&)override{unused();}void schedule_receive_022c60(s::IoHandlerEnvironment&,s::ReceiveHandler&)override{unused();}};
+struct Guard final:s::DispatcherEffects {std::uintptr_t capture_tls_slot()override{return 1;}std::int32_t thread_epoch(std::uintptr_t n)override{check(n==1,"dispatcher passes selected TLS identity");return 0;}void guard_header_04b838(std::int32_t&)override{unused();}void register_atexit_04b770(std::uintptr_t)override{unused();}void guard_footer_04b7cc(std::int32_t&)override{unused();}std::uint32_t read_stop_34(s::IocpSchedulerEntry& e)override{return e.high_34;}std::array<std::uintptr_t,2>& copy_exception_024100(std::array<std::uintptr_t,2>& d,const std::array<std::uintptr_t,2>& src)override{d=src;return d;}[[noreturn]]void rethrow_029880(std::array<std::uintptr_t,2>&)override{unused();}void complete(s::IocpSchedulerEntry*,s::CancelOperation&,const s::Error&,std::uint32_t)override{unused();}};
+struct Control final:r::WorkerControl {State& state;explicit Control(State& s):state(s){}std::uint32_t exchange_stop(s::IocpSchedulerEntry& e,std::uint32_t n)override{state.event("control.exchange");return std::atomic_ref(e.high_34).exchange(n);}std::uint32_t exchange_wake(s::IocpSchedulerEntry& e,std::uint32_t n)override{const auto old=static_cast<std::uint32_t>(e.word_38);e.word_38=(e.word_38&0xffffffff00000000ULL)|n;return old;}void initialize(std::array<std::uintptr_t,2>& p)override{p.fill(0);++state.init;}void finish(std::array<std::uintptr_t,2>& p)override{check(p==std::array<std::uintptr_t,2>{},"actual worker finishes clean exception context");++state.finish;}[[noreturn]]void raise(s::Error,std::uintptr_t)override{unused();}};
+struct Log final:s::WriteFinishApi {void free_sized_04b0f8(std::uintptr_t,std::uint64_t)override{unused();}[[noreturn]]void invalid_parameter_05c974()override{unused();}void next_write_02a500(std::uintptr_t)override{unused();}s::WriteFinishStream& begin_log_006880(std::uintptr_t,std::uintptr_t)override{unused();}s::WriteFinishStream& append_007990(s::WriteFinishStream&,std::uintptr_t,std::uint64_t)override{unused();}std::uint64_t widen_01e510(std::uintptr_t,std::uint8_t)override{unused();}void put_00fe90(s::WriteFinishStream&,std::uint8_t)override{unused();}void flush_00e1e0(s::WriteFinishStream&)override{unused();}};
+struct Terminal final:s::FrameReadTerminal {[[noreturn]]void bad_weak_ptr_026860()override{unused();}};
+struct FrameApi final:s::FrameReadApi {void construct_message_006b30(s::ReceiveBufferString&,std::uintptr_t,std::uint64_t)override{unused();}s::FrameMessageClosure* allocate_frame_04b0bc(std::uint64_t)override{unused();}std::uintptr_t begin_frame_thread_05e8e0(std::uintptr_t,std::uint32_t,std::uintptr_t,s::FrameMessageClosure*,std::uint32_t,std::uint32_t&)override{unused();}std::int32_t detach_04a458(const s::FrameThreadHandle&)override{unused();}[[noreturn]]void thread_error_04a648(int)override{unused();}void free_sized_04b0f8(std::uintptr_t,std::uint64_t)override{unused();}[[noreturn]]void invalid_parameter_05c974()override{unused();}void next_write_02a500(std::uintptr_t)override{unused();}s::WriteFinishStream& begin_log_006880(std::uintptr_t,std::uintptr_t)override{unused();}s::WriteFinishStream& append_007990(s::WriteFinishStream&,std::uintptr_t,std::uint64_t)override{unused();}std::uint64_t widen_01e510(std::uintptr_t,std::uint8_t)override{unused();}void put_00fe90(s::WriteFinishStream&,std::uint8_t)override{unused();}void flush_00e1e0(s::WriteFinishStream&)override{unused();}};
+struct Receive final:s::AsyncReceiveApi {s::AsyncReceiveResult receive(s::Socket,s::Buffer&,std::uint32_t,OVERLAPPED&)override{unused();}};
+struct ReadApi final:s::ComposedReadApi {void finish_frame_025480(s::ReceiveHandler&,s::Error&,std::uint64_t)override{unused();}void construct_length_error_024390(s::ReadLengthError&,std::uintptr_t)override{unused();}[[noreturn]]void throw_length_error_023930(s::ReadLengthError&)override{unused();}};
+struct App final:r::Application {
+ std::shared_ptr<State> state;r::Ports ports;Errors& errors;Table& table;Completion completion;Guard guard;Control control;Log log;Terminal terminal;FrameApi frame_api;Receive receive_api;ReadApi read_api;
+ s::AsyncReceiveContext receive;s::ComposedReadContext read;s::FrameReadContext frame;
+ App(std::shared_ptr<State> st,r::Ports p,Errors& e,Table& t):state(std::move(st)),ports(p),errors(e),table(t),control(*state),receive{p.environment,p.worker,p.memory.posted(),receive_api,p.completion,e,p.memory},read{p.view.memory.buffer_context(),receive,completion,read_api,{},{}},frame{p.view.memory.buffer_context(),completion,frame_api,{},{},{},terminal,{0x1111},&read}{state->ports.emplace(p);state->event("app.create");}
+ ~App(){++state->destroyed;state->event("app.destroy");}
+ r::Bindings bindings()override{++state->bindings;state->event("bindings");if(state->invalid_bindings)frame.read=nullptr;return {frame,log,completion,guard,control,{}, {},nullptr};}
+ void construct_accept_environment(s::IoHandlerEnvironment& out,std::uintptr_t allocator)override{check(allocator==ports.server_identity+0x68,"actual rearm uses runtime-owned stable server identity+68");out={{1,2},&table,0,0,nullptr};state->event("construct.env");}
+ void reset_pending_owner(s::AcceptPending&)override{unused();}s::ReceiveBufferString& greeting(s::SessionOwner&,s::ReceiveBufferString&)override{unused();}[[noreturn]]void raise_write(s::Error&,std::uintptr_t)override{unused();}
+ s::IocpSchedulerEntry* completion_owner(s::IocpSchedulerEntry* owner,s::CancelOperation&,const s::Error& error,std::uint32_t)override{check(owner==&ports.view.scheduler&&error.value==995,"only observed terminal995 packet selects explicit owner0 policy");(void)ports.view.memory.buffer_context();state->event("owner0");return nullptr;}
+ void after_completion()override{++state->after;state->event("after");}
+ void worker_returned(std::uint64_t n,const s::WorkerRunResult& result)override{check(result.error&&result.error->value==0&&state->tls==nullptr,"real worker restoredTLS andreturneddefinedsuccess");state->handled=n;++state->returned;state->event("worker.returned");}
+};
+struct Profile final:r::Profile {
+ std::shared_ptr<State> state;Errors& errors;Table table;Types types;s::IoEnvironmentConstructorContext constructor{types,{},{}};std::function<void()> on_destroy;
+ Profile(std::shared_ptr<State> p,Errors& e):state(std::move(p)),errors(e){}
+ ~Profile()override{if(on_destroy)on_destroy();}
+ r::Environment environment(o::ServerView view,std::uintptr_t server)override{++state->environment;state->view.emplace(view);check(server!=0&&view.identity.value!=0,"profile seescopied complete view andstable runtime server token");state->event("profile.environment");if(state->poison_reentry){try{state->runtime->submit_accept(view);}catch(const std::logic_error&){state->reentered=true;}}return {{&table,0,nullptr,table.destroy_identity},constructor,{}};}
+ std::unique_ptr<r::Application> create(r::Ports ports)override{++state->created;state->accept_memory=&ports.accept;check(&ports.view.memory==&state->view->memory&&&ports.view.io==&state->view->io,"Profilecreate uses sameexact view owners");if(state->poison_backend){try{ports.view.backend.with_operation([](o::ServerView&){unused();});}catch(const std::logic_error&){state->reentered=true;}}return std::make_unique<App>(state,ports,errors,table);}
+ bool external_quiescent(o::ServerView view,r::Application&)override{++state->external;bool outside=false;try{(void)view.memory.buffer_context();}catch(const std::logic_error&){outside=true;}check(outside,"externalattestation isoutside parentOperation");state->event("external");return state->attested;}
+};
+void move_executor(void*,s::ExecutorFields& to,s::ExecutorFields& from,std::uintptr_t){to=from;}
+struct BorrowedRuntime final:o::Runtime {
+ r::Runtime& runtime;explicit BorrowedRuntime(r::Runtime& value):runtime(value){}
+ void submit_accept(o::ServerView& view)override{runtime.submit_accept(view);}
+ anadius::server_recovered::Error run(o::ServerView& view,o::AdmittedDispatcherApi& api)override{return runtime.run(view,api);}
+ bool quiescent(o::ServerView& view)override{return runtime.quiescent(view);}
+};
+struct Fixture {
+ NativeDomain native;std::shared_ptr<State> state=std::make_shared<State>();std::shared_ptr<Errors> errors=std::make_shared<Errors>(state);std::shared_ptr<Sockets> sockets=std::make_shared<Sockets>(state);std::shared_ptr<Dispatcher> dispatcher=std::make_shared<Dispatcher>(state);std::shared_ptr<Worker> worker=std::make_shared<Worker>(state);std::shared_ptr<Accept> accept=std::make_shared<Accept>(state);std::shared_ptr<Factory> factory=std::make_shared<Factory>(state);std::shared_ptr<Cancel> cancel=std::make_shared<Cancel>();std::shared_ptr<Profile> profile=std::make_shared<Profile>(state,*errors);
+ std::shared_ptr<r::Runtime> runtime;std::unique_ptr<o::OwnedServerBackend> backend;
+ Fixture(){check(!active,"isolated runtimefixtures do not overlap");active=state.get();}
+ ~Fixture(){if(backend){if(backend->snapshot().phase!=o::Phase::Closed)std::terminate();backend.reset();}runtime.reset();active=nullptr;}
+ r::Dependencies runtime_dependencies(){return {state,errors,sockets,dispatcher,worker,accept,factory,cancel,profile,&state->index,&state->epoch,{0x1111},{0x2222},{0x3333,anadius::server_recovered::ErrorCategory::asio_misc},{nullptr,move_executor},4};}
+ o::Dependencies server_dependencies(){o::Dependencies d;d.state_lifetime=state;d.errors=errors;d.sockets=sockets;d.dispatcher=dispatcher;d.iocp=std::make_shared<Iocp>(state);d.gates=std::make_shared<Gates>();d.cancellation=std::make_shared<Cancellation>();d.executor=std::make_shared<Executor>();d.kernel={startup,cleanup,local_name,environment,delete_gate};return d;}
+ void initialize(bool borrowed=false,std::shared_ptr<void> lifetime={}){auto rd=runtime_dependencies();if(lifetime)rd.state_lifetime=std::move(lifetime);runtime=std::make_shared<r::Runtime>(std::move(rd));state->runtime=runtime.get();auto d=server_dependencies();d.runtime=borrowed?std::static_pointer_cast<o::Runtime>(std::make_shared<BorrowedRuntime>(*runtime)):runtime;backend=std::make_unique<o::OwnedServerBackend>(native.root,d,4);backend->initialize_context_0241b0();anadius::server_recovered::Endpoint endpoint;backend->construct_acceptor_020e20(endpoint,true,INT_MAX);backend->initialize_pending_socket_0211b0();}
+ void submit(){backend->async_accept_021b00();}
+ void run(){const auto error=backend->run_context_0298b0();check(error.value==0,"concrete runtime returns actual source-worker success");}
+ void drain_wake(){while(!state->packets.empty()){const auto packet=state->packets.front();state->packets.pop_front();check(!packet.operation&&!packet.key&&!packet.bytes,"only observed wake token remains outside completed worker");}}
+ void close(){drain_wake();state->attested=true;backend->destroy_pending_socket_024db0();backend->destroy_acceptor_024db0();backend->destroy_context();check(runtime->snapshot().phase==r::Phase::Closed&&!runtime->snapshot().graph_present,"explicit retirement closesconcreteRuntime graph beforeBackendcontext");}
+};
+
+struct HeaderLedgerApi final:s::FrameReadApi {
+ sp::Strings& strings;s::WriteFinishStream stream{0x6000,0};std::uintptr_t expected_base=0;std::uint64_t expected_bytes=0;unsigned frees=0,appends=0,next=0;
+ explicit HeaderLedgerApi(sp::Strings& owned):strings(owned){}
+ void free_sized_04b0f8(std::uintptr_t address,std::uint64_t bytes)override{check(address==expected_base&&bytes==expected_bytes,"Grown header consumer frees the exact aligned allocation base and sized extent");++frees;strings.free_sized(address,bytes);}
+ [[noreturn]]void invalid_parameter_05c974()override{unused();}
+ void next_write_02a500(std::uintptr_t owner)override{check(owner==0x4444,"Grown write completion resumes its exact queue owner");++next;}
+ s::WriteFinishStream& begin_log_006880(std::uintptr_t global,std::uintptr_t prefix)override{check(global==0x1800a4130ULL&&prefix==0x1800845c8ULL,"Actual frame error path uses its observed log prefix after header growth");return stream;}
+ s::WriteFinishStream& append_007990(s::WriteFinishStream& out,std::uintptr_t,std::uint64_t size)override{check(&out==&stream&&size==4095,"Actual frame error logs its live large message before freeing through rebound headers");++appends;return out;}
+ std::uint64_t widen_01e510(std::uintptr_t value,std::uint8_t c)override{check(value==stream.identity&&c==10,"Frame error preserves its newline call");return c;}
+ void put_00fe90(s::WriteFinishStream& out,std::uint8_t c)override{check(&out==&stream&&c==10,"Frame error emits one newline");}
+ void flush_00e1e0(s::WriteFinishStream& out)override{check(&out==&stream,"Frame error flushes the same stream");}
+ void construct_message_006b30(s::ReceiveBufferString&,std::uintptr_t,std::uint64_t)override{unused();}
+ s::FrameMessageClosure* allocate_frame_04b0bc(std::uint64_t)override{unused();}
+ std::uintptr_t begin_frame_thread_05e8e0(std::uintptr_t,std::uint32_t,std::uintptr_t,s::FrameMessageClosure*,std::uint32_t,std::uint32_t&)override{unused();}
+ std::int32_t detach_04a458(const s::FrameThreadHandle&)override{unused();}
+ [[noreturn]]void thread_error_04a648(int)override{unused();}
+};
+struct HeaderLedgerCategory final:s::WriteFinishCategory {
+ s::ReceiveBufferString* source=nullptr;
+ HeaderLedgerCategory(){identity_08=0x8888;}
+ void message_slot_10(s::WriteFinishString& output,std::int32_t code)override{check(source&&code==5,"Actual frame error selects the controlled large-message category");output=*source;*source={};}
+};
+void strings_registered_header_growth(){
+ auto* retained=new Fixture;auto& f=*retained;f.initialize();f.submit();f.run();
+ f.backend->with_operation([&](o::ServerView& view){
+   sp::Strings strings(view.memory,256);Completion completion;Terminal terminal;HeaderLedgerApi api(strings);HeaderLedgerCategory category;
+   const s::Category key{0x8888,anadius::server_recovered::ErrorCategory::system};std::array<s::WriteFinishCategoryBinding,1> categories{{{key,&category}}};
+   std::array<s::ReceiveBufferString,260> values{};std::array<s::WriteFinishString*,1> map{{&values[258]}};
+   s::WriteFinishOwner owner{map,1,0,1};std::array<s::WriteFinishOwnerBinding,1> owners{{{0x4444,&owner}}};
+   s::FrameReadContext frame{view.memory.buffer_context(),completion,api,{},categories,strings.bindings(),terminal,{0x1111},nullptr};
+   s::WriteFinishContext finish{completion,api,owners,categories,strings.bindings()};
+   strings.bind_header_views(frame.allocation_headers,finish.allocation_headers);const auto* initial=strings.bindings().data();
+   for(std::size_t i=0;i<values.size();++i)strings.assign(values[i],std::string(4095,static_cast<char>('a'+i%26)));
+   const auto grown=strings.bindings();check(strings.live_headers()==260&&view.memory.snapshot().buffers==260&&grown.size()>=260&&grown.data()!=initial,"More than256 aligned strings remain simultaneously owned beyond the initial header ledger");
+   check(frame.allocation_headers.data()==grown.data()&&finish.allocation_headers.data()==grown.data()&&frame.allocation_headers.size()==grown.size()&&finish.allocation_headers.size()==grown.size(),"Both live registered completion contexts are rebound after ledger relocation");
+   const auto prepare=[&](const s::ReceiveBufferString& value){const auto data=s::receive_buffer_address(value);const auto entry=std::find_if(grown.begin(),grown.end(),[&](const auto& h){return h.address==data-8;});check(entry!=grown.end()&&(data&31)==0&&data-entry->allocation_base-8<=31,"Post-growth header preserves aligned raw base provenance");api.expected_base=entry->allocation_base;api.expected_bytes=value.capacity_18+1+39;};
+   prepare(values[259]);category.source=&values[259];s::ReceiveHandler receive;s::Error read_error{5,key};s::finish_frame_read_025480(receive,read_error,0,frame);
+   check(api.frees==1&&api.appends==1&&!values[259].size_10&&strings.live_headers()==259,"Actual FrameReadContext consumer finds a new header beyond old256 span and frees it once");
+   prepare(values[258]);s::SendHandler send;send.word_88=0x4444;s::Error success{0,{0x1111}};s::finish_write_025a70(send,success,finish);
+   check(api.frees==2&&api.next==1&&!owner.count_e8&&!owner.offset_e0&&values[258].capacity_18==15&&strings.live_headers()==258,"Actual WriteFinishContext consumer independently finds another new header and retires its queue head");
+   strings.assign(values[258],std::string(4095,'R'));strings.assign(values[259],std::string(4095,'S'));
+   check(strings.live_headers()==260&&strings.bindings().data()==grown.data()&&frame.allocation_headers.data()==grown.data()&&finish.allocation_headers.data()==grown.data(),"Freed metadata entries are reused without breaking either registered context");
+   for(auto& value:values)strings.release(value);
+   check(!strings.live_headers()&&!view.memory.snapshot().buffers,"All260 payloads and their reused aligned headers retire without a remaining Parent buffer");
+ });
+ f.close();delete retained;
+}
+void strings_contract(){
+ auto* retained=new Fixture;auto& f=*retained;f.initialize();f.submit();f.run();
+ f.backend->with_operation([&](o::ServerView& view){
+   rejects<std::invalid_argument>([&]{sp::Strings bad(view.memory,0);},"string header registry rejects zero capacity");
+   rejects<std::invalid_argument>([&]{sp::Strings bad(view.memory,1048577);},"string header registry has explicit bounded maximum");
+   sp::Strings strings(view.memory,3);s::ReceiveBufferString a,b,c;
+   const std::string nul("ab\0cd",5);strings.assign(a,nul);check(strings.read(a)==nul&&a.capacity_18==15&&a.storage_00[5]==0,"SSO adapter preserves embedded NUL and exact binary length");
+   strings.copy(b,a);check(strings.read(b)==nul&&b.storage_00==a.storage_00,"actual009eb0 copy preserves complete inline sixteen-byte prefix");
+   rejects<s::UnsupportedInput>([&]{strings.copy(a,a);},"copy rejects alias before constructor prefix overwrite");check(strings.read(a)==nul,"alias rejection preserves live source");
+   strings.assign(a,std::string(32,'a'));check(strings.read(a)==std::string(32,'a')&&view.memory.snapshot().buffers==1&&!strings.live_headers(),"small heap assignment owns one bounded allocation without large header");
+   strings.assign(a,"short");check(strings.read(a)=="short"&&!view.memory.snapshot().buffers,"heap to SSO releases original owned byte ticket");
+   strings.assign(a,std::string(4079,'x'));check(a.capacity_18==4079&&!strings.live_headers(),"4095-byte boundary below aligned allocation remains headerless");strings.release(a);
+   strings.assign(a,std::string(4080,'y'));check(a.capacity_18==4095&&strings.live_headers()==1,"4096-byte allocation threshold publishes exact aligned header");
+   const auto data=s::receive_buffer_address(a);check((data&31)==0&&strings.bindings()[0].address==data-8&&data-strings.bindings()[0].allocation_base-8<=31,"large string has bounded aligned data and raw header provenance");
+   auto header=view.memory.buffer_context().memory.view(data-8,8);std::array<std::uint8_t,8> saved{};std::copy(header.begin(),header.end(),saved.begin());const auto bad_base=data-40;for(unsigned i=0;i<8;++i)header[i]=static_cast<std::uint8_t>(bad_base>>(8*i));
+   rejects<std::invalid_argument>([&]{strings.track(a);},"unsigned alignment distance thirty-two rejected before header publication");rejects<std::invalid_argument>([&]{strings.release(a);},"release rejects corrupted raw header before freeing owned string");check(a.size_10==4080&&view.memory.snapshot().buffers==1,"failed alignment guard preserves owned prefix and allocation");std::copy(saved.begin(),saved.end(),header.begin());
+   strings.track(a);check(strings.live_headers()==1,"tracking same live header updates without consuming capacity");
+   strings.copy(c,a);check(strings.read(c)==strings.read(a)&&s::receive_buffer_address(c)!=data&&strings.live_headers()==2,"actual009eb0 large copy allocates independent bytes and header");
+   strings.assign(c,std::string(7000,'z'));check(strings.live_headers()==2&&strings.read(a)==std::string(4080,'y'),"replacement retires previous header while preserving distinct source");
+   auto corrupt=b;corrupt.size_10=16;rejects<s::UnsupportedInput>([&]{(void)strings.read(corrupt);},"read rejects declared size above inline capacity before reading");
+   const auto address=s::receive_buffer_address(c);std::uintptr_t base=0;for(const auto& h:strings.bindings())if(h.address==address-8)base=h.allocation_base;
+   check(base!=0,"second aligned allocation has tracked raw base");view.memory.free_sized_04b0f8(base,c.capacity_18+1+39);c={};strings.prune();check(strings.live_headers()==1,"prune drops metadata after independent actual parent free");
+   strings.release(a);strings.release(b);check(!strings.live_headers()&&!view.memory.snapshot().buffers,"explicit string retirement drains every byte ticket and large header");
+ });
+ sp::Strings outside(f.state->view->memory,1);s::ReceiveBufferString empty;rejects<std::logic_error>([&]{(void)outside.read(empty);},"even inline string read requires current parent Operation");
+ f.close();delete retained;
+}
+struct ProfilePolicy final:sp::Policy {
+ Control worker;Guard guard;Log log;Table& table;unsigned environments=0,cleanups=0,external_calls=0;std::function<void()> on_destroy,after_hook;
+ explicit ProfilePolicy(State& state,Table& t):worker(state),table(t){}
+ ~ProfilePolicy()override{if(on_destroy)on_destroy();}
+ s::DispatcherEffects& guards()override{return guard;}s::WriteFinishApi& logging()override{return log;}
+ s::IoHandlerEnvironment session_environment(sp::SessionView)override{++environments;return {{1,2},&table,0,0,nullptr};}
+ void accept_environment(s::IoHandlerEnvironment& out,std::uintptr_t)override{out={{1,2},&table,0,0,nullptr};}
+ void grow_deque(s::WriteFinishOwner&,std::uint64_t)override{unused();}
+ void construct_length_error(s::ReadLengthError&,std::uintptr_t)override{unused();}[[noreturn]]void throw_length_error(s::ReadLengthError&)override{unused();}
+ [[noreturn]]void thread_error(int)override{unused();}void cleanup_exit_waits()override{++cleanups;}[[noreturn]]void raise_write(s::Error&,std::uintptr_t)override{unused();}
+ s::IocpSchedulerEntry* completion_owner(sp::Application&,s::IocpSchedulerEntry* owner,s::CancelOperation&,const s::Error&,std::uint32_t)override{return owner;}
+ void after_completion(sp::Application&)override{if(after_hook)after_hook();}void worker_returned(sp::Application&,std::uint64_t,const s::WorkerRunResult&)override{}
+ bool external_quiescent(o::ServerView,sp::Application&)override{++external_calls;return true;}
+ std::uint32_t exchange_stop(s::IocpSchedulerEntry& e,std::uint32_t n)override{return worker.exchange_stop(e,n);}std::uint32_t exchange_wake(s::IocpSchedulerEntry& e,std::uint32_t n)override{return worker.exchange_wake(e,n);}
+ void initialize(std::array<std::uintptr_t,2>& v)override{worker.initialize(v);}void finish(std::array<std::uintptr_t,2>& v)override{worker.finish(v);}[[noreturn]]void raise(s::Error,std::uintptr_t)override{unused();}
+ [[noreturn]]void bad_weak_ptr_026860()override{unused();}
+};
+struct ProfileJobs final:sp::Jobs {
+ struct Entry{sp::JobToken token;std::function<void()> runner;s::FrameThreadHandle handle;};std::vector<Entry> entries;unsigned detached=0;bool inline_run=false;std::function<void()> on_start,on_destroy,on_detach;
+ ~ProfileJobs()override{if(on_destroy)on_destroy();}
+ s::FrameThreadHandle start(sp::JobToken token,std::function<void()> runner)override{const s::FrameThreadHandle handle{0x500+entries.size(),static_cast<std::uint32_t>(0x600+entries.size())};entries.push_back({token,std::move(runner),handle});if(on_start)on_start();if(inline_run)entries.back().runner();return handle;}
+ std::int32_t detach(const s::FrameThreadHandle& handle)override{check(!entries.empty()&&entries.back().handle.handle==handle.handle&&entries.back().handle.id==handle.id,"detach receives exact backend returned handle and id");++detached;if(on_detach)on_detach();return 0;}
+};
+struct ProfileSend final:s::AsyncSendApi {s::AsyncSendResult send(s::Socket,s::Buffer&,std::uint32_t,OVERLAPPED&)override{unused();}};
+struct Logic final:sp::SessionLogic {
+ std::string hello;std::function<void()> destroy;std::function<void(std::string&)> process_hook;unsigned* calls=nullptr;
+ ~Logic()override{if(destroy)destroy();}std::string greeting()override{return hello;}std::string process(std::string& request)override{if(calls)++*calls;if(process_hook)process_hook(request);return {};}
+};
+struct ProfileFixture {
+ Fixture host;Table table;std::shared_ptr<ProfilePolicy> policy;std::shared_ptr<ProfileJobs> jobs=std::make_shared<ProfileJobs>();std::shared_ptr<Types> types=std::make_shared<Types>();std::vector<sp::SessionToken> tokens;std::vector<Logic*> logic;std::function<void(sp::SessionToken)> logic_deleted;
+ std::unique_ptr<sp::Profile> profile;std::unique_ptr<s::CoherentIoMemory> coherent;std::unique_ptr<r::Application> owned;sp::Application* app=nullptr;unsigned processed=0;
+ ProfileFixture(){host.initialize();host.submit();policy=std::make_shared<ProfilePolicy>(*host.state,table);}
+ sp::Dependencies dependencies(std::size_t sessions=2,std::size_t job_capacity=2,std::size_t headers=8){sp::Dependencies d;d.errors=host.errors;d.receive=std::make_shared<Receive>();d.send=std::make_shared<ProfileSend>();d.policy=policy;d.jobs=jobs;d.logic=[this](sp::SessionView view){tokens.push_back(view.token);auto value=std::make_unique<Logic>();value->hello="hello-"+std::to_string(view.token.slot);value->calls=&processed;value->destroy=[this,token=view.token]{if(logic_deleted)logic_deleted(token);};logic.push_back(value.get());return value;};d.environment.sentinels={&table,0,nullptr,table.destroy_identity};d.environment.types=types;d.success={0x1111};d.misc={0x3333,anadius::server_recovered::ErrorCategory::asio_misc};d.sessions=sessions;d.jobs_capacity=job_capacity;d.headers=headers;d.initial_output_slots=8;return d;}
+ void create(std::size_t sessions=2,std::size_t job_capacity=2){host.backend->with_operation([&](o::ServerView& view){profile=std::make_unique<sp::Profile>(dependencies(sessions,job_capacity));auto prior=*host.state->ports;auto binding=profile->environment(view,prior.server_identity);coherent=std::make_unique<s::CoherentIoMemory>(prior.accept,view.io,binding.sentinels,binding.constructor,binding.sources);auto env=prior.environment;env.sentinels=binding.sentinels;r::Ports ports{view,prior.accept,*coherent,prior.worker,prior.completion,env,prior.server_identity};owned=profile->create(ports);app=dynamic_cast<sp::Application*>(owned.get());check(app&&app->snapshot().phase==sp::Phase::Open,"concrete Profile creates own ready application contexts");});}
+ template<class F>void operation(F fn){host.backend->with_operation([&](o::ServerView& view){fn(view);});}
+ s::SessionPair session(o::ServerView& view){return view.construct_accepted({nullptr,move_executor});}
+ void finish(){operation([&](o::ServerView&){app->reap();});host.run();host.drain_wake();check(profile->external_quiescent(*host.state->view,*owned),"selected source and external checks close concrete application before destructor");owned.reset();app=nullptr;coherent.reset();profile.reset();host.close();}
+};
+void release_strong(s::IoReference* control){if(control->strong_08.fetch_sub(1)==1){control->dispose_slot_00();if(control->weak_0c.fetch_sub(1)==1)control->delete_slot_08();}}
+struct ProfileLifetime {std::function<void()> callback;~ProfileLifetime(){if(callback)callback();}};
+void profile_dependencies(){
+ auto* retained=new ProfileFixture;auto& f=*retained;
+ auto invalid=[&](auto change){auto d=f.dependencies();change(d);rejects<std::invalid_argument>([&]{sp::Profile profile(std::move(d));},"incomplete provider or unbounded profile capacity rejected before source publication");};
+ invalid([](auto& d){d.errors.reset();});invalid([](auto& d){d.receive.reset();d.receive_imports.receive=nullptr;});invalid([](auto& d){d.send.reset();d.send_imports.send=nullptr;});invalid([](auto& d){d.policy.reset();});invalid([](auto& d){d.jobs.reset();d.jobs_capacity=0;});invalid([](auto& d){d.logic={};});invalid([](auto& d){d.environment.types.reset();});invalid([](auto& d){d.environment.sentinels.empty_operations_846c8=nullptr;});invalid([](auto& d){d.sessions=0;});invalid([](auto& d){d.sessions=65537;});invalid([](auto& d){d.jobs_capacity=0;});invalid([](auto& d){d.jobs_capacity=65537;});invalid([](auto& d){d.headers=0;});invalid([](auto& d){d.headers=1048577;});invalid([](auto& d){d.initial_output_slots=4;});invalid([](auto& d){d.initial_output_slots=9;});invalid([](auto& d){d.initial_output_slots=2097152;});
+ unsigned retired=0;auto d=f.dependencies();auto policy=std::make_shared<ProfilePolicy>(*f.host.state,f.table);auto jobs=std::make_shared<ProfileJobs>();auto lifetime=std::make_shared<ProfileLifetime>();d.policy=policy;d.jobs=jobs;d.state_lifetime=lifetime;auto profile=std::make_unique<sp::Profile>(std::move(d));auto* identity=profile.get();
+ auto observe=[&]{const auto snap=identity->snapshot();check(snap.phase==sp::Phase::Retiring&&!snap.live_sessions&&!snap.live_jobs&&!snap.active_calls,"last-owned profile dependencies observe sealed live Retiring metadata");rejects<std::logic_error>([&]{(void)identity->environment(*f.host.state->view,f.host.state->ports->server_identity);},"dependency destructor cannot bind retiring Profile");rejects<std::logic_error>([&]{(void)identity->create(*f.host.state->ports);},"dependency destructor cannot create App after dependencies moved");check(identity->snapshot().phase==sp::Phase::Retiring,"caught dependency reentry preserves retiring phase");++retired;};policy->on_destroy=observe;jobs->on_destroy=observe;lifetime->callback=observe;policy.reset();jobs.reset();lifetime.reset();profile.reset();check(retired==3&&!f.tokens.size(),"final-owned policy/jobs/state each retires exactly once without constructing session logic");
+ f.host.run();f.host.close();delete retained;
+}
+void profile_identity(){
+ auto* retained=new ProfileFixture;auto& f=*retained;
+ f.operation([&](o::ServerView& view){sp::Profile profile(f.dependencies());auto prior=*f.host.state->ports;const auto binding=profile.environment(view,prior.server_identity);s::CoherentIoMemory memory(prior.accept,view.io,binding.sentinels,binding.constructor,binding.sources);auto env=prior.environment;env.sentinels=binding.sentinels;
+   auto foreign=[&](o::ServerView other){r::Ports ports{other,prior.accept,memory,prior.worker,prior.completion,env,prior.server_identity};rejects<std::invalid_argument>([&]{auto result=profile.create(ports);},"full bound ServerView tuple rejects foreign referent before application publication");};
+   s::SocketService service(view.service.gate);foreign({view.backend,view.identity,service,view.acceptor,view.pending,view.scheduler,view.memory,view.io});
+   s::AcceptorState state;s::SocketObject socket(state);foreign({view.backend,view.identity,view.service,socket,view.pending,view.scheduler,view.memory,view.io});foreign({view.backend,view.identity,view.service,view.acceptor,socket,view.scheduler,view.memory,view.io});
+   struct Scheduler:s::IocpSchedulerEntry{using IocpSchedulerEntry::IocpSchedulerEntry;void scalar_delete(std::uint32_t)override{unused();}}scheduler(view.service.gate,view.scheduler.section);foreign({view.backend,view.identity,view.service,view.acceptor,view.pending,scheduler,view.memory,view.io});
+   auto identity=view;identity.identity.value^=1;foreign(identity);
+   r::Ports exact{view,prior.accept,memory,prior.worker,prior.completion,env,prior.server_identity};auto wrong_server=exact;wrong_server.server_identity^=1;rejects<std::invalid_argument>([&]{auto result=profile.create(wrong_server);},"Profile create requires exact bound runtime server token");
+   auto wrong_sentinel=exact;Table table;wrong_sentinel.environment.sentinels.empty_operations_846c8=&table;rejects<std::invalid_argument>([&]{auto result=profile.create(wrong_sentinel);},"Profile create rejects foreign sentinel object with same token fields");
+   auto wrong_storage=exact;wrong_storage.environment.storage.storage={};rejects<std::invalid_argument>([&]{auto result=profile.create(wrong_storage);},"Profile create requires exact owned storage span identity and extent");
+   bool denied=false;std::thread worker([&]{try{auto result=profile.create(exact);}catch(const std::logic_error&){denied=true;}});worker.join();check(denied&&profile.snapshot().phase==sp::Phase::Bound&&!profile.snapshot().active_calls,"foreign worker rejection preserves unpublished bound profile without parent access");
+ });f.host.run();f.host.close();delete retained;
+}
+void profile_slots(){
+ auto* retained=new ProfileFixture;auto& f=*retained;f.create();
+ f.operation([&](o::ServerView& view){
+   const auto bindings=f.app->bindings();const auto ports=f.app->ports();check(&ports.view.memory==&view.memory&&&ports.memory==f.coherent.get()&&&bindings.frame.buffer==&view.memory.buffer_context()&&bindings.frame.read&&bindings.write,"application contexts use exact runtime-owned coherent/parent identities");
+   check(bindings.frame.owners.size()==2&&bindings.frame.read->strings.size()==2&&bindings.write->streams.size()==2,"all fixed registry spans use configured session capacity");
+   auto first=f.session(view),second=f.session(view);s::ReceiveBufferString a,b;f.app->greeting(*first.object,a);f.app->greeting(*second.object,b);check(a.size_10==7&&b.size_10==7&&f.tokens.size()==2,"two actual023000 owners publish separate greeting/logic slots");
+   const auto one=f.tokens[0],two=f.tokens[1];check(one.slot!=two.slot&&one.generation&&two.generation&&f.app->snapshot().live_sessions==2,"fixed slots publish distinct nonzero generations");
+   const auto first_id=first.object->identity(),second_id=second.object->identity();auto registry=f.app->registry();
+   check(registry.frames[one.slot].identity==first_id&&registry.frames[two.slot].identity==second_id&&registry.frames[one.slot].owner==&first.object->weak_self,"frame registry binds distinct exact owner sidecars");
+   check(registry.strings[one.slot].identity==first_id+0xa8&&registry.reads[one.slot].identity==first_id+0x10&&registry.writes[one.slot].identity==first_id+0x10,"read/string/write token offsets match per-owner native routing labels");
+   check(registry.finish[one.slot].identity==first_id&&registry.queued[one.slot].identity==first_id&&registry.messages[one.slot].identity==first_id&&registry.environments[one.slot].allocator_identity==first_id+0x78,"response/message/environment registries publish same exact session identity");
+   check(first.control->weak_0c==3&&second.control->weak_0c==3&&first.control->strong_08==1,"each profile observer adds one weak without retaining a strong owner");
+   unsigned deleted=0;f.logic_deleted=[&](sp::SessionToken old){const auto now=f.app->registry();const auto i=old.slot;check(!now.frames[i].identity&&!now.frames[i].owner&&!now.strings[i].identity&&!now.reads[i].identity&&!now.writes[i].identity&&!now.finish[i].identity&&!now.queued[i].identity&&!now.messages[i].identity&&!now.environments[i].allocator_identity,"logic destructor observes ALL slot registries cleared before observer weak release");check(view.memory.snapshot().controls_destroyed==deleted,"control remains live throughout cleared-slot logic destructor callback");rejects<std::logic_error>([&]{(void)f.app->session(old);},"retiring slot cannot be resolved during logic destructor reentry");++deleted;};
+   const auto freed_control=static_cast<void*>(first.control);unsigned final_free_observed=0;before_heap_free=[&](void* raw){if(raw!=freed_control)return;const auto now=f.app->registry();const auto ports=f.app->ports();check(!now.frames[one.slot].identity&&!now.reads[one.slot].identity&&!now.writes[one.slot].identity&&!now.messages[one.slot].identity&&!now.environments[one.slot].allocator_identity&&&ports.view.memory==&view.memory,"actual final-control free provider sees cleared metadata without borrowing retired Root bytes");++final_free_observed;};
+   release_strong(first.control);f.app->reap();before_heap_free={};check(final_free_observed==1,"exact source control reaches one observed backing free after metadata clear");check(deleted==1&&view.memory.snapshot().controls_destroyed==1&&f.app->snapshot().live_sessions==1,"reap runs actual final observer delete after clearing slot and logic");
+   check(f.app->session(two).owner.identity()==second_id,"reaping first owner leaves second owner identity and contexts intact");
+   rejects<std::logic_error>([&]{(void)f.app->session(one);},"old generation rejected after slot is reaped");
+   auto third=f.session(view);s::ReceiveBufferString c;f.app->greeting(*third.object,c);const auto three=f.tokens.back();check(three.slot==one.slot&&three.generation>one.generation&&f.app->snapshot().live_sessions==2,"freed fixed slot reuses index with increasing generation");
+   rejects<std::logic_error>([&]{(void)f.app->session(one);},"old token stays stale when same slot has new owner");check(&f.app->session(three).owner==third.object&&&f.app->session(two).owner==second.object,"generation lookup resolves only current exact session owners");
+   release_strong(second.control);release_strong(third.control);f.app->reap();check(deleted==3&&!f.app->snapshot().live_sessions&&view.memory.snapshot().controls_destroyed==3&&view.memory.snapshot().allocations==1,"all final observers drain actual source controls and output maps exactly once");
+ });f.logic_deleted={};f.finish();delete retained;
+}
+void deferred_jobs(){
+ auto* retained=new ProfileFixture;auto& f=*retained;f.create(1,1);s::SessionPair pair;std::function<void()> copied;
+ f.operation([&](o::ServerView& view){pair=f.session(view);s::ReceiveBufferString greeting;f.app->greeting(*pair.object,greeting);auto& api=f.app->bindings().frame.api;auto* closure=api.allocate_frame_04b0bc(48);closure->owner_20=pair.object->identity();closure->function_28=0x180028d30ULL;
+   f.jobs->on_start=[&]{check(pair.control->strong_08==2,"application adds extra strong raw-job pin BEFORE calling Jobs.start");};
+   std::uint32_t id=0;const auto handle=api.begin_frame_thread_05e8e0(0,0,0x180021770ULL,closure,0,id);check(handle==0x500&&id==0x600&&f.jobs->entries.size()==1&&f.app->snapshot().live_jobs==1,"deferred frame entry returns exact backend handle/id and retains pending record");check(api.detach_04a458({handle,id})==0,"job detach accepts exact started handle/id");copied=f.jobs->entries[0].runner;
+   release_strong(pair.control);check(pair.control->strong_08==1,"raw-job pin independently survives release of original session strong");f.app->reap();check(f.app->snapshot().live_sessions==1&&!view.memory.snapshot().controls_destroyed,"pending deferred job prevents session observer reap");
+ });
+ f.operation([&](o::ServerView& view){copied();check(!f.app->snapshot().live_jobs&&f.policy->cleanups==1&&pair.control->strong_08==0,"actual021770 normal return cleans closure and releases only raw-job pin");f.app->reap();check(!f.app->snapshot().live_sessions&&view.memory.snapshot().controls_destroyed==1&&view.memory.snapshot().allocations==1,"completed detached job plus observer reap drains actual session allocations");});
+ f.operation([&](o::ServerView& view){pair=f.session(view);s::ReceiveBufferString greeting;f.app->greeting(*pair.object,greeting);auto& api=f.app->bindings().frame.api;auto* closure=api.allocate_frame_04b0bc(48);closure->owner_20=pair.object->identity();closure->function_28=0x180028d30ULL;f.jobs->inline_run=true;std::uint32_t id=0;const auto handle=api.begin_frame_thread_05e8e0(0,0,0x180021770ULL,closure,0,id);
+   check(f.jobs->entries[1].token.slot==f.jobs->entries[0].token.slot&&f.jobs->entries[1].token.generation>f.jobs->entries[0].token.generation,"completed detached fixed job slot reuses only with increasing generation");check(f.app->snapshot().live_jobs==1&&f.policy->cleanups==2&&pair.control->strong_08==1,"inline normal completion retains record until start returns and exact detach occurs");(void)api.detach_04a458({handle,id});check(!f.app->snapshot().live_jobs,"done plus detached record becomes reusable exactly once");release_strong(pair.control);f.app->reap();check(view.memory.snapshot().controls_destroyed==2&&view.memory.snapshot().allocations==1,"inline raw job and second observer drain actual source owner without leaked pin");});
+ f.jobs->on_start={};f.finish();rejects<std::logic_error>([&]{copied();},"copied backend runner after application destruction rejects via shared tombstone before parent or App access");delete retained;
+}
+void job_handoff_preflight(){
+ auto* retained=new ProfileFixture;auto& f=*retained;f.create(1,1);
+ f.operation([&](o::ServerView& view){
+  auto pair=f.session(view);s::ReceiveBufferString greeting;f.app->greeting(*pair.object,greeting);
+  auto& api=f.app->bindings().frame.api;auto* closure=api.allocate_frame_04b0bc(48);
+  closure->owner_20=pair.object->identity();closure->function_28=0x180028d30ULL;
+  std::uint32_t id=0;const auto handle=api.begin_frame_thread_05e8e0(0,0,0x180021770ULL,closure,0,id);(void)api.detach_04a458({handle,id});
+  const auto token=f.jobs->entries.back().token;auto stale=token;++stale.generation;
+  rejects<std::invalid_argument>([&]{(void)f.app->prepare_job(stale);},"Handoff rejects stale source job generation before any claim/backing offer");
+  const auto owner=closure->owner_20;closure->owner_20^=1;
+  rejects<std::logic_error>([&]{(void)f.app->prepare_job(token);},"Handoff binds exact session owner rather than any live job row");closure->owner_20=owner;
+  closure->function_28=0;
+  rejects<std::logic_error>([&]{(void)f.app->prepare_job(token);},"Handoff rejects different message function token before execution");closure->function_28=0x180028d30ULL;
+  ::SetLastError(0x47e1);
+  for(unsigned i=0;i<2;++i)rejects<std::logic_error>([&]{(void)f.app->prepare_job(token);},"Legacy sole-owned Parent cannot silently manufacture prepared job capability or retain partial claim");
+  check(::GetLastError()==0x47e1&&f.app->snapshot().phase==sp::Phase::Open&&f.app->snapshot().live_jobs==1&&pair.control->strong_08==2,"Rejected passive handoffs preserve source job, session pin, Profile and incoming LastError");
+  release_strong(pair.control);f.jobs->entries.back().runner();f.app->reap();
+  check(!f.app->snapshot().live_jobs&&!f.app->snapshot().live_sessions&&f.policy->cleanups==1&&view.memory.snapshot().controls_destroyed==1,"Known preflight failures leave original deferred runner fully eligible and actual source ownership retires once");
+ });f.finish();delete retained;
+}
+void deferred_completion_reuses_slot(){
+ auto* retained=new ProfileFixture;auto& f=*retained;f.create(1,1);
+ f.operation([&](o::ServerView& view){auto first=f.session(view);s::ReceiveBufferString greeting;f.app->greeting(*first.object,greeting);const auto token=f.tokens.back();auto& api=f.app->bindings().frame.api;auto* closure=api.allocate_frame_04b0bc(48);closure->owner_20=first.object->identity();closure->function_28=0x180028d30ULL;std::uint32_t id=0;const auto handle=api.begin_frame_thread_05e8e0(0,0,0x180021770ULL,closure,0,id);(void)api.detach_04a458({handle,id});release_strong(first.control);
+   check(first.control->strong_08==1&&f.app->snapshot().live_sessions==1,"last session strong is retained solely by deferred empty-message job before policy hook");
+   f.policy->after_hook=f.jobs->entries.back().runner;f.app->after_completion();f.policy->after_hook={};
+   check(!f.app->snapshot().live_sessions&&!f.app->snapshot().live_jobs&&view.memory.snapshot().controls_destroyed==1&&view.memory.snapshot().allocations==1,"after_completion post-policy reap frees final observer and fixed session slot before returning");
+   auto next=f.session(view);s::ReceiveBufferString next_greeting;f.app->greeting(*next.object,next_greeting);const auto reused=f.tokens.back();check(reused.slot==token.slot&&reused.generation>token.generation&&f.app->snapshot().live_sessions==1,"immediately following actual factory owner reuses capacity-one slot without manual reap");release_strong(next.control);f.app->after_completion();check(!f.app->snapshot().live_sessions&&view.memory.snapshot().controls_destroyed==2,"next completion drains second source owner independently");
+ });f.finish();delete retained;
+}
+
+
+}
+[[noreturn]]void poisoned_profile(std::string_view mode){
+ auto* retained=new ProfileFixture;auto& f=*retained;f.create(1,1);s::SessionPair pair;
+ if(mode=="heldroot"){
+   f.host.run();f.operation([&](o::ServerView& view){rejects<std::logic_error>([&]{(void)f.profile->external_quiescent(view,*f.app);},"external quiescence requires true outside-Root probe before opaque policy callback");check(!f.policy->external_calls&&f.app->snapshot().phase==sp::Phase::Poisoned&&view.memory.snapshot().phase==s::SessionMemoryPhase::Open&&view.io.snapshot().phase==s::IoMemoryPhase::Open,"held Root quiescence rejects without policy effects or guessed storage teardown");});::ExitProcess(222);
+ }
+ f.operation([&](o::ServerView& view){pair=f.session(view);s::ReceiveBufferString out;f.app->greeting(*pair.object,out);});
+ if(mode=="forged"){
+   f.operation([&](o::ServerView&){s::SessionOwner forged;forged.weak_self={forged.identity(),pair.control,&forged.input};s::ReceiveBufferString output;rejects<std::invalid_argument>([&]{f.app->greeting(forged,output);},"forged owner carrying real owned control cannot register a different embedded object");check(f.app->snapshot().phase==sp::Phase::Poisoned&&f.app->snapshot().live_sessions==1&&f.tokens.size()==1&&pair.control->weak_0c==3,"forged pair rejection precedes map, observer and logic publication");});::ExitProcess(220);
+ }
+ if(mode=="reap"){
+   f.operation([&](o::ServerView& view){const auto registry=f.app->registry();const auto token=f.tokens[0];bool caught=false;f.logic_deleted=[&](sp::SessionToken){try{f.app->reap();}catch(const std::logic_error&){caught=true;}};release_strong(pair.control);rejects<std::logic_error>([&]{f.app->reap();},"swallowed logic-destructor reap reentry remains sticky after callback returns");check(caught&&f.app->snapshot().phase==sp::Phase::Poisoned&&f.app->snapshot().live_sessions==1&&pair.control->strong_08==0&&pair.control->weak_0c==1&&!view.memory.snapshot().controls_destroyed,"unknown reentrant reap retains exact final observer instead of deleting source control");const auto i=token.slot;check(!registry.frames[i].identity&&!registry.strings[i].identity&&!registry.reads[i].identity&&!registry.writes[i].identity&&!registry.finish[i].identity&&!registry.queued[i].identity&&!registry.messages[i].identity&&!registry.environments[i].allocator_identity,"reap poison retains tombstone with all routing registries already cleared");});::ExitProcess(218);
+ }
+ if(mode=="capacity"||mode=="duplicate"){
+   f.operation([&](o::ServerView& view){bool rejected=false;try{s::ReceiveBufferString out;if(mode=="capacity"){auto extra=f.session(view);f.app->greeting(*extra.object,out);}else f.app->greeting(*pair.object,out);}catch(const std::exception&){rejected=true;}check(rejected&&f.app->snapshot().phase==sp::Phase::Poisoned&&f.app->snapshot().live_sessions==1,"session overflow/duplicate preserves existing fixed registry and poisons admission");check(pair.control->weak_0c==3&&f.tokens.size()==1,"failed registration does not add observer or second logic for existing slot");});::ExitProcess(mode=="capacity"?211:212);
+ }
+ std::function<void()> runner;
+ f.operation([&](o::ServerView&){auto& api=f.app->bindings().frame.api;auto* closure=api.allocate_frame_04b0bc(48);closure->owner_20=pair.object->identity();closure->function_28=0x180028d30ULL;
+   if(mode=="unknown"){closure->message_00.size_10=3;closure->message_00.storage_00[0]='r';closure->message_00.storage_00[1]='e';closure->message_00.storage_00[2]='q';closure->message_00.storage_00[3]=0;f.logic.back()->process_hook=[](std::string&){throw std::runtime_error("controlled unknown message outcome");};}
+   std::uint32_t id=0;const auto handle=api.begin_frame_thread_05e8e0(0,0,0x180021770ULL,closure,0,id);runner=f.jobs->entries.back().runner;
+   if(mode=="detach"){rejects<std::exception>([&]{(void)api.detach_04a458({handle+1,id});},"detach rejects foreign handle before calling backend");check(f.app->snapshot().phase==sp::Phase::Poisoned&&pair.control->strong_08==2&&!f.jobs->detached,"wrong handle retains job strong pin and denies backend detach");::ExitProcess(216);}
+   if(mode=="detachreentry"){bool caught=false;f.jobs->on_detach=[&]{try{(void)api.detach_04a458({handle,id});}catch(const std::logic_error&){caught=true;}};rejects<std::logic_error>([&]{(void)api.detach_04a458({handle,id});},"recursive detach swallowed by lower remains sticky before start wrapper resumes");check(caught&&f.jobs->detached==1&&f.app->snapshot().phase==sp::Phase::Poisoned&&f.app->snapshot().live_jobs==1&&pair.control->strong_08==2,"detaching marker denies second lower SDK call and retains job prefix/strong pin");::ExitProcess(221);}
+   (void)api.detach_04a458({handle,id});
+   if(mode=="jobsfull"){rejects<std::length_error>([&]{(void)api.allocate_frame_04b0bc(48);},"pending fixed job record cannot be reused while backend retains runner");check(f.app->snapshot().phase==sp::Phase::Poisoned&&f.app->snapshot().live_jobs==1&&pair.control->strong_08==2&&f.jobs->entries.size()==1,"job capacity failure retains existing closure, generation and strong pin");::ExitProcess(219);}
+   if(mode=="worker"){s::WorkerRunResult result;result.error=s::Error{0,{0x1111}};rejects<std::logic_error>([&]{f.app->worker_returned(0,result);},"worker return rejects outstanding deferred raw jobs");check(f.app->snapshot().phase==sp::Phase::Poisoned&&f.app->snapshot().live_jobs==1&&pair.control->strong_08==2,"false worker exit retains pending job pin instead of claiming quiescence");::ExitProcess(217);}
+ });
+ if(mode=="outside"){rejects<std::logic_error>([&]{runner();},"backend runner outside parent Operation fails before raw closure execution");check(pair.control->strong_08==2&&!f.policy->cleanups,"wrong admission retains unknown job and pin");::ExitProcess(215);}
+ f.operation([&](o::ServerView&){if(mode=="unknown"){rejects<std::runtime_error>([&]{runner();},"unknown logic outcome propagates from actual021770 chain");check(f.app->snapshot().phase==sp::Phase::Poisoned&&f.app->snapshot().live_jobs==1&&pair.control->strong_08==2&&!f.policy->cleanups&&f.processed==1,"unknown raw job outcome retains extra strong and closure prefix without guessed rollback");::ExitProcess(214);}runner();check(f.policy->cleanups==1&&pair.control->strong_08==1,"first exact runner releases normal job pin once");rejects<std::logic_error>([&]{runner();},"duplicate copied runner denied after exact normal completion");check(f.policy->cleanups==1&&pair.control->strong_08==1,"duplicate runner does not execute closure or decrement owner twice");::ExitProcess(213);});
+ ::ExitProcess(299);
+}
+void isolated(std::wstring mode,DWORD expected){
+ std::array<wchar_t,32768> path{};const auto n=::GetModuleFileNameW(nullptr,path.data(),static_cast<DWORD>(path.size()));check(n&&n<path.size(),"own controlled profile fixture executable located");std::wstring command=L"\""+std::wstring(path.data(),n)+L"\" --"+mode;STARTUPINFOW startup_info{};startup_info.cb=sizeof(startup_info);PROCESS_INFORMATION process{};
+ check(::CreateProcessW(nullptr,command.data(),nullptr,nullptr,FALSE,CREATE_NO_WINDOW,nullptr,nullptr,&startup_info,&process)!=0,"isolated retained profile failure fixture launched");const auto wait=::WaitForSingleObject(process.hProcess,30000);DWORD code=0;check(wait==WAIT_OBJECT_0&&::GetExitCodeProcess(process.hProcess,&code)&&code==expected,"isolated profile failure reaches exact retained-prefix assertions");::CloseHandle(process.hThread);::CloseHandle(process.hProcess);
+}
+int main(int argc,char** argv){try{if(argc==2)poisoned_profile(std::string_view(argv[1]).substr(2));strings_contract();strings_registered_header_growth();profile_dependencies();profile_identity();profile_slots();deferred_jobs();job_handoff_preflight();deferred_completion_reuses_slot();isolated(L"capacity",211);isolated(L"duplicate",212);isolated(L"rerun",213);isolated(L"unknown",214);isolated(L"outside",215);isolated(L"detach",216);isolated(L"worker",217);isolated(L"reap",218);isolated(L"jobsfull",219);isolated(L"forged",220);isolated(L"detachreentry",221);isolated(L"heldroot",222);std::cout<<"PASS: "<<checks<<" session-profile core checks; fixed owner generations, string headers, deferred jobs/handoff preflight and twelve isolated retention prefixes\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+
+
+

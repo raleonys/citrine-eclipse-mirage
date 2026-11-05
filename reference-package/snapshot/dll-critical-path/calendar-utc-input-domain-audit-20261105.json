@@ -1,0 +1,101 @@
+{
+  "scope": "Read-only current source and retained evidence; no new native query or runtime validation",
+  "files": [
+    {
+      "path": "outputs/anadius-calendar-source/calendar.cpp",
+      "sha256": "ef95920c0c8c4a3056cb8878931ec6733a4c3262b7fb1d96ff5352c9ffbcda0f"
+    },
+    {
+      "path": "outputs/anadius-calendar-source/calendar.hpp",
+      "sha256": "e46c9ed16d357d6c225aae29afb799ad2d41ce26160749e3ea25eeb762b685b4"
+    },
+    {
+      "path": "outputs/anadius-calendar-source/evidence.json",
+      "sha256": "2cffd72c6c1ce4b240fbb9597fd385a724a6b8373f63e40a05ed6f951407b7cd"
+    },
+    {
+      "path": "outputs/anadius-achievement-runtime-source/utc.cpp",
+      "sha256": "7684a1ffe3dfbb52585c893eb23c53c1ec7f272862cb258cb99b52f84d9f7cbe"
+    },
+    {
+      "path": "outputs/anadius-achievement-runtime-source/evidence.json",
+      "sha256": "30f4422e0df16afad12463a15369bba86bf765b17d3cc47802567373906b22ff"
+    },
+    {
+      "path": "outputs/anadius-achievement-runtime-source/flow-audit.md",
+      "sha256": "3d3960ee478e4390bebe69db60299a925832f051d231227ceb65444f537ee122"
+    },
+    {
+      "path": "outputs/anadius-timestamp-source/timestamp.cpp",
+      "sha256": "4b55091f581f50cee7f363a16f5e355d1b4cce7539ebc301d1840914bfb251c7"
+    },
+    {
+      "path": "outputs/anadius-achievement-storage-source/storage.cpp",
+      "sha256": "2a2f23e278f35e8920047c2a9444e1fd150220d01bb2d727d1f3378a43684d13"
+    },
+    {
+      "path": "outputs/anadius-achievement-storage-source/evidence.json",
+      "sha256": "095080cf03a17feb14bb055888557d51810e9392ed24dbf409ca7ba5445cd5cd"
+    },
+    {
+      "path": "outputs/anadius-achievement-writer-source/writer.cpp",
+      "sha256": "20bd58a3fb48d3db046725fa6c154da475072c9dbd29f21e7c6a34c617319b87"
+    },
+    {
+      "path": "outputs/anadius-content-handlers-source/content_handlers.cpp",
+      "sha256": "4cb847e398b3a81b4c9149a711fecfe0532265fb5c974f33aed73591700e947f"
+    },
+    {
+      "path": "outputs/anadius-content-effects-source/effects.hpp",
+      "sha256": "b387ca6756b1898abe60f672bfdfa467de6a16117c33bcdb6333509630312242"
+    },
+    {
+      "path": "outputs/anadius-information-effects-source/effects.hpp",
+      "sha256": "78f57e125b0f648ace5a42a875a91b6ceb8f792f528d7b67858d48f315b0b739"
+    },
+    {
+      "path": "outputs/anadius-licensing-effects-source/effects.hpp",
+      "sha256": "7a84578546cecb74312818a094cdccdabbb641ab67f0c63787e7bfdf56684d07"
+    },
+    {
+      "path": "outputs/anadius-licensing-effects-source/effects.cpp",
+      "sha256": "c66cf34ed9b2e23772c48e834810e5afca0200083dd14b30e0eb508547e7e5d9"
+    },
+    {
+      "path": "outputs/anadius-license-source/license.cpp",
+      "sha256": "87ea1eebab23fa2bbaff52689e4a076428e5cd8f292e028fbba985d4ce4376c0"
+    },
+    {
+      "path": "outputs/anadius-license-source/evidence.json",
+      "sha256": "cec9ec9244645a5abe24e653aa47052e79d3723f457fe16afce68c501c8ec66b"
+    },
+    {
+      "path": "outputs/anadius-handlers-source/handlers.cpp",
+      "sha256": "8180eb0f47bca1708c05ec2f6c72ef4e54da67a832cbcc5ad4b482e46a09c400"
+    },
+    {
+      "path": "outputs/anadius-handlers-source/evidence.json",
+      "sha256": "49538c9ba8cc5fda42826efdd06fd3409a37f4913abe7a23091c4cc738b2dcc2"
+    },
+    {
+      "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+      "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151"
+    },
+    {
+      "path": "outputs/anadius-misc-handlers-source/evidence.json",
+      "sha256": "ac11c1dccc7ca23368df84bd888a0cd963ddb0e467e544b623e4f3ad983f7644"
+    },
+    {
+      "path": "outputs/anadius-config-storage-source/persistence.hpp",
+      "sha256": "e3b7167f45394b7cb9b9a4f697909f05ce9e1f9ffa04664da8dfce51dba6f9ce"
+    },
+    {
+      "path": "outputs/anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+    },
+    {
+      "path": "outputs/dll-critical-path/calendar-utc-input-domain-audit-20261105.md",
+      "sha256": "adb2ce0558542962d53ca83465f5e41204036e0f0ade8c8b9456f660818032ea"
+    }
+  ]
+}

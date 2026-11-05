@@ -41,8 +41,13 @@ struct ServerBackend {
     virtual void destroy_pending_socket_024db0() = 0;
     virtual void destroy_acceptor_024db0() = 0;
     virtual void destroy_context() = 0;
+    // Empty context selects native028210's context-free construction; nonempty
+    // context selects028240. Forwarding backends must preserve this distinction.
     [[noreturn]] virtual void raise_error(Error, std::string_view observed_context) = 0;
 };
+// Shared port reads/writes use the network hook's relaxed atomic_ref helpers.
+// The caller retains this exact cell through worker/callback drain; plain
+// accesses or configuration copies require quiescence once it is live.
 void construct_server_024480(ServerBackend&, std::uint16_t& port_0a3c90,
                             std::uint8_t& ready_0a3c3d, execution_recovered::Execution&);
 // Normal construction/run/destruction order. Backend owns ASIO context internals

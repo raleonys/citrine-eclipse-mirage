@@ -1,0 +1,141 @@
+{
+  "schema": "synchronous-loader.source-and-native-audit.v1",
+  "recorded_at": "2026-11-02T17:22:11.290446+00:00",
+  "status": "STATIC_AUDIT_NO_CPP_CHANGE",
+  "user_startup_policy": "Preserve original synchronous startup; continue resolving loader conditions. Explicitly selected by the user this turn.",
+  "server_observation": {
+    "server": "rea",
+    "version": "6.8.0",
+    "path": "C:/tools/rea-6.8.0/node_modules/rea-agents/scripts/rea.mjs",
+    "alignment": "aligned",
+    "ghidra_available": true,
+    "ghidra_version": "12.1.4",
+    "qualification": "Selected fields transcribed from observed binary_session response; no raw session hash claimed."
+  },
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "native_export": {
+    "path": "outputs/anadius-bootstrap-backend-source/library-phase-native.evidence.json",
+    "sha256": "3087ed24eac133bc554a7a9fc737e94e435eb7efaeb7e5f5a890553d9739a3df",
+    "records": 2
+  },
+  "snapshot": {
+    "path": "outputs/anadius-bootstrap-backend-source/library-phase-native.snapshot.json",
+    "sha256": "b065573c8248e006e90d585d61981c4bc30c832683d837ca1f97edccf47544f8"
+  },
+  "report": {
+    "path": "outputs/anadius-bootstrap-backend-source/synchronous-loader-audit.md",
+    "sha256": "58aa884eacaeec9d2cde31bc242b25a34130d0a40baf6ee73566d4aabdca1681"
+  },
+  "native_evidence_ids": [
+    "ev_b1b6bd3bd55c75b89e66d0e673d6192f5de38762352c0cc95047ecda15e049b4",
+    "ev_31ddc9c81d9f0318f52788c16be5f6debe0fa616e8c3d008d72bab7a5acead34"
+  ],
+  "source_evidence": [
+    {
+      "path": "outputs/anadius-source/bootstrap.cpp",
+      "line": 43,
+      "anchor": "deps_.boolean_worker_035850()(true)",
+      "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6"
+    },
+    {
+      "path": "outputs/anadius-source/bootstrap.cpp",
+      "line": 44,
+      "anchor": "auto* third =",
+      "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6"
+    },
+    {
+      "path": "outputs/anadius-source/bootstrap.cpp",
+      "line": 48,
+      "anchor": "start_detached(ThreadEntry::boolean_0388d0, third)",
+      "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 186,
+      "anchor": "static void library_worker(bool main)",
+      "sha256": "2ef04a8061eee14b3578890261f3e3f6d0791596822547acec304100ffbda40a"
+    },
+    {
+      "path": "outputs/anadius-libraries-source/native_system.cpp",
+      "line": 12,
+      "anchor": "LoadLibraryW(path)",
+      "sha256": "07d0334288981264b83b6832dcf3bb79276ee11f1d9313c60a29638d6ede53ad"
+    },
+    {
+      "path": "outputs/anadius-startup-source/startup.cpp",
+      "line": 85,
+      "anchor": "if (state.no_console_0a3ef2 != 0) return;",
+      "sha256": "87bcd90892dcea301fc3c1aceb589d1097875d9400d3bd69b64570d008740dea"
+    },
+    {
+      "path": "outputs/anadius-host-init-source/host_init.cpp",
+      "line": 71,
+      "anchor": "install_hook_00f120(state, effects, u\"ws2_32.dll\"",
+      "sha256": "ee60b84bfe1fc6cf1f480561ee9f3fad232c98a901362cc1b77f6bb86bc1f52b"
+    },
+    {
+      "path": "outputs/hook-engine-source/vendor/minhook/src/hook.c",
+      "line": 348,
+      "anchor": "DWORD result = SuspendThread(hThread);",
+      "sha256": "edcce4c81985d7dd5b73feae96d6498c8f749b1bca4c3d2d9926ea9a17a84755"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-policies-source/config_platform.cpp",
+      "line": 51,
+      "anchor": "configuration::Path program_data(ConfigPlatformApi api)",
+      "sha256": "312238a5246e1d1ef126cd146eeb40fb12bd26ed2627d28f6356c11ff46ad28c"
+    },
+    {
+      "path": "outputs/anadius-thread-domain-source/domain.cpp",
+      "line": 335,
+      "anchor": "bool DomainStorage::initialize()",
+      "sha256": "31a36ff7c7e65a909e4e5a712113d67a565b6418edb50a4a38c02aa4ac4e04a5"
+    },
+    {
+      "path": "outputs/anadius-thread-domain-source/runtime.cpp",
+      "line": 69,
+      "anchor": "NativeRuntime::NativeRuntime(NativeRuntimeApi api)",
+      "sha256": "91b633102c8d0163703fd77a32d7242f8fcc4c37ad6de173cec2c6ccd15d95c9"
+    },
+    {
+      "path": "outputs/anadius-thread-source/threads.cpp",
+      "line": 61,
+      "anchor": "if (e.runtime_policy_06c0d0() == 2)",
+      "sha256": "3a3387ec1d94226b9a5eae4aec0b1458a55f3ab7a54aefdf52ee1f8f48310da9"
+    },
+    {
+      "path": "outputs/dll-link-gate-source/production_image.hpp",
+      "line": 5,
+      "anchor": "REQUIRED production definitions",
+      "sha256": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866"
+    }
+  ],
+  "conclusions": [
+    "No missing loaded-vector serialization established in normal one-attach chain: synchronous main035850 returns before third library worker is created. No new mutex or startup wait added.",
+    "Native035850 false branch waits2 and publishes libraries_ready; true branch bypasses both. Explicit shared-vector application lock absent in the observed append interval; helper/allocator internal locks not characterized.",
+    "Concrete NativeRuntime constructor validates/stores API only. A LoadLibraryExW function pointer in its table is not proof of an attach-time call. Domain initialize heap/locks/FLS must be distinguished from conditional runtime initialization on created workers.",
+    "Selected ProgramData/LocalAppData routes use environment API, not assumed known-folder calls. Console is conditional; main DLL list conditional; successful host engine initialization attempts six baseline hooks independent of optional config hooks.",
+    "Loader hooks remain undefined. Original synchronous timing preserved. Next bounded target is pre-first-worker versus post-created-worker failed-attach ownership/rollback.",
+    "Historical unmapped inventory is not absent-code count. Provisional helper classification neither changes canonical inventory nor earns native completion credit."
+  ],
+  "primary_documents": [
+    "https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain",
+    "https://learn.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-best-practices"
+  ],
+  "production_sources_changed_this_step": 0,
+  "test_sources_changed_this_step": 0,
+  "pending_source_count": 69,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "target_executed": false,
+  "original_modified": false,
+  "version_input_accessed": false,
+  "package_rebuilt": false,
+  "binary_closed": true,
+  "limitations": [
+    "Static Ghidra output is not original source or runtime proof; complete tool limitations are preserved in export.",
+    "One attach source ordering does not establish arbitrary cached-route reuse, reentrant application attach, all foreign/code/CRT lifetime, or loader-safe construction.",
+    "Current source was not compiled. Previous69 source/header deltas still require explicit rebuild authorization."
+  ]
+}

@@ -78,4 +78,25 @@ void boundaries(){
         rejects<s::UnsupportedInput>([&]{o.output->call_slot_00(1);});check(!o.state.cache_00[4]&&p.task->payload.control_30==nullptr&&!p.task->payload.response_08.size_10&&o.f.m.base.owner.strong_08==2,"marker bounds failure after payload move; no rollback or callback tail invented");}
 }
 }
-int main(){try{factory();invoke();lifetime();boundaries();std::cout<<"PASS: "<<checks<<" socket owned response checks; actual020cb0/021900/022280/0219d0, early destruction, cache reuse, byte flags, independent copy and residual cleanup\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}
+namespace {
+struct HeaderOwner final:s::AllocationHeaderResolver {
+    std::span<const s::WriteFinishAllocationHeader> headers;s::MemoryLookup result=s::MemoryLookup::Found;unsigned calls=0;
+    s::MemoryLookup lookup_header(std::uintptr_t header,std::uintptr_t& output)override{
+        ++calls;if(result!=s::MemoryLookup::Found)return result;
+        return s::lookup_allocation_header(header,headers,nullptr,output);
+    }
+};
+void authoritative_headers(){
+    OwnedFixture o;o.f.m.seed(o.f.m.response,std::string(4095,'H'));o.f.task.response_08=o.f.m.response.value;HeaderOwner owner;owner.headers=o.f.m.headers;
+    auto stale=o.f.m.headers;for(auto& header:stale)if(header.address)header.allocation_base=header.address+8;
+    o.f.m.frame.allocation_headers=stale;o.f.m.frame.allocation_header_resolver=&owner;o.make();o.output->call_slot_00(0);
+    check(owner.calls==1&&o.f.m.frees.size()==1&&!o.memory.live(o.allocated_id)&&o.f.m.base.owner.strong_08==1,"actual owned response discard frees moved payload through exact owner after envelope/control release");
+    for(auto result:{s::MemoryLookup::Miss,s::MemoryLookup::Ambiguous}){
+        OwnedFixture rejected;rejected.f.m.seed(rejected.f.m.response,std::string(4095,'H'));rejected.f.task.response_08=rejected.f.m.response.value;
+        HeaderOwner missing;missing.headers=rejected.f.m.headers;missing.result=result;rejected.f.m.frame.allocation_header_resolver=&missing;rejected.make();
+        rejects<s::UnsupportedInput>([&]{rejected.output->call_slot_00(0);});
+        check(missing.calls==1&&rejected.f.m.frees.empty()&&!rejected.memory.live(rejected.allocated_id)&&rejected.f.m.base.owner.strong_08==1,"owned header miss/ambiguity retains original early envelope/control cleanup without legacy fallback or invented payload free");
+    }
+}
+}
+int main(){try{factory();invoke();lifetime();boundaries();authoritative_headers();std::cout<<"PASS: "<<checks<<" socket owned response checks; actual020cb0/021900/022280/0219d0, early destruction, cache reuse, byte flags, independent copy and residual cleanup\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}

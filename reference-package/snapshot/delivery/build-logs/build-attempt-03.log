@@ -1,0 +1,173 @@
+**********************
+PowerShell transcript start
+Start time: 20261105213039
+Username: HeonhideDeluxe\Skysect
+RunAs User: HeonhideDeluxe\Skysect
+Configuration Name: 
+Machine: HEONHIDEDELUXE (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Users\Skysect\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+& 'C:/Users/Skysect/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe' -X utf8 'work/apply-build-repair-20261105.py' 'work/build-repair-003-20261105.json'
+& './work/continue-rebuild-20261104.ps1'
+Process ID: 18032
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+PASS bootstrap_mock_tests
+PASS crt_threads_mock_tests
+PASS crt_runtime_mock_tests
+PASS crt_errors_mock_tests
+PASS crt_ptd_mock_tests
+PASS crt_ptd_data_mock_tests
+PASS crt_heap_mock_tests
+PASS crt_realloc_mock_tests
+PASS crt_recalloc_mock_tests
+PASS crt_recalloc_bridge_mock_tests
+PASS crt_conversion_mock_tests
+PASS crt_conversion_api_mock_tests
+PASS crt_conversion_bridge_mock_tests
+PASS crt_module_path_mock_tests
+PASS crt_find_native_mock_tests
+PASS crt_find_bridge_mock_tests
+PASS crt_locale_update_mock_tests
+PASS crt_locale_thread_mock_tests
+PASS crt_locale_bridge_mock_tests
+PASS crt_locale_ref_mock_tests
+PASS crt_locale_free_mock_tests
+PASS crt_locale_resource_bridge_mock_tests
+PASS crt_multibyte_support_mock_tests
+PASS crt_multibyte_control_mock_tests
+PASS crt_multibyte_bridge_mock_tests
+PASS crt_multibyte_tables_mock_tests
+PASS crt_multibyte_builder_mock_tests
+PASS crt_multibyte_record_bridge_mock_tests
+PASS crt_string_type_mock_tests
+PASS crt_lcmap_mock_tests
+PASS crt_nls_bridge_mock_tests
+PASS crt_locale_names_mock_tests
+PASS crt_nls_dispatch_mock_tests
+PASS crt_nls_dispatch_bridge_mock_tests
+PASS crt_nls_native_mock_tests
+PASS crt_nls_dispatch_native_mock_tests
+PASS crt_nls_native_bridge_mock_tests
+PASS crt_heap_native_mock_tests
+PASS crt_heap_native_bridge_mock_tests
+PASS crt_fls_native_mock_tests
+PASS crt_lock_native_mock_tests
+PASS crt_atomic_native_mock_tests
+PASS crt_sync_bridge_mock_tests
+PASS crt_counter_native_mock_tests
+PASS crt_locale_native_mock_tests
+PASS crt_initial_locale_mock_tests
+PASS crt_initial_multibyte_mock_tests
+PASS crt_initial_state_mock_tests
+PASS crt_locale_startup_mock_tests
+PASS crt_environment_cleanup_mock_tests
+PASS crt_lifecycle_callbacks_mock_tests
+PASS crt_pair_leaves_mock_tests
+PASS crt_lowio_lifecycle_mock_tests
+PASS crt_pair_bindings_mock_tests
+PASS crt_invalid_mock_tests
+PASS crt_glue_mock_tests
+PASS crt_cache_mock_tests
+PASS crt_onexit_mock_tests
+PASS crt_entry_mock_tests
+PASS crt_initializers_mock_tests
+PASS vcrt_ptd_mock_tests
+PASS vcrt_api_mock_tests
+PASS crt_locks_mock_tests
+PASS crt_cpu_mock_tests
+PASS vcrt_bridge_mock_tests
+PASS crt_support_mock_tests
+PASS crt_environment_mock_tests
+PASS crt_termination_mock_tests
+PASS crt_startup_bridge_mock_tests
+PASS crt_argv_parser_mock_tests
+PASS crt_argv_mock_tests
+PASS crt_byteclass_mock_tests
+PASS crt_argv_bridge_mock_tests
+PASS crt_wildcard_storage_mock_tests
+PASS crt_wildcard_search_mock_tests
+PASS crt_sort_mock_tests
+PASS crt_wildcard_mock_tests
+PASS thread_native_mock_tests
+PASS bootstrap_native_mock_tests
+PASS bootstrap_owner_mock_tests
+PASS bootstrap_owner_integration_mock_tests
+PASS bootstrap_backend_mock_tests
+PASS bootstrap_backend_integration_mock_tests
+PASS bootstrap_callbacks_mock_tests
+PASS bootstrap_factory_mock_tests
+PASS bootstrap_providers_mock_tests
+PASS bootstrap_providers_integration_mock_tests
+PASS thread_domain_mock_tests
+PASS thread_domain_integration_mock_tests
+PASS bootstrap_policies_mock_tests
+PASS bootstrap_policies_integration_mock_tests
+PASS config_storage_mock_tests
+PASS config_storage_integration_mock_tests
+PASS config_iteration_mock_tests
+PASS config_iteration_integration_mock_tests
+PASS services_completion_mock_tests
+PASS services_completion_integration_mock_tests
+PASS config_logging_mock_tests
+PASS config_logging_integration_mock_tests
+PASS library_effects_mock_tests
+PASS library_effects_integration_mock_tests
+PASS online_platform_mock_tests
+PASS online_platform_integration_mock_tests
+PASS host_platform_mock_tests
+PASS host_platform_integration_mock_tests
+PASS source_stop_mock_tests
+PASS initial_cells_mock_tests
+PASS native_context_mock_tests
+PASS native_context_integration_mock_tests
+PASS callback_policy_mock_tests
+PASS callback_policy_integration_mock_tests
+PASS callback_admission_mock_tests
+PASS callback_admission_integration_mock_tests
+PASS foreign_callback_mock_tests
+PASS foreign_callback_integration_mock_tests
+PASS startup_publication_mock_tests
+PASS startup_publication_integration_mock_tests
+PASS shared_log_mock_tests
+PASS shared_log_integration_mock_tests
+PASS callback_identity_mock_tests
+PASS callback_identity_integration_mock_tests
+PASS callback_provider_mock_tests
+PASS callback_provider_integration_mock_tests
+PASS original_provider_mock_tests
+PASS original_provider_integration_mock_tests
+PASS original_checkpoint_mock_tests
+PASS original_checkpoint_integration_mock_tests
+PASS online_version_mock_tests
+PASS online_version_integration_mock_tests
+PASS online_object_mock_tests
+PASS online_object_integration_mock_tests
+PASS online_query_mock_tests
+PASS online_application_queries_mock_tests
+PASS content_effects_mock_tests
+PASS information_effects_mock_tests
+PASS licensing_effects_mock_tests
+PS>TerminatingError(): "Worker retained unknown composition/handler prefix
+Exit code: 1
+Failed: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\source-workspace\build\application_effects_mock_tests.exe"
+>> TerminatingError(): "Worker retained unknown composition/handler prefix
+Exit code: 1
+Failed: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\source-workspace\build\application_effects_mock_tests.exe"
+Exception: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\source-workspace\fresh-run-checkpoint.ps1:63
+Line |
+  63 |  … CODE -ne 0){throw (($result -join "`n")+"`nExit code: $LASTEXITCODE`n …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Worker retained unknown composition/handler prefix Exit code: 1 Failed:
+     | C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\source-workspace\build\application_effects_mock_tests.exe
+**********************
+PowerShell transcript end
+End time: 20261105213151
+**********************

@@ -1,0 +1,38 @@
+{
+  "reviewer": "/root/b22_provider_audit",
+  "result": "STATIC_PASS_NO_REMAINING_REQUIRED_ISSUE",
+  "scope": "15 current sources: explicit NativeJobs handoff/start/detach barrier, receipt/work-pin routing, outside-Parent maintenance/physical reaping, retry/retirement safety and three lower test sources. No complete native prepared Graph/Profile fixture or runtime validation.",
+  "reviewed_source_hashes": {
+    "anadius-owned-jobs-source/jobs.hpp": "0523929e8731ef5b7e9a09b42b3449894cce10f6a49579d9dfaa879ea7c9f171",
+    "anadius-owned-jobs-source/jobs.cpp": "7cbbc391e62372ffb695bcac941e0a066be7e118a1e32597e5e612cd3eac3065",
+    "anadius-session-profile-source/profile.hpp": "125387b5ee7e9cfa472c9c784164860249edd8fb56ec6501cbf18f5f8e3c512e",
+    "anadius-session-profile-source/profile.cpp": "08ed40e9f08044c76d0c94b820331099dc1587c03949cb7093ce6095826c0219",
+    "anadius-server-runtime-source/runtime.hpp": "8c04a8c6a52c520258782ef782af2da68f73bd60af94c3feef750c7a46dc33d9",
+    "anadius-server-runtime-source/runtime.cpp": "641f9e8d257aa4e748717639aeda257325a827a554e526533be35967de58b254",
+    "anadius-socket-source/completion_dispatcher.hpp": "f1878bfa7ab828cb58d8ab601e6bccd161326e61029d4b1bed226ded04345a20",
+    "anadius-socket-source/completion_dispatcher.cpp": "a87ef40713eb11cef6cf06e7d4d150429a372e903505bf9531efe0d507303e6d",
+    "anadius-owned-server-source/server.hpp": "96c62e0c3b30cca72eabdcf3050d9c3cc4be34b4ccece916ff5e0f1bfe418be9",
+    "anadius-owned-server-source/server.cpp": "7e2b4805a28dd785e7b55b4ba7cbc73b860b4614953ad5e9b5926bfd92cf567f",
+    "anadius-session-memory-source/memory.hpp": "37bda367481217537e0501baacbded0fadf17b0ab32ebcdf4db1e53256a83dce",
+    "anadius-session-memory-source/memory.cpp": "2422204139a19f2c1f49dfe3067b7472e9ce480c102dacca0c9d96b430f940ec",
+    "anadius-owned-jobs-source/jobs_tests.cpp": "70c8dd764df4136ba06f0f180daaed416485d4049ade966a038d5a7d458422ad",
+    "anadius-owned-server-source/server_tests.cpp": "7625891fc6a64aa640afa3e7c90c6aa33c42d187f1a171741ef10bbf9cd6c598",
+    "anadius-socket-source/completion_dispatcher_tests.cpp": "2acf5f118216bfd13a52ee8d9362a601d17ff0949595d89fff9eb4ce15446e67"
+  },
+  "findings": [
+    "Explicit PreparedJobs selection preserves legacy virtual slots/default InlineJobs. Native start retains exact JobHandoff and scheduler work pin before actual same-Domain NativeThreads launch; child detach barrier wait is outside Parent, and original Frame commits start/detach before releasing Parent.",
+    "HOST null-OVERLAPPED receipt is exact-row/normal-return/one-shot checked before one dispatcher work decrement. Duplicate/foreign/key-only cases cannot release another work pin;0 cannot underflow. Existing pending-exception and last-work stop order retained.",
+    "NativeJobs source_gate serializes acquire/body/logical return against outside-Parent maintenance/reap. Original Parent metadata probe releases its lock before source gate, avoiding nested reverse lock order. operation_on_this_thread rejects holding Parent even if PTD/fiber admission is damaged; grants no source authority. Other launched rows no longer starve consumed-row physical reaping.",
+    "Physical row reuse requires actual wait0 signal, exitcode0 and known private handle/barrier closes; Root duplicate handles reap independently. Opaque SDK phase seals occur between calls, successful close is null-committed before next seal. Unknowns retain ownership without retry.",
+    "Retiring facade remains attached while last-owned NativeThreads retires outside metadata lock; unattached constructor-prefix access rejects. Closed quiescent/close retries preserve exact passive Application identity and original actor, allowing later provider-close deferrals.",
+    "Three lower source-test additions cover passive native validation/last-provider deletion, physical wait maintenance error capture/outside Parent/context clear, and exact/duplicate/foreign/key-only/work1/work0/pending-exception receipts. No test executed; full NativeJobs start-to-child-to-receipt-to-reap fixture remains absent."
+  ],
+  "positive_native_jobs_prepared_fixture_source_present": false,
+  "positive_prepared_graph_profile_test_source_present": false,
+  "required_issues_remaining": 0,
+  "edits_by_reviewer": false,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

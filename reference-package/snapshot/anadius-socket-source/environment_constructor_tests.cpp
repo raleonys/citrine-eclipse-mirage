@@ -62,6 +62,32 @@ struct Fixture{
 std::uintptr_t query_type(){active->event("type");return active->type;}
 std::int32_t Types::compare_type_names_04d2d0(std::uintptr_t first,std::uintptr_t second){auto& f=*active;f.event("compare");check(first==f.type+std::uintptr_t{8}&&second==0x1800a25c8ULL,"type pointer plus8 and exact expected name identity");return f.result;}
 void construct(s::IoHandlerEnvironment& value,std::uintptr_t query,s::IoEnvironmentConstructorScratch&){auto& f=*active;f.event("factory");check(query==0xabcdef,"cached factory gets live query result without executor this");value={{31,32},&f.original,7,0x456,&f.executor};}
+// Bounded routing provider, not an Environment/Parent permission substitute.
+// The native algorithms still execute their real field and callback order.
+struct BoundCalls final:s::IoEnvironmentCallOperations {
+ Fixture& f;unsigned comparisons=0,queries=0,factories=0,moves=0,destroys=0;
+ explicit BoundCalls(Fixture& value):f(value){}
+ std::int32_t compare_type_names_04d2d0(std::uintptr_t a,std::uintptr_t b)override{++comparisons;return f.types.compare_type_names_04d2d0(a,b);}
+ std::uintptr_t query_slot_18(s::IoHandlerEnvironment& value)override{++queries;return value.operations_10->query_slot_18(value);}
+ void destroy_slot_00(s::IoHandlerEnvironment& value)override{++destroys;value.operations_10->destroy_slot_00(value);}
+ void construct_slot_58(s::IoEnvironmentFactory cached,s::IoHandlerEnvironment& out,std::uintptr_t query,s::IoEnvironmentConstructorScratch& scratch)override{++factories;check(cached==&construct,"Explicit call receives the factory function cached before the live source query");cached(out,query,scratch);}
+ s::IoHandlerEnvironment& move_023cb0(s::IoHandlerEnvironment& out,s::IoHandlerEnvironment& from,s::IoHandlerSentinels sentinels)override{
+  ++moves;struct Slot final:s::IoEnvironmentMoveSlot{void move_slot_10(s::IoHandlerEnvironment& a,s::IoHandlerEnvironment& b)override{a.operations_10->move_slot_10(a,b);}} slot;
+  return s::move_io_environment_023cb0(out,from,sentinels,&slot);
+ }
+};
+void explicit_calls(){
+ {Fixture f;BoundCalls calls(f);auto private_context=f.context;private_context.calls=&calls;f.delete_executor=true;f.heap_executor=std::make_unique<s::IoHandlerExecutor>();f.source.executor_28=f.heap_executor.get();f.factories[0].executor_identity=f.heap_executor.get();
+  check(&s::construct_io_environment_023dd0(f.destination,f.source,f.sentinels,private_context)==&f.destination,"Explicit calls preserve the actual constructor destination identity");
+  check(!f.context.calls&&private_context.calls==&calls&&calls.comparisons==1&&calls.queries==1&&calls.factories==1&&calls.moves==2&&calls.destroys==2,"Private context routes every selected comparison/query/cached-factory/move/destroy without rebinding the shared constructor");
+  check(f.events==std::vector<std::string>{"type","compare","query","factory","move1","destroy1","move2","destroy2"}&&f.destination.state_18==23&&f.destination.executor_28==&f.replacement,"Explicit routing preserves native callback order and live executor reload despite deletion of the queried executor");}
+ {Fixture f;f.result=0;BoundCalls calls(f);auto private_context=f.context;private_context.calls=&calls;
+  s::construct_io_environment_023dd0(f.destination,f.source,f.sentinels,private_context);
+  check(calls.comparisons==1&&!calls.queries&&!calls.factories&&calls.moves==1&&!calls.destroys&&f.events==std::vector<std::string>{"type","compare"}&&f.destination.operations_10==&f.empty&&f.source.state_18==9,"Explicit empty-type branch performs one sentinel move without a fabricated query, factory, work row or guarded destroy");}
+ {Fixture f;f.throw_at="query";BoundCalls calls(f);auto private_context=f.context;private_context.calls=&calls;bool caught=false;
+  try{s::construct_io_environment_023dd0(f.destination,f.source,f.sentinels,private_context);}catch(const Stop&){caught=true;}
+  check(caught&&calls.comparisons==1&&calls.queries==1&&!calls.factories&&!calls.moves&&!calls.destroys&&!f.context.calls&&f.events==std::vector<std::string>{"type","compare","query"},"Unknown explicit query stops at the exact native prefix without invoking factories, cleanup or shared context rebinding");}
+}
 void defaults(){for(bool change_guard:{false,true})for(std::uintptr_t type:{std::uintptr_t{0},std::uintptr_t{0x1000},std::numeric_limits<std::uintptr_t>::max()-3}){
  Fixture f;f.result=0;f.type=type;
  f.empty.move=[&](auto& to,auto& from){f.event("empty_move");check(to.operations_10==&f.empty&&to.schedule_20==f.sentinels.empty_schedule_846e8,"default initialized sentinel ops and schedule");check(from.operations_10==&f.empty&&from.schedule_20==f.sentinels.empty_schedule_846e8&&from.state_18==0&&from.executor_28==&f.empty_executor,"empty temporary setup and reset precede provider move");to.state_18=55;from.executor_28=&f.replacement;if(change_guard)from.operations_10=&f.late;};
@@ -86,4 +112,4 @@ void registries(){
  {Fixture f;f.empty.move=[&](auto&,auto& from){from.operations_10=nullptr;};f.result=0;unsupported([&]{f.run();});}
 }
 }
-int main(){try{defaults();nonmatching();exceptions();registries();std::cout<<"PASS: "<<checks<<" socket environment constructor core checks; actual023dd0, zero and signed nonzero comparator, wrapped type identity, cached factory despite executor deletion, live moves and guard cleanup, exact exception prefixes and bounded registries\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+int main(){try{defaults();nonmatching();exceptions();registries();explicit_calls();std::cout<<"PASS: "<<checks<<" socket environment constructor core checks; actual023dd0, zero and signed nonzero comparator, wrapped type identity, cached factory despite executor deletion, live moves and guard cleanup, exact exception prefixes and bounded registries\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

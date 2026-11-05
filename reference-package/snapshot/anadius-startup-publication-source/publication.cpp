@@ -23,6 +23,19 @@ void Milestones::published(execution_recovered::ReadyStage stage,const void* iss
     if(!bit){invalid_.store(true,std::memory_order_release);return;}
     bits_.fetch_or(bit,std::memory_order_acq_rel);
 }
+void Milestones::server_port_published(std::uint16_t port,const void* issuer) noexcept{
+    const auto bound=execution_.load(std::memory_order_acquire);
+    if(!bound||issuer!=bound||(bits_.load(std::memory_order_acquire)&1u)){invalid_.store(true,std::memory_order_release);return;}
+    std::uint32_t expected=0;
+    if(!server_port_.compare_exchange_strong(expected,0x10000u|port,std::memory_order_release,std::memory_order_relaxed))
+        invalid_.store(true,std::memory_order_release); // one server construction; never replace a live snapshot
+}
+std::optional<std::uint16_t> Milestones::server_port() const noexcept{
+    if(!(bits_.load(std::memory_order_acquire)&1u))return std::nullopt;
+    const auto value=server_port_.load(std::memory_order_acquire);
+    if(!(value&0x10000u)||invalid_.load(std::memory_order_acquire))return std::nullopt;
+    return static_cast<std::uint16_t>(value);
+}
 bool Milestones::observed_all() const noexcept{return bits_.load(std::memory_order_acquire)==15&&!invalid_.load(std::memory_order_acquire);}
 bool Milestones::invalid() const noexcept{return invalid_.load(std::memory_order_acquire);}
 std::uint32_t Milestones::bits() const noexcept{return bits_.load(std::memory_order_acquire);}

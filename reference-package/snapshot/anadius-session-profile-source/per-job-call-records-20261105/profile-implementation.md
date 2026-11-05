@@ -1,0 +1,36 @@
+# Profile prepared-call records — source implementation
+
+2026-11-05. Author scope: only `anadius-session-profile-source/profile.hpp` and `profile.cpp`. The actual pre-edit captures are the two matching files in this stage's `before/` directory and `before-manifest.json` (pending baseline116). No compiler, project tests, linker, DLL execution or ZIP operation was performed. This is source implementation/static reasoning, not a passing runtime or full native-equivalence claim.
+
+| File | Before SHA256 | Final SHA256 |
+|---|---|---|
+| profile.hpp | `5c8f0a3e432b1f9c8ae0ab1738173acc496d098345c24cb5ed5554d72cf76808` | `ede20dcc14bcfb1d4859f91b2f9222051c43ad7044947badc853133c65d49c5a` |
+| profile.cpp | `7413d158e406bdcdca2b308f495dbc4a71db265df313566f17e741f4cb892676` | `55b0964eb026adea5fb7a8acf793fdbd818b6a12a6c65c65f497503dac6cc69b` |
+
+## Exact authority and ownership
+
+Existing public tokens and handoff APIs remain. Private stable SlotRecord/JobRecord types are shared between Impl and immutable per-handoff JobCapture. Only the original worker traverses or grows the containing deques. Before allocation of the handoff/offer, prepare_job reserves the exact row and original-call membership; it captures stable row, closure, SessionOwner, strong-control and Logic/JobLogic identities. A successfully returned offer is adopted into the row before source postchecks. Known pre-offer metadata/precondition failure releases the preparation flag and counts without manufacturing a partial claim.
+
+ChildUse registers the caller after explicit Parent.enter(JobMemory) supplies its exact actor/permit. It maintains aggregate observation and per-Slot call counts plus a monotonically generated **per-handoff active-call epoch**. Every copied checkpoint retains the dispatch tombstone, handoff, permit and epoch. Another healthy caller's aggregate count cannot substitute for that exact membership. Its final source boundary revalidates own handoff and State/capture after actual Parent/source snapshots; a copied permit expires with its Operation.
+
+Child inspect/grow/clone/cleanup/process methods validate captured records rather than calling deque size/index/iterators, original-worker affinity, `completing`, or closure-span lookup. JobRecord.published points to the current public closure binding; original growth repairs these pointers under State.gate before retiring the old vector, preserving closure-projection identity validation without exposing container internals to children. Mutable Job metadata used by capture validation is committed under the same gate.
+
+**Correction to the preceding read-only plan:** start-return/detach is not Concurrent child authority. Native025480 launches021770 before original detach and a child may run before begin_thread returns. Concurrent captured validation therefore admits the exact prepublished Submitting or Pending Job once the actual JobMemory has been acquired and its permit validates. Binding preparation must be complete and closure/control/generation ownership remains exact. There is no readiness barrier, spin or native-thread-completion wait. Serialized keeps its previous returned-start/detach checks. Child processing only changes its handoff message state, so the original worker's conditional Submitting→Pending publication cannot overwrite early Processing/Prepared state. Known returned handle and detach outcomes are retained before source postchecks, including an early-child failure.
+
+## Independent calls, root progress and failure prefixes
+
+Concurrent processing uses each handoff's Fresh→Processing→Prepared state and exact epoch; it does not reserve Slot.processing or demand aggregate active_calls==1. NativeProfile.failed_prefix rejects actual unknown retention while permitting a healthy same-Logic invocation. Serialized retains its broad retained-prefix/session-processing contract. The child still executes033d70, actual current-thread exit-wait cleanup and final request/response ownership bookkeeping in the existing order. Final checks bracket request_snapshot and Prepared publication.
+
+State.root_calls separately protects original-worker registry mutation against original SDK/allocator reentry. Concurrent Mutation permits healthy children but rejects another original effect or mutation. Session retirement requires that Slot's own jobs/calls/processing be absent and actual strong ownership exhausted; a healthy unrelated call does not block it. The retained observer, Logic/environment cleanup and final weak/control release occur outside State.gate. Concurrent healthy close/drain returns false while source jobs/calls remain, without closing their admission or marking them unknown.
+
+Deque growth allocates outside State.gate. Narrow ContainerMutation marks only actual resize and rollback-pop windows; original-worker metadata rejects structural reentry from allocator callbacks before touching container internals. Passive snapshot and captured children remain available. The marker ends before ordinary postchecks. Metadata vector publication and projection-pointer repair happen under State.gate, old storage retires after unlock. after_completion captures each handoff pointer under metadata and invokes callbacks outside it; it retains no deque iterator across a callback.
+
+Handoff/dispatch admission failures construct exceptions after unlocking. Metadata guards preserve incoming LastError; no added guard spans a new source SDK effect. The handoff destructor/Call destructor no longer reset JobMemory under the handoff mutex: an unknown offer stays owned by its existing source row, retaining actual request/response/closure/strong prefixes. There is no guessed cleanup, replay, counter-based rollback or clearing of another failed caller. Final opaque/control/metadata destruction occurs outside the relevant metadata gates.
+
+## Deliberately unchanged composition and ordering
+
+Actual factories still select Serialized. NativeJobs.source_gate is unchanged. Profile's Concurrent metadata admission does not certify those remaining execution layers. Root supplies the separate Policy child-cleanup companion and explicit server policy composition; neither is authored or independently certified by this implementation note.
+
+The response split is preserved: child returns a prepared response and retires its Parent Operation; original receipt/complete_job runs the existing response/021770 continuation, closure cleanup, session-job decrement and strong release. No child response tail or queue mutation was silently moved. OwnedEnvironment's singleton job/checking/releasing restrictions and tracked-family effects remain explicit separate integration work; clone_environment retains its actual calls and does not claim arbitrary concurrent safety. Shared licensing/business mutations are not cloned or protected by an invented body lock.
+
+The separate fixture author's intended proof uses real PreparedMemory/NativeThreads and the actual same-Session Graph JobLogic. A is held in its supported UnknownMessage diagnostic while B prepares/returns before the original start call returns, then receives original response completion/physical reap before A is released. That fixture, its current-thread cleanup and original tail must be independently source-reviewed; this report makes no execution claim.

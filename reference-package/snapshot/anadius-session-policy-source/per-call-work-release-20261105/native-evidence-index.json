@@ -1,0 +1,83 @@
+{
+  "status": "TWO_COMPLETE_WORK_DROP_STOP_BODIES_AND_ONE_EXACT_ATOMIC_INSTRUCTION",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "relevant_fresh_records": [
+    {
+      "path": "outputs/anadius-session-policy-source/per-call-work-release-20261105/instructions-1800229a0.json",
+      "sha256": "ea6a06e90d13db645954c452d0e7a7b592a6fb9fc304c6db0c2de6ef9bbb9f49",
+      "evidence_id": "ev_ba745032bc8bbc9c8e63affa14037cda6d0a2342f65052f4c22be7a6e4046dee",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x1800229a0"
+      },
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "This fast path reads only the requested function and does not invoke the decompiler or whole-program string/name inventories.",
+        "Instruction text is Ghidra-specific and does not claim textual equivalence with Hopper output.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically."
+      ]
+    },
+    {
+      "path": "outputs/anadius-session-policy-source/per-call-work-release-20261105/instructions-18002a190.json",
+      "sha256": "a98608ba881e7d2c7343101b1cff4356f81d944a779b19bc81f5279b6b87ec48",
+      "evidence_id": "ev_f7b8c7e0fa1119d3457d42a801700ff189916e678cdcd3db644e8a7c42e95a79",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x18002a190"
+      },
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "This fast path reads only the requested function and does not invoke the decompiler or whole-program string/name inventories.",
+        "Instruction text is Ghidra-specific and does not claim textual equivalence with Hopper output.",
+        "Ghidra Listing reports a terminal call at 0x18002a1f2 to 0x180028240 FUN_180028240 (external=false, thunk=false, hasNoReturn=true); fallthrough is excluded by Ghidra's flow model. This records Ghidra's FunctionManager flag, not an independent verification that the callee cannot return.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically."
+      ]
+    },
+    {
+      "path": "outputs/anadius-session-policy-source/per-call-work-release-20261105/instruction-1800229b5.json",
+      "sha256": "0f9bdee23323a6f0d8b7697c7ba775ec907c7590c1455619afcb5af0d3032e95",
+      "evidence_id": "ev_59546899db41e6dca910681edb4cbfe96b78b48b7bddf4e77affbdd4e283eb13",
+      "operation": "inspect_native_instruction",
+      "parameters": {
+        "address": "0x1800229b5"
+      },
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically."
+      ]
+    }
+  ],
+  "unrelated_exploratory_reply": {
+    "path": "outputs/anadius-session-policy-source/per-call-work-release-20261105/nonrelease-request-022940-resolved-0228e0.json",
+    "sha256": "740c498df47e3741a1d02d403bc114701162ff767dd25bcee629c0883efdf44c"
+  },
+  "unrelated_selector_resolution": "Requested022940 resolved0228e0 constructor, not work release; not counted in the three relevant claims.",
+  "open_reply": {
+    "path": "outputs/anadius-session-policy-source/per-call-work-release-20261105/open-binary.json",
+    "sha256": "5b7ea33ba76688b393f2b34c4db25d8280fa94041da1053093eb3bc18527e599"
+  },
+  "exported_bundle": {
+    "path": "outputs/anadius-session-policy-source/per-call-work-release-20261105/rea-evidence-bundle.json",
+    "sha256": "7dcab1fb6a60b7b96657be8e21f8a0f0fb0a944d3fcf80370bc68c6c21b744e1"
+  },
+  "exported_records": 4,
+  "session_closed": true,
+  "original_hash_verified_after_close": true,
+  "runtime_observation": false,
+  "new_recovered_function_credit": 0
+}

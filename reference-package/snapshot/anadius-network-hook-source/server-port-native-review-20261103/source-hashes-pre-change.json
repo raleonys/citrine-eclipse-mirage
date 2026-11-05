@@ -1,0 +1,86 @@
+[
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\connect.cpp",
+    "Hash": "73659FEA38E311C87DD91E3311321F421483CF0F0EA9061D7E266F5469867F9D"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\connect.hpp",
+    "Hash": "7E0BDCC5AFC378C9AC2EC394092A794D16DA3C8344EF82B4BF63DC228AEFC890"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-server-source\\server.cpp",
+    "Hash": "9E1168C5B006C4BDB253268B98A95276BBB1ADDB19541DDFF4F4854972B3D7CE"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-server-source\\server.hpp",
+    "Hash": "6632B6D5F91B93F3F977F46A03C51D57AEE999DD3DAA233AC5DCA850B9D526E1"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-config-source\\configuration.cpp",
+    "Hash": "A2A2FA7980DDEEAECE163B705213BDC5ADFFF48AE149EC39A122850032E25F6C"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-config-source\\configuration.hpp",
+    "Hash": "8CB1F9D28B9F5B48177D4233B6F3304980B6912002D67DB67583F252BF557CE6"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-config-application-source\\application.cpp",
+    "Hash": "27E32AC1010AA4C169148F189016DEB02A78C32D881F99134AED0B3A8EC0D2BB"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.cpp",
+    "Hash": "5AE305476A8498A8D01B9BA0BB4EA86965F297D34BB92AF0A8945664CA2F0077"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.hpp",
+    "Hash": "E7AFD4962BA0CD8ADBBB3948DFEEAE18C67AD2694988A9E76924B552D8D6B6D5"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.cpp",
+    "Hash": "7EB43063C67266775B94FF2C9F1509433E3114F326240F2E24CEC309BD97569A"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.hpp",
+    "Hash": "62924D694F1F7DEAC38E99C0D9F3DDD56A0B61DF74439CAEA1B1B9ADFE852AB7"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-context-source\\context.cpp",
+    "Hash": "F62B9F3DE5B59B1CD4E2F253FCDF00F94CC188C75616C5DA3E34574D2838F5C1"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-context-source\\context.hpp",
+    "Hash": "8C93154D154BED66605178CFE190F9C87E8C709F4946BFE2A7A77A771B9923AB"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-host-platform-source\\assembly.cpp",
+    "Hash": "6E7E393DEC531FE5C50ACE97C75EEAC568470E631922BDE404E2C05AB2E28D9A"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-startup-publication-source\\publication.cpp",
+    "Hash": "7B7A50A8B28541B5B3461439C6918A7055ACD8AF054344C212E7CB5650BACE82"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-startup-publication-source\\publication.hpp",
+    "Hash": "1730351414779C51B586D05C8B4CD6C0B4A4638CEA303A344DED1ABA91255CCD"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-bootstrap-backend-source\\backend.cpp",
+    "Hash": "D327F045085F20A968EA1781FD38A6C233A3FF970F9C8A9D208661B4D16ED019"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-bootstrap-owner-source\\owner.cpp",
+    "Hash": "3E09B48EF634B7FD02FF7002659870F67EEF3E5DE09C25FF8A5E02A88FFCF887"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-source\\bootstrap.cpp",
+    "Hash": "630E6AE211D9E54A2A4009A4CCF5DCCA5CD1D4DF7B2B82A7C6B2BCBBAC681DA6"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-application-worker-source\\worker.cpp",
+    "Hash": "A384138A6DBC7C2C4348E1C77B6D6CB33F3CFF3FE2F45EB91822AD71CF09FF8A"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-execution-source\\execution.cpp",
+    "Hash": "03946D42E546072F0E875C4A45327B63A24419303E9B4B23325F79B55F75B705"
+  }
+]

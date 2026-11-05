@@ -1,4 +1,14 @@
+<!-- PENDING-SOURCE-CHANGES -->
+2026-11-05: Kullanıcının açık isteğiyle güncel tam ortak derleme ve testler geçti. Üretim DLL linki başarılı; DLL yüklenmedi/çalıştırılmadı. 296 nesne, 356 test grubu ve 19 framework terminal senaryosu doğrulandı. Güncel kaynakların son tam derlemeye göre bekleyen farkı 0. Bu sonuç tam davranış/loader/native ABI eşdeğerliği kanıtı değildir. Kanıt: `dll-critical-path/current-rebuild.evidence.json`. Önceki aşama metinleri tarihseldir; ZIP sonucu ayrı paket kaydındadır.
+<!-- END-PENDING-SOURCE-CHANGES -->
+
 # B45 — Somut oturum hata, log ve worker politikası
+
+**Güncel kaynak adımı, henüz derlenmedi:** Canlı çocuk Parent JobPermit ile
+yalnız o thread'in owned exit-wait kayıtlarını temizleyen giriş ve tam
+JobHandoff bağlantısı eklendi. Diğer Policy işlemleri asıl worker'a bağlıdır.
+Yeni pozitif entegrasyon test kaynağı henüz yoktur; test çalıştırılmadı.
+[Kaynak sınırları](job-exit-cleanup.md). Aşağıdaki PASS sonuçları tarihseldir.
 
 `session_policy::Policy::create(Options)` ve `install(Profile::Dependencies&)`, caller tarafından yazılan hata/category/log/guard/worker sınıfları yerine somut uygulamaları bağlar. Üç kategori tokenı ayrı ve owner-pinned; error API mevcut typed NativeApi’dir. NativeApi constructor yapılandırılmış importları çağırmaz; dedicated exit registry kendi owned SDK depolamasını kurar. Export edilen error/category shared alias’ları Policy’yi tutar, self-cycle yaratmaz; SDK portu Server başlangıcı/kapanışı için bind öncesi ve source-close sonrası geçerlidir.
 

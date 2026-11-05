@@ -1,0 +1,66 @@
+{
+  "schema": "original-licensing-nested-call-views.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_NESTED_LICENSING_CALL_VIEW_PREREQUISITE",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Registered Licensing Handler/Core call views sharing one stable immutable actual-child context, actual prebound authentication cell/AttemptState/Runtime/Online roots and failed-owner health; private semantic execution/file ownership and explicit normal close. Actual production unchanged.",
+  "sources": [
+    {
+      "path": "anadius-licensing-effects-source/effects.hpp",
+      "before": "before/anadius-licensing-effects-source__effects.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-licensing-effects-source/effects.cpp",
+      "before": "before/anadius-licensing-effects-source__effects.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-licensing-effects-source/effects_tests.cpp",
+      "before": "before/anadius-licensing-effects-source__effects_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "before": "before/anadius-worker-handoff-source__handoff_tests.cpp",
+      "role": "test"
+    }
+  ],
+  "reviews": [
+    "licensing-and-unit-independent-review.md",
+    "sdk-fixture-independent-review.md",
+    "root-independent-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "native-findings.md",
+    "licensing-implementation.md",
+    "unit-test-source-notes.md",
+    "sdk-fixture-implementation.md"
+  ],
+  "native_replies": [
+    "instructions-18002e3b0.json",
+    "instructions-180030c50.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-licensing-effects-source/nested-call-views-20261105/native-evidence-index.json",
+    "outputs/anadius-application-io-source/provider-call-views-20261105/evidence.json",
+    "outputs/anadius-application-io-source/provider-call-views-20261105/remaining-integration.json",
+    "outputs/anadius-application-io-source/provider-call-views-20261105/next-licensing-call-view-plan.md",
+    "outputs/anadius-application-io-source/provider-call-views-20261105/next-licensing-shared-root-audit.md",
+    "outputs/anadius-application-io-source/provider-call-views-20261105/next-licensing-fixture-plan.md",
+    "outputs/anadius-application-io-source/call.hpp"
+  ],
+  "limits": [
+    "No compiler, project tests, link, DLL execution or ZIP update. Two test files contain authored assertions, none executed.",
+    "Actual production remains Serialized. Graph MessageCall/router/writers/lock bookkeeping, Profile stable Job/Slot admission, Policy cleanup, actual accept/packet and full child-tail ordering still need coherent integration before NativeJobs gate removal/policy enable.",
+    "Authentication identity and binding history stay owner-level. Per-view semantic used_ is HOST execution bookkeeping, not a new shared native bit. Unbound diagnostics cannot invent fallback; first binding after their normal close remains legal.",
+    "AttemptState attempted/blocked, token string, maps and Runtime/Online are the SAME shared business roots. General simultaneous mutating license requests/invalidation and arbitrary foreign provider/SDK behavior are not certified. Primary A diagnostic does not mutate those fields.",
+    "Normal close needs the exact live Operation and borrowed checkpoint backing. Unknown file/provider prefixes remain registered/shared-owner-failed without guessed cleanup or retry; closed handle destruction is metadata-only.",
+    "RealPrepared diagnostic/license and file/UTC overlap plus isolated705 retention are source fixtures. Offline fake_auth branch does not prove Online ownership; separate own-EXE unit delegates to the actual owned slot30 path. Neither is actual Graph/NativeJobs/network validation.",
+    "Historical source/build/link/DLL/ZIP and original binaries unchanged. Prior added headers remain build_sha256:null until a consistent explicitly authorized rebuild. Native ABI/EH/full equivalence remains open; no invented percentage."
+  ],
+  "completed_note": "SOURCE_ONLY2freshcompleteREAinstructionrecords;2production+2testfiles implementnestedLicensingcallviews/samecontext/authroot/sharedhealthandprivatefiles. TwoactualPreparedparallelcases+isolated705andownEXEownedslot30unitassertionsNOTRUN; actualSerialized.",
+  "observation": "AlignedREA6.8.0/Ghidra12.1.4 complete02e3b0/030c50 instructionEvidence exportedclosed/originalhashunchanged. Three useful implementation/test/independent-review subagents; legacypre-actionoverlapgapfixed, no sharedbusinessclone/bodymutex.",
+  "next_scope": "Integrate Graph registered MessageCall/router/adapters/writers/native-lock ownership consuming actual Information/Content/Licensing views via NativeProfile explicit per-call dependencies, then Profile stable handoff/job/session metadata and Policy current-thread cleanup. Audit actual accept/packet/full028d30 child response ownership and shared business mutations; only then remove NativeJobs gate/select actual immutable policy and author real same-session/distinct-session progress cases. No build authorization."
+}

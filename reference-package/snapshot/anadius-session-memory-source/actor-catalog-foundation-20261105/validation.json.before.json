@@ -1,0 +1,416 @@
+{
+  "result": "SOURCE_IMPLEMENTED_STATIC_REVIEWED_NOT_COMPILED",
+  "baseline_sources_unchanged": 906,
+  "fresh_static_instruction_records": 2,
+  "static_bytes_observed": 12,
+  "exact_tail_target": "0x180037f70",
+  "blocker_groups": 10,
+  "new_native_definitions": 1,
+  "full_build_or_link_run": true,
+  "artifacts": {
+    "blockers.json": "602b769c553847fffed13bc41f4f9e2a2c7b6227767a13f38277148b11e8760d",
+    "native-lifecycle-slice.json": "430595c3b9027ed245dfead79da05857ccfbb6047c41b0cc0fc2edb245117599",
+    "startup-cleanup-evidence.json": "e9b6267e137cc74417a73f3daa9cfebf4435a144fb129e8aa2cb7a87d1f2827e",
+    "rea-session.json": "ad9f635a91920e677e2b773ac62b97763ccb79991566bbd2f00d528d8ff2c2a5",
+    "active-work-plan.json": "555c4c5ab017368d0a27cf8da88d5edfecaa8a6254417bec77dafee7bab2667a",
+    "review.json": "e93a511c74c5492881d92db192be976ac3a72e43956e1bde03a7d55c8743b2c5",
+    "aggregate-map.json": "7e3536701f9c28dcc0a7529573dea40b2b6c33fd2d035833079afa8a7192982f",
+    "loader-context-map.json": "a1b28ec5712026441825b399e223263d618eb4a52896a0c153ef70b2760cb843",
+    "pending-source-status.json": "8193fd0d3c0231696d6c28fc848938dcd1b5ef6d52d2ee32577b35c81cd52d18"
+  },
+  "scope": "OriginalCrt concurrent exact-object Online queries with independent reservations and retained lifecycle/code ownership; remove extra startup/avatar busy rejection without adding OnlineReady wait. Serialized HOST default preserved. Source-only, uncompiled and unexecuted.",
+  "baseline_sources_modified_explicitly": 40,
+  "new_source_files": 71,
+  "focused_checks": 42,
+  "new_Runtime_bindings_closed": 1,
+  "implementation_evidence": {
+    "path": "outputs/anadius-license-source/key_binding.evidence.json",
+    "sha256": "4f0c51caf13664ae78cc25c57c8b71f0620a3b71ecb3f8d28f6afbdb2a3c35c5"
+  },
+  "prior_review_scope": "review.json is historical B54 audit; current independent reviews are in implementation evidence files.",
+  "focused_binding_checks": 50,
+  "new_native_definitions_this_change": 0,
+  "focused_shared_path_checks": 42,
+  "focused_record": null,
+  "latest_implementation_evidence": {
+    "path": "outputs/anadius-callback-policy-source/network-effect-postcheck.evidence.json",
+    "sha256": "ec8e79ab6f178a4326f4e1d69178bcaf47a561765d923d292ed7ab2c8da9b193"
+  },
+  "planned_common_objects": 296,
+  "planned_common_normal_groups": 356,
+  "planned_counts_executed": true,
+  "focused_suite_checks": [],
+  "new_selected_source_algorithms_this_change": 1,
+  "observed_actual_allocation_frees": 60,
+  "new_selected_source_bindings_this_change": 1,
+  "repaired_native_call_sites_this_change": 1,
+  "focused_test_amendment": [
+    {
+      "path": "work/pre-unload-v1-results.json",
+      "sha256": "1141b8f7d72be5c3b4acb629e89e86abec354f728bc2d2237e33148f557fd6ab",
+      "result": "FAIL",
+      "seconds": 1.0,
+      "qualification": "Compilation rejected undefined ERROR_REENTRANT_CALL. Replaced with documented generic ERROR_BUSY for reentry result; no V1 test executed."
+    }
+  ],
+  "pending_new_sources": [
+    "anadius-achievement-runtime-source/mutex_binding.hpp",
+    "anadius-achievement-storage-source/path_binding.hpp",
+    "anadius-achievement-storage-source/path_binding_tests.cpp",
+    "anadius-application-effects-source/composition.hpp",
+    "anadius-application-effects-source/factory.cpp",
+    "anadius-application-effects-source/factory.hpp",
+    "anadius-application-effects-source/factory_tests.cpp",
+    "anadius-application-io-source/files.cpp",
+    "anadius-application-io-source/files.hpp",
+    "anadius-bootstrap-runtime-source/observed_runtime.cpp",
+    "anadius-bootstrap-runtime-source/observed_runtime.hpp",
+    "anadius-bootstrap-runtime-source/observed_runtime_tests.cpp",
+    "anadius-config-defaults-source/teardown.cpp",
+    "anadius-config-defaults-source/teardown.hpp",
+    "anadius-config-defaults-source/teardown_tests.cpp",
+    "anadius-config-source/state_binding.hpp",
+    "anadius-content-effects-source/effects.cpp",
+    "anadius-content-effects-source/effects.hpp",
+    "anadius-content-effects-source/effects_tests.cpp",
+    "anadius-host-platform-source/assembly.cpp",
+    "anadius-host-platform-source/assembly.hpp",
+    "anadius-host-platform-source/engine.cpp",
+    "anadius-host-platform-source/engine.hpp",
+    "anadius-host-platform-source/source_stop.cpp",
+    "anadius-host-platform-source/source_stop.hpp",
+    "anadius-host-platform-source/source_stop_tests.cpp",
+    "anadius-information-effects-source/effects.cpp",
+    "anadius-information-effects-source/effects.hpp",
+    "anadius-information-effects-source/effects_tests.cpp",
+    "anadius-initial-cells-source/defaults.cpp",
+    "anadius-initial-cells-source/defaults.hpp",
+    "anadius-initial-cells-source/defaults_tests.cpp",
+    "anadius-initial-cells-source/runtime.cpp",
+    "anadius-initial-cells-source/runtime.hpp",
+    "anadius-initial-cells-source/worker.cpp",
+    "anadius-initial-cells-source/worker.hpp",
+    "anadius-library-effects-source/bound.cpp",
+    "anadius-library-effects-source/bound.hpp",
+    "anadius-library-effects-source/bound_tests.cpp",
+    "anadius-library-effects-source/phase_binding.hpp",
+    "anadius-license-source/auth_state.hpp",
+    "anadius-license-source/key_binding_tests.cpp",
+    "anadius-license-source/key_processor.cpp",
+    "anadius-license-source/key_processor.hpp",
+    "anadius-license-source/key_processor_tests.cpp",
+    "anadius-licensing-effects-source/effects.cpp",
+    "anadius-licensing-effects-source/effects.hpp",
+    "anadius-licensing-effects-source/effects_tests.cpp",
+    "anadius-messages-source/control.hpp",
+    "anadius-module-reference-source/fixture.cpp",
+    "anadius-module-reference-source/reference.cpp",
+    "anadius-module-reference-source/reference.hpp",
+    "anadius-module-reference-source/reference_tests.cpp",
+    "anadius-online-query-source/application_queries_tests.cpp",
+    "anadius-permanent-errors-source/errors.cpp",
+    "anadius-permanent-errors-source/errors.hpp",
+    "anadius-permanent-errors-source/errors_tests.cpp",
+    "anadius-pre-unload-source/shutdown.cpp",
+    "anadius-pre-unload-source/shutdown.hpp",
+    "anadius-pre-unload-source/shutdown_tests.cpp",
+    "anadius-resources-factory-source/configuration.cpp",
+    "anadius-resources-factory-source/configuration.hpp",
+    "anadius-resources-factory-source/factory.cpp",
+    "anadius-resources-factory-source/factory.hpp",
+    "anadius-resources-factory-source/factory_tests.cpp",
+    "anadius-thread-domain-source/factory.cpp",
+    "anadius-thread-domain-source/factory.hpp",
+    "anadius-thread-domain-source/factory_tests.cpp",
+    "hook-engine-source/owned.cpp",
+    "hook-engine-source/owned.hpp",
+    "hook-engine-source/owned_tests.cpp"
+  ],
+  "latest_independent_review": "Historical reviews cover prior hashes. Current postcheck Policy CPP/header and two scenario sources have author static inspection only; no execution.",
+  "focused_new_runtime_record": null,
+  "new_selected_native_control_paths_this_change": 0,
+  "planned_auxiliary_synthetic_DLLs_added_this_stage": 0,
+  "packaging": {
+    "status": "AUTHORIZED_CURRENT_PACKAGE_FOLLOWS_BUILD_STATUS",
+    "receipt": "outputs/package-receipt.json",
+    "runtime_or_loader_equivalence_established": false
+  },
+  "full_common_build": {
+    "path": "outputs/source-workspace/full-build-verification.json",
+    "sha256": "6cbded372c77eeb2a35b332dbe75fbc9bc6cfbd24da3b967bfaa03b124087e12"
+  },
+  "full_production_link": {
+    "path": "outputs/dll-link-gate-source/current-full-link.json",
+    "sha256": "70d9d9dcbaed784530bee67928fe0ebbe27dbe931b07219545cd6988f50e4755"
+  },
+  "comparison_baseline_snapshot": "source-workspace/history/B54/source-snapshot.json",
+  "pending_source_changes": [
+    "anadius-accept-source/owned.cpp",
+    "anadius-accept-source/owned.hpp",
+    "anadius-application-graph-source/graph.cpp",
+    "anadius-application-graph-source/graph.hpp",
+    "anadius-application-graph-source/graph_integration_tests.cpp",
+    "anadius-application-graph-source/graph_tests.cpp",
+    "anadius-foreign-callback-source/foreign.cpp",
+    "anadius-foreign-callback-source/foreign.hpp",
+    "anadius-foreign-callback-source/foreign_integration_tests.cpp",
+    "anadius-foreign-callback-source/foreign_tests.cpp",
+    "anadius-io-memory-source/io_memory.cpp",
+    "anadius-io-memory-source/io_memory.hpp",
+    "anadius-io-memory-source/io_memory_tests.cpp",
+    "anadius-native-context-source/context.cpp",
+    "anadius-native-source/native_callbacks.cpp",
+    "anadius-native-source/native_callbacks.hpp",
+    "anadius-online-factory-source/factory.cpp",
+    "anadius-online-factory-source/factory_tests.cpp",
+    "anadius-online-object-source/object.cpp",
+    "anadius-online-query-source/query.cpp",
+    "anadius-online-query-source/query_tests.cpp",
+    "anadius-online-version-source/version.cpp",
+    "anadius-online-version-source/version.hpp",
+    "anadius-owned-environment-source/environment.cpp",
+    "anadius-owned-environment-source/environment.hpp",
+    "anadius-owned-environment-source/environment_integration_tests.cpp",
+    "anadius-owned-environment-source/environment_tests.cpp",
+    "anadius-owned-jobs-source/jobs.cpp",
+    "anadius-owned-jobs-source/jobs.hpp",
+    "anadius-owned-jobs-source/jobs_tests.cpp",
+    "anadius-owned-server-source/server.cpp",
+    "anadius-owned-server-source/server.hpp",
+    "anadius-owned-server-source/server_integration_tests.cpp",
+    "anadius-owned-server-source/server_tests.cpp",
+    "anadius-registry-source/registry.cpp",
+    "anadius-registry-source/registry_tests.cpp",
+    "anadius-resources-factory-source/factory.cpp",
+    "anadius-resources-factory-source/factory_tests.cpp",
+    "anadius-server-runtime-source/runtime.cpp",
+    "anadius-server-runtime-source/runtime.hpp",
+    "anadius-session-flow-source/coherent_io.hpp",
+    "anadius-session-policy-source/policy.cpp",
+    "anadius-session-policy-source/policy.hpp",
+    "anadius-session-policy-source/policy_tests.cpp",
+    "anadius-session-profile-source/profile.cpp",
+    "anadius-session-profile-source/profile.hpp",
+    "anadius-session-profile-source/profile_integration_tests.cpp",
+    "anadius-session-profile-source/profile_tests.cpp",
+    "anadius-session-profile-source/strings.cpp",
+    "anadius-session-profile-source/strings.hpp",
+    "anadius-socket-source/completion_dispatcher.cpp",
+    "anadius-socket-source/completion_dispatcher.hpp",
+    "anadius-socket-source/environment_constructor.hpp",
+    "anadius-socket-source/handler_dispatch.cpp",
+    "anadius-socket-source/handler_dispatch.hpp",
+    "anadius-socket-source/native.cpp",
+    "anadius-socket-source/native.hpp",
+    "anadius-socket-source/native_tests.cpp",
+    "anadius-socket-source/posted_operation.cpp",
+    "anadius-socket-source/posted_operation.hpp",
+    "anadius-socket-source/posted_operation_tests.cpp",
+    "anadius-socket-source/worker_run.cpp",
+    "anadius-socket-source/worker_run.hpp",
+    "anadius-timestamp-source/timestamp.cpp",
+    "anadius-timestamp-source/timestamp.hpp",
+    "anadius-timestamp-source/timestamp_tests.cpp",
+    "anadius-worker-handoff-source/handoff.cpp",
+    "anadius-worker-handoff-source/handoff.hpp",
+    "anadius-worker-handoff-source/handoff_integration_tests.cpp",
+    "anadius-worker-handoff-source/handoff_tests.cpp",
+    "dll-link-gate-source/entry.cpp"
+  ],
+  "current_source_matches_last_full_build": false,
+  "last_focused_execution_record": {
+    "path": "work/pre-unload-v2-results.json",
+    "sha256": "93701a5afdf21567b2c37b4baa7a48279b79c9fdae02373d2bb6c8ba683ce9f8",
+    "seconds": 10.828,
+    "result": "PASS"
+  },
+  "previous_focused_suite_checks": [
+    13,
+    142,
+    274
+  ],
+  "current_step_execution": {
+    "compiled": false,
+    "tests_executed": false,
+    "link_attempted": false,
+    "target_executed": false,
+    "package_rebuilt": false
+  },
+  "toolchain_update": {
+    "path": "tool-maintenance/2026-11-02.json",
+    "sha256": "f89223fa1e03db765b24a68387a97c7085271a4afa06e27f3a0cb093f8e37a80",
+    "new_tools_validated_by_project_build": false,
+    "common_build_script_changed": true
+  },
+  "positive_prepared_graph_profile_test_source_present": true,
+  "positive_native_jobs_prepared_fixture_source_present": true,
+  "latest_source_review": {
+    "reviewer": "author only; no independent agent review",
+    "path": "outputs/anadius-callback-policy-source/network-effect-postcheck.evidence.json",
+    "sha256": "ec8e79ab6f178a4326f4e1d69178bcaf47a561765d923d292ed7ab2c8da9b193"
+  },
+  "delayed_physical_exit_interleaving_source_present": true,
+  "worker_same_actor_close_continuation_source_present": true,
+  "production_controller_selection_and_wake_binding_present": true,
+  "end_to_end_application_worker_retry_source_present": true,
+  "end_to_end_application_worker_retry_runtime_verified": false,
+  "prepared_receipt_stop_deferral_source_present": true,
+  "session_io_after_receipt_stop_drain_integrated": true,
+  "session_io_after_receipt_stop_drain_runtime_verified": false,
+  "combined_delayed_physical_exit_and_worker_close_retry_source_present": true,
+  "combined_delayed_physical_exit_and_worker_close_retry_runtime_verified": false,
+  "closed_callback_admission_source_present": true,
+  "closed_callback_admission_runtime_verified": false,
+  "latest_loader_audit": {
+    "path": "outputs/anadius-host-platform-source/synchronous-hook-order.audit.json",
+    "sha256": "32e03f00d78bdbd02c979bd12eb8b0d67ca5589c411ef35d3f81560ac3a5b949",
+    "status": "NATIVE_ORDER_MATCHES_BOUNDED_SCOPE_STARTUP_ADMISSION_GAP_OPEN"
+  },
+  "poisoned_create_admission_source_present": true,
+  "poisoned_create_admission_runtime_verified": false,
+  "configuration_construction_ownership_source_present": true,
+  "configuration_construction_ownership_runtime_verified": false,
+  "backend_provider_binding_admission_source_present": true,
+  "backend_provider_binding_admission_runtime_verified": false,
+  "native_hook_order_bounded_match_observed": true,
+  "production_callback_startup_admission_gap_open": true,
+  "per_hook_original_publication_source_present": true,
+  "per_hook_original_publication_runtime_verified": false,
+  "warming_callback_admission_closed": false,
+  "warming_original_only_source_present": true,
+  "warming_original_only_runtime_verified": false,
+  "web_no_redirect_source_present": true,
+  "web_no_redirect_runtime_verified": false,
+  "connect_wait_no_redirect_source_present": true,
+  "connect_wait_no_redirect_runtime_verified": false,
+  "connect_redirect_body_source_present": true,
+  "connect_redirect_body_runtime_verified": false,
+  "network_effect_postcheck_source_present": true,
+  "network_effect_postcheck_runtime_verified": false,
+  "latest_build_validation_scope": "All normal synthetic suites and framework terminal cases; original targets and production DLL not executed. Historical source-only records retain their dates/hashes.",
+  "priority_revision": {
+    "recorded_at": "2026-11-02T20:36:11.442319+00:00",
+    "scope": "Roadmap-only correction toward the two production loader hooks; no C/C++ source or frozen build proof changed."
+  },
+  "latest_owned_attach_source": {
+    "path": "outputs/anadius-pre-unload-source/owned-attach.evidence.json",
+    "sha256": "0bbb53d18fd390883a04e26707b3e0a0ff331f762a16021f0f2a2a1e07a8b855"
+  },
+  "current_change_checks_executed": false,
+  "latest_native_worker_io_source": {
+    "path": "outputs/anadius-resources-factory-source/native-worker-io.evidence.json",
+    "sha256": "d053fdf97728983a312ca90ceb45a8be946505e21f665178ba6626e962719182"
+  },
+  "latest_selected_executor_source": {
+    "path": "outputs/anadius-socket-move-source/selected-executor.evidence.json",
+    "sha256": "be46cdbb60e862f9f6395622d3a0013f00de1741ec2ae89159e931e366f7da68"
+  },
+  "latest_source_owned_lifecycle": {
+    "path": "outputs/anadius-session-policy-source/source-lifecycle.evidence.json",
+    "sha256": "0aaa93e072156bbd04f89baf2c9458ac76891c880e47581478d87e96205e9366"
+  },
+  "latest_stop_source_proof": {
+    "path": "outputs/anadius-accept-stop-source/source-proof.evidence.json",
+    "sha256": "add0bfc3e76b3ff5d0eb96a14f247d34da9a351ceb118426a7abf63e0b262e28"
+  },
+  "latest_pre_cleanup_quiescence": {
+    "path": "outputs/anadius-host-platform-source/pre-cleanup-quiescence.evidence.json",
+    "sha256": "4bb6562ae3cd2ffa344ea3896b9aab3163ec1160b30c2ae57ff68bd626eb64da"
+  },
+  "latest_original_detach_profile": {
+    "path": "outputs/dll-critical-path/original-detach-profile.audit.json",
+    "sha256": "61e5424ce5c997d2f098e7c7c6a45d322958a7d2eda7afcc1e5f8269037a8507"
+  },
+  "latest_original_loader_source": {
+    "path": "outputs/dll-link-gate-source/original-loader-profile.evidence.json",
+    "sha256": "f13115d9c9f7e03ae8c5ada66bf8acebaad6944bd5d41364d59d4b70af10dd4b"
+  },
+  "latest_original_native_worker": {
+    "path": "outputs/anadius-resources-factory-source/original-native-worker.evidence.json",
+    "sha256": "c5a91bc5b07740478e70420c45355687925e3048473274266ef42dd62df32d20"
+  },
+  "latest_native_image_base": {
+    "path": "outputs/anadius-resources-factory-source/native-image-base.evidence.json",
+    "sha256": "a0d56f7960d7a45b30e2bcadb4d540c516895d043cc420aac144c805ca8ebb0b"
+  },
+  "latest_original_image_bindings": {
+    "path": "outputs/anadius-host-platform-source/original-image-bindings.evidence.json",
+    "sha256": "2b5feb4fee17bcd59213417ab396ad042fd1f76946a75d52a14a1b50ed000ab7"
+  },
+  "latest_native_image_owner": {
+    "path": "outputs/dll-link-gate-source/native-image-owner.evidence.json",
+    "sha256": "95eed9c5bfc74860f7861805dbdd1a497a7f4156651d2b1e87762cc209a126c7"
+  },
+  "source_defined_loader_hooks": [
+    "require_loader_attach_runtime",
+    "require_loader_detach_quiescence"
+  ],
+  "expected_missing_loader_hooks_in_current_source": [],
+  "latest_original_worker_dispatch": {
+    "path": "outputs/anadius-application-worker-source/original-dispatch.evidence.json",
+    "sha256": "23b8c71f2c455e7befe734e6a1055a57e5a070dc7c7b6d83616b4a9c1a092151"
+  },
+  "latest_original_graph_retirement": {
+    "path": "outputs/anadius-application-graph-source/original-retirement.evidence.json",
+    "sha256": "83eddab2ac32f62f8e7dfd345c2b7a1bc9f9baa99d8c616376c5066786b8a91a"
+  },
+  "latest_original_dispatch_observation": {
+    "path": "outputs/anadius-application-worker-source/original-dispatch-observation.evidence.json",
+    "sha256": "515ac78eca17c9d726ad3e6c7aecb633b5318e42dbe8d6ce3538c555616648ce"
+  },
+  "latest_link_preparation": {
+    "path": "outputs/dll-link-gate-source/link-preparation.evidence.json",
+    "sha256": "054f69e149cd2adf455446182a6f3b020625a33d2eccf4ddebd39df1078925f9"
+  },
+  "latest_native_message_jobs": {
+    "path": "outputs/anadius-resources-factory-source/native-message-jobs.evidence.json",
+    "sha256": "cee0ee1ad7a19cea48d4ed6786c836362fb0e7a7fceb7b2c5802852f143a3394"
+  },
+  "latest_startup_log_flag": {
+    "path": "outputs/anadius-application-worker-source/startup-log-flag.evidence.json",
+    "sha256": "4b3ece15ca7ca7bbd3d50135bb258be3ff9d2a0c515739a70b3ebb6b3d7d2644"
+  },
+  "latest_source_route_review": {
+    "path": "outputs/dll-critical-path/current-source-route-review.evidence.json",
+    "sha256": "b936d8c86e35674dd91e642b81648b847fa40b14d20aa621544133594c7e4809"
+  },
+  "latest_misc_message_020a80": {
+    "path": "outputs/anadius-session-policy-source/misc-message-020a80.evidence.json",
+    "sha256": "d6953e923214b9a24f46d06ce55cc7778d79ed4fb2d989bdbffe54c9c63c76f4"
+  },
+  "latest_error_category_028240": {
+    "path": "outputs/anadius-owned-server-source/error-category-028240.evidence.json",
+    "sha256": "479788ed6da4ee949fb2e7dc5736e571c71b546ab81f8f70caa352a82dc8b1c2"
+  },
+  "latest_error_no_context_028210": {
+    "path": "outputs/anadius-owned-server-source/error-no-context-028210.evidence.json",
+    "sha256": "0f90f141f2f476b49e7bfd1819f1ed7b1244018c8db7f4e6943f0acfb31e1192"
+  },
+  "latest_completion_error_review": {
+    "path": "outputs/anadius-session-policy-source/completion-error-review.evidence.json",
+    "sha256": "bac84ab583dc2ac704ddf76c2b9556fbc464655cc170347f3523e67f25924fe8"
+  },
+  "latest_original_connect_concurrency": {
+    "path": "outputs/anadius-foreign-callback-source/original-connect-concurrency.evidence.json",
+    "sha256": "d1ff950ebd2267b9dbc12a1a91861f1742a2666fc60666d13064b6ba2f19f80b"
+  },
+  "latest_source_stage": {
+    "path": "outputs/anadius-online-query-source/startup-overlap-20261105/evidence.json",
+    "sha256": "2a36acb4f734e0cbf3cea827be0c3ef58d7783f78f39e46599e1959b2a88d4da"
+  },
+  "workflow_instruction_update": {
+    "fresh_REA_per_stage_required": true,
+    "project_code_or_build_changed": false
+  },
+  "current_stage_full_build_or_link_run": false,
+  "latest_readonly_provider_audit": {
+    "path": "outputs/anadius-session-policy-source/worker-error-028240-20261104/compiler-provider-audit-index.json",
+    "sha256": "4084d937bcbf23e44f29c9eefe1d5bd9ca9226d4883daa76e55cf391b6f91827"
+  },
+  "terminal_system_message_equivalence": "EXPLICIT_NATIVE_STOP_WRITE_PROVIDER_BOUND_SOURCE_ONLY_NOT_COMPILED",
+  "compiler_default_system_message_equivalence": "DISPROVEN_BY_CURRENT_PRIMARY_ARCHIVE",
+  "native_system_diagnostic_source_resolution": {
+    "path": "outputs/anadius-session-policy-source/native-stop-diagnostic-20261104/evidence.json",
+    "sha256": "fbc54501e1df8602f303e77cbc2dd852249d2521a03512118b28b847995fe8c1"
+  }
+}

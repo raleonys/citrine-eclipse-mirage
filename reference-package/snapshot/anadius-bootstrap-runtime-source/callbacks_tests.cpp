@@ -137,6 +137,28 @@ void competing_and_rebinding(){
     }
     action_a={};action_b={};
 }
+void inactive_pause_preserves_admission(){
+    Host host;current=&host;unsigned calls=0;
+    action_a=[&]{++calls;};
+    n::ExitCallback dispatch=nullptr;
+    {
+        r::CallbackRegistry active(api()),inactive(api());
+        active.register_exit(a);dispatch=host.registered.back();
+        close(inactive);
+        SetLastError(861);dispatch();
+        check(calls==1&&GetLastError()==861&&active.pending_exit_callbacks()==0,
+            "pausing/finishing unpublished contender leaves current natural callback admitted");
+        active.register_exit(a);
+        check(active.pause_admission(),"current owner pause seals natural callback admission");
+        SetLastError(862);dispatch();
+        check(calls==1&&GetLastError()==862&&active.pending_exit_callbacks()==1,
+            "paused natural thunk preserves pending manual drain and LastError");
+        close(active);check(calls==2,"manual drain remains available after natural admission is sealed");
+    }
+    SetLastError(863);run_crt(host);dispatch();
+    check(calls==2&&GetLastError()==863,"retained thunks after owner destruction preserve LastError and never repeat cleanup");
+    action_a={};
+}
 void terminate_ownership(){
     Host host;host.handler=previous_terminate;current=&host;
     {
@@ -214,7 +236,7 @@ int terminal(const std::string& mode){
 int main(int argc,char** argv){
     if(argc==2)return terminal(argv[1]);
     try{
-        initial_and_validation();natural_order();failure_and_manual_prefix();active_lease_and_reentry();competing_and_rebinding();terminate_ownership();service_forwarding();
+        initial_and_validation();natural_order();failure_and_manual_prefix();active_lease_and_reentry();competing_and_rebinding();inactive_pause_preserves_admission();terminate_ownership();service_forwarding();
         for(const auto* mode:{"--live-dtor","--term-after-finish","--term-paused","--term-return"})
             check(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==88,"own terminal child enforces inactive/return/destructor abort contract");
         check(_spawnl(_P_WAIT,argv[0],argv[0],"--term-calls",static_cast<const char*>(nullptr))==86,"active terminate dispatcher invokes selected callback");

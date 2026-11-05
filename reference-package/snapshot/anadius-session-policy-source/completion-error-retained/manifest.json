@@ -1,0 +1,59 @@
+{
+  "status": "RETAINED_FUNCTION_SLICES_NOT_FRESH_DECOMPILATION",
+  "slices": [
+    {
+      "address": "0x180025480",
+      "path": "outputs/anadius-session-policy-source/completion-error-retained/0x180025480.c",
+      "sha256": "09c4129554625be0eec5566abe44bfe64db9921e988c7d777c4f83cecd53d730",
+      "parent": "outputs/anadius-all-functions.pseudo.c",
+      "parent_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "parent_start_line": 30941,
+      "evidence": "ev_d3aaf411d3595e43ae2c3c1c8309ed42f85a4434602216330b5e2c58aa788a3b"
+    },
+    {
+      "address": "0x180025a70",
+      "path": "outputs/anadius-session-policy-source/completion-error-retained/0x180025a70.c",
+      "sha256": "6aff6432a0191f4c549ec7a90c1084b4f73f054e6dbfb1fe26afbf4678ceaae0",
+      "parent": "outputs/anadius-all-functions.pseudo.c",
+      "parent_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "parent_start_line": 31249,
+      "evidence": "ev_f7448c3646f8693c49a161e2449f559db548111bdf4c3a9cacfa5295f5e963b8"
+    },
+    {
+      "address": "0x180025720",
+      "path": "outputs/anadius-session-policy-source/completion-error-retained/0x180025720.c",
+      "sha256": "19cdf416c8d425c7e7640227e93eead3159bb1c1edc771aa0b46010f90e11900",
+      "parent": "outputs/anadius-all-functions.pseudo.c",
+      "parent_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "parent_start_line": 31078,
+      "evidence": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39"
+    },
+    {
+      "address": "0x180025480",
+      "path": "outputs/anadius-session-policy-source/completion-error-retained/0x180025480.asm.txt",
+      "sha256": "4e2626a162a44afbaf346755ec7c0b0ceae12390cc90186428b363832a38a461",
+      "parent": "outputs/anadius-all-functions.asm.txt",
+      "parent_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "parent_start_line": 38264,
+      "evidence": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31"
+    },
+    {
+      "address": "0x180025a70",
+      "path": "outputs/anadius-session-policy-source/completion-error-retained/0x180025a70.asm.txt",
+      "sha256": "23163b92c81f04cab10359000195a59138bb83234f8f75c978a348a753d19f3e",
+      "parent": "outputs/anadius-all-functions.asm.txt",
+      "parent_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "parent_start_line": 38643,
+      "evidence": "ev_55d30b85e7b6ed50c63ac8a363324c343cf0045dfef90f8fc377ed5e9e01b4d7"
+    },
+    {
+      "address": "0x180025720",
+      "path": "outputs/anadius-session-policy-source/completion-error-retained/0x180025720.asm.txt",
+      "sha256": "30672726aa06fd752f2ec98e042cf9c27e77cebca19b0634f17c3f41a17cad2b",
+      "parent": "outputs/anadius-all-functions.asm.txt",
+      "parent_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "parent_start_line": 38441,
+      "evidence": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa"
+    }
+  ]
+}

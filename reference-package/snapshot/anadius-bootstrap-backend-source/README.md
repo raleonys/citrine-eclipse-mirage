@@ -1,4 +1,15 @@
+<!-- PENDING-SOURCE-CHANGES -->
+2026-11-05: Kullanıcının açık isteğiyle güncel tam ortak derleme ve testler geçti. Üretim DLL linki başarılı; DLL yüklenmedi/çalıştırılmadı. 296 nesne, 356 test grubu ve 19 framework terminal senaryosu doğrulandı. Güncel kaynakların son tam derlemeye göre bekleyen farkı 0. Bu sonuç tam davranış/loader/native ABI eşdeğerliği kanıtı değildir. Kanıt: `dll-critical-path/current-rebuild.evidence.json`. Önceki aşama metinleri tarihseldir; ZIP sonucu ayrı paket kaydındadır.
+<!-- END-PENDING-SOURCE-CHANGES -->
+
 # B3 — Somut kaynak backend'i ve beklenebilir worker ömrü
+
+**Güncel kaynak notu, henüz derlenmedi:** `stop_and_join`, wait/close
+sınırından gelen istisnada kalan kayıtları kalıcı hata durumunda tutar; aynı
+sayısal HANDLE yeniden denenmez. Normal timeout/WAIT_FAILED/close FALSE
+sonuçlarının mevcut retry davranışı korunur. Dört test senaryosu yalnız kaynak
+olarak eklendi; çalıştırılmadı. Önceki derleme sonuçları aşağıda tarihsel olarak
+korunur. Ayrıntı: `../anadius-owned-jobs-source/native-job-gap.md`.
 
 Bu paket, B2'nin `RuntimeOwner` sınıfına verilebilen somut `SourceBackend` ile thread etkilerini saran somut `TrackingThreads` sınıfını ekler. Mevcut uygulama gövdeleri yeniden kullanılır. Yeni özgün native gövde veya native sağlayıcı kapanışı **0**; üretim DLL hazırlığı henüz tamamlanmış değildir.
 

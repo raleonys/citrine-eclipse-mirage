@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/b22_provider_audit",
+  "result": "STATIC_PASS_NO_REMAINING_REQUIRED_ISSUE",
+  "scope": "Four current Core/Handlers/Graph/test sources; synchronous child Licensing scopes and lower prepared scenario. No full child Graph/Profile or native Jobs backend validation.",
+  "reviewed_source_hashes": {
+    "anadius-licensing-effects-source/effects.hpp": "7a84578546cecb74312818a094cdccdabbb641ab67f0c63787e7bfdf56684d07",
+    "anadius-licensing-effects-source/effects.cpp": "c66cf34ed9b2e23772c48e834810e5afca0200083dd14b30e0eb508547e7e5d9",
+    "anadius-licensing-effects-source/effects_tests.cpp": "2489299510b081ea8f83c0becbfaa92509378c7beeef6e9b6fa590251fe72e5e",
+    "anadius-application-graph-source/graph.cpp": "0bc8a6535e3817f0b2f6636ba360abf187b2e75dda97972bc6e116e6bf86d450"
+  },
+  "findings": [
+    "Core.check to Handler.check is metadata/permit-only; no Core.admit recursion. Both facade locks release before Parent/probe/other facade checks. Handler completion uses its own proof after Core scope ends.",
+    "Separate busy/checking/binding and creator-only lifecycle guards protect synchronous stack descriptors; no JobAction/JobCall retained past return. Void/value/nonreference payload discipline preserved without facade field/vtable changes.",
+    "Only action marker is caught as possible control. Postchecks/retirement occur outside control catch; failures poison and same-marker completion converts to logic_error. Healthy control rethrows only after successful scope retirement. SDK/Node/Xml/diagnostic unknowns remain poisoned; Graph diagnostic control=false preserved.",
+    "Normal Core closure requires known/no pending GuardedFiles. Error paths retain raw ownership without speculative close/destruction/replay, using stable Impl checkpoint.",
+    "Lower test source has consistent Core checkpoint1/2/3 and Handler1/2/4/5/6 sequence, no failed probe retry. Original resume Request includes ClientId=resumed. Event/task owners survive catch boundary, physical waits failfast, provider destruction occurs on original worker after last child access. Input denial modes terminate without cleanup/destructor at183/184."
+  ],
+  "positive_lower_prepared_licensing_test_source_present": true,
+  "positive_prepared_graph_profile_test_source_present": false,
+  "required_issues_remaining": 0,
+  "edits_by_reviewer": false,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

@@ -1,11 +1,24 @@
 #include "posted_operation.hpp"
+#include "handler_dispatch.hpp"
 #include <algorithm>
 
 namespace anadius::socket_recovered {
+MemoryLookup PostedEnvironment::lookup_storage(std::uintptr_t identity,OperationStorage*& out)const{
+    if(storage_resolver){
+        OperationStorage* found=nullptr;
+        const auto result=storage_resolver->lookup_storage(identity,found);
+        if(result==MemoryLookup::Found)out=found;
+        return result;
+    }
+    // Retain the legacy first-match rule, including live-span indirection.
+    for(auto& binding:current_storage())if(binding.identity==identity&&binding.storage){out=binding.storage;return MemoryLookup::Found;}
+    return MemoryLookup::Miss;
+}
 namespace {
 OperationStorage& storage_at(std::uintptr_t identity,PostedEnvironment environment){
-    for(auto& binding:environment.storage)
-        if(binding.identity==identity && binding.storage)return *binding.storage;
+    OperationStorage* storage=nullptr;const auto result=environment.lookup_storage(identity,storage);
+    if(result==MemoryLookup::Found&&storage)return *storage;
+    if(result==MemoryLookup::Ambiguous)throw UnsupportedInput("Cache identity has ambiguous owned storage binding");
     throw UnsupportedInput("Cache identity has no live borrowed storage binding");
 }
 std::byte read_byte(const OperationStorage& storage,std::uint64_t index){
@@ -86,7 +99,9 @@ void enqueue_posted_028ca0(IocpSchedulerEntry& entry,CancelOperation& operation,
     (void)scheduler.dispatch_required.exchange(1,std::memory_order_seq_cst);
     scheduler.gate.leave();
 }
-void dispatch_posted_022e40(PostedExecutor& executor,PostedFunctor*& source,PostedEnvironment environment,
+namespace {
+template<class Functor>
+void dispatch_posted_impl(PostedExecutor& executor,Functor*& source,PostedEnvironment environment,
     WorkerRunApi& api,DispatcherApi& completion,PostedMemoryEffects& memory){
     const auto executor_identity=executor.identity;
     if((executor.flags_0c&1U)==0){
@@ -96,7 +111,7 @@ void dispatch_posted_022e40(PostedExecutor& executor,PostedFunctor*& source,Post
         for(;context;context=static_cast<WorkerTlsContext*>(context->previous)){
             if(context->port_key!=key)continue;
             if(context->state){
-                auto* local=source;source=nullptr;
+                PostedFunctor* local=source;source=nullptr;
                 consume_functor_021ac0(local);
                 if(local)local->call_slot_00(0);
                 return;
@@ -120,6 +135,15 @@ void dispatch_posted_022e40(PostedExecutor& executor,PostedFunctor*& source,Post
     enqueue_posted_028ca0(*live_scheduler,operation.operation,static_cast<std::uint8_t>((executor.flags_0c>>1)&1U),completion);
     PostedCleanupFrame frame{executor_identity+8,nullptr,nullptr};
     cleanup_posted_028fd0(frame,environment,api,memory);
+}
+}
+void dispatch_posted_022e40(PostedExecutor& executor,PostedFunctor*& source,PostedEnvironment environment,
+    WorkerRunApi& api,DispatcherApi& completion,PostedMemoryEffects& memory){
+    dispatch_posted_impl(executor,source,environment,api,completion,memory);
+}
+void dispatch_posted_022e40(PostedExecutor& executor,OwnedHandlerTask*& source,PostedEnvironment environment,
+    WorkerRunApi& api,DispatcherApi& completion,PostedMemoryEffects& memory){
+    dispatch_posted_impl(executor,source,environment,api,completion,memory);
 }
 void complete_posted_027120(std::uintptr_t owner,PostedOperation& operation,PostedEnvironment environment,
     WorkerRunApi& api,PostedMemoryEffects& memory){

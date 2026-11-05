@@ -24,10 +24,12 @@ struct IoMemorySnapshot {IoMemoryPhase phase=IoMemoryPhase::Open;std::size_t all
 // Concrete storage/projection composition, NOT a native ASIO layout overlay.
 // Hold parent Operation around the entire source call. Parent and all supplied
 // handler/dispatcher/environment contexts outlive pending work and cache reuse.
-// Fixed-capacity binding arrays are never resized while contexts borrow spans.
+// Serialized binding snapshots expire on allocation growth. Concurrent Parent
+// policy requires exact owner resolvers and stable Record-owned bindings; it
+// does not make arbitrary shared payload mutation safe or enable upper actors.
 class OwnedIoMemory final:public HandlerDispatchMemory {
 public:
-    OwnedIoMemory(std::shared_ptr<SessionMemoryDomain>,std::size_t maximum_allocations);
+    OwnedIoMemory(std::shared_ptr<SessionMemoryDomain>,std::size_t initial_allocations);
     ~OwnedIoMemory()noexcept;
     OwnedIoMemory(const OwnedIoMemory&)=delete;OwnedIoMemory& operator=(const OwnedIoMemory&)=delete;
     OperationStorage& allocate_04b0bc(std::uint64_t native_bytes)override;
@@ -41,6 +43,21 @@ public:
     OwnedResponseMemory& response_memory();
     std::span<OperationStorageBinding> storage_bindings();
     std::span<DispatcherOperationBinding> dispatcher_bindings();
+    const std::span<OperationStorageBinding>* storage_view()const;
+    const std::span<DispatcherOperationBinding>* dispatcher_view()const;
+    // Passive owner identities may be captured before source entry. Each actual
+    // lookup validates the explicitly admitted Parent actor. Returned objects
+    // retain their actual native owner/callback lifetime, not a new raw lease.
+    OperationStorageResolver& storage_resolver()const noexcept;
+    DispatcherOperationResolver& dispatcher_resolver()const noexcept;
+    std::size_t registry_capacity()const;
+    // Exact mode-authoritative mutable row, including the intentional Posted
+    // reservation overlaid by OwnedAccept. Concurrent address never relocates.
+    DispatcherOperationBinding& packet_binding(OperationStorage&);
+    // One stable external pointer field per live storage row. Its owner must
+    // unregister before destroying that field; projection/free also clear it.
+    void bind_external_packet(OperationStorage&,DispatcherOperationBinding*&);
+    void unbind_external_packet(DispatcherOperationBinding*&);
     IoMemoryHandle handle_for(const OperationStorage&)const;
     IoMemoryHandle handle_for(const OVERLAPPED*)const;
     IoMemoryHandle handle_for(const CancelOperation*)const;

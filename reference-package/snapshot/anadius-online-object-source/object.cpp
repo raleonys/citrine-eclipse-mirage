@@ -2,6 +2,8 @@
 #include "../anadius-online-version-source/version.hpp"
 #include <cstring>
 #include <stdexcept>
+#include <cstdlib>
+#include <limits>
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
@@ -24,7 +26,7 @@ Procedure Binding::resolve_factory(Module module,const std::function<Procedure()
     Error error;std::shared_ptr<void> retired;
     if(!lower)throw std::invalid_argument("Explicit online factory lookup required");
     {std::lock_guard lock(gate_);
-     if(active_||poisoned_||object_||object_unknown_||!module||module!=module_)throw std::logic_error("Factory lookup requires exact quiescent loaded module");
+     if(active_||queries_||poisoned_||object_||object_unknown_||!module||module!=module_)throw std::logic_error("Factory lookup requires exact quiescent loaded module");
      active_=true;factory_=0;retired=std::move(factory_code_);}
     bool lookup_returned=false;
     try{
@@ -39,7 +41,7 @@ Procedure Binding::resolve_factory(Module module,const std::function<Procedure()
 Object Binding::create(Procedure procedure,const char16_t* cookie){
     Error error;online_object::FactoryFunction function;
     {std::lock_guard lock(gate_);
-     if(active_||poisoned_||object_||object_unknown_||!module_||!procedure||procedure!=factory_||!factory_code_)
+     if(active_||queries_||poisoned_||object_||object_unknown_||!module_||!procedure||procedure!=factory_||!factory_code_)
          throw std::logic_error("Factory call requires exact resolved export and no prior object");
      if(!cookie)throw online_recovered::OutOfEvidenceInput("Factory cookie must be readable NUL UTF16");
      active_=true;object_unknown_=true;function=reinterpret_cast<online_object::FactoryFunction>(factory_);}
@@ -52,7 +54,7 @@ Object Binding::create(Procedure procedure,const char16_t* cookie){
 void Binding::destroy(Object object){
     Error error;
     {std::lock_guard lock(gate_);
-     if(active_||poisoned_||object_unknown_||!module_||!object||object!=object_||!factory_code_)
+     if(active_||queries_||poisoned_||object_unknown_||!module_||!object||object!=object_||!factory_code_)
          throw std::logic_error("Destroy requires exact adopted live object");
      active_=true;object_unknown_=true;}
     bool invoked=false;
@@ -64,9 +66,11 @@ void Binding::destroy(Object object){
 }
 void Binding::begin_object(Object object){
     Error error;std::lock_guard lock(gate_);
-    if(active_||poisoned_||object_unknown_||!module_||!object||object!=object_||!factory_code_)
+    if(active_||poisoned_||object_unknown_||!module_||!object||object!=object_||!factory_code_||
+       (query_policy_==QueryPolicy::Serialized&&queries_))
         throw std::logic_error("Foreign query requires exact adopted live object");
-    active_=true;
+    if(queries_==std::numeric_limits<std::size_t>::max())throw std::length_error("Online query counter overflow");
+    ++queries_;
 }
-void Binding::end_object()noexcept{Error error;std::lock_guard lock(gate_);active_=false;}
+void Binding::end_object()noexcept{Error error;std::lock_guard lock(gate_);if(!queries_)std::abort();--queries_;}
 }

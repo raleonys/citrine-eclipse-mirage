@@ -24,6 +24,10 @@ JoinApi native_join_api() noexcept;
 // its original detached handle; only a duplicated join handle is retained here.
 // Lifecycle/destruction belongs to one control thread. Creation may overlap
 // draining; a reserved, not-yet-returned create prevents a successful drain.
+// Once an unknown create/duplicate/wait/close outcome poisons this adapter, new
+// create requests reject before reserving a ticket or invoking the lower. Work
+// already reserved before poison remains owned and may still complete create.
+// A known null create result removes its ticket and does not close admission.
 class TrackingThreads final:public threads_recovered::Effects {
 public:
     TrackingThreads(threads_recovered::Effects&,JoinApi);
@@ -34,7 +38,10 @@ public:
     // jobs still execute; this method only rejects NEW create requests. False
     // retains unjoined handles, so the backend/owner must remain alive. A
     // successful-create/duplicate failure, or an unknown lower-create exception
-    // outcome, permanently poisons safe quiescence.
+    // outcome, permanently poisons safe quiescence. A throwing wait/close also
+    // poisons: the duplicate may already be closed/reused, so its numeric value
+    // must not be retried. Known WAIT_TIMEOUT/WAIT_FAILED/close FALSE retain
+    // their existing retry behavior. Poison retains the owner; no drain proof.
     bool stop_and_join(std::uint32_t timeout_ms);
     std::size_t tracked_jobs() const;
     bool poisoned() const;

@@ -2,6 +2,7 @@
 #include "../anadius-socket-source/async_receive_test_fixture.hpp"
 #include "../anadius-thread-domain-source/domain_test_fixture.hpp"
 #include <iostream>
+#include <string_view>
 #include <thread>
 
 namespace {
@@ -100,7 +101,7 @@ struct Fixture {
     receive_test::Worker worker;receive_test::Errors errors;Effects effects;Table table;
     s::IoHandlerExecutor executor;s::WorkerThreadState thread{};s::WorkerTlsContext tls{nullptr,&thread,nullptr};
     explicit Fixture(std::size_t capacity=8):memory(root,capacity){auto operation=root->enter();pair=root->construct_session(pending.socket,{nullptr,::executor});}
-    s::IoCompletionEnvironment environment(){return {{index,memory.storage_bindings()},{&table,0x846e8,&executor,0x777}};}
+    s::IoCompletionEnvironment environment(){return {{index,memory.storage_bindings(),memory.storage_view()},{&table,0x846e8,&executor,0x777}};}
     s::IoHandlerEnvironment handler_environment(){return {{1,2},&table,0,0x846e8,&executor};}
     s::Buffer buffer(){s::resize_receive_buffer_010040(pair.object->input,3,'i',root->buffer_context());s::Buffer value;value.len=3;value.buf=reinterpret_cast<char*>(s::receive_buffer_address(pair.object->input));return value;}
     void receive_owner(s::AsyncReceiveOperation& op){pair.control->strong_08.fetch_add(1);pair.control->weak_0c.fetch_add(1);op.io.handler.control_a8=pair.control;op.io.handler.object_a0=reinterpret_cast<std::uintptr_t>(pair.object);op.io.weak_48=pair.control;op.io.environment_b0=handler_environment();}
@@ -113,9 +114,9 @@ struct Fixture {
         require(root->close()&&heap.root->provider_leases()==0,"session close drains dedicated real application-memory lease");
     }
 };
-void admission_and_fixed_views(){
+void admission_and_growing_views(){
     Fixture f(2);auto bindings=f.memory.storage_bindings();auto packets=f.memory.dispatcher_bindings();
-    require(bindings.size()==2&&packets.size()==2,"fixed-capacity bindings supplied before any allocation");
+    require(bindings.size()==2&&packets.size()==2,"initial binding capacity supplied before any allocation");
     rejects<std::logic_error>([&]{f.memory.allocate_04b0bc(73);},"foreign call without whole parent Operation rejected");
     {auto operation=f.root->enter();
      rejects<std::logic_error>([&]{f.root->acquire_provider_lease();},"controller provider lease cannot be acquired inside Operation");
@@ -123,11 +124,14 @@ void admission_and_fixed_views(){
      auto& first=s::allocate_cached_021820(0,nullptr,0x48,1,f.environment().storage,f.memory);
      auto& posted=f.memory.project_posted(first);auto h=f.memory.handle_for(first);
      require(first.identity==reinterpret_cast<std::uintptr_t>(first.bytes.data())&&first.bytes.size()==73,"owned raw operation identity is actual same-domain heap allocation");
-     require(f.memory.storage_bindings().data()==bindings.data()&&f.memory.dispatcher_bindings().data()==packets.data(),"borrowed copied spans never relocate");
+     require(f.memory.storage_bindings().data()==bindings.data()&&f.memory.dispatcher_bindings().data()==packets.data(),"tables retain their initial addresses until growth is required");
      require(packets[h.slot].operation==&posted.operation&&packets[h.slot].overlapped_identity==&posted.operation.overlapped&&reinterpret_cast<std::uintptr_t>(&posted.operation.overlapped)!=first.identity,"SDK uses separate typed OVERLAPPED, never guessed native raw overlay");
-     auto& second=f.memory.allocate_04b0bc(73);auto allocations=f.heap.observed.allocations;
-     rejects<std::bad_alloc>([&]{f.memory.allocate_04b0bc(73);},"fixed metadata capacity fails before native allocation");
-     require(allocations==f.heap.observed.allocations&&f.memory.snapshot().phase==s::IoMemoryPhase::Open,"capacity failure is effect-free and leaves admission open");
+     auto& second=f.memory.allocate_04b0bc(73);const auto copied=f.environment();
+     auto& third=f.memory.allocate_04b0bc(73);auto allocations=f.heap.observed.allocations;
+     bindings=f.memory.storage_bindings();packets=f.memory.dispatcher_bindings();
+     require(bindings.size()==4&&packets.size()==4&&copied.storage.current_storage().data()==bindings.data()&&copied.storage.current_storage().size()==4,"A pre-growth environment copy follows the current owner view after initial2 grows to4");
+     require(packets[h.slot].operation==&posted.operation&&bindings[h.slot].storage==&first&&f.memory.handle_for(first)==h,"Growth preserves old storage, projection and generation identities");
+     f.memory.free_04b788(third);
      s::OperationStorage forged{first.identity,first.bytes};rejects<std::invalid_argument>([&]{f.memory.free_04b788(forged);},"forged descriptor cannot free owned raw allocation");
      const auto span=first.bytes;first.bytes=first.bytes.first(72);
      rejects<std::invalid_argument>([&]{f.memory.free_04b788(first);},"altered public span cannot change original raw-allocation ledger");first.bytes=span;
@@ -139,6 +143,53 @@ void admission_and_fixed_views(){
      rejects<std::invalid_argument>([&]{f.memory.kind(h);},"freed generation rejects stale explicit controller handle");
      auto& replacement=f.memory.allocate_04b0bc(73);f.memory.project_posted(replacement);auto fresh=f.memory.handle_for(replacement);
      require(fresh.slot==h.slot&&fresh.generation>h.generation,"slot reuse gets a new generation regardless of allocator address reuse");f.memory.free_04b788(replacement);
+    }f.finish();
+}
+void exact_owner_resolvers(){
+    Fixture f(1);auto* storage_owner=&f.memory.storage_resolver();auto* packet_owner=&f.memory.dispatcher_resolver();
+    require(f.memory.registry_capacity()==1&&storage_owner==&f.memory.storage_resolver()&&packet_owner==&f.memory.dispatcher_resolver(),"Typed resolver identities and current capacity remain passive owner observations");
+    s::OperationStorage* found=nullptr;
+    rejects<std::logic_error>([&]{storage_owner->lookup_storage(1,found);},"A ready Domain PTD alone cannot use the IO owner resolver without explicit Parent Operation");
+    {auto operation=f.root->enter();
+     auto& first=f.memory.allocate_04b0bc(73);auto& posted=f.memory.project_posted(first);auto handle=f.memory.handle_for(first);
+     s::PostedEnvironment copied{f.index,{},nullptr,storage_owner};
+     require(copied.lookup_storage(first.identity,found)==s::MemoryLookup::Found&&found==&first,"Copied environment resolves the actual descriptor through its exact IO owner");
+     auto* actual=&f.memory.packet_binding(first);s::DispatcherOperationBinding* packet=nullptr;
+     require(packet_owner->lookup_operation(&posted.operation.overlapped,packet)==s::MemoryLookup::Found&&packet==actual&&actual==&f.memory.dispatcher_bindings()[handle.slot],"Serialized packet lookup preserves the actual public legacy packet row");
+     require(packet_owner->lookup_operation(&posted.operation,packet)==s::MemoryLookup::Found&&packet==actual,"Typed CancelOperation lookup names the same actual current packet");
+     auto& second=f.memory.allocate_04b0bc(73);require(f.memory.registry_capacity()==2,"Capacity observation follows the actual grown registry instead of its initial setting");
+     require(copied.lookup_storage(first.identity,found)==s::MemoryLookup::Found&&found==&first&&storage_owner==&f.memory.storage_resolver(),"Exact storage lookup survives initial-one owner-index replacement without a cached catalog span");
+     require(packet_owner->lookup_operation(&posted.operation.overlapped,packet)==s::MemoryLookup::Found&&packet==&f.memory.packet_binding(first)&&packet==&f.memory.dispatcher_bindings()[handle.slot],"Host growth keeps resolver access on the authoritative current legacy packet instead of a detached copy");
+     s::CancelOperation foreign{};auto* unchanged_packet=packet;
+     require(packet_owner->lookup_operation(&foreign,packet)==s::MemoryLookup::Miss&&packet==unchanged_packet,"Unknown actual operation misses without replacing the caller's packet output");
+     const auto old_identity=first.identity;f.memory.free_04b788(first);found=&second;
+     require(copied.lookup_storage(old_identity,found)==s::MemoryLookup::Miss&&found==&second,"Retired storage misses authoritatively and preserves a live unrelated output");
+     f.memory.free_04b788(second);
+    }f.finish();
+}
+void pending_loans_survive_growth(){
+    Fixture f(1);f.worker.tls=&f.tls;constexpr std::size_t held_io=70;
+    std::vector<s::OperationStorage*> extra;extra.reserve(held_io-2);
+    {auto operation=f.root->enter();const auto buffer=f.buffer();
+     auto& first=f.memory.allocate_04b0bc(225);auto& receive=f.memory.project_async_receive(first);f.receive_owner(receive);
+     receive_test::Receive receive_lower;s::PinnedAsyncReceiveApi receive_sdk(f.memory,receive_lower);auto receive_buffer=buffer;
+     (void)receive_sdk.receive(77,receive_buffer,0,receive.io.operation.overlapped);const auto first_handle=f.memory.handle_for(first);
+     const auto copied=f.environment();auto* const first_operation=&receive;auto* const first_overlapped=&receive.io.operation.overlapped;
+     receive.packet->transferred_14=27;
+     auto& second=f.memory.allocate_04b0bc(209);auto& send=f.memory.project_async_send(second);f.send_owner(send);
+     Send send_lower;s::PinnedAsyncSendApi send_sdk(f.memory,send_lower);auto send_buffer=buffer;
+     (void)send_sdk.send(77,send_buffer,0,send.io.operation.overlapped);const auto second_handle=f.memory.handle_for(second);auto* const second_operation=&send;
+     for(std::size_t i=2;i<held_io;++i){auto& storage=f.memory.allocate_04b0bc(73);f.memory.project_posted(storage);extra.push_back(&storage);}
+     const auto packets=f.memory.dispatcher_bindings();const auto storage=f.memory.storage_bindings();
+     require(storage.size()>=held_io&&copied.storage.current_storage().data()==storage.data()&&copied.storage.current_storage().size()==storage.size(),"A by-value environment captured at initial1 follows repeated table growth beyond64");
+     require(f.memory.snapshot().allocations==held_io&&f.memory.snapshot().pending==2&&f.root->snapshot().buffer_borrows==2&&f.pair.control->strong_08==5,"Seventy held records preserve both actual SDK buffer loans and independent strong pins");
+     require(&f.memory.receive_operation(first_handle)==first_operation&&&f.memory.send_operation(second_handle)==second_operation&&&receive.io.operation.overlapped==first_overlapped&&f.memory.handle_for(first)==first_handle&&f.memory.handle_for(second)==second_handle,"Growth keeps old typed operations, OVERLAPPED addresses and generations stable");
+     require(receive.packet==&packets[first_handle.slot]&&send.packet==&packets[second_handle.slot]&&receive.packet->transferred_14==27&&packets[first_handle.slot].operation==&receive.io.operation&&packets[second_handle.slot].operation==&send.io.operation,"Both live packet pointers and copied packet contents follow each table replacement");
+     for(auto* value:extra)f.memory.free_04b788(*value);
+     f.memory.complete_receive(first_handle,1,{},3,copied,f.worker,f.errors,f.effects);
+     f.memory.complete_send(second_handle,1,{},3,copied,f.worker,f.errors,f.effects);
+     require(!f.memory.snapshot().pending&&!f.root->snapshot().buffer_borrows&&f.pair.control->strong_08==1&&f.effects.receives==1&&f.effects.sends==1,"Old receive/send completions through the copied environment consume each loan and source pin once after growth");
+     f.drain_terminal_cache();require(!f.memory.snapshot().allocations,"Actual terminal caches and remaining grown records all drain");
     }f.finish();
 }
 void receive_send_and_cross_kind_cache(){
@@ -244,14 +295,28 @@ void cross_thread_metadata_unpin(){
     require(!f.memory.close()&&!f.root->close(),"unknown outcome never pretends to drain or close");
     std::cout<<"retained unknown SDK child verified\n"<<std::flush;std::_Exit(0);
 }
-void child_check(){
+[[noreturn]]void retained_consumed_pin_child(){
+    Fixture f;auto operation=f.root->enter();auto buffer=f.buffer();auto& storage=s::allocate_io_storage_0269b0(0xe0,f.environment().storage,f.worker,f.memory);auto& recv=f.memory.project_async_receive(storage);f.receive_owner(recv);
+    receive_test::Receive lower;s::PinnedAsyncReceiveApi sdk(f.memory,lower);
+    (void)sdk.receive(77,buffer,0,recv.io.operation.overlapped);const auto handle=f.memory.handle_for(storage);auto* packet=recv.packet;
+    require(f.memory.snapshot().pending==1&&f.root->snapshot().buffer_borrows==1&&f.pair.control->strong_08==3,"Actual pending receive begins with native handler owner plus independent SDK strong/range pins");
+    // Deliberate isolated invalid-prefix input: the source consumed ownership
+    // that terminal observation is required to validate before forgetting it.
+    f.pair.control->strong_08=1;
+    rejects<std::logic_error>([&]{f.memory.complete_receive(handle,1,{},3,f.environment(),f.worker,f.errors,f.effects);},"Consumed source strong guard rejects terminal observation before native callback");
+    require(f.memory.snapshot().phase==s::IoMemoryPhase::Poisoned&&f.memory.snapshot().allocations==1&&f.memory.snapshot().pending==1&&f.root->snapshot().buffer_borrows==1,"Failed terminal strong guard retains exact pending record and actual range pin rather than unwinding a stack lease");
+    require(packet&&recv.packet==packet&&packet->operation==&recv.io.operation&&packet->overlapped_identity==&recv.io.operation.overlapped&&f.pair.control->strong_08==1&&!f.effects.receives&&!f.table.moves&&!f.table.destroys,"Rejected observation retains live public packet/projection and performs no strong decrement, environment move or callback");
+    require(!f.memory.close()&&!f.root->close(),"Invalid consumed-strong prefix cannot pretend to drain either owner");
+    std::cout<<"retained consumed source strong child verified\n"<<std::flush;std::_Exit(0);
+}
+void child_check(const wchar_t* mode=L"--unknown-sdk"){
     std::array<wchar_t,32768> executable{};if(!::GetModuleFileNameW(nullptr,executable.data(),static_cast<DWORD>(executable.size())))unused();
-    std::wstring command=L"\""+std::wstring(executable.data())+L"\" --unknown-sdk";STARTUPINFOW startup{};startup.cb=sizeof(startup);PROCESS_INFORMATION process{};
+    std::wstring command=L"\""+std::wstring(executable.data())+L"\" "+mode;STARTUPINFOW startup{};startup.cb=sizeof(startup);PROCESS_INFORMATION process{};
     if(!::CreateProcessW(executable.data(),command.data(),nullptr,nullptr,FALSE,CREATE_NO_WINDOW,nullptr,nullptr,&startup,&process))unused();
     auto waited=::WaitForSingleObject(process.hProcess,30000);DWORD code=99;if(waited!=WAIT_OBJECT_0)::TerminateProcess(process.hProcess,98);else ::GetExitCodeProcess(process.hProcess,&code);
-    ::CloseHandle(process.hThread);::CloseHandle(process.hProcess);require(waited==WAIT_OBJECT_0&&code==0,"own child proves conservative unknown SDK retention without executing DLL target");
+    ::CloseHandle(process.hThread);::CloseHandle(process.hProcess);require(waited==WAIT_OBJECT_0&&code==0,"own child reaches exact retained SDK/consumed-strong prefix assertions without executing DLL target");
 }
 } // namespace
-int main(int argc,char**){try{if(argc==2)retained_child();admission_and_fixed_views();receive_send_and_cross_kind_cache();owned_handler_and_response();failed_arm_and_exact_ranges();cross_thread_metadata_unpin();child_check();
+int main(int argc,char** argv){try{if(argc==2){if(std::string_view(argv[1])=="--unknown-sdk")retained_child();else if(std::string_view(argv[1])=="--consumed-strong")retained_consumed_pin_child();else return 2;}admission_and_growing_views();exact_owner_resolvers();pending_loans_survive_growth();receive_send_and_cross_kind_cache();owned_handler_and_response();failed_arm_and_exact_ranges();cross_thread_metadata_unpin();child_check();child_check(L"--consumed-strong");
     std::cout<<"PASS: "<<checks<<" owned IO memory controls\n";return 0;
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"Unexpected owned IO failure\n";return 1;}}

@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/b22_provider_audit",
+  "result": "STATIC_PASS_NO_REMAINING_REQUIRED_ISSUE",
+  "scope": "Five current C++ source/header files; source-only independent inspection, no compilation or execution proof.",
+  "reviewed_source_hashes": {
+    "anadius-owned-environment-source/environment.hpp": "cbb3048100274a1710b458ea5f1aa8a73528a8cd9cccd6510db2134c5cac887f",
+    "anadius-owned-environment-source/environment.cpp": "fe8b080bc5b0eae4a58f7afd158cbeb86b2a21f1767664c015de044899648c18",
+    "anadius-owned-environment-source/environment_tests.cpp": "570631227d1e8b4628c214f59a64326fa677e6b5fa95f8c5529986c333574cf8",
+    "anadius-session-profile-source/profile.hpp": "fadd20ddd646faad188ee18820296ac9a80ef5b6bb1490e23547f345b8f8f4ae",
+    "anadius-session-profile-source/profile.cpp": "9b38e5810b8728add201915eed8e30f6b016c69d18395fa020fd2c5f891b785e"
+  },
+  "findings": [
+    "Exact Origin plus epoch rejects other sessions and preexisting same-Origin aliases; only protected source capability and newly scoped temporary rows are usable. Protected source move/destroy is denied.",
+    "Scope close requires no active/probing call and zero epoch temporaries before/after target retirement; full protected source is revalidated including native partial move fields.",
+    "JobPermit/Parent validation and opaque checkpoints execute outside Control gate; registry-to-Control lock order remains unchanged.",
+    "Call pins selected shared JobState. Close refuses active/probing before clearing target; destructor invalidation/poison preserves executing callback through Call pin.",
+    "Profile clone uses heap captures, exact handoff claim and child Parent active pin; invokes existing023dd0 clone/query/destroy only. No message/job completion or strong release.",
+    "Original-worker lineage scenario is invoked by test main; no positive prepared Profile/child Environment test source or runtime validation exists."
+  ],
+  "required_issue_fixed": "Reject scoped temporary rows before successful scope unpublish; otherwise stack-backed projection metadata could survive as original-worker rows.",
+  "edits_by_reviewer": false,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

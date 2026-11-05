@@ -7,13 +7,11 @@ void destroy(ReceiveBufferString& value,FrameReadContext& context){
     const auto capacity=value.capacity_18;if(capacity<=15)return;
     auto bytes=capacity+std::uint64_t{1};auto address=receive_buffer_address(value);
     if(bytes>=4096){
-        bytes+=39;std::uintptr_t base=0;bool found=false;
-        for(const auto& item:context.allocation_headers){
-            if(item.address!=address-std::uintptr_t{8})continue;
-            if(found)throw UnsupportedInput("Owned response allocation header is ambiguous");
-            found=true;base=item.allocation_base;
-        }
-        if(!found)throw UnsupportedInput("Owned response allocation header is unbound");
+        bytes+=39;std::uintptr_t base=0;
+        const auto match=lookup_allocation_header(address-std::uintptr_t{8},context.allocation_headers,
+            context.allocation_header_resolver,base);
+        if(match==MemoryLookup::Ambiguous)throw UnsupportedInput("Owned response allocation header is ambiguous");
+        if(match!=MemoryLookup::Found)throw UnsupportedInput("Owned response allocation header is unbound");
         if(address-base-std::uintptr_t{8}>31)context.api.invalid_parameter_05c974();
         address=base;
     }

@@ -1,10 +1,15 @@
 #include "factory.hpp"
+#include "../anadius-bootstrap-providers-source/native_threads.hpp"
 #include <stdexcept>
 #include <system_error>
 #include <type_traits>
 
 namespace anadius::bootstrap_runtime {
 namespace {
+std::shared_ptr<thread_domain::DomainStorage> runtime_domain(const bootstrap_backend::Resources& resources)noexcept{
+    const auto* threads=dynamic_cast<const bootstrap_providers::NativeThreads*>(resources.threads.get());
+    return threads?threads->memory_domain():nullptr;
+}
 std::int64_t execution_frequency(ExecutionApi api){
     LARGE_INTEGER value{};
     if(!api.frequency(&value))throw std::system_error(static_cast<int>(::GetLastError()),std::system_category(),"QueryPerformanceFrequency");
@@ -61,8 +66,8 @@ struct Prepared {
 };
 Prepared prepare(bootstrap_backend::Resources& resources,CallbackRegistry& registry,SelectedDefaults& selected){
     Prepared prepared{nullptr,bootstrap_backend::take_resources(resources)};auto& r=prepared.resources;
-    if((static_cast<bool>(r.remaining)==static_cast<bool>(r.remaining_factory))||!r.stop_sources)
-        throw std::invalid_argument("Exactly one remaining Services/factory and external admission stopper required");
+    if((static_cast<bool>(r.remaining)==static_cast<bool>(r.remaining_factory))||!bootstrap_backend::lifetime_configuration_valid(r))
+        throw std::invalid_argument("Exactly one remaining Services/factory and selected lifetime configuration required");
     if(!r.files){r.files=std::make_unique<file_recovered::NativeFactory>();selected.files=true;}
     if(!r.input){r.input=std::make_unique<startup_recovered::NativeInputPlatform>();selected.input=true;}
     if(!r.library_os){r.library_os=std::make_unique<recovered::libraries::NativeSystemCalls>();selected.library_os=true;}
@@ -79,11 +84,13 @@ Prepared prepare(bootstrap_backend::Resources& resources,CallbackRegistry& regis
         selected.execution=true;
     }
     if(empty(r.join_api)){r.join_api=bootstrap_backend::native_join_api();selected.thread_join=true;}
-    auto external=std::move(r.stop_sources);
-    r.stop_sources=[external=std::move(external),&registry]() mutable {
-        if(!external())return false;
-        return registry.pause_admission();
-    };
+    if(r.stop_sources){
+        auto external=std::move(r.stop_sources);
+        r.stop_sources=[external=std::move(external),&registry]() mutable {
+            if(!external())return false;
+            return registry.pause_admission();
+        };
+    }
     return prepared;
 }
 class ClosingBackend final:public bootstrap_owner::ProviderOwner {
@@ -120,7 +127,7 @@ public:
 }
 Runtime::Runtime(bootstrap_owner::InitialState initial,bootstrap_backend::RuntimeSeed seed,
     bootstrap_backend::Resources resources,bootstrap_native_recovered::Errors& errors,HostApi host)
-    :registry_(host),owner_(std::make_unique<bootstrap_owner::RuntimeOwner>(std::move(initial),
+    :domain_(runtime_domain(resources)),registry_(host),owner_(std::make_unique<bootstrap_owner::RuntimeOwner>(std::move(initial),
         std::make_unique<ClosingBackend>(std::move(seed),prepare(resources,registry_,selected_),registry_),errors)){}
 Runtime::~Runtime() noexcept=default;
 void Runtime::publish(){owner_->publish();}

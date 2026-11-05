@@ -1,0 +1,68 @@
+{
+  "schema": "selected-owner-scoped-runtime-integration.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "SELECTED_PROVIDER_ASSEMBLY_AND_REAL_SCOPED_RUNTIME_SCENARIO_SOURCE",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Typed ONE-owned-Environment dependency preserves existing Profile lifecycle; actual Prepared/NativeThreads/Runtime two-Scope tracked-family projection/prepare/drop/physical-reap scenario authored, not executed. No fake NativeJobs work or production Concurrent opt-in.",
+  "sources": [
+    {
+      "path": "anadius-session-profile-source/profile.hpp",
+      "before": "before/anadius-session-profile-source__profile.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.cpp",
+      "before": "before/anadius-session-profile-source__profile.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-profile-source/profile_tests.cpp",
+      "before": "before/anadius-session-profile-source__profile_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-application-graph-source/graph.hpp",
+      "before": "before/anadius-application-graph-source__graph.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-application-graph-source/graph.cpp",
+      "before": "before/anadius-application-graph-source__graph.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-application-graph-source/graph_integration_tests.cpp",
+      "before": "before/anadius-application-graph-source__graph_integration_tests.cpp",
+      "role": "test"
+    }
+  ],
+  "reviews": [
+    "scoped-runtime-independent-review.md",
+    "root-six-file-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "selected-owner-implementation.md",
+    "scoped-runtime-test-implementation.md"
+  ],
+  "native_replies": [],
+  "supplementary": [
+    "outputs/anadius-owned-environment-source/prepare40-caller-ownership-20261105/evidence.json",
+    "outputs/anadius-owned-environment-source/prepare40-caller-ownership-20261105/remaining-integration.json",
+    "outputs/anadius-owned-environment-source/prepare40-caller-ownership-20261105/native-evidence-index.json",
+    "outputs/anadius-owned-environment-source/prepare40-caller-ownership-20261105/next-selected-environment-injection-plan.md",
+    "outputs/anadius-session-policy-source/per-call-work-release-20261105/evidence.json"
+  ],
+  "limits": [
+    "Four production/two test sources statically reviewed, no compiler/project tests/link/DLL execution/ZIP. Actual-component dependency composition is authored source, not observed runtime PASS.",
+    "This is source assembly/integration using already retained REA/Ghidra addressed prepare/family/work-drop/stop evidence; no new native instruction query or recovered-function credit is attributed to this stage.",
+    "Supplied fresh provider is one explicit object in existing owned lifecycle, with no getter/new Root/Policy wrapper or substitute Runtime capability. One instance binds one Profile/Graph; configuration Fresh is not an exclusive reservation and retained pointer grants no actor or lifecycle permission.",
+    "Actual two-Scope mode uses real Parent memory offers/child permits/native/FLS wrappers, one actual selected Environment and actual Policy/Runtime work capability, but scripted SDK IO. Manual Scope actors are not NativeJobs frame-message coverage; no fake count/pin/permit or reset.",
+    "A hold is after real nonfinal N-to-Nminus1 before Blaunch; Breal58/copy/move/prepare40/drop/close/offerreturn/nativeFLSreap and Rootoriginal progress are source assertions. A resumes against current actual count, drains before EOF/typed995 normal cleanup. No runtime result is claimed without explicitly authorized rebuild.",
+    "Returned-child-old1, child response20/88/completeIO/scheduling/Worker/dispatcher/shared/accept/packet/fullnative028d30-021770 tail remain open; production Parent stays Serialized.",
+    "Original binary and historical build/link/DLL/ZIP remain unchanged. Explicit consistent rebuild required. No total percentage from file counts."
+  ],
+  "completed_note": "SOURCE_ONLY ONEselectedownedEnvironmentDI preservedexistinglifecycle in4productionfiles;2testfiles author exactselectedconstructorandactualtwoScopePrepared/NativeThreads/Runtime trackedprojection/prepare/workdrop/BFLSreap/Rootprogress/naturaldrain assertionsNOTRUN.",
+  "observation": "REA/Ghidra original native ordering/work drop evidence retained from prior focused stages; this source-composition stage introduces no new native query/function credit. Source/test/independent agents plus Root inspect SAMEselectedowner, realoffers/permits, nofakework, heldconsumeddrop/Bphysicalreap and normalSDKsource drain. No execution.",
+  "next_scope": "Author and independently audit naturally established Returned-child-old1 using existing real native stop helper/lower selected SDK/Policy with real pending IO drain and original post-run lifetime; no false controller Stop drain proof. Then implement actual response20/88 preparation/actor seams from fresh021420 evidence, and remaining childIO/scheduling/shared/accept/packet/fullnative tail. Production Serialized, explicit rebuild still required."
+}

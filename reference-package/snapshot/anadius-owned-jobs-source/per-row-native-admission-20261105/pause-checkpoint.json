@@ -1,0 +1,61 @@
+{
+  "status": "PAUSED_BY_EXPLICIT_USER_REQUEST_IN_PROGRESS_STAGE",
+  "at": "2026-11-05T02:03:28.328677+00:00",
+  "reason_tr": "Kullanici bugunluk durmamizi istedi. Alt ajanlar durduruldu; yeni uygulama calismasi yapilmayacak.",
+  "last_recorded_checkpoint": "outputs/anadius-session-profile-source/per-job-call-records-20261105/evidence.json",
+  "current_stage_recorded": false,
+  "source_snapshot_at_pause": [
+    {
+      "path": "anadius-owned-jobs-source/jobs.hpp",
+      "before_sha256": "a2a1f920550b3d9ef9112aa0e312733c8430dc1617141082595e2bfbf944743d",
+      "current_sha256": "a2a1f920550b3d9ef9112aa0e312733c8430dc1617141082595e2bfbf944743d",
+      "changed": false
+    },
+    {
+      "path": "anadius-owned-jobs-source/jobs.cpp",
+      "before_sha256": "8973b5c6b1346fce65fcbf417f5b011919abc9f4bfd3cc9673a692552da3bfbf",
+      "current_sha256": "8973b5c6b1346fce65fcbf417f5b011919abc9f4bfd3cc9673a692552da3bfbf",
+      "changed": false
+    },
+    {
+      "path": "anadius-owned-jobs-source/jobs_tests.cpp",
+      "before_sha256": "976ba611904a257e38c7b6f41607fc4ee4d014d8eeee4673430e7c07df4aeba3",
+      "current_sha256": "976ba611904a257e38c7b6f41607fc4ee4d014d8eeee4673430e7c07df4aeba3",
+      "changed": false
+    },
+    {
+      "path": "anadius-owned-jobs-source/jobs_integration_tests.cpp",
+      "before_sha256": "32e1b3d74cece5a1062de4d55773ce96807177fe09f1e6515c4be57a159565a6",
+      "current_sha256": "32e1b3d74cece5a1062de4d55773ce96807177fe09f1e6515c4be57a159565a6",
+      "changed": false
+    },
+    {
+      "path": "anadius-application-graph-source/graph_integration_tests.cpp",
+      "before_sha256": "b80e0d82a7ee1c2a09f2ecd588148f7891d04936b9b7dd0f702ed757e1088354",
+      "current_sha256": "566def697caa323a7556c193816d6fd594011d003e0ea27ac41d81a153f98985",
+      "changed": true
+    },
+    {
+      "path": "anadius-session-memory-source/memory.hpp",
+      "before_sha256": "32e37805f2b01e992b4607a25bdff114dcac3f71d43280c3b48ffaed21dcdc19",
+      "current_sha256": "32e37805f2b01e992b4607a25bdff114dcac3f71d43280c3b48ffaed21dcdc19",
+      "changed": false
+    },
+    {
+      "path": "anadius-session-memory-source/memory.cpp",
+      "before_sha256": "84cb386fa4f0093c431376bf14e292e379c19777ec2f9d51577e6a7769987276",
+      "current_sha256": "84cb386fa4f0093c431376bf14e292e379c19777ec2f9d51577e6a7769987276",
+      "changed": false
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "before_sha256": "931b2f1218829c58858916451e8740b80273a6309715e97a35523cba6a5ecc31",
+      "current_sha256": "931b2f1218829c58858916451e8740b80273a6309715e97a35523cba6a5ecc31",
+      "changed": false
+    }
+  ],
+  "rea_evidence_saved_and_session_closed": true,
+  "original_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "build_tests_link_dll_execution_zip_update": false,
+  "next_resume_note": "Revalidate current source before edits. NativeJobs2 author and Graph fixture author interrupted. Root Parent busy-aware Serialized reap change was only designed, NOT implemented yet; before Memory2/handoff snapshots exist. Preserve original-worker proof before busy0; own Operation must reject; existing Parent serial_gate try_lock for Serialized, no metadata gate across SDK. No all-sibling-FLS barrier."
+}

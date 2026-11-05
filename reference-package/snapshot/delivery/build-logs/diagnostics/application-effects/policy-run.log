@@ -1,0 +1,5 @@
+DIAG Worker cause: selected partial composition
+DIAG Worker cause: Effect composition returned incomplete owned providers
+DIAG Worker cause: selected unknown foreign auth outcome
+DIAG Worker non-std exception
+PASS: 65 application-effects checks; actual one-worker/six-request pipeline and 4 isolated retained prefixes

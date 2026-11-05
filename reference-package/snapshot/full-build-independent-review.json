@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T18:38:41.991969+00:00",
+  "reviewer": "/root/b22_provider_audit",
+  "archive_sha256": "4b98177c7f7d827994e209fe75a918d9c54f25194c4adf19d9d419bdf061f0fe",
+  "archive_bytes": 214377900,
+  "objects_verified": 296,
+  "archive_object_payloads_verified": {
+    "anadius_core_partial": 288,
+    "preloader_core_partial": 3,
+    "hook_engine_compat": 5
+  },
+  "normal_groups": 356,
+  "framework_terminal_cases": 19,
+  "source_hashes_verified": 1017,
+  "manifested_file_hashes_verified": 4265,
+  "unique_safe_zip_entries": 4266,
+  "fresh_artifact_members_verified": 729,
+  "exact_canonical_build_membership_verified": true,
+  "stale_binary_trees_absent": true,
+  "sole_DLL": "source-workspace/build/owned_reference_fixture.dll",
+  "production_DLL_readiness": "BLOCKED",
+  "undefined_hooks": [
+    "require_loader_attach_runtime",
+    "require_loader_detach_quiescence"
+  ],
+  "reviewer_build_or_execution": false,
+  "reviewer_target_access": false
+}

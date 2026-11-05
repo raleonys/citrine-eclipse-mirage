@@ -1,0 +1,77 @@
+[
+  {
+    "Role": "reviewed production integration",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.cpp",
+    "Sha256": "c85991c0e7515cc6250cf721f811fbb8403be7c68392576fbf82768547e4918e"
+  },
+  {
+    "Role": "reviewed production integration",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.hpp",
+    "Sha256": "270b9ea85daee64225f18106e2df54833902ed19ea2f0fef9ea587ec8546a29e"
+  },
+  {
+    "Role": "reviewed production integration",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.cpp",
+    "Sha256": "8f649acdd515ac92869a92bad574cfdc856942e8ff93ebb014f727f83ba8abc5"
+  },
+  {
+    "Role": "reviewed production integration",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.hpp",
+    "Sha256": "54b3305fe5002a841cdbc251bdbd4a1cf0ef45d9a6902a05487cc8bb3f3c125c"
+  },
+  {
+    "Role": "supporting source inspected",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\original_effects.cpp",
+    "Sha256": "2f8ec2eae9ce6463eed8871a8f5f01660c806744a94a22fbcd392b329496a898"
+  },
+  {
+    "Role": "supporting source inspected",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-original-checkpoint-source\\checkpoint.hpp",
+    "Sha256": "9c5c09e8bffec21826adb0f2d9a0240a403510c09f58978cba7bdfffac18ee57"
+  },
+  {
+    "Role": "supporting source inspected",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-original-checkpoint-source\\checkpoint.cpp",
+    "Sha256": "3d6fef228c9b824fa658547a8a204149c60b9d3d5263ebe745322982a81842a9"
+  },
+  {
+    "Role": "supporting source inspected",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-original-provider-source\\originals.cpp",
+    "Sha256": "794aca9eed3c31ab9dbe06a2b1df968bc690c99177003c3f6e8db9cc99be0339"
+  },
+  {
+    "Role": "supporting source inspected",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-callback-policy-source\\policy.cpp",
+    "Sha256": "74c88a3d3d592f325b025b6f0b400c826e89ac0a42082885ad0a93f3cc980c69"
+  },
+  {
+    "Role": "supporting source inspected",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-callback-policy-source\\policy.hpp",
+    "Sha256": "c8e811e3e489e1b6b328dc8f1faf82880fff788487fea8f737a0ecaa0eaef119"
+  },
+  {
+    "Role": "supporting source inspected",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-registry-source\\abi_cells.hpp",
+    "Sha256": "4fd3d0a6169f8feb22d60f982b94194c3d4b47f2eee1478444e3767070a92351"
+  },
+  {
+    "Role": "supporting source inspected",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-host-callbacks-source\\callbacks.hpp",
+    "Sha256": "1fc379d622ae3480bd9d441f181454703735bacb7832f80206bf79d0d863f0bf"
+  },
+  {
+    "Role": "supporting source inspected",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-registry-source\\registry.hpp",
+    "Sha256": "f3393a359bbafe7feef5725aae73967f18e65814cafd0726792b51fbe5716d34"
+  },
+  {
+    "Role": "supporting source inspected",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-host-platform-source\\assembly.cpp",
+    "Sha256": "6b13a4b41309f68dcf9f4423aac3807bc9c019005c48551535e9e2c2fa12fd07"
+  },
+  {
+    "Role": "supporting source inspected",
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-thread-domain-source\\domain.cpp",
+    "Sha256": "31a36ff7c7e65a909e4e5a712113d67a565b6418edb50a4a38c02aa4ac4e04a5"
+  }
+]

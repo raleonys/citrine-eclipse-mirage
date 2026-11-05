@@ -1,0 +1,178 @@
+{
+  "status": "FRESH_SELECTED_INSTRUCTIONS_WITH_EXPLICIT_RETAINED_FULL_BODY_CONTEXT",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "readiness_projection": {
+    "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/readiness-projection.json",
+    "sha256": "d81e8869214b6b3dc2171a8a0fe39e75c8b64a651d518677fc4f12bcd566fa31"
+  },
+  "open_reply": {
+    "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/open-binary.json",
+    "sha256": "2d889844cbfd5387f02194503ddcd9e9657f0c9eb1520103668d2e686d10f456"
+  },
+  "fresh_records": [
+    {
+      "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/instruction-180033d7c.json",
+      "sha256": "0c2cc9e334aa932a9c3cf36ef0ee94013fa7365319879f34de3004dd5d86e0c7",
+      "evidence_id": "ev_add581ca0206ee6b09ae36e139f17ad3e821008827500a73fea3bba9e6371655",
+      "address": "0x180033d7c",
+      "instruction": "SUB RSP,0x3d0",
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically.",
+        "Operand components are Ghidra Listing decoder tokens; effective memory base/index/displacement roles and per-instruction context mode are unavailable. The mode field is the program language variant."
+      ]
+    },
+    {
+      "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/instruction-180033db0.json",
+      "sha256": "5a2478095cef2f88efbe6daf2364d2b2d584d2ec26965a3dc6cb32a1d13cd536",
+      "evidence_id": "ev_8646c691288d877d7485ba60e6a23e5cf5ce4fc4d90d0d04d81fc5ef533fe0a1",
+      "address": "0x180033db0",
+      "instruction": "LEA RCX,[RSP + 0x70]",
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically.",
+        "Operand components are Ghidra Listing decoder tokens; effective memory base/index/displacement roles and per-instruction context mode are unavailable. The mode field is the program language variant."
+      ]
+    },
+    {
+      "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/instruction-180033dbe.json",
+      "sha256": "cac2db64aab91b8fe7739651529ad6e7dbde8185252ac11053ea37725b26fbe5",
+      "evidence_id": "ev_895dccc1d33e7001e6110427903ecfe2a4a2518e59c64a56236a55a1037c00f4",
+      "address": "0x180033dbe",
+      "instruction": "MOVUPS xmmword ptr [RSP + 0x380],XMM0",
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically.",
+        "Operand components are Ghidra Listing decoder tokens; effective memory base/index/displacement roles and per-instruction context mode are unavailable. The mode field is the program language variant."
+      ]
+    },
+    {
+      "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/instruction-1800340bf.json",
+      "sha256": "79339b81963347a2687bd69f435196e5ffe2a1aad3e3b428be9b2ff2fc5ee4e4",
+      "evidence_id": "ev_d3ab0d6371f8f03acde91cb41b740a97af7dadcb5ebf36ad0b707982316c5ce1",
+      "address": "0x1800340bf",
+      "instruction": "LEA R8,[RSP + 0x70]",
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically.",
+        "Operand components are Ghidra Listing decoder tokens; effective memory base/index/displacement roles and per-instruction context mode are unavailable. The mode field is the program language variant."
+      ]
+    },
+    {
+      "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/instruction-1800340c7.json",
+      "sha256": "6ba6ce1ebed8e4656a01d6aac5e0bef4cd49a51b8607cd6dbf9439413fe6f162",
+      "evidence_id": "ev_0657c9cf5afd11ac541618302d9e1c7e56fb43c70ef4d5e28b627535db30029e",
+      "address": "0x1800340c7",
+      "instruction": "LEA RCX,[RSP + 0x3a0]",
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically.",
+        "Operand components are Ghidra Listing decoder tokens; effective memory base/index/displacement roles and per-instruction context mode are unavailable. The mode field is the program language variant."
+      ]
+    },
+    {
+      "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/instruction-1800340cf.json",
+      "sha256": "52f150dc91cab73d44f43eb8f195e11bad0e9f4565b3a405d3e21771c1d162f9",
+      "evidence_id": "ev_3e45ee6a934d0854fd3b74bdd57381c71c1895e49283d2ea05ce6771c3646154",
+      "address": "0x1800340cf",
+      "instruction": "CALL 0x180032d00",
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically.",
+        "Operand components are Ghidra Listing decoder tokens; effective memory base/index/displacement roles and per-instruction context mode are unavailable. The mode field is the program language variant."
+      ]
+    },
+    {
+      "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/instruction-180034207.json",
+      "sha256": "f99834f721ff02f1fb1804f162fbf32e56464b69f5f7972ad3179ca376338dbc",
+      "evidence_id": "ev_c215c4d07679e9aee45c1d76029375cb2dadf81df9d28ff9ac1f3ee240b3a998",
+      "address": "0x180034207",
+      "instruction": "CMP byte ptr [R15 + 0xc4],0x0",
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically.",
+        "Operand components are Ghidra Listing decoder tokens; effective memory base/index/displacement roles and per-instruction context mode are unavailable. The mode field is the program language variant."
+      ]
+    },
+    {
+      "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/instruction-1800345c8.json",
+      "sha256": "b15c368975b91f4425a9da407e1f16b531ad945a25fe46519caba33ef85fc5dd",
+      "evidence_id": "ev_707e60fd6750b6379f8617246100a2b0fc9706c6ed637bbf40b2d10ed940b4fb",
+      "address": "0x1800345c8",
+      "instruction": "LEA RCX,[RSP + 0x380]",
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically.",
+        "Operand components are Ghidra Listing decoder tokens; effective memory base/index/displacement roles and per-instruction context mode are unavailable. The mode field is the program language variant."
+      ]
+    }
+  ],
+  "exported_bundle": {
+    "path": "outputs/anadius-native-profile-source/per-message-invocations-20261105/rea-evidence-bundle.json",
+    "sha256": "85e808b7bd73e758693cd1d53455b51a4ba82ef3304901e27a081f817a304df0"
+  },
+  "exported_records": 8,
+  "session_closed": true,
+  "original_hash_verified_after_close": true,
+  "retained_not_fresh": [
+    {
+      "path": "outputs/anadius-session-memory-source/handler-admission-overlap-20261105/caller-proof.md",
+      "sha256": "f4a590b9229b936d29528719132cbecfdc233305711cad90015409520d809a63"
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/handler-admission-overlap-20261105/retained-evidence-index.json",
+      "sha256": "8fe1eabdbad28d5fd42f358d5b7fec4c7ac89c14a53436fcde289b0664ee16fb"
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/handler-admission-overlap-20261105/retained-180033d70.assembly.txt",
+      "sha256": "786b66318efd9c0d4e96ad6bdd94201478fc885a81dcbfe4adb0a367ddfa538f"
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/handler-admission-overlap-20261105/retained-180033d70.pseudo.txt",
+      "sha256": "1e6d2e15fd7c8d347d767050457357f971fba5430a0b6db7f2e7ddf5080746d3"
+    }
+  ],
+  "compile": false,
+  "tests_run": false,
+  "runtime_observation": false
+}

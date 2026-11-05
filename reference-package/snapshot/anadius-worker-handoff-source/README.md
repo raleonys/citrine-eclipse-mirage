@@ -1,5 +1,13 @@
 # B47 — Controller sahipli bellek ve worker/join sınırı
 
+**Güncel kaynak adımı, henüz derlenmedi:** JobMemory/Parent izinlerine bağlı
+Deque ve Information senaryoları test kaynağına eklendi, çalıştırılmadı.
+Information senaryosu kontrollü saat/log, yanlış/süresi bitmiş izin ve yeniden
+giriş durumlarını tarif eder; tam Graph/Profile mesaj testi değildir. Mantıksal
+iade ile gerçek thread/FLS çıkışı ayrı izlenir. Ayrıntı:
+`../anadius-information-effects-source/job-information.md`. Aşağıdaki JobMemory/B47
+sonuçları önceki kaynak sürümünün tarihsel doğrulamasıdır.
+
 Bellek sağlayıcısı controller üzerinde hazırlanır ve son sahipliği orada kalır. Aynı Domain'in gerçek NativeThreads worker'ı, bu belleği yalnızca bir kez alabilen kullanım hakkıyla Graph/Policy/server kurar. Önceki aynı-thread API korunur. Parent erişimleri worker/thread/fiber/PTD kimliğini yeniden denetler; alias shared_ptr ile sole-owner kontrolü aşılmaz.
 
 Worker kaynakları açıkça drain edip kullanım hakkını iade eder. Controller, worker'ın bağımsız kopyalanmış gerçek thread handle'ını bekler; `Returned` durumu tek başına yeterli değildir. Thread ve FLS çıkışı tamamlandıktan sonra bellek sağlayıcısını controller bırakır. Timeout sahipliği korur; bilinmeyen veya terk edilen sonuç bileti zehirler. Graph/Policy/server referanslarının son yıkımı worker üzerinde, thread fonksiyonu dönmeden önce yapılmalıdır.

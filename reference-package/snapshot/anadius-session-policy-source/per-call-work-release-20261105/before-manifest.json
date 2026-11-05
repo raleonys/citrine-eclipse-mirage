@@ -1,0 +1,26 @@
+{
+  "status": "PRE_EDIT_SOURCE_SNAPSHOT",
+  "pending_source_count": 116,
+  "files": [
+    {
+      "path": "anadius-session-policy-source/policy.hpp",
+      "exists": true,
+      "sha256": "720a15b840365f5e87fe3cc7e0ae4e98b88df195dd5d1f078aea723eff854aea",
+      "before": "before/anadius-session-policy-source__policy.hpp"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.cpp",
+      "exists": true,
+      "sha256": "6338a6ecb4d7c3d736057da418a49fe18debb300ff58131ff85468248554be23",
+      "before": "before/anadius-session-policy-source__policy.cpp"
+    },
+    {
+      "path": "anadius-session-policy-source/policy_tests.cpp",
+      "exists": true,
+      "sha256": "8f68c316ad3b666472914e4eefc205c55bd03bb77d5069df8b85cc7c8ff0b0f1",
+      "before": "before/anadius-session-policy-source__policy_tests.cpp"
+    }
+  ],
+  "compile": false,
+  "tests_run": false
+}

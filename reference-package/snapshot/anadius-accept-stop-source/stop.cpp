@@ -45,7 +45,7 @@ struct Stop::Impl {
         ~Call(){std::lock_guard lock(v.gate);v.working=false;}
     };
     bool stopping(){std::lock_guard lock(gate);return phase==Phase::Requested||phase==Phase::Draining;}
-    bool session_io()const noexcept{return options.scope==Scope::SessionIo;}
+    bool session_io()const noexcept{return options.scope==Scope::SessionIo||options.scope==Scope::SessionIoPrepared;}
     static Loan convert(const s::AcceptLoan& l){return {Family::Accept,{l.handle.slot,l.handle.generation},l.submission,l.state,l.listener,l.overlapped,l.operation,l.pending,l.consumed};}
     static Loan convert(const s::IoLoan& l){
         const auto family=l.kind==s::IoMemoryKind::Receive?Family::Receive:l.kind==s::IoMemoryKind::Send?Family::Send:Family::Posted;
@@ -64,6 +64,16 @@ struct Stop::Impl {
         std::vector<Loan> out;out.reserve(options.capacity);
         for(const auto& l:accept->pending_loans())out.push_back(convert(l));
         if(session_io())for(const auto& l:view->io.pending_loans())out.push_back(convert(l));return out;
+    }
+    bool active_session_io(){
+        bool active=false;
+        for(const auto& loan:view->io.active_loans()){
+            if(loan.binding_valid){active=true;continue;}
+            if(loan.kind!=s::IoMemoryKind::Posted||!accept->contains(loan.binding_operation))throw std::logic_error("Unowned IO alias during prepared session drain");
+            const auto handle=accept->handle_for(loan.binding_overlapped);const auto actual=accept->loan(handle);
+            if(handle.slot!=loan.handle.slot||actual.operation!=loan.binding_operation||actual.overlapped!=loan.binding_overlapped)throw std::logic_error("Prepared drain accept alias differs from actual owner");
+        }
+        return active;
     }
     Loan current(const Loan& l){
         if(l.family==Family::Accept)return convert(accept->loan({l.handle.slot,l.handle.generation}));
@@ -85,7 +95,7 @@ struct Stop::Impl {
 Stop::Stop(std::unique_ptr<Impl> p)noexcept:impl_(std::move(p)){}
 std::shared_ptr<Stop> Stop::create(Options options){
     PreserveError error;const auto& i=options.imports;
-    if(!options.lifetime||!options.other_work_drained||!i.cancel||!i.post||!i.error||!options.capacity||options.capacity>65536||!options.post_drain_timeout_ms||options.post_drain_timeout_ms==INFINITE||(options.scope!=Scope::AcceptOnly&&options.scope!=Scope::SessionIo))
+    if(!options.lifetime||!options.other_work_drained||!i.cancel||!i.post||!i.error||!options.capacity||options.capacity>65536||!options.post_drain_timeout_ms||options.post_drain_timeout_ms==INFINITE||(options.scope!=Scope::AcceptOnly&&options.scope!=Scope::SessionIo&&options.scope!=Scope::SessionIoPrepared))
         throw std::invalid_argument("Owned other-work proof, native cancel/post imports, bounded capacity and finite timeout required");
     auto result=std::shared_ptr<Stop>(new Stop(nullptr));result->impl_=std::make_unique<Impl>(std::move(options));return result;
 }
@@ -126,11 +136,13 @@ Snapshot Stop::snapshot()const{
     if(v.route&&!v.route->drop)++receipts;
     return {v.phase,v.cancel_calls,v.not_found,v.kernel_packets,v.software_packets,v.acknowledged,receipts,v.active_posts};
 }
-void Stop::bind(o::ServerView view,s::OwnedAcceptMemory& accept){
+Scope Stop::scope()const noexcept{return impl_->options.scope;}
+void Stop::bind(o::ServerView view,s::OwnedAcceptMemory& accept,bool prepared_jobs_managed){
     PreserveError error;auto& v=*impl_;
     {std::lock_guard lock(v.gate);if(v.phase!=Phase::Fresh)throw std::logic_error("Stop binding admission is closed");}
+    if(v.options.scope==Scope::SessionIoPrepared&&!prepared_jobs_managed)throw std::invalid_argument("Prepared SessionIo requires exact Runtime prepared-job management");
     (void)view.memory.buffer_context();
-    if(!view.scheduler.completion.port||accept.storage_bindings().size()>v.options.capacity)throw std::invalid_argument("Accept stop requires matching live port and adequate receipt capacity");
+    if(!view.scheduler.completion.port||accept.storage_capacity()>v.options.capacity)throw std::invalid_argument("Accept stop requires matching live port and adequate receipt capacity");
     std::lock_guard lock(v.gate);if(v.phase!=Phase::Fresh)throw std::logic_error("Accept stop binds once");
     v.worker=::GetCurrentThreadId();v.fiber=::GetCurrentFiber();v.slot=view.memory.memory_domain_identity()->native_fls_index();v.ptd=::FlsGetValue(v.slot);
     if(!v.ptd||v.ptd==crt_ptd_recovered::construction_sentinel())throw std::logic_error("Accept stop requires an admitted Domain PTD");
@@ -228,11 +240,53 @@ void Stop::after(Receipt receipt){
         found->ack=true;++v.acknowledged;++v.route_epoch;v.route.reset();
     }catch(...){v.poison();throw;}
 }
+bool Stop::session_io_pending(){
+    PreserveError error;auto& v=*impl_;Impl::Call call(v);
+    try{
+        if(v.options.scope!=Scope::SessionIoPrepared)throw std::logic_error("Session drain query requires explicit prepared scope");
+        if(!v.stopping())return true; // independent stop proof has not been accepted
+        const bool loans=!v.pending().empty(),active=v.active_session_io();
+        std::lock_guard lock(v.gate);if(v.route)return true;
+        for(const auto& entry:v.entries)if(!entry.observed||!entry.ack)return true;
+        // Controller posts are drained separately by close_worker outside
+        // Parent; waiting for their metadata here could lose the only wake.
+        return loans||active;
+    }catch(...){v.poison();throw;}
+}
+bool Stop::source_quiescent(o::ServerView view){
+    PreserveError error;auto& v=*impl_;
+    // Identity errors by an unrelated actor cannot access or poison this
+    // worker's borrowed source graph. Same actor calls remain serialized.
+    v.identity();
+    try{
+        {
+            std::lock_guard lock(v.gate);
+            if(v.phase==Phase::Poisoned||v.phase==Phase::Closed||v.phase==Phase::Closing||v.phase==Phase::Retiring)
+                throw std::logic_error("Source drain requires a live known Stop binding");
+            if(!v.view)throw std::logic_error("Source drain requires the bound server");
+            const auto& own=*v.view;
+            if(view.identity.value!=own.identity.value||&view.backend!=&own.backend||&view.memory!=&own.memory||
+               &view.io!=&own.io||&view.scheduler!=&own.scheduler||&view.service!=&own.service||
+               &view.acceptor!=&own.acceptor||&view.pending!=&own.pending)
+                throw std::invalid_argument("Source drain proof belongs to another server");
+            if((v.phase!=Phase::Requested&&v.phase!=Phase::Draining)||v.working||v.control_busy||v.route||v.active_posts)return false;
+        }
+        // Enter only after releasing Stop metadata; this also rejects a caller
+        // holding Parent. No SDK cancellation, waits or opaque calls occur.
+        {auto operation=view.memory.enter();
+            if(!v.pending().empty()||(v.options.scope==Scope::SessionIoPrepared&&v.active_session_io()))return false;
+        }
+        std::lock_guard lock(v.gate);
+        if((v.phase!=Phase::Requested&&v.phase!=Phase::Draining)||v.working||v.control_busy||v.route||v.active_posts)return false;
+        for(const auto& entry:v.entries)if(!entry.observed||!entry.ack)return false;
+        return true;
+    }catch(...){v.poison();throw;}
+}
 bool Stop::close_worker(){
     PreserveError error;auto& v=*impl_;
     {std::lock_guard lock(v.gate);if(v.phase==Phase::Closed)return true;if((v.phase!=Phase::Draining&&v.phase!=Phase::Requested)||v.working||v.route)return false;}
     v.identity();
-    {auto operation=v.view->memory.enter();if(!v.pending().empty())return false;}
+    {auto operation=v.view->memory.enter();if(!v.pending().empty()||(v.options.scope==Scope::SessionIoPrepared&&v.active_session_io()))return false;}
     std::unique_lock lock(v.gate);if((v.phase!=Phase::Draining&&v.phase!=Phase::Requested)||v.working||v.route)return false;
     for(const auto& e:v.entries)if(!e.observed||!e.ack)return false;
     v.phase=Phase::Closing;

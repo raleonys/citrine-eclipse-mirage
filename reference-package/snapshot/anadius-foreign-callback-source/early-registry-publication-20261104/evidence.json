@@ -1,0 +1,137 @@
+{
+  "schema": "early-registry-publication.v1",
+  "recorded_at": "2026-11-04T15:27:33.731755+00:00",
+  "client_date": "2026-11-04",
+  "status": "TEST_SOURCE_ADDED_STATIC_REVIEWED_NOT_RUN",
+  "scope": "Fresh native/source audit confirms existing per-hook early general registry admission. Synthetic actual-host-enable typed callback integration source added; no production readiness change.",
+  "fresh_REA_evidence": [
+    {
+      "path": "outputs/anadius-foreign-callback-source/early-registry-publication-20261104/instructions-18000e310.json",
+      "sha256": "52a8faf073e1d86d8c5f1b41c66416f1144e45cdf4795675c86dff84bad06017",
+      "evidence_id": "ev_fa256b914785b5eedb0db071f842e42fdfc23c16a613912089bd9f674ebdb8c5",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x18000e310"
+      }
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/early-registry-publication-20261104/instructions-18000f120.json",
+      "sha256": "680e102c648c3692f963f6477b800199a8f8e77e0f87f7b309a7c1ddba650ef8",
+      "evidence_id": "ev_db4128db9201224935f547f3afcabc9ce1e363e50ef58cf9c717e929236254b0",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x18000f120"
+      }
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/early-registry-publication-20261104/instructions-18000f800.json",
+      "sha256": "39f21080e9318c107372a4cc7f552a8ff869c9dc3ffdc139453069951fdcfe43",
+      "evidence_id": "ev_5bc8e3f46648e5c4684b4bd1726110badbb537e4e3c67e85801dbdbac1794501",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x18000f800"
+      }
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/early-registry-publication-20261104/instructions-1800466e0.json",
+      "sha256": "acd2ad66ad7834037fe44f8de2ee39987840407b288e8295662a710baf8e1f92",
+      "evidence_id": "ev_86f1d6b71200947ea7cddef1898368f16e3eac5e0be746eb83b33d948e989499",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x1800466e0"
+      }
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/early-registry-publication-20261104/instructions-180046970.json",
+      "sha256": "a4c337901e06453a15dd18e640bc4efce1675146e461da5d56d996c8018a35b2",
+      "evidence_id": "ev_beeb8128f316431bd556828710758f20c06609d5f889eba7649a8d49de6938a5",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x180046970"
+      }
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/early-registry-publication-20261104/instructions-180046a10.json",
+      "sha256": "1defa829cff843b4bf4cea0813aef0ec0e5ceb39d20848ff3c6467d698dab1e3",
+      "evidence_id": "ev_a7541a2c706f642c5beb8d222e55e62c4de6fa76d495f6c2adf88fab21744ad1",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x180046a10"
+      }
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/early-registry-publication-20261104/pseudo-18000f120.json",
+      "sha256": "fe5cf16c03bc3332c898cc659eca726dac4b0d797ac01b069dc6f15571d2f125",
+      "evidence_id": "ev_928ee479fb797262656ce46e39529a44d68b07810d77ed469c0b92697ecce742",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x18000f120"
+      }
+    }
+  ],
+  "report": {
+    "path": "outputs/anadius-foreign-callback-source/early-registry-publication-20261104/native-audit.md",
+    "sha256": "0667d9ab45bd1d2fc701f009a6438ea86aea02e8247b3ab40c8cc5b20f8490ab"
+  },
+  "independent_static_review": {
+    "path": "outputs/anadius-foreign-callback-source/early-registry-publication-20261104/review.md",
+    "sha256": "d626793b75d31e5a885eb23c33815950c9a8a6a81f6120e766bc5f1f542fe9df"
+  },
+  "pending_source_count": 2,
+  "pending_sources": [
+    {
+      "path": "anadius-registry-source/registry.cpp",
+      "build_sha256": "757e2ffb52077852d9ca509635a10bc5191f2176f6d05a1dd8c88131965680f5",
+      "current_sha256": "be3a6151a754397231909e4fea9f2ade1e5e3512c3a48fabcb67f12da3701176"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "build_sha256": "8125d09a886ad080e79f13fb31ee85f9260bfad311b980dc2202d06a8179446d",
+      "current_sha256": "247c7838c29b3b1790b327653bb8ffbc2d3f3a89ccebddbac118d11ff7b913c1"
+    }
+  ],
+  "current_stage_changed_sources": [
+    "anadius-resources-factory-source/factory_tests.cpp"
+  ],
+  "production_cpp_changed_this_stage": false,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "DLL_executed": false,
+  "ZIP_updated": false,
+  "native_session_closed": true,
+  "original_unchanged": true,
+  "frozen_build_and_delivery": [
+    {
+      "path": "outputs/source-workspace/build-record.json",
+      "sha256": "b9b5bd714c6b5744f379961b6ad60e7eb037a00c1677723bf7bcea6a664d4573"
+    },
+    {
+      "path": "outputs/source-workspace/source-snapshot.json",
+      "sha256": "b7362cf518727f6fc997bfc1377bc4d83e2751903ead78cf376251cb0bf87e6d"
+    },
+    {
+      "path": "outputs/source-workspace/full-build-verification.json",
+      "sha256": "6cbded372c77eeb2a35b332dbe75fbc9bc6cfbd24da3b967bfaa03b124087e12"
+    },
+    {
+      "path": "outputs/dll-link-gate-source/current-full-link.json",
+      "sha256": "70d9d9dcbaed784530bee67928fe0ebbe27dbe931b07219545cd6988f50e4755"
+    },
+    {
+      "path": "outputs/package-receipt.json",
+      "sha256": "35ca916ac996decc75abc35e6ebe0d7c6e33db9d1ffc9860693d27d176d3bd32"
+    },
+    {
+      "path": "outputs/dll-link-gate-source/build-current-full/anadius64.reconstruction.dll",
+      "sha256": "44bc309127e7cec7db7ed5c62ff6664a22e257b4edf3ed977a0fa8fa109b290b"
+    },
+    {
+      "path": "outputs/dll-reverse-engineering.zip",
+      "sha256": "790b71bbf92d02ff05a391d2985fdab4eaad3ab72f34de29ea51e79be13b267c"
+    }
+  ],
+  "overall_completion_percentage": null,
+  "new_normal_native_body_recoveries": 0,
+  "native_ABI_closures": 0
+}

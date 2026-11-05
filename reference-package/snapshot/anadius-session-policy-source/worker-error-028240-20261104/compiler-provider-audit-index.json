@@ -1,0 +1,45 @@
+{
+  "schema": "current-compiler-system-message-gap.v1",
+  "recorded_at": "2026-11-04T19:49:25.893271+00:00",
+  "kind": "READ_ONLY_PRIMARY_ARTIFACT_REVIEW",
+  "result": "CURRENT_COMPILER_SYSTEM_CATEGORY_MESSAGE_NOT_EQUIVALENT_TO_NATIVE_020950",
+  "reports": [
+    {
+      "path": "outputs/anadius-session-policy-source/worker-error-028240-20261104/compiler-provider-review/findings.md",
+      "sha256": "4430e2c1a7df7e08d093b0702b14cb80b6fd0b0f1fd5bb65b6f77cbb67f1487a"
+    },
+    {
+      "path": "outputs/anadius-session-policy-source/worker-error-028240-20261104/compiler-provider-review/manifest.json",
+      "sha256": "894975d14f41298b2072eec9c65b9249dfebbd7b5dd326a56c96949692311ce4"
+    }
+  ],
+  "native_comparison": [
+    {
+      "path": "outputs/anadius-session-policy-source/worker-error-028240-20261104/native-findings.md",
+      "sha256": "04a9bd35b1d1835dbf793a39f0d6aa3859994fb57ab9b9d53b042dd97a1128b0"
+    },
+    {
+      "path": "outputs/anadius-session-policy-source/system-message-020950-20261104/evidence.json",
+      "sha256": "16f469d357d18644c1b0fdb6e270749731e15f00a14899d23ec38c259c8c895e"
+    }
+  ],
+  "historical_archive_hash_known": false,
+  "current_archive_sha256": "7951a18341870b622e67bea17bed9cd953d827cc7fbd0b521f01944f1ac7d22c",
+  "verified_differences": [
+    "FormatMessageA language0 instead of native0x400",
+    "Repeated LF/CR/space trimming instead of at most oneLF thenoneCR",
+    "Counted copy instead of subsequent first-NUL scan",
+    "Unknown error fallback instead of asio.system error"
+  ],
+  "agreed_composition": "For selected nonzero error, supplied prefix then colon-space then one category.message result; inherited what returns stored diagnostic.",
+  "next_action": "Design and bind exact native system message provider for both original and child terminal paths, preserving catch/code value and retaining category/import/failure-state lifetime coherently. No duplicate formatting, ambient current category or category identity lifetime hacks.",
+  "pending_source_count": 55,
+  "source_changes": [],
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "full_native_what_equivalence": false,
+  "continuous_goal_active": true
+}

@@ -3,6 +3,48 @@
 
 namespace anadius::socket_recovered {
 struct IoHandlerEnvironment;
+struct IoHandlerSentinels;
+struct IoPrepareScratch;
+using IoPrepareFunction=void(*)(IoHandlerEnvironment& destination,std::uintptr_t query,IoPrepareScratch&);
+// HOST-only synchronous preparation authority. It is separate from deferred
+// task contexts and grants no handler/response publication permission.
+class IoEnvironmentPrepareOperations {
+public:
+    virtual ~IoEnvironmentPrepareOperations()=default;
+    virtual std::uintptr_t query_slot_18(IoHandlerEnvironment&)=0;
+    virtual void construct_slot_40(IoPrepareFunction cached,IoHandlerEnvironment&,std::uintptr_t,IoPrepareScratch&)=0;
+    virtual IoHandlerEnvironment& move_023cb0(IoHandlerEnvironment&,IoHandlerEnvironment&,IoHandlerSentinels)=0;
+    virtual void destroy_slot_00(IoHandlerEnvironment&)=0;
+};
+class IoEnvironmentPrepareBody {
+public:
+    virtual ~IoEnvironmentPrepareBody()=default;
+    // Address only before admission; never inspect unspecified output fields.
+    virtual IoHandlerEnvironment& temporary()noexcept=0;
+    virtual IoHandlerEnvironment& run(IoEnvironmentPrepareOperations* admitted)=0;
+};
+class IoEnvironmentPreparation {
+public:
+    virtual ~IoEnvironmentPreparation()=default;
+    virtual IoHandlerEnvironment& prepare(IoHandlerEnvironment&,IoHandlerEnvironment&,
+        const IoHandlerSentinels&,IoEnvironmentPrepareBody&)=0;
+};
+class IoEnvironmentMoveSlot {
+public:
+    virtual ~IoEnvironmentMoveSlot()=default;
+    virtual void move_slot_10(IoHandlerEnvironment&,IoHandlerEnvironment&)=0;
+};
+using IoEnvironmentCopyFunction=void(*)(IoHandlerEnvironment&,IoHandlerEnvironment&);
+class IoEnvironmentCopySlot {
+public:
+    virtual ~IoEnvironmentCopySlot()=default;
+    virtual void copy_slot_08(IoEnvironmentCopyFunction cached,IoHandlerEnvironment&,IoHandlerEnvironment&)=0;
+};
+class IoEnvironmentCopyBody {
+public:
+    virtual ~IoEnvironmentCopyBody()=default;
+    virtual IoHandlerEnvironment& run(IoEnvironmentCopySlot* admitted_slot)=0;
+};
 class IoHandlerVtable {
 public:
     explicit IoHandlerVtable(std::uintptr_t destroy_identity):destroy_identity(destroy_identity){}
@@ -12,11 +54,22 @@ public:
     virtual void destroy_slot_00(IoHandlerEnvironment&)=0;
     virtual void move_slot_10(IoHandlerEnvironment& destination,IoHandlerEnvironment& source)=0;
     virtual std::uintptr_t query_slot_18(IoHandlerEnvironment&)=0;
+    // Optional HOST ownership hook, not an additional recovered native slot.
+    // An owning provider claims the whole move before native prefix writes,
+    // then invokes the same helper with a private, already-admitted slot bridge.
+    virtual bool try_move_environment_023cb0(IoHandlerEnvironment&,IoHandlerEnvironment&,const IoHandlerSentinels&){return false;}
+    // The actual028d30 caller owns lookup AFTER prefix writes and the final
+    // live executor load. An owning HOST provider reserves the whole operation
+    // and invokes this stack body with its explicit already-admitted slot.
+    virtual bool try_copy_environment_028d30(IoHandlerEnvironment&,IoHandlerEnvironment&,IoEnvironmentCopyBody&){return false;}
+    // Reserve source/output/actual temporary before executor cache or query.
+    // This is a HOST owning-provider hook, not a recovered native table slot.
+    virtual bool try_prepare_environment_40(IoHandlerEnvironment&,IoHandlerEnvironment&,
+        const IoHandlerSentinels&,IoEnvironmentPrepareBody&){return false;}
 };
 // Native caches the actual slot40 FUNCTION before the query callback. That
 // function receives destination/query/tag; there is no executor-this argument.
 struct IoPrepareScratch {}; // native uninitialized scratch contents are not projected
-using IoPrepareFunction=void(*)(IoHandlerEnvironment& destination,std::uintptr_t query,IoPrepareScratch&);
 struct IoHandlerExecutor {IoPrepareFunction prepare_slot_40=nullptr;};
 // Typed defined-field projection, not native polymorphic storage or a C++ ABI.
 // move_slot_10 owns the payload00/state18 transfer; move023cb0 does not zero it.
@@ -95,7 +148,13 @@ public:
     virtual void schedule_send_0229d0(IoHandlerEnvironment&,SendHandler&)=0;
     virtual void schedule_receive_022c60(IoHandlerEnvironment&,ReceiveHandler&)=0;
 };
-IoHandlerEnvironment& move_io_environment_023cb0(IoHandlerEnvironment&,IoHandlerEnvironment&,IoHandlerSentinels);
+IoHandlerEnvironment& move_io_environment_023cb0(IoHandlerEnvironment&,IoHandlerEnvironment&,IoHandlerSentinels,
+    IoEnvironmentMoveSlot* admitted_slot=nullptr);
+// Shared native send0229d0/receive027710 preparation segment only. The explicit
+// call is selected BEFORE any source field access and borrowed synchronously.
+// Neither it nor the stack body is installed in a deferred task context.
+IoHandlerEnvironment& prepare_io_environment_40(IoHandlerEnvironment&,IoHandlerEnvironment&,IoHandlerSentinels,
+    IoEnvironmentPreparation* explicit_call=nullptr);
 void release_io_storage_026a00(OperationStorage&,std::uint64_t size,PostedEnvironment,WorkerRunApi&,PostedMemoryEffects&);
 void cleanup_receive_0293f0(IoCleanupFrame<ReceiveIoOperation>&,IoCompletionEnvironment,WorkerRunApi&,PostedMemoryEffects&);
 void cleanup_send_0294c0(IoCleanupFrame<SendIoOperation>&,IoCompletionEnvironment,WorkerRunApi&,PostedMemoryEffects&);

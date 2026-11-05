@@ -1,0 +1,75 @@
+(anonymous namespace)::unused()
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\application-graph-parallel/graph-tests-unused-diagnostic.cpp:37:63
+
+(anonymous namespace)::prepared_profile_parallel()::$_0::operator()() const::'lambda'(anadius::session_profile::Application&)::operator()(anadius::session_profile::Application&) const
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\application-graph-parallel/graph-tests-unused-diagnostic.cpp:0:95
+std::__1::__invoke_result_impl<void, (anonymous namespace)::prepared_profile_parallel()::$_0::operator()() const::'lambda'(anadius::session_profile::Application&)&, anadius::session_profile::Application&>::type std::__1::__invoke[abi:nqe230104]<(anonymous namespace)::prepared_profile_parallel()::$_0::operator()() const::'lambda'(anadius::session_profile::Application&)&, anadius::session_profile::Application&>((anonymous namespace)::prepared_profile_parallel()::$_0::operator()() const::'lambda'(anadius::session_profile::Application&)&, anadius::session_profile::Application&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__type_traits/invoke.h:90:27
+void std::__1::__invoke_void_return_wrapper<void, true>::__call[abi:nqe230104]<(anonymous namespace)::prepared_profile_parallel()::$_0::operator()() const::'lambda'(anadius::session_profile::Application&)&, anadius::session_profile::Application&>((anonymous namespace)::prepared_profile_parallel()::$_0::operator()() const::'lambda'(anadius::session_profile::Application&)&, anadius::session_profile::Application&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__type_traits/invoke.h:350:5
+void std::__1::__invoke_r[abi:nqe230104]<void, (anonymous namespace)::prepared_profile_parallel()::$_0::operator()() const::'lambda'(anadius::session_profile::Application&)&, anadius::session_profile::Application&>((anonymous namespace)::prepared_profile_parallel()::$_0::operator()() const::'lambda'(anadius::session_profile::Application&)&, anadius::session_profile::Application&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__type_traits/invoke.h:356:10
+std::__1::__function::__func<(anonymous namespace)::prepared_profile_parallel()::$_0::operator()() const::'lambda'(anadius::session_profile::Application&), void (anadius::session_profile::Application&)>::operator()[abi:nqe230104](anadius::session_profile::Application&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__functional/function.h:177:12
+
+anadius::session_policy::Policy::after_completion(anadius::session_profile::Application&)
+??:0:0
+
+anadius::session_profile::Application::after_completion()
+??:0:0
+
+anadius::server_runtime::Runtime::run(anadius::owned_server::ServerView&, anadius::owned_server::AdmittedDispatcherApi&)::Router::complete(anadius::socket_recovered::IocpSchedulerEntry*, anadius::socket_recovered::CancelOperation&, anadius::socket_recovered::Error const&, unsigned int)
+??:0:0
+
+anadius::socket_recovered::dispatch_completion_027c10(anadius::socket_recovered::DispatcherState&, unsigned int, anadius::socket_recovered::WorkerThreadState&, anadius::socket_recovered::WorkerRunResult&, anadius::socket_recovered::DispatcherEnvironment, anadius::socket_recovered::DispatcherApi&, anadius::socket_recovered::DispatcherEffects&, anadius::socket_recovered::WorkerRunApi&, anadius::socket_recovered::Api&, anadius::socket_recovered::WorkerRunEffects&)
+??:0:0
+
+anadius::socket_recovered::RecoveredDispatcherWorkerEffects::dispatch_027c10(anadius::socket_recovered::IocpSchedulerEntry&, unsigned int, anadius::socket_recovered::WorkerThreadState&, anadius::socket_recovered::WorkerRunResult&)
+??:0:0
+
+anadius::socket_recovered::run_worker_0298b0(anadius::socket_recovered::IocpSchedulerEntry&, anadius::socket_recovered::WorkerRunResult&, anadius::socket_recovered::WorkerRunEnvironment, anadius::socket_recovered::WorkerRunApi&, anadius::socket_recovered::Api&, anadius::socket_recovered::WorkerRunEffects&)
+??:0:0
+
+anadius::server_runtime::Runtime::run(anadius::owned_server::ServerView&, anadius::owned_server::AdmittedDispatcherApi&)
+??:0:0
+
+anadius::owned_server::OwnedServerBackend::run_context_0298b0()
+??:0:0
+
+std::__1::__invoke_result_impl<void, anadius::application_graph::Graph::Impl::Server::run_context_0298b0()::'lambda'()>::type anadius::application_graph::Graph::Impl::Server::invoke<anadius::application_graph::Graph::Impl::Server::run_context_0298b0()::'lambda'()>(anadius::application_graph::Graph::Impl::Server::run_context_0298b0()::'lambda'()&&, bool)
+??:0:0
+
+anadius::application_graph::Graph::Impl::Server::run_context_0298b0()
+??:0:0
+
+anadius::server_recovered::server_start_029ea0(anadius::server_recovered::ServerBackend&, unsigned short&, unsigned char&, anadius::execution_recovered::Execution&)
+??:0:0
+
+std::__1::shared_ptr<anadius::application_graph::Graph>::operator->[abi:nqe230104]() const
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__memory/shared_ptr.h:531:12
+(anonymous namespace)::prepared_profile_parallel()::$_0::operator()() const
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\application-graph-parallel/graph-tests-unused-diagnostic.cpp:854:381
+std::__1::__invoke_result_impl<void, (anonymous namespace)::prepared_profile_parallel()::$_0&>::type std::__1::__invoke[abi:nqe230104]<(anonymous namespace)::prepared_profile_parallel()::$_0&>((anonymous namespace)::prepared_profile_parallel()::$_0&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__type_traits/invoke.h:90:27
+void std::__1::__invoke_void_return_wrapper<void, true>::__call[abi:nqe230104]<(anonymous namespace)::prepared_profile_parallel()::$_0&>((anonymous namespace)::prepared_profile_parallel()::$_0&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__type_traits/invoke.h:350:5
+void std::__1::__invoke_r[abi:nqe230104]<void, (anonymous namespace)::prepared_profile_parallel()::$_0&>((anonymous namespace)::prepared_profile_parallel()::$_0&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__type_traits/invoke.h:356:10
+std::__1::__function::__func<(anonymous namespace)::prepared_profile_parallel()::$_0, void ()>::operator()[abi:nqe230104]()
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__functional/function.h:177:12
+
+(anonymous namespace)::ParallelThread::entry(void*)
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\application-graph-parallel/graph-tests-unused-diagnostic.cpp:640:521
+
+anadius::threads_recovered::thread_entry_05e7a8(anadius::threads_recovered::Context*, anadius::threads_recovered::Effects&)
+??:0:0
+
+anadius::bootstrap_providers::NativeThreads::start(void*)
+??:0:0
+
+??
+??:0:0
+
+??
+??:0:0
+

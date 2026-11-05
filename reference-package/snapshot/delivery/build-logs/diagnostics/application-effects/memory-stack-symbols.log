@@ -1,0 +1,78 @@
+anadius::socket_recovered::SessionMemoryDomain::Impl::current_locked(unsigned long, void*, std::__1::unique_lock<std::__1::mutex>&) const
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\application-effects/memory-diagnostic.cpp:115:45
+
+std::__1::shared_ptr<anadius::socket_recovered::SessionMemoryDomain::ActorState>::shared_ptr[abi:nqe230104](std::__1::shared_ptr<anadius::socket_recovered::SessionMemoryDomain::ActorState>&&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__memory/shared_ptr.h:411:77
+std::__1::shared_ptr<anadius::socket_recovered::SessionMemoryDomain::ActorState>::operator=[abi:nqe230104](std::__1::shared_ptr<anadius::socket_recovered::SessionMemoryDomain::ActorState>&&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__memory/shared_ptr.h:471:5
+anadius::socket_recovered::SessionMemoryDomain::Impl::Access::Access(anadius::socket_recovered::SessionMemoryDomain::Impl&, bool, bool)
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\application-effects/memory-diagnostic.cpp:142:52
+
+anadius::socket_recovered::SessionMemoryDomain::buffer_context()
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\application-effects/memory-diagnostic.cpp:548:114
+
+anadius::socket_recovered::OwnedAcceptMemory::Impl::Access::Access(anadius::socket_recovered::OwnedAcceptMemory::Impl&)
+??:0:0
+
+anadius::socket_recovered::OwnedAcceptMemory::matches_storage(anadius::socket_recovered::PostedEnvironment const&)
+??:0:0
+
+anadius::session_policy::Policy::Impl::application(anadius::session_profile::Application&)
+??:0:0
+
+anadius::session_policy::Policy::external_quiescent(anadius::owned_server::ServerView, anadius::session_profile::Application&)
+??:0:0
+
+anadius::session_profile::Profile::external_quiescent(anadius::owned_server::ServerView, anadius::server_runtime::Application&)
+??:0:0
+
+anadius::server_runtime::Runtime::quiescent(anadius::owned_server::ServerView&)
+??:0:0
+
+anadius::owned_server::OwnedServerBackend::Impl::quiesce()
+??:0:0
+
+anadius::owned_server::OwnedServerBackend::destroy_pending_socket_024db0()
+??:0:0
+
+std::__1::__invoke_result_impl<void, anadius::application_graph::Graph::Impl::Server::destroy_pending_socket_024db0()::'lambda'()>::type anadius::application_graph::Graph::Impl::Server::invoke<anadius::application_graph::Graph::Impl::Server::destroy_pending_socket_024db0()::'lambda'()>(anadius::application_graph::Graph::Impl::Server::destroy_pending_socket_024db0()::'lambda'()&&, bool)
+??:0:0
+
+anadius::application_graph::Graph::Impl::Server::destroy_pending_socket_024db0()
+??:0:0
+
+anadius::application_worker::Worker::Impl::Proxy::destroy_pending_socket_024db0()
+??:0:0
+
+anadius::server_recovered::server_start_029ea0(anadius::server_recovered::ServerBackend&, unsigned short&, unsigned char&, anadius::execution_recovered::Execution&)
+??:0:0
+
+anadius::application_worker::Worker::run_server(unsigned short&, unsigned char&, anadius::execution_recovered::Execution&)
+??:0:0
+
+(anonymous namespace)::native_worker_pipeline()::$_0::operator()() const
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-application-effects-source/factory_tests.cpp:113:131
+std::__1::__invoke_result_impl<void, (anonymous namespace)::native_worker_pipeline()::$_0&>::type std::__1::__invoke[abi:nqe230104]<(anonymous namespace)::native_worker_pipeline()::$_0&>((anonymous namespace)::native_worker_pipeline()::$_0&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__type_traits/invoke.h:90:27
+void std::__1::__invoke_void_return_wrapper<void, true>::__call[abi:nqe230104]<(anonymous namespace)::native_worker_pipeline()::$_0&>((anonymous namespace)::native_worker_pipeline()::$_0&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__type_traits/invoke.h:350:5
+void std::__1::__invoke_r[abi:nqe230104]<void, (anonymous namespace)::native_worker_pipeline()::$_0&>((anonymous namespace)::native_worker_pipeline()::$_0&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__type_traits/invoke.h:356:10
+std::__1::__function::__func<(anonymous namespace)::native_worker_pipeline()::$_0, void ()>::operator()[abi:nqe230104]()
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__functional/function.h:177:12
+
+(anonymous namespace)::Task::run(void*)
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-application-effects-source/factory_tests.cpp:66:184
+
+anadius::threads_recovered::thread_entry_05e7a8(anadius::threads_recovered::Context*, anadius::threads_recovered::Effects&)
+??:0:0
+
+anadius::bootstrap_providers::NativeThreads::start(void*)
+??:0:0
+
+??
+??:0:0
+
+??
+??:0:0
+

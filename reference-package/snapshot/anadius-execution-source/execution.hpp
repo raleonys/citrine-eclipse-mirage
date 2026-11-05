@@ -35,6 +35,11 @@ struct Platform {
 };
 
 // 04a698 writes only these recovered fields, leaving unrelated bytes untouched.
+// Initialize before publication, never while a helper/owner is active. Live
+// lock/unlock owner access uses short-lived lock-free atomic_ref projections;
+// borrowers must not perform overlapping plain owner reads/writes. Type stays
+// fixed; count and protected state still require actual SRW ownership (or a
+// quiescent lifetime boundary). The raw field types/layout remain unchanged.
 void initialize_mutex_04a698(MutexState&, std::uint32_t observed_type);
 int lock_04a6ac(MutexState&, Platform&); // precisely the nullptr-deadline path
 int unlock_04a6b4(MutexState&, Platform&);
@@ -52,6 +57,9 @@ public:
     virtual ~Publication()=default;
     virtual void bind(const void* execution_identity,FlagReferences)=0;
     virtual void published(ReadyStage,const void* execution_identity) noexcept=0;
+    // Optional SOURCE payload before the real Server finish event. It does
+    // not replace the event or permit raw concurrent port-cell reads.
+    virtual void server_port_published(std::uint16_t,const void*) noexcept {}
 };
 
 // Neither construction nor any method invents/reset flags, mutex type or QPC
@@ -66,6 +74,9 @@ public:
     Execution(Execution&&)=delete;Execution& operator=(Execution&&)=delete;
 
     void finish_flag_036820(std::uint8_t& supplied_flag);
+    // Source composition of bound-port payload + the recovered flag routine.
+    // Not a separately recovered native function. First/server flag only.
+    void finish_server_startup(std::uint8_t& server_flag,std::uint16_t bound_port);
     void wait_steps_036880(std::int32_t count);
     std::int64_t now_nanoseconds_036740();
 

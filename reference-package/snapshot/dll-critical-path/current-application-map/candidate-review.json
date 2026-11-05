@@ -1,0 +1,48 @@
+{
+  "status": "MANUAL_RETAINED_SOURCE_REVIEW_NOT_RUNTIME_PROOF",
+  "reviewed_at": "2026-11-03T19:09:51.031757+00:00",
+  "functions": [
+    {
+      "address": "0x180028240",
+      "classification": "system_error_with_context_wrapper",
+      "source_scope": "Source throw counterparts exist. Audit typed category/context propagation before treating native EH as an application-code gap.",
+      "next_priority": true
+    },
+    {
+      "address": "0x1800285b0",
+      "classification": "misc_category_static_getter",
+      "source_scope": "Selected Policy category exists. Guard/TLS/vtable identity remains native ABI scope; message020a80 value discrepancy fixed separately."
+    },
+    {
+      "address": "0x18002b300",
+      "classification": "string_reserve_shrink_helper",
+      "source_scope": "STL string capacity/SSO/allocator helper; defer generic CRT/container byte equivalence."
+    },
+    {
+      "address": "0x180026860",
+      "classification": "bad_weak_ptr_throw_wrapper",
+      "source_scope": "Selected Policy throws std::bad_weak_ptr. Exact MSVC EH object/RTTI ABI remains unvalidated."
+    },
+    {
+      "address": "0x1800348d0",
+      "classification": "signed_decimal_to_string",
+      "source_scope": "Value helper used by existing source string formatting; native string/stack/cookie details are separate."
+    },
+    {
+      "address": "0x180028210",
+      "classification": "system_error_throw_wrapper",
+      "source_scope": "Throwing error projection exists. Exact native exception construction/unwind ABI not recovered by source mapping."
+    },
+    {
+      "address": "0x18002b600",
+      "classification": "ordered_tree_insert_hint",
+      "source_scope": "Comparator/tree/STL node helper; not a newly identified missing app request algorithm."
+    },
+    {
+      "address": "0x18002bcd0",
+      "classification": "NoResponseRequiredError_constructor",
+      "source_scope": "Semantic source NoResponseRequiredError exists; exact vftable/object ABI remains separate."
+    }
+  ],
+  "new_application_gap_selected": "0x180020a80"
+}

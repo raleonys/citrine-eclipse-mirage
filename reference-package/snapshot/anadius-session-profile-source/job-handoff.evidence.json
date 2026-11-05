@@ -1,0 +1,258 @@
+{
+  "schema": "profile-job-identity-handoff.source-only.v1",
+  "recorded_at": "2026-11-01T20:26:41.515635+00:00",
+  "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+  "authority": "Selected HOST nonexecuting job-authority binding. No new native function or execution proof.",
+  "user_execution_policy": "No compilation, tests, link or binary execution unless explicitly requested by user.",
+  "production_sources_changed_this_step": 2,
+  "test_sources_changed_not_run": 1,
+  "source_files_changed_this_step": [
+    "anadius-session-profile-source/profile.hpp",
+    "anadius-session-profile-source/profile.cpp",
+    "anadius-session-profile-source/profile_tests.cpp"
+  ],
+  "all_pending_sources_since_last_full_build": [
+    {
+      "path": "anadius-application-worker-source/worker.cpp",
+      "last_built_sha256": "a3502562d95b6f7d7d4182ac6c2f37f2ae64a19f448092d0fc2f31ab743572a9",
+      "current_sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "anadius-application-worker-source/worker.hpp",
+      "last_built_sha256": "923514f18bf5d32ecfa2487e982e571117d0809e0892f171803c06ae915408f1",
+      "current_sha256": "6cf84342444f3724c02dda3727d54569e7cf3fcecf3d972be71c65f48fb9aea5"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend_tests.cpp",
+      "last_built_sha256": "65005e8082e9fadfc06fb89a00539deda014ea710f00c3fadd0e718077410414",
+      "current_sha256": "8d653c11159bf39152d18a5709a0bc45bf5927ab267987016a181a978bf8c27c"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "last_built_sha256": "31fc08d0311ed281465d9ffe7e255581c6848a5f83c67f2b435e17084efc8573",
+      "current_sha256": "56ed1a15c770804607c3bf911a9401a6d18c5f03638eca0672e612444d43f973"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/tracked_threads.hpp",
+      "last_built_sha256": "414a94314cecedd2908a073a6206a0adfdb7847e80df75911d0ba29e792277a7",
+      "current_sha256": "1688b459b3585703989e902f1378609abcdc3d40a2296e7eddf58e0b117e086f"
+    },
+    {
+      "path": "anadius-bootstrap-providers-source/native_threads.hpp",
+      "last_built_sha256": "243bf515118b795e9bf8004d79f5b923bf40f0ad98ff7d68946ebe4fd264cac7",
+      "current_sha256": "b9f2cade216f3333614fb0d94ce25ca6e7a41a6c228f9bd38c4994eca41cfbfe"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.cpp",
+      "last_built_sha256": "be831aeeaf94ab99a75981613a124f522e9cffc8e35590c898ffc8e6af27dcca",
+      "current_sha256": "271861dbf9a661eee658ae4de200317010adbae341dbcb368305f3b2e0040435"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.hpp",
+      "last_built_sha256": "d55494573dc515eacdcf2197c5213d67893aecfb46466e835d07de4e3add99eb",
+      "current_sha256": "b6864109663f3b1894be37f1142b5a72802f66e4616379ed0d167770ce92b20d"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.cpp",
+      "last_built_sha256": "6db0b7461cae29db4ad1cb0a09eb02ef6426628b80d4ca1706acd9ca3a7363c2",
+      "current_sha256": "365d05409246c1e97c551590c1ddd0b907c7bf4f4b374ad0bd73eff5f509fd78"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.hpp",
+      "last_built_sha256": "c24b4a64d9be048f998531979fa7bba54173d51dc313c9359887daedd5811346",
+      "current_sha256": "e182db10c6487a270e2f040fdbcc144daff18790cc7e23270b69999a3e604fbd"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.cpp",
+      "last_built_sha256": "fed670a3e0937ff56cc0cf001d19873c5d068b546ddf8b7f7de7f878a1547849",
+      "current_sha256": "d3a5eb1687024a15aa7e031b4960aaa5d6e3ee6b7cc992f039fca367f068d85a"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.hpp",
+      "last_built_sha256": "e127429b9bebd195cc7cd6e1d1ef81743547a1602431b41baf98baf4e16734f8",
+      "current_sha256": "e3f55458b5943b0db9f7662b8b591bfb818923898cf4f9ab5a03c4756d79ffa4"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.cpp",
+      "last_built_sha256": "50193ac5c84e279207831100ae38bfa480626892cf237ddc401e7ca61eef1893",
+      "current_sha256": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.hpp",
+      "last_built_sha256": "865208b224507f1b708e0d7aea7bf3fff1433f9fe5d52260bcc0c1c6c4b136ca",
+      "current_sha256": "a9d1da810c6a94d4033cb9aa6973dfd9ccaf5f46e8b21f3173211129bf502ccb"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown_tests.cpp",
+      "last_built_sha256": "8f42a649fb93c1e74d477521f23ff5a702a63c54cc37a8cdb19ac85a768752bb",
+      "current_sha256": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "last_built_sha256": "dec7a66e5120e0c7064d95c53aa250d678160913486abf76409de08a4082d150",
+      "current_sha256": "a33af361f391a03658ccdcd9f16ee7474ca636bec48280309bf6f68bd29d26bb"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.hpp",
+      "last_built_sha256": "8b3afb7a69b6a7d99a992b3dbc767845a5dfef49784b0500f157d76c499e2704",
+      "current_sha256": "e3e7fef3dea236a09225b19bc4ed6e92ea35172eb62c059fa322cc35a4f6f3a9"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "last_built_sha256": "23ed92f55c5bb8f6f70002a86f770aa242f72ddc9f148f22243d0a0d1c9d95ef",
+      "current_sha256": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.cpp",
+      "last_built_sha256": "905a59dd2e705056c072e5e72ebbd22566667f904a746ae0c9a45196239e37c4",
+      "current_sha256": "4e638e4192b888b889836a84a45daf817855fd27b301ebec88334dad6ea82ee6"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.hpp",
+      "last_built_sha256": "76b2a60370a20084228ab75fc0ce1450323f081e26aa2359b7a6a3080a1cfe3d",
+      "current_sha256": "78c2608914e82f761d0c0ac42a35eb5dbf5b84e138acf30d281aab448f8527f5"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.cpp",
+      "last_built_sha256": "8554bd2ddca2043fe7c199b9d058885879053bbbab7a58edfc539107c004b913",
+      "current_sha256": "1a5d16e81c147bf7432b3edeea0239f51bdcba277620c832cd03a25ebafad85a"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.hpp",
+      "last_built_sha256": "b6a4412bc258ef7d47f63cfe8f889ec8ddd18170b1c334e6f127dd93ab1a2bef",
+      "current_sha256": "8b2f85013812b34c4421d22385fbb5da5f062889794f8d23d05611f5a5c5c39d"
+    },
+    {
+      "path": "anadius-session-profile-source/profile_tests.cpp",
+      "last_built_sha256": "60884c7e7e9b3aa495e9eea32db00486ec9debd8e73d9c37800bb07c0ca51b6b",
+      "current_sha256": "3f67b09f3984c54f59f0b98602f0a179c5bc3dae87274dac4867da5c3f5ea1d0"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "last_built_sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a",
+      "current_sha256": "31a36ff7c7e65a909e4e5a712113d67a565b6418edb50a4a38c02aa4ac4e04a5"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff.cpp",
+      "last_built_sha256": "8e2bb730bdf8d8ec1471ea6c8d0ea22a85450101c67d61d194a351bae2b696d7",
+      "current_sha256": "944914b063fceb4b7ef4ebfc9d9898394a367e7a05091a0357160186de192ef0"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff.hpp",
+      "last_built_sha256": "76c23df3621ce30be07f678decbf713ba655c783b5b4f658c3b0292f397c4049",
+      "current_sha256": "417165442cf848da4a4897284c2b041c734bfd89d6a0d0b4857db531c26f45d8"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "last_built_sha256": "6da9b872b45ab2a1ca8bf7ad5ba69183142908e6f77baafb54878645989be65f",
+      "current_sha256": "1655669001898051fe283a4d2a07ce7df8c0c61b3ee5088f0b31c0dd2d634bf8"
+    }
+  ],
+  "implementation": [
+    "Original whole Parent Operation mints move-only JobHandoff for retained Submitting/Pending source job, capturing exact job/session generations, live closure and binding, owner/function and Parent-owned strong/weak-self control.",
+    "Preparing reservation and row-held shared state protect source identity through bookkeeping allocation. All bookkeeping precedes backing offer; noexcept adoption precedes postchecks. Claimed/preparing row cannot run through legacy path or recycle.",
+    "Child acquire binds real JobMemory. inspect pins dispatch target before Application access, enters exact Parent capability and uses separate identity-only validation; requires returned start and successful detach, calls no Logic/Policy/Graph/Env/Deque and returns no mutable context.",
+    "return_memory only returns child authority. Original release_job revalidates identities and only cancels Offered or accepts Returned, clears claim and restores existing runner eligibility. No source completion, strong drop or closure cleanup inferred.",
+    "Shared state survives facade movement/destruction during call. Busy guard defers memory abandonment until inspect Parent teardown; unresolved facade poisons live Profile/retains row and abandons idle backing permission into existing poison policy.",
+    "Default Profile and higher-provider affinity remains unchanged. New preflight source scenarios reject stale identity/unsupported Parent while keeping legacy source execution available; none compiled or run."
+  ],
+  "source_evidence": [
+    {
+      "path": "outputs/anadius-session-profile-source/profile.hpp",
+      "line": 130,
+      "anchor": "class Application::JobHandoff final",
+      "sha256": "8b2f85013812b34c4421d22385fbb5da5f062889794f8d23d05611f5a5c5c39d"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "line": 23,
+      "anchor": "struct DispatchCall",
+      "sha256": "1a5d16e81c147bf7432b3edeea0239f51bdcba277620c832cd03a25ebafad85a"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "line": 33,
+      "anchor": "struct JobHandoffState",
+      "sha256": "1a5d16e81c147bf7432b3edeea0239f51bdcba277620c832cd03a25ebafad85a"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "line": 237,
+      "anchor": "JobIdentity job_identity(",
+      "sha256": "1a5d16e81c147bf7432b3edeea0239f51bdcba277620c832cd03a25ebafad85a"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "line": 242,
+      "anchor": "ports.view.memory.owns_control(row.strong)",
+      "sha256": "1a5d16e81c147bf7432b3edeea0239f51bdcba277620c832cd03a25ebafad85a"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "line": 388,
+      "anchor": "Frame job is reserved by an explicit handoff",
+      "sha256": "1a5d16e81c147bf7432b3edeea0239f51bdcba277620c832cd03a25ebafad85a"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "line": 427,
+      "anchor": "owner->armed=true;row.handoff=owner",
+      "sha256": "1a5d16e81c147bf7432b3edeea0239f51bdcba277620c832cd03a25ebafad85a"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "line": 449,
+      "anchor": "auto operation=v.ports.view.memory.enter(*owner->memory)",
+      "sha256": "1a5d16e81c147bf7432b3edeea0239f51bdcba277620c832cd03a25ebafad85a"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "line": 470,
+      "anchor": "void Application::release_job(",
+      "sha256": "1a5d16e81c147bf7432b3edeea0239f51bdcba277620c832cd03a25ebafad85a"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile_tests.cpp",
+      "line": 259,
+      "anchor": "void job_handoff_preflight()",
+      "sha256": "3f67b09f3984c54f59f0b98602f0a179c5bc3dae87274dac4867da5c3f5ea1d0"
+    }
+  ],
+  "independent_static_review": {
+    "reviewer": "/root/b22_provider_audit",
+    "result": "STATIC_PASS_NO_REQUIRED_ISSUE_FOUND",
+    "reviewed_source_hashes": {
+      "anadius-session-profile-source/profile.hpp": "8b2f85013812b34c4421d22385fbb5da5f062889794f8d23d05611f5a5c5c39d",
+      "anadius-session-profile-source/profile.cpp": "1a5d16e81c147bf7432b3edeea0239f51bdcba277620c832cd03a25ebafad85a",
+      "anadius-session-profile-source/profile_tests.cpp": "3f67b09f3984c54f59f0b98602f0a179c5bc3dae87274dac4867da5c3f5ea1d0"
+    },
+    "edits_or_compile_tests_link_binary_execution": false
+  },
+  "unexecuted_test_source": [
+    "Controlled sole-owned Parent fixture: reject stale job generation, wrong closure owner/function before offer/claim.",
+    "Reject unsupported prepared route twice, preserve LastError/Profile/job/strong state and clear preparation reservation.",
+    "Original deferred runner remains eligible after known preflight failures; actual source ownership cleanup described in assertions only."
+  ],
+  "positive_prepared_profile_child_round_trip": {
+    "test_source_present": false,
+    "compiled": false,
+    "executed": false,
+    "required": "Actual single-Domain prepared Parent/Profile fixture: acquire/inspect/return/release, wrong claim/generation/control, facade movement/destruction, allocation/reentry and lifecycle/tombstone overlaps."
+  },
+  "limits": [
+    "Nonexecuting identity handoff only. No message runner, source completion, native worker provider eligibility, mutable context escape or new strong-reference algorithm.",
+    "Default Profile/Graph/Policy/owned Environment/Deque worker constraints and InlineJobs unchanged. These providers still require explicit message-source execution admission before a native runner can work.",
+    "Caller owns actual launch/transfer/serialization, exclusion of pending canceled-token users, independent thread joins, code/image lifetimes and all source/finality policies.",
+    "No source test is a dynamic PASS. Positive prepared Profile child roundtrip is not even present in current test sources. No overall DLL percentage inferred.",
+    "Production loader hooks and image/CRT/foreign/kernel finality remain open. Prior full-build and ZIP refer to their frozen source snapshot."
+  ],
+  "new_native_function_definitions": 0,
+  "new_translation_units": 0,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "target_executed": false,
+  "original_access_or_modification": false,
+  "package_rebuilt": false,
+  "REA_queries_this_step": false
+}

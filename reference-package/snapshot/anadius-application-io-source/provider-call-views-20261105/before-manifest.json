@@ -1,0 +1,56 @@
+{
+  "status": "PRE_EDIT_SOURCE_SNAPSHOT",
+  "files": [
+    {
+      "path": "anadius-information-effects-source/effects.hpp",
+      "exists": true,
+      "sha256": "78f57e125b0f648ace5a42a875a91b6ceb8f792f528d7b67858d48f315b0b739",
+      "before": "before/anadius-information-effects-source__effects.hpp"
+    },
+    {
+      "path": "anadius-information-effects-source/effects.cpp",
+      "exists": true,
+      "sha256": "11ae43c5d32eb83d9cd1768fef6d789d7db69ea200a5392bdf731905ab7a0e51",
+      "before": "before/anadius-information-effects-source__effects.cpp"
+    },
+    {
+      "path": "anadius-information-effects-source/effects_tests.cpp",
+      "exists": true,
+      "sha256": "c069657527bf25724eae0e6d93958ea8f247c5cb419c97b17b35a4d88d5ca5e5",
+      "before": "before/anadius-information-effects-source__effects_tests.cpp"
+    },
+    {
+      "path": "anadius-content-effects-source/effects.hpp",
+      "exists": true,
+      "sha256": "b387ca6756b1898abe60f672bfdfa467de6a16117c33bcdb6333509630312242",
+      "before": "before/anadius-content-effects-source__effects.hpp"
+    },
+    {
+      "path": "anadius-content-effects-source/effects.cpp",
+      "exists": true,
+      "sha256": "8224ff1c1b10c5a3bb3d91aa8762f574a657a17dc4a83dee59dc19b745e5a510",
+      "before": "before/anadius-content-effects-source__effects.cpp"
+    },
+    {
+      "path": "anadius-content-effects-source/effects_tests.cpp",
+      "exists": true,
+      "sha256": "39388e93eb14ac57ea87e89c04e1453170b801b24528e53c113d46f3b4cf615e",
+      "before": "before/anadius-content-effects-source__effects_tests.cpp"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "exists": true,
+      "sha256": "3140116c5847c8f6529063b41d5638308eb6458b0449aa3306a9b1615eec5f33",
+      "before": "before/anadius-worker-handoff-source__handoff_tests.cpp"
+    },
+    {
+      "path": "anadius-application-io-source/call.hpp",
+      "exists": false,
+      "sha256": null,
+      "before": null
+    }
+  ],
+  "pending_source_count": 101,
+  "compile": false,
+  "tests_run": false
+}

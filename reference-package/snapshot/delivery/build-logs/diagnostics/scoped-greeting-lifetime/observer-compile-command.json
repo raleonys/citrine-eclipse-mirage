@@ -1,0 +1,20 @@
+{
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-I",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-application-graph-source",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\scoped-greeting-lifetime\\graph-tests-observer-diagnostic.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+    "-lws2_32",
+    "-lmswsock",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\scoped-greeting-lifetime\\scoped-greeting-observer-diagnostic.exe"
+  ],
+  "exit": 1,
+  "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang++.exe"
+}

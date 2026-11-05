@@ -1,0 +1,21 @@
+{
+  "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang++.exe",
+  "exit": 0,
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-g",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-I",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-application-graph-source",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\application-graph-parallel\\graph-tests-stop-diagnostic.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+    "-lws2_32",
+    "-lmswsock",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\application-graph-parallel\\graph-parallel-stop-diagnostic.exe"
+  ]
+}

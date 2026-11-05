@@ -1,6 +1,9 @@
 #include <winsock2.h>
 #include "factory.hpp"
 #include "configuration.hpp"
+#include "../anadius-socket-move-source/move.hpp"
+#include "../anadius-owned-jobs-source/jobs.hpp"
+#include "../anadius-bootstrap-providers-source/native_threads.hpp"
 #include "../anadius-module-reference-source/reference.hpp"
 #include "../anadius-permanent-errors-source/errors.hpp"
 #include "../anadius-thread-domain-source/factory.hpp"
@@ -22,6 +25,7 @@
 #include <iostream>
 #include <optional>
 #include <sstream>
+#include <thread>
 
 // Actual installer/Runtime/three Domain bootstrap workers and concrete Graph
 // effects. Configuration/host/console are explicit synthetic test boundaries;
@@ -29,15 +33,16 @@
 namespace {
 using namespace anadius;namespace rf=resources_factory;namespace aw=application_worker;namespace s=socket_recovered;namespace sp=session_profile;namespace os=owned_server;namespace br=bootstrap_runtime;
 std::atomic<unsigned> checks=0;
-void require(bool value,const char* text){++checks;if(!value)throw std::runtime_error(text);}
+void require(bool value,const char* text){++checks;if(!value){std::cerr<<"FAILED: "<<text<<'\n';throw std::runtime_error(text);}}
 template<class E,class F>void rejects(F&& f,const char* text){bool caught=false;try{f();}catch(const E&){caught=true;}require(caught,text);}
 [[noreturn]]void unused(){throw std::logic_error("unselected resources fixture boundary");}
 struct HookEngine final:recovered_hooks::Api {
     b14_test::Engine calls;native_recovered::Resolver resolver;
+    std::array<std::uintptr_t,10> originals=b15_test::originals();
     int initialize()override{return calls.initialize();}
     int create(void* target,void* detour,void** out)override{
         std::size_t slot=0;while(slot<10&&resolver.rebuilt_address(static_cast<host_init_recovered::Callback>(slot))!=reinterpret_cast<std::uintptr_t>(detour))++slot;
-        require(slot<10,"Installed host uses actual rebuilt SDK callback entry addresses");const auto result=calls.create(target,detour,out);*out=reinterpret_cast<void*>(b15_test::originals()[slot]);return result;
+        require(slot<10,"Installed host uses actual rebuilt SDK callback entry addresses");const auto result=calls.create(target,detour,out);*out=reinterpret_cast<void*>(originals[slot]);return result;
     }
     int enable(void* t)override{return calls.enable(t);}int disable(void* t)override{return calls.disable(t);}int uninitialize()override{return calls.uninitialize();}
 };
@@ -50,7 +55,7 @@ struct State {
     std::shared_ptr<library_effects::Dialog> dialog=std::make_shared<library_effects::Dialog>(b12_test::dialog_api());b12_test::Ui ui;
     std::shared_ptr<b8_test::MemoryFilesState> files=std::make_shared<b8_test::MemoryFilesState>();
     HANDLE armed=::CreateEventW(nullptr,TRUE,FALSE,nullptr),done=::CreateEventW(nullptr,TRUE,FALSE,nullptr);
-    std::uintptr_t port=0;OVERLAPPED* terminal=nullptr;std::vector<OVERLAPPED*> accepts;sp::Application* app=nullptr;
+    std::uintptr_t port=0;OVERLAPPED* terminal=nullptr;std::vector<OVERLAPPED*> accepts;std::vector<SOCKET> attached_sockets;sp::Application* app=nullptr;
     b14_test::Sdk host_sdk;HookEngine* hooks=nullptr;bool provider_ready=true,external=true,stop_allowed=true;unsigned stops=0;std::weak_ptr<foreign_callback::Domain> callback_admission;
     bool shutdown=false,worker_returned=false,drained=false,slot_valid=true,path_retirement_valid=false;unsigned configured=0,startups=0,cleanups=0,loads=0,avatars=0,auths=0,destroys=0,pins=0,frees=0,socket_count=0,responses=0,config_retired=0,legacy_calls=0,legacy_retired=0,module_paths=0,environment_paths=0;
     b8_test::FsSdk filesystem_sdk;b5_test::PlatformState console_sdk;
@@ -96,7 +101,8 @@ DWORD copy_configuration_path(std::u16string_view value,LPWSTR out,DWORD capacit
 DWORD WINAPI configuration_module(HMODULE module,LPWSTR out,DWORD capacity){require(!module,"Actual configuration asks current process module");++current->module_paths;return copy_configuration_path(uR"(C:\MEM\host.exe)",out,capacity);}
 DWORD WINAPI configuration_environment(LPCWSTR name,LPWSTR out,DWORD capacity){++current->environment_paths;const auto value=std::wstring_view(name);require(value==L"ProgramData"||value==L"LocalAppData","Actual configuration selects retained environment path names");return copy_configuration_path(value==L"ProgramData"?uR"(C:\MEM\program)":uR"(C:\MEM\local)",out,capacity);}
 
-int WSAAPI startup(WORD,LPWSADATA){++current->startups;return 0;}int WSAAPI cleanup(){++current->cleanups;return 0;}
+int WSAAPI startup(WORD version,LPWSADATA){require(version==MAKEWORD(2,2),"Running HOST resources fixture retains per-Core WSA2.2 policy");++current->startups;return 0;}int WSAAPI cleanup(){++current->cleanups;return 0;}
+unsigned mixed_startups=0;int WSAAPI mixed_startup(WORD,LPWSADATA){++mixed_startups;return 0;}
 int WSAAPI local_name(SOCKET,sockaddr* out,int* size){std::memset(out,0,*size);out->sa_family=2;reinterpret_cast<unsigned char*>(out)[2]=0x30;reinterpret_cast<unsigned char*>(out)[3]=0x39;*size=16;return 0;}
 BOOL WINAPI environment(LPCSTR key,LPCSTR value){require(std::string_view(key)=="EALsxPort"&&std::string_view(value)=="12345","Actual server publishes selected port through injected environment boundary");return FALSE;}
 HANDLE WINAPI create_port(HANDLE file,HANDLE prior,ULONG_PTR key,DWORD count){auto handle=::CreateIoCompletionPort(file,prior,key,count);current->port=reinterpret_cast<std::uintptr_t>(handle);return handle;}BOOL WINAPI close_port(HANDLE handle){return ::CloseHandle(handle);}
@@ -108,15 +114,28 @@ INT WSAAPI parse(LPWSTR,INT family,LPWSAPROTOCOL_INFOW,LPSOCKADDR out,LPINT size
 int WSAAPI sync_send(SOCKET,LPWSABUF b,DWORD,LPDWORD bytes,DWORD,LPWSAOVERLAPPED,LPWSAOVERLAPPED_COMPLETION_ROUTINE){*bytes=b->len;return 0;}int WSAAPI select_write(int,fd_set*,fd_set*,fd_set*,const timeval*){unused();}
 int WSAAPI receive(SOCKET socket,LPWSABUF b,DWORD count,LPDWORD bytes,LPDWORD flags,LPWSAOVERLAPPED ov,LPWSAOVERLAPPED_COMPLETION_ROUTINE cb){auto& st=*current;require(socket==201&&count==1&&!*bytes&&!*flags&&!cb,"Actual native receive forwards exact one-buffer SDK shape");const auto n=std::min<std::size_t>(b->len,st.wire.size()-st.cursor);if(n)std::memcpy(b->buf,st.wire.data()+st.cursor,n);st.cursor+=n;require(st.app->ports().completion.post(st.port,static_cast<std::uint32_t>(n),0,ov)!=0,"Own receive publishes bytes/EOF to actual IOCP");::WSASetLastError(997);return SOCKET_ERROR;}
 int WSAAPI send(SOCKET,LPWSABUF b,DWORD,LPDWORD,DWORD,LPWSAOVERLAPPED ov,LPWSAOVERLAPPED_COMPLETION_ROUTINE){require(current->app->ports().completion.post(current->port,b->len,0,ov)!=0,"Own async send completion posted");::WSASetLastError(997);return SOCKET_ERROR;}
-struct Sockets final:s::AcceptorApi {s::Socket create_socket(std::int32_t)override{return 200;}std::uintptr_t attach_completion_port(s::Socket,std::uintptr_t p)override{return p;}std::uint32_t get_win32_error()override{return ::GetLastError();}std::int32_t set_option(s::Socket,std::int32_t,std::int32_t,std::int32_t)override{return 0;}std::int32_t bind_socket(s::Socket,std::span<const std::byte>,std::int32_t)override{return 0;}std::int32_t listen_socket(s::Socket,std::int32_t)override{return 0;}std::int32_t close_socket(s::Socket)override{return 0;}std::int32_t set_nonblocking(s::Socket,std::uint32_t,std::uint32_t&)override{unused();}};
-struct Dispatcher final:s::DispatcherApi {
-    void set_last_error(std::uint32_t n)override{::SetLastError(n);}std::uint32_t get_last_error()override{return ::GetLastError();}
-    std::int32_t get(std::uintptr_t p,std::uint32_t& bytes,std::uintptr_t& key,OVERLAPPED*& ov,std::uint32_t timeout)override{DWORD n=0;ULONG_PTR k=0;auto result=::GetQueuedCompletionStatus(reinterpret_cast<HANDLE>(p),&n,&k,&ov,timeout);bytes=n;key=k;if(ov&&ov==current->terminal){::SetLastError(995);return 0;}return result;}
-    std::int32_t post(std::uintptr_t p,std::uint32_t n,std::uintptr_t k,OVERLAPPED* ov)override{return ::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(p),n,k,ov);}std::int32_t set_timer(std::uintptr_t,LARGE_INTEGER&,std::int32_t,PTIMERAPCROUTINE,void*,std::int32_t)override{unused();}
-};
-struct Cancel final:s::CancellationEffects {void cancel_026aa0(s::CancellationEngine&,s::Socket,const s::Error&)override{unused();}};
-struct Executor final:s::RegistryExecutorEffects {void executor_cleanup(s::SocketObject&,std::uintptr_t)override{}};
-void move_executor(void*,s::ExecutorFields& out,s::ExecutorFields& from,std::uintptr_t){out.context=from.context;out.zero_74=from.zero_74;out.self_reference_80=true;}
+// SDK test shims: only owned IOCP operations are real. Socket values remain
+// synthetic; the production selector's defaults use the actual SDK imports.
+SOCKET WSAAPI listener_socket(int family,int type,int protocol,LPWSAPROTOCOL_INFOW info,GROUP group,DWORD flags){
+    require((family==AF_INET||family==AF_INET6)&&type==SOCK_STREAM&&protocol==IPPROTO_TCP&&!info&&!group&&flags==WSA_FLAG_OVERLAPPED,"Native listener adapter preserves selected SDK socket shape");return 200;
+}
+HANDLE WINAPI attach_socket(HANDLE file,HANDLE port,ULONG_PTR key,DWORD concurrency){
+    auto& st=*current;
+    // acceptor020e20 attaches listener200; successful complete0271a0 then
+    // transfers accepted201 into its destination on the same owned scheduler.
+    require(st.attached_sockets.size()<2&&reinterpret_cast<SOCKET>(file)==200+st.attached_sockets.size()&&port==reinterpret_cast<HANDLE>(st.port)&&port&&!key&&!concurrency,"Native listener and transferred accepted socket preserve exact ordered identities and owned IOCP/key/concurrency");
+    st.attached_sockets.push_back(reinterpret_cast<SOCKET>(file));return port;
+}
+int WSAAPI listener_option(SOCKET socket,int level,int option,const char* value,int bytes){
+    require(socket==200&&level==SOL_SOCKET&&option==SO_REUSEADDR&&value&&bytes==static_cast<int>(sizeof(int)),"Native listener reuse passes exact SDK buffer shape");int selected=0;std::memcpy(&selected,value,sizeof selected);require(selected==1,"Native listener reuse value remains one");return 0;
+}
+int WSAAPI listener_bind(SOCKET socket,const sockaddr* address,int bytes){require(socket==200&&address&&(bytes==16||bytes==28),"Native bind uses selected initialized endpoint");return 0;}
+int WSAAPI listener_listen(SOCKET socket,int backlog){require(socket==200&&backlog==0x7fffffff,"Native listener backlog preserved");return 0;}
+int WSAAPI close_test_socket(SOCKET){return 0;}
+BOOL WINAPI get_test_completion(HANDLE port,LPDWORD bytes,PULONG_PTR key,LPOVERLAPPED* operation,DWORD timeout){
+    const auto result=::GetQueuedCompletionStatus(port,bytes,key,operation,timeout);
+    if(*operation&&*operation==current->terminal){::SetLastError(995);return FALSE;}return result;
+}
 void configure(State& st,aw::Inputs& input){
     ++st.configured;st.graph_thread=::GetCurrentThreadId();b12_test::ui=&st.ui;auto& graph=input.graph;graph.policy.stream=st.stream;graph.policy.imports={::WSASetLastError,::WSAGetLastError,convert,parse,sync_send,select_write};graph.profile.sessions=1;graph.profile.jobs_capacity=2;graph.profile.headers=64;graph.profile.environment_capacity=256;graph.profile.receive={receive,::WSAGetLastError};graph.profile.send={send,::WSAGetLastError};graph.show_lsx=1;
     graph.prepare_session=[&st](sp::SessionView view){view.owner.cipher.set_fixed_key_084c98();view.owner.cipher.encrypted_c4=1;s::SessionCipher client;client.set_fixed_key_084c98();for(const auto* body:{"<GetProfile index=\"0\"/>","<QueryImage Width=\"416\" Height=\"208\" ImageId=\"avatar:remote\"/>","<GetAuthCode ClientId=\"client\"/>","<QueryImage Width=\"128\" Height=\"64\" ImageId=\"avatar:owner\"/>","<QueryImage Width=\"128\" Height=\"64\" ImageId=\"avatar:owner\"/>","<QueryImage Width=\"128\" Height=\"64\" ImageId=\"avatar:owner\"/>","<QueryImage Width=\"416\" Height=\"208\" ImageId=\"avatar:owner\"/>","<QueryImage Width=\"416\" Height=\"208\" ImageId=\"avatar:owner\"/>"}){std::string request="<LSX><Request id=\"own\" recipient=\"EbisuSDK\">";request+=body;request+="</Request></LSX>";require(client.encrypt_042610(request),"Own independent fixed-key client encrypts selected request");messages_recovered::hex_encode_03d190(request);st.wire+=request;st.wire.push_back(0);}};
@@ -125,7 +144,14 @@ void configure(State& st,aw::Inputs& input){
     graph.policy.lifecycle.after=[&st](sp::Application& app){if(!st.shutdown&&st.responses==8&&!app.snapshot().live_sessions){st.shutdown=true;auto ports=app.ports();st.terminal=st.accepts.back();ports.accept.note_cancel_requested(ports.accept.handle_for(st.terminal));require(ports.completion.post(st.port,0,0,st.terminal)!=0,"Selected fake SDK cancellation publishes its pending operation to own IOCP");}};
     graph.policy.lifecycle.returned=[&st](sp::Application& app,std::uint64_t,const s::WorkerRunResult& result){require(result.error&&result.error->value==0&&!app.snapshot().live_sessions&&!app.snapshot().live_jobs,"Actual native worker source returns with all synthetic session/jobs retired");st.worker_returned=true;};
     graph.policy.lifecycle.external_drained=[&st](os::ServerView,sp::Application& app){require(st.worker_returned&&st.shutdown&&!app.snapshot().live_sessions&&!app.snapshot().live_jobs,"Selected synthetic SDK driver attests only after actual session/job source return");for(;;){DWORD n=0;ULONG_PTR key=0;OVERLAPPED* ov=nullptr;if(!::GetQueuedCompletionStatus(reinterpret_cast<HANDLE>(st.port),&n,&key,&ov,0)){require(::GetLastError()==WAIT_TIMEOUT&&!ov,"Own IOCP proves no leftover operation packet");break;}require(!n&&!key&&!ov,"Only source-posted empty stop relay may remain");}st.drained=true;::SetEvent(st.done);return true;};
-    auto sockets=std::make_shared<Sockets>();auto dispatcher=std::make_shared<Dispatcher>();input.server.sockets=sockets;input.server.dispatcher=dispatcher;s::IocpConstructorImports iocp;iocp.create_completion_port=create_port;iocp.close_handle=close_port;input.server.iocp=std::make_shared<s::NativeIocpConstructorApi>(iocp);input.server.gates=std::make_shared<s::NativeServiceGateApi>();input.server.cancellation=std::make_shared<Cancel>();input.server.executor=std::make_shared<Executor>();input.server.kernel={startup,cleanup,local_name,environment,::DeleteCriticalSection};input.runtime.sockets=sockets;input.runtime.dispatcher=dispatcher;input.runtime.accept=std::make_shared<s::NativeAsyncAcceptApi>(s::AsyncAcceptImports{accept_sdk,addresses,context,::WSAGetLastError});input.runtime.factory=std::make_shared<s::NativeSocketFactoryApi>(s::SocketFactoryImports{socket_factory});input.runtime.cancel=std::make_shared<s::NativeRetryCancelApi>(cancel_sdk);input.runtime.executor={nullptr,move_executor};input.runtime.capacity=16;
+    rf::WorkerIoImports native_io;
+    native_io.sockets.create=listener_socket;native_io.sockets.attach=attach_socket;native_io.sockets.option=listener_option;native_io.sockets.bind=listener_bind;native_io.sockets.listen=listener_listen;native_io.sockets.close=close_test_socket;
+    native_io.iocp.create_completion_port=create_port;native_io.iocp.close_handle=close_port;native_io.dispatcher.get=get_test_completion;
+    native_io.accept={accept_sdk,addresses,context,::WSAGetLastError};native_io.factory.open=socket_factory;native_io.cancel=cancel_sdk;
+    const auto incoming=::GetLastError();rf::select_native_worker_io(input,native_io);
+    require(::GetLastError()==incoming&&!st.port&&!st.startups&&st.accepts.empty(),"Worker SDK selection preserves LastError and creates no IOCP/socket/accept or WSAStartup before actual server source initialization");
+    rf::select_recovered_socket_executor(input);require(!input.server.cancellation,"Selected owned server has no installed cancellation engine and needs no fake cancellation provider");input.server.kernel={startup,cleanup,local_name,environment,::DeleteCriticalSection};
+    input.runtime.capacity=16;
 }
 
 bootstrap_backend::Resources resources(const std::shared_ptr<State>& st){
@@ -139,6 +165,124 @@ void inputs(rf::Inputs& in,const std::shared_ptr<State>& st,Domain& domain){
     in.effects.content.files=std::make_shared<b8_test::MemoryFiles>(st->files);in.effects.licensing.files=std::make_shared<b8_test::MemoryFiles>(st->files);
     in.online.os=std::make_unique<OnlineOs>(*st);in.online.get_proc=lookup;in.online.code_lease=module_reference::make_code_lease({retain_online,release_online},st);in.online.foreign_quiescent=[st]{return st->drained;};in.online.files=std::make_unique<b8_test::MemoryFiles>(st->files);
     initial_cells::select_worker_defaults(in);require(in.worker.state&&in.worker.state->saved_avatar_size==-1&&in.worker.state->achievement_file.empty(),"Actual Worker uses observed -1 avatar seed and live Runtime path binding rather than manual zero seed");in.effects.content.copy_file=copy_avatar;in.worker.lifetime=st;in.worker.configure=[st](aw::Inputs& value){configure(*st,value);};
+}
+void native_worker_io_preflight(){
+    bootstrap_backend::Resources native_base;auto base_stream=shared_log::make_stream(std::make_shared<std::stringbuf>());::SetLastError(0x49d5);rf::install_native_configuration_console(native_base,base_stream);require(::GetLastError()==0x49d5&&dynamic_cast<configuration_factory::Configuration*>(native_base.configuration.get())&&dynamic_cast<bootstrap_providers::CompilerConsole*>(native_base.console.get())&&!native_base.threads&&!native_base.application_worker,"Image base selects concrete native configuration/console passively without inventing Domain/worker roots");const auto base_configuration=native_base.configuration.get();rejects<std::invalid_argument>([&]{rf::install_native_configuration_console(native_base,base_stream);},"Native base install cannot replace occupied image providers");require(native_base.configuration.get()==base_configuration,"Rejected native base replacement preserves actual selected owner");
+    aw::Inputs native;auto stream=shared_log::make_stream(std::make_shared<std::stringbuf>());::SetLastError(0x49d4);rf::configure_native_worker(native,stream,"own-native-profile");require(::GetLastError()==0x49d4&&native.graph.policy.stream==stream&&native.graph.version=="own-native-profile"&&native.server.sockets==native.runtime.sockets&&native.server.dispatcher==native.runtime.dispatcher&&dynamic_cast<s::NativeAcceptorApi*>(native.server.sockets.get())&&dynamic_cast<s::RecoveredSocketExecutor*>(native.server.executor.get())&&session_policy::lifecycle_configuration_valid(native.graph.policy.lifecycle)&&!native.graph.policy.lifecycle.external_drained&&!native.runtime.accept_stop,"Concrete image Worker configure composes native adapters/executor/original lifecycle without opaque proof callbacks");
+    require(native.server.context_profile==os::ContextProfile::Original&&native.server.winsock_module==&os::native_winsock_module()&&native.server.winsock_module->matches({native.server.kernel.startup,native.server.kernel.cleanup}),"Native Worker configuration passively selects the exact module state/profile matching its immutable kernel imports");
+    const auto selected_socket=native.server.sockets;const auto* selected_module=native.server.winsock_module;rejects<std::invalid_argument>([&]{rf::configure_native_worker(native,stream,"replace");},"Native configure cannot replace selected Worker state");require(native.server.sockets==selected_socket&&native.graph.version=="own-native-profile"&&native.server.winsock_module==selected_module&&native.server.context_profile==os::ContextProfile::Original,"Rejected native reconfigure preserves selected sources and module authority");
+    for(const unsigned kind:{0U,1U,2U}){aw::Inputs occupied;if(kind==0)occupied.server.context_profile=os::ContextProfile::Original;if(kind==1)occupied.server.winsock_module=&os::native_winsock_module();if(kind==2)occupied.server.kernel.startup=mixed_startup;const auto profile=occupied.server.context_profile;const auto* module=occupied.server.winsock_module;const auto startup=occupied.server.kernel.startup;
+     rejects<std::invalid_argument>([&]{rf::configure_native_worker(occupied,stream,"reject");},"Preselected context profile/state or mixed default-module SDK pair rejects before target allocation/commit");
+     require(occupied.server.context_profile==profile&&occupied.server.winsock_module==module&&occupied.server.kernel.startup==startup&&!occupied.server.sockets&&!occupied.server.iocp&&!occupied.server.gates&&!occupied.server.dispatcher&&!occupied.server.executor&&!occupied.runtime.sockets&&!occupied.runtime.dispatcher&&!occupied.runtime.accept&&!occupied.runtime.factory&&!occupied.runtime.cancel&&!occupied.runtime.executor.move&&!occupied.graph.policy.stream&&occupied.graph.version.empty()&&occupied.graph.policy.lifecycle.mode==session_policy::LifecycleMode::Explicit&&!mixed_startups,"Rejected native context/mixed-pair configuration preserves every selected target and makes zero injected startup calls");
+    }
+    aw::Inputs original;rf::select_original_worker_lifecycle(original);require(original.graph.policy.lifecycle.mode==session_policy::LifecycleMode::OriginalApplication&&session_policy::lifecycle_configuration_valid(original.graph.policy.lifecycle)&&!original.runtime.accept_stop&&!original.graph.policy.lifecycle.select_owner&&!original.graph.policy.lifecycle.after&&!original.graph.policy.lifecycle.returned&&!original.graph.policy.lifecycle.external_drained,"Original Worker profile selects source decisions without external callback stubs or mandatory Stop");
+    require(original.server.context_profile==os::ContextProfile::Host&&!original.server.winsock_module,"OriginalApplication lifecycle alone does not silently replace HOST context policy");rejects<std::invalid_argument>([&]{rf::select_original_worker_lifecycle(original);},"Original lifecycle cannot replace an already selected profile");
+    aw::Inputs input;rf::WorkerIoImports missing;missing.accept.addresses=nullptr;
+    rejects<std::invalid_argument>([&]{rf::select_native_worker_io(input,missing);},"Missing native accept import rejects before any target commit");
+    require(!input.server.sockets&&!input.server.iocp&&!input.server.gates&&!input.server.dispatcher&&!input.runtime.sockets&&!input.runtime.dispatcher&&!input.runtime.accept&&!input.runtime.factory&&!input.runtime.cancel,"Failed native SDK selection leaves all targets empty");
+    ::SetLastError(0x49d2);rf::select_native_worker_io(input);
+    require(input.server.context_profile==os::ContextProfile::Host&&!input.server.winsock_module,"Native SDK adapter selection alone leaves explicit HOST context profile unchanged");
+    require(::GetLastError()==0x49d2&&input.server.sockets==input.runtime.sockets&&input.server.dispatcher==input.runtime.dispatcher&&dynamic_cast<s::NativeAcceptorApi*>(input.server.sockets.get())&&dynamic_cast<s::NativeDispatcherApi*>(input.server.dispatcher.get()),"Default source SDK selection shares exact concrete native socket/dispatcher owners and preserves LastError");
+    require(!input.server.cancellation&&!input.server.executor&&!input.server.runtime&&!input.runtime.errors&&!input.runtime.worker&&!input.runtime.profile&&!input.runtime.tls_index&&!input.graph.policy.lifecycle.external_drained,"SDK selection does not fabricate executor/cancellation/profile/TLS or external drain providers");
+    const auto sockets=input.server.sockets;const auto dispatcher=input.server.dispatcher;
+    rejects<std::invalid_argument>([&]{rf::select_native_worker_io(input);},"Occupied native IO slots reject replacement");
+    require(input.server.sockets==sockets&&input.runtime.sockets==sockets&&input.server.dispatcher==dispatcher&&input.runtime.dispatcher==dispatcher,"Rejected repeat preserves existing paired owners");
+    ::SetLastError(0x49d3);rf::select_recovered_socket_executor(input);
+    require(::GetLastError()==0x49d3&&dynamic_cast<s::RecoveredSocketExecutor*>(input.server.executor.get())&&input.runtime.executor.move&&!input.server.cancellation,"Selected executor uses recovered table-specific source bodies while leaving absent cancellation engine unbound");
+    const auto executor=input.server.executor;const auto move=input.runtime.executor.move;
+    rejects<std::invalid_argument>([&]{rf::select_recovered_socket_executor(input);},"Selected executor cannot replace occupied slots");
+    require(input.server.executor==executor&&input.runtime.executor.move==move,"Rejected executor replacement preserves original selection");
+    rejects<std::invalid_argument>([&]{rf::select_source_worker_lifecycle(input);},"Source lifecycle never supplies a fabricated external drain proof");
+    require(input.graph.policy.lifecycle.mode==session_policy::LifecycleMode::Explicit,"Missing proof preserves original lifecycle selection");
+    input.graph.policy.lifecycle.external_drained=[](os::ServerView,sp::Application&){return false;};
+    rf::select_source_worker_lifecycle(input);
+    require(input.graph.policy.lifecycle.mode==session_policy::LifecycleMode::SourceOwned&&!input.graph.policy.lifecycle.select_owner&&!input.graph.policy.lifecycle.after&&!input.graph.policy.lifecycle.returned,"Source lifecycle selects actual source decisions without installing fake observer callbacks");
+    rejects<std::invalid_argument>([&]{rf::select_source_worker_lifecycle(input);},"Source lifecycle selection cannot be silently repeated");
+}
+void native_message_jobs_selection(){
+    Domain domain;auto api=thread_native::native_api();api.get_module=no_module;
+    auto threads=std::shared_ptr<bootstrap_providers::NativeThreads>(domain.root->make_threads(api));
+    aw::Inputs input;
+    rejects<std::invalid_argument>([&]{rf::select_native_message_jobs(input,threads);},"Native message jobs require explicitly selected original lifecycle");
+    rf::select_original_worker_lifecycle(input);
+    rejects<std::invalid_argument>([&]{rf::select_native_message_jobs(input,{});},"Missing real NativeThreads cannot select detached jobs");
+    input.graph.profile.jobs_capacity=0;
+    rejects<std::invalid_argument>([&]{rf::select_native_message_jobs(input,threads);},"Invalid message job capacity rejects before jobs slot publication");
+    require(!input.graph.profile.jobs,"Rejected native jobs construction leaves the target empty");
+    {
+        aw::Inputs wide;rf::select_original_worker_lifecycle(wide);wide.graph.profile.jobs_capacity=65;
+        rf::select_native_message_jobs(wide,threads);auto wide_jobs=std::dynamic_pointer_cast<owned_jobs::NativeJobs>(wide.graph.profile.jobs);
+        require(static_cast<bool>(wide_jobs),"Initial capacity above64 selects the actual growable NativeJobs provider");const auto state=wide_jobs->snapshot();
+    require(state.phase==owned_jobs::Phase::Fresh&&!state.pending&&!state.active&&!state.started&&!state.completed&&!state.detached&&!input.graph.profile.jobs,"Initial capacity65 is passive storage, not a child offer/work claim or replacement of the separate original input");
+    }
+    input.graph.profile.jobs_capacity=2;::SetLastError(0x49d6);rf::select_native_message_jobs(input,threads);
+    auto jobs=std::dynamic_pointer_cast<owned_jobs::NativeJobs>(input.graph.profile.jobs);
+    require(::GetLastError()==0x49d6&&jobs&&jobs->snapshot().phase==owned_jobs::Phase::Fresh&&!jobs->snapshot().pending&&!jobs->snapshot().started,"Original selection creates actual passive NativeJobs and preserves LastError without starting a child");
+    const auto selected=input.graph.profile.jobs;
+    rejects<std::invalid_argument>([&]{rf::select_native_message_jobs(input,threads);},"Native jobs selection cannot replace an existing provider");
+    require(input.graph.profile.jobs==selected,"Rejected repeated selection preserves exact jobs owner");
+}
+struct EarlyRegistryProbe {
+    foreign_callback::Domain* callbacks=nullptr;DWORD fls=FLS_OUT_OF_INDEXES,controller=0;
+    void* controller_ptd=nullptr;unsigned calls=0;bool valid=true;
+};
+EarlyRegistryProbe* early_registry_probe=nullptr;
+LSTATUS WINAPI early_registry_open(HKEY root,LPCSTR key,DWORD options,REGSAM access,PHKEY output){
+    auto& probe=*early_registry_probe;const auto incoming=::GetLastError();const bool controller=::GetCurrentThreadId()==probe.controller;
+    const auto ptd=::FlsGetValue(probe.fls);
+    probe.valid=probe.valid&&root==HKEY_CURRENT_USER&&key&&std::string_view(key)=="SOFTWARE\\Own\\Unrelated"&&options==0&&access==KEY_READ&&output&&
+        incoming==0x6e10&&ptd&&ptd!=crt_ptd_recovered::construction_sentinel()&&
+        (controller?ptd==probe.controller_ptd:ptd!=probe.controller_ptd)&&
+        probe.callbacks->permits_current()&&probe.callbacks->permits_original_current()&&!probe.callbacks->ready()&&native_recovered::active_calls()==1;
+    ++probe.calls;if(output)*output=reinterpret_cast<HKEY>(controller?0x711:0x722);::SetLastError(0x6e20);return 0;
+}
+void original_registry_during_enable(){
+    Domain domain;auto st=std::make_shared<State>();bootstrap_backend::Resources r;r.state_lifetime=st;r.lifetime_profile=bootstrap_backend::LifetimeProfile::OriginalCrt;
+    auto errors=permanent_errors::compiler_abort_policy();std::unique_ptr<recovered_hooks::Api> lower=std::make_unique<HookEngine>();auto* hooks=static_cast<HookEngine*>(lower.get());
+    hooks->originals[host_init_recovered::slot(native_recovered::Callback::reg_open_a_00f800)]=reinterpret_cast<std::uintptr_t>(&early_registry_open);
+    std::shared_ptr<void> backing=st;auto engine=recovered_hooks::make_owned_engine(lower,backing);
+    host_platform::AssemblyInputs host;host.domain=domain.root;host.stream=st->stream;host.callbacks.memory=domain.root->make_memory();host.seed=initial_cells::make_callback_defaults();host.permanent_errors=&errors.host;host.host.api=b14_test::api();
+    host_platform::select_original_owned_engine(host,engine);auto installed=host_platform::install_host(r,host);
+    b15_test::Driver driver(installed.milestones.get());driver.runtime.originals.fill(0);driver.configuration.executable_path=u"C:\\own\\early.exe";
+    auto attachment=r.callback_attachment(driver.view());r.callback_attachment={};attachment->publish();attachment->host_setup_begin();
+    EarlyRegistryProbe probe;probe.callbacks=installed.callbacks.get();probe.fls=domain.root->native_fls_index();probe.controller=::GetCurrentThreadId();probe.controller_ptd=domain.root->current_ptd();early_registry_probe=&probe;
+    require(probe.controller_ptd&&::FlsGetValue(probe.fls)==probe.controller_ptd,"Early registry fixture has the actual controller PTD before enable");
+    unsigned observed=0;
+    hooks->calls.on_enable=[&](std::uintptr_t){
+        if(hooks->calls.targets.size()!=2)return; // connect then RegOpenKeyExA
+        require(!installed.callbacks->ready()&&!installed.milestones->bits()&&driver.runtime.originals[0]&&driver.runtime.originals[1]==reinterpret_cast<std::uintptr_t>(&early_registry_open)&&std::all_of(driver.runtime.originals.begin()+2,driver.runtime.originals.end(),[](auto original){return original==0;}),
+            "Actual host enable sees only the successful original prefix before setup completion");
+        auto invoke=[&](bool controller){
+            HKEY output=nullptr;::SetLastError(0x6e10);
+            const auto result=native_recovered::reg_open_a_entry(HKEY_CURRENT_USER,"SOFTWARE\\Own\\Unrelated",0,KEY_READ,&output);
+            require(!result&&output==reinterpret_cast<HKEY>(controller?0x711:0x722)&&!installed.callbacks->active()&&native_recovered::active_calls()==0,
+                "Typed nonnull registry body completes under per-hook publication before global setup");
+        };
+        invoke(true);require(::FlsGetValue(probe.fls)==probe.controller_ptd,"Controller callback borrows and preserves its existing PTD");
+        std::exception_ptr failure;std::thread foreign([&]{try{
+            require(!::FlsGetValue(probe.fls),"Foreign early callback starts with an empty private FLS slot");invoke(false);
+            require(!::FlsGetValue(probe.fls),"Foreign early callback retires its acquired private PTD before returning");
+        }catch(...){failure=std::current_exception();}});foreign.join();if(failure)std::rethrow_exception(failure);++observed;
+    };
+    host_init_recovered::initialize_host_00e310({driver.configuration,driver.runtime.registry_values,driver.runtime.enabled_targets,driver.runtime.originals},*r.host);
+    require(observed==1&&probe.calls==2&&probe.valid&&!installed.callbacks->ready()&&hooks->calls.enabled.size()==6,
+        "Both early actors reach the actual typed original with Full scope while actual host setup remains incomplete");
+    hooks->calls.on_enable={};attachment->host_setup_complete();require(installed.callbacks->ready(),"Normal host completion remains separate from early registry admission");
+    require(attachment->pause_before_cleanup(),"Both bounded early registry calls drain before ordinary fixture cleanup");
+    network_hook_recovered::cleanup_hooks_0102b0(driver.runtime.enabled_targets,*r.hook_cleanup);
+    require(attachment->close_after_cleanup()&&engine->empty()&&!native_recovered::is_bound(),"Existing original cleanup retires enabled own hooks and native Context");attachment.reset();early_registry_probe=nullptr;
+}
+void original_host_assembly(){
+    Domain domain;auto st=std::make_shared<State>();bootstrap_backend::Resources r;r.state_lifetime=st;r.lifetime_profile=bootstrap_backend::LifetimeProfile::OriginalCrt;auto errors=permanent_errors::compiler_abort_policy();
+    std::unique_ptr<recovered_hooks::Api> lower=std::make_unique<HookEngine>();st->hooks=static_cast<HookEngine*>(lower.get());std::shared_ptr<void> backing=st;auto engine=recovered_hooks::make_owned_engine(lower,backing);
+    host_platform::AssemblyInputs host;host.domain=domain.root;host.stream=st->stream;host.callbacks.memory=domain.root->make_memory();host.permanent_errors=&errors.host;
+    rf::Inputs image;image.domain=domain.root;image.stream=st->stream;image.dialog=st->dialog;image.waits=std::make_shared<services_completion::ExitWaitRegistry>(services_completion::InitialRegistry::empty_owned);image.worker.lifetime=st;auto message_threads=std::shared_ptr<bootstrap_providers::NativeThreads>(domain.root->make_threads());image.worker.configure=[stream=st->stream,threads=message_threads](aw::Inputs& values){rf::configure_native_worker(values,stream,"own-original-image");rf::select_native_message_jobs(values,threads);};
+    initial_cells::select_defaults(host,image);initial_cells::select_worker_defaults(image);online_factory::select_native_original_online(image.online);
+    host_platform::select_original_owned_engine(host,engine);auto installed=host_platform::install_host(r,host);
+    require(installed.callbacks&&!installed.stopped_sources&&!r.stop_sources&&bootstrap_backend::lifetime_configuration_valid(r)&&r.host&&r.hook_cleanup&&r.callback_attachment&&r.startup_publication&&!host.providers_ready&&!host.external_quiescence&&!native_recovered::is_bound()&&engine->empty()&&!st->hooks->calls.init_calls,"Actual original Host assembly selects shared engine/publication/PTD/context factories without executing hooks or supplying extra ready/unload callbacks");
+    rf::install_native_configuration_console(r,st->stream);rf::install(r,image);auto runtime=initial_cells::make_fresh_runtime(r,errors.bootstrap);
+    require(runtime->phase()==bootstrap_owner::Phase::Constructed&&runtime->memory_domain()==domain.root.get()&&!native_recovered::is_bound()&&!bootstrap_native_recovered::is_bound()&&!st->hooks->calls.init_calls&&!st->configured,"Original host/Online/native-base/Worker factories compose into an actual fresh Runtime without a cooperative stopper or application start");
+    require(runtime->close(),"Never-published original Runtime keeps its real unstarted close route");runtime.reset();
 }
 void preflight_and_actual_runtime(){
     Domain domain;auto st=std::make_shared<State>();auto r=resources(st);
@@ -178,12 +322,18 @@ void preflight_and_actual_runtime(){
     require(dynamic_cast<bootstrap_providers::NativeThreads*>(r.threads.get())&&r.remaining_factory&&r.online_factory&&r.application_worker&&dynamic_cast<library_effects::BoundLibrary*>(r.library_effects.get())&&!r.remaining&&!r.online&&!r.server,"Installer adopts actual same-Domain NativeThreads, narrow factories and BoundLibrary without legacy substitutes");
     require(!in.worker.configure&&!in.worker.effects&&!in.online.code_lease&&!in.online.os&&!in.effects.attempts&&!st->loads&&!st->startups&&!st->configured&&st->files->reads.empty(),"Successful passive install consumes owning callable/provider donors before publication");
     rejects<std::logic_error>([&]{rf::install(r,in);},"Consumed Inputs is single-use");
-    auto runtime=initial_cells::make_fresh_runtime(r,errors.bootstrap,b4_test::host_api());st->shared_paths=&selected_configuration->paths();
+    auto runtime_donor=initial_cells::make_fresh_runtime(r,errors.bootstrap,b4_test::host_api());auto* runtime=runtime_donor.get();st->shared_paths=&selected_configuration->paths();
     require(st->bound&&(&st->bound->configuration==&runtime->configuration())&&st->shared_paths&&runtime->phase()==bootstrap_owner::Phase::Constructed&&!st->configured&&!st->loads&&!st->startups&&st->host.registrations==0,"Actual Runtime binds installed Online/Worker/phase/path roots passively before publication");
     require(!st->bound->runtime.frequency_cache&&st->bound->runtime.registry_values.empty()&&st->bound->runtime.enabled_targets.empty()&&std::all_of(st->bound->runtime.originals.begin(),st->bound->runtime.originals.end(),[](auto value){return value==0;})&&runtime->configuration().username=="anadius"&&runtime->configuration().content_id=="0"&&st->bound->runtime.execution_mutex.type==2,"Actual installed Resources now uses combined observed constructor and outside-image defaults before host setup fills original slots");
     const auto selected=runtime->selected_defaults();require(selected.execution&&selected.thread_join&&!selected.files&&!selected.input&&!selected.library_os,"Runtime keeps injected memory/config boundaries and selects existing concrete execution/native join defaults");
-    runtime->publish();const auto cached_application=runtime->application_entry();require(cached_application(nullptr,1,nullptr)==TRUE,"Actual source application entry starts installed three Domain workers");
+    auto domain_donor=domain.root;auto unload=pre_unload::Controller::take(runtime_donor,domain_donor);
+    require(!runtime_donor&&!domain_donor&&unload->snapshot().phase==pre_unload::Phase::Managed&&runtime->phase()==bootstrap_owner::Phase::Constructed&&!st->startups&&!st->configured,"One owner adopts actual Runtime/Domain before publication or any worker startup");
+    unload->start_application(::GetModuleHandleW(nullptr),nullptr);
+    require(unload->snapshot().phase==pre_unload::Phase::ApplicationAttached&&!unload->snapshot().busy,"Owning attach completes actual synchronous source initialization without controller milestone wait");
+    rejects<std::logic_error>([&]{unload->start_application(::GetModuleHandleW(nullptr),nullptr);},"Attached owner cannot repeat source initialization");
+    const auto cached_application=runtime->application_entry();
     require(::WaitForSingleObject(st->done,10000)==WAIT_OBJECT_0,"Own controlled SDK driver reaches source drain before controller activation");
+    require(st->attached_sockets==std::vector<SOCKET>{200,201},"Listener and first accepted destination attach exactly once; cancelled pending accept never transfers to IOCP");
     for(unsigned n=0;!installed_host.milestones->observed_all()&&n<2000;++n)::Sleep(1);
     require(installed_host.milestones->observed_all()&&installed_host.milestones->matches_execution(&st->bound->execution),"Installed host and three actual workers publish same-Execution milestones");
     require(st->hooks->calls.targets.size()==8&&st->bound->runtime.enabled_targets==st->hooks->calls.enabled,"Actual host source selects six base and two document hooks through same selected engine");
@@ -214,10 +364,10 @@ void preflight_and_actual_runtime(){
     require(st->avatar_requests==std::vector<std::pair<std::string,std::int32_t>>{{"remote",2},{"owner",0},{"owner",0},{"owner",0},{"owner",2},{"owner",2}},"Actual native requests preserve owner and scaled size through all avatar cache cases");
     require(st->avatar_copy_from.size()==3&&st->avatar_copy_from[0].ends_with(u"_AVATAR_owner_128")&&st->avatar_copy_from[1]==st->avatar_copy_from[0]&&st->avatar_copy_from[2].ends_with(u"_AVATAR_owner_416")&&std::all_of(st->avatar_copy_to.begin(),st->avatar_copy_to.end(),[&](const auto& path){return path==runtime->configuration().last_avatar_path;}),"Native -1 permits first small avatar copy, failed copy retries, equal successful size skips and larger size upgrades");
     const auto log=st->buffer->str();const auto zero=log.find("saved size: 0\n"),two=log.find("saved size: 2\n");require(zero!=std::string::npos&&two!=std::string::npos&&zero<two&&log.find("saved size: ",zero+1)==two&&log.find("saved size: ",two+1)==std::string::npos,"Only successful avatar copies publish saved size/log; fail and equal-size hits do not");
-    require(in.waits->active()==0&&in.waits->close(),"Actual selected exit registry is quiescent/closed after source cleanup");auto external_memory=domain.root->make_memory();auto domain_donor=domain.root;auto unload=pre_unload::Controller::take(runtime,domain_donor);const auto close_entry=pre_unload::Controller::entry();
-    require(!close_entry(unload->context())&&!runtime&&!domain_donor&&unload->snapshot().phase==pre_unload::Phase::ClosingDomain,"Actual pre-unload entry retires closed Runtime but retains Domain while explicit external provider lease remains");
+    require(in.waits->active()==0&&in.waits->close(),"Actual selected exit registry is quiescent/closed after source cleanup");auto external_memory=domain.root->make_memory();const auto close_entry=pre_unload::Controller::entry();runtime=nullptr;
+    require(!close_entry(unload->context())&&unload->snapshot().phase==pre_unload::Phase::ClosingDomain,"The same attach owner retires closed Runtime and retains Domain while explicit external provider lease remains");
     require(st->config_retired==1&&st->path_retirement_valid,"Opaque configuration retirement sees live actual state/path roots before aggregate release");
-    installed_host.callbacks.reset();installed_host.milestones.reset();external_memory.reset();require(domain.root->provider_leases()==0,"All worker and retained host control handles release Domain leases before Domain close");st->bound.reset();owned_engine.reset();st.reset();require(close_entry(unload->context())&&unload->closed()&&domain.root->phase()==thread_domain::Phase::Closed,"Actual pre-unload entry closes whole own Domain after real workers/FLS and all retained host/provider controls retire");unload.reset();
+    installed_host.stopped_sources.reset();installed_host.callbacks.reset();installed_host.milestones.reset();external_memory.reset();require(domain.root->provider_leases()==0,"All worker and retained host control handles release Domain leases before Domain close");st->bound.reset();owned_engine.reset();st.reset();require(close_entry(unload->context())&&unload->closed()&&domain.root->phase()==thread_domain::Phase::Closed,"Actual pre-unload entry closes whole own Domain after real workers/FLS and all retained host/provider controls retire");unload.reset();
 }
 }
-int main(){try{preflight_and_actual_runtime();std::cout<<"PASS: "<<checks<<" Resources installer checks; actual Runtime/three Domain workers and assembled native host callbacks; actual Configuration/CompilerConsole; controlled path/FS/CRT/engine/socket SDK boundaries\n";}catch(const std::exception& error){std::cerr<<"FAIL: "<<error.what()<<'\n';std::_Exit(1);}}
+int main(){try{native_worker_io_preflight();native_message_jobs_selection();original_host_assembly();original_registry_during_enable();preflight_and_actual_runtime();std::cout<<"PASS: "<<checks<<" Resources installer checks; actual Runtime/three Domain workers and assembled native host callbacks; actual Configuration/CompilerConsole; controlled path/FS/CRT/engine/socket SDK boundaries\n";}catch(const std::exception& error){std::cerr<<"FAIL: "<<error.what()<<'\n';std::_Exit(1);}}

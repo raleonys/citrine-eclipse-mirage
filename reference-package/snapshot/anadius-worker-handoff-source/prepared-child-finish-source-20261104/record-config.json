@@ -1,0 +1,14 @@
+{
+  "schema":"prepared-child-final-work.source-validation.v1",
+  "kind":"SOURCE_INTEGRATION_TEST_AUTHORING_NOT_NEW_NATIVE_ANALYSIS",
+  "pending_before":"pending-source-status.before.json",
+  "scope":"Actual prepared child/Runtime/Policy final work1-to0 stop and zero-wake integration test source; normal59packet path and native exit/FLS/reap ownership retained. NOT RUN.",
+  "sources":[{"path":"anadius-worker-handoff-source/handoff_integration_tests.cpp","before":"handoff_integration_tests.cpp.before.txt","role":"test"}],
+  "reviews":["independent-fixture-audit.md","root-review.md"],
+  "reports":["source-validation-notes.md","root-review.md"],
+  "supplementary":["outputs/anadius-owned-environment-source/tracked-executor-implementation-20261104/evidence.json","outputs/anadius-owned-environment-source/tracked-executor-implementation-20261104/native-findings.md"],
+  "limits":["No compiler/test/link/DLL execution; assertions are unexecuted source.","Direct actual bridge uses an explicitly fixture-owned work pin; child tracked OwnedEnvironment Row and OriginalApplication end-to-end behavior are not proved.","Runtime failed-post error-latch integration, native ABI/EH and whole-DLL fidelity remain open."],
+  "completed_note":"SOURCE_ONLY prepared real-child LAST work release case authored and independently statically reviewed; three material source findings corrected; default future test entry reaches ordinary and child scenarios. Existing tracked native evidence reused explicitly, not relabeled fresh.",
+  "observation":"Source integration for prior fresh0229a0/02a190 evidence; no redundant native query. Separate fresh028240 audit found literal84530=pqcs; that correction follows as its own stage.",
+  "next_scope":"Correct independently measured84530=pqcs literal in both Policy paths, preserve existing exception/code contract and keep full native diagnostic-message equivalence open pending actual compiler-provider evidence. Continue full reconstruction objective."
+}

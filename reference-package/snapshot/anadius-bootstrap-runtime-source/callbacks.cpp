@@ -1,4 +1,5 @@
 #include "callbacks.hpp"
+#include <atomic>
 #include <mutex>
 #include <stdexcept>
 #include <vector>
@@ -19,6 +20,12 @@ struct Hub {std::mutex gate;std::shared_ptr<State> current;};
 // Survives C++ static teardown. CRT may retain these image-scope thunk addresses
 // after a registry is finished; the thunks never retain a raw provider pointer.
 Hub& hub(){static auto* value=new Hub;return *value;}
+// CRT retains image-scope thunks after manual finish. Once admission is paused,
+// a later exit thunk must not initialize/access Hub or acquire its mutex merely
+// to discover that no callback may run. This scalar has static initialization
+// and trivial destruction; the image itself must still remain mapped.
+constinit std::atomic<bool> dispatch_admitted{false};
+static_assert(std::atomic<bool>::is_always_lock_free);
 struct LastError {
     DWORD value=GetLastError();
     ~LastError(){SetLastError(value);}
@@ -32,6 +39,7 @@ struct Lease {
     ~Lease(){if(state)leave(state);}
 };
 void exit_dispatch() noexcept {
+    if(!dispatch_admitted.load(std::memory_order_acquire))return;
     std::shared_ptr<State> state;Callback callback=nullptr;
     {
         LastError error;
@@ -43,6 +51,7 @@ void exit_dispatch() noexcept {
     try{callback();}catch(...){std::terminate();}
 }
 [[noreturn]] void terminate_dispatch() noexcept {
+    if(!dispatch_admitted.load(std::memory_order_acquire))std::abort();
     std::shared_ptr<State> state;std::terminate_handler callback=nullptr;
     {
         LastError error;
@@ -60,6 +69,7 @@ void activate(const std::shared_ptr<State>& state){
     if(state->finished||state->paused)throw std::logic_error("Callback admission is closed");
     if(hub().current&&hub().current!=state)throw std::logic_error("Another callback registry is published");
     hub().current=state;state->published=true;
+    dispatch_admitted.store(true,std::memory_order_release);
 }
 // Only control methods use this guard. pause may run while an actual callback
 // is active; no provider callback is invoked while the hub mutex is held.
@@ -115,6 +125,8 @@ bool CallbackRegistry::pause_admission(){
     std::lock_guard lock(hub().gate);
     if(state->finished)return true;
     state->paused=true;
+    // An unpublished contender must not disable the current owner's thunks.
+    if(hub().current==state)dispatch_admitted.store(false,std::memory_order_release);
     return !state->active&&!state->draining&&!state->control_busy;
 }
 bool CallbackRegistry::drain_exit_callbacks(){
@@ -157,7 +169,10 @@ bool CallbackRegistry::finish(){
         state->api.set_terminate(state->previous_terminate);
     {
         std::lock_guard lock(hub().gate);
-        if(hub().current==state)hub().current.reset();
+        if(hub().current==state){
+            dispatch_admitted.store(false,std::memory_order_release);
+            hub().current.reset();
+        }
         state->published=false;state->finished=true;state->terminate_callback=nullptr;
     }
     return true;

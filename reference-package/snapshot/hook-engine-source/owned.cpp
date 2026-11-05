@@ -12,7 +12,7 @@ struct OwnedEngine::Impl {
     // Destroy lower Api while its code/backing is still retained.
     std::shared_ptr<void> code;std::unique_ptr<Api> lower;
     mutable std::mutex gate;const DWORD controller=::GetCurrentThreadId();
-    OwnedPhase phase=OwnedPhase::Fresh;bool active=false,has_result=false;
+    OwnedPhase phase=OwnedPhase::Fresh;bool active=false,has_result=false,original_callers=false;
     Operation operation=Operation::Initialize;int status=0;
     explicit Impl(Owners&& owners):code(std::move(owners.code)),lower(std::move(owners.lower)){}
 };
@@ -30,10 +30,14 @@ OwnedEngine::~OwnedEngine() noexcept {
 }
 EngineSnapshot OwnedEngine::snapshot()const{Error error;const auto& v=*impl_;std::lock_guard lock(v.gate);return {v.phase,v.active,v.has_result,v.operation,v.status};}
 bool OwnedEngine::empty()const{const auto s=snapshot();return !s.active&&(s.phase==OwnedPhase::Fresh||s.phase==OwnedPhase::Closed);}
+void OwnedEngine::select_original_callers(){
+    Error error;auto& v=*impl_;if(::GetCurrentThreadId()!=v.controller)throw std::logic_error("Original engine profile selects on its creator");
+    std::lock_guard lock(v.gate);if(v.phase!=OwnedPhase::Fresh||v.active||v.original_callers)throw std::logic_error("Original engine callers require a fresh unselected engine");v.original_callers=true;
+}
 template<class F>int OwnedEngine::run(Operation op,F&& lower){
     Error error;auto& v=*impl_;
-    if(::GetCurrentThreadId()!=v.controller)throw std::logic_error("Hook engine controller required");
     {std::lock_guard lock(v.gate);
+     if(!v.original_callers&&::GetCurrentThreadId()!=v.controller)throw std::logic_error("Hook engine controller required");
      if(v.phase==OwnedPhase::Retiring)throw std::logic_error("Retiring hook engine cannot be called");
      if(v.active){v.phase=OwnedPhase::Poisoned;throw std::logic_error("Hook engine reentry");}
      if(v.phase==OwnedPhase::Poisoned)throw std::logic_error("Unknown hook engine outcome requires retention");

@@ -1,0 +1,47 @@
+{
+  "schema": "parallel-handler-remaining-integration.v1",
+  "recorded_at": "2026-11-04T22:43:29.405121+00:00",
+  "status": "LOWER_ACTOR_FOUNDATION_IMPLEMENTED_ACTUAL_ORIGINAL_PARALLEL_ROUTE_PENDING",
+  "source_checkpoint": {
+    "path": "outputs/anadius-session-memory-source/actor-catalog-foundation-20261105/evidence.json",
+    "sha256": "f13662c6370f7bd64c2ff51e6344e3ed150cd700935ba16e4f4bcf50d88a6811"
+  },
+  "pending_source_count": 86,
+  "actual_production_policy": "Serialized; no OriginalConcurrentActors production selection",
+  "native_behavior_gap_closed": false,
+  "completed_prerequisite": "Stable per-actor Parent/PTD/JobScope permissions; exact pinned byte/header/map lookups; per-attempt allocation rollback; ApplicationMemory node and Prepared reaper metadata outside gates. Independently reviewed, not compiled or run.",
+  "remaining": [
+    {
+      "order": 1,
+      "scope": "OwnedIoMemory stable Record-owned storage/dispatcher bindings + exact owner resolvers; remove live-vector pointer patching/shared registry mutex across Parent/native effects, preserve generation/loans/strong/range pins. Profile Strings authoritative header/prune and Deques per-call growth/cached-map ownership."
+    },
+    {
+      "order": 2,
+      "scope": "Per-message Profile job/slot admission and NativeProfile independent Invocation with local/private-window composite resolver + explicitly supplied call Dependencies. Same-session healthy messages may overlap; retain exact failed prefixes and actual shared cipher/business identity."
+    },
+    {
+      "order": 3,
+      "scope": "Per-message Graph router/adapters/writers/checkpoint/lock bookkeeping; concrete Content/Information/Licensing job views over shared actual backing. Preserve real event/achievement mutexes, no global current job/TLS authority or cloned Runtime/Online roots."
+    },
+    {
+      "order": 4,
+      "scope": "Only after lower+upper consumers cohere remove NativeJobs whole-body source_gate in selected Original policy. Keep exact row/generation/work/receipt ownership and response completion before physical native/FLS reap."
+    },
+    {
+      "order": 5,
+      "scope": "Wire actual Original composition through the one immutable Parent policy. Author both same-session and distinct-session warmed plaintext A supported UnknownMessage modal/B actual GetConfig response-before-A-release cases, real IO/Graph/NativeJobs route; no fabricated readiness/work or separate Parents."
+    }
+  ],
+  "validation_limits": [
+    "All17source units statically reviewed; five test files authored, none run.",
+    "Actual UnknownMessage/GetConfig Graph progress is still unimplemented/unvalidated. Lower direct typed-map source coverage is not end-to-end closure.",
+    "Explicit rebuild still required for compiler/project test/link/execution/ZIP work; historical proof retained."
+  ],
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "overall_completion_percentage": null,
+  "continuous_goal_active": true
+}

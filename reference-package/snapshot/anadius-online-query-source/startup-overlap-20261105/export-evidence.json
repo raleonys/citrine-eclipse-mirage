@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"path\":\"C:\\\\Users\\\\Skysect\\\\Documents\\\\Codex\\\\2026-10-16\\\\mcp\\\\outputs\\\\anadius-online-query-source\\\\startup-overlap-20261105\\\\native-evidence-bundle.json\",\"bytes\":187323,\"records\":12,\"unknowns\":0}}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-online-query-source\\startup-overlap-20261105\\native-evidence-bundle.json",
+      "bytes": 187323,
+      "records": 12,
+      "unknowns": 0
+    }
+  }
+}

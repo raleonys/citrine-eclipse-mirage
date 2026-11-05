@@ -136,6 +136,30 @@ void query_tests(){
     check(std::find(f.e.events.begin(),f.e.events.end(),"copyA")==f.e.events.end());
     check(f.e.events.back()=="wait");
 }
+void query_alias_tests(){
+    for(bool wide:{false,true}){
+        Fixture f;f.client.insert(9);f.values["ClientPath"]=u"";
+        alignas(std::uint32_t) std::array<unsigned char,8> bytes;bytes.fill(0xa5);
+        const auto shared=DwordCell::from_raw(bytes.data());
+        const auto query=[&](void* data){
+            return wide?query_w_00fb60(f.state(),f.e,{9,u"INSTALL",nullptr,shared,data,shared}):
+                query_a_00fac0(f.state(),f.e,{9,"INSTALL",nullptr,shared,data,shared});
+        };
+        const auto required=wide?2u:1u;
+        // Native0091a0/0093a0 write the size before copying NUL;009520/009850
+        // then reread type. All three outputs may denote the same DWORD.
+        shared.store(4);
+        check(query(bytes.data())==0&&shared.load()==1);
+        check(bytes[0]==1&&bytes[1]==0&&bytes[2]==0&&bytes[3]==0);
+        check(bytes[4]==0xa5&&bytes[5]==0xa5&&bytes[6]==0xa5&&bytes[7]==0xa5);
+        // Without a copy, the required-size DWORD remains nonzero and the
+        // shared type field must not overwrite it with a separate cached type.
+        shared.store(4);
+        check(query(nullptr)==0&&shared.load()==required);
+        shared.store(0);
+        check(query(bytes.data())==234&&shared.load()==required);
+    }
+}
 void close_tests(){
     for(bool fabricated:{false,true})for(Status status:{0u,6u,0xffffffffu}){
         Fixture f;f.client.insert(4);f.language.insert(4);if(fabricated)f.fake.insert(4);f.e.close_status=status;
@@ -226,4 +250,4 @@ void abi_cell_tests(){
     check(native_size==777&&native_type==0);
 }
 }
-int main(){try{match_tests();open_tests();query_tests();close_tests();abi_cell_tests();std::cout<<"registry-source: "<<checks<<" checks passed\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+int main(){try{match_tests();open_tests();query_tests();query_alias_tests();close_tests();abi_cell_tests();std::cout<<"registry-source: "<<checks<<" checks passed\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

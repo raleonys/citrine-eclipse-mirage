@@ -1,0 +1,70 @@
+{
+  "schema": "original-native-profile-per-message.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_PER_MESSAGE_NATIVE_PROFILE_PREREQUISITE",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Per-message NativeProfile Invocation/admission/retirement ownership with immutable explicit call Dependencies, healthy-active versus failed prefix observations and private-window/exact-Parent memory resolution. Actual Original remains Serialized.",
+  "sources": [
+    {
+      "path": "anadius-native-profile-source/native.hpp",
+      "before": "before/anadius-native-profile-source__native.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-native-profile-source/native.cpp",
+      "before": "before/anadius-native-profile-source__native.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-native-profile-source/native_tests.cpp",
+      "before": "before/anadius-native-profile-source__native_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "before": "before/anadius-worker-handoff-source__handoff_tests.cpp",
+      "role": "test"
+    }
+  ],
+  "reviews": [
+    "production-independent-review.md",
+    "fixture-independent-review.md",
+    "root-independent-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "native-findings.md",
+    "native-implementation.md",
+    "core-test-source-notes.md",
+    "sdk-fixture-implementation.md"
+  ],
+  "native_replies": [
+    "instruction-180033d7c.json",
+    "instruction-180033db0.json",
+    "instruction-180033dbe.json",
+    "instruction-1800340bf.json",
+    "instruction-1800340c7.json",
+    "instruction-1800340cf.json",
+    "instruction-180034207.json",
+    "instruction-1800345c8.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-native-profile-source/per-message-invocations-20261105/native-evidence-index.json",
+    "outputs/anadius-session-profile-source/parallel-string-deque-ownership-20261105/evidence.json",
+    "outputs/anadius-session-profile-source/parallel-string-deque-ownership-20261105/remaining-integration.json",
+    "outputs/anadius-session-profile-source/parallel-string-deque-ownership-20261105/next-profile-per-message-plan.md",
+    "outputs/anadius-session-profile-source/parallel-string-deque-ownership-20261105/graph-parallel-design.md"
+  ],
+  "limits": [
+    "No compiler, project tests, link, DLL execution or ZIP update. Two changed test files contain authored assertions, none executed.",
+    "Actual Original remains Serialized. Profile Job/Slot admission/publication, Graph router/writer and Content/Information/Licensing facades, Policy cleanup and NativeJobs source gate must still cohere before actual production enable.",
+    "Per-call DOM/printer/adapter ownership shares actual Session/cipher and business backing. Arbitrary same-session encrypted/key transitions or foreign SDK/global payload mutation are not newly synchronized or claimed safe.",
+    "RealPrepared same-session NativeProfile source fixture is not actual Graph/NativeJobs, IOCP/network or full028d30 child response-tail ordering coverage.",
+    "Unknown source/callback/retirement outcomes retain their invocation and shared sticky failure; they are not replayed, guessed cleaned or erased by healthy sibling completion.",
+    "Exact Parent lookup plus private inline windows does not grant permission to use a foreign owner or released span; actual per-actor/SDK range loans remain authoritative.",
+    "Historical build/source snapshot/DLL/ZIP and original binaries unchanged. Consistent explicitly authorized rebuilding and later execution needed; native ABI/EH and overall completeness remain unverified."
+  ],
+  "completed_note": "SOURCE_ONLY8freshREAinstructions;2production+2testfiles implementper-messageNativeProfileInvocation/explicitdependencies/compositeviewsandhealthyactivefailureseparation. SameSessionrealPreparedAUnknown/BactualGetConfigsourceassertionsNOTRUN; productionSerialized.",
+  "observation": "REA6.8.0aligned/Ghidra12.1.4;8freshselected033d70local-document/result/temporary/sharedflaginstructions exportedclosed/originalhashunchanged. Three useful implementation/test/review subagents and exactcandidate staticreviews.",
+  "next_scope": "Continue per-message Profile Job/Slot registry admission/publication and Graph explicitcall contexts/providers over the same business roots; preserve concrete Policy current-thread cleanup, actual accept/packet ownership, then remove NativeJobs bodygate and enable one actual immutable policy only when coherent. Full same-session/distinct-session actualGraph/native response-before-modal-release and child-tail ordering remain mandatory. No build authorization."
+}

@@ -2,6 +2,7 @@
 #include "request_growth.hpp"
 #include "response_hex.hpp"
 #include "response_containers.hpp"
+#include <atomic>
 
 namespace anadius::socket_recovered {
 // Explicit caller-owned projection of the native automatic document/string
@@ -9,8 +10,25 @@ namespace anadius::socket_recovered {
 // no shared scratch, reentrancy, MSVC object layout or EH implementation implied.
 struct NativeMessageDocument {int error_6c=0;};
 struct NativeMessageLocals {NativeMessageDocument document;ReceiveBufferString response,temporary;};
+// One shared count cell: the native pre-lock peek is relaxed and cannot wait
+// on the event mutex. Map/payload access and count mutations still require the
+// actual queue lock. Copies are value snapshots, never another queue owner.
+class NativeMessageCount final {
+public:
+    NativeMessageCount(std::uint64_t value=0)noexcept:value_(value){}
+    NativeMessageCount(const NativeMessageCount& other)noexcept:value_(other.load()){}
+    NativeMessageCount& operator=(const NativeMessageCount& other)noexcept{return *this=other.load();}
+    NativeMessageCount& operator=(std::uint64_t value)noexcept{value_.store(value,std::memory_order_relaxed);return *this;}
+    std::uint64_t load()const noexcept{return value_.load(std::memory_order_relaxed);}
+    operator std::uint64_t()const noexcept{return load();}
+    std::uint64_t operator++()noexcept{return value_.fetch_add(1,std::memory_order_relaxed)+1;}
+    std::uint64_t operator--()noexcept{return value_.fetch_sub(1,std::memory_order_relaxed)-1;}
+private:
+    std::atomic<std::uint64_t> value_;
+};
+static_assert(std::atomic<std::uint64_t>::is_always_lock_free,"Native event count peek must not hide a library mutex");
 struct NativeMessageEventQueue {
-    std::span<ReceiveBufferString*> map_08;std::uint64_t map_size_10=0,offset_18=0,count_20=0;
+    std::span<ReceiveBufferString*> map_08;std::uint64_t map_size_10=0,offset_18=0;NativeMessageCount count_20=0;
 };
 struct NativeMessageMutex {std::int32_t lock_count_4c=0;};
 enum class NativeMessageLog {received,response,event,bad_xml,decryption_failure};

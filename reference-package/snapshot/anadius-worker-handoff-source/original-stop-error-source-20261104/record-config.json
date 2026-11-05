@@ -1,0 +1,34 @@
+{
+  "schema": "original-serving-stop-error.source-validation.v1",
+  "kind": "SOURCE_INTEGRATION_TEST_AUTHORING_NOT_NEW_NATIVE_ANALYSIS",
+  "pending_before": "before/pending-source-status.before.json",
+  "scope": "Actual Runtime serving original failed-stop latch source scenario with natural final pin, saved77 before checkpoint clobber, native what and exact terminal137; NOT RUN.",
+  "sources": [
+    {
+      "path": "anadius-worker-handoff-source/handoff_integration_tests.cpp",
+      "before": "before/handoff_integration_tests.cpp.before.txt",
+      "role": "test"
+    }
+  ],
+  "reviews": [
+    "independent-fixture-audit.md",
+    "root-review.md"
+  ],
+  "reports": [
+    "source-validation-notes.md",
+    "root-review.md"
+  ],
+  "supplementary": [
+    "outputs/anadius-owned-environment-source/tracked-executor-implementation-20261104/evidence.json",
+    "outputs/anadius-session-policy-source/native-stop-diagnostic-20261104/evidence.json"
+  ],
+  "limits": [
+    "No compiler/tests/link/DLL execution; authored assertions remain unexecuted.",
+    "Actual child post-failure/latch and child tracked-row ownership integration remain separate coverage.",
+    "Failing subprocess exits before normal worker_returned/cache/Graph teardown; success modes retain their own assertions.",
+    "Native EH/ABI, full original application lifecycle and whole DLL fidelity remain open."
+  ],
+  "completed_note": "SOURCE_ONLY actual Runtime original-serving failed-post latch integration authored and independently reviewed; natural final pin, immediate77 then checkpoint1234, once-native diagnostic and exact retained-prefix terminal137 included in future default own-child harness.",
+  "observation": "No new native query for source fixture authoring; prior exact02a190/028240 and native category/what records reused explicitly. Concurrent freshIOCP audit identified mutex/iocp labels for next production correction.",
+  "next_scope": "Bind the newly measured84428 mutex and84528 iocp construction failures to native system diagnostics while preserving nonzero guards/nullport-error0 and uninspected HOST cases. Continue complete reconstruction; do not claim tests executed."
+}

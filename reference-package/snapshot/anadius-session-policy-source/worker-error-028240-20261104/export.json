@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"path\":\"C:\\\\Users\\\\Skysect\\\\Documents\\\\Codex\\\\2026-10-16\\\\mcp\\\\outputs\\\\anadius-session-policy-source\\\\worker-error-028240-20261104\\\\rea-evidence-bundle.json\",\"bytes\":45717,\"records\":7,\"unknowns\":0}}"
+    }
+  ],
+  "structuredContent": {
+    "result": {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\worker-error-028240-20261104\\rea-evidence-bundle.json",
+      "bytes": 45717,
+      "records": 7,
+      "unknowns": 0
+    }
+  }
+}

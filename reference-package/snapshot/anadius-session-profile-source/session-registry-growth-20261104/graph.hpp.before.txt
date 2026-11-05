@@ -1,0 +1,100 @@
+#pragma once
+#include "../anadius-session-policy-source/policy.hpp"
+#include "../anadius-native-profile-source/native.hpp"
+#include "../anadius-server-runtime-source/resources.hpp"
+#include "../anadius-dispatch-source/router.hpp"
+#include "../anadius-crypto-source/crypto.hpp"
+#include "../anadius-achievement-runtime-source/mutex_binding.hpp"
+#include <functional>
+
+namespace anadius::application_graph {
+namespace sp=session_profile;namespace np=native_profile;namespace rt=server_runtime;namespace o=owned_server;namespace s=socket_recovered;
+// Exact live objects, not a copy of RuntimeOwner configuration. The owner must
+// retain ALL pointed cells. Access/mutation is serialized on the graph worker;
+// concurrent online-worker/global mutation is outside this selected contract.
+struct StateView {
+    std::shared_ptr<void> lifetime;
+    configuration::State* configuration=nullptr;
+    std::uint8_t* online=nullptr;
+    std::int32_t* saved_avatar_size=nullptr;
+    configuration::Path* achievement_file=nullptr;
+};
+enum class Log {Received,Response,Event,BadXml,DecryptionFailure};
+struct ProfileSettings {
+    std::size_t sessions=16,jobs_capacity=64,headers=256,initial_output_slots=8,environment_capacity=4096;
+    s::AsyncReceiveImports receive{};s::AsyncSendImports send{};
+    // Explicit HOST execution backend. Empty preserves owned InlineJobs.
+    // Selecting one does not grant child message/Graph/leaf-provider authority.
+    std::shared_ptr<sp::Jobs> jobs;
+};
+struct Options {
+    StateView state;
+    // Policy stream/imports and explicit lifecycle profile. Default Explicit
+    // requires all four callbacks; SourceOwned retains mandatory external drain
+    // with source owner/reap/worker-return behavior. OriginalApplication uses
+    // real local source retirement without an external image/unload proof.
+    // Graph and Policy share lifecycle_configuration_valid. guard_epoch MUST
+    // be null: the graph supplies one stable fresh cell to Policy and Runtime.
+    session_policy::Options policy;
+    std::shared_ptr<handlers_recovered::Effects> information;
+    std::shared_ptr<content_handlers_recovered::Effects> content;
+    std::shared_ptr<dispatch_recovered::LicenseHandlers> licensing;
+    std::shared_ptr<crypto_recovered::TimeSource> time; // empty selects WindowsTimeSource
+    ProfileSettings profile;
+    std::string version;
+    std::uint8_t show_lsx=0;
+    // Initial power-of-two map allocation, not a maximum event count. Native
+    //034660's one-spare-slot rule grows it by doubling with minimum8.
+    std::size_t event_capacity=64;
+    // Optional explicit HOST customization/observation, never a SessionLogic,
+    // XML/backend, Router, context registry or event implementation supplied by
+    // the caller. All opaque callbacks run outside graph metadata locks.
+    std::function<void(sp::SessionView)> prepare_session;
+    std::function<void(sp::SessionView,Log,std::string_view,std::string_view)> observe_log;
+};
+enum class Phase {Fresh,Installing,Installed,Bound,Drained,Closed,Poisoned,Retiring};
+struct Snapshot {Phase phase;std::size_t live_logics,queued_events;bool active,event_locked,event_initialized,parent_bound;};
+
+// Concrete application/server-component factory. Graph create/install/server
+// entry/retirement always use ONE original worker thread/fiber outside loader
+// lock. Legacy install creates Domain memory on that same controller/worker.
+// Prepared install consumes a dedicated capability from a distinct controller;
+// no automatic whole bootstrap Resources/loader factory is claimed.
+// Its private NativeLogic additionally implements native_profile::JobLogic for
+// exact session/Parent scoped033d70. Public graph/lifecycle APIs remain original
+// worker-only; external global/online mutation must still be serialized.
+class Graph final:public std::enable_shared_from_this<Graph> {
+public:
+    static std::shared_ptr<Graph> create(Options);
+    ~Graph()noexcept;
+    Graph(const Graph&)=delete;Graph& operator=(const Graph&)=delete;
+    // Original worker/fiber, once in Fresh before install. Owner retains idle
+    // type2 native mutex state and SDK platform through all Graph retirement.
+    // Unbound Graphs preserve their existing private semantic mutex policy.
+    void bind_achievement_mutex(execution_recovered::MutexState&,execution_recovered::Platform&);
+    // Refuses prebound errors/runtime/profile/categories/guard and replaces
+    // neither existing Resources.server nor caller's other Resources members.
+    // Existing explicit socket/dispatcher/accept/cancel/executor/TLS providers
+    // remain mandatory. Constructs actual Policy, Profile and NativeLogic route.
+    void install_server(bootstrap_backend::Resources&,std::shared_ptr<thread_domain::DomainStorage>,o::Dependencies,rt::Dependencies);
+    void install_server_prepared(bootstrap_backend::Resources&,std::shared_ptr<thread_domain::DomainStorage>,worker_handoff::PreparedMemory::Borrow&&,o::Dependencies,rt::Dependencies);
+    // Explicit cancellation for a published factory whose context was NEVER
+    // initialized. No implicit cleanup of a partial/unknown started graph.
+    void close_unstarted();
+    // Same worker + whole bound Parent Operation; allocation/unknown errors
+    // poison and retain known state. First event use inserts actual DOWN seed.
+    void enqueue(std::string_view);
+    // Rebuilds Router state views at every dispatch, so controlled vector/map
+    // updates do not leave persistent stale spans. No rollback on unknown error.
+    void update(const std::function<void(StateView)>&);
+    Snapshot snapshot()const; // owning-worker reentrant metadata only
+    bool retained(sp::SessionToken)const;
+    std::shared_ptr<sp::Profile> profile()const;
+    std::shared_ptr<session_policy::Policy> policy()const;
+    o::OwnedServerBackend& backend()const; // borrowed, only while server lives
+private:
+    explicit Graph(Options);
+    void install_server_impl(bootstrap_backend::Resources&,std::shared_ptr<thread_domain::DomainStorage>,worker_handoff::PreparedMemory::Borrow*,o::Dependencies,rt::Dependencies);
+    struct Impl;std::shared_ptr<Impl> impl_;
+};
+} // namespace anadius::application_graph

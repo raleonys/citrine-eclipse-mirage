@@ -1,27 +1,27 @@
 {
-  "recorded_at": "2026-11-01T18:35:16.689528+00:00",
-  "scope": "Documentation accompanying fresh full common build; prior B54 documentation snapshot retained in history",
-  "build_record_sha256": "e6112b9ade9c32c6dba2b4bec33ae09c2e8a8d3593b99c0db97fb29b836a66d6",
+  "recorded_at": "2026-11-05T19:38:00.051488+00:00",
+  "scope": "Current rebuild documentation; earlier snapshots dated in history",
+  "build_record_sha256": "359927eea05c1d1f6dddc99be05a4a4f0df393ff82ac4bc9e5e2355a15ad7252",
   "documents": [
     {
       "path": "DLL-ANALIZ-RAPORU.md",
-      "sha256": "4cf72f2fdde4e2cef9fa8bcdf4056110b0d0e5838b4a7e73bbc4a436d1adf9a5"
+      "sha256": "21da3777a07c49c9fd53a04e994e43bf881f03891ef56f3043c5f1f08e84ccd9"
     },
     {
       "path": "KAYNAK-DURUMU.md",
-      "sha256": "9dce1c81a7a220b5a6474a08ab916a3e45fc8e46da4a62889e64e8044c2ef31d"
+      "sha256": "4601b0f79a36b3c3376d9811adb8e44139bfb2dc4e23f586e0d00dbdd71eb2bf"
     },
     {
       "path": "KOD-REHBERI.md",
-      "sha256": "fbc9f304367029508a9069cc129cd51cd61681cc70569595c5012a581d6862a8"
+      "sha256": "a648eacb03f744583b6fe92f5267ebc94024daab639193cbf06338e3361579ea"
     },
     {
       "path": "TAMAMLANMA-TAHMINI.md",
-      "sha256": "9ab69e4e3d7609960197ccaecd798c7777a735cb3fc913fe43dfbe9d9feca111"
+      "sha256": "5e42bf0d08df5a4358690c0cddc894d1f1dcd9039a45bfdb335ffd14a278d43a"
     },
     {
       "path": "YOL-HARITASI.md",
-      "sha256": "6da847fe684d0eb1c01f93edcf19cc4cfcd769f9233f28ae73d56a51b3d58b77"
+      "sha256": "cfc0561768add195ac4c59100d473946964422cccf10a694bc75712f230d602a"
     },
     {
       "path": "anadius-accept-helpers-source/README.md",
@@ -46,6 +46,10 @@
     {
       "path": "anadius-accept-stop-source/architecture-review.md",
       "sha256": "09dcae808feb27441713dd89109c65949568725c6224c2306640e4dcdc3198e4"
+    },
+    {
+      "path": "anadius-accept-stop-source/source-proof.md",
+      "sha256": "e2fd238d98cf225b5f48168c0a87482ea951a84e455af55a3273225e801606fd"
     },
     {
       "path": "anadius-achievement-runtime-source/README.md",
@@ -89,27 +93,219 @@
     },
     {
       "path": "anadius-application-graph-source/README.md",
-      "sha256": "25775391e36550e3a297cb899a3225a4ab9eb627fa04d9c8207d651c6ad40021"
+      "sha256": "bee453fa5b27b138568a82065981f42ff24274af73057426568caa02607a0bc7"
     },
     {
       "path": "anadius-application-graph-source/architecture-review.md",
       "sha256": "045625f5ddc09dbc28fa8f607998d8bc8a75492ded4e65a1e8a54ffa455aefaa"
     },
     {
+      "path": "anadius-application-graph-source/event-queue-growth-20261104/graph-implementation.md",
+      "sha256": "b0e0edc362084536dfbdfc2a93315edffb151d8d4adc6c6e3fa7a1b54739786a"
+    },
+    {
+      "path": "anadius-application-graph-source/event-queue-growth-20261104/independent-review.md",
+      "sha256": "47278e359b2bd7885e46707851ed4fbbb9cb0ddfcf12f61c8159b5830448b190"
+    },
+    {
+      "path": "anadius-application-graph-source/event-queue-growth-20261104/native-findings.md",
+      "sha256": "9e3b01f90cd959a636840370ca0f7acef22a791993dd85cddda81068ee854280"
+    },
+    {
+      "path": "anadius-application-graph-source/event-queue-growth-20261104/report.md",
+      "sha256": "627cab8e601e0fbd53617b18c03a7af11b326b0c7a9bc03fa1b2ff7e395d433d"
+    },
+    {
+      "path": "anadius-application-graph-source/event-queue-growth-20261104/test-source-notes.md",
+      "sha256": "dfdb1ba10289ba37119ea1a1e1ce8158c43433b2acede081dea9b653b0a15e9c"
+    },
+    {
+      "path": "anadius-application-graph-source/job-graph.md",
+      "sha256": "737a4d3e26dcd43c7babcac12e9537fc7ebef95310379c4bf76323044a25e4b9"
+    },
+    {
+      "path": "anadius-application-graph-source/native-close-retry.md",
+      "sha256": "f54bb1d477d3cf70f10845832b138aacc477b8b1df62cf1e09a8b26568cd3302"
+    },
+    {
+      "path": "anadius-application-graph-source/original-retirement.md",
+      "sha256": "4bcc29bcb5c83eca120aa6248518ef375807c430ab4ccbfe4834c08a8ce3dfe9"
+    },
+    {
+      "path": "anadius-application-graph-source/per-message-call-contexts-20261105/count-test-source-notes.md",
+      "sha256": "8e7a4224ccb5530c56bf37a94ee0df4355b18267c407451767a0dcee199d009c"
+    },
+    {
+      "path": "anadius-application-graph-source/per-message-call-contexts-20261105/graph-and-count-independent-review.md",
+      "sha256": "825f78144fa6913f206ce0d3bf68bf768875011bb31b67b2b21d825f703a7930"
+    },
+    {
+      "path": "anadius-application-graph-source/per-message-call-contexts-20261105/graph-implementation.md",
+      "sha256": "501f81af93ef6649de95f1bc596c159b47f7861f2849382c3a05641f80d920a2"
+    },
+    {
+      "path": "anadius-application-graph-source/per-message-call-contexts-20261105/implementation.md",
+      "sha256": "9a8a3ccd196052afa02d82694fe2b18136d299be9a8de22f5b480f080335becf"
+    },
+    {
+      "path": "anadius-application-graph-source/per-message-call-contexts-20261105/native-findings.md",
+      "sha256": "144d1d5c168e7613cc98d9395fa8acfa0f88ccbc1cc525c9853f027dc79d6811"
+    },
+    {
+      "path": "anadius-application-graph-source/per-message-call-contexts-20261105/native-mutex-concurrency-audit.md",
+      "sha256": "71783ef858e8c95814910a2898bdbd0893b2842c691e22078647e64e675a295f"
+    },
+    {
+      "path": "anadius-application-graph-source/per-message-call-contexts-20261105/next-mutex-owner-implementation-plan.md",
+      "sha256": "1448fc301f4f48f6da722242fbcea315a97cb16f4bd0d33f9447477cc266ce4c"
+    },
+    {
+      "path": "anadius-application-graph-source/per-message-call-contexts-20261105/next-profile-code-plan-v2.md",
+      "sha256": "57c0fc62644271ec2a8814c02ec3f07a159f5eac1ddcf14c3bf2a1e364c053cf"
+    },
+    {
+      "path": "anadius-application-graph-source/per-message-call-contexts-20261105/root-independent-review.md",
+      "sha256": "875ad58924268c4ecf1011d7a3eda791aa4f95e8c0d003630d27b77dd4817f46"
+    },
+    {
+      "path": "anadius-application-graph-source/per-message-call-contexts-20261105/sdk-fixture-implementation.md",
+      "sha256": "eb3347239118baae6b2a6b20868261b06800c23bdfc5d245121492d2c9e28785"
+    },
+    {
+      "path": "anadius-application-graph-source/per-message-call-contexts-20261105/sdk-fixture-independent-review.md",
+      "sha256": "0973dd4327f28d739751bdfe190e8bbe640c96b7ba3862633a087225059a7ff0"
+    },
+    {
+      "path": "anadius-application-graph-source/prepared-native-delayed-exit.md",
+      "sha256": "8f3d51bf1c96f4ba56ee549ba47668a922a512ea0664a00cdc882faa665c2941"
+    },
+    {
+      "path": "anadius-application-graph-source/prepared-native-fixture.md",
+      "sha256": "766f043956395141bc5411b56adfddb09a2e763a61e8aac0248936523b35d759"
+    },
+    {
+      "path": "anadius-application-graph-source/scoped-runtime-integration-20261105/implementation.md",
+      "sha256": "ad8377459a06ea88a195aa88f13956536c143205149035719bd2a6b0acee5e57"
+    },
+    {
+      "path": "anadius-application-graph-source/scoped-runtime-integration-20261105/root-six-file-review.md",
+      "sha256": "c59d000331a2773418e49c5def565e95b1a9ae8d3363df712b12336d85160467"
+    },
+    {
+      "path": "anadius-application-graph-source/scoped-runtime-integration-20261105/scoped-runtime-independent-review.md",
+      "sha256": "6e4096a8f1025a05dfb63450057aff81eea66b4ea14f0a87460b43a135b88247"
+    },
+    {
+      "path": "anadius-application-graph-source/scoped-runtime-integration-20261105/scoped-runtime-test-implementation.md",
+      "sha256": "a8faa3039f6eaf6be2ff12cac53deac9a829a6193d9083facbaa4a9c6b7b01ae"
+    },
+    {
+      "path": "anadius-application-graph-source/scoped-runtime-integration-20261105/selected-owner-implementation.md",
+      "sha256": "bf75833107b37e50c158417cc7b582a829c1440d8b7098ef2c5a0a03b52e120d"
+    },
+    {
+      "path": "anadius-application-graph-source/worker-physical-close.md",
+      "sha256": "9e0ce773fa580baeffe056c3f4b98d54eef7dc7bf12ff234df836646a0872df5"
+    },
+    {
+      "path": "anadius-application-io-source/provider-call-views-20261105/content-and-fixture-independent-review.md",
+      "sha256": "df43a6a3808f037ae08aaed6fb72edae4358d4563d0c7b92e563f9546de95375"
+    },
+    {
+      "path": "anadius-application-io-source/provider-call-views-20261105/content-and-fixture-independent-review.round1.md",
+      "sha256": "74ccf5fcd3d4882fa3d2210736b0ce96fbe8731ca90e53b6b5872c901332e311"
+    },
+    {
+      "path": "anadius-application-io-source/provider-call-views-20261105/content-implementation.md",
+      "sha256": "bf154c2a6f12cee0618e27badee364ed2cd89e58c907f4313d815be092cd724a"
+    },
+    {
+      "path": "anadius-application-io-source/provider-call-views-20261105/implementation.md",
+      "sha256": "8855c107590e5d314cae90b8fa1b6b806fcfdcb9aa79265115b5de5418915c4a"
+    },
+    {
+      "path": "anadius-application-io-source/provider-call-views-20261105/information-and-context-independent-review.md",
+      "sha256": "b26cdd4b2972834ee98cc69d7692cf962bcdbc15e55c3b80662704fc8a215cce"
+    },
+    {
+      "path": "anadius-application-io-source/provider-call-views-20261105/information-implementation.md",
+      "sha256": "cf0a56e1a57f130215feb196850f19b655eea99d6f84e5e051f2dd2f5e7737a6"
+    },
+    {
+      "path": "anadius-application-io-source/provider-call-views-20261105/native-findings.md",
+      "sha256": "8465f7d52693167b45dd7121f9ebd10ad8916f62b1ac306d930341870cf1f9bd"
+    },
+    {
+      "path": "anadius-application-io-source/provider-call-views-20261105/next-licensing-call-view-plan.md",
+      "sha256": "9ec3853eb69e30efe43bcaba01b3941177168b1d830a198d8b4407402325d5c4"
+    },
+    {
+      "path": "anadius-application-io-source/provider-call-views-20261105/next-licensing-fixture-plan.md",
+      "sha256": "62e881aacf7c0cfa86ada2c26834738a6b161ce98174a7628edf7614bb6059f5"
+    },
+    {
+      "path": "anadius-application-io-source/provider-call-views-20261105/next-licensing-shared-root-audit.md",
+      "sha256": "6f9f0d1f96352f89e9fa3d729871e5e2861098594ad7298b7689e75730edeb06"
+    },
+    {
+      "path": "anadius-application-io-source/provider-call-views-20261105/root-independent-review.md",
+      "sha256": "49a99bd702eb2989f24fde9374c625689d734aa668b7ec885ca76d57504647dc"
+    },
+    {
+      "path": "anadius-application-io-source/provider-call-views-20261105/sdk-fixture-implementation.md",
+      "sha256": "4b4e0cd80fd767d72d2734f9f6d7ad300ea60ea4ba10fda3f43095b2430f1eb4"
+    },
+    {
       "path": "anadius-application-worker-source/README.md",
-      "sha256": "310c1a8f9b0e0abfd91a93a55e7ea19c561085ec6b7d9c02fd283b8528a33ae4"
+      "sha256": "03a733bdb3687303c7f97b12982c04461642c18c5c97d16b01ac55c8e8ebf6e5"
     },
     {
       "path": "anadius-application-worker-source/architecture-review.md",
       "sha256": "5d85d56a133b89e97f28120ab6a8b7494ffde0608329fb317685f5006dcbb55b"
     },
     {
+      "path": "anadius-application-worker-source/close-continuation.md",
+      "sha256": "d4b2fe2bb9986daf18c507da821222764476dca1368ff903ebeac4663f78a8fa"
+    },
+    {
+      "path": "anadius-application-worker-source/join-binding.md",
+      "sha256": "f17c2a2cfa1a821d9902295fc0a893431114b6cd4fa11ae129992109e0dd9da0"
+    },
+    {
+      "path": "anadius-application-worker-source/original-dispatch-observation.md",
+      "sha256": "0c9981a4e72f9cbe8af70015bc40c652573858539dc8c53447297cee9e6fa15f"
+    },
+    {
+      "path": "anadius-application-worker-source/original-dispatch.md",
+      "sha256": "2d0d7e2d3e5d38a86e31af0625cf7dd8cc7662117b808e2e0af7ad9a03e69323"
+    },
+    {
+      "path": "anadius-application-worker-source/startup-log-flag.md",
+      "sha256": "bb6b6f271e67ea91fa490a186bbe710fb25568633df12a1f05e7a60754c3bba5"
+    },
+    {
+      "path": "anadius-application-worker-source/stop-binding.md",
+      "sha256": "369aaa9b94641980def6c10d400e3fa6b57035b7250eded339d325f9d3363930"
+    },
+    {
       "path": "anadius-bootstrap-backend-source/README.md",
-      "sha256": "b3e0fefc3e86392b96a66bc97610ccc0b2eac589be9ad151194a8bb381c990b2"
+      "sha256": "32010cc9ce0a24bc926e312999bbf7860e47cad1e4e79fbd4736c525ca7af4fe"
     },
     {
       "path": "anadius-bootstrap-backend-source/architecture-review.md",
       "sha256": "c1a198619311933dbbbb50e9c49734c09a0979cfbb830bc547c72127cf69a21a"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/attach-failure-prefix.md",
+      "sha256": "97b9438ffdba4dc1dbf997e50bac5af052bd6e479f7838754092ecc268d79e77"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/provider-binding-admission.md",
+      "sha256": "2fea076e69c1a5a7f7af18c30f172ca24a4e56aa7fa845f17965bd00bc4fafcd"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/synchronous-loader-audit.md",
+      "sha256": "58aa884eacaeec9d2cde31bc242b25a34130d0a40baf6ee73566d4aabdca1681"
     },
     {
       "path": "anadius-bootstrap-native-source/README.md",
@@ -156,6 +352,10 @@
       "sha256": "0f326582c054746319ddd09669bca6048fe60691911befb66dfcfacac3b79ac5"
     },
     {
+      "path": "anadius-bootstrap-runtime-source/closed-admission.md",
+      "sha256": "6bbd05aedbc6703573c4344a4c6ae966dfe1ead8cd097c2413affd0c05175673"
+    },
+    {
       "path": "anadius-calendar-source/README.md",
       "sha256": "9be789d2313ac65568a5af3304f8c179d1cae915875b96d94ab8f2e89a409f34"
     },
@@ -182,6 +382,10 @@
     {
       "path": "anadius-callback-policy-source/architecture-review.md",
       "sha256": "3f72a01fb2ecfbb291d58811a4573ca4fd0ecb9cfe3bcf6d680c3c4986fe1234"
+    },
+    {
+      "path": "anadius-callback-policy-source/network-effect-postcheck.md",
+      "sha256": "7370d7c6de3b9fbb8c04ac22d93df53659255151b476b2909bfa0e7f47b8fb05"
     },
     {
       "path": "anadius-callback-provider-source/README.md",
@@ -222,6 +426,10 @@
     {
       "path": "anadius-config-hash-source/README.md",
       "sha256": "992f59224511be89995324201c543daf418f8e59cc03fdd898506847a8fb0804"
+    },
+    {
+      "path": "anadius-config-hash-source/config-duplicate-assignment-20261104/source-audit.md",
+      "sha256": "2870890eeb81b2536499a4ac43acc771622e23a65339ae23a28bc0565f3b8c67"
     },
     {
       "path": "anadius-config-hash-source/review-application.md",
@@ -314,6 +522,14 @@
     {
       "path": "anadius-configuration-factory-source/architecture-review.md",
       "sha256": "c9caec27a682c1dd5d44ec9a333368462cefdcebcec27261c4f41f7f60afd803"
+    },
+    {
+      "path": "anadius-configuration-factory-source/construction-ownership.md",
+      "sha256": "b709196fb2d1ad76894a8ebf4907e960ef67ae19fd959f90d00ff8167cde637d"
+    },
+    {
+      "path": "anadius-content-effects-source/job-content.md",
+      "sha256": "525550c42166887c4eb320dea596aa28200c358a53b940996b33790c9b0f801f"
     },
     {
       "path": "anadius-content-handlers-source/README.md",
@@ -656,6 +872,26 @@
       "sha256": "591a341b17647a0b116369fbeadbf943689c917e148ffd66e0e78753d04be99d"
     },
     {
+      "path": "anadius-execution-source/atomic-owner-projection-20261105/implementation.md",
+      "sha256": "ff929355fca65f9c999ccbbdd912abe8a441fad418179f61ee281fd131b0c4c2"
+    },
+    {
+      "path": "anadius-execution-source/atomic-owner-projection-20261105/native-findings.md",
+      "sha256": "aa2b70e998f959048069d7115f4abdb78ff64da73a372aa70bd8770a25aa378a"
+    },
+    {
+      "path": "anadius-execution-source/atomic-owner-projection-20261105/owner-and-contention-independent-review.md",
+      "sha256": "23143d18fd0019f9c8db4ca53aa5d120919b078d023e1ebd46a4708d68b3c44a"
+    },
+    {
+      "path": "anadius-execution-source/atomic-owner-projection-20261105/root-test-independent-review.md",
+      "sha256": "4df978411c001b26158d5a3a5ca17e3d23de2a319c7d24910b868374f2d671da"
+    },
+    {
+      "path": "anadius-execution-source/atomic-owner-projection-20261105/test-implementation.md",
+      "sha256": "87afeec61d6eb08eb3cee1a1d9280be3ed10708a8fd3bc4d6afefdf7dbaeaf80"
+    },
+    {
       "path": "anadius-file-source/README.md",
       "sha256": "d3be9f356436a863c270480e4e97ff688c1e1c80f5fa00f3005d7a44d6c965b4"
     },
@@ -665,15 +901,123 @@
     },
     {
       "path": "anadius-foreign-callback-source/README.md",
-      "sha256": "69fa81cf595ef5f43a722956b9dd6d4493e20ecc83e2570e67b41e0434c4cfa1"
+      "sha256": "0ed1ed112ad820d1b1e42e75f0c7dd3ba38d41a45a5fa35ae622ab4e2c6f6f9c"
     },
     {
       "path": "anadius-foreign-callback-source/architecture-review.md",
       "sha256": "c1451a69cdbe9b165b19b821f86b748d7aef507d53786a4602901457de37f661"
     },
     {
+      "path": "anadius-foreign-callback-source/connect-passthrough.md",
+      "sha256": "2123a4ab7703db90c41b73b3f4e1788eb5efebe4ed5c9d9aea46daedb61d19f0"
+    },
+    {
+      "path": "anadius-foreign-callback-source/connect-redirect-body.md",
+      "sha256": "21b721d3ec7c1f5a54e79738f8ba487731c25d2b30808575bc2629f9f5749841"
+    },
+    {
+      "path": "anadius-foreign-callback-source/connect-wait-passthrough.md",
+      "sha256": "82fb5e1c62d7ada4e2c512d16f0db5a98db4e52ab6908b55be2dc6c60cb05572"
+    },
+    {
+      "path": "anadius-foreign-callback-source/early-registry-publication-20261104/implementation-notes.md",
+      "sha256": "af0fd69fb9057ed9ea69afdc90f6ab8d37c98a63f3221069d1c5e5e37c098c65"
+    },
+    {
+      "path": "anadius-foreign-callback-source/early-registry-publication-20261104/native-audit.md",
+      "sha256": "0667d9ab45bd1d2fc701f009a6438ea86aea02e8247b3ab40c8cc5b20f8490ab"
+    },
+    {
+      "path": "anadius-foreign-callback-source/early-registry-publication-20261104/review.md",
+      "sha256": "d626793b75d31e5a885eb23c33815950c9a8a6a81f6120e766bc5f1f542fe9df"
+    },
+    {
+      "path": "anadius-foreign-callback-source/lane-state-native-review-20261103/amendment-production-stage-review.md",
+      "sha256": "c72da7c678c35a0b4c3b2037a7a8c3ef7787512a9628939c8d2b80adc12b2e84"
+    },
+    {
+      "path": "anadius-foreign-callback-source/lane-state-native-review-20261103/final-stage-amendment.md",
+      "sha256": "72e5386dd045c58b773ad9e71cb3de3a77d52c7b42a81ac23abfe457d0b1c1fd"
+    },
+    {
+      "path": "anadius-foreign-callback-source/lane-state-native-review-20261103/review.md",
+      "sha256": "70c86af5b29e5a8bc35c244af79bd019f2e8f276a713a27d9beb22ca716d505b"
+    },
+    {
+      "path": "anadius-foreign-callback-source/live-port-test-review-20261104/review.md",
+      "sha256": "0c0f2f16c1ea572153c4870c797b383866e6c1d03778846c0f9780b128174a20"
+    },
+    {
+      "path": "anadius-foreign-callback-source/original-connect-concurrency.md",
+      "sha256": "23326038c8a5d69c983e21296d1b8dec957db647962ce7cba7d2935dfb101ed6"
+    },
+    {
+      "path": "anadius-foreign-callback-source/original-live-server-port.md",
+      "sha256": "4a8ccc12393e943b8ff84a787923be1f00fa49a41a6909817b7d3e1c0ba12864"
+    },
+    {
+      "path": "anadius-foreign-callback-source/original-pure-forward.md",
+      "sha256": "8c8613112865719f7dd78f2890fe31aa951d0f4ba7e9f4cd48c1db702814de54"
+    },
+    {
+      "path": "anadius-foreign-callback-source/original-redirect-concurrency.md",
+      "sha256": "9a4ef31b2cdbe17a87aea62d197533967c7c44b4b8286737ab91e17f40b458be"
+    },
+    {
+      "path": "anadius-foreign-callback-source/original-wait-concurrency.md",
+      "sha256": "8bf5ef61be8990006f6701cc337ec18df924efb7f33458edc0a170d7e9da0c06"
+    },
+    {
+      "path": "anadius-foreign-callback-source/original-web-concurrency.md",
+      "sha256": "d447fe4289d012e78fb01d781db069dd495403c3d9e866979b76c3ab2cd6f986"
+    },
+    {
       "path": "anadius-foreign-callback-source/ptd-review.md",
       "sha256": "87bba9bb27473415ff9ae2ef4a2646f0ab9b08b259c58c0076f531ed0cd8d58d"
+    },
+    {
+      "path": "anadius-foreign-callback-source/pure-forward-native-20261104/findings.md",
+      "sha256": "f8a56deb384d2bd1ad83a5178698e8d902c8288b864638c3c068c0e2f77e62c6"
+    },
+    {
+      "path": "anadius-foreign-callback-source/pure-forward-production-review-20261104/review.md",
+      "sha256": "5fdc644ef158c74e6c4b367de42fcd24684eff27edf020ca6afa797ee563ac6c"
+    },
+    {
+      "path": "anadius-foreign-callback-source/pure-forward-tests-20261104/review.md",
+      "sha256": "9e5e6fa68d54a52b5b932aa53896e16a36e505bb8f024cfc11b59267b9ad1fd1"
+    },
+    {
+      "path": "anadius-foreign-callback-source/registry-matched-alias-20261104/independent-review.md",
+      "sha256": "90cb6d452f50d0de9f5417d9ef30994b3961b377ac574fab7e9f2290e1dfefef"
+    },
+    {
+      "path": "anadius-foreign-callback-source/registry-matched-alias-20261104/matched-integration-notes.md",
+      "sha256": "2c94426a28fd04708f172367f410265b638669cf537c8df1f7824602cf269246"
+    },
+    {
+      "path": "anadius-foreign-callback-source/registry-matched-alias-20261104/report.md",
+      "sha256": "2602b0ff0bc0822a441f6b678e4447414f402bd5e57a9aa5d66bc19fb5b87c11"
+    },
+    {
+      "path": "anadius-foreign-callback-source/registry-sdk-nesting-20261104/domain-implementation.md",
+      "sha256": "693a93855654903adc693e638e10670cde25232711e6267c561420328179b0e5"
+    },
+    {
+      "path": "anadius-foreign-callback-source/registry-sdk-nesting-20261104/independent-review.md",
+      "sha256": "9b025411dc7b022d72b98fe55e700d94e873a50f88442761f82a8ba18e8f5af9"
+    },
+    {
+      "path": "anadius-foreign-callback-source/registry-sdk-nesting-20261104/native-findings.md",
+      "sha256": "18b1ccbcd73649418997731272cf632c4fcd682374ece9fe1ee06dd360a7aae9"
+    },
+    {
+      "path": "anadius-foreign-callback-source/registry-sdk-nesting-20261104/report.md",
+      "sha256": "2c5999fbf2d35188e8fed90e3de3d1c7b4f121d66f7a44612cc28ef8f90c1c8b"
+    },
+    {
+      "path": "anadius-foreign-callback-source/registry-sdk-nesting-20261104/test-source-notes.md",
+      "sha256": "df68967d9a252011983ae23378f4c320a2f8e8889803a1f6c56178ab6b39c5ee"
     },
     {
       "path": "anadius-handlers-source/README.md",
@@ -700,12 +1044,84 @@
       "sha256": "82b158cadc8edc93e018191a8a9e6f610a3a0f39c5e0fb24a071205ca19f5555"
     },
     {
+      "path": "anadius-host-platform-source/original-image-bindings.md",
+      "sha256": "37dc22e0067893fdf5a8c233f087f9444d17d87557dbb93c23f5513888019963"
+    },
+    {
+      "path": "anadius-host-platform-source/pre-cleanup-quiescence.md",
+      "sha256": "5b55294adc0da41a08f3664ac910ec79c93ac8fe37495675160fa0dfb04dd970"
+    },
+    {
+      "path": "anadius-host-platform-source/synchronous-hook-order.md",
+      "sha256": "09ffcb7e488bc9789a9fe925b3a50ba28eb9631c0b6878f37b88195fc29875e2"
+    },
+    {
+      "path": "anadius-information-effects-source/job-information.md",
+      "sha256": "459737008acdaf99ddce0ecc2a4496436ca3aaba3da96534b1109664712dc98b"
+    },
+    {
       "path": "anadius-io-memory-source/README.md",
       "sha256": "9237baab587eb5d4ddfc0a8ac5974365f5bbbcf916c68d6bc57eff8ebdfd2b00"
     },
     {
       "path": "anadius-io-memory-source/architecture-review.md",
       "sha256": "e0392ef5f5bb6d2462889ca6c0f7495d99756d222093cd7490f11ba18c728039"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/implementation.md",
+      "sha256": "2f545171b100061b93b1c094877f908fe0409bc098d63830b3fdaca9a640f60d"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/io-implementation.md",
+      "sha256": "1fa36406496aad8706f2b26ff0f1f65e78dc121b614ff55c14bfcc67446eb9fe"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/io-implementation.round1.md",
+      "sha256": "cd848973994688cc31855062a313311a278c1c77cdf1b08c7661b9b0a4d1b1c2"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/io-implementation.round2.md",
+      "sha256": "b9720390f2afb2b802ba9c2cb6fadd654c294c22fbdd2507821b7578269b093f"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/io-implementation.round3.md",
+      "sha256": "54c12ffaa3458daf46ec067b15edcb730618878c0e594d3df5a577f1f8f240b5"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/io-production-independent-review-round1.md",
+      "sha256": "309aa3dc2927db0beeb58670672c45e6a95cbf83ea88b0ff5af59b351d013cf9"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/io-production-independent-review-round2.md",
+      "sha256": "f051b030679301d8b5358af106a0f77a2fb882a0f6f9c8be3765510f4f8de4ae"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/io-production-independent-review.md",
+      "sha256": "b15f60e853448dbb0e7b514de09dc04692e621c5ca2a513fd60ee89ece128dde"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/native-findings.md",
+      "sha256": "80b4a9aa45557269e1871d5aeeaec6bce5da1eadbae19ebac69c82daaa89096e"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/root-independent-review.md",
+      "sha256": "5d9e1431c98cd62c7bd82ea53d6a2f71d651f4f24a19be0d3a081bdbe5c460d0"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/root-sources-independent-review.md",
+      "sha256": "b281944787bc3c042ccdb741e7f933895202add40f38b3fa3fe23c35b3232538"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/sdk-combined-independent-review.md",
+      "sha256": "24e7cafa322fb5a96f164d00b15953f5b23ad1b2764d644b0297c5d4f135543a"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/socket-resolver-implementation.md",
+      "sha256": "25091d3a53ef4bd36c0cbdfb3a382786998f29536c2b3cfe7b498381a5762f7c"
+    },
+    {
+      "path": "anadius-io-memory-source/stable-owner-bindings-20261105/test-source-notes.md",
+      "sha256": "3690e5dde3a138ae25d89992ee76b019cb661c792bb3773a7e2fc74f3d88e869"
     },
     {
       "path": "anadius-libraries-source/README.md",
@@ -722,6 +1138,54 @@
     {
       "path": "anadius-license-source/README.md",
       "sha256": "d8a7bdd40da4aa6aab972a4ec3858106a668737b13d172c26e00d1d45d0aa195"
+    },
+    {
+      "path": "anadius-licensing-effects-source/job-licensing.md",
+      "sha256": "96fe31e17d8232c4557dc8b22af32543d0f6aa7325d6108c71fd6dd706e57b50"
+    },
+    {
+      "path": "anadius-licensing-effects-source/nested-call-views-20261105/implementation.md",
+      "sha256": "a70bb5db16076b3df8a11fb64f79fbbecfdda0bdc4de96ef00b4c1a5e07ebbec"
+    },
+    {
+      "path": "anadius-licensing-effects-source/nested-call-views-20261105/licensing-and-unit-independent-review.md",
+      "sha256": "10285f2578c8ff01cbc3d21d1311d4a0ef37825477ad9686ad7d475aa79f17ed"
+    },
+    {
+      "path": "anadius-licensing-effects-source/nested-call-views-20261105/licensing-implementation.md",
+      "sha256": "92707cfb23d690496c709c8ff0327cb7ccf6a34fa28b7738bbf213bcf08d86c5"
+    },
+    {
+      "path": "anadius-licensing-effects-source/nested-call-views-20261105/native-findings.md",
+      "sha256": "a617710d5247def6d12a8623d80de58f3f9bc01924fd9e87a3dfec99388b0a85"
+    },
+    {
+      "path": "anadius-licensing-effects-source/nested-call-views-20261105/next-graph-code-plan.md",
+      "sha256": "2d32a6beb553c698b649ec1802bf1b13df57732488b004c1612ad0e05a3e35a3"
+    },
+    {
+      "path": "anadius-licensing-effects-source/nested-call-views-20261105/next-graph-fixture-plan.md",
+      "sha256": "3a66c4ecfc6862be3ca774dc78abcd4a42ab570e69300c4e4238e999338b4689"
+    },
+    {
+      "path": "anadius-licensing-effects-source/nested-call-views-20261105/next-graph-locks-review.md",
+      "sha256": "feee6755e16afa6d9b3732d7fe0ce0fa673167baccdbf20abe18ae61334b0611"
+    },
+    {
+      "path": "anadius-licensing-effects-source/nested-call-views-20261105/root-independent-review.md",
+      "sha256": "87494cf05f862c2d8a53c5a5deb912687409cd8ea07670c704c0fdeded4bcfc2"
+    },
+    {
+      "path": "anadius-licensing-effects-source/nested-call-views-20261105/sdk-fixture-implementation.md",
+      "sha256": "874c28aa7c430cf78ea5b471bb8dcb9ec40f8312c3d087ce51f24c362d5d67ff"
+    },
+    {
+      "path": "anadius-licensing-effects-source/nested-call-views-20261105/sdk-fixture-independent-review.md",
+      "sha256": "e8c15f1c1eb9d1eeeae4f4b4ba8fee24bcffa6a58d4aadcecca8a2766112d9b7"
+    },
+    {
+      "path": "anadius-licensing-effects-source/nested-call-views-20261105/unit-test-source-notes.md",
+      "sha256": "f6384d701b46392381360523c87cf90617c19453896b4a6cc5fe7f1c36d63938"
     },
     {
       "path": "anadius-messages-source/README.md",
@@ -756,12 +1220,68 @@
       "sha256": "2a1cdf5a8ee846f63dad3b8604c53128745ddaf76e5e6b341f1b3dd5dbc6dcd5"
     },
     {
+      "path": "anadius-native-profile-source/per-message-invocations-20261105/core-test-source-notes.md",
+      "sha256": "123032de0b03abf7d6a575c3ab88a23fe7a941be27729cfb82aa811da14e8d4d"
+    },
+    {
+      "path": "anadius-native-profile-source/per-message-invocations-20261105/fixture-independent-review.md",
+      "sha256": "7d331030420fcb2be60f5fe1edebe921644ad2c974a8cc170c0a285f349061ed"
+    },
+    {
+      "path": "anadius-native-profile-source/per-message-invocations-20261105/implementation.md",
+      "sha256": "2109c9070152e78338ec7cd1a8f923d692bf919649bf251feafe19afd692e539"
+    },
+    {
+      "path": "anadius-native-profile-source/per-message-invocations-20261105/native-findings.md",
+      "sha256": "bf71004b06c686d6e3d6da3f42a0768c58f91d87e1ca77a0e4a65a8cb933c53e"
+    },
+    {
+      "path": "anadius-native-profile-source/per-message-invocations-20261105/native-implementation.md",
+      "sha256": "e2d8506806b95381ab9084cd652f10ea3b9132311cc01887eac1f675e6ec816b"
+    },
+    {
+      "path": "anadius-native-profile-source/per-message-invocations-20261105/next-graph-assembly-plan.md",
+      "sha256": "b04129c0624a6e02b805342bde13f081394bca6c1588f442396640cbc8cefc2b"
+    },
+    {
+      "path": "anadius-native-profile-source/per-message-invocations-20261105/next-profile-implementation-plan.md",
+      "sha256": "b3d030aa35451e737b1b11b6cdf5be9f60688d119e7649e771e05f5569272bc7"
+    },
+    {
+      "path": "anadius-native-profile-source/per-message-invocations-20261105/next-provider-call-view-plan.md",
+      "sha256": "ce2970e951c34be4c2664c2324a680e91a19d8347078cd0d36db960bf493af69"
+    },
+    {
+      "path": "anadius-native-profile-source/per-message-invocations-20261105/production-independent-review.md",
+      "sha256": "90abe235784728aa4ef2653ab9bed70046fb30cfd2ad54b044764b4d1a14c2e2"
+    },
+    {
+      "path": "anadius-native-profile-source/per-message-invocations-20261105/root-independent-review.md",
+      "sha256": "5d6b61740d55e27b3c472c10c78be26b3cdf64d38404376897c569deadd2a28d"
+    },
+    {
+      "path": "anadius-native-profile-source/per-message-invocations-20261105/sdk-fixture-implementation.md",
+      "sha256": "37506e073167ac924075d35cffdb0f064ed55b7762012574dbacf58a190292ce"
+    },
+    {
       "path": "anadius-native-source/README.md",
-      "sha256": "e52b1896a640eb53df9f5f50a6d40d7a4f9aef9b563793c6a22a51664d528075"
+      "sha256": "106815db21b63a0de542956734e06687f8babde42783aa4f4bb38d666330ca10"
     },
     {
       "path": "anadius-network-hook-source/README.md",
-      "sha256": "df4ed0fb4975b3a71cf2ee2a0b604cf2bd0fc15d31e961cd3137508b0604c479"
+      "sha256": "174d8e7c2a148416e19257e2d58c599b1ea1930478e4861a516e67d4741544a0"
+    },
+    {
+      "path": "anadius-network-hook-source/counter-native-review-20261103/audit.md",
+      "sha256": "9d11191d06acce34b5b3a9984b808c5d4cd162b973db82a524a0b3bcec8dbef1"
+    },
+    {
+      "path": "anadius-network-hook-source/live-port-source-review-20261104/source-review.md",
+      "sha256": "2365522aba8f1750e9da663cd9eb056f18ab30f9438e8b19f686f51d198061fe"
+    },
+    {
+      "path": "anadius-network-hook-source/server-port-native-review-20261103/audit.md",
+      "sha256": "50b86976a5603f33c38e628d06814fadc291b75808c55d21e434caae7eb5e7ee"
     },
     {
       "path": "anadius-online-factory-source/README.md",
@@ -800,6 +1320,38 @@
       "sha256": "0b430740690c0182430857d91be94f9e2c41371ec69b8a2220c1fefec0bbf88f"
     },
     {
+      "path": "anadius-online-query-source/startup-overlap-20261105/fresh-reachability-addendum.md",
+      "sha256": "2558f53400f38f776c1686090a793b66256299ef746c8a6c21807b9d873ea5b3"
+    },
+    {
+      "path": "anadius-online-query-source/startup-overlap-20261105/implementation.md",
+      "sha256": "01fe8f06c24bc5152edb712cf47c8f33b842999fbe308604e93018ff4e2cd60b"
+    },
+    {
+      "path": "anadius-online-query-source/startup-overlap-20261105/native-findings.md",
+      "sha256": "5fe19be92d06dfbb99cdd76aa4695a114aeb3cad8eb91b2408564b9e5ea57783"
+    },
+    {
+      "path": "anadius-online-query-source/startup-overlap-20261105/production-independent-review.md",
+      "sha256": "cdc272d135f2b22f1928e3233f6dc759d885b9f4550ce51cc28fbb0759052c1c"
+    },
+    {
+      "path": "anadius-online-query-source/startup-overlap-20261105/source-design-review.md",
+      "sha256": "d118f2a6dbf724d8e89de7016d9c67df8c63969fb834b4835626d65ab3a55ce2"
+    },
+    {
+      "path": "anadius-online-query-source/startup-overlap-20261105/source-reachability-review.md",
+      "sha256": "95f447de312852996b0fd97096a6e6a14d76ffc50669a2254dcfbf2a79e99f29"
+    },
+    {
+      "path": "anadius-online-query-source/startup-overlap-20261105/test-source-notes.md",
+      "sha256": "9e31d191596195db50bca1a68a4ae2587664a33bfac1a457e3639d037c307a74"
+    },
+    {
+      "path": "anadius-online-query-source/startup-overlap-20261105/tests-independent-review.md",
+      "sha256": "25085211a1e814bb77cce8c3ed3d1612b6378cca4b32f37fa1148105deb6a67b"
+    },
+    {
       "path": "anadius-online-source/README.md",
       "sha256": "d9f0acb77ce8fe3a1a4082e53f0c12db446f9cb209c9c5bcb980d261b65a713e"
     },
@@ -828,36 +1380,500 @@
       "sha256": "7bcfaf6d40a52d92606b5a2898aa8e94828544501b4d01ff23b8955f723d2604"
     },
     {
+      "path": "anadius-original-provider-source/per-hook-publication.md",
+      "sha256": "09320fb8d772853a92a7aacacc17c7b227082276afafc0e3260d82e9e43cbe01"
+    },
+    {
       "path": "anadius-owned-deque-source/README.md",
-      "sha256": "aefc760c85b7703651cf2da8375ac88e0bf8501fb77b9717b70cb7bf376d67be"
+      "sha256": "4f40403232693ab003d96b1a61c0e3fc787c29d1ff3819b958599e378a00e734"
     },
     {
       "path": "anadius-owned-deque-source/architecture-review.md",
       "sha256": "af8481bfe1101a308d80a94273f4a99150b91dd1c4fd17872883c7fc70b766f8"
     },
     {
+      "path": "anadius-owned-deque-source/job-deque.md",
+      "sha256": "e965f9bee992423219f3e70d04483b47d49de35249965286e5d114b07d68411c"
+    },
+    {
       "path": "anadius-owned-environment-source/README.md",
-      "sha256": "aac6e46e82a311cc2ccf0e682742e6e4545dbc08e2863ef9f1297dc42f3943f8"
+      "sha256": "42bf76972488d0a97138eeec862a0fc195ce62e4772c75f7f27a4a41a84c0bb7"
     },
     {
       "path": "anadius-owned-environment-source/architecture-review.md",
       "sha256": "6384bf4fcf9524b76d1f207007dfde7663876c519de4d27d16f231c9a4ff0330"
     },
     {
+      "path": "anadius-owned-environment-source/job-environment.md",
+      "sha256": "04071d0905e4788c2e7f8c900e535556c36e3f8d92183804984974b39c052dc2"
+    },
+    {
+      "path": "anadius-owned-environment-source/native-environment-targets-20261104/classifier-implementation.md",
+      "sha256": "712aa341363f4f5da6655817a67e23f9ed283cc476db6e9cf7764d7c472ad4bf"
+    },
+    {
+      "path": "anadius-owned-environment-source/native-environment-targets-20261104/classifier-test-notes.md",
+      "sha256": "8c4acbcad047630d1b8b73a914b68f1adec5fe18a5d6a9726abc7dd6df57cfa3"
+    },
+    {
+      "path": "anadius-owned-environment-source/native-environment-targets-20261104/classifier-test-review.md",
+      "sha256": "6efc245b002bb50fe3831e1cc2da71a98334ee109f600e91a377d68eda12c097"
+    },
+    {
+      "path": "anadius-owned-environment-source/native-environment-targets-20261104/default-classifier-proposal.md",
+      "sha256": "ace1347a6ba4cbd1cc7ea4547de2c93500fbab847083d1973b03742656349334"
+    },
+    {
+      "path": "anadius-owned-environment-source/native-environment-targets-20261104/default-environment-review.md",
+      "sha256": "2f4d504fbd173b8ecbef381e6ad3f9f7bed0620acb544a7136af9c737f20d73d"
+    },
+    {
+      "path": "anadius-owned-environment-source/native-environment-targets-20261104/native-findings.md",
+      "sha256": "f734ca4ea4add74afc802dc3a8d46d88bec96eb7ee3d5f7cc3b869e67c14734c"
+    },
+    {
+      "path": "anadius-owned-environment-source/native-environment-targets-20261104/production-independent-review.md",
+      "sha256": "b5fc007abc59d910f2d5524fc3f6c9a7416034047f3d18f43d1fd65af8e78920"
+    },
+    {
+      "path": "anadius-owned-environment-source/native-environment-targets-20261104/report.md",
+      "sha256": "36eaa7d5bdcfb8bcf5a976df10a321a67d4399ecc272b894d058a1336d2f14bd"
+    },
+    {
+      "path": "anadius-owned-environment-source/native-environment-targets-20261104/source-origin-audit.md",
+      "sha256": "ae884ba948798a27f29b45d8c0e2ac38932d067afe954a60cdfc842e4c2d288c"
+    },
+    {
+      "path": "anadius-owned-environment-source/prepare40-caller-ownership-20261105/implementation.md",
+      "sha256": "aee6167befed21a9b2a9fa861a91ae6aebdb27de9dccd9ad0f005596b23df184"
+    },
+    {
+      "path": "anadius-owned-environment-source/prepare40-caller-ownership-20261105/native-findings.md",
+      "sha256": "b77457cb269bb38dd166970e8e9c6e7da6a3697213dd8e7b92f6f3aae2b61057"
+    },
+    {
+      "path": "anadius-owned-environment-source/prepare40-caller-ownership-20261105/next-selected-environment-injection-plan.md",
+      "sha256": "2dbc7b3d0541b0c18a7add5012ad488d0d083fabba8fab253650c603a6a583ca"
+    },
+    {
+      "path": "anadius-owned-environment-source/prepare40-caller-ownership-20261105/prepare40-environment-implementation.md",
+      "sha256": "b3dd0f230ac52d3c7441fc14c113ffbcdbe77b68ac3717035e051be3f72c5c5e"
+    },
+    {
+      "path": "anadius-owned-environment-source/prepare40-caller-ownership-20261105/prepare40-independent-review.md",
+      "sha256": "062094b6c91c09e9cd7076f2b3f18baf01e16084ea9160f8a299aa5dbd859b84"
+    },
+    {
+      "path": "anadius-owned-environment-source/prepare40-caller-ownership-20261105/prepare40-test-implementation.md",
+      "sha256": "0386a09a01d61347c35e4d2b7b4ad84c10fe69f50ba66f6092dd015b6707735d"
+    },
+    {
+      "path": "anadius-owned-environment-source/prepare40-caller-ownership-20261105/root-prepare40-seam-implementation.md",
+      "sha256": "c86428e14d85fc88204ab9664a64f0f44f068dc43bf616330427abdfcfc2b6b3"
+    },
+    {
+      "path": "anadius-owned-environment-source/prepare40-caller-ownership-20261105/root-seven-file-review.md",
+      "sha256": "a06a95152fb3af31bbddba2a8d063d5399a18c8fff9a6278fcfb77a4c16b162a"
+    },
+    {
+      "path": "anadius-owned-environment-source/reference-ledger-growth-20261104/design-review.md",
+      "sha256": "31416468c2a87b0f52c432b2624e44d805fe7ecd4fe437b9b174b6a7745d8a09"
+    },
+    {
+      "path": "anadius-owned-environment-source/reference-ledger-growth-20261104/implementation.md",
+      "sha256": "ace36bb659c5dad0b91168caa162439294de3b8623a77f0c74ba561153c683fe"
+    },
+    {
+      "path": "anadius-owned-environment-source/reference-ledger-growth-20261104/native-findings.md",
+      "sha256": "ccc78b8fdd5d00c8bde3fbabbbff038036f01e2294c233dbf064091a48f9025b"
+    },
+    {
+      "path": "anadius-owned-environment-source/reference-ledger-growth-20261104/production-independent-review.md",
+      "sha256": "c22a42be5f5a131f2c371bb072f2d07bdba7d4b7e6f1dfabe359f18d9a6899ae"
+    },
+    {
+      "path": "anadius-owned-environment-source/reference-ledger-growth-20261104/report.md",
+      "sha256": "05160527edde77d684223effbda3c9eeb9b7a8754de2306d82558fde05b69272"
+    },
+    {
+      "path": "anadius-owned-environment-source/reference-ledger-growth-20261104/source-triage.md",
+      "sha256": "5604a38a9bdfa518dbb7d9580c30340df812e10fb6adc48e94805e5285778449"
+    },
+    {
+      "path": "anadius-owned-environment-source/reference-ledger-growth-20261104/test-review.md",
+      "sha256": "c28837ec81fd75069d420637a7983540d30238006c79f524e19783fb02426edc"
+    },
+    {
+      "path": "anadius-owned-environment-source/reference-ledger-growth-20261104/test-source-notes.md",
+      "sha256": "990c8d127bfbdd18246430847ad4c2071e5ddf0de981ccbb150b47d9c70b79f4"
+    },
+    {
+      "path": "anadius-owned-environment-source/response-environment-caller-ownership-20261105/native-findings.md",
+      "sha256": "8b14aad4287ed0bcc1cb83f2bd6c7f13348e1fe68d8a371273dd487034cb3451"
+    },
+    {
+      "path": "anadius-owned-environment-source/response-executor-native-20261104/native-findings.md",
+      "sha256": "e526f3107203e35cbd32e5974a6f682cecf280945a911b27442cab091dd2e8d3"
+    },
+    {
+      "path": "anadius-owned-environment-source/response-executor-native-20261104/source-flow-audit.md",
+      "sha256": "af5400a5d2de57a768699739f74ccee2973f2130ae99577e42d23861bf6badd0"
+    },
+    {
+      "path": "anadius-owned-environment-source/root-copy-caller-ownership-20261105/implementation.md",
+      "sha256": "509bb6026d70579f1a4668c71439aecf1c9f385796ff77ab564d6617d233d6b8"
+    },
+    {
+      "path": "anadius-owned-environment-source/root-copy-caller-ownership-20261105/native-findings.md",
+      "sha256": "f9c348146d6443c95085e3ba5badc10733425d3134c1eea42da9b81adcdd2581"
+    },
+    {
+      "path": "anadius-owned-environment-source/root-copy-caller-ownership-20261105/root-caller-seam-implementation.md",
+      "sha256": "92773b98874a3e5c191aeae631a4066fae6a3c4a1489a482af217bba84e7ef78"
+    },
+    {
+      "path": "anadius-owned-environment-source/root-copy-caller-ownership-20261105/root-copy-environment-implementation.md",
+      "sha256": "0222f475013fdec97d04aa041892f9cbdb3671cc71a92922ae178d0773bbfd99"
+    },
+    {
+      "path": "anadius-owned-environment-source/root-copy-caller-ownership-20261105/root-copy-independent-review.md",
+      "sha256": "212a3e7d5bd6da5088422b79c27299eda3d487fbc8ca6eaf81554d4d2a07a17a"
+    },
+    {
+      "path": "anadius-owned-environment-source/root-copy-caller-ownership-20261105/root-copy-test-implementation.md",
+      "sha256": "4e08b05aa330dc164364e1221f1b915aac1919c814320f78edc3e39a79f1543d"
+    },
+    {
+      "path": "anadius-owned-environment-source/root-copy-caller-ownership-20261105/root-six-file-review.md",
+      "sha256": "7ceecba676ba89560366f59e602005e6b67a2ae0d165ee8e12154dd134da7b60"
+    },
+    {
+      "path": "anadius-owned-environment-source/scoped-projection-calls-20261105/implementation.md",
+      "sha256": "742894531a86c8301865621d2fa592c0937e5c79615ae7b058ea22a0e6ef1c8d"
+    },
+    {
+      "path": "anadius-owned-environment-source/scoped-projection-calls-20261105/native-findings.md",
+      "sha256": "aa4ee98372ee9b01a5da5f490a8795c2f5257d9087c87e4c62394ed6303f20eb"
+    },
+    {
+      "path": "anadius-owned-environment-source/scoped-projection-calls-20261105/root-scoped-environment-review.md",
+      "sha256": "4c2e5cf9803fc178c3dd66702a4c55998d4e5f533d328efa1cf8d7a14cd8450c"
+    },
+    {
+      "path": "anadius-owned-environment-source/scoped-projection-calls-20261105/root-seam-independent-review.md",
+      "sha256": "0ae105402d66d0ce93b43dd928957580c773a567199e07ddc0146be738f4513c"
+    },
+    {
+      "path": "anadius-owned-environment-source/scoped-projection-calls-20261105/scoped-environment-core-independent-review-v2.md",
+      "sha256": "a625ae39b7f71868eea498ab4c024e6b8bca77fade94ee2183700a0f931fde9f"
+    },
+    {
+      "path": "anadius-owned-environment-source/scoped-projection-calls-20261105/scoped-environment-core-independent-review.md",
+      "sha256": "538fdd57e885c6f4715c948716c93d116d44e27be896844ffa217686148c38f6"
+    },
+    {
+      "path": "anadius-owned-environment-source/scoped-projection-calls-20261105/scoped-environment-implementation-v2.md",
+      "sha256": "7362df8242650c556b28fa60e77dbaa2229c60d8a261d75279460a524380b421"
+    },
+    {
+      "path": "anadius-owned-environment-source/scoped-projection-calls-20261105/scoped-environment-implementation.md",
+      "sha256": "b3c400181d6346d8ced9608cacd067f51444cd4acbe2b89b61c244239802efae"
+    },
+    {
+      "path": "anadius-owned-environment-source/scoped-projection-calls-20261105/scoped-environment-test-implementation-v2.md",
+      "sha256": "22d23fad0702ed7deb944bc6695de2a3b17c87a1eb2e63b678d7dad9e1df96b3"
+    },
+    {
+      "path": "anadius-owned-environment-source/scoped-projection-calls-20261105/scoped-environment-test-implementation-v3.md",
+      "sha256": "711267bb23996f534815889408cc60909fdf770d2574859fd7c147cb2b7fb71a"
+    },
+    {
+      "path": "anadius-owned-environment-source/scoped-projection-calls-20261105/scoped-environment-test-implementation.md",
+      "sha256": "c77e4cdb7ca920475db929b55e3ba5f7df934bfe8436f7e700877a3bee51c0b6"
+    },
+    {
+      "path": "anadius-owned-environment-source/scoped-projection-calls-20261105/socket-profile-seam-implementation.md",
+      "sha256": "b30ca0afb6974a8f4289da8bb169249b6f857d07de21a65fd4bf016a5dfbfa2e"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-design-20261104/bridge-implementation.md",
+      "sha256": "a49dd41c5b6276b36d8851d08d47d9361273a067c4e732952d18186e11d671d6"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-design-20261104/child-stop-capability-proposal.md",
+      "sha256": "ed4dd6a4cfbe2f6222df7cf7a521e093938ae00e467077936f7d71c5e4ade820"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-design-20261104/design-review.md",
+      "sha256": "86db8b1dbe54ced062e0e3c935c29b086b55b3955f755722e9ea0cf5c093a568"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-design-20261104/source-plan.md",
+      "sha256": "decdd25a3ea2ef940d60e1b63dd3558baed4dd9862b0c3a3dd7c959d835d052e"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-implementation-20261104/environment-implementation.md",
+      "sha256": "f4f2a414d6d6ea4c58f98df750c5d9f52c3c6931f4f833ea82e577f7334948d2"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-implementation-20261104/environment-test-source-notes.md",
+      "sha256": "7794c207f27d16b19fd6f5febb364c005eda6971f6d8c955380866020123096f"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-implementation-20261104/environment-tests-independent-review.md",
+      "sha256": "99022cd659f5bab382f5bfda413928ec288fcbcda884e2b39521ec9366eb7888"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-implementation-20261104/independent-bridge-review.md",
+      "sha256": "734eea84abe2011a5ce53455da9000b5ab86584fcf6fb91505638f06029dc062"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-implementation-20261104/native-findings.md",
+      "sha256": "2372b6c8cfbb505aeec5372250daf7e75b24d7309a638a04b81043184497c21e"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-implementation-20261104/next-fixture-plan.md",
+      "sha256": "451456a18f001b26e768a39880f07c4be248b98bf41be29b3ef9a0d890a288ce"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-implementation-20261104/next-native-candidates.md",
+      "sha256": "ce6256499945cd3d9065be27764d849cd099669f097715d3e30a7a07f8235dde"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-implementation-20261104/report.md",
+      "sha256": "c4147cb8d0b720d98670dd726a46b1ac7b48e2168a774ab0492212b9dfb631a9"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-implementation-20261104/root-production-review.md",
+      "sha256": "a17eb7944ece19a2016e7b017f9e096f5e1d5268e8af5c8fef3c73e53f3f4a63"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-implementation-20261104/row-plan.md",
+      "sha256": "9ff372ed48fe1729e60f4b0c8bdc511120767745817cf901f6a04498d3510857"
+    },
+    {
+      "path": "anadius-owned-environment-source/tracked-executor-implementation-20261104/socket-and-policy-independent-review.md",
+      "sha256": "e81f7e2a47e5df6f59d856c0181f270ead883fc5313791393ebdefe73bd07924"
+    },
+    {
       "path": "anadius-owned-jobs-source/README.md",
-      "sha256": "ce8fef60a4203085482eb8654898cbe50b99c141b3c9642e49b132d9bb126c57"
+      "sha256": "12093b6a22f88057fc83d956e1157720ad5c644225e20c650916e52698b82f26"
     },
     {
       "path": "anadius-owned-jobs-source/architecture-review.md",
       "sha256": "5725a4a30b3bf2b10b3f17dd3b5b7157fc75cdd4460c2a977bed1024bd332add"
     },
     {
+      "path": "anadius-owned-jobs-source/job-capacity-native-review-20261104/backend-implementation.md",
+      "sha256": "41b064f66caadd67807e09193af78630277bcaf3176e0648211d4003469c5c17"
+    },
+    {
+      "path": "anadius-owned-jobs-source/job-capacity-native-review-20261104/backend-independent-review.md",
+      "sha256": "d9ee4b352d3b7bb155abaf0185053edec4f8492d0f942e528aea080869c6eaad"
+    },
+    {
+      "path": "anadius-owned-jobs-source/job-capacity-native-review-20261104/native-findings.md",
+      "sha256": "beadf83659d66f903b1f2338f50d37389f227ab91b7446f105fdac5e63e7cd63"
+    },
+    {
+      "path": "anadius-owned-jobs-source/job-capacity-native-review-20261104/native-test-independent-review.md",
+      "sha256": "edad429565a427dab2a299cb48f2865b913bd56ab51a821dafee0476c53de3c9"
+    },
+    {
+      "path": "anadius-owned-jobs-source/job-capacity-native-review-20261104/production-profile.md",
+      "sha256": "aaaad1c2566be86ac324cff4fbae68c9a9fcb92053cbfd774c51e222a49b655c"
+    },
+    {
+      "path": "anadius-owned-jobs-source/job-capacity-native-review-20261104/profile-independent-review.md",
+      "sha256": "94bbbf05c15c2c62d3ba47f4d36670d859d67efed633cfafeb3956cf6f604372"
+    },
+    {
+      "path": "anadius-owned-jobs-source/job-capacity-native-review-20261104/report.md",
+      "sha256": "b4d22218d02af477adf68bd051d2d668b47775d39623c66aa64fb6b2c0fa5710"
+    },
+    {
+      "path": "anadius-owned-jobs-source/job-capacity-native-review-20261104/root-test-review.md",
+      "sha256": "565abfe80496ae8576c8d685a3b03751c36928a378dc60d2a28abc4320b7d8dc"
+    },
+    {
+      "path": "anadius-owned-jobs-source/job-capacity-native-review-20261104/test-native-growth.md",
+      "sha256": "a22d160d80ace7a557c25f05fdc4a49f63ee938f0d7922e09abf6833f641e498"
+    },
+    {
+      "path": "anadius-owned-jobs-source/native-job-gap.md",
+      "sha256": "fcd5b40909f43a8df88e1154831fa7b4bed891dd03860dad342c361fa3d07306"
+    },
+    {
+      "path": "anadius-owned-jobs-source/native-jobs.md",
+      "sha256": "5c30a3e38967285b969afba1c8fb2f89b119a060d83679ed1756b1d7ef135fd3"
+    },
+    {
+      "path": "anadius-owned-jobs-source/per-row-native-admission-20261105/implementation.md",
+      "sha256": "c5365ed3d5182f2724b57dce3217029ac5ebadd2acf51acecc3afa515841c42e"
+    },
+    {
+      "path": "anadius-owned-jobs-source/per-row-native-admission-20261105/native-findings.md",
+      "sha256": "7a76ac8b934c319675173c92731955e26eb21476d7f7f12c79c8677c29a71f64"
+    },
+    {
+      "path": "anadius-owned-jobs-source/per-row-native-admission-20261105/native-jobs-implementation-v2.md",
+      "sha256": "a94f99d4ee2f15970f0f46b83979c7edfa16f1739d252a49f26bcebdfe8c27b6"
+    },
+    {
+      "path": "anadius-owned-jobs-source/per-row-native-admission-20261105/native-jobs-implementation.md",
+      "sha256": "a475696e910fded2b3c4bad4a1eb3c60b334bdbd68c76d0ac8fa3b1d5e51d03a"
+    },
+    {
+      "path": "anadius-owned-jobs-source/per-row-native-admission-20261105/native-jobs-independent-review.md",
+      "sha256": "550299b33f4136ac2e3cc9fcc83f314f410ee0a2fc15a59d7c23782e89a847df"
+    },
+    {
+      "path": "anadius-owned-jobs-source/per-row-native-admission-20261105/native-sdk-fixture-implementation.md",
+      "sha256": "e8f60e0b88f92e1089d974ef3759b63daa30bbaa58759402941bd5eaf8152016"
+    },
+    {
+      "path": "anadius-owned-jobs-source/per-row-native-admission-20261105/native-sdk-independent-review.md",
+      "sha256": "0ee9868a99d576fe2aa4802975c34def8d4af7042283e3ff853525df55437f00"
+    },
+    {
+      "path": "anadius-owned-jobs-source/per-row-native-admission-20261105/parent-maintenance-implementation.md",
+      "sha256": "d46f46be4c69ac25c6d8e42f0eaf74ff3a35460dd34f76afa7529fe324c53d43"
+    },
+    {
+      "path": "anadius-owned-jobs-source/per-row-native-admission-20261105/parent-reap-independent-review.md",
+      "sha256": "aa7b37775e716996d9c15e299b91d6cc2768648cd2fc023aea9f516c8b6a2d55"
+    },
+    {
+      "path": "anadius-owned-jobs-source/per-row-native-admission-20261105/root-native-fixture-review.md",
+      "sha256": "f88a02647edfa72cdde3c022c0391d467b0c9a4142dcdb44a5d4a962b11be119"
+    },
+    {
+      "path": "anadius-owned-jobs-source/per-row-native-admission-20261105/root-native-jobs-review-v2.md",
+      "sha256": "9bf148c3bb8ec376b337198cdd173f9be894e63e945a99a121c87ba425cde943"
+    },
+    {
+      "path": "anadius-owned-jobs-source/per-row-native-admission-20261105/root-native-jobs-review.md",
+      "sha256": "fa9290654217271f1d948dc63403c7a99a11483234fb2306214d1075ee6f7808"
+    },
+    {
       "path": "anadius-owned-server-source/README.md",
-      "sha256": "3c21284e501d65771bd3c78944d8a119cafdf56bab9bc01ac762ce256ec517fc"
+      "sha256": "bb93f65e664c6fb3b0847b574df94d54cceb61d128bc644b3c3d5fe06af1ec82"
     },
     {
       "path": "anadius-owned-server-source/architecture-review.md",
       "sha256": "c43a2f8eb0585e525316df917a130aa289c1ee04345b958e26dcd3bb88d7a02e"
+    },
+    {
+      "path": "anadius-owned-server-source/error-category-028240.md",
+      "sha256": "6bf7daecab1e6c90efe974c76cac32a28e81eebf219b4302f61d046bb2cb6c8a"
+    },
+    {
+      "path": "anadius-owned-server-source/error-no-context-028210.md",
+      "sha256": "84d3f3e79161fded86fa1ab1994dced32801e16ffeb58d25ad7983a01ea36878"
+    },
+    {
+      "path": "anadius-owned-server-source/iocp-error-diagnostic-20261104/implementation.md",
+      "sha256": "5ae383773a1e1637b16d366b8ac759178668ccc04fcd3feef057efceeef76405"
+    },
+    {
+      "path": "anadius-owned-server-source/iocp-error-diagnostic-20261104/native-findings.md",
+      "sha256": "78c73e6f88fbe53ef9825a8151cfc5fdb32b4fdddbd8770aad7c5ee2e5d17108"
+    },
+    {
+      "path": "anadius-owned-server-source/iocp-error-diagnostic-20261104/root-production-review.md",
+      "sha256": "43066571ee994a346bf1063b299d829727a7058c2b89700839692811b98bc50b"
+    },
+    {
+      "path": "anadius-owned-server-source/iocp-error-diagnostic-20261104/root-test-review.md",
+      "sha256": "fb0f89efe64856f063fc54da7b552433f7b90f258d98725b244ada4d353c6a40"
+    },
+    {
+      "path": "anadius-owned-server-source/iocp-error-diagnostic-20261104/test-source-notes.md",
+      "sha256": "46fca75cf1c094cb799a74aeb576e4c24772d99d5cd65c7790f665a9e1b74813"
+    },
+    {
+      "path": "anadius-owned-server-source/registry-teardown-order-20261105/implementation.md",
+      "sha256": "a93a7c20600457ffe7e8ca736ffcb5c70c96939b4ed293ede379e691c877897b"
+    },
+    {
+      "path": "anadius-owned-server-source/registry-teardown-order-20261105/integration-independent-review.md",
+      "sha256": "0f6eebe0be666e610aa0dde06acf7fbbbb7697251d2e9a93c614b0806af2d78a"
+    },
+    {
+      "path": "anadius-owned-server-source/registry-teardown-order-20261105/native-findings.md",
+      "sha256": "71b58c3d741042fe383adc973ee213e68c0de992f81487c19585cc519af69fe8"
+    },
+    {
+      "path": "anadius-owned-server-source/registry-teardown-order-20261105/production-independent-review.md",
+      "sha256": "b0503f24f1e0b3516a96f35f695a9f538ceb44c39b04b9be701edd305ee91db0"
+    },
+    {
+      "path": "anadius-owned-server-source/registry-teardown-order-20261105/test-source-notes.md",
+      "sha256": "00246ab16733d4ce4617c4852367c97b4b74cc327d5da2e8b6b171d32edea23c"
+    },
+    {
+      "path": "anadius-owned-server-source/typed-socket-diagnostic-20261104/evidence-links.md",
+      "sha256": "6f8d4fd25ac2faeaaac60a853c043260f61af60177950af334157448b20e114a"
+    },
+    {
+      "path": "anadius-owned-server-source/typed-socket-diagnostic-20261104/implementation.md",
+      "sha256": "01d66f6c0bcc959aa6c7a9ba0a695732744b20e6a306af000315ab23626338ed"
+    },
+    {
+      "path": "anadius-owned-server-source/typed-socket-diagnostic-20261104/root-production-review.md",
+      "sha256": "1799df600512c635eccf7c811858f509a67895bfb1bce3763cd26581ee815567"
+    },
+    {
+      "path": "anadius-owned-server-source/typed-socket-diagnostic-20261104/root-test-review.md",
+      "sha256": "45cbc35c05ec68497d4a542cb2da3a3837d2bca8b8f77c76aaf91d9a398764bc"
+    },
+    {
+      "path": "anadius-owned-server-source/typed-socket-diagnostic-20261104/test-source-notes.md",
+      "sha256": "90c389f1082cbadb30a271a9594f985d8fc050e948bb821ab5cb03c28320e4e3"
+    },
+    {
+      "path": "anadius-owned-server-source/winsock-context-startup-20261104/compiler-portability-note.md",
+      "sha256": "cbc64d57573e769891f096fa3f424ad126ce35f28d2fdb1e44e167f974600178"
+    },
+    {
+      "path": "anadius-owned-server-source/winsock-context-startup-20261104/design-review.md",
+      "sha256": "b43da1854520ea1923fb2d19670a5575882587047502421e2a8f9e172acb31a9"
+    },
+    {
+      "path": "anadius-owned-server-source/winsock-context-startup-20261104/implementation.md",
+      "sha256": "3a06696d126204d44d90154936ca0ebed815c64cd77170aab071eaa753c20432"
+    },
+    {
+      "path": "anadius-owned-server-source/winsock-context-startup-20261104/implementation.round1.md",
+      "sha256": "fd275d21aa11e038085e0eac04a63bc740bac7d33d5236f316af7c5b84b6143d"
+    },
+    {
+      "path": "anadius-owned-server-source/winsock-context-startup-20261104/integration-factory-independent-review.md",
+      "sha256": "ac10cf45aecd1cbf26022f914f57dae6a885a6906369a3ec4a7252fbe1cdc8f0"
+    },
+    {
+      "path": "anadius-owned-server-source/winsock-context-startup-20261104/native-findings.md",
+      "sha256": "a147b1dd5e36d373e8e83b0d1400a502a40dec7d413f19ee82faa6f8b4c45dac"
+    },
+    {
+      "path": "anadius-owned-server-source/winsock-context-startup-20261104/production-independent-review-initial.md",
+      "sha256": "3ca7a47a1745c8433698cab90a7b728b189ce37e5bf21d76a64974591f2ee473"
+    },
+    {
+      "path": "anadius-owned-server-source/winsock-context-startup-20261104/production-independent-review.md",
+      "sha256": "0a7c8df586d5c2e41f6bd58e6baf49c49c468e8cf02c410e82af105e7795f8b2"
+    },
+    {
+      "path": "anadius-owned-server-source/winsock-context-startup-20261104/root-primitive-test-review.md",
+      "sha256": "f9fe3e805c3b8f240fe9cde2d7ba85cd040bd8d6a65dd39bcdf602127da040e2"
+    },
+    {
+      "path": "anadius-owned-server-source/winsock-context-startup-20261104/test-source-notes.md",
+      "sha256": "3101e9b06578fe66a1f815f1298dea9355e9707277a66f949070248f2e4d2716"
+    },
+    {
+      "path": "anadius-owned-server-source/winsock-crt-order-followup-20261105/findings.md",
+      "sha256": "9ede2c6d2f25cae31deb4bf18e486d1e3cc17067664ff721bab3fc5cbb972566"
     },
     {
       "path": "anadius-parser-source/README.md",
@@ -873,11 +1889,39 @@
     },
     {
       "path": "anadius-pre-unload-source/README.md",
-      "sha256": "777e3b404b3d7230c19d1cac0c7a90455afadbb6bb23d0dbcd66de2a478bc67a"
+      "sha256": "0c335c9d8a3e3a904795cde8a9bb81fb50431cc7cf7716a959454bba03b5b15d"
     },
     {
       "path": "anadius-registry-source/README.md",
       "sha256": "ddc65f2c14720251899bb9d33c62f1af00b64853c205ca890876d0e0c2b40e93"
+    },
+    {
+      "path": "anadius-registry-source/language-log-lifetime-20261104/report.md",
+      "sha256": "e4c764ff2ac7f39b53f1219cb35f6a8553f41888e44a54fd4dfd467ba5ff10cc"
+    },
+    {
+      "path": "anadius-registry-source/language-log-lifetime-20261104/review.md",
+      "sha256": "3ef1b17eb70e7facf440c10287e55bcc20a1247ad98fe53a68a3b810021bbc4e"
+    },
+    {
+      "path": "anadius-resources-factory-source/native-image-base.md",
+      "sha256": "482ef1cac7e86643de004423b03e17472a1f7c09b0b8b8fdff5785666da42a62"
+    },
+    {
+      "path": "anadius-resources-factory-source/native-message-jobs.md",
+      "sha256": "11e41728f6ff27ae4b5035aa4cbea6992521af437ae0d8b0e344802563c89a49"
+    },
+    {
+      "path": "anadius-resources-factory-source/native-worker-io.md",
+      "sha256": "6bdb179a1964b6fefbc4d37fb2b7c9329e664c2ed1fcc4f3b194b97481a53120"
+    },
+    {
+      "path": "anadius-resources-factory-source/original-native-worker.md",
+      "sha256": "c59aaf34fb723037b9d7c202c13bfff5598ae15cbca49753da8a7e8c7f07aa1e"
+    },
+    {
+      "path": "anadius-resources-factory-source/stop-admission-binding.md",
+      "sha256": "309f4d6564e334fc209dce66e1aaddfd3a35406485ad8083e8c41846b2ca8685"
     },
     {
       "path": "anadius-server-runtime-source/README.md",
@@ -888,8 +1932,16 @@
       "sha256": "748773c643cecbb492899ef00c6d4adb215cd7bad09d279c50cd15843dde77b8"
     },
     {
+      "path": "anadius-server-runtime-source/prepared-session-drain.md",
+      "sha256": "1a8e7c46847f272ba7ac358586bc8012b402ec60c0da006e1cb913ddf9fc37b2"
+    },
+    {
+      "path": "anadius-server-runtime-source/prepared-stop-drain.md",
+      "sha256": "d16f052c260297279e9e4f4009c55364fe740b27972fc25e787178ebc7cc3bab"
+    },
+    {
       "path": "anadius-server-source/README.md",
-      "sha256": "a41dff22ac2687db649aea6764c9304c58945c20702500c465eae371c55d28c7"
+      "sha256": "8d30b84ef28e38d1279b965677de40f9b9cd6289a6c649e341a4ca4679f5b7b1"
     },
     {
       "path": "anadius-services-completion-source/README.md",
@@ -937,11 +1989,75 @@
     },
     {
       "path": "anadius-session-memory-source/README.md",
-      "sha256": "2ea1a08695f153502fd46bbeb1e04e664fe13506e225d7ff194ba24ce95b0aaf"
+      "sha256": "a2d968562ec3a236f1789a4b855a81955d2c65f9739fcf5be4f7b691a164d376"
+    },
+    {
+      "path": "anadius-session-memory-source/actor-catalog-foundation-20261105/combined-lower-independent-review.md",
+      "sha256": "3af1cf83d27df3c1144c6d6c1299a7b27687e4736ac4067d03ba0da4e00f60cc"
+    },
+    {
+      "path": "anadius-session-memory-source/actor-catalog-foundation-20261105/implementation.md",
+      "sha256": "cc47cc93ba9287fa1d98c841a63064ec32631d86320dbec888046c4d9bcb3168"
+    },
+    {
+      "path": "anadius-session-memory-source/actor-catalog-foundation-20261105/independent-socket-review.md",
+      "sha256": "6200c3db293721a349f2bebabc31a0a9b640c68459c76bd6a93a1d0320bfc9f0"
+    },
+    {
+      "path": "anadius-session-memory-source/actor-catalog-foundation-20261105/loweractor-test-source-notes.md",
+      "sha256": "b863e4924ed55449281bf07b4bec0fb4a9fa1cc15678be91319f42d4cf32b449"
+    },
+    {
+      "path": "anadius-session-memory-source/actor-catalog-foundation-20261105/native-findings.md",
+      "sha256": "e941d267f79b7d15eefdf21c1f674bbdec9d1e3a58cd6352fd0b13ed3cb2f382"
+    },
+    {
+      "path": "anadius-session-memory-source/actor-catalog-foundation-20261105/parent-implementation.md",
+      "sha256": "aefc42dd1b8c5881b80a2151940723629dbb6867b4527719ac38e10a25ca2a36"
+    },
+    {
+      "path": "anadius-session-memory-source/actor-catalog-foundation-20261105/parent-production-independent-review-round1.md",
+      "sha256": "770a5fb10d1519ec5a5e2b8fd3be66ef7ce384bf1ad30d91d84b9f87c1bc4c4e"
+    },
+    {
+      "path": "anadius-session-memory-source/actor-catalog-foundation-20261105/parent-production-independent-review.md",
+      "sha256": "79f1ebf4d7ab50f313f49761df8dc5056d5dd9dddfb84fe21ed205a4cd7f87eb"
+    },
+    {
+      "path": "anadius-session-memory-source/actor-catalog-foundation-20261105/root-independent-review.md",
+      "sha256": "243a3f9910b2fc177e3b0b950a76d9387f2b49220df3947d1a1dd25081dfd68f"
+    },
+    {
+      "path": "anadius-session-memory-source/actor-catalog-foundation-20261105/root-sources-independent-review.md",
+      "sha256": "feeb4f43d791d794c8baebe8c9c4043416f035fc0fa37fef35222f801f6c6f39"
+    },
+    {
+      "path": "anadius-session-memory-source/actor-catalog-foundation-20261105/socket-resolver-implementation.md",
+      "sha256": "357f51ff839176f80ca6b78255ea8ec933babeb5da4f8e38f148f5e24a981bba"
     },
     {
       "path": "anadius-session-memory-source/architecture-review.md",
       "sha256": "fc9643271411015d0e120142bcf27abcc1261338174955b294003f32f3931be9"
+    },
+    {
+      "path": "anadius-session-memory-source/handler-admission-overlap-20261105/caller-proof.md",
+      "sha256": "f4a590b9229b936d29528719132cbecfdc233305711cad90015409520d809a63"
+    },
+    {
+      "path": "anadius-session-memory-source/handler-admission-overlap-20261105/source-gate-review.md",
+      "sha256": "afdc629e4869248d5abdcb11cafdee0e3d44c549d9be52fc5cb2f10261bc8948"
+    },
+    {
+      "path": "anadius-session-memory-source/job-parent.md",
+      "sha256": "25b56029a44e006e82f587572b41bb8b982329df97800ba7c3cd07cdd6488e06"
+    },
+    {
+      "path": "anadius-session-memory-source/parallel-frame-admission-20261105/memory-design-review.md",
+      "sha256": "e6a0906a89801016a3bcc4ae810220aea79c89aa64b6c96571c73761f614d893"
+    },
+    {
+      "path": "anadius-session-memory-source/parallel-frame-admission-20261105/native-findings.md",
+      "sha256": "83f602687e4e2ffe5d09a69daf661c2615e8899b995c4d68c17da1c630a5282f"
     },
     {
       "path": "anadius-session-owner-source/README.md",
@@ -957,19 +2073,355 @@
     },
     {
       "path": "anadius-session-policy-source/README.md",
-      "sha256": "db722e16863503ed2833dc25f5c43534a8de9137b849c6b51ba98feff4524708"
+      "sha256": "a476d9e5a9c3ee99c4fd554f7b499c5e346f971640556f149ec05087d6eafe56"
     },
     {
       "path": "anadius-session-policy-source/architecture-review.md",
       "sha256": "12334838955a3582cfa2d1932888fa9ba8d861208057dcd458d45c1cc55e101e"
     },
     {
+      "path": "anadius-session-policy-source/completion-error-review.md",
+      "sha256": "00fc1992e6611ef1d36df8efce9022cd3f2a22e48a505c4fbde6b65b56ddfb4d"
+    },
+    {
+      "path": "anadius-session-policy-source/job-exit-cleanup.md",
+      "sha256": "589b5d399f001b0a5609bda9a982307365353a8860f8dba167f760619e9be5e7"
+    },
+    {
+      "path": "anadius-session-policy-source/misc-message-020a80.md",
+      "sha256": "05bb06fdb6b87bfacb0098cd94c6e853f2c91ad050d7d7751209f65652c8eb2d"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/compiler-zero-constructor-proof.md",
+      "sha256": "0ae546f545015b29925f430f3f6368af17c2121e216596070db59b890e6d50fb"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/implementation-round1.md",
+      "sha256": "ee73addf5a07e2cda8c1b85174169e529f3c88f90ba6d66941444cd926a089fc"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/implementation-round2.md",
+      "sha256": "fd631f927b0cecdb84c44436749989fa4308f987d04037041f0be6f0a319851d"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/implementation.md",
+      "sha256": "e5cdc8a163295ac535ff7883b7798e7afc525a0bb16d5af6011fbb6c2e98ce8c"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/production-independent-review.md",
+      "sha256": "8535f477c0a5b5518493def4a9eeeef867bfea56d089dfdbb163434a847fab7a"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/production-independent-review.round1.md",
+      "sha256": "17597b22e0ab1019b299281f7ee6794eb41dec9f7e7b2d96748ae371589f49c2"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/production-independent-review.round2.md",
+      "sha256": "90cae2f1ec173b71f3afecc3d9adda501aa4b78b6190ca3f90080962a26922d0"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/report.md",
+      "sha256": "18b6733e4082b55c28753a2eab56425ff64ad19a84b55a65658f92e0589326f0"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/root-independent-review.md",
+      "sha256": "e665cbf88d53ed113fdfc425f74325d79ab6b13086c92f3298b9b7eec566b65f"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/root-independent-review.round2.md",
+      "sha256": "7a52d56d1fd794e6095eb365c4c861b8829541dace9bb86104b02c3d31b3d3d5"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/test-source-notes.md",
+      "sha256": "c634e8f5bba464c27a6033c2ae8362c2797945c656dff994453f8215799def2d"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/test-source-notes.round1.md",
+      "sha256": "edb192b6fb80738a0ae0d4ee27907eb986b571d1432a77e8c74bfd0524afc45d"
+    },
+    {
+      "path": "anadius-session-policy-source/native-stop-diagnostic-20261104/test-source-notes.round2.md",
+      "sha256": "a923e29185d20a8fe1661b926ab36ed01ac39f77aa40dffff0b370ff74d6af46"
+    },
+    {
+      "path": "anadius-session-policy-source/native-system-category-20261104/native-findings.md",
+      "sha256": "5b23e2090a6a8466c9ae811c693a7e7d71c021245a3647cdf52442c84efa1d43"
+    },
+    {
+      "path": "anadius-session-policy-source/per-call-work-release-20261105/implementation.md",
+      "sha256": "9f938476bd7645051b81e01fe4ee53510e3959f79bbeff10e638d1eff7b68104"
+    },
+    {
+      "path": "anadius-session-policy-source/per-call-work-release-20261105/native-findings.md",
+      "sha256": "0b8fe48fe430db5a05b858a6f82b998cc8f6a7b7744e11e0004348a4dfa2c06f"
+    },
+    {
+      "path": "anadius-session-policy-source/per-call-work-release-20261105/policy-work-implementation.md",
+      "sha256": "3bd259723555d60d0e37ea256b7b24d5d3ac56684477d0e6584b4ba9c8b2e1d4"
+    },
+    {
+      "path": "anadius-session-policy-source/per-call-work-release-20261105/policy-work-independent-review.md",
+      "sha256": "73345f49cf50cbb09f26ad3b2552a51cdfe5f8c3c124b378adb70bea7a0e59fc"
+    },
+    {
+      "path": "anadius-session-policy-source/per-call-work-release-20261105/policy-work-test-implementation.md",
+      "sha256": "b3d2ee778041c4f3763f3d612e09750337b3a3a2aefb7eabc846cb6af945c8e1"
+    },
+    {
+      "path": "anadius-session-policy-source/per-call-work-release-20261105/root-policy-work-review.md",
+      "sha256": "55acc137c727b7c3b4b27c8f982881fdfce8da4fd4fb2056100ca575054d26ae"
+    },
+    {
+      "path": "anadius-session-policy-source/source-lifecycle.md",
+      "sha256": "b051eb927f3edd5e67a38416b35335b52b8a8845375fe7d1cffede2ef013b1c3"
+    },
+    {
+      "path": "anadius-session-policy-source/system-message-020950-20261104/before-recovery.md",
+      "sha256": "7a706d8ee165f4e6d766be88173ceb2fc97727644057a3e2acc799a96079f0ba"
+    },
+    {
+      "path": "anadius-session-policy-source/system-message-020950-20261104/implementation.md",
+      "sha256": "63903af4f40836fb2b4935e12dc337553a035faea6221ebd9cbf072cee046981"
+    },
+    {
+      "path": "anadius-session-policy-source/system-message-020950-20261104/native-findings.md",
+      "sha256": "65cf82681d62ee2381b64fbd154408bcbb4d8d2260d8987c90f732705861fbb8"
+    },
+    {
+      "path": "anadius-session-policy-source/system-message-020950-20261104/production-independent-review.md",
+      "sha256": "948a625860afc003416e8922cd769e18b1a5866b7f53e880fa9b068ef02b6042"
+    },
+    {
+      "path": "anadius-session-policy-source/system-message-020950-20261104/report.md",
+      "sha256": "4acf634e99fea3af06c0005e94bc685a0e189f3980c4d293e4eed66515cad31a"
+    },
+    {
+      "path": "anadius-session-policy-source/system-message-020950-20261104/root-independent-review.md",
+      "sha256": "8dff141ebf6c17f3a8bd71cfa0c088bd4b459282bfbedc2537caa6025c56207e"
+    },
+    {
+      "path": "anadius-session-policy-source/system-message-020950-20261104/test-source-notes.md",
+      "sha256": "765ac913afac36958e59ce7a395c5c5b660da036a78f96a7dd4027fcb7e79034"
+    },
+    {
+      "path": "anadius-session-policy-source/worker-error-028240-20261104/compiler-provider-review/findings.md",
+      "sha256": "4430e2c1a7df7e08d093b0702b14cb80b6fd0b0f1fd5bb65b6f77cbb67f1487a"
+    },
+    {
+      "path": "anadius-session-policy-source/worker-error-028240-20261104/complete-diagnostic-design.md",
+      "sha256": "ddaa3536c5df993dc4a7d54716cd08b29eb5927850bcf20f4d95b463964fc015"
+    },
+    {
+      "path": "anadius-session-policy-source/worker-error-028240-20261104/design-review.md",
+      "sha256": "dff8860e4fedda147e089aa4b8f1a150028d47cff28df5acb070ebe54ff446c3"
+    },
+    {
+      "path": "anadius-session-policy-source/worker-error-028240-20261104/literal-independent-review.md",
+      "sha256": "3f42dba67a9b2bb6ba16497cfe7243b779f42f7209f2769b8d3fa5e28a8602f5"
+    },
+    {
+      "path": "anadius-session-policy-source/worker-error-028240-20261104/native-findings.md",
+      "sha256": "04a9bd35b1d1835dbf793a39f0d6aa3859994fb57ab9b9d53b042dd97a1128b0"
+    },
+    {
+      "path": "anadius-session-policy-source/worker-error-028240-20261104/report.md",
+      "sha256": "b7d6eb35118a5631d15e49f4c50236162f787846449f7875c07b32e5dbbc15a2"
+    },
+    {
+      "path": "anadius-session-policy-source/write-diagnostic-20261104/native-findings.md",
+      "sha256": "e3722f24d64350979b4075eaf39b677161db83feeb0200dccc7a264bbc689bf6"
+    },
+    {
       "path": "anadius-session-profile-source/README.md",
-      "sha256": "dd905d07cced28fca47af51bc25e9b0a1c98f4b2a24a59b89f794288a0943e85"
+      "sha256": "3b85013ecd7097cc93545dd81208832a918b27be98a724ed80cb659a7c1557ab"
     },
     {
       "path": "anadius-session-profile-source/architecture-review.md",
       "sha256": "6374e9c89fd198756b0714729ef5881786f692d8a836beaa4e15ed966170b69a"
+    },
+    {
+      "path": "anadius-session-profile-source/header-ledger-growth-20261104/header-growth-tests.md",
+      "sha256": "1e3e46863b2cd4a9175dd0ef6422b3ebc2cf018b658c8233594d06b5cf8a570d"
+    },
+    {
+      "path": "anadius-session-profile-source/header-ledger-growth-20261104/independent-review.md",
+      "sha256": "fbb08246970c53d01dad54b10e33df1bf1e42abf31713b9e6a7cba16bdae3877"
+    },
+    {
+      "path": "anadius-session-profile-source/header-ledger-growth-20261104/native-findings.md",
+      "sha256": "d705dec036eb493f2de681a5b01be3b03f1c693839df463e67e8949d2a60e306"
+    },
+    {
+      "path": "anadius-session-profile-source/header-ledger-growth-20261104/production-implementation.md",
+      "sha256": "1d1c86c5ff2c8337b2f57284c3ad37c639f2949d71e06e16cd2b90cdab8006cf"
+    },
+    {
+      "path": "anadius-session-profile-source/header-ledger-growth-20261104/report.md",
+      "sha256": "a8df8a6b4c9474362dd37530202c72cbeb4c65225a361f568755d0dd8f24e85e"
+    },
+    {
+      "path": "anadius-session-profile-source/io-registry-growth-20261104/accept-implementation.md",
+      "sha256": "2c3d197610faf27dd2b13da2d6b059f6c0096da3db820f503df8918e566d8cf4"
+    },
+    {
+      "path": "anadius-session-profile-source/io-registry-growth-20261104/consumer-independent-review.md",
+      "sha256": "659b9758e7e70fb5e22767d0b19584535ff8535ab339d5d395c3218f3e9dce90"
+    },
+    {
+      "path": "anadius-session-profile-source/io-registry-growth-20261104/io-consumer-triage.md",
+      "sha256": "1587dde4f52f04b492fe1f3704e07f7d1d71bb028cef70ca0bf1d497203770a4"
+    },
+    {
+      "path": "anadius-session-profile-source/io-registry-growth-20261104/io-implementation.md",
+      "sha256": "041b215258fde6219934fe47f8478b1e001d6c2bfce0768b6293f27ccc6a5dff"
+    },
+    {
+      "path": "anadius-session-profile-source/io-registry-growth-20261104/io-storage-triage.md",
+      "sha256": "f28b52305065938ef504400a60400e29f3f26a15d3f65b2b3addb1cc4b187fad"
+    },
+    {
+      "path": "anadius-session-profile-source/io-registry-growth-20261104/native-findings.md",
+      "sha256": "88a6944780a93d87e87839a3603072da68ba075fe4dfe0013a163f4df09695bd"
+    },
+    {
+      "path": "anadius-session-profile-source/io-registry-growth-20261104/production-review.md",
+      "sha256": "65a415d53acd974aa92d7c870f7dc2888bce62ba5be1e885f5b92312b8ba5b23"
+    },
+    {
+      "path": "anadius-session-profile-source/io-registry-growth-20261104/report.md",
+      "sha256": "df769999cd2cb474f9e8583fd9a8e29e87ac6b642382e0102e0581236a002a4a"
+    },
+    {
+      "path": "anadius-session-profile-source/io-registry-growth-20261104/root-test-review.md",
+      "sha256": "97e356924618f9fd570d885088476e574125505bc4230484d1d62d7989e4bb34"
+    },
+    {
+      "path": "anadius-session-profile-source/job-capacity-native-review-20261104/source-design-triage.md",
+      "sha256": "6caacd81c864b0ae47c0666a567ea62c9d5e617943b6bc5e4e1fbcd0127c6417"
+    },
+    {
+      "path": "anadius-session-profile-source/job-handoff.md",
+      "sha256": "e39074895c13f10d74ba0aa565220d505d892db9e9ae51f0cc67579d0e623c92"
+    },
+    {
+      "path": "anadius-session-profile-source/job-pipeline.md",
+      "sha256": "fa5409760b381c93d0875f61a1795afbb43b5abfb33db1d99c59e2bba2d46783"
+    },
+    {
+      "path": "anadius-session-profile-source/parallel-string-deque-ownership-20261105/deque-implementation.md",
+      "sha256": "ad8d896ee5d124ea71aa2513f195e60d5381d49482bda16bd6fa3ac3785dccae"
+    },
+    {
+      "path": "anadius-session-profile-source/parallel-string-deque-ownership-20261105/deque-production-independent-review.md",
+      "sha256": "1622507a8f0014044c2f4c3e7107efda14082e633e3c09ffd309d251d6986994"
+    },
+    {
+      "path": "anadius-session-profile-source/parallel-string-deque-ownership-20261105/graph-parallel-design.md",
+      "sha256": "b5a990e13f05d00dce30e366694ddb10240551117ec24922cf33eedbefbb225c"
+    },
+    {
+      "path": "anadius-session-profile-source/parallel-string-deque-ownership-20261105/handoff-fixture-independent-review.md",
+      "sha256": "adf7fcad8229532a80b92267c6da1b53d51bce3dd4cb179cf4e0b52460900af7"
+    },
+    {
+      "path": "anadius-session-profile-source/parallel-string-deque-ownership-20261105/implementation.md",
+      "sha256": "86410a996a7635c1d132571abebf3c77e3f5e87f83540e2ee1f20cf9e7847b0d"
+    },
+    {
+      "path": "anadius-session-profile-source/parallel-string-deque-ownership-20261105/native-findings.md",
+      "sha256": "15d18f014430459cbb8b5f8e1c97fd0e8c34392b6c160de199063f3cc866f912"
+    },
+    {
+      "path": "anadius-session-profile-source/parallel-string-deque-ownership-20261105/next-profile-per-message-plan.md",
+      "sha256": "b3a1f04f079acf91c0c898a41fecf4195384c479472bb78271192d132e34f33c"
+    },
+    {
+      "path": "anadius-session-profile-source/parallel-string-deque-ownership-20261105/root-and-strings-independent-review.md",
+      "sha256": "fa70abe2a60fb15711cb6d28a0ce3c23c8bc5751095beb049ece8eca9cfb81ac"
+    },
+    {
+      "path": "anadius-session-profile-source/parallel-string-deque-ownership-20261105/sdk-fixture-and-coupled-review.md",
+      "sha256": "f57c6bcf228644150e28988e7e8b6dabb2169a19748de94cc42ab1aefb84e08e"
+    },
+    {
+      "path": "anadius-session-profile-source/parallel-string-deque-ownership-20261105/sdk-fixture-review-reference-addendum.md",
+      "sha256": "0a1de334659f453b071bc230f0e2e051c1cb09d387f50cfc007ba54d9230e8d1"
+    },
+    {
+      "path": "anadius-session-profile-source/parallel-string-deque-ownership-20261105/string-parent-implementation.md",
+      "sha256": "cc1c8396db1cc6730b575766d2771ff121e83379c56aea2d454937a7314f2cf8"
+    },
+    {
+      "path": "anadius-session-profile-source/per-job-call-records-20261105/implementation.md",
+      "sha256": "0b02ac79fede92935d1c0262aec3de1f1a2af208818b3f468354586c677b5892"
+    },
+    {
+      "path": "anadius-session-profile-source/per-job-call-records-20261105/native-findings.md",
+      "sha256": "4b2ba862671dd0c8f2733616e1092fa348543d0ebceedf1800efa0ec90c27165"
+    },
+    {
+      "path": "anadius-session-profile-source/per-job-call-records-20261105/next-environment-work-plan.md",
+      "sha256": "6428ac2db51d3bfac295e8f7d9eb7582f0d8219ce4b43da0c5ae8906f4b98673"
+    },
+    {
+      "path": "anadius-session-profile-source/per-job-call-records-20261105/policy-and-composition-implementation.md",
+      "sha256": "b73020b02c3e46009f05bc185e9418cb4332da41d090fbdb45eb0f57fc29fa52"
+    },
+    {
+      "path": "anadius-session-profile-source/per-job-call-records-20261105/policy-and-composition-independent-review.md",
+      "sha256": "968893ffda0f81986afc8d862295091a55f179731d70ab655c617eb9b139092c"
+    },
+    {
+      "path": "anadius-session-profile-source/per-job-call-records-20261105/profile-implementation.md",
+      "sha256": "2be92befab8b1cb94c890a8008d2ce3262129585246f72870176733364f4ad64"
+    },
+    {
+      "path": "anadius-session-profile-source/per-job-call-records-20261105/profile-policy-and-fixture-independent-review.md",
+      "sha256": "0c30c483b7453622bda962e549910b8a9a5502906bc123cad82fc69bbfc35e80"
+    },
+    {
+      "path": "anadius-session-profile-source/per-job-call-records-20261105/root-fixture-independent-review.md",
+      "sha256": "20ff8afa6ddde1f06978e2bcb389b9fd9212243dbf98d239caf4a2dd49449447"
+    },
+    {
+      "path": "anadius-session-profile-source/per-job-call-records-20261105/root-profile-independent-review.md",
+      "sha256": "0bef2260e6e605c0580426307b590f184380ab455ccab3632765cae99db1fad2"
+    },
+    {
+      "path": "anadius-session-profile-source/per-job-call-records-20261105/sdk-fixture-implementation.md",
+      "sha256": "13f13ec439eb913c0adf45e90672a1982062b963a05c11413d4a21b17c581ef8"
+    },
+    {
+      "path": "anadius-session-profile-source/session-registry-growth-20261104/graph-session-rows.md",
+      "sha256": "d462eb5d054d51808bbeaf9bb17a2de90dc733f3f78c7a1e3087062ad70cd3a9"
+    },
+    {
+      "path": "anadius-session-profile-source/session-registry-growth-20261104/independent-review.md",
+      "sha256": "80a215ef92d40b9e129336baf901d96634ac6ddf3b27128f4624f283b6f3d6b2"
+    },
+    {
+      "path": "anadius-session-profile-source/session-registry-growth-20261104/native-findings.md",
+      "sha256": "bf326e45f12227c2cce5dd9ba7fa5d6e5917070ad9a180cd2ae5cd08f5702e15"
+    },
+    {
+      "path": "anadius-session-profile-source/session-registry-growth-20261104/next-gap-triage.md",
+      "sha256": "af41a3d3e8a59c957d0b62e29ae76215679c1591a25b65d78e3585bf74870391"
+    },
+    {
+      "path": "anadius-session-profile-source/session-registry-growth-20261104/profile-implementation.md",
+      "sha256": "627a7fa46688cac393d97ca801aa08552bd01b103612d4d92079c8ed995c15f0"
+    },
+    {
+      "path": "anadius-session-profile-source/session-registry-growth-20261104/report.md",
+      "sha256": "d618279421cfe280fe0998bf3d9954cca25d2daa86e1f200ec625b23d5d8fe5a"
+    },
+    {
+      "path": "anadius-session-profile-source/session-registry-growth-20261104/test-review.md",
+      "sha256": "131a9aac274017083506f76f850f18362fb99093a118de861cd9b0d13277c719"
+    },
+    {
+      "path": "anadius-session-profile-source/session-registry-growth-20261104/test-source-notes.md",
+      "sha256": "4275da190deb7be556b92af7485d619a219b01465f9dc03100c04c737073daa9"
     },
     {
       "path": "anadius-session-source/README.md",
@@ -1006,6 +2458,10 @@
     {
       "path": "anadius-socket-move-source/architecture-review.md",
       "sha256": "29bd5e549a556dc6d86bef9ad001a4128b305c35fa1c2feb2305eb878630ffec"
+    },
+    {
+      "path": "anadius-socket-move-source/selected-executor.md",
+      "sha256": "cd910b6798c2cee5145d0c91d1f7983a6730ee733a3e1781c52806cb95c2bf7d"
     },
     {
       "path": "anadius-socket-move-source/source-audit.md",
@@ -1324,6 +2780,10 @@
       "sha256": "577b1a1680b35c8b1bf64899a11bbb7b7342c0b2dfb1aa8e043b823080d80170"
     },
     {
+      "path": "anadius-startup-publication-source/server-port-web.md",
+      "sha256": "81faa0980a034806f83023c1a2249c97290e84144104b5c799d6e9adc63927a7"
+    },
+    {
       "path": "anadius-startup-source/README.md",
       "sha256": "e166fc77de244ba82f1046c7a4daca6c060108309460717f1fb1e1004032099d"
     },
@@ -1356,6 +2816,22 @@
       "sha256": "88028baba72ebaf1111b1249a3aa5f2f938bac6421beb5be00e2c742150495a5"
     },
     {
+      "path": "anadius-timestamp-source/nonascii-suffix-20261104/implementation.md",
+      "sha256": "f3542e541c074a366db5a0795e7bdb87332153530acceff7563a3a7deba26827"
+    },
+    {
+      "path": "anadius-timestamp-source/nonascii-suffix-20261104/independent-test-review.md",
+      "sha256": "ea8a023498c7a738dd1734b593a7b79eef520deae8fa525a88779cc06dfc8c37"
+    },
+    {
+      "path": "anadius-timestamp-source/nonascii-suffix-20261104/native-findings.md",
+      "sha256": "5e7213377ad52092170db092a5c08b7988a801f456a5c8de76b563c5f14287cf"
+    },
+    {
+      "path": "anadius-timestamp-source/nonascii-suffix-20261104/root-production-review.md",
+      "sha256": "68fd5b40005833e3e2a2f284db7bde88f4b3c49de9c5bd2693d812617b1be87d"
+    },
+    {
       "path": "anadius-timestamp-source/parse-audit.md",
       "sha256": "e1fdfdfb39f7c27b3bef9601a50228fd21d3f3a444273bdd128c623b8c25aec6"
     },
@@ -1366,10 +2842,6 @@
     {
       "path": "anadius-token-source/README.md",
       "sha256": "edd08bee8e3109ee5ef568d2d943c7d5bb65cb579972e3f0f2a3e8373a1e6b51"
-    },
-    {
-      "path": "anadius-type-recovery/README.md",
-      "sha256": "63ebb3ca9a03edaa129d57943283057acde83f63cad130f2db4c9c660b44ea3a"
     },
     {
       "path": "anadius-vcrt-api-source/README.md",
@@ -1389,15 +2861,47 @@
     },
     {
       "path": "anadius-worker-handoff-source/README.md",
-      "sha256": "23a8f814b2d7ec460f39291a1ed74937e3fa293dcc328249d1ffaf67e34a2fd5"
+      "sha256": "70c41e0734de59656c87363369e3446b695d1c8b8752f5a5f1e374ba8aa18a7c"
     },
     {
       "path": "anadius-worker-handoff-source/architecture-review.md",
       "sha256": "7bcd73027a235508510621bf98aa3376ae3b56490abcc254546602c40af2f59b"
     },
     {
+      "path": "anadius-worker-handoff-source/job-memory.md",
+      "sha256": "ed3806edea263cd35d976383adbc027110bcbb546a9e93fe0b533c7fbc5fc0d5"
+    },
+    {
+      "path": "anadius-worker-handoff-source/original-stop-error-source-20261104/independent-fixture-audit.md",
+      "sha256": "643c30e6cec6b90e2540a0b5940b761dac7aa7adae6603235bd7c42478dfe371"
+    },
+    {
+      "path": "anadius-worker-handoff-source/original-stop-error-source-20261104/root-review.md",
+      "sha256": "01130f48ddf79a5f1eae1f24798486adc2d8c699bb81bbf24c90e59318fa95ad"
+    },
+    {
+      "path": "anadius-worker-handoff-source/original-stop-error-source-20261104/source-validation-notes.md",
+      "sha256": "c60634fb1ee16fcb16d1907f5d68288b3437869f81ec92012bd34a3cbf74d046"
+    },
+    {
+      "path": "anadius-worker-handoff-source/prepared-child-finish-source-20261104/independent-fixture-audit.md",
+      "sha256": "b77ca880143c3fa2d7328d755f866e2b51b356c8a6605db4e1c5725840e55488"
+    },
+    {
+      "path": "anadius-worker-handoff-source/prepared-child-finish-source-20261104/root-review.md",
+      "sha256": "aaef344c1baf7b611781ec49f92225ec57bfd1f7549b764545f2d242cce6b582"
+    },
+    {
+      "path": "anadius-worker-handoff-source/prepared-child-finish-source-20261104/source-validation-notes.md",
+      "sha256": "5d2d2c687bc580478d15cc50faa196daa47453edf3923671ab1edaba79adee1e"
+    },
+    {
       "path": "anadius-xml-reader-source/README.md",
       "sha256": "1a1f893964fd7e46a5cd263637c93922110843df436cbff5f56c7e2e251ec3ad"
+    },
+    {
+      "path": "anadius-xml-reader-source/parse-status-native-audit-20261104/report.md",
+      "sha256": "b641d32f5b7d6bc98a27655d98296c9696110de0b66ceec00535d88adbcbdafe"
     },
     {
       "path": "anadius-xml-source/README.md",
@@ -1408,20 +2912,48 @@
       "sha256": "44434a36c370d5b2f47e2b51e5dc070b5099260f32b24cfbca52c308ec1930d8"
     },
     {
-      "path": "dll-integration-audit/README.md",
-      "sha256": "3561c4347f2ad2204f216c71eea5b3aa4bc8217f9a9f699543b92559d0ad5e91"
+      "path": "dll-critical-path/active-config-values-audit-20261105.md",
+      "sha256": "4345993c063ab0af602400bcb35df139aacc9a7b0d603df7cd27862e51e5084f"
     },
     {
-      "path": "dll-integration-audit/entry-roots.md",
-      "sha256": "71a6f18d0681c1682d2d556d0169342427fa7b8cb5d09a077c479d2412edfdfc"
+      "path": "dll-critical-path/business-gap-triage-20261104.md",
+      "sha256": "6de4337393cbcda3d8b956b300d131be8eaba24ca0f2b454ab1f8f51b217b286"
     },
     {
-      "path": "dll-integration-audit/provider-blockers.md",
-      "sha256": "1059051c059a03b6218fbe9fd3b7dbea9ce006d9cdc775fe3b63efaa953fbd72"
+      "path": "dll-critical-path/calendar-utc-input-domain-audit-20261105.md",
+      "sha256": "adb2ce0558542962d53ca83465f5e41204036e0f0ade8c8b9456f660818032ea"
+    },
+    {
+      "path": "dll-critical-path/current-source-route-review.md",
+      "sha256": "6e39c646da7f8516ac903589c01fdc599f5849a5799f1d5dfc409e7759696b2f"
+    },
+    {
+      "path": "dll-critical-path/legacy-config-input-route-audit-20261105.md",
+      "sha256": "77a2cc1ef33b7c80b09e7ae665f79b890ff3c56a3fc9d926afc580c0faee7ca0"
+    },
+    {
+      "path": "dll-critical-path/noncrt-input-domain-triage-20261104.md",
+      "sha256": "ef3eaf95c700460183ecd59979b80b77ecb44570fdfb5716e805e7414ffa3f50"
+    },
+    {
+      "path": "dll-critical-path/noncrt-input-domain-triage-second-batch-20261104.md",
+      "sha256": "297c98d68ec82b3513af7ba4c8f4581987cc2f41d975f17e9db4a462435d7ee7"
+    },
+    {
+      "path": "dll-critical-path/persistence-source-triage-20261104.md",
+      "sha256": "4aaf5c436c87ae20f8b7aed03ab8d1c3298e5fab5dd2643b69ad0dd849d25e3d"
+    },
+    {
+      "path": "dll-critical-path/production-provider-source-audit-20261104.md",
+      "sha256": "625ef8d048d5b7295762a5de06385fbd9b94817b4194642fb0b1931fdaf7c6a9"
+    },
+    {
+      "path": "dll-critical-path/remaining-child-validation-boundary-20261104.md",
+      "sha256": "c6b51ca3be60ddc2361127204282bce3ea87c2f02315c27e57f8dc33bf4923bc"
     },
     {
       "path": "dll-link-gate-source/README.md",
-      "sha256": "5b82ee921a3b12a56f358a6a97c12a0da4d3a1520f44229865c9849c6d1fa975"
+      "sha256": "4d8e4974eee3aa0334540aa552d8d9af972b1eee149cb47fe44655126345768d"
     },
     {
       "path": "dll-link-gate-source/baseline/B30-source-workspace-README.md",
@@ -1520,6 +3052,18 @@
       "sha256": "16c22499051c08c85bf00079aa8d1347e882d9a7cf419ed20e7c5c357e55ce95"
     },
     {
+      "path": "dll-link-gate-source/link-preparation.md",
+      "sha256": "c0224a2315568cbda4dba507baba9fed2033002c1800be4b015e570e4f00a6fc"
+    },
+    {
+      "path": "dll-link-gate-source/native-image-owner.md",
+      "sha256": "43e953124e31517499f2a074d8d20a3c7fd9122efa2b544d0b3213dc9522cef6"
+    },
+    {
+      "path": "dll-link-gate-source/original-loader-profile.md",
+      "sha256": "1d554e0f6d59f67392a598039b5e92ecb0b7e3680e85405d91ce1b495f91cbe2"
+    },
+    {
       "path": "dll-link-gate-source/production-root-review.md",
       "sha256": "928deac4154908305461a1983e4174bbfc97acf5c02389f7d86948a68082b559"
     },
@@ -1544,22 +3088,6 @@
       "sha256": "502b0b87ca77b00473142951a10bf8d42e8ffe3294f10de677a833682e9a9aae"
     },
     {
-      "path": "host-compatibility/CFG-README.md",
-      "sha256": "ee28e521320214e14b362c5a58725311b426bb9f72074be72f71db453ba1bb9d"
-    },
-    {
-      "path": "host-compatibility/README.md",
-      "sha256": "0d67c109897a781df8897b615daacf447b91aaab478e1bb02231387c83959c1f"
-    },
-    {
-      "path": "mac-symbol-comparison/README.md",
-      "sha256": "438c61bb99776b652475cc9cff86094b696709bd9c4fff944952202be52c750b"
-    },
-    {
-      "path": "preloader-analysis/README.md",
-      "sha256": "d8d2165fc73d3df586a41d3469e1e255975bbd9a3ef61355a0e183b3e1e37716"
-    },
-    {
       "path": "preloader-native-source/README.md",
       "sha256": "234dc38eda8a2177ebc66e6dbd91d7e3ce68cc5e78bfd701356e88393c7c2b7e"
     },
@@ -1568,28 +3096,8 @@
       "sha256": "1d463568c053316d241daadf4ebb51f0cce4994eb10670d745ef40b647b3797d"
     },
     {
-      "path": "reconstruction-inventory/README.md",
-      "sha256": "b8b699aed5ed17a4e7ab2a48c1fe47a902adaf74c19509a823c6f645b2d1a0b0"
-    },
-    {
-      "path": "reconstruction-inventory/dependency-audit.md",
-      "sha256": "dcb2d5a803b607c823c65b6ddb5cd82609109857d50bce05f2cb9e8ad3b0f284"
-    },
-    {
-      "path": "reconstruction-inventory/mapping-audit.md",
-      "sha256": "a854da84053d1be36a7c991e7795f0ebb3d36c9bec62d0890e45e42d2bbdcc4d"
-    },
-    {
       "path": "source-workspace/README.md",
-      "sha256": "e6668d9304b318ea14217abc01ab0afc7de59a0647c5863c0df39211bb683bfa"
-    },
-    {
-      "path": "version-build-verification/README.md",
-      "sha256": "fbe280a0f85a8b035be37a601352b9d9fc478bcf87b0ee52ef4947a8fd3a7004"
-    },
-    {
-      "path": "version-rebuild/README.md",
-      "sha256": "d9d0fec914c17d1cca19f0b3fe8b1aa57973f0c1c9d200f0e42e6daa52eace3b"
+      "sha256": "d19dcf531176d8c5a5108b0ba0a5850e5eda47c047e803f56de8e107d493cc05"
     }
   ]
 }

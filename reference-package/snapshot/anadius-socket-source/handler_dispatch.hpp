@@ -3,10 +3,12 @@
 
 namespace anadius::socket_recovered {
 struct HandlerTaskContext;
-class OwnedHandlerTask {
+// Handler tasks and response functors share the native slot00 flag contract.
+// The base permits the same posted envelope to own either typed projection.
+class OwnedHandlerTask:public PostedFunctor {
 public:
     virtual ~OwnedHandlerTask()=default;
-    virtual void call_slot_00(std::uint8_t flag)=0; // native flag0 discard, nonzero invoke
+    void call_slot_00(std::uint8_t flag)override=0; // native flag0 discard, nonzero invoke
 };
 struct ReceiveHandlerTask final:OwnedHandlerTask {
     ReceiveHandlerTask(OperationStorage& storage,HandlerTaskContext& context):storage(storage),context(context){}

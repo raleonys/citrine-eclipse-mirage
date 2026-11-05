@@ -1,0 +1,82 @@
+[
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.cpp",
+    "sha256": "f061ccecc409d666671581b7df53adafb16ef20e8c0df4fe9e0b95eae3d3afcb",
+    "bytes": 24991
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.hpp",
+    "sha256": "498ca76db66825606ff27fe52a21baaf77b0593e3f120d4fa29a17f15a22294e",
+    "bytes": 8196
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.cpp",
+    "sha256": "45580980d53421a114627dbaba56285fb087dfa3356be37db41d5b62d399c7fe",
+    "bytes": 13752
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.hpp",
+    "sha256": "73a666017fdbba72d7836cf7564979e05701dba7069c54585e0c5945420da7bf",
+    "bytes": 11426
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-host-platform-source\\assembly.cpp",
+    "sha256": "6b13a4b41309f68dcf9f4423aac3807bc9c019005c48551535e9e2c2fa12fd07",
+    "bytes": 6788
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-bootstrap-owner-source\\owner.hpp",
+    "sha256": "b0328466ecd9316a1aef6d4a2c0d7e3729a300db2633078144719f002642a9a0",
+    "bytes": 6028
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\connect.hpp",
+    "sha256": "94eafd7fc70d6540d0729176114e6340b4596a3120ef54efcdd7a7882a3294f7",
+    "bytes": 4471
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\connect.cpp",
+    "sha256": "82c848cde72f93fecc0aa8a3c803e5a4f2a687d4d51d904c923ab71b844c1382",
+    "bytes": 4254
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-config-source\\configuration.hpp",
+    "sha256": "dbb4912596f34ac5e87246e0415c20186ca3484d9d9c727e14434ac3aaa57deb",
+    "bytes": 7541
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-server-source\\server.hpp",
+    "sha256": "278c83ae16bdaa2b9c44e5e491838c592273cdbc1cbb1e0344d3b3142ae2facc",
+    "bytes": 5922
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-server-source\\server.cpp",
+    "sha256": "b2cfc25d5e8b3848523a5d0aa0e35a200785dc70a8c66e1528521d8bfd2e342a",
+    "bytes": 6942
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-context-source\\context.cpp",
+    "sha256": "f62b9f3de5b59b1cd4e2f253fcdf00f94cc188c75616c5da3e34574d2838f5c1",
+    "bytes": 5179
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-bootstrap-backend-source\\backend.cpp",
+    "sha256": "d327f045085f20a968ea1781fd38a6c233a3ff970f9c8a9d208661b4d16ed019",
+    "bytes": 25827
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-bootstrap-owner-source\\owner.cpp",
+    "sha256": "3e09b48ef634b7fd02ff7002659870f67eef3e5de09c25ff8a5e02a88ffcf887",
+    "bytes": 5764
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-config-application-source\\application.cpp",
+    "sha256": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb",
+    "bytes": 8432
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-config-source\\configuration.cpp",
+    "sha256": "a2a2fa7980ddeeaece163b705213bdc5adfff48ae149ec39a122850032e25f6c",
+    "bytes": 15659
+  }
+]

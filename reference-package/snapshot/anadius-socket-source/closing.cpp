@@ -3,16 +3,21 @@
 namespace anadius::socket_recovered {
 void cancel_and_close_026fb0(CloseContext& context,SocketObject& object,Api& errors,
     AcceptorApi& api,CancellationEffects& cancellation){
+    cancel_and_close_026fb0(context,object,errors,api,&cancellation);
+}
+void cancel_and_close_026fb0(CloseContext& context,SocketObject& object,Api& errors,
+    AcceptorApi& api,CancellationEffects* cancellation){
     if(object.state.socket!=invalid_socket){
         CancellationEngine* engine=nullptr;
         (void)context.engine.compare_exchange_strong(engine,nullptr,
             std::memory_order_seq_cst,std::memory_order_seq_cst);
         if(engine){
+            if(!cancellation)throw UnsupportedInput("Live cancellation engine requires a real provider");
             const auto socket=object.state.socket; // cache before engine gate
             engine->gate.enter();
             const auto category=errors.system_category_028620();
             const Error reason{995,category};
-            cancellation.cancel_026aa0(*engine,socket,reason);
+            cancellation->cancel_026aa0(*engine,socket,reason);
             engine->gate.leave();
         }
         Error ignored;

@@ -1,0 +1,28 @@
+{
+  "schema": "current-application-source-map.v1",
+  "recorded_at": "2026-11-03T19:21:46.009129+00:00",
+  "status": "OFFLINE_SOURCE_PRESENCE_ONLY",
+  "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "canonical_local_functions": 2076,
+  "selected_address_range": "0x18001ff00 <= VA < 0x180039000",
+  "selected_entries": 307,
+  "scanned_current_source_files": 577,
+  "presence": {
+    "not_mapped_requires_review": 141,
+    "tagged_or_explicit_source_present": 157,
+    "composition_only": 9
+  },
+  "old_unmapped_now_tagged_or_explicit": 10,
+  "review_candidates": 149,
+  "compiled_symbol_probing": false,
+  "project_tests_executed": false,
+  "native_target_opened_or_executed": false,
+  "completion_percentage": null,
+  "limits": [
+    "Heuristic source-presence only; comments/literals/declarations/calls/fixtures excluded but no compiler AST or semantic proof.",
+    "Composition-only forwards are listed separately; interfaces/adapters/coarse bodies can still share labels.",
+    "Absence of an exact address mapping does not prove absent behavior.",
+    "Current compiled symbols are not refreshed or correlated. Existing build snapshot remains historical.",
+    "Application range contains STL/CRT/template helpers; candidates require manual retained-evidence review before implementation."
+  ]
+}

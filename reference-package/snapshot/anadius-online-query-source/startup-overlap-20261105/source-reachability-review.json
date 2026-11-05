@@ -1,0 +1,89 @@
+{
+  "scope": "Independent read-only current-source and retained-native reachability audit; fresh native queries owned by SDK agent",
+  "files": [
+    {
+      "path": "outputs/dll-link-gate-source/entry.cpp",
+      "sha256": "c0810bfc385c7159bdc559ad7bb3329799ca212d17ae4aba7fa49cd2243e09ca"
+    },
+    {
+      "path": "outputs/anadius-resources-factory-source/factory.cpp",
+      "sha256": "3210fd8e2711603aba00d1f536299a606ce164a5806d7bd1153e94fbd89b1dc5"
+    },
+    {
+      "path": "outputs/anadius-application-worker-source/worker.cpp",
+      "sha256": "a384138a6dbc7c2c4348e1c77b6d6cb33f3cff3fe2f45eb91822ad71cf09ff8a"
+    },
+    {
+      "path": "outputs/anadius-server-source/server.cpp",
+      "sha256": "b2cfc25d5e8b3848523a5d0aa0e35a200785dc70a8c66e1528521d8bfd2e342a"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "sha256": "d327f045085f20a968ea1781fd38a6c233a3ff970f9c8a9d208661b4d16ed019"
+    },
+    {
+      "path": "outputs/anadius-online-source/online.cpp",
+      "sha256": "00020732bf6e36d53b9bfafe80d6cb85f303b8b329624562d45991f916e50cb8"
+    },
+    {
+      "path": "outputs/anadius-execution-source/execution.cpp",
+      "sha256": "03946d42e546072f0e875c4a45327b63a24419303e9b4b23325f79b55f75b705"
+    },
+    {
+      "path": "outputs/anadius-content-handlers-source/content_handlers.cpp",
+      "sha256": "4cb847e398b3a81b4c9149a711fecfe0532265fb5c974f33aed73591700e947f"
+    },
+    {
+      "path": "outputs/anadius-dispatch-source/router.cpp",
+      "sha256": "79ee7f693ca49e584c04b36984f33782cef867f4fa2c023cf41d06cfeaa32b9d"
+    },
+    {
+      "path": "outputs/anadius-messages-source/messages.cpp",
+      "sha256": "2eda8d8cdd82a783b694ef1c8f7ad97b643d3b50589694a76239c14e1a970f9c"
+    },
+    {
+      "path": "outputs/anadius-content-effects-source/effects.cpp",
+      "sha256": "8224ff1c1b10c5a3bb3d91aa8762f574a657a17dc4a83dee59dc19b745e5a510"
+    },
+    {
+      "path": "outputs/anadius-online-factory-source/factory.cpp",
+      "sha256": "f6a613a5c9cc007a722298efdc0c181c1270c496a179eb952a0f12fbbb8b95c9"
+    },
+    {
+      "path": "outputs/anadius-online-query-source/query.cpp",
+      "sha256": "55bf8cf5ffc9ac78dfd6d96956b62bc03cd06e6e0265877a86315d1dc36c36d3"
+    },
+    {
+      "path": "outputs/anadius-online-object-source/object.cpp",
+      "sha256": "917a7503768e47250f94df059b2ad98fec03a022c264aa2a0566e9ae36dfce78"
+    },
+    {
+      "path": "outputs/anadius-online-version-source/version.hpp",
+      "sha256": "512c3f20766a3fd5691d06933e69c0ca5228aec3a16e5c156eb5cd9d5fa4537b"
+    },
+    {
+      "path": "outputs/anadius-host-platform-source/assembly.cpp",
+      "sha256": "6b13a4b41309f68dcf9f4423aac3807bc9c019005c48551535e9e2c2fa12fd07"
+    },
+    {
+      "path": "outputs/anadius-foreign-callback-source/foreign.cpp",
+      "sha256": "bd28299de32cce8cfe9628ab4880a1eb86c38101cf0bcfa64ab481a550ef3732"
+    },
+    {
+      "path": "outputs/anadius-network-hook-source/connect.cpp",
+      "sha256": "82c848cde72f93fecc0aa8a3c803e5a4f2a687d4d51d904c923ab71b844c1382"
+    },
+    {
+      "path": "outputs/anadius-network-hook-source/evidence.json",
+      "sha256": "3ee3cecfbd72fa7d01e8f20f4dbba343122ca88b8074d28d49cbe7a283b1142b"
+    },
+    {
+      "path": "outputs/anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+    },
+    {
+      "path": "outputs/anadius-online-query-source/startup-overlap-20261105/source-reachability-review.md",
+      "sha256": "95f447de312852996b0fd97096a6e6a14d76ffc50669a2254dcfbf2a79e99f29"
+    }
+  ]
+}

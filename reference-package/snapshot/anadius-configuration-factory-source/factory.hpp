@@ -20,6 +20,14 @@ public:
     virtual ~LegacyDocumentReader()=default;
     virtual configuration::Node read(const configuration::Path&)=0;
 };
+// Concrete file/parser/hash boundary for the legacy scalar entry. Reads raw
+// bytes through the owned Factory (native by default), selects/copies Config2
+// using the recovered hash-table source and returns an owning Node. Ordered
+// collection application is rejected by the existing scalar guard: later
+// reused section-copy order must use Runtime's actual FilePass instead.
+// Construction opens no file. This is a real reader, not an unreachable stub.
+std::unique_ptr<LegacyDocumentReader> make_scalar_documents(
+    std::unique_ptr<file_recovered::Factory> = std::make_unique<file_recovered::NativeFactory>());
 struct Inputs {
     // Optional backing owner for supplied SDK/stream/effect captures; declared
     // first so it retires last. Otherwise supplied callbacks must be permanent
@@ -40,6 +48,11 @@ struct Inputs {
 // Configuration calls are serialized; construction may occur on a different
 // thread from source startup. Retire after application/worker/callback joins.
 // Compiler/SDK source policy, not original MSVC class/EH/loader equivalence.
+// On entry, constructors/factories/installers adopt the supplied inputs and
+// narrow effects into one ordered owner before allocation/validation. Failed
+// facade/Impl allocation and occupied-slot rejection retire document/license
+// effects before Inputs::lifetime. Caller argument-construction failures before
+// entry remain the caller's responsibility. Public signatures/layout unchanged.
 // The additional StateBinding/PathBinding bases change this class's HOST layout;
 // allocating/constructing/deleting/crosscasting consumers must be rebuilt.
 // Dependencies and bootstrap Resources retain their existing layouts.

@@ -1,0 +1,8 @@
+DIAG check tid14620: Parallel Profile controller initializes actual Domain
+DIAG check tid14620: Actual parallel fixture owns finite SDK handshake events
+DIAG check tid14620: Parallel fixture launches an actual same-Domain native wrapper
+DIAG ParallelThread body tid8632
+DIAG check tid8632: Parallel source owns real Runtime TLS selector
+DIAG check tid8632: Worker provider aliases borrow exact live bound configuration/Execution
+Parallel source child: Complete exact application state, effects, lifecycle and bounded capacities required
+DIAG exit254 line640 tid8632

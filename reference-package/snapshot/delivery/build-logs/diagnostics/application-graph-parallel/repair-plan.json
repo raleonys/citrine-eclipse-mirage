@@ -1,0 +1,69 @@
+{
+  "task": "Fresh application_graph_integration_mock_tests controlled/native/scoped source-fixture failure",
+  "canonical_source_edits": false,
+  "new_checks": "Actual selected Stop Closed, cancel_calls1, kernel_packets1, acknowledged1, receipts0, active_posts0; injected cancel_calls1, scripted packet queue empty",
+  "proposed_sha256": "17e4c63bdfa168151cad7ed5ab2c03dd30a2648c74324e51612ee8a997272f59",
+  "limitations": "Only these four focused synthetic source scenarios; sockets/cancellation are injected SDK tokens/packets, not real network cancellation or complete DLL equivalence. Root owns canonical patch, full fresh suite and packaging.",
+  "validation": {
+    "run_commands": "proposed-v2-run-commands.json",
+    "compile_exit": 0,
+    "modes": [
+      {
+        "duration_ms": 49,
+        "exit": 0,
+        "mode": "--prepared-profile-parallel"
+      },
+      {
+        "duration_ms": 25,
+        "exit": 0,
+        "mode": "--prepared-native-parallel-same"
+      },
+      {
+        "duration_ms": 25,
+        "exit": 0,
+        "mode": "--prepared-native-parallel-distinct"
+      },
+      {
+        "duration_ms": 14,
+        "exit": 0,
+        "mode": "--prepared-scoped-runtime"
+      }
+    ],
+    "compile_command": "proposed-v2-compile-command.json"
+  },
+  "canonical_before_sha256": "36a43bce9074211ba5f577ef7ac77c9b07cd8db37482962d8a38efd85b568ed8",
+  "failure_chain": [
+    {
+      "repair": "Move same existing one-shot probe to outside-Parent parallel_maintenance, enter genuine original Parent only for probe, release before physical maintenance/dequeue.",
+      "evidence": "probe0 acquired genuine offer/Parent/permit/target; CleanupCall validate blocks on accept.snapshot before checkpoint; controller timeout254 at10046ms",
+      "cause": "Synchronous child Policy probe inside prepare_session while original accept callback holds Accept recursive gate"
+    },
+    {
+      "repair": "Capture incoming LastError at Dispatcher.get entry, restore immediately before real GQCS, preserve immediate GQCS error on return.",
+      "evidence": "incoming LastError0, observed126 before GQCS",
+      "cause": "Probe NativeThreads intentionally leaves ERROR_MOD_NOT_FOUND126 before successful GQCS which preserves LastError"
+    },
+    {
+      "repair": "Guard only selected parallel/scoped after callbacks until connections[0] exists; retain later source drain conditions.",
+      "cause": "First lifecycle.after may precede actual session201 registration"
+    },
+    {
+      "repair": "Select existing Runtime AcceptOnly Stop on original controller; passive real completed-source proof; existing outside-Parent maintenance requests it after real session/job/physical prepared drain; dedicated SDK callback validates current owned accept/socket200/Parent, queues scripted995 once; Runtime observes packet, drops owner by real Stop receipt, acknowledges and closes. OriginalApplication policy untouched.",
+      "cause": "OriginalApplication preserves completion owner; bare injected995 retries native accept and cannot represent terminal teardown"
+    }
+  ],
+  "canonical_source": "outputs/anadius-application-graph-source/graph_integration_tests.cpp",
+  "archive_edits": false,
+  "preserved": [
+    "All earlier supported Unknown A/GetConfig B request/response/earlybody assertions",
+    "Receipt-before-post-return actual NativeJobs schedule",
+    "B independent real native/FLS/Parent reap while A held",
+    "Seven real Policy cleanup expectation (no counter reset)",
+    "Same selected Environment actual two Scope tracked-family/factory/copy/move/prepare40/workdrop source assertions",
+    "No production Concurrent default, fake permits, counter reset, added business roots, fake jobs or source getter"
+  ],
+  "lifetime": "Stop owns existing Domain identity owner, proof captures weak State; no strong State/Stop cycle. Proof never enters/borrows raw Parent/Ports; request precondition independently requires outside Parent.",
+  "proposed_source": "work/rebuild-20261105T182000Z/diagnostics/application-graph-parallel/graph_integration_tests.proposed.cpp",
+  "production_edits": false,
+  "diff": "proposed-source.diff"
+}

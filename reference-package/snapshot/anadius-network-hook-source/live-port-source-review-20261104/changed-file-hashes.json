@@ -1,0 +1,27 @@
+[
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-config-source\\configuration.hpp",
+    "BeforeSha256": "8cb1f9d28b9f5b48177d4233b6f3304980b6912002d67db67583f252bf557ce6",
+    "AfterSha256": "dbb4912596f34ac5e87246e0415c20186ca3484d9d9c727e14434ac3aaa57deb"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\connect.cpp",
+    "BeforeSha256": "73659fea38e311c87dd91e3311321f421483cf0f0ea9061d7e266f5469867f9d",
+    "AfterSha256": "82c848cde72f93fecc0aa8a3c803e5a4f2a687d4d51d904c923ab71b844c1382"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\connect.hpp",
+    "BeforeSha256": "7e0bdcc5afc378c9ac2ec394092a794d16da3c8344ef82b4bf63dc228aefc890",
+    "AfterSha256": "94eafd7fc70d6540d0729176114e6340b4596a3120ef54efcdd7a7882a3294f7"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-server-source\\server.cpp",
+    "BeforeSha256": "9e1168c5b006c4bdb253268b98a95276bbb1addb19541ddff4f4854972b3d7ce",
+    "AfterSha256": "b2cfc25d5e8b3848523a5d0aa0e35a200785dc70a8c66e1528521d8bfd2e342a"
+  },
+  {
+    "Path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-server-source\\server.hpp",
+    "BeforeSha256": "6632b6d5f91b93f3f977f46a03c51d57aee999dd3daa233ac5dca850b9d526e1",
+    "AfterSha256": "278c83ae16bdaa2b9c44e5e491838c592273cdbc1cbb1e0344d3b3142ae2facc"
+  }
+]

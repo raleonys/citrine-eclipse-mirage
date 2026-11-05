@@ -1,0 +1,126 @@
+{
+  "original": {
+    "path": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+    "sha256_after_close": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+  },
+  "records": [
+    {
+      "path": "bytes-086a38.json",
+      "sha256": "3064635af878beec07cc2844d802f6d00c21390e3ad03f70d9657c141400f1cc",
+      "evidence_id": "ev_269637d3b846b14306c703a0bfcab02ceb7e77b39a0ef8a5c662a3e72f0b0a2a",
+      "operation": "read_bytes",
+      "parameters": {
+        "address": "0x180086a38",
+        "length": 8
+      }
+    },
+    {
+      "path": "instructions-03d8f0.json",
+      "sha256": "3d5aa707e4d328f1144bebf1cc40602e9bf211b4bcb98e9d610ba39cd82577aa",
+      "evidence_id": "ev_560f6f4161dd17d86960ac9615dbcbbc8a150f4757d817c73eaba02bbf06535b",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x18003d8f0"
+      }
+    },
+    {
+      "path": "instructions-03e870.json",
+      "sha256": "70d8a72b6576ff6dc734fc0f5e90fd8bb590e28a047cf216ccd5d8ede64fa85d",
+      "evidence_id": "ev_8fbefcadbd4dba9b6d8c9c3dbbe29ad7b5cbadbbd35efedd2c758d5e7b8ae6ef",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x18003e870"
+      }
+    },
+    {
+      "path": "instructions-03ef80.json",
+      "sha256": "929b9082997c12e0774a41b4e8863d493bd8f0af109858640ad28f152b882573",
+      "evidence_id": "ev_df380ed7569cd5e7d4adbf9c464cac4fcd6b96eb8955e518ef720ddcb0a2a652",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x18003ef80"
+      }
+    },
+    {
+      "path": "instructions-03f190.json",
+      "sha256": "9de08538960873ebfbf0812eadb7dda7d0487efe96344180a1f1c13ee0a852e3",
+      "evidence_id": "ev_a851dc58c87e63921ae8f33f1f14b69bc17bd8a96150e0f7581d84e0b150c813",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x18003f190"
+      }
+    },
+    {
+      "path": "instructions-041760.json",
+      "sha256": "b4cba906056107ae8ff4fec4e332555c478a49d22fa351a489ead14f12ee0314",
+      "evidence_id": "ev_64192c7682feb63591798acc439eeb35a03eb1893f41647edeab8428a6f41a82",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x180041760"
+      }
+    },
+    {
+      "path": "instructions-041e10.json",
+      "sha256": "97f1d9cc3ff283f34e8f38935c9bfe776ef7d70557891b9be33a7a0b525cf267",
+      "evidence_id": "ev_0f2ba5e57e103ffe9cf8f9f408e34543a14795dd71b240dab144dc9ff33d3375",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x180041e10"
+      }
+    },
+    {
+      "path": "pseudo-03d8f0.json",
+      "sha256": "224822656c9569a5e296e094cb2dac72f0d070c5ff2a493fccdbe1e86cacb843",
+      "evidence_id": "ev_b6352e8a39be4af80496d2ac3923b93a0cde39c65b923c54252b857a8479eb8e",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x18003d8f0"
+      }
+    },
+    {
+      "path": "pseudo-03e870.json",
+      "sha256": "b4bb09fb95cfa2f1ecda9ac74321bd901b812230ba2bd681525b294437f02b1b",
+      "evidence_id": "ev_572a6afc6e3d230a173dedc4f41555ae2dd681965209965746617d7c580ff031",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x18003e870"
+      }
+    },
+    {
+      "path": "pseudo-03ef80.json",
+      "sha256": "deacd256d27c4d0d972e51876be0d68d5416a4e92f8d2190451aa05600042796",
+      "evidence_id": "ev_6587e9fd26ef25425babc8a6012e9fed5c3f3cc7394fa49b72df193f0db1d1e4",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x18003ef80"
+      }
+    },
+    {
+      "path": "pseudo-03f190.json",
+      "sha256": "b2933e77662fe38e9031bd1f4d4fc7a1094468a69de270233206e0ce286021b6",
+      "evidence_id": "ev_7f58fdbb52591779a7cc4713cb437d2294b8fb6357d8f82796eeff2f3a49fc17",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x18003f190"
+      }
+    },
+    {
+      "path": "pseudo-041760.json",
+      "sha256": "d63f6030e847c132689a752c10c3c8ddfc377d27d4088a186cb3f1531fd8c421",
+      "evidence_id": "ev_49fd2c63ab063676ce0d34d3f486816559bcf701596943b7a02c1d37a88227ff",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x180041760"
+      }
+    },
+    {
+      "path": "pseudo-041e10.json",
+      "sha256": "2b0f3dac9de4963cbe894ba2607b55e6337a0a1f3f11ac3d46bcb38300f64490",
+      "evidence_id": "ev_bb488e7c9c05d541688f19d1bd20db92dab969ad2657820771861c4d59b50ae8",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x180041e10"
+      }
+    }
+  ]
+}

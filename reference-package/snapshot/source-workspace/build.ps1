@@ -1,4 +1,4 @@
-param([string]$ToolchainRoot=(Join-Path $PSScriptRoot '..\..\work\toolchain\extracted\llvm-mingw-20261006-ucrt-x86_64'))
+param([string]$ToolchainRoot=$(if($env:ANADIUS_TOOLCHAIN_ROOT){$env:ANADIUS_TOOLCHAIN_ROOT}else{Join-Path $PSScriptRoot '..\..\work\toolchain\extracted\llvm-mingw-20261020-ucrt-x86_64'}),[string]$FreshRunCheckpoint='')
 $ErrorActionPreference='Stop'
 $compiler=(Resolve-Path -LiteralPath (Join-Path $ToolchainRoot 'bin\clang++.exe')).Path
 $cCompiler=(Resolve-Path -LiteralPath (Join-Path $ToolchainRoot 'bin\clang.exe')).Path
@@ -14,6 +14,7 @@ function Invoke-Recorded([string]$program,[string[]]$arguments) {
     if($LASTEXITCODE -ne 0){throw (($result -join "`n")+"`nFailed: $program")}
     return $result
 }
+if($FreshRunCheckpoint){. (Join-Path $PSScriptRoot 'fresh-run-checkpoint.ps1')}
 $units=[ordered]@{
     bootstrap='anadius-source/bootstrap.cpp'
     crt_threads='anadius-thread-source/threads.cpp'

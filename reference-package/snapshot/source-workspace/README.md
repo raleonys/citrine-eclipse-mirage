@@ -1,6 +1,10 @@
 <!-- CURRENT-FULL-BUILD -->
-Güncel temiz tam ortak derleme (2026-11-01T18:35:16.689528+00:00): **296 nesne (292 C++ / 4 C), 356 test grubu ve 19 terminal senaryosu PASS**. Güncel kaynak snapshot'ı 1017 dosyadır. Tam arşiv seçimiyle üretim DLL linki denendi; `require_loader_attach_runtime` ve `require_loader_detach_quiescence` tanımları eksik olduğundan **BLOCKED**. Çalışan production DLL üretilmedi. Ayrıntı: `source-workspace/full-build-verification.json`, `dll-link-gate-source/current-full-link.json` ve `SON-DURUM.txt`. Aşağıdaki B54 ve önceki aşama kayıtları tarihseldir.
+Güncel temiz tam derleme (2026-11-05T19:38:00.051488+00:00): **296 nesne, 356 test grubu ve 19 framework terminal senaryosu PASS**. Derleyici: clang version 23.1.4 (https://github.com/llvm/llvm-project.git 7a941dfb2877a0b8cf30323fefa85ad019e0b0f5). 1017 kanonik kaynak ve 3 ek bağımlılık başlığı, toplam 1020 dosya güncel hashlerle doğrulandı; bekleyen derlenmemiş fark yok. Üretim DLL link durumu: **LINKED_NOT_RUNTIME_VALIDATED**. Link completed; DLL was not loaded or executed. Ayrıntı: `source-workspace/full-build-verification.json`, `dll-link-gate-source/current-full-link.json`, `SON-DURUM.txt`. Önceki aşama/araç kayıtları tarihseldir.
 <!-- END-CURRENT-FULL-BUILD -->
+
+**Araç güncellemesi (2026-11-02):** REA 6.8.0, Node 26.13.0 LTS, npm 12.2.1,
+Java 25.0.5 ve LLVM-MinGW 20261020 / Clang 23.1.4 kuruldu. Ghidra 12.2 ayrı
+kurulu; REA uyumluluğu için sağlayıcı 12.1.4'te tutuldu. Bu teslimde proje yeni LLVM-MinGW araçlarıyla derlendi. [Araç yolları ve sınırlar](../tool-maintenance/README.md).
 
 Aktif kaynak paketi B54: 274 nesne, 337 normal grup ve 19 terminal senaryo; 755 yeni kontrol. [B54 raporu](../anadius-online-factory-source/README.md). Yeni typed normal gövde0, nativeABI/provider kapanışı0; native kapsam501/505 ve52kapanış.
 
@@ -123,7 +127,7 @@ Son eklenen N29, 0x1800035e0 GetStr yordamının normal C++ gövdesini ve Native
 Başka makinede mevcut LLVM-MinGW araç zinciri yolu belirtilebilir:
 
 ```powershell
-.\build.ps1 -ToolchainRoot 'C:\tools\llvm-mingw'
+.\build.ps1 -ToolchainRoot '..\..\work\toolchain\extracted\llvm-mingw-20261020-ucrt-x86_64'
 ```
 
 Script indirme/kurulum yapmaz. `build/anadius_core_partial.a`, önceki modüllere Windows lexical paths, status flags3 ve codepage/encoding ile bunların lisans bağlantısını da ekler. `build/preloader_core_partial.a`, preloader çekirdeği ve motor adapter'idir. `build/hook_engine_compat.a`, sabitlenmiş resmî MinHook ve NativeApi kaynağıdır. İki ayrı DLL kendi statik motor kopyasını kullanmalıdır. Adapter testleri fake Api kullanır; fixture testleri dört gerçek upstream C birimini ayrı nesnelerde test-only API yönlendirmesiyle derler, native hook çağırmaz. Üretilen patch/trampoline baytları veri olarak okunur; çalıştırılmaz. Gerçek I/O/status yalnız `build/file-io-fixtures`, `build/status-fixtures`, `build/windows-fixtures`, `build/config-pipeline-fixtures`, `build/config-application-fixtures`, `build/config-startup-fixtures`, `build/achievement-storage-fixtures`, `build/achievement-writer-fixtures`, `build/timestamp-fixtures`, `build/achievement-runtime-fixtures` içinde üretilen dosya/klasörlerde çalışır; encoding API'leri sentetik string'lerde çalışır. Fixture'lar inceleme için kalır; gerçek token veya kullanıcı CFG değeri içermez. SDK find/modül yolu bağlayıcıları tipli sentetik API tablosuyla kendi kayıt/scratch depolarında çalışır; gerçek Find/GetModuleFileNameW çağrısı yapılmaz. Diğer uygulama/provider bağlayıcıları testlerde çalıştırılmaz. Özgün/yeniden derlenen DLL veya oyun EXE'si yüklenmez/çalıştırılmaz; orijinaller değiştirilmez. Gerçek environment/registry yazımı, pencere, socket veya hook oluşturulmaz. Tam komutlar, derleyici hashleri ve sonuçlar `build-record.json` içindedir.

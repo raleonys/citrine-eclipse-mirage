@@ -1,0 +1,30 @@
+{
+  "scope": "Retained evidence extraction and additive CRT ordering analysis only; no new REA queries or execution",
+  "files": [
+    {
+      "file": "findings.md",
+      "bytes": 3905,
+      "sha256": "9ede2c6d2f25cae31deb4bf18e486d1e3cc17067664ff721bab3fc5cbb972566"
+    },
+    {
+      "file": "retained-crt-order.assembly.txt",
+      "bytes": 6816,
+      "sha256": "67b6cde31d5e1171b2425226a69879aa91eca81dfe02e22605d6519e0cb08266"
+    },
+    {
+      "file": "retained-crt-order.pseudo.txt",
+      "bytes": 3965,
+      "sha256": "df25c9aa1c6d3e8b3685d209a17d4d7192afcaaaa4f1bc956eb7b13d263e06ff"
+    },
+    {
+      "file": "retained-extraction-index.json",
+      "bytes": 2401,
+      "sha256": "3142c55b9bfc810eef65320ff9750916e125c9435a0435dcd6b3c60d9471f971"
+    },
+    {
+      "file": "retained-table-selection.json",
+      "bytes": 705,
+      "sha256": "e0c231c38a527f4d75faa7cadf69d0977e23ee254bcc555e3357bf4d865c2e95"
+    }
+  ]
+}

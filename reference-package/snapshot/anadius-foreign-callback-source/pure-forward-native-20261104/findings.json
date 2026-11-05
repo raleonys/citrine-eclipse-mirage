@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-04",
+  "target": {
+    "path": "C:/Users/Skysect/Downloads/anadius64.dll",
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "rea": "6.8.0",
+    "provider": "Ghidra12.1.4",
+    "analysisProfileDigest": "64922283ade10fadf28df5d1689f74f28ec027c5180b774a9d26635c0e69c554"
+  },
+  "freshQueryCount": 22,
+  "historical": {
+    "classification": "historical/reused context only; not fresh evidence",
+    "review": "../general-callback-native-review-20261103/review.json",
+    "reviewSha256": "5c87846dad0e0ca795c839f05bd25bdbb1992be265c3f9c7f41097768d033845",
+    "index": "../general-callback-native-review-20261103/evidence-index.json",
+    "indexSha256": "3ef77f5072e5076c208522adf12f0750a70ffdbf4bf7ccc3a5e68a949a646c7c",
+    "note": "Prior step3 SDK-only phase restriction was a source-policy proposal. No such native gate was established and current task does not adopt it."
+  },
+  "findings": [
+    {
+      "predicates": [
+        "RegOpenKeyExA subkey==nullptr",
+        "RegOpenKeyExW subkey==nullptr"
+      ],
+      "classification": "observed native control flow; derived source shortcut",
+      "originalSites": [
+        "0x18000f823 -> [0x1800a3840]",
+        "0x18000f983 -> [0x1800a3848]"
+      ],
+      "anchors": [
+        "0x1800086d7 null TEST -> cleanup0x1800086df ->1at0x1800086e4",
+        "0x180008817 null TEST -> cleanup0x18000881f ->1at0x180008824",
+        "0x18000f922 MOV EAX,EDI /0x18000fa82 MOV EAX,EDI"
+      ],
+      "claim": "Original executes unconditionally first. Null comparisons cannot match, so no fabrication or client/language set insertion. Original arguments/output/result can be forwarded directly.",
+      "omittedInertWork": "StackSSO key construction/cleanup and security-cookie bookkeeping; language-enabled bytea3ad1 read atf8b7/fa17."
+    },
+    {
+      "predicates": [
+        "CreateProcessA application==nullptr",
+        "CreateProcessW application==nullptr"
+      ],
+      "classification": "observed native control flow; derived source shortcut",
+      "originalSites": [
+        "0x18000f4ac -> [0x1800a3868]",
+        "0x18000f58c -> [0x1800a3870]"
+      ],
+      "claim": "Null comparison returns1 before resolver/encoding/CRT and original receives all ten unchanged arguments. No command-line inspection required. Nonnull/empty application is not included.",
+      "omittedInertWork": "LocalSSO ClientPath construction/cleanup and helper security-cookie bookkeeping."
+    },
+    {
+      "predicates": [
+        "SHGetFolderPathA exact32bit id!=5",
+        "SHGetFolderPathW exact32bit id!=5"
+      ],
+      "classification": "observed native control flow; derived source shortcut",
+      "originalSites": [
+        "0x18000fc53 -> [0x1800a3878]",
+        "0x18000fcd3 -> [0x1800a3880]"
+      ],
+      "anchors": [
+        "0x180008dfb CMP ECX,5 ->JNZ0x180008ec6",
+        "0x180008feb CMP ECX,5 ->JNZ0x1800090bb"
+      ],
+      "claim": "Helper returnsfalse before Documents lookup/conversion/copy; no source body output access. Forward full integer unchanged; do not mask flag bits.",
+      "omittedInertWork": "Empty localSSO setup/cleanup and security-cookie bookkeeping."
+    }
+  ],
+  "nestingBoundary": "The inspected functions establish the argument-classified pure-original branch, not a source admission phase. No SDK-only nested phase gate is justified here. Nested source actor frames must restore exact parent permission and retain typed provider/code lifetime; this static audit does not prove Windows itself reenters hooks, arbitrary full-body concurrency, CRT/PTD safety, or completed ABI.",
+  "scope": {
+    "sourceEdits": false,
+    "build": false,
+    "tests": false,
+    "link": false,
+    "targetExecution": false,
+    "binaryMutation": false,
+    "zipChanges": false
+  },
+  "evidenceIndex": "evidence-index.json"
+}

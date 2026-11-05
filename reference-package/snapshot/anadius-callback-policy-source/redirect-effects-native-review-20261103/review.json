@@ -1,0 +1,243 @@
+{
+  "task": "Read-only redirect-effect concurrency audit",
+  "date": "2026-11-03",
+  "original": {
+    "path": "C:/Users/Skysect/Downloads/anadius64.dll",
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+  },
+  "tools": {
+    "rea": "6.8.0",
+    "ghidra": "12.1.4",
+    "analysis_profile_digest": "64922283ade10fadf28df5d1689f74f28ec027c5180b774a9d26635c0e69c554"
+  },
+  "evidence_bundle": "rea-evidence-bundle-final.json",
+  "source_hashes": "source-hashes.json",
+  "evidence": [
+    {
+      "id": "ev_4b237267ebf4f1563f67a6e5c3bea40fbee890a0e1fceb1b3425de5a06fb7204",
+      "kind": "pseudocode",
+      "address": "0x18000fd00"
+    },
+    {
+      "id": "ev_839077f99c02612bc8d409358a72a00b4078cf9a201c931361fd8e1c4381c349",
+      "kind": "instructions",
+      "address": "0x18000fd00"
+    },
+    {
+      "id": "ev_76b11b883a1866dcf66d96c0c3ffac8658e72e3a023676ca2ae6448dff8256fd",
+      "kind": "pseudocode",
+      "address": "0x1800088e0"
+    },
+    {
+      "id": "ev_14de02a7a46d515cfd460f64f8b32fa22109caacb546ee3bf97b09f30a0f0f22",
+      "kind": "instructions",
+      "address": "0x1800088e0"
+    },
+    {
+      "id": "ev_d286971ab053146bdd8f12c39d2786bebfe9cafbff4aa83f775f95cbcab5a49c",
+      "kind": "pseudocode",
+      "address": "0x180038bc0"
+    },
+    {
+      "id": "ev_21d1bdaff86e3c0975509688797f0c1d6c5a5596613627a94af1246e091a4b9e",
+      "kind": "instructions",
+      "address": "0x180038bc0"
+    },
+    {
+      "id": "ev_0342b1d2c39e04b557e4592737b2822cd9fe13b9f7ee0faddc0b0133db8f62c3",
+      "kind": "pseudocode",
+      "address": "0x180006880"
+    },
+    {
+      "id": "ev_b7816532a05e0f89f8f60cd9701720da65795371e2a187d634f0fce688a48995",
+      "kind": "pseudocode",
+      "address": "0x18000ad70"
+    },
+    {
+      "id": "ev_794622fce45b0abee27382c9bf120e0fa2a7c8aafcaf6ae74acdc1b90adcf303",
+      "kind": "pseudocode",
+      "address": "0x1800452d0"
+    },
+    {
+      "id": "ev_3537d4f716f70cf67acd193179a5dd81e95388dd3b77b00f164a7191fc18eb8e",
+      "kind": "pseudocode",
+      "address": "0x18000fe90"
+    },
+    {
+      "id": "ev_6bfb0cce31d642fac1defee537577759a73db94905f91e37cf2644f288d3131c",
+      "kind": "pseudocode",
+      "address": "0x18000e1e0"
+    },
+    {
+      "id": "ev_3476299a9f6cbf8d5a222dfebeecd8c70e3f0154be12bd6b0b51b142d899e439",
+      "kind": "pseudocode",
+      "address": "0x18005cdc0"
+    },
+    {
+      "id": "ev_6869474fffffbe0657b17b1112925ba8502150c02cf3242329762ecdbd5ed62e",
+      "kind": "pseudocode",
+      "address": "0x18005cc04"
+    }
+  ],
+  "findings": [
+    {
+      "kind": "observed-native",
+      "claim": "Redirect logs literal/requested/literal/server/endl before counter load. Native uses unlocked MOV/INC/MOV and compares cached EAX; the terminal condition is local updated value ==15, not a guaranteed unique fifteenth globally linearized call.",
+      "sites": [
+        "0x18000fd8a",
+        "0x18000fd95",
+        "0x18000fda4",
+        "0x18000fdb3",
+        "0x18000fdbb",
+        "0x18000fdc0",
+        "0x18000fdc6",
+        "0x18000fdc8",
+        "0x18000fdce"
+      ],
+      "evidence_index": [
+        0,
+        1
+      ]
+    },
+    {
+      "kind": "observed-native",
+      "claim": "Terminal branch constructs per-call message/title strings, shows error dialog with flags0x10, then calls exit with0xffffffff before sockaddr port write or original connect. Nonterminal rereads server port, htons, stores sockaddr+2, and tail-jumps original.",
+      "sites": [
+        "0x18000fe09",
+        "0x18000fe22",
+        "0x18000fe36",
+        "0x18000fe48",
+        "0x18000fe52",
+        "0x18000fdd3",
+        "0x18000fdda",
+        "0x18000fde0",
+        "0x18000fe02"
+      ],
+      "evidence_index": [
+        0,
+        1
+      ]
+    },
+    {
+      "kind": "observed-native",
+      "claim": "80/443 branches bypass wait; other recognized ports call wait(-1) atfd64 before redirect choice. Do not move logging/counter before this wait or add extra waits.",
+      "sites": [
+        "0x18000fd54",
+        "0x18000fd59",
+        "0x18000fd64",
+        "0x18000fd6e",
+        "0x18000fd73"
+      ],
+      "evidence_index": [
+        0,
+        1
+      ]
+    },
+    {
+      "kind": "observed-native",
+      "claim": "0088e0 gets the stream ctype facet, widens newline, then calls character insertion00fe90 and stream flush00e1e0. Literal/port insertions use mutable stream width/error/buffer state and locale facets; they are substantive observable operations.",
+      "sites": [
+        "0x180008916",
+        "0x180008927",
+        "0x180008955",
+        "0x18000895d"
+      ],
+      "evidence_index": [
+        2,
+        3,
+        6,
+        7,
+        9,
+        10
+      ]
+    },
+    {
+      "kind": "observed-native",
+      "claim": "038bc0 converts caption first at038bfc and body at038c09 through0452d0, then MessageBoxW(NULL,body,caption,flags) at038c2f. Its string cleanup mutates only the supplied per-call string objects and local wide strings on this path.0452d0 performs UTF8/flags0 query then fill, ignoring fill failure.",
+      "sites": [
+        "0x180038bfc",
+        "0x180038c09",
+        "0x180038c2f"
+      ],
+      "evidence_index": [
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "kind": "observed-source",
+      "claim": "Policy narrow network effects call check_connect_body before and after each opaque effect; exception path checks again before rethrow. Lambdas destroy stream lease before the postcheck. Only text whitelist/stream/dialog/exit are accessed, not registry handles, application allocator, encoding provider, CRT compare/copy or recovered PTD.",
+      "sources": [
+        "policy.hpp:108",
+        "policy.cpp:91",
+        "policy.cpp:136",
+        "policy.cpp:142",
+        "policy.cpp:143",
+        "policy.cpp:144",
+        "policy.cpp:145"
+      ]
+    },
+    {
+      "kind": "observed-source",
+      "claim": "Managed Stream shares a mutex per concrete stream and owns its streambuf. A Lease protects one insertion or endl, retaining owner and buffer. It does not serialize an entire redirect record; records may interleave between operations. This matches the native sequence's absence of whole-body locking. Plain ostream returns an unmanaged lease and is insufficient for concurrent writes.",
+      "sources": [
+        "stream.cpp:31",
+        "stream.cpp:33",
+        "stream.cpp:35",
+        "stream.cpp:40",
+        "stream.cpp:48",
+        "policy.cpp:139",
+        "policy.cpp:142",
+        "policy.cpp:143"
+      ]
+    },
+    {
+      "kind": "observed-source",
+      "claim": "Dialog has immutable function pointers after construction and const show/widen with local caption/body wstrings. Native SDK defaults need no new shared per-call dialog state or general PTD grant. The rebuilt wstring allocator is compiler CRT allocation, not access to registry/ApplicationMemory::allocate or original private PTD.",
+      "sources": [
+        "dialog.hpp:25",
+        "dialog.cpp:10",
+        "dialog.cpp:18",
+        "dialog.cpp:25"
+      ]
+    },
+    {
+      "kind": "inference-recommendation",
+      "claim": "Reuse current concrete Policy redirect effects with a narrow concurrent body permission and the same managed Stream for all writers. Do not broaden registry/allocation/full callback permission. Preserve per-operation lease boundaries; never hold log/domain gate across dialog, wait, original SDK call or exit."
+    },
+    {
+      "kind": "inference-real-blocker",
+      "claim": "Current core ++attempts followed by attempts==15 and native callback passing shared counter by reference are not ready for multiple body calls: plain C++ accesses race and compare rereads storage instead of cached updated EAX. Use counter-agent design for all concurrent accesses; relaxed atomic_ref load/localincrement/store and local comparison preserves unlocked loss behavior better than fetch_add or body serialization.",
+      "sources": [
+        "connect.cpp:27",
+        "connect.cpp:28",
+        "native_callbacks.cpp:107"
+      ]
+    },
+    {
+      "kind": "domain-limit",
+      "claim": "All writers must use the same managed Stream and no raw buffer writes/other ostream frontends sharing its buffer, rdbuf/tie replacement, global locale mutation, fiber migration, or streambuf/facet callbacks invoking/waiting for another writer. Same-thread nested managed adapter calls reject before second lock, but callback waits can still deadlock if caller violates nonblocking callback domain. These are current declared source limits, not newly inferred unload requirements.",
+      "sources": [
+        "stream.hpp:19",
+        "stream.hpp:30",
+        "stream.cpp:34",
+        "stream.cpp:41",
+        "stream.cpp:42"
+      ]
+    },
+    {
+      "kind": "domain-limit",
+      "claim": "Permission std::function and injected dialog/exit callbacks must support concurrent invocation under the chosen profile. Default Dialog API state is immutable; arbitrary stateful injected target thread safety is not established. Existing admission is single-active and must be changed by the parent before concurrent scope is granted."
+    }
+  ],
+  "limitations": [
+    "Static analysis only; no runtime observation, compilation, linking, project tests, DLL execution or packaging was performed.",
+    "Ghidra terminal-call hasNoReturn is provider modeling, not independent dynamic proof.5cdc0 delegates to5cc04(code,0,0);5cc04 zero-return-mode path calls5cccc and trap. Full process cleanup internals were not reimplemented or proved in this audit.",
+    "Ghidra pseudocode is not original source. Exact counter/branch claims use raw instructions.",
+    "No claim of general ostream/CRT ABI equivalence, arbitrary custom facet/provider concurrency, same-buffer external writers, or concurrent mutable input sockaddr aliasing.",
+    "Parent authorized opening an isolated child REA session after initial target_unavailable established per-agent isolation. Child session alone was closed after complete Evidence export; parent session was not touched.",
+    "Production source and original binaries were not edited."
+  ],
+  "recommendation": "Concrete log/dialog/exit adapters are reusable for a narrowly admitted concurrent redirect body under their existing managed-stream/reentry/locale domain. Remaining work is admission metadata plus race-free native-faithful counter/shared-port handling, not a new general registry/allocator/private PTD grant."
+}

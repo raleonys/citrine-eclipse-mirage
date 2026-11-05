@@ -1,0 +1,225 @@
+#include "native_callbacks.hpp"
+#include <bit>
+#include <mutex>
+#include <atomic>
+#include <type_traits>
+
+namespace anadius::native_recovered {
+namespace {
+std::mutex gate;
+Context* current{};
+std::size_t calls{};
+std::atomic<Errors*> last_errors{};
+struct Lease {
+    Context* context{};
+    Errors* errors{};
+    Lease(){std::lock_guard lock(gate);if(!current)throw std::logic_error("native callback without Context binding");context=current;errors=last_errors.load(std::memory_order_acquire);++calls;}
+    void release(){if(context){const auto error=GetLastError();{std::lock_guard lock(gate);--calls;context=nullptr;}SetLastError(error);}}
+    ~Lease(){release();}
+};
+struct CallbackSelection {bool original=false;std::optional<std::uint16_t> port;bool wait=false;bool forward=false;};
+struct AdmissionLease {
+    Admission* policy;
+    Callback callback;
+    bool direct_original=false;
+    OriginalForwardFrame forward_frame;
+    bool direct_forward=false;
+    AdmissionLease(Context& context,Callback value,CallbackSelection selected={}):policy(context.admission),callback(value){
+        if(policy){
+            direct_forward=selected.forward&&policy->try_enter_original_forward(callback,forward_frame);
+            direct_original=direct_forward||(selected.original&&policy->try_enter_connect_original(context.network.server_port_0a3c90,selected.port,selected.wait));
+            if(!direct_original)policy->enter(callback);
+        }
+    }
+    void release() noexcept {
+        if(policy){const auto error=GetLastError();auto* value=policy;policy=nullptr;
+            if(direct_forward)value->leave_original_forward(forward_frame);else value->leave(callback);
+            SetLastError(error);}
+    }
+    ~AdmissionLease(){release();}
+};
+template<class F,class Select> auto invoke_selected(Callback callback,F&& f,Select&& select) noexcept -> decltype(f(std::declval<Context&>(),false)) {
+    const auto incoming=GetLastError();
+    Errors* invocation_errors=last_errors.load(std::memory_order_acquire);
+    try {
+        Lease lease;
+        invocation_errors=lease.errors; // retain this binding's policy after release
+        AdmissionLease admission(*lease.context,callback,select(*lease.context));
+        SetLastError(incoming); // binding synchronization adds no API error state
+        const auto result=f(*lease.context,admission.direct_original);
+        const auto outgoing=GetLastError();
+        admission.release(); // Context remains leased throughout leave()
+        lease.release();
+        SetLastError(outgoing);
+        return result;
+    } catch(...) {
+        if(invocation_errors)
+            invocation_errors->callback_exception(callback,std::current_exception());
+        std::terminate(); // explicit out-of-contract entry before any binding
+    }
+}
+template<class F> auto invoke(Callback callback,F&& f) noexcept -> decltype(f(std::declval<Context&>())) {
+    return invoke_selected(callback,[&](Context& context,bool){return f(context);},[](Context&){return CallbackSelection{};});
+}
+std::uintptr_t address(const void* p){return reinterpret_cast<std::uintptr_t>(p);}
+LSTATUS status(std::uint32_t n){return std::bit_cast<LSTATUS>(n);}
+}
+Binding::Binding(Context& context,Errors& errors):context_(&context),errors_(errors){
+    bool busy;
+    {std::lock_guard lock(gate);busy=current!=nullptr;if(!busy){last_errors.store(&errors,std::memory_order_release);current=&context;}}
+    if(busy){context_=nullptr;errors_.lifecycle(LifecycleFault::AlreadyBound);}
+}
+void Binding::close(){
+    if(!context_)return;
+    LifecycleFault failure{};bool rejected=false;
+    {std::lock_guard lock(gate);
+     if(current!=context_){failure=LifecycleFault::WrongOwner;rejected=true;}
+     else if(calls){failure=LifecycleFault::Busy;rejected=true;}
+     else{current=nullptr;context_=nullptr;}}
+    if(rejected)errors_.lifecycle(failure);
+}
+Binding::~Binding() noexcept{close();}
+bool is_bound(){std::lock_guard lock(gate);return current!=nullptr;}
+std::size_t active_calls(){std::lock_guard lock(gate);return calls;}
+
+int WSAAPI connect_entry(SOCKET socket,const sockaddr* pointer,int length) noexcept {
+    std::size_t original_extent=0;
+    std::optional<std::uint16_t> original_requested;
+    return invoke_selected(Callback::connect_00fd00,[&](Context& c,bool direct_original){
+        if(direct_original){
+            auto* bytes=reinterpret_cast<std::byte*>(const_cast<sockaddr*>(pointer));
+            if(c.admission->connect_original_wait_pending()){
+                c.network_effects.wait_steps_036880(-1);
+                c.admission->complete_connect_original_wait();
+            }
+            if(c.admission->connect_original_redirect_pending()){
+                if(!original_requested)throw std::logic_error("Original redirect requires its cached requested port");
+                network_hook_recovered::redirect_body_00fd00(c.network_effects,{bytes,original_extent},*original_requested,c.network.server_port_0a3c90,c.network.attempts_0a3888);
+                c.admission->complete_connect_original_redirect();
+            }
+            return c.network_effects.original_connect_0a3838(socket,{bytes,original_extent},length);
+        }
+        if(c.admission&&c.admission->connect_probe()){
+            std::size_t extent=0;
+            if(length==c.probe_ipv4_length||length==c.probe_ipv6_length){
+                if(!pointer)throw network_hook_recovered::OutOfEvidenceInput("recognized sockaddr length with null pointer");
+                extent=2; // classification reads family only; no port or shared state
+            }
+            auto* bytes=reinterpret_cast<std::byte*>(const_cast<sockaddr*>(pointer));
+            const bool untouched=network_hook_recovered::original_only_00fd00(c.probe_ipv4_length,c.probe_ipv6_length,{bytes,extent},length);
+            if(untouched)c.admission->connect_classified(true);
+            else{
+                extent=4; // recognized family: port prefix is required by native00fd00
+                const auto port=network_hook_recovered::requested_port_00fd00({bytes,extent});
+                if(!c.admission->connect_web_passthrough(port)){
+                    if(c.admission->connect_wait_begin(port)){
+                        c.network_effects.wait_steps_036880(-1);
+                        c.admission->connect_wait_complete();
+                    }else if(c.admission->connect_redirect_begin(port)){
+                        if(port!=80&&port!=443)c.network_effects.wait_steps_036880(-1);
+                        auto published_port=c.admission->connect_redirect_ready();
+                        network_hook_recovered::redirect_body_00fd00(c.network_effects,{bytes,extent},port,published_port,c.network.attempts_0a3888);
+                        c.admission->connect_redirect_complete();
+                    }else{
+                        c.admission->connect_classified(false);
+                        throw std::logic_error("Connect probe accepted an unresolved shared-state body");
+                    }
+                }
+            }
+            return c.network_effects.original_connect_0a3838(socket,{bytes,extent},length);
+        }
+        std::size_t extent=0;
+        if(length==c.network.ipv4_length_0a10d0||length==c.network.ipv6_length_0a10d4){
+            if(!pointer)throw network_hook_recovered::OutOfEvidenceInput("recognized sockaddr length with null pointer");
+            extent=4; // SDK-argument contract: first four bytes readable/writable
+        }
+        auto* bytes=reinterpret_cast<std::byte*>(const_cast<sockaddr*>(pointer));
+        return network_hook_recovered::connect_00fd00(c.network,c.network_effects,socket,{bytes,extent},length);
+    },[&](Context& c){
+        if(!c.admission||!c.admission->has_connect_original_lane())return CallbackSelection{};
+        if(length==c.probe_ipv4_length||length==c.probe_ipv6_length){
+            if(!pointer)throw network_hook_recovered::OutOfEvidenceInput("recognized sockaddr length with null pointer");
+            original_extent=2;
+        }
+        auto* bytes=reinterpret_cast<std::byte*>(const_cast<sockaddr*>(pointer));
+        if(network_hook_recovered::original_only_00fd00(c.probe_ipv4_length,c.probe_ipv6_length,{bytes,original_extent},length))return CallbackSelection{true,{}};
+        original_extent=4;
+        const auto port=network_hook_recovered::requested_port_00fd00({bytes,original_extent});
+        original_requested=port;
+        return CallbackSelection{true,port,port!=80&&port!=443};
+    });
+}
+LSTATUS WINAPI reg_open_a_entry(HKEY root,LPCSTR key,DWORD options,REGSAM access,PHKEY result) noexcept {
+    return invoke_selected(Callback::reg_open_a_00f800,[&](Context& c,bool direct){
+        const registry_recovered::OpenA call{address(root),key,options,access,registry_recovered::HandleCell::from_raw(result)};
+        return status(direct?c.registry_effects.original_open_a(call):registry_recovered::open_a_00f800(c.registry,c.registry_effects,call));
+    },[&](Context&){return CallbackSelection{false,{},false,key==nullptr};});
+}
+LSTATUS WINAPI reg_open_w_entry(HKEY root,LPCWSTR key,DWORD options,REGSAM access,PHKEY result) noexcept {
+    return invoke_selected(Callback::reg_open_w_00f960,[&](Context& c,bool direct){
+        const registry_recovered::OpenW call{address(root),reinterpret_cast<const char16_t*>(key),options,access,registry_recovered::HandleCell::from_raw(result)};
+        return status(direct?c.registry_effects.original_open_w(call):registry_recovered::open_w_00f960(c.registry,c.registry_effects,call));
+    },[&](Context&){return CallbackSelection{false,{},false,key==nullptr};});
+}
+LSTATUS WINAPI reg_close_entry(HKEY key) noexcept {
+    return invoke(Callback::reg_close_00f5b0,[&](Context& c){return status(registry_recovered::close_00f5b0(c.registry,c.registry_effects,address(key)));});
+}
+LSTATUS WINAPI reg_query_a_entry(HKEY key,LPCSTR name,LPDWORD reserved,LPDWORD type,LPBYTE data,LPDWORD size) noexcept {
+    return invoke(Callback::reg_query_a_00fac0,[&](Context& c){return status(registry_recovered::query_a_00fac0(c.registry,c.registry_effects,
+        {address(key),name,reserved,registry_recovered::DwordCell::from_raw(type),data,registry_recovered::DwordCell::from_raw(size)}));});
+}
+LSTATUS WINAPI reg_query_w_entry(HKEY key,LPCWSTR name,LPDWORD reserved,LPDWORD type,LPBYTE data,LPDWORD size) noexcept {
+    return invoke(Callback::reg_query_w_00fb60,[&](Context& c){return status(registry_recovered::query_w_00fb60(c.registry,c.registry_effects,
+        {address(key),reinterpret_cast<const char16_t*>(name),reserved,registry_recovered::DwordCell::from_raw(type),data,registry_recovered::DwordCell::from_raw(size)}));});
+}
+BOOL WINAPI process_a_entry(LPCSTR app,LPSTR cmd,LPSECURITY_ATTRIBUTES p,LPSECURITY_ATTRIBUTES t,BOOL inherit,DWORD flags,LPVOID env,LPCSTR cwd,LPSTARTUPINFOA start,LPPROCESS_INFORMATION info) noexcept {
+    return invoke_selected(Callback::create_process_a_00f3f0,[&](Context& c,bool direct){
+        const host_callbacks_recovered::ProcessCall<char> call{app,cmd,address(p),address(t),inherit,flags,address(env),cwd,address(start),address(info)};
+        return direct?c.host_effects.original_create_process_a(call):host_callbacks_recovered::create_process_a_00f3f0(c.registry.values,c.host_effects,call);
+    },[&](Context&){return CallbackSelection{false,{},false,app==nullptr};});
+}
+BOOL WINAPI process_w_entry(LPCWSTR app,LPWSTR cmd,LPSECURITY_ATTRIBUTES p,LPSECURITY_ATTRIBUTES t,BOOL inherit,DWORD flags,LPVOID env,LPCWSTR cwd,LPSTARTUPINFOW start,LPPROCESS_INFORMATION info) noexcept {
+    return invoke_selected(Callback::create_process_w_00f4d0,[&](Context& c,bool direct){
+        const host_callbacks_recovered::ProcessCall<char16_t> call{reinterpret_cast<const char16_t*>(app),reinterpret_cast<char16_t*>(cmd),address(p),address(t),inherit,flags,address(env),reinterpret_cast<const char16_t*>(cwd),address(start),address(info)};
+        return direct?c.host_effects.original_create_process_w(call):host_callbacks_recovered::create_process_w_00f4d0(c.registry.values,c.host_effects,call);
+    },[&](Context&){return CallbackSelection{false,{},false,app==nullptr};});
+}
+HRESULT WINAPI folder_a_entry(HWND window,int id,HANDLE token,DWORD flags,LPSTR path) noexcept {
+    return invoke_selected(Callback::folder_a_00fc00,[&](Context& c,bool direct){
+        const host_callbacks_recovered::FolderCall<char> call{address(window),id,address(token),flags,path};
+        return std::bit_cast<HRESULT>(direct?c.host_effects.original_folder_a(call):host_callbacks_recovered::folder_a_00fc00(c.registry.values,c.host_effects,call));
+    },[&](Context&){return CallbackSelection{false,{},false,id!=5};});
+}
+HRESULT WINAPI folder_w_entry(HWND window,int id,HANDLE token,DWORD flags,LPWSTR path) noexcept {
+    return invoke_selected(Callback::folder_w_00fc80,[&](Context& c,bool direct){
+        const host_callbacks_recovered::FolderCall<char16_t> call{address(window),id,address(token),flags,reinterpret_cast<char16_t*>(path)};
+        return std::bit_cast<HRESULT>(direct?c.host_effects.original_folder_w(call):host_callbacks_recovered::folder_w_00fc80(c.registry.values,c.host_effects,call));
+    },[&](Context&){return CallbackSelection{false,{},false,id!=5};});
+}
+std::uintptr_t Resolver::rebuilt_address(Callback c){
+    switch(c){
+    case Callback::connect_00fd00:return reinterpret_cast<std::uintptr_t>(&connect_entry);
+    case Callback::reg_open_a_00f800:return reinterpret_cast<std::uintptr_t>(&reg_open_a_entry);
+    case Callback::reg_open_w_00f960:return reinterpret_cast<std::uintptr_t>(&reg_open_w_entry);
+    case Callback::reg_close_00f5b0:return reinterpret_cast<std::uintptr_t>(&reg_close_entry);
+    case Callback::reg_query_a_00fac0:return reinterpret_cast<std::uintptr_t>(&reg_query_a_entry);
+    case Callback::reg_query_w_00fb60:return reinterpret_cast<std::uintptr_t>(&reg_query_w_entry);
+    case Callback::create_process_a_00f3f0:return reinterpret_cast<std::uintptr_t>(&process_a_entry);
+    case Callback::create_process_w_00f4d0:return reinterpret_cast<std::uintptr_t>(&process_w_entry);
+    case Callback::folder_a_00fc00:return reinterpret_cast<std::uintptr_t>(&folder_a_entry);
+    case Callback::folder_w_00fc80:return reinterpret_cast<std::uintptr_t>(&folder_w_entry);
+    }
+    throw std::out_of_range("invalid callback enum");
+}
+static_assert(std::is_convertible_v<decltype(&connect_entry),decltype(&::connect)>);
+static_assert(std::is_convertible_v<decltype(&reg_open_a_entry),decltype(&::RegOpenKeyExA)>);
+static_assert(std::is_convertible_v<decltype(&reg_open_w_entry),decltype(&::RegOpenKeyExW)>);
+static_assert(std::is_convertible_v<decltype(&reg_close_entry),decltype(&::RegCloseKey)>);
+static_assert(std::is_convertible_v<decltype(&reg_query_a_entry),decltype(&::RegQueryValueExA)>);
+static_assert(std::is_convertible_v<decltype(&reg_query_w_entry),decltype(&::RegQueryValueExW)>);
+static_assert(std::is_convertible_v<decltype(&process_a_entry),decltype(&::CreateProcessA)>);
+static_assert(std::is_convertible_v<decltype(&process_w_entry),decltype(&::CreateProcessW)>);
+static_assert(std::is_convertible_v<decltype(&folder_a_entry),decltype(&::SHGetFolderPathA)>);
+static_assert(std::is_convertible_v<decltype(&folder_w_entry),decltype(&::SHGetFolderPathW)>);
+static_assert(sizeof(DWORD)==4&&sizeof(HKEY)==8&&sizeof(wchar_t)==2&&sizeof(SOCKET)==8);
+}

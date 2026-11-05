@@ -96,6 +96,10 @@ public:
     bool close();
     bootstrap_native_recovered::ApplicationEntry application_entry() const;
     Phase phase() const noexcept{return phase_;}
+    // Borrowed stable state, not a synchronized snapshot. Live server_port
+    // reads through an owning mutable view use the shared relaxed helper;
+    // plain reads/copies through this const view require quiescence with
+    // server and callback access (State contract).
     const configuration::State& configuration() const noexcept{return configuration_;}
     const ConsoleState& console() const noexcept{return console_;}
 private:

@@ -1,0 +1,117 @@
+{
+  "status": "RETAINED_STATIC_EVIDENCE_ONLY",
+  "original_binary_accessed": false,
+  "slices": [
+    {
+      "address": "0x180028210",
+      "kind": "pseudocode",
+      "path": "outputs/anadius-owned-server-source/error-028210-retained/0x180028210.c",
+      "sha256": "fe24be6f43589b88bee943106eedc321f46d469d140a46d856a2ce0bf9b410a6",
+      "parent_path": "outputs/anadius-all-functions.pseudo.c",
+      "parent_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "parent_start_line": 33524,
+      "evidence": "ev_02a670557ce1dceb8af766dab7f5d5d49a6c728c526a27da27fc58e0c4ce4604"
+    },
+    {
+      "address": "0x18000a8b0",
+      "kind": "pseudocode",
+      "path": "outputs/anadius-owned-server-source/error-028210-retained/0x18000a8b0.c",
+      "sha256": "a5f26841a3e6cc2094471de18641b99093a02be84f297e3d4a787b131682eed0",
+      "parent_path": "outputs/anadius-all-functions.pseudo.c",
+      "parent_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "parent_start_line": 8399,
+      "evidence": "ev_fc947a3901241283810696e19eb65c0c82e180bf30a63575d0813340371d5d06"
+    },
+    {
+      "address": "0x180024480",
+      "kind": "pseudocode",
+      "path": "outputs/anadius-owned-server-source/error-028210-retained/0x180024480.c",
+      "sha256": "375ba318b4c930db1125a430c5e93a067eeee17aff0872838ad1302fc888ead7",
+      "parent_path": "outputs/anadius-all-functions.pseudo.c",
+      "parent_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "parent_start_line": 29781,
+      "evidence": "ev_20e549a27321ba1d7651fc94fdf90ec98fec21fff58fbc1d4561e3b5a5828d5c"
+    },
+    {
+      "address": "0x180029ea0",
+      "kind": "pseudocode",
+      "path": "outputs/anadius-owned-server-source/error-028210-retained/0x180029ea0.c",
+      "sha256": "101475bf2bf9c26dadf8ab83a6211f41ce4400628379c2c5dffdd8f4ea56fa16",
+      "parent_path": "outputs/anadius-all-functions.pseudo.c",
+      "parent_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "parent_start_line": 35192,
+      "evidence": "ev_6cf0254d6c71c9d2e74fabc14f751e84a071e29cca026bf32d866351d4cf2705"
+    },
+    {
+      "address": "0x180028210",
+      "kind": "assembly",
+      "path": "outputs/anadius-owned-server-source/error-028210-retained/0x180028210.asm.txt",
+      "sha256": "34855cab2ff884b4d4b9b11a7ac2d93268f71e5d5f698df9fdd8bdad1a200844",
+      "parent_path": "outputs/anadius-all-functions.asm.txt",
+      "parent_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "parent_start_line": 41282,
+      "evidence": "ev_25c14ed40f26e217d370bb90edf86775165d09c97e58dbc00f9086e9b3eb361d"
+    },
+    {
+      "address": "0x18000a8b0",
+      "kind": "assembly",
+      "path": "outputs/anadius-owned-server-source/error-028210-retained/0x18000a8b0.asm.txt",
+      "sha256": "84d0335833149b645378b43cc763ae11c7df00301fdb132da1db53c7072c53dd",
+      "parent_path": "outputs/anadius-all-functions.asm.txt",
+      "parent_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "parent_start_line": 10484,
+      "evidence": "ev_bb12b0cfe9083332d30fdc7340126633654baa64fe730f163869b5007b9ad2da"
+    },
+    {
+      "address": "0x180024480",
+      "kind": "assembly",
+      "path": "outputs/anadius-owned-server-source/error-028210-retained/0x180024480.asm.txt",
+      "sha256": "72db459b4dbf86d8e793a55c59278f7b67d89bc13891d394e919fbe322acbb4d",
+      "parent_path": "outputs/anadius-all-functions.asm.txt",
+      "parent_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "parent_start_line": 37231,
+      "evidence": "ev_4f9d3f62cce3b75d905b999b5f99a20ceb6c0fc1fb8597ea7bcba97cde3c61f6"
+    },
+    {
+      "address": "0x180029ea0",
+      "kind": "assembly",
+      "path": "outputs/anadius-owned-server-source/error-028210-retained/0x180029ea0.asm.txt",
+      "sha256": "3b3d2273f61bcb887f617348681fca309d40621a28191118d5d1532e770d7e21",
+      "parent_path": "outputs/anadius-all-functions.asm.txt",
+      "parent_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "parent_start_line": 43209,
+      "evidence": "ev_67f556e08a5391b12c3e18dee0a1fbf33f14cd0960c392c6c54e9dc2714631e2"
+    }
+  ],
+  "direct_calls": [
+    {
+      "source": "0x180024480",
+      "sourceName": "FUN_180024480",
+      "site": "0x1800247d9",
+      "target": "0x180028210",
+      "targetName": "FUN_180028210",
+      "kind": "direct_call",
+      "evidence": "ev_4f9d3f62cce3b75d905b999b5f99a20ceb6c0fc1fb8597ea7bcba97cde3c61f6"
+    },
+    {
+      "source": "0x180024480",
+      "sourceName": "FUN_180024480",
+      "site": "0x18002480f",
+      "target": "0x180028210",
+      "targetName": "FUN_180028210",
+      "kind": "direct_call",
+      "evidence": "ev_4f9d3f62cce3b75d905b999b5f99a20ceb6c0fc1fb8597ea7bcba97cde3c61f6"
+    },
+    {
+      "source": "0x180029ea0",
+      "sourceName": "FUN_180029ea0",
+      "site": "0x180029ff4",
+      "target": "0x180028210",
+      "targetName": "FUN_180028210",
+      "kind": "direct_call",
+      "evidence": "ev_67f556e08a5391b12c3e18dee0a1fbf33f14cd0960c392c6c54e9dc2714631e2"
+    }
+  ],
+  "callgraph_path": "outputs/anadius-callgraph.json",
+  "callgraph_sha256": "4a6a57d0a27f1f0e068d7f5d417a00f9eea9793b322378eb62c29ffdcba5dfef"
+}

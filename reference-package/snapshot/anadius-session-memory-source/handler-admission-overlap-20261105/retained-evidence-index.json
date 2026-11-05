@@ -1,0 +1,168 @@
+{
+  "status": "RETAINED_EXTRACTS_NOT_NEW_REA_QUERIES",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "records": [
+    {
+      "address": "0x180021770",
+      "kind": "pseudo",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "evidence_id": "ev_f4884fc6f81199da63c2b34f733cd982fc0fada865bc01fed690b3c71bce8d8a",
+      "file": "retained-180021770.pseudo.txt",
+      "sha256": "17044dcfe8b469418b5106695f841f9e3cf90c4df4a97207bcfdec497e9ddaea"
+    },
+    {
+      "address": "0x180025480",
+      "kind": "pseudo",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "evidence_id": "ev_d3aaf411d3595e43ae2c3c1c8309ed42f85a4434602216330b5e2c58aa788a3b",
+      "file": "retained-180025480.pseudo.txt",
+      "sha256": "09c4129554625be0eec5566abe44bfe64db9921e988c7d777c4f83cecd53d730"
+    },
+    {
+      "address": "0x180028d30",
+      "kind": "pseudo",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "evidence_id": "ev_0d8a8e35ac896b7bc4add247df507ee04b3056848c23b97a02d0e5360511e67a",
+      "file": "retained-180028d30.pseudo.txt",
+      "sha256": "efb104cae7c19575efdd8d2dcb4ef3daa07a44eef58fa26ee9327939814451ac"
+    },
+    {
+      "address": "0x18002e5f0",
+      "kind": "pseudo",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "evidence_id": "ev_08c9cbb7d94139171f29ba86d86cd51101e76b2d6d913d183d8a51258f2dec5b",
+      "file": "retained-18002e5f0.pseudo.txt",
+      "sha256": "4d518dcc49bc65e257e72e23bbb8a5789c44c89a67b65600dfa20fbe074af033"
+    },
+    {
+      "address": "0x180032d00",
+      "kind": "pseudo",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "evidence_id": "ev_4657037962313465cce62f6579fa74838943f7f547b0d739a8b152611c24c36b",
+      "file": "retained-180032d00.pseudo.txt",
+      "sha256": "797dc61bd4dfbba39f3318aecb139410b837e3f20e77050faec035e25c8ca926"
+    },
+    {
+      "address": "0x180033d70",
+      "kind": "pseudo",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "evidence_id": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "file": "retained-180033d70.pseudo.txt",
+      "sha256": "1e6d2e15fd7c8d347d767050457357f971fba5430a0b6db7f2e7ddf5080746d3"
+    },
+    {
+      "address": "0x180038bc0",
+      "kind": "pseudo",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "evidence_id": "ev_5fe2a22e48a2f1a6c5771fc4c6ef4fe75b8ef06f743100261e1d6ece6d1baa76",
+      "file": "retained-180038bc0.pseudo.txt",
+      "sha256": "6be480007217ad63dad05fcf3d44332491d730ca1a3cd14ba4c90d7361afc2fc"
+    },
+    {
+      "address": "0x18005e7a8",
+      "kind": "pseudo",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "evidence_id": "ev_5e71c9771b4ee41eabb165b637fe2731b56aa25a4607e88aa0466f7c42c11285",
+      "file": "retained-18005e7a8.pseudo.txt",
+      "sha256": "06783d4107351d67b4992643e06f966d12a4b55482ae97fa4480a7bf8c1233d6"
+    },
+    {
+      "address": "0x18005e8e0",
+      "kind": "pseudo",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "evidence_id": "ev_06d02d032bc19f80b5602d3d24b5ce1d432c5a742d8014e2c0f45f08f084deea",
+      "file": "retained-18005e8e0.pseudo.txt",
+      "sha256": "3b0233d16527b8ed0e9a0d06c865789a09a81c2f8aece56638a4e24c7fca1480"
+    },
+    {
+      "address": "0x180021770",
+      "kind": "assembly",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "evidence_id": "ev_267ad2fba0da2ea44cbb89f4ef891512c4b721af9c7a6c38b4be9571c4a1bc19",
+      "file": "retained-180021770.assembly.txt",
+      "sha256": "cb0e7c4bb539ab27ee3ef50c0ea04450e6513b6fb5a92f843566a9c4bad49248"
+    },
+    {
+      "address": "0x180025480",
+      "kind": "assembly",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "evidence_id": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31",
+      "file": "retained-180025480.assembly.txt",
+      "sha256": "4e2626a162a44afbaf346755ec7c0b0ceae12390cc90186428b363832a38a461"
+    },
+    {
+      "address": "0x180028d30",
+      "kind": "assembly",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "evidence_id": "ev_65681baf7e383e89ff3fa9f7f1032ce0865024b0d48e0ad7b76997e04088bc66",
+      "file": "retained-180028d30.assembly.txt",
+      "sha256": "36802457c02801f696cc567ceb5346b1c73f9c4c9aa306dbfedd16982692aca4"
+    },
+    {
+      "address": "0x18002e5f0",
+      "kind": "assembly",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "evidence_id": "ev_73b6f6da8bb1c590a9fdda96a768e029bbfa302ce7c4ad86a699f43c5e189a8f",
+      "file": "retained-18002e5f0.assembly.txt",
+      "sha256": "cd9fc7dbdb32e58634a411ce034bb4359fc67c566fdd27ea045ac63dde0b17e5"
+    },
+    {
+      "address": "0x180032d00",
+      "kind": "assembly",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "evidence_id": "ev_94c6661b424caa94ba28f70ebfbf7ee51eb890c653d2f2f1f6384efa2d1b7224",
+      "file": "retained-180032d00.assembly.txt",
+      "sha256": "3c08bfc4332d40700ec02cdec55af19028c276573eb1e75f64e449de734f5681"
+    },
+    {
+      "address": "0x180033d70",
+      "kind": "assembly",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "evidence_id": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6",
+      "file": "retained-180033d70.assembly.txt",
+      "sha256": "786b66318efd9c0d4e96ad6bdd94201478fc885a81dcbfe4adb0a367ddfa538f"
+    },
+    {
+      "address": "0x180038bc0",
+      "kind": "assembly",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "evidence_id": "ev_0ee948b57b5a0b042dbfa8ae1605ebd4e7170d08b24e71e12c3017ec7c1b3ff8",
+      "file": "retained-180038bc0.assembly.txt",
+      "sha256": "c1abdb73987551641c7eac4740ad8d6c76d7bf3a17bf8053fd3783482086deef"
+    },
+    {
+      "address": "0x18005e7a8",
+      "kind": "assembly",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "evidence_id": "ev_0de6693f5df6645aa78071aa314460e2d91874a3dee820d61225b7a47d038c06",
+      "file": "retained-18005e7a8.assembly.txt",
+      "sha256": "54063bbea9c3982510b73a520cb6bf26623aba53192572015d6078f903c9539a"
+    },
+    {
+      "address": "0x18005e8e0",
+      "kind": "assembly",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "evidence_id": "ev_b2508bf2d6430c3f029f1f6090cadaa12d2315a853312d93ad48f42602adfb0e",
+      "file": "retained-18005e8e0.assembly.txt",
+      "sha256": "baa2735886b961ee540895e435ba803f461976671f65fbbc94717078bf009a3c"
+    }
+  ]
+}

@@ -1,0 +1,761 @@
+
+system_error.cpp.obj:	file format coff-x86-64
+
+RELOCATION RECORDS FOR [.text$_ZNKSt3__112__do_message7messageEi]:
+OFFSET           TYPE                     VALUE
+000000000000001e IMAGE_REL_AMD64_REL32    __imp_strerror_s
+000000000000002d IMAGE_REL_AMD64_REL32    .str.4
+0000000000000042 IMAGE_REL_AMD64_REL32    __mingw_snprintf
+000000000000004a IMAGE_REL_AMD64_REL32    strlen
+0000000000000076 IMAGE_REL_AMD64_REL32    _Znwy
+0000000000000098 IMAGE_REL_AMD64_REL32    memcpy
+00000000000000b6 IMAGE_REL_AMD64_REL32    strlen
+00000000000000c1 IMAGE_REL_AMD64_REL32    _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE20__throw_length_errorB9nqe230104Ev
+
+RELOCATION RECORDS FOR [.text$_ZNKSt3__124__generic_error_category4nameEv]:
+OFFSET           TYPE                     VALUE
+0000000000000003 IMAGE_REL_AMD64_REL32    .str
+
+RELOCATION RECORDS FOR [.text$_ZNKSt3__124__generic_error_category7messageEi]:
+OFFSET           TYPE                     VALUE
+000000000000000e IMAGE_REL_AMD64_REL32    __imp___sys_nerr
+000000000000001d IMAGE_REL_AMD64_REL32    _ZNKSt3__112__do_message7messageEi
+0000000000000029 IMAGE_REL_AMD64_REL32    _Znwy
+0000000000000043 IMAGE_REL_AMD64_REL32    .str.1
+000000000000004d IMAGE_REL_AMD64_REL32    .str.1
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__116generic_categoryEv]:
+OFFSET           TYPE                     VALUE
+0000000000000007 IMAGE_REL_AMD64_REL32    _ZGVZNSt3__116generic_categoryEvE6helper
+0000000000000012 IMAGE_REL_AMD64_REL32    _ZZNSt3__116generic_categoryEvE6helper
+000000000000001e IMAGE_REL_AMD64_REL32    _ZGVZNSt3__116generic_categoryEvE6helper
+0000000000000023 IMAGE_REL_AMD64_REL32    __cxa_guard_acquire
+000000000000002e IMAGE_REL_AMD64_REL32    _ZGVZNSt3__116generic_categoryEvE6helper
+0000000000000033 IMAGE_REL_AMD64_REL32    __cxa_guard_release
+000000000000003a IMAGE_REL_AMD64_REL32    _ZZNSt3__116generic_categoryEvE6helper
+
+RELOCATION RECORDS FOR [.text$_ZNKSt3__123__system_error_category4nameEv]:
+OFFSET           TYPE                     VALUE
+0000000000000003 IMAGE_REL_AMD64_REL32    .str.2
+
+RELOCATION RECORDS FOR [.text$_ZNKSt3__123__system_error_category7messageEi]:
+OFFSET           TYPE                     VALUE
+000000000000004c IMAGE_REL_AMD64_REL32    __imp_FormatMessageA
+00000000000000b5 IMAGE_REL_AMD64_REL32    __imp_LocalFree
+00000000000000e8 IMAGE_REL_AMD64_REL32    _Znwy
+000000000000010b IMAGE_REL_AMD64_REL32    memmove
+000000000000012b IMAGE_REL_AMD64_REL32    _Unwind_Resume
+0000000000000143 IMAGE_REL_AMD64_REL32    _ZdlPvy
+000000000000014b IMAGE_REL_AMD64_REL32    _Unwind_Resume
+0000000000000153 IMAGE_REL_AMD64_REL32    _Unwind_Resume
+
+RELOCATION RECORDS FOR [.xdata$_ZNKSt3__123__system_error_category7messageEi]:
+OFFSET           TYPE                     VALUE
+0000000000000010 IMAGE_REL_AMD64_ADDR32NB __gxx_personality_seh0
+
+RELOCATION RECORDS FOR [.text$_ZNKSt3__123__system_error_category23default_error_conditionEi]:
+OFFSET           TYPE                     VALUE
+0000000000000006 IMAGE_REL_AMD64_REL32    _ZZNSt3__116generic_categoryEvE6helper
+0000000000000026 IMAGE_REL_AMD64_REL32    .rdata
+000000000000013f IMAGE_REL_AMD64_REL32    _ZZNSt3__115system_categoryEvE6helper
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__115system_categoryEv]:
+OFFSET           TYPE                     VALUE
+0000000000000007 IMAGE_REL_AMD64_REL32    _ZGVZNSt3__115system_categoryEvE6helper
+0000000000000012 IMAGE_REL_AMD64_REL32    _ZZNSt3__115system_categoryEvE6helper
+000000000000001e IMAGE_REL_AMD64_REL32    _ZGVZNSt3__115system_categoryEvE6helper
+0000000000000023 IMAGE_REL_AMD64_REL32    __cxa_guard_acquire
+000000000000002e IMAGE_REL_AMD64_REL32    _ZGVZNSt3__115system_categoryEvE6helper
+0000000000000033 IMAGE_REL_AMD64_REL32    __cxa_guard_release
+000000000000003a IMAGE_REL_AMD64_REL32    _ZZNSt3__115system_categoryEvE6helper
+
+RELOCATION RECORDS FOR [.text$_ZNKSt3__115error_condition7messageEv]:
+OFFSET           TYPE                     VALUE
+0000000000000014 IMAGE_REL_AMD64_REL32    __guard_dispatch_icall_fptr
+
+RELOCATION RECORDS FOR [.text$_ZNKSt3__110error_code7messageEv]:
+OFFSET           TYPE                     VALUE
+0000000000000014 IMAGE_REL_AMD64_REL32    __guard_dispatch_icall_fptr
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__112system_errorC2ENS_10error_codeERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE]:
+OFFSET           TYPE                     VALUE
+0000000000000023 IMAGE_REL_AMD64_REL32    _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE25__init_copy_ctor_externalEPKcy
+0000000000000049 IMAGE_REL_AMD64_REL32    _ZNSt3__112_GLOBAL__N_114make_error_strERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+0000000000000056 IMAGE_REL_AMD64_REL32    _ZNSt13runtime_errorC2ERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE
+0000000000000070 IMAGE_REL_AMD64_REL32    _ZdlPvy
+000000000000008a IMAGE_REL_AMD64_REL32    _ZdlPvy
+0000000000000091 IMAGE_REL_AMD64_REL32    _ZTVNSt3__112system_errorE
+00000000000000bb IMAGE_REL_AMD64_REL32    _Unwind_Resume
+00000000000000ce IMAGE_REL_AMD64_REL32    _ZdlPvy
+00000000000000f4 IMAGE_REL_AMD64_REL32    _ZdlPvy
+00000000000000fc IMAGE_REL_AMD64_REL32    _Unwind_Resume
+
+RELOCATION RECORDS FOR [.xdata$_ZNSt3__112system_errorC2ENS_10error_codeERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE]:
+OFFSET           TYPE                     VALUE
+000000000000000c IMAGE_REL_AMD64_ADDR32NB __gxx_personality_seh0
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__112_GLOBAL__N_114make_error_strERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE]:
+OFFSET           TYPE                     VALUE
+0000000000000038 IMAGE_REL_AMD64_REL32    .str.6
+0000000000000046 IMAGE_REL_AMD64_REL32    _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendEPKcy
+000000000000005f IMAGE_REL_AMD64_REL32    __guard_dispatch_icall_fptr
+0000000000000086 IMAGE_REL_AMD64_REL32    _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6appendEPKcy
+00000000000000a0 IMAGE_REL_AMD64_REL32    _ZdlPvy
+00000000000000e1 IMAGE_REL_AMD64_REL32    _ZdlPvy
+00000000000000e9 IMAGE_REL_AMD64_REL32    _Unwind_Resume
+
+RELOCATION RECORDS FOR [.xdata$_ZNSt3__112_GLOBAL__N_114make_error_strERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE]:
+OFFSET           TYPE                     VALUE
+000000000000000c IMAGE_REL_AMD64_ADDR32NB __gxx_personality_seh0
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__112system_errorC2ENS_10error_codeEPKc]:
+OFFSET           TYPE                     VALUE
+000000000000001a IMAGE_REL_AMD64_REL32    strlen
+000000000000004f IMAGE_REL_AMD64_REL32    _Znwy
+0000000000000073 IMAGE_REL_AMD64_REL32    memcpy
+000000000000008a IMAGE_REL_AMD64_REL32    _ZNSt3__112_GLOBAL__N_114make_error_strERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+0000000000000097 IMAGE_REL_AMD64_REL32    _ZNSt13runtime_errorC2ERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE
+00000000000000b1 IMAGE_REL_AMD64_REL32    _ZdlPvy
+00000000000000cb IMAGE_REL_AMD64_REL32    _ZdlPvy
+00000000000000d2 IMAGE_REL_AMD64_REL32    _ZTVNSt3__112system_errorE
+00000000000000ef IMAGE_REL_AMD64_REL32    _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE20__throw_length_errorB9nqe230104Ev
+0000000000000108 IMAGE_REL_AMD64_REL32    _Unwind_Resume
+000000000000011b IMAGE_REL_AMD64_REL32    _ZdlPvy
+0000000000000141 IMAGE_REL_AMD64_REL32    _ZdlPvy
+0000000000000149 IMAGE_REL_AMD64_REL32    _Unwind_Resume
+
+RELOCATION RECORDS FOR [.xdata$_ZNSt3__112system_errorC2ENS_10error_codeEPKc]:
+OFFSET           TYPE                     VALUE
+0000000000000014 IMAGE_REL_AMD64_ADDR32NB __gxx_personality_seh0
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__112system_errorC2ENS_10error_codeE]:
+OFFSET           TYPE                     VALUE
+0000000000000026 IMAGE_REL_AMD64_REL32    __guard_dispatch_icall_fptr
+0000000000000046 IMAGE_REL_AMD64_REL32    _ZNSt13runtime_errorC2ERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE
+0000000000000060 IMAGE_REL_AMD64_REL32    _ZdlPvy
+0000000000000067 IMAGE_REL_AMD64_REL32    _ZTVNSt3__112system_errorE
+0000000000000095 IMAGE_REL_AMD64_REL32    _ZdlPvy
+000000000000009d IMAGE_REL_AMD64_REL32    _Unwind_Resume
+
+RELOCATION RECORDS FOR [.xdata$_ZNSt3__112system_errorC2ENS_10error_codeE]:
+OFFSET           TYPE                     VALUE
+000000000000000c IMAGE_REL_AMD64_ADDR32NB __gxx_personality_seh0
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__112system_errorC2EiRKNS_14error_categoryERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE]:
+OFFSET           TYPE                     VALUE
+000000000000002c IMAGE_REL_AMD64_REL32    _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE25__init_copy_ctor_externalEPKcy
+0000000000000054 IMAGE_REL_AMD64_REL32    _ZNSt3__112_GLOBAL__N_114make_error_strERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+0000000000000061 IMAGE_REL_AMD64_REL32    _ZNSt13runtime_errorC2ERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE
+000000000000007b IMAGE_REL_AMD64_REL32    _ZdlPvy
+0000000000000095 IMAGE_REL_AMD64_REL32    _ZdlPvy
+000000000000009c IMAGE_REL_AMD64_REL32    _ZTVNSt3__112system_errorE
+00000000000000c7 IMAGE_REL_AMD64_REL32    _Unwind_Resume
+00000000000000da IMAGE_REL_AMD64_REL32    _ZdlPvy
+0000000000000100 IMAGE_REL_AMD64_REL32    _ZdlPvy
+0000000000000108 IMAGE_REL_AMD64_REL32    _Unwind_Resume
+
+RELOCATION RECORDS FOR [.xdata$_ZNSt3__112system_errorC2EiRKNS_14error_categoryERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE]:
+OFFSET           TYPE                     VALUE
+000000000000000c IMAGE_REL_AMD64_ADDR32NB __gxx_personality_seh0
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__112system_errorC2EiRKNS_14error_categoryEPKc]:
+OFFSET           TYPE                     VALUE
+0000000000000027 IMAGE_REL_AMD64_REL32    strlen
+000000000000005b IMAGE_REL_AMD64_REL32    _Znwy
+000000000000007f IMAGE_REL_AMD64_REL32    memcpy
+0000000000000098 IMAGE_REL_AMD64_REL32    _ZNSt3__112_GLOBAL__N_114make_error_strERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+00000000000000a5 IMAGE_REL_AMD64_REL32    _ZNSt13runtime_errorC2ERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE
+00000000000000bf IMAGE_REL_AMD64_REL32    _ZdlPvy
+00000000000000d9 IMAGE_REL_AMD64_REL32    _ZdlPvy
+00000000000000e0 IMAGE_REL_AMD64_REL32    _ZTVNSt3__112system_errorE
+00000000000000ff IMAGE_REL_AMD64_REL32    _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE20__throw_length_errorB9nqe230104Ev
+0000000000000118 IMAGE_REL_AMD64_REL32    _Unwind_Resume
+000000000000012b IMAGE_REL_AMD64_REL32    _ZdlPvy
+0000000000000151 IMAGE_REL_AMD64_REL32    _ZdlPvy
+0000000000000159 IMAGE_REL_AMD64_REL32    _Unwind_Resume
+
+RELOCATION RECORDS FOR [.xdata$_ZNSt3__112system_errorC2EiRKNS_14error_categoryEPKc]:
+OFFSET           TYPE                     VALUE
+0000000000000014 IMAGE_REL_AMD64_ADDR32NB __gxx_personality_seh0
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__112system_errorC2EiRKNS_14error_categoryE]:
+OFFSET           TYPE                     VALUE
+0000000000000027 IMAGE_REL_AMD64_REL32    __guard_dispatch_icall_fptr
+0000000000000047 IMAGE_REL_AMD64_REL32    _ZNSt13runtime_errorC2ERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE
+0000000000000061 IMAGE_REL_AMD64_REL32    _ZdlPvy
+0000000000000068 IMAGE_REL_AMD64_REL32    _ZTVNSt3__112system_errorE
+0000000000000097 IMAGE_REL_AMD64_REL32    _ZdlPvy
+000000000000009f IMAGE_REL_AMD64_REL32    _Unwind_Resume
+
+RELOCATION RECORDS FOR [.xdata$_ZNSt3__112system_errorC2EiRKNS_14error_categoryE]:
+OFFSET           TYPE                     VALUE
+000000000000000c IMAGE_REL_AMD64_ADDR32NB __gxx_personality_seh0
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__112system_errorD2Ev]:
+OFFSET           TYPE                     VALUE
+0000000000000001 IMAGE_REL_AMD64_REL32    _ZNSt13runtime_errorD2Ev
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__112system_errorD0Ev]:
+OFFSET           TYPE                     VALUE
+0000000000000009 IMAGE_REL_AMD64_REL32    _ZNSt13runtime_errorD2Ev
+000000000000001b IMAGE_REL_AMD64_REL32    _ZdlPvy
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__120__throw_system_errorEiPKc]:
+OFFSET           TYPE                     VALUE
+000000000000000b IMAGE_REL_AMD64_REL32    _ZZNSt3__116generic_categoryEvE6helper
+000000000000001a IMAGE_REL_AMD64_REL32    _ZNSt3__120__throw_system_errorB9nqe230104ENS_10error_codeEPKc
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__120__throw_system_errorB9nqe230104ENS_10error_codeEPKc]:
+OFFSET           TYPE                     VALUE
+0000000000000013 IMAGE_REL_AMD64_REL32    __cxa_allocate_exception
+000000000000002e IMAGE_REL_AMD64_REL32    _ZNSt3__112system_errorC2ENS_10error_codeEPKc
+0000000000000035 IMAGE_REL_AMD64_REL32    _ZTINSt3__112system_errorE
+000000000000003c IMAGE_REL_AMD64_REL32    _ZNSt3__112system_errorD2Ev
+0000000000000044 IMAGE_REL_AMD64_REL32    __cxa_throw
+000000000000004f IMAGE_REL_AMD64_REL32    __cxa_free_exception
+0000000000000057 IMAGE_REL_AMD64_REL32    _Unwind_Resume
+
+RELOCATION RECORDS FOR [.xdata$_ZNSt3__120__throw_system_errorB9nqe230104ENS_10error_codeEPKc]:
+OFFSET           TYPE                     VALUE
+000000000000000c IMAGE_REL_AMD64_ADDR32NB __gxx_personality_seh0
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__124__generic_error_categoryD0Ev]:
+OFFSET           TYPE                     VALUE
+0000000000000009 IMAGE_REL_AMD64_REL32    _ZNSt3__114error_categoryD2Ev
+000000000000001b IMAGE_REL_AMD64_REL32    _ZdlPvy
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__123__system_error_categoryD0Ev]:
+OFFSET           TYPE                     VALUE
+0000000000000009 IMAGE_REL_AMD64_REL32    _ZNSt3__114error_categoryD2Ev
+000000000000001b IMAGE_REL_AMD64_REL32    _ZdlPvy
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE20__throw_length_errorB9nqe230104Ev]:
+OFFSET           TYPE                     VALUE
+0000000000000007 IMAGE_REL_AMD64_REL32    .str.5
+000000000000000c IMAGE_REL_AMD64_REL32    _ZNSt3__120__throw_length_errorB9nqe230104EPKc
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__120__throw_length_errorB9nqe230104EPKc]:
+OFFSET           TYPE                     VALUE
+000000000000000f IMAGE_REL_AMD64_REL32    __cxa_allocate_exception
+000000000000001d IMAGE_REL_AMD64_REL32    _ZNSt12length_errorC2B9nqe230104EPKc
+0000000000000024 IMAGE_REL_AMD64_REL32    _ZTISt12length_error
+000000000000002b IMAGE_REL_AMD64_REL32    _ZNSt12length_errorD1Ev
+0000000000000033 IMAGE_REL_AMD64_REL32    __cxa_throw
+000000000000003e IMAGE_REL_AMD64_REL32    __cxa_free_exception
+0000000000000046 IMAGE_REL_AMD64_REL32    _Unwind_Resume
+
+RELOCATION RECORDS FOR [.xdata$_ZNSt3__120__throw_length_errorB9nqe230104EPKc]:
+OFFSET           TYPE                     VALUE
+000000000000000c IMAGE_REL_AMD64_ADDR32NB __gxx_personality_seh0
+
+RELOCATION RECORDS FOR [.text$_ZNSt12length_errorC2B9nqe230104EPKc]:
+OFFSET           TYPE                     VALUE
+0000000000000009 IMAGE_REL_AMD64_REL32    _ZNSt11logic_errorC2EPKc
+0000000000000010 IMAGE_REL_AMD64_REL32    .refptr._ZTVSt12length_error
+
+RELOCATION RECORDS FOR [.text$_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE25__init_copy_ctor_externalEPKcy]:
+OFFSET           TYPE                     VALUE
+0000000000000038 IMAGE_REL_AMD64_REL32    _Znwy
+0000000000000061 IMAGE_REL_AMD64_REL32    memmove
+0000000000000066 IMAGE_REL_AMD64_REL32    _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE20__throw_length_errorB9nqe230104Ev
+
+RELOCATION RECORDS FOR [.data$_ZZNSt3__116generic_categoryEvE6helper]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   _ZTVNSt3__124__generic_error_categoryE
+
+RELOCATION RECORDS FOR [.rdata$_ZTVNSt3__124__generic_error_categoryE]:
+OFFSET           TYPE                     VALUE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTINSt3__124__generic_error_categoryE
+0000000000000010 IMAGE_REL_AMD64_ADDR64   _ZNSt3__114error_categoryD2Ev
+0000000000000018 IMAGE_REL_AMD64_ADDR64   _ZNSt3__124__generic_error_categoryD0Ev
+0000000000000020 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__124__generic_error_category4nameEv
+0000000000000028 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__114error_category23default_error_conditionEi
+0000000000000030 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__114error_category10equivalentEiRKNS_15error_conditionE
+0000000000000038 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__114error_category10equivalentERKNS_10error_codeEi
+0000000000000040 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__124__generic_error_category7messageEi
+
+RELOCATION RECORDS FOR [.data$_ZZNSt3__115system_categoryEvE6helper]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   _ZTVNSt3__123__system_error_categoryE
+
+RELOCATION RECORDS FOR [.rdata$_ZTVNSt3__123__system_error_categoryE]:
+OFFSET           TYPE                     VALUE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTINSt3__123__system_error_categoryE
+0000000000000010 IMAGE_REL_AMD64_ADDR64   _ZNSt3__114error_categoryD2Ev
+0000000000000018 IMAGE_REL_AMD64_ADDR64   _ZNSt3__123__system_error_categoryD0Ev
+0000000000000020 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__123__system_error_category4nameEv
+0000000000000028 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000030 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__114error_category10equivalentEiRKNS_15error_conditionE
+0000000000000038 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__114error_category10equivalentERKNS_10error_codeEi
+0000000000000040 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__123__system_error_category7messageEi
+
+RELOCATION RECORDS FOR [.rdata$_ZTVNSt3__112system_errorE]:
+OFFSET           TYPE                     VALUE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTINSt3__112system_errorE
+0000000000000010 IMAGE_REL_AMD64_ADDR64   _ZNSt3__112system_errorD2Ev
+0000000000000018 IMAGE_REL_AMD64_ADDR64   _ZNSt3__112system_errorD0Ev
+0000000000000020 IMAGE_REL_AMD64_ADDR64   _ZNKSt13runtime_error4whatEv
+
+RELOCATION RECORDS FOR [.rdata$_ZTINSt3__112system_errorE]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   _ZTVN10__cxxabiv120__si_class_type_infoE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTSNSt3__112system_errorE
+0000000000000010 IMAGE_REL_AMD64_ADDR64   _ZTISt13runtime_error
+
+RELOCATION RECORDS FOR [.rdata$_ZTISt13runtime_error]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   _ZTVN10__cxxabiv120__si_class_type_infoE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTSSt13runtime_error
+0000000000000010 IMAGE_REL_AMD64_ADDR64   _ZTISt9exception
+
+RELOCATION RECORDS FOR [.rdata$_ZTISt9exception]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   _ZTVN10__cxxabiv117__class_type_infoE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTSSt9exception
+
+RELOCATION RECORDS FOR [.rdata$_ZTVNSt3__112__do_messageE]:
+OFFSET           TYPE                     VALUE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTINSt3__112__do_messageE
+0000000000000010 IMAGE_REL_AMD64_ADDR64   _ZNSt3__114error_categoryD2Ev
+0000000000000018 IMAGE_REL_AMD64_ADDR64   _ZNSt3__112__do_messageD0Ev
+0000000000000020 IMAGE_REL_AMD64_ADDR64   __cxa_pure_virtual
+0000000000000028 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__114error_category23default_error_conditionEi
+0000000000000030 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__114error_category10equivalentEiRKNS_15error_conditionE
+0000000000000038 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__114error_category10equivalentERKNS_10error_codeEi
+0000000000000040 IMAGE_REL_AMD64_ADDR64   _ZNKSt3__112__do_message7messageEi
+
+RELOCATION RECORDS FOR [.rdata$_ZTINSt3__112__do_messageE]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   _ZTVN10__cxxabiv120__si_class_type_infoE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTSNSt3__112__do_messageE
+0000000000000010 IMAGE_REL_AMD64_ADDR64   _ZTINSt3__114error_categoryE
+
+RELOCATION RECORDS FOR [.rdata$_ZTINSt3__114error_categoryE]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   _ZTVN10__cxxabiv117__class_type_infoE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTSNSt3__114error_categoryE
+
+RELOCATION RECORDS FOR [.rdata$_ZTINSt3__124__generic_error_categoryE]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   _ZTVN10__cxxabiv120__si_class_type_infoE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTSNSt3__124__generic_error_categoryE
+0000000000000010 IMAGE_REL_AMD64_ADDR64   _ZTINSt3__112__do_messageE
+
+RELOCATION RECORDS FOR [.rdata$_ZTINSt3__123__system_error_categoryE]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   _ZTVN10__cxxabiv120__si_class_type_infoE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTSNSt3__123__system_error_categoryE
+0000000000000010 IMAGE_REL_AMD64_ADDR64   _ZTINSt3__112__do_messageE
+
+RELOCATION RECORDS FOR [.rdata$_ZTISt12length_error]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   _ZTVN10__cxxabiv120__si_class_type_infoE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTSSt12length_error
+0000000000000010 IMAGE_REL_AMD64_ADDR64   _ZTISt11logic_error
+
+RELOCATION RECORDS FOR [.rdata$_ZTISt11logic_error]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   _ZTVN10__cxxabiv120__si_class_type_infoE
+0000000000000008 IMAGE_REL_AMD64_ADDR64   _ZTSSt11logic_error
+0000000000000010 IMAGE_REL_AMD64_ADDR64   _ZTISt9exception
+
+RELOCATION RECORDS FOR [.rdata$.refptr._ZTVSt12length_error]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   _ZTVSt12length_error
+
+RELOCATION RECORDS FOR [.pdata$_ZNKSt3__112__do_message7messageEi]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNKSt3__112__do_message7messageEi
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNKSt3__112__do_message7messageEi
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNKSt3__112__do_message7messageEi
+
+RELOCATION RECORDS FOR [.pdata$_ZNKSt3__124__generic_error_category7messageEi]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNKSt3__124__generic_error_category7messageEi
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNKSt3__124__generic_error_category7messageEi
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNKSt3__124__generic_error_category7messageEi
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__116generic_categoryEv]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__116generic_categoryEv
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__116generic_categoryEv
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__116generic_categoryEv
+
+RELOCATION RECORDS FOR [.pdata$_ZNKSt3__123__system_error_category7messageEi]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNKSt3__123__system_error_category7messageEi
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNKSt3__123__system_error_category7messageEi
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNKSt3__123__system_error_category7messageEi
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__115system_categoryEv]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__115system_categoryEv
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__115system_categoryEv
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__115system_categoryEv
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__112system_errorC2ENS_10error_codeERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorC2ENS_10error_codeERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorC2ENS_10error_codeERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__112system_errorC2ENS_10error_codeERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__112_GLOBAL__N_114make_error_strERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112_GLOBAL__N_114make_error_strERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112_GLOBAL__N_114make_error_strERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__112_GLOBAL__N_114make_error_strERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__112system_errorC2ENS_10error_codeEPKc]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorC2ENS_10error_codeEPKc
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorC2ENS_10error_codeEPKc
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__112system_errorC2ENS_10error_codeEPKc
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__112system_errorC2ENS_10error_codeE]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorC2ENS_10error_codeE
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorC2ENS_10error_codeE
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__112system_errorC2ENS_10error_codeE
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__112system_errorC2EiRKNS_14error_categoryERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorC2EiRKNS_14error_categoryERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorC2EiRKNS_14error_categoryERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__112system_errorC2EiRKNS_14error_categoryERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__112system_errorC2EiRKNS_14error_categoryEPKc]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorC2EiRKNS_14error_categoryEPKc
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorC2EiRKNS_14error_categoryEPKc
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__112system_errorC2EiRKNS_14error_categoryEPKc
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__112system_errorC2EiRKNS_14error_categoryE]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorC2EiRKNS_14error_categoryE
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorC2EiRKNS_14error_categoryE
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__112system_errorC2EiRKNS_14error_categoryE
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__112system_errorD0Ev]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorD0Ev
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112system_errorD0Ev
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__112system_errorD0Ev
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__120__throw_system_errorEiPKc]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__120__throw_system_errorEiPKc
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__120__throw_system_errorEiPKc
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__120__throw_system_errorEiPKc
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__120__throw_system_errorB9nqe230104ENS_10error_codeEPKc]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__120__throw_system_errorB9nqe230104ENS_10error_codeEPKc
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__120__throw_system_errorB9nqe230104ENS_10error_codeEPKc
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__120__throw_system_errorB9nqe230104ENS_10error_codeEPKc
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__124__generic_error_categoryD0Ev]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__124__generic_error_categoryD0Ev
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__124__generic_error_categoryD0Ev
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__124__generic_error_categoryD0Ev
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__123__system_error_categoryD0Ev]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__123__system_error_categoryD0Ev
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__123__system_error_categoryD0Ev
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__123__system_error_categoryD0Ev
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE20__throw_length_errorB9nqe230104Ev]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE20__throw_length_errorB9nqe230104Ev
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE20__throw_length_errorB9nqe230104Ev
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE20__throw_length_errorB9nqe230104Ev
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__120__throw_length_errorB9nqe230104EPKc]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__120__throw_length_errorB9nqe230104EPKc
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__120__throw_length_errorB9nqe230104EPKc
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__120__throw_length_errorB9nqe230104EPKc
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt12length_errorC2B9nqe230104EPKc]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt12length_errorC2B9nqe230104EPKc
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt12length_errorC2B9nqe230104EPKc
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt12length_errorC2B9nqe230104EPKc
+
+RELOCATION RECORDS FOR [.pdata$_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE25__init_copy_ctor_externalEPKcy]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE25__init_copy_ctor_externalEPKcy
+0000000000000004 IMAGE_REL_AMD64_ADDR32NB .text$_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE25__init_copy_ctor_externalEPKcy
+0000000000000008 IMAGE_REL_AMD64_ADDR32NB .xdata$_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE25__init_copy_ctor_externalEPKcy
+
+RELOCATION RECORDS FOR [.rdata]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000004 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000008 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000000c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000010 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000014 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000018 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000001c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000020 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000024 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000028 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000002c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000030 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000034 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000038 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000003c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000040 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000044 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000048 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000004c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000050 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000054 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000058 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000005c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000060 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000064 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000068 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000006c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000070 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000074 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000078 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000007c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000080 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000084 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000088 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000008c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000090 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000094 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000098 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000009c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000a0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000a4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000a8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000ac IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000b0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000b4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000b8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000bc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000c0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000c4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000c8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000cc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000d0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000d4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000d8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000dc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000e0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000e4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000e8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000ec IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000f0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000f4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000f8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000000fc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000100 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000104 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000108 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000010c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000110 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000114 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000118 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000011c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000120 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000124 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000128 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000012c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000130 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000134 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000138 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000013c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000140 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000144 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000148 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000014c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000150 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000154 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000158 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000015c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000160 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000164 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000168 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000016c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000170 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000174 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000178 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000017c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000180 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000184 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000188 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000018c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000190 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000194 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000198 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000019c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001a0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001a4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001a8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001ac IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001b0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001b4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001b8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001bc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001c0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001c4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001c8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001cc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001d0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001d4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001d8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001dc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001e0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001e4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001e8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001ec IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001f0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001f4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001f8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000001fc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000200 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000204 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000208 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000020c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000210 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000214 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000218 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000021c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000220 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000224 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000228 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000022c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000230 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000234 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000238 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000023c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000240 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000244 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000248 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000024c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000250 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000254 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000258 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000025c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000260 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000264 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000268 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000026c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000270 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000274 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000278 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000027c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000280 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000284 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000288 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000028c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000290 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000294 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000298 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000029c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002a0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002a4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002a8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002ac IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002b0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002b4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002b8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002bc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002c0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002c4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002c8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002cc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002d0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002d4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002d8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002dc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002e0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002e4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002e8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002ec IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002f0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002f4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002f8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000002fc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000300 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000304 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000308 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000030c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000310 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000314 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000318 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000031c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000320 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000324 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000328 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000032c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000330 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000334 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000338 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000033c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000340 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000344 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000348 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000034c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000350 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000354 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000358 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000035c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000360 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000364 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000368 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000036c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000370 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000374 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000378 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000037c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000380 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000384 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000388 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000038c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000390 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000394 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000398 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000039c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003a0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003a4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003a8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003ac IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003b0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003b4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003b8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003bc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003c0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003c4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003c8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003cc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003d0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003d4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003d8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003dc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003e0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003e4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003e8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003ec IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003f0 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003f4 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003f8 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+00000000000003fc IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000400 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000404 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000408 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000040c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000410 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000414 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000418 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000041c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000420 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000424 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+0000000000000428 IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi
+000000000000042c IMAGE_REL_AMD64_REL32    .text$_ZNKSt3__123__system_error_category23default_error_conditionEi

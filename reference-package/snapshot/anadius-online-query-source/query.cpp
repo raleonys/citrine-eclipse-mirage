@@ -36,8 +36,8 @@ struct Binding::QueryUse {
         try{address=online_query::query_slot(object,slot);}
         catch(...){
             // Invalid selected layout: retain code/object without further reads.
-            std::lock_guard lock(owner.gate_);
-            owner.poisoned_=true;owner.object_unknown_=true;owner.active_=false;
+            {std::lock_guard lock(owner.gate_);owner.poisoned_=true;owner.object_unknown_=true;}
+            owner.end_object(); // only this failed constructor's reservation
             throw;
         }
     }

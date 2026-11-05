@@ -1,0 +1,97 @@
+{
+  "schema": "native-worker-io.source-only.v1",
+  "client_date": "2026-11-03",
+  "recorded_at": "2026-11-03T15:38:42.989794+00:00",
+  "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+  "authority": "Author source inspection and source-byte inventory; no compiler, project test or new native/runtime observation.",
+  "production_dependency": "require_loader_attach_runtime: actual server-worker SDK provider selection in the per-image Resources composition.",
+  "step_source_changes": [
+    {
+      "path": "anadius-resources-factory-source/factory.hpp",
+      "before_sha256": "e3e7fef3dea236a09225b19bc4ed6e92ea35172eb62c059fa322cc35a4f6f3a9",
+      "current_sha256": "92ce93c2ba1d048f368c87a0ff88b6b14fa31185557e28a1fbdab2752def80a4"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "before_sha256": "a33af361f391a03658ccdcd9f16ee7474ca636bec48280309bf6f68bd29d26bb",
+      "current_sha256": "788236c2eefac7471f9bfddf15fe8e6407abb57cf383b66f42754d08eb67d475"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "before_sha256": "b50b7b978d8ff1d9bb73613ed46cce78e2ff57098e9016a030b8507b9c4d47c9",
+      "current_sha256": "400ff979330d30699bbd2bd33e62891c3ac982496580bd2141eeab3295b65558"
+    }
+  ],
+  "all_pending_sources_since_last_full_build": [
+    {
+      "path": "anadius-pre-unload-source/shutdown.cpp",
+      "last_built_sha256": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77",
+      "current_sha256": "2653388e3e007376b9e038648b3a3f34d29daa45e604cc7dd11f4455c7664d25"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.hpp",
+      "last_built_sha256": "a9d1da810c6a94d4033cb9aa6973dfd9ccaf5f46e8b21f3173211129bf502ccb",
+      "current_sha256": "d4feb92ad786738bfa22f818ddff9e814576f4b8bcda21cf3934210f112e699e"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown_tests.cpp",
+      "last_built_sha256": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c",
+      "current_sha256": "b23cb1b4f6880051f2a7efe37cb4b4a9ff6f20338f602597a3475494e19de8e8"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "last_built_sha256": "a33af361f391a03658ccdcd9f16ee7474ca636bec48280309bf6f68bd29d26bb",
+      "current_sha256": "788236c2eefac7471f9bfddf15fe8e6407abb57cf383b66f42754d08eb67d475"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.hpp",
+      "last_built_sha256": "e3e7fef3dea236a09225b19bc4ed6e92ea35172eb62c059fa322cc35a4f6f3a9",
+      "current_sha256": "92ce93c2ba1d048f368c87a0ff88b6b14fa31185557e28a1fbdab2752def80a4"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "last_built_sha256": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253",
+      "current_sha256": "400ff979330d30699bbd2bd33e62891c3ac982496580bd2141eeab3295b65558"
+    },
+    {
+      "path": "dll-link-gate-source/entry.cpp",
+      "last_built_sha256": "98ad93b7314b5715ed5e19dc775259981947784f19f04167da233dfb659e974d",
+      "current_sha256": "af21559c039f7f723e96a32e0e1f30474071ef8740dcf47af919360bc9c3b5f3"
+    },
+    {
+      "path": "dll-link-gate-source/production_image.hpp",
+      "last_built_sha256": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866",
+      "current_sha256": "cf8681ad700ca65d201d42aadd514f332ca4140de93bc1adbd86bfe72d30d34c"
+    }
+  ],
+  "implementation": [
+    "select_native_worker_io chooses seven existing concrete SDK adapters using native defaults. It validates all function pointers and refuses occupied target slots before constructing adapters.",
+    "All seven adapter owners are constructed before committing any target. Server and Runtime share exactly the same socket and dispatcher objects; IOC constructor/gates/accept/factory/cancel are installed in their actual owning slots.",
+    "Selection preserves LastError. SDK-table functions are not invoked during selection; only LastError bookkeeping calls are made. No socket, IOCP, accept, wait, WSAStartup or extra worker starts in this function.",
+    "The existing owning Runtime/three-worker scenario now calls this selector from the original worker configure callback. Custom coarse socket/dispatcher test classes were replaced by SDK shims around the same concrete classes used by native defaults.",
+    "The source scenario checks empty targets after failed import validation, paired identities/native classes, LastError, refusal to replace occupied providers and absence of fabricated lifecycle/cancellation/executor/TLS/drain providers."
+  ],
+  "source_call_boundary": {
+    "path": "outputs/anadius-application-worker-source/worker.cpp",
+    "anchor": "v.settings.configure(p.inputs);v.check();",
+    "classification": "Source first-worker route after entering actual Domain worker and acquiring prepared memory; not a new DllMain call. No fresh original-binary claim."
+  },
+  "still_required": [
+    "Concrete cancellation registry and executor/move behavior.",
+    "Completion owner, after/returned lifecycle and real external drain policy.",
+    "Per-image host/config/stream/foreign-code assembly and synchronous attach loader profile.",
+    "Both production loader hook definitions, attach failure/process termination and actual unload lifetime."
+  ],
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "package_rebuilt": false,
+  "original_binary_accessed": false,
+  "original_modified": false,
+  "new_native_function_definitions": 0,
+  "prior_owned_attach": {
+    "path": "outputs/anadius-pre-unload-source/owned-attach.evidence.json",
+    "sha256": "0bbb53d18fd390883a04e26707b3e0a0ff331f762a16021f0f2a2a1e07a8b855",
+    "scope": "Prior source stage; its Resources test source hash predates this additional binding."
+  }
+}

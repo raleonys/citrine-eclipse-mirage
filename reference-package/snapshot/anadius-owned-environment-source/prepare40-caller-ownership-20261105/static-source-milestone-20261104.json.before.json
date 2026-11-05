@@ -1,0 +1,63 @@
+{
+  "recorded_at": "2026-11-05T17:31:35.351737+00:00",
+  "continuous_goal_active": true,
+  "pending_source_count": 122,
+  "count_is_completion_percentage": false,
+  "latest_source_milestone": {
+    "path": "outputs/anadius-owned-environment-source/root-copy-caller-ownership-20261105/evidence.json",
+    "sha256": "02782cfc2cf92c70a521ea895af032b27b5cc7ede8cf9bb7be116977ac00b021"
+  },
+  "decisions": [
+    {
+      "path": "outputs/dll-critical-path/persistence-source-triage-20261104.md",
+      "sha256": "4aaf5c436c87ae20f8b7aed03ab8d1c3298e5fab5dd2643b69ad0dd849d25e3d"
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/tracked-executor-design-20261104/design-review.md",
+      "sha256": "86db8b1dbe54ced062e0e3c935c29b086b55b3955f755722e9ea0cf5c093a568"
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/tracked-executor-design-20261104/source-plan.md",
+      "sha256": "decdd25a3ea2ef940d60e1b63dd3558baed4dd9862b0c3a3dd7c959d835d052e"
+    }
+  ],
+  "tracked_family_decision": "Previous default-only deferral superseded: concrete Initial/Tracked family source and original/child immediate work-stop route implemented and statically reviewed. Full objective active; native ABI/null/EH and real child integration remain unvalidated.",
+  "persistence_decision": "XML/INI BOOL-discard candidate already matched by retained native evidence; no repeat REA or rollback/retry patch.",
+  "awaiting_explicit_rebuild_instruction": true,
+  "async_question_pending": true,
+  "no_answer_is_not_approval": true,
+  "independent_static_work_in_progress": "Use legitimate ONE-selected-Environment actual Prepared/Runtime two-Scope tracked-family source composition; integrate explicit actor prepare40/response20/88 at actual consumers with correct callback ownership handoff, then shared/accept/packet and fullnativechildtail. Production remains Serialized; no build authorization.",
+  "next_build_if_explicitly_requested": "Consistent full source compile, appropriate project tests and production DLL link; DLL execution/ZIP update require their own requested scope.",
+  "remaining_validation_limits": [
+    "Four production/two test files statically reviewed. No compiler/project tests/link/DLL execution/ZIP; authored assertions are NOT runtime PASS.",
+    "Complete analyzed028d30 static body is656bytes in three ranges over658spanbytes. Provider terminal flags are not independent termination/EH proof. No new function coverage credit.",
+    "Selected actual message whole-copy caller ownership closes at source level; direct legacy raw slot08 remains partial trusted contract for external caller-owned tail. HOST hooks are not recovered native ABI slots.",
+    "Actual positive two-Scope tracked-family Runtime/B physical/FLS/Parent reap and naturally established returned-child-old1 remain open. Controlled Environment fixture is not actual child permission or real Runtime evidence.",
+    "Actor prepare40/response20/88/Worker/dispatcher, shared/accept/packet mutation and full native028d30/021770 child tail remain open. Production Parent stays Serialized.",
+    "Originals and frozen build/link/DLL/ZIP proofs remain unchanged. Explicit rebuild required; no overall completion percentage from pending file count."
+  ],
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "production_provider_audit": {
+    "path": "outputs/dll-critical-path/production-provider-source-audit-20261104.md",
+    "sha256": "625ef8d048d5b7295762a5de06385fbd9b94817b4194642fb0b1931fdaf7c6a9",
+    "status": "BOUNDED_SOURCE_AUDIT_NO_NEW_GAP"
+  },
+  "current_validation_gate": {
+    "reason": "Explicit rebuild required for compiler/test/link evidence; further source reconstruction work remains useful and active.",
+    "consecutive_goal_turns_at_impasse": 0,
+    "no_repeat_question": true
+  },
+  "system_message_decision": "Concrete020950 default system message callback implemented and statically reviewed; generic/misc/explicit override preserved; native EH/ABI remains open.",
+  "latest_compiler_provider_audit": {
+    "path": "outputs/anadius-session-policy-source/worker-error-028240-20261104/compiler-provider-audit-index.json",
+    "sha256": "4084d937bcbf23e44f29c9eefe1d5bd9ca9226d4883daa76e55cf391b6f91827"
+  },
+  "native_system_diagnostic_resolution": {
+    "path": "outputs/anadius-session-policy-source/native-stop-diagnostic-20261104/evidence.json",
+    "sha256": "fbc54501e1df8602f303e77cbc2dd852249d2521a03512118b28b847995fe8c1"
+  }
+}

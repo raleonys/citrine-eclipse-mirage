@@ -1,0 +1,3706 @@
+{
+  "Source": "Independent read-only PE32+ parser; supplemental to REA",
+  "Path": "C:\\Windows\\System32\\notepad.exe",
+  "SHA256": "3f543719a819a9769d8f138a02544f93af8b53ef1779a96bc2403715d9a55380",
+  "Bytes": 360448,
+  "PEHeaderFileOffset": "0xf8",
+  "Machine": "0x8664",
+  "ImageBase": "0x140000000",
+  "EntryRVA": "0x19c0",
+  "EntryVA": "0x1400019c0",
+  "SizeOfImage": "0x5a000",
+  "Subsystem": 2,
+  "DllCharacteristics": "0xc160",
+  "Sections": [
+    {
+      "Name": ".text",
+      "HeaderOffset": "0x200",
+      "RVA": "0x1000",
+      "VA": "0x140001000",
+      "VirtualSize": "0x267e2",
+      "RawOffset": "0x1000",
+      "RawSize": "0x27000",
+      "Characteristics": "0x60000020",
+      "R": true,
+      "W": false,
+      "X": true,
+      "rvaNumber": 4096,
+      "rawNumber": 4096,
+      "rawSizeNumber": 159744,
+      "virtualSizeNumber": 157666
+    },
+    {
+      "Name": "fothk",
+      "HeaderOffset": "0x228",
+      "RVA": "0x28000",
+      "VA": "0x140028000",
+      "VirtualSize": "0x1000",
+      "RawOffset": "0x28000",
+      "RawSize": "0x1000",
+      "Characteristics": "0x60000020",
+      "R": true,
+      "W": false,
+      "X": true,
+      "rvaNumber": 163840,
+      "rawNumber": 163840,
+      "rawSizeNumber": 4096,
+      "virtualSizeNumber": 4096
+    },
+    {
+      "Name": ".rdata",
+      "HeaderOffset": "0x250",
+      "RVA": "0x29000",
+      "VA": "0x140029000",
+      "VirtualSize": "0xa6c8",
+      "RawOffset": "0x29000",
+      "RawSize": "0xb000",
+      "Characteristics": "0x40000040",
+      "R": true,
+      "W": false,
+      "X": false,
+      "rvaNumber": 167936,
+      "rawNumber": 167936,
+      "rawSizeNumber": 45056,
+      "virtualSizeNumber": 42696
+    },
+    {
+      "Name": ".data",
+      "HeaderOffset": "0x278",
+      "RVA": "0x34000",
+      "VA": "0x140034000",
+      "VirtualSize": "0x2740",
+      "RawOffset": "0x34000",
+      "RawSize": "0x1000",
+      "Characteristics": "0xc0000040",
+      "R": true,
+      "W": true,
+      "X": false,
+      "rvaNumber": 212992,
+      "rawNumber": 212992,
+      "rawSizeNumber": 4096,
+      "virtualSizeNumber": 10048
+    },
+    {
+      "Name": ".pdata",
+      "HeaderOffset": "0x2a0",
+      "RVA": "0x37000",
+      "VA": "0x140037000",
+      "VirtualSize": "0x1218",
+      "RawOffset": "0x35000",
+      "RawSize": "0x2000",
+      "Characteristics": "0x40000040",
+      "R": true,
+      "W": false,
+      "X": false,
+      "rvaNumber": 225280,
+      "rawNumber": 217088,
+      "rawSizeNumber": 8192,
+      "virtualSizeNumber": 4632
+    },
+    {
+      "Name": ".didat",
+      "HeaderOffset": "0x2c8",
+      "RVA": "0x39000",
+      "VA": "0x140039000",
+      "VirtualSize": "0xf8",
+      "RawOffset": "0x37000",
+      "RawSize": "0x1000",
+      "Characteristics": "0xc0000040",
+      "R": true,
+      "W": true,
+      "X": false,
+      "rvaNumber": 233472,
+      "rawNumber": 225280,
+      "rawSizeNumber": 4096,
+      "virtualSizeNumber": 248
+    },
+    {
+      "Name": ".rsrc",
+      "HeaderOffset": "0x2f0",
+      "RVA": "0x3a000",
+      "VA": "0x14003a000",
+      "VirtualSize": "0x1e1d0",
+      "RawOffset": "0x38000",
+      "RawSize": "0x1f000",
+      "Characteristics": "0x40000040",
+      "R": true,
+      "W": false,
+      "X": false,
+      "rvaNumber": 237568,
+      "rawNumber": 229376,
+      "rawSizeNumber": 126976,
+      "virtualSizeNumber": 123344
+    },
+    {
+      "Name": ".reloc",
+      "HeaderOffset": "0x318",
+      "RVA": "0x59000",
+      "VA": "0x140059000",
+      "VirtualSize": "0x35c",
+      "RawOffset": "0x57000",
+      "RawSize": "0x1000",
+      "Characteristics": "0x42000040",
+      "R": true,
+      "W": false,
+      "X": false,
+      "rvaNumber": 364544,
+      "rawNumber": 356352,
+      "rawSizeNumber": 4096,
+      "virtualSizeNumber": 860
+    }
+  ],
+  "Directories": [
+    {
+      "Name": "Export",
+      "HeaderOffset": "0x180",
+      "RVA": "0x0",
+      "Size": "0x0"
+    },
+    {
+      "Name": "Import",
+      "HeaderOffset": "0x188",
+      "RVA": "0x309c0",
+      "Size": "0x3fc"
+    },
+    {
+      "Name": "Resource",
+      "HeaderOffset": "0x190",
+      "RVA": "0x3a000",
+      "Size": "0x1e1d0"
+    },
+    {
+      "Name": "Exception",
+      "HeaderOffset": "0x198",
+      "RVA": "0x37000",
+      "Size": "0x1218"
+    },
+    {
+      "Name": "Security",
+      "HeaderOffset": "0x1a0",
+      "RVA": "0x0",
+      "Size": "0x0"
+    },
+    {
+      "Name": "BaseReloc",
+      "HeaderOffset": "0x1a8",
+      "RVA": "0x59000",
+      "Size": "0x304"
+    },
+    {
+      "Name": "Debug",
+      "HeaderOffset": "0x1b0",
+      "RVA": "0x2e2f0",
+      "Size": "0x70"
+    },
+    {
+      "Name": "Architecture",
+      "HeaderOffset": "0x1b8",
+      "RVA": "0x0",
+      "Size": "0x0"
+    },
+    {
+      "Name": "GlobalPtr",
+      "HeaderOffset": "0x1c0",
+      "RVA": "0x0",
+      "Size": "0x0"
+    },
+    {
+      "Name": "TLS",
+      "HeaderOffset": "0x1c8",
+      "RVA": "0x0",
+      "Size": "0x0"
+    },
+    {
+      "Name": "LoadConfig",
+      "HeaderOffset": "0x1d0",
+      "RVA": "0x29790",
+      "Size": "0x148"
+    },
+    {
+      "Name": "BoundImport",
+      "HeaderOffset": "0x1d8",
+      "RVA": "0x0",
+      "Size": "0x0"
+    },
+    {
+      "Name": "IAT",
+      "HeaderOffset": "0x1e0",
+      "RVA": "0x298d8",
+      "Size": "0xb68"
+    },
+    {
+      "Name": "DelayImport",
+      "HeaderOffset": "0x1e8",
+      "RVA": "0x303e0",
+      "Size": "0xe0"
+    },
+    {
+      "Name": "CLR",
+      "HeaderOffset": "0x1f0",
+      "RVA": "0x0",
+      "Size": "0x0"
+    },
+    {
+      "Name": "Reserved",
+      "HeaderOffset": "0x1f8",
+      "RVA": "0x0",
+      "Size": "0x0"
+    }
+  ],
+  "ImportDescriptors": [
+    {
+      "DLL": "GDI32.dll",
+      "DescriptorFileOffset": "0x309c0",
+      "LookupRVA": "0x30e20",
+      "IATRVA": "0x29938"
+    },
+    {
+      "DLL": "USER32.dll",
+      "DescriptorFileOffset": "0x309d4",
+      "LookupRVA": "0x30ef0",
+      "IATRVA": "0x29a08"
+    },
+    {
+      "DLL": "api-ms-win-crt-string-l1-1-0.dll",
+      "DescriptorFileOffset": "0x309e8",
+      "LookupRVA": "0x318a0",
+      "IATRVA": "0x2a3b8"
+    },
+    {
+      "DLL": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "DescriptorFileOffset": "0x309fc",
+      "LookupRVA": "0x31878",
+      "IATRVA": "0x2a390"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30a10",
+      "LookupRVA": "0x31738",
+      "IATRVA": "0x2a250"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-0.dll",
+      "DescriptorFileOffset": "0x30a24",
+      "LookupRVA": "0x313c0",
+      "IATRVA": "0x29ed8"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30a38",
+      "LookupRVA": "0x31600",
+      "IATRVA": "0x2a118"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30a4c",
+      "LookupRVA": "0x31318",
+      "IATRVA": "0x29e30"
+    },
+    {
+      "DLL": "api-ms-win-core-errorhandling-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30a60",
+      "LookupRVA": "0x31268",
+      "IATRVA": "0x29d80"
+    },
+    {
+      "DLL": "api-ms-win-core-threadpool-l1-2-0.dll",
+      "DescriptorFileOffset": "0x30a74",
+      "LookupRVA": "0x316a8",
+      "IATRVA": "0x2a1c0"
+    },
+    {
+      "DLL": "api-ms-win-core-processthreads-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30a88",
+      "LookupRVA": "0x314a0",
+      "IATRVA": "0x29fb8"
+    },
+    {
+      "DLL": "api-ms-win-core-localization-l1-2-0.dll",
+      "DescriptorFileOffset": "0x30a9c",
+      "LookupRVA": "0x31428",
+      "IATRVA": "0x29f40"
+    },
+    {
+      "DLL": "api-ms-win-core-debug-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30ab0",
+      "LookupRVA": "0x31228",
+      "IATRVA": "0x29d40"
+    },
+    {
+      "DLL": "api-ms-win-core-handle-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30ac4",
+      "LookupRVA": "0x31308",
+      "IATRVA": "0x29e20"
+    },
+    {
+      "DLL": "api-ms-win-core-com-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30ad8",
+      "LookupRVA": "0x311c0",
+      "IATRVA": "0x29cd8"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l1-1-1.dll",
+      "DescriptorFileOffset": "0x30aec",
+      "LookupRVA": "0x31568",
+      "IATRVA": "0x2a080"
+    },
+    {
+      "DLL": "api-ms-win-core-largeinteger-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30b00",
+      "LookupRVA": "0x313b0",
+      "IATRVA": "0x29ec8"
+    },
+    {
+      "DLL": "api-ms-win-core-shlwapi-legacy-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30b14",
+      "LookupRVA": "0x315a8",
+      "IATRVA": "0x2a0c0"
+    },
+    {
+      "DLL": "api-ms-win-core-winrt-string-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30b28",
+      "LookupRVA": "0x31710",
+      "IATRVA": "0x2a228"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30b3c",
+      "LookupRVA": "0x31518",
+      "IATRVA": "0x2a030"
+    },
+    {
+      "DLL": "api-ms-win-core-winrt-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30b50",
+      "LookupRVA": "0x31700",
+      "IATRVA": "0x2a218"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l2-1-0.dll",
+      "DescriptorFileOffset": "0x30b64",
+      "LookupRVA": "0x31340",
+      "IATRVA": "0x29e58"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30b78",
+      "LookupRVA": "0x31298",
+      "IATRVA": "0x29db0"
+    },
+    {
+      "DLL": "api-ms-win-shcore-obsolete-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30b8c",
+      "LookupRVA": "0x318f8",
+      "IATRVA": "0x2a410"
+    },
+    {
+      "DLL": "api-ms-win-security-base-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30ba0",
+      "LookupRVA": "0x318e8",
+      "IATRVA": "0x2a400"
+    },
+    {
+      "DLL": "api-ms-win-core-processenvironment-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30bb4",
+      "LookupRVA": "0x31480",
+      "IATRVA": "0x29f98"
+    },
+    {
+      "DLL": "api-ms-win-core-string-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30bc8",
+      "LookupRVA": "0x315c8",
+      "IATRVA": "0x2a0e0"
+    },
+    {
+      "DLL": "api-ms-win-core-psapi-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30bdc",
+      "LookupRVA": "0x31508",
+      "IATRVA": "0x2a020"
+    },
+    {
+      "DLL": "api-ms-win-core-localization-obsolete-l1-2-0.dll",
+      "DescriptorFileOffset": "0x30bf0",
+      "LookupRVA": "0x31450",
+      "IATRVA": "0x29f68"
+    },
+    {
+      "DLL": "api-ms-win-core-sysinfo-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30c04",
+      "LookupRVA": "0x31690",
+      "IATRVA": "0x2a1a8"
+    },
+    {
+      "DLL": "api-ms-win-core-datetime-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30c18",
+      "LookupRVA": "0x31210",
+      "IATRVA": "0x29d28"
+    },
+    {
+      "DLL": "api-ms-win-shcore-path-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30c2c",
+      "LookupRVA": "0x31908",
+      "IATRVA": "0x2a420"
+    },
+    {
+      "DLL": "api-ms-win-core-memory-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30c40",
+      "LookupRVA": "0x31460",
+      "IATRVA": "0x29f78"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l2-1-0.dll",
+      "DescriptorFileOffset": "0x30c54",
+      "LookupRVA": "0x31578",
+      "IATRVA": "0x2a090"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-obsolete-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30c68",
+      "LookupRVA": "0x31380",
+      "IATRVA": "0x29e98"
+    },
+    {
+      "DLL": "api-ms-win-shcore-scaling-l1-1-1.dll",
+      "DescriptorFileOffset": "0x30c7c",
+      "LookupRVA": "0x31918",
+      "IATRVA": "0x2a430"
+    },
+    {
+      "DLL": "api-ms-win-core-string-obsolete-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30c90",
+      "LookupRVA": "0x315f0",
+      "IATRVA": "0x2a108"
+    },
+    {
+      "DLL": "api-ms-win-core-windowserrorreporting-l1-1-3.dll",
+      "DescriptorFileOffset": "0x30ca4",
+      "LookupRVA": "0x316d0",
+      "IATRVA": "0x2a1e8"
+    },
+    {
+      "DLL": "api-ms-win-eventing-provider-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30cb8",
+      "LookupRVA": "0x318c0",
+      "IATRVA": "0x2a3d8"
+    },
+    {
+      "DLL": "api-ms-win-base-util-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30ccc",
+      "LookupRVA": "0x311b0",
+      "IATRVA": "0x29cc8"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-1.dll",
+      "DescriptorFileOffset": "0x30ce0",
+      "LookupRVA": "0x31418",
+      "IATRVA": "0x29f30"
+    },
+    {
+      "DLL": "api-ms-win-core-rtlsupport-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30cf4",
+      "LookupRVA": "0x31588",
+      "IATRVA": "0x2a0a0"
+    },
+    {
+      "DLL": "api-ms-win-core-processthreads-l1-1-1.dll",
+      "DescriptorFileOffset": "0x30d08",
+      "LookupRVA": "0x314e0",
+      "IATRVA": "0x29ff8"
+    },
+    {
+      "DLL": "api-ms-win-core-profile-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30d1c",
+      "LookupRVA": "0x314f8",
+      "IATRVA": "0x2a010"
+    },
+    {
+      "DLL": "api-ms-win-core-interlocked-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30d30",
+      "LookupRVA": "0x313a0",
+      "IATRVA": "0x29eb8"
+    },
+    {
+      "DLL": "api-ms-win-core-winrt-error-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30d44",
+      "LookupRVA": "0x316e0",
+      "IATRVA": "0x2a1f8"
+    },
+    {
+      "DLL": "api-ms-win-core-winrt-error-l1-1-1.dll",
+      "DescriptorFileOffset": "0x30d58",
+      "LookupRVA": "0x316f0",
+      "IATRVA": "0x2a208"
+    },
+    {
+      "DLL": "COMCTL32.dll",
+      "DescriptorFileOffset": "0x30d6c",
+      "LookupRVA": "0x30dc0",
+      "IATRVA": "0x298d8"
+    },
+    {
+      "DLL": "api-ms-win-core-delayload-l1-1-1.dll",
+      "DescriptorFileOffset": "0x30d80",
+      "LookupRVA": "0x31258",
+      "IATRVA": "0x29d70"
+    },
+    {
+      "DLL": "api-ms-win-core-delayload-l1-1-0.dll",
+      "DescriptorFileOffset": "0x30d94",
+      "LookupRVA": "0x31248",
+      "IATRVA": "0x29d60"
+    }
+  ],
+  "Imports": [
+    {
+      "DLL": "GDI32.dll",
+      "Name": "SetMapMode",
+      "Ordinal": null,
+      "Hint": 922,
+      "NameFileOffset": "0x319f6",
+      "LookupFileOffset": "0x30e20",
+      "IATRVA": "0x29938",
+      "IATVA": "0x140029938"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "SetViewportExtEx",
+      "Ordinal": null,
+      "Hint": 942,
+      "NameFileOffset": "0x31a04",
+      "LookupFileOffset": "0x30e28",
+      "IATRVA": "0x29940",
+      "IATVA": "0x140029940"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "SetWindowExtEx",
+      "Ordinal": null,
+      "Hint": 946,
+      "NameFileOffset": "0x31a18",
+      "LookupFileOffset": "0x30e30",
+      "IATRVA": "0x29948",
+      "IATVA": "0x140029948"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "LPtoDP",
+      "Ordinal": null,
+      "Hint": 768,
+      "NameFileOffset": "0x31a2a",
+      "LookupFileOffset": "0x30e38",
+      "IATRVA": "0x29950",
+      "IATVA": "0x140029950"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "SetBkMode",
+      "Ordinal": null,
+      "Hint": 901,
+      "NameFileOffset": "0x31a34",
+      "LookupFileOffset": "0x30e40",
+      "IATRVA": "0x29958",
+      "IATVA": "0x140029958"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "GetTextMetricsW",
+      "Ordinal": null,
+      "Hint": 752,
+      "NameFileOffset": "0x31a40",
+      "LookupFileOffset": "0x30e48",
+      "IATRVA": "0x29960",
+      "IATVA": "0x140029960"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "TextOutW",
+      "Ordinal": null,
+      "Hint": 959,
+      "NameFileOffset": "0x319ea",
+      "LookupFileOffset": "0x30e50",
+      "IATRVA": "0x29968",
+      "IATVA": "0x140029968"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "AbortDoc",
+      "Ordinal": null,
+      "Hint": 0,
+      "NameFileOffset": "0x31a5c",
+      "LookupFileOffset": "0x30e58",
+      "IATRVA": "0x29970",
+      "IATVA": "0x140029970"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "EndDoc",
+      "Ordinal": null,
+      "Hint": 416,
+      "NameFileOffset": "0x31a68",
+      "LookupFileOffset": "0x30e60",
+      "IATRVA": "0x29978",
+      "IATVA": "0x140029978"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "SetAbortProc",
+      "Ordinal": null,
+      "Hint": 895,
+      "NameFileOffset": "0x31a72",
+      "LookupFileOffset": "0x30e68",
+      "IATRVA": "0x29980",
+      "IATVA": "0x140029980"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "StartDocW",
+      "Ordinal": null,
+      "Hint": 950,
+      "NameFileOffset": "0x31a82",
+      "LookupFileOffset": "0x30e70",
+      "IATRVA": "0x29988",
+      "IATVA": "0x140029988"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "StartPage",
+      "Ordinal": null,
+      "Hint": 952,
+      "NameFileOffset": "0x31a8e",
+      "LookupFileOffset": "0x30e78",
+      "IATRVA": "0x29990",
+      "IATVA": "0x140029990"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "CreateDCW",
+      "Ordinal": null,
+      "Hint": 52,
+      "NameFileOffset": "0x31a9a",
+      "LookupFileOffset": "0x30e80",
+      "IATRVA": "0x29998",
+      "IATVA": "0x140029998"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "EnumFontsW",
+      "Ordinal": null,
+      "Hint": 473,
+      "NameFileOffset": "0x319dc",
+      "LookupFileOffset": "0x30e88",
+      "IATRVA": "0x299a0",
+      "IATVA": "0x1400299a0"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "GetTextFaceW",
+      "Ordinal": null,
+      "Hint": 750,
+      "NameFileOffset": "0x319cc",
+      "LookupFileOffset": "0x30e90",
+      "IATRVA": "0x299a8",
+      "IATVA": "0x1400299a8"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "GetDeviceCaps",
+      "Ordinal": null,
+      "Hint": 659,
+      "NameFileOffset": "0x319bc",
+      "LookupFileOffset": "0x30e98",
+      "IATRVA": "0x299b0",
+      "IATVA": "0x1400299b0"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "DeleteDC",
+      "Ordinal": null,
+      "Hint": 403,
+      "NameFileOffset": "0x319b0",
+      "LookupFileOffset": "0x30ea0",
+      "IATRVA": "0x299b8",
+      "IATVA": "0x1400299b8"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "DeleteObject",
+      "Ordinal": null,
+      "Hint": 406,
+      "NameFileOffset": "0x319a0",
+      "LookupFileOffset": "0x30ea8",
+      "IATRVA": "0x299c0",
+      "IATVA": "0x1400299c0"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "SetBkColor",
+      "Ordinal": null,
+      "Hint": 900,
+      "NameFileOffset": "0x31992",
+      "LookupFileOffset": "0x30eb0",
+      "IATRVA": "0x299c8",
+      "IATVA": "0x1400299c8"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "CreateSolidBrush",
+      "Ordinal": null,
+      "Hint": 90,
+      "NameFileOffset": "0x3197e",
+      "LookupFileOffset": "0x30eb8",
+      "IATRVA": "0x299d0",
+      "IATVA": "0x1400299d0"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "GetTextExtentPoint32W",
+      "Ordinal": null,
+      "Hint": 744,
+      "NameFileOffset": "0x31966",
+      "LookupFileOffset": "0x30ec0",
+      "IATRVA": "0x299d8",
+      "IATVA": "0x1400299d8"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "SelectObject",
+      "Ordinal": null,
+      "Hint": 893,
+      "NameFileOffset": "0x31956",
+      "LookupFileOffset": "0x30ec8",
+      "IATRVA": "0x299e0",
+      "IATVA": "0x1400299e0"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "CreateCompatibleDC",
+      "Ordinal": null,
+      "Hint": 49,
+      "NameFileOffset": "0x31940",
+      "LookupFileOffset": "0x30ed0",
+      "IATRVA": "0x299e8",
+      "IATVA": "0x1400299e8"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "EndPage",
+      "Ordinal": null,
+      "Hint": 419,
+      "NameFileOffset": "0x31a52",
+      "LookupFileOffset": "0x30ed8",
+      "IATRVA": "0x299f0",
+      "IATVA": "0x1400299f0"
+    },
+    {
+      "DLL": "GDI32.dll",
+      "Name": "CreateFontIndirectW",
+      "Ordinal": null,
+      "Hint": 67,
+      "NameFileOffset": "0x3192a",
+      "LookupFileOffset": "0x30ee0",
+      "IATRVA": "0x299f8",
+      "IATVA": "0x1400299f8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "PostQuitMessage",
+      "Ordinal": null,
+      "Hint": 704,
+      "NameFileOffset": "0x31b76",
+      "LookupFileOffset": "0x30ef0",
+      "IATRVA": "0x29a08",
+      "IATVA": "0x140029a08"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "BeginPaint",
+      "Ordinal": null,
+      "Hint": 18,
+      "NameFileOffset": "0x31b88",
+      "LookupFileOffset": "0x30ef8",
+      "IATRVA": "0x29a10",
+      "IATVA": "0x140029a10"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "EndPaint",
+      "Ordinal": null,
+      "Hint": 252,
+      "NameFileOffset": "0x31b96",
+      "LookupFileOffset": "0x30f00",
+      "IATRVA": "0x29a18",
+      "IATVA": "0x140029a18"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "FillRect",
+      "Ordinal": null,
+      "Hint": 281,
+      "NameFileOffset": "0x31ba2",
+      "LookupFileOffset": "0x30f08",
+      "IATRVA": "0x29a20",
+      "IATVA": "0x140029a20"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "DrawTextW",
+      "Ordinal": null,
+      "Hint": 227,
+      "NameFileOffset": "0x31bae",
+      "LookupFileOffset": "0x30f10",
+      "IATRVA": "0x29a28",
+      "IATVA": "0x140029a28"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "DrawFocusRect",
+      "Ordinal": null,
+      "Hint": 215,
+      "NameFileOffset": "0x31bba",
+      "LookupFileOffset": "0x30f18",
+      "IATRVA": "0x29a30",
+      "IATVA": "0x140029a30"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "DefWindowProcW",
+      "Ordinal": null,
+      "Hint": 172,
+      "NameFileOffset": "0x31bca",
+      "LookupFileOffset": "0x30f20",
+      "IATRVA": "0x29a38",
+      "IATVA": "0x140029a38"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "TrackMouseEvent",
+      "Ordinal": null,
+      "Hint": 975,
+      "NameFileOffset": "0x31bdc",
+      "LookupFileOffset": "0x30f28",
+      "IATRVA": "0x29a40",
+      "IATVA": "0x140029a40"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "InvalidateRect",
+      "Ordinal": null,
+      "Hint": 563,
+      "NameFileOffset": "0x31bee",
+      "LookupFileOffset": "0x30f30",
+      "IATRVA": "0x29a48",
+      "IATVA": "0x140029a48"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "DestroyIcon",
+      "Ordinal": null,
+      "Hint": 182,
+      "NameFileOffset": "0x31c00",
+      "LookupFileOffset": "0x30f38",
+      "IATRVA": "0x29a50",
+      "IATVA": "0x140029a50"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SetThreadDpiAwarenessContext",
+      "Ordinal": null,
+      "Hint": 903,
+      "NameFileOffset": "0x31c0e",
+      "LookupFileOffset": "0x30f40",
+      "IATRVA": "0x29a58",
+      "IATVA": "0x140029a58"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "DialogBoxParamW",
+      "Ordinal": null,
+      "Hint": 191,
+      "NameFileOffset": "0x31c2e",
+      "LookupFileOffset": "0x30f48",
+      "IATRVA": "0x29a60",
+      "IATVA": "0x140029a60"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "LoadIconW",
+      "Ordinal": null,
+      "Hint": 620,
+      "NameFileOffset": "0x31c40",
+      "LookupFileOffset": "0x30f50",
+      "IATRVA": "0x29a68",
+      "IATVA": "0x140029a68"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetFocus",
+      "Ordinal": null,
+      "Hint": 355,
+      "NameFileOffset": "0x31c4c",
+      "LookupFileOffset": "0x30f58",
+      "IATRVA": "0x29a70",
+      "IATVA": "0x140029a70"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "MessageBoxW",
+      "Ordinal": null,
+      "Hint": 668,
+      "NameFileOffset": "0x31c58",
+      "LookupFileOffset": "0x30f60",
+      "IATRVA": "0x29a78",
+      "IATVA": "0x140029a78"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "ShowWindow",
+      "Ordinal": null,
+      "Hint": 949,
+      "NameFileOffset": "0x31c66",
+      "LookupFileOffset": "0x30f68",
+      "IATRVA": "0x29a80",
+      "IATVA": "0x140029a80"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SetCursor",
+      "Ordinal": null,
+      "Hint": 835,
+      "NameFileOffset": "0x31c74",
+      "LookupFileOffset": "0x30f70",
+      "IATRVA": "0x29a88",
+      "IATVA": "0x140029a88"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SetActiveWindow",
+      "Ordinal": null,
+      "Hint": 820,
+      "NameFileOffset": "0x31c80",
+      "LookupFileOffset": "0x30f78",
+      "IATRVA": "0x29a90",
+      "IATVA": "0x140029a90"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "EnableMenuItem",
+      "Ordinal": null,
+      "Hint": 239,
+      "NameFileOffset": "0x31c92",
+      "LookupFileOffset": "0x30f80",
+      "IATRVA": "0x29a98",
+      "IATVA": "0x140029a98"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "IsIconic",
+      "Ordinal": null,
+      "Hint": 582,
+      "NameFileOffset": "0x31ca4",
+      "LookupFileOffset": "0x30f88",
+      "IATRVA": "0x29aa0",
+      "IATVA": "0x140029aa0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SetFocus",
+      "Ordinal": null,
+      "Hint": 850,
+      "NameFileOffset": "0x31cb0",
+      "LookupFileOffset": "0x30f90",
+      "IATRVA": "0x29aa8",
+      "IATVA": "0x140029aa8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "MessageBeep",
+      "Ordinal": null,
+      "Hint": 660,
+      "NameFileOffset": "0x31cbc",
+      "LookupFileOffset": "0x30f98",
+      "IATRVA": "0x29ab0",
+      "IATVA": "0x140029ab0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetForegroundWindow",
+      "Ordinal": null,
+      "Hint": 356,
+      "NameFileOffset": "0x31cca",
+      "LookupFileOffset": "0x30fa0",
+      "IATRVA": "0x29ab8",
+      "IATVA": "0x140029ab8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetDlgCtrlID",
+      "Ordinal": null,
+      "Hint": 343,
+      "NameFileOffset": "0x31ce0",
+      "LookupFileOffset": "0x30fa8",
+      "IATRVA": "0x29ac0",
+      "IATVA": "0x140029ac0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SetWindowPos",
+      "Ordinal": null,
+      "Hint": 924,
+      "NameFileOffset": "0x31cf0",
+      "LookupFileOffset": "0x30fb0",
+      "IATRVA": "0x29ac8",
+      "IATVA": "0x140029ac8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "RedrawWindow",
+      "Ordinal": null,
+      "Hint": 749,
+      "NameFileOffset": "0x31d00",
+      "LookupFileOffset": "0x30fb8",
+      "IATRVA": "0x29ad0",
+      "IATVA": "0x140029ad0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetKeyboardLayout",
+      "Ordinal": null,
+      "Hint": 373,
+      "NameFileOffset": "0x31d10",
+      "LookupFileOffset": "0x30fc0",
+      "IATRVA": "0x29ad8",
+      "IATVA": "0x140029ad8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "CharNextW",
+      "Ordinal": null,
+      "Hint": 53,
+      "NameFileOffset": "0x31d24",
+      "LookupFileOffset": "0x30fc8",
+      "IATRVA": "0x29ae0",
+      "IATVA": "0x140029ae0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SetWinEventHook",
+      "Ordinal": null,
+      "Hint": 911,
+      "NameFileOffset": "0x31d30",
+      "LookupFileOffset": "0x30fd0",
+      "IATRVA": "0x29ae8",
+      "IATVA": "0x140029ae8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetMessageW",
+      "Ordinal": null,
+      "Hint": 405,
+      "NameFileOffset": "0x31d42",
+      "LookupFileOffset": "0x30fd8",
+      "IATRVA": "0x29af0",
+      "IATVA": "0x140029af0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "TranslateAcceleratorW",
+      "Ordinal": null,
+      "Hint": 980,
+      "NameFileOffset": "0x31d50",
+      "LookupFileOffset": "0x30fe0",
+      "IATRVA": "0x29af8",
+      "IATVA": "0x140029af8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "IsDialogMessageW",
+      "Ordinal": null,
+      "Hint": 578,
+      "NameFileOffset": "0x31d68",
+      "LookupFileOffset": "0x30fe8",
+      "IATRVA": "0x29b00",
+      "IATVA": "0x140029b00"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "TranslateMessage",
+      "Ordinal": null,
+      "Hint": 982,
+      "NameFileOffset": "0x31d7c",
+      "LookupFileOffset": "0x30ff0",
+      "IATRVA": "0x29b08",
+      "IATVA": "0x140029b08"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "DispatchMessageW",
+      "Ordinal": null,
+      "Hint": 194,
+      "NameFileOffset": "0x31d90",
+      "LookupFileOffset": "0x30ff8",
+      "IATRVA": "0x29b10",
+      "IATVA": "0x140029b10"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "UnhookWinEvent",
+      "Ordinal": null,
+      "Hint": 985,
+      "NameFileOffset": "0x31da4",
+      "LookupFileOffset": "0x31000",
+      "IATRVA": "0x29b18",
+      "IATVA": "0x140029b18"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SetWindowTextW",
+      "Ordinal": null,
+      "Hint": 929,
+      "NameFileOffset": "0x31db6",
+      "LookupFileOffset": "0x31008",
+      "IATRVA": "0x29b20",
+      "IATVA": "0x140029b20"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetMenu",
+      "Ordinal": null,
+      "Hint": 387,
+      "NameFileOffset": "0x31dc8",
+      "LookupFileOffset": "0x31010",
+      "IATRVA": "0x29b28",
+      "IATVA": "0x140029b28"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetSubMenu",
+      "Ordinal": null,
+      "Hint": 466,
+      "NameFileOffset": "0x31dd2",
+      "LookupFileOffset": "0x31018",
+      "IATRVA": "0x29b30",
+      "IATVA": "0x140029b30"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "OpenClipboard",
+      "Ordinal": null,
+      "Hint": 685,
+      "NameFileOffset": "0x31de0",
+      "LookupFileOffset": "0x31020",
+      "IATRVA": "0x29b38",
+      "IATVA": "0x140029b38"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "IsClipboardFormatAvailable",
+      "Ordinal": null,
+      "Hint": 575,
+      "NameFileOffset": "0x31df0",
+      "LookupFileOffset": "0x31028",
+      "IATRVA": "0x29b40",
+      "IATVA": "0x140029b40"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "CloseClipboard",
+      "Ordinal": null,
+      "Hint": 80,
+      "NameFileOffset": "0x31e0e",
+      "LookupFileOffset": "0x31030",
+      "IATRVA": "0x29b48",
+      "IATVA": "0x140029b48"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "CheckMenuItem",
+      "Ordinal": null,
+      "Hint": 68,
+      "NameFileOffset": "0x31e20",
+      "LookupFileOffset": "0x31038",
+      "IATRVA": "0x29b50",
+      "IATVA": "0x140029b50"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SetDlgItemTextW",
+      "Ordinal": null,
+      "Hint": 847,
+      "NameFileOffset": "0x31e30",
+      "LookupFileOffset": "0x31040",
+      "IATRVA": "0x29b58",
+      "IATVA": "0x140029b58"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetDlgItemTextW",
+      "Ordinal": null,
+      "Hint": 347,
+      "NameFileOffset": "0x31e42",
+      "LookupFileOffset": "0x31048",
+      "IATRVA": "0x29b60",
+      "IATVA": "0x140029b60"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "EndDialog",
+      "Ordinal": null,
+      "Hint": 250,
+      "NameFileOffset": "0x31e54",
+      "LookupFileOffset": "0x31050",
+      "IATRVA": "0x29b68",
+      "IATVA": "0x140029b68"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SendDlgItemMessageW",
+      "Ordinal": null,
+      "Hint": 808,
+      "NameFileOffset": "0x31e60",
+      "LookupFileOffset": "0x31058",
+      "IATRVA": "0x29b70",
+      "IATVA": "0x140029b70"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SetScrollPos",
+      "Ordinal": null,
+      "Hint": 891,
+      "NameFileOffset": "0x31e76",
+      "LookupFileOffset": "0x31060",
+      "IATRVA": "0x29b78",
+      "IATVA": "0x140029b78"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "UpdateWindow",
+      "Ordinal": null,
+      "Hint": 1008,
+      "NameFileOffset": "0x31e86",
+      "LookupFileOffset": "0x31068",
+      "IATRVA": "0x29b80",
+      "IATVA": "0x140029b80"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetWindowPlacement",
+      "Ordinal": null,
+      "Hint": 510,
+      "NameFileOffset": "0x31e96",
+      "LookupFileOffset": "0x31070",
+      "IATRVA": "0x29b88",
+      "IATVA": "0x140029b88"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SetWindowPlacement",
+      "Ordinal": null,
+      "Hint": 923,
+      "NameFileOffset": "0x31eac",
+      "LookupFileOffset": "0x31078",
+      "IATRVA": "0x29b90",
+      "IATVA": "0x140029b90"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "CharUpperW",
+      "Ordinal": null,
+      "Hint": 64,
+      "NameFileOffset": "0x31ec2",
+      "LookupFileOffset": "0x31080",
+      "IATRVA": "0x29b98",
+      "IATVA": "0x140029b98"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetSystemMenu",
+      "Ordinal": null,
+      "Hint": 470,
+      "NameFileOffset": "0x31ed0",
+      "LookupFileOffset": "0x31088",
+      "IATRVA": "0x29ba0",
+      "IATVA": "0x140029ba0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "LoadAcceleratorsW",
+      "Ordinal": null,
+      "Hint": 612,
+      "NameFileOffset": "0x31ee0",
+      "LookupFileOffset": "0x31090",
+      "IATRVA": "0x29ba8",
+      "IATVA": "0x140029ba8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SetWindowLongW",
+      "Ordinal": null,
+      "Hint": 921,
+      "NameFileOffset": "0x31ef4",
+      "LookupFileOffset": "0x31098",
+      "IATRVA": "0x29bb0",
+      "IATVA": "0x140029bb0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "MonitorFromWindow",
+      "Ordinal": null,
+      "Hint": 673,
+      "NameFileOffset": "0x31f06",
+      "LookupFileOffset": "0x310a0",
+      "IATRVA": "0x29bb8",
+      "IATVA": "0x140029bb8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "RegisterWindowMessageW",
+      "Ordinal": null,
+      "Hint": 786,
+      "NameFileOffset": "0x31f1a",
+      "LookupFileOffset": "0x310a8",
+      "IATRVA": "0x29bc0",
+      "IATVA": "0x140029bc0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "LoadCursorW",
+      "Ordinal": null,
+      "Hint": 618,
+      "NameFileOffset": "0x31f34",
+      "LookupFileOffset": "0x310b0",
+      "IATRVA": "0x29bc8",
+      "IATVA": "0x140029bc8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "LoadImageW",
+      "Ordinal": null,
+      "Hint": 622,
+      "NameFileOffset": "0x31f42",
+      "LookupFileOffset": "0x310b8",
+      "IATRVA": "0x29bd0",
+      "IATVA": "0x140029bd0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "RegisterClassExW",
+      "Ordinal": null,
+      "Hint": 753,
+      "NameFileOffset": "0x31b50",
+      "LookupFileOffset": "0x310c0",
+      "IATRVA": "0x29bd8",
+      "IATVA": "0x140029bd8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetWindowLongW",
+      "Ordinal": null,
+      "Hint": 505,
+      "NameFileOffset": "0x31f68",
+      "LookupFileOffset": "0x310c8",
+      "IATRVA": "0x29be0",
+      "IATVA": "0x140029be0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "PeekMessageW",
+      "Ordinal": null,
+      "Hint": 699,
+      "NameFileOffset": "0x31f7a",
+      "LookupFileOffset": "0x310d0",
+      "IATRVA": "0x29be8",
+      "IATVA": "0x140029be8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetWindowTextW",
+      "Ordinal": null,
+      "Hint": 519,
+      "NameFileOffset": "0x31f8a",
+      "LookupFileOffset": "0x310d8",
+      "IATRVA": "0x29bf0",
+      "IATVA": "0x140029bf0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "EnableWindow",
+      "Ordinal": null,
+      "Hint": 246,
+      "NameFileOffset": "0x31f9c",
+      "LookupFileOffset": "0x310e0",
+      "IATRVA": "0x29bf8",
+      "IATVA": "0x140029bf8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "CreateDialogParamW",
+      "Ordinal": null,
+      "Hint": 109,
+      "NameFileOffset": "0x31fac",
+      "LookupFileOffset": "0x310e8",
+      "IATRVA": "0x29c00",
+      "IATVA": "0x140029c00"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "DrawTextExW",
+      "Ordinal": null,
+      "Hint": 226,
+      "NameFileOffset": "0x31fc2",
+      "LookupFileOffset": "0x310f0",
+      "IATRVA": "0x29c08",
+      "IATVA": "0x140029c08"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "IsWindow",
+      "Ordinal": null,
+      "Hint": 600,
+      "NameFileOffset": "0x31fd0",
+      "LookupFileOffset": "0x310f8",
+      "IATRVA": "0x29c10",
+      "IATVA": "0x140029c10"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "CreateDialogIndirectParamW",
+      "Ordinal": null,
+      "Hint": 107,
+      "NameFileOffset": "0x31fdc",
+      "LookupFileOffset": "0x31100",
+      "IATRVA": "0x29c18",
+      "IATVA": "0x140029c18"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetPropW",
+      "Ordinal": null,
+      "Hint": 449,
+      "NameFileOffset": "0x31ffa",
+      "LookupFileOffset": "0x31108",
+      "IATRVA": "0x29c20",
+      "IATVA": "0x140029c20"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SetPropW",
+      "Ordinal": null,
+      "Hint": 887,
+      "NameFileOffset": "0x32006",
+      "LookupFileOffset": "0x31110",
+      "IATRVA": "0x29c28",
+      "IATVA": "0x140029c28"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetDlgItem",
+      "Ordinal": null,
+      "Hint": 344,
+      "NameFileOffset": "0x32012",
+      "LookupFileOffset": "0x31118",
+      "IATRVA": "0x29c30",
+      "IATVA": "0x140029c30"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "RemovePropW",
+      "Ordinal": null,
+      "Hint": 794,
+      "NameFileOffset": "0x32020",
+      "LookupFileOffset": "0x31120",
+      "IATRVA": "0x29c38",
+      "IATVA": "0x140029c38"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "CheckDlgButton",
+      "Ordinal": null,
+      "Hint": 67,
+      "NameFileOffset": "0x3202e",
+      "LookupFileOffset": "0x31128",
+      "IATRVA": "0x29c40",
+      "IATVA": "0x140029c40"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "CheckRadioButton",
+      "Ordinal": null,
+      "Hint": 72,
+      "NameFileOffset": "0x32040",
+      "LookupFileOffset": "0x31130",
+      "IATRVA": "0x29c48",
+      "IATVA": "0x140029c48"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "IsDlgButtonChecked",
+      "Ordinal": null,
+      "Hint": 579,
+      "NameFileOffset": "0x32054",
+      "LookupFileOffset": "0x31138",
+      "IATRVA": "0x29c50",
+      "IATVA": "0x140029c50"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "NotifyWinEvent",
+      "Ordinal": null,
+      "Hint": 678,
+      "NameFileOffset": "0x3206a",
+      "LookupFileOffset": "0x31140",
+      "IATRVA": "0x29c58",
+      "IATVA": "0x140029c58"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "CreateWindowExW",
+      "Ordinal": null,
+      "Hint": 123,
+      "NameFileOffset": "0x31b64",
+      "LookupFileOffset": "0x31148",
+      "IATRVA": "0x29c60",
+      "IATVA": "0x140029c60"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetWindowTextLengthW",
+      "Ordinal": null,
+      "Hint": 518,
+      "NameFileOffset": "0x31f50",
+      "LookupFileOffset": "0x31150",
+      "IATRVA": "0x29c68",
+      "IATVA": "0x140029c68"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetClientRect",
+      "Ordinal": null,
+      "Hint": 316,
+      "NameFileOffset": "0x31ab0",
+      "LookupFileOffset": "0x31158",
+      "IATRVA": "0x29c70",
+      "IATVA": "0x140029c70"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "DestroyWindow",
+      "Ordinal": null,
+      "Hint": 186,
+      "NameFileOffset": "0x31ac0",
+      "LookupFileOffset": "0x31160",
+      "IATRVA": "0x29c78",
+      "IATVA": "0x140029c78"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetDpiForWindow",
+      "Ordinal": null,
+      "Hint": 352,
+      "NameFileOffset": "0x31ad0",
+      "LookupFileOffset": "0x31168",
+      "IATRVA": "0x29c80",
+      "IATVA": "0x140029c80"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SystemParametersInfoForDpi",
+      "Ordinal": null,
+      "Hint": 965,
+      "NameFileOffset": "0x31ae2",
+      "LookupFileOffset": "0x31170",
+      "IATRVA": "0x29c88",
+      "IATVA": "0x140029c88"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "SendMessageW",
+      "Ordinal": null,
+      "Hint": 817,
+      "NameFileOffset": "0x31b00",
+      "LookupFileOffset": "0x31178",
+      "IATRVA": "0x29c90",
+      "IATVA": "0x140029c90"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "MoveWindow",
+      "Ordinal": null,
+      "Hint": 674,
+      "NameFileOffset": "0x31b10",
+      "LookupFileOffset": "0x31180",
+      "IATRVA": "0x29c98",
+      "IATVA": "0x140029c98"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "GetDC",
+      "Ordinal": null,
+      "Hint": 333,
+      "NameFileOffset": "0x31b1e",
+      "LookupFileOffset": "0x31188",
+      "IATRVA": "0x29ca0",
+      "IATVA": "0x140029ca0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "LoadStringW",
+      "Ordinal": null,
+      "Hint": 633,
+      "NameFileOffset": "0x31b42",
+      "LookupFileOffset": "0x31190",
+      "IATRVA": "0x29ca8",
+      "IATVA": "0x140029ca8"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "PostMessageW",
+      "Ordinal": null,
+      "Hint": 703,
+      "NameFileOffset": "0x31b32",
+      "LookupFileOffset": "0x31198",
+      "IATRVA": "0x29cb0",
+      "IATVA": "0x140029cb0"
+    },
+    {
+      "DLL": "USER32.dll",
+      "Name": "ReleaseDC",
+      "Ordinal": null,
+      "Hint": 788,
+      "NameFileOffset": "0x31b26",
+      "LookupFileOffset": "0x311a0",
+      "IATRVA": "0x29cb8",
+      "IATVA": "0x140029cb8"
+    },
+    {
+      "DLL": "api-ms-win-crt-string-l1-1-0.dll",
+      "Name": "wcscmp",
+      "Ordinal": null,
+      "Hint": 158,
+      "NameFileOffset": "0x336a2",
+      "LookupFileOffset": "0x318a0",
+      "IATRVA": "0x2a3b8",
+      "IATVA": "0x14002a3b8"
+    },
+    {
+      "DLL": "api-ms-win-crt-string-l1-1-0.dll",
+      "Name": "wcsnlen",
+      "Ordinal": null,
+      "Hint": 169,
+      "NameFileOffset": "0x32088",
+      "LookupFileOffset": "0x318a8",
+      "IATRVA": "0x2a3c0",
+      "IATVA": "0x14002a3c0"
+    },
+    {
+      "DLL": "api-ms-win-crt-string-l1-1-0.dll",
+      "Name": "memset",
+      "Ordinal": null,
+      "Hint": 131,
+      "NameFileOffset": "0x323ee",
+      "LookupFileOffset": "0x318b0",
+      "IATRVA": "0x2a3c8",
+      "IATVA": "0x14002a3c8"
+    },
+    {
+      "DLL": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "Name": "_c_exit",
+      "Ordinal": null,
+      "Hint": 21,
+      "NameFileOffset": "0x320ac",
+      "LookupFileOffset": "0x31878",
+      "IATRVA": "0x2a390",
+      "IATVA": "0x14002a390"
+    },
+    {
+      "DLL": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "Name": "_initterm_e",
+      "Ordinal": null,
+      "Hint": 55,
+      "NameFileOffset": "0x3209e",
+      "LookupFileOffset": "0x31880",
+      "IATRVA": "0x2a398",
+      "IATVA": "0x14002a398"
+    },
+    {
+      "DLL": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "Name": "_initterm",
+      "Ordinal": null,
+      "Hint": 54,
+      "NameFileOffset": "0x32092",
+      "LookupFileOffset": "0x31888",
+      "IATRVA": "0x2a3a0",
+      "IATVA": "0x14002a3a0"
+    },
+    {
+      "DLL": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "Name": "_register_thread_local_exe_atexit_callback",
+      "Ordinal": null,
+      "Hint": 61,
+      "NameFileOffset": "0x320b6",
+      "LookupFileOffset": "0x31890",
+      "IATRVA": "0x2a3a8",
+      "IATVA": "0x14002a3a8"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__get_wide_winmain_command_line",
+      "Ordinal": null,
+      "Hint": 281,
+      "NameFileOffset": "0x3224a",
+      "LookupFileOffset": "0x31738",
+      "IATRVA": "0x2a250",
+      "IATVA": "0x14002a250"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__initialize_onexit_table",
+      "Ordinal": null,
+      "Hint": 317,
+      "NameFileOffset": "0x3226e",
+      "LookupFileOffset": "0x31740",
+      "IATRVA": "0x2a258",
+      "IATVA": "0x14002a258"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__initialize_wide_environment",
+      "Ordinal": null,
+      "Hint": 318,
+      "NameFileOffset": "0x3228c",
+      "LookupFileOffset": "0x31748",
+      "IATRVA": "0x2a260",
+      "IATVA": "0x14002a260"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__invalid_parameter_noinfo",
+      "Ordinal": null,
+      "Hint": 319,
+      "NameFileOffset": "0x322ae",
+      "LookupFileOffset": "0x31750",
+      "IATRVA": "0x2a268",
+      "IATVA": "0x14002a268"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__purecall",
+      "Ordinal": null,
+      "Hint": 579,
+      "NameFileOffset": "0x322ce",
+      "LookupFileOffset": "0x31758",
+      "IATRVA": "0x2a270",
+      "IATVA": "0x14002a270"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__register_onexit_function",
+      "Ordinal": null,
+      "Hint": 593,
+      "NameFileOffset": "0x322de",
+      "LookupFileOffset": "0x31760",
+      "IATRVA": "0x2a278",
+      "IATVA": "0x14002a278"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__seh_filter_exe",
+      "Ordinal": null,
+      "Hint": 602,
+      "NameFileOffset": "0x322fe",
+      "LookupFileOffset": "0x31768",
+      "IATRVA": "0x2a280",
+      "IATVA": "0x14002a280"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__set_app_type",
+      "Ordinal": null,
+      "Hint": 604,
+      "NameFileOffset": "0x32314",
+      "LookupFileOffset": "0x31770",
+      "IATRVA": "0x2a288",
+      "IATVA": "0x14002a288"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__set_fmode",
+      "Ordinal": null,
+      "Hint": 607,
+      "NameFileOffset": "0x32328",
+      "LookupFileOffset": "0x31778",
+      "IATRVA": "0x2a290",
+      "IATVA": "0x14002a290"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__set_new_mode",
+      "Ordinal": null,
+      "Hint": 610,
+      "NameFileOffset": "0x32338",
+      "LookupFileOffset": "0x31780",
+      "IATRVA": "0x2a298",
+      "IATVA": "0x14002a298"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__wcsicmp",
+      "Ordinal": null,
+      "Hint": 717,
+      "NameFileOffset": "0x3234c",
+      "LookupFileOffset": "0x31788",
+      "IATRVA": "0x2a2a0",
+      "IATVA": "0x14002a2a0"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__wtol",
+      "Ordinal": null,
+      "Hint": 823,
+      "NameFileOffset": "0x3235a",
+      "LookupFileOffset": "0x31790",
+      "IATRVA": "0x2a2a8",
+      "IATVA": "0x14002a2a8"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o_exit",
+      "Ordinal": null,
+      "Hint": 877,
+      "NameFileOffset": "0x32366",
+      "LookupFileOffset": "0x31798",
+      "IATRVA": "0x2a2b0",
+      "IATVA": "0x14002a2b0"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o_free",
+      "Ordinal": null,
+      "Hint": 909,
+      "NameFileOffset": "0x32370",
+      "LookupFileOffset": "0x317a0",
+      "IATRVA": "0x2a2b8",
+      "IATVA": "0x14002a2b8"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o_iswdigit",
+      "Ordinal": null,
+      "Hint": 945,
+      "NameFileOffset": "0x3237a",
+      "LookupFileOffset": "0x317a8",
+      "IATRVA": "0x2a2c0",
+      "IATVA": "0x14002a2c0"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o_malloc",
+      "Ordinal": null,
+      "Hint": 984,
+      "NameFileOffset": "0x32388",
+      "LookupFileOffset": "0x317b0",
+      "IATRVA": "0x2a2c8",
+      "IATVA": "0x14002a2c8"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o_terminate",
+      "Ordinal": null,
+      "Hint": 1078,
+      "NameFileOffset": "0x32394",
+      "LookupFileOffset": "0x317b8",
+      "IATRVA": "0x2a2d0",
+      "IATVA": "0x14002a2d0"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "__CxxFrameHandler3",
+      "Ordinal": null,
+      "Hint": 18,
+      "NameFileOffset": "0x323a4",
+      "LookupFileOffset": "0x317c0",
+      "IATRVA": "0x2a2d8",
+      "IATVA": "0x14002a2d8"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "__current_exception",
+      "Ordinal": null,
+      "Hint": 32,
+      "NameFileOffset": "0x323ba",
+      "LookupFileOffset": "0x317c8",
+      "IATRVA": "0x2a2e0",
+      "IATVA": "0x14002a2e0"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "__current_exception_context",
+      "Ordinal": null,
+      "Hint": 33,
+      "NameFileOffset": "0x323d0",
+      "LookupFileOffset": "0x317d0",
+      "IATRVA": "0x2a2e8",
+      "IATVA": "0x14002a2e8"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_CxxThrowException",
+      "Ordinal": null,
+      "Hint": 1,
+      "NameFileOffset": "0x323f8",
+      "LookupFileOffset": "0x317d8",
+      "IATRVA": "0x2a2f0",
+      "IATVA": "0x14002a2f0"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__crt_atexit",
+      "Ordinal": null,
+      "Hint": 167,
+      "NameFileOffset": "0x32220",
+      "LookupFileOffset": "0x317e0",
+      "IATRVA": "0x2a2f8",
+      "IATVA": "0x14002a2f8"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o___stdio_common_vswprintf",
+      "Ordinal": null,
+      "Hint": 112,
+      "NameFileOffset": "0x3219e",
+      "LookupFileOffset": "0x317e8",
+      "IATRVA": "0x2a300",
+      "IATVA": "0x14002a300"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__configure_wide_argv",
+      "Ordinal": null,
+      "Hint": 161,
+      "NameFileOffset": "0x32206",
+      "LookupFileOffset": "0x317f0",
+      "IATRVA": "0x2a308",
+      "IATVA": "0x14002a308"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o___std_exception_destroy",
+      "Ordinal": null,
+      "Hint": 95,
+      "NameFileOffset": "0x32180",
+      "LookupFileOffset": "0x317f8",
+      "IATRVA": "0x2a310",
+      "IATVA": "0x14002a310"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o___std_exception_copy",
+      "Ordinal": null,
+      "Hint": 94,
+      "NameFileOffset": "0x32166",
+      "LookupFileOffset": "0x31800",
+      "IATRVA": "0x2a318",
+      "IATVA": "0x14002a318"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__configthreadlocale",
+      "Ordinal": null,
+      "Hint": 159,
+      "NameFileOffset": "0x321ec",
+      "LookupFileOffset": "0x31808",
+      "IATRVA": "0x2a320",
+      "IATVA": "0x14002a320"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o___p__commode",
+      "Ordinal": null,
+      "Hint": 83,
+      "NameFileOffset": "0x32154",
+      "LookupFileOffset": "0x31810",
+      "IATRVA": "0x2a328",
+      "IATVA": "0x14002a328"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__exit",
+      "Ordinal": null,
+      "Hint": 199,
+      "NameFileOffset": "0x3223e",
+      "LookupFileOffset": "0x31818",
+      "IATRVA": "0x2a330",
+      "IATVA": "0x14002a330"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__cexit",
+      "Ordinal": null,
+      "Hint": 147,
+      "NameFileOffset": "0x321e0",
+      "LookupFileOffset": "0x31820",
+      "IATRVA": "0x2a338",
+      "IATVA": "0x14002a338"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__errno",
+      "Ordinal": null,
+      "Hint": 192,
+      "NameFileOffset": "0x32232",
+      "LookupFileOffset": "0x31828",
+      "IATRVA": "0x2a340",
+      "IATVA": "0x14002a340"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__callnewh",
+      "Ordinal": null,
+      "Hint": 145,
+      "NameFileOffset": "0x321d0",
+      "LookupFileOffset": "0x31830",
+      "IATRVA": "0x2a348",
+      "IATVA": "0x14002a348"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "_o__beginthreadex",
+      "Ordinal": null,
+      "Hint": 143,
+      "NameFileOffset": "0x321bc",
+      "LookupFileOffset": "0x31838",
+      "IATRVA": "0x2a350",
+      "IATVA": "0x14002a350"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "wcsrchr",
+      "Ordinal": null,
+      "Hint": 1132,
+      "NameFileOffset": "0x3214a",
+      "LookupFileOffset": "0x31840",
+      "IATRVA": "0x2a358",
+      "IATVA": "0x14002a358"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "wcschr",
+      "Ordinal": null,
+      "Hint": 1131,
+      "NameFileOffset": "0x32140",
+      "LookupFileOffset": "0x31848",
+      "IATRVA": "0x2a360",
+      "IATVA": "0x14002a360"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "__C_specific_handler",
+      "Ordinal": null,
+      "Hint": 12,
+      "NameFileOffset": "0x32128",
+      "LookupFileOffset": "0x31850",
+      "IATRVA": "0x2a368",
+      "IATVA": "0x14002a368"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "memcmp",
+      "Ordinal": null,
+      "Hint": 1122,
+      "NameFileOffset": "0x336ac",
+      "LookupFileOffset": "0x31858",
+      "IATRVA": "0x2a370",
+      "IATVA": "0x14002a370"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "memcpy",
+      "Ordinal": null,
+      "Hint": 1123,
+      "NameFileOffset": "0x336b6",
+      "LookupFileOffset": "0x31860",
+      "IATRVA": "0x2a378",
+      "IATVA": "0x14002a378"
+    },
+    {
+      "DLL": "api-ms-win-crt-private-l1-1-0.dll",
+      "Name": "memmove",
+      "Ordinal": null,
+      "Hint": 1124,
+      "NameFileOffset": "0x336c0",
+      "LookupFileOffset": "0x31868",
+      "IATRVA": "0x2a380",
+      "IATVA": "0x14002a380"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-0.dll",
+      "Name": "LockResource",
+      "Ordinal": null,
+      "Hint": 30,
+      "NameFileOffset": "0x32d28",
+      "LookupFileOffset": "0x313c0",
+      "IATRVA": "0x29ed8",
+      "IATVA": "0x140029ed8"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-0.dll",
+      "Name": "GetModuleHandleExW",
+      "Ordinal": null,
+      "Hint": 20,
+      "NameFileOffset": "0x324a4",
+      "LookupFileOffset": "0x313c8",
+      "IATRVA": "0x29ee0",
+      "IATVA": "0x140029ee0"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-0.dll",
+      "Name": "FindResourceExW",
+      "Ordinal": null,
+      "Hint": 10,
+      "NameFileOffset": "0x32d16",
+      "LookupFileOffset": "0x313d0",
+      "IATRVA": "0x29ee8",
+      "IATVA": "0x140029ee8"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-0.dll",
+      "Name": "LoadResource",
+      "Ordinal": null,
+      "Hint": 27,
+      "NameFileOffset": "0x32d48",
+      "LookupFileOffset": "0x313d8",
+      "IATRVA": "0x29ef0",
+      "IATVA": "0x140029ef0"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-0.dll",
+      "Name": "GetModuleHandleA",
+      "Ordinal": null,
+      "Hint": 18,
+      "NameFileOffset": "0x32d58",
+      "LookupFileOffset": "0x313e0",
+      "IATRVA": "0x29ef8",
+      "IATVA": "0x140029ef8"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-0.dll",
+      "Name": "GetModuleFileNameA",
+      "Ordinal": null,
+      "Hint": 16,
+      "NameFileOffset": "0x32430",
+      "LookupFileOffset": "0x313e8",
+      "IATRVA": "0x29f00",
+      "IATVA": "0x140029f00"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-0.dll",
+      "Name": "FreeLibrary",
+      "Ordinal": null,
+      "Hint": 13,
+      "NameFileOffset": "0x32e80",
+      "LookupFileOffset": "0x313f0",
+      "IATRVA": "0x29f08",
+      "IATVA": "0x140029f08"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-0.dll",
+      "Name": "GetProcAddress",
+      "Ordinal": null,
+      "Hint": 22,
+      "NameFileOffset": "0x3265c",
+      "LookupFileOffset": "0x313f8",
+      "IATRVA": "0x29f10",
+      "IATVA": "0x140029f10"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-0.dll",
+      "Name": "GetModuleHandleW",
+      "Ordinal": null,
+      "Hint": 21,
+      "NameFileOffset": "0x326d8",
+      "LookupFileOffset": "0x31400",
+      "IATRVA": "0x29f18",
+      "IATVA": "0x140029f18"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-0.dll",
+      "Name": "GetModuleFileNameW",
+      "Ordinal": null,
+      "Hint": 17,
+      "NameFileOffset": "0x32974",
+      "LookupFileOffset": "0x31408",
+      "IATRVA": "0x29f20",
+      "IATVA": "0x140029f20"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "LeaveCriticalSection",
+      "Ordinal": null,
+      "Hint": 29,
+      "NameFileOffset": "0x324ba",
+      "LookupFileOffset": "0x31600",
+      "IATRVA": "0x2a118",
+      "IATVA": "0x14002a118"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "InitializeCriticalSectionEx",
+      "Ordinal": null,
+      "Hint": 26,
+      "NameFileOffset": "0x324d2",
+      "LookupFileOffset": "0x31608",
+      "IATRVA": "0x2a120",
+      "IATVA": "0x14002a120"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "WaitForSingleObject",
+      "Ordinal": null,
+      "Hint": 54,
+      "NameFileOffset": "0x32512",
+      "LookupFileOffset": "0x31610",
+      "IATRVA": "0x2a128",
+      "IATVA": "0x14002a128"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "ReleaseSemaphore",
+      "Ordinal": null,
+      "Hint": 38,
+      "NameFileOffset": "0x32490",
+      "LookupFileOffset": "0x31618",
+      "IATRVA": "0x2a130",
+      "IATVA": "0x14002a130"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "ReleaseSRWLockExclusive",
+      "Ordinal": null,
+      "Hint": 36,
+      "NameFileOffset": "0x32570",
+      "LookupFileOffset": "0x31620",
+      "IATRVA": "0x2a138",
+      "IATVA": "0x14002a138"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "EnterCriticalSection",
+      "Ordinal": null,
+      "Hint": 17,
+      "NameFileOffset": "0x32478",
+      "LookupFileOffset": "0x31628",
+      "IATRVA": "0x2a140",
+      "IATVA": "0x14002a140"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "SetEvent",
+      "Ordinal": null,
+      "Hint": 41,
+      "NameFileOffset": "0x327e8",
+      "LookupFileOffset": "0x31630",
+      "IATRVA": "0x2a148",
+      "IATVA": "0x14002a148"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "CreateEventExW",
+      "Ordinal": null,
+      "Hint": 5,
+      "NameFileOffset": "0x327ba",
+      "LookupFileOffset": "0x31638",
+      "IATRVA": "0x2a150",
+      "IATVA": "0x14002a150"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "AcquireSRWLockExclusive",
+      "Ordinal": null,
+      "Hint": 0,
+      "NameFileOffset": "0x325b8",
+      "LookupFileOffset": "0x31640",
+      "IATRVA": "0x2a158",
+      "IATVA": "0x14002a158"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "ReleaseMutex",
+      "Ordinal": null,
+      "Hint": 35,
+      "NameFileOffset": "0x3253e",
+      "LookupFileOffset": "0x31648",
+      "IATRVA": "0x2a160",
+      "IATVA": "0x14002a160"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "WaitForSingleObjectEx",
+      "Ordinal": null,
+      "Hint": 55,
+      "NameFileOffset": "0x325d2",
+      "LookupFileOffset": "0x31650",
+      "IATRVA": "0x2a168",
+      "IATVA": "0x14002a168"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "DeleteCriticalSection",
+      "Ordinal": null,
+      "Hint": 15,
+      "NameFileOffset": "0x32698",
+      "LookupFileOffset": "0x31658",
+      "IATRVA": "0x2a170",
+      "IATVA": "0x14002a170"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "AcquireSRWLockShared",
+      "Ordinal": null,
+      "Hint": 1,
+      "NameFileOffset": "0x32680",
+      "LookupFileOffset": "0x31660",
+      "IATRVA": "0x2a178",
+      "IATVA": "0x14002a178"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "CreateMutexExW",
+      "Ordinal": null,
+      "Hint": 9,
+      "NameFileOffset": "0x3266e",
+      "LookupFileOffset": "0x31668",
+      "IATRVA": "0x2a180",
+      "IATVA": "0x14002a180"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "OpenSemaphoreW",
+      "Ordinal": null,
+      "Hint": 33,
+      "NameFileOffset": "0x325ea",
+      "LookupFileOffset": "0x31670",
+      "IATRVA": "0x2a188",
+      "IATVA": "0x14002a188"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "ReleaseSRWLockShared",
+      "Ordinal": null,
+      "Hint": 37,
+      "NameFileOffset": "0x32620",
+      "LookupFileOffset": "0x31678",
+      "IATRVA": "0x2a190",
+      "IATVA": "0x14002a190"
+    },
+    {
+      "DLL": "api-ms-win-core-synch-l1-1-0.dll",
+      "Name": "CreateSemaphoreExW",
+      "Ordinal": null,
+      "Hint": 11,
+      "NameFileOffset": "0x32446",
+      "LookupFileOffset": "0x31680",
+      "IATRVA": "0x2a198",
+      "IATVA": "0x14002a198"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l1-1-0.dll",
+      "Name": "GetProcessHeap",
+      "Ordinal": null,
+      "Hint": 0,
+      "NameFileOffset": "0x326c6",
+      "LookupFileOffset": "0x31318",
+      "IATRVA": "0x29e30",
+      "IATVA": "0x140029e30"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l1-1-0.dll",
+      "Name": "HeapAlloc",
+      "Ordinal": null,
+      "Hint": 2,
+      "NameFileOffset": "0x32650",
+      "LookupFileOffset": "0x31320",
+      "IATRVA": "0x29e38",
+      "IATVA": "0x140029e38"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l1-1-0.dll",
+      "Name": "HeapSetInformation",
+      "Ordinal": null,
+      "Hint": 10,
+      "NameFileOffset": "0x328da",
+      "LookupFileOffset": "0x31328",
+      "IATRVA": "0x29e40",
+      "IATVA": "0x140029e40"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l1-1-0.dll",
+      "Name": "HeapFree",
+      "Ordinal": null,
+      "Hint": 6,
+      "NameFileOffset": "0x3245c",
+      "LookupFileOffset": "0x31330",
+      "IATRVA": "0x29e48",
+      "IATVA": "0x140029e48"
+    },
+    {
+      "DLL": "api-ms-win-core-errorhandling-l1-1-0.dll",
+      "Name": "UnhandledExceptionFilter",
+      "Ordinal": null,
+      "Hint": 17,
+      "NameFileOffset": "0x32dae",
+      "LookupFileOffset": "0x31268",
+      "IATRVA": "0x29d80",
+      "IATVA": "0x140029d80"
+    },
+    {
+      "DLL": "api-ms-win-core-errorhandling-l1-1-0.dll",
+      "Name": "SetUnhandledExceptionFilter",
+      "Ordinal": null,
+      "Hint": 15,
+      "NameFileOffset": "0x32dca",
+      "LookupFileOffset": "0x31270",
+      "IATRVA": "0x29d88",
+      "IATVA": "0x140029d88"
+    },
+    {
+      "DLL": "api-ms-win-core-errorhandling-l1-1-0.dll",
+      "Name": "RaiseException",
+      "Ordinal": null,
+      "Hint": 7,
+      "NameFileOffset": "0x3274c",
+      "LookupFileOffset": "0x31278",
+      "IATRVA": "0x29d90",
+      "IATVA": "0x140029d90"
+    },
+    {
+      "DLL": "api-ms-win-core-errorhandling-l1-1-0.dll",
+      "Name": "GetLastError",
+      "Ordinal": null,
+      "Hint": 5,
+      "NameFileOffset": "0x32560",
+      "LookupFileOffset": "0x31280",
+      "IATRVA": "0x29d98",
+      "IATVA": "0x140029d98"
+    },
+    {
+      "DLL": "api-ms-win-core-errorhandling-l1-1-0.dll",
+      "Name": "SetLastError",
+      "Ordinal": null,
+      "Hint": 13,
+      "NameFileOffset": "0x32468",
+      "LookupFileOffset": "0x31288",
+      "IATRVA": "0x29da0",
+      "IATVA": "0x140029da0"
+    },
+    {
+      "DLL": "api-ms-win-core-threadpool-l1-2-0.dll",
+      "Name": "CloseThreadpoolTimer",
+      "Ordinal": null,
+      "Hint": 6,
+      "NameFileOffset": "0x325a0",
+      "LookupFileOffset": "0x316a8",
+      "IATRVA": "0x2a1c0",
+      "IATVA": "0x14002a1c0"
+    },
+    {
+      "DLL": "api-ms-win-core-threadpool-l1-2-0.dll",
+      "Name": "WaitForThreadpoolTimerCallbacks",
+      "Ordinal": null,
+      "Hint": 34,
+      "NameFileOffset": "0x324f0",
+      "LookupFileOffset": "0x316b0",
+      "IATRVA": "0x2a1c8",
+      "IATVA": "0x14002a1c8"
+    },
+    {
+      "DLL": "api-ms-win-core-threadpool-l1-2-0.dll",
+      "Name": "CreateThreadpoolTimer",
+      "Ordinal": null,
+      "Hint": 12,
+      "NameFileOffset": "0x32638",
+      "LookupFileOffset": "0x316b8",
+      "IATRVA": "0x2a1d0",
+      "IATVA": "0x14002a1d0"
+    },
+    {
+      "DLL": "api-ms-win-core-threadpool-l1-2-0.dll",
+      "Name": "SetThreadpoolTimer",
+      "Ordinal": null,
+      "Hint": 26,
+      "NameFileOffset": "0x3260a",
+      "LookupFileOffset": "0x316c0",
+      "IATRVA": "0x2a1d8",
+      "IATVA": "0x14002a1d8"
+    },
+    {
+      "DLL": "api-ms-win-core-processthreads-l1-1-0.dll",
+      "Name": "GetCurrentProcess",
+      "Ordinal": null,
+      "Hint": 12,
+      "NameFileOffset": "0x3289e",
+      "LookupFileOffset": "0x314a0",
+      "IATRVA": "0x29fb8",
+      "IATVA": "0x140029fb8"
+    },
+    {
+      "DLL": "api-ms-win-core-processthreads-l1-1-0.dll",
+      "Name": "OpenProcessToken",
+      "Ordinal": null,
+      "Hint": 52,
+      "NameFileOffset": "0x3288a",
+      "LookupFileOffset": "0x314a8",
+      "IATRVA": "0x29fc0",
+      "IATVA": "0x140029fc0"
+    },
+    {
+      "DLL": "api-ms-win-core-processthreads-l1-1-0.dll",
+      "Name": "CreateProcessW",
+      "Ordinal": null,
+      "Hint": 3,
+      "NameFileOffset": "0x32d04",
+      "LookupFileOffset": "0x314b0",
+      "IATRVA": "0x29fc8",
+      "IATVA": "0x140029fc8"
+    },
+    {
+      "DLL": "api-ms-win-core-processthreads-l1-1-0.dll",
+      "Name": "TerminateProcess",
+      "Ordinal": null,
+      "Hint": 85,
+      "NameFileOffset": "0x32de8",
+      "LookupFileOffset": "0x314b8",
+      "IATRVA": "0x29fd0",
+      "IATVA": "0x140029fd0"
+    },
+    {
+      "DLL": "api-ms-win-core-processthreads-l1-1-0.dll",
+      "Name": "GetCurrentThreadId",
+      "Ordinal": null,
+      "Hint": 17,
+      "NameFileOffset": "0x32528",
+      "LookupFileOffset": "0x314c0",
+      "IATRVA": "0x29fd8",
+      "IATVA": "0x140029fd8"
+    },
+    {
+      "DLL": "api-ms-win-core-processthreads-l1-1-0.dll",
+      "Name": "GetStartupInfoW",
+      "Ordinal": null,
+      "Hint": 34,
+      "NameFileOffset": "0x32b68",
+      "LookupFileOffset": "0x314c8",
+      "IATRVA": "0x29fe0",
+      "IATVA": "0x140029fe0"
+    },
+    {
+      "DLL": "api-ms-win-core-processthreads-l1-1-0.dll",
+      "Name": "GetCurrentProcessId",
+      "Ordinal": null,
+      "Hint": 13,
+      "NameFileOffset": "0x326b0",
+      "LookupFileOffset": "0x314d0",
+      "IATRVA": "0x29fe8",
+      "IATVA": "0x140029fe8"
+    },
+    {
+      "DLL": "api-ms-win-core-localization-l1-2-0.dll",
+      "Name": "FormatMessageW",
+      "Ordinal": null,
+      "Hint": 9,
+      "NameFileOffset": "0x3254e",
+      "LookupFileOffset": "0x31428",
+      "IATRVA": "0x29f40",
+      "IATVA": "0x140029f40"
+    },
+    {
+      "DLL": "api-ms-win-core-localization-l1-2-0.dll",
+      "Name": "FindNLSString",
+      "Ordinal": null,
+      "Hint": 6,
+      "NameFileOffset": "0x32b9a",
+      "LookupFileOffset": "0x31430",
+      "IATRVA": "0x29f48",
+      "IATVA": "0x140029f48"
+    },
+    {
+      "DLL": "api-ms-win-core-localization-l1-2-0.dll",
+      "Name": "GetLocaleInfoW",
+      "Ordinal": null,
+      "Hint": 21,
+      "NameFileOffset": "0x32822",
+      "LookupFileOffset": "0x31438",
+      "IATRVA": "0x29f50",
+      "IATVA": "0x140029f50"
+    },
+    {
+      "DLL": "api-ms-win-core-localization-l1-2-0.dll",
+      "Name": "GetACP",
+      "Ordinal": null,
+      "Hint": 10,
+      "NameFileOffset": "0x3284e",
+      "LookupFileOffset": "0x31440",
+      "IATRVA": "0x29f58",
+      "IATVA": "0x140029f58"
+    },
+    {
+      "DLL": "api-ms-win-core-debug-l1-1-0.dll",
+      "Name": "IsDebuggerPresent",
+      "Ordinal": null,
+      "Hint": 5,
+      "NameFileOffset": "0x326fa",
+      "LookupFileOffset": "0x31228",
+      "IATRVA": "0x29d40",
+      "IATVA": "0x140029d40"
+    },
+    {
+      "DLL": "api-ms-win-core-debug-l1-1-0.dll",
+      "Name": "OutputDebugStringW",
+      "Ordinal": null,
+      "Hint": 7,
+      "NameFileOffset": "0x3258a",
+      "LookupFileOffset": "0x31230",
+      "IATRVA": "0x29d48",
+      "IATVA": "0x140029d48"
+    },
+    {
+      "DLL": "api-ms-win-core-debug-l1-1-0.dll",
+      "Name": "DebugBreak",
+      "Ordinal": null,
+      "Hint": 4,
+      "NameFileOffset": "0x326ec",
+      "LookupFileOffset": "0x31238",
+      "IATRVA": "0x29d50",
+      "IATVA": "0x140029d50"
+    },
+    {
+      "DLL": "api-ms-win-core-handle-l1-1-0.dll",
+      "Name": "CloseHandle",
+      "Ordinal": null,
+      "Hint": 0,
+      "NameFileOffset": "0x325fc",
+      "LookupFileOffset": "0x31308",
+      "IATRVA": "0x29e20",
+      "IATVA": "0x140029e20"
+    },
+    {
+      "DLL": "api-ms-win-core-com-l1-1-0.dll",
+      "Name": "CoTaskMemFree",
+      "Ordinal": null,
+      "Hint": 67,
+      "NameFileOffset": "0x3270e",
+      "LookupFileOffset": "0x311c0",
+      "IATRVA": "0x29cd8",
+      "IATVA": "0x140029cd8"
+    },
+    {
+      "DLL": "api-ms-win-core-com-l1-1-0.dll",
+      "Name": "CoCreateInstance",
+      "Ordinal": null,
+      "Hint": 9,
+      "NameFileOffset": "0x32858",
+      "LookupFileOffset": "0x311c8",
+      "IATRVA": "0x29ce0",
+      "IATVA": "0x140029ce0"
+    },
+    {
+      "DLL": "api-ms-win-core-com-l1-1-0.dll",
+      "Name": "CoInitializeEx",
+      "Ordinal": null,
+      "Hint": 40,
+      "NameFileOffset": "0x328f0",
+      "LookupFileOffset": "0x311d0",
+      "IATRVA": "0x29ce8",
+      "IATVA": "0x140029ce8"
+    },
+    {
+      "DLL": "api-ms-win-core-com-l1-1-0.dll",
+      "Name": "PropVariantClear",
+      "Ordinal": null,
+      "Hint": 80,
+      "NameFileOffset": "0x32e8e",
+      "LookupFileOffset": "0x311d8",
+      "IATRVA": "0x29cf0",
+      "IATVA": "0x140029cf0"
+    },
+    {
+      "DLL": "api-ms-win-core-com-l1-1-0.dll",
+      "Name": "CoUninitialize",
+      "Ordinal": null,
+      "Hint": 70,
+      "NameFileOffset": "0x32902",
+      "LookupFileOffset": "0x311e0",
+      "IATRVA": "0x29cf8",
+      "IATVA": "0x140029cf8"
+    },
+    {
+      "DLL": "api-ms-win-core-com-l1-1-0.dll",
+      "Name": "CoWaitForMultipleHandles",
+      "Ordinal": null,
+      "Hint": 73,
+      "NameFileOffset": "0x327cc",
+      "LookupFileOffset": "0x311e8",
+      "IATRVA": "0x29d00",
+      "IATVA": "0x140029d00"
+    },
+    {
+      "DLL": "api-ms-win-core-com-l1-1-0.dll",
+      "Name": "CoCreateGuid",
+      "Ordinal": null,
+      "Hint": 8,
+      "NameFileOffset": "0x32c60",
+      "LookupFileOffset": "0x311f0",
+      "IATRVA": "0x29d08",
+      "IATVA": "0x140029d08"
+    },
+    {
+      "DLL": "api-ms-win-core-com-l1-1-0.dll",
+      "Name": "CoTaskMemAlloc",
+      "Ordinal": null,
+      "Hint": 66,
+      "NameFileOffset": "0x3277e",
+      "LookupFileOffset": "0x311f8",
+      "IATRVA": "0x29d10",
+      "IATVA": "0x140029d10"
+    },
+    {
+      "DLL": "api-ms-win-core-com-l1-1-0.dll",
+      "Name": "CoCreateFreeThreadedMarshaler",
+      "Ordinal": null,
+      "Hint": 7,
+      "NameFileOffset": "0x327f4",
+      "LookupFileOffset": "0x31200",
+      "IATRVA": "0x29d18",
+      "IATVA": "0x140029d18"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l1-1-1.dll",
+      "Name": "RegSetKeyValueW",
+      "Ordinal": null,
+      "Hint": 44,
+      "NameFileOffset": "0x3271e",
+      "LookupFileOffset": "0x31568",
+      "IATRVA": "0x2a080",
+      "IATVA": "0x14002a080"
+    },
+    {
+      "DLL": "api-ms-win-core-largeinteger-l1-1-0.dll",
+      "Name": "MulDiv",
+      "Ordinal": null,
+      "Hint": 71,
+      "NameFileOffset": "0x32730",
+      "LookupFileOffset": "0x313b0",
+      "IATRVA": "0x29ec8",
+      "IATVA": "0x140029ec8"
+    },
+    {
+      "DLL": "api-ms-win-core-shlwapi-legacy-l1-1-0.dll",
+      "Name": "PathFileExistsW",
+      "Ordinal": null,
+      "Hint": 20,
+      "NameFileOffset": "0x3273a",
+      "LookupFileOffset": "0x315a8",
+      "IATRVA": "0x2a0c0",
+      "IATVA": "0x14002a0c0"
+    },
+    {
+      "DLL": "api-ms-win-core-shlwapi-legacy-l1-1-0.dll",
+      "Name": "PathIsFileSpecW",
+      "Ordinal": null,
+      "Hint": 34,
+      "NameFileOffset": "0x3286c",
+      "LookupFileOffset": "0x315b0",
+      "IATRVA": "0x2a0c8",
+      "IATVA": "0x14002a0c8"
+    },
+    {
+      "DLL": "api-ms-win-core-shlwapi-legacy-l1-1-0.dll",
+      "Name": "PathFindExtensionW",
+      "Ordinal": null,
+      "Hint": 22,
+      "NameFileOffset": "0x32a4a",
+      "LookupFileOffset": "0x315b8",
+      "IATRVA": "0x2a0d0",
+      "IATVA": "0x14002a0d0"
+    },
+    {
+      "DLL": "api-ms-win-core-winrt-string-l1-1-0.dll",
+      "Name": "WindowsDeleteString",
+      "Ordinal": null,
+      "Hint": 12,
+      "NameFileOffset": "0x32f0e",
+      "LookupFileOffset": "0x31710",
+      "IATRVA": "0x2a228",
+      "IATVA": "0x14002a228"
+    },
+    {
+      "DLL": "api-ms-win-core-winrt-string-l1-1-0.dll",
+      "Name": "WindowsCreateString",
+      "Ordinal": null,
+      "Hint": 10,
+      "NameFileOffset": "0x32ea2",
+      "LookupFileOffset": "0x31718",
+      "IATRVA": "0x2a230",
+      "IATVA": "0x14002a230"
+    },
+    {
+      "DLL": "api-ms-win-core-winrt-string-l1-1-0.dll",
+      "Name": "WindowsCreateStringReference",
+      "Ordinal": null,
+      "Hint": 11,
+      "NameFileOffset": "0x3275e",
+      "LookupFileOffset": "0x31720",
+      "IATRVA": "0x2a238",
+      "IATVA": "0x14002a238"
+    },
+    {
+      "DLL": "api-ms-win-core-winrt-string-l1-1-0.dll",
+      "Name": "WindowsGetStringRawBuffer",
+      "Ordinal": null,
+      "Hint": 16,
+      "NameFileOffset": "0x32f24",
+      "LookupFileOffset": "0x31728",
+      "IATRVA": "0x2a240",
+      "IATVA": "0x14002a240"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l1-1-0.dll",
+      "Name": "RegQueryInfoKeyW",
+      "Ordinal": null,
+      "Hint": 33,
+      "NameFileOffset": "0x32bfa",
+      "LookupFileOffset": "0x31518",
+      "IATRVA": "0x2a030",
+      "IATVA": "0x14002a030"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l1-1-0.dll",
+      "Name": "RegGetValueW",
+      "Ordinal": null,
+      "Hint": 20,
+      "NameFileOffset": "0x32790",
+      "LookupFileOffset": "0x31520",
+      "IATRVA": "0x2a038",
+      "IATVA": "0x14002a038"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l1-1-0.dll",
+      "Name": "RegOpenKeyExW",
+      "Ordinal": null,
+      "Hint": 30,
+      "NameFileOffset": "0x32b4c",
+      "LookupFileOffset": "0x31528",
+      "IATRVA": "0x2a040",
+      "IATVA": "0x14002a040"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l1-1-0.dll",
+      "Name": "RegDeleteKeyExW",
+      "Ordinal": null,
+      "Hint": 5,
+      "NameFileOffset": "0x32be8",
+      "LookupFileOffset": "0x31530",
+      "IATRVA": "0x2a048",
+      "IATVA": "0x14002a048"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l1-1-0.dll",
+      "Name": "RegEnumValueW",
+      "Ordinal": null,
+      "Hint": 16,
+      "NameFileOffset": "0x32c0e",
+      "LookupFileOffset": "0x31538",
+      "IATRVA": "0x2a050",
+      "IATVA": "0x14002a050"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l1-1-0.dll",
+      "Name": "RegCloseKey",
+      "Ordinal": null,
+      "Hint": 0,
+      "NameFileOffset": "0x32b3e",
+      "LookupFileOffset": "0x31540",
+      "IATRVA": "0x2a058",
+      "IATVA": "0x14002a058"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l1-1-0.dll",
+      "Name": "RegQueryValueExW",
+      "Ordinal": null,
+      "Hint": 37,
+      "NameFileOffset": "0x32b1a",
+      "LookupFileOffset": "0x31548",
+      "IATRVA": "0x2a060",
+      "IATVA": "0x14002a060"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l1-1-0.dll",
+      "Name": "RegCreateKeyExW",
+      "Ordinal": null,
+      "Hint": 3,
+      "NameFileOffset": "0x32bd6",
+      "LookupFileOffset": "0x31550",
+      "IATRVA": "0x2a068",
+      "IATVA": "0x14002a068"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l1-1-0.dll",
+      "Name": "RegSetValueExW",
+      "Ordinal": null,
+      "Hint": 46,
+      "NameFileOffset": "0x32b08",
+      "LookupFileOffset": "0x31558",
+      "IATRVA": "0x2a070",
+      "IATVA": "0x14002a070"
+    },
+    {
+      "DLL": "api-ms-win-core-winrt-l1-1-0.dll",
+      "Name": "RoGetActivationFactory",
+      "Ordinal": null,
+      "Hint": 1,
+      "NameFileOffset": "0x327a0",
+      "LookupFileOffset": "0x31700",
+      "IATRVA": "0x2a218",
+      "IATVA": "0x14002a218"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l2-1-0.dll",
+      "Name": "LocalUnlock",
+      "Ordinal": null,
+      "Hint": 14,
+      "NameFileOffset": "0x32a1e",
+      "LookupFileOffset": "0x31340",
+      "IATRVA": "0x29e58",
+      "IATVA": "0x140029e58"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l2-1-0.dll",
+      "Name": "LocalFree",
+      "Ordinal": null,
+      "Hint": 10,
+      "NameFileOffset": "0x32914",
+      "LookupFileOffset": "0x31348",
+      "IATRVA": "0x29e60",
+      "IATVA": "0x140029e60"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l2-1-0.dll",
+      "Name": "LocalLock",
+      "Ordinal": null,
+      "Hint": 11,
+      "NameFileOffset": "0x32a12",
+      "LookupFileOffset": "0x31350",
+      "IATRVA": "0x29e68",
+      "IATVA": "0x140029e68"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l2-1-0.dll",
+      "Name": "GlobalAlloc",
+      "Ordinal": null,
+      "Hint": 0,
+      "NameFileOffset": "0x32bc8",
+      "LookupFileOffset": "0x31358",
+      "IATRVA": "0x29e70",
+      "IATVA": "0x140029e70"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l2-1-0.dll",
+      "Name": "GlobalFree",
+      "Ordinal": null,
+      "Hint": 2,
+      "NameFileOffset": "0x32814",
+      "LookupFileOffset": "0x31360",
+      "IATRVA": "0x29e78",
+      "IATVA": "0x140029e78"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l2-1-0.dll",
+      "Name": "LocalAlloc",
+      "Ordinal": null,
+      "Hint": 8,
+      "NameFileOffset": "0x32920",
+      "LookupFileOffset": "0x31368",
+      "IATRVA": "0x29e80",
+      "IATVA": "0x140029e80"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-l2-1-0.dll",
+      "Name": "LocalReAlloc",
+      "Ordinal": null,
+      "Hint": 12,
+      "NameFileOffset": "0x32ad2",
+      "LookupFileOffset": "0x31370",
+      "IATRVA": "0x29e88",
+      "IATVA": "0x140029e88"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "DeleteFileW",
+      "Ordinal": null,
+      "Hint": 15,
+      "NameFileOffset": "0x32a2c",
+      "LookupFileOffset": "0x31298",
+      "IATRVA": "0x29db0",
+      "IATVA": "0x140029db0"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "GetFileAttributesW",
+      "Ordinal": null,
+      "Hint": 50,
+      "NameFileOffset": "0x329fc",
+      "LookupFileOffset": "0x312a0",
+      "IATRVA": "0x29db8",
+      "IATVA": "0x140029db8"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "SetEndOfFile",
+      "Ordinal": null,
+      "Hint": 88,
+      "NameFileOffset": "0x32a3a",
+      "LookupFileOffset": "0x312a8",
+      "IATRVA": "0x29dc0",
+      "IATVA": "0x140029dc0"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "GetFileAttributesExW",
+      "Ordinal": null,
+      "Hint": 49,
+      "NameFileOffset": "0x32a60",
+      "LookupFileOffset": "0x312b0",
+      "IATRVA": "0x29dc8",
+      "IATVA": "0x140029dc8"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "GetFileInformationByHandle",
+      "Ordinal": null,
+      "Hint": 51,
+      "NameFileOffset": "0x32a78",
+      "LookupFileOffset": "0x312b8",
+      "IATRVA": "0x29dd0",
+      "IATVA": "0x140029dd0"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "FindClose",
+      "Ordinal": null,
+      "Hint": 18,
+      "NameFileOffset": "0x32940",
+      "LookupFileOffset": "0x312c0",
+      "IATRVA": "0x29dd8",
+      "IATVA": "0x140029dd8"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "FindFirstFileW",
+      "Ordinal": null,
+      "Hint": 26,
+      "NameFileOffset": "0x3292e",
+      "LookupFileOffset": "0x312c8",
+      "IATRVA": "0x29de0",
+      "IATVA": "0x140029de0"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "CreateFileW",
+      "Ordinal": null,
+      "Hint": 10,
+      "NameFileOffset": "0x32834",
+      "LookupFileOffset": "0x312d0",
+      "IATRVA": "0x29de8",
+      "IATVA": "0x140029de8"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "ReadFile",
+      "Ordinal": null,
+      "Hint": 81,
+      "NameFileOffset": "0x32842",
+      "LookupFileOffset": "0x312d8",
+      "IATRVA": "0x29df0",
+      "IATVA": "0x140029df0"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "GetDiskFreeSpaceExW",
+      "Ordinal": null,
+      "Hint": 41,
+      "NameFileOffset": "0x32c36",
+      "LookupFileOffset": "0x312e0",
+      "IATRVA": "0x29df8",
+      "IATVA": "0x140029df8"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "GetFullPathNameW",
+      "Ordinal": null,
+      "Hint": 59,
+      "NameFileOffset": "0x32af4",
+      "LookupFileOffset": "0x312e8",
+      "IATRVA": "0x29e00",
+      "IATVA": "0x140029e00"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "CreateDirectoryW",
+      "Ordinal": null,
+      "Hint": 6,
+      "NameFileOffset": "0x32c4c",
+      "LookupFileOffset": "0x312f0",
+      "IATRVA": "0x29e08",
+      "IATVA": "0x140029e08"
+    },
+    {
+      "DLL": "api-ms-win-core-file-l1-1-0.dll",
+      "Name": "WriteFile",
+      "Ordinal": null,
+      "Hint": 101,
+      "NameFileOffset": "0x329f0",
+      "LookupFileOffset": "0x312f8",
+      "IATRVA": "0x29e10",
+      "IATVA": "0x140029e10"
+    },
+    {
+      "DLL": "api-ms-win-shcore-obsolete-l1-1-0.dll",
+      "Name": "SHStrDupW",
+      "Ordinal": null,
+      "Hint": 2,
+      "NameFileOffset": "0x3287e",
+      "LookupFileOffset": "0x318f8",
+      "IATRVA": "0x2a410",
+      "IATVA": "0x14002a410"
+    },
+    {
+      "DLL": "api-ms-win-security-base-l1-1-0.dll",
+      "Name": "GetTokenInformation",
+      "Ordinal": null,
+      "Hint": 66,
+      "NameFileOffset": "0x328b2",
+      "LookupFileOffset": "0x318e8",
+      "IATRVA": "0x2a400",
+      "IATVA": "0x14002a400"
+    },
+    {
+      "DLL": "api-ms-win-core-processenvironment-l1-1-0.dll",
+      "Name": "GetCurrentDirectoryW",
+      "Ordinal": null,
+      "Hint": 7,
+      "NameFileOffset": "0x32c8e",
+      "LookupFileOffset": "0x31480",
+      "IATRVA": "0x29f98",
+      "IATVA": "0x140029f98"
+    },
+    {
+      "DLL": "api-ms-win-core-processenvironment-l1-1-0.dll",
+      "Name": "GetCommandLineW",
+      "Ordinal": null,
+      "Hint": 5,
+      "NameFileOffset": "0x328c8",
+      "LookupFileOffset": "0x31488",
+      "IATRVA": "0x29fa0",
+      "IATVA": "0x140029fa0"
+    },
+    {
+      "DLL": "api-ms-win-core-processenvironment-l1-1-0.dll",
+      "Name": "SetCurrentDirectoryW",
+      "Ordinal": null,
+      "Hint": 18,
+      "NameFileOffset": "0x32c1e",
+      "LookupFileOffset": "0x31490",
+      "IATRVA": "0x29fa8",
+      "IATVA": "0x140029fa8"
+    },
+    {
+      "DLL": "api-ms-win-core-string-l1-1-0.dll",
+      "Name": "FoldStringW",
+      "Ordinal": null,
+      "Hint": 3,
+      "NameFileOffset": "0x3294c",
+      "LookupFileOffset": "0x315c8",
+      "IATRVA": "0x2a0e0",
+      "IATVA": "0x14002a0e0"
+    },
+    {
+      "DLL": "api-ms-win-core-string-l1-1-0.dll",
+      "Name": "WideCharToMultiByte",
+      "Ordinal": null,
+      "Hint": 7,
+      "NameFileOffset": "0x329da",
+      "LookupFileOffset": "0x315d0",
+      "IATRVA": "0x2a0e8",
+      "IATVA": "0x14002a0e8"
+    },
+    {
+      "DLL": "api-ms-win-core-string-l1-1-0.dll",
+      "Name": "CompareStringOrdinal",
+      "Ordinal": null,
+      "Hint": 1,
+      "NameFileOffset": "0x32ed2",
+      "LookupFileOffset": "0x315d8",
+      "IATRVA": "0x2a0f0",
+      "IATVA": "0x14002a0f0"
+    },
+    {
+      "DLL": "api-ms-win-core-string-l1-1-0.dll",
+      "Name": "MultiByteToWideChar",
+      "Ordinal": null,
+      "Hint": 6,
+      "NameFileOffset": "0x32abc",
+      "LookupFileOffset": "0x315e0",
+      "IATRVA": "0x2a0f8",
+      "IATVA": "0x14002a0f8"
+    },
+    {
+      "DLL": "api-ms-win-core-psapi-l1-1-0.dll",
+      "Name": "K32GetModuleFileNameExW",
+      "Ordinal": null,
+      "Hint": 10,
+      "NameFileOffset": "0x3295a",
+      "LookupFileOffset": "0x31508",
+      "IATRVA": "0x2a020",
+      "IATVA": "0x14002a020"
+    },
+    {
+      "DLL": "api-ms-win-core-localization-obsolete-l1-2-0.dll",
+      "Name": "GetUserDefaultUILanguage",
+      "Ordinal": null,
+      "Hint": 8,
+      "NameFileOffset": "0x3298a",
+      "LookupFileOffset": "0x31450",
+      "IATRVA": "0x29f68",
+      "IATVA": "0x140029f68"
+    },
+    {
+      "DLL": "api-ms-win-core-sysinfo-l1-1-0.dll",
+      "Name": "GetLocalTime",
+      "Ordinal": null,
+      "Hint": 6,
+      "NameFileOffset": "0x329a6",
+      "LookupFileOffset": "0x31690",
+      "IATRVA": "0x2a1a8",
+      "IATVA": "0x14002a1a8"
+    },
+    {
+      "DLL": "api-ms-win-core-sysinfo-l1-1-0.dll",
+      "Name": "GetSystemTimeAsFileTime",
+      "Ordinal": null,
+      "Hint": 24,
+      "NameFileOffset": "0x32e32",
+      "LookupFileOffset": "0x31698",
+      "IATRVA": "0x2a1b0",
+      "IATVA": "0x14002a1b0"
+    },
+    {
+      "DLL": "api-ms-win-core-datetime-l1-1-0.dll",
+      "Name": "GetDateFormatW",
+      "Ordinal": null,
+      "Hint": 2,
+      "NameFileOffset": "0x329b6",
+      "LookupFileOffset": "0x31210",
+      "IATRVA": "0x29d28",
+      "IATVA": "0x140029d28"
+    },
+    {
+      "DLL": "api-ms-win-core-datetime-l1-1-0.dll",
+      "Name": "GetTimeFormatW",
+      "Ordinal": null,
+      "Hint": 6,
+      "NameFileOffset": "0x329c8",
+      "LookupFileOffset": "0x31218",
+      "IATRVA": "0x29d30",
+      "IATVA": "0x140029d30"
+    },
+    {
+      "DLL": "api-ms-win-shcore-path-l1-1-0.dll",
+      "Name": null,
+      "Ordinal": 170,
+      "Hint": null,
+      "NameFileOffset": null,
+      "LookupFileOffset": "0x31908",
+      "IATRVA": "0x2a420",
+      "IATVA": "0x14002a420"
+    },
+    {
+      "DLL": "api-ms-win-core-memory-l1-1-0.dll",
+      "Name": "MapViewOfFile",
+      "Ordinal": null,
+      "Hint": 20,
+      "NameFileOffset": "0x32aac",
+      "LookupFileOffset": "0x31460",
+      "IATRVA": "0x29f78",
+      "IATVA": "0x140029f78"
+    },
+    {
+      "DLL": "api-ms-win-core-memory-l1-1-0.dll",
+      "Name": "CreateFileMappingW",
+      "Ordinal": null,
+      "Hint": 6,
+      "NameFileOffset": "0x32a96",
+      "LookupFileOffset": "0x31468",
+      "IATRVA": "0x29f80",
+      "IATVA": "0x140029f80"
+    },
+    {
+      "DLL": "api-ms-win-core-memory-l1-1-0.dll",
+      "Name": "UnmapViewOfFile",
+      "Ordinal": null,
+      "Hint": 43,
+      "NameFileOffset": "0x32ae2",
+      "LookupFileOffset": "0x31470",
+      "IATRVA": "0x29f88",
+      "IATVA": "0x140029f88"
+    },
+    {
+      "DLL": "api-ms-win-core-registry-l2-1-0.dll",
+      "Name": "RegCreateKeyW",
+      "Ordinal": null,
+      "Hint": 6,
+      "NameFileOffset": "0x32b2e",
+      "LookupFileOffset": "0x31578",
+      "IATRVA": "0x2a090",
+      "IATVA": "0x14002a090"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-obsolete-l1-1-0.dll",
+      "Name": "LocalSize",
+      "Ordinal": null,
+      "Hint": 13,
+      "NameFileOffset": "0x32b5c",
+      "LookupFileOffset": "0x31380",
+      "IATRVA": "0x29e98",
+      "IATVA": "0x140029e98"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-obsolete-l1-1-0.dll",
+      "Name": "GlobalLock",
+      "Ordinal": null,
+      "Hint": 4,
+      "NameFileOffset": "0x32baa",
+      "LookupFileOffset": "0x31388",
+      "IATRVA": "0x29ea0",
+      "IATVA": "0x140029ea0"
+    },
+    {
+      "DLL": "api-ms-win-core-heap-obsolete-l1-1-0.dll",
+      "Name": "GlobalUnlock",
+      "Ordinal": null,
+      "Hint": 7,
+      "NameFileOffset": "0x32bb8",
+      "LookupFileOffset": "0x31390",
+      "IATRVA": "0x29ea8",
+      "IATVA": "0x140029ea8"
+    },
+    {
+      "DLL": "api-ms-win-shcore-scaling-l1-1-1.dll",
+      "Name": "GetDpiForMonitor",
+      "Ordinal": null,
+      "Hint": 0,
+      "NameFileOffset": "0x32b7a",
+      "LookupFileOffset": "0x31918",
+      "IATRVA": "0x2a430",
+      "IATVA": "0x14002a430"
+    },
+    {
+      "DLL": "api-ms-win-core-string-obsolete-l1-1-0.dll",
+      "Name": "lstrcmpiW",
+      "Ordinal": null,
+      "Hint": 5,
+      "NameFileOffset": "0x32b8e",
+      "LookupFileOffset": "0x315f0",
+      "IATRVA": "0x2a108",
+      "IATVA": "0x14002a108"
+    },
+    {
+      "DLL": "api-ms-win-core-windowserrorreporting-l1-1-3.dll",
+      "Name": "RegisterApplicationRestart",
+      "Ordinal": null,
+      "Hint": 2,
+      "NameFileOffset": "0x32c70",
+      "LookupFileOffset": "0x316d0",
+      "IATRVA": "0x2a1e8",
+      "IATVA": "0x14002a1e8"
+    },
+    {
+      "DLL": "api-ms-win-eventing-provider-l1-1-0.dll",
+      "Name": "EventRegister",
+      "Ordinal": null,
+      "Hint": 3,
+      "NameFileOffset": "0x32cbc",
+      "LookupFileOffset": "0x318c0",
+      "IATRVA": "0x2a3d8",
+      "IATVA": "0x14002a3d8"
+    },
+    {
+      "DLL": "api-ms-win-eventing-provider-l1-1-0.dll",
+      "Name": "EventUnregister",
+      "Ordinal": null,
+      "Hint": 5,
+      "NameFileOffset": "0x32ccc",
+      "LookupFileOffset": "0x318c8",
+      "IATRVA": "0x2a3e0",
+      "IATVA": "0x14002a3e0"
+    },
+    {
+      "DLL": "api-ms-win-eventing-provider-l1-1-0.dll",
+      "Name": "EventWriteTransfer",
+      "Ordinal": null,
+      "Hint": 9,
+      "NameFileOffset": "0x32cde",
+      "LookupFileOffset": "0x318d0",
+      "IATRVA": "0x2a3e8",
+      "IATVA": "0x14002a3e8"
+    },
+    {
+      "DLL": "api-ms-win-eventing-provider-l1-1-0.dll",
+      "Name": "EventSetInformation",
+      "Ordinal": null,
+      "Hint": 4,
+      "NameFileOffset": "0x32ca6",
+      "LookupFileOffset": "0x318d8",
+      "IATRVA": "0x2a3f0",
+      "IATVA": "0x14002a3f0"
+    },
+    {
+      "DLL": "api-ms-win-base-util-l1-1-0.dll",
+      "Name": "IsTextUnicode",
+      "Ordinal": null,
+      "Hint": 0,
+      "NameFileOffset": "0x32cf4",
+      "LookupFileOffset": "0x311b0",
+      "IATRVA": "0x29cc8",
+      "IATVA": "0x140029cc8"
+    },
+    {
+      "DLL": "api-ms-win-core-libraryloader-l1-2-1.dll",
+      "Name": "FindResourceW",
+      "Ordinal": null,
+      "Hint": 29,
+      "NameFileOffset": "0x32d38",
+      "LookupFileOffset": "0x31418",
+      "IATRVA": "0x29f30",
+      "IATVA": "0x140029f30"
+    },
+    {
+      "DLL": "api-ms-win-core-rtlsupport-l1-1-0.dll",
+      "Name": "RtlLookupFunctionEntry",
+      "Ordinal": null,
+      "Hint": 1302,
+      "NameFileOffset": "0x32d80",
+      "LookupFileOffset": "0x31588",
+      "IATRVA": "0x2a0a0",
+      "IATVA": "0x14002a0a0"
+    },
+    {
+      "DLL": "api-ms-win-core-rtlsupport-l1-1-0.dll",
+      "Name": "RtlCaptureContext",
+      "Ordinal": null,
+      "Hint": 778,
+      "NameFileOffset": "0x32d6c",
+      "LookupFileOffset": "0x31590",
+      "IATRVA": "0x2a0a8",
+      "IATVA": "0x14002a0a8"
+    },
+    {
+      "DLL": "api-ms-win-core-rtlsupport-l1-1-0.dll",
+      "Name": "RtlVirtualUnwind",
+      "Ordinal": null,
+      "Hint": 1640,
+      "NameFileOffset": "0x32d9a",
+      "LookupFileOffset": "0x31598",
+      "IATRVA": "0x2a0b0",
+      "IATVA": "0x14002a0b0"
+    },
+    {
+      "DLL": "api-ms-win-core-processthreads-l1-1-1.dll",
+      "Name": "IsProcessorFeaturePresent",
+      "Ordinal": null,
+      "Hint": 50,
+      "NameFileOffset": "0x32dfc",
+      "LookupFileOffset": "0x314e0",
+      "IATRVA": "0x29ff8",
+      "IATVA": "0x140029ff8"
+    },
+    {
+      "DLL": "api-ms-win-core-processthreads-l1-1-1.dll",
+      "Name": "GetProcessMitigationPolicy",
+      "Ordinal": null,
+      "Hint": 29,
+      "NameFileOffset": "0x32e62",
+      "LookupFileOffset": "0x314e8",
+      "IATRVA": "0x2a000",
+      "IATVA": "0x14002a000"
+    },
+    {
+      "DLL": "api-ms-win-core-profile-l1-1-0.dll",
+      "Name": "QueryPerformanceCounter",
+      "Ordinal": null,
+      "Hint": 0,
+      "NameFileOffset": "0x32e18",
+      "LookupFileOffset": "0x314f8",
+      "IATRVA": "0x2a010",
+      "IATVA": "0x14002a010"
+    },
+    {
+      "DLL": "api-ms-win-core-interlocked-l1-1-0.dll",
+      "Name": "InitializeSListHead",
+      "Ordinal": null,
+      "Hint": 0,
+      "NameFileOffset": "0x32e4c",
+      "LookupFileOffset": "0x313a0",
+      "IATRVA": "0x29eb8",
+      "IATVA": "0x140029eb8"
+    },
+    {
+      "DLL": "api-ms-win-core-winrt-error-l1-1-0.dll",
+      "Name": "SetRestrictedErrorInfo",
+      "Ordinal": null,
+      "Hint": 18,
+      "NameFileOffset": "0x32eb8",
+      "LookupFileOffset": "0x316e0",
+      "IATRVA": "0x2a1f8",
+      "IATVA": "0x14002a1f8"
+    },
+    {
+      "DLL": "api-ms-win-core-winrt-error-l1-1-1.dll",
+      "Name": "RoGetMatchingRestrictedErrorInfo",
+      "Ordinal": null,
+      "Hint": 6,
+      "NameFileOffset": "0x32eea",
+      "LookupFileOffset": "0x316f0",
+      "IATRVA": "0x2a208",
+      "IATVA": "0x14002a208"
+    },
+    {
+      "DLL": "COMCTL32.dll",
+      "Name": "ImageList_Create",
+      "Ordinal": null,
+      "Hint": 84,
+      "NameFileOffset": "0x33580",
+      "LookupFileOffset": "0x30dc0",
+      "IATRVA": "0x298d8",
+      "IATVA": "0x1400298d8"
+    },
+    {
+      "DLL": "COMCTL32.dll",
+      "Name": "ImageList_SetBkColor",
+      "Ordinal": null,
+      "Hint": 114,
+      "NameFileOffset": "0x33594",
+      "LookupFileOffset": "0x30dc8",
+      "IATRVA": "0x298e0",
+      "IATVA": "0x1400298e0"
+    },
+    {
+      "DLL": "COMCTL32.dll",
+      "Name": null,
+      "Ordinal": 381,
+      "Hint": null,
+      "NameFileOffset": null,
+      "LookupFileOffset": "0x30dd0",
+      "IATRVA": "0x298e8",
+      "IATVA": "0x1400298e8"
+    },
+    {
+      "DLL": "COMCTL32.dll",
+      "Name": "ImageList_ReplaceIcon",
+      "Ordinal": null,
+      "Hint": 112,
+      "NameFileOffset": "0x335ac",
+      "LookupFileOffset": "0x30dd8",
+      "IATRVA": "0x298f0",
+      "IATVA": "0x1400298f0"
+    },
+    {
+      "DLL": "COMCTL32.dll",
+      "Name": null,
+      "Ordinal": 410,
+      "Hint": null,
+      "NameFileOffset": null,
+      "LookupFileOffset": "0x30de0",
+      "IATRVA": "0x298f8",
+      "IATVA": "0x1400298f8"
+    },
+    {
+      "DLL": "COMCTL32.dll",
+      "Name": "ImageList_Draw",
+      "Ordinal": null,
+      "Hint": 91,
+      "NameFileOffset": "0x335c4",
+      "LookupFileOffset": "0x30de8",
+      "IATRVA": "0x29900",
+      "IATVA": "0x140029900"
+    },
+    {
+      "DLL": "COMCTL32.dll",
+      "Name": "ImageList_GetIconSize",
+      "Ordinal": null,
+      "Hint": 100,
+      "NameFileOffset": "0x335d6",
+      "LookupFileOffset": "0x30df0",
+      "IATRVA": "0x29908",
+      "IATVA": "0x140029908"
+    },
+    {
+      "DLL": "COMCTL32.dll",
+      "Name": null,
+      "Ordinal": 413,
+      "Hint": null,
+      "NameFileOffset": null,
+      "LookupFileOffset": "0x30df8",
+      "IATRVA": "0x29910",
+      "IATVA": "0x140029910"
+    },
+    {
+      "DLL": "COMCTL32.dll",
+      "Name": "ImageList_Destroy",
+      "Ordinal": null,
+      "Hint": 85,
+      "NameFileOffset": "0x335ee",
+      "LookupFileOffset": "0x30e00",
+      "IATRVA": "0x29918",
+      "IATVA": "0x140029918"
+    },
+    {
+      "DLL": "COMCTL32.dll",
+      "Name": null,
+      "Ordinal": 345,
+      "Hint": null,
+      "NameFileOffset": null,
+      "LookupFileOffset": "0x30e08",
+      "IATRVA": "0x29920",
+      "IATVA": "0x140029920"
+    },
+    {
+      "DLL": "COMCTL32.dll",
+      "Name": "CreateStatusWindowW",
+      "Ordinal": null,
+      "Hint": 12,
+      "NameFileOffset": "0x33602",
+      "LookupFileOffset": "0x30e10",
+      "IATRVA": "0x29928",
+      "IATVA": "0x140029928"
+    },
+    {
+      "DLL": "api-ms-win-core-delayload-l1-1-1.dll",
+      "Name": "ResolveDelayLoadedAPI",
+      "Ordinal": null,
+      "Hint": 1,
+      "NameFileOffset": "0x33626",
+      "LookupFileOffset": "0x31258",
+      "IATRVA": "0x29d70",
+      "IATVA": "0x140029d70"
+    },
+    {
+      "DLL": "api-ms-win-core-delayload-l1-1-0.dll",
+      "Name": "DelayLoadFailureHook",
+      "Ordinal": null,
+      "Hint": 0,
+      "NameFileOffset": "0x3363e",
+      "LookupFileOffset": "0x31248",
+      "IATRVA": "0x29d60",
+      "IATVA": "0x140029d60"
+    }
+  ],
+  "ExportDirectory": null,
+  "Exports": []
+}

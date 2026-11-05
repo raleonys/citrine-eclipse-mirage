@@ -12,16 +12,30 @@ void write_word(std::span<std::uint8_t> bytes,std::uint64_t value){
 }
 void terminate(std::uintptr_t address,ReceiveBufferMemory& memory){memory.view(address,1)[0]=0;}
 }
-std::span<std::uint8_t> ReceiveBufferMemory::view(std::uintptr_t address,std::uint64_t count) const{
+MemoryLookup ReceiveBufferMemory::lookup_bytes(std::uintptr_t address,std::uint64_t count,
+    std::span<std::uint8_t>& output) const{
+    if(resolver){
+        std::span<std::uint8_t> found;
+        const auto match=resolver->lookup_bytes(address,count,found);
+        if(match==MemoryLookup::Found)output=found;
+        return match;
+    }
     std::span<std::uint8_t> found;bool matched=false;
     for(const auto& region:regions){
         if(address<region.address)continue;
         const auto offset=address-region.address;
         if(offset>region.bytes.size() || count>region.bytes.size()-offset)continue;
-        if(matched)throw UnsupportedInput("Receive buffer memory mapping is ambiguous");
+        if(matched)return MemoryLookup::Ambiguous;
         matched=true;found=region.bytes.subspan(static_cast<std::size_t>(offset),static_cast<std::size_t>(count));
     }
-    if(!matched)throw UnsupportedInput("Receive buffer memory leaves bounded regions");
+    if(!matched)return MemoryLookup::Miss;
+    output=found;return MemoryLookup::Found;
+}
+std::span<std::uint8_t> ReceiveBufferMemory::view(std::uintptr_t address,std::uint64_t count) const{
+    std::span<std::uint8_t> found;
+    const auto match=lookup_bytes(address,count,found);
+    if(match==MemoryLookup::Ambiguous)throw UnsupportedInput("Receive buffer memory mapping is ambiguous");
+    if(match!=MemoryLookup::Found)throw UnsupportedInput("Receive buffer memory leaves bounded regions");
     return found;
 }
 void BoundedReceiveBufferApi::copy_bytes(std::uintptr_t to,std::uintptr_t from,std::uint64_t count){

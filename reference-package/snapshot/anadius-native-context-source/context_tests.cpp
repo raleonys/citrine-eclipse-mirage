@@ -3,6 +3,11 @@
 
 namespace {
 using namespace b15_test;
+void original_context_closure(){
+    Driver d;nc::Owner owner(d.view(),seed(),d.policies(),permanent_errors,{},{},nc::ClosureProfile::OriginalCrt);
+    owner.publish();require(n::is_bound(),"Original native Context binds real state without an external unload callback");
+    require(owner.close_after_cleanup()&&!n::is_bound()&&owner.close_after_cleanup(),"Original closure still performs actual native binding close and provider stop");
+}
 void guards_factory(){
     Driver d;
     rejects<std::invalid_argument>([&]{nc::Owner o(d.view(),seed(),{},permanent_errors,[]{return true;});},"missing policy factory rejected");
@@ -76,6 +81,6 @@ int terminal(std::string_view mode){
     return 98;
 }
 }
-int main(int argc,char** argv){if(argc==2&&std::string_view(argv[1]).starts_with("--"))return terminal(argv[1]);try{guards_factory();exact_context_and_close();busy_throw_and_competing_owner();control_reentry();
+int main(int argc,char** argv){if(argc==2&&std::string_view(argv[1]).starts_with("--"))return terminal(argv[1]);try{original_context_closure();guards_factory();exact_context_and_close();busy_throw_and_competing_owner();control_reentry();
     int code=95;for(const auto* mode:{"--open-context","--late-context"})require(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==code++,"own terminal child enforces open-owner/late-entry boundary");
     std::cout<<"PASS: "<<b15_test::checks<<" native Context core checks\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

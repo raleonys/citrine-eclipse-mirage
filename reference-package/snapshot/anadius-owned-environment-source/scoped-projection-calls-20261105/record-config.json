@@ -1,0 +1,95 @@
+{
+  "schema": "environment-explicit-scoped-projection-calls.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_SCOPED_ENVIRONMENT_STABLE_ROWS_AND_ACTUAL_CLONE_SEAMS",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Explicit JobScope-owned immutable CallContext and shared stable row/effect/address claims, exact tracked release proof, no ambient scope or global body/growth/release barrier; actual constructor/move/Profile-clone integration and bounded component/routing assertions. Production policy remains Serialized; actual two-scope Runtime/physical/old1 and full native child tail remain open.",
+  "sources": [
+    {
+      "path": "anadius-owned-environment-source/environment.hpp",
+      "before": "before/anadius-owned-environment-source__environment.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment.cpp",
+      "before": "before/anadius-owned-environment-source__environment.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment_tests.cpp",
+      "before": "before/anadius-owned-environment-source__environment_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-socket-source/io_completion.hpp",
+      "before": "before/anadius-socket-source__io_completion.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/io_completion.cpp",
+      "before": "before/anadius-socket-source__io_completion.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/io_completion_tests.cpp",
+      "before": "before/anadius-socket-source__io_completion_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-socket-source/environment_constructor.hpp",
+      "before": "before/anadius-socket-source__environment_constructor.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/environment_constructor.cpp",
+      "before": "before/anadius-socket-source__environment_constructor.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/environment_constructor_tests.cpp",
+      "before": "before/anadius-socket-source__environment_constructor_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.cpp",
+      "before": "before/anadius-session-profile-source__profile.cpp",
+      "role": "production"
+    }
+  ],
+  "reviews": [
+    "root-seam-independent-review.md",
+    "scoped-environment-core-independent-review-v2.md",
+    "root-scoped-environment-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "native-findings.md",
+    "socket-profile-seam-implementation.md",
+    "scoped-environment-implementation-v2.md",
+    "scoped-environment-test-implementation-v3.md"
+  ],
+  "native_replies": [
+    "instructions-180023cb0.json",
+    "instructions-180023dd0.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-owned-environment-source/scoped-projection-calls-20261105/native-evidence-index.json",
+    "outputs/anadius-session-policy-source/per-call-work-release-20261105/evidence.json",
+    "outputs/anadius-session-policy-source/per-call-work-release-20261105/remaining-integration.json"
+  ],
+  "limits": [
+    "Seven production and three test files independently statically reviewed; no compiler/project tests/link/DLL execution/ZIP. Authored assertions are not runtime PASS.",
+    "Two complete fresh REA6.8/Ghidra12.1.4 bodies establish native023cb0 field/callback/live-executor order and023dd0 type/cachedfactory/query/move/guard order; static bodies are not runtime overlap, native ABI/EH equivalence or new recovered-function credit.",
+    "Scope authority comes only from explicit owned immutable CallContext/Parent permit, exact source and registered effect lineage. Thread/fiber validate rather than select scope. Known foreign/unregistered input rejects before effects; genuine registered-source corruption or unknown admitted prefixes stay retained/failed.",
+    "Same shared Control/family/flags/scheduler/work and stable rows remain; tracked publication retains one native work unit, move transfers it, exact per-row ReleaseEntered/consumed proof delegates to existing Policy/Runtime synchronous old1 algorithm. No extra work, clone business root, counter reset, readiness barrier or new stop channel.",
+    "Actual Profile.clone_environment uses private scoped constructor/query/destroy; constructor claims full input/output before raw type query, and whole moves claim before prefix through final live executor reload. Owning HOST hook is not an extra recovered native vtable slot.",
+    "Raw Root slot08 remains partial payload/state-only, caller owns later live executor reload. Exact partial validation omits only that destination executor. Legacy raw-copy whole-caller/deallocator reentry is still a trusted projection boundary needing a measured caller guard seam; no full Root whole-copy proof is claimed.",
+    "Canonical empty results use scope address ownership only, no native row/cap/work/refcount. Global raw Empty remains stateless trusted low-level projection, not a scoped permission boundary or global authority router.",
+    "Component/routing fixtures use controlled SDK/FLS and no real child permit is fabricated. Existing4100-row/family/classifier bodies preserved; no actual Prepared two-scope tracked-family/B-native-FLS-reap/returned-child-old1 result is claimed. Such actual integration remains required.",
+    "Child prepare40/response20/88/handler-response scheduling, full native028d30 response/021770 tail and wider shared/accept/packet safety remain open. Existing production Parent stays Serialized.",
+    "Original binaries and frozen historical build/link/DLL/ZIP unchanged. Pending source/header changes require explicitly authorized consistent rebuild. No overall completion percentage from file counts."
+  ],
+  "completed_note": "SOURCE_ONLY2freshcompleteREAbodies;7productionfilesimplementeffect/Scope-ownedEnvironmentprojectionandactualCtor/move/Profile-clonecalls;3testfilesboundedcallback/prefix/copyexecutor/knowninputregressionsNOTRUN. No productionConcurrentopt-in/fullRuntimeproof.",
+  "observation": "REA6.8/Ghidra12.1.4complete023cb0/023dd0saved/exportedclosed,originalunchanged. Production/test/independentreviewagentsplusRootcorrectedpreprefixownership,canonicalcontext/permitpreflight,knownforeignvsregisteredcorruption,rawslot08earlyexecutor,Originrevalidation,callbackselfdeletion,scopeCPretirementandstableunknownproof. No fakeScoped/Runtimecoverage.",
+  "next_scope": "Close legacyRootcopy actualcaller prefix/tail claim seam using measured MessageDispatch copy sites, then build legitimate ONEselectedEnvironment actual Prepared/Runtime two-scope tracked-family+Bphysicalreap and naturalchildold1 source scenarios without testgetter/shadowroots. Continue actor-specific prepare/response/IO/full028d30 child-tail and shared/accept/packet audits before productionConcurrent selection. No build authorization."
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "path": "outputs\\anadius-socket-source\\receive_buffer.hpp",
+    "before_sha256": "709ca59766fc42bf2fbc7d1f4f033987b590e42874ff566b39f975ac43ed1e56",
+    "sha256": "607f158bb54fb305cb40e26ac2939e0d0dee5099fd64e78561f689f7c7ad9503"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\receive_buffer.cpp",
+    "before_sha256": "022de7686fc3aad28d915fbc90d7a0c018f6d8ed01fc1021ac42d1b519000ca0",
+    "sha256": "aedb4023d0a3e9ed55acd9d592eaca70c08c8bed0d21e6082e3d474ab9435398"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\write_finish.hpp",
+    "before_sha256": "c9e341de1a667ba2f17c1861aed4800243d2ebff022f3b9df47cdf6e48c2f6ba",
+    "sha256": "8f232392a79da93f1f0cba1093ba0f21824b9d77a1f507452618fb904213cff3"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\write_finish.cpp",
+    "before_sha256": "b13efb4696b7a8fd89e94e5d14d22d0b7da93d7da820fcaf212241807918667e",
+    "sha256": "a25e6ffba62e3ed15cbc93a5d0a900c98a438384eac80d22e6bf445af786956d"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\frame_read.hpp",
+    "before_sha256": "ea9adf5bd04a872d8e78173c5bdf9bf053deecdd6cc90665e4674efbf72d4111",
+    "sha256": "2cac0dc94fa28520e617b17bcc50957014fb5b8b20be7e1393ae0d6a3a9858e1"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\frame_read.cpp",
+    "before_sha256": "18eba441ded72416a66a10215cc69d7514dca3a272b02ae629d094fc1f934fba",
+    "sha256": "435d5884532583c5c7e7cb40a62315e3becce0aea47f21197efd105d8bd1177c"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\response_containers.hpp",
+    "before_sha256": "11c480e63a8bd5bb40624ecd320381df4f3ccb8253fd3772cb799da57637dd87",
+    "sha256": "bc28f179d0ba6747162689468f5c30c427cb6274c95ce0b1936835a06d19a69a"
+  },
+  {
+    "path": "outputs\\anadius-socket-source\\response_containers.cpp",
+    "before_sha256": "c1108f7835ac8e21ca3e05735e93ca55f4859127b556f6a5ff13644381ab0eb8",
+    "sha256": "17a39127e9e9a8fe53e269859c6dfff807200a5dea881cebf76151cee4bc6e10"
+  }
+]

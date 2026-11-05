@@ -1,0 +1,4 @@
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\scoped-greeting-lifetime\graph-tests-observer-diagnostic.cpp:732:36: error: unused parameter 'state' [-Werror,-Wunused-parameter]
+  732 | void scoped_runtime_receive(State& state,Connection& c,s::Buffer buffer,OVERLAPPED* ov){
+      |                                    ^
+1 error generated.

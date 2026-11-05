@@ -1,0 +1,32 @@
+{
+  "status": "PRE_EDIT_SOURCE_SNAPSHOT",
+  "files": [
+    {
+      "path": "anadius-licensing-effects-source/effects.hpp",
+      "exists": true,
+      "sha256": "7a84578546cecb74312818a094cdccdabbb641ab67f0c63787e7bfdf56684d07",
+      "before": "before/anadius-licensing-effects-source__effects.hpp"
+    },
+    {
+      "path": "anadius-licensing-effects-source/effects.cpp",
+      "exists": true,
+      "sha256": "c66cf34ed9b2e23772c48e834810e5afca0200083dd14b30e0eb508547e7e5d9",
+      "before": "before/anadius-licensing-effects-source__effects.cpp"
+    },
+    {
+      "path": "anadius-licensing-effects-source/effects_tests.cpp",
+      "exists": true,
+      "sha256": "2ff568a77527f25a9630e310dd31fd9eb91aa7416dac2c854fc7dad3e471b9e3",
+      "before": "before/anadius-licensing-effects-source__effects_tests.cpp"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "exists": true,
+      "sha256": "267d414545fff25d4b09e7ff62562ddefce8ccc525e4267e0e749a6bfbef3f97",
+      "before": "before/anadius-worker-handoff-source__handoff_tests.cpp"
+    }
+  ],
+  "pending_source_count": 108,
+  "compile": false,
+  "tests_run": false
+}

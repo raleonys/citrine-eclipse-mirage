@@ -1,0 +1,15 @@
+{
+  "schema":"worker-stop-pqcs-literal.source.v1",
+  "kind":"FRESH_NATIVE_COMPARISON_AND_VERIFIED_LITERAL_CORRECTION",
+  "pending_before":"before/pending-source-status.json",
+  "scope":"Both Policy84530 context projections corrected from guessed post to measured pqcs. Full native category message/what equivalence remains OPEN; existing exception/code contracts preserved.",
+  "sources":[{"path":"anadius-session-policy-source/policy.cpp","before":"before/policy.cpp","role":"production"},{"path":"anadius-session-policy-source/policy_tests.cpp","before":"before/policy_tests.cpp","role":"test"}],
+  "reviews":["literal-independent-review.md"],
+  "reports":["native-findings.md","design-review.md","report.md"],
+  "native_replies":["pseudo-180028240.json","instructions-180028240.json","pseudo-1800248b0.json","instructions-1800248b0.json","pseudo-18000a270.json","instructions-18000a270.json","bytes-180084530.json"],
+  "supplementary":["outputs/anadius-session-policy-source/system-message-020950-20261104/evidence.json"],
+  "limits":["No compiler/test/link/DLL execution; current source is unvalidated by a build.","Full native pqcs plus category-message what equivalence remains open; actual compiler provider comparison is in progress.","Existing compiler catch/code mapping is retained, not a claim of native C++ string/exception/EH ABI equivalence.","Actual prepared-child source case remains unexecuted; Runtime failed-post latch and child tracked-row integration are open.","Whole-DLL reconstruction and original application runtime/retirement behavior are not certified."],
+  "completed_note":"SOURCE_ONLY measured84530pqcs shared literal corrected in original and tracked Policy stop throws; exactprefix source assertions independentlyreviewed.7freshREA records exported/closed; full028240diagnostic/EH notdeclaredcomplete.",
+  "observation":"Fresh84530bytes=pqcs and028240→0248b0→00a270 context/separator/categorymessage construction. Compiler category equivalence is unproven; only the independently measured literal correction is closed.",
+  "next_scope":"Read actual selected LLVM-MinGW C++library source/artifact for system_category.message and system_error.what versus native020950/00a270; decide a coherent complete diagnostic-value integration without duplicate SDK effects or category lifetime/identity hacks. Continue full DLL reconstruction and remaining Runtime failure/child-row validation."
+}

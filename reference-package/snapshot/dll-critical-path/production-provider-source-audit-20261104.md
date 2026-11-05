@@ -1,0 +1,41 @@
+# OriginalImage production provider audit
+
+Result: BOUNDED NEGATIVE. No required virtual/provider call was found still unbound or implemented only as an unconditional UnsupportedInput/logic_error throw on the inspected normal selected startup, published callback, accept, IO, and prepared-job assembly paths.
+
+Independent read-only source audit, 2026-11-04. No new REA calls or sessions, source changes, compilation, project tests, linking, DLL execution, or packaging. This does not establish runtime correctness, complete binary equivalence, or coverage of every application request. The earlier business-handler audit was not repeated.
+
+## Exact production selection inspected
+
+`outputs/dll-link-gate-source/entry.cpp:50-108` supplies the actual Image owner, Ready Domain, thread provider, OriginalCrt Resources, configuration/console, explicit initial cells, real owned MinHook engine, selected host assembly, resources factory, fresh runtime, publication and synchronous application attach. Its configure callback selects native Worker IO/executor plus NativeJobs; it selects the native original Online provider. These are actual owning providers, not nonnull placeholder callbacks.
+
+`require_loader_attach_runtime` and `require_loader_detach_quiescence` are both defined in current entry.cpp. Their old missing-link status is not a current blocker. `anadius-host-platform-source/original-image-bindings.md` contains historical prose saying attach was undefined; this audit used current source and did not promote that stale note into a finding or rewrite historical validation.
+
+### Startup/host callbacks
+
+- `host_platform::select_original_owned_engine` selects OriginalCrt and original engine caller semantics (`engine.cpp:27-34`). `assembly.cpp:24-75` creates a shared per-hook Publication and OriginalCrt foreign-callback Domain, then installs `make_publishing_factory` into callback Resources. It does not select the older controller-only `Bound` original provider.
+- `original_provider::Publication::load` (`originals.cpp:117-125`) accepts actual successful-create receipts in Setup/Ready. The controller-only setup checks observed in legacy `Bound::load` (`:26`) do not apply to this selected provider. Exact slots are bound before hooks publish originals, successful create publishes before enable, and callback admission uses the corresponding published bit.
+- Default callback resources own encoding/error leaves and compiler CRT wrappers (`callback-policy-source/policy.hpp:41-61`). They are consumed into Policy with the exact original slot owner. `native-source/original_effects.cpp:6-18` implements all ten original passthroughs with their typed Windows signatures: A/W open/query, close, A/W process/folder, and connect. No required original SDK passthrough was left as a generic throw.
+- `initial-cells-source/defaults.cpp:20-35` and `worker.cpp:8-17` supply explicit empty callback sets/counters and the Worker state seed. They do not require a missing external seed provider.
+- Runtime preparation supplies concrete file/input/library SDK adapters when empty (`bootstrap-runtime-source/factory.cpp:71-83`). Resources factory installs actual remaining services, Online, threads and Worker factories (`resources-factory-source/factory.cpp:172-190`). Failure or single-use checks there validate real ownership/state; they are not absent implementations.
+
+### Worker, server and accept
+
+- `resources-factory-source/factory.cpp:42-68` installs concrete native acceptor, IOCP, gate, dispatcher, AcceptEx, socket factory and retry-cancel APIs. `:70-77` selects recovered0228c0 executor movement and its source cleanup. `:89-119` commits these to the actual Worker and selects NativeJobs with the Ready Domain's NativeThreads.
+- `application-worker-source/worker.cpp:265-325` runs that configure callback, binds the actual SDK version and startup flag, composes concrete Information/Content/Licensing providers, fills the exact live StateView/TLS, binds authentication, and creates/installs Graph. `application-effects-source/factory.cpp:35-48` returns all three concrete effects, with exact Online/path/backing checks. The required compose slots are supplied; no legacy effect body is substituted by an unconditional throw.
+- Graph builds Policy/Profile and binds a native Logic/JobLogic per real session (`application-graph-source/graph.cpp:420-429,457-473,566-574`). XML backend, cipher factory and RNG are actual default objects; this audit checked their selection, not their already-audited business algorithms.
+- `server-runtime-source/runtime.cpp:153-168` constructs `RecoveredAcceptLower` with native factory/sockets/errors/completion and actual retry bindings before arming accept. The deliberate throwing fallbacks at `runtime.cpp:43-48` are overridden by that adapter: `accept-helpers-source/bindings.hpp:18-37` and `bindings.cpp:10-22` implement socket creation, holder reset and retry. The remaining lower calls have concrete implementations at `runtime.cpp:182-184` for environment creation, pending-owner reset and accepted-session invocation.
+- The selected native source anchors are029ea0 server start,0211b0 initial pending socket,023000/023d20 accepted owner transfer, and023dd0 IO environment construction. No new binary inference or fresh native query is claimed from these source labels.
+
+### Profile, IO and prepared jobs
+
+- Profile creates the default owned environment only when the full provider configuration is empty (`session-profile-source/profile.cpp:763-773`). Graph's OriginalApplication selector now picks OriginalDefault for this provider. Its real session and accept roots remain bound, while the existing023dd0 equality branch produces empty IO handler environments as established in the separate fresh classifier stage.
+- Therefore Policy's intentionally throwing legacy `session_environment`/`accept_environment` defaults (`profile.hpp:55-56`) are not selected by actual greeting/accept: `profile.cpp:447,464-465` dispatches to owned Environment. Custom-provider boundaries remain explicit and were excluded from this normal-default audit.
+- `Profile::create` (`profile.cpp:797-816`) binds the owned Environment, concrete Policy, and selected PreparedJobs/NativeJobs against exact Ports before opening application state. NativeJobs is not left as an unbound constructor object; its `bind_prepared` path is selected by the dynamic interface at line814. Graph's per-session Logic also implements the required JobLogic interface, so Profile's exact native JobLogic checks do not identify a missing selected provider.
+- Runtime binds coherent accept/IO memory, live storage views, flow APIs, frame/write contexts and completion router before serving (`runtime.cpp:153-168,283-335`). WorkerRun's local dispatcher effects delegates to the already-bound Profile/Policy effects. Required generic dispatcher/worker functionality is selected through the recovered concrete router rather than an unused base fallback.
+- OriginalDefault IO completion uses state-zero direct receive/send handling; the separate tracked native family remains explicitly outside this selected constructor-source contract. Fresh response audit established initial factory20/88 preserve the initial family and produce force-post1, matching the owned response adapter. This audit did not reopen that closed candidate or treat absent arbitrary tracked input support as a normal production provider hole.
+
+## Exclusions and next action
+
+OS failures, invalid input/capability/generation checks, explicit custom provider routes, generic tracked-family input, arbitrary callback overlap/reentry, CRT ABI fidelity, and extra unload conditions were not converted into missing-provider findings. A defensive throw is evidence of a gap only if a normal selected caller actually reaches it with valid required inputs; none was established here.
+
+No new implementation candidate or REA address request is proposed from this inspected assembly scope. The useful next step is the separately authorized validation decision or a different concrete native/source discrepancy. Further changes in this scope should begin from an observed caller and its bound provider, not a broad TODO/throw count or historical unresolved-loader description.

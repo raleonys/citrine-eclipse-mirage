@@ -3,6 +3,26 @@
 #include <bit>
 
 namespace anadius::socket_recovered {
+MemoryLookup DispatcherState::lookup_operation(OVERLAPPED* identity,DispatcherOperationBinding*& out)const{
+    if(operation_resolver){
+        DispatcherOperationBinding* found=nullptr;
+        const auto result=operation_resolver->lookup_operation(identity,found);
+        if(result==MemoryLookup::Found)out=found;
+        return result;
+    }
+    for(auto& binding:current_operations())if(binding.operation&&binding.overlapped_identity==identity){out=&binding;return MemoryLookup::Found;}
+    return MemoryLookup::Miss;
+}
+MemoryLookup DispatcherState::lookup_operation(CancelOperation* identity,DispatcherOperationBinding*& out)const{
+    if(operation_resolver){
+        DispatcherOperationBinding* found=nullptr;
+        const auto result=operation_resolver->lookup_operation(identity,found);
+        if(result==MemoryLookup::Found)out=found;
+        return result;
+    }
+    for(auto& binding:current_operations())if(binding.operation&&binding.operation==identity){out=&binding;return MemoryLookup::Found;}
+    return MemoryLookup::Miss;
+}
 namespace {
 CancelOperation* pop(DispatcherQueue& queue){
     auto* const operation=queue.head;
@@ -12,8 +32,9 @@ CancelOperation* pop(DispatcherQueue& queue){
     return operation;
 }
 DispatcherOperationBinding& binding_for(DispatcherState& state,OVERLAPPED* raw){
-    for(auto& binding:state.operations)
-        if(binding.operation && binding.overlapped_identity==raw)return binding;
+    DispatcherOperationBinding* binding=nullptr;const auto result=state.lookup_operation(raw,binding);
+    if(result==MemoryLookup::Found&&binding)return *binding;
+    if(result==MemoryLookup::Ambiguous)throw UnsupportedInput("Completion pointer has ambiguous owned operation binding");
     throw UnsupportedInput("Completion pointer has no live borrowed operation binding");
 }
 void success(WorkerRunResult& result,Category category){result.error=Error{0,category};}
@@ -119,6 +140,21 @@ std::uint64_t dispatch_completion_027c10(DispatcherState& state,std::uint32_t re
             if(status!=0x102U){failure(result,status,errors);return 0;}
             if(requested==0xffffffffU)continue;
             success(result,environment.generic_category);return 0;
+        }
+        if(key==prepared_job_completion_key){
+            auto* notifications=dynamic_cast<DispatcherJobNotifications*>(&effects);
+            if(!notifications)throw UnsupportedInput("Prepared job notification receiver is not selected");
+            notifications->returned_job(bytes); // exact receipt before counter access
+            if(std::bit_cast<std::int32_t>(thread.pending_50)>0){
+                thread.pending_50=0;std::array<std::uintptr_t,2> first,second;
+                (void)effects.copy_exception_024100(first,thread.context_58);
+                auto& copied=effects.copy_exception_024100(second,first);effects.rethrow_029880(copied);
+            }
+            success(result,environment.generic_category);
+            auto previous=entry.work_count_30.load();
+            for(;;){if(!previous)throw UnsupportedInput("Prepared job work pin is missing");if(entry.work_count_30.compare_exchange_weak(previous,previous-1))break;}
+            if(previous==1)stop_worker_02a190(entry,worker_api,errors,worker);
+            return 1;
         }
         if(key==1)continue;
         (void)worker.exchange_wake_38(entry,0);

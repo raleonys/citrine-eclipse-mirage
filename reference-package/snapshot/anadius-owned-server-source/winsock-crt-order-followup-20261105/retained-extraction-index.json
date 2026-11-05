@@ -1,0 +1,66 @@
+[
+  {
+    "kind": "pseudo",
+    "function": "0x18004b9e0",
+    "source": "outputs/anadius-all-functions.pseudo.c",
+    "start_line": 62119,
+    "end_line": 62148,
+    "header": "/* 0x18004b9e0 FUN_18004b9e0; Evidence ev_8d1fa77bcddd0eb58c0f3d1e7f8490c49640d9be72cd8a44223093f1aff2aaf2 */"
+  },
+  {
+    "kind": "pseudo",
+    "function": "0x18004ba30",
+    "source": "outputs/anadius-all-functions.pseudo.c",
+    "start_line": 62149,
+    "end_line": 62198,
+    "header": "/* 0x18004ba30 FUN_18004ba30; Evidence ev_969fa08f3000af55fdfbefaf21047d6514908cf7dfb8ad03cc181894922a872d */"
+  },
+  {
+    "kind": "pseudo",
+    "function": "0x18004bbc8",
+    "source": "outputs/anadius-all-functions.pseudo.c",
+    "start_line": 62231,
+    "end_line": 62276,
+    "header": "/* 0x18004bbc8 dllmain_dispatch; Evidence ev_91e8bcee0b250a2874d0a05b4c68a1b1f88ae3412e43503f48e378bfefef7bc9 */"
+  },
+  {
+    "kind": "pseudo",
+    "function": "0x180064614",
+    "source": "outputs/anadius-all-functions.pseudo.c",
+    "start_line": 88575,
+    "end_line": 88591,
+    "header": "/* 0x180064614 FUN_180064614; Evidence ev_d3385bc6670ce172cf01545c87b7fb8b2b1601d79878e7016455aedca6c70b19 */"
+  },
+  {
+    "kind": "assembly",
+    "function": "0x18004b9e0",
+    "source": "outputs/anadius-all-functions.asm.txt",
+    "start_line": 78707,
+    "end_line": 78733,
+    "header": "; 0x18004b9e0 FUN_18004b9e0; Evidence ev_14275c8735da0d792f1a57803773b974be6d9f92b190fabb9089a5b31f489c71"
+  },
+  {
+    "kind": "assembly",
+    "function": "0x18004ba30",
+    "source": "outputs/anadius-all-functions.asm.txt",
+    "start_line": 78734,
+    "end_line": 78802,
+    "header": "; 0x18004ba30 FUN_18004ba30; Evidence ev_e313cdf981deab3b2e56b180e7becbd1b6a3095a19b2b7eeb786758fe475a6b1"
+  },
+  {
+    "kind": "assembly",
+    "function": "0x18004bbc8",
+    "source": "outputs/anadius-all-functions.asm.txt",
+    "start_line": 78839,
+    "end_line": 78935,
+    "header": "; 0x18004bbc8 dllmain_dispatch; Evidence ev_8a4fcef44115565710b6684a71424833dbc39067b1acfa4284be158f1b0a4630"
+  },
+  {
+    "kind": "assembly",
+    "function": "0x180064614",
+    "source": "outputs/anadius-all-functions.asm.txt",
+    "start_line": 107072,
+    "end_line": 107092,
+    "header": "; 0x180064614 FUN_180064614; Evidence ev_9db292af08a5935c9ea1770203044e37dc4ee9439454178adf306f44360f68b4"
+  }
+]

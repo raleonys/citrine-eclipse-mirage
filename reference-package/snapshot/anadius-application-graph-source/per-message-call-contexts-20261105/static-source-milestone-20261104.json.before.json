@@ -1,0 +1,64 @@
+{
+  "recorded_at": "2026-11-05T00:35:24.890765+00:00",
+  "continuous_goal_active": true,
+  "pending_source_count": 111,
+  "count_is_completion_percentage": false,
+  "latest_source_milestone": {
+    "path": "outputs/anadius-licensing-effects-source/nested-call-views-20261105/evidence.json",
+    "sha256": "da9c1f783850c7feaa3605e0ee0efe717087471b8dd85b1ed904d3cc4de31336"
+  },
+  "decisions": [
+    {
+      "path": "outputs/dll-critical-path/persistence-source-triage-20261104.md",
+      "sha256": "4aaf5c436c87ae20f8b7aed03ab8d1c3298e5fab5dd2643b69ad0dd849d25e3d"
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/tracked-executor-design-20261104/design-review.md",
+      "sha256": "86db8b1dbe54ced062e0e3c935c29b086b55b3955f755722e9ea0cf5c093a568"
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/tracked-executor-design-20261104/source-plan.md",
+      "sha256": "decdd25a3ea2ef940d60e1b63dd3558baed4dd9862b0c3a3dd7c959d835d052e"
+    }
+  ],
+  "tracked_family_decision": "Previous default-only deferral superseded: concrete Initial/Tracked family source and original/child immediate work-stop route implemented and statically reviewed. Full objective active; native ABI/null/EH and real child integration remain unvalidated.",
+  "persistence_decision": "XML/INI BOOL-discard candidate already matched by retained native evidence; no repeat REA or rollback/retry patch.",
+  "awaiting_explicit_rebuild_instruction": true,
+  "async_question_pending": true,
+  "no_answer_is_not_approval": true,
+  "independent_static_work_in_progress": "Integrate Graph registered MessageCall/router/adapters/writers/native-lock ownership consuming actual Information/Content/Licensing views via NativeProfile explicit per-call dependencies, then Profile stable handoff/job/session metadata and Policy current-thread cleanup. Audit actual accept/packet/full028d30 child response ownership and shared business mutations; only then remove NativeJobs gate/select actual immutable policy and author real same-session/distinct-session progress cases. No build authorization.",
+  "next_build_if_explicitly_requested": "Consistent full source compile, appropriate project tests and production DLL link; DLL execution/ZIP update require their own requested scope.",
+  "remaining_validation_limits": [
+    "No compiler, project tests, link, DLL execution or ZIP update. Two test files contain authored assertions, none executed.",
+    "Actual production remains Serialized. Graph MessageCall/router/writers/lock bookkeeping, Profile stable Job/Slot admission, Policy cleanup, actual accept/packet and full child-tail ordering still need coherent integration before NativeJobs gate removal/policy enable.",
+    "Authentication identity and binding history stay owner-level. Per-view semantic used_ is HOST execution bookkeeping, not a new shared native bit. Unbound diagnostics cannot invent fallback; first binding after their normal close remains legal.",
+    "AttemptState attempted/blocked, token string, maps and Runtime/Online are the SAME shared business roots. General simultaneous mutating license requests/invalidation and arbitrary foreign provider/SDK behavior are not certified. Primary A diagnostic does not mutate those fields.",
+    "Normal close needs the exact live Operation and borrowed checkpoint backing. Unknown file/provider prefixes remain registered/shared-owner-failed without guessed cleanup or retry; closed handle destruction is metadata-only.",
+    "RealPrepared diagnostic/license and file/UTC overlap plus isolated705 retention are source fixtures. Offline fake_auth branch does not prove Online ownership; separate own-EXE unit delegates to the actual owned slot30 path. Neither is actual Graph/NativeJobs/network validation.",
+    "Historical source/build/link/DLL/ZIP and original binaries unchanged. Prior added headers remain build_sha256:null until a consistent explicitly authorized rebuild. Native ABI/EH/full equivalence remains open; no invented percentage."
+  ],
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "production_provider_audit": {
+    "path": "outputs/dll-critical-path/production-provider-source-audit-20261104.md",
+    "sha256": "625ef8d048d5b7295762a5de06385fbd9b94817b4194642fb0b1931fdaf7c6a9",
+    "status": "BOUNDED_SOURCE_AUDIT_NO_NEW_GAP"
+  },
+  "current_validation_gate": {
+    "reason": "Explicit rebuild required for compiler/test/link evidence; further source reconstruction work remains useful and active.",
+    "consecutive_goal_turns_at_impasse": 0,
+    "no_repeat_question": true
+  },
+  "system_message_decision": "Concrete020950 default system message callback implemented and statically reviewed; generic/misc/explicit override preserved; native EH/ABI remains open.",
+  "latest_compiler_provider_audit": {
+    "path": "outputs/anadius-session-policy-source/worker-error-028240-20261104/compiler-provider-audit-index.json",
+    "sha256": "4084d937bcbf23e44f29c9eefe1d5bd9ca9226d4883daa76e55cf391b6f91827"
+  },
+  "native_system_diagnostic_resolution": {
+    "path": "outputs/anadius-session-policy-source/native-stop-diagnostic-20261104/evidence.json",
+    "sha256": "fbc54501e1df8602f303e77cbc2dd852249d2521a03512118b28b847995fe8c1"
+  }
+}

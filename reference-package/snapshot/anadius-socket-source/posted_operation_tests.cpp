@@ -1,4 +1,5 @@
 #include "posted_operation.hpp"
+#include "handler_dispatch.hpp"
 #include <algorithm>
 #include <functional>
 #include <iostream>
@@ -50,6 +51,31 @@ void enqueue(){
  Fixture live;s::CancelOperation op,old,new_tail;live.entry.completion.tail=&old;live.gate.on_enter=[&]{live.entry.completion.head=live.entry.completion.tail=&new_tail;};live.api.on_post=[](auto,auto){return 0;};s::enqueue_posted_028ca0(live.entry,op,0,live.api);check(!old.next&&new_tail.next==&op,"fallback reloads tail after entering gate");
  Fixture deletion;auto* heap=new s::CancelOperation;deletion.api.on_post=[&](auto,auto raw){check(raw==&heap->overlapped,"successful publication sees live heap operation");delete heap;heap=nullptr;return -1;};s::enqueue_posted_028ca0(deletion.entry,*heap,0,deletion.api);check(!heap&&deletion.entry.work_count_30==1&&!deletion.gate.entries,"successful publication may end operation lifetime immediately");
 }
+void typed_handler_slot(){
+ struct Handler final:s::OwnedHandlerTask{std::function<void(std::uint8_t)> effect;void call_slot_00(std::uint8_t flag)override{if(effect)effect(flag);}};
+ {
+  Fixture f;Handler fun,replacement;s::OwnedHandlerTask* source=&fun;f.worker.get=[&](auto){return &f.context;};
+  fun.effect=[&](auto flag){check(flag==1&&!source,"typed inline handler sees the real caller slot consumed before callback");source=&replacement;};
+  s::dispatch_posted_022e40(f.executor,source,f.env(),f.worker,f.api,f.memory);
+  check(source==&replacement&&!f.entry.work_count_30&&!f.api.posts&&f.memory.sizes.empty(),"typed inline overload preserves callback replacement and acquires no posted pin");
+ }
+ {
+  Fixture f;Handler fun;s::OwnedHandlerTask* source=&fun;f.executor.flags_0c=1;unsigned calls=0;
+  f.memory.on_allocate=[&](auto&){check(source==&fun,"typed post allocation retains the true caller slot before transfer");};
+  f.api.on_post=[&](auto,auto){check(!source&&f.entry.work_count_30==1,"typed post publishes the true caller slot null with one separate posted pin");return 1;};
+  fun.effect=[&](auto flag){check(flag==1&&!source,"actual posted completion consumes the same typed handler");++calls;};
+  s::dispatch_posted_022e40(f.executor,source,f.env(),f.worker,f.api,f.memory);
+  auto& op=*f.memory.nodes.front()->op;check(!source&&!calls&&op.functor_38==static_cast<s::PostedFunctor*>(&fun),"posted envelope retains actual handler through its shared slot00 base");
+  s::complete_posted_027120(1,op,f.env(),f.worker,f.memory);check(calls==1&&f.memory.frees.size()==1,"actual posted callback retires envelope then invokes handler once");
+ }
+ for(bool after_transfer:{false,true}){
+  Fixture f;Handler fun;s::OwnedHandlerTask* source=&fun;f.executor.flags_0c=1;
+  if(after_transfer)f.api.on_post=[](auto,auto)->std::int32_t{throw std::runtime_error("controlled unknown post");};
+  else f.memory.on_allocate=[](auto&){throw std::runtime_error("controlled allocation effect");};
+  bool caught=false;try{s::dispatch_posted_022e40(f.executor,source,f.env(),f.worker,f.api,f.memory);}catch(const std::runtime_error&){caught=true;}
+  check(caught&&source==(after_transfer?nullptr:&fun)&&f.entry.work_count_30==unsigned(after_transfer),"typed throwing dispatch preserves exact before/after-transfer slot and posted-pin prefix");
+ }
+}
 void executor(){
  for(std::uint32_t flags:{0U,2U,0x80000000U}){Fixture f;f.executor.flags_0c=flags;Functor fun,replacement;s::PostedFunctor* source=&fun;s::WorkerTlsContext first{nullptr,nullptr,&f.context};f.worker.get=[&](auto){return &first;};fun.effect=[&](auto flag){check(flag==1&&!source&&!f.entry.work_count_30,"inline consumes source before invoke with no queued work");source=&replacement;};s::dispatch_posted_022e40(f.executor,source,f.env(),f.worker,f.api,f.memory);check(source==&replacement&&fun.calls==std::vector<std::uint8_t>{1}&&!f.api.posts&&f.worker.gets==1&&f.memory.sizes.empty(),"first matching worker frame takes inline path without allocation");}
  for(std::uint32_t flags:{1U,3U,UINT32_MAX}){Fixture f;Functor fun;s::PostedFunctor* source=&fun;f.executor.flags_0c=flags;f.worker.get=[&](auto){return &f.context;};s::dispatch_posted_022e40(f.executor,source,f.env(),f.worker,f.api,f.memory);auto& n=*f.memory.nodes.front();check(!source&&fun.calls.empty()&&n.op->functor_38==&fun&&n.op->callback_identity_28==0x180027120ULL&&n.op->operation.queued==1,"flagbit0 forces ownership transfer and posted callback identity");check(f.worker.gets==1&&f.api.posts==1&&f.memory.sizes==std::vector<std::uint64_t>{73}&&n.bytes[72]==std::byte{18},"forced queue skips inline TLS query and uses current allocator context");check(std::all_of(n.bytes.begin(),n.bytes.begin()+sizeof(OVERLAPPED),[](auto b){return b==std::byte{};})&&n.bytes[sizeof(OVERLAPPED)]==std::byte{0xa5},"post initialization zeroes only SDK-sized prefix of bounded raw allocation");}
@@ -62,4 +88,35 @@ void executor(){
  Fixture immediate;source=&fun;immediate.executor.flags_0c=1;immediate.api.on_post=[&](auto,auto){auto& n=*immediate.memory.nodes.back();n.op.reset();return 1;};s::dispatch_posted_022e40(immediate.executor,source,immediate.env(),immediate.worker,immediate.api,immediate.memory);check(!immediate.memory.nodes.back()->op&&!source&&immediate.worker.gets==1,"executor final null cleanup never reads operation deleted inside post");
 }
 }
-int main(){try{allocator();consume_and_cleanup();enqueue();executor();std::cout<<"PASS: "<<checks<<" socket posted operation checks; six normal bodies, two-slot storage cache, source ownership, live TLS/scheduler and actual operation/functor lifetime ends\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+namespace {
+struct StorageOwner final:s::OperationStorageResolver {
+ s::OperationStorage* storage=nullptr;s::MemoryLookup result=s::MemoryLookup::Found;unsigned calls=0;
+ s::MemoryLookup lookup_storage(std::uintptr_t identity,s::OperationStorage*& output)override{
+  ++calls;if(result!=s::MemoryLookup::Found)return result;
+  if(!storage||storage->identity!=identity)return s::MemoryLookup::Miss;
+  output=storage;return s::MemoryLookup::Found;
+ }
+};
+void authoritative_cache_owner(){
+ for(bool handler:{false,true}){
+  Fixture f;auto& stale=f.memory.add(0x2000);Memory backing;auto& live=backing.add(0x2000);
+  stale.bytes[0]=std::byte{1};live.bytes[0]=std::byte{18};StorageOwner owner;owner.storage=&live.storage;
+  auto environment=f.env();environment.storage_resolver=&owner;
+  const auto slot=handler?4u:0u;f.state.cache_00[slot]=live.storage.identity;
+  auto& got=handler?s::allocate_handler_cached_021900(&f.state,72,16,environment,f.memory):s::allocate_cached_021820(0,&f.state,72,16,environment,f.memory);
+  check(&got==&live.storage&&live.bytes[72]==std::byte{18}&&stale.bytes[72]==std::byte{0xa5}&&owner.calls==1,"actual posted/handler cache uses exact owner storage instead of stale same-identity row");
+  check(!f.state.cache_00[slot]&&f.memory.sizes.empty()&&f.memory.frees.empty(),"owner cache hit retains original marker/unlink path without fallback allocation or free");
+ }
+ for(auto result:{s::MemoryLookup::Miss,s::MemoryLookup::Ambiguous}){
+  Fixture f;auto& live=f.memory.add(0x2000);live.bytes[0]=std::byte{18};f.state.cache_00[0]=live.storage.identity;
+  StorageOwner owner;owner.storage=&live.storage;owner.result=result;auto environment=f.env();environment.storage_resolver=&owner;
+  unsupported([&]{(void)s::allocate_cached_021820(0,&f.state,72,16,environment,f.memory);});
+  check(f.state.cache_00[0]==0x2000&&f.memory.sizes.empty()&&f.memory.frees.empty(),"authoritative miss/ambiguity keeps native cache prefix and never uses valid legacy fallback");
+ }
+ Fixture legacy;auto& first=legacy.memory.add(0x2000);Memory alternate;auto& second=alternate.add(0x2000);
+ first.bytes[0]=second.bytes[0]=std::byte{18};legacy.memory.bindings[1]={0x2000,&second.storage};legacy.state.cache_00[0]=0x2000;
+ auto& got=s::allocate_cached_021820(0,&legacy.state,72,16,legacy.env(),legacy.memory);
+ check(&got==&first.storage,"legacy null resolver retains first-match duplicate behavior");
+}
+}
+int main(){try{allocator();consume_and_cleanup();enqueue();executor();typed_handler_slot();authoritative_cache_owner();std::cout<<"PASS: "<<checks<<" socket posted operation checks; six normal bodies, two-slot storage cache, source ownership, live TLS/scheduler and actual operation/functor lifetime ends\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

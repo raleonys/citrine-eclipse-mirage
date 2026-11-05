@@ -1,0 +1,8 @@
+{
+  "duration_ms": 85,
+  "exit": 0,
+  "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\application-graph-parallel\\graph-parallel-stop-diagnostic.exe",
+  "arguments": [
+    "--prepared-profile-parallel"
+  ]
+}

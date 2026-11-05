@@ -1,0 +1,17 @@
+DIAG entering strings_contract
+DIAG entering strings_registered_header_growth
+DIAG entering profile_dependencies
+DIAG entering profile_selected_environment_owner
+DIAG entering profile_identity
+DIAG terminating
+DIAG terminate frame 0 RVA 0xe7f6
+DIAG terminate frame 1 RVA 0xcb6ed
+DIAG terminate frame 2 RVA 0xcb666
+DIAG terminate frame 3 RVA 0x2d40b
+DIAG terminate frame 4 RVA 0x2d47d
+DIAG terminate frame 5 RVA 0x1260b
+DIAG terminate frame 6 RVA 0x1ef67
+DIAG terminate frame 7 RVA 0x3138
+DIAG terminate frame 8 RVA 0x110d
+DIAG terminate frame 9 RVA 0x55288dda7
+DIAG terminate frame 10 RVA 0x55384ee4c

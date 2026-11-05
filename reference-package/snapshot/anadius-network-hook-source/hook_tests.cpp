@@ -107,6 +107,33 @@ void test_bounds_and_failures(){
     {Fixture f;f.attempts=14;Fake e(f);e.throw_at="dialog";auto b=make_address(2,3216);const auto old=b;
      try{connect_00fd00(f.refs(),e,9,b,16);}catch(const Injected&){require(f.attempts==15&&b==old&&!e.has("exit"),"dialog exception keeps increment but skips exit/write/callback");}}
 }
+void test_prefix_classification(){
+    require(original_only_00fd00(16,28,{},-1),"unknown length classification does not access null backing");
+    for(auto family:{std::uint16_t{0},std::uint16_t{2},std::uint16_t{23},std::uint16_t{99}}){
+        auto address=make_address(family,3216);const auto old=address;
+        for(int length:{-1,16,28})require(original_only_00fd00(16,28,std::span{address}.first(2),length)==
+            !((length==16&&family==2)||(length==28&&family==23)),"family-only classification needs no port bytes");
+        require(address==old,"classification never mutates caller backing");
+    }
+    auto equal=make_address(23,80);
+    require(!original_only_00fd00(4,4,std::span{equal}.first(2),4),"equal lengths preserve second family alternative");
+    require(!original_only_00fd00(16,28,make_address(2,80),16)&&!original_only_00fd00(16,28,make_address(2,443),16),
+        "HTTP/HTTPS are shared-state paths even when they skip wait");
+    for(std::uint16_t port:{0,80,443,3216,65535})require(requested_port_00fd00(make_address(2,port))==port,"pure extraction retains requested network-order port");
+    try{requested_port_00fd00(std::span{equal}.first(3));require(false,"short port prefix rejected");}
+    catch(const OutOfEvidenceInput&){}
+}
+void test_redirect_body_split(){
+    Fixture f;Fake e(f);auto address=make_address(2,3216);e.change_flush=true;e.after_flush=5555;
+    redirect_body_00fd00(e,address,3216,f.port,f.attempts);
+    require(f.attempts==1&&get_port(address)==5555&&e.connects==0&&!e.has("wait"),"extracted body keeps post-log live port reread and has no wait/original call");
+    Fixture terminal;terminal.attempts=14;Fake end(terminal);auto unchanged=make_address(2,3216);const auto old=unchanged;
+    try{redirect_body_00fd00(end,unchanged,3216,terminal.port,terminal.attempts);require(false,"terminal body must not return");}
+    catch(const Exit& value){require(value.code==0xffffffffu&&terminal.attempts==15&&unchanged==old&&end.connects==0,"terminal15 leaves sockaddr/original untouched after increment");}
+    Fixture short_input;Fake bound(short_input);auto prefix=make_address(2,3216);
+    try{redirect_body_00fd00(bound,std::span{prefix}.first(3),3216,short_input.port,short_input.attempts);require(false,"body requires full writable prefix");}
+    catch(const OutOfEvidenceInput&){require(bound.events.empty()&&short_input.attempts==0,"short body rejects before any effect");}
+}
 struct CleanupFake final : CleanupEffects{
     std::vector<std::string> events;std::vector<std::uintptr_t> seen;std::vector<std::int32_t> statuses;
     std::string throw_at;std::int32_t engine_status{};std::uintptr_t* mutate{};
@@ -158,6 +185,6 @@ void test_execution_composition(){
     require(!remaining.has("wait")&&get_port(address)==4000&&f.attempts==1,"wait core replaces external wait and published port reaches callback");
 }
 }
-int main(){try{test_decisions();test_dynamic_state();test_bounds_and_failures();test_cleanup();test_execution_composition();
+int main(){try{test_decisions();test_dynamic_state();test_bounds_and_failures();test_prefix_classification();test_redirect_body_split();test_cleanup();test_execution_composition();
  std::cout<<"PASS: "<<checks<<" connect/cleanup checks; synthetic effects, no sockets/hooks/process exit\n";
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"Unexpected test exception\n";return 1;}}

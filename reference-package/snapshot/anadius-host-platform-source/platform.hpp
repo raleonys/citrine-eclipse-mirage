@@ -2,6 +2,7 @@
 #include "../anadius-bootstrap-backend-source/backend.hpp"
 #include "../hook-engine-source/adapters.hpp"
 #include "../anadius-encoding-source/encoding.hpp"
+#include "../anadius-original-provider-source/originals.hpp"
 #include <memory>
 #include <ostream>
 
@@ -17,6 +18,10 @@ struct Resources {
     std::unique_ptr<encoding_recovered::Calls> encoding=std::make_unique<encoding_recovered::NativeCalls>();
     std::unique_ptr<encoding_recovered::Errors> errors=std::make_unique<encoding_recovered::PortableErrors>();
     HostApi api=native_host_api();
+    // Optional exact shared Policy/host original publication. Selected owning
+    // assembly sets this before consumption; direct legacy Domain use is empty.
+    // Appending this field changes HOST Resources/Domain layout: rebuild users.
+    std::shared_ptr<original_provider::Publication> original_publication{};
 };
 // Explicit shared owner, not a native Context factory. callback_lifetime must
 // retain resolver/context/binding/state as needed. Its presence does not prove

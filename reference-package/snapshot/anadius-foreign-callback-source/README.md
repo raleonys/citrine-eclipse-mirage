@@ -1,3 +1,7 @@
+<!-- PENDING-SOURCE-CHANGES -->
+2026-11-05: Kullanıcının açık isteğiyle güncel tam ortak derleme ve testler geçti. Üretim DLL linki başarılı; DLL yüklenmedi/çalıştırılmadı. 296 nesne, 356 test grubu ve 19 framework terminal senaryosu doğrulandı. Güncel kaynakların son tam derlemeye göre bekleyen farkı 0. Bu sonuç tam davranış/loader/native ABI eşdeğerliği kanıtı değildir. Kanıt: `dll-critical-path/current-rebuild.evidence.json`. Önceki aşama metinleri tarihseldir; ZIP sonucu ayrı paket kaydındadır.
+<!-- END-PENDING-SOURCE-CHANGES -->
+
 # B18 — Ardışık foreign callback ve PTD sahipliği
 
 Farklı host thread’lerinden **ardışık** callback’ler artık açık bir aynı-domain PTD scope içinde çalışabilir. Tek aktif callback kabul edilir; overlap, reentry ve setup/closing sırasında desteklenmeyen girişler erken reddedilir. Bu, genel eşzamanlı worker/callback veya özgün native CRT eşdeğerliği değildir.

@@ -1,0 +1,4071 @@
+{
+  "status": "STATIC_REVIEW_AID_NOT_NATIVE_EQUIVALENCE",
+  "method": "Retained Ghidra direct004080/005560 expressions plus independent read-only PE.rdata literals, compared to broad mapped source-unit literal presence. No source/project execution.",
+  "limits": [
+    "Helpers, dynamic values, inline integer-built strings and indirect operations are not expanded.",
+    "Whole-unit literal presence proves neither selected call use nor ordering. Absences require manual review."
+  ],
+  "original_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "sources": {
+    "outputs/anadius-messages-source/messages.cpp": "2eda8d8cdd82a783b694ef1c8f7ad97b643d3b50589694a76239c14e1a970f9c",
+    "outputs/anadius-session-source/handler.cpp": "2584e87dc37426924a2f3e07ff7388744b0d2bf5b875aaaa7e6369e51584cd42",
+    "outputs/anadius-handlers-source/handlers.cpp": "8180eb0f47bca1708c05ec2f6c72ef4e54da67a832cbcc5ad4b482e46a09c400",
+    "outputs/anadius-content-handlers-source/content_handlers.cpp": "4cb847e398b3a81b4c9149a711fecfe0532265fb5c974f33aed73591700e947f",
+    "outputs/anadius-misc-handlers-source/misc_handlers.cpp": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+    "outputs/anadius-license-source/license.cpp": "87ea1eebab23fa2bbaff52689e4a076428e5cd8f292e028fbba985d4ce4376c0",
+    "outputs/anadius-licensing-effects-source/effects.cpp": "c66cf34ed9b2e23772c48e834810e5afca0200083dd14b30e0eb508547e7e5d9"
+  },
+  "functions": [
+    {
+      "address": "0x18002d540",
+      "commands": [],
+      "pseudo_evidence": "ev_53566f426581ee5026cc02fda62aabed3b9849f460e2d315566e5aada6038d6a",
+      "source_definitions": [
+        {
+          "address": "0x18002d540",
+          "symbol": "initial_message_02d540",
+          "line": 55,
+          "path": "outputs/anadius-messages-source/messages.cpp",
+          "sha256": "2eda8d8cdd82a783b694ef1c8f7ad97b643d3b50589694a76239c14e1a970f9c",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        },
+        {
+          "address": "0x18002d540",
+          "symbol": "MessageHandler::initial_message_02d540",
+          "line": 7,
+          "path": "outputs/anadius-session-source/handler.cpp",
+          "sha256": "2584e87dc37426924a2f3e07ff7388744b0d2bf5b875aaaa7e6369e51584cd42",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080((longlong *)local_158,0x180084c58,'\\0');",
+          "name": {
+            "value": "LSX",
+            "address": "0x180084c58",
+            "file_offset": "0x83458",
+            "bytes_hex": "4c535800"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080((longlong *)local_158,0x180084c5c,'\\0');",
+          "name": {
+            "value": "Event",
+            "address": "0x180084c5c",
+            "file_offset": "0x8345c",
+            "bytes_hex": "4576656e7400"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560((longlong *)local_158,0x180084c64,&DAT_180084d8c);",
+          "name": {
+            "value": "sender",
+            "address": "0x180084c64",
+            "file_offset": "0x83464",
+            "bytes_hex": "73656e64657200"
+          },
+          "value": {
+            "value": "EALS",
+            "address": "0x180084d8c",
+            "file_offset": "0x8358c",
+            "bytes_hex": "45414c5300"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080((longlong *)local_158,0x1800862e0,'\\0');",
+          "name": {
+            "value": "Challenge",
+            "address": "0x1800862e0",
+            "file_offset": "0x84ae0",
+            "bytes_hex": "4368616c6c656e676500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560((longlong *)local_158,0x180084cb0,pbVar1);",
+          "name": {
+            "value": "version",
+            "address": "0x180084cb0",
+            "file_offset": "0x834b0",
+            "bytes_hex": "76657273696f6e00"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560((longlong *)local_158,0x1800862f8,(byte *)\"release\");",
+          "name": {
+            "value": "build",
+            "address": "0x1800862f8",
+            "file_offset": "0x84af8",
+            "bytes_hex": "6275696c6400"
+          },
+          "value": {
+            "value": "release",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560((longlong *)local_158,0x180084ca8,pbVar1);",
+          "name": {
+            "value": "key",
+            "address": "0x180084ca8",
+            "file_offset": "0x834a8",
+            "bytes_hex": "6b657900"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002e5f0",
+      "commands": [
+        "GetConfig"
+      ],
+      "pseudo_evidence": "ev_08c9cbb7d94139171f29ba86d86cd51101e76b2d6d913d183d8a51258f2dec5b",
+      "source_definitions": [
+        {
+          "address": "0x18002e5f0",
+          "symbol": "get_config_02e5f0",
+          "line": 6,
+          "path": "outputs/anadius-handlers-source/handlers.cpp",
+          "sha256": "8180eb0f47bca1708c05ec2f6c72ef4e54da67a832cbcc5ad4b482e46a09c400",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084cf8,'\\0');",
+          "name": {
+            "value": "GetConfigResponse",
+            "address": "0x180084cf8",
+            "file_offset": "0x834f8",
+            "bytes_hex": "476574436f6e666967526573706f6e736500"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,&DAT_180083acc);",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "SDK",
+            "address": "0x180083acc",
+            "file_offset": "0x822cc",
+            "bytes_hex": "53444b00"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"PROFILE\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "PROFILE",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,&DAT_180084d34);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "XMPP",
+            "address": "0x180084d34",
+            "file_offset": "0x83534",
+            "bytes_hex": "584d505000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"PRESENCE\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "PRESENCE",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,&DAT_180084d34);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "XMPP",
+            "address": "0x180084d34",
+            "file_offset": "0x83534",
+            "bytes_hex": "584d505000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"FRIENDS\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "FRIENDS",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"Commerce\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "Commerce",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"COMMERCE\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "COMMERCE",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"RECENTPLAYER\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "RECENTPLAYER",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,&DAT_180084d78);",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "IGO",
+            "address": "0x180084d78",
+            "file_offset": "0x83578",
+            "bytes_hex": "49474f00"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,&DAT_180084d7c);",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "MISC",
+            "address": "0x180084d7c",
+            "file_offset": "0x8357c",
+            "bytes_hex": "4d49534300"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,&DAT_180084d8c);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EALS",
+            "address": "0x180084d8c",
+            "file_offset": "0x8358c",
+            "bytes_hex": "45414c5300"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"LOGIN\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "LOGIN",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"Utility\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "Utility",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"UTILITY\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "UTILITY",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,&DAT_180084d34);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "XMPP",
+            "address": "0x180084d34",
+            "file_offset": "0x83534",
+            "bytes_hex": "584d505000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,&DAT_180084d34);",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "XMPP",
+            "address": "0x180084d34",
+            "file_offset": "0x83534",
+            "bytes_hex": "584d505000"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,&DAT_180084d34);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "XMPP",
+            "address": "0x180084d34",
+            "file_offset": "0x83534",
+            "bytes_hex": "584d505000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,&DAT_180084da8);",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "CHAT",
+            "address": "0x180084da8",
+            "file_offset": "0x835a8",
+            "bytes_hex": "4348415400"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"IGO_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "IGO_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,&DAT_180084d8c);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EALS",
+            "address": "0x180084d8c",
+            "file_offset": "0x8358c",
+            "bytes_hex": "45414c5300"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"EALS_EVENTS\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "EALS_EVENTS",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"LOGIN_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "LOGIN_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,&DAT_180084d34);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "XMPP",
+            "address": "0x180084d34",
+            "file_offset": "0x83534",
+            "bytes_hex": "584d505000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"INVITE_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "INVITE_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"PROFILE_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "PROFILE_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,&DAT_180084d34);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "XMPP",
+            "address": "0x180084d34",
+            "file_offset": "0x83534",
+            "bytes_hex": "584d505000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"PRESENCE_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "PRESENCE_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,&DAT_180084d34);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "XMPP",
+            "address": "0x180084d34",
+            "file_offset": "0x83534",
+            "bytes_hex": "584d505000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"FRIENDS_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "FRIENDS_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"Commerce\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "Commerce",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"COMMERCE_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "COMMERCE_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,&DAT_180084d34);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "XMPP",
+            "address": "0x180084d34",
+            "file_offset": "0x83534",
+            "bytes_hex": "584d505000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"CHAT_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "CHAT_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"DOWNLOAD_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "DOWNLOAD_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"PERMISSION\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "PERMISSION",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"RESOURCES\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "RESOURCES",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"BLOCKED_USERS\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "BLOCKED_USERS",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"BLOCKED_USER_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "BLOCKED_USER_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"GET_USERID\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "GET_USERID",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"ONLINE_STATUS_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "ONLINE_STATUS_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"ACHIEVEMENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "ACHIEVEMENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"ACHIEVEMENT_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "ACHIEVEMENT_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"BROADCAST_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "BROADCAST_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,&DAT_180084f14);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "PI",
+            "address": "0x180084f14",
+            "file_offset": "0x83714",
+            "bytes_hex": "504900"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"PROGRESSIVE_INSTALLATION\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "PROGRESSIVE_INSTALLATION",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,&DAT_180084f14);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "PI",
+            "address": "0x180084f14",
+            "file_offset": "0x83714",
+            "bytes_hex": "504900"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"PROGRESSIVE_INSTALLATION_EVENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "PROGRESSIVE_INSTALLATION_EVENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084ce0,'\\0');",
+          "name": {
+            "value": "Service",
+            "address": "0x180084ce0",
+            "file_offset": "0x834e0",
+            "bytes_hex": "5365727669636500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083954,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084ce8,(byte *)\"CONTENT\");",
+          "name": {
+            "value": "Facility",
+            "address": "0x180084ce8",
+            "file_offset": "0x834e8",
+            "bytes_hex": "466163696c69747900"
+          },
+          "value": {
+            "value": "CONTENT",
+            "basis": "retained_pseudocode_literal"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002f530",
+      "commands": [
+        "GetProfile"
+      ],
+      "pseudo_evidence": "ev_11dd60d55d88b95820aef3b8180dcbda9897dfb99616ab5c1180348775bb947b",
+      "source_definitions": [
+        {
+          "address": "0x18002f530",
+          "symbol": "get_profile_02f530",
+          "line": 34,
+          "path": "outputs/anadius-handlers-source/handlers.cpp",
+          "sha256": "8180eb0f47bca1708c05ec2f6c72ef4e54da67a832cbcc5ad4b482e46a09c400",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084f58,'\\0');",
+          "name": {
+            "value": "GetProfileResponse",
+            "address": "0x180084f58",
+            "file_offset": "0x83758",
+            "bytes_hex": "47657450726f66696c65526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083b68,pbVar4);",
+          "name": {
+            "value": "Country",
+            "address": "0x180083b68",
+            "file_offset": "0x82368",
+            "bytes_hex": "436f756e74727900"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084f70,pbVar4);",
+          "name": {
+            "value": "GeoCountry",
+            "address": "0x180084f70",
+            "file_offset": "0x83770",
+            "bytes_hex": "47656f436f756e74727900"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083b30,pbVar4);",
+          "name": {
+            "value": "PersonaId",
+            "address": "0x180083b30",
+            "file_offset": "0x82330",
+            "bytes_hex": "506572736f6e61496400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084f80,(byte *)\"false\");",
+          "name": {
+            "value": "IsTrialSubscriber",
+            "address": "0x180084f80",
+            "file_offset": "0x83780",
+            "bytes_hex": "4973547269616c5375627363726962657200"
+          },
+          "value": {
+            "value": "false",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083ba8,pbVar4);",
+          "name": {
+            "value": "SubscriberLevel",
+            "address": "0x180083ba8",
+            "file_offset": "0x823a8",
+            "bytes_hex": "537562736372696265724c6576656c00"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084f98,pbVar4);",
+          "name": {
+            "value": "Persona",
+            "address": "0x180084f98",
+            "file_offset": "0x83798",
+            "bytes_hex": "506572736f6e6100"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083b3c,pbVar4);",
+          "name": {
+            "value": "UserId",
+            "address": "0x180083b3c",
+            "file_offset": "0x8233c",
+            "bytes_hex": "55736572496400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084fa0,pbVar4);",
+          "name": {
+            "value": "CommerceCountry",
+            "address": "0x180084fa0",
+            "file_offset": "0x837a0",
+            "bytes_hex": "436f6d6d65726365436f756e74727900"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084fb0,pbVar4);",
+          "name": {
+            "value": "CommerceCurrency",
+            "address": "0x180084fb0",
+            "file_offset": "0x837b0",
+            "bytes_hex": "436f6d6d6572636543757272656e637900"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084fc8,&DAT_180080097);",
+          "name": {
+            "value": "AvatarId",
+            "address": "0x180084fc8",
+            "file_offset": "0x837c8",
+            "bytes_hex": "417661746172496400"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083b80,pbVar4);",
+          "name": {
+            "value": "IsSubscriber",
+            "address": "0x180083b80",
+            "file_offset": "0x82380",
+            "bytes_hex": "49735375627363726962657200"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084fd8,pbVar1);",
+          "name": {
+            "value": "UserIndex",
+            "address": "0x180084fd8",
+            "file_offset": "0x837d8",
+            "bytes_hex": "55736572496e64657800"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083bb8,pbVar1);",
+          "name": {
+            "value": "IsUnderAge",
+            "address": "0x180083bb8",
+            "file_offset": "0x823b8",
+            "bytes_hex": "4973556e64657241676500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083b90,pbVar1);",
+          "name": {
+            "value": "IsSteamSubscriber",
+            "address": "0x180083b90",
+            "file_offset": "0x82390",
+            "bytes_hex": "4973537465616d5375627363726962657200"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002f2d0",
+      "commands": [
+        "GetInternetConnectedState"
+      ],
+      "pseudo_evidence": "ev_b41f62dc5d99caf4a8270a002c9ba194875600615292d07b03df8f58787bc408",
+      "source_definitions": [
+        {
+          "address": "0x18002f2d0",
+          "symbol": "get_connected_02f2d0",
+          "line": 58,
+          "path": "outputs/anadius-handlers-source/handlers.cpp",
+          "sha256": "8180eb0f47bca1708c05ec2f6c72ef4e54da67a832cbcc5ad4b482e46a09c400",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084fe8,'\\0');",
+          "name": {
+            "value": "InternetConnectedState",
+            "address": "0x180084fe8",
+            "file_offset": "0x837e8",
+            "bytes_hex": "496e7465726e6574436f6e6e6563746564537461746500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085000,pbVar2);",
+          "name": {
+            "value": "connected",
+            "address": "0x180085000",
+            "file_offset": "0x83800",
+            "bytes_hex": "636f6e6e656374656400"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002f7c0",
+      "commands": [
+        "GetSetting"
+      ],
+      "pseudo_evidence": "ev_1b508c22e6541f42d9a3d84a7baa8e9429663fa9564d19f2080abc16619c08eb",
+      "source_definitions": [
+        {
+          "address": "0x18002f7c0",
+          "symbol": "get_setting_02f7c0",
+          "line": 76,
+          "path": "outputs/anadius-handlers-source/handlers.cpp",
+          "sha256": "8180eb0f47bca1708c05ec2f6c72ef4e54da67a832cbcc5ad4b482e46a09c400",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085020,'\\0');",
+          "name": {
+            "value": "GetSettingResponse",
+            "address": "0x180085020",
+            "file_offset": "0x83820",
+            "bytes_hex": "47657453657474696e67526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085038,pbVar8);",
+          "name": {
+            "value": "Setting",
+            "address": "0x180085038",
+            "file_offset": "0x83838",
+            "bytes_hex": "53657474696e6700"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002fa60",
+      "commands": [
+        "GetSettings"
+      ],
+      "pseudo_evidence": "ev_43da82c04eb58457c7bb8bb746f2ea56e82a26751dfe07349fc109fe011f1194",
+      "source_definitions": [
+        {
+          "address": "0x18002fa60",
+          "symbol": "get_settings_02fa60",
+          "line": 83,
+          "path": "outputs/anadius-handlers-source/handlers.cpp",
+          "sha256": "8180eb0f47bca1708c05ec2f6c72ef4e54da67a832cbcc5ad4b482e46a09c400",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085040,'\\0');",
+          "name": {
+            "value": "GetSettingsResponse",
+            "address": "0x180085040",
+            "file_offset": "0x83840",
+            "bytes_hex": "47657453657474696e6773526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085068,pbVar1);",
+          "name": {
+            "value": "Environment",
+            "address": "0x180085068",
+            "file_offset": "0x83868",
+            "bytes_hex": "456e7669726f6e6d656e7400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085090,pbVar1);",
+          "name": {
+            "value": "IsIGOAvailable",
+            "address": "0x180085090",
+            "file_offset": "0x83890",
+            "bytes_hex": "497349474f417661696c61626c6500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800850b8,pbVar1);",
+          "name": {
+            "value": "IsTelemetryEnabled",
+            "address": "0x1800850b8",
+            "file_offset": "0x838b8",
+            "bytes_hex": "497354656c656d65747279456e61626c656400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800850e8,pbVar1);",
+          "name": {
+            "value": "IsManualOffline",
+            "address": "0x1800850e8",
+            "file_offset": "0x838e8",
+            "bytes_hex": "49734d616e75616c4f66666c696e6500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083a60,pbVar1);",
+          "name": {
+            "value": "Language",
+            "address": "0x180083a60",
+            "file_offset": "0x82260",
+            "bytes_hex": "4c616e677561676500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085108,pbVar1);",
+          "name": {
+            "value": "IsIGOEnabled",
+            "address": "0x180085108",
+            "file_offset": "0x83908",
+            "bytes_hex": "497349474f456e61626c656400"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x180030ee0",
+      "commands": [
+        "QueryContent"
+      ],
+      "pseudo_evidence": "ev_a0a9549401f9822fda2afebad150488cd69d8a58c6f86ecae0c48842b4751608",
+      "source_definitions": [
+        {
+          "address": "0x180030ee0",
+          "symbol": "query_content_030ee0",
+          "line": 70,
+          "path": "outputs/anadius-content-handlers-source/content_handlers.cpp",
+          "sha256": "4cb847e398b3a81b4c9149a711fecfe0532265fb5c974f33aed73591700e947f",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085118,'\\0');",
+          "name": {
+            "value": "QueryContentResponse",
+            "address": "0x180085118",
+            "file_offset": "0x83918",
+            "bytes_hex": "5175657279436f6e74656e74526573706f6e736500"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x18008394c,'\\0');",
+          "name": {
+            "value": "Game",
+            "address": "0x18008394c",
+            "file_offset": "0x8214c",
+            "bytes_hex": "47616d6500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085130,&DAT_180083870);",
+          "name": {
+            "value": "progressValue",
+            "address": "0x180085130",
+            "file_offset": "0x83930",
+            "bytes_hex": "70726f677265737356616c756500"
+          },
+          "value": {
+            "value": "0",
+            "address": "0x180083870",
+            "file_offset": "0x82070",
+            "bytes_hex": "3000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085140,pbVar5);",
+          "name": {
+            "value": "contentID",
+            "address": "0x180085140",
+            "file_offset": "0x83940",
+            "bytes_hex": "636f6e74656e74494400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085150,(byte *)puVar6);",
+          "name": {
+            "value": "availableVersion",
+            "address": "0x180085150",
+            "file_offset": "0x83950",
+            "bytes_hex": "617661696c61626c6556657273696f6e00"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085168,(byte *)puVar6);",
+          "name": {
+            "value": "displayName",
+            "address": "0x180085168",
+            "file_offset": "0x83968",
+            "bytes_hex": "646973706c61794e616d6500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085174,(byte *)puVar6);",
+          "name": {
+            "value": "state",
+            "address": "0x180085174",
+            "file_offset": "0x83974",
+            "bytes_hex": "737461746500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085180,(byte *)puVar7);",
+          "name": {
+            "value": "installedVersion",
+            "address": "0x180085180",
+            "file_offset": "0x83980",
+            "bytes_hex": "696e7374616c6c656456657273696f6e00"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x180031030",
+      "commands": [
+        "QueryEntitlements"
+      ],
+      "pseudo_evidence": "ev_d93b75718d1f6d13cca75161139cf315aecf36b063c8cb965649d324d89b48c6",
+      "source_definitions": [
+        {
+          "address": "0x180031030",
+          "symbol": "query_entitlements_031030",
+          "line": 79,
+          "path": "outputs/anadius-content-handlers-source/content_handlers.cpp",
+          "sha256": "4cb847e398b3a81b4c9149a711fecfe0532265fb5c974f33aed73591700e947f",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085270,'\\0');",
+          "name": {
+            "value": "QueryEntitlementsResponse",
+            "address": "0x180085270",
+            "file_offset": "0x83a70",
+            "bytes_hex": "5175657279456e7469746c656d656e7473526573706f6e736500"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085290,'\\0');",
+          "name": {
+            "value": "Entitlement",
+            "address": "0x180085290",
+            "file_offset": "0x83a90",
+            "bytes_hex": "456e7469746c656d656e7400"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800851d0,pbVar9);",
+          "name": {
+            "value": "ItemId",
+            "address": "0x1800851d0",
+            "file_offset": "0x839d0",
+            "bytes_hex": "4974656d496400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x18008529c,(byte *)puVar10);",
+          "name": {
+            "value": "Type",
+            "address": "0x18008529c",
+            "file_offset": "0x83a9c",
+            "bytes_hex": "5479706500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800852a8,(byte *)ppppbVar6);",
+          "name": {
+            "value": "EntitlementId",
+            "address": "0x1800852a8",
+            "file_offset": "0x83aa8",
+            "bytes_hex": "456e7469746c656d656e74496400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083c18,(byte *)puVar10);",
+          "name": {
+            "value": "EntitlementTag",
+            "address": "0x180083c18",
+            "file_offset": "0x82418",
+            "bytes_hex": "456e7469746c656d656e7454616700"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083c10,(byte *)puVar10);",
+          "name": {
+            "value": "Group",
+            "address": "0x180083c10",
+            "file_offset": "0x82410",
+            "bytes_hex": "47726f757000"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800852b8,&DAT_180080097);",
+          "name": {
+            "value": "ResourceId",
+            "address": "0x1800852b8",
+            "file_offset": "0x83ab8",
+            "bytes_hex": "5265736f75726365496400"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800852c8,&DAT_180083870);",
+          "name": {
+            "value": "UseCount",
+            "address": "0x1800852c8",
+            "file_offset": "0x83ac8",
+            "bytes_hex": "557365436f756e7400"
+          },
+          "value": {
+            "value": "0",
+            "address": "0x180083870",
+            "file_offset": "0x82070",
+            "bytes_hex": "3000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800852d8,&DAT_180083888);",
+          "name": {
+            "value": "Expiration",
+            "address": "0x1800852d8",
+            "file_offset": "0x83ad8",
+            "bytes_hex": "45787069726174696f6e00"
+          },
+          "value": {
+            "value": "0000-00-00T00:00:00",
+            "address": "0x180083888",
+            "file_offset": "0x82088",
+            "bytes_hex": "303030302d30302d30305430303a30303a303000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800852e8,&DAT_180083888);",
+          "name": {
+            "value": "GrantDate",
+            "address": "0x1800852e8",
+            "file_offset": "0x83ae8",
+            "bytes_hex": "4772616e744461746500"
+          },
+          "value": {
+            "value": "0000-00-00T00:00:00",
+            "address": "0x180083888",
+            "file_offset": "0x82088",
+            "bytes_hex": "303030302d30302d30305430303a30303a303000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800852f8,&DAT_180083888);",
+          "name": {
+            "value": "LastModifiedDate",
+            "address": "0x1800852f8",
+            "file_offset": "0x83af8",
+            "bytes_hex": "4c6173744d6f6469666965644461746500"
+          },
+          "value": {
+            "value": "0000-00-00T00:00:00",
+            "address": "0x180083888",
+            "file_offset": "0x82088",
+            "bytes_hex": "303030302d30302d30305430303a30303a303000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083970,(byte *)puVar10);",
+          "name": {
+            "value": "Version",
+            "address": "0x180083970",
+            "file_offset": "0x82170",
+            "bytes_hex": "56657273696f6e00"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x180031ec0",
+      "commands": [
+        "QueryOffers"
+      ],
+      "pseudo_evidence": "ev_1bb65ff46cc704e9b2482ce97518d22ccb07f0b15a6364d70c71f02de7d49932",
+      "source_definitions": [
+        {
+          "address": "0x180031ec0",
+          "symbol": "query_offers_031ec0",
+          "line": 115,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085310,'\\0');",
+          "name": {
+            "value": "QueryOffersResponse",
+            "address": "0x180085310",
+            "file_offset": "0x83b10",
+            "bytes_hex": "51756572794f6666657273526573706f6e736500"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002efd0",
+      "commands": [
+        "GetGameInfo"
+      ],
+      "pseudo_evidence": "ev_ef8266017da897f5345aadbbdc4f690c0da75a591445b04cdc14b094c75ab673",
+      "source_definitions": [
+        {
+          "address": "0x18002efd0",
+          "symbol": "get_game_info_02efd0",
+          "line": 79,
+          "path": "outputs/anadius-handlers-source/handlers.cpp",
+          "sha256": "8180eb0f47bca1708c05ec2f6c72ef4e54da67a832cbcc5ad4b482e46a09c400",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085338,'\\0');",
+          "name": {
+            "value": "GetGameInfoResponse",
+            "address": "0x180085338",
+            "file_offset": "0x83b38",
+            "bytes_hex": "47657447616d65496e666f526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085350,pbVar8);",
+          "name": {
+            "value": "GameInfo",
+            "address": "0x180085350",
+            "file_offset": "0x83b50",
+            "bytes_hex": "47616d65496e666f00"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002da90",
+      "commands": [
+        "GetAllGameInfo"
+      ],
+      "pseudo_evidence": "ev_04c1b397cbbba90babf41cb8d096376c9a1f5de2aa6f4411179497b9021845d4",
+      "source_definitions": [
+        {
+          "address": "0x18002da90",
+          "symbol": "get_all_game_info_02da90",
+          "line": 96,
+          "path": "outputs/anadius-handlers-source/handlers.cpp",
+          "sha256": "8180eb0f47bca1708c05ec2f6c72ef4e54da67a832cbcc5ad4b482e46a09c400",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085360,'\\0');",
+          "name": {
+            "value": "GetAllGameInfoResponse",
+            "address": "0x180085360",
+            "file_offset": "0x83b60",
+            "bytes_hex": "476574416c6c47616d65496e666f526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085378,pbVar1);",
+          "name": {
+            "value": "DisplayName",
+            "address": "0x180085378",
+            "file_offset": "0x83b78",
+            "bytes_hex": "446973706c61794e616d6500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085388,pbVar1);",
+          "name": {
+            "value": "InstalledVersion",
+            "address": "0x180085388",
+            "file_offset": "0x83b88",
+            "bytes_hex": "496e7374616c6c656456657273696f6e00"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800853a0,pbVar1);",
+          "name": {
+            "value": "AvailableVersion",
+            "address": "0x1800853a0",
+            "file_offset": "0x83ba0",
+            "bytes_hex": "417661696c61626c6556657273696f6e00"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800853b8,pbVar1);",
+          "name": {
+            "value": "UpToDate",
+            "address": "0x1800853b8",
+            "file_offset": "0x83bb8",
+            "bytes_hex": "5570546f4461746500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800853e0,pbVar1);",
+          "name": {
+            "value": "FullGameReleased",
+            "address": "0x1800853e0",
+            "file_offset": "0x83be0",
+            "bytes_hex": "46756c6c47616d6552656c656173656400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085410,pbVar1);",
+          "name": {
+            "value": "FullGameReleaseDate",
+            "address": "0x180085410",
+            "file_offset": "0x83c10",
+            "bytes_hex": "46756c6c47616d6552656c656173654461746500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085440,pbVar1);",
+          "name": {
+            "value": "FullGamePurchased",
+            "address": "0x180085440",
+            "file_offset": "0x83c40",
+            "bytes_hex": "46756c6c47616d6550757263686173656400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085468,pbVar1);",
+          "name": {
+            "value": "FreeTrial",
+            "address": "0x180085468",
+            "file_offset": "0x83c68",
+            "bytes_hex": "46726565547269616c00"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800852d8,pbVar1);",
+          "name": {
+            "value": "Expiration",
+            "address": "0x1800852d8",
+            "file_offset": "0x83ad8",
+            "bytes_hex": "45787069726174696f6e00"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800854a0,pbVar1);",
+          "name": {
+            "value": "EntitlementSource",
+            "address": "0x1800854a0",
+            "file_offset": "0x83ca0",
+            "bytes_hex": "456e7469746c656d656e74536f7572636500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800854c8,pbVar1);",
+          "name": {
+            "value": "MaxGroupSize",
+            "address": "0x1800854c8",
+            "file_offset": "0x83cc8",
+            "bytes_hex": "4d617847726f757053697a6500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083a28,pbVar1);",
+          "name": {
+            "value": "Languages",
+            "address": "0x180083a28",
+            "file_offset": "0x82228",
+            "bytes_hex": "4c616e67756167657300"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800854d8,pbVar1);",
+          "name": {
+            "value": "InstalledLanguage",
+            "address": "0x1800854d8",
+            "file_offset": "0x83cd8",
+            "bytes_hex": "496e7374616c6c65644c616e677561676500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800854f0,(byte *)\"false\");",
+          "name": {
+            "value": "HasExpiration",
+            "address": "0x1800854f0",
+            "file_offset": "0x83cf0",
+            "bytes_hex": "48617345787069726174696f6e00"
+          },
+          "value": {
+            "value": "false",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085500,pbVar1);",
+          "name": {
+            "value": "SystemTime",
+            "address": "0x180085500",
+            "file_offset": "0x83d00",
+            "bytes_hex": "53797374656d54696d6500"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x1800314f0",
+      "commands": [
+        "QueryImage"
+      ],
+      "pseudo_evidence": "ev_2e2e94933ee58f5567373dbd0e0d2f7bcd6173760dd3b9b93dbd5f4724cbc149",
+      "source_definitions": [
+        {
+          "address": "0x1800314f0",
+          "symbol": "query_image_0314f0",
+          "line": 147,
+          "path": "outputs/anadius-content-handlers-source/content_handlers.cpp",
+          "sha256": "4cb847e398b3a81b4c9149a711fecfe0532265fb5c974f33aed73591700e947f",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085540,'\\0');",
+          "name": {
+            "value": "QueryImageResponse",
+            "address": "0x180085540",
+            "file_offset": "0x83d40",
+            "bytes_hex": "5175657279496d616765526573706f6e736500"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085554,'\\0');",
+          "name": {
+            "value": "Image",
+            "address": "0x180085554",
+            "file_offset": "0x83d54",
+            "bytes_hex": "496d61676500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x18008550c,(byte *)pppppppbVar7);",
+          "name": {
+            "value": "Width",
+            "address": "0x18008550c",
+            "file_offset": "0x83d0c",
+            "bytes_hex": "576964746800"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085514,pbVar8);",
+          "name": {
+            "value": "Height",
+            "address": "0x180085514",
+            "file_offset": "0x83d14",
+            "bytes_hex": "48656967687400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085560,(byte *)pppppppbVar7);",
+          "name": {
+            "value": "ResourcePath",
+            "address": "0x180085560",
+            "file_offset": "0x83d60",
+            "bytes_hex": "5265736f757263655061746800"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085520,pbVar9);",
+          "name": {
+            "value": "ImageId",
+            "address": "0x180085520",
+            "file_offset": "0x83d20",
+            "bytes_hex": "496d616765496400"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002ffb0",
+      "commands": [
+        "GoOnline",
+        "SetPresenceVisibility",
+        "SetPresence",
+        "SetDownloaderUtilization",
+        "SelectStore"
+      ],
+      "pseudo_evidence": "ev_e860ae843dde5b1c7a059481e475fd333e43ba8b443bb6a0e8e6984f67bac4e7",
+      "source_definitions": [
+        {
+          "address": "0x18002ffb0",
+          "symbol": "success_02ffb0",
+          "line": 19,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084c70,'\\0');",
+          "name": {
+            "value": "ErrorSuccess",
+            "address": "0x180084c70",
+            "file_offset": "0x83470",
+            "bytes_hex": "4572726f725375636365737300"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c80,&DAT_180083870);",
+          "name": {
+            "value": "Code",
+            "address": "0x180084c80",
+            "file_offset": "0x83480",
+            "bytes_hex": "436f646500"
+          },
+          "value": {
+            "value": "0",
+            "address": "0x180083870",
+            "file_offset": "0x82070",
+            "bytes_hex": "3000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c88,&DAT_180080097);",
+          "name": {
+            "value": "Description",
+            "address": "0x180084c88",
+            "file_offset": "0x83488",
+            "bytes_hex": "4465736372697074696f6e00"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002e3b0",
+      "commands": [
+        "GetAuthCode"
+      ],
+      "pseudo_evidence": "ev_33624c87853573a8e7b3efe065f830b8be05beda34cb0c9af0879cf7456993d4",
+      "source_definitions": [
+        {
+          "address": "0x18002e3b0",
+          "symbol": "Handlers::auth_code_02e3b0",
+          "line": 38,
+          "path": "outputs/anadius-license-source/license.cpp",
+          "sha256": "87ea1eebab23fa2bbaff52689e4a076428e5cd8f292e028fbba985d4ce4376c0",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        },
+        {
+          "address": "0x18002e3b0",
+          "symbol": "Handlers::auth_code_02e3b0",
+          "line": 211,
+          "path": "outputs/anadius-licensing-effects-source/effects.cpp",
+          "sha256": "c66cf34ed9b2e23772c48e834810e5afca0200083dd14b30e0eb508547e7e5d9",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084c70,'\\0');",
+          "name": {
+            "value": "ErrorSuccess",
+            "address": "0x180084c70",
+            "file_offset": "0x83470",
+            "bytes_hex": "4572726f725375636365737300"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c80,(byte *)\"-1577058293\");",
+          "name": {
+            "value": "Code",
+            "address": "0x180084c80",
+            "file_offset": "0x83480",
+            "bytes_hex": "436f646500"
+          },
+          "value": {
+            "value": "-1577058293",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x1800855c0,'\\0');",
+          "name": {
+            "value": "AuthCode",
+            "address": "0x1800855c0",
+            "file_offset": "0x83dc0",
+            "bytes_hex": "41757468436f646500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,(longlong)pcVar6,(byte *)pcVar8);",
+          "name": null,
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": [
+        {
+          "kind": "name",
+          "value": "ErrorSuccess",
+          "address": "0x180084c70",
+          "file_offset": "0x83470",
+          "bytes_hex": "4572726f725375636365737300"
+        },
+        {
+          "kind": "name",
+          "value": "Code",
+          "address": "0x180084c80",
+          "file_offset": "0x83480",
+          "bytes_hex": "436f646500"
+        },
+        {
+          "kind": "value",
+          "value": "-1577058293",
+          "basis": "retained_pseudocode_literal"
+        },
+        {
+          "kind": "name",
+          "value": "AuthCode",
+          "address": "0x1800855c0",
+          "file_offset": "0x83dc0",
+          "bytes_hex": "41757468436f646500"
+        }
+      ]
+    },
+    {
+      "address": "0x180032b10",
+      "commands": [
+        "ShowIGO",
+        "ShowIGOWindow"
+      ],
+      "pseudo_evidence": "ev_91196662eb3fd450e8c602b238d0876b7596738c737f63ce4707318feab10bc8",
+      "source_definitions": [
+        {
+          "address": "0x180032b10",
+          "symbol": "show_igo_032b10",
+          "line": 100,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084c70,'\\0');",
+          "name": {
+            "value": "ErrorSuccess",
+            "address": "0x180084c70",
+            "file_offset": "0x83470",
+            "bytes_hex": "4572726f725375636365737300"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c80,&DAT_180083870);",
+          "name": {
+            "value": "Code",
+            "address": "0x180084c80",
+            "file_offset": "0x83480",
+            "bytes_hex": "436f646500"
+          },
+          "value": {
+            "value": "0",
+            "address": "0x180083870",
+            "file_offset": "0x82070",
+            "bytes_hex": "3000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c88,&DAT_180080097);",
+          "name": {
+            "value": "Description",
+            "address": "0x180084c88",
+            "file_offset": "0x83488",
+            "bytes_hex": "4465736372697074696f6e00"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002fea0",
+      "commands": [
+        "GetUTCTime"
+      ],
+      "pseudo_evidence": "ev_d073d4f4198a8578f4a80ace4e1efd1ee9eae68f17d44bec0b1d825ea012b4bb",
+      "source_definitions": [
+        {
+          "address": "0x18002fea0",
+          "symbol": "utc_time_02fea0",
+          "line": 93,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x1800855d8,'\\0');",
+          "name": {
+            "value": "GetUTCTimeResponse",
+            "address": "0x1800855d8",
+            "file_offset": "0x83dd8",
+            "bytes_hex": "47657455544354696d65526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800855ec,pbVar1);",
+          "name": {
+            "value": "Time",
+            "address": "0x1800855ec",
+            "file_offset": "0x83dec",
+            "bytes_hex": "54696d6500"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x180032ca0",
+      "commands": [
+        "StartDownload"
+      ],
+      "pseudo_evidence": "ev_ecc6bebb2c025175f937226ef29f9610b92480e6134fe109d8a330fd8df852a2",
+      "source_definitions": [
+        {
+          "address": "0x180032ca0",
+          "symbol": "start_download_032ca0",
+          "line": 112,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084c70,'\\0');",
+          "name": {
+            "value": "ErrorSuccess",
+            "address": "0x180084c70",
+            "file_offset": "0x83470",
+            "bytes_hex": "4572726f725375636365737300"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c80,&DAT_180083870);",
+          "name": {
+            "value": "Code",
+            "address": "0x180084c80",
+            "file_offset": "0x83480",
+            "bytes_hex": "436f646500"
+          },
+          "value": {
+            "value": "0",
+            "address": "0x180083870",
+            "file_offset": "0x82070",
+            "bytes_hex": "3000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c88,(byte *)\"Requested a download of a DLC offer.\");",
+          "name": {
+            "value": "Description",
+            "address": "0x180084c88",
+            "file_offset": "0x83488",
+            "bytes_hex": "4465736372697074696f6e00"
+          },
+          "value": {
+            "value": "Requested a download of a DLC offer.",
+            "basis": "retained_pseudocode_literal"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002f4e0",
+      "commands": [
+        "GetPresenceVisibility"
+      ],
+      "pseudo_evidence": "ev_ddfc95f5f6f0b99d7f4810767440aa0faf66b553feb2291737534a84083d8cfa",
+      "source_definitions": [
+        {
+          "address": "0x18002f4e0",
+          "symbol": "presence_visibility_02f4e0",
+          "line": 20,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085620,'\\0');",
+          "name": {
+            "value": "GetPresenceVisibilityResponse",
+            "address": "0x180085620",
+            "file_offset": "0x83e20",
+            "bytes_hex": "47657450726573656e63655669736962696c697479526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085640,(byte *)\"false\");",
+          "name": {
+            "value": "Visible",
+            "address": "0x180085640",
+            "file_offset": "0x83e40",
+            "bytes_hex": "56697369626c6500"
+          },
+          "value": {
+            "value": "false",
+            "basis": "retained_pseudocode_literal"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002f330",
+      "commands": [
+        "GetPresence"
+      ],
+      "pseudo_evidence": "ev_5937ef11f9a7152216c80b1fc217f1786767461a89fb5237bf9866b431c22b45",
+      "source_definitions": [
+        {
+          "address": "0x18002f330",
+          "symbol": "presence_02f330",
+          "line": 23,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085648,'\\0');",
+          "name": {
+            "value": "GetPresenceResponse",
+            "address": "0x180085648",
+            "file_offset": "0x83e48",
+            "bytes_hex": "47657450726573656e6365526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x18008565c,&DAT_180080097);",
+          "name": {
+            "value": "Title",
+            "address": "0x18008565c",
+            "file_offset": "0x83e5c",
+            "bytes_hex": "5469746c6500"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085668,&DAT_180080097);",
+          "name": {
+            "value": "SessionId",
+            "address": "0x180085668",
+            "file_offset": "0x83e68",
+            "bytes_hex": "53657373696f6e496400"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085678,&DAT_180080097);",
+          "name": {
+            "value": "MultiplayerId",
+            "address": "0x180085678",
+            "file_offset": "0x83e78",
+            "bytes_hex": "4d756c7469706c61796572496400"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085688,&DAT_180080097);",
+          "name": {
+            "value": "GroupId",
+            "address": "0x180085688",
+            "file_offset": "0x83e88",
+            "bytes_hex": "47726f7570496400"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085690,&DAT_180080097);",
+          "name": {
+            "value": "TitleId",
+            "address": "0x180085690",
+            "file_offset": "0x83e90",
+            "bytes_hex": "5469746c65496400"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800856a0,(byte *)\"INGAME\");",
+          "name": {
+            "value": "Presence",
+            "address": "0x1800856a0",
+            "file_offset": "0x83ea0",
+            "bytes_hex": "50726573656e636500"
+          },
+          "value": {
+            "value": "INGAME",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800856b0,&DAT_180080097);",
+          "name": {
+            "value": "GamePresence",
+            "address": "0x1800856b0",
+            "file_offset": "0x83eb0",
+            "bytes_hex": "47616d6550726573656e636500"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083c10,&DAT_180080097);",
+          "name": {
+            "value": "Group",
+            "address": "0x180083c10",
+            "file_offset": "0x82410",
+            "bytes_hex": "47726f757000"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800856c0,pbVar1);",
+          "name": {
+            "value": "RichPresence",
+            "address": "0x1800856c0",
+            "file_offset": "0x83ec0",
+            "bytes_hex": "5269636850726573656e636500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083b3c,&DAT_180083870);",
+          "name": {
+            "value": "UserId",
+            "address": "0x180083b3c",
+            "file_offset": "0x8233c",
+            "bytes_hex": "55736572496400"
+          },
+          "value": {
+            "value": "0",
+            "address": "0x180083870",
+            "file_offset": "0x82070",
+            "bytes_hex": "3000"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x180031ef0",
+      "commands": [
+        "QueryPresence"
+      ],
+      "pseudo_evidence": "ev_03d922bdc9e6f3c0e926aaa64b91996ccf005a9fb19a9abcb5f8a47a556b5248",
+      "source_definitions": [
+        {
+          "address": "0x180031ef0",
+          "symbol": "query_presence_031ef0",
+          "line": 35,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x1800856d0,'\\0');",
+          "name": {
+            "value": "QueryPresenceResponse",
+            "address": "0x1800856d0",
+            "file_offset": "0x83ed0",
+            "bytes_hex": "517565727950726573656e6365526573706f6e736500"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x1800856e8,'\\0');",
+          "name": {
+            "value": "Friend",
+            "address": "0x1800856e8",
+            "file_offset": "0x83ee8",
+            "bytes_hex": "467269656e6400"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084fc8,&DAT_180080097);",
+          "name": {
+            "value": "AvatarId",
+            "address": "0x180084fc8",
+            "file_offset": "0x837c8",
+            "bytes_hex": "417661746172496400"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x18008565c,&DAT_180080097);",
+          "name": {
+            "value": "Title",
+            "address": "0x18008565c",
+            "file_offset": "0x83e5c",
+            "bytes_hex": "5469746c6500"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085688,&DAT_180080097);",
+          "name": {
+            "value": "GroupId",
+            "address": "0x180085688",
+            "file_offset": "0x83e88",
+            "bytes_hex": "47726f7570496400"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085678,&DAT_180080097);",
+          "name": {
+            "value": "MultiplayerId",
+            "address": "0x180085678",
+            "file_offset": "0x83e78",
+            "bytes_hex": "4d756c7469706c61796572496400"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085690,&DAT_180080097);",
+          "name": {
+            "value": "TitleId",
+            "address": "0x180085690",
+            "file_offset": "0x83e90",
+            "bytes_hex": "5469746c65496400"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800856a0,(byte *)\"UNKNOWN\");",
+          "name": {
+            "value": "Presence",
+            "address": "0x1800856a0",
+            "file_offset": "0x83ea0",
+            "bytes_hex": "50726573656e636500"
+          },
+          "value": {
+            "value": "UNKNOWN",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083b30,&DAT_180083870);",
+          "name": {
+            "value": "PersonaId",
+            "address": "0x180083b30",
+            "file_offset": "0x82330",
+            "bytes_hex": "506572736f6e61496400"
+          },
+          "value": {
+            "value": "0",
+            "address": "0x180083870",
+            "file_offset": "0x82070",
+            "bytes_hex": "3000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800856b0,&DAT_180080097);",
+          "name": {
+            "value": "GamePresence",
+            "address": "0x1800856b0",
+            "file_offset": "0x83eb0",
+            "bytes_hex": "47616d6550726573656e636500"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083c10,&DAT_180080097);",
+          "name": {
+            "value": "Group",
+            "address": "0x180083c10",
+            "file_offset": "0x82410",
+            "bytes_hex": "47726f757000"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084f98,pbVar2);",
+          "name": {
+            "value": "Persona",
+            "address": "0x180084f98",
+            "file_offset": "0x83798",
+            "bytes_hex": "506572736f6e6100"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800856c0,&DAT_180080097);",
+          "name": {
+            "value": "RichPresence",
+            "address": "0x1800856c0",
+            "file_offset": "0x83ec0",
+            "bytes_hex": "5269636850726573656e636500"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083b3c,pbVar2);",
+          "name": {
+            "value": "UserId",
+            "address": "0x180083b3c",
+            "file_offset": "0x8233c",
+            "bytes_hex": "55736572496400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180083bdc,&DAT_1800856f8);",
+          "name": {
+            "value": "State",
+            "address": "0x180083bdc",
+            "file_offset": "0x823dc",
+            "bytes_hex": "537461746500"
+          },
+          "value": {
+            "value": "NONE",
+            "address": "0x1800856f8",
+            "file_offset": "0x83ef8",
+            "bytes_hex": "4e4f4e4500"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002f270",
+      "commands": [
+        "GetGroupInfo"
+      ],
+      "pseudo_evidence": "ev_edd07a4a1178ceab2c5015849e9d7eb93798ab1f446318317b669f7cc3a56611",
+      "source_definitions": [
+        {
+          "address": "0x18002f270",
+          "symbol": "group_info_02f270",
+          "line": 55,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084c70,'\\0');",
+          "name": {
+            "value": "ErrorSuccess",
+            "address": "0x180084c70",
+            "file_offset": "0x83470",
+            "bytes_hex": "4572726f725375636365737300"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c80,(byte *)\"-1577058296\");",
+          "name": {
+            "value": "Code",
+            "address": "0x180084c80",
+            "file_offset": "0x83480",
+            "bytes_hex": "436f646500"
+          },
+          "value": {
+            "value": "-1577058296",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c88,(byte *)\"User not in a party, create one.\");",
+          "name": {
+            "value": "Description",
+            "address": "0x180084c88",
+            "file_offset": "0x83488",
+            "bytes_hex": "4465736372697074696f6e00"
+          },
+          "value": {
+            "value": "User not in a party, create one.",
+            "basis": "retained_pseudocode_literal"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x180030cd0",
+      "commands": [
+        "IsProgressiveInstallationAvailable"
+      ],
+      "pseudo_evidence": "ev_3fb164ee3ab5b6a91a35c41d816e1e2a481c89dbd27b68918ecd847eefd2ba68",
+      "source_definitions": [
+        {
+          "address": "0x180030cd0",
+          "symbol": "progressive_available_030cd0",
+          "line": 58,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085738,'\\0');",
+          "name": {
+            "value": "IsProgressiveInstallationAvailableResponse",
+            "address": "0x180085738",
+            "file_offset": "0x83f38",
+            "bytes_hex": "497350726f6772657373697665496e7374616c6c6174696f6e417661696c61626c65526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800851d0,&DAT_180080097);",
+          "name": {
+            "value": "ItemId",
+            "address": "0x1800851d0",
+            "file_offset": "0x839d0",
+            "bytes_hex": "4974656d496400"
+          },
+          "value": {
+            "value": "",
+            "address": "0x180080097",
+            "file_offset": "0x7e897",
+            "bytes_hex": "00"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085768,(byte *)\"false\");",
+          "name": {
+            "value": "Available",
+            "address": "0x180085768",
+            "file_offset": "0x83f68",
+            "bytes_hex": "417661696c61626c6500"
+          },
+          "value": {
+            "value": "false",
+            "basis": "retained_pseudocode_literal"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x180030eb0",
+      "commands": [
+        "QueryChunkStatus"
+      ],
+      "pseudo_evidence": "ev_e0a7ec897e62a81b5e8affe737c4064db360858fc3d1f3fa1e5d0b06351e9a7d",
+      "source_definitions": [
+        {
+          "address": "0x180030eb0",
+          "symbol": "query_chunk_status_030eb0",
+          "line": 65,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002d720",
+      "commands": [
+        "AreChunksInstalled"
+      ],
+      "coverage": "No canonical retained function body; separate LAB/disassembly evidence requires manual review.",
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x180030d30",
+      "commands": [
+        "QueryAchievements"
+      ],
+      "pseudo_evidence": "ev_d87af5d8151a7108b80f8af209dde572d444c5bc177dd0a57110f57cd31e8939",
+      "source_definitions": [
+        {
+          "address": "0x180030d30",
+          "symbol": "query_achievements_030d30",
+          "line": 105,
+          "path": "outputs/anadius-content-handlers-source/content_handlers.cpp",
+          "sha256": "4cb847e398b3a81b4c9149a711fecfe0532265fb5c974f33aed73591700e947f",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x180030010",
+      "commands": [
+        "GrantAchievement"
+      ],
+      "pseudo_evidence": "ev_8e0c6e33949acd640bbdc56b56ceea86f8bb373eca849ee8c6a34d8a0ac1b175",
+      "source_definitions": [
+        {
+          "address": "0x180030010",
+          "symbol": "grant_achievement_030010",
+          "line": 113,
+          "path": "outputs/anadius-content-handlers-source/content_handlers.cpp",
+          "sha256": "4cb847e398b3a81b4c9149a711fecfe0532265fb5c974f33aed73591700e947f",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(local_188,0x180084c58,'\\0');",
+          "name": {
+            "value": "LSX",
+            "address": "0x180084c58",
+            "file_offset": "0x83458",
+            "bytes_hex": "4c535800"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(local_188,0x180084c5c,'\\0');",
+          "name": {
+            "value": "Event",
+            "address": "0x180084c5c",
+            "file_offset": "0x8345c",
+            "bytes_hex": "4576656e7400"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(local_188,0x180084c64,(byte *)\"EbisuSDK\");",
+          "name": {
+            "value": "sender",
+            "address": "0x180084c64",
+            "file_offset": "0x83464",
+            "bytes_hex": "73656e64657200"
+          },
+          "value": {
+            "value": "EbisuSDK",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080((longlong *)local_2c8,0x180083c28,'\\0');",
+          "name": {
+            "value": "Achievements",
+            "address": "0x180083c28",
+            "file_offset": "0x82428",
+            "bytes_hex": "416368696576656d656e747300"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560((longlong *)local_2c8,0x1800857d8,pbVar13);",
+          "name": {
+            "value": "GameName",
+            "address": "0x1800857d8",
+            "file_offset": "0x83fd8",
+            "bytes_hex": "47616d654e616d6500"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560((longlong *)local_2c8,0x180083990,pbVar13);",
+          "name": {
+            "value": "ContentId",
+            "address": "0x180083990",
+            "file_offset": "0x82190",
+            "bytes_hex": "436f6e74656e74496400"
+          },
+          "value": null
+        },
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080((longlong *)local_2c8,0x1800857e8,'\\0');",
+          "name": {
+            "value": "Achievement",
+            "address": "0x1800857e8",
+            "file_offset": "0x83fe8",
+            "bytes_hex": "416368696576656d656e7400"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560((longlong *)local_2c8,0x1800841e0,pbVar13);",
+          "name": {
+            "value": "Id",
+            "address": "0x1800841e0",
+            "file_offset": "0x829e0",
+            "bytes_hex": "496400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560((longlong *)local_2c8,0x1800841e4,pbVar13);",
+          "name": {
+            "value": "Count",
+            "address": "0x1800841e4",
+            "file_offset": "0x829e4",
+            "bytes_hex": "436f756e7400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560((longlong *)local_2c8,0x1800841f0,pbVar13);",
+          "name": {
+            "value": "Progress",
+            "address": "0x1800841f0",
+            "file_offset": "0x829f0",
+            "bytes_hex": "50726f677265737300"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560((longlong *)local_2c8,0x1800841fc,pbVar13);",
+          "name": {
+            "value": "Grant",
+            "address": "0x1800841fc",
+            "file_offset": "0x829fc",
+            "bytes_hex": "4772616e7400"
+          },
+          "value": null
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560((longlong *)local_2c8,0x180083954,pbVar13);",
+          "name": {
+            "value": "Name",
+            "address": "0x180083954",
+            "file_offset": "0x82154",
+            "bytes_hex": "4e616d6500"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x1800314a0",
+      "commands": [
+        "QueryFriends"
+      ],
+      "coverage": "No canonical retained function body; separate LAB/disassembly evidence requires manual review.",
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002e5a0",
+      "commands": [
+        "GetBlockList"
+      ],
+      "pseudo_evidence": "ev_7285670777c8aa9cc11ec542935ae351b5e2e0521896afb3789dfac5e3258f64",
+      "source_definitions": [
+        {
+          "address": "0x18002e5a0",
+          "symbol": "block_list_02e5a0",
+          "line": 84,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085840,'\\0');",
+          "name": {
+            "value": "GetBlockListResponse",
+            "address": "0x180085840",
+            "file_offset": "0x84040",
+            "bytes_hex": "476574426c6f636b4c697374526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085838,(byte *)\"Success\");",
+          "name": {
+            "value": "Return",
+            "address": "0x180085838",
+            "file_offset": "0x84038",
+            "bytes_hex": "52657475726e00"
+          },
+          "value": {
+            "value": "Success",
+            "basis": "retained_pseudocode_literal"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002da30",
+      "commands": [
+        "GetVoipStatus",
+        "EnableVoip"
+      ],
+      "pseudo_evidence": "ev_2045042d6e2095c2c972f6b6af16e1c651b92882100bf4186cb9df5c7072a688",
+      "source_definitions": [
+        {
+          "address": "0x18002da30",
+          "symbol": "voip_02da30",
+          "line": 85,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084c70,'\\0');",
+          "name": {
+            "value": "ErrorSuccess",
+            "address": "0x180084c70",
+            "file_offset": "0x83470",
+            "bytes_hex": "4572726f725375636365737300"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c80,(byte *)\"-1593835518\");",
+          "name": {
+            "value": "Code",
+            "address": "0x180084c80",
+            "file_offset": "0x83480",
+            "bytes_hex": "436f646500"
+          },
+          "value": {
+            "value": "-1593835518",
+            "basis": "retained_pseudocode_literal"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c88,(byte *)\"The function you are calling is not implemented.\");",
+          "name": {
+            "value": "Description",
+            "address": "0x180084c88",
+            "file_offset": "0x83488",
+            "bytes_hex": "4465736372697074696f6e00"
+          },
+          "value": {
+            "value": "The function you are calling is not implemented.",
+            "basis": "retained_pseudocode_literal"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002ff60",
+      "commands": [
+        "GetWalletBalance"
+      ],
+      "pseudo_evidence": "ev_1ca56fcd080b624edd63816c027c0994098dca805aaa7920d9c82c84c7c9dc0e",
+      "source_definitions": [
+        {
+          "address": "0x18002ff60",
+          "symbol": "wallet_02ff60",
+          "line": 88,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x1800858a0,'\\0');",
+          "name": {
+            "value": "GetWalletBalanceResponse",
+            "address": "0x1800858a0",
+            "file_offset": "0x840a0",
+            "bytes_hex": "47657457616c6c657442616c616e6365526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800858c0,&DAT_180083870);",
+          "name": {
+            "value": "Balance",
+            "address": "0x1800858c0",
+            "file_offset": "0x840c0",
+            "bytes_hex": "42616c616e636500"
+          },
+          "value": {
+            "value": "0",
+            "address": "0x180083870",
+            "file_offset": "0x82070",
+            "bytes_hex": "3000"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x180032ab0",
+      "commands": [
+        "RestartGame"
+      ],
+      "pseudo_evidence": "ev_e91a8e28935e64fecf5a7ccbf790cfc092f7a948e597239c6524c18e6a0081a5",
+      "source_definitions": [
+        {
+          "address": "0x180032ab0",
+          "symbol": "restart_game_032ab0",
+          "line": 89,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084c70,'\\0');",
+          "name": {
+            "value": "ErrorSuccess",
+            "address": "0x180084c70",
+            "file_offset": "0x83470",
+            "bytes_hex": "4572726f725375636365737300"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c80,&DAT_18008386c);",
+          "name": {
+            "value": "Code",
+            "address": "0x180084c80",
+            "file_offset": "0x83480",
+            "bytes_hex": "436f646500"
+          },
+          "value": {
+            "value": "1",
+            "address": "0x18008386c",
+            "file_offset": "0x8206c",
+            "bytes_hex": "3100"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c88,(byte *)\"Origin is waiting for the game to shutdown.\");",
+          "name": {
+            "value": "Description",
+            "address": "0x180084c88",
+            "file_offset": "0x83488",
+            "bytes_hex": "4465736372697074696f6e00"
+          },
+          "value": {
+            "value": "Origin is waiting for the game to shutdown.",
+            "basis": "retained_pseudocode_literal"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x18002d9e0",
+      "commands": [
+        "CheckPermission"
+      ],
+      "pseudo_evidence": "ev_530bab620bd1316d3d5e4e599142bcdba5456059f83ba5d15512843884dc27a1",
+      "source_definitions": [
+        {
+          "address": "0x18002d9e0",
+          "symbol": "permission_02d9e0",
+          "line": 92,
+          "path": "outputs/anadius-misc-handlers-source/misc_handlers.cpp",
+          "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x1800858f8,'\\0');",
+          "name": {
+            "value": "CheckPermissionResponse",
+            "address": "0x1800858f8",
+            "file_offset": "0x840f8",
+            "bytes_hex": "436865636b5065726d697373696f6e526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180085918,(byte *)\"GRANTED\");",
+          "name": {
+            "value": "Access",
+            "address": "0x180085918",
+            "file_offset": "0x84118",
+            "bytes_hex": "41636365737300"
+          },
+          "value": {
+            "value": "GRANTED",
+            "basis": "retained_pseudocode_literal"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": []
+    },
+    {
+      "address": "0x1800320c0",
+      "commands": [
+        "RequestLicense"
+      ],
+      "pseudo_evidence": "ev_5c9367a9fdfab1d294c42fc48cbdb827f0cb9f4e56c3f220270debd2c4ab2732",
+      "source_definitions": [
+        {
+          "address": "0x1800320c0",
+          "symbol": "Handlers::request_license_0320c0",
+          "line": 123,
+          "path": "outputs/anadius-license-source/license.cpp",
+          "sha256": "87ea1eebab23fa2bbaff52689e4a076428e5cd8f292e028fbba985d4ce4376c0",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        },
+        {
+          "address": "0x1800320c0",
+          "symbol": "Handlers::request_license_0320c0",
+          "line": 212,
+          "path": "outputs/anadius-licensing-effects-source/effects.cpp",
+          "sha256": "c66cf34ed9b2e23772c48e834810e5afca0200083dd14b30e0eb508547e7e5d9",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180085f90,'\\0');",
+          "name": {
+            "value": "RequestLicenseResponse",
+            "address": "0x180085f90",
+            "file_offset": "0x84790",
+            "bytes_hex": "526571756573744c6963656e7365526573706f6e736500"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x1800839a0,pbVar19);",
+          "name": {
+            "value": "License",
+            "address": "0x1800839a0",
+            "file_offset": "0x821a0",
+            "bytes_hex": "4c6963656e736500"
+          },
+          "value": null
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": [
+        {
+          "kind": "name",
+          "value": "RequestLicenseResponse",
+          "address": "0x180085f90",
+          "file_offset": "0x84790",
+          "bytes_hex": "526571756573744c6963656e7365526573706f6e736500"
+        },
+        {
+          "kind": "name",
+          "value": "License",
+          "address": "0x1800839a0",
+          "file_offset": "0x821a0",
+          "bytes_hex": "4c6963656e736500"
+        }
+      ]
+    },
+    {
+      "address": "0x180030c50",
+      "commands": [
+        "InvalidateLicense"
+      ],
+      "pseudo_evidence": "ev_d1dc86b5f6657591728da569e088134c9c5dae2ace13ea7bb1fd3cca8a7f42c5",
+      "source_definitions": [
+        {
+          "address": "0x180030c50",
+          "symbol": "Handlers::invalidate_license_030c50",
+          "line": 56,
+          "path": "outputs/anadius-license-source/license.cpp",
+          "sha256": "87ea1eebab23fa2bbaff52689e4a076428e5cd8f292e028fbba985d4ce4376c0",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        },
+        {
+          "address": "0x180030c50",
+          "symbol": "Handlers::invalidate_license_030c50",
+          "line": 213,
+          "path": "outputs/anadius-licensing-effects-source/effects.cpp",
+          "sha256": "c66cf34ed9b2e23772c48e834810e5afca0200083dd14b30e0eb508547e7e5d9",
+          "matches_frozen_source_bytes": true,
+          "basis": "address_tagged_definition_heuristic_not_native_equivalence"
+        }
+      ],
+      "direct_XML_operations": [
+        {
+          "operation": "open",
+          "native_expression": "FUN_180004080(param_2,0x180084c70,'\\0');",
+          "name": {
+            "value": "ErrorSuccess",
+            "address": "0x180084c70",
+            "file_offset": "0x83470",
+            "bytes_hex": "4572726f725375636365737300"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c80,&DAT_180083870);",
+          "name": {
+            "value": "Code",
+            "address": "0x180084c80",
+            "file_offset": "0x83480",
+            "bytes_hex": "436f646500"
+          },
+          "value": {
+            "value": "0",
+            "address": "0x180083870",
+            "file_offset": "0x82070",
+            "bytes_hex": "3000"
+          }
+        },
+        {
+          "operation": "attribute",
+          "native_expression": "FUN_180005560(param_2,0x180084c88,(byte *)\"License Deleted.\");",
+          "name": {
+            "value": "Description",
+            "address": "0x180084c88",
+            "file_offset": "0x83488",
+            "bytes_hex": "4465736372697074696f6e00"
+          },
+          "value": {
+            "value": "License Deleted.",
+            "basis": "retained_pseudocode_literal"
+          }
+        }
+      ],
+      "not_found_as_literal_in_mapped_source_units": [
+        {
+          "kind": "name",
+          "value": "ErrorSuccess",
+          "address": "0x180084c70",
+          "file_offset": "0x83470",
+          "bytes_hex": "4572726f725375636365737300"
+        },
+        {
+          "kind": "name",
+          "value": "Code",
+          "address": "0x180084c80",
+          "file_offset": "0x83480",
+          "bytes_hex": "436f646500"
+        },
+        {
+          "kind": "value",
+          "value": "0",
+          "address": "0x180083870",
+          "file_offset": "0x82070",
+          "bytes_hex": "3000"
+        },
+        {
+          "kind": "name",
+          "value": "Description",
+          "address": "0x180084c88",
+          "file_offset": "0x83488",
+          "bytes_hex": "4465736372697074696f6e00"
+        },
+        {
+          "kind": "value",
+          "value": "License Deleted.",
+          "basis": "retained_pseudocode_literal"
+        }
+      ]
+    }
+  ]
+}

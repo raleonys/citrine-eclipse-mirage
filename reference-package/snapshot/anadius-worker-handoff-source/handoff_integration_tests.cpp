@@ -16,6 +16,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <exception>
+#include <functional>
 #include <iostream>
 #include <vector>
 
@@ -54,8 +55,23 @@ struct Connection {
  unsigned received_logs=0,response_logs=0,event_logs=0;bool live_request_seen=false,auto_decrypted=false;std::string expected_response;std::string expected_request;std::vector<std::string> requests,expected_requests;std::string receive_wire;std::size_t cursor=0;bool receive_waiting=false,eof_posted=false;s::Buffer receive_buffer{};OVERLAPPED* receive_ov=nullptr;bool send_waiting=false,send_posted=false;OVERLAPPED* send_ov=nullptr;std::uint32_t send_bytes=0;unsigned completed_sends=0;
  s::Socket socket=0;sp::SessionToken token{};std::uintptr_t owner_id=0,greeting_data=0,greeting_tail=0;bool encrypted=false,greeting_gone=false,eof_seen=false,logic_destroyed=false;unsigned receives=0,sends=0,sync_calls=0,processed=0;std::uint32_t max_sync=0;s::SessionCipher client;std::string greeting_wire,response_wire,event_text;
 };
+struct ChildFinishProbe {
+ std::shared_ptr<anadius::bootstrap_providers::NativeThreads> threads;
+ std::optional<wh::PreparedMemory::JobMemory> offer;std::optional<rt::Ports> ports;
+ HANDLE ready=nullptr,release=nullptr,handle=nullptr;std::uint32_t id=0;std::atomic<DWORD> actor=0;anadius::crt_ptd_recovered::Ptd* original_ptd=nullptr;
+ bool started=false,joined=false,consumed=false;unsigned zero_posts=0;DWORD post_actor=0;
+ std::uint32_t before=0,after=0;std::atomic<bool> retired=false;
+ static unsigned __stdcall entry(void*);
+};
+struct OriginalStopProbe {
+ std::optional<rt::Ports> ports;cp::Policy* policy=nullptr;bool pinned=false,entered=false,consumed=false;
+ unsigned failed_posts=0,error_reads=0,checkpoints=0,clobbers=0,formats=0,frees=0;DWORD post_actor=0,observed_error=0,checkpoint_error=0;
+ char message[64]="native original stop \r\n";
+};
 struct State {
  const td::DomainStorage* expected_domain=nullptr;DWORD expected_worker=0;
+ std::unique_ptr<ChildFinishProbe> child_finish;
+ std::unique_ptr<OriginalStopProbe> original_stop;
  anadius::configuration::State configuration{};std::uint8_t online=0;std::int32_t saved=0;anadius::configuration::Path achievement_file;std::weak_ptr<ag::Graph> graph;
  unsigned sdk_pending=0,sdk_expected_error=0,receive_error_calls=0,send_error_calls=0,receive_success=0,send_success=0;std::vector<char> sdk_trace;
  unsigned receive_packets=0,zero_receive_packets=0,send_packets=0,posted_packets=0,accept_completions=0;
@@ -67,6 +83,64 @@ struct State {
  Connection& connection(s::Socket socket){if(socket<201||socket>202||!connections[socket-201])unused();return *connections[socket-201];}
 };
 State* running=nullptr;
+DWORD WINAPI original_stop_format(DWORD flags,LPCVOID source,DWORD code,DWORD language,LPSTR output,DWORD size,va_list* args){
+ auto& probe=*running->original_stop;++probe.formats;require(probe.entered&&flags==0x1300&&!source&&code==77&&language==0x400&&output&&!size&&!args,"Actual original stop exception formats saved77 through exact native020950 imports");auto** buffer=reinterpret_cast<char**>(output);require(!*buffer,"Original stop diagnostic attempt starts with a null SDK pointer");*buffer=probe.message;::SetLastError(0x4567);return static_cast<DWORD>(sizeof("native original stop \r\n")-1);
+}
+HLOCAL WINAPI original_stop_free(HLOCAL pointer){
+ auto& probe=*running->original_stop;++probe.frees;constexpr auto count=sizeof("native original stop \r\n")-1;require(pointer==probe.message&&std::string_view(probe.message)=="native original stop "&&!probe.message[count-1]&&!probe.message[count-2],"Original stop diagnostic frees its exact SDK buffer after native counted CRLF trim");std::fill_n(probe.message,sizeof(probe.message),'#');::SetLastError(0x5678);return nullptr;
+}
+void trigger_original_stop_failure(State& state){
+ if(!state.original_stop||!state.shutdown_done)return;auto& probe=*state.original_stop;
+ require(probe.pinned&&!probe.entered&&probe.ports&&probe.policy&&state.application,"Original stop fixture owns one captured live Runtime capability and no child");auto& ports=*probe.ports;auto& scheduler=ports.view.scheduler;
+ const auto app=state.application->snapshot();const auto io=ports.view.io.snapshot();const auto accept=ports.accept.snapshot();const auto policy=probe.policy->snapshot();
+ require(::GetCurrentThreadId()==state.expected_worker&&ports.view.memory.operation_on_this_thread()&&ports.view.backend.snapshot().phase==o::Phase::Running&&!policy.active&&policy.phase==cp::Phase::Bound,"Raw set_last_error seam is the real original serving actor with whole Parent admission after ordinary Policy callback returned");
+ require(!app.live_sessions&&!app.live_jobs&&io.phase==s::IoMemoryPhase::Open&&!io.pending&&!accept.pending&&!accept.poisoned&&scheduler.work_count_30==1&&!scheduler.high_34&&!static_cast<std::uint32_t>(scheduler.word_38),"All source loans drain naturally to the fixture's one last work pin with no prior stop or reset");
+ require(state.accept_completions==3&&state.receive_packets==20&&state.zero_receive_packets==11&&state.posted_packets==18&&state.send_packets==18,"Fifty-nine normal packets complete before the original serving stop failure");
+ scheduler.completion.gate.enter();const bool empty=!scheduler.completion.head&&!scheduler.completion.tail;scheduler.completion.gate.leave();require(empty,"No fallback queue operation remains before original final work release");
+ auto* cap=ports.environment_work_stop;require(cap&&cap->matches(ports.view.memory,scheduler),"Original stop uses the actual exact Runtime EnvironmentWorkStop capability");probe.entered=true;
+ const std::function<void()> checkpoint=[&]{require(::GetCurrentThreadId()==state.expected_worker&&ports.view.memory.operation_on_this_thread(),"Borrowed original stop checkpoint retains the same original actor and admitted Parent");(void)ports.view.memory.buffer_context();++probe.checkpoints;if(probe.failed_posts){++probe.clobbers;::SetLastError(0x1234);probe.checkpoint_error=::GetLastError();}};
+ bool caught=false;try{cap->finish_original(scheduler,checkpoint,probe.consumed);}catch(const std::system_error& error){caught=error.code().value()==77&&&error.code().category()==&s::system_error_category_028620({original_stop_format,original_stop_free})&&std::string(error.what())=="pqcs: native original stop ";}
+ require(caught&&probe.consumed&&!scheduler.work_count_30&&scheduler.high_34==1&&static_cast<std::uint32_t>(scheduler.word_38)==1&&probe.failed_posts==1&&probe.post_actor==state.expected_worker&&probe.error_reads==1&&probe.observed_error==77&&probe.clobbers&&probe.checkpoint_error==0x1234&&probe.formats==1&&probe.frees==1,"Actual Runtime serving-original failed post latches77 before borrowed checkpoints clobber SDK error and throws one owned native diagnostic");
+ require(ports.view.memory.operation_on_this_thread()&&probe.policy->snapshot().phase==cp::Phase::Poisoned&&probe.policy->snapshot().active,"Failure retains actual admitted Parent and poisoned Policy prefix without pretending normal cache/thread/Graph teardown");
+ ::ExitProcess(137);
+}
+unsigned __stdcall ChildFinishProbe::entry(void* raw){
+ auto& probe=*static_cast<ChildFinishProbe*>(raw);
+ try{
+  require(probe.offer&&probe.ports,"Child finish probe retains its exact offer and Runtime Ports");probe.actor=::GetCurrentThreadId();probe.offer->acquire();
+  auto& ports=*probe.ports;const auto* domain=ports.view.memory.memory_domain_identity();auto* ptd=domain?static_cast<anadius::crt_ptd_recovered::Ptd*>(::FlsGetValue(domain->native_fls_index())):nullptr;
+  require(domain&&probe.offer->domain_identity()==domain&&ptd&&ptd!=probe.original_ptd&&ptd->thread_context&&probe.actor!=running->expected_worker,"Actual same-Domain NativeThreads child has distinct actor/PTD/FLS and native context before its release barrier");
+  if(!::SetEvent(probe.ready)||::WaitForSingleObject(probe.release,30000)!=WAIT_OBJECT_0)unused();
+  require(!ports.view.memory.operation_on_this_thread(),"Released child enters Parent only after the original physical wait released its Operation");
+  {
+   auto operation=ports.view.memory.enter(*probe.offer);const auto permit=operation.job_permit();
+   const std::function<void()> checkpoint=[&]{permit.check(ports.view.memory);(void)ports.view.memory.buffer_context();};
+   auto* cap=ports.environment_work_stop;require(cap&&cap->matches(ports.view.memory,ports.view.scheduler),"Child uses the actual matching Runtime EnvironmentWorkStop capability");
+   probe.before=ports.view.scheduler.work_count_30.load();
+   require(probe.before==1&&!ports.view.scheduler.high_34&&!static_cast<std::uint32_t>(ports.view.scheduler.word_38)&&ports.view.io.snapshot().pending==0&&ports.accept.snapshot().pending==0,"Actual child sees its last owned work pin after IO/AcceptEx loans end with native stop/wake still clear");
+   cap->finish_job(ports.view.scheduler,permit,checkpoint,probe.consumed);probe.after=ports.view.scheduler.work_count_30.load();
+   require(probe.consumed&&!probe.after&&ports.view.scheduler.high_34==1&&static_cast<std::uint32_t>(ports.view.scheduler.word_38)==1&&probe.zero_posts==1&&probe.post_actor==probe.actor,"Actual Runtime/Policy child oldcount1 release immediately posts one real zero wake and commits native flags");
+  }
+  require(probe.offer->retire(),"Child returns JobMemory only after its live Operation and permit end");probe.retired=true;return 71;
+ }catch(const std::exception& e){std::cerr<<"CHILD FINISH EXCEPTION: "<<e.what()<<'\n'<<std::flush;::ExitProcess(116);}catch(...){::ExitProcess(117);}
+}
+void release_final_child(State& state){
+ if(!state.child_finish||state.child_finish->joined||!state.shutdown_done)return;
+ auto& probe=*state.child_finish;require(probe.started&&probe.ports&&state.application,"Final child probe was started while the real session source was admitted");
+ const auto app=state.application->snapshot();const auto io=state.view->io.snapshot();const auto accept=probe.ports->accept.snapshot();
+ require(!state.view->memory.operation_on_this_thread()&&!app.live_sessions&&!app.live_jobs&&io.phase==s::IoMemoryPhase::Open&&!io.pending&&!accept.pending&&!accept.poisoned&&state.view->scheduler.work_count_30==1,"Outside-Parent final wait sees all source sessions/jobs/IO/AcceptEx loans drained and exactly the child's work pin");
+ require(state.accept_completions==3&&state.receive_packets==20&&state.zero_receive_packets==11&&state.posted_packets==18&&state.send_packets==18,"All fifty-nine normal source packets precede child last release");
+ auto& scheduler=state.view->scheduler;require(!scheduler.high_34&&!static_cast<std::uint32_t>(scheduler.word_38),"No original pre-stop or manual flag reset precedes child last release");
+ scheduler.completion.gate.enter();const bool empty=!scheduler.completion.head&&!scheduler.completion.tail;scheduler.completion.gate.leave();require(empty,"No source fallback queue packet remains before child wake");
+ const auto saved=::GetLastError();DWORD bytes=0;ULONG_PTR key=0;LPOVERLAPPED operation=nullptr;
+ const auto got=::GetQueuedCompletionStatus(reinterpret_cast<HANDLE>(state.port),&bytes,&key,&operation,0);const auto status=::GetLastError();::SetLastError(saved);
+ require(!got&&status==WAIT_TIMEOUT&&!operation,"Owned IOCP is physically empty before signaling child; probe cannot consume its future wake");
+ if(!::SetEvent(probe.release)||::WaitForSingleObject(probe.handle,10000)!=WAIT_OBJECT_0)unused();DWORD code=STILL_ACTIVE;
+ require(::GetExitCodeThread(probe.handle,&code)&&code==71&&probe.retired&&probe.before==1&&!probe.after,"Original outside-Parent wait independently joins child procedure and actual FLS exit after last release");
+ require(state.view->memory.reap_jobs()==1,"Original reaps the one returned job only after physical child exit and outside Parent");
+ require(::CloseHandle(probe.handle)&&::CloseHandle(probe.ready)&&::CloseHandle(probe.release),"Original closes only its joined child handle and owned barrier events");probe.handle=probe.ready=probe.release=nullptr;
+ probe.offer.reset();probe.ports.reset();probe.threads.reset();probe.joined=true;::SetLastError(saved);
+}
 int WSAAPI startup(WORD version,LPWSADATA data){auto& st=*running;require(version==MAKEWORD(2,2),"Owned context requests WSA2.2");++st.starts;st.order.push_back("startup");return ::WSAStartup(version,data);}
 int WSAAPI cleanup(){auto& st=*running;++st.cleanups;st.order.push_back("cleanup");return ::WSACleanup();}
 int WSAAPI local_name(SOCKET socket,sockaddr* output,int* bytes){
@@ -131,19 +205,20 @@ struct Cancel:s::CancellationEffects {State& state;explicit Cancel(State& s):sta
 struct Executor:s::RegistryExecutorEffects {State& state;explicit Executor(State& s):state(s){}void executor_cleanup(s::SocketObject&,std::uintptr_t table)override{require(table!=0,"Socket source destructor supplies selected executor identity");++state.executor_cleanups;}};
 struct Dispatcher:s::DispatcherApi {
  State& state;explicit Dispatcher(State& s):state(s){}
- void set_last_error(std::uint32_t n)override{::SetLastError(n);}std::uint32_t get_last_error()override{return ::GetLastError();}
+ void set_last_error(std::uint32_t n)override{::SetLastError(n);if(!n)trigger_original_stop_failure(state);}std::uint32_t get_last_error()override{const auto error=::GetLastError();if(state.original_stop&&state.original_stop->entered&&state.original_stop->failed_posts){auto& probe=*state.original_stop;++probe.error_reads;probe.observed_error=error;require(error==77&&!probe.clobbers,"Failed admitted post captures raw77 before any borrowed post-return checkpoint");}return error;}
  std::int32_t get(std::uintptr_t port,std::uint32_t& bytes,std::uintptr_t& key,OVERLAPPED*& operation,std::uint32_t timeout)override{
   require(port==state.port,"Every physical wait belongs to own concrete Runtime IOCP");
   if(state.view){
   bool released=false;try{(void)state.view->memory.buffer_context();}catch(const std::logic_error&){released=true;}
   require(released,"AdmittedDispatcherApi releases root admission before physical SDK wait");
   {auto independent=state.view->memory.enter();++state.wait_scopes;}
+  release_final_child(state); // AFTER the short independent Operation ended
   }else ++state.initial_waits;
   ++state.gets;DWORD transferred=0;ULONG_PTR token=0;LPOVERLAPPED raw=nullptr;
   auto result=::GetQueuedCompletionStatus(reinterpret_cast<HANDLE>(port),&transferred,&token,&raw,timeout);
   bytes=transferred;key=token;operation=raw;return result;
  }
- std::int32_t post(std::uintptr_t port,std::uint32_t bytes,std::uintptr_t key,OVERLAPPED* operation)override{++state.posts;return ::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(port),bytes,key,operation);}
+ std::int32_t post(std::uintptr_t port,std::uint32_t bytes,std::uintptr_t key,OVERLAPPED* operation)override{if(state.original_stop&&state.original_stop->entered){auto& probe=*state.original_stop;require(::GetCurrentThreadId()==state.expected_worker&&port==state.port&&!bytes&&!key&&!operation&&!probe.failed_posts,"Original serving Runtime reaches one exact admitted zero stop packet");++probe.failed_posts;probe.post_actor=::GetCurrentThreadId();++state.posts;::SetLastError(77);return 0;}if(state.child_finish&&::GetCurrentThreadId()!=state.expected_worker){auto& probe=*state.child_finish;require(::GetCurrentThreadId()==probe.actor&&port==state.port&&!bytes&&!key&&!operation,"Actual child Runtime stop reaches only the retained raw zero-packet Dispatcher import");++probe.zero_posts;probe.post_actor=::GetCurrentThreadId();}++state.posts;return ::PostQueuedCompletionStatus(reinterpret_cast<HANDLE>(port),bytes,key,operation);}
  std::int32_t set_timer(std::uintptr_t,LARGE_INTEGER&,std::int32_t,PTIMERAPCROUTINE,void*,std::int32_t)override{unused();}
 };
 struct WorkerApi:s::WorkerRunApi {
@@ -182,6 +257,13 @@ struct Time final:anadius::crypto_recovered::TimeSource {std::int64_t unix_secon
 void prepare_peer(State& state,sp::SessionView view){
  const auto socket=view.owner.socket_state.socket;if(socket<201||socket>202||state.connections[socket-201])unused();auto c=std::make_unique<Connection>();c->socket=socket;c->token=view.token;c->owner_id=view.owner.identity();c->encrypted=socket==202;c->expected_response=c->encrypted?"GetConfigResponse":"QueryEntitlementsResponse";
  require(view.owner.cipher.encrypted_c4==0&&view.owner.cipher.unknown_c5==0&&view.owner.cipher.native().mode_00==0,"Graph prepare callback receives actual023000 owner after second native reset and supplies NOlogic/context graph");if(c->encrypted){view.owner.cipher.set_fixed_key_084c98();view.owner.cipher.encrypted_c4=1;c->client.set_fixed_key_084c98();}state.connections[socket-201]=std::move(c);
+ if(state.original_stop&&!state.original_stop->pinned){auto& probe=*state.original_stop;require(state.application&&!state.child_finish,"Original failure fixture owns its own mode without a child");auto ports=state.application->ports();require(ports.environment_work_stop&&ports.environment_work_stop->matches(ports.view.memory,ports.view.scheduler),"Original prepare captures actual Runtime cap before normal session work");probe.ports.emplace(ports);ports.view.scheduler.work_count_30.fetch_add(1,std::memory_order_seq_cst);probe.pinned=true;} // one fixture-owned pin, only real finish_original consumes it
+ if(state.child_finish&&!state.child_finish->started){auto& probe=*state.child_finish;require(state.application&&probe.threads,"Child probe reuses the controller-created NativeThreads provider");auto ports=state.application->ports();require(ports.environment_work_stop&&ports.environment_work_stop->matches(ports.view.memory,ports.view.scheduler),"Original captures actual Runtime/Policy cap under the existing Parent Operation");
+  probe.ports.emplace(ports);probe.offer.emplace(ports.view.memory.prepare_job());probe.original_ptd=static_cast<anadius::crt_ptd_recovered::Ptd*>(::FlsGetValue(ports.view.memory.memory_domain_identity()->native_fls_index()));probe.ready=::CreateEventW(nullptr,TRUE,FALSE,nullptr);probe.release=::CreateEventW(nullptr,TRUE,FALSE,nullptr);require(probe.original_ptd&&probe.ready&&probe.release,"Child finish owns exact startup/release barriers and retains original PTD identity");
+  ports.view.scheduler.work_count_30.fetch_add(1,std::memory_order_seq_cst); // one explicitly fixture-owned work pin, consumed only by child
+  probe.started=true;probe.handle=reinterpret_cast<HANDLE>(t::begin_thread_05e8e0(nullptr,0,reinterpret_cast<std::uintptr_t>(&ChildFinishProbe::entry),reinterpret_cast<std::uintptr_t>(&probe),0,&probe.id,*probe.threads));
+  require(probe.handle&&probe.id&&probe.id!=state.expected_worker&&::WaitForSingleObject(probe.ready,10000)==WAIT_OBJECT_0,"Real child startup/FLS and JobMemory acquire finish before original continues ordinary Graph packets");
+ }
 }
 void observe(State& state,sp::SessionView view,ag::Log kind,std::string_view text,std::string_view error){
  auto& c=state.connection(view.owner.socket_state.socket);auto graph=state.graph.lock();if(!graph||view.token!=c.token||view.owner.identity()!=c.owner_id)unused();
@@ -291,6 +373,7 @@ void worker_graph(Plan& plan,wh::PreparedMemory::Borrow&& borrowed){
  {
   auto sockets=std::make_shared<Sockets>(*state);auto dispatcher=std::make_shared<Dispatcher>(*state);auto worker=std::make_shared<WorkerApi>(index,*dispatcher);auto hooks=std::make_shared<Hooks>(*state,*dispatcher);weak_hooks=hooks;
   auto log_buffer=std::make_shared<std::stringbuf>();auto log_stream=anadius::shared_log::make_stream(log_buffer);ag::Options options;options.state={state,&state->configuration,&state->online,&state->saved,&state->achievement_file};options.policy.stream=log_stream;options.policy.imports={::WSASetLastError,::WSAGetLastError,convert_sdk,parse_sdk,sync_send_sdk,select_sdk};options.policy.lifecycle.lifetime=hooks;
+  if(state->original_stop)options.policy.system_message={original_stop_format,original_stop_free};
   options.policy.lifecycle.select_owner=[h=hooks.get()](sp::Application& a,s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& error,std::uint32_t bytes){return h->completion_owner(a,owner,op,error,bytes);};
   options.policy.lifecycle.after=[h=hooks.get()](sp::Application& a){h->after_completion(a);};options.policy.lifecycle.returned=[h=hooks.get()](sp::Application& a,std::uint64_t n,const s::WorkerRunResult& r){h->worker_returned(a,n,r);};options.policy.lifecycle.external_drained=[h=hooks.get()](o::ServerView v,sp::Application& a){return h->external_quiescent(v,a);};
   options.information=std::make_shared<Information>();options.content=std::make_shared<ContentEffects>();options.licensing=std::make_shared<LicenseBoundary>();options.time=std::make_shared<Time>();options.version=std::string(70000,'a');options.show_lsx=1;options.event_capacity=8;
@@ -300,6 +383,7 @@ void worker_graph(Plan& plan,wh::PreparedMemory::Borrow&& borrowed){
   o::Dependencies server_deps;server_deps.state_lifetime=state;server_deps.sockets=sockets;server_deps.dispatcher=dispatcher;s::IocpConstructorImports imports;imports.create_completion_port=create_port;imports.close_handle=close_port;server_deps.iocp=std::make_shared<s::NativeIocpConstructorApi>(imports);server_deps.gates=std::make_shared<s::NativeServiceGateApi>(s::ServiceGateImports{gate_initialize,::GetLastError});server_deps.cancellation=std::make_shared<Cancel>(*state);server_deps.executor=std::make_shared<Executor>(*state);server_deps.kernel={startup,cleanup,local_name,environment,gate_delete};
   rt::Dependencies runtime_deps;runtime_deps.state_lifetime=state;runtime_deps.sockets=sockets;runtime_deps.dispatcher=dispatcher;runtime_deps.worker=worker;runtime_deps.accept=std::make_shared<s::NativeAsyncAcceptApi>(s::AsyncAcceptImports{accept_sdk,accept_addresses,update_context,::WSAGetLastError});runtime_deps.factory=std::make_shared<s::NativeSocketFactoryApi>(s::SocketFactoryImports{open_socket});runtime_deps.cancel=std::make_shared<s::NativeRetryCancelApi>(cancel_sdk);runtime_deps.tls_index=&index;runtime_deps.executor={observed,move_executor};runtime_deps.capacity=32;
   anadius::bootstrap_backend::Resources resources{};graph->install_server_prepared(resources,plan.domain,std::move(borrowed),std::move(server_deps),std::move(runtime_deps));hooks->policy=graph->policy().get();hooks->errors=graph->policy()->errors().get();
+  if(state->original_stop)state->original_stop->policy=hooks->policy;
   require(resources.server&&graph->profile()->snapshot().phase==sp::Phase::Fresh&&!observed->starts&&!observed->factory_calls&&graph->policy()->snapshot().worker_initializations==0&&graph->policy()->snapshot().exit_cleanups==0,"Concrete Graph installs Resources.server passively with NOcaller XML/Logic/Router/Random/event/context/Policy graph");
   sockets.reset();dispatcher.reset();worker.reset();hooks.reset();graph.reset();state.reset();require(!lifetime.expired()&&!graph_lifetime.expired(),"Server wrapper retains concrete Graph and all required SDK/state/lifecycle lifetimes after external owners drop");
   std::uint16_t port=0;
@@ -322,17 +406,21 @@ unsigned __stdcall worker_entry(void* opaque){
  }catch(const std::exception& e){std::cerr<<"WORKER EXCEPTION: "<<e.what()<<'\n'<<std::flush;::ExitProcess(111);}catch(...){::ExitProcess(112);}
 }
 BOOL WINAPI no_module(DWORD flags,LPCWSTR address,HMODULE* output){if(flags!=4||!address||!output)unused();*output=nullptr;::SetLastError(ERROR_MOD_NOT_FOUND);return FALSE;}
-void real_worker_handoff(){
+void real_worker_handoff(bool child_last=false,bool original_stop_failure=false){
+ require(!child_last||!original_stop_failure,"Child success and original serving failure are distinct fixture modes");
  NativeDomain native;const auto controller=::GetCurrentThreadId();auto* main_ptd=native.root->current_ptd();auto main_errno=native.root->errno_cell();main_errno.store(4242);
  require(main_ptd&&::FlsGetValue(native.root->native_fls_index())==main_ptd&&native.memory.count()==1,"Controller owns actual initialized Domain PTD/FLS and its sole heap block before preparation");
- auto prepared=wh::PreparedMemory::prepare(native.root);auto api=anadius::thread_native::native_api();api.get_module=no_module;auto threads=native.root->make_threads(api);
+ auto prepared=wh::PreparedMemory::prepare(native.root);auto api=anadius::thread_native::native_api();api.get_module=no_module;std::shared_ptr<anadius::bootstrap_providers::NativeThreads> threads=native.root->make_threads(api);
  require(prepared->snapshot().phase==wh::Phase::Prepared&&prepared->snapshot().controller_thread==controller&&native.root->provider_leases()==2,"PreparedMemory and real NativeThreads are created exclusively on controller and retain two exact Domain provider leases");
  Plan plan;plan.domain=native.root;plan.prepared=prepared.get();plan.controller=controller;plan.controller_ptd=main_ptd;plan.state=std::make_shared<State>();plan.state->expected_domain=native.root.get();plan.state->configuration.entitlements.push_back({"synthetic-offer","synthetic-group","synthetic-version","synthetic-type","synthetic-tag"});std::weak_ptr<State> state_lifetime=plan.state;
+ if(child_last){plan.state->child_finish=std::make_unique<ChildFinishProbe>();plan.state->child_finish->threads=threads;}
+ if(original_stop_failure)plan.state->original_stop=std::make_unique<OriginalStopProbe>();
  plan.returned=::CreateEventW(nullptr,TRUE,FALSE,nullptr);plan.release=::CreateEventW(nullptr,TRUE,FALSE,nullptr);require(plan.returned&&plan.release,"Own controller/worker barriers are actual kernel events");
  std::uint32_t id=0;const auto raw=t::begin_thread_05e8e0(nullptr,0,reinterpret_cast<std::uintptr_t>(&worker_entry),reinterpret_cast<std::uintptr_t>(&plan),0,&id,*threads);require(raw&&id&&id!=controller,"Actual recovered05e8e0/05e7a8 factory starts distinct real NativeThreads worker");auto handle=reinterpret_cast<HANDLE>(raw);
  if(::WaitForSingleObject(plan.returned,30000)!=WAIT_OBJECT_0){std::cerr<<"worker return barrier timeout\n"<<std::flush;::ExitProcess(113);}
  const auto returned=prepared->snapshot();DWORD exit_code=0;
  require(returned.phase==wh::Phase::Returned&&returned.worker_thread==id&&plan.worker==id&&returned.worker_handle_retained&&!returned.worker_exit_verified&&plan.graph_destroyed,"Returned capability retains duplicated ACTUAL native worker handle; application destruction is observed separately from thread exit");
+ if(child_last){const auto& child=*plan.state->child_finish;require(child.started&&child.joined&&child.retired&&child.consumed&&child.before==1&&!child.after&&child.zero_posts==1&&child.post_actor==child.actor&&!child.offer&&!child.ports&&!child.threads,"Prepared real child is physically joined/reaped and its exact last-release pin/wake resolved before Graph/original return");}
  require(!prepared->close(0)&&prepared->snapshot().phase==wh::Phase::Returned&&prepared->snapshot().worker_handle_retained&&!prepared->snapshot().worker_exit_verified&&::WaitForSingleObject(handle,0)==WAIT_TIMEOUT&&::GetExitCodeThread(handle,&exit_code)&&exit_code==STILL_ACTIVE,"Controller close times out while returned worker is deliberately alive; no boolean return or source counters fabricate actual OS/FLS exit");
  require(native.memory.count()==3&&native.root->provider_leases()==2&&native.root->locale_references()==3&&native.root->multibyte_references()==2&&main_errno.load()==4242&&native.root->current_ptd()==main_ptd,"After full59packet Graph close only controllerPTD+liveworkerPTD+nativeContext remain; controller memory ownership and errno identity are retained");
  require(::SetEvent(plan.release)!=FALSE,"Controller releases actual worker only after timeout retention proof");
@@ -342,5 +430,9 @@ void real_worker_handoff(){
  prepared.reset();require(::CloseHandle(handle)&&::CloseHandle(plan.returned)&&::CloseHandle(plan.release),"Caller closes only its own joined native thread/event handles; capability duplicate retired independently");threads.reset();require(native.root->provider_leases()==0,"Joined NativeThreads provider is destroyed on controller after prepared owner retirement");plan.state.reset();require(state_lifetime.expired(),"Controller releases immutable shared application cells only AFTER actual worker join and complete Graph destruction");plan.domain.reset();
  require(native.root->close()&&native.memory.balanced()&&native.memory.slot_allocations==1&&native.memory.slot_releases==1&&native.root->locale_references()==1&&native.root->multibyte_references()==0,"Controller finally closes Domain after all providers/workers/FLS callbacks, balancing every actual processheap/FLS ownership");
 }
+void isolated_original_stop_failure(){
+ std::array<wchar_t,32768> path{};const auto count=::GetModuleFileNameW(nullptr,path.data(),static_cast<DWORD>(path.size()));require(count&&count<path.size(),"Own handoff integration executable path found");std::wstring command=L"\""+std::wstring(path.data(),count)+L"\" --original-stop-failure";STARTUPINFOW startup{};startup.cb=sizeof(startup);PROCESS_INFORMATION process{};
+ require(::CreateProcessW(nullptr,command.data(),nullptr,nullptr,FALSE,CREATE_NO_WINDOW,nullptr,nullptr,&startup,&process)!=0,"Own isolated original serving stop failure fixture launched hidden");const auto waited=::WaitForSingleObject(process.hProcess,40000);DWORD code=0;require(waited==WAIT_OBJECT_0&&::GetExitCodeProcess(process.hProcess,&code)&&code==137,"Original serving failure reaches exact saved-error retained-prefix assertions");require(::CloseHandle(process.hThread)&&::CloseHandle(process.hProcess),"Parent closes only its joined isolated process/thread handles");
 }
-int main(){try{real_worker_handoff();std::cout<<"PASS: "<<checks<<" worker-handoff integration checks; actualcontroller PreparedMemory/NativeThreads distinctworker Graph NativeLogic/XML/Router/AES/DOWN59packets/wrapped8to16/FIFO17, allworkerGraphdestructors thenrealjoin/FLSexit thencontroller memory/provider/domainclose; SDKtokens only, no OriginalDLL/game/network/nativeABI/bootstrapclosure claim\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+}
+int main(int argc,char** argv){try{if(argc==2&&std::string_view(argv[1])=="--child-last-release")real_worker_handoff(true);else if(argc==2&&std::string_view(argv[1])=="--original-stop-failure")real_worker_handoff(false,true);else if(argc==1){real_worker_handoff();real_worker_handoff(true);isolated_original_stop_failure();}else return 2;std::cout<<"PASS: "<<checks<<" worker-handoff integration source checks; ordinary/prepared child last release and isolated actualRuntime original serving stop error latch; unchanged59normalpackets, realjoin/FLSexit for successful modes; SDKtokens only, no OriginalDLL/game/network/nativeABI/bootstrapclosure claim\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

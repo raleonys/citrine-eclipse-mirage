@@ -1,0 +1,100 @@
+{
+  "recorded_at": "2026-11-05T19:37:49.253117+00:00",
+  "continuous_goal_active": false,
+  "pending_source_count": 0,
+  "count_is_completion_percentage": false,
+  "latest_source_milestone": {
+    "path": "outputs/anadius-application-graph-source/scoped-runtime-integration-20261105/evidence.json",
+    "sha256": "5d875de3602debb98d4454fb039c4005c557facd3f234bddea1fed7b1f95bde2"
+  },
+  "decisions": [
+    {
+      "path": "outputs/dll-critical-path/persistence-source-triage-20261104.md",
+      "sha256": "4aaf5c436c87ae20f8b7aed03ab8d1c3298e5fab5dd2643b69ad0dd849d25e3d"
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/tracked-executor-design-20261104/design-review.md",
+      "sha256": "86db8b1dbe54ced062e0e3c935c29b086b55b3955f755722e9ea0cf5c093a568"
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/tracked-executor-design-20261104/source-plan.md",
+      "sha256": "decdd25a3ea2ef940d60e1b63dd3558baed4dd9862b0c3a3dd7c959d835d052e"
+    }
+  ],
+  "tracked_family_decision": "Previous default-only deferral superseded: concrete Initial/Tracked family source and original/child immediate work-stop route implemented and statically reviewed. Further RE work paused at user request; native ABI/null/EH and real child integration remain unvalidated.",
+  "persistence_decision": "XML/INI BOOL-discard candidate already matched by retained native evidence; no repeat REA or rollback/retry patch.",
+  "awaiting_explicit_rebuild_instruction": false,
+  "async_question_pending": false,
+  "no_answer_is_not_approval": true,
+  "independent_static_work_in_progress": "RE source work remains paused at the user request. Only the explicitly authorized build/test/link and delivery run was performed.",
+  "next_build_if_explicitly_requested": "Consistent full source compile, appropriate project tests and production DLL link; DLL execution/ZIP update require their own requested scope.",
+  "remaining_validation_limits": [
+    "Authorized common build/tests and actual production link are recorded separately by the current build/link proofs; the production DLL was not loaded or executed.",
+    "Passing reconstructed-component and injected-SDK tests is not native runtime/loader/ABI/EH equivalence or real-network cancellation proof.",
+    "Returned-child-old1, child response20/88/completeIO/scheduling/shared/accept/packet/fullnative tail remain open; production Parent remains Serialized.",
+    "The original binaries and historical source-only stage/pause evidence remain unchanged. No new native-body recovery, native ABI closure or completion percentage is claimed.",
+    "RE source work is still paused at the user request; fresh build/delivery authorization does not resume it. Future rebuilds require an explicit instruction."
+  ],
+  "compile": true,
+  "tests_run": true,
+  "link": true,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "production_provider_audit": {
+    "path": "outputs/dll-critical-path/production-provider-source-audit-20261104.md",
+    "sha256": "625ef8d048d5b7295762a5de06385fbd9b94817b4194642fb0b1931fdaf7c6a9",
+    "status": "BOUNDED_SOURCE_AUDIT_NO_NEW_GAP"
+  },
+  "current_validation_gate": {
+    "reason": "Current authorized common build/tests and production link have their actual proofs; runtime/native gaps remain open and RE work remains user-paused. ZIP receipt follows atomic packaging.",
+    "consecutive_goal_turns_at_impasse": 0,
+    "no_repeat_question": true
+  },
+  "system_message_decision": "Concrete020950 default system message callback implemented and statically reviewed; generic/misc/explicit override preserved; native EH/ABI remains open.",
+  "latest_compiler_provider_audit": {
+    "path": "outputs/anadius-session-policy-source/worker-error-028240-20261104/compiler-provider-audit-index.json",
+    "sha256": "4084d937bcbf23e44f29c9eefe1d5bd9ca9226d4883daa76e55cf391b6f91827"
+  },
+  "native_system_diagnostic_resolution": {
+    "path": "outputs/anadius-session-policy-source/native-stop-diagnostic-20261104/evidence.json",
+    "sha256": "fbc54501e1df8602f303e77cbc2dd852249d2521a03512118b28b847995fe8c1"
+  },
+  "work_status": "PAUSED_AT_USER_REQUEST",
+  "safe_pause_source_checkpoint": {
+    "path": "outputs/anadius-application-graph-source/scoped-runtime-integration-20261105/evidence.json",
+    "sha256": "5d875de3602debb98d4454fb039c4005c557facd3f234bddea1fed7b1f95bde2"
+  },
+  "source_only_limits_before_authorized_build": [
+    "Four production/two test sources statically reviewed, no compiler/project tests/link/DLL execution/ZIP. Actual-component dependency composition is authored source, not observed runtime PASS.",
+    "This is source assembly/integration using already retained REA/Ghidra addressed prepare/family/work-drop/stop evidence; no new native instruction query or recovered-function credit is attributed to this stage.",
+    "Supplied fresh provider is one explicit object in existing owned lifecycle, with no getter/new Root/Policy wrapper or substitute Runtime capability. One instance binds one Profile/Graph; configuration Fresh is not an exclusive reservation and retained pointer grants no actor or lifecycle permission.",
+    "Actual two-Scope mode uses real Parent memory offers/child permits/native/FLS wrappers, one actual selected Environment and actual Policy/Runtime work capability, but scripted SDK IO. Manual Scope actors are not NativeJobs frame-message coverage; no fake count/pin/permit or reset.",
+    "A hold is after real nonfinal N-to-Nminus1 before Blaunch; Breal58/copy/move/prepare40/drop/close/offerreturn/nativeFLSreap and Rootoriginal progress are source assertions. A resumes against current actual count, drains before EOF/typed995 normal cleanup. No runtime result is claimed without explicitly authorized rebuild.",
+    "Returned-child-old1, child response20/88/completeIO/scheduling/Worker/dispatcher/shared/accept/packet/fullnative028d30-021770 tail remain open; production Parent stays Serialized.",
+    "Original binary and historical build/link/DLL/ZIP remain unchanged. Explicit consistent rebuild required. No total percentage from file counts."
+  ],
+  "current_source_matches_last_full_build": true,
+  "future_rebuild_requires_explicit_instruction": true,
+  "previous_milestone_record": {
+    "path": "work/rebuild-20261105T182000Z/metadata-before-build-status/static-source-milestone-20261104.json",
+    "sha256": "91fa5a2f0b8f9f84d94e6599a16d0364f0b142b6ea252b1e364d29aa6f4fcba7"
+  },
+  "latest_authorized_build": {
+    "path": "outputs/dll-critical-path/current-rebuild.evidence.json",
+    "sha256": "a3b55f94eebd66023adec370aa5809ec5dfcc1acc6cebcb8fadc3189677f74b8"
+  },
+  "full_common_build": {
+    "path": "outputs/source-workspace/full-build-verification.json",
+    "sha256": "17adf10282ffcc203606bdfa421af13cd2666e30b16445c8abd9a8600271f4d9"
+  },
+  "production_link": {
+    "path": "outputs/dll-link-gate-source/current-full-link.json",
+    "sha256": "0cb6b7f6a5333510d2d99eb988c79ea7e4ce636cde9a4a1a7fff411f6bf126d5"
+  },
+  "builder_status": {
+    "status": "BUILD_AND_LINK_PASS_NOT_RUNTIME_VALIDATED",
+    "run": "work/rebuild-20261105T182000Z",
+    "ZIP": "Authorized packaging follows verification",
+    "production_DLL_loaded_or_executed": false
+  }
+}

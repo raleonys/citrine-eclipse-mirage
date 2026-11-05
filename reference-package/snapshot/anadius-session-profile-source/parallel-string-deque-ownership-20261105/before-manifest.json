@@ -1,0 +1,92 @@
+{
+  "status": "PRE_EDIT_SOURCE_SNAPSHOT",
+  "files": [
+    {
+      "path": "anadius-session-profile-source/strings.hpp",
+      "exists": true,
+      "sha256": "18db9bc458ab1e14f50bbba812d4928ef8a02c7fb4b25d7b9fb860845caec7a5",
+      "before": "before/anadius-session-profile-source__strings.hpp"
+    },
+    {
+      "path": "anadius-session-profile-source/strings.cpp",
+      "exists": true,
+      "sha256": "48da5ac125507c245caf3cf7ba56b94112c79e27e4e327d954b4d30f9603d797",
+      "before": "before/anadius-session-profile-source__strings.cpp"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.hpp",
+      "exists": true,
+      "sha256": "9dabf8e664583ee13973522382d8023a8dd31b57b85c7274e66e2e9f8f523c71",
+      "before": "before/anadius-session-memory-source__memory.hpp"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.cpp",
+      "exists": true,
+      "sha256": "ad221cc300d5bfdf1c2b17391fc7b999e86513b3c818b05fdd6cca846f91abb0",
+      "before": "before/anadius-session-memory-source__memory.cpp"
+    },
+    {
+      "path": "anadius-owned-deque-source/deque.hpp",
+      "exists": true,
+      "sha256": "7d12537b67ba147f4e902e745366636e0f9b787284c94113164fba83fbc2434d",
+      "before": "before/anadius-owned-deque-source__deque.hpp"
+    },
+    {
+      "path": "anadius-owned-deque-source/deque.cpp",
+      "exists": true,
+      "sha256": "b26400d2f592d6231610c997695786cf3798e59446e588e22c15368bc2869cac",
+      "before": "before/anadius-owned-deque-source__deque.cpp"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.cpp",
+      "exists": true,
+      "sha256": "dc40777b05ffce8698fafea48734b0c876df995a824deaa1aa4385e5ddfa42ba",
+      "before": "before/anadius-session-profile-source__profile.cpp"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "exists": true,
+      "sha256": "b676e53f01d240846fd0e0a3d268e38b8381110b2354d81525162b1a4fea1604",
+      "before": "before/anadius-worker-handoff-source__handoff_tests.cpp"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch.cpp",
+      "exists": true,
+      "sha256": "47efc10e32430961cd3f78f5604537cec1aa46a7848b48c1cf4b41dab259ca23",
+      "before": "before/anadius-socket-source__message_dispatch.cpp"
+    },
+    {
+      "path": "anadius-socket-source/response_dispatch.cpp",
+      "exists": true,
+      "sha256": "9b8659bdbaa95afc66e3759152168ad1add30bf5e856210e159f5e9f553401d0",
+      "before": "before/anadius-socket-source__response_dispatch.cpp"
+    },
+    {
+      "path": "anadius-socket-source/owned_response.cpp",
+      "exists": true,
+      "sha256": "a9125c30bf6d551a3eb32435ab088c8266a60f421e545e5e211c4fd34a7c821c",
+      "before": "before/anadius-socket-source__owned_response.cpp"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch_tests.cpp",
+      "exists": true,
+      "sha256": "cb7d3de14a5a5f61a0d38e41fac9e8297da8b3dfc19eaacabf08bd3544af3a80",
+      "before": "before/anadius-socket-source__message_dispatch_tests.cpp"
+    },
+    {
+      "path": "anadius-socket-source/response_dispatch_tests.cpp",
+      "exists": true,
+      "sha256": "c7c7ca0d8158e91185c34b10882a540d4c25e0f0efe4a555b6decdd89f34ea3a",
+      "before": "before/anadius-socket-source__response_dispatch_tests.cpp"
+    },
+    {
+      "path": "anadius-socket-source/owned_response_tests.cpp",
+      "exists": true,
+      "sha256": "77fb307cf79f5b503bc136c45e30ee2091e89d72e114382b07871bfa80a2ee2e",
+      "before": "before/anadius-socket-source__owned_response_tests.cpp"
+    }
+  ],
+  "pending_source_count": 90,
+  "compile": false,
+  "tests_run": false
+}

@@ -7,8 +7,21 @@ ReceiveBufferString& copy_response_string_009eb0(ReceiveBufferString& destinatio
 // A typed pointer-array projection with an explicit native address token.
 // No native pointer bytes or host MSVC container layout are reinterpreted.
 struct DequeMapBinding {std::uintptr_t address=0;std::span<WriteFinishString*> slots;};
+class DequeMapResolver {
+public:
+    virtual ~DequeMapResolver()=default;
+    // Exact descriptors copied by value; output changes only on Found.
+    // No SDK/application callback or payload lifetime grant. The integrating
+    // owner must validate resolver identity and retain the actual map pin.
+    virtual MemoryLookup lookup_map(std::uintptr_t,std::uint64_t,std::span<WriteFinishString*>&)=0;
+    virtual MemoryLookup lookup_address(std::span<WriteFinishString*>,std::uintptr_t&)=0;
+};
 struct DequeMapMemory {
     std::span<const DequeMapBinding> bindings;
+    // Authoritative when nonnull, otherwise use the original bounded table.
+    DequeMapResolver* resolver=nullptr;
+    MemoryLookup lookup_address(std::span<WriteFinishString*>,std::uintptr_t&) const;
+    MemoryLookup lookup_map(std::uintptr_t,std::uint64_t,std::span<WriteFinishString*>&) const;
     std::uintptr_t address_of(std::span<WriteFinishString*>) const;
     std::span<WriteFinishString*> view(std::uintptr_t address,std::uint64_t byte_count) const;
 };

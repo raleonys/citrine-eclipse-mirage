@@ -1,0 +1,23 @@
+# Tracked executor family: connected source implementation
+
+2026-11-04. SOURCE ONLY. No compilation, project tests, link, DLL execution or packaging. The original DLL and historical build/delivery remain unchanged. This stage supersedes the previous default-route-only decision to defer the tracked family; the full reconstruction objective remains active.
+
+## Native evidence and resulting source
+
+The eight fresh REA6.8.0/Ghidra12.1.4 records retained in native-findings.md establish the exact0229a0 decrement/old1/02a190 path, null-context branch,023580/023360 retains and0231b0 move. The prior native-environment-targets and response-executor-native stages additionally establish family table targets, type identities, flag transformations and022f90→022e40→028ca0. These are static observations, not native execution or recovered original C++.
+
+The actual Environment bindings now distinguish Initial and Tracked family metadata, flags, executor/type/schedule identities and owned work pins. Initial factory58 creates Tracked; tracked copies/factories retain; move transfers; destruction finishes exactly one owned pin. Prepare clears bit0, response20 sets it, response88 clears bit1. Metadata ledger references, session strong references, family work and posted-operation work remain separate. Growth copies current proof rows without retaining again; a new retain occurs in the final no-allocation publication prefix.
+
+Runtime supplies a stable Parent/scheduler-bound work-finish capability in Ports. Profile forwards to the selected concrete Policy. Policy validates original actor or the exact current child JobPermit before decrement, records consumption immediately and invokes existing02a190 synchronously on old1. Child finish has its own narrow reservation, allowing the exact child authority without granting ordinary Policy calls. Wake low32 uses the existing Policy gate and preserves high32. Returned/Quiescing original cleanup is explicitly admitted for this narrow operation. Original synchronous attach and application detach behavior are untouched.
+
+The private zero-packet API preserves the admitted dispatcher for a serving original and uses retained raw dispatcher only under the exact child/returned cleanup authority. It captures failed-post error before source postchecks. Existing02a190 still resolves system category even for false/error0 and raises only for nonzero error. No retry, rollback, deferred receipt or extra unload condition is added. Environment retains ReleaseEntered and consumed prefix on throw; it never retries an unknown release.
+
+Independent integration review also caught the previously unconditional native handler inline path. Native Initial/Tracked handlers now use actual022e40 with their flags. OwnedHandlerTask shares the existing functor slot00 contract through inheritance. A typed overload passes the real caller slot through the common dispatcher body, so its null/transfer update is visible before callback or posting, including exceptions. There is no allocating adapter or delayed base-pointer mirror. Host's selected inline handler behavior is preserved.
+
+## Validation boundary
+
+Source cases cover public family factories, type selection into actual023dd0, copy/move/prepare/response transformations, growth beyond initial storage, distinct family and posted pins, controlled root final release and failure prefixes. Concrete Policy source cases cover original nonfinal/final release, stop/wake early exits, false/error0, high32 preservation, Ready and Returned cleanup, error77 mapping, pre-drop admission failure, unknown post throw and foreign scheduler. Typed dispatcher source cases check the real slot before allocation, during inline callback, during post and after throws. Existing worker source cases cover failure-category ordering.
+
+None of these cases was compiled or run. Environment tests use a controlled work-finish provider; they do not establish the real Runtime/Policy child route. A prepared-backed real child last-release integration fixture remains a validation gap. The bound provider admits exact nonzero context roots; native null-context family values and arbitrary native ABI input are outside this admitted source domain. Native EH, full ABI equivalence, complete original application session/retirement behavior and DLL execution remain unproven. No whole-DLL completion percentage is inferred.
+
+Final hashes, source reviews, native Evidence IDs, pending source count and unchanged frozen artifact proofs are recorded in evidence.json. Source files that depend on changed host interfaces require one consistent explicitly authorized rebuild.

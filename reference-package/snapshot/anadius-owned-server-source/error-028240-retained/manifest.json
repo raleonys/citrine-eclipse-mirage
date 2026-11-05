@@ -1,0 +1,77 @@
+{
+  "scope": "Complete function slices of existing retained native evidence; no new target analysis",
+  "functions": [
+    {
+      "address": "0x180023990",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "source_line": 29200,
+      "path": "outputs/anadius-owned-server-source/error-028240-retained/0x180023990.pseudo.c",
+      "sha256": "4d903a38b4c886e303e35e5036e3b1975c9eff5141cad54f4881233c5a46af43",
+      "evidence_id": "ev_281613f2bb8e95e4cc27d3e90699cf4a6de3ac8c9d9a226c20934d795016628b"
+    },
+    {
+      "address": "0x1800248b0",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "source_line": 30034,
+      "path": "outputs/anadius-owned-server-source/error-028240-retained/0x1800248b0.pseudo.c",
+      "sha256": "a532e1b4fb5ca76454a03e5bfeb76298870a5e4e50ec7c8362d9884bb840dd9b",
+      "evidence_id": "ev_b2bf6baada4cd16a73cc61d2de01545aa74f09abc92379812bd927dd62ffb425"
+    },
+    {
+      "address": "0x180024990",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "source_line": 30082,
+      "path": "outputs/anadius-owned-server-source/error-028240-retained/0x180024990.pseudo.c",
+      "sha256": "30e9a6e6c1bf3c7e1027996f68c159bbf79dd510f2a444c0452458cd6aa9b790",
+      "evidence_id": "ev_3a626f8100eb1bf7ba0b9677a33b1b1418e250dde536cb3a9f122c32790a3442"
+    },
+    {
+      "address": "0x180028240",
+      "source": "outputs/anadius-all-functions.pseudo.c",
+      "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "source_line": 33545,
+      "path": "outputs/anadius-owned-server-source/error-028240-retained/0x180028240.pseudo.c",
+      "sha256": "68375021b5927ceeb104c85591cc142a184a452bfd49b87d8ae80d02c05760ae",
+      "evidence_id": "ev_8812039f80975bf30fe10c8e8c563cbf587e3d91e37da97a8180438643f24c06"
+    },
+    {
+      "address": "0x180023990",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "source_line": 36461,
+      "path": "outputs/anadius-owned-server-source/error-028240-retained/0x180023990.asm.txt",
+      "sha256": "fabfb0e650e4e0765cf5cb46dcd1e4232f0b02933e5e30c0a94fa597e10a675c",
+      "evidence_id": "ev_ca0d706ddcf9e9a6aa1cbc7657fb424496ebeba3ae238620941e94952136b774"
+    },
+    {
+      "address": "0x1800248b0",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "source_line": 37509,
+      "path": "outputs/anadius-owned-server-source/error-028240-retained/0x1800248b0.asm.txt",
+      "sha256": "adecd797bfe2885c5e0fdebc5491593b5da10015131d19a038893d12c567a19d",
+      "evidence_id": "ev_3a476ce05dcf5ed15a9411795f627b4597a40df1c28ac44648d54288184371e4"
+    },
+    {
+      "address": "0x180024990",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "source_line": 37567,
+      "path": "outputs/anadius-owned-server-source/error-028240-retained/0x180024990.asm.txt",
+      "sha256": "864c5033cbd03118e4ed868ea4fdcf70a276e8d7d017a6682727a687b3597a67",
+      "evidence_id": "ev_87052282e1951ed15719d13023b5cd5cfdf7a65dcbff15d2354f8ee4cff08aad"
+    },
+    {
+      "address": "0x180028240",
+      "source": "outputs/anadius-all-functions.asm.txt",
+      "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "source_line": 41294,
+      "path": "outputs/anadius-owned-server-source/error-028240-retained/0x180028240.asm.txt",
+      "sha256": "82d027cc8a70c5dddb1790030c33fbf64a580379632897ac1c20256dd25cbdb0",
+      "evidence_id": "ev_8016916b7c8a599039e381fd4abe2ba5300ec47940162ce8497a922f909af35b"
+    }
+  ]
+}

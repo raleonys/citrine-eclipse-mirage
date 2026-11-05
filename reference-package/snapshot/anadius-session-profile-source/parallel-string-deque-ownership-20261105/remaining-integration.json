@@ -1,0 +1,76 @@
+{
+  "schema": "parallel-handler-remaining-integration.v3",
+  "recorded_at": "2026-11-04T23:35:38.249337+00:00",
+  "status": "PARENT_IO_STRING_DEQUE_FOUNDATIONS_IMPLEMENTED_ACTUAL_ORIGINAL_PARALLEL_ROUTE_PENDING",
+  "source_checkpoint": {
+    "path": "outputs/anadius-session-profile-source/parallel-string-deque-ownership-20261105/evidence.json",
+    "sha256": "020efa1a8f4c1ca55cc8faabbc50c37df8ea7ec51f16592354108a27a8baf07d"
+  },
+  "pending_source_count": 98,
+  "added_dependency_headers": [
+    "anadius-socket-source/memory_lookup.hpp"
+  ],
+  "bookkeeping_recorder": "work/record-focused-source-stage-v3.py",
+  "actual_production_policy": "Serialized; no OriginalConcurrentActors production selection",
+  "native_behavior_gap_closed": false,
+  "completed_prerequisites": [
+    {
+      "scope": "Per-actor Parent/JobPermit/PTD/JobScope records, exact byte/header/map catalog pins, per-attempt allocator rollback and sibling reap metadata",
+      "proof": {
+        "path": "outputs/anadius-session-memory-source/actor-catalog-foundation-20261105/evidence.json",
+        "sha256": "f13662c6370f7bd64c2ff51e6344e3ed150cd700935ba16e4f4bcf50d88a6811"
+      }
+    },
+    {
+      "scope": "Stable Record IO owner resolvers, generation-specific unlocked effect/callback lifetimes, known/unknown completion prefixes and mode-aware consumer/current-capacity wiring",
+      "proof": {
+        "path": "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/evidence.json",
+        "sha256": "f93751e53ea7e6a190545a4b319be4535e92110fad5a68c46c4934326c08240c"
+      }
+    },
+    {
+      "scope": "Stateless authoritative string headers, exact producer last-use/SDK-and-foreign view retention, per-call deque growth and residual header destructors",
+      "proof": {
+        "path": "outputs/anadius-session-profile-source/parallel-string-deque-ownership-20261105/evidence.json",
+        "sha256": "020efa1a8f4c1ca55cc8faabbc50c37df8ea7ec51f16592354108a27a8baf07d"
+      }
+    }
+  ],
+  "remaining": [
+    {
+      "order": 1,
+      "scope": "Per-message Profile admission/job/slot records and NativeProfile independent Invocation/private-window composite resolver with explicit call Dependencies. Same-session healthy invocations may overlap; retain exact failed prefixes and actual shared cipher identity."
+    },
+    {
+      "order": 2,
+      "scope": "Per-message Graph router/adapters/writers/checkpoint/lock bookkeeping; Content/Information/Licensing concrete call views over the same actual Runtime/config/Online/AttemptState roots. Keep real event/achievement mutexes."
+    },
+    {
+      "order": 3,
+      "scope": "Audit actual source actor ownership of accept-body/SDK gates and mutable packet publications/readers. Stable pointer lookup alone is not concurrent packet-payload synchronization; resolve any actual-route conflicts without a new whole-handler/session strand."
+    },
+    {
+      "order": 4,
+      "scope": "After all lower/upper consumers cohere remove selected Original NativeJobs source_gate, keep receipt/work/closure/generation ownership and response completion before physical native/FLS reap; wire the one immutable Parent policy into actual production composition."
+    },
+    {
+      "order": 5,
+      "scope": "Author actual NativeJobs/Graph/IO warmed plaintext A supported UnknownMessage dialog held/B GetConfig response-before-release cases, BOTH same session and distinct sessions. No fake readiness/work counters, duplicate Parents or cloned business roots."
+    }
+  ],
+  "validation_limits": [
+    "14 current-stage files independently statically reviewed; four test sources contain authored assertions, never executed. No compiler/tests/link/DLL/ZIP operation.",
+    "Actual Original remains Serialized. Lower Prepared/OwnedIO null-response-control and typed socket fixtures are not actual NativeJobs/Graph/same-session/network progress validation.",
+    "Every future async ownership publication needs its own actual last-use audit; relinquish ends ALL this actor aliases of one ticket and does not release SDK/foreign views.",
+    "Foreign same-queue mutation rejects without waiting/poisoning; exact native response queue scheduling/control lifetime remain upper caller duties.",
+    "Accept-body and packet-payload writer ownership, same shared business roots, native ABI/EH/fault behavior and foreign SDK properties remain qualified.",
+    "98 pending source/header files including one added dependency require a consistent explicitly authorized rebuild. Historical build/source snapshot/DLL/ZIP untouched."
+  ],
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "overall_completion_percentage": null,
+  "continuous_goal_active": true
+}

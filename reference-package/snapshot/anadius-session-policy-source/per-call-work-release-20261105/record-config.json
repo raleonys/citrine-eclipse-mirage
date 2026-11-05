@@ -1,0 +1,56 @@
+{
+  "schema": "policy-per-call-tracked-work-release.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_POLICY_EXACT_WORK_RELEASE_MEMBERSHIP",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Policy per-call tracked-work pending/publication/actor/checkpoint/lease/consumption registry, exact original or copied child Parent permit, sibling/root progress in explicit Concurrent policy and retained unknown prefixes, without changing native atomic drop/stop algorithm. Existing synthetic Policy component assertions authored, not run; full Environment scoped-adapter integration remains open.",
+  "sources": [
+    {
+      "path": "anadius-session-policy-source/policy.hpp",
+      "before": "before/anadius-session-policy-source__policy.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.cpp",
+      "before": "before/anadius-session-policy-source__policy.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-policy-source/policy_tests.cpp",
+      "before": "before/anadius-session-policy-source__policy_tests.cpp",
+      "role": "test"
+    }
+  ],
+  "reviews": [
+    "policy-work-independent-review.md",
+    "root-policy-work-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "native-findings.md",
+    "policy-work-implementation.md",
+    "policy-work-test-implementation.md"
+  ],
+  "native_replies": [
+    "instructions-1800229a0.json",
+    "instructions-18002a190.json",
+    "instruction-1800229b5.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-session-policy-source/per-call-work-release-20261105/native-evidence-index.json",
+    "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/evidence.json",
+    "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/remaining-integration.json"
+  ],
+  "limits": [
+    "Source implementation and independent static review only. No compiler, project tests, link, DLL execution or ZIP update; authored component assertions are not runtime PASS.",
+    "Three relevant fresh REA6.8.0/Ghidra12.1.4 records constrain actual decrement and synchronous last-work stop; four-record bundle also preserves one unrelated constructor returned by an exploratory interior selector. That constructor is not release evidence or new recovered-function credit.",
+    "Per-call pending and durable membership replaces the Policy singleton, not actual shared scheduler/work/stop/wake state. External consumed is published immediately after actual fetch_sub, then durable state before callback-capable stop. No re-add, guard, deferred completion or guessed retry.",
+    "Exact child permits are copied. Native API/errors/external-consumed references remain synchronous stack inputs, never retained replay authority. Callback ownership and final checks remain under exact published membership; unknown prefixes stay failed/retained and aggregate Snapshot.active is truthful.",
+    "The existing Policy component fixture has synthetic SDK/FLS and initialized leaf counters. Its before/after-consumed, destructor/copy/reentry/error/order assertions are supplemental; no actual concurrent PreparedMemory/NativeThreads/Environment/Runtime progress is claimed from them.",
+    "Production Parent remains Serialized. OwnedEnvironment singleton job/vector/growth/releasing still requires explicit immutable CallContext-bound projection adapters and per-row effect records, actual tracked-family concurrent/returned-child-old1 fixtures, plus accept/packet/shared mutation/full028d30 child-tail integration.",
+    "Original binaries and historical build/link/DLL/ZIP proofs are unchanged. Pending source/header changes require an explicitly authorized consistent rebuild. No overall completion percentage from file counts."
+  ],
+  "completed_note": "SOURCE_ONLY3relevantfreshREArecords;Policy2productionfilesreplaceenvironmentworksingletonwithexactper-callpending/registeredactor/copypermit/callback/consumedfailedrecords;boundedPolicyleafassertionsupdated/authoredNOTRUN.",
+  "observation": "REA6.8/Ghidra12.1.4complete0229a0and02a190plusselected229b5saved/exportedclosed,originalunchanged. Unrelated022940\u21920228e0constructorreplypreservedwithoutreleaseclaim. Usefulproduction/test/independent-reviewagentskeepnativeatomicdrop/stopandunknownprefixes;actualEnvironmentprojectionintegrationnotclaimed.",
+  "next_scope": "Explicit immutable CallContext-bound OwnedEnvironment scoped operations over SAMEControl/family/work/rows, exact per-row claims and actual constructor type-compare/query/factory/move/destroy/Profile-clone seams. Keep prepare40/response/scheduling permissions explicit and fullnativechildtail/shared/accept/packet/productionConcurrent integration open; meaningful actual Prepared tracked-family overlap and naturally established returned-child old1 remain required. No build authorization."
+}

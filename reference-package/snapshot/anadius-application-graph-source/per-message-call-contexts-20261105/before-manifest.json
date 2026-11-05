@@ -1,0 +1,44 @@
+{
+  "status": "PRE_EDIT_SOURCE_SNAPSHOT",
+  "files": [
+    {
+      "path": "anadius-application-graph-source/graph.hpp",
+      "exists": true,
+      "sha256": "de539b9a711a527a824ff55d9b22ac67c6098fb3657ab3d0ee49bc0c0d853aaa",
+      "before": "before/anadius-application-graph-source__graph.hpp"
+    },
+    {
+      "path": "anadius-application-graph-source/graph.cpp",
+      "exists": true,
+      "sha256": "fc90cf952eb5bb9230421d8dc97981ed6c7b60cf94d5b18f0cbd695ea0fdaf84",
+      "before": "before/anadius-application-graph-source__graph.cpp"
+    },
+    {
+      "path": "anadius-application-graph-source/graph_tests.cpp",
+      "exists": true,
+      "sha256": "732042f790d54a16472d76398eb570d40e29bbefaddac4a09b8294376fcfe606",
+      "before": "before/anadius-application-graph-source__graph_tests.cpp"
+    },
+    {
+      "path": "anadius-application-graph-source/graph_integration_tests.cpp",
+      "exists": true,
+      "sha256": "6d6ca930e82f20dc81c9d0390f53bf117e17be501e171bd835010ae8f98357ad",
+      "before": "before/anadius-application-graph-source__graph_integration_tests.cpp"
+    },
+    {
+      "path": "anadius-socket-source/native_message.hpp",
+      "exists": true,
+      "sha256": "6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c",
+      "before": "before/anadius-socket-source__native_message.hpp"
+    },
+    {
+      "path": "anadius-socket-source/native_message_tests.cpp",
+      "exists": true,
+      "sha256": "bf7dc4ea0e80dbf1bdefba67479d7818b5b39c0b0cb2db60eea2357acf3befa5",
+      "before": "before/anadius-socket-source__native_message_tests.cpp"
+    }
+  ],
+  "pending_source_count": 111,
+  "compile": false,
+  "tests_run": false
+}

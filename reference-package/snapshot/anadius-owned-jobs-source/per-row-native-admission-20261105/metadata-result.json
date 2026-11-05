@@ -1,0 +1,34 @@
+{
+  "pending_source_count": 116,
+  "frozen_build_and_delivery_unchanged": true,
+  "updated_records": [
+    {
+      "path": "outputs/dll-critical-path/pending-source-status.json",
+      "sha256": "ff3176ade89d6c00569091c652c75770afb8d6b37b767bccdfafb97f85a1e73e"
+    },
+    {
+      "path": "outputs/dll-critical-path/active-work-plan.json",
+      "sha256": "0af18af8233e535e08d0e44de2513fe09c4c98047e6988f9197667a9e29f1558"
+    },
+    {
+      "path": "outputs/dll-critical-path/blockers.json",
+      "sha256": "b9f7316fae64fdd99253e2bb19f879d5ed811cb831e7fa947bd3553dec53dbd0"
+    },
+    {
+      "path": "outputs/dll-critical-path/validation.json",
+      "sha256": "edaf57d2f4615a750f196af05a5d38265fc869f5986974af66ba97dd189feeda"
+    },
+    {
+      "path": "outputs/dll-critical-path/static-source-milestone-20261104.json",
+      "sha256": "1855d342beacdb05fe86263172a03e315961521bbd4061304a1a70891ce09bed"
+    }
+  ],
+  "remaining_integration": {
+    "path": "outputs/anadius-owned-jobs-source/per-row-native-admission-20261105/remaining-integration.json",
+    "sha256": "55fc8723a46349e14b6704018fe2cfa1de68f12126da96148e727636d15e413c"
+  },
+  "finalizer": {
+    "path": "work/finalize-native-job-plan-20261105.py",
+    "sha256": "4747d17f7228b5dd71242ec95cf0f468f5db6c9139c79acfc510b10671ff8bb1"
+  }
+}

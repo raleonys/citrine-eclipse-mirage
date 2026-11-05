@@ -1,0 +1,294 @@
+
+stdlib_stdexcept.cpp.obj:	file format coff-x86-64
+
+Disassembly of section .text$_ZNSt11logic_errorD2Ev:
+
+0000000000000000 <std::invalid_argument::~invalid_argument()>:
+       0: 56                           	pushq	%rsi
+       1: 48 83 ec 20                  	subq	$0x20, %rsp
+       5: 48 8d 05 10 00 00 00         	leaq	0x10(%rip), %rax        # 0x1c <std::invalid_argument::~invalid_argument()+0x1c>
+		0000000000000008:  IMAGE_REL_AMD64_REL32	_ZTVSt11logic_error
+       c: 48 89 01                     	movq	%rax, (%rcx)
+       f: 48 8b 41 08                  	movq	0x8(%rcx), %rax
+      13: f0                           	lock
+      14: ff 48 f8                     	decl	-0x8(%rax)
+      17: 79 12                        	jns	0x2b <std::invalid_argument::~invalid_argument()+0x2b>
+      19: 48 83 c0 e8                  	addq	$-0x18, %rax
+      1d: 48 89 ce                     	movq	%rcx, %rsi
+      20: 48 89 c1                     	movq	%rax, %rcx
+      23: e8 00 00 00 00               	callq	0x28 <std::invalid_argument::~invalid_argument()+0x28>
+		0000000000000024:  IMAGE_REL_AMD64_REL32	_ZdlPv
+      28: 48 89 f1                     	movq	%rsi, %rcx
+      2b: 48 83 c4 20                  	addq	$0x20, %rsp
+      2f: 5e                           	popq	%rsi
+      30: e9 00 00 00 00               	jmp	0x35 <std::invalid_argument::~invalid_argument()+0x35>
+		0000000000000031:  IMAGE_REL_AMD64_REL32	_ZNSt9exceptionD2Ev
+
+Disassembly of section .text$_ZNSt11logic_errorD0Ev:
+
+0000000000000000 <std::logic_error::~logic_error()>:
+       0: 56                           	pushq	%rsi
+       1: 48 83 ec 20                  	subq	$0x20, %rsp
+       5: 48 89 ce                     	movq	%rcx, %rsi
+       8: 48 8d 05 10 00 00 00         	leaq	0x10(%rip), %rax        # 0x1f <std::logic_error::~logic_error()+0x1f>
+		000000000000000b:  IMAGE_REL_AMD64_REL32	_ZTVSt11logic_error
+       f: 48 89 01                     	movq	%rax, (%rcx)
+      12: 48 8b 49 08                  	movq	0x8(%rcx), %rcx
+      16: f0                           	lock
+      17: ff 49 f8                     	decl	-0x8(%rcx)
+      1a: 79 09                        	jns	0x25 <std::logic_error::~logic_error()+0x25>
+      1c: 48 83 c1 e8                  	addq	$-0x18, %rcx
+      20: e8 00 00 00 00               	callq	0x25 <std::logic_error::~logic_error()+0x25>
+		0000000000000021:  IMAGE_REL_AMD64_REL32	_ZdlPv
+      25: 48 89 f1                     	movq	%rsi, %rcx
+      28: e8 00 00 00 00               	callq	0x2d <std::logic_error::~logic_error()+0x2d>
+		0000000000000029:  IMAGE_REL_AMD64_REL32	_ZNSt9exceptionD2Ev
+      2d: ba 10 00 00 00               	movl	$0x10, %edx
+      32: 48 89 f1                     	movq	%rsi, %rcx
+      35: 48 83 c4 20                  	addq	$0x20, %rsp
+      39: 5e                           	popq	%rsi
+      3a: e9 00 00 00 00               	jmp	0x3f <std::logic_error::~logic_error()+0x3f>
+		000000000000003b:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+
+Disassembly of section .text$_ZNKSt11logic_error4whatEv:
+
+0000000000000000 <std::logic_error::what() const>:
+       0: 48 8b 41 08                  	movq	0x8(%rcx), %rax
+       4: c3                           	retq
+
+Disassembly of section .text$_ZNSt13runtime_errorD2Ev:
+
+0000000000000000 <std::underflow_error::~underflow_error()>:
+       0: 56                           	pushq	%rsi
+       1: 48 83 ec 20                  	subq	$0x20, %rsp
+       5: 48 8d 05 10 00 00 00         	leaq	0x10(%rip), %rax        # 0x1c <std::underflow_error::~underflow_error()+0x1c>
+		0000000000000008:  IMAGE_REL_AMD64_REL32	_ZTVSt13runtime_error
+       c: 48 89 01                     	movq	%rax, (%rcx)
+       f: 48 8b 41 08                  	movq	0x8(%rcx), %rax
+      13: f0                           	lock
+      14: ff 48 f8                     	decl	-0x8(%rax)
+      17: 79 12                        	jns	0x2b <std::underflow_error::~underflow_error()+0x2b>
+      19: 48 83 c0 e8                  	addq	$-0x18, %rax
+      1d: 48 89 ce                     	movq	%rcx, %rsi
+      20: 48 89 c1                     	movq	%rax, %rcx
+      23: e8 00 00 00 00               	callq	0x28 <std::underflow_error::~underflow_error()+0x28>
+		0000000000000024:  IMAGE_REL_AMD64_REL32	_ZdlPv
+      28: 48 89 f1                     	movq	%rsi, %rcx
+      2b: 48 83 c4 20                  	addq	$0x20, %rsp
+      2f: 5e                           	popq	%rsi
+      30: e9 00 00 00 00               	jmp	0x35 <std::underflow_error::~underflow_error()+0x35>
+		0000000000000031:  IMAGE_REL_AMD64_REL32	_ZNSt9exceptionD2Ev
+
+Disassembly of section .text$_ZNSt13runtime_errorD0Ev:
+
+0000000000000000 <std::runtime_error::~runtime_error()>:
+       0: 56                           	pushq	%rsi
+       1: 48 83 ec 20                  	subq	$0x20, %rsp
+       5: 48 89 ce                     	movq	%rcx, %rsi
+       8: 48 8d 05 10 00 00 00         	leaq	0x10(%rip), %rax        # 0x1f <std::runtime_error::~runtime_error()+0x1f>
+		000000000000000b:  IMAGE_REL_AMD64_REL32	_ZTVSt13runtime_error
+       f: 48 89 01                     	movq	%rax, (%rcx)
+      12: 48 8b 49 08                  	movq	0x8(%rcx), %rcx
+      16: f0                           	lock
+      17: ff 49 f8                     	decl	-0x8(%rcx)
+      1a: 79 09                        	jns	0x25 <std::runtime_error::~runtime_error()+0x25>
+      1c: 48 83 c1 e8                  	addq	$-0x18, %rcx
+      20: e8 00 00 00 00               	callq	0x25 <std::runtime_error::~runtime_error()+0x25>
+		0000000000000021:  IMAGE_REL_AMD64_REL32	_ZdlPv
+      25: 48 89 f1                     	movq	%rsi, %rcx
+      28: e8 00 00 00 00               	callq	0x2d <std::runtime_error::~runtime_error()+0x2d>
+		0000000000000029:  IMAGE_REL_AMD64_REL32	_ZNSt9exceptionD2Ev
+      2d: ba 10 00 00 00               	movl	$0x10, %edx
+      32: 48 89 f1                     	movq	%rsi, %rcx
+      35: 48 83 c4 20                  	addq	$0x20, %rsp
+      39: 5e                           	popq	%rsi
+      3a: e9 00 00 00 00               	jmp	0x3f <std::runtime_error::~runtime_error()+0x3f>
+		000000000000003b:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+
+Disassembly of section .text$_ZNKSt13runtime_error4whatEv:
+
+0000000000000000 <std::runtime_error::what() const>:
+       0: 48 8b 41 08                  	movq	0x8(%rcx), %rax
+       4: c3                           	retq
+
+Disassembly of section .text$_ZNSt12domain_errorD0Ev:
+
+0000000000000000 <std::domain_error::~domain_error()>:
+       0: 56                           	pushq	%rsi
+       1: 48 83 ec 20                  	subq	$0x20, %rsp
+       5: 48 89 ce                     	movq	%rcx, %rsi
+       8: 48 8d 05 10 00 00 00         	leaq	0x10(%rip), %rax        # 0x1f <std::domain_error::~domain_error()+0x1f>
+		000000000000000b:  IMAGE_REL_AMD64_REL32	_ZTVSt11logic_error
+       f: 48 89 01                     	movq	%rax, (%rcx)
+      12: 48 8b 49 08                  	movq	0x8(%rcx), %rcx
+      16: f0                           	lock
+      17: ff 49 f8                     	decl	-0x8(%rcx)
+      1a: 79 09                        	jns	0x25 <std::domain_error::~domain_error()+0x25>
+      1c: 48 83 c1 e8                  	addq	$-0x18, %rcx
+      20: e8 00 00 00 00               	callq	0x25 <std::domain_error::~domain_error()+0x25>
+		0000000000000021:  IMAGE_REL_AMD64_REL32	_ZdlPv
+      25: 48 89 f1                     	movq	%rsi, %rcx
+      28: e8 00 00 00 00               	callq	0x2d <std::domain_error::~domain_error()+0x2d>
+		0000000000000029:  IMAGE_REL_AMD64_REL32	_ZNSt9exceptionD2Ev
+      2d: ba 10 00 00 00               	movl	$0x10, %edx
+      32: 48 89 f1                     	movq	%rsi, %rcx
+      35: 48 83 c4 20                  	addq	$0x20, %rsp
+      39: 5e                           	popq	%rsi
+      3a: e9 00 00 00 00               	jmp	0x3f <std::domain_error::~domain_error()+0x3f>
+		000000000000003b:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+
+Disassembly of section .text$_ZNSt16invalid_argumentD0Ev:
+
+0000000000000000 <std::invalid_argument::~invalid_argument()>:
+       0: 56                           	pushq	%rsi
+       1: 48 83 ec 20                  	subq	$0x20, %rsp
+       5: 48 89 ce                     	movq	%rcx, %rsi
+       8: 48 8d 05 10 00 00 00         	leaq	0x10(%rip), %rax        # 0x1f <std::invalid_argument::~invalid_argument()+0x1f>
+		000000000000000b:  IMAGE_REL_AMD64_REL32	_ZTVSt11logic_error
+       f: 48 89 01                     	movq	%rax, (%rcx)
+      12: 48 8b 49 08                  	movq	0x8(%rcx), %rcx
+      16: f0                           	lock
+      17: ff 49 f8                     	decl	-0x8(%rcx)
+      1a: 79 09                        	jns	0x25 <std::invalid_argument::~invalid_argument()+0x25>
+      1c: 48 83 c1 e8                  	addq	$-0x18, %rcx
+      20: e8 00 00 00 00               	callq	0x25 <std::invalid_argument::~invalid_argument()+0x25>
+		0000000000000021:  IMAGE_REL_AMD64_REL32	_ZdlPv
+      25: 48 89 f1                     	movq	%rsi, %rcx
+      28: e8 00 00 00 00               	callq	0x2d <std::invalid_argument::~invalid_argument()+0x2d>
+		0000000000000029:  IMAGE_REL_AMD64_REL32	_ZNSt9exceptionD2Ev
+      2d: ba 10 00 00 00               	movl	$0x10, %edx
+      32: 48 89 f1                     	movq	%rsi, %rcx
+      35: 48 83 c4 20                  	addq	$0x20, %rsp
+      39: 5e                           	popq	%rsi
+      3a: e9 00 00 00 00               	jmp	0x3f <std::invalid_argument::~invalid_argument()+0x3f>
+		000000000000003b:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+
+Disassembly of section .text$_ZNSt12length_errorD0Ev:
+
+0000000000000000 <std::length_error::~length_error()>:
+       0: 56                           	pushq	%rsi
+       1: 48 83 ec 20                  	subq	$0x20, %rsp
+       5: 48 89 ce                     	movq	%rcx, %rsi
+       8: 48 8d 05 10 00 00 00         	leaq	0x10(%rip), %rax        # 0x1f <std::length_error::~length_error()+0x1f>
+		000000000000000b:  IMAGE_REL_AMD64_REL32	_ZTVSt11logic_error
+       f: 48 89 01                     	movq	%rax, (%rcx)
+      12: 48 8b 49 08                  	movq	0x8(%rcx), %rcx
+      16: f0                           	lock
+      17: ff 49 f8                     	decl	-0x8(%rcx)
+      1a: 79 09                        	jns	0x25 <std::length_error::~length_error()+0x25>
+      1c: 48 83 c1 e8                  	addq	$-0x18, %rcx
+      20: e8 00 00 00 00               	callq	0x25 <std::length_error::~length_error()+0x25>
+		0000000000000021:  IMAGE_REL_AMD64_REL32	_ZdlPv
+      25: 48 89 f1                     	movq	%rsi, %rcx
+      28: e8 00 00 00 00               	callq	0x2d <std::length_error::~length_error()+0x2d>
+		0000000000000029:  IMAGE_REL_AMD64_REL32	_ZNSt9exceptionD2Ev
+      2d: ba 10 00 00 00               	movl	$0x10, %edx
+      32: 48 89 f1                     	movq	%rsi, %rcx
+      35: 48 83 c4 20                  	addq	$0x20, %rsp
+      39: 5e                           	popq	%rsi
+      3a: e9 00 00 00 00               	jmp	0x3f <std::length_error::~length_error()+0x3f>
+		000000000000003b:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+
+Disassembly of section .text$_ZNSt12out_of_rangeD0Ev:
+
+0000000000000000 <std::out_of_range::~out_of_range()>:
+       0: 56                           	pushq	%rsi
+       1: 48 83 ec 20                  	subq	$0x20, %rsp
+       5: 48 89 ce                     	movq	%rcx, %rsi
+       8: 48 8d 05 10 00 00 00         	leaq	0x10(%rip), %rax        # 0x1f <std::out_of_range::~out_of_range()+0x1f>
+		000000000000000b:  IMAGE_REL_AMD64_REL32	_ZTVSt11logic_error
+       f: 48 89 01                     	movq	%rax, (%rcx)
+      12: 48 8b 49 08                  	movq	0x8(%rcx), %rcx
+      16: f0                           	lock
+      17: ff 49 f8                     	decl	-0x8(%rcx)
+      1a: 79 09                        	jns	0x25 <std::out_of_range::~out_of_range()+0x25>
+      1c: 48 83 c1 e8                  	addq	$-0x18, %rcx
+      20: e8 00 00 00 00               	callq	0x25 <std::out_of_range::~out_of_range()+0x25>
+		0000000000000021:  IMAGE_REL_AMD64_REL32	_ZdlPv
+      25: 48 89 f1                     	movq	%rsi, %rcx
+      28: e8 00 00 00 00               	callq	0x2d <std::out_of_range::~out_of_range()+0x2d>
+		0000000000000029:  IMAGE_REL_AMD64_REL32	_ZNSt9exceptionD2Ev
+      2d: ba 10 00 00 00               	movl	$0x10, %edx
+      32: 48 89 f1                     	movq	%rsi, %rcx
+      35: 48 83 c4 20                  	addq	$0x20, %rsp
+      39: 5e                           	popq	%rsi
+      3a: e9 00 00 00 00               	jmp	0x3f <std::out_of_range::~out_of_range()+0x3f>
+		000000000000003b:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+
+Disassembly of section .text$_ZNSt11range_errorD0Ev:
+
+0000000000000000 <std::range_error::~range_error()>:
+       0: 56                           	pushq	%rsi
+       1: 48 83 ec 20                  	subq	$0x20, %rsp
+       5: 48 89 ce                     	movq	%rcx, %rsi
+       8: 48 8d 05 10 00 00 00         	leaq	0x10(%rip), %rax        # 0x1f <std::range_error::~range_error()+0x1f>
+		000000000000000b:  IMAGE_REL_AMD64_REL32	_ZTVSt13runtime_error
+       f: 48 89 01                     	movq	%rax, (%rcx)
+      12: 48 8b 49 08                  	movq	0x8(%rcx), %rcx
+      16: f0                           	lock
+      17: ff 49 f8                     	decl	-0x8(%rcx)
+      1a: 79 09                        	jns	0x25 <std::range_error::~range_error()+0x25>
+      1c: 48 83 c1 e8                  	addq	$-0x18, %rcx
+      20: e8 00 00 00 00               	callq	0x25 <std::range_error::~range_error()+0x25>
+		0000000000000021:  IMAGE_REL_AMD64_REL32	_ZdlPv
+      25: 48 89 f1                     	movq	%rsi, %rcx
+      28: e8 00 00 00 00               	callq	0x2d <std::range_error::~range_error()+0x2d>
+		0000000000000029:  IMAGE_REL_AMD64_REL32	_ZNSt9exceptionD2Ev
+      2d: ba 10 00 00 00               	movl	$0x10, %edx
+      32: 48 89 f1                     	movq	%rsi, %rcx
+      35: 48 83 c4 20                  	addq	$0x20, %rsp
+      39: 5e                           	popq	%rsi
+      3a: e9 00 00 00 00               	jmp	0x3f <std::range_error::~range_error()+0x3f>
+		000000000000003b:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+
+Disassembly of section .text$_ZNSt14overflow_errorD0Ev:
+
+0000000000000000 <std::overflow_error::~overflow_error()>:
+       0: 56                           	pushq	%rsi
+       1: 48 83 ec 20                  	subq	$0x20, %rsp
+       5: 48 89 ce                     	movq	%rcx, %rsi
+       8: 48 8d 05 10 00 00 00         	leaq	0x10(%rip), %rax        # 0x1f <std::overflow_error::~overflow_error()+0x1f>
+		000000000000000b:  IMAGE_REL_AMD64_REL32	_ZTVSt13runtime_error
+       f: 48 89 01                     	movq	%rax, (%rcx)
+      12: 48 8b 49 08                  	movq	0x8(%rcx), %rcx
+      16: f0                           	lock
+      17: ff 49 f8                     	decl	-0x8(%rcx)
+      1a: 79 09                        	jns	0x25 <std::overflow_error::~overflow_error()+0x25>
+      1c: 48 83 c1 e8                  	addq	$-0x18, %rcx
+      20: e8 00 00 00 00               	callq	0x25 <std::overflow_error::~overflow_error()+0x25>
+		0000000000000021:  IMAGE_REL_AMD64_REL32	_ZdlPv
+      25: 48 89 f1                     	movq	%rsi, %rcx
+      28: e8 00 00 00 00               	callq	0x2d <std::overflow_error::~overflow_error()+0x2d>
+		0000000000000029:  IMAGE_REL_AMD64_REL32	_ZNSt9exceptionD2Ev
+      2d: ba 10 00 00 00               	movl	$0x10, %edx
+      32: 48 89 f1                     	movq	%rsi, %rcx
+      35: 48 83 c4 20                  	addq	$0x20, %rsp
+      39: 5e                           	popq	%rsi
+      3a: e9 00 00 00 00               	jmp	0x3f <std::overflow_error::~overflow_error()+0x3f>
+		000000000000003b:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+
+Disassembly of section .text$_ZNSt15underflow_errorD0Ev:
+
+0000000000000000 <std::underflow_error::~underflow_error()>:
+       0: 56                           	pushq	%rsi
+       1: 48 83 ec 20                  	subq	$0x20, %rsp
+       5: 48 89 ce                     	movq	%rcx, %rsi
+       8: 48 8d 05 10 00 00 00         	leaq	0x10(%rip), %rax        # 0x1f <std::underflow_error::~underflow_error()+0x1f>
+		000000000000000b:  IMAGE_REL_AMD64_REL32	_ZTVSt13runtime_error
+       f: 48 89 01                     	movq	%rax, (%rcx)
+      12: 48 8b 49 08                  	movq	0x8(%rcx), %rcx
+      16: f0                           	lock
+      17: ff 49 f8                     	decl	-0x8(%rcx)
+      1a: 79 09                        	jns	0x25 <std::underflow_error::~underflow_error()+0x25>
+      1c: 48 83 c1 e8                  	addq	$-0x18, %rcx
+      20: e8 00 00 00 00               	callq	0x25 <std::underflow_error::~underflow_error()+0x25>
+		0000000000000021:  IMAGE_REL_AMD64_REL32	_ZdlPv
+      25: 48 89 f1                     	movq	%rsi, %rcx
+      28: e8 00 00 00 00               	callq	0x2d <std::underflow_error::~underflow_error()+0x2d>
+		0000000000000029:  IMAGE_REL_AMD64_REL32	_ZNSt9exceptionD2Ev
+      2d: ba 10 00 00 00               	movl	$0x10, %edx
+      32: 48 89 f1                     	movq	%rsi, %rcx
+      35: 48 83 c4 20                  	addq	$0x20, %rsp
+      39: 5e                           	popq	%rsi
+      3a: e9 00 00 00 00               	jmp	0x3f <std::underflow_error::~underflow_error()+0x3f>
+		000000000000003b:  IMAGE_REL_AMD64_REL32	_ZdlPvy

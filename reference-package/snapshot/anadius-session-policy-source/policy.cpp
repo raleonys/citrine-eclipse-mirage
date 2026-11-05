@@ -1,10 +1,12 @@
 #include "policy.hpp"
 #include "../anadius-config-iteration-source/thread_error.hpp"
 #include <algorithm>
+#include <atomic>
 #include <bit>
 #include <cstring>
 #include <exception>
 #include <limits>
+#include <list>
 #include <mutex>
 #include <optional>
 #include <system_error>
@@ -13,14 +15,31 @@
 namespace anadius::session_policy {
 namespace {
 struct PreserveError {DWORD saved=::GetLastError();~PreserveError(){::SetLastError(saved);}};
+[[noreturn]]void reject(std::unique_lock<std::mutex>& lock,const char* text){lock.unlock();throw std::logic_error(text);}
 bool same(s::Category a,s::Category b){return a.name_identity==b.name_identity&&a.logical==b.logical;}
 bool zero(const std::array<std::uintptr_t,2>& p){return p==std::array<std::uintptr_t,2>{};}
-class MiscErrorCategory final:public std::error_category {public:const char* name()const noexcept override{return "asio.misc";}std::string message(int n)const override{return "asio.misc error "+std::to_string(n);}};
-const std::error_category& compiler_category(unsigned i){static const MiscErrorCategory misc;return i==0?std::generic_category():i==1?std::system_category():misc;}
+const std::error_category& compiler_category(unsigned i){return i==0?std::generic_category():i==1?std::system_category():s::misc_error_category();}
+// Measured C string at084530, selected by native02a190/028240. The compiler
+// category/what representation remains a separate HOST exception boundary.
+constexpr char worker_stop_context_084530[]="pqcs";
+[[noreturn]]void throw_source_error_028240(std::int32_t value,const std::error_category& category,const char* context){
+    if(value!=0)throw std::system_error(value,category,context);
+    // Native00a270 formats category.message even for code0. The selected
+    // compiler's make_error_str instead keeps its supplied string unchanged
+    // for zero, so compose once here and use its counted-string overload.
+    std::string text(context);if(!text.empty())text.append(": ");
+    text.append(category.message(0));
+    throw std::system_error(std::error_code(0,category),text);
+}
 }
 struct Policy::Impl {
     mutable std::mutex gate;Phase phase=Phase::Fresh;bool active=false,binding=false,closing=false;
-    Options options;services_completion::ExitWaitRegistry exits{services_completion::InitialRegistry::empty_owned};
+    bool concurrent=false;
+    struct CleanupAdmission {CleanupAdmission* next;DWORD thread;void* fiber;};
+    struct CleanupCall;CleanupAdmission* cleanup_admissions=nullptr;std::list<std::shared_ptr<CleanupCall>> cleanup_calls;
+    struct WorkAdmission {WorkAdmission* next;DWORD thread;void* fiber;};
+    struct WorkCall;WorkAdmission* work_admissions=nullptr;std::list<std::shared_ptr<WorkCall>> work_calls;
+    Options options;GraphRetirement retire_graph;services_completion::ExitWaitRegistry exits{services_completion::InitialRegistry::empty_owned};
     std::array<std::byte,3> identities{};std::optional<rt::Ports> ports;std::shared_ptr<void> lease;std::function<void()> checkpoint;
     DWORD thread=::GetCurrentThreadId();void* fiber=::GetCurrentFiber();
     std::int32_t thread_epoch=std::numeric_limits<std::int32_t>::min();
@@ -29,29 +48,102 @@ struct Policy::Impl {
     std::uint64_t starts=0,finishes=0,cleanups=0,flushes=0;
     enum class LogStage {Empty,Prefix,Message,Widened,Put};LogStage log_stage=LogStage::Empty;
     s::WriteFinishStream stream;std::string loan_text;std::uintptr_t loan_address=0;bool loan_heap=false;
+    s::SystemMessageState system_message;
+    const std::error_category& native_system_category;
     std::optional<s::WriteFinishString> partial;std::uint8_t widened=0;
     s::Category category(unsigned i)const noexcept{return {reinterpret_cast<std::uintptr_t>(&identities[i]),i==2?server_recovered::ErrorCategory::asio_misc:server_recovered::ErrorCategory::system};}
     struct Catalog:s::CategoryProvider {Impl& v;explicit Catalog(Impl& v):v(v){}s::Category get_028620()override{return v.category(1);}} catalog{*this};
     s::NativeApi native;
+    struct CleanupCall {
+        Impl& v;std::shared_ptr<void> lease;s::SessionMemoryDomain& parent;
+        const s::SessionMemoryDomain::JobPermit permit;
+        const DWORD thread=::GetCurrentThreadId();void* const fiber=::GetCurrentFiber();
+        std::function<void()> checkpoint;bool open=true,checking=false,failed=false,cleaned=false;
+        CleanupCall(Impl& owner,std::shared_ptr<void> backing,s::SessionMemoryDomain& memory,const s::SessionMemoryDomain::JobPermit& proof)
+            :v(owner),lease(std::move(backing)),parent(memory),permit(proof){}
+        void poison()noexcept{PreserveError error;std::lock_guard lock(v.gate);failed=true;if(v.phase!=Phase::Closed&&v.phase!=Phase::Retiring)v.phase=Phase::Poisoned;}
+        void metadata(){
+            PreserveError error;std::unique_lock lock(v.gate);bool found=false;
+            for(const auto& call:v.cleanup_calls)if(call.get()==this){found=true;break;}
+            if(!found||!open||failed||v.phase!=Phase::Bound||v.binding||v.closing||!v.ports||
+               &v.ports->view.memory!=&parent||thread!=::GetCurrentThreadId()||fiber!=::GetCurrentFiber()||
+               (!v.concurrent&&(v.active||v.work_pending())))
+                reject(lock,"Policy child cleanup admission ended or was poisoned");
+        }
+        void validate(){permit.check(parent);metadata();v.source();permit.check(parent);metadata();}
+        void admit(){
+            validate();
+            {PreserveError error;std::unique_lock lock(v.gate);if(checking){failed=true;v.phase=Phase::Poisoned;reject(lock,"Policy child cleanup checkpoint cannot reenter");}checking=true;}
+            try{checkpoint();validate();}
+            catch(...){PreserveError error;std::lock_guard lock(v.gate);checking=false;failed=true;if(v.phase!=Phase::Closed)v.phase=Phase::Poisoned;throw;}
+            {PreserveError error;std::unique_lock lock(v.gate);checking=false;
+                if(v.phase!=Phase::Bound||!open||failed||v.binding||v.closing)reject(lock,"Policy cleanup checkpoint return was poisoned");}
+        }
+    };
+    struct WorkCall {
+        Impl& v;std::shared_ptr<void> lease;s::SessionMemoryDomain& parent;s::IocpSchedulerEntry& scheduler;
+        // All durable authority refers to owned source backing. The caller's
+        // StopApi, errors argument and bool are borrowed only by the stack below.
+        s::Api* const errors;std::optional<s::SessionMemoryDomain::JobPermit> job;
+        const DWORD thread=::GetCurrentThreadId();void* const fiber=::GetCurrentFiber();
+        std::function<void()> checkpoint;bool open=true,checking=false,failed=false,entered=false;
+        std::atomic<bool> consumed{false};
+        WorkCall(Impl& owner,std::shared_ptr<void> backing,s::SessionMemoryDomain& memory,s::IocpSchedulerEntry& entry,const s::SessionMemoryDomain::JobPermit* proof)
+            :v(owner),lease(std::move(backing)),parent(memory),scheduler(entry),errors(&owner.native){if(proof)job.emplace(*proof);}
+        void poison()noexcept{PreserveError error;std::lock_guard lock(v.gate);failed=true;if(v.phase!=Phase::Closed&&v.phase!=Phase::Retiring)v.phase=Phase::Poisoned;}
+        void metadata(){
+            PreserveError error;std::unique_lock lock(v.gate);bool found=false;
+            for(const auto& call:v.work_calls)if(call.get()==this){found=true;break;}
+            if(!found||!open||failed||v.phase!=Phase::Bound||v.binding||v.closing||!v.ports||
+               &v.ports->view.memory!=&parent||&v.ports->view.scheduler!=&scheduler||errors!=&v.native||
+               thread!=::GetCurrentThreadId()||fiber!=::GetCurrentFiber()||
+               (!job&&(thread!=v.thread||fiber!=v.fiber||v.active))||
+               (!v.concurrent&&(v.cleanup_admissions||!v.cleanup_calls.empty())))
+                reject(lock,"Tracked work call admission ended or was poisoned");
+        }
+        void validate(){
+            metadata();
+            if(job)job->check(parent);else{v.affinity();(void)parent.buffer_context();}
+            metadata();v.source(true);if(job)job->check(parent);metadata();
+        }
+        void admit(){
+            validate();
+            {PreserveError error;std::unique_lock lock(v.gate);if(checking){failed=true;v.phase=Phase::Poisoned;reject(lock,"Tracked work checkpoint cannot reenter");}checking=true;}
+            try{checkpoint();validate();}
+            catch(...){PreserveError error;std::lock_guard lock(v.gate);checking=false;failed=true;if(v.phase!=Phase::Closed)v.phase=Phase::Poisoned;throw;}
+            {PreserveError error;std::unique_lock lock(v.gate);checking=false;
+                if(v.phase!=Phase::Bound||!open||failed||v.binding||v.closing)reject(lock,"Tracked work checkpoint return was poisoned");}
+        }
+    };
+    bool work_pending()const noexcept{return work_admissions||!work_calls.empty();}
+    bool scoped_pending()const noexcept{return work_pending()||cleanup_admissions||!cleanup_calls.empty();}
+    bool actor_reserved(DWORD actor,void* actor_fiber)const noexcept{
+        for(auto* p=work_admissions;p;p=p->next)if(p->thread==actor&&p->fiber==actor_fiber)return true;
+        for(const auto& p:work_calls)if(p->thread==actor&&p->fiber==actor_fiber)return true;
+        for(auto* p=cleanup_admissions;p;p=p->next)if(p->thread==actor&&p->fiber==actor_fiber)return true;
+        for(const auto& p:cleanup_calls)if(p->thread==actor&&p->fiber==actor_fiber)return true;
+        return false;
+    }
     void affinity()const{if(thread!=::GetCurrentThreadId()||fiber!=::GetCurrentFiber())throw std::logic_error("Session policy requires its original worker/fiber");}
     void poison(){PreserveError error;std::lock_guard lock(gate);if(phase!=Phase::Closed&&phase!=Phase::Retiring)phase=Phase::Poisoned;}
-    void valid()const{PreserveError error;std::lock_guard lock(gate);if(phase!=Phase::Bound||!active||binding)throw std::logic_error("Session policy admission was poisoned");}
+    void valid()const{PreserveError error;std::unique_lock lock(gate);if(phase!=Phase::Bound||!active||binding||(!concurrent&&work_pending())||actor_reserved(thread,fiber))reject(lock,"Session policy admission was poisoned");}
     void source(bool cleanup=false){auto& p=*ports;(void)p.view.memory.buffer_context();const auto backend=p.view.backend.snapshot().phase;
         if((backend!=o::Phase::Ready&&backend!=o::Phase::Running&&!(cleanup&&(backend==o::Phase::Returned||backend==o::Phase::Quiescing)))||p.view.io.snapshot().phase!=s::IoMemoryPhase::Open||p.accept.snapshot().poisoned)throw std::logic_error("Session policy source graph is unavailable");}
     void admit(bool cleanup=false){valid();checkpoint();valid();source(cleanup);valid();}
-    void enter(){PreserveError error;std::lock_guard lock(gate);if(active||binding||closing){if(phase!=Phase::Closed)phase=Phase::Poisoned;throw std::logic_error("Session policy calls are nonreentrant");}if(phase!=Phase::Bound)throw std::logic_error("Session policy is not bound/open");affinity();active=true;}
-    void leave(){PreserveError error;std::lock_guard lock(gate);if(phase!=Phase::Bound||!active)throw std::logic_error("Session policy completion was poisoned");active=false;}
+    void enter(){PreserveError error;std::unique_lock lock(gate);const auto actor=::GetCurrentThreadId();auto* const actor_fiber=::GetCurrentFiber();if(active||binding||closing||actor_reserved(actor,actor_fiber)||(!concurrent&&scoped_pending())){if(phase!=Phase::Closed)phase=Phase::Poisoned;reject(lock,"Session policy calls are nonreentrant");}if(phase!=Phase::Bound)reject(lock,"Session policy is not bound/open");if(thread!=actor||fiber!=actor_fiber)reject(lock,"Session policy requires its original worker/fiber");active=true;}
+    void leave(){PreserveError error;std::unique_lock lock(gate);if(phase!=Phase::Bound||!active||(!concurrent&&work_pending())||actor_reserved(thread,fiber))reject(lock,"Session policy completion was poisoned");active=false;}
     void failed(){poison();PreserveError error;std::lock_guard lock(gate);active=false;}
     template<class F>std::invoke_result_t<F> call(F&& f){enter();try{admit();if constexpr(std::is_void_v<std::invoke_result_t<F>>){f();admit();leave();}else{std::invoke_result_t<F> result=f();admit();leave();return result;}}catch(...){failed();throw;}}
     void terminal(){enter();try{source();valid();}catch(...){failed();throw;}poison();{PreserveError error;std::lock_guard lock(gate);active=false;}}
     void matching(const o::ServerView& p)const{const auto& own=ports->view;
         if(p.identity.value!=own.identity.value||&p.backend!=&own.backend||&p.memory!=&own.memory||&p.io!=&own.io||&p.scheduler!=&own.scheduler||&p.service!=&own.service||&p.acceptor!=&own.acceptor||&p.pending!=&own.pending)throw std::invalid_argument("Session policy belongs to another source graph");}
     void application(sp::Application& app){const auto p=app.ports();const auto& own=*ports;matching(p.view);const auto& a=p.environment.sentinels;const auto& b=own.environment.sentinels;
-        if(p.server_identity!=own.server_identity||&p.accept!=&own.accept||&p.memory!=&own.memory||&p.worker!=&own.worker||&p.completion!=&own.completion||&p.environment.storage.tls_index!=&own.environment.storage.tls_index||p.environment.storage.storage.data()!=own.environment.storage.storage.data()||p.environment.storage.storage.size()!=own.environment.storage.storage.size()||a.empty_operations_846c8!=b.empty_operations_846c8||a.empty_schedule_846e8!=b.empty_schedule_846e8||a.empty_executor_84770!=b.empty_executor_84770||a.guard_destroy_017a30!=b.guard_destroy_017a30||(application_identity&&application_identity!=&app))throw std::invalid_argument("Session policy belongs to another application graph");application_identity=&app;}
+        if(p.server_identity!=own.server_identity||&p.accept!=&own.accept||&p.memory!=&own.memory||&p.worker!=&own.worker||&p.completion!=&own.completion||p.environment_work_stop!=own.environment_work_stop||&p.environment.storage.tls_index!=&own.environment.storage.tls_index||!own.accept.matches_storage(p.environment.storage)||!own.accept.matches_storage(own.environment.storage)||a.empty_operations_846c8!=b.empty_operations_846c8||a.empty_schedule_846e8!=b.empty_schedule_846e8||a.empty_executor_84770!=b.empty_executor_84770||a.guard_destroy_017a30!=b.guard_destroy_017a30||(application_identity&&application_identity!=&app))throw std::invalid_argument("Session policy belongs to another application graph");application_identity=&app;}
     void entry(s::IocpSchedulerEntry& e){if(&e!=&ports->view.scheduler)throw std::invalid_argument("Session policy received a foreign scheduler");}
     unsigned index(s::Category c)const{for(unsigned i=0;i<3;++i)if(same(c,category(i)))return i;throw std::invalid_argument("Unknown session policy category identity");}
     std::string text(unsigned i,std::int32_t code){
-        auto result=options.format_override?options.format_override(category(i),code):compiler_category(i).message(code);
+        auto result=options.format_override?options.format_override(category(i),code):
+            i==1?s::system_message_020950(code,system_message,options.system_message,[this]{admit();}):compiler_category(i).message(code);
         if(result.size()>options.maximum_message_bytes)throw std::length_error("Session category message exceeds its configured bound");return result;
     }
     void message(unsigned i,s::WriteFinishString& out,std::int32_t code){call([&]{
@@ -94,26 +186,36 @@ struct Policy::Impl {
         void put_00fe90(s::WriteFinishStream& s,std::uint8_t c)override{v.call([&]{stream(s);if(v.log_stage!=LogStage::Widened||c!=v.widened)throw std::invalid_argument("Owned log put must use its widened character");v.log_stage=LogStage::Put;const auto lease=shared_log::acquire(*v.options.stream);v.options.stream->put(static_cast<char>(c));});}
         void flush_00e1e0(s::WriteFinishStream& s)override{v.call([&]{stream(s);if(v.log_stage!=LogStage::Put)throw std::logic_error("Owned log flush before complete message");{const auto lease=shared_log::acquire(*v.options.stream);v.options.stream->flush();}v.admit();v.loan_address=0;v.loan_heap=false;v.loan_text.clear();v.log_stage=LogStage::Empty;++v.flushes;});}
     } log{*this};
-    explicit Impl(Options o):options(std::move(o)),native(catalog,options.imports){stream.identity=reinterpret_cast<std::uintptr_t>(&stream);}
-    Snapshot snapshot()const{affinity();PreserveError error;std::lock_guard lock(gate);return {phase,active,log_stage!=LogStage::Empty,guard_initialized,worker_context!=nullptr,starts,finishes,cleanups,flushes};}
+    explicit Impl(Options o,GraphRetirement retirement):options(std::move(o)),retire_graph(std::move(retirement)),native_system_category(s::system_error_category_028620(options.system_message)),native(catalog,options.imports){stream.identity=reinterpret_cast<std::uintptr_t>(&stream);}
+    Snapshot snapshot()const{affinity();PreserveError error;std::lock_guard lock(gate);return {phase,active||scoped_pending(),log_stage!=LogStage::Empty,guard_initialized,worker_context!=nullptr,starts,finishes,cleanups,flushes};}
 };
 
-std::shared_ptr<Policy> Policy::create(Options o){
-    const auto& i=o.imports;
-    if(!o.stream||!o.guard_epoch||*o.guard_epoch||!o.lifecycle.select_owner||!o.lifecycle.after||!o.lifecycle.returned||!o.lifecycle.external_drained||!i.set_last_error||!i.get_last_error||!i.convert||!i.parse||!i.send||!i.select_write||!o.maximum_message_bytes||o.maximum_message_bytes>1048576)
-        throw std::invalid_argument("Complete explicit session policy configuration required");
-    for(const auto* s:{&o.read_prefix,&o.write_prefix,&o.accept_prefix})if(s->size()>o.maximum_message_bytes||s->find('\0')!=std::string::npos)throw std::invalid_argument("Owned log prefixes require bounded C strings");
-    return std::shared_ptr<Policy>(new Policy(std::move(o)));
+bool lifecycle_configuration_valid(const Lifecycle& l)noexcept{
+    switch(l.mode){
+    case LifecycleMode::Explicit:return l.select_owner&&l.after&&l.returned&&l.external_drained&&!l.source_stop;
+    case LifecycleMode::SourceOwned:return !l.select_owner&&l.external_drained;
+    case LifecycleMode::OriginalApplication:return !l.select_owner&&!l.external_drained&&!l.source_stop;
+    }return false;
 }
-Policy::Policy(Options o):impl_(std::make_unique<Impl>(std::move(o))){}
-Policy::~Policy()noexcept{auto& v=*impl_;{PreserveError error;std::lock_guard lock(v.gate);if(v.active||v.binding||v.closing||v.lease||v.worker_context||v.length||v.partial||v.loan_address||v.log_stage!=Impl::LogStage::Empty||(v.phase!=Phase::Fresh&&v.phase!=Phase::Closed))std::terminate();v.phase=Phase::Retiring;}
+std::shared_ptr<Policy> Policy::create(Options o,GraphRetirement retirement){
+    const auto& i=o.imports;
+    const auto& l=o.lifecycle;
+    if(!lifecycle_configuration_valid(l)||(retirement&&l.mode!=LifecycleMode::OriginalApplication)||
+       !o.stream||!o.guard_epoch||*o.guard_epoch||!i.set_last_error||!i.get_last_error||!i.convert||!i.parse||!i.send||!i.select_write||
+       !o.system_message.format_message||!o.system_message.local_free||!o.maximum_message_bytes||o.maximum_message_bytes>1048576)
+        throw std::invalid_argument("Complete selected session policy configuration required");
+    for(const auto* s:{&o.read_prefix,&o.write_prefix,&o.accept_prefix})if(s->size()>o.maximum_message_bytes||s->find('\0')!=std::string::npos)throw std::invalid_argument("Owned log prefixes require bounded C strings");
+    return std::shared_ptr<Policy>(new Policy(std::move(o),std::move(retirement)));
+}
+Policy::Policy(Options o,GraphRetirement retirement):impl_(std::make_unique<Impl>(std::move(o),std::move(retirement))){}
+Policy::~Policy()noexcept{auto& v=*impl_;{PreserveError error;std::lock_guard lock(v.gate);if(v.active||v.scoped_pending()||v.binding||v.closing||v.lease||v.worker_context||v.length||v.partial||v.loan_address||v.log_stage!=Impl::LogStage::Empty||(v.phase!=Phase::Fresh&&v.phase!=Phase::Closed))std::terminate();v.phase=Phase::Retiring;}
     try{if(!v.exits.close())std::terminate();}catch(...){std::terminate();}
     // Retire opaque functions and stream backing while metadata/mutex live.
-    {Options retiring=std::move(v.options);v.options.lifecycle={};v.options.format_override={};}
+    {Options retiring=std::move(v.options);v.retire_graph={};v.options.lifecycle={};v.options.format_override={};}
 }
 void Policy::install(sp::Dependencies& d){auto& v=*impl_;PreserveError error;
     v.affinity();
-    {std::lock_guard lock(v.gate);if(v.phase!=Phase::Fresh||v.active||v.binding||d.errors||d.policy||!d.categories.empty()||d.success.name_identity||d.misc.name_identity)throw std::invalid_argument("Policy installation refuses mixed caller providers");}
+    {std::unique_lock lock(v.gate);if(v.phase!=Phase::Fresh||v.active||v.scoped_pending()||v.binding||d.errors||d.policy||!d.categories.empty()||d.success.name_identity||d.misc.name_identity){lock.unlock();throw std::invalid_argument("Policy installation refuses mixed caller providers");}}
     auto self=shared_from_this();std::vector<sp::CategoryProvider> categories{{generic_category(),{self,&v.generic}},{system_category(),{self,&v.system}},{misc_category(),{self,&v.misc}}};
     d.errors={self,&v.native};d.policy=self;d.categories=std::move(categories);d.success=generic_category();d.misc=misc_category();
 }
@@ -127,14 +229,14 @@ Snapshot Policy::snapshot()const{return impl_->snapshot();}
 s::DispatcherEffects& Policy::guards(){return impl_->guard;}
 s::WriteFinishApi& Policy::logging(){return impl_->log;}
 void Policy::bind(rt::Ports ports,std::function<void()> checkpoint){auto& v=*impl_;
-    {PreserveError error;std::lock_guard lock(v.gate);if(v.phase!=Phase::Fresh||v.binding||v.active){if(v.binding||v.active)v.phase=Phase::Poisoned;throw std::logic_error("Session policy binds once");}v.affinity();v.binding=true;}
-    try{const auto storage=ports.accept.storage_bindings();if(!checkpoint||!ports.server_identity||storage.data()!=ports.environment.storage.storage.data()||storage.size()!=ports.environment.storage.storage.size())throw std::invalid_argument("Session policy requires stable exact Ports");
+    {PreserveError error;std::unique_lock lock(v.gate);if(v.phase!=Phase::Fresh||v.binding||v.active||v.scoped_pending()){if(v.binding||v.active||v.scoped_pending())v.phase=Phase::Poisoned;reject(lock,"Session policy binds once");}if(v.thread!=::GetCurrentThreadId()||v.fiber!=::GetCurrentFiber())reject(lock,"Session policy requires its original worker/fiber");v.binding=true;}
+    try{const bool storage_matches=ports.accept.matches_storage(ports.environment.storage);if(!checkpoint||!ports.server_identity||!storage_matches||(ports.environment_work_stop&&!ports.environment_work_stop->matches(ports.view.memory,ports.view.scheduler)))throw std::invalid_argument("Session policy requires stable exact Ports");
         (void)ports.view.memory.buffer_context();const auto b=ports.view.backend.snapshot().phase;
         if((b!=o::Phase::Ready&&b!=o::Phase::Running)||ports.view.io.snapshot().phase!=s::IoMemoryPhase::Open||ports.accept.snapshot().poisoned||*v.options.guard_epoch)throw std::logic_error("Session policy requires fresh guard and open source graph");
-        v.ports.emplace(ports);v.checkpoint=std::move(checkpoint);checkpoint={};
-        {PreserveError error;std::lock_guard lock(v.gate);if(v.phase!=Phase::Fresh)throw std::logic_error("Session policy bind retirement was poisoned");}
+        v.ports.emplace(ports);v.concurrent=ports.view.memory.operation_policy()==s::OperationPolicy::OriginalConcurrentActors;v.checkpoint=std::move(checkpoint);checkpoint={};
+        {PreserveError error;std::unique_lock lock(v.gate);if(v.phase!=Phase::Fresh)reject(lock,"Session policy bind retirement was poisoned");}
         v.lease=ports.view.memory.acquire_provider_lease_from_operation();
-        {PreserveError error;std::lock_guard lock(v.gate);if(v.phase!=Phase::Fresh)throw std::logic_error("Session policy bind was poisoned");v.binding=false;v.phase=Phase::Bound;}
+        {PreserveError error;std::unique_lock lock(v.gate);if(v.phase!=Phase::Fresh)reject(lock,"Session policy bind was poisoned");v.binding=false;v.phase=Phase::Bound;}
     }catch(...){v.poison();{PreserveError error;std::lock_guard lock(v.gate);v.binding=false;}throw;}
 }
 std::uint32_t Policy::exchange_stop(s::IocpSchedulerEntry& e,std::uint32_t n){auto& v=*impl_;return v.call([&]{v.entry(e);return std::atomic_ref(e.high_34).exchange(n);});}
@@ -145,28 +247,203 @@ void Policy::construct_length_error(s::ReadLengthError& e,std::uintptr_t p){auto
 [[noreturn]]void Policy::throw_length_error(s::ReadLengthError& e){auto& v=*impl_;v.terminal();if(!v.length||v.length->first!=&e)throw s::UnsupportedInput("Unregistered read length error");throw std::length_error(v.length->second);}
 [[noreturn]]void Policy::bad_weak_ptr_026860(){impl_->terminal();throw std::bad_weak_ptr();}
 [[noreturn]]void Policy::thread_error(int n){impl_->terminal();bootstrap_policies::throw_thread_error_04a648(n);}
-void Policy::cleanup_exit_waits(){auto& v=*impl_;v.call([&]{v.exits.cleanup_current_thread();++v.cleanups;});}
-[[noreturn]]void Policy::raise_write(s::Error& e,std::uintptr_t p){auto& v=*impl_;v.terminal();if(p!=0x180084720ULL)throw s::UnsupportedInput("Unknown source write exception context");throw std::system_error(e.value,compiler_category(v.index(e.category)),"write");}
-[[noreturn]]void Policy::raise(s::Error e,std::uintptr_t p){auto& v=*impl_;v.terminal();if(p!=0x180084530ULL)throw s::UnsupportedInput("Unknown source worker exception context");throw std::system_error(e.value,compiler_category(v.index(e.category)),"post");}
-s::IocpSchedulerEntry* Policy::completion_owner(sp::Application& app,s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& e,std::uint32_t n){auto& v=*impl_;return v.call([&]{v.application(app);auto* selected=v.options.lifecycle.select_owner(app,owner,op,e,n);if(selected&&selected!=owner)throw std::invalid_argument("External lifecycle selected a foreign completion owner");return selected;});}
-void Policy::after_completion(sp::Application& app){auto& v=*impl_;v.call([&]{v.application(app);v.options.lifecycle.after(app);});}
+void Policy::cleanup_exit_waits(){auto& v=*impl_;v.call([&]{v.exits.cleanup_current_thread();PreserveError error;std::lock_guard lock(v.gate);++v.cleanups;});}
+void Policy::cleanup_job_exit_waits(const s::SessionMemoryDomain::JobPermit& permit,std::function<void()> checkpoint){
+    PreserveError error;auto self=shared_from_this();auto& v=*impl_;
+    s::SessionMemoryDomain* parent=nullptr;std::shared_ptr<void> lease;
+    {
+        std::unique_lock lock(v.gate);
+        if(v.phase!=Phase::Bound||v.binding||v.closing||!v.ports)reject(lock,"Child exit cleanup requires bound Policy");
+        if(v.actor_reserved(::GetCurrentThreadId(),::GetCurrentFiber())){v.phase=Phase::Poisoned;reject(lock,"Policy child cleanup actor cannot reenter a scoped call");}
+        if(!v.concurrent&&v.work_pending())reject(lock,"Serialized child cleanup overlaps tracked work");
+        if(v.thread==::GetCurrentThreadId())reject(lock,"Explicit child exit cleanup requires a distinct worker");
+        parent=&v.ports->view.memory;lease=v.lease;
+    }
+    if(!checkpoint)throw std::invalid_argument("Explicit child job admission required");
+    permit.check(*parent); // wrong Parent/actor/expired rejects before reservation
+    Impl::CleanupAdmission admission{nullptr,::GetCurrentThreadId(),::GetCurrentFiber()};
+    {
+        std::unique_lock lock(v.gate);
+        if(v.phase!=Phase::Bound||v.binding||v.closing||!v.ports||&v.ports->view.memory!=parent)reject(lock,"Child exit cleanup reservation changed");
+        if(!v.concurrent&&(v.active||v.scoped_pending())){v.phase=Phase::Poisoned;reject(lock,"Serialized child exit cleanup overlaps Policy");}
+        if(v.actor_reserved(admission.thread,admission.fiber)){v.phase=Phase::Poisoned;reject(lock,"Policy child cleanup actor is already reserved");}
+        admission.next=v.cleanup_admissions;v.cleanup_admissions=&admission;
+    }
+    struct Pending {
+        Impl& v;Impl::CleanupAdmission& admission;bool linked=true;
+        void remove()noexcept{auto** at=&v.cleanup_admissions;while(*at&&*at!=&admission)at=&(*at)->next;if(!*at)std::terminate();*at=admission.next;linked=false;}
+        ~Pending(){PreserveError error;if(linked){std::lock_guard lock(v.gate);remove();}}
+    } pending{v,admission};
+    std::list<std::shared_ptr<Impl::CleanupCall>> prepared,retired;std::shared_ptr<Impl::CleanupCall> call;
+    try{
+        prepared.emplace_back();call=std::make_shared<Impl::CleanupCall>(v,std::move(lease),*parent,permit);prepared.front()=call;
+        {std::unique_lock lock(v.gate);v.cleanup_calls.splice(v.cleanup_calls.end(),prepared);pending.remove();if(v.phase!=Phase::Bound)reject(lock,"Policy cleanup preparation was poisoned");}
+        call->checkpoint.swap(checkpoint);call->admit();
+        v.exits.cleanup_current_thread(); // actual registry selects current native thread only
+        {std::lock_guard lock(v.gate);call->cleaned=true;++v.cleanups;}
+        call->admit();
+        {std::function<void()> retiring;retiring.swap(call->checkpoint);} // target dies while the exact call is registered
+        call->validate();
+        {std::unique_lock lock(v.gate);if(v.phase!=Phase::Bound||call->failed||call->checking)reject(lock,"Policy cleanup target retirement was poisoned");
+            auto at=v.cleanup_calls.begin();while(at!=v.cleanup_calls.end()&&at->get()!=call.get())++at;if(at==v.cleanup_calls.end())std::terminate();call->open=false;retired.splice(retired.end(),v.cleanup_calls,at);}
+        retired.clear();call.reset(); // no lease/deleter runs under Policy metadata
+    }catch(...){
+        if(call)call->poison();else v.poison();
+        // Unknown call/registry/checkpoint prefixes remain registered. A known
+        // pre-publication failure has only its stack admission to retire.
+        checkpoint={};throw;
+    }
+}
+void Policy::finish_environment_work(s::IocpSchedulerEntry& scheduler,const s::SessionMemoryDomain::JobPermit* job,s::WorkerStopApi& api,s::Api& errors,const std::function<void()>& checkpoint,bool& consumed){
+    PreserveError error;auto self=shared_from_this();auto& v=*impl_;
+    if(consumed||!checkpoint)throw std::invalid_argument("Fresh work-drop state and explicit source checkpoint required");
+    s::SessionMemoryDomain* parent=nullptr;std::shared_ptr<void> lease;
+    {
+        std::unique_lock lock(v.gate);
+        if(v.phase!=Phase::Bound||v.binding||v.closing||!v.ports)reject(lock,"Tracked work requires bound Policy");
+        if(&scheduler!=&v.ports->view.scheduler||&errors!=&v.native){lock.unlock();throw std::invalid_argument("Tracked work requires exact scheduler and error provider");}
+        if(job){if(v.thread==::GetCurrentThreadId())reject(lock,"Job work release requires a distinct child actor");}
+        else if(v.thread!=::GetCurrentThreadId()||v.fiber!=::GetCurrentFiber())reject(lock,"Original work release requires bound Policy actor");
+        parent=&v.ports->view.memory;lease=v.lease;
+    }
+    if(job)job->check(*parent);else (void)parent->buffer_context();
+    Impl::WorkAdmission admission{nullptr,::GetCurrentThreadId(),::GetCurrentFiber()};
+    {
+        std::unique_lock lock(v.gate);
+        if(v.phase!=Phase::Bound||v.binding||v.closing||!v.ports||&v.ports->view.memory!=parent||&v.ports->view.scheduler!=&scheduler)reject(lock,"Tracked work reservation changed");
+        if((!job&&v.active)||v.actor_reserved(admission.thread,admission.fiber)||(!v.concurrent&&v.scoped_pending())){
+            if(v.phase!=Phase::Closed)v.phase=Phase::Poisoned;
+            reject(lock,"Tracked work actor reservation is unavailable");
+        }
+        // Reserve before node/target allocation. Runtime's original active
+        // reservation may be outside Parent at physical wait; it is not the
+        // authority for this child's independently checked Parent permit.
+        admission.next=v.work_admissions;v.work_admissions=&admission;
+    }
+    struct Pending {
+        Impl& v;Impl::WorkAdmission& admission;bool linked=true;
+        void remove()noexcept{auto** at=&v.work_admissions;while(*at&&*at!=&admission)at=&(*at)->next;if(!*at)std::terminate();*at=admission.next;linked=false;}
+        ~Pending(){PreserveError error;if(linked){std::lock_guard lock(v.gate);remove();}}
+    } pending{v,admission};
+    std::list<std::shared_ptr<Impl::WorkCall>> prepared,retired;std::shared_ptr<Impl::WorkCall> call;
+    struct Effects final:s::WorkerStopEffects {
+        Impl::WorkCall& call;s::IocpSchedulerEntry& scheduler;
+        Effects(Impl::WorkCall& c,s::IocpSchedulerEntry& e):call(c),scheduler(e){}
+        void exact(s::IocpSchedulerEntry& e){if(&e!=&scheduler)throw std::invalid_argument("Foreign tracked-work scheduler");}
+        std::uint32_t exchange_stop_34(s::IocpSchedulerEntry& e,std::uint32_t value)override{
+            exact(e);call.admit();const auto previous=std::atomic_ref(e.high_34).exchange(value);call.admit();return previous;
+        }
+        std::uint32_t exchange_wake_38(s::IocpSchedulerEntry& e,std::uint32_t value)override{
+            exact(e);call.admit();std::uint32_t previous;
+            {PreserveError error;std::lock_guard lock(call.v.gate);previous=static_cast<std::uint32_t>(e.word_38);e.word_38=(e.word_38&0xffffffff00000000ULL)|value;}
+            call.admit();return previous;
+        }
+        [[noreturn]]void raise_028240(s::Error value,std::uintptr_t context)override{
+            call.admit();if(context!=0x180084530ULL)throw s::UnsupportedInput("Unknown tracked stop exception context");
+            const auto category=call.v.index(value.category);call.v.poison();
+            throw_source_error_028240(value.value,category==1?call.v.native_system_category:compiler_category(category),worker_stop_context_084530);
+        }
+    };
+    try{
+        prepared.emplace_back();call=std::make_shared<Impl::WorkCall>(v,std::move(lease),*parent,scheduler,job);prepared.front()=call;
+        {std::unique_lock lock(v.gate);v.work_calls.splice(v.work_calls.end(),prepared);pending.remove();if(v.phase!=Phase::Bound)reject(lock,"Tracked work preparation was poisoned");}
+        // A copying callable may allocate or reenter. Its exact stable call is
+        // already published; no ambient actor lookup supplies authority.
+        call->checkpoint=checkpoint;call->admit();
+        if(consumed)throw std::logic_error("Tracked work was already consumed during admission");
+        {std::unique_lock lock(v.gate);if(v.phase!=Phase::Bound||call->failed||call->entered||call->consumed.load(std::memory_order_relaxed))reject(lock,"Tracked work drop prefix was poisoned");call->entered=true;}
+        const auto previous=scheduler.work_count_30.fetch_sub(1,std::memory_order_seq_cst);
+        consumed=true; // native drop completed; no later throw can authorize replay
+        call->consumed.store(true,std::memory_order_relaxed); // durable prefix before any callback/old1 stop
+        Effects effects{*call,scheduler};
+        if(previous==1)s::stop_worker_02a190(scheduler,api,errors,effects);
+        call->admit();
+        {std::function<void()> retiring;retiring.swap(call->checkpoint);} // exact call remains registered through target destruction
+        call->validate();
+        {std::unique_lock lock(v.gate);if(v.phase!=Phase::Bound||call->failed||call->checking||!call->entered||!call->consumed.load(std::memory_order_relaxed))reject(lock,"Tracked work target retirement was poisoned");
+            auto at=v.work_calls.begin();while(at!=v.work_calls.end()&&at->get()!=call.get())++at;if(at==v.work_calls.end())std::terminate();call->open=false;retired.splice(retired.end(),v.work_calls,at);}
+        retired.clear();call.reset(); // lease, target and node destruction outside metadata
+    }catch(...){
+        if(call)call->poison();else v.poison();
+        // Retain the exact failed call/prefix and owned callback. No durable
+        // record retains the caller's stack api/errors/consumed references;
+        // unknown effects are never replayed or speculatively decremented.
+        throw;
+    }
+}
+[[noreturn]]void Policy::raise_write(s::Error& e,std::uintptr_t p){auto& v=*impl_;v.terminal();if(p!=0x180084720ULL)throw s::UnsupportedInput("Unknown source write exception context");const auto category=v.index(e.category);throw_source_error_028240(e.value,category==1?v.native_system_category:compiler_category(category),"write");}
+[[noreturn]]void Policy::raise(s::Error e,std::uintptr_t p){auto& v=*impl_;v.terminal();if(p!=0x180084530ULL)throw s::UnsupportedInput("Unknown source worker exception context");const auto category=v.index(e.category);throw_source_error_028240(e.value,category==1?v.native_system_category:compiler_category(category),worker_stop_context_084530);}
+s::IocpSchedulerEntry* Policy::completion_owner(sp::Application& app,s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& e,std::uint32_t n){
+    auto& v=*impl_;return v.call([&]{
+        v.application(app);auto* selected=owner;
+        if(v.options.lifecycle.mode!=LifecycleMode::Explicit){
+            if(owner&&owner!=&v.ports->view.scheduler)
+                throw std::invalid_argument("Source lifecycle received a foreign scheduler owner");
+        }else selected=v.options.lifecycle.select_owner(app,owner,op,e,n);
+        if(selected&&selected!=owner)throw std::invalid_argument("External lifecycle selected a foreign completion owner");
+        return selected;
+    });
+}
+void Policy::after_completion(sp::Application& app){auto& v=*impl_;v.call([&]{v.application(app);if(v.options.lifecycle.after)v.options.lifecycle.after(app);});}
 void Policy::worker_returned(sp::Application& app,std::uint64_t n,const s::WorkerRunResult& r){auto& v=*impl_;v.call([&]{v.application(app);
     const bool empty=!v.starts&&!v.finishes&&!n&&r.error&&!r.error->value&&same(r.error->category,v.category(0));
-    if(v.returned||v.worker_context||!r.error||(!empty&&(v.starts!=1||v.finishes!=1)))throw std::logic_error("Worker return lacks normal owned context finish");v.options.lifecycle.returned(app,n,r);v.returned=true;});}
-bool Policy::external_quiescent(o::ServerView view,sp::Application& app){auto& v=*impl_;v.enter();try{
-    v.matching(view);v.application(app);
+    if(v.returned||v.worker_context||!r.error||(!empty&&(v.starts!=1||v.finishes!=1)))throw std::logic_error("Worker return lacks normal owned context finish");
+    if(v.options.lifecycle.returned)v.options.lifecycle.returned(app,n,r);
+    v.returned=true;});}
+bool Policy::external_quiescent(o::ServerView view,sp::Application& app){auto& v=*impl_;
+    v.affinity();{PreserveError error;std::lock_guard lock(v.gate);if(v.scoped_pending())return false;}
+    v.enter();try{
+    v.matching(view);
     const auto phase=view.backend.snapshot().phase;if(!v.returned||(phase!=o::Phase::Returned&&phase!=o::Phase::Quiescing))throw std::logic_error("External proof requires observed worker return");
-    {auto outside=view.memory.enter();}const auto result=v.options.lifecycle.external_drained(view,app);v.valid();v.attested=result;v.leave();return result;
+    const auto local_idle=[&]{PreserveError error;auto outside=view.memory.enter();v.application(app);
+        {std::lock_guard lock(v.gate);if(v.scoped_pending())return false;}
+        if(v.options.lifecycle.mode!=LifecycleMode::Explicit){
+            const auto io=view.io.snapshot();const auto accept=v.ports->accept.snapshot();const auto application=app.snapshot();
+            if(io.phase!=s::IoMemoryPhase::Open||accept.closed||accept.poisoned||application.phase==sp::Phase::Poisoned)
+                throw std::logic_error("Source lifecycle drain observed unavailable/poisoned IO");
+            return !io.allocations&&!io.pending&&!io.active_calls&&!accept.projections&&!accept.pending&&!accept.active_calls&&
+                !application.live_sessions&&!application.live_jobs&&!application.active_calls&&!view.scheduler.work_count_30.load()&&
+                !view.scheduler.completion.head&&!view.scheduler.completion.tail;
+        }return true;
+    };
+    const auto source_idle=[&]{return !v.options.lifecycle.source_stop||v.options.lifecycle.source_stop->source_quiescent(view);};
+    if(!local_idle()||!source_idle()){v.valid();v.attested=false;v.leave();return false;}
+    if(v.options.lifecycle.mode==LifecycleMode::OriginalApplication){
+        // Only the actual source worker/IO/job/queue state was checked above.
+        // Graph's actual queue/string/Parent lease cleanup is independent of
+        // an external proof. Retain FALSE and recheck real IO/work after TRUE.
+        if(v.retire_graph){
+            const bool retired=v.retire_graph(view,app);v.valid();
+            if(!retired||!local_idle()||!source_idle()){v.attested=false;v.leave();return false;}
+        }
+        // No caller unload proof or foreign/image claim. Profile and Runtime
+        // retain their real subsequent close operations.
+        v.valid();bool result;
+        {PreserveError error;std::unique_lock lock(v.gate);if(v.phase!=Phase::Bound||!v.active)reject(lock,"Policy source retirement was poisoned");result=!v.scoped_pending();v.attested=result;}
+        v.leave();return result;
+    }
+    // Parent is released before the real host proof. Local idle only gates
+    // that call; it cannot attest final kernel packets or foreign/code lifetime.
+    bool result=v.options.lifecycle.external_drained(view,app);v.valid();
+    // Recheck after the opaque proof without calling it twice. A true callback
+    // cannot hide newly retained tracked IO/work or leave Parent held.
+    if(v.options.lifecycle.mode==LifecycleMode::SourceOwned&&(!local_idle()||!source_idle()))result=false;
+    v.valid();{PreserveError error;std::unique_lock lock(v.gate);if(v.phase!=Phase::Bound||!v.active)reject(lock,"Policy external proof return was poisoned");if(v.scoped_pending())result=false;v.attested=result;}
+    v.leave();return result;
 }catch(...){v.failed();throw;}}
 bool Policy::close(bool attestation){auto& v=*impl_;
     {PreserveError error;std::lock_guard lock(v.gate);if(v.phase==Phase::Closed)return true;}
+    v.affinity();{PreserveError error;std::lock_guard lock(v.gate);if(v.scoped_pending())return false;}
     v.enter();try{v.admit(true);if(!attestation||!v.attested||!v.returned||v.worker_context||v.length||v.partial||v.loan_address||v.log_stage!=Impl::LogStage::Empty||v.guard_pending||v.exits.active()){v.leave();return false;}
         auto& p=*v.ports;const auto m=p.view.memory.snapshot();const auto io=p.view.io.snapshot();const auto a=p.accept.snapshot();const auto b=p.view.backend.snapshot().phase;
         if((b!=o::Phase::Returned&&b!=o::Phase::Quiescing)||m.allocations||m.controls||m.proxies||m.blocks||m.maps||m.buffers||m.reserved||m.pending_frees||m.partial_constructions||m.buffer_borrows||io.allocations||io.pending||io.active_calls||a.projections||a.pending||a.active_calls||a.poisoned||p.view.scheduler.work_count_30.load()||p.view.scheduler.completion.head||p.view.scheduler.completion.tail){v.leave();return false;}
-        {PreserveError error;std::lock_guard lock(v.gate);v.closing=true;}
+        {PreserveError error;std::unique_lock lock(v.gate);
+            if(v.phase!=Phase::Bound||!v.active||v.binding)reject(lock,"Policy close admission was poisoned");
+            if(v.scoped_pending()){lock.unlock();v.leave();return false;}
+            v.closing=true;}
         if(!v.exits.close())throw std::logic_error("Owned job exit-wait registry remains active");
         {auto retiring=std::move(v.checkpoint);v.checkpoint={};}v.valid();v.lease.reset();v.ports.reset();
-        {PreserveError error;std::lock_guard lock(v.gate);if(v.phase!=Phase::Bound)throw std::logic_error("Policy retirement was poisoned");v.active=false;v.closing=false;v.phase=Phase::Closed;}return true;
+        {PreserveError error;std::unique_lock lock(v.gate);if(v.phase!=Phase::Bound)reject(lock,"Policy retirement was poisoned");v.active=false;v.closing=false;v.phase=Phase::Closed;}return true;
     }catch(...){v.failed();{PreserveError error;std::lock_guard lock(v.gate);v.closing=false;}throw;}
 }
 } // namespace anadius::session_policy

@@ -1,0 +1,8 @@
+{
+  "arguments": [
+    "--prepared-scoped-runtime"
+  ],
+  "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\scoped-greeting-lifetime\\scoped-greeting-proposed.exe",
+  "exit": 0,
+  "duration_ms": 49
+}

@@ -4,7 +4,7 @@
 
 namespace anadius::accept_stop {
 namespace s=socket_recovered;namespace o=owned_server;
-enum class Scope {AcceptOnly,SessionIo};
+enum class Scope {AcceptOnly,SessionIo,SessionIoPrepared};
 struct Imports {
     decltype(&::CancelIoEx) cancel=&::CancelIoEx;
     decltype(&::PostQueuedCompletionStatus) post=&::PostQueuedCompletionStatus;
@@ -23,6 +23,11 @@ struct Options {
     // admission and drain raw/deferred jobs; existing tracked IO/session owners
     // may still be live and are retired by observed source completions.
     Scope scope=Scope::AcceptOnly;
+    // SessionIoPrepared explicitly permits this Runtime's managed PreparedJobs
+    // to remain live; other_work_drained must still seal new external work and
+    // drain ALL unmanaged raw/deferred/foreign work. Requires finite Runtime
+    // prepared-stop policy and exact PreparedJobSourceDrain binding. Existing
+    // SessionIo proof requirements remain unchanged.
 };
 enum class Phase {Fresh,Bound,Running,Requested,Draining,Closing,Closed,Poisoned,Retiring};
 struct Snapshot {
@@ -45,14 +50,27 @@ public:
     Stop(const Stop&)=delete;Stop& operator=(const Stop&)=delete;
     bool request(); // original controller/fiber; false before actual Runtime.run
     Snapshot snapshot()const;
+    Scope scope()const noexcept; // immutable selection, not source authority
     // Runtime-only protocol: source bind/pump/packet methods need the existing
     // WHOLE Parent Operation on their original worker/fiber/PTD.
-    void bind(o::ServerView,s::OwnedAcceptMemory&);
+    void bind(o::ServerView,s::OwnedAcceptMemory&,bool prepared_jobs_managed=false);
     void running();
     void pump();
     bool physical(std::int32_t received,std::uint32_t bytes,std::uintptr_t key,OVERLAPPED*,std::uint32_t status);
     Receipt before(s::IocpSchedulerEntry*,s::CancelOperation&,const s::Error&,std::uint32_t);
     void after(Receipt); // no old operation dereference after source completion
+    // Whole original Parent, SessionIoPrepared only. Pending loans, active
+    // source packet bindings and unacknowledged stop receipts remain live.
+    // False is not external/kernel/foreign finality; close_worker still required.
+    bool session_io_pending();
+    // Read-only local source prerequisite for the real external drain proof.
+    // Original bound worker/fiber/PTD, OUTSIDE Parent, exact ServerView only.
+    // Requires an accepted independent stop request, no pending tracked loans,
+    // no active route/post/control call, and every observed receipt acknowledged.
+    // Does not wait, consume IOCP packets, close Stop, or attest foreign/image
+    // lifetime. A queued null-OV wake may remain until actual IOCP retirement.
+    // Recheck after opaque proof; a true result is not permission to unload.
+    bool source_quiescent(o::ServerView);
     bool close_worker(); // outside Parent, after independent external proof
 private:
     struct Impl;explicit Stop(std::unique_ptr<Impl>)noexcept;

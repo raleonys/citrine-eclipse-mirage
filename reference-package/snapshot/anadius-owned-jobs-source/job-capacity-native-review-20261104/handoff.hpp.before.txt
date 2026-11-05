@@ -1,0 +1,114 @@
+#pragma once
+#include "../anadius-thread-domain-source/domain.hpp"
+
+namespace anadius::worker_handoff {
+enum class Phase {Prepared,Acquiring,Borrowed,Returned,Retiring,Closed,Poisoned};
+struct Snapshot {
+    Phase phase;DWORD controller_thread,worker_thread;
+    bool worker_handle_retained,worker_exit_verified;
+};
+// Host composition, not an original native class or recovered bootstrap ABI.
+// Prepare on the Domain controller; hold this root until explicit close/cancel.
+// The sole ApplicationMemory OWNER never leaves the controller. Exactly one
+// real same-Domain NativeThreads worker holds the original Borrow. Explicit
+// JobMemory offers may lend backing access to distinct same-Domain workers;
+// Profile/Graph admission stays separate; Parent needs explicit enter(job).
+// No aliasing shared_ptr is
+// used to bypass SessionMemoryDomain's legacy sole-owner constructor.
+// The caller freezes shared application cells until worker retirement/join;
+// source drain on the worker and OS thread/FLS exit are separate obligations.
+class PreparedMemory final {
+    struct State;
+    struct JobState;
+public:
+    class JobMemory;
+    class JobScope;
+    static constexpr std::size_t maximum_job_borrows=64; // selected HOST bound
+    class Borrow final {
+    public:
+        Borrow(Borrow&&)noexcept;
+        Borrow& operator=(Borrow&&)=delete;
+        Borrow(const Borrow&)=delete;Borrow& operator=(const Borrow&)=delete;
+        // An unreturned borrow poisons the retained ticket; no guessed cleanup.
+        ~Borrow()noexcept;
+        thread_domain::ApplicationMemory& memory()const;
+        const thread_domain::DomainStorage* domain_identity()const noexcept;
+        // Original worker only. Passive, move-only offer for a distinct actual
+        // NativeThreads sibling. This does NOT admit Profile/Graph/Parent calls.
+        JobMemory prepare_job();
+        // Original worker, outside Parent Operation. Zero-timeout OS polling;
+        // only signaled returned jobs are closed/recycled. Unknowns poison.
+        std::size_t reap_jobs();
+        // Exact-root pin for an explicitly admitted child source Operation.
+        // Caller keeps this Borrow object stable during the call.
+        std::unique_ptr<JobScope> pin_job(JobMemory&)const;
+        bool jobs_returned()const; // original worker; no waits/SDK finality
+        // Same worker/thread/fiber/PTD only, after every source owner drained.
+        // False retains the borrow when known live allocations remain.
+        bool retire();
+    private:
+        friend class PreparedMemory;
+        explicit Borrow(std::shared_ptr<State>)noexcept;
+        std::shared_ptr<State> state_;
+    };
+    class JobMemory final {
+    public:
+        JobMemory(JobMemory&&)noexcept;
+        JobMemory& operator=(JobMemory&&)=delete;
+        JobMemory(const JobMemory&)=delete;JobMemory& operator=(const JobMemory&)=delete;
+        ~JobMemory()noexcept; // unreturned/uncanceled offer poisons the owner
+        void acquire(); // distinct same-Domain NativeThreads thread/fiber/PTD
+        // Borrowed reference only: no use/retained reference after retire.
+        // Caller serializes allocator/fallback/OOM and all shared source state;
+        // this ticket does not prove concurrent allocator/new-handler safety.
+        // One worker may hold multiple distinct offers; each retains its own
+        // actual self handle. Serialize all calls/transfers of each token.
+        thread_domain::ApplicationMemory& memory()const;
+        const thread_domain::DomainStorage* domain_identity()const noexcept;
+        // Actual job worker, after all its source access ends. Allocations may
+        // have transferred to other owners; main Borrow still requires zero.
+        bool retire();
+        // Original worker, before acquire begins. Caller first excludes pending
+        // token users/launches and still joins any independent launched thread.
+        bool cancel();
+    private:
+        friend class Borrow;
+        JobMemory(std::shared_ptr<State>,std::shared_ptr<JobState>)noexcept;
+        std::shared_ptr<State> state_;
+        std::shared_ptr<JobState> job_;
+    };
+    // Stable permission pin independent of the movable JobMemory object.
+    // Blocks logical return until scope destruction; never joins a thread.
+    class JobScope final {
+    public:
+        ~JobScope()noexcept;
+        JobScope(const JobScope&)=delete;JobScope& operator=(const JobScope&)=delete;
+        JobScope(JobScope&&)=delete;JobScope& operator=(JobScope&&)=delete;
+        thread_domain::ApplicationMemory& memory()const;
+        bool valid()const noexcept; // owning child only; failure poisons root
+    private:
+        friend class Borrow;
+        JobScope(std::shared_ptr<State>,std::shared_ptr<JobState>);
+        std::shared_ptr<State> state_;
+        std::shared_ptr<JobState> job_;
+    };
+    static std::unique_ptr<PreparedMemory> prepare(std::shared_ptr<thread_domain::DomainStorage>);
+    ~PreparedMemory()noexcept;
+    PreparedMemory(const PreparedMemory&)=delete;PreparedMemory& operator=(const PreparedMemory&)=delete;
+    Borrow acquire();
+    // Controller, outside loader lock. Uses a duplicated ACTUAL worker handle;
+    // a returned borrow or caller's boolean is not sufficient proof of exit.
+    // Timeout/failed wait retains every owner. Unknown outcome forbids retry.
+    // Finite timeout is one shared wait budget for original + all job threads.
+    bool close(DWORD timeout_ms=0);
+    // Only before a worker has acquired the capability. No thread was launched
+    // by this class; the caller still owns any independent launch/join tracker.
+    bool cancel();
+    Snapshot snapshot()const;
+    std::size_t outstanding_jobs()const; // metadata only, not a drain proof
+    const thread_domain::DomainStorage* domain_identity()const noexcept;
+private:
+    explicit PreparedMemory(std::shared_ptr<State>)noexcept;
+    std::shared_ptr<State> state_;
+};
+} // namespace anadius::worker_handoff

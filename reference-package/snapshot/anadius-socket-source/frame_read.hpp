@@ -28,6 +28,9 @@ struct FrameReadContext {
     // Logical category projection for literal native object1800a10f8, NOT its
     // object VA substituted for the name-function identity. No callback here.
     Category success_category_a10f8;ComposedReadContext* read=nullptr;
+    // Optional authoritative allocation-header lookup. Legacy aggregate
+    // arguments and span fallback retain their meaning when this is null.
+    AllocationHeaderResolver* allocation_header_resolver=nullptr;
 };
 using FrameReadComposedCall=decltype(&composed_receive_025c40);
 void start_frame_read_0280d0(std::uintptr_t,FrameReadContext&,

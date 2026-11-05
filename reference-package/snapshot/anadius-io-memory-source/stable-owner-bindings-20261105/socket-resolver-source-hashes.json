@@ -1,0 +1,56 @@
+{
+  "status": "SOURCE_ONLY_NOT_RUN",
+  "files": [
+    {
+      "path": "anadius-socket-source/posted_operation.hpp",
+      "before_sha256": "29d0ee6439b2d7ce82bd6ef852cbd303d13ea8734b272c95aecb448377222bb6",
+      "before": "before/anadius-socket-source__posted_operation.hpp",
+      "before_exists": true,
+      "sha256": "dcbdadf100a1f89a421d7787f03862edf6ca2d7e4bda991506f79d34f832c56d"
+    },
+    {
+      "path": "anadius-socket-source/posted_operation.cpp",
+      "before_sha256": "6f7f17ea26c8e08abdd6fb5a892f3337162743de76ffa93c658c6397f20ca215",
+      "before": "before/anadius-socket-source__posted_operation.cpp",
+      "before_exists": true,
+      "sha256": "e73a1612c4c1ac9aa2ba6da1212ffaad3385c1fb0a70f978fe450dc29cf3775d"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher.hpp",
+      "before_sha256": "26c716c5a6f08d8f741b964ccb8e48719707799c655e447c3cbb8ed65f412f48",
+      "before": "before/anadius-socket-source__completion_dispatcher.hpp",
+      "before_exists": true,
+      "sha256": "bf93f1e45b8850e7f76e8589283de076dc42ae79621bd43eb1b136aa9185b835"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher.cpp",
+      "before_sha256": "56a9c5386a1e1615b222f26da95d918f3aeef8666fd16fb64fc9bfba7ea1ab95",
+      "before": "before/anadius-socket-source__completion_dispatcher.cpp",
+      "before_exists": true,
+      "sha256": "d31a11ea940bd77a442feae3dda84a4dbc87e5128ad3161a637195aae849108f"
+    },
+    {
+      "path": "anadius-socket-source/handler_dispatch.cpp",
+      "before_sha256": "512444bb40a57b21c1acd40274579c4d7a8acf70921482d01606658cbe6a15fc",
+      "before": "before/anadius-socket-source__handler_dispatch.cpp",
+      "before_exists": true,
+      "sha256": "42e33a86b4f8bcc6bf0df085045857e5fd9b287bf84a69b4d34335e183bebd9d"
+    },
+    {
+      "path": "anadius-socket-source/write_finish.hpp",
+      "before_sha256": "8f232392a79da93f1f0cba1093ba0f21824b9d77a1f507452618fb904213cff3",
+      "before": "before/anadius-socket-source__write_finish.hpp",
+      "before_exists": true,
+      "sha256": "fae0e0f9d5bb38c782f3665eafe92c337c9edb5854981fb30520ab9696832a5d"
+    },
+    {
+      "path": "anadius-socket-source/memory_lookup.hpp",
+      "before_sha256": null,
+      "before": null,
+      "before_exists": false,
+      "sha256": "9daeaaf4e5431039a178288a52ee6ee6dd19775fef12e288bb6618d8f8c0c851"
+    }
+  ],
+  "compile": false,
+  "tests_run": false
+}

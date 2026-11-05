@@ -1,0 +1,750 @@
+#include "profile.hpp"
+#include "../anadius-native-profile-source/native.hpp"
+#include "../anadius-owned-deque-source/deque.hpp"
+#include "../anadius-owned-environment-source/environment.hpp"
+#include "../anadius-owned-jobs-source/jobs.hpp"
+#include "../anadius-session-policy-source/policy.hpp"
+#include <algorithm>
+#include <exception>
+#include <limits>
+#include <mutex>
+#include <optional>
+#include <type_traits>
+
+namespace anadius::session_profile {
+namespace {
+struct PreserveError {DWORD saved=::GetLastError();~PreserveError(){::SetLastError(saved);}};
+void add_reference(std::atomic<std::uint32_t>& counter,bool require_live){
+    auto value=counter.load();
+    for(;;){if((require_live&&!value)||value==std::numeric_limits<std::uint32_t>::max())throw std::overflow_error("Session reference cannot be acquired");if(counter.compare_exchange_weak(value,value+1))return;}
+}
+void drop_strong(s::IoReference* p){if(p&&p->strong_08.fetch_sub(1)==1){p->dispose_slot_00();if(p->weak_0c.fetch_sub(1)==1)p->delete_slot_08();}}
+struct DispatchState {std::mutex gate;Application* target=nullptr;std::size_t active=0;};
+struct DispatchCall {
+    std::shared_ptr<DispatchState> state;Application* target=nullptr;
+    explicit DispatchCall(std::shared_ptr<DispatchState> s):state(std::move(s)){
+        std::lock_guard lock(state->gate);
+        if(!state->target)throw std::logic_error("Closed frame-job application tombstone");
+        target=state->target;++state->active;
+    }
+    ~DispatchCall(){std::lock_guard lock(state->gate);if(!state->active)std::terminate();--state->active;}
+};
+}
+struct JobHandoffState {
+    enum class Phase {Offered,Acquired,Returned,Released};
+    enum class Message {Fresh,Processing,Prepared,Consuming,Consumed};
+    const std::shared_ptr<DispatchState> dispatch;const JobIdentity identity;
+    std::optional<worker_handoff::PreparedMemory::JobMemory> memory;
+    std::mutex gate;Phase phase=Phase::Offered;Message message=Message::Fresh;bool armed=false,busy=false,poisoned=false;
+    // Stable owned result, including unknown033d70 prefixes. Snapshot is a
+    // nonowning header mirror, never released as a second allocation owner.
+    s::ReceiveBufferString response,request_snapshot;bool had_message=false;
+    JobHandoffState(std::shared_ptr<DispatchState> d,JobIdentity i):dispatch(std::move(d)),identity(i){}
+    struct Call {
+        std::shared_ptr<JobHandoffState> state;
+        explicit Call(std::shared_ptr<JobHandoffState> s):state(std::move(s)){
+            std::lock_guard lock(state->gate);
+            if(state->busy){state->poisoned=true;throw std::logic_error("Frame-job handoff lifecycle reentry");}
+            if(!state->armed||state->poisoned||state->phase==Phase::Released)throw std::logic_error("Frame-job handoff is not available");
+            state->busy=true;
+        }
+        ~Call(){std::lock_guard lock(state->gate);state->busy=false;if(state->poisoned)state->memory.reset();}
+        void check()const{std::lock_guard lock(state->gate);if(state->poisoned||!state->busy)throw std::logic_error("Frame-job handoff was poisoned");}
+    };
+};
+struct Profile::State {
+    mutable std::mutex gate;Phase phase=Phase::Fresh;
+    std::size_t live_sessions=0,live_jobs=0,active_calls=0;
+    bool mutation=false,profile_call=false,application_live=false;
+    DWORD thread=0;void* fiber=nullptr;
+    o::OwnedServerBackend* backend=nullptr;s::SessionMemoryDomain* memory=nullptr;s::OwnedIoMemory* io=nullptr;
+    s::SocketService* service=nullptr;s::SocketObject* acceptor=nullptr;s::SocketObject* pending_socket=nullptr;s::IocpSchedulerEntry* scheduler=nullptr;
+    std::uintptr_t context=0,server=0;Application* application=nullptr;
+    std::unique_ptr<Application> pending_application;
+    std::shared_ptr<owned_environment::Environment> owned_environment;
+    std::shared_ptr<owned_jobs::InlineJobs> owned_jobs;
+    Dependencies deps;
+    std::vector<s::IoEnvironmentSourceBinding> sources;
+    s::IoEnvironmentConstructorContext constructor;
+    explicit State(Dependencies d,std::shared_ptr<anadius::owned_environment::Environment> env,std::shared_ptr<anadius::owned_jobs::InlineJobs> jobs):owned_environment(std::move(env)),owned_jobs(std::move(jobs)),deps(std::move(d)),sources(deps.sessions),
+        constructor{*deps.environment.types,deps.environment.queries,deps.environment.factories}{}
+    Snapshot snapshot()const{PreserveError error;std::lock_guard lock(gate);return {phase,live_sessions,live_jobs,active_calls};}
+    void poison(){PreserveError error;std::lock_guard lock(gate);if(phase!=Phase::Retiring)phase=Phase::Poisoned;}
+    void match(const o::ServerView& v)const{
+        if(thread!=::GetCurrentThreadId()||fiber!=::GetCurrentFiber())throw std::logic_error("Profile requires its bound worker thread/fiber");
+        if(backend!=&v.backend||memory!=&v.memory||io!=&v.io||context!=v.identity.value||
+           service!=&v.service||acceptor!=&v.acceptor||pending_socket!=&v.pending||scheduler!=&v.scheduler)
+            throw std::invalid_argument("Profile belongs to a different owned server context");
+    }
+};
+struct Application::Impl {
+    enum class SlotPhase {Empty,Binding,Ready,Retiring};
+    struct Slot {
+        SlotPhase phase=SlotPhase::Empty;std::uint64_t generation=0;
+        s::SessionOwner* owner=nullptr;s::IoReference* observer=nullptr;std::size_t jobs=0;bool processing=false;
+        s::ReceiveSocketImplementation receive;s::SendSocketImplementation send;
+        s::IoHandlerEnvironment environment;s::QueuedWriteOwner queued;s::MessageDispatchOwner message;
+        std::unique_ptr<SessionLogic> logic;
+    };
+    enum class JobPhase {Empty,Allocated,Submitting,Pending,Running,Done,Unknown};
+    struct Job {
+        JobPhase phase=JobPhase::Empty;std::uint64_t generation=0;std::unique_ptr<s::FrameMessageClosure> closure;
+        SessionToken session;s::IoReference* strong=nullptr;s::FrameThreadHandle handle;bool detached=false,start_returned=false,detaching=false;
+        bool binding=false;std::shared_ptr<JobHandoffState> handoff;
+    };
+    Application* owner=nullptr;const std::shared_ptr<Profile::State> state;const rt::Ports ports;
+    std::vector<Slot> slots;std::vector<Job> jobs;
+    std::vector<s::FrameReadOwnerBinding> frames;std::vector<s::ReceiveStringBinding> string_bindings;
+    std::vector<s::ReceiveStreamBinding> reads;std::vector<s::SendStreamBinding> writes;
+    std::vector<s::WriteFinishOwnerBinding> finish_owners;std::vector<s::QueuedWriteOwnerBinding> queued_owners;
+    std::vector<s::MessageDispatchOwnerBinding> message_owners;std::vector<s::MessageClosureBinding> closures;
+    Strings strings;std::unique_ptr<owned_deque::Deques> deques;
+    std::shared_ptr<DispatchState> dispatch=std::make_shared<DispatchState>();
+    JobHandoffState* completing=nullptr; // original-worker synchronous021770
+    s::AsyncReceiveService receive_service;s::AsyncSendService send_service;s::OwnedNoopControlFactory controls;
+    template<class F>std::invoke_result_t<F> effect(F&& fn,bool cleanup=false){
+        check(cleanup);{PreserveError error;std::lock_guard lock(state->gate);++state->active_calls;}
+        struct Leave {Profile::State& s;~Leave(){PreserveError error;std::lock_guard lock(s.gate);--s.active_calls;}} leave{*state};
+        try{if constexpr(std::is_void_v<std::invoke_result_t<F>>){std::forward<F>(fn)();check(cleanup);}
+            else{decltype(auto) result=std::forward<F>(fn)();check(cleanup);return result;}}
+        catch(...){state->poison();throw;}
+    }
+    struct Mutation {
+        Impl& v;explicit Mutation(Impl& v,bool cleanup=false):v(v){v.check(cleanup);PreserveError error;std::lock_guard lock(v.state->gate);
+            if(v.state->mutation||v.state->active_calls){v.state->phase=Phase::Poisoned;throw std::logic_error("Reentrant session registry mutation");}v.state->mutation=true;}
+        ~Mutation(){PreserveError error;std::lock_guard lock(v.state->gate);v.state->mutation=false;}
+    };
+    void metadata(bool cleanup=false)const{
+        PreserveError error;
+        {std::lock_guard lock(state->gate);
+            if(state->phase!=Phase::Open&&!(cleanup&&state->phase==Phase::Closing))throw std::logic_error("Session application is closed or poisoned");
+            if(state->thread!=::GetCurrentThreadId()||state->fiber!=::GetCurrentFiber())throw std::logic_error("Session profile requires its bound worker thread/fiber");}
+    }
+    void check(bool cleanup=false)const{
+        PreserveError error;metadata(cleanup);(void)ports.view.memory.buffer_context();
+        if(completing){std::lock_guard lock(completing->gate);if(completing->poisoned||!completing->busy||completing->phase!=JobHandoffState::Phase::Returned)throw std::logic_error("Prepared message completion was poisoned");}
+        const auto backend=ports.view.backend.snapshot().phase;
+        if((backend!=o::Phase::Ready&&backend!=o::Phase::Running&&!(cleanup&&(backend==o::Phase::Returned||backend==o::Phase::Quiescing)))||
+           ports.view.io.snapshot().phase!=s::IoMemoryPhase::Open||ports.accept.snapshot().poisoned)
+            throw std::logic_error("Session application source admission was poisoned");
+    }
+    struct Category final:s::WriteFinishCategory {
+        Impl& v;s::WriteFinishCategory& lower;Category(Impl& v,s::WriteFinishCategory& c):v(v),lower(c){identity_08=c.identity_08;}
+        void message_slot_10(s::WriteFinishString& out,std::int32_t code)override{v.effect([&]{lower.message_slot_10(out,code);v.strings.track(out);});}
+    };
+    std::vector<std::unique_ptr<Category>> category_objects;std::vector<s::WriteFinishCategoryBinding> categories;
+    struct Logging final:s::RecoveredQueuedWriteApi {
+        Impl& v;Logging(Impl& v,s::QueuedWriteContext& c):RecoveredQueuedWriteApi(c),v(v){}
+        void free_sized_04b0f8(std::uintptr_t p,std::uint64_t n)override{v.effect([&]{v.strings.free_sized(p,n);},true);}
+        [[noreturn]]void invalid_parameter_05c974()override{v.check();v.state->poison();v.state->deps.policy->logging().invalid_parameter_05c974();std::terminate();}
+        s::WriteFinishStream& begin_log_006880(std::uintptr_t p,std::uintptr_t q)override{return v.effect([&]() -> s::WriteFinishStream&{return v.state->deps.policy->logging().begin_log_006880(p,q);});}
+        s::WriteFinishStream& append_007990(s::WriteFinishStream& s,std::uintptr_t p,std::uint64_t n)override{return v.effect([&]() -> s::WriteFinishStream&{return v.state->deps.policy->logging().append_007990(s,p,n);});}
+        std::uint64_t widen_01e510(std::uintptr_t p,std::uint8_t n)override{return v.effect([&]{return v.state->deps.policy->logging().widen_01e510(p,n);});}
+        void put_00fe90(s::WriteFinishStream& s,std::uint8_t n)override{v.effect([&]{v.state->deps.policy->logging().put_00fe90(s,n);});}
+        void flush_00e1e0(s::WriteFinishStream& s)override{v.effect([&]{v.state->deps.policy->logging().flush_00e1e0(s);});}
+    };
+    struct Receive final:s::AsyncReceiveApi {Impl& v;explicit Receive(Impl& v):v(v){}
+        s::AsyncReceiveResult receive(s::Socket p,s::Buffer& b,std::uint32_t n,OVERLAPPED& o)override{return v.effect([&]{return v.state->deps.receive->receive(p,b,n,o);});}
+    } raw_receive{*this};
+    struct Send final:s::AsyncSendApi {Impl& v;explicit Send(Impl& v):v(v){}
+        s::AsyncSendResult send(s::Socket p,s::Buffer& b,std::uint32_t n,OVERLAPPED& o)override{return v.effect([&]{return v.state->deps.send->send(p,b,n,o);});}
+    } raw_send{*this};
+    struct Worker final:rt::WorkerControl {Impl& v;explicit Worker(Impl& v):v(v){}
+        std::uint32_t exchange_stop(s::IocpSchedulerEntry& s,std::uint32_t n)override{return v.effect([&]{return v.state->deps.policy->exchange_stop(s,n);});}
+        std::uint32_t exchange_wake(s::IocpSchedulerEntry& s,std::uint32_t n)override{return v.effect([&]{return v.state->deps.policy->exchange_wake(s,n);});}
+        void initialize(std::array<std::uintptr_t,2>& s)override{v.effect([&]{v.state->deps.policy->initialize(s);});}
+        void finish(std::array<std::uintptr_t,2>& s)override{v.effect([&]{v.state->deps.policy->finish(s);});}
+        [[noreturn]]void raise(s::Error e,std::uintptr_t p)override{v.check();v.state->poison();v.state->deps.policy->raise(e,p);std::terminate();}
+    } worker{*this};
+    struct Guard final:s::DispatcherEffects {Impl& v;explicit Guard(Impl& v):v(v){}
+        s::DispatcherEffects& lower(){return v.state->deps.policy->guards();}
+        std::uintptr_t capture_tls_slot()override{return v.effect([&]{return lower().capture_tls_slot();});}
+        std::int32_t thread_epoch(std::uintptr_t p)override{return v.effect([&]{return lower().thread_epoch(p);});}
+        void guard_header_04b838(std::int32_t& n)override{v.effect([&]{lower().guard_header_04b838(n);});}
+        void register_atexit_04b770(std::uintptr_t p)override{v.effect([&]{lower().register_atexit_04b770(p);});}
+        void guard_footer_04b7cc(std::int32_t& n)override{v.effect([&]{lower().guard_footer_04b7cc(n);});}
+        std::uint32_t read_stop_34(s::IocpSchedulerEntry& e)override{return v.effect([&]{return lower().read_stop_34(e);});}
+        std::array<std::uintptr_t,2>& copy_exception_024100(std::array<std::uintptr_t,2>& a,const std::array<std::uintptr_t,2>& b)override{return v.effect([&]() -> std::array<std::uintptr_t,2>&{return lower().copy_exception_024100(a,b);});}
+        [[noreturn]]void rethrow_029880(std::array<std::uintptr_t,2>& a)override{v.check();v.state->poison();lower().rethrow_029880(a);std::terminate();}
+        void complete(s::IocpSchedulerEntry*,s::CancelOperation&,const s::Error&,std::uint32_t)override{throw std::logic_error("Runtime owns actual coherent routing");}
+    } guard{*this};
+    struct Terminal final:s::FrameReadTerminal,s::QueuedWriteTerminal {Impl& v;explicit Terminal(Impl& v):v(v){}
+        [[noreturn]]void bad_weak_ptr_026860()override{v.check();v.state->poison();v.state->deps.policy->bad_weak_ptr_026860();std::terminate();}
+    } terminal{*this};
+    s::QueuedWriteContext queued;Logging logging;
+    s::PinnedAsyncReceiveApi pinned_receive;s::PinnedAsyncSendApi pinned_send;
+    struct Effects final:s::RecoveredComposedReadEffects {
+        Impl& v;
+        explicit Effects(Impl& v):RecoveredComposedReadEffects(v.ports.environment,v.ports.worker,v.ports.memory,
+            v.state->deps.environment.handlers,v.pinned_send,v.ports.completion,*v.state->deps.errors,v.writes,
+            v.state->constructor,v.state->sources,v.logging,v.finish_owners,v.categories,v.strings.bindings()),v(v){}
+        s::AsyncSendOperation& project_async_send(s::OperationStorage& s)override{return v.effect([&]() -> s::AsyncSendOperation&{return v.ports.memory.project_async_send(s);});}
+        s::Category misc_category_0285b0()override{return v.state->deps.misc;}
+    } effects;
+    struct Frame final:s::FrameReadApi {
+        Impl& v;explicit Frame(Impl& v):v(v){}
+        void construct_message_006b30(s::ReceiveBufferString& out,std::uintptr_t p,std::uint64_t n)override{v.effect([&]{const auto b=v.ports.view.memory.buffer_context().memory.view(p,n);v.strings.assign(out,{reinterpret_cast<const char*>(b.data()),b.size()});});}
+        s::FrameMessageClosure* allocate_frame_04b0bc(std::uint64_t n)override;
+        std::uintptr_t begin_frame_thread_05e8e0(std::uintptr_t,std::uint32_t,std::uintptr_t,s::FrameMessageClosure*,std::uint32_t,std::uint32_t&)override;
+        std::int32_t detach_04a458(const s::FrameThreadHandle&)override;
+        [[noreturn]]void thread_error_04a648(int n)override{v.check();v.state->poison();v.state->deps.policy->thread_error(n);std::terminate();}
+        void free_sized_04b0f8(std::uintptr_t p,std::uint64_t n)override;
+        [[noreturn]]void invalid_parameter_05c974()override{v.logging.invalid_parameter_05c974();std::terminate();}
+        void next_write_02a500(std::uintptr_t p)override{v.logging.next_write_02a500(p);}
+        s::WriteFinishStream& begin_log_006880(std::uintptr_t p,std::uintptr_t q)override{return v.logging.begin_log_006880(p,q);}
+        s::WriteFinishStream& append_007990(s::WriteFinishStream& s,std::uintptr_t p,std::uint64_t n)override{return v.logging.append_007990(s,p,n);}
+        std::uint64_t widen_01e510(std::uintptr_t p,std::uint8_t n)override{return v.logging.widen_01e510(p,n);}
+        void put_00fe90(s::WriteFinishStream& s,std::uint8_t n)override{v.logging.put_00fe90(s,n);}
+        void flush_00e1e0(s::WriteFinishStream& s)override{v.logging.flush_00e1e0(s);}
+    } frame_api{*this};
+    s::FrameReadContext frame;
+    struct Read final:s::RecoveredFrameReadApi {Impl& v;Read(Impl& v,s::FrameReadContext& f):RecoveredFrameReadApi(f),v(v){}
+        void construct_length_error_024390(s::ReadLengthError& e,std::uintptr_t p)override{v.effect([&]{v.state->deps.policy->construct_length_error(e,p);});}
+        [[noreturn]]void throw_length_error_023930(s::ReadLengthError& e)override{v.check();v.state->poison();v.state->deps.policy->throw_length_error(e);std::terminate();}
+    } read_api;
+    s::AsyncReceiveContext receive_context;s::ComposedReadContext read;
+    s::OwnedResponseContext owned_response;
+    struct Response final:s::RecoveredOwnedResponseApi {Impl& v;Response(Impl& v,s::OwnedResponseContext& c):RecoveredOwnedResponseApi(c),v(v){}
+        s::ReceiveBufferString& copy_response_009eb0(s::ReceiveBufferString& out,s::ReceiveBufferString& from)override{return v.effect([&]() -> s::ReceiveBufferString&{return v.strings.copy(out,from);});}
+    } response_api;
+    struct Queue final:s::ResponseQueueApi {Impl& v;explicit Queue(Impl& v):v(v){}
+        void grow_deque_026670(s::WriteFinishOwner& o,std::uint64_t n)override{v.effect([&]{v.deques->grow(o,n,[&v=v]{v.check();});});}
+        s::WriteFinishString* allocate_string_04b0bc(std::uint64_t n)override{return v.effect([&]{if(n!=32)throw s::UnsupportedInput("Output string projection requires32bytes");return v.ports.view.memory.allocate_output_block();});}
+    } queue_api{*this};
+    s::ResponseQueueContext queue;s::ResponseDispatchContext responses;
+    struct Message final:s::RecoveredResponseDispatchApi {Impl& v;Message(Impl& v,s::ResponseDispatchContext& c):RecoveredResponseDispatchApi(c),v(v){}
+        void process_message_033d70(std::uintptr_t,s::ReceiveBufferString&,s::ReceiveBufferString&)override;
+        void destroy_empty_message_00aa50(s::ReceiveBufferString& s)override{v.effect([&]{v.strings.release(s);});}
+        void cleanup_exit_waits_04a47c()override{v.effect([&]{v.state->deps.policy->cleanup_exit_waits();});}
+    } message_api;
+    s::MessageDispatchContext message;
+    Impl(std::shared_ptr<Profile::State> s,rt::Ports p):state(std::move(s)),ports(p),slots(state->deps.sessions),jobs(state->deps.jobs_capacity),
+        frames(slots.size()),string_bindings(slots.size()),reads(slots.size()),writes(slots.size()),finish_owners(slots.size()),queued_owners(slots.size()),message_owners(slots.size()),closures(jobs.size()),
+        strings(ports.view.memory,state->deps.headers),receive_service{&ports.view.scheduler},send_service{&ports.view.scheduler},
+        queued{queued_owners,terminal,nullptr},logging(*this,queued),pinned_receive(ports.view.io,raw_receive),pinned_send(ports.view.io,raw_send),
+        effects(*this),frame{ports.view.memory.buffer_context(),effects,frame_api,frames,categories,strings.bindings(),terminal,state->deps.success,nullptr},
+        read_api(*this,frame),receive_context{ports.environment,ports.worker,ports.memory.posted(),pinned_receive,ports.completion,*state->deps.errors,ports.memory},
+        read{ports.view.memory.buffer_context(),receive_context,effects,read_api,string_bindings,reads},
+        owned_response{ports.environment.storage,ports.worker,ports.memory,frame,nullptr},response_api(*this,owned_response),
+        queue{frame,queue_api,finish_owners,&queued},responses{frame,ports.environment.sentinels,state->deps.environment.response_executors,state->deps.environment.responses,response_api,&queue},
+        message_api(*this,responses),message{frame,message_api,message_owners,state->deps.environment.copies,closures}{
+        // Fixed session/category/owner containers finish growing before publication;
+        // the string header ledger republishes its two live spans when needed.
+        category_objects.reserve(state->deps.categories.size());categories.reserve(state->deps.categories.size());
+        for(const auto& c:state->deps.categories){category_objects.push_back(std::make_unique<Category>(*this,*c.object));categories.push_back({c.key,category_objects.back().get()});}
+        frame.categories=categories;effects.finish_context().categories=categories;
+        frame.read=&read;effects.bind_read_context(read);queued.write=&effects.write_context();owned_response.response=&responses;
+        strings.bind_header_views(frame.allocation_headers,effects.finish_context().allocation_headers);
+        // Last potentially throwing construction: no mandatory-open provider
+        // is unwound by a later context/category allocation failure.
+        deques=std::make_unique<owned_deque::Deques>(ports.view.memory);
+    }
+    Slot& slot(SessionToken t){if(t.slot>=slots.size()||slots[t.slot].generation!=t.generation||slots[t.slot].phase!=SlotPhase::Ready)throw std::invalid_argument("Stale session token");return slots[t.slot];}
+    std::size_t slot_for(std::uintptr_t id){for(std::size_t i=0;i<slots.size();++i)if(slots[i].phase==SlotPhase::Ready&&slots[i].owner->identity()==id)return i;throw std::invalid_argument("Session owner is not registered");}
+    Job& job(JobToken t){if(t.slot>=jobs.size()||jobs[t.slot].generation!=t.generation||jobs[t.slot].phase==JobPhase::Empty)throw std::invalid_argument("Stale frame-job token");return jobs[t.slot];}
+    JobIdentity job_identity(JobToken token,bool started){
+        auto& row=job(token);
+        if((row.phase!=JobPhase::Submitting&&row.phase!=JobPhase::Pending)||!row.strong||!row.closure)
+            throw std::logic_error("Only a retained unexecuted frame job can be handed off");
+        auto& session=slot(row.session);
+        if(!ports.view.memory.owns_control(row.strong)||session.observer!=row.strong||!session.jobs||!row.strong->strong_08.load()||
+           session.owner->weak_self.control_08!=row.strong||session.owner->weak_self.object_00!=session.owner->identity()||
+           row.closure->owner_20!=session.owner->identity()||row.closure->function_28!=0x180028d30ULL||
+           closures[token.slot].closure!=row.closure.get()||closures[token.slot].identity!=reinterpret_cast<std::uintptr_t>(row.closure.get()))
+            throw std::logic_error("Frame job closure/session/control identity mismatch");
+        if(started&&(row.phase!=JobPhase::Pending||!row.start_returned||!row.detached||row.detaching))
+            throw std::logic_error("Child inspection requires returned start and successful source detach");
+        return {token,row.session,reinterpret_cast<std::uintptr_t>(row.closure.get()),row.closure->owner_20,row.closure->function_28,reinterpret_cast<std::uintptr_t>(row.strong)};
+    }
+    void match_handoff(const std::shared_ptr<JobHandoffState>& claim,bool started){
+        const auto current=job_identity(claim->identity.job,started);const auto& expected=claim->identity;
+        if(dispatch!=claim->dispatch||job(expected.job).handoff!=claim||current.session!=expected.session||
+           current.closure!=expected.closure||current.owner!=expected.owner||current.function!=expected.function||current.control!=expected.control)
+            throw std::logic_error("Frame-job handoff no longer matches its exact source record");
+    }
+    static bool same_prefix(const s::ReceiveBufferString& a,const s::ReceiveBufferString& b){return a.storage_00==b.storage_00&&a.size_10==b.size_10&&a.capacity_18==b.capacity_18;}
+    void prepared_invoke(std::uintptr_t function,std::uintptr_t owner,s::ReceiveBufferString& request,s::MessageDispatchContext& context){
+        check();auto* claim=completing;
+        if(!claim||&context!=&message||function!=claim->identity.function||owner!=claim->identity.owner||!same_prefix(request,claim->request_snapshot))throw std::logic_error("Prepared message continuation lost its exact request/entry");
+        {std::lock_guard lock(claim->gate);if(claim->message!=JobHandoffState::Message::Prepared)throw std::logic_error("Prepared message response cannot be consumed twice");claim->message=JobHandoffState::Message::Consuming;}
+        if(claim->had_message)s::dispatch_prepared_response(owner,claim->response,request,context);
+        else s::invoke_frame_message(function,owner,request,context);
+        check();
+        if(claim->response.size_10||claim->response.capacity_18>15)throw std::logic_error("Prepared response retains an unfinished source prefix");
+        {std::lock_guard lock(claim->gate);if(claim->poisoned||claim->message!=JobHandoffState::Message::Consuming)throw std::logic_error("Prepared response consumption was poisoned");claim->message=JobHandoffState::Message::Consumed;}
+    }
+    void retire_job(Job& j){
+        if(j.phase!=JobPhase::Done||!j.detached||!j.start_returned||j.detaching||j.strong||j.closure||j.binding||j.handoff)return;
+        j.phase=JobPhase::Empty;j.handle={};j.session={};j.detached=false;j.start_returned=false;j.detaching=false;
+        PreserveError error;std::lock_guard lock(state->gate);--state->live_jobs;
+    }
+    void seal_dispatch(){std::lock_guard lock(dispatch->gate);if(dispatch->active)throw std::logic_error("Frame runner invocation is still active");dispatch->target=nullptr;}
+    void reap(){
+        for(std::size_t i=0;i<slots.size();++i){auto& s=slots[i];if(s.phase!=SlotPhase::Ready||s.jobs||s.processing||s.observer->strong_08.load()!=0)continue;
+            auto* const control=s.observer;s.phase=SlotPhase::Retiring;
+            frames[i]={};string_bindings[i]={};reads[i]={};writes[i]={};finish_owners[i]={};queued_owners[i]={};message_owners[i]={};state->sources[i]={};
+            s.receive={};s.send={};s.queued={};s.message={};
+            if(state->owned_environment)state->owned_environment->release(s.environment);
+            s.environment={};s.owner=nullptr;
+            s.logic.reset();check(true); // unknown destructor reentry retains observer
+            s.observer=nullptr;
+            {PreserveError error;std::lock_guard lock(state->gate);--state->live_sessions;}
+            if(control->weak_0c.fetch_sub(1)==1)control->delete_slot_08();
+            // Never read owner/control after the potentially final weak drop.
+            check(true);s.phase=SlotPhase::Empty;
+        }
+        strings.prune();
+    }
+};
+s::FrameMessageClosure* Application::Impl::Frame::allocate_frame_04b0bc(std::uint64_t n){return v.effect([&]{
+    if(n!=48)throw s::UnsupportedInput("Frame closure projection requires48bytes");
+    for(std::size_t i=0;i<v.jobs.size();++i){auto& j=v.jobs[i];if(j.phase!=JobPhase::Empty)continue;
+        if(j.generation==std::numeric_limits<std::uint64_t>::max())throw std::overflow_error("Job generation exhausted");
+        j.closure=std::make_unique<s::FrameMessageClosure>();++j.generation;j.phase=JobPhase::Allocated;
+        v.closures[i]={reinterpret_cast<std::uintptr_t>(j.closure.get()),j.closure.get()};
+        {PreserveError error;std::lock_guard lock(v.state->gate);++v.state->live_jobs;}return j.closure.get();}
+    throw std::length_error("Fixed frame-job capacity exhausted");
+});}
+std::uintptr_t Application::Impl::Frame::begin_frame_thread_05e8e0(std::uintptr_t security,std::uint32_t stack,std::uintptr_t entry,s::FrameMessageClosure* closure,std::uint32_t flags,std::uint32_t& id){return v.effect([&]{
+    if(security||stack||flags||entry!=0x180021770ULL)throw s::UnsupportedInput("Unsupported frame job entry arguments");
+    std::size_t i=0;for(;i<v.jobs.size();++i)if(v.jobs[i].phase==JobPhase::Allocated&&v.jobs[i].closure.get()==closure)break;
+    if(i==v.jobs.size())throw std::invalid_argument("Frame closure is not an allocated owned job");
+    auto& j=v.jobs[i];const auto index=v.slot_for(closure->owner_20);auto& session=v.slots[index];
+    j.session={index,session.generation};add_reference(session.observer->strong_08,true);j.strong=session.observer;++session.jobs;j.phase=JobPhase::Submitting;
+    const JobToken token{i,j.generation};const auto dispatch=v.dispatch;
+    auto runner=[dispatch,token]{
+        Application* target=nullptr;{std::lock_guard lock(dispatch->gate);if(!dispatch->target)throw std::logic_error("Closed frame runner tombstone");target=dispatch->target;++dispatch->active;}
+        struct Leave {std::shared_ptr<DispatchState> state;~Leave(){std::lock_guard lock(state->gate);--state->active;}} leave{dispatch};
+        target->run_job(token);
+    };
+    const auto handle=[&]{if(auto* prepared=dynamic_cast<PreparedJobs*>(v.state->deps.jobs.get()))return prepared->start_prepared(*v.owner,token);return v.state->deps.jobs->start(token,std::move(runner));}();v.check();
+    if(!handle.handle||!handle.id)throw s::UnsupportedInput("Frame backend returned no valid handle/id");
+    for(const auto& other:v.jobs)if(&other!=&j&&other.phase!=JobPhase::Empty&&other.start_returned&&other.handle.handle==handle.handle&&other.handle.id==handle.id)
+        throw std::invalid_argument("Frame backend reused an outstanding handle/id");
+    j.handle=handle;j.start_returned=true;if(j.phase==JobPhase::Submitting)j.phase=JobPhase::Pending;
+    id=handle.id;return handle.handle;
+});}
+std::int32_t Application::Impl::Frame::detach_04a458(const s::FrameThreadHandle& handle){return v.effect([&]{
+    Job* found=nullptr;for(auto& j:v.jobs)if(j.phase!=JobPhase::Empty&&j.start_returned&&j.handle.handle==handle.handle&&j.handle.id==handle.id){if(found)throw std::invalid_argument("Ambiguous frame detach handle");found=&j;}
+    if(!found||found->detached||found->detaching)throw std::invalid_argument("Frame detach handle is stale, active or already detached");
+    found->detaching=true;
+    const auto result=v.state->deps.jobs->detach(handle);v.check();found->detaching=false;
+    if(!result){found->detached=true;v.retire_job(*found);}return result;
+});}
+void Application::Impl::Frame::free_sized_04b0f8(std::uintptr_t p,std::uint64_t n){v.effect([&]{
+    for(std::size_t i=0;i<v.jobs.size();++i){auto& j=v.jobs[i];if(j.closure&&reinterpret_cast<std::uintptr_t>(j.closure.get())==p){
+        if(n!=48||j.phase!=JobPhase::Running)throw s::UnsupportedInput("Closure free requires its running job");
+        v.closures[i]={};j.closure.reset();return;}}
+    v.strings.free_sized(p,n);
+},true);}
+void Application::Impl::Message::process_message_033d70(std::uintptr_t handler,s::ReceiveBufferString& response,s::ReceiveBufferString& request){v.effect([&]{
+    if(handler<0xf0||&response==&request)throw s::UnsupportedInput("Invalid message handler/prefix identity");
+    const auto slot_id=v.slot_for(handler-0xf0);auto& slot=v.slots[slot_id];if(slot.processing)throw std::logic_error("Session message logic reentry");slot.processing=true;
+    if(auto* native=dynamic_cast<native_profile::Logic*>(slot.logic.get())){
+        if(!native->matches({{slot_id,slot.generation},*slot.owner}))throw std::invalid_argument("Native message logic belongs to a different session generation");
+        native->process_native(v.ports.view.memory,v.strings,response,request,[&v=v]{v.check();});slot.processing=false;return;
+    }
+    const auto original=v.strings.read(request);auto working=original;const auto result=slot.logic->process(working);v.check();
+    if(working!=original)v.strings.assign(request,working);v.strings.assign(response,result);slot.processing=false;
+});}
+Application::Application(std::unique_ptr<Impl> p):impl_(std::move(p)){impl_->owner=this;impl_->dispatch->target=this;}
+Application::~Application()noexcept{
+    auto& v=*impl_;{PreserveError error;std::lock_guard lock(v.state->gate);if(v.state->phase!=Phase::Closed||v.state->active_calls||v.state->live_sessions||v.state->live_jobs)std::terminate();}
+    try{v.seal_dispatch();}catch(...){std::terminate();}
+    {PreserveError error;std::lock_guard lock(v.state->gate);v.state->application=nullptr;v.state->application_live=false;}
+}
+rt::Bindings Application::bindings(){auto& v=*impl_;return v.effect([&]{return rt::Bindings{v.frame,v.logging,v.effects,v.guard,v.worker,v.categories,v.state->deps.environment.accepts,&v.effects.write_context()};});}
+void Application::construct_accept_environment(s::IoHandlerEnvironment& out,std::uintptr_t allocator){auto& v=*impl_;v.effect([&]{if(allocator!=v.ports.server_identity+0x68)throw std::invalid_argument("Foreign server allocator token");if(v.state->owned_environment)v.state->owned_environment->accept(out,allocator);else v.state->deps.policy->accept_environment(out,allocator);});}
+void Application::reset_pending_owner(s::AcceptPending& pending){auto& v=*impl_;v.effect([&]{if(&pending.object!=&v.ports.view.pending)throw std::invalid_argument("Foreign pending socket");s::replace_owner_0237f0(pending.object.cancellation,0,v.controls);});}
+s::ReceiveBufferString& Application::greeting(s::SessionOwner& owner,s::ReceiveBufferString& out){
+    auto& v=*impl_;Impl::Mutation mutation(v);
+    return v.effect([&]() -> s::ReceiveBufferString&{
+        const auto id=owner.identity();auto* const control=owner.weak_self.control_08;
+        if(!control||!v.ports.view.memory.owns_control(control)||!control->strong_08.load()||owner.weak_self.object_00!=id)
+            throw std::invalid_argument("Only a live factory session from this domain may register");
+        if(&static_cast<s::SessionControl*>(control)->object!=&owner)
+            throw std::invalid_argument("Session owner is not the registered control's embedded object");
+        for(const auto& s:v.slots)if(s.phase!=Impl::SlotPhase::Empty&&s.observer==control)throw std::invalid_argument("Session is already registered");
+        std::size_t i=0;for(;i<v.slots.size();++i)if(v.slots[i].phase==Impl::SlotPhase::Empty)break;
+        if(i==v.slots.size())throw std::length_error("Fixed session capacity exhausted after native factory prefix");
+        auto& slot=v.slots[i];if(slot.generation==std::numeric_limits<std::uint64_t>::max())throw std::overflow_error("Session generation exhausted");
+        add_reference(control->weak_0c,false);slot.phase=Impl::SlotPhase::Binding;++slot.generation;slot.owner=&owner;slot.observer=control;
+        {PreserveError error;std::lock_guard lock(v.state->gate);++v.state->live_sessions;}
+        const SessionView session{{i,slot.generation},owner};
+        if(v.state->owned_environment)v.state->owned_environment->session(slot.environment,session);
+        else slot.environment=v.state->deps.policy->session_environment(session);
+        v.check();
+        slot.receive={owner.socket_state.socket,owner.socket_state.socket_state,id,control};slot.send={owner.socket_state.socket,owner.socket_state.socket_state,id,control};
+        v.frames[i]={id,&owner.weak_self};v.string_bindings[i]={id+0xa8,&owner.input};
+        v.reads[i]={id+0x10,&v.receive_service,&slot.receive};v.writes[i]={id+0x10,&v.send_service,&slot.send,id+0x78};
+        v.state->sources[i]={id+0x78,&slot.environment};
+        if(owner.output.fields.map_d0.data()||owner.output.fields.map_size_d8||owner.output.fields.count_e8)throw std::invalid_argument("Fresh session output queue required");
+        auto map=v.ports.view.memory.allocate_output_map(v.state->deps.initial_output_slots);owner.output.fields={map,map.size(),0,0};
+        v.finish_owners[i]={id,&owner.output.fields};slot.queued={id,control,&owner.output.fields,&v.writes[i]};v.queued_owners[i]={id,&slot.queued};
+        slot.message={&owner.weak_self,&slot.environment};v.message_owners[i]={id,&slot.message};
+        slot.logic=v.state->deps.logic(session);v.check();if(!slot.logic)throw std::invalid_argument("Session logic factory returned null");
+        if(auto* native=dynamic_cast<native_profile::Logic*>(slot.logic.get());native&&!native->matches(session))throw std::invalid_argument("Native greeting logic belongs to a different session generation");
+        const auto text=dynamic_cast<native_profile::Logic*>(slot.logic.get())?
+            static_cast<native_profile::Logic*>(slot.logic.get())->greeting_native(v.ports.view.memory,v.strings,[&v=v]{v.check();}):slot.logic->greeting();
+        v.check();v.strings.assign(out,text);slot.phase=Impl::SlotPhase::Ready;return out;
+    });
+}
+void Application::raise_write(s::Error& e,std::uintptr_t p){impl_->check();impl_->state->poison();impl_->state->deps.policy->raise_write(e,p);std::terminate();}
+s::IocpSchedulerEntry* Application::completion_owner(s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& e,std::uint32_t n){auto& v=*impl_;return v.effect([&]{return v.state->deps.policy->completion_owner(*this,owner,op,e,n);});}
+void Application::reap(){auto& v=*impl_;Impl::Mutation mutation(v,true);v.effect([&]{v.reap();},true);}
+void Application::after_completion(){
+    reap();auto& v=*impl_;
+    // Consume returned child results BEFORE entering the opaque Policy hook.
+    // Concrete Policy is nonreentrant; its callback cannot nest021770 cleanup.
+    // Selected native Jobs owns receipt acknowledgement/work-pin transfer;
+    // only its observed receipt may consume one of those prepared results.
+    if(!dynamic_cast<PreparedJobs*>(v.state->deps.jobs.get()))for(auto& row:v.jobs){
+        auto claim=row.handoff;if(!claim)continue;bool ready=false;
+        {std::lock_guard lock(claim->gate);ready=!claim->poisoned&&!claim->busy&&claim->phase==JobHandoffState::Phase::Returned&&claim->message==JobHandoffState::Message::Prepared;}
+        if(ready){JobHandoff handoff(std::move(claim));complete_job(handoff);}
+    }
+    reap();v.effect([&]{v.state->deps.policy->after_completion(*this);});reap();
+}
+void Application::returned_job(std::uint32_t receipt){auto& v=*impl_;v.effect([&]{auto* jobs=dynamic_cast<PreparedJobs*>(v.state->deps.jobs.get());if(!jobs)throw std::logic_error("Prepared Jobs receipt provider is not selected");jobs->returned_prepared(*this,receipt);});}
+void Application::maintain_jobs(){auto& v=*impl_;v.metadata(true);if(auto* jobs=dynamic_cast<PreparedJobs*>(v.state->deps.jobs.get()))try{(void)jobs->quiescent_prepared(*this);}catch(...){v.state->poison();throw;}}
+bool Application::pending_prepared_jobs(){auto& v=*impl_;return v.effect([&]{
+    if(!dynamic_cast<PreparedJobs*>(v.state->deps.jobs.get()))throw std::logic_error("Prepared stop drain requires selected PreparedJobs");
+    PreserveError error;std::lock_guard lock(v.state->gate);return v.state->live_jobs!=0;
+});}
+void Application::worker_returned(std::uint64_t n,const s::WorkerRunResult& r){
+    reap();auto& v=*impl_;v.effect([&]{
+        {PreserveError error;std::lock_guard lock(v.state->gate);if(v.state->live_jobs)throw std::logic_error("Deferred source jobs must finish before native worker return");}
+        v.state->deps.policy->worker_returned(*this,n,r);
+    });reap();
+}
+Snapshot Application::snapshot()const{return impl_->state->snapshot();}
+RegistryView Application::registry()const{auto& v=*impl_;v.metadata(true);return {v.frames,v.string_bindings,v.reads,v.writes,v.finish_owners,v.queued_owners,v.message_owners,v.state->sources};}
+rt::Ports Application::ports()const{impl_->metadata(true);return impl_->ports;}
+SessionView Application::session(SessionToken token)const{auto& v=*impl_;v.check(true);return {token,*v.slot(token).owner};}
+void Application::run_job(JobToken token){auto& v=*impl_;v.check();
+    if(v.completing){v.state->poison();throw std::logic_error("Prepared message completion cannot reenter another runner");}
+    if(token.slot<v.jobs.size()){const auto& row=v.jobs[token.slot];if(row.generation==token.generation&&row.phase!=Impl::JobPhase::Empty&&(row.binding||row.handoff))throw std::logic_error("Frame job is reserved by an explicit handoff");}
+    v.effect([&]{
+    auto& job=v.job(token);if(job.phase!=Impl::JobPhase::Submitting&&job.phase!=Impl::JobPhase::Pending)throw std::logic_error("Frame job cannot execute twice or resume an unknown prefix");
+    auto& slot=v.slot(job.session);if(!job.strong||!job.closure)throw std::logic_error("Frame job has no retained owner/closure");
+    job.phase=Impl::JobPhase::Running;
+    try{if(s::message_thread_entry_021770(*job.closure,v.message)!=0)throw std::logic_error("Unexpected message entry result");}
+    catch(...){job.phase=Impl::JobPhase::Unknown;throw;}
+    if(job.closure)throw std::logic_error("Normal message entry did not release its closure");
+    auto* const strong=job.strong;job.strong=nullptr;--slot.jobs;job.phase=Impl::JobPhase::Done;
+    drop_strong(strong);v.check();v.retire_job(job);
+});}
+Application::JobHandoff::JobHandoff(std::shared_ptr<JobHandoffState> s)noexcept:state_(std::move(s)){}
+Application::JobHandoff::JobHandoff(JobHandoff&& from)noexcept:state_(std::move(from.state_)){}
+Application::JobHandoff::~JobHandoff()noexcept{
+    PreserveError error;if(!state_)return;auto owner=std::move(state_);
+    {
+        std::lock_guard lock(owner->gate);
+        if(!owner->armed||owner->phase==JobHandoffState::Phase::Released)return;
+        owner->poisoned=true;if(!owner->busy)owner->memory.reset();
+    }
+    // Pin target before dereferencing it; never hold dispatch gate across Parent.
+    try{DispatchCall dispatch(owner->dispatch);dispatch.target->impl_->state->poison();}
+    catch(...){/* Closed tombstone: no Application target is dereferenced. */}
+}
+JobIdentity Application::JobHandoff::identity()const{
+    if(!state_)throw std::logic_error("Frame-job handoff was moved");return state_->identity;
+}
+Application::JobHandoff Application::prepare_job(JobToken token){
+    PreserveError error;auto& v=*impl_;v.check();auto& row=v.job(token);
+    if(v.completing){v.state->poison();throw std::logic_error("Prepared message completion cannot prepare another job");}
+    if(row.binding||row.handoff)throw std::logic_error("Frame job already has a handoff");
+    const auto identity=v.job_identity(token,false);
+    struct Preparing {
+        Impl& v;Impl::Job& row;
+        Preparing(Impl& p,Impl::Job& j):v(p),row(j){row.binding=true;std::lock_guard lock(v.state->gate);++v.state->active_calls;}
+        ~Preparing(){row.binding=false;std::lock_guard lock(v.state->gate);--v.state->active_calls;}
+    } preparing{v,row};
+    // All bookkeeping allocation precedes the offered backing capability.
+    auto owner=std::make_shared<JobHandoffState>(v.dispatch,identity);v.check();
+    owner->memory.emplace(v.ports.view.memory.prepare_job());
+    owner->armed=true;row.handoff=owner; // noexcept adoption BEFORE postchecks
+    try{v.check();v.match_handoff(owner,false);}
+    catch(...){
+        {std::lock_guard lock(owner->gate);owner->poisoned=true;}
+        v.state->poison();throw; // row retains offer
+    }
+    return JobHandoff(std::move(owner));
+}
+void Application::JobHandoff::acquire(){
+    PreserveError error;if(!state_)throw std::logic_error("Frame-job handoff was moved");
+    auto owner=state_;DispatchCall dispatch(owner->dispatch);JobHandoffState::Call call(owner);
+    {std::lock_guard lock(owner->gate);if(owner->phase!=JobHandoffState::Phase::Offered)throw std::logic_error("Frame-job handoff has already acquired memory");}
+    {std::lock_guard lock(dispatch.target->impl_->state->gate);if(dispatch.target->impl_->state->phase!=Phase::Open)throw std::logic_error("Frame-job Profile admission is not open");}
+    owner->memory->acquire();call.check();
+    {std::lock_guard lock(owner->gate);owner->phase=JobHandoffState::Phase::Acquired;}
+}
+JobIdentity Application::JobHandoff::inspect(){
+    PreserveError error;if(!state_)throw std::logic_error("Frame-job handoff was moved");
+    auto owner=state_;DispatchCall dispatch(owner->dispatch);JobHandoffState::Call call(owner);
+    {std::lock_guard lock(owner->gate);if(owner->phase!=JobHandoffState::Phase::Acquired)throw std::logic_error("Acquire job memory before inspection");}
+    auto& v=*dispatch.target->impl_;
+    try{
+        auto operation=v.ports.view.memory.enter(*owner->memory); // exact root + child pin
+        {
+            std::lock_guard lock(v.state->gate);
+            if(v.state->phase!=Phase::Open||v.state->profile_call||v.state->mutation)throw std::logic_error("Profile job inspection overlaps lifecycle mutation");
+            ++v.state->active_calls;
+        }
+        struct Leave {Profile::State& state;~Leave(){std::lock_guard lock(state.gate);--state.active_calls;}} leave{*v.state};
+        (void)v.ports.view.memory.buffer_context();v.match_handoff(owner,true);call.check();
+        return owner->identity; // numeric snapshot, no mutable source context escapes
+    }catch(...){
+        {std::lock_guard lock(owner->gate);owner->poisoned=true;}
+        v.state->poison();throw;
+    }
+}
+void Application::JobHandoff::return_memory(){
+    PreserveError error;if(!state_)throw std::logic_error("Frame-job handoff was moved");
+    auto owner=state_;DispatchCall dispatch(owner->dispatch);JobHandoffState::Call call(owner);
+    {std::lock_guard lock(owner->gate);if(owner->phase!=JobHandoffState::Phase::Acquired)throw std::logic_error("Frame-job memory is not acquired");}
+    if(!owner->memory->retire())throw std::logic_error("Frame-job memory still has an active source pin");
+    call.check();{std::lock_guard lock(owner->gate);owner->phase=JobHandoffState::Phase::Returned;}
+}
+void Application::JobHandoff::grow_output(std::uint64_t extra){
+    PreserveError error;if(!state_)throw std::logic_error("Frame-job handoff was moved");
+    auto owner=state_;DispatchCall dispatch(owner->dispatch);JobHandoffState::Call call(owner);
+    {std::lock_guard lock(owner->gate);if(owner->phase!=JobHandoffState::Phase::Acquired)throw std::logic_error("Acquire frame-job memory before output growth");}
+    auto& v=*dispatch.target->impl_;
+    try{
+        auto operation=v.ports.view.memory.enter(*owner->memory);auto permit=operation.job_permit();
+        {
+            std::lock_guard lock(v.state->gate);
+            if(v.state->phase!=Phase::Open||v.state->profile_call||v.state->mutation)throw std::logic_error("Profile output growth overlaps lifecycle mutation");
+            ++v.state->active_calls;
+        }
+        struct Leave {Profile::State& state;~Leave(){std::lock_guard lock(state.gate);--state.active_calls;}} leave{*v.state};
+        // Capture stable heap owners only: an unknown deque prefix may retain
+        // this checkpoint beyond this call's stack/Parent Operation.
+        const auto checkpoint=[owner,target=&v]{
+            {std::lock_guard lock(owner->gate);if(owner->poisoned||!owner->busy)throw std::logic_error("Profile job output permission was poisoned");}
+            {std::lock_guard lock(target->state->gate);if(target->state->phase!=Phase::Open||target->state->profile_call||target->state->mutation)throw std::logic_error("Profile output source admission closed");}
+            target->match_handoff(owner,true);
+        };
+        checkpoint();auto& session=v.slot(owner->identity.session);
+        v.deques->grow(session.owner->output.fields,extra,checkpoint,permit);checkpoint();call.check();
+    }catch(...){
+        {std::lock_guard lock(owner->gate);owner->poisoned=true;}
+        v.state->poison();throw;
+    }
+}
+void Application::JobHandoff::clone_environment(){
+    PreserveError error;if(!state_)throw std::logic_error("Frame-job handoff was moved");
+    auto owner=state_;DispatchCall dispatch(owner->dispatch);JobHandoffState::Call call(owner);
+    {std::lock_guard lock(owner->gate);if(owner->phase!=JobHandoffState::Phase::Acquired)throw std::logic_error("Acquire frame-job memory before environment cloning");}
+    auto& v=*dispatch.target->impl_;
+    if(!v.state->owned_environment)throw std::logic_error("Job environment scope requires selected owned provider");
+    try{
+        auto operation=v.ports.view.memory.enter(*owner->memory);auto permit=operation.job_permit();
+        {
+            std::lock_guard lock(v.state->gate);
+            if(v.state->phase!=Phase::Open||v.state->profile_call||v.state->mutation)throw std::logic_error("Profile environment clone overlaps lifecycle mutation");
+            ++v.state->active_calls;
+        }
+        struct Leave {Profile::State& state;~Leave(){std::lock_guard lock(state.gate);--state.active_calls;}} leave{*v.state};
+        const auto checkpoint=[owner,target=&v]{
+            {std::lock_guard lock(owner->gate);if(owner->poisoned||!owner->busy)throw std::logic_error("Profile job environment permission was poisoned");}
+            {std::lock_guard lock(target->state->gate);if(target->state->phase!=Phase::Open||target->state->profile_call||target->state->mutation)throw std::logic_error("Profile environment source admission closed");}
+            target->match_handoff(owner,true);
+        };
+        checkpoint();auto& session=v.slot(owner->identity.session);
+        auto scope=v.state->owned_environment->enter_job(session.environment,{owner->identity.session,*session.owner},permit,checkpoint);
+        s::IoHandlerEnvironment clone;
+        s::construct_io_environment_023dd0(clone,session.environment,v.state->deps.environment.sentinels,v.state->constructor);
+        (void)clone.operations_10->query_slot_18(clone);
+        clone.operations_10->destroy_slot_00(clone);
+        scope.close();checkpoint();call.check();
+    }catch(...){
+        {std::lock_guard lock(owner->gate);owner->poisoned=true;}
+        v.state->poison();throw;
+    }
+}
+void Application::JobHandoff::cleanup_exit_waits(){
+    PreserveError error;if(!state_)throw std::logic_error("Frame-job handoff was moved");
+    auto owner=state_;DispatchCall dispatch(owner->dispatch);JobHandoffState::Call call(owner);
+    {std::lock_guard lock(owner->gate);if(owner->phase!=JobHandoffState::Phase::Acquired)throw std::logic_error("Acquire frame-job memory before exit-wait cleanup");}
+    auto& v=*dispatch.target->impl_;
+    auto policy=std::dynamic_pointer_cast<session_policy::Policy>(v.state->deps.policy);
+    if(!policy)throw std::logic_error("Child exit cleanup requires selected concrete Policy");
+    try{
+        auto operation=v.ports.view.memory.enter(*owner->memory);auto permit=operation.job_permit();
+        {
+            std::lock_guard lock(v.state->gate);
+            if(v.state->phase!=Phase::Open||v.state->profile_call||v.state->mutation)throw std::logic_error("Profile child cleanup overlaps lifecycle mutation");
+            ++v.state->active_calls;
+        }
+        struct Leave {Profile::State& state;~Leave(){std::lock_guard lock(state.gate);--state.active_calls;}} leave{*v.state};
+        const auto checkpoint=[owner,target=&v]{
+            {std::lock_guard lock(owner->gate);if(owner->poisoned||!owner->busy)throw std::logic_error("Profile child cleanup permission was poisoned");}
+            {std::lock_guard lock(target->state->gate);if(target->state->phase!=Phase::Open||target->state->profile_call||target->state->mutation)throw std::logic_error("Profile child cleanup source admission closed");}
+            target->match_handoff(owner,true);
+        };
+        checkpoint();policy->cleanup_job_exit_waits(permit,checkpoint);checkpoint();call.check();
+    }catch(...){
+        {std::lock_guard lock(owner->gate);owner->poisoned=true;}
+        v.state->poison();throw;
+    }
+}
+void Application::JobHandoff::process_message(){
+    PreserveError error;if(!state_)throw std::logic_error("Frame-job handoff was moved");
+    auto owner=state_;DispatchCall dispatch(owner->dispatch);JobHandoffState::Call call(owner);
+    {std::lock_guard lock(owner->gate);if(owner->phase!=JobHandoffState::Phase::Acquired||owner->message!=JobHandoffState::Message::Fresh)throw std::logic_error("Child message requires acquired, unprocessed job memory");}
+    auto& v=*dispatch.target->impl_;
+    try{
+        auto operation=v.ports.view.memory.enter(*owner->memory);auto permit=operation.job_permit();
+        {std::lock_guard lock(v.state->gate);if(v.state->phase!=Phase::Open||v.state->profile_call||v.state->mutation||v.state->active_calls)throw std::logic_error("Child message overlaps Profile lifecycle/work");++v.state->active_calls;}
+        struct Leave {Profile::State& state;~Leave(){std::lock_guard lock(state.gate);--state.active_calls;}} leave{*v.state};
+        // Each retained probe pins the tombstone before touching Application.
+        // The copied permit expires when the whole child Operation ends.
+        const auto checkpoint=[owner,permit]{
+            DispatchCall dispatch(owner->dispatch);auto& target=*dispatch.target->impl_;
+            permit.check(target.ports.view.memory);
+            {std::lock_guard lock(owner->gate);if(owner->poisoned||!owner->busy||owner->phase!=JobHandoffState::Phase::Acquired)throw std::logic_error("Child message claim admission closed");}
+            {std::lock_guard lock(target.state->gate);if(target.state->phase!=Phase::Open||target.state->profile_call||target.state->mutation||target.state->active_calls!=1)throw std::logic_error("Child message Profile admission closed");}
+            (void)target.ports.view.memory.buffer_context();target.match_handoff(owner,true);
+            const auto backend=target.ports.view.backend.snapshot().phase;
+            if((backend!=o::Phase::Ready&&backend!=o::Phase::Running)||target.ports.view.io.snapshot().phase!=s::IoMemoryPhase::Open||target.ports.accept.snapshot().poisoned)throw std::logic_error("Child message source admission was poisoned");
+        };
+        checkpoint();auto& row=v.job(owner->identity.job);auto& slot=v.slot(owner->identity.session);
+        if(slot.processing)throw std::logic_error("Child message session already has a retained processor");
+        auto* native=dynamic_cast<native_profile::Logic*>(slot.logic.get());auto* child=dynamic_cast<native_profile::JobLogic*>(slot.logic.get());
+        if(!native||!child||!native->matches({owner->identity.session,*slot.owner})||native->retained_prefix())throw s::UnsupportedInput("Child message requires exact healthy native JobLogic");
+        auto policy=std::dynamic_pointer_cast<session_policy::Policy>(v.state->deps.policy);
+        if(!policy)throw s::UnsupportedInput("Child message requires selected current-thread exit Policy");
+        {std::lock_guard lock(owner->gate);owner->message=JobHandoffState::Message::Processing;}
+        slot.processing=true;owner->had_message=row.closure->message_00.size_10!=0;
+        if(owner->had_message)child->process_native_job(v.ports.view.memory,v.strings,owner->response,row.closure->message_00,permit,checkpoint);
+        checkpoint();call.check();
+        if(native->retained_prefix())throw std::logic_error("Child message retains native prefix");
+        policy->cleanup_job_exit_waits(permit,checkpoint);checkpoint();call.check();
+        v.strings.track(owner->response);v.strings.track(row.closure->message_00);checkpoint();
+        owner->request_snapshot=row.closure->message_00;slot.processing=false;
+        {std::lock_guard lock(owner->gate);if(owner->poisoned||owner->message!=JobHandoffState::Message::Processing)throw std::logic_error("Child message preparation was poisoned");owner->message=JobHandoffState::Message::Prepared;}
+    }catch(...){
+        {std::lock_guard lock(owner->gate);owner->poisoned=true;}
+        v.state->poison();throw; // keep response/request/closure/strong prefix
+    }
+}
+void Application::complete_job(JobHandoff& handoff){
+    PreserveError error;auto& v=*impl_;v.check();auto owner=handoff.state_;
+    if(!owner||owner->dispatch!=v.dispatch)throw std::invalid_argument("Prepared result belongs to another Application");
+    if(v.completing){v.state->poison();throw std::logic_error("Prepared completion cannot reenter");}
+    JobHandoffState::Call call(owner);
+    {std::lock_guard lock(owner->gate);if(owner->phase!=JobHandoffState::Phase::Returned||owner->message!=JobHandoffState::Message::Prepared)throw std::logic_error("Return a prepared child result before original completion");}
+    v.match_handoff(owner,true);auto& job=v.job(owner->identity.job);auto& slot=v.slot(job.session);
+    if(slot.processing||!Impl::same_prefix(job.closure->message_00,owner->request_snapshot))throw std::logic_error("Prepared request changed before original completion");
+    v.completing=owner.get();
+    struct Completion {Impl& v;~Completion(){v.completing=nullptr;}} completion{v};
+    try{v.effect([&]{
+        job.phase=Impl::JobPhase::Running;
+        const auto invoke=[](std::uintptr_t fn,std::uintptr_t object,s::ReceiveBufferString& request,s::MessageDispatchContext& context){
+            auto* api=dynamic_cast<Impl::Message*>(&context.api);if(!api)throw std::logic_error("Prepared continuation lost Profile message adapter");api->v.prepared_invoke(fn,object,request,context);
+        };
+        if(s::message_thread_entry_021770(*job.closure,v.message,invoke)!=0||job.closure)throw std::logic_error("Prepared message entry did not retire its closure");
+        call.check();{std::lock_guard lock(owner->gate);if(owner->message!=JobHandoffState::Message::Consumed)throw std::logic_error("Prepared message response was not consumed");}
+        auto* const strong=job.strong;job.strong=nullptr;--slot.jobs;job.phase=Impl::JobPhase::Done;
+        drop_strong(strong);v.check();call.check();
+        {std::lock_guard lock(owner->gate);if(owner->poisoned)throw std::logic_error("Prepared completion was poisoned during final release");owner->phase=JobHandoffState::Phase::Released;}
+        job.handoff.reset();v.completing=nullptr;v.retire_job(job);
+    });}catch(...){job.phase=Impl::JobPhase::Unknown;{std::lock_guard lock(owner->gate);owner->poisoned=true;}v.state->poison();throw;}
+}
+void Application::release_job(JobHandoff& handoff){
+    PreserveError error;auto& v=*impl_;v.check();auto owner=handoff.state_;
+    if(!owner||owner->dispatch!=v.dispatch)throw std::invalid_argument("Handoff belongs to another Profile Application");
+    JobHandoffState::Call call(owner);JobHandoffState::Phase phase;
+    {std::lock_guard lock(owner->gate);phase=owner->phase;if(owner->message!=JobHandoffState::Message::Fresh)throw std::logic_error("Processed message requires completion; legacy replay is forbidden");}
+    if(phase!=JobHandoffState::Phase::Offered&&phase!=JobHandoffState::Phase::Returned)throw std::logic_error("Return child memory before releasing its source claim");
+    v.match_handoff(owner,phase==JobHandoffState::Phase::Returned);
+    if(phase==JobHandoffState::Phase::Offered&&!owner->memory->cancel())throw std::logic_error("Frame-job memory acquisition is already in progress");
+    call.check();v.job(owner->identity.job).handoff.reset();
+    {std::lock_guard lock(owner->gate);owner->phase=JobHandoffState::Phase::Released;}
+}
+Profile::Profile(Dependencies d){
+    const auto& e=d.environment;const auto& sentinels=e.sentinels;
+    const bool empty=!e.types&&!sentinels.empty_operations_846c8&&!sentinels.empty_schedule_846e8&&!sentinels.empty_executor_84770&&!sentinels.guard_destroy_017a30&&
+        e.queries.empty()&&e.factories.empty()&&e.handlers.empty()&&e.response_executors.empty()&&e.responses.empty()&&e.copies.empty()&&e.accepts.empty();
+    std::shared_ptr<anadius::owned_environment::Environment> owned;
+    if(empty){owned=std::make_shared<anadius::owned_environment::Environment>(d.environment_capacity);d.environment=owned->configuration();}
+    if(!d.receive){if(!d.receive_imports.receive||!d.receive_imports.get_error)throw std::invalid_argument("Complete default receive SDK imports required");d.receive=std::make_shared<s::NativeAsyncReceiveApi>(d.receive_imports);}
+    if(!d.send){if(!d.send_imports.send||!d.send_imports.get_error)throw std::invalid_argument("Complete default send SDK imports required");d.send=std::make_shared<s::NativeAsyncSendApi>(d.send_imports);}
+    std::shared_ptr<anadius::owned_jobs::InlineJobs> jobs;
+    if(!d.jobs){jobs=std::make_shared<anadius::owned_jobs::InlineJobs>(d.jobs_capacity);d.jobs=jobs;}
+    if(!d.errors||!d.receive||!d.send||!d.policy||!d.jobs||!d.logic||!d.environment.types||!d.environment.sentinels.empty_operations_846c8||
+       !d.sessions||d.sessions>65536||!d.jobs_capacity||d.jobs_capacity>65536||!d.headers||d.headers>1048576||
+       d.initial_output_slots<8||(d.initial_output_slots&(d.initial_output_slots-1))||d.initial_output_slots>1048576)
+        throw std::invalid_argument("Complete session profile providers and bounded capacities required");
+    for(std::size_t i=0;i<d.categories.size();++i){if(!d.categories[i].object)throw std::invalid_argument("Category provider is null");
+        for(std::size_t j=0;j<i;++j)if(d.categories[i].key.name_identity==d.categories[j].key.name_identity&&d.categories[i].key.logical==d.categories[j].key.logical)throw std::invalid_argument("Category binding is ambiguous");}
+    state_=std::make_shared<State>(std::move(d),std::move(owned),std::move(jobs));
+}
+Profile::~Profile()noexcept{
+    auto& s=*state_;{PreserveError error;std::lock_guard lock(s.gate);if(s.application_live||s.active_calls||s.profile_call)std::terminate();s.phase=Phase::Retiring;}
+    {Dependencies retiring=std::move(s.deps);s.deps.logic={};} // clear moved-from SBO target while metadata is alive, outside mutex
+}
+rt::Environment Profile::environment(o::ServerView view,std::uintptr_t server){
+    auto& s=*state_;PreserveError error;
+    {std::lock_guard lock(s.gate);if(s.profile_call||s.active_calls||s.mutation){if(s.phase!=Phase::Retiring)s.phase=Phase::Poisoned;throw std::logic_error("Reentrant profile environment binding");}if(s.phase!=Phase::Fresh)throw std::logic_error("Profile environment binds once");}
+    (void)view.memory.buffer_context();if(!server)throw std::invalid_argument("Stable server identity required");
+    const auto backend=view.backend.snapshot().phase;
+    if((backend!=o::Phase::Ready&&backend!=o::Phase::Running)||view.io.snapshot().phase!=s::IoMemoryPhase::Open)throw std::logic_error("Profile requires an admissible owned backend");
+    {std::lock_guard lock(s.gate);s.backend=&view.backend;s.memory=&view.memory;s.io=&view.io;s.service=&view.service;s.acceptor=&view.acceptor;s.pending_socket=&view.pending;s.scheduler=&view.scheduler;s.context=view.identity.value;s.server=server;s.thread=::GetCurrentThreadId();s.fiber=::GetCurrentFiber();s.phase=Phase::Bound;}
+    return {s.deps.environment.sentinels,s.constructor,s.sources};
+}
+std::unique_ptr<rt::Application> Profile::create(rt::Ports ports){
+    auto& s=*state_;{PreserveError error;std::lock_guard lock(s.gate);if(s.profile_call||s.active_calls||s.mutation){if(s.phase!=Phase::Retiring)s.phase=Phase::Poisoned;throw std::logic_error("Reentrant profile application binding");}if(s.phase!=Phase::Bound||s.application_live)throw std::logic_error("Profile application binds once");}
+    s.match(ports.view);(void)ports.view.memory.buffer_context();if(ports.server_identity!=s.server)throw std::invalid_argument("Foreign profile server identity");
+    const auto storage=ports.accept.storage_bindings();const auto& sentinels=s.deps.environment.sentinels;
+    if(ports.environment.storage.storage.data()!=storage.data()||ports.environment.storage.storage.size()!=storage.size()||
+       ports.environment.sentinels.empty_operations_846c8!=sentinels.empty_operations_846c8||ports.environment.sentinels.empty_schedule_846e8!=sentinels.empty_schedule_846e8||
+       ports.environment.sentinels.empty_executor_84770!=sentinels.empty_executor_84770||ports.environment.sentinels.guard_destroy_017a30!=sentinels.guard_destroy_017a30)
+        throw std::invalid_argument("Profile requires the exact owned storage and sentinel projections");
+    {PreserveError error;std::lock_guard lock(s.gate);s.profile_call=true;s.application_live=true;}
+    struct Leave {State& s;~Leave(){PreserveError error;std::lock_guard lock(s.gate);s.profile_call=false;}} leave{s};
+    try{s.pending_application=std::unique_ptr<Application>(new Application(std::make_unique<Application::Impl>(state_,ports)));
+        // The completed pending Application owns its mandatory-close providers
+        // before a potentially throwing environment bind. Unknown bind prefixes
+        // retain this application instead of unwinding its graph.
+        if(s.owned_environment){auto* impl=s.pending_application->impl_.get();s.owned_environment->bind(ports,[impl]{impl->check(true);});}
+        if(s.owned_jobs){auto* impl=s.pending_application->impl_.get();s.owned_jobs->bind(ports,[impl]{impl->check(true);});}
+        if(auto* policy=dynamic_cast<session_policy::Policy*>(s.deps.policy.get())){auto* impl=s.pending_application->impl_.get();policy->bind(ports,[impl]{impl->check(true);});}
+        if(auto* jobs=dynamic_cast<PreparedJobs*>(s.deps.jobs.get())){auto* impl=s.pending_application->impl_.get();jobs->bind_prepared(*s.pending_application,ports,[impl]{impl->check(true);});}
+        {PreserveError error;std::lock_guard lock(s.gate);if(s.phase!=Phase::Bound)throw std::logic_error("Profile binding was poisoned");s.application=s.pending_application.get();s.phase=Phase::Open;}
+        return std::move(s.pending_application);
+    }catch(...){if(!s.pending_application){PreserveError error;std::lock_guard lock(s.gate);s.application_live=false;}s.poison();throw;}
+}
+bool Profile::external_quiescent(o::ServerView view,rt::Application& application){
+    auto& s=*state_;{PreserveError error;std::lock_guard lock(s.gate);
+        if((s.phase!=Phase::Open&&s.phase!=Phase::Closing)||s.application!=&application||s.profile_call||s.active_calls||s.mutation){if(s.phase!=Phase::Retiring)s.phase=Phase::Poisoned;throw std::logic_error("Invalid/reentrant profile quiescence");}
+        s.profile_call=true;s.phase=Phase::Closing;}
+    struct Leave {State& s;~Leave(){PreserveError error;std::lock_guard lock(s.gate);s.profile_call=false;}} leave{s};
+    try{s.match(view);auto& app=static_cast<Application&>(application);
+        const auto initial_backend=view.backend.snapshot().phase;
+        if((initial_backend!=o::Phase::Returned&&initial_backend!=o::Phase::Quiescing)||view.memory.snapshot().phase!=s::SessionMemoryPhase::Open||view.io.snapshot().phase!=s::IoMemoryPhase::Open)
+            throw std::logic_error("External proof requires returned/closing source admission");
+        {auto probe=view.memory.enter();} // succeeds only outside any existing/mutating parent Operation
+        if(auto* jobs=dynamic_cast<PreparedJobs*>(s.deps.jobs.get()))if(!jobs->quiescent_prepared(app))return false;
+        const auto external=s.deps.policy->external_quiescent(view,app);
+        {PreserveError error;std::lock_guard lock(s.gate);if(s.phase!=Phase::Closing)throw std::logic_error("Profile quiescence was poisoned");}
+        const auto backend=view.backend.snapshot().phase;
+        if((backend!=o::Phase::Returned&&backend!=o::Phase::Quiescing)||view.memory.snapshot().phase!=s::SessionMemoryPhase::Open||view.io.snapshot().phase!=s::IoMemoryPhase::Open)
+            throw std::logic_error("External quiescence poisoned source admission");
+        if(!external)return false;
+        {auto operation=view.memory.enter();app.reap();}
+        {PreserveError error;std::lock_guard lock(s.gate);if(s.live_sessions||s.live_jobs||s.active_calls)return false;}
+        app.impl_->seal_dispatch();
+        if(s.owned_jobs){auto operation=view.memory.enter();if(!s.owned_jobs->close(true))return false;}
+        if(auto* jobs=dynamic_cast<PreparedJobs*>(s.deps.jobs.get())){auto operation=view.memory.enter();if(!jobs->close_prepared(app,true))return false;}
+        if(s.owned_environment){auto operation=view.memory.enter();if(!s.owned_environment->close(true))return false;}
+        {auto operation=view.memory.enter();app.impl_->deques->close();}
+        if(auto* policy=dynamic_cast<session_policy::Policy*>(s.deps.policy.get())){auto operation=view.memory.enter();if(!policy->close(true))return false;}
+        {PreserveError error;std::lock_guard lock(s.gate);if(s.phase!=Phase::Closing)throw std::logic_error("Profile retirement was poisoned");s.phase=Phase::Closed;}
+        return true;
+    }catch(...){s.poison();throw;}
+}
+Snapshot Profile::snapshot()const{return state_->snapshot();}
+} // namespace anadius::session_profile

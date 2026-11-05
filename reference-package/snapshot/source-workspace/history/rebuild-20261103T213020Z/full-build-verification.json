@@ -1,0 +1,4581 @@
+{
+  "schema": "fresh-full-common-build.v2",
+  "result": "PASS",
+  "checked_at": "2026-11-02T20:30:03.477135+00:00",
+  "clean_build": "Previous common build and hook fixture moved aside before clean compilation. All delivered binaries originate in this run. Verified outputs from earlier successful compiler invocations within the same run were reused after test-only warning repairs; all tests and archive commands executed again.",
+  "run": "work/rebuild-20261102T194636Z",
+  "build_record": {
+    "path": "outputs/source-workspace/build-record.json",
+    "sha256": "cbb21eb0137b9b43b4330ca0ad234a695e9cbcaa79022e27eeaead355377b394"
+  },
+  "source_snapshot": {
+    "path": "outputs/source-workspace/source-snapshot.json",
+    "sha256": "6692f545193c79fbdb0aea659a061ae5e3fd2cd2935747b55de3d4e023da2037",
+    "sources": 1017
+  },
+  "native_objects": 296,
+  "cpp_objects": 292,
+  "c_objects": 4,
+  "normal_groups": 356,
+  "normal_executables": 355,
+  "framework_terminal_cases": 19,
+  "object_compile_commands_verified": 296,
+  "objects": [
+    {
+      "path": "outputs/source-workspace/build/bootstrap.o",
+      "source": "anadius-source/bootstrap.cpp",
+      "bytes": 3199,
+      "sha256": "ccc16be337163dfec1ebb364946fb4e5dde6b76026cc56e3559c2261bbaabde5",
+      "mtime_utc": "2026-11-02T19:51:41.879385+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_threads.o",
+      "source": "anadius-thread-source/threads.cpp",
+      "bytes": 4344,
+      "sha256": "9c505cfdef2fb4ec73b278bd7836d0ef696737019b3091de0fa7ac2a7f069b70",
+      "mtime_utc": "2026-11-02T19:51:41.966393+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_runtime.o",
+      "source": "anadius-crt-runtime-source/runtime.cpp",
+      "bytes": 8772,
+      "sha256": "4448571405871bea88272f04be836520edc5824245fb4b586af9eb1c8b47e675",
+      "mtime_utc": "2026-11-02T19:51:42.266381+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_errors.o",
+      "source": "anadius-crt-error-source/errors.cpp",
+      "bytes": 2292,
+      "sha256": "17a4e577c046bc13bcd77a0995dc590fb5fc7adf2a5a1a12dbc93f3dbc080d3e",
+      "mtime_utc": "2026-11-02T19:51:42.449380+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_ptd.o",
+      "source": "anadius-crt-ptd-source/ptd.cpp",
+      "bytes": 2775,
+      "sha256": "1269f1ff2210785702911d02fb014bf1d45cece66890b716a84d29e36e04869a",
+      "mtime_utc": "2026-11-02T19:51:42.631369+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_ptd_data.o",
+      "source": "anadius-crt-ptd-data-source/ptd_data.cpp",
+      "bytes": 3508,
+      "sha256": "854cc0a346d6b994a29e7c03777cd5fc9dec1183d70b109054870e8b55de40e1",
+      "mtime_utc": "2026-11-02T19:51:42.814286+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_heap.o",
+      "source": "anadius-crt-heap-source/heap.cpp",
+      "bytes": 2208,
+      "sha256": "af3e16875c4bacdba2188273ef44a8c7fd667b1e109dbd7fa5b55d865e4b3450",
+      "mtime_utc": "2026-11-02T19:51:42.900286+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_realloc.o",
+      "source": "anadius-crt-realloc-source/realloc.cpp",
+      "bytes": 1822,
+      "sha256": "11b94f035a0688f65dc2e99679eb52bd3535a32c33a1cb07e66d7130078782b3",
+      "mtime_utc": "2026-11-02T19:51:42.967279+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_recalloc.o",
+      "source": "anadius-crt-recalloc-source/recalloc.cpp",
+      "bytes": 3845,
+      "sha256": "fe3f5e38f54f724a6590bbd6ac4317269bc939d2988e9138c0d8cc7627ae8e8d",
+      "mtime_utc": "2026-11-02T19:51:43.050287+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_recalloc_bridge.o",
+      "source": "anadius-crt-recalloc-bridge-source/bridge.cpp",
+      "bytes": 9467,
+      "sha256": "d1fad968d321fc7cb6a8b9ec5fbcb11d9c13a800c742de92aab3780212c53be8",
+      "mtime_utc": "2026-11-02T19:51:43.339281+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_conversion.o",
+      "source": "anadius-crt-conversion-source/conversion.cpp",
+      "bytes": 1974,
+      "sha256": "22f2cb91e9d1ca079fdbe0ed515705845e31da5d62317bf59cb168fc1b87f0b3",
+      "mtime_utc": "2026-11-02T19:51:43.431284+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_conversion_api.o",
+      "source": "anadius-crt-conversion-api-source/api.cpp",
+      "bytes": 2119,
+      "sha256": "0f3fb4810cf8cb808f17e9e58a6184cd3fed6334f9158bf737da552462e63ffc",
+      "mtime_utc": "2026-11-02T19:51:43.693153+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_conversion_bridge.o",
+      "source": "anadius-crt-conversion-bridge-source/bridge.cpp",
+      "bytes": 12796,
+      "sha256": "89cfdecc63c5c83ec3506e9fbb6c1e0166fb76a59a6fbf878c87ed9217b8ecb4",
+      "mtime_utc": "2026-11-02T19:51:43.981096+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_module_path.o",
+      "source": "anadius-crt-module-path-source/module_path.cpp",
+      "bytes": 1580,
+      "sha256": "541e9cf0f914dd211bb2b439824dff7b982dcd8de9a6b6e0e460a41deadc9555",
+      "mtime_utc": "2026-11-02T19:51:44.071091+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_find_native.o",
+      "source": "anadius-crt-find-native-source/find_native.cpp",
+      "bytes": 18572,
+      "sha256": "612f8c2b256093e61bbfbcfd449f5fffd8bd664522856c90b9669638c985e5fd",
+      "mtime_utc": "2026-11-02T19:51:44.719729+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_find_bridge.o",
+      "source": "anadius-crt-find-bridge-source/bridge.cpp",
+      "bytes": 19759,
+      "sha256": "19937c1f10fc6265f7e220d247a77c5a5e4080d08f7940a01eedbe24aed96799",
+      "mtime_utc": "2026-11-02T19:51:45.382737+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_update.o",
+      "source": "anadius-crt-locale-update-source/locale_update.cpp",
+      "bytes": 1841,
+      "sha256": "8f2ba2351b127c294b57d507443803967f79a4ccc4d5b4f71c9fc54e3c23b9e9",
+      "mtime_utc": "2026-11-02T19:51:45.560405+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_thread.o",
+      "source": "anadius-crt-locale-thread-source/locale_thread.cpp",
+      "bytes": 2267,
+      "sha256": "6c0425a518765d7ca2bcec72133ce1063e810f717402d1346e8753bd829ef413",
+      "mtime_utc": "2026-11-02T19:51:45.633438+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_bridge.o",
+      "source": "anadius-crt-locale-bridge-source/bridge.cpp",
+      "bytes": 17139,
+      "sha256": "2ab784994cd9d08dece4921cd945277460056eab77ca245203ca3127086ce419",
+      "mtime_utc": "2026-11-02T19:51:46.296565+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_ref.o",
+      "source": "anadius-crt-locale-ref-source/locale_ref.cpp",
+      "bytes": 2127,
+      "sha256": "bacb614f3b6c494882cf44994e7b5dd76ff32104c37eeb93f96b08eed0b986e2",
+      "mtime_utc": "2026-11-02T19:51:46.383557+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_free.o",
+      "source": "anadius-crt-locale-free-source/locale_free.cpp",
+      "bytes": 5835,
+      "sha256": "1af96251537bafffba328713512442701c7ea59a015f8446a2d944b9724ef297",
+      "mtime_utc": "2026-11-02T19:51:46.567561+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_resource_bridge.o",
+      "source": "anadius-crt-locale-resource-bridge-source/bridge.cpp",
+      "bytes": 6133,
+      "sha256": "6babe2d30fe881805a66f9a448441f8522e6adc755a317fbe55f482bd819fed3",
+      "mtime_utc": "2026-11-02T19:51:47.221358+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_multibyte_support.o",
+      "source": "anadius-crt-multibyte-support-source/multibyte_support.cpp",
+      "bytes": 2414,
+      "sha256": "05d5b02222f961b7bc42dd06d9acd3851eeabd089bb6af1eaf239a25bcd99538",
+      "mtime_utc": "2026-11-02T19:51:47.360507+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_multibyte_control.o",
+      "source": "anadius-crt-multibyte-control-source/multibyte_control.cpp",
+      "bytes": 2310,
+      "sha256": "5ce1855ca37f6f89f4b32381d5afbc1630ba4ffa52f7b6b335132212d1874aa6",
+      "mtime_utc": "2026-11-02T19:51:47.541507+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_multibyte_bridge.o",
+      "source": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+      "bytes": 10681,
+      "sha256": "8e78d8cd10b345445b244dfe3b4899000f26da8ca19fd17f5f68e13b77c1b96a",
+      "mtime_utc": "2026-11-02T19:51:48.213837+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_multibyte_tables.o",
+      "source": "anadius-crt-multibyte-tables-source/multibyte_tables.cpp",
+      "bytes": 5172,
+      "sha256": "7f8c2c85ef7f021c2dc618338c5881ee9068501b10843dd22e71bc8333e48bf4",
+      "mtime_utc": "2026-11-02T19:51:48.440834+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_multibyte_builder.o",
+      "source": "anadius-crt-multibyte-builder-source/multibyte_builder.cpp",
+      "bytes": 5550,
+      "sha256": "47997c6e558a0e83d95f3da0a4b9b165d10182455799e84e5f7f2d213d4e4080",
+      "mtime_utc": "2026-11-02T19:51:48.630833+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_multibyte_record_bridge.o",
+      "source": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+      "bytes": 14902,
+      "sha256": "88db22fcc8cc85aaf06ddad6c30aa55ab7640438d10b679a8a8fb4ad277d9732",
+      "mtime_utc": "2026-11-02T19:51:49.323769+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_string_type.o",
+      "source": "anadius-crt-string-type-source/string_type.cpp",
+      "bytes": 1486,
+      "sha256": "ac33dcf8e9fcda3a4414f4e0e66830106dac797fea36c40eb4f3336ae97dbedd",
+      "mtime_utc": "2026-11-02T19:51:49.448762+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_lcmap.o",
+      "source": "anadius-crt-lcmap-source/lcmap.cpp",
+      "bytes": 2600,
+      "sha256": "74c91cae962afe476b6310177bd96d5f10731d6d6540e2972c9917e464353c79",
+      "mtime_utc": "2026-11-02T19:51:49.584522+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_nls_bridge.o",
+      "source": "anadius-crt-nls-bridge-source/bridge.cpp",
+      "bytes": 18830,
+      "sha256": "7e1992b9557f206e874dbe00f3236eb1a45bbf76388cf9ed66b9b888506e80a9",
+      "mtime_utc": "2026-11-02T19:51:50.321631+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_names.o",
+      "source": "anadius-crt-locale-names-source/locale_names.cpp",
+      "bytes": 14953,
+      "sha256": "c7e7866285892d1c057f8a263c2e6e14ae0eeee4a38bd8adce69d6a86260065a",
+      "mtime_utc": "2026-11-02T19:51:50.547607+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_nls_dispatch.o",
+      "source": "anadius-crt-nls-dispatch-source/nls_dispatch.cpp",
+      "bytes": 2110,
+      "sha256": "2469331cf3374f45db14dbc632a93d7fac72d4158a63e03b2617d4cb2b4687bc",
+      "mtime_utc": "2026-11-02T19:51:50.761791+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_nls_dispatch_bridge.o",
+      "source": "anadius-crt-nls-dispatch-bridge-source/bridge.cpp",
+      "bytes": 9981,
+      "sha256": "be6cc74e39495983cc602b37cc1fc58bab29117df187ff78b778d3ac79fcb5e8",
+      "mtime_utc": "2026-11-02T19:51:51.483707+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_nls_native.o",
+      "source": "anadius-crt-nls-native-source/native_api.cpp",
+      "bytes": 10005,
+      "sha256": "ee53ec6255daeccea7911882553e7a3eb5f4b51ab8101737af4a4ae9ff74fdac",
+      "mtime_utc": "2026-11-02T19:51:52.382221+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_nls_dispatch_native.o",
+      "source": "anadius-crt-nls-dispatch-native-source/native.cpp",
+      "bytes": 10704,
+      "sha256": "7c96606c705ba317c0e72afe060884f3e720d3f7cf5a929ef2ee0166f98d38b8",
+      "mtime_utc": "2026-11-02T19:51:53.173405+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_nls_native_bridge.o",
+      "source": "anadius-crt-nls-native-bridge-source/bridge.cpp",
+      "bytes": 6517,
+      "sha256": "c4d547f88275a0b725ac663889ed57d9d8ca64e1aa9ab8a74571789d758dcb91",
+      "mtime_utc": "2026-11-02T19:51:54.004452+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_heap_native.o",
+      "source": "anadius-crt-heap-native-source/native_api.cpp",
+      "bytes": 4809,
+      "sha256": "43c54e8f636878a202f20a1d1c63291068ec93bb8da6bb09094dc3b29978763c",
+      "mtime_utc": "2026-11-02T19:51:54.492457+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_heap_native_bridge.o",
+      "source": "anadius-crt-heap-native-bridge-source/bridge.cpp",
+      "bytes": 8339,
+      "sha256": "ed1a16df0af8b6d42c51729ab5c32f9248044dcc908a6f88adf337e26c3573f3",
+      "mtime_utc": "2026-11-02T19:51:54.980815+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_fls_native.o",
+      "source": "anadius-crt-fls-native-source/fls.cpp",
+      "bytes": 8457,
+      "sha256": "aa3d767900da68ed75024cdd0e1a3ef229e9d24103c8dcc450035caaf2d57784",
+      "mtime_utc": "2026-11-02T19:51:55.551173+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_lock_native.o",
+      "source": "anadius-crt-lock-native-source/native.cpp",
+      "bytes": 14277,
+      "sha256": "40db4f58cb0ec8a732075714dead3dd37d779b6e86c111eb87aef8221f06d36b",
+      "mtime_utc": "2026-11-02T19:51:56.236860+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_atomic_native.o",
+      "source": "anadius-crt-atomic-native-source/atomic.cpp",
+      "bytes": 1082,
+      "sha256": "054251c3cc84e49f06f9647300b2569f84eee3a19e255ac4e5a88907defd1ddb",
+      "mtime_utc": "2026-11-02T19:51:56.702965+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_sync_bridge.o",
+      "source": "anadius-crt-sync-bridge-source/bridge.cpp",
+      "bytes": 5130,
+      "sha256": "1948543be93bf35b84e325b2833564e5717016472d8f5703208537afc014cf7b",
+      "mtime_utc": "2026-11-02T19:51:57.357976+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_counter_native.o",
+      "source": "anadius-crt-counter-native-source/counters.cpp",
+      "bytes": 8115,
+      "sha256": "3c9ed0be1e42b645be6a5ce12f196718e26d10dd55709a563eabb8741a553e7f",
+      "mtime_utc": "2026-11-02T19:51:58.045085+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_native.o",
+      "source": "anadius-crt-locale-native-source/native.cpp",
+      "bytes": 7349,
+      "sha256": "12564cb39314a940839bdca5071323c0f84828b2c78c917cc24af1cbc80286e4",
+      "mtime_utc": "2026-11-02T19:51:58.720492+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_initial_locale.o",
+      "source": "anadius-crt-initial-locale-source/initial_locale_data.cpp",
+      "bytes": 21925,
+      "sha256": "83300277a93bfc0f27e37ab8d4f9927c262626602d22451bfac7f6f91e60422a",
+      "mtime_utc": "2026-11-02T19:51:59.032667+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_initial_multibyte.o",
+      "source": "anadius-crt-initial-multibyte-source/initial_mb.cpp",
+      "bytes": 2475,
+      "sha256": "ef6bbd386c5b00c1e4ac95718045e0038860fa684f1823856d336a8a06550a7e",
+      "mtime_utc": "2026-11-02T19:51:59.205413+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_initial_state.o",
+      "source": "anadius-crt-initial-state-source/initial_state.cpp",
+      "bytes": 18916,
+      "sha256": "669e11926927a87839546fa9783cac4c712c24542b808ee68628f4509837f085",
+      "mtime_utc": "2026-11-02T19:52:00.027372+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_startup.o",
+      "source": "anadius-crt-locale-startup-source/locale_startup.cpp",
+      "bytes": 4403,
+      "sha256": "ebbf4f343a61fd4ee4a5b24a4a18568a8ec9744ac2611d0413c0cc401f76b2a5",
+      "mtime_utc": "2026-11-02T19:52:00.100373+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_environment_cleanup.o",
+      "source": "anadius-crt-environment-cleanup-source/environment_cleanup.cpp",
+      "bytes": 2118,
+      "sha256": "57fc3730a55ce2fb42f7417041de61aa9f8d746d42a688cb4b8d6dc0e4a41833",
+      "mtime_utc": "2026-11-02T19:52:00.224243+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_lifecycle_callbacks.o",
+      "source": "anadius-crt-lifecycle-callbacks-source/callbacks.cpp",
+      "bytes": 1423,
+      "sha256": "8730b39a3101d30a1134d6aeab3e2d9484c6fdadedc33cfd4d0b2183e74f56f5",
+      "mtime_utc": "2026-11-02T19:52:00.454243+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_pair_leaves.o",
+      "source": "anadius-crt-pair-leaves-source/pair_leaves.cpp",
+      "bytes": 1520,
+      "sha256": "4f74aaea4de1917c60a538559247d93e82a7038b6b472cd29cf6009ce49ccd29",
+      "mtime_utc": "2026-11-02T19:52:00.645565+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_lowio_lifecycle.o",
+      "source": "anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp",
+      "bytes": 3481,
+      "sha256": "bf5d53b3feab211abb735ddc37a2da2940f832b36642fe0f5cea0bb2bac9b12b",
+      "mtime_utc": "2026-11-02T19:52:00.825764+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_pair_bindings.o",
+      "source": "anadius-crt-pair-bindings-source/bindings.cpp",
+      "bytes": 9863,
+      "sha256": "465d00f31ced72cf4e280d93b3e526167f6ed1ab4041a3e7640ae3a3f1ef923c",
+      "mtime_utc": "2026-11-02T19:52:01.190763+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_invalid.o",
+      "source": "anadius-crt-invalid-source/invalid.cpp",
+      "bytes": 3641,
+      "sha256": "2aaba47e1279c7465e7d136f6a6afb281cebd7a8ed7df57df4b99947dad52fa6",
+      "mtime_utc": "2026-11-02T19:52:01.382763+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_glue.o",
+      "source": "anadius-crt-glue-source/crt_glue.cpp",
+      "bytes": 19626,
+      "sha256": "9e7c20cffe69f2f3ca011c51fedb6762736612b36ae2cf6a95204dffaaf95a5b",
+      "mtime_utc": "2026-11-02T19:52:01.983415+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_cache.o",
+      "source": "anadius-crt-cache-source/cache.cpp",
+      "bytes": 6027,
+      "sha256": "4ec7ac1c92a18b22437013063aa1ac551ff4f7f4483799631d6524cd4c6a269f",
+      "mtime_utc": "2026-11-02T19:52:02.270410+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_onexit.o",
+      "source": "anadius-crt-onexit-source/onexit.cpp",
+      "bytes": 3062,
+      "sha256": "6637b52cca3a22651ce440050dfaf3a8a5e086bcad83161dbe7a8087681cef11",
+      "mtime_utc": "2026-11-02T19:52:02.370409+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_entry.o",
+      "source": "anadius-crt-entry-source/entry.cpp",
+      "bytes": 4451,
+      "sha256": "719d5d29d6a503f449efb1e07645f4229e3c7874b11872eaf6c39abd42b3e4e3",
+      "mtime_utc": "2026-11-02T19:52:02.461410+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_initializers.o",
+      "source": "anadius-crt-initializers-source/initializers.cpp",
+      "bytes": 7440,
+      "sha256": "957caf2711e40d4aec28783718d34a5d06d04675a627ce21d97ab74595559938",
+      "mtime_utc": "2026-11-02T19:52:02.674415+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/vcrt_ptd.o",
+      "source": "anadius-vcrt-ptd-source/vcrt_ptd.cpp",
+      "bytes": 3629,
+      "sha256": "d4ed2b570d12fb8434c23a408b9d71b3f0e24b750609e633b0c6bb80a3a10b02",
+      "mtime_utc": "2026-11-02T19:52:02.865396+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/vcrt_api.o",
+      "source": "anadius-vcrt-api-source/api.cpp",
+      "bytes": 3426,
+      "sha256": "4241c0171bad5d3afd955e5fc1c31cc1d825cdcd402fac35667c523b15f82e04",
+      "mtime_utc": "2026-11-02T19:52:03.146400+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locks.o",
+      "source": "anadius-crt-lock-source/locks.cpp",
+      "bytes": 6241,
+      "sha256": "4a06398d5f2860e93df44aa8ed00e8719632f473072b5a5d6c5ce0ea9f8f0f89",
+      "mtime_utc": "2026-11-02T19:52:03.421381+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_cpu.o",
+      "source": "anadius-crt-cpu-source/cpu.cpp",
+      "bytes": 1309,
+      "sha256": "4141fa9a251bac16fe7b0999dd48583df5be9c24ef351e18e39c09bbb45d8d65",
+      "mtime_utc": "2026-11-02T19:52:03.501374+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/vcrt_bridge.o",
+      "source": "anadius-vcrt-bridge-source/bridge.cpp",
+      "bytes": 16128,
+      "sha256": "c67188734b7c154337cba39696a5dfc72e4b360a780a84e990d2a944f8b547bd",
+      "mtime_utc": "2026-11-02T19:52:03.837131+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_support.o",
+      "source": "anadius-crt-support-source/support.cpp",
+      "bytes": 1887,
+      "sha256": "5d4f6238317dad589f74005bc45b4eb150c9e0bf67808bb9e0ef16d818743e8d",
+      "mtime_utc": "2026-11-02T19:52:03.904141+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_environment.o",
+      "source": "anadius-crt-environment-source/environment.cpp",
+      "bytes": 6438,
+      "sha256": "e8c465ea5c588e9a3eda8c875b25f5ff7a201721ab2affdaa2515c719cf17b71",
+      "mtime_utc": "2026-11-02T19:52:04.073676+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_termination.o",
+      "source": "anadius-crt-termination-source/termination.cpp",
+      "bytes": 3966,
+      "sha256": "4c7d385f841918950552fd1f02d554bbf0f0869258bd8ea3eff6bc02e95b5fdf",
+      "mtime_utc": "2026-11-02T19:52:04.322680+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_startup_bridge.o",
+      "source": "anadius-crt-startup-bridge-source/startup_bridge.cpp",
+      "bytes": 12838,
+      "sha256": "d74fa30e0ab414af2e4153f90fe54162022c8e3f357938edb1145bfe180da9c6",
+      "mtime_utc": "2026-11-02T19:52:04.600020+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_argv_parser.o",
+      "source": "anadius-crt-argv-parser-source/parse.cpp",
+      "bytes": 5543,
+      "sha256": "bd71f607c65cbffe8e07362c82ad32d706a3c70084799f7bbab6f8f29e755d04",
+      "mtime_utc": "2026-11-02T19:52:04.744144+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_argv.o",
+      "source": "anadius-crt-argv-source/argv.cpp",
+      "bytes": 5568,
+      "sha256": "d189519fecfbebe567f3789bcf49f1b3741dc96b1c1ac66b0c205853312dface",
+      "mtime_utc": "2026-11-02T19:52:04.981027+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_byteclass.o",
+      "source": "anadius-crt-byteclass-source/byteclass.cpp",
+      "bytes": 3146,
+      "sha256": "fa6367fe8cb989f71f52e6a8d52b7cc7fbab3cd0739edfabed48e4c902a1ce6b",
+      "mtime_utc": "2026-11-02T19:52:05.102022+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_argv_bridge.o",
+      "source": "anadius-crt-argv-bridge-source/argv_bridge.cpp",
+      "bytes": 10523,
+      "sha256": "09e54f74d6d742668f363a35a06bade8ab69d3e8b90a03945125eea869d72977",
+      "mtime_utc": "2026-11-02T19:52:05.401036+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_wildcard_storage.o",
+      "source": "anadius-crt-wildcard-storage-source/storage.cpp",
+      "bytes": 1366,
+      "sha256": "5039e4bee14f5c6f33b54aa626685890679e9fa529a3002f9de13dcc2a25e9ad",
+      "mtime_utc": "2026-11-02T19:52:05.481028+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_wildcard_search.o",
+      "source": "anadius-crt-wildcard-search-source/search.cpp",
+      "bytes": 4271,
+      "sha256": "4946d998c323767f75d5ffd4ecf3243264f7bd19b48fb9d222360f87a386af48",
+      "mtime_utc": "2026-11-02T19:52:05.567039+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_sort.o",
+      "source": "anadius-crt-sort-source/sort.cpp",
+      "bytes": 5029,
+      "sha256": "8c75ed313998abc3695e257bca825bd12f7a283899b821bce1513146e9633afc",
+      "mtime_utc": "2026-11-02T19:52:05.762224+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_wildcard.o",
+      "source": "anadius-crt-wildcard-source/wildcard.cpp",
+      "bytes": 13220,
+      "sha256": "a1c03b57add28c2a8c75d9c2b21f2da501a72f5c424c3b8c49cee9a4b354ec2a",
+      "mtime_utc": "2026-11-02T19:52:06.076148+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/thread_native.o",
+      "source": "anadius-thread-native-source/win32_effects.cpp",
+      "bytes": 8781,
+      "sha256": "69a0af5f09828a6210bcb0a6e0170bbae4d33b015033d782207b0c00297fc467",
+      "mtime_utc": "2026-11-02T19:52:06.621151+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_native.o",
+      "source": "anadius-bootstrap-native-source/native_entries.cpp",
+      "bytes": 15513,
+      "sha256": "20a582c0285f88e55a17e689e5ee70cce3f37e3ccdcf0368f6e4ee94375e0ae3",
+      "mtime_utc": "2026-11-02T19:52:07.124339+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_owner.o",
+      "source": "anadius-bootstrap-owner-source/owner.cpp",
+      "bytes": 22822,
+      "sha256": "c3b4d98cfe248d97010962c455753c6410cb9c471fb30971cac62bc5293a43b7",
+      "mtime_utc": "2026-11-02T19:52:07.880983+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_backend.o",
+      "source": "anadius-bootstrap-backend-source/backend.cpp",
+      "bytes": 71480,
+      "sha256": "fca3d882942584484e292db592e1cb8356cfa4d48f1e1c3048c35ce7088fe6f8",
+      "mtime_utc": "2026-11-02T19:52:09.423812+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_tracking.o",
+      "source": "anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "bytes": 13495,
+      "sha256": "173d64fba45583fe1ce0715b1e4d0d02dc2f465514ede0db74c7659f65be6614",
+      "mtime_utc": "2026-11-02T19:52:10.029500+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_callbacks.o",
+      "source": "anadius-bootstrap-runtime-source/callbacks.cpp",
+      "bytes": 35406,
+      "sha256": "8469e6ecfe0b745db258da8dae09ca9dde7c1cfec105a68ead04c87ed8c21041",
+      "mtime_utc": "2026-11-02T19:52:10.879218+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_factory.o",
+      "source": "anadius-bootstrap-runtime-source/factory.cpp",
+      "bytes": 43416,
+      "sha256": "02510a8155e2701950c258b5d220f44ea368cf9491671afcfc68c073e08d4242",
+      "mtime_utc": "2026-11-02T19:52:11.926723+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/observed_runtime.o",
+      "source": "anadius-bootstrap-runtime-source/observed_runtime.cpp",
+      "bytes": 17536,
+      "sha256": "8dd8759ad3ed10927fc457c4d4889dd87aa344cec09e7cd8ef78d17e58121c62",
+      "mtime_utc": "2026-11-02T19:52:12.933715+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_providers.o",
+      "source": "anadius-bootstrap-providers-source/providers.cpp",
+      "bytes": 28653,
+      "sha256": "6a98b94acc97aef2ac65519e90288a19e0498e7f551ab447473d977d77868c2e",
+      "mtime_utc": "2026-11-02T19:52:13.801788+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_thread_start.o",
+      "source": "anadius-bootstrap-providers-source/native_threads.cpp",
+      "bytes": 13645,
+      "sha256": "ac316b341211f4af0b267be565b9478f6f7d2485e72c922013c9a9cc3801a236",
+      "mtime_utc": "2026-11-02T19:52:14.444643+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/thread_domain.o",
+      "source": "anadius-thread-domain-source/domain.cpp",
+      "bytes": 78845,
+      "sha256": "0806f3cf8f3d904477a81827a2c267a2cbe7a2dd9049ba4e1435151085eda98c",
+      "mtime_utc": "2026-11-02T19:52:15.549469+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/thread_domain_locale.o",
+      "source": "anadius-thread-domain-source/initial_locale.cpp",
+      "bytes": 11447,
+      "sha256": "de7481326647d3752b09fa29f872af3e73031261fd802c38c4f9f95c9bb101e4",
+      "mtime_utc": "2026-11-02T19:52:16.276631+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/thread_domain_runtime.o",
+      "source": "anadius-thread-domain-source/runtime.cpp",
+      "bytes": 23453,
+      "sha256": "294dd83b13feff2fb68c38c4bd3239dd5321af91f590d2bd8768764a775244cf",
+      "mtime_utc": "2026-11-02T19:52:17.119549+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_services.o",
+      "source": "anadius-bootstrap-policies-source/services.cpp",
+      "bytes": 8448,
+      "sha256": "804caa7f3a2f1b379218f013c88b45179ea88cd60b342997ac56ccf88a7375fb",
+      "mtime_utc": "2026-11-02T19:52:17.888703+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/configuration_platform.o",
+      "source": "anadius-bootstrap-policies-source/config_platform.cpp",
+      "bytes": 24293,
+      "sha256": "6670462e6d4cff069e0cad262af19a8fdb4b194a21621b01e6e8d13ff59c9c82",
+      "mtime_utc": "2026-11-02T19:52:18.809978+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/configuration_filesystem.o",
+      "source": "anadius-config-storage-source/filesystem.cpp",
+      "bytes": 47515,
+      "sha256": "9bffefe31ef431b31228285724af7943142a46ed27b1face69447777913a07cd",
+      "mtime_utc": "2026-11-02T19:52:19.833416+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/configuration_persistence.o",
+      "source": "anadius-config-storage-source/persistence.cpp",
+      "bytes": 55307,
+      "sha256": "7d2956224ceb0d0ce5ea1dac1ddc18667d722a9a905701cfbdbabe3aface528e",
+      "mtime_utc": "2026-11-02T19:52:20.841927+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/thread_error_policy.o",
+      "source": "anadius-config-iteration-source/thread_error.cpp",
+      "bytes": 5391,
+      "sha256": "056290a22cfe94e077080d005c526d00fefb70cac618ae089b60ea66916054f0",
+      "mtime_utc": "2026-11-02T19:52:21.122927+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/exit_wait_completion.o",
+      "source": "anadius-services-completion-source/exit_wait.cpp",
+      "bytes": 41083,
+      "sha256": "b4c7a7e1e6e45db9bff3c7d547cbd3713e2b49068aa26aeaa5293dee2e509e88",
+      "mtime_utc": "2026-11-02T19:52:21.910045+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/services_completion.o",
+      "source": "anadius-services-completion-source/completion.cpp",
+      "bytes": 19948,
+      "sha256": "9179ce25926b9889fdea5772fbe66523e8e41c9e86637fae70801a2aa06922fb",
+      "mtime_utc": "2026-11-02T19:52:22.797043+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/config_logging.o",
+      "source": "anadius-config-logging-source/logging.cpp",
+      "bytes": 21376,
+      "sha256": "f768f885baf2bd4868a1e994147d538db8796ddec13dba26810fe5c1b120e345",
+      "mtime_utc": "2026-11-02T19:52:23.760628+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/library_dialog.o",
+      "source": "anadius-library-effects-source/dialog.cpp",
+      "bytes": 7134,
+      "sha256": "6f88c4872fb1399fe08508328719eca5f029f44667b9c6fb9978e0e857cdcf38",
+      "mtime_utc": "2026-11-02T19:52:24.319628+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/library_effects.o",
+      "source": "anadius-library-effects-source/effects.cpp",
+      "bytes": 18987,
+      "sha256": "193559df9e7523d19bd5204fda6638080322aff8d9f1dcbb186499cea950af11",
+      "mtime_utc": "2026-11-02T19:52:25.268432+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/online_platform.o",
+      "source": "anadius-online-platform-source/platform.cpp",
+      "bytes": 59944,
+      "sha256": "25a974696186e5dcc22a7e23ecf9ff5030b7d5bf963946d608ca5da369e2d32c",
+      "mtime_utc": "2026-11-02T19:52:26.440847+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/host_platform.o",
+      "source": "anadius-host-platform-source/platform.cpp",
+      "bytes": 33331,
+      "sha256": "d17f51f929b373ea98b3559d7a2b978b27fc4f608e21a112071179f609c82122",
+      "mtime_utc": "2026-11-02T19:52:27.674083+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/host_assembly.o",
+      "source": "anadius-host-platform-source/assembly.cpp",
+      "bytes": 68512,
+      "sha256": "92147a329d976a5af6e7d826beef6a167218c82f34005e1f03500c51e38a8431",
+      "mtime_utc": "2026-11-02T19:52:29.083171+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/source_stop.o",
+      "source": "anadius-host-platform-source/source_stop.cpp",
+      "bytes": 27008,
+      "sha256": "c9f06ba9380427f9a417dc475b8849833b3a528ebebf3e2a6a674ab7f425b8a7",
+      "mtime_utc": "2026-11-02T19:52:30.294811+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/initial_cells.o",
+      "source": "anadius-initial-cells-source/defaults.cpp",
+      "bytes": 11027,
+      "sha256": "aeb0dc00b6da6b2b426e55ba2a9aef5f79a87652f20092bf793f5d395b9ac47c",
+      "mtime_utc": "2026-11-02T19:52:31.895644+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/initial_runtime.o",
+      "source": "anadius-initial-cells-source/runtime.cpp",
+      "bytes": 4952,
+      "sha256": "a56c75f621b0465145117b09302f02f13d441e29e44bbf65fa6d8a1185db9beb",
+      "mtime_utc": "2026-11-02T19:52:32.719800+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/initial_worker.o",
+      "source": "anadius-initial-cells-source/worker.cpp",
+      "bytes": 3742,
+      "sha256": "843982530f9d19d82e58b0f97e1f40ab713ea6a39c0a45a539b676811af4b93e",
+      "mtime_utc": "2026-11-02T19:52:34.023023+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/native_context.o",
+      "source": "anadius-native-context-source/context.cpp",
+      "bytes": 31019,
+      "sha256": "3d3c39cf0020699a97dcfe555ddd89d194410314c998c8764d1316c4ca8a2945",
+      "mtime_utc": "2026-11-02T19:52:35.159327+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/callback_policy.o",
+      "source": "anadius-callback-policy-source/policy.cpp",
+      "bytes": 57844,
+      "sha256": "933183e412d4c2f633b66f8ce4034edd25137fdf47c92a1067408d69155c92df",
+      "mtime_utc": "2026-11-02T19:52:36.626552+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/callback_admission.o",
+      "source": "anadius-callback-admission-source/admission.cpp",
+      "bytes": 27001,
+      "sha256": "91625c3c78a076ced123b506368dd75c03a055401405e7a95af2795fdf237a32",
+      "mtime_utc": "2026-11-02T19:52:37.724932+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/foreign_callback.o",
+      "source": "anadius-foreign-callback-source/foreign.cpp",
+      "bytes": 72949,
+      "sha256": "0d071a34c20f2926b0881ddcb7f4cefde4ee586dc1ede5388323cebfd2ca0346",
+      "mtime_utc": "2026-11-02T19:52:39.097567+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/startup_publication.o",
+      "source": "anadius-startup-publication-source/publication.cpp",
+      "bytes": 42373,
+      "sha256": "54332e5a1fefcef88cc5157eefd0da16fd03687dd4f7b57864c89334f0dd821a",
+      "mtime_utc": "2026-11-02T19:52:40.404642+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/shared_log.o",
+      "source": "anadius-shared-log-source/stream.cpp",
+      "bytes": 21576,
+      "sha256": "44f19a61c192ab68e16db8fe50eaa278b1b3c03478914a7ce551afd4fdcd7568",
+      "mtime_utc": "2026-11-02T19:52:41.147784+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/callback_identity.o",
+      "source": "anadius-callback-identity-source/identity.cpp",
+      "bytes": 12377,
+      "sha256": "913058f3e961c8a5d7baf418f1d112eda0ea80bb2526549baa8aa5f5a44c49cd",
+      "mtime_utc": "2026-11-02T19:52:41.868788+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/callback_provider.o",
+      "source": "anadius-callback-provider-source/provider.cpp",
+      "bytes": 25268,
+      "sha256": "86009b8f951e075453bbce14223da78ddf3ba9ba516c707002eb89af7e2fcafc",
+      "mtime_utc": "2026-11-02T19:52:43.133386+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/original_provider.o",
+      "source": "anadius-original-provider-source/originals.cpp",
+      "bytes": 36099,
+      "sha256": "4752ebc85c2bb370701e859798cfe620ff78e8e756f488fb2dcbd5a08080ab29",
+      "mtime_utc": "2026-11-02T19:52:44.226885+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/original_checkpoint.o",
+      "source": "anadius-original-checkpoint-source/checkpoint.cpp",
+      "bytes": 5618,
+      "sha256": "07a562fe6b62e46996310a7a8a0de8b9db04cc33606edf1b4846be2f169f9c29",
+      "mtime_utc": "2026-11-02T19:52:44.808244+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/online_version.o",
+      "source": "anadius-online-version-source/version.cpp",
+      "bytes": 14839,
+      "sha256": "25db970a2c67e3799d757bc044bf4ef7d6753648bc3e717459911e710741cb9c",
+      "mtime_utc": "2026-11-02T19:52:45.573506+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/online_object.o",
+      "source": "anadius-online-object-source/object.cpp",
+      "bytes": 13342,
+      "sha256": "e5feb39bf47f88fb0263b71edb12ee8dab0de68fb0b853f25375cc5bd36d9f81",
+      "mtime_utc": "2026-11-02T19:52:46.326738+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/online_query.o",
+      "source": "anadius-online-query-source/query.cpp",
+      "bytes": 14633,
+      "sha256": "33c10e4f89f75478f8c2e917b4416511ee7ddb55e8da2e630405bd6e4f1ebd50",
+      "mtime_utc": "2026-11-02T19:52:47.198210+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/config_defaults.o",
+      "source": "anadius-config-defaults-source/defaults.cpp",
+      "bytes": 56724,
+      "sha256": "d6f8d6aa16bd2b3d7866edbe59f8f5cfc2dc054a784d1e8127cb14f4db2f3763",
+      "mtime_utc": "2026-11-02T19:52:47.696816+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/aggregate_teardown.o",
+      "source": "anadius-config-defaults-source/teardown.cpp",
+      "bytes": 9592,
+      "sha256": "6f7495d9fb68c98f7cfcca87b6799c59d427950f94b9b6aa614064d4d9783b53",
+      "mtime_utc": "2026-11-02T19:52:48.179434+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_move.o",
+      "source": "anadius-socket-move-source/move.cpp",
+      "bytes": 5860,
+      "sha256": "4c1bca585cd160b2aa7d2dc168cac69e716520ad671663a786f6ea7488466cfc",
+      "mtime_utc": "2026-11-02T19:52:48.896986+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/session_owner.o",
+      "source": "anadius-session-owner-source/owner.cpp",
+      "bytes": 5999,
+      "sha256": "9c6d693ef9b9ca7e8371b718791518746b36f5b119f3a962e2322dd6c70308e5",
+      "mtime_utc": "2026-11-02T19:52:49.800110+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/session_dispose.o",
+      "source": "anadius-session-dispose-source/dispose.cpp",
+      "bytes": 9271,
+      "sha256": "55fd92ff9d30833ea2f78af924b185d65496de6559427eeb6fb24757f2727a19",
+      "mtime_utc": "2026-11-02T19:52:50.746638+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/session_memory.o",
+      "source": "anadius-session-memory-source/memory.cpp",
+      "bytes": 78116,
+      "sha256": "1c8e5c5f585090653d6bc69aec473a1d81ccac5e38fbe86df1db206087ed1950",
+      "mtime_utc": "2026-11-02T19:52:52.129219+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/io_memory.o",
+      "source": "anadius-io-memory-source/io_memory.cpp",
+      "bytes": 77908,
+      "sha256": "8d4fe7fd7a33cf684c6172ff7b70bc4130e1fc6d90ac0450fb1883ac7c3ef962",
+      "mtime_utc": "2026-11-02T19:52:53.533120+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_server.o",
+      "source": "anadius-owned-server-source/server.cpp",
+      "bytes": 103876,
+      "sha256": "bf9f3724b8c5d048e652bd28d7c5f253343f984c2fe38915e85fd19c484d05a8",
+      "mtime_utc": "2026-11-02T19:52:54.739261+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/native_async_accept.o",
+      "source": "anadius-accept-source/accept.cpp",
+      "bytes": 14280,
+      "sha256": "8d5b4437d01cb911182525d773b3bd680fff5c4bcd6d89321f19b1d7a95df202",
+      "mtime_utc": "2026-11-02T19:52:55.705564+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_accept.o",
+      "source": "anadius-accept-source/owned.cpp",
+      "bytes": 71152,
+      "sha256": "fb280ecde8682f60199108796b9efb3b4242e1f1147ca5408ca43a09c1ed1016",
+      "mtime_utc": "2026-11-02T19:52:56.936832+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/session_flow.o",
+      "source": "anadius-session-flow-source/flow.cpp",
+      "bytes": 8906,
+      "sha256": "904f0fd3568ed77182dcbf3a2280ac7f81c17816df8f4760071bea67b27939dd",
+      "mtime_utc": "2026-11-02T19:52:58.047344+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/coherent_io.o",
+      "source": "anadius-session-flow-source/coherent_io.cpp",
+      "bytes": 20550,
+      "sha256": "d7d0dd40c9503e56e0c420094e7b738c6c796f511fd06c8617970af58d1cef66",
+      "mtime_utc": "2026-11-02T19:52:59.051814+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/accept_helpers.o",
+      "source": "anadius-accept-helpers-source/helpers.cpp",
+      "bytes": 12442,
+      "sha256": "d39282a5de572d17d082e974dffbe47f981d4191431f0ad0c24032f50ddc4e59",
+      "mtime_utc": "2026-11-02T19:52:59.874824+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/accept_bindings.o",
+      "source": "anadius-accept-helpers-source/bindings.cpp",
+      "bytes": 10072,
+      "sha256": "681d9766e12befa2cf5c4ee068b8813c7f182290cd0ebb11c7b1e0363af2e0c3",
+      "mtime_utc": "2026-11-02T19:53:00.692394+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/server_runtime.o",
+      "source": "anadius-server-runtime-source/runtime.cpp",
+      "bytes": 73068,
+      "sha256": "69042f45217e4242175c40cec94017a8f082689e85e11579f4a6d706d3ba59da",
+      "mtime_utc": "2026-11-02T19:53:02.015570+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/server_runtime_resources.o",
+      "source": "anadius-server-runtime-source/resources.cpp",
+      "bytes": 17930,
+      "sha256": "1c073f3b6ce7043fc3ca9904f8db0db05f1ebefeac4a5b589baf37133a10a461",
+      "mtime_utc": "2026-11-02T19:53:03.152701+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/session_profile.o",
+      "source": "anadius-session-profile-source/profile.cpp",
+      "bytes": 368377,
+      "sha256": "c44899a586d1fe371e571e6829a8fa91c9bd9a71230eb4b868f887385e3975f8",
+      "mtime_utc": "2026-11-02T19:53:05.673517+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/session_profile_strings.o",
+      "source": "anadius-session-profile-source/strings.cpp",
+      "bytes": 13577,
+      "sha256": "f07ea348eb917b366bf75618e7d02e80793383a01d9eaacf29f45dac149dc510",
+      "mtime_utc": "2026-11-02T19:53:06.816293+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/native_profile.o",
+      "source": "anadius-native-profile-source/native.cpp",
+      "bytes": 203452,
+      "sha256": "d267f94dbc1ee133fd07dc96fbca99e48a09dfc98d5396f66095f5d757dd353f",
+      "mtime_utc": "2026-11-02T19:53:08.551932+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_deque.o",
+      "source": "anadius-owned-deque-source/deque.cpp",
+      "bytes": 37417,
+      "sha256": "d0184d34fded21242f6b12b10b27f9d50902a45a297dde3114dfc45d7a93c561",
+      "mtime_utc": "2026-11-02T19:53:09.581714+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_environment.o",
+      "source": "anadius-owned-environment-source/environment.cpp",
+      "bytes": 140029,
+      "sha256": "df7971ef992270be532796bf2c9f19fb5c10f264928341dfb021b2044f179da1",
+      "mtime_utc": "2026-11-02T19:53:11.293976+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_jobs.o",
+      "source": "anadius-owned-jobs-source/jobs.cpp",
+      "bytes": 71309,
+      "sha256": "49783adff8c94a061811ec26811bac3a8b9fae419c1d4bb326dd8205938b67d9",
+      "mtime_utc": "2026-11-02T19:53:12.593052+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_session_policy.o",
+      "source": "anadius-session-policy-source/policy.cpp",
+      "bytes": 131762,
+      "sha256": "2f159867dcd6d0df424d88dda7c0cce34bf7916111ad5898d89d2189488641c3",
+      "mtime_utc": "2026-11-02T19:53:14.201720+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/application_graph.o",
+      "source": "anadius-application-graph-source/graph.cpp",
+      "bytes": 620112,
+      "sha256": "212aaa6c1105f761434099078f33e5c913bc4f558078ae9e1e277f556e7c1350",
+      "mtime_utc": "2026-11-02T19:53:16.945412+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/worker_handoff.o",
+      "source": "anadius-worker-handoff-source/handoff.cpp",
+      "bytes": 51184,
+      "sha256": "a583d0c8f02b944039462057f38fe9c46f28bd223e037c00bf647b496ae5f3d3",
+      "mtime_utc": "2026-11-02T19:53:17.931574+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/application_worker.o",
+      "source": "anadius-application-worker-source/worker.cpp",
+      "bytes": 87575,
+      "sha256": "642a9652743941203d603db15cd9abb30093e29019d5310c46cd12435b1599dd",
+      "mtime_utc": "2026-11-02T19:53:19.521836+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/accept_stop.o",
+      "source": "anadius-accept-stop-source/stop.cpp",
+      "bytes": 59135,
+      "sha256": "26ecc353c4f05edf1704cb2cd010336cac150eea87535b1c3613ce5e0415367c",
+      "mtime_utc": "2026-11-02T19:53:21.479039+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/configuration_factory.o",
+      "source": "anadius-configuration-factory-source/factory.cpp",
+      "bytes": 46411,
+      "sha256": "4fde38b388e44352ea2da4d794cd6ab05b93c6f285e1552453bfdf99e8d4b049",
+      "mtime_utc": "2026-11-02T19:53:22.536890+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/configuration_key_processor.o",
+      "source": "anadius-license-source/key_processor.cpp",
+      "bytes": 27624,
+      "sha256": "389e91712471f9b26dc276232a8cd0fe1d6598ad3d6db71fb4d8997d2cbf6f79",
+      "mtime_utc": "2026-11-02T19:53:23.516830+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/services_factory.o",
+      "source": "anadius-services-factory-source/factory.cpp",
+      "bytes": 28750,
+      "sha256": "b7a41aa8efadbf77b787c226cdbb7ee027a87ab5d3339abe9d05ea94d7eab798",
+      "mtime_utc": "2026-11-02T19:53:24.497095+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/online_factory.o",
+      "source": "anadius-online-factory-source/factory.cpp",
+      "bytes": 92987,
+      "sha256": "fb426e703550b482ca37080382ee34a42f5d7bcd9399e3c927e9914980d7d6bc",
+      "mtime_utc": "2026-11-02T19:53:25.742176+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/host_init.o",
+      "source": "anadius-host-init-source/host_init.cpp",
+      "bytes": 29237,
+      "sha256": "1033a2d81f1fb572a9515545ad0027839b2a404d022142ef08b6d5afc3f06d36",
+      "mtime_utc": "2026-11-02T19:53:26.256170+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/host_hook_adapter.o",
+      "source": "hook-engine-source/adapters.cpp",
+      "bytes": 5926,
+      "sha256": "c2df014817c762d442d2677597b4f33059812f1e00a42d462347eac0513bee4b",
+      "mtime_utc": "2026-11-02T19:53:27.067245+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/preloader_hook_adapter.o",
+      "source": "hook-engine-source/preloader_engine.cpp",
+      "bytes": 2316,
+      "sha256": "c44011aa6c78c1fa6d1c3966acfccf0e2eb9cf68ca8f510b24fd1a5738f3ea34",
+      "mtime_utc": "2026-11-02T19:53:27.854681+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/hook_api.o",
+      "source": "hook-engine-source/api.cpp",
+      "bytes": 2594,
+      "sha256": "e58897ffaef086ffe535ee5cad1b9d60fe5268e0e4a87f64368e88204c744b07",
+      "mtime_utc": "2026-11-02T19:53:28.311687+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/minhook_hooks.o",
+      "source": "hook-engine-source/vendor/minhook/src/hook.c",
+      "bytes": 10147,
+      "sha256": "d886bb7019430066f15f08b0daef9cb0f821112943974807fb27cfe0625e32e2",
+      "mtime_utc": "2026-11-02T19:53:28.720153+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/minhook_buffer.o",
+      "source": "hook-engine-source/vendor/minhook/src/buffer.c",
+      "bytes": 2509,
+      "sha256": "35c492e2e92f085c930218dcdf1ea94d99688f337ad9f5dd3e9f8d43dd10fb0d",
+      "mtime_utc": "2026-11-02T19:53:29.042153+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/minhook_trampoline.o",
+      "source": "hook-engine-source/vendor/minhook/src/trampoline.c",
+      "bytes": 2328,
+      "sha256": "82f3e137b422c5bd78593aeb3657885f3091b42a7eb830416f00ae9a35ba8c2a",
+      "mtime_utc": "2026-11-02T19:53:29.368054+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/minhook_hde.o",
+      "source": "hook-engine-source/vendor/minhook/src/hde/hde64.c",
+      "bytes": 4431,
+      "sha256": "3ef564d549ff2739adb25a7fb37a0f660b48c9b0bd2d83d8ac1eb22ebf6d2088",
+      "mtime_utc": "2026-11-02T19:53:29.704452+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/registry.o",
+      "source": "anadius-registry-source/registry.cpp",
+      "bytes": 20564,
+      "sha256": "67bb2ef07b17cb499ef9a01c54a9745bc24291aca940f83ad089e1148e66dee3",
+      "mtime_utc": "2026-11-02T19:53:30.225447+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/native_callbacks.o",
+      "source": "anadius-native-source/native_callbacks.cpp",
+      "bytes": 23341,
+      "sha256": "71f247bab081b040f29d067b7d582411c3fbf837c4197c3f098dde4d63524bd2",
+      "mtime_utc": "2026-11-02T19:53:31.286600+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/native_originals.o",
+      "source": "anadius-native-source/original_effects.cpp",
+      "bytes": 49840,
+      "sha256": "ec5e565fb41e228c4e3a2cdef21ea118ef4f5eea34c3ac2710eec0112ca027eb",
+      "mtime_utc": "2026-11-02T19:53:32.354397+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/preloader_native.o",
+      "source": "preloader-native-source/native_shims.cpp",
+      "bytes": 6899,
+      "sha256": "28c298249da5face73f5344de8a7becf216d370ec0aeee18cec79ea047616475",
+      "mtime_utc": "2026-11-02T19:53:32.939792+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/host_callbacks.o",
+      "source": "anadius-host-callbacks-source/callbacks.cpp",
+      "bytes": 5215,
+      "sha256": "19c2c96bbad0aee7c329bc078bd8b4acf6e64abb7423ef55b163ddc1a353ef01",
+      "mtime_utc": "2026-11-02T19:53:33.324603+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/connect_hook.o",
+      "source": "anadius-network-hook-source/connect.cpp",
+      "bytes": 9372,
+      "sha256": "67aab1cb2aa1e223d30eef1162352098af5ad4f19887215319586ab2e47aff26",
+      "mtime_utc": "2026-11-02T19:53:33.584650+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/hook_cleanup.o",
+      "source": "anadius-network-hook-source/hook_cleanup.cpp",
+      "bytes": 1414,
+      "sha256": "d80ec8fc33872257c1c3301abe92eec8c3844e678a1091f035086fb9c0db86ce",
+      "mtime_utc": "2026-11-02T19:53:33.788816+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/online.o",
+      "source": "anadius-online-source/online.cpp",
+      "bytes": 27253,
+      "sha256": "57b1a1cdfcda4606a6775a6f44ca2889896b3cf194fe3605dd9f4948308cc3ca",
+      "mtime_utc": "2026-11-02T19:53:34.265342+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/online_effects.o",
+      "source": "anadius-online-source/recovered_effects.cpp",
+      "bytes": 12125,
+      "sha256": "696df068c021e39dfbfb2bf95a11c15b9e48820cd8d8f9a940c558d74d044626",
+      "mtime_utc": "2026-11-02T19:53:34.705474+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/configuration.o",
+      "source": "anadius-config-source/configuration.cpp",
+      "bytes": 82210,
+      "sha256": "1c1ce99f29f7a9fae6123fc89f1f8aa40d595ed098d47ba7553ff2ccde49c566",
+      "mtime_utc": "2026-11-02T19:53:35.634667+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/execution.o",
+      "source": "anadius-execution-source/execution.cpp",
+      "bytes": 8760,
+      "sha256": "8c8d28066437c0371587a2ac3fff8bf347e350a0413978a7495c80e13dd12f11",
+      "mtime_utc": "2026-11-02T19:53:36.113233+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/execution_windows.o",
+      "source": "anadius-execution-source/windows_platform.cpp",
+      "bytes": 3683,
+      "sha256": "91e83a242c60d753ea41f2e63588b019e9143e5d2c3a06a0f55b31e6e2536cc4",
+      "mtime_utc": "2026-11-02T19:53:36.564229+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/libraries.o",
+      "source": "anadius-libraries-source/libraries.cpp",
+      "bytes": 15201,
+      "sha256": "3bd4fbfc019c7153ab386ab239a7d7ce9b38ffeb59ec539d181ba50781f3aee2",
+      "mtime_utc": "2026-11-02T19:53:36.998376+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/libraries_windows.o",
+      "source": "anadius-libraries-source/native_system.cpp",
+      "bytes": 3478,
+      "sha256": "9f1a4714f596ed6d3b77eac0d8609a273f9afe161b760528363dfa255a312427",
+      "mtime_utc": "2026-11-02T19:53:37.582533+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/startup.o",
+      "source": "anadius-startup-source/startup.cpp",
+      "bytes": 23681,
+      "sha256": "682cccc4fee24ff8684e3aa125c083f33b616700d9df164c232a4e4c9c683835",
+      "mtime_utc": "2026-11-02T19:53:38.071751+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/startup_windows.o",
+      "source": "anadius-startup-source/windows_platform.cpp",
+      "bytes": 5741,
+      "sha256": "7a2bb3000dfc26f705457e8ee9ce5146e69eebed5db4631624f457b0886e7467",
+      "mtime_utc": "2026-11-02T19:53:38.697164+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/parser.o",
+      "source": "anadius-parser-source/parser.cpp",
+      "bytes": 38243,
+      "sha256": "fcc21ff9923cd7352d9c72ef68d87b198934951053e2205a70cb9ed57d53d833",
+      "mtime_utc": "2026-11-02T19:53:39.382295+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/config_order.o",
+      "source": "anadius-config-order-source/order.cpp",
+      "bytes": 23227,
+      "sha256": "2ec0c23195d4b3058f36e80414753de6eb212839a55dcafce0229c7978b7c773",
+      "mtime_utc": "2026-11-02T19:53:39.973122+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/config_pipeline.o",
+      "source": "anadius-config-pipeline-source/pipeline.cpp",
+      "bytes": 27748,
+      "sha256": "f204b2be24c1e1eab48ea87f028f7632508c47b97ab01b1d909ed8ba160c6719",
+      "mtime_utc": "2026-11-02T19:53:40.471114+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/config_hash.o",
+      "source": "anadius-config-hash-source/hash_table.cpp",
+      "bytes": 73587,
+      "sha256": "5cdd0a0244e87013a0533a4d8239be4ce2588692491f9fc12404da24a43f0d8c",
+      "mtime_utc": "2026-11-02T19:53:41.437062+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/config_application.o",
+      "source": "anadius-config-application-source/application.cpp",
+      "bytes": 67546,
+      "sha256": "ca7c71b7ea8b1d554e0de2a02af99971c01c3e2f6b2f91ae40b55faf409b34e6",
+      "mtime_utc": "2026-11-02T19:53:42.192271+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/config_startup.o",
+      "source": "anadius-config-startup-source/startup.cpp",
+      "bytes": 6028,
+      "sha256": "ce6992a1f6ef71ed40c927a241330ce6a6075c9a6d5edcc93e495f527d858512",
+      "mtime_utc": "2026-11-02T19:53:42.587322+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/achievement_writer.o",
+      "source": "anadius-achievement-writer-source/writer.cpp",
+      "bytes": 10864,
+      "sha256": "8abcf240f87300fcca27998e7f22c37202ebfc11120110052b23a350267346f1",
+      "mtime_utc": "2026-11-02T19:53:43.092279+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/achievement_storage.o",
+      "source": "anadius-achievement-storage-source/storage.cpp",
+      "bytes": 19082,
+      "sha256": "5f165c0529a0d05d5db7299d93e6446a53b82aa07c60e3728b7893378701a792",
+      "mtime_utc": "2026-11-02T19:53:43.608747+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/calendar.o",
+      "source": "anadius-calendar-source/calendar.cpp",
+      "bytes": 1218,
+      "sha256": "fa00b5cf759656fb40b7cfd936fe73aa4a673c1e553006eb964d262b287f8774",
+      "mtime_utc": "2026-11-02T19:53:43.707576+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/timestamp.o",
+      "source": "anadius-timestamp-source/timestamp.cpp",
+      "bytes": 31467,
+      "sha256": "f357e98287a829e015e9f4dcb6639dce7e1298a4ff386c056946024e14f3f0a3",
+      "mtime_utc": "2026-11-02T19:53:44.279726+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/achievement_utc.o",
+      "source": "anadius-achievement-runtime-source/utc.cpp",
+      "bytes": 27450,
+      "sha256": "30f1991c0a66ee65f8b71d9159c78d4da5426cb22ea61fb50fce6deeee774362",
+      "mtime_utc": "2026-11-02T19:53:44.738934+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/achievement_runtime.o",
+      "source": "anadius-achievement-runtime-source/runtime.cpp",
+      "bytes": 16208,
+      "sha256": "4f52b04bc8b85adfd86161ad0c48d48c0f08e9e956b59148e1b0d1be402724bf",
+      "mtime_utc": "2026-11-02T19:53:45.219803+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/event_queue.o",
+      "source": "anadius-event-queue-source/queue.cpp",
+      "bytes": 23177,
+      "sha256": "399bc0d915c251a1b83fb320dd6d3c4ed5fecb127b9d6b68870f1fb31c83c7a6",
+      "mtime_utc": "2026-11-02T19:53:45.779170+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/event_queue_adapters.o",
+      "source": "anadius-event-queue-source/adapters.cpp",
+      "bytes": 9801,
+      "sha256": "eb9dbce86d0c7c7cb5ff9485f566b793651b500babbeb180adfa13c9e99f223a",
+      "mtime_utc": "2026-11-02T19:53:46.260171+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/session_handler.o",
+      "source": "anadius-session-source/handler.cpp",
+      "bytes": 6975,
+      "sha256": "9e606632349cb78b72579d3dd24f41caa97ad0ccd851395de168a53baa551083",
+      "mtime_utc": "2026-11-02T19:53:46.677171+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/session_routing.o",
+      "source": "anadius-session-source/routing.cpp",
+      "bytes": 2482,
+      "sha256": "51ec2cb8fbffa3c655b073d7df65a5857c258990561a6abf72a12e4605625d40",
+      "mtime_utc": "2026-11-02T19:53:47.097589+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_operations.o",
+      "source": "anadius-socket-source/operations.cpp",
+      "bytes": 10042,
+      "sha256": "896dd34ae504d677ce8c16f6eec1d42e6ba7d0399d241917c9893ab0bbced541",
+      "mtime_utc": "2026-11-02T19:53:47.925130+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_native.o",
+      "source": "anadius-socket-source/native.cpp",
+      "bytes": 8094,
+      "sha256": "1422739e7c12196a3502ebd04b3d5cffbb1740aafaa3679c4d9ba2c4afcc4dc9",
+      "mtime_utc": "2026-11-02T19:53:48.642145+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_acceptor.o",
+      "source": "anadius-socket-source/acceptor.cpp",
+      "bytes": 9530,
+      "sha256": "03901b4ee51a45509af61535e16889015f366bc2731735b6c4d79b90627e4f91",
+      "mtime_utc": "2026-11-02T19:53:49.378549+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_acceptor_native.o",
+      "source": "anadius-socket-source/acceptor_native.cpp",
+      "bytes": 6867,
+      "sha256": "d64f91053a3015d599f3986de751c79d56127ace9bcab55f1af04d3ceb712045",
+      "mtime_utc": "2026-11-02T19:53:50.072419+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_lifecycle.o",
+      "source": "anadius-socket-source/lifecycle.cpp",
+      "bytes": 10883,
+      "sha256": "c683048e2e343401138e2943ca929a4ad6ad6fcd3bc7d3a4f8cd8d24e10d1738",
+      "mtime_utc": "2026-11-02T19:53:50.806590+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_lifecycle_native.o",
+      "source": "anadius-socket-source/lifecycle_native.cpp",
+      "bytes": 2291,
+      "sha256": "097a6d2d71c452a5d32bfeef08aacf6bf94172f618e6fc06fa0b9b2171c78030",
+      "mtime_utc": "2026-11-02T19:53:51.532219+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_close.o",
+      "source": "anadius-socket-source/close.cpp",
+      "bytes": 1389,
+      "sha256": "ff66208f1852997a41552977d562dcc426fe7cc6514c69047b2a697f30b94021",
+      "mtime_utc": "2026-11-02T19:53:52.215413+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_closing.o",
+      "source": "anadius-socket-source/closing.cpp",
+      "bytes": 6512,
+      "sha256": "c273a8f75742f8d40521127a4a4ba89aa1a3f4a19082dbb2abff2338479b2978",
+      "mtime_utc": "2026-11-02T19:53:52.950499+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_cancellation.o",
+      "source": "anadius-socket-source/cancellation.cpp",
+      "bytes": 7523,
+      "sha256": "9479049a0189447cd3c109dfe475b9450759f276f4441e926a1d51c9f9125003",
+      "mtime_utc": "2026-11-02T19:53:53.692502+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_cancellation_native.o",
+      "source": "anadius-socket-source/cancellation_native.cpp",
+      "bytes": 2242,
+      "sha256": "6aff0993f14b8278c86f65fae946f069a3d9dd4f49cdceb113a76a82db61fc45",
+      "mtime_utc": "2026-11-02T19:53:54.445505+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_recycle.o",
+      "source": "anadius-socket-source/recycle.cpp",
+      "bytes": 7014,
+      "sha256": "044cd5c03a3283b4656a00a162160dcd1c9f3340e31d5c4965c3e917b3c39c6b",
+      "mtime_utc": "2026-11-02T19:53:55.210514+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_recycle_storage.o",
+      "source": "anadius-socket-source/recycle_storage.cpp",
+      "bytes": 12599,
+      "sha256": "6ee72f1a875a970427ae53bbaff83a2ea85344164c28feedf96fd9c35b13d829",
+      "mtime_utc": "2026-11-02T19:53:56.041754+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_service_registry.o",
+      "source": "anadius-socket-source/service_registry.cpp",
+      "bytes": 7895,
+      "sha256": "715ddf1c8d89c75146a16e9a1748b8a47d6414e3f682947fb50d2b828dabf4a5",
+      "mtime_utc": "2026-11-02T19:53:56.777635+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_service_constructor.o",
+      "source": "anadius-socket-source/service_constructor.cpp",
+      "bytes": 6687,
+      "sha256": "bacae73b3a556bfe71c9333ce183970a05f3e4cac3cc23e98d59557000f00a0c",
+      "mtime_utc": "2026-11-02T19:53:57.511567+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_service_constructor_native.o",
+      "source": "anadius-socket-source/service_constructor_native.cpp",
+      "bytes": 2368,
+      "sha256": "c597ede9876d52af578baf62068e9fc1760ed38629d95cc9dd59bcc469b81e7e",
+      "mtime_utc": "2026-11-02T19:53:58.241691+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_scheduler_registry.o",
+      "source": "anadius-socket-source/scheduler_registry.cpp",
+      "bytes": 7077,
+      "sha256": "c53b476582df5f2ae2d92a4e33d8cb4d9cb30604ff414dc1c936713a79f6e142",
+      "mtime_utc": "2026-11-02T19:53:58.981059+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_iocp_constructor.o",
+      "source": "anadius-socket-source/iocp_constructor.cpp",
+      "bytes": 7962,
+      "sha256": "cca297abf9de078c3321fb15d0a2bdeddd9326bfb0f784bdfe184b6ae6ef859e",
+      "mtime_utc": "2026-11-02T19:53:59.720677+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_iocp_constructor_native.o",
+      "source": "anadius-socket-source/iocp_constructor_native.cpp",
+      "bytes": 2826,
+      "sha256": "71928824b1a1bf103129ec8db37baa8a855570b8456d16d2f8cb8666cc5ce5d1",
+      "mtime_utc": "2026-11-02T19:54:00.456518+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_worker_startup.o",
+      "source": "anadius-socket-source/worker_startup.cpp",
+      "bytes": 8410,
+      "sha256": "2cb4fc3a01c1fb76d5ff40dd8dc6d6d3717c0843ee1b80d9844bcfed103c735d",
+      "mtime_utc": "2026-11-02T19:54:01.214374+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_worker_startup_native.o",
+      "source": "anadius-socket-source/worker_startup_native.cpp",
+      "bytes": 2871,
+      "sha256": "e073d42efa4c4439c408720fde1fbb84ab12016bb8fce7e073888b1fa235f23a",
+      "mtime_utc": "2026-11-02T19:54:01.953401+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_worker_run.o",
+      "source": "anadius-socket-source/worker_run.cpp",
+      "bytes": 9637,
+      "sha256": "e3f35543fb2c463048656574dcd441bf994393096fc37f6c5159f2d5980ae462",
+      "mtime_utc": "2026-11-02T19:54:02.718546+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_worker_run_native.o",
+      "source": "anadius-socket-source/worker_run_native.cpp",
+      "bytes": 2578,
+      "sha256": "b4e37737036121635541c70d502c3984206e9994d79dd65cdae339b27de675e8",
+      "mtime_utc": "2026-11-02T19:54:03.466417+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_completion_dispatcher.o",
+      "source": "anadius-socket-source/completion_dispatcher.cpp",
+      "bytes": 10167,
+      "sha256": "924eb9c6e0ac7ed62240d4f13da562ad2e9b7952c4126f5808fbb44337915abd",
+      "mtime_utc": "2026-11-02T19:54:04.338699+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_completion_dispatcher_native.o",
+      "source": "anadius-socket-source/completion_dispatcher_native.cpp",
+      "bytes": 3138,
+      "sha256": "07fccb35d452835bec1347384dca08350ae5df03664b34bbe3532d7d456adaf2",
+      "mtime_utc": "2026-11-02T19:54:05.099435+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_posted_operation.o",
+      "source": "anadius-socket-source/posted_operation.cpp",
+      "bytes": 8425,
+      "sha256": "53303e48f8d48100e3a5f35796f4a4e2c5fcffa60d9e174866ceb41820711de2",
+      "mtime_utc": "2026-11-02T19:54:05.986695+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_posted_operation_dispatch.o",
+      "source": "anadius-socket-source/posted_operation_dispatch.cpp",
+      "bytes": 2978,
+      "sha256": "4d674a79bfdeeed67d58fc7cd7dade85bc9b40cffd7518f584857803b3d474ec",
+      "mtime_utc": "2026-11-02T19:54:06.762901+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_io_completion.o",
+      "source": "anadius-socket-source/io_completion.cpp",
+      "bytes": 11003,
+      "sha256": "e8da35c1529800b7ac044e74f321fce0b4bc0a8f5298a204c7c39eada381166c",
+      "mtime_utc": "2026-11-02T19:54:07.556113+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_io_completion_dispatch.o",
+      "source": "anadius-socket-source/io_completion_dispatch.cpp",
+      "bytes": 7346,
+      "sha256": "ffcd10b23f92b854028c9fda36eeb997e664d06ff315b4e9fe3ea7e64bb849bb",
+      "mtime_utc": "2026-11-02T19:54:08.327297+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_handler_dispatch.o",
+      "source": "anadius-socket-source/handler_dispatch.cpp",
+      "bytes": 14841,
+      "sha256": "a5e66b5cc9a34ca88ae577da643f7a20631fe29661bc8c0b6b14d7a8de5b3eee",
+      "mtime_utc": "2026-11-02T19:54:09.129591+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_handler_dispatch_bridge.o",
+      "source": "anadius-socket-source/handler_dispatch_bridge.cpp",
+      "bytes": 2975,
+      "sha256": "16f8a714b38c3e16b5cc405de73615240c84a0faf903dc58a4ffb856cb38fa67",
+      "mtime_utc": "2026-11-02T19:54:09.892193+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_composed_write.o",
+      "source": "anadius-socket-source/composed_write.cpp",
+      "bytes": 12433,
+      "sha256": "c2cd666f345225b9de939262fa90ca5d2636d9f6426d1a12dfe20d6732fd0398",
+      "mtime_utc": "2026-11-02T19:54:10.861137+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_composed_write_native.o",
+      "source": "anadius-socket-source/composed_write_native.cpp",
+      "bytes": 5810,
+      "sha256": "485d633cad82e98a29ebc9be8b4616af96978b757e62807c7ebeba9693e7d3cc",
+      "mtime_utc": "2026-11-02T19:54:11.639702+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_environment_constructor.o",
+      "source": "anadius-socket-source/environment_constructor.cpp",
+      "bytes": 10761,
+      "sha256": "4277bb15190ed2a86ee381eb9488514f016e9fb5d52a93a1acba480d2dd99a0e",
+      "mtime_utc": "2026-11-02T19:54:12.474609+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_write_finish.o",
+      "source": "anadius-socket-source/write_finish.cpp",
+      "bytes": 11171,
+      "sha256": "4b07a8a71a3008277b8d713e09b2cd212cb19f3e985eeb6250dee85c868589b6",
+      "mtime_utc": "2026-11-02T19:54:13.305633+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_queued_write.o",
+      "source": "anadius-socket-source/queued_write.cpp",
+      "bytes": 7366,
+      "sha256": "a80e774d43921defe39706fb413efec602fa311b88c809c24ee2ec0734cdc1dd",
+      "mtime_utc": "2026-11-02T19:54:14.274024+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_async_receive.o",
+      "source": "anadius-socket-source/async_receive.cpp",
+      "bytes": 11205,
+      "sha256": "cc2d3e9d68c942343033cb7bd675bc17b7a17435d6f318bacdf86156b5225a69",
+      "mtime_utc": "2026-11-02T19:54:15.180246+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_receive_buffer.o",
+      "source": "anadius-socket-source/receive_buffer.cpp",
+      "bytes": 8082,
+      "sha256": "ee0c3a0ef29941e979b4c07534dc302d5882780de065a964ec50daee2e49e555",
+      "mtime_utc": "2026-11-02T19:54:16.157169+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_composed_read.o",
+      "source": "anadius-socket-source/composed_read.cpp",
+      "bytes": 13327,
+      "sha256": "8fadb18eba35bbbaf81bd01156c269e4b540dbc26534aa83d26cacacb44fbe39",
+      "mtime_utc": "2026-11-02T19:54:17.107419+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_frame_read.o",
+      "source": "anadius-socket-source/frame_read.cpp",
+      "bytes": 10466,
+      "sha256": "64f6dfe0a461f519cb97f0614a7ecb74e7f8a694d218edadd8bc7e949ee4daad",
+      "mtime_utc": "2026-11-02T19:54:18.075306+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_message_dispatch.o",
+      "source": "anadius-socket-source/message_dispatch.cpp",
+      "bytes": 12186,
+      "sha256": "cfe0bf2541e675cacb768551ef69033e0a200ae1e7a41ec9df931b08fb5b78a3",
+      "mtime_utc": "2026-11-02T19:54:18.950937+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_response_dispatch.o",
+      "source": "anadius-socket-source/response_dispatch.cpp",
+      "bytes": 13738,
+      "sha256": "82007a34881a2d7222182fbce490aa73c53547a527cb406f04b9728703a6c4b7",
+      "mtime_utc": "2026-11-02T19:54:19.861374+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_owned_response.o",
+      "source": "anadius-socket-source/owned_response.cpp",
+      "bytes": 9945,
+      "sha256": "2c8ad3b10436b4a8575bfccd4504c668a7396ac99356d824d366fec96d92bbc9",
+      "mtime_utc": "2026-11-02T19:54:20.744550+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_response_containers.o",
+      "source": "anadius-socket-source/response_containers.cpp",
+      "bytes": 12933,
+      "sha256": "9a03e11f38fbfdb3f0f426c87acd82b1e0fe9027c008c963f47d2077ee43989d",
+      "mtime_utc": "2026-11-02T19:54:21.779677+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_message_core_bridge.o",
+      "source": "anadius-socket-source/message_core_bridge.cpp",
+      "bytes": 14025,
+      "sha256": "6756e0e3697025a6bd69b7cf6a0c716d3be6da4c5e529e0489cfc17d788da4f9",
+      "mtime_utc": "2026-11-02T19:54:22.801655+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_request_mutation.o",
+      "source": "anadius-socket-source/request_mutation.cpp",
+      "bytes": 2369,
+      "sha256": "1f633de7817e282a91864e61645e6bcb14cd3355f1134728b1fa54fa1b08c5d2",
+      "mtime_utc": "2026-11-02T19:54:23.727988+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_request_growth.o",
+      "source": "anadius-socket-source/request_growth.cpp",
+      "bytes": 3687,
+      "sha256": "8f1f3b6e0c89d4a35673572e06bea7dfc3833cac9ed475921bd533842053d0f5",
+      "mtime_utc": "2026-11-02T19:54:24.677720+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_response_hex.o",
+      "source": "anadius-socket-source/response_hex.cpp",
+      "bytes": 1663,
+      "sha256": "924afb9ed6d0be28fecb00016d22ec4d5a508de471cae9cbf46a2c351ec7cf88",
+      "mtime_utc": "2026-11-02T19:54:25.493979+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_native_message.o",
+      "source": "anadius-socket-source/native_message.cpp",
+      "bytes": 15537,
+      "sha256": "7c1bfe0e44dd7ac1fbccaaa82048703d46ba809853d01f386d1b2d5cbb6b4a86",
+      "mtime_utc": "2026-11-02T19:54:26.415686+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_append_growth.o",
+      "source": "anadius-socket-source/append_growth.cpp",
+      "bytes": 4906,
+      "sha256": "b5daca9b06975ee65b336509e2742720133e61d286b935884948ba2f9469dd04",
+      "mtime_utc": "2026-11-02T19:54:27.417836+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_prefix_cipher.o",
+      "source": "anadius-socket-source/prefix_cipher.cpp",
+      "bytes": 11971,
+      "sha256": "8bb05189ca8cf2a5ad9dadf8077c2b2173397d7f40b1d62ecb163c2f36a5d36a",
+      "mtime_utc": "2026-11-02T19:54:28.448853+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_cipher_session.o",
+      "source": "anadius-socket-source/cipher_session.cpp",
+      "bytes": 17861,
+      "sha256": "7a07c67b235cc3e9cae45007afc4b4fa20afd2ec101098585f304878204871a0",
+      "mtime_utc": "2026-11-02T19:54:29.486281+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_native_dispatch.o",
+      "source": "anadius-socket-source/native_dispatch.cpp",
+      "bytes": 9968,
+      "sha256": "daa0f93c9db9d0f94943743bce561af0946c1a0381571635b3eb852f756813d5",
+      "mtime_utc": "2026-11-02T19:54:30.408473+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_native_document.o",
+      "source": "anadius-socket-source/native_document.cpp",
+      "bytes": 16389,
+      "sha256": "0c093e33d0cfe3277a6a87dd18513daf1cd2556330299f815e819242ee41f939",
+      "mtime_utc": "2026-11-02T19:54:31.342881+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_document_clear.o",
+      "source": "anadius-socket-source/document_clear.cpp",
+      "bytes": 7371,
+      "sha256": "523cee42092f093c8f58fbe955a4c66285badcdbfb8f760ad432ef8ba1bedc93",
+      "mtime_utc": "2026-11-02T19:54:32.291195+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_delete.o",
+      "source": "anadius-socket-source/node_delete.cpp",
+      "bytes": 6795,
+      "sha256": "61e2f69426a73bf2373ecbb3bebcef22ddac7c8e78dd75615f31cefd635b400b",
+      "mtime_utc": "2026-11-02T19:54:33.231551+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_release.o",
+      "source": "anadius-socket-source/pool_release.cpp",
+      "bytes": 8307,
+      "sha256": "c3e862dcacc99d7209f1e2b0aae5f068d124ce44ede05dba975b2c8badfd9124",
+      "mtime_utc": "2026-11-02T19:54:34.135539+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_allocate.o",
+      "source": "anadius-socket-source/pool_allocate.cpp",
+      "bytes": 9501,
+      "sha256": "148517cea74c58c8cdb38f853e14e530dc7362e7eb81eb31918a59f080929972",
+      "mtime_utc": "2026-11-02T19:54:34.992468+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_append.o",
+      "source": "anadius-socket-source/pool_append.cpp",
+      "bytes": 4682,
+      "sha256": "e21b58dea9d814d9857da940df09fd4541e6b7da70a3d181cddb9a56a4faa583",
+      "mtime_utc": "2026-11-02T19:54:35.814597+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_clear.o",
+      "source": "anadius-socket-source/pool_clear.cpp",
+      "bytes": 4875,
+      "sha256": "f822722b428c40463166cb52dc6482e14e2606840d464f78321cd6d1b1fb2e50",
+      "mtime_utc": "2026-11-02T19:54:36.719870+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_destruct.o",
+      "source": "anadius-socket-source/pool_destruct.cpp",
+      "bytes": 6345,
+      "sha256": "5be45c92577ab3c4c1a6ea21a6eb6267629e642191486f7ed5efd50c90fb691a",
+      "mtime_utc": "2026-11-02T19:54:37.626494+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_base.o",
+      "source": "anadius-socket-source/node_base.cpp",
+      "bytes": 7357,
+      "sha256": "59580fb4c037099e833ecd834fe29f1af569377fc71fa6fb0f48d61ff2d6e326",
+      "mtime_utc": "2026-11-02T19:54:38.547585+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_parse_entry.o",
+      "source": "anadius-socket-source/parse_entry.cpp",
+      "bytes": 7599,
+      "sha256": "4f20c79619a4ce64a936afeba54eb9ed3455fcfcc06906bf2d952464d259eafa",
+      "mtime_utc": "2026-11-02T19:54:39.448709+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_document_error.o",
+      "source": "anadius-socket-source/document_error.cpp",
+      "bytes": 10006,
+      "sha256": "6fce58e036543316cb2bc1b6ff49dcd5ec49ac02f2d1759c6ded273149d6f89c",
+      "mtime_utc": "2026-11-02T19:54:40.359472+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_parse.o",
+      "source": "anadius-socket-source/node_parse.cpp",
+      "bytes": 19172,
+      "sha256": "75de615c6f7988e13468e8ecaab55f2d5592eb73ed89a9dc9df9500b0e8be9cc",
+      "mtime_utc": "2026-11-02T19:54:41.341595+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_identify.o",
+      "source": "anadius-socket-source/node_identify.cpp",
+      "bytes": 12997,
+      "sha256": "bed42864fbbcf9bfcff7c54962a286fcdf2a114840debf7f2368b6ddd58cfc73",
+      "mtime_utc": "2026-11-02T19:54:42.261693+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_constructors.o",
+      "source": "anadius-socket-source/node_constructors.cpp",
+      "bytes": 17320,
+      "sha256": "9af3c6487671322f3c56ba368df1b7119f5d30d0d976a9e6826921bb91a737dc",
+      "mtime_utc": "2026-11-02T19:54:43.178431+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_insertion.o",
+      "source": "anadius-socket-source/node_insertion.cpp",
+      "bytes": 17357,
+      "sha256": "13671e195c84c86995bf666681d6cd5965a36b94efc73831ff97427d7219fd68",
+      "mtime_utc": "2026-11-02T19:54:44.118023+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_string.o",
+      "source": "anadius-socket-source/node_string.cpp",
+      "bytes": 18889,
+      "sha256": "09124f93389a4c441e2d68f206c5375e2f5bd54f5f1831ff3dddb0353ef6b4af",
+      "mtime_utc": "2026-11-02T19:54:45.076251+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/server.o",
+      "source": "anadius-server-source/server.cpp",
+      "bytes": 43975,
+      "sha256": "9ae326a07009c78f2b63f3116c6e8c173825529a8e8baefa05588f0d264c889d",
+      "mtime_utc": "2026-11-02T19:54:45.753561+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/messages.o",
+      "source": "anadius-messages-source/messages.cpp",
+      "bytes": 22969,
+      "sha256": "9b3ec45fe2565a31824a6c23a5ece0f794e682b60fedceeb8ff86a8081d15a45",
+      "mtime_utc": "2026-11-02T19:54:46.178555+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/handlers.o",
+      "source": "anadius-handlers-source/handlers.cpp",
+      "bytes": 17444,
+      "sha256": "d46741ac8621889f51698179a0778341f5c4744905bdeee75bef445e5419be2b",
+      "mtime_utc": "2026-11-02T19:54:46.575558+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/crypto.o",
+      "source": "anadius-crypto-source/crypto.cpp",
+      "bytes": 20097,
+      "sha256": "dcbdbd85a08ec6f3a06202792cacef9006615c41af830da73dee70aa09a1a5c0",
+      "mtime_utc": "2026-11-02T19:54:47.530025+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/xml_printer.o",
+      "source": "anadius-xml-source/memory_printer.cpp",
+      "bytes": 17237,
+      "sha256": "5e14a7e67a9297505acb811259894773b1345c4a5e4301f6afdf3350d1c66b64",
+      "mtime_utc": "2026-11-02T19:54:47.976176+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/xml_reader.o",
+      "source": "anadius-xml-reader-source/reader.cpp",
+      "bytes": 25616,
+      "sha256": "38c39d3bdd0ca991ce9176c9ad77d9545d839b2d7d985f9ea8e558686b29579a",
+      "mtime_utc": "2026-11-02T19:54:48.583650+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/tinyxml2_compat.o",
+      "source": "anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.cpp",
+      "bytes": 98222,
+      "sha256": "ca04fb1182e83342fe5b5ae792833c0a8b686a45dd473e879fe56f8f6e6410b3",
+      "mtime_utc": "2026-11-02T19:54:49.027263+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/licensing.o",
+      "source": "anadius-license-source/license.cpp",
+      "bytes": 48451,
+      "sha256": "8fb43a77feac1d531ca9183c8cd9f7795509b1a75ef8ebfc2d9aebd803822d0f",
+      "mtime_utc": "2026-11-02T19:54:49.588950+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/hash.o",
+      "source": "anadius-hash-source/hash.cpp",
+      "bytes": 6875,
+      "sha256": "0347467d9d9ee37ec3f6fbfcc30b32f88c2bea5e1335ae4bb9548b5d658eed86",
+      "mtime_utc": "2026-11-02T19:54:50.192378+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/token.o",
+      "source": "anadius-token-source/token.cpp",
+      "bytes": 5736,
+      "sha256": "343d2f4d2fdd93361ba92db84ab75012959749ef17c79c81c2621526c2a25cd1",
+      "mtime_utc": "2026-11-02T19:54:50.614377+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/file_io.o",
+      "source": "anadius-file-source/binary_io.cpp",
+      "bytes": 4062,
+      "sha256": "62a624060549d1de2905e7739df019201d796a1b1b147f0765afea7fc41192b2",
+      "mtime_utc": "2026-11-02T19:54:51.024456+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/file_io_native.o",
+      "source": "anadius-file-source/native_io.cpp",
+      "bytes": 44780,
+      "sha256": "48ca79610faf529829e34f37c4526bd4f740fcb97e3e8dbfde9b87b770078a8d",
+      "mtime_utc": "2026-11-02T19:54:51.728909+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/license_files.o",
+      "source": "anadius-file-source/license_files.cpp",
+      "bytes": 36005,
+      "sha256": "ce66b67d88ed7a94da761f10d824989cf8fa9bde695d219e90f7716b43d2fe9f",
+      "mtime_utc": "2026-11-02T19:54:52.341918+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/status.o",
+      "source": "anadius-status-source/status.cpp",
+      "bytes": 6384,
+      "sha256": "40ff7985d5d8d7b7c4e9669f31c8d874a6aeff384c04a9aca22a2397f97c1e0f",
+      "mtime_utc": "2026-11-02T19:54:52.728915+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/status_native.o",
+      "source": "anadius-status-source/native_status.cpp",
+      "bytes": 4459,
+      "sha256": "20cd1705df1b8bbca2a2b6bef26fc30050a59c40abf6c2d3f716edce6bcdb609",
+      "mtime_utc": "2026-11-02T19:54:53.417475+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/paths.o",
+      "source": "anadius-path-source/paths.cpp",
+      "bytes": 18689,
+      "sha256": "17190855fb9b3e8765cd6bd4bb833e1a03a8df65ccdf627395d486098a4d0958",
+      "mtime_utc": "2026-11-02T19:54:53.846392+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/encoding.o",
+      "source": "anadius-encoding-source/encoding.cpp",
+      "bytes": 10711,
+      "sha256": "a480674fb9d76ca0251328ed3d47a8d2cd764025c00e43891c75905c212db1d9",
+      "mtime_utc": "2026-11-02T19:54:54.252300+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/encoding_native.o",
+      "source": "anadius-encoding-source/native_encoding.cpp",
+      "bytes": 11783,
+      "sha256": "fa5a4f94421bdbf82bfd9184fe2655e5bc577fc0abafc902e52143d1a210a4d5",
+      "mtime_utc": "2026-11-02T19:54:54.926514+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/windows_effects.o",
+      "source": "anadius-windows-source/windows_effects.cpp",
+      "bytes": 8543,
+      "sha256": "f4fd0b8a38f2dd8c810a2efb3669351ba6878edf6503332b6ffd6372e480ef82",
+      "mtime_utc": "2026-11-02T19:54:55.364077+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/content_handlers.o",
+      "source": "anadius-content-handlers-source/content_handlers.cpp",
+      "bytes": 46403,
+      "sha256": "312363a9a2b474182204bab0562d108a82e35e97b9f85bf69bf83e4b2cff82fd",
+      "mtime_utc": "2026-11-02T19:54:56.012247+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/content_effects.o",
+      "source": "anadius-content-effects-source/effects.cpp",
+      "bytes": 75545,
+      "sha256": "b7495d618b9e6f7330f8463f68b5e4d98796cd0cd59b127cadb67a52c5c73a3a",
+      "mtime_utc": "2026-11-02T19:54:57.368718+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/information_effects.o",
+      "source": "anadius-information-effects-source/effects.cpp",
+      "bytes": 40686,
+      "sha256": "91a34ff5a6a99307ea6c93b45e658bbe3c4e9db507b76eaed8dc04156ab1e0bd",
+      "mtime_utc": "2026-11-02T19:54:58.599458+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/application_io.o",
+      "source": "anadius-application-io-source/files.cpp",
+      "bytes": 21841,
+      "sha256": "b20a31fd04a60b1e510ff046946f696f07c9eb9b7b83879a08deaabe94184fa8",
+      "mtime_utc": "2026-11-02T19:54:59.427537+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/licensing_effects.o",
+      "source": "anadius-licensing-effects-source/effects.cpp",
+      "bytes": 155438,
+      "sha256": "4ccf2fb44d8779f07adc20e506fccdc592dcc89f39173b8bf72078481c56ca9f",
+      "mtime_utc": "2026-11-02T19:55:01.052598+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/application_effects.o",
+      "source": "anadius-application-effects-source/factory.cpp",
+      "bytes": 30776,
+      "sha256": "d52cb7ac5e445c333c798cb5f180daa32ee63a704ab6ae012d4a0221f9c4eaf0",
+      "mtime_utc": "2026-11-02T19:55:02.456687+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/bound_library.o",
+      "source": "anadius-library-effects-source/bound.cpp",
+      "bytes": 27627,
+      "sha256": "3627e3a47cb4bbe4e5b4a51aa02cce86b6620b76b68c36ad36feafafd6c25acf",
+      "mtime_utc": "2026-11-02T19:55:03.449762+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/resources_factory.o",
+      "source": "anadius-resources-factory-source/factory.cpp",
+      "bytes": 58243,
+      "sha256": "c73fd39a058a658b77a2c777eed8096e86952e18f79cc7e665f08d7fea065297",
+      "mtime_utc": "2026-11-02T19:55:05.218147+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/resources_configuration.o",
+      "source": "anadius-resources-factory-source/configuration.cpp",
+      "bytes": 7169,
+      "sha256": "288a5f2747ce555f01f9ed0ecc6a732aadd5815adc37125c1fd23829768e7278",
+      "mtime_utc": "2026-11-02T19:55:06.579173+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/module_reference.o",
+      "source": "anadius-module-reference-source/reference.cpp",
+      "bytes": 13924,
+      "sha256": "58348a0355b6a80acfc4f11162383a200bd73074a2ab178a922a8349d546bc4f",
+      "mtime_utc": "2026-11-02T19:55:07.371619+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/permanent_errors.o",
+      "source": "anadius-permanent-errors-source/errors.cpp",
+      "bytes": 5657,
+      "sha256": "ff4d6df7c7196009b740af89531ecf9200de93d4b051936a6ec5c0b16923dd0e",
+      "mtime_utc": "2026-11-02T19:55:08.357778+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/initial_domain_factory.o",
+      "source": "anadius-thread-domain-source/factory.cpp",
+      "bytes": 8153,
+      "sha256": "f7ccbd27f758b480c9df2e33e6d46ba17990295dec54ba65117a3bb90beb46ce",
+      "mtime_utc": "2026-11-02T19:55:09.109176+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_engine.o",
+      "source": "hook-engine-source/owned.cpp",
+      "bytes": 23955,
+      "sha256": "60a255f66bc9621e0f9d70180b85022dd6197a185fa972a1da3551385dc65e79",
+      "mtime_utc": "2026-11-02T19:55:09.675556+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/host_engine.o",
+      "source": "anadius-host-platform-source/engine.cpp",
+      "bytes": 14884,
+      "sha256": "16401f59aa9d7b62157c19fade40b7e97004d61db7b1a687781eda99660f30e5",
+      "mtime_utc": "2026-11-02T19:55:10.918217+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/pre_unload.o",
+      "source": "anadius-pre-unload-source/shutdown.cpp",
+      "bytes": 14489,
+      "sha256": "5ff7e840cfbdad4523a08532b6a9644bd5c06e028b3203629e446cdbbe9c4bb8",
+      "mtime_utc": "2026-11-02T19:55:11.806487+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/misc_handlers.o",
+      "source": "anadius-misc-handlers-source/misc_handlers.cpp",
+      "bytes": 13475,
+      "sha256": "3dc2b97e5a09d1a1633e4dd9d69db0e3a893841c5bdaf5eda69da24e7d2e3bc2",
+      "mtime_utc": "2026-11-02T19:55:12.192764+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/dispatch.o",
+      "source": "anadius-dispatch-source/router.cpp",
+      "bytes": 39203,
+      "sha256": "7deca76f5b3760efdefc504abd8f15ef9d3e70292d9df1f72c4f33fd9b9a79e4",
+      "mtime_utc": "2026-11-02T19:55:12.786726+00:00"
+    },
+    {
+      "path": "outputs/source-workspace/build/preloader.o",
+      "source": "preloader-source/preloader_core.cpp",
+      "bytes": 4843,
+      "sha256": "c424ac0acefe3ecc6c52e0b58d953b237215c73079163571660230e06257a77e",
+      "mtime_utc": "2026-11-02T19:55:13.349726+00:00"
+    }
+  ],
+  "executables": [
+    {
+      "path": "outputs/source-workspace/build/bootstrap_mock_tests.exe",
+      "module": "bootstrap",
+      "sha256": "053cbc1a626fae2325bfd6209453eaedb36ebcff53f40f89d8feb6262f2031a3",
+      "bytes": 1488384
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_threads_mock_tests.exe",
+      "module": "crt_threads",
+      "sha256": "34083241ad3820b2175f9bebfd956c9a3bc070b45745b05ae52457e8abac20d8",
+      "bytes": 1489408
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_runtime_mock_tests.exe",
+      "module": "crt_runtime",
+      "sha256": "19f92999e91ad0b7a47fd61c73488180af43ac442fe38946bd67560decf9d314",
+      "bytes": 1489920
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_errors_mock_tests.exe",
+      "module": "crt_errors",
+      "sha256": "569a1b20b4bd76499122c7bc426a15ec40713dc2f12bf5cc169e88023f85d7d3",
+      "bytes": 1468416
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_ptd_mock_tests.exe",
+      "module": "crt_ptd",
+      "sha256": "7de7f16a8e36ff4c02cfc9021d41aeb690dc36acfb7973d45ce1a25ccac155a9",
+      "bytes": 1481216
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_ptd_data_mock_tests.exe",
+      "module": "crt_ptd_data",
+      "sha256": "f38065489187069baa5108c7fe5b2caeb1766532f83d466bbe9bc8f0e0d9453e",
+      "bytes": 1483776
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_heap_mock_tests.exe",
+      "module": "crt_heap",
+      "sha256": "2b3f7811be8b3c2f9df28e646d0a9d11e3eeafe027651ac6c5a87af5ac59a153",
+      "bytes": 1468416
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_realloc_mock_tests.exe",
+      "module": "crt_realloc",
+      "sha256": "ab1e3c0efe563b7f0451b500c51ad30c3e8952f4da585e172063521c134a2a93",
+      "bytes": 1468928
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_recalloc_mock_tests.exe",
+      "module": "crt_recalloc",
+      "sha256": "5f271511d9eb9f08ee4cc2d7d3ca89c0f2004deec6f229b2207a4c226e13df5c",
+      "bytes": 1476096
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_recalloc_bridge_mock_tests.exe",
+      "module": "crt_recalloc_bridge",
+      "sha256": "31e4ed7d3d99b18d1f72b868102b6bca606c296db4325e80a5429ebb77a199c3",
+      "bytes": 1571328
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_conversion_mock_tests.exe",
+      "module": "crt_conversion",
+      "sha256": "9f2d9efff6c48be61f711d6df8d50c4b452f8c2cf0dffeaaa09509fc0d9ea204",
+      "bytes": 1473024
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_conversion_api_mock_tests.exe",
+      "module": "crt_conversion_api",
+      "sha256": "c9894d324c8f5b2c7a344d2d539f46098bc6f413536f99fc3f0451dda93bc70f",
+      "bytes": 1472000
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_conversion_bridge_mock_tests.exe",
+      "module": "crt_conversion_bridge",
+      "sha256": "b7d5f295b0672e71b7e00af1eceb3c83f19dc57d705a1d685247bd0180f0424c",
+      "bytes": 1590272
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_module_path_mock_tests.exe",
+      "module": "crt_module_path",
+      "sha256": "fb7a53fc93dccf18381b9f677a68353c53d87641cff65ced5a9809d2f80dfcea",
+      "bytes": 1477632
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_find_native_mock_tests.exe",
+      "module": "crt_find_native",
+      "sha256": "47d3ab7aae6b642e514e5944956df2bf8f6aaabcc734cc518252117c82c1cb6b",
+      "bytes": 1480192
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_find_bridge_mock_tests.exe",
+      "module": "crt_find_bridge",
+      "sha256": "852646f7b712c797b9b6c1b475cba2962eb0e7cec3159944396d8d3646e0b19a",
+      "bytes": 1608192
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_update_mock_tests.exe",
+      "module": "crt_locale_update",
+      "sha256": "dd587309feece986ebcf0aee4c1577803e4f38626c2b3388c7fc1a1b7abb79f0",
+      "bytes": 1508352
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_thread_mock_tests.exe",
+      "module": "crt_locale_thread",
+      "sha256": "882881faedf8879925cf6e36907c6469d52d80f04e907a8a3e5e38f054b89649",
+      "bytes": 1498112
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_bridge_mock_tests.exe",
+      "module": "crt_locale_bridge",
+      "sha256": "8cddbd2a557a647e131deed0cce32923ff35d98188426115c7e1e7563b463f38",
+      "bytes": 1630208
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_ref_mock_tests.exe",
+      "module": "crt_locale_ref",
+      "sha256": "0fe04017815d36192da886ef423a38aa024d9159d69838c957eb8a12af11d944",
+      "bytes": 1475072
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_free_mock_tests.exe",
+      "module": "crt_locale_free",
+      "sha256": "1295fb5f5ead84a604586ee7158ab5737f9a30bf89a516d4ec91d24e6cc8d282",
+      "bytes": 1491456
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_resource_bridge_mock_tests.exe",
+      "module": "crt_locale_resource_bridge",
+      "sha256": "1a993853455dfe379f92b887def5566b5e627bfc28f7df33b685b8ff7eb009a9",
+      "bytes": 1644032
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_multibyte_support_mock_tests.exe",
+      "module": "crt_multibyte_support",
+      "sha256": "1dcb03c26aa4f456cbe12affe91802b79604f26a6819318aadc15d50ca9bf450",
+      "bytes": 1505792
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_multibyte_control_mock_tests.exe",
+      "module": "crt_multibyte_control",
+      "sha256": "28fd44ce92fb47232345f4307142bd0035175f68727f1f2e31dcfd499a53dbbb",
+      "bytes": 775680
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_multibyte_bridge_mock_tests.exe",
+      "module": "crt_multibyte_bridge",
+      "sha256": "ce5cdd0993cbf65392ab06eec7eff31165acfada91dc820655a58de48de26c3c",
+      "bytes": 1659392
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_multibyte_tables_mock_tests.exe",
+      "module": "crt_multibyte_tables",
+      "sha256": "eefb93652b447bd319c5f78d48a0737dd14235750b6a4dac9845676d465e7891",
+      "bytes": 1465344
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_multibyte_builder_mock_tests.exe",
+      "module": "crt_multibyte_builder",
+      "sha256": "f072aa7290c3c92b7b61ce96663dea130b8ee29a9bf49bd49a0cb64c28a3ccb5",
+      "bytes": 542720
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_multibyte_record_bridge_mock_tests.exe",
+      "module": "crt_multibyte_record_bridge",
+      "sha256": "d11a5225bef2dcb86966596020bd90006c0672d7b5a890abf880db8c9549ccf3",
+      "bytes": 1684480
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_string_type_mock_tests.exe",
+      "module": "crt_string_type",
+      "sha256": "ca90f49d1bd49a37ab85ba085d637438f2a09483fef3fde6c8991045d6b2c19f",
+      "bytes": 1472000
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_lcmap_mock_tests.exe",
+      "module": "crt_lcmap",
+      "sha256": "ac6f77574a980539af128e7c85d9852831d0a3ee74eb5b7eed54003ba647da09",
+      "bytes": 1479680
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_nls_bridge_mock_tests.exe",
+      "module": "crt_nls_bridge",
+      "sha256": "18bd35ae9388c29e4b70bcf15e81e257d321c8a0f012debdad664aa72490edac",
+      "bytes": 1706496
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_names_mock_tests.exe",
+      "module": "crt_locale_names",
+      "sha256": "a30763824cae6d5f5b69112d7752752f7e180aba9883923294423908e3865746",
+      "bytes": 1469952
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_nls_dispatch_mock_tests.exe",
+      "module": "crt_nls_dispatch",
+      "sha256": "7353e0ddce7196992ace865b756a46257d2d3128e906b15ba9900bf4326227da",
+      "bytes": 1464320
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_nls_dispatch_bridge_mock_tests.exe",
+      "module": "crt_nls_dispatch_bridge",
+      "sha256": "8af008b5abd49db7ef68d4a0a04a837e50d7dd1cd77a35bb807bc725a9d4014c",
+      "bytes": 1736704
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_nls_native_mock_tests.exe",
+      "module": "crt_nls_native",
+      "sha256": "7de1a5547b6671e5a0fd9b5f27f55b4c04f1c7ba82def7346f4aa7469f0dfcf5",
+      "bytes": 545792
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_nls_dispatch_native_mock_tests.exe",
+      "module": "crt_nls_dispatch_native",
+      "sha256": "e551a8721fcd73bc84317745dc2073f223dd70eb6291ea8b2160806069f02597",
+      "bytes": 540160
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_nls_native_bridge_mock_tests.exe",
+      "module": "crt_nls_native_bridge",
+      "sha256": "e1a90c3e1d26b5b6c4f825dfa0861ab48f8ef7d074045f65a333553281a57679",
+      "bytes": 1711616
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_heap_native_mock_tests.exe",
+      "module": "crt_heap_native",
+      "sha256": "c5f4d3cf8c691b28691dc59919a40ebad514571256546ee8df00c0476dc93aea",
+      "bytes": 536064
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_heap_native_bridge_mock_tests.exe",
+      "module": "crt_heap_native_bridge",
+      "sha256": "fe4dc8a369db93b4a4a520a90f08af582a17c05397fd08e2d724eff030e00828",
+      "bytes": 1728000
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_fls_native_mock_tests.exe",
+      "module": "crt_fls_native",
+      "sha256": "40e3e4f764aa707adcb970575a8a78fc4c7a8ff9cb0d03331e358abfa694ab75",
+      "bytes": 1526784
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_lock_native_mock_tests.exe",
+      "module": "crt_lock_native",
+      "sha256": "bd37395a559e08cd2d5e5160a1ff0af0fd1d3a5144d8706d141c315aa9efe177",
+      "bytes": 788992
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_atomic_native_mock_tests.exe",
+      "module": "crt_atomic_native",
+      "sha256": "3911c6f57c9c6832c2cc8b184c56c817dd4ee330464f8a51e23183bfbbed0e3a",
+      "bytes": 1474560
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_sync_bridge_mock_tests.exe",
+      "module": "crt_sync_bridge",
+      "sha256": "0acbac786085d08b7f015785935b8c71c41d3a272372fea8f538b53f072383e1",
+      "bytes": 1572352
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_counter_native_mock_tests.exe",
+      "module": "crt_counter_native",
+      "sha256": "5b30b5d9a7079270d3c1bd89e0c4a057af2820352eb60f8ef6f6742def2f1043",
+      "bytes": 1483264
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_native_mock_tests.exe",
+      "module": "crt_locale_native",
+      "sha256": "ec76b505b2eeed8af21b50f24a2d59c85836e4a75046d84ed4f454a67457f596",
+      "bytes": 1634816
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_initial_locale_mock_tests.exe",
+      "module": "crt_initial_locale",
+      "sha256": "9ddc40acef9b494b85c6b59c8528e9e9b2b857e5aa8a5c36995f204cbe9f761e",
+      "bytes": 1474048
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_initial_multibyte_mock_tests.exe",
+      "module": "crt_initial_multibyte",
+      "sha256": "2532364121b9778ab98190f7932ad5ec2e296b7bb7653ea18934ed070c492c31",
+      "bytes": 1456640
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_initial_state_mock_tests.exe",
+      "module": "crt_initial_state",
+      "sha256": "b65ed928c1eb43896449ed5843560a5b75e176123ebe85580b5d07bd832b8ebe",
+      "bytes": 1506816
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locale_startup_mock_tests.exe",
+      "module": "crt_locale_startup",
+      "sha256": "5055cbff11de9074350f07381a23b0830a60b6c7354dbaf68f7ddfe2cadc24e2",
+      "bytes": 1582080
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_environment_cleanup_mock_tests.exe",
+      "module": "crt_environment_cleanup",
+      "sha256": "d9b62855ef88463f4a3533f1c91299079fefc61a918f5c9fc61b7660b437eb7d",
+      "bytes": 1480704
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_lifecycle_callbacks_mock_tests.exe",
+      "module": "crt_lifecycle_callbacks",
+      "sha256": "19d98e7eb43b5e048d39237943186a84775f9423c7e7da0c05f34600bd5d9b45",
+      "bytes": 1512960
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_pair_leaves_mock_tests.exe",
+      "module": "crt_pair_leaves",
+      "sha256": "a361f9d340afe0d12f7c197b9b04ab6b29369c4a2a87654833855af0d255becb",
+      "bytes": 1473536
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_lowio_lifecycle_mock_tests.exe",
+      "module": "crt_lowio_lifecycle",
+      "sha256": "4c878d6d6181fe89e882ab8cbf4957f4c950c1567e0cb3e9fe1cfca77e0e7105",
+      "bytes": 1475072
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_pair_bindings_mock_tests.exe",
+      "module": "crt_pair_bindings",
+      "sha256": "c2ae93c0818f5266efdc339952ac183b560d5915cca1cd5f41a74b8da8e8e56a",
+      "bytes": 1602560
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_invalid_mock_tests.exe",
+      "module": "crt_invalid",
+      "sha256": "b0038717b279d0334ae12b6c8170eab1d68236d0d44c328a4f45f364b1a16f21",
+      "bytes": 1472512
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_glue_mock_tests.exe",
+      "module": "crt_glue",
+      "sha256": "24e9efaaf81c9cd417857e6ddde6841d7409f27229d6f8da3b677a90e3d9b47c",
+      "bytes": 1495552
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_cache_mock_tests.exe",
+      "module": "crt_cache",
+      "sha256": "30e8ee8ac49985c049d3171340c949bdbcfbaeee1ecb580b071d002414c60b95",
+      "bytes": 1472000
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_onexit_mock_tests.exe",
+      "module": "crt_onexit",
+      "sha256": "576bbce71afd3c813d76ada8643d6ff4b84d5e1d9f4ccec9239779dbcd8eddfd",
+      "bytes": 1466880
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_entry_mock_tests.exe",
+      "module": "crt_entry",
+      "sha256": "e3abfe4ad5f189f5e363d6b6f9e00352aeb9494ca41b65dc7a09b06ba56afee2",
+      "bytes": 1480192
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_initializers_mock_tests.exe",
+      "module": "crt_initializers",
+      "sha256": "a50f2bb71469200f0b19f451d4aa69e4d364309e0614ccec7577111245863d80",
+      "bytes": 1510400
+    },
+    {
+      "path": "outputs/source-workspace/build/vcrt_ptd_mock_tests.exe",
+      "module": "vcrt_ptd",
+      "sha256": "6c73d0f63dfaa8c02eb7dbc8ba9780a61c4fe8a29a47451cb59b265747745bb9",
+      "bytes": 568320
+    },
+    {
+      "path": "outputs/source-workspace/build/vcrt_api_mock_tests.exe",
+      "module": "vcrt_api",
+      "sha256": "3a3949e695a64312636df78ae89d69267f80a3b0d6115d91d7c6e89d3128765b",
+      "bytes": 1480704
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_locks_mock_tests.exe",
+      "module": "crt_locks",
+      "sha256": "33d7a043a8ce0a16a9ca79c6d64d1b4001df39535205a246aea82a4a8a3d931c",
+      "bytes": 1487360
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_cpu_mock_tests.exe",
+      "module": "crt_cpu",
+      "sha256": "b6f80a7ad91b3477faf50bf6a9cb494dc7fb80873ef613243800b6a930da01bd",
+      "bytes": 1455104
+    },
+    {
+      "path": "outputs/source-workspace/build/vcrt_bridge_mock_tests.exe",
+      "module": "vcrt_bridge",
+      "sha256": "30c670e3c8780ababd95e9577544a71cecd7c883e857fb05fa631690ea62a68b",
+      "bytes": 1535488
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_support_mock_tests.exe",
+      "module": "crt_support",
+      "sha256": "485c50e7a7c14677954d3fcd12ca6be4cc51808d84e8b038ed65620f55619a8c",
+      "bytes": 1461760
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_environment_mock_tests.exe",
+      "module": "crt_environment",
+      "sha256": "a74ea2198b1368bb60dcd3973e59f975c2928c4dc6b5e4ff2afa3e4acc431713",
+      "bytes": 1481216
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_termination_mock_tests.exe",
+      "module": "crt_termination",
+      "sha256": "f16c67306c81812bd4c491faf1c24598c2303054c293cfb1516248c0148cc2d1",
+      "bytes": 1513984
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_startup_bridge_mock_tests.exe",
+      "module": "crt_startup_bridge",
+      "sha256": "1abea8cb3c50aeef4d12f57b3f3720200299670ef8fa43ee196ae95e8bcc6725",
+      "bytes": 1571328
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_argv_parser_mock_tests.exe",
+      "module": "crt_argv_parser",
+      "sha256": "31e3a4c00cd4b7ca5a98f1e985efaae6a5a9c15af75c6db875c3547c073a1a21",
+      "bytes": 1474560
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_argv_mock_tests.exe",
+      "module": "crt_argv",
+      "sha256": "cc3a671f9cc2160c555cebbe3c5e7cc648dbe8cee675a2f9154c33587c1c5621",
+      "bytes": 1489920
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_byteclass_mock_tests.exe",
+      "module": "crt_byteclass",
+      "sha256": "cc45df70a8b8fe4390fc01656beb1c824e95a02cbf0727a36d26758b5e96a7d2",
+      "bytes": 1453056
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_argv_bridge_mock_tests.exe",
+      "module": "crt_argv_bridge",
+      "sha256": "8e917c16a9e754487f11d85667d79bcd0710fe6a92186155ba406439770cfeaa",
+      "bytes": 1599488
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_wildcard_storage_mock_tests.exe",
+      "module": "crt_wildcard_storage",
+      "sha256": "9b126a417d4ad5ea91f84d806d84581a6ca4365b8f2a6510171439387cedfa4a",
+      "bytes": 1487360
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_wildcard_search_mock_tests.exe",
+      "module": "crt_wildcard_search",
+      "sha256": "e2024f83ec495c0395e349cc8d906b19bd35d02ecdb0b178b4d435108b16d6ea",
+      "bytes": 1485824
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_sort_mock_tests.exe",
+      "module": "crt_sort",
+      "sha256": "d02aed7b81180cb09804f86cc74939c17008039b676830ef03c4223ba55a54f9",
+      "bytes": 1553920
+    },
+    {
+      "path": "outputs/source-workspace/build/crt_wildcard_mock_tests.exe",
+      "module": "crt_wildcard",
+      "sha256": "381c0d7a2dd674b2ece30c1cc8fb981c094f90c613dcf4907596c6614a1ab969",
+      "bytes": 1573376
+    },
+    {
+      "path": "outputs/source-workspace/build/thread_native_mock_tests.exe",
+      "module": "thread_native",
+      "sha256": "7eec3fa86f42bc4ec81f36e9f7e41f6704a872ad6e46d4d93f70e5c9683d02e8",
+      "bytes": 1487872
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_native_mock_tests.exe",
+      "module": "bootstrap_native",
+      "sha256": "26e40722a77b2da6f30ed6342b11973186d175d1ea0fa46580ea47100e34328a",
+      "bytes": 1499648
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_owner_mock_tests.exe",
+      "module": "bootstrap_owner",
+      "sha256": "d3ee538fc2eaa641b2d5508327e290bbbe65626c6290186e851f171a78b1086d",
+      "bytes": 1715200
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_owner_integration_mock_tests.exe",
+      "module": "bootstrap_owner_integration",
+      "sha256": "48b3d6d3c56b4b68814bda336b4db2dd9310bf1815e0cfed186367e6e32c80a7",
+      "bytes": 1708032
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_backend_mock_tests.exe",
+      "module": "bootstrap_backend",
+      "sha256": "16c33f025dccfc4357d2f5d8a641f9bf584bdefb55705535d6db849ca03f0dc8",
+      "bytes": 1545216
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_backend_integration_mock_tests.exe",
+      "module": "bootstrap_backend_integration",
+      "sha256": "972ab314d54575c81a4fffc7201e4b17257e0923d6ae225f91663f183e7018b6",
+      "bytes": 1928704
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_callbacks_mock_tests.exe",
+      "module": "bootstrap_callbacks",
+      "sha256": "f8bd82af70594207fd0f454f091405d001bd0e0f82c602dcd8aad669bec14c5f",
+      "bytes": 1534976
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_factory_mock_tests.exe",
+      "module": "bootstrap_factory",
+      "sha256": "3e65277163d83e25a8cf1d8d564a12e0d8b38e436bb813f9f6f2f4ef5164d1bd",
+      "bytes": 1977344
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_providers_mock_tests.exe",
+      "module": "bootstrap_providers",
+      "sha256": "29178e8bc782ef54707e2497daca646254ca18477af03590f5e706073897e00d",
+      "bytes": 1612288
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_providers_integration_mock_tests.exe",
+      "module": "bootstrap_providers_integration",
+      "sha256": "87057952bf9d108ce29cd19d65bbad1b94a78b414232d3d09af549673451dcf6",
+      "bytes": 1996288
+    },
+    {
+      "path": "outputs/source-workspace/build/thread_domain_mock_tests.exe",
+      "module": "thread_domain",
+      "sha256": "6384a4481d895ac4d32e6012a957a36e5acbaee2b5722b17c3b519188438540d",
+      "bytes": 1654784
+    },
+    {
+      "path": "outputs/source-workspace/build/thread_domain_integration_mock_tests.exe",
+      "module": "thread_domain_integration",
+      "sha256": "ea3133c9b6d51c53202ecfc3fcbc5caf64c46b64f36648f50de57c8487e29e0f",
+      "bytes": 2059776
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_policies_mock_tests.exe",
+      "module": "bootstrap_policies",
+      "sha256": "e40fb859bd6259dbc7d0bd6dca00fafdb69d3ab13e1dd65e51bcb63610fc95e3",
+      "bytes": 1833984
+    },
+    {
+      "path": "outputs/source-workspace/build/bootstrap_policies_integration_mock_tests.exe",
+      "module": "bootstrap_policies_integration",
+      "sha256": "c0e5a353e0f4c7ed5ecb207132d1df9be796e38a87fb7e65bd8d27d77ebfbf0b",
+      "bytes": 2127360
+    },
+    {
+      "path": "outputs/source-workspace/build/config_storage_mock_tests.exe",
+      "module": "config_storage",
+      "sha256": "6b2d9c47824e11b0eafe67260dbd17855738a8766e658de2ec525997fc4959e8",
+      "bytes": 1815552
+    },
+    {
+      "path": "outputs/source-workspace/build/config_storage_integration_mock_tests.exe",
+      "module": "config_storage_integration",
+      "sha256": "ca4b55bfd28fc8026d0745712ce7925aaa96b6510f999fe797ab2ddfbfc5d8fe",
+      "bytes": 1946112
+    },
+    {
+      "path": "outputs/source-workspace/build/config_iteration_mock_tests.exe",
+      "module": "config_iteration",
+      "sha256": "608988b9880df4a5d441819b958be898eb67293dd3f94de3832e6812fb16c36a",
+      "bytes": 2093568
+    },
+    {
+      "path": "outputs/source-workspace/build/config_iteration_integration_mock_tests.exe",
+      "module": "config_iteration_integration",
+      "sha256": "3b87fe0c70f98f5b8468f40b1eb6a250300e850196a0e9f30f82d460265f1408",
+      "bytes": 2145792
+    },
+    {
+      "path": "outputs/source-workspace/build/services_completion_mock_tests.exe",
+      "module": "services_completion",
+      "sha256": "623909dd075879488c683bb91ba5491791c30a964d1d489dd203a4d12131258d",
+      "bytes": 1690112
+    },
+    {
+      "path": "outputs/source-workspace/build/services_completion_integration_mock_tests.exe",
+      "module": "services_completion_integration",
+      "sha256": "feeb9efe8a836b9345a8dd0de3d28208e89a40ae35501bda97c1574263d97d95",
+      "bytes": 2101760
+    },
+    {
+      "path": "outputs/source-workspace/build/config_logging_mock_tests.exe",
+      "module": "config_logging",
+      "sha256": "16ced8414a89f294a892e28faa2d6909d621c1ed81527278f26f2c6038cfe186",
+      "bytes": 1592320
+    },
+    {
+      "path": "outputs/source-workspace/build/config_logging_integration_mock_tests.exe",
+      "module": "config_logging_integration",
+      "sha256": "d2c8e786293ef9b282ee82aa900d1c04647587d37ced23951410c211b7462640",
+      "bytes": 1813504
+    },
+    {
+      "path": "outputs/source-workspace/build/library_effects_mock_tests.exe",
+      "module": "library_effects",
+      "sha256": "8fcb1e582986dabb2cbf894b7fe677d8ae53db276aab87cd5490d0caa38bcf71",
+      "bytes": 1532416
+    },
+    {
+      "path": "outputs/source-workspace/build/library_effects_integration_mock_tests.exe",
+      "module": "library_effects_integration",
+      "sha256": "32cb9eb2a0da3dc69f4d6139002a5e449c25e440ca2d3cbd1e9985622377a2bf",
+      "bytes": 2020864
+    },
+    {
+      "path": "outputs/source-workspace/build/online_platform_mock_tests.exe",
+      "module": "online_platform",
+      "sha256": "3f9d5fbbd67db08057930e22ea9908caa072792160c7ee0adf8608adadc32eef",
+      "bytes": 1690624
+    },
+    {
+      "path": "outputs/source-workspace/build/online_platform_integration_mock_tests.exe",
+      "module": "online_platform_integration",
+      "sha256": "78312ad59af68d27bee04a9d22dcc886cacb0748672522276164bd124c4467b8",
+      "bytes": 2104832
+    },
+    {
+      "path": "outputs/source-workspace/build/host_platform_mock_tests.exe",
+      "module": "host_platform",
+      "sha256": "4fe1cc3571456e877d0fa95918f2500055a91257f7267854f24d30be8a571909",
+      "bytes": 1576448
+    },
+    {
+      "path": "outputs/source-workspace/build/host_platform_integration_mock_tests.exe",
+      "module": "host_platform_integration",
+      "sha256": "46bd4c1e409a97187013692942b2b5563ea1661a9ce4a67c6b30982907ddc431",
+      "bytes": 2063360
+    },
+    {
+      "path": "outputs/source-workspace/build/source_stop_mock_tests.exe",
+      "module": "source_stop",
+      "sha256": "28ee8f45dbe2aa4999b48c30fc69b8845231ddc7c89c67f5bf6ba117848d6fe4",
+      "bytes": 1861632
+    },
+    {
+      "path": "outputs/source-workspace/build/initial_cells_mock_tests.exe",
+      "module": "initial_cells",
+      "sha256": "cbdf0004d4450ba3cd1b7919792b7ce9588b53d9bee1df77a41de209919b7445",
+      "bytes": 1888256
+    },
+    {
+      "path": "outputs/source-workspace/build/native_context_mock_tests.exe",
+      "module": "native_context",
+      "sha256": "e2857e7935ecd1ab2e2f711fa81e261c7a613925e5f9334ef55d0afa3465fc5a",
+      "bytes": 1636352
+    },
+    {
+      "path": "outputs/source-workspace/build/native_context_integration_mock_tests.exe",
+      "module": "native_context_integration",
+      "sha256": "a5ce7749c489153d251598796b1f88194dc8e2af99b50064933923a6bf10a70c",
+      "bytes": 2143744
+    },
+    {
+      "path": "outputs/source-workspace/build/callback_policy_mock_tests.exe",
+      "module": "callback_policy",
+      "sha256": "16f082b64b076588e0fafc0e7aec91f0719a6322b538941e3578608369b72238",
+      "bytes": 1753088
+    },
+    {
+      "path": "outputs/source-workspace/build/callback_policy_integration_mock_tests.exe",
+      "module": "callback_policy_integration",
+      "sha256": "fc2e95cd511f97466ef069ec5978f42c17fabbc329a2df5c68b5e586b23f74d6",
+      "bytes": 1795584
+    },
+    {
+      "path": "outputs/source-workspace/build/callback_admission_mock_tests.exe",
+      "module": "callback_admission",
+      "sha256": "af32d98fbfa872364f9076f31e6496c0c9a38825d3964570c9d6a05bf652c7e3",
+      "bytes": 1626112
+    },
+    {
+      "path": "outputs/source-workspace/build/callback_admission_integration_mock_tests.exe",
+      "module": "callback_admission_integration",
+      "sha256": "3d52dd3aa1e2c6a53d7051f832fd101774450964e7656fd41e8c287fc221f9dc",
+      "bytes": 2292224
+    },
+    {
+      "path": "outputs/source-workspace/build/foreign_callback_mock_tests.exe",
+      "module": "foreign_callback",
+      "sha256": "3d99e250784ba026e262173d97080b80888ba9a6399745411cab72c3d639fc3d",
+      "bytes": 1938944
+    },
+    {
+      "path": "outputs/source-workspace/build/foreign_callback_integration_mock_tests.exe",
+      "module": "foreign_callback_integration",
+      "sha256": "d805792f223d8aca73c371eb6c2a4c9879539e7fb284d57dc69b7cb5a2b462bc",
+      "bytes": 2501632
+    },
+    {
+      "path": "outputs/source-workspace/build/startup_publication_mock_tests.exe",
+      "module": "startup_publication",
+      "sha256": "7d4ef95f78217a71db84adeb770698e5d58e2a9e1283131ee4305660a9dcf37d",
+      "bytes": 1844224
+    },
+    {
+      "path": "outputs/source-workspace/build/startup_publication_integration_mock_tests.exe",
+      "module": "startup_publication_integration",
+      "sha256": "06a492c1ee529c8800f369c8cf8ac69a5cc8c18de793b4ec9dd0da9c56886307",
+      "bytes": 2372096
+    },
+    {
+      "path": "outputs/source-workspace/build/shared_log_mock_tests.exe",
+      "module": "shared_log",
+      "sha256": "e22b139396ec8d055bd561c7bb0bbbec3436bc636ff641b26db9f6d6e4a49d18",
+      "bytes": 1503232
+    },
+    {
+      "path": "outputs/source-workspace/build/shared_log_integration_mock_tests.exe",
+      "module": "shared_log_integration",
+      "sha256": "61162932e7f1ce54ae61b60ef804374c2ffa9d8a79c0f10249b24297311ad3ac",
+      "bytes": 2024448
+    },
+    {
+      "path": "outputs/source-workspace/build/callback_identity_mock_tests.exe",
+      "module": "callback_identity",
+      "sha256": "31438ff9aea1827ce299aca1b7ab4d0c0bc9ab2d9cd030dde30cefca7b0e5f02",
+      "bytes": 1848320
+    },
+    {
+      "path": "outputs/source-workspace/build/callback_identity_integration_mock_tests.exe",
+      "module": "callback_identity_integration",
+      "sha256": "7fe05750816ceb25c19a797149c7ef59aecc067348b4f4262f7467e6f3f96e5d",
+      "bytes": 1882624
+    },
+    {
+      "path": "outputs/source-workspace/build/callback_provider_mock_tests.exe",
+      "module": "callback_provider",
+      "sha256": "0609bef08cdb1a67ec3d77dbce691666152177c0c9083b5c3fe2fc46012547ac",
+      "bytes": 1738752
+    },
+    {
+      "path": "outputs/source-workspace/build/callback_provider_integration_mock_tests.exe",
+      "module": "callback_provider_integration",
+      "sha256": "15d31268ccf2e7e412587e3d39a29c895ede745d0faaa6fbac444b0bae66b925",
+      "bytes": 1887744
+    },
+    {
+      "path": "outputs/source-workspace/build/original_provider_mock_tests.exe",
+      "module": "original_provider",
+      "sha256": "38700282d98c41a352a9ee4de2e631cb2dc151dbbbabfd1cd7ddec1d643130b0",
+      "bytes": 1826816
+    },
+    {
+      "path": "outputs/source-workspace/build/original_provider_integration_mock_tests.exe",
+      "module": "original_provider_integration",
+      "sha256": "b4214e6e92d40aea4d03d8fc6ea12bbc4bea02fb16e6e7059425a0aa7275e3e6",
+      "bytes": 1955328
+    },
+    {
+      "path": "outputs/source-workspace/build/original_checkpoint_mock_tests.exe",
+      "module": "original_checkpoint",
+      "sha256": "64adc326a348d0455d9ed75709ab9357a26af22e5f6235eee15fe43aedb6f090",
+      "bytes": 1758720
+    },
+    {
+      "path": "outputs/source-workspace/build/original_checkpoint_integration_mock_tests.exe",
+      "module": "original_checkpoint_integration",
+      "sha256": "b7d1df5a2d27b43ff8f84a7ec30e3d671e9c1aef1d7c3cf3fac28bc0b545bc18",
+      "bytes": 1887744
+    },
+    {
+      "path": "outputs/source-workspace/build/online_version_mock_tests.exe",
+      "module": "online_version",
+      "sha256": "2d30ba16c00f355020cb58d29f7655fde8a4f1595a2c90a553182b799fef13f1",
+      "bytes": 1542656
+    },
+    {
+      "path": "outputs/source-workspace/build/online_version_integration_mock_tests.exe",
+      "module": "online_version_integration",
+      "sha256": "83df377c775e580d010404d355a03bcb8c00d389559a6f718b99ead3df3d4cd9",
+      "bytes": 1673728
+    },
+    {
+      "path": "outputs/source-workspace/build/online_object_mock_tests.exe",
+      "module": "online_object",
+      "sha256": "19c0cd1d65de66ede47b5c04443e50f33080ef5a570c5ff3259ddac715c2054d",
+      "bytes": 1543168
+    },
+    {
+      "path": "outputs/source-workspace/build/online_object_integration_mock_tests.exe",
+      "module": "online_object_integration",
+      "sha256": "8136d937206499fc47c55f1651232103fec2085992d91551149d097bcd7633b4",
+      "bytes": 1714176
+    },
+    {
+      "path": "outputs/source-workspace/build/online_query_mock_tests.exe",
+      "module": "online_query",
+      "sha256": "88d7bd01c27a1602009e0d4ed7c3598517089cc942af3919d0e16d4cfcf92768",
+      "bytes": 1513472
+    },
+    {
+      "path": "outputs/source-workspace/build/online_application_queries_mock_tests.exe",
+      "module": "online_application_queries",
+      "sha256": "4992c7b832ae82434c66afa074f3d9ef8b64d22029469725759183346c646ba2",
+      "bytes": 1515520
+    },
+    {
+      "path": "outputs/source-workspace/build/content_effects_mock_tests.exe",
+      "module": "content_effects",
+      "sha256": "526f9d07b8f8a27dca319c01f5988922f4b1549269c15b8bd0146f04369f9cc6",
+      "bytes": 2104320
+    },
+    {
+      "path": "outputs/source-workspace/build/information_effects_mock_tests.exe",
+      "module": "information_effects",
+      "sha256": "ae8d683f7559885f81b5ebea9feae8141413a3452951a67eb5ae0e905170ae3f",
+      "bytes": 1812992
+    },
+    {
+      "path": "outputs/source-workspace/build/licensing_effects_mock_tests.exe",
+      "module": "licensing_effects",
+      "sha256": "a73258192dec8ddd2adaac710fed2270d1042b6ec7598b64912a12726b9d1588",
+      "bytes": 2163200
+    },
+    {
+      "path": "outputs/source-workspace/build/application_effects_mock_tests.exe",
+      "module": "application_effects",
+      "sha256": "835aee30c7e9a500cc54b6f7dc353c373abca8fc844f48239ac314253d1789fb",
+      "bytes": 3522048
+    },
+    {
+      "path": "outputs/source-workspace/build/bound_library_mock_tests.exe",
+      "module": "bound_library",
+      "sha256": "4000593086240f6d9f3a3520db22e0691dfadeeaf4f178c356ab388f761dd43b",
+      "bytes": 1524224
+    },
+    {
+      "path": "outputs/source-workspace/build/resources_factory_mock_tests.exe",
+      "module": "resources_factory",
+      "sha256": "ccb8e910dce1aa5eaf6d4ef9609b8fa8246404251ba7dcaab1fbad0b832b7c39",
+      "bytes": 4290560
+    },
+    {
+      "path": "outputs/source-workspace/build/online_query_integration_mock_tests.exe",
+      "module": "online_query_integration",
+      "sha256": "0c03e782ce5c9b286dba06adecaca6008b20b962b8a195365f53d7dd12236bb6",
+      "bytes": 2139648
+    },
+    {
+      "path": "outputs/source-workspace/build/config_defaults_mock_tests.exe",
+      "module": "config_defaults",
+      "sha256": "59d0ff5b9dae31e3086166a1880d620feda0fe6286a2d8c70ba97032270d8590",
+      "bytes": 1479168
+    },
+    {
+      "path": "outputs/source-workspace/build/aggregate_teardown_mock_tests.exe",
+      "module": "aggregate_teardown",
+      "sha256": "860e2b35fa000bf8edf4845ba016a69dfe46221997bc7fec662a4a7d8719c9ff",
+      "bytes": 1490432
+    },
+    {
+      "path": "outputs/source-workspace/build/observed_runtime_mock_tests.exe",
+      "module": "observed_runtime",
+      "sha256": "669ce744318cdfbda076fbd6208583f9cf77db8437ca2b73540122cef7369a58",
+      "bytes": 2151424
+    },
+    {
+      "path": "outputs/source-workspace/build/config_defaults_integration_mock_tests.exe",
+      "module": "config_defaults_integration",
+      "sha256": "203caef31665060eeb0df9375427280eb9fd6df5464bd6ddb517036d1c16b142",
+      "bytes": 1659392
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_move_mock_tests.exe",
+      "module": "socket_move",
+      "sha256": "81e3322332bdbe0354e220d0fb03a14baae49a857af491fd63ebe302ba36c32d",
+      "bytes": 1476096
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_move_integration_mock_tests.exe",
+      "module": "socket_move_integration",
+      "sha256": "731bc18c94bc0ca9a770e1b07e58f6408dfbbf1d8fcce8278860a2866fce0c35",
+      "bytes": 1776640
+    },
+    {
+      "path": "outputs/source-workspace/build/session_owner_mock_tests.exe",
+      "module": "session_owner",
+      "sha256": "fcfd2f1a9e29e2a73cab3d37dde04579bb3f262dc22ff217768bf3aa9242ecd7",
+      "bytes": 1515008
+    },
+    {
+      "path": "outputs/source-workspace/build/session_owner_integration_mock_tests.exe",
+      "module": "session_owner_integration",
+      "sha256": "165d36cab9872b04ec90bf65e20e8998c3d01f854aede3b863131cfa0369ceea",
+      "bytes": 1702912
+    },
+    {
+      "path": "outputs/source-workspace/build/session_dispose_mock_tests.exe",
+      "module": "session_dispose",
+      "sha256": "465a6e654226b745be1e5c664d7dc096e48401fb6a38173466a901f17c47165e",
+      "bytes": 1543680
+    },
+    {
+      "path": "outputs/source-workspace/build/session_dispose_integration_mock_tests.exe",
+      "module": "session_dispose_integration",
+      "sha256": "9a4652cc7177d918e42e11f0c813a9463a8342d939409b6d6ce80b3f4a5529b8",
+      "bytes": 1717760
+    },
+    {
+      "path": "outputs/source-workspace/build/session_memory_mock_tests.exe",
+      "module": "session_memory",
+      "sha256": "967cbdb6fc008441aea2912a8a54e69159094a3be9dfacaeb3336ab1d511bb03",
+      "bytes": 1770496
+    },
+    {
+      "path": "outputs/source-workspace/build/session_memory_integration_mock_tests.exe",
+      "module": "session_memory_integration",
+      "sha256": "a268a31d2c9a819e8cb8362a993e1e0d77764b5db09cf6777cec0e6080b8e5db",
+      "bytes": 1934848
+    },
+    {
+      "path": "outputs/source-workspace/build/io_memory_mock_tests.exe",
+      "module": "io_memory",
+      "sha256": "39ed4e059db8d4d9c74f88a5be04ae41f3a5aacb421958e09819e48b4276a55c",
+      "bytes": 1849856
+    },
+    {
+      "path": "outputs/source-workspace/build/io_memory_integration_mock_tests.exe",
+      "module": "io_memory_integration",
+      "sha256": "2e02f50741858bcc9a531ca7c6e83c3b7d9d1cc4e3764955e5af9f88015164df",
+      "bytes": 1988608
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_server_mock_tests.exe",
+      "module": "owned_server",
+      "sha256": "64c07ce00b8fe6c47aa077bdcbb329c300bc06ee248935d98f3f0f54fcd3ffbc",
+      "bytes": 1907712
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_server_integration_mock_tests.exe",
+      "module": "owned_server_integration",
+      "sha256": "701aaa6b5c72d5165f00852248a9c285d49035ec0766ef4f9d55c64519359957",
+      "bytes": 1960448
+    },
+    {
+      "path": "outputs/source-workspace/build/async_accept_mock_tests.exe",
+      "module": "async_accept",
+      "sha256": "b9cf6b58015f4b2e0916b485ca85533b71da9d7b4e1784b5cbc20d1aa6e90087",
+      "bytes": 1645568
+    },
+    {
+      "path": "outputs/source-workspace/build/async_accept_integration_mock_tests.exe",
+      "module": "async_accept_integration",
+      "sha256": "cd59ee5ba09eddc9fcb65b07cab9295d9de9b51e7cf405dea1d749fe7a1f2c5c",
+      "bytes": 2008064
+    },
+    {
+      "path": "outputs/source-workspace/build/session_flow_mock_tests.exe",
+      "module": "session_flow",
+      "sha256": "f3c7f4b960cc03d607aeb967724803be5c5070530638c35ab6a1084e800b1568",
+      "bytes": 1652224
+    },
+    {
+      "path": "outputs/source-workspace/build/session_flow_integration_mock_tests.exe",
+      "module": "session_flow_integration",
+      "sha256": "86a2ba1e2e1d979b70157630fa793a7009662052f54905c69a9af79964e26617",
+      "bytes": 2241024
+    },
+    {
+      "path": "outputs/source-workspace/build/async_accept_helpers_mock_tests.exe",
+      "module": "async_accept_helpers",
+      "sha256": "88461801abf3703930097497a525e7fb1c6392101ec6aa8857a7187f83d6cb61",
+      "bytes": 1610240
+    },
+    {
+      "path": "outputs/source-workspace/build/async_accept_helpers_integration_mock_tests.exe",
+      "module": "async_accept_helpers_integration",
+      "sha256": "e763b63846ed2dc7a83dadbe78e93c2d2659393d0a3189d3afa6c56353490a46",
+      "bytes": 2019840
+    },
+    {
+      "path": "outputs/source-workspace/build/server_runtime_mock_tests.exe",
+      "module": "server_runtime",
+      "sha256": "24127dc1259e99a70fa85d23bd529a05a79f6203696fcfd2fa5ba783ab72dadf",
+      "bytes": 2173952
+    },
+    {
+      "path": "outputs/source-workspace/build/server_runtime_integration_mock_tests.exe",
+      "module": "server_runtime_integration",
+      "sha256": "b04c826fbb7b15728d3ff6bb540f406255f697145b3fff883469d7bd51e0fea7",
+      "bytes": 2316288
+    },
+    {
+      "path": "outputs/source-workspace/build/session_profile_mock_tests.exe",
+      "module": "session_profile",
+      "sha256": "c4bbd67823b66d79c31b972b29f8154df74cfcb30891e2b7f4641f265b794349",
+      "bytes": 2775552
+    },
+    {
+      "path": "outputs/source-workspace/build/session_profile_integration_mock_tests.exe",
+      "module": "session_profile_integration",
+      "sha256": "637e9022144ea39f99d3be71a61de1fe315fd8759a8494c3af07d75c8b986042",
+      "bytes": 2810368
+    },
+    {
+      "path": "outputs/source-workspace/build/native_profile_mock_tests.exe",
+      "module": "native_profile",
+      "sha256": "20b6b88c3e5fab58ed862c6b9c7d392a4a56d1be6bedcc667abd9354d477fa67",
+      "bytes": 2152960
+    },
+    {
+      "path": "outputs/source-workspace/build/native_profile_integration_mock_tests.exe",
+      "module": "native_profile_integration",
+      "sha256": "cd62cb57ee3636852b139fbf6838d17c009c5a5d48ea0c2a33dcc2993781d6d8",
+      "bytes": 2830336
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_deque_mock_tests.exe",
+      "module": "owned_deque",
+      "sha256": "722726dbec0294ebfa6ecd3ecfc2a4ab33484672f89a86b93faeaca11bd94385",
+      "bytes": 1842688
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_deque_integration_mock_tests.exe",
+      "module": "owned_deque_integration",
+      "sha256": "6ed25a570f49d77b696a5ad87ab22e32e6ec9d3db640857b60218b9a2b2f5cad",
+      "bytes": 2832896
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_environment_mock_tests.exe",
+      "module": "owned_environment",
+      "sha256": "99c413a8df2b36ee8775f676f5739850d133876bae4c2d06ffaaab02916215fd",
+      "bytes": 2219520
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_environment_integration_mock_tests.exe",
+      "module": "owned_environment_integration",
+      "sha256": "c8ea6f1a42b2c8e914142f823e8a267c14f2df83a2f7389b3a61630ce703e550",
+      "bytes": 2827264
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_jobs_mock_tests.exe",
+      "module": "owned_jobs",
+      "sha256": "546f6fe907a0548f4a57fa9176e0d0f6fd67023a2898393990313a69036aed1e",
+      "bytes": 2774528
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_jobs_integration_mock_tests.exe",
+      "module": "owned_jobs_integration",
+      "sha256": "9ebf89735b041e053ecd642f7f68b918c01475eae1cd8968411e6ec1a6a40205",
+      "bytes": 2822144
+    },
+    {
+      "path": "outputs/source-workspace/build/session_policy_mock_tests.exe",
+      "module": "session_policy",
+      "sha256": "d11bf1214d914e080da4399a3a3087966f8f652bddc09368ebe61a17523996fa",
+      "bytes": 2800640
+    },
+    {
+      "path": "outputs/source-workspace/build/session_policy_integration_mock_tests.exe",
+      "module": "session_policy_integration",
+      "sha256": "ee9785450b3b0a4ebebf61744feb651b5da7015a6c131dcea80ce2cf70855fc5",
+      "bytes": 2833408
+    },
+    {
+      "path": "outputs/source-workspace/build/application_graph_mock_tests.exe",
+      "module": "application_graph",
+      "sha256": "f06f976b8724fe516b22cbc4dd0bb30de0a5372a6c3c1f50ed516aa8bdceaace",
+      "bytes": 3490304
+    },
+    {
+      "path": "outputs/source-workspace/build/application_graph_integration_mock_tests.exe",
+      "module": "application_graph_integration",
+      "sha256": "8f9f9e4d7b84992380bb6f849a0c5b8192099184e9edb3a7dcaaab9cef07306e",
+      "bytes": 3686912
+    },
+    {
+      "path": "outputs/source-workspace/build/worker_handoff_mock_tests.exe",
+      "module": "worker_handoff",
+      "sha256": "815347c793f4a22cde375aeabf68f7f80a14b4b76f759bebc80fe1517beee42d",
+      "bytes": 1940992
+    },
+    {
+      "path": "outputs/source-workspace/build/worker_handoff_integration_mock_tests.exe",
+      "module": "worker_handoff_integration",
+      "sha256": "5519cbd3495b706c882e8517b8cd39506d2b02d989e2c7885a8fa9f2b87fcc00",
+      "bytes": 3397632
+    },
+    {
+      "path": "outputs/source-workspace/build/application_worker_mock_tests.exe",
+      "module": "application_worker",
+      "sha256": "d60e83c9063341a8586d452db00b798d6f7d2a68a29a7fdbc9de9c1368dec757",
+      "bytes": 3869696
+    },
+    {
+      "path": "outputs/source-workspace/build/application_worker_integration_mock_tests.exe",
+      "module": "application_worker_integration",
+      "sha256": "24e1a52cb6cedef8dc7a7cbcfa6ee543b93734f6a66de6c3d63828520acf24f4",
+      "bytes": 3739136
+    },
+    {
+      "path": "outputs/source-workspace/build/accept_stop_mock_tests.exe",
+      "module": "accept_stop",
+      "sha256": "2b6989c4ee50ec2ef997065f5aa9ec785d964fdac7225113fd3d7485e92fb56b",
+      "bytes": 3462656
+    },
+    {
+      "path": "outputs/source-workspace/build/accept_stop_integration_mock_tests.exe",
+      "module": "accept_stop_integration",
+      "sha256": "9176dfe294be01387551580ff58a422a64e7f23bd1b8bcdfc86899c06bae10fc",
+      "bytes": 3713536
+    },
+    {
+      "path": "outputs/source-workspace/build/session_stop_mock_tests.exe",
+      "module": "session_stop",
+      "sha256": "8a2860c3e7d32cc88593c4ac101207e9c0565a3725eb6243808b4091308c4d8b",
+      "bytes": 2007040
+    },
+    {
+      "path": "outputs/source-workspace/build/session_stop_integration_mock_tests.exe",
+      "module": "session_stop_integration",
+      "sha256": "e7bb354985db7384099e7ad75381f41e918b2873fee9eacff11a53f359efcb1f",
+      "bytes": 3727872
+    },
+    {
+      "path": "outputs/source-workspace/build/application_admission_mock_tests.exe",
+      "module": "application_admission",
+      "sha256": "97880853654b93c8c6ebfe8259c0772b60bbb6e5aa249d224e9a8e2a37546a5d",
+      "bytes": 1502208
+    },
+    {
+      "path": "outputs/source-workspace/build/application_admission_integration_mock_tests.exe",
+      "module": "application_admission_integration",
+      "sha256": "9c9546cb1bfa1934531d0b5779295c4d98ae0b172903bf666993dfae4cb4e296",
+      "bytes": 3716608
+    },
+    {
+      "path": "outputs/source-workspace/build/configuration_factory_mock_tests.exe",
+      "module": "configuration_factory",
+      "sha256": "a2a8e4421697d86fdf9b93eb14638f57ad2b243f9a67ee8292b32c584e82120b",
+      "bytes": 1920000
+    },
+    {
+      "path": "outputs/source-workspace/build/configuration_factory_integration_mock_tests.exe",
+      "module": "configuration_factory_integration",
+      "sha256": "eadd5ee547ab25372abd1c271807f089b0f3bbfce4edba4bafcc04ca06e9e479",
+      "bytes": 1999872
+    },
+    {
+      "path": "outputs/source-workspace/build/configuration_key_processor_mock_tests.exe",
+      "module": "configuration_key_processor",
+      "sha256": "64036089f8e488acdcc4f78585728062e157b360f7f142a9dc4d101b95249a60",
+      "bytes": 1946112
+    },
+    {
+      "path": "outputs/source-workspace/build/configuration_key_binding_mock_tests.exe",
+      "module": "configuration_key_binding",
+      "sha256": "b1da52dc12d99768c04c86133e2b5fa9682c583e77a2af2c504da2bd8cabb74d",
+      "bytes": 2236928
+    },
+    {
+      "path": "outputs/source-workspace/build/achievement_path_binding_mock_tests.exe",
+      "module": "achievement_path_binding",
+      "sha256": "7f31472363545eadb5417cbf5d49762b2546aafda02e6383e306544736381489",
+      "bytes": 3875328
+    },
+    {
+      "path": "outputs/source-workspace/build/services_factory_mock_tests.exe",
+      "module": "services_factory",
+      "sha256": "16b2b0a067760d0246d53fa325c947defbffe4b596770cf1d7f31baaf771fe29",
+      "bytes": 1845760
+    },
+    {
+      "path": "outputs/source-workspace/build/services_factory_integration_mock_tests.exe",
+      "module": "services_factory_integration",
+      "sha256": "d9aa8be993d97744702bfadca417e1526376adb73b47dd3ddd18bc2ede968bab",
+      "bytes": 3778560
+    },
+    {
+      "path": "outputs/source-workspace/build/online_factory_mock_tests.exe",
+      "module": "online_factory",
+      "sha256": "5b62a83b6ef008137d885766473dbcb71a20bdb6165c3208335fa5e202781e74",
+      "bytes": 1982976
+    },
+    {
+      "path": "outputs/source-workspace/build/online_factory_integration_mock_tests.exe",
+      "module": "online_factory_integration",
+      "sha256": "ce317ef491f2304e01d7814e6441ad1ce950a130e2c674241c32fabc03b4f744",
+      "bytes": 3799040
+    },
+    {
+      "path": "outputs/source-workspace/build/host_init_mock_tests.exe",
+      "module": "host_init",
+      "sha256": "43fdbedbc46f893345d038fabc0bd1ca8ab209f515eaf7a684eedc12cc3a5043",
+      "bytes": 1505280
+    },
+    {
+      "path": "outputs/source-workspace/build/hook_adapters_mock_tests.exe",
+      "module": "hook_adapters",
+      "sha256": "a26ac646a4bd798c74922f7c3e92f66f380d887678eec0fdab829da7a17c5d28",
+      "bytes": 1520128
+    },
+    {
+      "path": "outputs/source-workspace/build/registry_mock_tests.exe",
+      "module": "registry",
+      "sha256": "ebb2cb3073d757e59b69f1f8929277634600b9ae83a4b0cd920fb76e56131b44",
+      "bytes": 1499136
+    },
+    {
+      "path": "outputs/source-workspace/build/native_callbacks_mock_tests.exe",
+      "module": "native_callbacks",
+      "sha256": "3ae8aa82cef210f76d6b1c39350157f4f5464532b16d75029a3dee10b2e6edff",
+      "bytes": 1592320
+    },
+    {
+      "path": "outputs/source-workspace/build/preloader_native_mock_tests.exe",
+      "module": "preloader_native",
+      "sha256": "b6e98e07822652f81d84a7502defbe5810f66f9f1041f0aa866cb1c519112f4a",
+      "bytes": 1508864
+    },
+    {
+      "path": "outputs/source-workspace/build/host_callbacks_mock_tests.exe",
+      "module": "host_callbacks",
+      "sha256": "c7f36a1fb51a9bfd0299d903a036eac78f296701e325ce06c3ac8e9850e0eb5f",
+      "bytes": 1535488
+    },
+    {
+      "path": "outputs/source-workspace/build/network_hooks_mock_tests.exe",
+      "module": "network_hooks",
+      "sha256": "d92d34de80abea56d2519490ffedc81c9387851bc5663a001b2d77d0b62e8787",
+      "bytes": 1509888
+    },
+    {
+      "path": "outputs/source-workspace/build/online_mock_tests.exe",
+      "module": "online",
+      "sha256": "6a572dabe93903f1994f28fedd107af22f6f10799bca49f3c84cbc2eed666b24",
+      "bytes": 1607168
+    },
+    {
+      "path": "outputs/source-workspace/build/configuration_mock_tests.exe",
+      "module": "configuration",
+      "sha256": "7e616c4c0bad4b709a7e717bfa733e7c1a5b5cd58e0d463edeb1c8077083aeaa",
+      "bytes": 1602048
+    },
+    {
+      "path": "outputs/source-workspace/build/execution_mock_tests.exe",
+      "module": "execution",
+      "sha256": "db84a28d3f92c496762dc5407e1d259e1965eb83ad735ec24335edfcd5f6d470",
+      "bytes": 1496576
+    },
+    {
+      "path": "outputs/source-workspace/build/libraries_mock_tests.exe",
+      "module": "libraries",
+      "sha256": "300346015f773142180de467a74cdcca386ec6950e78d2ced7bc3119bdbd515d",
+      "bytes": 793088
+    },
+    {
+      "path": "outputs/source-workspace/build/startup_mock_tests.exe",
+      "module": "startup",
+      "sha256": "69623576fbc91052f28f6ad0e21e9f985d2c6e3964ecdad654ad7a15937fef08",
+      "bytes": 791552
+    },
+    {
+      "path": "outputs/source-workspace/build/parser_mock_tests.exe",
+      "module": "parser",
+      "sha256": "6c2d17bbb2b52c56cc22e8f059720f93709bbf151c012d94b5f3db47b16a7573",
+      "bytes": 1518080
+    },
+    {
+      "path": "outputs/source-workspace/build/config_order_mock_tests.exe",
+      "module": "config_order",
+      "sha256": "60913d96e19879d5ba631e4eefa0f5f1fc030a59fb88e7b616b2a458e2a24caf",
+      "bytes": 1535488
+    },
+    {
+      "path": "outputs/source-workspace/build/config_pipeline_mock_tests.exe",
+      "module": "config_pipeline",
+      "sha256": "68ee53a0a26dd90eacc5c13c7cc05550827969da5ee7558b355bfc3771913507",
+      "bytes": 1673728
+    },
+    {
+      "path": "outputs/source-workspace/build/config_hash_mock_tests.exe",
+      "module": "config_hash",
+      "sha256": "9dc38260d7867bad282a3de7b9f8c560a7200abdafe0c94825048cb178f75c57",
+      "bytes": 1568256
+    },
+    {
+      "path": "outputs/source-workspace/build/config_application_mock_tests.exe",
+      "module": "config_application",
+      "sha256": "21da9d4f97e11f7106a00e8ccf696825d739042a5cd27d38b0c6a08b5a691f8a",
+      "bytes": 1720320
+    },
+    {
+      "path": "outputs/source-workspace/build/config_startup_mock_tests.exe",
+      "module": "config_startup",
+      "sha256": "8766b85cec37116b0dd51081e73a24650e1e44a9d1f827c24ef3426afd2aea21",
+      "bytes": 1735168
+    },
+    {
+      "path": "outputs/source-workspace/build/achievement_writer_mock_tests.exe",
+      "module": "achievement_writer",
+      "sha256": "6b70a4b4fb63b77297721f248b0be3c944402a1ccddd43d3e2349ed9120cdcca",
+      "bytes": 1594880
+    },
+    {
+      "path": "outputs/source-workspace/build/achievement_storage_mock_tests.exe",
+      "module": "achievement_storage",
+      "sha256": "608023dbc531ad03794d69088d648ef196998aba6bffda63c7d9f9293765b8ce",
+      "bytes": 1845760
+    },
+    {
+      "path": "outputs/source-workspace/build/calendar_mock_tests.exe",
+      "module": "calendar",
+      "sha256": "71395ae31e2c41ec4a5a44aae314e74f5b29c3a0d05faae9a17cc671e42db614",
+      "bytes": 1451520
+    },
+    {
+      "path": "outputs/source-workspace/build/timestamp_mock_tests.exe",
+      "module": "timestamp",
+      "sha256": "3dbb01a7513c0ecb1009f3a9cbecf0d2dd39438bd579f87de2c7060f0c3699ef",
+      "bytes": 1697280
+    },
+    {
+      "path": "outputs/source-workspace/build/utc_mock_tests.exe",
+      "module": "utc",
+      "sha256": "1137a1900c5fbb4ab5259e58effed9a433a6e97fdf98b63fd6d49f8156dc72e8",
+      "bytes": 1464320
+    },
+    {
+      "path": "outputs/source-workspace/build/achievement_runtime_mock_tests.exe",
+      "module": "achievement_runtime",
+      "sha256": "a355a3b42f1e1637c0fff59dd6048291adde62243b1d3ac8aa6ddbd4624dfbea",
+      "bytes": 1763328
+    },
+    {
+      "path": "outputs/source-workspace/build/event_queue_mock_tests.exe",
+      "module": "event_queue",
+      "sha256": "49234fadf1bdb25b67414b8b5d42de4df48ddc8021d6a9488efb59a6fc8ea64a",
+      "bytes": 1475584
+    },
+    {
+      "path": "outputs/source-workspace/build/event_queue_integration_mock_tests.exe",
+      "module": "event_queue_integration",
+      "sha256": "8aa8ea9c53ca9afeb99c6a9a66052bf94dfc369c6562d767fcf9f23ac188fdb2",
+      "bytes": 1656832
+    },
+    {
+      "path": "outputs/source-workspace/build/session_handler_mock_tests.exe",
+      "module": "session_handler",
+      "sha256": "b0916fa1968d30b2d345569d68fde24037513899d48e1dd7382a5202995de8a9",
+      "bytes": 1564160
+    },
+    {
+      "path": "outputs/source-workspace/build/session_integration_mock_tests.exe",
+      "module": "session_integration",
+      "sha256": "a0728318fe5ff7b74a79ba334e62a65bd1a4f63b8f22c882db95f92cf40d88c0",
+      "bytes": 1743360
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_operations_mock_tests.exe",
+      "module": "socket_operations",
+      "sha256": "a9e73124e509f1bb8923eb00d523ffb018fc98f608f803d034c5233f5b2525a6",
+      "bytes": 1561600
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_native_mock_tests.exe",
+      "module": "socket_native",
+      "sha256": "8a2817a8651d92c3d3645a5f034830e225b138712d8df6c613ac18ee7f15382d",
+      "bytes": 1477632
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_acceptor_mock_tests.exe",
+      "module": "socket_acceptor",
+      "sha256": "8fce516f197d338109738eed38aa1bad4ccc8a06003ac7c56bc8a6038f2b190e",
+      "bytes": 1542144
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_acceptor_native_mock_tests.exe",
+      "module": "socket_acceptor_native",
+      "sha256": "d39b5c753955999e9c95ecb9936590d996f46dbd3623f522e7bc4bdfc6daaae5",
+      "bytes": 1482752
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_lifecycle_mock_tests.exe",
+      "module": "socket_lifecycle",
+      "sha256": "ca067d644a62b939c64b9e05dd7c7f66fcdb2c3eacb719080d1ccd69da1e42fd",
+      "bytes": 1542656
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_lifecycle_native_mock_tests.exe",
+      "module": "socket_lifecycle_native",
+      "sha256": "50520b45205b725f2b9624f491770f58d6de7e8489630f13fedf0480de307370",
+      "bytes": 1473536
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_close_mock_tests.exe",
+      "module": "socket_close",
+      "sha256": "a53db4ac8a6be92bc0cf01c17b4d8ef7e59a4cc89db81e0d98bd29fe0c2cc413",
+      "bytes": 1506304
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_closing_mock_tests.exe",
+      "module": "socket_closing",
+      "sha256": "bcee9124236657c0e0d64339be20414d5ec4c3681d9562dbddd7a7d40c087a2d",
+      "bytes": 1536512
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_cancellation_mock_tests.exe",
+      "module": "socket_cancellation",
+      "sha256": "f9812589cda00f12daaa40a693d87a81e3febf2896eba833f504a4a40b4e726a",
+      "bytes": 1499136
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_cancellation_native_mock_tests.exe",
+      "module": "socket_cancellation_native",
+      "sha256": "98b03fdbfdae056795d8f397607da83584577ed72b3a03fcbee1aaef017c2a4b",
+      "bytes": 1500672
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_recycle_mock_tests.exe",
+      "module": "socket_recycle",
+      "sha256": "fb8ead9812a76a70c0f91d053bc3d042278dc86b5fa84b2ba0c1f323a793cdbd",
+      "bytes": 1460736
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_recycle_storage_mock_tests.exe",
+      "module": "socket_recycle_storage",
+      "sha256": "d234f27457a280bd1f30869eea04b93f9e07f6b2f98113824f5e45d429977259",
+      "bytes": 1499136
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_service_registry_mock_tests.exe",
+      "module": "socket_service_registry",
+      "sha256": "2629a588e19b3111b0077ddabbb299915138e1ddfbccf49529a68fedec58090c",
+      "bytes": 1517568
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_service_registry_integration_mock_tests.exe",
+      "module": "socket_service_registry_integration",
+      "sha256": "05cf75ea55a2ee7d1f9bfa863c706aa827b568d843351ae6f75e448229b95082",
+      "bytes": 1500672
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_service_constructor_mock_tests.exe",
+      "module": "socket_service_constructor",
+      "sha256": "7f3a80c3a86a89b6c394e99aa63e5040d7bd3d89e7ec8fc35aa9e005c6702329",
+      "bytes": 1489408
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_service_constructor_native_mock_tests.exe",
+      "module": "socket_service_constructor_native",
+      "sha256": "d7018217d967d6e8fb7f7a9baa1c9d943dd354236f3e1a4caa89646547d3c021",
+      "bytes": 1508352
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_scheduler_registry_mock_tests.exe",
+      "module": "socket_scheduler_registry",
+      "sha256": "4e60f406776e5b0f930d955caac11c2fd1445f7511fbb6811cf1b99c3e5eb724",
+      "bytes": 1500160
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_scheduler_registry_integration_mock_tests.exe",
+      "module": "socket_scheduler_registry_integration",
+      "sha256": "185ee1718d04a8723869d7add34cfc6a1a21cc13debb02ba723b0a0de97284ac",
+      "bytes": 1512448
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_iocp_constructor_mock_tests.exe",
+      "module": "socket_iocp_constructor",
+      "sha256": "080cf398503adc1978808cfc96710ea79a69e77c90bbe88d3b4344f1ba901c74",
+      "bytes": 1501184
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_iocp_constructor_native_mock_tests.exe",
+      "module": "socket_iocp_constructor_native",
+      "sha256": "cac99b9478d9fe1ee890ff048fffb68212e71b8aa29f753813c4a9085c5b7746",
+      "bytes": 1523712
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_worker_startup_mock_tests.exe",
+      "module": "socket_worker_startup",
+      "sha256": "ba8f4c5177474cc6497f799b1271859c764d85060fbcdd6a9b9017e1b09eeffe",
+      "bytes": 1505280
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_worker_startup_native_mock_tests.exe",
+      "module": "socket_worker_startup_native",
+      "sha256": "babe6947e9e2e0001c7bf76258d6c834707d8f989b81fd9d93b63e6e31dce917",
+      "bytes": 1532928
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_worker_run_mock_tests.exe",
+      "module": "socket_worker_run",
+      "sha256": "7ee305ba26d05f45d47913d43ae47b76c35a604644e743561fb16b2d3ed02b39",
+      "bytes": 1520640
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_worker_run_native_mock_tests.exe",
+      "module": "socket_worker_run_native",
+      "sha256": "a77b374275eefe13d50de9d97bf89df86059dc59626d0dc344d86fd7671e94f9",
+      "bytes": 1495040
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_completion_dispatcher_mock_tests.exe",
+      "module": "socket_completion_dispatcher",
+      "sha256": "862414d9322dfea42c06b345fd305377dbb640665f9e1a29b7ff425edd3be08d",
+      "bytes": 1587200
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_completion_dispatcher_native_mock_tests.exe",
+      "module": "socket_completion_dispatcher_native",
+      "sha256": "9a354bb1d62bb537db03bd856dbbd0e992446e909b648ffe5bfd4878295f5f3f",
+      "bytes": 1503744
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_posted_operation_mock_tests.exe",
+      "module": "socket_posted_operation",
+      "sha256": "82315bc03b10d40477f9ddab81fea69f8d89bbaacd89566440f80de182dd61dd",
+      "bytes": 1558528
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_posted_operation_integration_mock_tests.exe",
+      "module": "socket_posted_operation_integration",
+      "sha256": "08a84c57ccfb3730e1c7dd9972bcf866b4464610550d56c6247ffae386fa110c",
+      "bytes": 1511424
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_io_completion_mock_tests.exe",
+      "module": "socket_io_completion",
+      "sha256": "2705d3518c2e26dfe2be34002b57525e54d22be80a3fe5b4048916e4edb798c3",
+      "bytes": 1614336
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_io_completion_integration_mock_tests.exe",
+      "module": "socket_io_completion_integration",
+      "sha256": "636759dd407d96e15668594e49a23f4a0d936a745ac77c2196f0e71b7ce07aca",
+      "bytes": 1622528
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_handler_dispatch_mock_tests.exe",
+      "module": "socket_handler_dispatch",
+      "sha256": "fe067377025ff8533a227a5bdc83d0a4c08f22607ae19eb2e9fe77c744374e14",
+      "bytes": 1610752
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_handler_dispatch_integration_mock_tests.exe",
+      "module": "socket_handler_dispatch_integration",
+      "sha256": "b7f275feab1360c2c55dd1a911ae70f2dbfef39e038f70b708ef3e68bcf1b99d",
+      "bytes": 1625088
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_composed_write_mock_tests.exe",
+      "module": "socket_composed_write",
+      "sha256": "25619d46900d50c28e0027b2894bf6d32c4236bba1a1fd25e3340fab9726debf",
+      "bytes": 1540608
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_composed_write_integration_mock_tests.exe",
+      "module": "socket_composed_write_integration",
+      "sha256": "b46fca4cf309559d94f4f570b28b5c7ad22c9022e9c83e69c33394bb62bd11c1",
+      "bytes": 1537536
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_environment_constructor_mock_tests.exe",
+      "module": "socket_environment_constructor",
+      "sha256": "e5d0cfd22806c10a4a6ac544315bdf237292f5fd322a6c8800b90724acedd0c7",
+      "bytes": 1518080
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_environment_constructor_integration_mock_tests.exe",
+      "module": "socket_environment_constructor_integration",
+      "sha256": "eecfe07e1663227a7bbba71906a96248e35210f469abf52c4bab97ef0bfd3789",
+      "bytes": 1546240
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_write_finish_mock_tests.exe",
+      "module": "socket_write_finish",
+      "sha256": "6119fcf467a4dd9d956fb43975349e534e70f71f92051b190a5ad1d2d3be9a1e",
+      "bytes": 1565696
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_write_finish_integration_mock_tests.exe",
+      "module": "socket_write_finish_integration",
+      "sha256": "21637918f310086bdaf926d0f3a688100a6c5a146d7226c6e679d17c7af592b7",
+      "bytes": 1553408
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_queued_write_mock_tests.exe",
+      "module": "socket_queued_write",
+      "sha256": "53868fb3dcb1eb0187b58234f4548751612b4785e6258cec1de0c4f1917068c6",
+      "bytes": 1555968
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_queued_write_integration_mock_tests.exe",
+      "module": "socket_queued_write_integration",
+      "sha256": "66518eb0a282a62dc47fa5b075e2a1133969b5e9bc9fd06c599d1b281837c49d",
+      "bytes": 1547264
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_async_receive_mock_tests.exe",
+      "module": "socket_async_receive",
+      "sha256": "60ec476a41f21cbe6851aa2f111f3611a61e061c2b3c3ac3e66258b9422a7859",
+      "bytes": 1536000
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_async_receive_integration_mock_tests.exe",
+      "module": "socket_async_receive_integration",
+      "sha256": "96bde794a534595d6c5ac03cffc92828abcad7e8e9eb7c1862770c254d40394e",
+      "bytes": 1512960
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_receive_buffer_mock_tests.exe",
+      "module": "socket_receive_buffer",
+      "sha256": "a4108f72a620d0c34038ec12d3ea981485e47c20a9dc8f0adbd44fee3161f2f0",
+      "bytes": 1496064
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_receive_buffer_integration_mock_tests.exe",
+      "module": "socket_receive_buffer_integration",
+      "sha256": "b3af8a7b4bc4415ddc598c0d83e3372e5d00308a5be4272ae2a3341afa342ce4",
+      "bytes": 1516032
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_composed_read_mock_tests.exe",
+      "module": "socket_composed_read",
+      "sha256": "2bba1e6f54159b555f5ad7cc1c0da7f0f63c2b5e6db9034037481db2ccd38237",
+      "bytes": 1550336
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_composed_read_integration_mock_tests.exe",
+      "module": "socket_composed_read_integration",
+      "sha256": "e578b041fdfb3fc162453fbf6feab3bb86e66e156e2edaa036986ee6db21f87c",
+      "bytes": 1541632
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_frame_read_mock_tests.exe",
+      "module": "socket_frame_read",
+      "sha256": "600d6f16678f00382e4b1a4e4be4b6c60e4a670f2e76143c82b3e8425353c32e",
+      "bytes": 1596416
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_frame_read_integration_mock_tests.exe",
+      "module": "socket_frame_read_integration",
+      "sha256": "b4447261a4761f890e144ad7ffc4c0d485a6f36c1e2a20500b24c3c86755410e",
+      "bytes": 1554432
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_message_dispatch_mock_tests.exe",
+      "module": "socket_message_dispatch",
+      "sha256": "a1863be5bdd5b3499555af989bda25363481f1bf19cf6a766e4ae891d9be9b65",
+      "bytes": 1576960
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_message_dispatch_integration_mock_tests.exe",
+      "module": "socket_message_dispatch_integration",
+      "sha256": "ee46edafd77fb5bc83754faf62e5798f75fd66fc4704139475f89aa75426998c",
+      "bytes": 1694720
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_response_dispatch_mock_tests.exe",
+      "module": "socket_response_dispatch",
+      "sha256": "6eb79797f08f679d9e2d386f3d8ca90f8d716612ee9e633f81f4c7056e48c35e",
+      "bytes": 1597440
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_response_dispatch_integration_mock_tests.exe",
+      "module": "socket_response_dispatch_integration",
+      "sha256": "1a3da43a9e9ae10eaa617e4a9c5511a90e9105505c2ebef04d4243654386af6d",
+      "bytes": 1585152
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_owned_response_mock_tests.exe",
+      "module": "socket_owned_response",
+      "sha256": "a6c46c15bcf7dcee2d34a3e8b617bceb1cc0f5c80aa0835e4010c0b02ccbde78",
+      "bytes": 1624576
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_owned_response_integration_mock_tests.exe",
+      "module": "socket_owned_response_integration",
+      "sha256": "5cd75cc9b93443977f36b1cac7a20621df0a30ec3065b7b6d140f84b7b9bd560",
+      "bytes": 1601536
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_response_containers_mock_tests.exe",
+      "module": "socket_response_containers",
+      "sha256": "aab9924e2a328b2bfdec9f0e133b480f7afac6299e2bc07f122650b475665c6e",
+      "bytes": 1558528
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_response_containers_integration_mock_tests.exe",
+      "module": "socket_response_containers_integration",
+      "sha256": "19a9d730777346c8dda0f50c7b3cff33cf1f275329c7273664ca7d5c7918ac2a",
+      "bytes": 1618944
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_message_core_bridge_mock_tests.exe",
+      "module": "socket_message_core_bridge",
+      "sha256": "40fc6b5fe1750a3791227f742298463c4e217e653eaf8c712650eb2d4057a439",
+      "bytes": 1762816
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_message_core_bridge_integration_mock_tests.exe",
+      "module": "socket_message_core_bridge_integration",
+      "sha256": "474003186296bcb5f9aa9b5ab38f2f44504173f648e10dad0d6347d6508f7bea",
+      "bytes": 1750528
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_request_mutation_mock_tests.exe",
+      "module": "socket_request_mutation",
+      "sha256": "2d3739d8b2bfebdb903ff067328aa8a1adba8c356a83ffe0cb884463a794e4ee",
+      "bytes": 1513472
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_request_mutation_integration_mock_tests.exe",
+      "module": "socket_request_mutation_integration",
+      "sha256": "0313dc749f85ed91f6df3f4f04eea54627c76d873a182697c2e4738241494877",
+      "bytes": 1761792
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_request_growth_mock_tests.exe",
+      "module": "socket_request_growth",
+      "sha256": "f2a121651720775dd2d9ddd470cc8f73385f0edc70013e5a313f5f9628bf2845",
+      "bytes": 1510912
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_request_growth_integration_mock_tests.exe",
+      "module": "socket_request_growth_integration",
+      "sha256": "c7b1d599771042a9e995c76764496332444fce17c81228b6b80784fd23682a18",
+      "bytes": 1764864
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_response_hex_mock_tests.exe",
+      "module": "socket_response_hex",
+      "sha256": "dfc835585e1fcbca053350d9791f911dc90a9c9c07861fc0c39641901d97510b",
+      "bytes": 1504256
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_response_hex_integration_mock_tests.exe",
+      "module": "socket_response_hex_integration",
+      "sha256": "0e0ede5c20621a6ca8272231c4c6ddb9962209cf310f0aa6d5cd545b33d2f6c5",
+      "bytes": 1770496
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_native_message_mock_tests.exe",
+      "module": "socket_native_message",
+      "sha256": "8fd1de5f8fced04a3009756bf12ea3fb252730614e91d90944d42748919cb9fc",
+      "bytes": 1871360
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_native_message_integration_mock_tests.exe",
+      "module": "socket_native_message_integration",
+      "sha256": "78c499ed5e48e9a990ed3eae1102c09fc84d5a654079fe948fe510254aaf5425",
+      "bytes": 1796608
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_append_growth_mock_tests.exe",
+      "module": "socket_append_growth",
+      "sha256": "935ab808a66b6e646312f0dfbbe01ccbc55332a518bbb3f581141590601f7d33",
+      "bytes": 1513984
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_append_growth_integration_mock_tests.exe",
+      "module": "socket_append_growth_integration",
+      "sha256": "1c8c98636f7af69f0ca771d9685d593f0aa5dabb17cee63b3ed69d18b3a3cca4",
+      "bytes": 1815040
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_prefix_cipher_mock_tests.exe",
+      "module": "socket_prefix_cipher",
+      "sha256": "d78672b10fca02e5b0547f82c43e3a67bff432af05053483f15a7ed32dedba0e",
+      "bytes": 1539072
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_prefix_cipher_integration_mock_tests.exe",
+      "module": "socket_prefix_cipher_integration",
+      "sha256": "164f4aad5a3fe05caaf56dc1b42bfcbb37059e7b81fcfbb2e197d2d34fc399fa",
+      "bytes": 1820672
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_cipher_session_mock_tests.exe",
+      "module": "socket_cipher_session",
+      "sha256": "f9020a7d3f8b6077e23eeb096a5530233ed83ae0d4e56e4dfa829c1ce51e97d0",
+      "bytes": 1768448
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_cipher_session_integration_mock_tests.exe",
+      "module": "socket_cipher_session_integration",
+      "sha256": "37a51f4d01aeb651c4e319086631e1f0e0cdbb8e840b5794ae0810d24e94d5ec",
+      "bytes": 1842688
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_native_dispatch_mock_tests.exe",
+      "module": "socket_native_dispatch",
+      "sha256": "396ec3c506a9a466d363c7a1febc438155bf650475932c2645f7589da1ddfd9d",
+      "bytes": 1814528
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_native_dispatch_integration_mock_tests.exe",
+      "module": "socket_native_dispatch_integration",
+      "sha256": "d078de95f391340e224d058715b98c520cdfd153a943f2627eb544f62488ea96",
+      "bytes": 1864704
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_native_document_mock_tests.exe",
+      "module": "socket_native_document",
+      "sha256": "29b568a8d064ace8f0bb5c15e81967d8fdfe5dc43aaf3027d529869521327652",
+      "bytes": 1877504
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_native_document_integration_mock_tests.exe",
+      "module": "socket_native_document_integration",
+      "sha256": "55b885aba65288fac2df243c41c5aa72cf7e86cce40322a4b5455525869621ea",
+      "bytes": 1888256
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_document_clear_mock_tests.exe",
+      "module": "socket_document_clear",
+      "sha256": "2d01c5e3e973d4826ede57a096b6b302b7bb1d3de52754e3b9a0f2412fd19aba",
+      "bytes": 1701888
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_document_clear_integration_mock_tests.exe",
+      "module": "socket_document_clear_integration",
+      "sha256": "9f1c25e72559821748dc7e28733408dd63ff208e10a3d894fecc4519ed6eebea",
+      "bytes": 1912832
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_delete_mock_tests.exe",
+      "module": "socket_node_delete",
+      "sha256": "d9cf6128974c296f689bf504da7cc1495a125c3464350dda56281de9f2c805a0",
+      "bytes": 1683456
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_delete_integration_mock_tests.exe",
+      "module": "socket_node_delete_integration",
+      "sha256": "7b428669d3105b0e7e4ad7504b12fd3ebb1345ba7f0d3960b944c35b71f56310",
+      "bytes": 1919488
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_release_mock_tests.exe",
+      "module": "socket_pool_release",
+      "sha256": "6e517f11c0c86e66943b5a79f8db3a96ac152325250c6d0882d902641362f568",
+      "bytes": 1625600
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_release_integration_mock_tests.exe",
+      "module": "socket_pool_release_integration",
+      "sha256": "63a12587a7f460fd9ac58b2116fecdcb532f92b40ea15cbaa2dacd27747d19fe",
+      "bytes": 1929216
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_allocate_mock_tests.exe",
+      "module": "socket_pool_allocate",
+      "sha256": "7ab9f602f9afc287e543be0c16373ff23158e231a997859d41553ccb1c8f37f8",
+      "bytes": 1502208
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_allocate_integration_mock_tests.exe",
+      "module": "socket_pool_allocate_integration",
+      "sha256": "20304240f38c986b6a05931682fbaca44e503bda7eac5f00e70302632943e69c",
+      "bytes": 1488896
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_append_mock_tests.exe",
+      "module": "socket_pool_append",
+      "sha256": "e70bea7ac1d529595e98e75e1b72c3e344f6de9f866624565181ab350630b0d6",
+      "bytes": 1504768
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_append_integration_mock_tests.exe",
+      "module": "socket_pool_append_integration",
+      "sha256": "3aa1117983cdcc4104d02409f98d2413cabc1528d081d8ece7e75978c60a3934",
+      "bytes": 1502208
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_clear_mock_tests.exe",
+      "module": "socket_pool_clear",
+      "sha256": "ad2586478d7463969867e9a4f24c133728e64caece4598dd14179bba09a0c248",
+      "bytes": 1515008
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_clear_integration_mock_tests.exe",
+      "module": "socket_pool_clear_integration",
+      "sha256": "629e9ec7a1313cb975c9f3bc9e1b1669c3a7f857cff70b4a9fa72aab5fac2fbe",
+      "bytes": 1559040
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_destruct_mock_tests.exe",
+      "module": "socket_pool_destruct",
+      "sha256": "d87429efcbbc0c4e13007428b1d2348a1ab38daab8284849665cdab9d5b0aecd",
+      "bytes": 1525760
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_pool_destruct_integration_mock_tests.exe",
+      "module": "socket_pool_destruct_integration",
+      "sha256": "04befbbefc5e66b820e8fafbbeacffd9fb4762f54518d1861a42aea71b2f26ed",
+      "bytes": 1558016
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_base_mock_tests.exe",
+      "module": "socket_node_base",
+      "sha256": "3b663cd2909e3cc4a2db86d45ebdc4a6e86be6ab14bffd012f2727a7b5312c15",
+      "bytes": 1510400
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_base_integration_mock_tests.exe",
+      "module": "socket_node_base_integration",
+      "sha256": "692730ded66c731d7c54c4e01da5ae236063b58f6409580494b971bc26a5bdff",
+      "bytes": 1545728
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_parse_entry_mock_tests.exe",
+      "module": "socket_parse_entry",
+      "sha256": "803621b7724c33abdc5994f4dd7dd51a09cadc2e2e0d84d8487877d5d31df0a7",
+      "bytes": 1519104
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_parse_entry_integration_mock_tests.exe",
+      "module": "socket_parse_entry_integration",
+      "sha256": "0c523a16d69656004bc5dcc795cc1ad1c13648b4abfda81b106f36b021bafcc7",
+      "bytes": 1550848
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_document_error_mock_tests.exe",
+      "module": "socket_document_error",
+      "sha256": "a7d9db98a0932d34890b904f0b8e9c2c162d1580e916c875cf958946d3fff10d",
+      "bytes": 1542656
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_document_error_integration_mock_tests.exe",
+      "module": "socket_document_error_integration",
+      "sha256": "9da8ced7af8d496ef2c015f7762683b8a14fe364105420d8e611f31d5edd0d41",
+      "bytes": 1570816
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_parse_mock_tests.exe",
+      "module": "socket_node_parse",
+      "sha256": "001af15d95e6d3936de5aba0ec877e54720fb7f09b828e09020c0899ed598b05",
+      "bytes": 1615872
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_parse_integration_mock_tests.exe",
+      "module": "socket_node_parse_integration",
+      "sha256": "f059414385fbe11cc4df5a2151342e7c5d01445b3d7b9cdb82a260ebd3385c70",
+      "bytes": 1604096
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_identify_mock_tests.exe",
+      "module": "socket_node_identify",
+      "sha256": "1b01b8d96bba0db2e2630539ef5ecbd6464ea71380c3802a9a5cb6157da20872",
+      "bytes": 1558016
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_identify_integration_mock_tests.exe",
+      "module": "socket_node_identify_integration",
+      "sha256": "c31477a52dc8c565b9c95b4b342b18226f3117d79a2ab1b7db4cdab9d9e5af24",
+      "bytes": 1587712
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_constructors_mock_tests.exe",
+      "module": "socket_node_constructors",
+      "sha256": "43ff394310ddd08a97e8324c3161361d0a889e5b62fed38766171e52b4cc862e",
+      "bytes": 1525760
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_constructors_integration_mock_tests.exe",
+      "module": "socket_node_constructors_integration",
+      "sha256": "655a955ec74619deee35080e4cb19720763d41481219d727351e8d8885ef4fce",
+      "bytes": 1594880
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_insertion_mock_tests.exe",
+      "module": "socket_node_insertion",
+      "sha256": "6a4940a8f9f0f8d484a3c661e7401fe60769073e684d84cf575e83162d857fbc",
+      "bytes": 1532928
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_insertion_integration_mock_tests.exe",
+      "module": "socket_node_insertion_integration",
+      "sha256": "ec133d07785c1861c9faa1bae73ef3d2ddf6216bfb67d0aa057afe25b6a2dacf",
+      "bytes": 1620480
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_string_mock_tests.exe",
+      "module": "socket_node_string",
+      "sha256": "d2c191b2651b425405da8ab8cffc823d98ebe98719d8178415f20a91a88ae95d",
+      "bytes": 1565184
+    },
+    {
+      "path": "outputs/source-workspace/build/socket_node_string_integration_mock_tests.exe",
+      "module": "socket_node_string_integration",
+      "sha256": "e506ad135ebd5c7ba2d4b220c838929403817e86744b52955ad8fbcef8f2fc9a",
+      "bytes": 1640960
+    },
+    {
+      "path": "outputs/source-workspace/build/server_mock_tests.exe",
+      "module": "server",
+      "sha256": "73bcbb6f9501b5e59f6ded98f98fc470f9103ecd674b33afba6819bad633f7a5",
+      "bytes": 1554944
+    },
+    {
+      "path": "outputs/source-workspace/build/messages_mock_tests.exe",
+      "module": "messages",
+      "sha256": "c81dcbe5317cc15e64ec4358310390c98fef2313f90b1993158203d4724b3767",
+      "bytes": 845824
+    },
+    {
+      "path": "outputs/source-workspace/build/handlers_mock_tests.exe",
+      "module": "handlers",
+      "sha256": "f1c66897f2db1bc6e35ca0cbbe95b1fb08e5878c61d8fcf75e3a71f390451214",
+      "bytes": 798208
+    },
+    {
+      "path": "outputs/source-workspace/build/crypto_mock_tests.exe",
+      "module": "crypto",
+      "sha256": "7e5802fb70c109e9699cdcc3babd6026bbd24ab621ef101ced7813dd9d371cef",
+      "bytes": 1479168
+    },
+    {
+      "path": "outputs/source-workspace/build/xml_printer_mock_tests.exe",
+      "module": "xml_printer",
+      "sha256": "96807202ec4925ea2c5bb3d12ee0af1b44f6f3bcd956250e8b41a5e65a88062b",
+      "bytes": 774656
+    },
+    {
+      "path": "outputs/source-workspace/build/xml_reader_mock_tests.exe",
+      "module": "xml_reader",
+      "sha256": "71101d4dbc16f465e4edf4f4fa5a9a5e926d0e88bfad70b850bf45fbcebd357c",
+      "bytes": 1547264
+    },
+    {
+      "path": "outputs/source-workspace/build/licensing_mock_tests.exe",
+      "module": "licensing",
+      "sha256": "29bf9c9bdb5dccd83b3c43e8c368ec4ecd568d9dc39187802f03fe986c2fd4e3",
+      "bytes": 1632768
+    },
+    {
+      "path": "outputs/source-workspace/build/hash_mock_tests.exe",
+      "module": "hash",
+      "sha256": "60aa6d97ddad021c5d077a93141ed88d3bd33adc6628e198b66196a13aed089d",
+      "bytes": 1473536
+    },
+    {
+      "path": "outputs/source-workspace/build/token_mock_tests.exe",
+      "module": "token",
+      "sha256": "6b024aacf073bbed11be4bf3704c66b46e913b06f6bd27a540d50aadd37686db",
+      "bytes": 1486848
+    },
+    {
+      "path": "outputs/source-workspace/build/file_io_mock_tests.exe",
+      "module": "file_io",
+      "sha256": "7325d4f7c7440b0249af33c1c4acd1e59d821b9424ce6337c335fca020ccf531",
+      "bytes": 1574912
+    },
+    {
+      "path": "outputs/source-workspace/build/license_files_mock_tests.exe",
+      "module": "license_files",
+      "sha256": "c86e877378d329040ef49e5d799b74ac2d9dc1d4305e4b22e79ecaaf59324f2b",
+      "bytes": 1711616
+    },
+    {
+      "path": "outputs/source-workspace/build/status_mock_tests.exe",
+      "module": "status",
+      "sha256": "6dc611e2988d7c5294d5c276cb520a1f32ed7214307e9eed12a4525feb105394",
+      "bytes": 1572864
+    },
+    {
+      "path": "outputs/source-workspace/build/paths_mock_tests.exe",
+      "module": "paths",
+      "sha256": "70bd68c80dfac3074217c5e0a58e4e455aac3e2f0cf550f2a20825f25f774bfa",
+      "bytes": 1471488
+    },
+    {
+      "path": "outputs/source-workspace/build/encoding_mock_tests.exe",
+      "module": "encoding",
+      "sha256": "88719e935ffd2ea71dd19672d482f240dad65ee5caafe278421ccd0c8daf0e53",
+      "bytes": 1484288
+    },
+    {
+      "path": "outputs/source-workspace/build/windows_effects_mock_tests.exe",
+      "module": "windows_effects",
+      "sha256": "9de2be21953ada73699c0a074f57ee532e90a26b51da13cc65190f12fc4414a7",
+      "bytes": 1732608
+    },
+    {
+      "path": "outputs/source-workspace/build/content_handlers_mock_tests.exe",
+      "module": "content_handlers",
+      "sha256": "ea6e8db93b2a793144d355acf25fcc82235181c2b23f886f99d0666e6d911a30",
+      "bytes": 928256
+    },
+    {
+      "path": "outputs/source-workspace/build/misc_handlers_mock_tests.exe",
+      "module": "misc_handlers",
+      "sha256": "0850face1322712b35dc78e6b79f2442a7194fc26d214a3a681e3325be40ac19",
+      "bytes": 1509376
+    },
+    {
+      "path": "outputs/source-workspace/build/dispatch_mock_tests.exe",
+      "module": "dispatch",
+      "sha256": "365e8dbf023a0a223365788793ef8241ca70110d242903bdffe7cf05e82aadf2",
+      "bytes": 1698304
+    },
+    {
+      "path": "outputs/source-workspace/build/preloader_mock_tests.exe",
+      "module": "preloader",
+      "sha256": "b7367a6ffedf4bb7556bb02442ea445f12909fa624fd2ec08cb03be6e11b4e22",
+      "bytes": 1517568
+    },
+    {
+      "path": "outputs/source-workspace/build/module_reference_mock_tests.exe",
+      "module": "module_reference",
+      "sha256": "bd250285f33988e0f5656042fa0ebc20fcd483a47a5a5b9f4b9cf3f30250ab76",
+      "bytes": 1613824
+    },
+    {
+      "path": "outputs/source-workspace/build/permanent_errors_mock_tests.exe",
+      "module": "permanent_errors",
+      "sha256": "1969d4f5008a4a215ec6f9337e355d776ad954d412fd1883f19eadd8f2858896",
+      "bytes": 1814016
+    },
+    {
+      "path": "outputs/source-workspace/build/initial_domain_factory_mock_tests.exe",
+      "module": "initial_domain_factory",
+      "sha256": "68a776a2854656a6ad9aab93cc4ea4edcced85526d5a6ad7027af98bdba56ccc",
+      "bytes": 1629184
+    },
+    {
+      "path": "outputs/source-workspace/build/owned_engine_mock_tests.exe",
+      "module": "owned_engine",
+      "sha256": "5698f655747b1807cbf9c85198c73edab971326670ad9b6608cccad7b3e6fb3d",
+      "bytes": 1763840
+    },
+    {
+      "path": "outputs/source-workspace/build/pre_unload_mock_tests.exe",
+      "module": "pre_unload",
+      "sha256": "290fae6d52d961278856a39eb5d4e6f13a41725198bbbe9183c4f86dc76e9d1e",
+      "bytes": 2068480
+    }
+  ],
+  "archives": [
+    {
+      "file": "anadius_core_partial.a",
+      "bytes": 8090824,
+      "sha256": "c6b6dcdba4c175139459b0aec32b1214a59b178fd0a50c99ccf9e6d34d035ddf",
+      "members": [
+        "bootstrap.o",
+        "crt_threads.o",
+        "crt_runtime.o",
+        "crt_errors.o",
+        "crt_ptd.o",
+        "crt_ptd_data.o",
+        "crt_heap.o",
+        "crt_realloc.o",
+        "crt_recalloc.o",
+        "crt_recalloc_bridge.o",
+        "crt_conversion.o",
+        "crt_conversion_api.o",
+        "crt_conversion_bridge.o",
+        "crt_module_path.o",
+        "crt_find_native.o",
+        "crt_find_bridge.o",
+        "crt_locale_update.o",
+        "crt_locale_thread.o",
+        "crt_locale_bridge.o",
+        "crt_locale_ref.o",
+        "crt_locale_free.o",
+        "crt_locale_resource_bridge.o",
+        "crt_multibyte_support.o",
+        "crt_multibyte_control.o",
+        "crt_multibyte_bridge.o",
+        "crt_multibyte_tables.o",
+        "crt_multibyte_builder.o",
+        "crt_multibyte_record_bridge.o",
+        "crt_string_type.o",
+        "crt_lcmap.o",
+        "crt_nls_bridge.o",
+        "crt_locale_names.o",
+        "crt_nls_dispatch.o",
+        "crt_nls_dispatch_bridge.o",
+        "crt_nls_native.o",
+        "crt_nls_dispatch_native.o",
+        "crt_nls_native_bridge.o",
+        "crt_heap_native.o",
+        "crt_heap_native_bridge.o",
+        "crt_fls_native.o",
+        "crt_lock_native.o",
+        "crt_atomic_native.o",
+        "crt_sync_bridge.o",
+        "crt_counter_native.o",
+        "crt_locale_native.o",
+        "crt_initial_locale.o",
+        "crt_initial_multibyte.o",
+        "crt_initial_state.o",
+        "crt_locale_startup.o",
+        "crt_environment_cleanup.o",
+        "crt_lifecycle_callbacks.o",
+        "crt_pair_leaves.o",
+        "crt_lowio_lifecycle.o",
+        "crt_pair_bindings.o",
+        "crt_invalid.o",
+        "crt_glue.o",
+        "crt_cache.o",
+        "crt_onexit.o",
+        "crt_entry.o",
+        "crt_initializers.o",
+        "vcrt_ptd.o",
+        "vcrt_api.o",
+        "crt_locks.o",
+        "crt_cpu.o",
+        "vcrt_bridge.o",
+        "crt_support.o",
+        "crt_environment.o",
+        "crt_termination.o",
+        "crt_startup_bridge.o",
+        "crt_argv_parser.o",
+        "crt_argv.o",
+        "crt_byteclass.o",
+        "crt_argv_bridge.o",
+        "crt_wildcard_storage.o",
+        "crt_wildcard_search.o",
+        "crt_sort.o",
+        "crt_wildcard.o",
+        "thread_native.o",
+        "bootstrap_native.o",
+        "bootstrap_owner.o",
+        "bootstrap_backend.o",
+        "bootstrap_tracking.o",
+        "bootstrap_callbacks.o",
+        "bootstrap_factory.o",
+        "observed_runtime.o",
+        "bootstrap_providers.o",
+        "bootstrap_thread_start.o",
+        "thread_domain.o",
+        "thread_domain_locale.o",
+        "thread_domain_runtime.o",
+        "bootstrap_services.o",
+        "configuration_platform.o",
+        "configuration_filesystem.o",
+        "configuration_persistence.o",
+        "thread_error_policy.o",
+        "exit_wait_completion.o",
+        "services_completion.o",
+        "config_logging.o",
+        "library_dialog.o",
+        "library_effects.o",
+        "online_platform.o",
+        "host_platform.o",
+        "host_assembly.o",
+        "source_stop.o",
+        "initial_cells.o",
+        "initial_runtime.o",
+        "initial_worker.o",
+        "native_context.o",
+        "callback_policy.o",
+        "callback_admission.o",
+        "foreign_callback.o",
+        "startup_publication.o",
+        "shared_log.o",
+        "callback_identity.o",
+        "callback_provider.o",
+        "original_provider.o",
+        "original_checkpoint.o",
+        "online_version.o",
+        "online_object.o",
+        "online_query.o",
+        "config_defaults.o",
+        "aggregate_teardown.o",
+        "socket_move.o",
+        "session_owner.o",
+        "session_dispose.o",
+        "session_memory.o",
+        "io_memory.o",
+        "owned_server.o",
+        "native_async_accept.o",
+        "owned_accept.o",
+        "session_flow.o",
+        "coherent_io.o",
+        "accept_helpers.o",
+        "accept_bindings.o",
+        "server_runtime.o",
+        "server_runtime_resources.o",
+        "session_profile.o",
+        "session_profile_strings.o",
+        "native_profile.o",
+        "owned_deque.o",
+        "owned_environment.o",
+        "owned_jobs.o",
+        "owned_session_policy.o",
+        "application_graph.o",
+        "worker_handoff.o",
+        "application_worker.o",
+        "accept_stop.o",
+        "configuration_factory.o",
+        "configuration_key_processor.o",
+        "services_factory.o",
+        "online_factory.o",
+        "host_init.o",
+        "host_hook_adapter.o",
+        "registry.o",
+        "native_callbacks.o",
+        "native_originals.o",
+        "host_callbacks.o",
+        "connect_hook.o",
+        "hook_cleanup.o",
+        "online.o",
+        "online_effects.o",
+        "configuration.o",
+        "execution.o",
+        "execution_windows.o",
+        "libraries.o",
+        "libraries_windows.o",
+        "startup.o",
+        "startup_windows.o",
+        "parser.o",
+        "config_order.o",
+        "config_pipeline.o",
+        "config_hash.o",
+        "config_application.o",
+        "config_startup.o",
+        "achievement_writer.o",
+        "achievement_storage.o",
+        "calendar.o",
+        "timestamp.o",
+        "achievement_utc.o",
+        "achievement_runtime.o",
+        "event_queue.o",
+        "event_queue_adapters.o",
+        "session_handler.o",
+        "session_routing.o",
+        "socket_operations.o",
+        "socket_native.o",
+        "socket_acceptor.o",
+        "socket_acceptor_native.o",
+        "socket_lifecycle.o",
+        "socket_lifecycle_native.o",
+        "socket_close.o",
+        "socket_closing.o",
+        "socket_cancellation.o",
+        "socket_cancellation_native.o",
+        "socket_recycle.o",
+        "socket_recycle_storage.o",
+        "socket_service_registry.o",
+        "socket_service_constructor.o",
+        "socket_service_constructor_native.o",
+        "socket_scheduler_registry.o",
+        "socket_iocp_constructor.o",
+        "socket_iocp_constructor_native.o",
+        "socket_worker_startup.o",
+        "socket_worker_startup_native.o",
+        "socket_worker_run.o",
+        "socket_worker_run_native.o",
+        "socket_completion_dispatcher.o",
+        "socket_completion_dispatcher_native.o",
+        "socket_posted_operation.o",
+        "socket_posted_operation_dispatch.o",
+        "socket_io_completion.o",
+        "socket_io_completion_dispatch.o",
+        "socket_handler_dispatch.o",
+        "socket_handler_dispatch_bridge.o",
+        "socket_composed_write.o",
+        "socket_composed_write_native.o",
+        "socket_environment_constructor.o",
+        "socket_write_finish.o",
+        "socket_queued_write.o",
+        "socket_async_receive.o",
+        "socket_receive_buffer.o",
+        "socket_composed_read.o",
+        "socket_frame_read.o",
+        "socket_message_dispatch.o",
+        "socket_response_dispatch.o",
+        "socket_owned_response.o",
+        "socket_response_containers.o",
+        "socket_message_core_bridge.o",
+        "socket_request_mutation.o",
+        "socket_request_growth.o",
+        "socket_response_hex.o",
+        "socket_native_message.o",
+        "socket_append_growth.o",
+        "socket_prefix_cipher.o",
+        "socket_cipher_session.o",
+        "socket_native_dispatch.o",
+        "socket_native_document.o",
+        "socket_document_clear.o",
+        "socket_node_delete.o",
+        "socket_pool_release.o",
+        "socket_pool_allocate.o",
+        "socket_pool_append.o",
+        "socket_pool_clear.o",
+        "socket_pool_destruct.o",
+        "socket_node_base.o",
+        "socket_parse_entry.o",
+        "socket_document_error.o",
+        "socket_node_parse.o",
+        "socket_node_identify.o",
+        "socket_node_constructors.o",
+        "socket_node_insertion.o",
+        "socket_node_string.o",
+        "server.o",
+        "messages.o",
+        "handlers.o",
+        "crypto.o",
+        "xml_printer.o",
+        "xml_reader.o",
+        "tinyxml2_compat.o",
+        "licensing.o",
+        "hash.o",
+        "token.o",
+        "file_io.o",
+        "file_io_native.o",
+        "license_files.o",
+        "status.o",
+        "status_native.o",
+        "paths.o",
+        "encoding.o",
+        "encoding_native.o",
+        "windows_effects.o",
+        "content_handlers.o",
+        "content_effects.o",
+        "information_effects.o",
+        "application_io.o",
+        "licensing_effects.o",
+        "application_effects.o",
+        "bound_library.o",
+        "resources_factory.o",
+        "resources_configuration.o",
+        "module_reference.o",
+        "permanent_errors.o",
+        "initial_domain_factory.o",
+        "owned_engine.o",
+        "host_engine.o",
+        "pre_unload.o",
+        "misc_handlers.o",
+        "dispatch.o"
+      ]
+    },
+    {
+      "file": "preloader_core_partial.a",
+      "bytes": 17834,
+      "sha256": "0858c16f19ae34172f8f727827039fd362c846cba40e3fbfe06077c266908e09",
+      "members": [
+        "preloader.o",
+        "preloader_hook_adapter.o",
+        "preloader_native.o"
+      ]
+    },
+    {
+      "file": "hook_engine_compat.a",
+      "bytes": 24418,
+      "sha256": "9266e1acf2eff8a689f1527ba8989039ee73dc2aa74fe11db172639af422e918",
+      "members": [
+        "hook_api.o",
+        "minhook_hooks.o",
+        "minhook_buffer.o",
+        "minhook_trampoline.o",
+        "minhook_hde.o"
+      ]
+    }
+  ],
+  "hook_fixture": {
+    "record_path": "outputs/hook-engine-source/fixture-validation.json",
+    "record_sha256": "5521ccfd1e8ed2b27404e6832bdd713c9afe37f566409e5e10cf01a7f01b87bb",
+    "path": "outputs/hook-engine-source/testing/build/hook-engine-fixture-tests.exe",
+    "sha256": "274e765e9b4e54495d48084031f1198a3b3890e177acc385bfd5bf6e17a52891"
+  },
+  "own_synthetic_DLL": {
+    "path": "outputs/source-workspace/build/owned_reference_fixture.dll",
+    "sha256": "73adc29a67dbe26f6124bee4c668410d6ed4ab69bbd460ad8e3e2a0dccda98a4"
+  },
+  "compiler": "clang version 23.1.4 (https://github.com/llvm/llvm-project.git 7a941dfb2877a0b8cf30323fefa85ad019e0b0f5)",
+  "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "f6599825884bd087a81ef01e7a662025a9553de01dc501c824b6c568aa4e5ec9",
+  "c_compiler_sha256": "f6599825884bd087a81ef01e7a662025a9553de01dc501c824b6c568aa4e5ec9",
+  "archiver_sha256": "4959819f15bcd31d15c2723dc24606dc6674e0af63d1c2ef0fe5bf9cd89c865a",
+  "all_current_source_hashes_verified": true,
+  "builder_sha256": "fe0da637157f1b9424f566326506883764a5c78025ca22c5bbb37c5cbb9c8ff3",
+  "command_status_evidence": "Builder records PASS only after every normal command exits0 and all19 framework terminal cases match; extra child cases are invoked by their normal suites",
+  "original_input_access": false,
+  "original_target_execution": false,
+  "original_modification": false,
+  "compiled_production_DLL": false,
+  "compiler_checkpoint": {
+    "path": "delivery/build-logs/compile-checkpoint.json",
+    "sha256": "30549a2f71e62dbb59893b3cec48dbcd86080f72163fdc8409b83570b4e6b796",
+    "seed_sha256": "a5510c402da588c6146727614ccd109108c491bc80f04c7c0ac789457396222c",
+    "reused_same_clean_run_compiler_commands": 476,
+    "reused_objects": 296,
+    "reused_test_compilations": 180,
+    "test_execution_reused": false,
+    "historical_binary_reuse": false,
+    "compile_archive_test_recipes_unchanged": true
+  }
+}

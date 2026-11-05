@@ -1,6 +1,21 @@
 #include "move.hpp"
 
 namespace anadius::socket_recovered {
+void move_executor_0228c0(ExecutorFields& destination,const ExecutorFields& source) noexcept{
+    destination.context=source.context;destination.zero_74=source.zero_74;
+    destination.self_reference_80=true;
+}
+void RecoveredSocketExecutor::executor_cleanup(SocketObject& object,std::uintptr_t table){
+    if(table!=table_identity||object.executor.table_78!=table_identity)
+        throw UnsupportedInput("Executor cleanup requires selected084928 slot0");
+    // Observed slot0 targets017a30: RET0. No fields or owners are changed.
+}
+void RecoveredSocketExecutor::invoke_move(void*,ExecutorFields& destination,ExecutorFields& source,std::uintptr_t table){
+    if(table!=table_identity||destination.table_78!=table_identity||source.table_78!=table_identity)
+        throw UnsupportedInput("Executor move requires selected084928 slot8");
+    move_executor_0228c0(destination,source);
+}
+ExecutorMove RecoveredSocketExecutor::move() noexcept{return {nullptr,&invoke_move};}
 namespace {
 void distinct(SocketObject& destination,SocketObject& source){
     if(&destination==&source||&destination.state==&source.state)

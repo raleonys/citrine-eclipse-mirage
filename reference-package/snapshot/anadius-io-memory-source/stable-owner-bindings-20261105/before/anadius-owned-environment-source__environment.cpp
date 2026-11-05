@@ -1,0 +1,445 @@
+#include "environment.hpp"
+#include <algorithm>
+#include <atomic>
+#include <exception>
+#include <limits>
+#include <list>
+#include <mutex>
+#include <optional>
+#include <type_traits>
+
+namespace anadius::owned_environment {
+namespace {
+struct PreserveError {DWORD value=::GetLastError();~PreserveError(){::SetLastError(value);}};
+s::IoHandlerExecutor& empty_executor(){static s::IoHandlerExecutor value{};return value;}
+struct Empty final:s::IoHandlerVtable {
+    Empty():IoHandlerVtable(0x180017a30ULL){}
+    void destroy_slot_00(s::IoHandlerEnvironment& out)override{out={};out.operations_10=this;out.executor_28=&empty_executor();}
+    void move_slot_10(s::IoHandlerEnvironment& out,s::IoHandlerEnvironment& from)override{
+        out.payload_00={};out.state_18=0;from.payload_00={};from.state_18=0;
+    }
+    std::uintptr_t query_slot_18(s::IoHandlerEnvironment&)override{throw s::UnsupportedInput("Empty owned environment has no query capability");}
+};
+Empty& empty(){static Empty value;return value;}
+s::IoHandlerSentinels sentinels(){return {&empty(),0,&empty_executor(),empty().destroy_identity};}
+// Opaque selected-policy tokens, never dereferenced RTTI/code addresses.
+std::uintptr_t active_type(){return 1;}
+std::uintptr_t empty_type(){return 0x1800a25c0ULL;}
+std::uintptr_t tracked_type(){return 0x1800a2690ULL;}
+std::uintptr_t next_capability(){
+    static std::atomic<std::uintptr_t> next{1};auto value=next.load();
+    for(;;){if(value==std::numeric_limits<std::uintptr_t>::max())throw std::overflow_error("Environment capabilities exhausted");if(next.compare_exchange_weak(value,value+1))return value;}
+}
+bool same(s::IoHandlerSentinels a,s::IoHandlerSentinels b){return a.empty_operations_846c8==b.empty_operations_846c8&&a.empty_schedule_846e8==b.empty_schedule_846e8&&a.empty_executor_84770==b.empty_executor_84770&&a.guard_destroy_017a30==b.guard_destroy_017a30;}
+struct Origin {
+    sp::SessionToken session;std::uintptr_t owner=0;s::IoReference* control=nullptr;
+    bool operator==(const Origin&)const=default;
+};
+}
+struct Environment::JobState {
+    std::shared_ptr<Control> control;std::shared_ptr<void> lease;
+    s::SessionMemoryDomain* const parent;
+    const s::SessionMemoryDomain::JobPermit permit;const Origin origin;
+    const s::IoHandlerEnvironment* const source;const std::uintptr_t source_cap,epoch=next_capability();
+    const DWORD thread=::GetCurrentThreadId();void* const fiber=::GetCurrentFiber();
+    std::atomic<bool> open{true};std::function<void()> checkpoint;
+    JobState(std::shared_ptr<Control> c,std::shared_ptr<void> l,s::SessionMemoryDomain& p,const s::SessionMemoryDomain::JobPermit& proof,Origin o,const s::IoHandlerEnvironment& from,std::uintptr_t cap,std::function<void()>& donor)
+        :control(std::move(c)),lease(std::move(l)),parent(&p),permit(proof),origin(o),source(&from),source_cap(cap){checkpoint.swap(donor);}
+    void check()const{
+        if(!open.load(std::memory_order_acquire))throw std::logic_error("Environment job scope has ended");
+        permit.check(*parent);
+        if(!parent->owns_control(origin.control)||!origin.control->strong_08.load())throw std::logic_error("Environment job session is no longer live");
+        const auto& owner=static_cast<s::SessionControl*>(origin.control)->object;
+        if(owner.identity()!=origin.owner||owner.weak_self.control_08!=origin.control||owner.weak_self.object_00!=origin.owner)
+            throw std::logic_error("Environment job session owner/control changed");
+    }
+};
+struct Environment::Control:std::enable_shared_from_this<Control> {
+    enum class Family {Host,Initial,Tracked};
+    enum class Pin {None,Owned,ReleaseEntered};
+    enum class Transform {Copy,Prepare,Factory,Response20,Response88};
+    struct Row {
+        s::IoHandlerEnvironment* address=nullptr;std::uintptr_t cap=0,state=0;Origin origin;std::uintptr_t job_epoch=0;
+        Family family=Family::Host;std::uint32_t flags=0;Pin pin=Pin::None;bool release_consumed=false;
+    };
+    mutable std::mutex gate;Phase phase=Phase::Fresh;bool binding=false,checking=false,growing=false,releasing=false;
+    const ClassifierProfile classifier;
+    const std::uintptr_t token=next_capability(),tracked_token;std::vector<Row> rows;
+    std::size_t refs=0,active=0;std::uint64_t created=0,moved=0,copied=0,destroyed=0,handlers=0,responses=0;
+    DWORD thread=0;void* fiber=nullptr;std::optional<rt::Ports> ports;
+    std::shared_ptr<void> lease;std::function<void()> checkpoint;
+    std::weak_ptr<JobState> job;bool job_binding=false;
+    struct Registry {std::mutex gate;std::list<std::pair<std::uintptr_t,std::weak_ptr<Control>>> entries;};
+    static Registry& registry(){static Registry value;return value;}
+    static void register_owner(const std::shared_ptr<Control>& c){
+        auto& r=registry();decltype(r.entries) prepared;prepared.emplace_back(c->token,c);
+        std::lock_guard lock(r.gate);r.entries.splice(r.entries.end(),prepared);
+    }
+    static void unregister_owner(std::uintptr_t token){
+        auto& r=registry();decltype(r.entries) retired;
+        {std::lock_guard lock(r.gate);for(auto at=r.entries.begin();at!=r.entries.end();++at)if(at->first==token){retired.splice(retired.end(),r.entries,at);break;}}
+        // Weak control/node retirement and allocator effects occur outside gate.
+    }
+    static std::shared_ptr<Control> owner(std::uintptr_t token){
+        auto& r=registry();std::lock_guard lock(r.gate);auto at=std::find_if(r.entries.begin(),r.entries.end(),[=](const auto& item){return item.first==token;});
+        if(at==r.entries.end())throw s::UnsupportedInput("Stale or foreign environment owner token");
+        auto c=at->second.lock();if(!c)throw s::UnsupportedInput("Retired environment owner");return c;
+    }
+    static std::shared_ptr<Control> query_owner(std::uintptr_t cap){
+        auto& r=registry();std::lock_guard lock(r.gate);
+        for(const auto& entry:r.entries)if(auto c=entry.second.lock()){
+            std::lock_guard own(c->gate);if(c->phase!=Phase::Bound)continue;
+            for(const auto& row:c->rows)if(row.address&&row.cap==cap)return c;
+        }
+        throw s::UnsupportedInput("Stale or foreign environment query capability");
+    }
+    explicit Control(std::size_t capacity,ClassifierProfile profile):classifier(profile),tracked_token(profile==ClassifierProfile::OriginalDefault?next_capability():0),rows(capacity){}
+    void poison(){PreserveError error;std::lock_guard lock(gate);if(phase!=Phase::Closed)phase=Phase::Poisoned;}
+    void affinity()const{if(thread!=::GetCurrentThreadId()||fiber!=::GetCurrentFiber())throw std::logic_error("Environment requires its bound worker/fiber");}
+    void probe(Phase expected,const std::shared_ptr<JobState>& selected={}){
+        {PreserveError error;std::lock_guard lock(gate);if(checking||phase!=expected){if(phase!=Phase::Closed)phase=Phase::Poisoned;throw std::logic_error("Environment admission probe reentry");}checking=true;}
+        try{if(selected){selected->check();selected->checkpoint();selected->check();}else checkpoint();}catch(...){PreserveError error;std::lock_guard lock(gate);checking=false;if(phase!=Phase::Closed)phase=Phase::Poisoned;throw;}
+        {PreserveError error;std::lock_guard lock(gate);checking=false;if(phase!=expected)throw std::logic_error("Environment admission probe was poisoned");}
+    }
+    void admission(bool cleanup,const std::shared_ptr<JobState>& selected){
+        {PreserveError error;std::lock_guard lock(gate);if(phase!=Phase::Bound||job_binding)throw std::logic_error("Environment source is closed or poisoned");if(selected){if(job.lock()!=selected||!selected->open.load())throw std::logic_error("Environment job scope changed");}else affinity();}
+        probe(Phase::Bound,selected);
+        {PreserveError error;std::lock_guard lock(gate);if(phase!=Phase::Bound)throw std::logic_error("Environment admission was poisoned");}
+        (void)ports->view.memory.buffer_context();const auto backend=ports->view.backend.snapshot().phase;
+        if((backend!=sp::o::Phase::Ready&&backend!=sp::o::Phase::Running&&!(cleanup&&(backend==sp::o::Phase::Returned||backend==sp::o::Phase::Quiescing)))||
+           ports->view.io.snapshot().phase!=s::IoMemoryPhase::Open||ports->accept.snapshot().poisoned)
+            throw std::logic_error("Environment backend/IO admission is unavailable");
+        if(classifier==ClassifierProfile::OriginalDefault&&(!ports->environment_work_stop||!ports->environment_work_stop->matches(ports->view.memory,ports->view.scheduler)))
+            throw std::logic_error("Native environment work capability does not match its source");
+    }
+    template<class F>std::invoke_result_t<F> perform(F&& fn,bool cleanup=false,bool original_only=false){
+        auto pin=shared_from_this();
+        std::shared_ptr<JobState> selected;bool growth_reentry=false;
+        {PreserveError error;std::lock_guard lock(gate);
+            if(growing||releasing){phase=Phase::Poisoned;growth_reentry=true;}
+            else{if(checking||job_binding){phase=Phase::Poisoned;throw std::logic_error("Environment source cannot reenter admission/retirement");}if(phase!=Phase::Bound){if(phase==Phase::Closing||binding)phase=Phase::Poisoned;throw std::logic_error("Environment is unbound or closed");}selected=job.lock();if(selected){if(original_only||!selected->open.load()||selected->thread!=::GetCurrentThreadId()||selected->fiber!=::GetCurrentFiber())throw std::logic_error("Environment operation is outside child projection authority");}else affinity();++active;}
+        }
+        if(growth_reentry)throw std::logic_error("Environment source cannot reenter ledger growth/work release");
+        struct Leave {Control& c;~Leave(){PreserveError error;std::lock_guard lock(c.gate);--c.active;}} leave{*this};
+        try{admission(cleanup,selected);if constexpr(std::is_void_v<std::invoke_result_t<F>>){std::forward<F>(fn)();admission(cleanup,selected);}
+            else{decltype(auto) result=std::forward<F>(fn)();admission(cleanup,selected);return result;}}
+        catch(...){poison();throw;}
+    }
+    void allowed(const Row& row,bool destructive=false){
+        if(row.pin==Pin::ReleaseEntered)throw s::UnsupportedInput("Environment work release has already entered");
+        if(auto selected=job.lock()){
+            if(!selected->open.load()||row.origin!=selected->origin||(row.cap!=selected->source_cap&&row.job_epoch!=selected->epoch))throw s::UnsupportedInput("Environment projection is outside exact job lineage");
+            if(destructive&&row.cap==selected->source_cap)throw s::UnsupportedInput("Job cannot retire or move its protected source projection");
+        }
+    }
+    std::uintptr_t schedule(const Row& r)const noexcept{return r.family==Family::Tracked?tracked_token:token;}
+    s::IoHandlerExecutor* execution(const Row& r)noexcept{return r.family==Family::Tracked?&tracked_executor:&executor;}
+    const s::IoHandlerExecutor* execution(const Row& r)const noexcept{return r.family==Family::Tracked?&tracked_executor:&executor;}
+    Row& row(s::IoHandlerEnvironment& value,bool full,bool destructive=false,bool scoped=true){
+        for(auto& r:rows)if(r.address==&value){
+            if(value.payload_00[0]!=token||value.payload_00[1]!=r.cap||value.state_18!=r.state||
+               r.pin==Pin::ReleaseEntered||
+               (full&&(value.operations_10!=&table||value.schedule_20!=schedule(r)||value.executor_28!=execution(r)))||
+               (!full&&(value.operations_10!=&empty()||value.schedule_20!=0||value.executor_28!=execution(r))))
+                throw s::UnsupportedInput("Environment projection/capability fields changed");
+            if(scoped)allowed(r,destructive);return r;
+        }
+        throw s::UnsupportedInput("Environment projection is not registered at this address");
+    }
+    Row query_row(std::uintptr_t cap){for(const auto& r:rows)if(r.address&&r.cap==cap){allowed(r);return r;}throw s::UnsupportedInput("Expired environment query generation");}
+    void fresh(s::IoHandlerEnvironment& out,bool partial){
+        for(const auto& r:rows)if(r.address==&out)throw s::UnsupportedInput("Environment output already owns a projection");
+        if(partial){if(out.operations_10!=&table||(out.schedule_20!=token&&(!tracked_token||out.schedule_20!=tracked_token)))throw s::UnsupportedInput("Environment output has a foreign native copy/move prefix");}
+        else if(out.payload_00[0]||(out.operations_10&&out.operations_10!=&empty()))throw s::UnsupportedInput("Environment output is not fresh");
+    }
+    bool source_matches(const Row& expected)const noexcept{
+        for(const auto& r:rows)if(r.address==expected.address&&r.address){
+            const auto& value=*r.address;
+            return r.cap==expected.cap&&r.state==expected.state&&r.origin==expected.origin&&r.job_epoch==expected.job_epoch&&
+                r.family==expected.family&&r.flags==expected.flags&&r.pin==expected.pin&&r.release_consumed==expected.release_consumed&&
+                value.payload_00[0]==token&&value.payload_00[1]==r.cap&&value.state_18==r.state&&value.operations_10==&table&&value.schedule_20==schedule(r)&&value.executor_28==execution(r);
+        }
+        return false;
+    }
+    bool destination_fresh(const s::IoHandlerEnvironment& out,bool partial)const noexcept{
+        for(const auto& r:rows)if(r.address==&out)return false;
+        return partial?(out.operations_10==&table&&(out.schedule_20==token||(tracked_token&&out.schedule_20==tracked_token))):(!out.payload_00[0]&&(!out.operations_10||out.operations_10==&empty()));
+    }
+    void publish(Row& target,s::IoHandlerEnvironment& out,std::uintptr_t cap,std::uintptr_t state,Origin origin,std::uintptr_t epoch,bool partial,Family family,std::uint32_t flags)noexcept{
+        if(family==Family::Tracked)ports->view.scheduler.work_count_30.fetch_add(1,std::memory_order_seq_cst);
+        target={&out,cap,state,origin,epoch,family,flags,family==Family::Tracked?Pin::Owned:Pin::None,false};++refs;
+        if(partial){++copied;out.payload_00={token,cap};out.state_18=state;}
+        else{++created;out={{token,cap},&table,state,schedule(target),execution(target)};}
+    }
+    void make(s::IoHandlerEnvironment& out,std::uintptr_t state,Origin origin,const Row* source=nullptr,bool partial=false,Transform transform=Transform::Copy){
+        // Capability overflow may construct an exception: do it outside gate.
+        const auto cap=next_capability();
+        auto family=classifier==ClassifierProfile::Host?Family::Host:(source?source->family:Family::Initial);
+        auto flags=source?source->flags:0U;
+        if(family!=Family::Host){
+            if(transform==Transform::Prepare)flags&=~1U;
+            else if(transform==Transform::Factory)family=Family::Tracked;
+            else if(transform==Transform::Response20)flags|=1U;
+            else if(transform==Transform::Response88)flags&=~2U;
+        }
+        std::shared_ptr<JobState> selected;Row protected_source;
+        std::size_t count=0,depth=0;const Row* old_data=nullptr;
+        struct Growth {
+            Control& c;bool armed=false;
+            ~Growth(){if(armed){PreserveError error;std::lock_guard lock(c.gate);c.growing=false;}}
+        } growth{*this};
+        {
+            std::lock_guard lock(gate);fresh(out,partial);selected=job.lock();
+            if(selected&&(!selected->open.load()||origin!=selected->origin))throw s::UnsupportedInput("Environment factory lost job origin");
+            if(source&&!source_matches(*source))throw s::UnsupportedInput("Environment factory source changed");
+            if(partial&&source&&out.schedule_20!=schedule(*source))throw s::UnsupportedInput("Environment copy prefix belongs to another family");
+            if(selected){
+                protected_source=row(const_cast<s::IoHandlerEnvironment&>(*selected->source),true,false,false);
+                if(protected_source.cap!=selected->source_cap||protected_source.origin!=selected->origin)throw s::UnsupportedInput("Protected job environment source changed");
+            }
+            for(auto& target:rows)if(!target.address){publish(target,out,cap,state,origin,selected?selected->epoch:0,partial,family,flags);return;}
+            if(growing)throw std::logic_error("Environment ledger growth is already reserved");
+            growing=true;growth.armed=true;count=rows.size();old_data=rows.data();depth=active;
+        }
+        PreserveError error;
+        // Candidate allocation and eventual old-vector retirement are outside
+        // the nonrecursive gate; callbacks can inspect only the old ledger.
+        const auto limit=rows.max_size();if(count>=limit)throw std::length_error("Environment ledger exceeds container capacity");
+        const auto capacity=count>limit-count?limit:count*2;
+        std::vector<Row> next(capacity);
+        admission(false,selected);
+        bool origin_live=true;
+        if(origin.control){
+            auto& memory=ports->view.memory;origin_live=memory.owns_control(origin.control)&&origin.control->strong_08.load();
+            if(origin_live){const auto& owner=static_cast<s::SessionControl*>(origin.control)->object;origin_live=owner.identity()==origin.owner&&owner.weak_self.control_08==origin.control&&owner.weak_self.object_00==origin.owner;}
+        }
+        bool valid=false;
+        {
+            std::lock_guard lock(gate);
+            valid=phase==Phase::Bound&&growing&&!checking&&!binding&&!job_binding&&active==depth&&rows.size()==count&&rows.data()==old_data&&
+                job.lock()==selected&&(!selected||(selected->open.load()&&selected->origin==origin&&source_matches(protected_source)))&&
+                origin_live&&destination_fresh(out,partial)&&(!source||source_matches(*source))&&(!partial||!source||out.schedule_20==schedule(*source));
+            if(valid){
+                std::copy(rows.begin(),rows.end(),next.begin());
+                rows.swap(next);publish(rows[count],out,cap,state,origin,selected?selected->epoch:0,partial,family,flags);
+            }
+        }
+        if(!valid)throw std::logic_error("Environment ledger admission or projection changed during growth");
+    }
+    void retire(Row& r,s::IoHandlerEnvironment& value)noexcept{
+        r={};--refs;++destroyed;value={};value.operations_10=&empty();value.executor_28=&empty_executor();
+    }
+    void destroy(s::IoHandlerEnvironment& value){
+        Row expected,protected_source;std::shared_ptr<JobState> selected;std::size_t depth=0;
+        {
+            std::lock_guard lock(gate);auto& r=row(value,true,true);
+            if(r.pin==Pin::None){retire(r,value);return;}
+            selected=job.lock();
+            if(selected){
+                protected_source=row(const_cast<s::IoHandlerEnvironment&>(*selected->source),true,false,false);
+                if(protected_source.cap!=selected->source_cap||protected_source.origin!=selected->origin)throw s::UnsupportedInput("Protected job source changed before work release");
+            }
+            r.pin=Pin::ReleaseEntered;expected=r;depth=active;releasing=true;
+        }
+        struct Release {Control& c;~Release(){PreserveError error;std::lock_guard lock(c.gate);c.releasing=false;}} release{*this};
+        bool consumed=false;
+        try{
+            // Borrowed synchronously by the capability; construction/destruction
+            // and all source/SDK effects occur outside the nonrecursive gate.
+            const std::function<void()> proof=[&]{
+                admission(true,selected);bool valid=false;
+                {PreserveError error;std::lock_guard lock(gate);
+                    valid=phase==Phase::Bound&&releasing&&!growing&&!checking&&!job_binding&&active==depth&&job.lock()==selected&&
+                        source_matches(expected)&&(!selected||(selected->open.load()&&source_matches(protected_source)));
+                }
+                if(!valid)throw std::logic_error("Environment work release lost its source authority");
+            };
+            auto& p=*ports;
+            if(selected)p.environment_work_stop->finish_job(p.view.scheduler,selected->permit,proof,consumed);
+            else p.environment_work_stop->finish_original(p.view.scheduler,proof,consumed);
+            bool valid=false;
+            {
+                PreserveError error;std::lock_guard lock(gate);
+                valid=consumed&&phase==Phase::Bound&&releasing&&active==depth&&job.lock()==selected&&source_matches(expected)&&
+                    (!selected||(selected->open.load()&&source_matches(protected_source)));
+                if(valid)for(auto& r:rows)if(r.address==&value&&r.cap==expected.cap){retire(r,value);break;}
+            }
+            if(!valid)throw std::logic_error("Environment work finish returned without exact consumption");
+        }catch(...){
+            {PreserveError error;std::lock_guard lock(gate);
+                for(auto& r:rows)if(r.address==&value&&r.cap==expected.cap)r.release_consumed=consumed;
+                if(phase!=Phase::Closed)phase=Phase::Poisoned;
+            }
+            // ReleaseEntered is deliberately retained whether validation failed
+            // before decrement or an effect failed after it. Never replay/readd.
+            throw;
+        }
+    }
+    struct Table final:s::IoHandlerVtable {
+        Control& c;explicit Table(Control& value):IoHandlerVtable(1),c(value){}
+        void destroy_slot_00(s::IoHandlerEnvironment& value)override{c.perform([&]{c.destroy(value);},true);}
+        void move_slot_10(s::IoHandlerEnvironment& out,s::IoHandlerEnvironment& from)override{c.perform([&]{
+            std::lock_guard lock(c.gate);c.fresh(out,true);auto& r=c.row(from,false,true);
+            if(out.schedule_20!=c.schedule(r))throw s::UnsupportedInput("Environment move prefix belongs to another family");
+            out.payload_00=from.payload_00;out.state_18=from.state_18;r.address=&out;++c.moved;from.payload_00={};from.state_18=0;
+        });}
+        std::uintptr_t query_slot_18(s::IoHandlerEnvironment& value)override{return c.perform([&]{std::lock_guard lock(c.gate);return c.row(value,true).cap;});}
+    } table{*this};
+    struct Types final:s::IoEnvironmentTypeApi {
+        std::weak_ptr<Control> control;explicit Types(std::weak_ptr<Control> c):control(std::move(c)){}
+        std::int32_t compare_type_names_04d2d0(std::uintptr_t first,std::uintptr_t second)override{
+            auto c=control.lock();if(!c)throw s::UnsupportedInput("Retired environment type provider");
+            return c->perform([&]{if(second!=0x1800a25c8ULL)throw s::UnsupportedInput("Unknown environment type comparison");if(first==empty_type()+8)return 0;if(first==active_type()+8||(c->classifier==ClassifierProfile::OriginalDefault&&first==tracked_type()+8))return -1;throw s::UnsupportedInput("Unknown environment type token");});
+        }
+    };
+    static void prepare(s::IoHandlerEnvironment& out,std::uintptr_t query,s::IoPrepareScratch&){construct(out,query,Transform::Prepare);}
+    static void factory(s::IoHandlerEnvironment& out,std::uintptr_t query,s::IoEnvironmentConstructorScratch&){construct(out,query,Transform::Factory);}
+    static void response20(s::IoHandlerEnvironment& out,std::uintptr_t query,std::uintptr_t literal){if(literal!=0x180084425ULL)throw s::UnsupportedInput("Response factory literal mismatch");construct(out,query,Transform::Response20);}
+    static void response88(s::IoHandlerEnvironment& out,std::uintptr_t query,s::ResponseExecutorScratch&){construct(out,query,Transform::Response88);}
+    static void construct(s::IoHandlerEnvironment& out,std::uintptr_t query,Transform transform){auto c=query_owner(query);c->perform([&]{Row source;{std::lock_guard lock(c->gate);source=c->query_row(query);}c->make(out,source.state,source.origin,&source,false,transform);});}
+    static void copy(s::IoHandlerEnvironment& out,s::IoHandlerEnvironment& from){auto c=owner(from.payload_00[0]);c->perform([&]{
+        Row source;{std::lock_guard lock(c->gate);c->fresh(out,true);source=c->row(from,true);}
+        c->make(out,source.state,source.origin,&source,true);
+    });}
+    static void handler(s::IoHandlerEnvironment& env,s::OwnedHandlerTask*& slot){auto c=owner(env.payload_00[0]);c->perform([&]{
+        Family family;std::uint32_t flags=0;
+        {std::lock_guard lock(c->gate);const auto& row=c->row(env,true);family=row.family;flags=row.flags;++c->handlers;}
+        if(family!=Family::Host){
+            if(!slot)throw s::UnsupportedInput("Owned handler slot is empty");auto& p=*c->ports;
+            s::PostedExecutor selected{p.view.identity.value,&p.view.scheduler,flags};
+            s::dispatch_posted_022e40(selected,slot,p.environment.storage,p.worker,p.completion,p.memory.posted());return;
+        }
+        auto* const task=slot;if(!task)throw s::UnsupportedInput("Owned handler slot is empty");slot=nullptr;task->call_slot_00(1);
+        // Neither task nor environment projection may be inspected after call.
+    },false,true);}
+    static void response(s::IoHandlerEnvironment& env,s::PostedFunctor*& slot){auto c=owner(env.payload_00[0]);c->perform([&]{
+        std::uint32_t flags=1;
+        {std::lock_guard lock(c->gate);const auto& row=c->row(env,true);if(row.family!=Family::Host)flags=row.flags;++c->responses;}
+        if(!slot)throw s::UnsupportedInput("Owned response slot is empty");auto& p=*c->ports;
+        s::PostedExecutor selected{p.view.identity.value,&p.view.scheduler,flags};
+        s::dispatch_posted_022e40(selected,slot,p.environment.storage,p.worker,p.completion,p.memory.posted());
+    },false,true);}
+    s::IoHandlerExecutor executor{prepare},tracked_executor{prepare};s::HandlerSchedule handlers_table{handler,nullptr};s::ResponseSchedule responses_table{response,nullptr};s::AcceptSchedule accepts_table{handler,nullptr};
+    Snapshot snapshot()const{PreserveError error;std::lock_guard lock(gate);return {phase,refs,active,created,moved,copied,destroyed,handlers,responses,token};}
+};
+Environment::Environment(std::size_t capacity,ClassifierProfile profile){
+    if(!capacity||capacity>1048576||(profile!=ClassifierProfile::Host&&profile!=ClassifierProfile::OriginalDefault))throw std::invalid_argument("Bounded environment capacity and known classifier profile required");
+    control_=std::make_shared<Control>(capacity,profile);Control::register_owner(control_);
+}
+Environment::~Environment()noexcept{
+    auto c=control_;{PreserveError error;std::lock_guard lock(c->gate);if(c->active||c->refs||c->binding||c->job_binding||!c->job.expired()||(c->phase!=Phase::Closed&&c->phase!=Phase::Fresh))std::terminate();c->phase=Phase::Closed;}
+    Control::unregister_owner(c->token);
+}
+sp::Environment Environment::configuration()const{
+    auto c=control_;{PreserveError error;std::lock_guard lock(c->gate);if(c->phase!=Phase::Fresh||c->binding)throw std::logic_error("Environment configuration exports before binding only");}
+    sp::Environment out;out.sentinels=sentinels();out.types=std::make_shared<Control::Types>(c);
+    out.queries={{c->token,c->classifier==ClassifierProfile::OriginalDefault?empty_type:active_type},{0,empty_type}};
+    out.factories={{&c->executor,Control::factory}};out.handlers={{c->token,&c->handlers_table}};out.response_executors={{&c->executor,Control::response20,Control::response88}};
+    out.responses={{c->token,&c->responses_table}};out.copies={{&c->table,Control::copy}};out.accepts={{c->token,&c->accepts_table}};
+    if(c->classifier==ClassifierProfile::OriginalDefault){
+        out.queries.push_back({c->tracked_token,tracked_type});out.factories.push_back({&c->tracked_executor,Control::factory});
+        out.handlers.push_back({c->tracked_token,&c->handlers_table});out.response_executors.push_back({&c->tracked_executor,Control::response20,Control::response88});
+        out.responses.push_back({c->tracked_token,&c->responses_table});out.accepts.push_back({c->tracked_token,&c->accepts_table});
+    }
+    return out;
+}
+void Environment::bind(rt::Ports ports,std::function<void()> checkpoint){
+    auto c=control_;{PreserveError error;std::lock_guard lock(c->gate);if(c->phase!=Phase::Fresh||c->binding){if(c->binding||c->active||c->phase==Phase::Closing)c->phase=Phase::Poisoned;throw std::logic_error("Environment binds once");}c->binding=true;}
+    try{
+        if(!checkpoint||!same(ports.environment.sentinels,sentinels())||!ports.server_identity||!ports.view.identity.value)throw std::invalid_argument("Exact owned sentinels, stable Ports and source admission required");
+        if(c->classifier==ClassifierProfile::OriginalDefault&&(!ports.environment_work_stop||!ports.environment_work_stop->matches(ports.view.memory,ports.view.scheduler)))throw std::invalid_argument("Native environment requires its exact work-stop capability");
+        const auto bindings=ports.accept.storage_bindings();if(bindings.data()!=ports.environment.storage.current_storage().data()||bindings.size()!=ports.environment.storage.current_storage().size())throw std::invalid_argument("Environment storage belongs to another source graph");
+        (void)ports.view.memory.buffer_context();const auto phase=ports.view.backend.snapshot().phase;
+        if((phase!=sp::o::Phase::Ready&&phase!=sp::o::Phase::Running)||ports.view.io.snapshot().phase!=s::IoMemoryPhase::Open)throw std::logic_error("Environment requires an open owned source graph");
+        c->ports.emplace(ports);c->checkpoint=std::move(checkpoint);checkpoint={};
+        {PreserveError error;std::lock_guard lock(c->gate);if(c->phase!=Phase::Fresh||!c->binding)throw std::logic_error("Environment bind target retirement was poisoned");}
+        c->lease=ports.view.memory.acquire_provider_lease_from_operation();
+        {PreserveError error;std::lock_guard lock(c->gate);if(c->phase!=Phase::Fresh||!c->binding)throw std::logic_error("Environment bind was poisoned");c->thread=::GetCurrentThreadId();c->fiber=::GetCurrentFiber();c->binding=false;c->phase=Phase::Bound;}
+    }catch(...){c->poison();{PreserveError error;std::lock_guard lock(c->gate);c->binding=false;}throw;}
+}
+void Environment::session(s::IoHandlerEnvironment& out,sp::SessionView view){auto c=control_;c->perform([&]{auto& p=*c->ports;auto* control=view.owner.weak_self.control_08;
+    if(!p.view.memory.owns_control(control)||!control->strong_08.load()||&static_cast<s::SessionControl*>(control)->object!=&view.owner||view.owner.weak_self.object_00!=view.owner.identity())throw std::invalid_argument("Environment session must be an exact live Parent owner");c->make(out,1,{view.token,view.owner.identity(),control});
+},false,true);}
+void Environment::accept(s::IoHandlerEnvironment& out,std::uintptr_t allocator){auto c=control_;c->perform([&]{if(allocator!=c->ports->server_identity+0x68)throw std::invalid_argument("Foreign accept allocator token");c->make(out,0,{});},false,true);}
+void Environment::release(s::IoHandlerEnvironment& value){if(value.operations_10==&empty()){empty().destroy_slot_00(value);return;}auto c=control_;{std::lock_guard lock(c->gate);c->affinity();if(!c->job.expired())throw std::logic_error("Public environment release is original-worker only");}if(value.operations_10!=&c->table)throw s::UnsupportedInput("Foreign environment table");c->table.destroy_slot_00(value);}
+Environment::JobScope::JobScope(std::shared_ptr<JobState> state)noexcept:state_(std::move(state)){}
+Environment::JobScope::~JobScope()noexcept{
+    PreserveError error;if(!state_)return;
+    try{close();}catch(...){auto state=std::move(state_);state->open.store(false,std::memory_order_release);state->control->poison();}
+}
+Environment::JobScope Environment::enter_job(const s::IoHandlerEnvironment& source,sp::SessionView view,const s::SessionMemoryDomain::JobPermit& permit,std::function<void()> checkpoint){
+    PreserveError error;auto c=control_;Origin origin;std::uintptr_t cap=0;s::SessionMemoryDomain* parent;std::shared_ptr<void> lease;
+    {
+        std::lock_guard lock(c->gate);
+        if(c->phase!=Phase::Bound||c->active||c->checking||c->binding||c->job_binding||!c->job.expired())throw std::logic_error("Environment job scope requires idle bound provider");
+        if(c->thread==::GetCurrentThreadId())throw std::logic_error("Environment job scope requires a distinct child worker");
+        const auto& row=c->row(const_cast<s::IoHandlerEnvironment&>(source),true);origin=row.origin;cap=row.cap;
+        if(row.state!=1||!origin.control||origin.session!=view.token||origin.owner!=view.owner.identity())throw std::invalid_argument("Exact session environment origin required");
+        parent=&c->ports->view.memory;lease=c->lease;
+    }
+    if(!checkpoint)throw std::invalid_argument("Explicit job source checkpoint required");
+    permit.check(*parent);
+    if(!parent->owns_control(origin.control)||!origin.control->strong_08.load()||
+       &static_cast<s::SessionControl*>(origin.control)->object!=&view.owner||view.owner.weak_self.control_08!=origin.control||view.owner.weak_self.object_00!=origin.owner)
+        throw std::invalid_argument("Environment job requires exact live Parent session/control");
+    {
+        std::lock_guard lock(c->gate);
+        if(c->phase!=Phase::Bound||c->active||c->checking||c->binding||c->job_binding||!c->job.expired())throw std::logic_error("Environment job scope changed before reservation");
+        c->job_binding=true;
+    }
+    try{
+        auto state=std::make_shared<JobState>(c,std::move(lease),*parent,permit,origin,source,cap,checkpoint);
+        state->check();state->checkpoint();state->check();
+        {
+            std::lock_guard lock(c->gate);const auto& row=c->row(const_cast<s::IoHandlerEnvironment&>(source),true);
+            if(c->phase!=Phase::Bound||!c->job_binding||c->active||c->checking||!c->job.expired()||row.cap!=cap||row.origin!=origin)throw std::logic_error("Environment job scope was poisoned during preparation");
+            c->job=state;c->job_binding=false;
+        }
+        return JobScope(std::move(state));
+    }catch(...){c->poison();throw;}
+}
+void Environment::JobScope::close(){
+    PreserveError error;if(!state_)return;auto state=state_;auto c=state->control;
+    try{
+        {
+            std::lock_guard lock(c->gate);state->open.store(false,std::memory_order_release);
+            if(c->phase!=Phase::Bound||c->job.lock()!=state||c->job_binding||c->active||c->checking||state->thread!=::GetCurrentThreadId()||state->fiber!=::GetCurrentFiber()){
+                c->phase=Phase::Poisoned;throw std::logic_error("Environment job scope cannot retire active/foreign admission");
+            }
+            const auto& row=c->row(const_cast<s::IoHandlerEnvironment&>(*state->source),true,false,false);
+            if(row.cap!=state->source_cap||row.origin!=state->origin)throw std::logic_error("Protected environment source changed");
+            if(std::any_of(c->rows.begin(),c->rows.end(),[&](const Control::Row& r){return r.address&&r.job_epoch==state->epoch;}))
+                throw std::logic_error("Environment job scope still owns temporary projections");
+            c->job_binding=true;
+        }
+        state->permit.check(*state->parent);
+        state->checkpoint={}; // no active/probing Call may still execute target
+        state->permit.check(*state->parent);
+        {
+            std::lock_guard lock(c->gate);const auto& row=c->row(const_cast<s::IoHandlerEnvironment&>(*state->source),true,false,false);
+            if(c->phase!=Phase::Bound||!c->job_binding||c->active||c->checking||c->job.lock()!=state||row.cap!=state->source_cap||row.origin!=state->origin)throw std::logic_error("Environment job target retirement was poisoned");
+            if(std::any_of(c->rows.begin(),c->rows.end(),[&](const Control::Row& r){return r.address&&r.job_epoch==state->epoch;}))
+                throw std::logic_error("Environment job temporary retirement changed");
+            c->job.reset();c->job_binding=false;
+        }
+        state_.reset();
+    }catch(...){c->poison();throw;}
+}
+bool Environment::close(bool attested){
+    auto c=control_;{PreserveError error;std::lock_guard lock(c->gate);if(c->phase==Phase::Closed)return true;if(!c->job.expired())throw std::logic_error("Active child projection scope cannot close Environment");if(c->active||c->binding||c->job_binding||c->phase==Phase::Closing){c->phase=Phase::Poisoned;throw std::logic_error("Environment lifecycle reentry");}if(c->phase!=Phase::Bound)throw std::logic_error("Environment cannot close an unknown/unbound state");c->affinity();if(!attested||c->refs)return false;c->phase=Phase::Closing;}
+    try{
+        c->probe(Phase::Closing);auto& p=*c->ports;(void)p.view.memory.buffer_context();const auto phase=p.view.backend.snapshot().phase;
+        const auto io=p.view.io.snapshot();const auto memory=p.view.memory.snapshot();const auto accept=p.accept.snapshot();
+        const bool drained=(phase==sp::o::Phase::Returned||phase==sp::o::Phase::Quiescing)&&io.phase==s::IoMemoryPhase::Open&&!io.allocations&&!io.pending&&!io.active_calls&&
+            memory.phase==s::SessionMemoryPhase::Open&&!memory.allocations&&!memory.controls&&!memory.proxies&&!memory.blocks&&!memory.maps&&!memory.buffers&&!memory.reserved&&!memory.pending_frees&&!memory.partial_constructions&&!memory.buffer_borrows&&
+            !accept.poisoned&&!accept.projections&&!accept.pending&&!accept.active_calls&&!p.view.scheduler.work_count_30.load()&&!p.view.scheduler.completion.head&&!p.view.scheduler.completion.tail;
+        {PreserveError error;std::lock_guard lock(c->gate);if(c->phase!=Phase::Closing)throw std::logic_error("Environment close was poisoned");if(!drained){c->phase=Phase::Bound;return false;}}
+        Control::unregister_owner(c->token);
+        {auto retiring=std::move(c->checkpoint);c->checkpoint={};}
+        {PreserveError error;std::lock_guard lock(c->gate);if(c->phase!=Phase::Closing)throw std::logic_error("Environment checkpoint retirement was poisoned");}
+        c->lease.reset();c->ports.reset();
+        {PreserveError error;std::lock_guard lock(c->gate);if(c->phase!=Phase::Closing)throw std::logic_error("Environment provider retirement was poisoned");c->phase=Phase::Closed;}return true;
+    }catch(...){c->poison();throw;}
+}
+Snapshot Environment::snapshot()const{return control_->snapshot();}
+} // namespace anadius::owned_environment

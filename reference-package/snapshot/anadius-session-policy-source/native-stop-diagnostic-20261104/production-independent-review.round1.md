@@ -1,0 +1,37 @@
+# Independent production source review
+
+Result: **no blocking source finding** at the three exact hashes below. Reviewed complete diffs against this stage's before copies, complete new category/getter/message bodies, the two84530 Policy throw sites and their unchanged surrounding admission/failure ordering. No source edits, compiler/tests/link, execution, package update or new REA call performed during this review. This is static review, not a runtime PASS.
+
+| Production file | Reviewed SHA256 | Before SHA256 |
+|---|---|---|
+| outputs/anadius-socket-source/native.hpp |8d14ded529a1f8766775612d4c910d72c711f23f49da112b32eddd80387e847c |054f0a03884610c94ec0683f67735ce41fb2025130cbbd757f6c818da31d8e5c |
+| outputs/anadius-socket-source/native.cpp |688c0323472f7ca0601016dc1109d9706bc1276e60ae142b81687929b9aaa1b8 |718bfac524e2b8d445e522b433abba165dee811e1301cc50a0ecc9fdc9a41a39 |
+| outputs/anadius-session-policy-source/policy.cpp |7a7603dc92eb5d8617d1efa6599aa0cb7f8f6542514b9d28352b81bf56d26771 |32de8c7a0f70371baae8117b009eaed9c25d6882e963eab74cf783f661b95759 |
+
+## Identity and owned lifetime
+
+The getter validates the immutable typed FormatMessageA/LocalFree pair, searches the module pool under its gate, prepares both category and list node outside that gate, then rechecks before no-allocation splice. A concurrent/reentrant publication of the same pair wins the recheck; the unpublished duplicate retires outside the gate. Matching is only the two typed function pointers, so the same pair selects one stable module-owned category, independent of Policy/exception instance. No message import is invoked by the getter.
+
+The category's name is exactly asio.system. Plain std::system_error copies, runtime_error value slices and error_code references do not own a short-lived per-Policy category. The pool retains its object until ordinary module CRT teardown. This fixes that C++ category-reference lifetime within the declared module domain; it does not permit invoking imported code after its own module or this category module is gone. No hidden derived exception guard, TLS constructor state, teardown/drain prerequisite or new unloading framework appears.
+
+## Independent attempts and unknown prefixes
+
+Each message invocation prepares one list Attempt outside the metadata mutex and publishes its stable node by splice. The held iterator addresses only that call's SystemMessageState; other callers modify list structure under the gate and their own separate state. No mutex/shared busy reservation spans FormatMessageA, std::string allocation or LocalFree, allowing independent concurrent and callback-reentrant attempts.
+
+The actual previously reviewed system_message_020950 body is unchanged and invoked once. A successful attempt is unlinked to a local retirement list under the gate, then its metadata is deallocated outside. On helper/SDK/string failure, stack unwinding destroys only the now-empty local list; the published attempt remains passively owned with its entered/release prefix. Later calls do not retry, reset or free that retained attempt. Pool teardown destroys plain metadata, with no LocalFree-based guessed recovery. Exceptional native buffer reclamation remains unproven and is not represented as solved.
+
+MessageMetadataError protects added allocation/publication/retirement metadata effects. It does not cover the actual helper/SDK work in message(), so the successful LocalFree error state survives the following retirement. Getter metadata preservation also spans duplicate-candidate retirement. Existing outer Policy LastError behavior is unchanged by the diff.
+
+## Exact category comparison proof
+
+Fresh native proof remains in **outputs/anadius-session-policy-source/native-system-category-20261104/native-evidence-index.json**, SHA256 **ef4e925d09aa71068ca2d880ed5c847352d7b2aaf8e74f19365cffa81d8a7222**. Its report SHA256 is5b23e2090a6a8466c9ae811c693a7e7d71c021245a3647cdf52442c84efa1d43. Seven fresh records resolve table84248 slots+18/+20/+28 to00d120/00e0c0/00e0e0 and retain complete99 bytes. That native audit was exported/closed separately; it is supplementary evidence here, not seven new queries in this source stage.
+
+Native default condition preserves code/this. Both equivalents compare values and native category+8 identity keys; retained A1110 bytes prove its concrete key is self. The current selected LLVM-MinGW error_category.cpp.obj base methods were also read from the previously retained complete disassembly: base default condition returns {ev,this}; equivalent(int,condition) calls the virtual default condition then compares identity/value; the other overload compares this identity/code value. Therefore inherited BASE methods implement the selected typed normal domain. The new class does not delegate to compiler system_category's disproved Win32/generic normalization. Arbitrary foreign objects sharing a forged native key remain outside this projection.
+
+## Selected terminal path and compatibility boundary
+
+Policy passively captures the module category reference using its already validated Options.system_message pair. Both84530 raise sites select it only for the validated system category index1 and continue throwing plain std::system_error with pqcs. The original site preserves terminal poison/admission; tracked finish preserves Parent/permit checks, consumed work-drop/stop/wake prefix and intentional poison before construction. The category owns no Policy checkpoint and can produce its self-contained value after that poison or after Policy destruction.
+
+The actual selected compiler system_error composition previously inspected calls the supplied message virtual once for a nonzero error and appends it to pqcs plus `: `. The new code uses that real path, with no second formatter or custom what override. code().category() intentionally changes from compiler system to the native asio.system projection for these system-stop errors; identity-based external catch logic must use the new stable category. Catch type and raw signed code remain standard C++ values.
+
+Generic/misc stop inputs and write84720 remain on their prior compiler category routes; the full diff confirms no other raise migration. Logging/format_override semantics are unchanged. The selected02a190 failure is nonzero; arbitrary code0 native diagnostic construction remains an explicit separate gap because compiler composition skips message for zero. Native exception layout/RTTI/catch/unwind ABI, allocator parity, exceptional release behavior, prepared-child failed-post integration and whole-DLL runtime equivalence are not established by this review.

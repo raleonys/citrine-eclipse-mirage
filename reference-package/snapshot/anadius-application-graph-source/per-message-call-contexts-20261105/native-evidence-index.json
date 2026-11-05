@@ -1,0 +1,106 @@
+{
+  "status": "EIGHT_FRESH_SELECTED_INSTRUCTIONS_WITH_EXPLICIT_RETAINED_BODY_CONTEXT",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "readiness_projection": {
+    "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/readiness-projection.json",
+    "sha256": "4107954066d70aff0a9ed09d73e2805173d24558f7ff745a2c6d4dea0a8707e5"
+  },
+  "open_reply": {
+    "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/open-binary.json",
+    "sha256": "2d889844cbfd5387f02194503ddcd9e9657f0c9eb1520103668d2e686d10f456"
+  },
+  "fresh_records": [
+    {
+      "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/instruction-1800342fc.json",
+      "sha256": "8bd5befbb74add5bfa357fb8f2397f1bb32e9a510c9f9add3b8de62dadefd7b8",
+      "evidence_id": "ev_b5f4eda1c8b8cee37623ff2edb723f7ad30502d1ec20a2ca3cf82d8746e66e1b",
+      "address": "0x1800342fc",
+      "procedure": "0x180033d70",
+      "disassembly": "CMP qword ptr [RAX + 0x20],0x0"
+    },
+    {
+      "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/instruction-180034317.json",
+      "sha256": "9431f29b94cec01c2322a01df776335198aceb8a9cae9f29edb5304b5174e686",
+      "evidence_id": "ev_961df5a01dfb645b936eabfda3d32ee6bd77fc45ae071acde1836d33079556ba",
+      "address": "0x180034317",
+      "procedure": "0x180033d70",
+      "disassembly": "CALL 0x18004a6ac"
+    },
+    {
+      "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/instruction-180034332.json",
+      "sha256": "3ae3475e4ff91a6303c2279f8650ba3ba44bdda28c6da097bde944205964a781",
+      "evidence_id": "ev_48eb2c4825c70d61298887444a5a33b24a040328cdbc20045ab2ca5201296ff6",
+      "address": "0x180034332",
+      "procedure": "0x180033d70",
+      "disassembly": "CMP qword ptr [RSI + 0x20],0x0"
+    },
+    {
+      "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/instruction-180034337.json",
+      "sha256": "304b0f93e1bcdba2e4667a0ec2713869b72fb4a1f75d4c90c20b172ae750d95d",
+      "evidence_id": "ev_4fee03bacc379a4a2d0fff14e2f281aac209fdfd04a1483f9d00feb3bd6438db",
+      "address": "0x180034337",
+      "procedure": "0x180033d70",
+      "disassembly": "JZ 0x180034570"
+    },
+    {
+      "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/instruction-18003451b.json",
+      "sha256": "b2f388c5ab225846357e89093d474c4cc49c82ebca8d61a2c50a46f4276b32cd",
+      "evidence_id": "ev_3f7f48947d586085703979011362723e13d0ed65206898d6651083c3cc235490",
+      "address": "0x18003451b",
+      "procedure": "0x180033d70",
+      "disassembly": "SUB qword ptr [RSI + 0x20],0x1"
+    },
+    {
+      "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/instruction-180034522.json",
+      "sha256": "0dbe69b34144c0325d7fe00da4ae4ae775347fbd95816d624a6fd6c194475538",
+      "evidence_id": "ev_6a5c08769c224c23a50b6af021984098574c194bc0da30df5b073fc14e5a7cdd",
+      "address": "0x180034522",
+      "procedure": "0x180033d70",
+      "disassembly": "MOV qword ptr [RSI + 0x18],R14"
+    },
+    {
+      "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/instruction-180034528.json",
+      "sha256": "8e5e65f2681c9755b7b17ab13ef0f6ec0d8b086cc4ea8d6fc7401a0c8ae62c85",
+      "evidence_id": "ev_ab0551dbf412fa354ff4bfcab3f62f678220aac32b8fb25ad904ff31004592f3",
+      "address": "0x180034528",
+      "procedure": "0x180033d70",
+      "disassembly": "INC qword ptr [RSI + 0x18]"
+    },
+    {
+      "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/instruction-180034573.json",
+      "sha256": "02a705aac5ce8619eff1eae786da3f8dec512959ff08a6a1eaea64c2a72a6785",
+      "evidence_id": "ev_674eeb27bcc4cf6e05e47b864a7c028cf40dcc5c7d798a3e733c30f13591e7fb",
+      "address": "0x180034573",
+      "procedure": "0x180033d70",
+      "disassembly": "CALL 0x18004a6b4"
+    }
+  ],
+  "exported_bundle": {
+    "path": "outputs/anadius-application-graph-source/per-message-call-contexts-20261105/rea-evidence-bundle.json",
+    "sha256": "7504738ac76c82f60051b5160b2b5da6153874debf570e19fff12b8c08b814b1"
+  },
+  "exported_records": 8,
+  "retained_context": [
+    {
+      "path": "outputs/anadius-session-memory-source/handler-admission-overlap-20261105/retained-180033d70.assembly.txt",
+      "sha256": "786b66318efd9c0d4e96ad6bdd94201478fc885a81dcbfe4adb0a367ddfa538f"
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/handler-admission-overlap-20261105/retained-180033d70.pseudo.txt",
+      "sha256": "1e6d2e15fd7c8d347d767050457357f971fba5430a0b6db7f2e7ddf5080746d3"
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/handler-admission-overlap-20261105/retained-evidence-index.json",
+      "sha256": "8fe1eabdbad28d5fd42f358d5b7fec4c7ac89c14a53436fcde289b0664ee16fb"
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/handler-admission-overlap-20261105/caller-proof.md",
+      "sha256": "f4a590b9229b936d29528719132cbecfdc233305711cad90015409520d809a63"
+    }
+  ],
+  "session_closed": true,
+  "original_hash_verified_after_close": true,
+  "compile": false,
+  "tests_run": false,
+  "runtime_observation": false
+}

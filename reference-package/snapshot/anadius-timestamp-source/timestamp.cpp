@@ -39,8 +39,6 @@ Number number_03d8f0(std::string_view raw,std::size_t& pos,
 std::uint32_t ClassicIso::extract_03d310(std::string_view raw,std::string_view pattern,
                                        calendar_recovered::BrokenDown& value) {
     if(pattern!=format)throw std::invalid_argument("ClassicIso requires recovered ISO format");
-    for(const unsigned char byte:raw)
-        if(byte>=0x80)throw std::invalid_argument("ClassicIso requires ASCII input");
     std::size_t pos=0;
     while(pos<raw.size() && classic_space(raw[pos]))++pos; // 03ab40 sentry
     if(pos==raw.size())return eof_bit|fail_bit;

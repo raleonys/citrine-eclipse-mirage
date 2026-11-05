@@ -1,0 +1,111 @@
+{
+  "schema": "config-duplicate-assignment-audit.v1",
+  "recorded_at": "2026-11-04T16:17:45.312468+00:00",
+  "client_date": "2026-11-04",
+  "status": "CANDIDATE_CLOSED_NO_PRODUCTION_CHANGE",
+  "scope": "Config2 duplicate-child capacity/history candidate closed: fresh0164f0/014b10 MOVE clears/swaps fresh table, matching current parser; no source changes.",
+  "fresh_REA_evidence": [
+    {
+      "path": "outputs/anadius-config-hash-source/config-duplicate-assignment-20261104/instructions-180012bf0.json",
+      "sha256": "7af7e84991b3763f06e5d2dc2db91c7b2229b1f6c9883a02cf6ca0447d0b2a98",
+      "evidence_id": "ev_3dcb06bccff3a0802db6ccbeea89458b4ecf664664e70e8f9b526747c6f692f9",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x180012bf0"
+      }
+    },
+    {
+      "path": "outputs/anadius-config-hash-source/config-duplicate-assignment-20261104/instructions-180012cf0.json",
+      "sha256": "d5e1bc364494451bdd0dc8ec509c6c4cc547853e30cf32a2203699ba2faba149",
+      "evidence_id": "ev_3e3e29862025f4978aceb11b8ece86580de26a74386ef4c2c82ce82ee1ba4495",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x180012cf0"
+      }
+    },
+    {
+      "path": "outputs/anadius-config-hash-source/config-duplicate-assignment-20261104/instructions-1800164f0.json",
+      "sha256": "dec009c1d30461d21813cdd7534992f0ef59a7b116fa722fea29b45c468229d8",
+      "evidence_id": "ev_a5e7037e7bdfc723e39a4e642adb74b559f063d478cb85f4519bf483695ec406",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x1800164f0"
+      }
+    },
+    {
+      "path": "outputs/anadius-config-hash-source/config-duplicate-assignment-20261104/pseudo-180012bf0.json",
+      "sha256": "6eb8ff63688e3107250fd1d9345ba82ba4f5afd56e4299016efb4a3778ad0957",
+      "evidence_id": "ev_cb532cc84d0e41fb19f71f87d91b593b04419cbc74991efb0c96a596eebe012b",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x180012bf0"
+      }
+    },
+    {
+      "path": "outputs/anadius-config-hash-source/config-duplicate-assignment-20261104/pseudo-180012cf0.json",
+      "sha256": "a0dd5bb614d62fb2ec4f199e834ba4f5976ca57817c10556cfe175ed2967d79f",
+      "evidence_id": "ev_ed85385e7aedab03d954d808a746a6524381794905b3e76272f3dfdffea7216b",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x180012cf0"
+      }
+    },
+    {
+      "path": "outputs/anadius-config-hash-source/config-duplicate-assignment-20261104/pseudo-180014b10.json",
+      "sha256": "f4d127998f0d04350a22fbbf4d9a918eaf9d09ce42efb7bc9ac0846126af520a",
+      "evidence_id": "ev_52adbf4570e1eed96857bd990e21f8b722bb83d58cc891bbe990408eed5f6a2c",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x180014b10"
+      }
+    },
+    {
+      "path": "outputs/anadius-config-hash-source/config-duplicate-assignment-20261104/pseudo-1800164f0.json",
+      "sha256": "11d2361019c945fefde4019ee0de1956e0171566efdb72ac9a0c9d4d763f9d5c",
+      "evidence_id": "ev_596aa531d5948a4d0ee8d4b2306a189771087f59fb808c724d0417cf418cd7e7",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x1800164f0"
+      }
+    },
+    {
+      "path": "outputs/anadius-config-hash-source/config-duplicate-assignment-20261104/pseudo-180018c90.json",
+      "sha256": "398ebffda670dccd8c267ab3f14d1f80602ddd9ea0575b1c8cc4de5e4f55f543",
+      "evidence_id": "ev_d2bb165dcd0cd871668c516ab924f2e11e508813bc35e9be8e3a7d6b7cf36aa6",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x180018c90"
+      }
+    }
+  ],
+  "independent_source_audit": {
+    "path": "outputs/anadius-config-hash-source/config-duplicate-assignment-20261104/source-audit.md",
+    "sha256": "2870890eeb81b2536499a4ac43acc771622e23a65339ae23a28bc0565f3b8c67"
+  },
+  "reviewed_sources": [
+    {
+      "path": "outputs/anadius-parser-source/parser.cpp",
+      "sha256": "700479cfca81eae57f85d1fb8786426ffcc25d49edf9fa25359d00396252d2e2"
+    },
+    {
+      "path": "outputs/anadius-config-hash-source/hash_table.cpp",
+      "sha256": "15df336c45bd842333e5e56588d4c79a4e581c6ec239c488370926f13251934f"
+    },
+    {
+      "path": "outputs/anadius-config-application-source/application.cpp",
+      "sha256": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb"
+    }
+  ],
+  "native_session_closed": true,
+  "production_changes": 0,
+  "test_source_changes": 0,
+  "compiled": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "pending_source_count": 13,
+  "whole_DLL_completion_percentage": null,
+  "frozen_build_and_delivery_unchanged": true,
+  "continuous_goal_active": true
+}

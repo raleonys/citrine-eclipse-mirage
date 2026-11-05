@@ -1,0 +1,30 @@
+{
+  "pending_source_count": 111,
+  "frozen_build_and_delivery_unchanged": true,
+  "updated_records": [
+    {
+      "path": "outputs/dll-critical-path/pending-source-status.json",
+      "sha256": "bf447c08116e14e9ad7477ec2989e2f62d53c67a99eb6afe9335da4fe7254631"
+    },
+    {
+      "path": "outputs/dll-critical-path/active-work-plan.json",
+      "sha256": "4b09ff6295a580b5167ed8e29fc3f1fd7e909612fbe2dd8e263d4d8b0ba002b6"
+    },
+    {
+      "path": "outputs/dll-critical-path/blockers.json",
+      "sha256": "8c5c45bddc107a205db1644ceb94e62ded88f54d4b1911edf47dc1f5bbf0b483"
+    },
+    {
+      "path": "outputs/dll-critical-path/validation.json",
+      "sha256": "6af3500e6f9d4dec2d1c1ddd64ea4c84a5e554886964b7c5ef33d1497f3f79d6"
+    },
+    {
+      "path": "outputs/dll-critical-path/static-source-milestone-20261104.json",
+      "sha256": "6eafc096fc37447ef27f586f29b57db9d6d0f3b4ab292bd045e0770791997406"
+    }
+  ],
+  "remaining_integration": {
+    "path": "outputs/anadius-licensing-effects-source/nested-call-views-20261105/remaining-integration.json",
+    "sha256": "5c42d9c56246b88d821cfa02fbaf82b94f0712178620f2dfd0a9ed6417ba80ad"
+  }
+}

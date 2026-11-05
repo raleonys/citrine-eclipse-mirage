@@ -149,12 +149,24 @@ void* ApplicationMemory::allocate(std::size_t bytes){
     if(bytes>static_cast<std::uint64_t>(std::numeric_limits<std::ptrdiff_t>::max())&&bytes<=maximum)
         throw std::domain_error("Application allocation extent exceeds rebuilt byte-array domain");
     auto& v=*impl_;auto& d=*v.domain.impl_;PreserveError error;
-    std::list<Impl::Ticket>::iterator ticket;
+    bool poisoned=false;
     {
         std::lock_guard lock(v.gate);
-        if(v.poisoned)throw std::logic_error("Application memory has an unknown native outcome");
-        ticket=v.tickets.emplace(v.tickets.end());
+        poisoned=v.poisoned;
     }
+    if(poisoned)throw std::logic_error("Application memory has an unknown native outcome");
+    // Preparing a list node may invoke the compiler allocator/new-handler.
+    // Keep that work outside the shared ticket gate; a sibling or a handler
+    // may use this provider while this individual reservation is prepared.
+    std::list<Impl::Ticket> prepared;
+    prepared.emplace_back();
+    const auto ticket=prepared.begin();
+    {
+        std::lock_guard lock(v.gate);
+        poisoned=v.poisoned;
+        if(!poisoned)v.tickets.splice(v.tickets.end(),prepared,ticket);
+    }
+    if(poisoned)throw std::logic_error("Application memory has an unknown native outcome");
     MemoryEffects effects(d.heap_fx);void* observed_pointer=nullptr;bool captured=false;error.restore();
     try{
         do{
@@ -355,8 +367,10 @@ std::unique_ptr<bootstrap_providers::NativeThreads> DomainStorage::make_threads(
     auto& v=*impl_;Impl::Control control(v);
     if(v.phase!=Phase::Ready)throw std::logic_error("Thread providers require a ready domain");
     auto lease=std::make_shared<ProviderLease>(shared_from_this());
-    return bootstrap_providers::make_recovered_threads({lease,v.runtime_state,v.runtime,v.errors,v.error_ptd,
+    auto threads=bootstrap_providers::make_recovered_threads({lease,v.runtime_state,v.runtime,v.errors,v.error_ptd,
         {v.binding.state(),v.binding,v.heap,v.heap_fx,v.invalid}},api);
+    threads->domain_=shared_from_this();
+    return threads;
 }
 std::shared_ptr<ApplicationMemory> DomainStorage::make_memory(){
     auto& v=*impl_;Impl::Control control(v);

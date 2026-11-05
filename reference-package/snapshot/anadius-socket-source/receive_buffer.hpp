@@ -6,8 +6,21 @@ namespace anadius::socket_recovered {
 // host projection; native MSVC string ABI and allocator provenance stay open.
 using ReceiveBufferString=WriteFinishString;
 struct ReceiveBufferRegion {std::uintptr_t address=0;std::span<std::uint8_t> bytes;};
+class ReceiveBufferResolver {
+public:
+    virtual ~ReceiveBufferResolver()=default;
+    // Exact requested window; output changes only on Found. Pure metadata,
+    // no SDK/application callback. Owner admission may throw. The span value
+    // does not itself retain the payload or authorize a foreign resolver.
+    virtual MemoryLookup lookup_bytes(std::uintptr_t,std::uint64_t,std::span<std::uint8_t>&)=0;
+};
 struct ReceiveBufferMemory {
     std::span<ReceiveBufferRegion> regions;
+    // Authoritative when nonnull. The legacy regions are then not inspected;
+    // a composite resolver explicitly combines its private windows and Parent.
+    // Consumers must compare against their actual owner's resolver identity.
+    ReceiveBufferResolver* resolver=nullptr;
+    MemoryLookup lookup_bytes(std::uintptr_t,std::uint64_t,std::span<std::uint8_t>&) const;
     // Pure bounded memory projection, never an application callback. Register
     // the live inline prefix as well as owned heap/header windows. Overlapping
     // or missing complete mappings fail explicitly without native fault claims.

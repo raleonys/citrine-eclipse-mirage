@@ -1,5 +1,7 @@
 #include "platform_test_fixture.hpp"
 #include "../anadius-bootstrap-runtime-source/runtime_test_fixture.hpp"
+#include <thread>
+#include <exception>
 
 namespace {
 using namespace b14_test;
@@ -102,5 +104,27 @@ void runtime_source(){
     // Fake resolver tokens were never invoked. This does not establish the
     // native Context's identity with the internal moved RuntimeSeed originals.
 }
+void publication_before_enable(){
+    State state;Graph g;
+    auto publication=std::make_shared<original_provider::Publication>(g.callback_lifetime);
+    publication->bind_slots(state.originals);publication->setup_begin();
+    auto resources=g.resources();resources.original_publication=publication;
+    auto domain=std::make_shared<hp::Domain>(g.output,g.engine,g.resolver,g.callback_lifetime,std::move(resources));
+    auto host=std::make_unique<hp::HostPlatform>(domain);unsigned observed=0;
+    g.engine->on_enable=[&](std::uintptr_t target){
+        const auto callback=g.resolver->seen.back();std::uintptr_t original=0;std::exception_ptr error;
+        std::thread reader([&]{try{original=publication->load(callback);}catch(...){error=std::current_exception();}});reader.join();
+        if(error)std::rethrow_exception(error);
+        require(original==target+0x100000&&publication->snapshot().phase==original_provider::PublicationPhase::Setup,
+            "actual HostPlatform publishes exact adapter copyback for a foreign read before lower enable");++observed;
+    };
+    g.engine->create_results[0]=8;
+    hi::initialize_host_00e310(state.refs(),*host);
+    require(observed==5&&g.engine->enabled.size()==5&&state.targets.size()==5,
+        "failed create is not published/enabled and later actual host hooks continue in native order");
+    rejects<std::logic_error>([&]{publication->load(hi::Callback::connect_00fd00);},"failed create output remains unavailable even though fake engine wrote it");
+    require(state.originals[0]==g.engine->targets[0]+0x100000,"normal failed original copyback remains unchanged from native adapter policy");
+    publication->setup_complete();publication->stop();g.engine->on_enable={};
 }
-int main(){try{host_matrix();failure_prefixes();cleanup_prefixes();runtime_source();std::cout<<"PASS: "<<b14_test::checks<<" host platform integration checks; actual host/cleanup/Runtime sources with controlled SDK/engine/resolver\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+}
+int main(){try{host_matrix();failure_prefixes();cleanup_prefixes();runtime_source();publication_before_enable();std::cout<<"PASS: "<<b14_test::checks<<" host platform integration checks; actual host/cleanup/Runtime sources with controlled SDK/engine/resolver\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

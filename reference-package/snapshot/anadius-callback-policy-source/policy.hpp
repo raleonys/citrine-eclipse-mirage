@@ -52,6 +52,14 @@ struct Resources {
     // Optional explicit permission for an admitted same-domain PTD scope.
     // Empty keeps B16 controller-only behavior. Must retain its gate owner.
     std::function<bool()> callback_scope;
+    // Optional narrower original SDK permission; does not grant policy effects.
+    // Empty falls back to callback_scope. Source Resources layout changes.
+    std::function<bool()> original_scope{};
+    // Only network wait_steps(-1); registry waits and all other effects still
+    // require callback_scope. Owns the same admission gate as native Context.
+    std::function<bool()> connect_wait_scope{};
+    // Network redirect log/dialog/exit only; never registry/allocation/wait.
+    std::function<bool()> connect_body_scope{};
 };
 struct Storage {
     Resources resources;
@@ -60,13 +68,14 @@ struct Storage {
     std::shared_ptr<original_checkpoint::Boundary> original_boundary;
     Storage(Resources,const native_recovered::OriginalSlots&);
 };
-// Bounded concrete policy: one controller thread serializes ALL callbacks and
-// shared map/config/set/counter/stream accesses, with NO callback reentry.
-// This class's overrides reject other-thread calls. Inherited final original/
-// wide methods do not; this is not a whole-callback synchronization/admission guard.
-// Memory is the caller's same-domain ApplicationMemory; foreign host-thread PTD
-// support remains open. No incoming fabricated handles are adopted. Providers
-// must outlive callbacks; native Context must close before destruction.
+// Bounded concrete policy: absent callback_scope, general effects require the
+// original controller. An owning foreign Domain may instead supply actual PTD
+// permission for its single general body. Separate network wait/body/original
+// scopes permit only those concrete effects, including counted Original connect
+// actors; they never grant registry/allocator permission. Managed stream leases
+// protect each network insertion. This is not the whole-callback admission gate.
+// No incoming fabricated handles are adopted. Providers outlive callbacks and
+// native Context closes before destruction; general nested callbacks remain bounded.
 class Policy final:private Storage,public native_recovered::OriginalEffects {
 public:
     Policy(native_context::PolicyView,Resources);
@@ -92,6 +101,16 @@ public:
     static std::string_view registry_literal(std::uint64_t);
 private:
     void check_thread() const;
+    void check_connect_body() const;
+    // Opaque network effects may return or throw after changing the admitted
+    // PTD/permission. Postcheck precedes caller counter/port writes; invalid
+    // permission wins over lower exceptions. Lambdas retire stream leases
+    // before this probe. No rollback of completed lower effects is implied.
+    template<class F>void connect_body_call(F&& call){
+        check_connect_body();
+        try{call();}catch(...){check_connect_body();throw;}
+        check_connect_body();
+    }
     execution_recovered::Execution& execution_;
     DWORD controller_;
     std::list<registry_recovered::Handle> handles_;

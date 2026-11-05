@@ -14,7 +14,8 @@ public:
                                         calendar_recovered::BrokenDown&)=0;
 };
 // Recovered fixed-format branch under explicit classic ASCII/base-facet
-// assumptions. Other formats and any non-ASCII byte throw invalid_argument.
+// grammar assumptions. Other formats throw invalid_argument. Parsing stops at
+// format completion; an unconsumed suffix may contain arbitrary bytes.
 // Does not reconstruct arbitrary native locale/stream/allocator/exception ABI.
 class ClassicIso final:public Parser {
 public:

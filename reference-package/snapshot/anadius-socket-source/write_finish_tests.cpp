@@ -88,7 +88,30 @@ void registries(){
  for(unsigned kind=0;kind<4;++kind){Fixture f;f.error.value=5;std::array<s::WriteFinishCategoryBinding,2> duplicate{{f.cats[0],f.cats[0]}};if(kind==0)f.context.categories={};if(kind==1)f.cats[0].category=nullptr;if(kind==2)f.context.categories=duplicate;if(kind==3)f.cats[0].key.logical=anadius::server_recovered::ErrorCategory::other;unsupported([&]{f.run();});check(f.events==std::vector<std::string>{"misc"},"category projection validates after misc before log");}
  for(bool duplicate:{false,true}){Fixture f;f.item.capacity_18=4095;heap(f.item,0x10000);std::array<s::WriteFinishAllocationHeader,2> d{{f.headers[0],f.headers[0]}};if(duplicate)f.context.allocation_headers=d;else f.context.allocation_headers={};unsupported([&]{f.run();});check(f.events.empty(),"header projection rejects before free");}
 }
+struct HeaderOwner final:s::AllocationHeaderResolver {
+ std::uintptr_t base=0xffe8;s::MemoryLookup result=s::MemoryLookup::Found;unsigned calls=0;
+ s::MemoryLookup lookup_header(std::uintptr_t address,std::uintptr_t& output)override{
+  ++calls;check(address==0xfff8,"write resolves exact data-8 header");
+  if(result==s::MemoryLookup::Found)output=base;return result;
+ }
+};
+void authoritative_headers(){
+ for(bool message:{false,true}){
+  Fixture f;HeaderOwner owner;f.context.allocation_header_resolver=&owner;
+  f.error.value=message?5:0;f.message_capacity=4095;f.item.capacity_18=4095;heap(f.item,0x10000);
+  f.api.free=[&](auto p,auto n){f.event("free");check(p==owner.base&&p!=f.headers[0].allocation_base&&n==4135,"actual write/log destruction uses current owner header over stale catalog");};
+  f.run();check(owner.calls==1,"one exact header read per actual destruction");
+ }
+ for(auto result:{s::MemoryLookup::Miss,s::MemoryLookup::Ambiguous}){
+  Fixture f;HeaderOwner owner;owner.result=result;f.context.allocation_header_resolver=&owner;
+  f.item.capacity_18=4095;heap(f.item,0x10000);unsupported([&]{f.run();});
+  check(owner.calls==1&&f.events.empty()&&f.owner.count_e8==2&&f.item.size_10==7,"owner miss/ambiguity rejects before free/reset even when stale header is valid");
+ }
+ Fixture f;HeaderOwner owner;owner.base=0x10000-40;f.context.allocation_header_resolver=&owner;
+ f.item.capacity_18=4095;heap(f.item,0x10000);bool terminal=false;try{f.run();}catch(const Terminal&){terminal=true;}
+ check(terminal&&f.events==std::vector<std::string>{"invalid"}&&f.item.size_10==7&&f.owner.count_e8==2,"authoritative invalid gap preserves original terminal before free and queue mutation");
+}
 void exceptions(){const auto sequence=std::vector<std::string>{"misc","begin","message","append","widen","put","flush","free"};for(std::size_t i=0;i<sequence.size();++i){Fixture f;f.error.value=5;f.message_capacity=16;f.throw_at=sequence[i];bool caught=false;try{f.run();}catch(const Stop&){caught=true;}check(caught&&f.events==std::vector<std::string>(sequence.begin(),sequence.begin()+i+1),"required logging exception preserves only native normal prefix without invented cleanup");}for(auto effect:{"free","next"}){Fixture f;f.item.capacity_18=16;heap(f.item,0x10000);f.throw_at=effect;bool caught=false;try{f.run();}catch(const Stop&){caught=true;}check(caught,"success required provider exception propagates");check(f.item.capacity_18==(std::string(effect)=="free"?16U:15U),"success mutation sequence stops exactly at throwing callback");}}
 }
-int main(){try{success_matrix();live_success();alignment();logging();live_logging();registries();exceptions();std::cout<<"PASS: "<<checks<<" socket write finish core checks; actual025a70 mask/pop, saved strings/owner and live callback mutations, size/alignment boundaries and terminal, exact category/code suppression and log stream order, wrapped signed virtual offset, heap lifetime ends, bounded projections and callback exception prefixes\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+int main(){try{success_matrix();live_success();alignment();logging();live_logging();registries();authoritative_headers();exceptions();std::cout<<"PASS: "<<checks<<" socket write finish core checks; actual025a70 mask/pop, saved strings/owner and live callback mutations, size/alignment boundaries and terminal, exact category/code suppression and log stream order, wrapped signed virtual offset, heap lifetime ends, bounded projections and callback exception prefixes\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
 

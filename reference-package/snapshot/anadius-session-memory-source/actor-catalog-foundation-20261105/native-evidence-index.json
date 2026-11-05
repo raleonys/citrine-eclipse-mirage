@@ -1,0 +1,45 @@
+{
+  "scope": "Fresh exact native handler entry-reference classification; supplements retained complete bodies and prior12capture-site records, not repeated function reconstruction",
+  "original_sha256_after_close": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "records": [
+    {
+      "path": "xrefs-033d70.json",
+      "sha256": "b38992490e97459a0f1cc36f353f910678771f48211d0fe67825c68b48bad1ce",
+      "evidence_id": "ev_4f3e6892e2e85123d38d02e20bfb8e7a46bac6b9c92d8357e56241e138b165e2",
+      "operation": "xrefs",
+      "parameters": {
+        "address": "0x180033d70"
+      }
+    },
+    {
+      "path": "instruction-028d99.json",
+      "sha256": "842e8217c8d7a087856a81ec21d147b2bf0eb6183878829a7b71f959faa5ddb7",
+      "evidence_id": "ev_cb0ee34f06df65ba1992a016b84adf153fd0a1a5ca21a069ea80232e320420d8",
+      "operation": "inspect_native_instruction",
+      "parameters": {
+        "address": "0x180028d99"
+      }
+    },
+    {
+      "path": "instruction-033d70.json",
+      "sha256": "885409841e2eafb623dbed306fa06dc6ea87d611c470426d22ed30438e11ec59",
+      "evidence_id": "ev_c319ae4c895520aa767331f28657e409824bf516bc09cfd0de892d226b28d911",
+      "operation": "inspect_native_instruction",
+      "parameters": {
+        "address": "0x180033d70"
+      }
+    },
+    {
+      "path": "data-type-0a8a90.json",
+      "sha256": "5bb39b57c6d24e7d7d536bb2b39f71ca35c6a86f761c2a2185c061de2c2c2cdd",
+      "evidence_id": "ev_baa2bce6c557f49d7e0eeb0f5a2f4bd53efeb7ae95db3281b3f3aa70a41139b7",
+      "operation": "inspect_native_data_type",
+      "parameters": {
+        "address": "0x1800a8a90"
+      }
+    }
+  ],
+  "session_exported": true,
+  "session_closed": true,
+  "target_executed": false
+}

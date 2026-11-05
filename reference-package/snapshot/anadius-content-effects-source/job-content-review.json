@@ -1,0 +1,26 @@
+{
+  "reviewer": "/root/b22_provider_audit",
+  "result": "STATIC_PASS_NO_REMAINING_REQUIRED_ISSUE",
+  "scope": "Four current Content/Graph/test sources; synchronous child Content scope and lower prepared scenario, not full child Graph/Profile execution.",
+  "reviewed_source_hashes": {
+    "anadius-content-effects-source/effects.hpp": "b387ca6756b1898abe60f672bfdfa467de6a16117c33bcdb6333509630312242",
+    "anadius-content-effects-source/effects.cpp": "8224ff1c1b10c5a3bb3d91aa8762f574a657a17dc4a83dee59dc19b745e5a510",
+    "anadius-content-effects-source/effects_tests.cpp": "39388e93eb14ac57ea87e89c04e1453170b801b24528e53c113d46f3b4cf615e",
+    "anadius-application-graph-source/graph.cpp": "d028939ebdff3f20096d2b00d38849549d7ce47c25c7b6a05f808ee49ac2c663"
+  },
+  "findings": [
+    "Void/nonvoid payloads synchronous, F& invocation consistent, reference results excluded, explicit R return moves value from local optional. No owned callable donor transfer.",
+    "Stack JobCall publishes under binding before caller probe; per-method busy/checking reserves before callbacks. Unpublish before stack destruction on normal/error.",
+    "Parent/probe/file/SDK calls outside metadata gate. Normal finish requires known/no-pending raw files. Unknown file owners remain GuardedFiles-owned with stable Impl checkpoint; no guessed close/destructor replay or stack callback retained.",
+    "Graph selected concrete Content and JobCall pinned under existing opaque chain. Printer raw owner adopted into Graph writers before scope postcheck; later document access stays Graph-guarded.",
+    "Lower test source uses one real Domain/two prepared memory roots, finite fail-fast joins and wait owners outside try. Value/void/expiry/refresh/reentry cases plausible; two child file-prefix modes exit without unwinding unknown owners. Counters made atomic for worker concurrency."
+  ],
+  "positive_lower_prepared_content_test_source_present": true,
+  "positive_prepared_graph_profile_test_source_present": false,
+  "required_issues_remaining": 0,
+  "edits_by_reviewer": false,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

@@ -1,0 +1,30 @@
+{
+  "pending_source_count": 86,
+  "frozen_build_and_delivery_unchanged": true,
+  "updated_records": [
+    {
+      "path": "outputs/dll-critical-path/pending-source-status.json",
+      "sha256": "f363b2e32a6615365fcadbceaf26085b3d94333b0b9aafb38969262ca7354abb"
+    },
+    {
+      "path": "outputs/dll-critical-path/active-work-plan.json",
+      "sha256": "03ae4001925318f1b53ea5c9c04c068c637293cbfe6c9828663b210fef945b88"
+    },
+    {
+      "path": "outputs/dll-critical-path/blockers.json",
+      "sha256": "c6b12efcffe4e46fc709f94972fc25a22006694e3d8808b35fd57529ff1bfc8c"
+    },
+    {
+      "path": "outputs/dll-critical-path/validation.json",
+      "sha256": "7c8ddd9a8951d4216f8f884b12e764a2ec225b5f1cc38994546881eaa05810c5"
+    },
+    {
+      "path": "outputs/dll-critical-path/static-source-milestone-20261104.json",
+      "sha256": "1d18594426f8696bfd67a69d25df043d6ccb15fc177a33ab8a59d50c8370f437"
+    }
+  ],
+  "integration_plan": {
+    "path": "outputs/anadius-session-memory-source/actor-catalog-foundation-20261105/remaining-integration.json",
+    "sha256": "d8eb413fd4c93066dd35a1fce308853d81e38a055a186f215ca89332a99199a3"
+  }
+}

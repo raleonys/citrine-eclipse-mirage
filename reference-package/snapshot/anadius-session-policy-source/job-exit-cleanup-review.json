@@ -1,0 +1,25 @@
+{
+  "reviewer": "/root/b22_provider_audit",
+  "result": "STATIC_PASS_NO_REMAINING_REQUIRED_ISSUE",
+  "scope": "Four current C++ source/header files; explicit child exit-wait cleanup and exact Profile JobHandoff bridge only.",
+  "reviewed_source_hashes": {
+    "anadius-session-policy-source/policy.hpp": "d14d02a1ecb5358646f52b97227c2f09a7b91137d86ad4600ea791b18ecff3a0",
+    "anadius-session-policy-source/policy.cpp": "5ed95fda012839341bcc830935b0d62cb3ce2b5485e2241c66846fe36c93a8c6",
+    "anadius-session-profile-source/profile.hpp": "f92ac943421142a916011f87cf1b741da70131e904a1532f896a29c50852a43b",
+    "anadius-session-profile-source/profile.cpp": "6749d493304d44bc65a7733aac3e3105594d27ba9150a0c5c13e833dfe890e27"
+  },
+  "required_issue_fixed": "Call initially consumed std::function donor before active reservation. Empty Call now precedes reservation; swap and target retirement occur inside active try region/outside mutex. Authorized reentry poisons before registry cleanup.",
+  "findings": [
+    "Exact child permit rejects wrong Parent/actor/expired proof before active mutation; self and copied lease keep Policy and Parent backing alive.",
+    "Permit/source/checkpoint validation occurs outside Policy mutex; post-transfer and post-retirement checks prevent swallowed reentry from succeeding.",
+    "Existing registry selects current native thread only; cleanup invocation counter records actual returned prefix, while unknown postcheck remains poisoned with no speculative replay.",
+    "Profile pins Dispatch before Application access, exact claim under child Parent Operation, concrete-only Policy selection and unwinds active count before Parent Operation ends.",
+    "No default affinity relaxation, vtable/layout change, message execution, closure/strong release, job completion or native exit proof."
+  ],
+  "positive_prepared_profile_policy_test_source_present": false,
+  "edits_by_reviewer": false,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

@@ -1,0 +1,80 @@
+{
+  "status": "PRE_EDIT_SOURCE_SNAPSHOT",
+  "pending_source_count": 116,
+  "files": [
+    {
+      "path": "anadius-session-profile-source/profile.hpp",
+      "exists": true,
+      "sha256": "5c8f0a3e432b1f9c8ae0ab1738173acc496d098345c24cb5ed5554d72cf76808",
+      "before": "before/anadius-session-profile-source__profile.hpp"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.cpp",
+      "exists": true,
+      "sha256": "7413d158e406bdcdca2b308f495dbc4a71db265df313566f17e741f4cb892676",
+      "before": "before/anadius-session-profile-source__profile.cpp"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.hpp",
+      "exists": true,
+      "sha256": "aec906fed7543fcafeb9862cfef347b3391ccdf13c845d5b2529432cff8e388b",
+      "before": "before/anadius-session-policy-source__policy.hpp"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.cpp",
+      "exists": true,
+      "sha256": "e71bdc060cb62baf04c6354197beca04022c928f0ba257cc6429ce0a4164de0c",
+      "before": "before/anadius-session-policy-source__policy.cpp"
+    },
+    {
+      "path": "anadius-session-profile-source/profile_tests.cpp",
+      "exists": true,
+      "sha256": "af2fe8a0d7bfee786c8882c4bad3578bcf3bd05873fd951b3d285b3169490491",
+      "before": "before/anadius-session-profile-source__profile_tests.cpp"
+    },
+    {
+      "path": "anadius-session-profile-source/profile_integration_tests.cpp",
+      "exists": true,
+      "sha256": "8df185be573ce8a7457900ac8701c10579d5b5d46e163cd120773f301ab3953b",
+      "before": "before/anadius-session-profile-source__profile_integration_tests.cpp"
+    },
+    {
+      "path": "anadius-session-policy-source/policy_tests.cpp",
+      "exists": true,
+      "sha256": "8f68c316ad3b666472914e4eefc205c55bd03bb77d5069df8b85cc7c8ff0b0f1",
+      "before": "before/anadius-session-policy-source__policy_tests.cpp"
+    },
+    {
+      "path": "anadius-session-policy-source/policy_integration_tests.cpp",
+      "exists": true,
+      "sha256": "7a466a528b68bea4056136c80e98bf0c4fa23ad3dda76107ecafa3484d4460c6",
+      "before": "before/anadius-session-policy-source__policy_integration_tests.cpp"
+    },
+    {
+      "path": "anadius-application-graph-source/graph_integration_tests.cpp",
+      "exists": true,
+      "sha256": "13094a04164a2890cafbfa9637ed38e1b801c2b7c15daf3a4326af211d0a99d3",
+      "before": "before/anadius-application-graph-source__graph_integration_tests.cpp"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "exists": true,
+      "sha256": "931b2f1218829c58858916451e8740b80273a6309715e97a35523cba6a5ecc31",
+      "before": "before/anadius-worker-handoff-source__handoff_tests.cpp"
+    },
+    {
+      "path": "anadius-owned-server-source/server.hpp",
+      "exists": true,
+      "sha256": "2a6a7ad756bb473c09e9c909bb5fc8a7f6465b44f65a3ec9022e434bcd62c452",
+      "before": "before/anadius-owned-server-source__server.hpp"
+    },
+    {
+      "path": "anadius-owned-server-source/server.cpp",
+      "exists": true,
+      "sha256": "653c9671ef4eb818f3f0ba15124e135d4a5286629bb62e728c0beea682ecad57",
+      "before": "before/anadius-owned-server-source__server.cpp"
+    }
+  ],
+  "compile": false,
+  "tests_run": false
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.cpp",
+    "sha256": "7eb43063c67266775b94ff2c9f1509433e3114f326240f2e24cec309bd97569a",
+    "lastWriteTimeUtc": "2026-11-03T20:32:05.1118163Z",
+    "bytes": 13735
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.hpp",
+    "sha256": "62924d694f1f7deac38e99c0d9f3ddd56a0b61df74439caea1b1b9adfe852ab7",
+    "lastWriteTimeUtc": "2026-11-03T20:42:43.5469488Z",
+    "bytes": 11341
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.cpp",
+    "sha256": "5ae305476a8498a8d01b9ba0bb4ea86965f297d34bb92af0a8945664ca2f0077",
+    "lastWriteTimeUtc": "2026-11-03T20:34:24.6824233Z",
+    "bytes": 24371
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.hpp",
+    "sha256": "e7afd4962ba0cd8adbbb3948dfeeae18c67ad2694988a9e76924b552d8d6b6d5",
+    "lastWriteTimeUtc": "2026-11-03T20:42:43.5469488Z",
+    "bytes": 7925
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\connect.cpp",
+    "sha256": "73659fea38e311c87dd91e3311321f421483cf0f0ea9061d7e266f5469867f9d",
+    "lastWriteTimeUtc": "2026-11-03T20:28:17.1601153Z",
+    "bytes": 4154
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign_tests.cpp",
+    "sha256": "4605bb17faa643f9064587fb305f30ea84a248999ea4a1f083d14061a79bc9f6",
+    "lastWriteTimeUtc": "2026-11-03T20:35:19.8064756Z",
+    "bytes": 27563
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign_integration_tests.cpp",
+    "sha256": "8d77c9411504263896b72429dbc242ffa821e91ba6d27a39d674b00f86de7e4f",
+    "lastWriteTimeUtc": "2026-11-03T20:42:43.5459363Z",
+    "bytes": 45008
+  }
+]

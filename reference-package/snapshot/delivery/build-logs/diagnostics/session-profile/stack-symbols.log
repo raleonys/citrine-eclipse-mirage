@@ -1,0 +1,55 @@
+main::$_0::operator()() const
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\session-profile/profile-tests-diagnostic.cpp:458:373
+main::$_0::__invoke()
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\session-profile/profile-tests-diagnostic.cpp:458:51
+
+std::__terminate(void (*)())
+??:0:0
+
+std::terminate()
+??:0:0
+
+anadius::session_profile::Application::~Application()
+??:0:0
+
+anadius::session_profile::Application::~Application()
+??:0:0
+
+void (anonymous namespace)::rejects<std::invalid_argument, (anonymous namespace)::profile_identity()::$_0::operator()(anadius::owned_server::ServerView&) const::'lambda1'()>((anonymous namespace)::profile_identity()::$_0::operator()(anadius::owned_server::ServerView&) const::'lambda1'(), char const*)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__memory/unique_ptr.h:0:5
+(anonymous namespace)::profile_identity()::$_0::operator()(anadius::owned_server::ServerView&) const
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\session-profile/profile-tests-diagnostic.cpp:305:74
+void (anonymous namespace)::ProfileFixture::operation<(anonymous namespace)::profile_identity()::$_0>((anonymous namespace)::profile_identity()::$_0)::'lambda'(anadius::owned_server::ServerView&)::operator()(anadius::owned_server::ServerView&) const
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\session-profile/profile-tests-diagnostic.cpp:247:94
+std::__1::__invoke_result_impl<void, void (anonymous namespace)::ProfileFixture::operation<(anonymous namespace)::profile_identity()::$_0>((anonymous namespace)::profile_identity()::$_0)::'lambda'(anadius::owned_server::ServerView&)&, anadius::owned_server::ServerView&>::type std::__1::__invoke[abi:nqe230104]<void (anonymous namespace)::ProfileFixture::operation<(anonymous namespace)::profile_identity()::$_0>((anonymous namespace)::profile_identity()::$_0)::'lambda'(anadius::owned_server::ServerView&)&, anadius::owned_server::ServerView&>(void (anonymous namespace)::ProfileFixture::operation<(anonymous namespace)::profile_identity()::$_0>((anonymous namespace)::profile_identity()::$_0)::'lambda'(anadius::owned_server::ServerView&)&, anadius::owned_server::ServerView&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__type_traits/invoke.h:90:27
+void std::__1::__invoke_void_return_wrapper<void, true>::__call[abi:nqe230104]<void (anonymous namespace)::ProfileFixture::operation<(anonymous namespace)::profile_identity()::$_0>((anonymous namespace)::profile_identity()::$_0)::'lambda'(anadius::owned_server::ServerView&)&, anadius::owned_server::ServerView&>(void (anonymous namespace)::ProfileFixture::operation<(anonymous namespace)::profile_identity()::$_0>((anonymous namespace)::profile_identity()::$_0)::'lambda'(anadius::owned_server::ServerView&)&, anadius::owned_server::ServerView&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__type_traits/invoke.h:350:5
+(anonymous namespace)::profile_identity()::$_0 std::__1::__invoke_r[abi:nqe230104]<void, void (anonymous namespace)::ProfileFixture::operation<(anonymous namespace)::profile_identity()::$_0>((anonymous namespace)::profile_identity()::$_0)::'lambda'(anadius::owned_server::ServerView&)&, anadius::owned_server::ServerView&>(void (anonymous namespace)::ProfileFixture::operation<(anonymous namespace)::profile_identity()::$_0>((anonymous namespace)::profile_identity()::$_0)::'lambda'(anadius::owned_server::ServerView&)&, anadius::owned_server::ServerView&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__type_traits/invoke.h:356:10
+std::__1::__function::__func<void (anonymous namespace)::ProfileFixture::operation<(anonymous namespace)::profile_identity()::$_0>((anonymous namespace)::profile_identity()::$_0)::'lambda'(anadius::owned_server::ServerView&), void (anadius::owned_server::ServerView&)>::operator()[abi:nqe230104](anadius::owned_server::ServerView&)
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__functional/function.h:177:12
+
+anadius::owned_server::OwnedServerBackend::with_operation(std::__1::function<void (anadius::owned_server::ServerView&)> const&)
+??:0:0
+
+std::__1::__function::__value_func<void (anadius::owned_server::ServerView&)>::~__value_func[abi:nqe230104]()
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__functional/function.h:245:16
+std::__1::function<void (anadius::owned_server::ServerView&)>::~function[abi:nqe230104]()
+C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261020-ucrt-x86_64/include/c++/v1/__functional/function.h:754:43
+void (anonymous namespace)::ProfileFixture::operation<(anonymous namespace)::profile_identity()::$_0>((anonymous namespace)::profile_identity()::$_0)
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\session-profile/profile-tests-diagnostic.cpp:247:40
+(anonymous namespace)::profile_identity()
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\session-profile/profile-tests-diagnostic.cpp:297:4
+main
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\rebuild-20261105T182000Z\diagnostics\session-profile/profile-tests-diagnostic.cpp:458:874
+
+__tmainCRTStartup
+/home/runner/work/llvm-mingw/llvm-mingw/mingw-w64/mingw-w64-crt/build-x86_64/../crt/crtexe.c:272:10
+
+??
+??:0:0
+
+??
+??:0:0
+

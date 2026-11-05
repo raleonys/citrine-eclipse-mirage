@@ -61,6 +61,18 @@ void primitive_checkpoints_and_reentry(){
     {Fixture f;f.checkpoint();f.trace.time_hook=[&]{f.trace.deny=true;};rejects<std::logic_error>([&]{(void)f.information->current_time_041b60();},"Clock-time postcheck rejects before later opaque primitives");require(f.trace.time==1&&!f.trace.gmtime&&!f.trace.formatted,"Denied time callback cannot reach gmtime or formatter");}
     {Fixture f;unsigned denied=0;f.trace.format_hook=[&]{try{f.information->log_profile_name_084f48("nested");}catch(const std::logic_error&){++denied;}};rejects<std::logic_error>([&]{(void)f.information->current_time_041b60();},"Swallowed formatter reentry remains sticky at outer postcheck");require(denied==1&&f.trace.time==1&&f.trace.gmtime==1&&f.trace.formatted==1&&f.buffer->str().empty(),"Formatter reentry cannot perform nested logging or return successful outer time");rejects<std::logic_error>([&]{(void)f.information->current_time_041b60();},"Unknown/reentrant provider denies subsequent calls");require(f.trace.time==1,"Sticky denial prevents repeated clock effects");}
 }
+void sdk_error_survives_metadata(){
+    Fixture f;f.checkpoint();
+    f.trace.time_hook=[] {::SetLastError(0x6911);};
+    f.trace.format_hook=[] {::SetLastError(0x6912);};
+    ::SetLastError(0x6910);
+    require(f.information->current_time_041b60()=="2020-01-01T00:00:00"&&::GetLastError()==0x6912,
+        "Information metadata/checkpoint gates retain the actual last formatter error rather than restoring pre-call state");
+    f.buffer->flush_hook=[] {::SetLastError(0x6913);};
+    f.information->log_profile_name_084f48("error-owner");
+    require(f.buffer->str()=="profile name: error-owner\n"&&::GetLastError()==0x6913,
+        "Shared root logging leaves its final stream effect error live through metadata retirement");
+}
 struct FiberCall {
     void* controller;ie::Information& information;bool rejected=false;
     static VOID WINAPI run(void* raw){auto& call=*static_cast<FiberCall*>(raw);try{(void)call.information.current_time_041b60();}catch(const std::logic_error&){call.rejected=true;}::SwitchToFiber(call.controller);std::terminate();}
@@ -83,4 +95,4 @@ void attached_retirement_and_required_inputs(){
     require(retired==4&&denied==8&&!trace.time&&!trace.gmtime&&!trace.formatted,"All last-owner deleters see attached Retiring guard and reject both routes before touching retired leaves");
 }
 }
-int main(){try{actual_handlers_and_time();primitive_checkpoints_and_reentry();worker_and_fiber_affinity();attached_retirement_and_required_inputs();std::cout<<"PASS: "<<checks<<" Information effects checks; own handlers/XML/clock and bounded admission/retirement only\n";}catch(const std::exception& error){std::cerr<<"FAIL: "<<error.what()<<'\n';return 1;}}
+int main(){try{actual_handlers_and_time();primitive_checkpoints_and_reentry();sdk_error_survives_metadata();worker_and_fiber_affinity();attached_retirement_and_required_inputs();std::cout<<"PASS: "<<checks<<" Information effects checks; own handlers/XML/clock and bounded admission/retirement only\n";}catch(const std::exception& error){std::cerr<<"FAIL: "<<error.what()<<'\n';return 1;}}

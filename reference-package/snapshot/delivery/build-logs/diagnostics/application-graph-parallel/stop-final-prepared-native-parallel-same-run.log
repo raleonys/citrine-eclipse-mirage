@@ -1,0 +1,248 @@
+DIAG check tid13004: Actual NativeJobs parallel controller initializes its one real Domain
+DIAG check tid13004: Actual parallel fixture owns finite SDK handshake events
+DIAG check tid13004: Parallel fixture launches an actual same-Domain native wrapper
+DIAG ParallelThread body tid16756
+DIAG check tid16756: Actual NativeJobs concurrent original owns real Runtime TLS
+DIAG check tid16756: Worker provider aliases borrow exact live bound configuration/Execution
+DIAG check tid16756: Owned context requests WSA2.2
+DIAG check tid16756: Actual024990 forwards observed selected IOCP construction arguments
+DIAG check tid16756: Concrete NativeApi forwards ACP exact loopback C string and bounded10 wide conversion
+DIAG check tid16756: Concrete NativeApi forwards persistent converted text, null protocol and initialized128byte sockaddr capacity
+DIAG check tid16756: Concrete NativeApi forwards ACP exact loopback C string and bounded10 wide conversion
+DIAG check tid16756: Concrete NativeApi forwards persistent converted text, null protocol and initialized128byte sockaddr capacity
+DIAG check tid16756: Actual020e20 opens selected family through synthetic socket SDK boundary
+DIAG check tid16756: Actual acceptor/accepted transfer attaches selected socket to same owned kernel completion port
+DIAG check tid16756: Acceptor enables source reuse-address option
+DIAG check tid16756: Actual bind lower receives family-specific initialized sockaddr length
+DIAG check tid16756: Actual listen uses observed INT_MAX backlog
+DIAG check tid16756: Local endpoint uses actual owned acceptor token and initialized SDK buffer
+DIAG check tid16756: Bound port environment publication precedes source readiness flag
+DIAG check tid16756: Actual NativeJobs observes SAME concurrent Parent/Runtime capability at bind
+DIAG check tid16756: Profile integration uses exact injected AcceptEx boundary with distinct201/202/203 sockets and90+90 endpoints
+DIAG check tid16756: Concrete Profile/native flow retains next accept SDK loan alongside active session
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Parallel fixture launches an actual same-Domain native wrapper
+DIAG ParallelThread body tid5756
+DIAG probe0 acquiring
+DIAG probe0 acquired
+DIAG probe0 Operation
+DIAG probe0 permit
+DIAG probe0 target locked
+DIAG probe0 target registered
+DIAG check tid16756: Parallel fixture launches an actual same-Domain native wrapper
+DIAG ParallelThread body tid14212
+DIAG probe1 acquiring
+DIAG probe1 acquired
+DIAG probe1 Operation
+DIAG probe1 permit
+DIAG probe1 target locked
+DIAG probe1 target registered
+DIAG check tid14212: Actual current-thread04a47c releases only this child's registered native wait target
+DIAG check tid14212: Policy probe returns its actual prepared child offer
+DIAG check tid16756: Actual parallel native/FLS exit joins before own handle retirement
+DIAG check tid16756: B actual Policy cleanup/native exit progresses while A exact cleanup checkpoint and target remain live
+DIAG check tid16756: Actual original Policy call and passives progress without cleaning foreign A target
+DIAG check tid5756: Actual current-thread04a47c releases only this child's registered native wait target
+DIAG check tid5756: Policy probe returns its actual prepared child offer
+DIAG check tid16756: Actual parallel native/FLS exit joins before own handle retirement
+DIAG check tid16756: Two actual child cleanups plus one original cleanup finish without fake count reset
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed126
+DIAG check tid16756: Observed completion releases accept loan before native endpoint address extraction
+DIAG check tid16756: Native0271a0 updates accepted context with captured listener pointer value and exact option700b/size8
+DIAG check tid16756: Actual acceptor/accepted transfer attaches selected socket to same owned kernel completion port
+DIAG check tid16756: Socket source destructor supplies selected executor identity
+DIAG check tid16756: Graph prepare callback receives actual023000 owner after second native reset and supplies NOlogic/context graph
+DIAG check tid16756: Actual NativeJobs Graph owns Policy before session publication
+DIAG check tid16756: Concrete NativeApi synchronous greeting uses exact WSASend one-buffer/zeroDWORD/flags0/nullOV/nullcallback imports
+DIAG check tid16756: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid16756: Actual parallel session has one real SDK receive loan
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Profile integration uses exact injected AcceptEx boundary with distinct201/202/203 sockets and90+90 endpoints
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid16756: Actual parallel session has one real SDK receive loan
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid16756: Actual parallel session has one real SDK receive loan
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid16756: Actual parallel session has one real SDK receive loan
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid16756: Actual parallel session has one real SDK receive loan
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid16756: Actual parallel session has one real SDK receive loan
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid16756: Actual parallel session has one real SDK receive loan
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid16756: Actual parallel session has one real SDK receive loan
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Bounded actual NativeJobs fixture launches exactly two messages
+DIAG check tid16756: Actual duplicate observes its still-undetached source handle
+DIAG check tid22416: Actual parallel Graph callback retains its exact Session and real child actor
+DIAG check tid22416: Held A uses the original actual session
+DIAG check tid22416: Actual Graph unknown diagnostic reaches concrete Licensing/Dialog from held A
+DIAG check tid16756: Actual NativeJobs A body reaches concrete Dialog before DuplicateHandle/start returns or detach
+DIAG check tid16756: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid16756: Actual parallel session has one real SDK receive loan
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid16756: Actual parallel session has one real SDK receive loan
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid16756: Actual parallel session has one real SDK receive loan
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Bounded actual NativeJobs fixture launches exactly two messages
+DIAG check tid16756: Actual duplicate observes its still-undetached source handle
+DIAG check tid16756: Actual NativeJobs initial1 source/physical registries grow while A remains live
+DIAG check tid20964: Actual parallel Graph callback retains its exact Session and real child actor
+DIAG check tid20964: B receives exact separate real XML on selected same/distinct Session
+DIAG check tid20964: Actual parallel Graph callback retains its exact Session and real child actor
+DIAG check tid20964: Only B emits actual GetConfig response while supported Unknown A stays held
+DIAG check tid20964: Held A's actual launch is published before either source receipt
+DIAG check tid20964: Actual NativeJobs post owns a nonzero source receipt
+DIAG check tid16756: Actual NativeJobs B body/return/real receipt post finish BEFORE duplicate/start returns and BEFORE B detach
+DIAG check tid16756: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid16756: Actual parallel session has one real SDK receive loan
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG check tid16756: Queued B receipt belongs to the second actual native launch
+DIAG check tid16756: Runtime has consumed B's actual queued receipt while the native post callback is still held before return/FLS
+DIAG check tid16756: Physical maintenance skips B's active post reservation without waiting or poisoning
+DIAG check tid16756: Receipt-before-post-return retains only physical B and live source A, without a second acknowledgement
+DIAG check tid16756: No active post/native row closes and no production detach event is synthesized
+DIAG beforeQCS incoming0 observed0
+DIAG check tid20964: B native post returns only after actual original receipt and outside-Parent retention observation
+DIAG check tid16756: Default NativeAsyncSendApi forwards exact WSASend one-buffer/zeroDWORD/flags0/realOV/nullcallback signature
+DIAG check tid16756: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Actual SDK send packet follows its one pending loan
+DIAG check tid16756: B actual original response retires one source job while held A's exact live session/call and ordinary Root metadata remain usable
+DIAG check tid16756: Same-session source fixture uses the exact shared Session/Logic, without a cloned business root
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG check tid16756: Actual NativeJobs owns two physical launches
+DIAG check tid16756: Actual B native wrapper and FLS exit complete before A is released
+DIAG check tid16756: Actual NativeJobs physical maintenance progresses without waiting for held A's body
+DIAG check tid16756: Actual NativeJobs and PreparedMemory retire B while only held A's exact row remains
+DIAG check tid16756: Actual B private native handle retires independently of live A
+DIAG check tid16756: B source response and physical reap progress are observed before releasing A outside Parent
+DIAG check tid22416: A continues only after real B response and native/FLS/reap progress
+DIAG check tid22416: Held A's actual launch is published before either source receipt
+DIAG check tid22416: Actual NativeJobs post owns a nonzero source receipt
+DIAG check tid16756: Released A reaches actual native/FLS exit outside Parent before the fixture's final drain
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG check tid16756: Released A reaches actual native/FLS exit outside Parent before the fixture's final drain
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG check tid16756: Released A reaches actual native/FLS exit outside Parent before the fixture's final drain
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG check tid16756: Released A reaches actual native/FLS exit outside Parent before the fixture's final drain
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Socket source destructor supplies selected executor identity
+DIAG check tid16756: Final actual pending accept retains its typed SDK packet until the scripted995 completion
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: AcceptOnly Stop request follows actual session/job/prepared/native retirement outside Parent
+DIAG check tid16756: Actual original Stop controller requests only its naturally drained pending accept
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG check tid16756: Released A reaches actual native/FLS exit outside Parent before the fixture's final drain
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Synthetic AcceptOnly cancellation targets exactly one actual pending accept after source/physical drain
+DIAG check tid16756: Selected real Stop cancels the current owned pending accept generation once
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: AcceptOnly Stop request follows actual session/job/prepared/native retirement outside Parent
+DIAG check tid16756: Actual original Stop controller requests only its naturally drained pending accept
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG check tid16756: Released A reaches actual native/FLS exit outside Parent before the fixture's final drain
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid16756: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid16756: AcceptOnly Stop request follows actual session/job/prepared/native retirement outside Parent
+DIAG check tid16756: Actual original Stop controller requests only its naturally drained pending accept
+DIAG check tid16756: Actual NativeJobs physical progress is tested outside Parent while A remains inside its body
+DIAG check tid16756: Released A reaches actual native/FLS exit outside Parent before the fixture's final drain
+DIAG beforeQCS incoming0 observed0
+DIAG check tid16756: Actual Runtime consumes each real NativeJobs receipt/work pin once and drains both physical rows before normal original return
+DIAG check tid16756: Socket source destructor supplies selected executor identity
+DIAG check tid16756: Socket source destructor supplies selected executor identity
+DIAG check tid16756: Owned teardown closes the same actual kernel IOCP handle
+DIAG check tid16756: Selected real AcceptOnly Stop closes after one exact injected cancellation packet and acknowledged source receipt
+DIAG check tid16756: Actual NativeJobs/Profile/Policy closes after two child, two original and three explicit probe cleanups
+DIAG check tid16756: Actual B GetConfig emits exactly one framed response with its own long id; supported Unknown A emits none
+DIAG check tid16756: Both actual routes/native handles/real receipts retire once with no NativeJobs detach event call
+DIAG check tid16756: Actual NativeJobs detaches and closes each private physical handle on its exact child
+DIAG check tid16756: Actual NativeJobs detaches and closes each private physical handle on its exact child
+DIAG check tid16756: Actual concurrent NativeJobs TLS outlives all concrete providers
+DIAG check tid13004: Actual parallel native/FLS exit joins before own handle retirement
+DIAG check tid13004: Controller observes actual original and both NativeJobs native/FLS exits before backing release
+DIAG check tid13004: Controller retires only its independent native proof handles after actual source close
+DIAG check tid13004: Controller retires only its independent native proof handles after actual source close
+DIAG check tid13004: Actual concurrent NativeJobs source fixture releases its one Domain naturally

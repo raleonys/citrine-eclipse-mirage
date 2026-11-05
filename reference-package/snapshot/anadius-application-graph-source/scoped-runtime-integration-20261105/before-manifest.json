@@ -1,0 +1,44 @@
+{
+  "status": "PRE_EDIT_SOURCE_SNAPSHOT",
+  "pending_source_count": 122,
+  "files": [
+    {
+      "path": "anadius-session-profile-source/profile.hpp",
+      "exists": true,
+      "sha256": "ede20dcc14bcfb1d4859f91b2f9222051c43ad7044947badc853133c65d49c5a",
+      "before": "before/anadius-session-profile-source__profile.hpp"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.cpp",
+      "exists": true,
+      "sha256": "50cac048aca16fcdab4c49d862ba86587c1f63dd771dfd22123023cdf82c5108",
+      "before": "before/anadius-session-profile-source__profile.cpp"
+    },
+    {
+      "path": "anadius-session-profile-source/profile_tests.cpp",
+      "exists": true,
+      "sha256": "af2fe8a0d7bfee786c8882c4bad3578bcf3bd05873fd951b3d285b3169490491",
+      "before": "before/anadius-session-profile-source__profile_tests.cpp"
+    },
+    {
+      "path": "anadius-application-graph-source/graph.hpp",
+      "exists": true,
+      "sha256": "62938f990e41fed26dc8444969c75e53c90ae2308dc954d0b0ad4a8c10e0b6c2",
+      "before": "before/anadius-application-graph-source__graph.hpp"
+    },
+    {
+      "path": "anadius-application-graph-source/graph.cpp",
+      "exists": true,
+      "sha256": "7a5950a9b39d13ab51269a652b105c07e5f2e35d5b47de2e1ffce58cd464d9e2",
+      "before": "before/anadius-application-graph-source__graph.cpp"
+    },
+    {
+      "path": "anadius-application-graph-source/graph_integration_tests.cpp",
+      "exists": true,
+      "sha256": "0d65bfb6d588b571eb4bdb62c8bda3fd0ec31c2eabbd588bbcdb19c96c4c9f23",
+      "before": "before/anadius-application-graph-source__graph_integration_tests.cpp"
+    }
+  ],
+  "compile": false,
+  "tests_run": false
+}

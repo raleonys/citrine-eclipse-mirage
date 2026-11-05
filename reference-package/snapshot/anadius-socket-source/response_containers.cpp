@@ -42,29 +42,57 @@ ReceiveBufferString& copy_response_string_009eb0(ReceiveBufferString& out,const 
     context.api.copy_bytes(destination,data,size+std::uint64_t{1}); // includes NUL, preserves source
     return out;
 }
-std::uintptr_t DequeMapMemory::address_of(std::span<WriteFinishString*> slots) const{
-    if(!slots.data())return 0;
+MemoryLookup DequeMapMemory::lookup_address(std::span<WriteFinishString*> slots,std::uintptr_t& output) const{
+    if(!slots.data()){output=0;return MemoryLookup::Found;}
+    if(resolver){
+        std::uintptr_t found=0;
+        const auto match=resolver->lookup_address(slots,found);
+        if(match==MemoryLookup::Found)output=found;
+        return match;
+    }
     std::uintptr_t result=0;bool found=false;
     for(const auto& item:bindings){
         if(item.slots.data()!=slots.data() || item.slots.size()<slots.size())continue;
-        if(found)throw UnsupportedInput("Deque map identity is ambiguous");
+        if(found)return MemoryLookup::Ambiguous;
         found=true;result=item.address;
     }
-    if(!found)throw UnsupportedInput("Deque map identity is unbound");
-    return result;
+    if(!found)return MemoryLookup::Miss;
+    output=result;return MemoryLookup::Found;
 }
-std::span<WriteFinishString*> DequeMapMemory::view(std::uintptr_t address,std::uint64_t bytes) const{
-    if(bytes%8)throw UnsupportedInput("Deque byte count is not a complete pointer slot");
+MemoryLookup DequeMapMemory::lookup_map(std::uintptr_t address,std::uint64_t bytes,
+    std::span<WriteFinishString*>& output) const{
+    if(bytes%8)return MemoryLookup::Miss;
+    if(resolver){
+        std::span<WriteFinishString*> found;
+        const auto match=resolver->lookup_map(address,bytes,found);
+        if(match==MemoryLookup::Found)output=found;
+        return match;
+    }
     std::span<WriteFinishString*> result;bool found=false;
     for(const auto& item:bindings){
         if(!item.address || address<item.address)continue;
         const auto distance=address-item.address;if(distance%8)continue;
         const auto offset=distance/8,count=bytes/8;
         if(offset>item.slots.size() || count>item.slots.size()-offset)continue;
-        if(found)throw UnsupportedInput("Deque map region is ambiguous");
+        if(found)return MemoryLookup::Ambiguous;
         found=true;result=item.slots.subspan(static_cast<std::size_t>(offset),static_cast<std::size_t>(count));
     }
-    if(!found)throw UnsupportedInput("Deque pointer access leaves bounded maps");
+    if(!found)return MemoryLookup::Miss;
+    output=result;return MemoryLookup::Found;
+}
+std::uintptr_t DequeMapMemory::address_of(std::span<WriteFinishString*> slots) const{
+    std::uintptr_t result=0;
+    const auto match=lookup_address(slots,result);
+    if(match==MemoryLookup::Ambiguous)throw UnsupportedInput("Deque map identity is ambiguous");
+    if(match!=MemoryLookup::Found)throw UnsupportedInput("Deque map identity is unbound");
+    return result;
+}
+std::span<WriteFinishString*> DequeMapMemory::view(std::uintptr_t address,std::uint64_t bytes) const{
+    if(bytes%8)throw UnsupportedInput("Deque byte count is not a complete pointer slot");
+    std::span<WriteFinishString*> result;
+    const auto match=lookup_map(address,bytes,result);
+    if(match==MemoryLookup::Ambiguous)throw UnsupportedInput("Deque map region is ambiguous");
+    if(match!=MemoryLookup::Found)throw UnsupportedInput("Deque pointer access leaves bounded maps");
     return result;
 }
 void BoundedDequeGrowthApi::copy_slots(std::uintptr_t to,std::uintptr_t from,std::uint64_t bytes){

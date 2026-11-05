@@ -1,7 +1,649 @@
 #include "foreign_test_fixture.hpp"
+#include <ws2tcpip.h>
+#include "../anadius-original-provider-source/originals.hpp"
+#include "../anadius-startup-publication-source/publication.hpp"
+#include <chrono>
+#include <algorithm>
+#include <bit>
+#include "../anadius-shared-log-source/stream.hpp"
 
 namespace {
 using namespace b18_test;
+enum class MatchedRegistryMode {SharedOpen,RemoveTracked,AddTracked,Cleanup};
+struct MatchedRegistryProbe {
+    std::shared_ptr<fc::Domain> domain;nc::CallbackSeed* state=nullptr;DWORD fls=FLS_OUT_OF_INDEXES;void* ptd=nullptr;
+    MatchedRegistryMode mode=MatchedRegistryMode::SharedOpen;bool valid=true;unsigned depth=0,opens=0,queries=0,closes=0;
+    HKEY output=nullptr,target=nullptr;DWORD type=0,size=16;BYTE data[16]{};
+    const wchar_t* subkey=L"Own\\Language";const char* name="Locale";
+    void observe(unsigned leases){
+        auto* current=::FlsGetValue(fls);if(leases==1)ptd=current;
+        valid=valid&&current&&current==ptd&&current!=crt_ptd_recovered::construction_sentinel()&&
+            domain->permits_current()&&domain->permits_original_current()&&n::active_calls()==leases;
+    }
+};
+MatchedRegistryProbe* matched_registry_probe=nullptr;
+LSTATUS WINAPI matched_registry_open_w(HKEY root,LPCWSTR key,DWORD options,REGSAM access,PHKEY output){
+    auto& p=*matched_registry_probe;++p.opens;
+    p.observe(p.mode==MatchedRegistryMode::SharedOpen?(p.depth?2:1):2);
+    p.valid=p.valid&&root==HKEY_CURRENT_USER&&key==p.subkey&&options==0&&access==KEY_READ&&output==&p.output;
+    if(p.mode==MatchedRegistryMode::SharedOpen){
+        const bool outer=p.depth++==0;*output=reinterpret_cast<HKEY>(outer?0xb01:0xb02);
+        if(outer){
+            const auto status=n::reg_open_w_entry(root,p.subkey,options,access,output);
+            p.valid=p.valid&&!status&&*output==reinterpret_cast<HKEY>(0xb02)&&p.state->language.contains(0xb02)&&!p.state->language.contains(0xb01)&&n::active_calls()==1&&::FlsGetValue(p.fls)==p.ptd;
+        }
+        --p.depth;
+    }else{*output=p.target;p.size=1;}
+    return 0;
+}
+LSTATUS WINAPI matched_registry_close(HKEY key){
+    auto& p=*matched_registry_probe;++p.closes;p.observe(p.mode==MatchedRegistryMode::RemoveTracked?2:1);
+    p.valid=p.valid&&key==p.target&&p.state->language.contains(reinterpret_cast<std::uintptr_t>(key));return 0;
+}
+LSTATUS WINAPI matched_registry_query_a(HKEY key,LPCSTR name,LPDWORD reserved,LPDWORD type,LPBYTE data,LPDWORD size){
+    auto& p=*matched_registry_probe;++p.queries;p.observe(1);
+    p.valid=p.valid&&key==p.target&&name==p.name&&!reserved&&type==&p.type&&data==p.data&&size==&p.size;
+    if(p.mode==MatchedRegistryMode::RemoveTracked){
+        p.valid=p.valid&&p.state->language.contains(reinterpret_cast<std::uintptr_t>(key));*type=9;*size=3;std::memcpy(data,"SDK",4);
+        const auto status=n::reg_close_entry(key);
+        p.valid=p.valid&&!status&&!p.state->language.contains(reinterpret_cast<std::uintptr_t>(key))&&n::active_calls()==1&&::FlsGetValue(p.fls)==p.ptd;
+        return std::bit_cast<LSTATUS>(0x80001234u);
+    }
+    p.valid=p.valid&&!p.state->language.contains(reinterpret_cast<std::uintptr_t>(key));*type=0;*size=777;
+    const auto status=n::reg_open_w_entry(HKEY_CURRENT_USER,p.subkey,0,KEY_READ,&p.output);
+    p.valid=p.valid&&!status&&p.output==key&&p.size==1&&p.state->language.contains(reinterpret_cast<std::uintptr_t>(key))&&n::active_calls()==1&&::FlsGetValue(p.fls)==p.ptd;
+    return std::bit_cast<LSTATUS>(0x80005678u);
+}
+void registry_matched_sdk_paths(){
+    Fixture f;auto publication=std::make_shared<original_provider::Publication>(std::make_shared<int>(1));
+    auto domain=std::make_shared<fc::Domain>(f.heap.domain,std::function<bool()>{},std::function<bool()>{},std::function<bool(std::uint16_t)>{},std::function<bool(std::uint16_t)>{},std::function<std::optional<std::uint16_t>()>{},[publication](n::Callback c){const auto s=publication->snapshot();return (s.phase==original_provider::PublicationPhase::Setup||s.phase==original_provider::PublicationPhase::Ready)&&(s.published_mask&(1u<<host_init_recovered::slot(c)));});
+    MatchedRegistryProbe probe;probe.domain=domain;probe.fls=f.heap.domain->native_fls_index();matched_registry_probe=&probe;
+    f.driver.configuration.registry_spoof=1;
+    f.driver.runtime.registry_values={{"ClientKey",u"Own\\Client"},{"ClientKey2",u"Own\\Client2"},{"LanguageKey",u"Own\\Language"},{"LanguageValue",u"Locale"},{"Language",u"en_US"}};
+    auto resources=f.resources();resources.stream=shared_log::make_stream(std::make_shared<std::stringbuf>());resources.originals=original_provider::make_publishing_factory(publication);
+    resources.callback_scope=[domain]{return domain->permits_current();};resources.original_scope=[domain]{return domain->permits_original_current();};
+    resources.connect_wait_scope=[domain]{return domain->permits_connect_wait_current();};resources.connect_body_scope=[domain]{return domain->permits_connect_body_current();};
+    auto policies=callback_policy::make_policy_factory(std::move(resources));nc::PolicyFactory observed=[&](nc::PolicyView view){probe.state=&view.callbacks;return policies(view);};
+    auto seed=b15_test::seed();seed.language.insert(0xb10); // explicit pre-publication state for the removal case
+    auto attachment=nc::make_factory(std::move(seed),std::move(observed),permanent_errors,{},std::make_unique<fc::Admission>(domain),nc::ClosureProfile::OriginalCrt);
+    domain->bind_connect_server_port(f.driver.configuration.server_port);auto owner=attachment(f.driver.view());attachment={};owner->publish();owner->host_setup_begin();
+    auto& slots=f.driver.runtime.originals;slots[2]=reinterpret_cast<std::uintptr_t>(&matched_registry_open_w);slots[3]=reinterpret_cast<std::uintptr_t>(&matched_registry_close);slots[4]=reinterpret_cast<std::uintptr_t>(&matched_registry_query_a);
+    for(std::size_t i:{2u,3u,4u}){const auto c=static_cast<n::Callback>(i);publication->before_create(c,0xa000+i,slots[i]);publication->after_create(c,0xa000+i,slots[i],0);}
+    const auto blocks=f.heap.memory.blocks.size();
+    in_thread([&]{
+        require(!::FlsGetValue(probe.fls),"Matched registry fixture starts without a private PTD");
+        require(!n::reg_open_w_entry(HKEY_CURRENT_USER,probe.subkey,0,KEY_READ,&probe.output)&&probe.output==reinterpret_cast<HKEY>(0xb02)&&probe.state->language.contains(0xb02)&&!probe.state->language.contains(0xb01),"Recursive matched OpenW rereads the shared caller handle cell and tracks only the child's final returned handle");
+        probe.mode=MatchedRegistryMode::Cleanup;probe.target=probe.output;require(!n::reg_close_entry(probe.target),"Matched OpenW result closes through the actual typed real-original route");
+        probe.mode=MatchedRegistryMode::RemoveTracked;probe.target=reinterpret_cast<HKEY>(0xb10);probe.size=16;probe.type=0;
+        const auto removed=n::reg_query_a_entry(probe.target,probe.name,nullptr,&probe.type,probe.data,&probe.size);
+        require(std::bit_cast<std::uint32_t>(removed)==0x80001234u&&probe.type==9&&probe.size==3&&std::memcmp(probe.data,"SDK",4)==0&&!probe.state->language.contains(0xb10),"Outer query observes its nested close removing matched membership and preserves original status/output instead of replacing");
+        probe.mode=MatchedRegistryMode::AddTracked;probe.target=reinterpret_cast<HKEY>(0xb20);probe.size=16;probe.type=9;std::memset(probe.data,0,sizeof probe.data);
+        const auto added=n::reg_query_a_entry(probe.target,probe.name,nullptr,&probe.type,probe.data,&probe.size);
+        require(!added&&probe.type==1&&probe.size==6&&std::memcmp(probe.data,"en_US",6)==0&&probe.state->language.contains(0xb20),"Outer query notices membership created by nested matched OpenW and restores pre-SDK capacity16 over the nested size1 before replacement");
+        probe.mode=MatchedRegistryMode::Cleanup;require(!n::reg_close_entry(probe.target)&&!::FlsGetValue(probe.fls),"Final matched handle cleanup retires the root PTD without a second nested owner");
+    });
+    require(probe.valid&&probe.opens==3&&probe.queries==2&&probe.closes==3&&probe.state->language.empty()&&probe.state->client.empty()&&probe.state->fabricated.empty()&&!domain->active()&&!n::active_calls()&&f.heap.memory.blocks.size()==blocks,"Matched nesting retains exact per-depth PTD/Context ownership and leaves no tracked/fabricated handle or callback allocation");
+    owner->host_setup_complete();require(owner->pause_before_cleanup()&&owner->close_after_cleanup(),"Matched registry fixture retires the existing Original provider and Context");owner.reset();matched_registry_probe=nullptr;
+}
+struct RegistrySdkProbe {
+    std::shared_ptr<fc::Domain> domain;fc::Admission* admission=nullptr;DWORD fls=FLS_OUT_OF_INDEXES;
+    void* ptd=nullptr;bool valid=true,throw_sdk=false;unsigned open_calls=0,seen=0,resolver_checks=0,child_body_checks=0;
+    HKEY root_output=nullptr,child_output=nullptr;DWORD reserved_a=0x11,reserved_w=0x22,type_a=3,type_w=4,size_a=99,size_w=88;
+    BYTE data_a[8]{},data_w[8]{};const char* name_a="untracked-a";const wchar_t* name_w=L"untracked-w";
+    bool denied(){
+        n::RegistryNestedFrame frame;
+        try{if(!admission->try_enter_registry_nested(n::Callback::reg_query_a_00fac0,frame))return true;}
+        catch(const fc::Rejected&){return true;}
+        admission->leave_registry_nested(frame);return false;
+    }
+    void observe(unsigned index,bool arguments){
+        const auto incoming=::GetLastError();auto* current=::FlsGetValue(fls);if(!ptd)ptd=current;
+        valid=valid&&arguments&&incoming==0x8300+index&&current&&current==ptd&&current!=crt_ptd_recovered::construction_sentinel()&&
+            domain->permits_current()&&domain->permits_original_current()&&domain->active()&&n::active_calls()==index+1;++seen;
+    }
+};
+RegistrySdkProbe* registry_sdk_probe=nullptr;
+LSTATUS WINAPI registry_nested_close(HKEY key){
+    auto& p=*registry_sdk_probe;p.observe(4,key==reinterpret_cast<HKEY>(0x901));::SetLastError(0x8404);return 0;
+}
+LSTATUS WINAPI registry_nested_query_w(HKEY key,LPCWSTR name,LPDWORD reserved,LPDWORD type,LPBYTE data,LPDWORD size){
+    auto& p=*registry_sdk_probe;p.observe(3,key==reinterpret_cast<HKEY>(0x903)&&name==p.name_w&&reserved==&p.reserved_w&&type==&p.type_w&&data==p.data_w&&size==&p.size_w);
+    ::SetLastError(0x8304);const auto result=n::reg_close_entry(reinterpret_cast<HKEY>(0x901));
+    p.valid=p.valid&&!result&&n::active_calls()==4&&::FlsGetValue(p.fls)==p.ptd&&p.domain->permits_current();
+    *type=7;*size=12;data[0]=0x57;::SetLastError(0x8403);return std::bit_cast<LSTATUS>(0x80000444u);
+}
+LSTATUS WINAPI registry_nested_query_a(HKEY key,LPCSTR name,LPDWORD reserved,LPDWORD type,LPBYTE data,LPDWORD size){
+    auto& p=*registry_sdk_probe;p.observe(2,key==reinterpret_cast<HKEY>(0x902)&&name==p.name_a&&reserved==&p.reserved_a&&type==&p.type_a&&data==p.data_a&&size==&p.size_a);
+    ::SetLastError(0x8303);const auto result=n::reg_query_w_entry(reinterpret_cast<HKEY>(0x903),p.name_w,&p.reserved_w,&p.type_w,p.data_w,&p.size_w);
+    p.valid=p.valid&&std::bit_cast<std::uint32_t>(result)==0x80000444u&&p.type_w==7&&p.size_w==12&&p.data_w[0]==0x57&&n::active_calls()==3&&::FlsGetValue(p.fls)==p.ptd&&p.domain->permits_current();
+    *type=6;*size=11;data[0]=0x41;::SetLastError(0x8402);return std::bit_cast<LSTATUS>(0x80000333u);
+}
+LSTATUS WINAPI registry_nested_open_a(HKEY root,LPCSTR key,DWORD options,REGSAM access,PHKEY output){
+    auto& p=*registry_sdk_probe;const unsigned index=p.open_calls++;
+    if(p.throw_sdk)throw std::runtime_error("synthetic registry SDK exception");
+    p.observe(index,root==reinterpret_cast<HKEY>(0x900)&&key&&std::string_view(key)=="Own\\Unrelated"&&options==0x12&&access==0x34&&output==(index?&p.child_output:&p.root_output));
+    if(!index){
+        bool overlap=false;std::thread foreign([&]{try{p.admission->enter(n::Callback::reg_query_a_00fac0);p.admission->leave(n::Callback::reg_query_a_00fac0);}catch(const fc::Rejected& e){overlap=e.fault==fc::Fault::Overlap;}});foreign.join();p.valid=p.valid&&overlap;
+        ::SetLastError(0x8301);const auto result=n::reg_open_a_entry(reinterpret_cast<HKEY>(0x900),"Own\\Unrelated",0x12,0x34,&p.child_output);
+        p.valid=p.valid&&std::bit_cast<std::uint32_t>(result)==0x80000222u&&p.child_output==reinterpret_cast<HKEY>(0xa02)&&n::active_calls()==1&&::FlsGetValue(p.fls)==p.ptd&&p.domain->permits_current();
+    }else{
+        ::SetLastError(0x8302);const auto result=n::reg_query_a_entry(reinterpret_cast<HKEY>(0x902),p.name_a,&p.reserved_a,&p.type_a,p.data_a,&p.size_a);
+        p.valid=p.valid&&std::bit_cast<std::uint32_t>(result)==0x80000333u&&p.type_a==6&&p.size_a==11&&p.data_a[0]==0x41&&n::active_calls()==2&&::FlsGetValue(p.fls)==p.ptd&&p.domain->permits_current();
+    }
+    *output=reinterpret_cast<HKEY>(index?0xa02:0xa01);::SetLastError(0x8400+index);return std::bit_cast<LSTATUS>(index?0x80000222u:0x80000111u);
+}
+class RegistryObservedEncoding final:public encoding_recovered::Calls {
+    b16_test::Encoding lower_;RegistrySdkProbe& probe_;
+public:
+    RegistryObservedEncoding(std::shared_ptr<b16_test::ConvertState> lower,RegistrySdkProbe& probe):lower_(std::move(lower)),probe_(probe){}
+    std::uint32_t locale_codepage_0629ec()override{return lower_.locale_codepage_0629ec();}
+    bool are_file_apis_ansi()override{return lower_.are_file_apis_ansi();}
+    int multi_byte_to_wide(std::uint32_t cp,std::uint32_t flags,const char* text,int count,char16_t* output,int capacity)override{return lower_.multi_byte_to_wide(cp,flags,text,count,output,capacity);}
+    int wide_to_multi_byte(std::uint32_t cp,std::uint32_t flags,const char16_t* text,int count,char* output,int capacity,bool* used)override{
+        if(n::active_calls()>1)++probe_.child_body_checks;probe_.valid=probe_.valid&&probe_.denied();
+        return lower_.wide_to_multi_byte(cp,flags,text,count,output,capacity,used);
+    }
+    std::uint32_t last_error()override{return lower_.last_error();}
+};
+class RegistryObservedOriginals final:public n::OriginalProvider {
+    std::shared_ptr<original_provider::Publication> lower_;RegistrySdkProbe& probe_;
+public:
+    RegistryObservedOriginals(std::shared_ptr<original_provider::Publication> lower,RegistrySdkProbe& probe):lower_(std::move(lower)),probe_(probe){}
+    const n::OriginalSlots* slots_identity()const noexcept override{return lower_->slots_identity();}
+    std::uintptr_t load(n::Callback callback)override{++probe_.resolver_checks;probe_.valid=probe_.valid&&probe_.denied();return lower_->load(callback);}
+    void setup_begin()override{lower_->setup_begin();}void setup_complete()override{lower_->setup_complete();}void stop()noexcept override{lower_->stop();}
+};
+void registry_sdk_nesting(){
+    Fixture f;auto publication=std::make_shared<original_provider::Publication>(std::make_shared<int>(1));
+    auto domain=std::make_shared<fc::Domain>(f.heap.domain,std::function<bool()>{},std::function<bool()>{},std::function<bool(std::uint16_t)>{},std::function<bool(std::uint16_t)>{},std::function<std::optional<std::uint16_t>()>{},[publication](n::Callback c){const auto s=publication->snapshot();return (s.phase==original_provider::PublicationPhase::Setup||s.phase==original_provider::PublicationPhase::Ready)&&(s.published_mask&(1u<<host_init_recovered::slot(c)));});
+    fc::Admission admission(domain);RegistrySdkProbe probe;probe.domain=domain;probe.admission=&admission;probe.fls=f.heap.domain->native_fls_index();registry_sdk_probe=&probe;
+    f.driver.runtime.registry_values={{"ClientKey",u"Own\\Client"},{"ClientKey2",u"Own\\Client2"},{"LanguageKey",u"Own\\Language"}};
+    auto resources=f.resources();resources.stream=shared_log::make_stream(std::make_shared<std::stringbuf>());resources.encoding=std::make_unique<RegistryObservedEncoding>(f.conversion,probe);
+    resources.originals=[publication,&probe](const n::OriginalSlots& slots){publication->bind_slots(slots);return std::make_shared<RegistryObservedOriginals>(publication,probe);};
+    resources.callback_scope=[domain]{return domain->permits_current();};resources.original_scope=[domain]{return domain->permits_original_current();};
+    resources.connect_wait_scope=[domain]{return domain->permits_connect_wait_current();};resources.connect_body_scope=[domain]{return domain->permits_connect_body_current();};
+    n::OriginalEffects* effects=nullptr;auto policies=callback_policy::make_policy_factory(std::move(resources));
+    nc::PolicyFactory observed=[&](nc::PolicyView view){auto value=policies(view);effects=value.get();return value;};
+    auto attachment=nc::make_factory(b15_test::seed(),std::move(observed),permanent_errors,{},std::make_unique<fc::Admission>(domain),nc::ClosureProfile::OriginalCrt);
+    domain->bind_connect_server_port(f.driver.configuration.server_port);auto owner=attachment(f.driver.view());attachment={};owner->publish();owner->host_setup_begin();
+    auto& slots=f.driver.runtime.originals;slots[1]=reinterpret_cast<std::uintptr_t>(&registry_nested_open_a);slots[3]=reinterpret_cast<std::uintptr_t>(&registry_nested_close);slots[4]=reinterpret_cast<std::uintptr_t>(&registry_nested_query_a);slots[5]=reinterpret_cast<std::uintptr_t>(&registry_nested_query_w);
+    for(std::size_t i:{1u,3u,4u,5u}){const auto c=static_cast<n::Callback>(i);publication->before_create(c,0x9000+i,slots[i]);publication->after_create(c,0x9000+i,slots[i],0);}
+    const auto blocks=f.heap.memory.blocks.size();
+    in_thread([&]{require(!::FlsGetValue(probe.fls),"Nested registry fixture begins on an unowned foreign PTD slot");::SetLastError(0x8300);
+        const auto result=n::reg_open_a_entry(reinterpret_cast<HKEY>(0x900),"Own\\Unrelated",0x12,0x34,&probe.root_output);
+        require(std::bit_cast<std::uint32_t>(result)==0x80000111u&&probe.root_output==reinterpret_cast<HKEY>(0xa01)&&!::FlsGetValue(probe.fls),"Root registry body preserves return/output and alone retires its acquired PTD");});
+    require(probe.valid&&probe.seen==5&&probe.open_calls==2&&probe.child_body_checks&&probe.resolver_checks==5&&!domain->active()&&!n::active_calls()&&f.heap.memory.blocks.size()==blocks,"Typed recursive same-slot open/queryA/queryW/real-close chain retains one PTD, per-entry Context leases and exact parent restoration; child body/resolver cannot inherit ancestor SDK permission");
+    // Direct Effects invocation allows a synthetic throwing SDK to unwind rather
+    // than crossing the noexcept native API wrapper's terminal error boundary.
+    admission.enter(n::Callback::reg_open_a_00f800);probe.throw_sdk=true;
+    bool expected_exception=false;try{(void)effects->original_open_a({0x900,"Own\\Unrelated",0x12,0x34,registry_recovered::HandleCell::from_raw(&probe.root_output)});}
+    catch(const std::runtime_error& e){expected_exception=std::string_view(e.what())=="synthetic registry SDK exception";}
+    require(expected_exception,"Actual SDK marker propagates the same synthetic lower exception");
+    require(probe.denied()&&domain->permits_current(),"Throwing SDK scope restores the exact ordinary parent and removes its nesting permission");admission.leave(n::Callback::reg_open_a_00f800);probe.throw_sdk=false;
+    owner->host_setup_complete();require(owner->pause_before_cleanup()&&owner->close_after_cleanup(),"Nested registry fixture closes through the existing Original provider/Context route");owner.reset();registry_sdk_probe=nullptr;
+}
+constexpr std::array<std::uint32_t,6> pure_results{0x80001111u,0x90002222u,0x87654321u,0x76543210u,0x80004005u,0x81234567u};
+struct PureForwardProbe {
+    std::shared_ptr<fc::Domain> domain;DWORD fls=FLS_OUT_OF_INDEXES;unsigned base_calls=0;
+    std::mutex gate;std::condition_variable cv;bool leaf_entered=false,release=false,throw_leaf=false,valid=true;
+    std::array<unsigned,6> calls{};std::array<DWORD,6> errors{};
+    HKEY output_a=nullptr,output_w=nullptr;SECURITY_ATTRIBUTES process_security{},thread_security{};
+    STARTUPINFOA start_a{};STARTUPINFOW start_w{};PROCESS_INFORMATION info_a{},info_w{};
+    char command_a[8]="cmd-a",cwd_a[8]="cwd-a",environment_a[8]="env-a",path_a[8]{};
+    wchar_t command_w[8]=L"cmd-w",cwd_w[8]=L"cwd-w",environment_w[8]=L"env-w",path_w[8]{};
+    void observe(unsigned index,bool arguments){
+        const auto incoming=::GetLastError();
+        valid=valid&&arguments&&incoming==0x7100+index&&domain->permits_original_current()&&!domain->permits_current()&&!domain->permits_connect_wait_current()&&!domain->permits_connect_body_current()&&n::active_calls()==base_calls+index+1&&!::FlsGetValue(fls);++calls[index];
+    }
+};
+PureForwardProbe* pure_probe=nullptr;
+std::uint32_t invoke_pure(unsigned);
+void nested_pure(unsigned index){
+    auto& p=*pure_probe;if(index+1<6){const auto result=invoke_pure(index+1);p.valid=p.valid&&result==pure_results[index+1]&&::GetLastError()==0x7200+index+1&&n::active_calls()==p.base_calls+index+1&&p.domain->permits_original_current()&&!p.domain->permits_current();}
+    ::SetLastError(0x7200+index);
+}
+LSTATUS WINAPI pure_open_a(HKEY root,LPCSTR key,DWORD options,REGSAM access,PHKEY output){
+    auto& p=*pure_probe;p.observe(0,root==reinterpret_cast<HKEY>(0x101)&&!key&&options==0x1122&&access==0x3344&&output==&p.output_a);*output=reinterpret_cast<HKEY>(0x8011);nested_pure(0);return std::bit_cast<LSTATUS>(pure_results[0]);
+}
+LSTATUS WINAPI pure_open_w(HKEY root,LPCWSTR key,DWORD options,REGSAM access,PHKEY output){
+    auto& p=*pure_probe;p.observe(1,root==reinterpret_cast<HKEY>(0x102)&&!key&&options==0x5566&&access==0x7788&&output==&p.output_w);*output=reinterpret_cast<HKEY>(0x8022);nested_pure(1);return std::bit_cast<LSTATUS>(pure_results[1]);
+}
+BOOL WINAPI pure_process_a(LPCSTR app,LPSTR command,LPSECURITY_ATTRIBUTES process,LPSECURITY_ATTRIBUTES thread,BOOL inherit,DWORD flags,LPVOID environment,LPCSTR cwd,LPSTARTUPINFOA start,LPPROCESS_INFORMATION output){
+    auto& p=*pure_probe;p.observe(2,!app&&command==p.command_a&&process==&p.process_security&&thread==&p.thread_security&&inherit==7&&flags==0x12345678&&environment==p.environment_a&&cwd==p.cwd_a&&start==&p.start_a&&output==&p.info_a);command[0]='A';output->dwProcessId=0x3456;nested_pure(2);return std::bit_cast<BOOL>(pure_results[2]);
+}
+BOOL WINAPI pure_process_w(LPCWSTR app,LPWSTR command,LPSECURITY_ATTRIBUTES process,LPSECURITY_ATTRIBUTES thread,BOOL inherit,DWORD flags,LPVOID environment,LPCWSTR cwd,LPSTARTUPINFOW start,LPPROCESS_INFORMATION output){
+    auto& p=*pure_probe;p.observe(3,!app&&command==p.command_w&&process==&p.thread_security&&thread==&p.process_security&&inherit==-3&&flags==0xfedcba98&&environment==p.environment_w&&cwd==p.cwd_w&&start==&p.start_w&&output==&p.info_w);command[0]=L'W';output->dwProcessId=0x4567;nested_pure(3);return std::bit_cast<BOOL>(pure_results[3]);
+}
+HRESULT WINAPI pure_folder_a(HWND window,int id,HANDLE token,DWORD flags,LPSTR path){
+    auto& p=*pure_probe;p.observe(4,window==reinterpret_cast<HWND>(0x201)&&id==0x4005&&token==reinterpret_cast<HANDLE>(0x301)&&flags==0xabcdef01&&path==p.path_a);path[0]='A';path[1]=0;nested_pure(4);return std::bit_cast<HRESULT>(pure_results[4]);
+}
+HRESULT WINAPI pure_folder_w(HWND window,int id,HANDLE token,DWORD flags,LPWSTR path){
+    auto& p=*pure_probe;p.observe(5,window==reinterpret_cast<HWND>(0x202)&&id==-7&&token==reinterpret_cast<HANDLE>(0x302)&&flags==0x10203040&&path==p.path_w);path[0]=L'W';path[1]=0;
+    if(p.throw_leaf)throw std::runtime_error("synthetic pure leaf exception");
+    {std::unique_lock lock(p.gate);p.leaf_entered=true;p.cv.notify_all();if(!p.cv.wait_for(lock,std::chrono::seconds(10),[&]{return p.release;}))p.valid=false;}
+    nested_pure(5);return std::bit_cast<HRESULT>(pure_results[5]);
+}
+std::uint32_t invoke_pure(unsigned index){
+    auto& p=*pure_probe;::SetLastError(0x7100+index);std::uint32_t result=0;
+    switch(index){
+    case 0:result=std::bit_cast<std::uint32_t>(n::reg_open_a_entry(reinterpret_cast<HKEY>(0x101),nullptr,0x1122,0x3344,&p.output_a));break;
+    case 1:result=std::bit_cast<std::uint32_t>(n::reg_open_w_entry(reinterpret_cast<HKEY>(0x102),nullptr,0x5566,0x7788,&p.output_w));break;
+    case 2:result=std::bit_cast<std::uint32_t>(n::process_a_entry(nullptr,p.command_a,&p.process_security,&p.thread_security,7,0x12345678,p.environment_a,p.cwd_a,&p.start_a,&p.info_a));break;
+    case 3:result=std::bit_cast<std::uint32_t>(n::process_w_entry(nullptr,p.command_w,&p.thread_security,&p.process_security,-3,0xfedcba98,p.environment_w,p.cwd_w,&p.start_w,&p.info_w));break;
+    case 4:result=std::bit_cast<std::uint32_t>(n::folder_a_entry(reinterpret_cast<HWND>(0x201),0x4005,reinterpret_cast<HANDLE>(0x301),0xabcdef01,p.path_a));break;
+    case 5:result=std::bit_cast<std::uint32_t>(n::folder_w_entry(reinterpret_cast<HWND>(0x202),-7,reinterpret_cast<HANDLE>(0x302),0x10203040,p.path_w));break;
+    }
+    p.errors[index]=::GetLastError();return result;
+}
+int WSAAPI pure_parent_connect(SOCKET socket,const sockaddr* address,int length){
+    auto& p=*pure_probe;const auto incoming=::GetLastError();p.valid=p.valid&&socket==0x701&&!address&&length==-1&&incoming==0x7010&&p.domain->permits_original_current()&&!p.domain->permits_current()&&n::active_calls()==1;
+    const auto result=invoke_pure(0);p.valid=p.valid&&result==pure_results[0]&&::GetLastError()==0x7200&&p.domain->permits_original_current()&&!p.domain->permits_current()&&n::active_calls()==1;
+    ::SetLastError(0x7a55);return -10035;
+}
+struct PureUnwindErrors final:n::Errors {
+    std::weak_ptr<int> code;
+    [[noreturn]]void lifecycle(n::LifecycleFault)override{terminate_own(230);}
+    [[noreturn]]void callback_exception(n::Callback callback,std::exception_ptr failure)noexcept override{
+        bool expected=false;try{std::rethrow_exception(failure);}catch(const std::runtime_error& value){expected=std::string_view(value.what())=="synthetic pure leaf exception";}catch(...){}
+        auto* p=pure_probe;const bool valid=expected&&p&&p->valid&&callback==n::Callback::folder_w_00fc80&&n::active_calls()==5&&p->domain->active()&&p->domain->permits_original_current()&&!p->domain->permits_current()&&!p->domain->permits_connect_body_current()&&!p->domain->permits_connect_wait_current()&&!::FlsGetValue(p->fls)&&!code.expired();
+        terminate_own(valid?194:230);
+    }
+};
+void pure_forward_routes(bool connect_parent=false,bool throw_leaf=false,std::string_view negative={}){
+    Fixture f;auto code=std::make_shared<int>(1);PureUnwindErrors unwind;unwind.code=code;
+    auto publication=std::make_shared<original_provider::Publication>(code);code.reset();
+    auto domain=std::make_shared<fc::Domain>(f.heap.domain,std::function<bool()>{},std::function<bool()>{},std::function<bool(std::uint16_t)>{},std::function<bool(std::uint16_t)>{},std::function<std::optional<std::uint16_t>()>{},[publication](n::Callback callback){const auto state=publication->snapshot();return (state.phase==original_provider::PublicationPhase::Setup||state.phase==original_provider::PublicationPhase::Ready)&&(state.published_mask&(1u<<host_init_recovered::slot(callback)));});
+    auto buffer=std::make_shared<std::stringbuf>();auto resources=f.resources();resources.stream=shared_log::make_stream(buffer);resources.originals=original_provider::make_publishing_factory(publication);
+    n::Errors& errors=throw_leaf?static_cast<n::Errors&>(unwind):static_cast<n::Errors&>(permanent_errors);
+    auto attachment=fc::make_factory(domain,b15_test::seed(),std::move(resources),errors,{},nc::ClosureProfile::OriginalCrt);auto owner=attachment(f.driver.view());attachment={};owner->publish();owner->host_setup_begin();
+    auto& slots=f.driver.runtime.originals;slots[0]=reinterpret_cast<std::uintptr_t>(&pure_parent_connect);slots[1]=reinterpret_cast<std::uintptr_t>(&pure_open_a);slots[2]=reinterpret_cast<std::uintptr_t>(&pure_open_w);slots[6]=reinterpret_cast<std::uintptr_t>(&pure_process_a);slots[7]=reinterpret_cast<std::uintptr_t>(&pure_process_w);slots[8]=reinterpret_cast<std::uintptr_t>(&pure_folder_a);slots[9]=reinterpret_cast<std::uintptr_t>(&pure_folder_w);
+    for(std::size_t i=0;i<slots.size();++i){const auto callback=static_cast<n::Callback>(i);publication->before_create(callback,0x3000+i,slots[i]);publication->after_create(callback,0x3000+i,slots[i],0);}
+    fc::Admission main(domain);main.enter(n::Callback::reg_close_00f5b0);
+    if(!negative.empty()){
+        in_thread([&]{
+            if(negative=="close")(void)n::reg_close_entry(reinterpret_cast<HKEY>(1));
+            else if(negative=="query-a")(void)n::reg_query_a_entry(reinterpret_cast<HKEY>(1),reinterpret_cast<LPCSTR>(1),nullptr,nullptr,nullptr,nullptr);
+            else if(negative=="query-w")(void)n::reg_query_w_entry(reinterpret_cast<HKEY>(1),reinterpret_cast<LPCWSTR>(1),nullptr,nullptr,nullptr,nullptr);
+            else if(negative=="open-a")(void)n::reg_open_a_entry(reinterpret_cast<HKEY>(1),reinterpret_cast<LPCSTR>(1),0,0,nullptr);
+            else if(negative=="open-w")(void)n::reg_open_w_entry(reinterpret_cast<HKEY>(1),reinterpret_cast<LPCWSTR>(1),0,0,nullptr);
+            else if(negative=="process-a")(void)n::process_a_entry(reinterpret_cast<LPCSTR>(1),nullptr,nullptr,nullptr,0,0,nullptr,nullptr,nullptr,nullptr);
+            else if(negative=="process-w")(void)n::process_w_entry(reinterpret_cast<LPCWSTR>(1),nullptr,nullptr,nullptr,0,0,nullptr,nullptr,nullptr,nullptr);
+            else if(negative=="folder-a")(void)n::folder_a_entry(nullptr,5,nullptr,0,nullptr);
+            else if(negative=="folder-w")(void)n::folder_w_entry(nullptr,5,nullptr,0,nullptr);
+            terminate_own(230);
+        });terminate_own(230);
+    }
+    PureForwardProbe probe;probe.domain=domain;probe.fls=f.heap.domain->native_fls_index();probe.base_calls=connect_parent?1:0;probe.throw_leaf=throw_leaf;pure_probe=&probe;
+    const auto blocks=f.heap.memory.blocks.size();std::uint32_t result=0;DWORD outgoing=0;
+    std::thread callback([&]{if(connect_parent){::SetLastError(0x7010);result=std::bit_cast<std::uint32_t>(n::connect_entry(0x701,nullptr,-1));}else result=invoke_pure(0);outgoing=::GetLastError();});
+    bool entered;{std::unique_lock lock(probe.gate);entered=probe.cv.wait_for(lock,std::chrono::seconds(10),[&]{return probe.leaf_entered;});}
+    owner->host_setup_complete();const bool paused=owner->pause_before_cleanup();main.leave(n::Callback::reg_close_00f5b0);
+    const bool retained=domain->active()&&n::is_bound()&&n::active_calls()==6+probe.base_calls;
+    {std::lock_guard lock(probe.gate);probe.release=true;probe.cv.notify_all();}callback.join();pure_probe=nullptr;
+    require(entered&&!paused&&retained&&probe.valid,"Synthetic nested six-wrapper SDK chain overlaps Full, retains each native lease, and drains through setup/pause");
+    require(result==(connect_parent?std::bit_cast<std::uint32_t>(std::int32_t{-10035}):pure_results[0])&&outgoing==(connect_parent?0x7a55u:0x7200u),"Outer selected wrapper preserves actual SDK return bits and outgoing LastError through nested frame leaves");
+    for(unsigned i=0;i<6;++i)require(probe.calls[i]==1&&probe.errors[i]==0x7200+i,"Each typed SDK fixture observes exactly one argument-preserving call and nested return error");
+    require(probe.output_a==reinterpret_cast<HKEY>(0x8011)&&probe.output_w==reinterpret_cast<HKEY>(0x8022)&&probe.info_a.dwProcessId==0x3456&&probe.info_w.dwProcessId==0x4567&&probe.command_a[0]=='A'&&probe.command_w[0]==L'W'&&probe.path_a[0]=='A'&&probe.path_w[0]==L'W',"Null-key/process and non-5 folder pure routes preserve original output cells and mutable caller buffers");
+    require(!domain->active()&&!n::active_calls()&&buffer->str().empty()&&f.heap.memory.blocks.size()==blocks,"Pure SDK frames add no recovered body effects, allocations or residual admission/native counts");
+    require(owner->pause_before_cleanup()&&owner->close_after_cleanup(),"Pure chain drain permits actual Original provider and Context retirement");owner.reset();
+}
+struct ConcurrentOriginalProbe {
+    std::shared_ptr<fc::Domain> domain;DWORD fls=FLS_OUT_OF_INDEXES;
+    std::mutex gate;std::condition_variable cv;unsigned entered=0;bool release=false;
+    std::array<bool,3> valid{};
+    bool redirects=false;std::uint16_t bound=0;
+};
+struct RedirectLogBuffer final:std::stringbuf {
+    int sync()override{const auto result=std::stringbuf::sync();::SetLastError(0x5a00);return result;}
+};
+ConcurrentOriginalProbe* concurrent_original_probe=nullptr;
+int WSAAPI concurrent_original(SOCKET socket,const sockaddr* address,int length){
+    auto& p=*concurrent_original_probe;const auto incoming=::GetLastError();
+    const auto index=static_cast<unsigned>(socket-0x701);
+    const bool permission=p.domain->permits_original_current()&&!p.domain->permits_current()&&
+        !p.domain->permits_connect_wait_current()&&!p.domain->permits_connect_body_current();
+    const bool no_ptd=!::FlsGetValue(p.fls);
+    std::uint16_t family=0;if(address)std::memcpy(&family,address,2);
+    std::unique_lock lock(p.gate);
+    if(index<3){
+        bool arguments=index==0?(!address&&length==-1):(address&&length==16&&family==99);
+        if(index==2){std::array<unsigned char,4> bytes{};if(address)std::memcpy(bytes.data(),address,4);arguments=address&&length==16&&family==2&&bytes[2]==1&&bytes[3]==0xbb;}
+        if(p.redirects&&index<2){std::array<unsigned char,4> bytes{};if(address)std::memcpy(bytes.data(),address,4);arguments=address&&length==16&&family==2&&bytes[2]==(p.bound>>8)&&bytes[3]==(p.bound&255);}
+        const DWORD expected=p.redirects&&index<2?0x5a00:0x5100+index;
+        p.valid[index]=permission&&no_ptd&&incoming==expected&&arguments;
+    }
+    ++p.entered;p.cv.notify_all();
+    const bool released=p.cv.wait_for(lock,std::chrono::seconds(10),[&]{return p.release;});
+    lock.unlock();::SetLastError(released?0x6100+index:0xdead);return -10035;
+}
+void concurrent_original_connect(bool redirects=false){
+    auto milestones=std::make_shared<startup_publication::Milestones>();
+    Fixture f(milestones.get());auto publication=std::make_shared<original_provider::Publication>(std::make_shared<int>(1));
+    if(redirects)f.driver.configuration.server_port=4660;
+    fc::HookPublicationProof proof=[publication](n::Callback callback){
+        const auto state=publication->snapshot();const auto index=host_init_recovered::slot(callback);
+        return index<host_init_recovered::callback_count&&(state.phase==original_provider::PublicationPhase::Setup||state.phase==original_provider::PublicationPhase::Ready)&&(state.published_mask&(1u<<index));
+    };
+    auto domain=std::make_shared<fc::Domain>(f.heap.domain,std::function<bool()>{},std::function<bool()>{},std::function<bool(std::uint16_t)>{},std::function<bool(std::uint16_t)>{},std::function<std::optional<std::uint16_t>()>{},std::move(proof));
+    std::shared_ptr<std::stringbuf> buffer=std::make_shared<std::stringbuf>();if(redirects)buffer=std::make_shared<RedirectLogBuffer>();
+    auto stream=shared_log::make_stream(buffer);
+    auto resources=f.resources();resources.stream=stream;resources.originals=original_provider::make_publishing_factory(publication);
+    std::uint32_t* counter=nullptr;bootstrap_backend::CallbackAttachmentFactory attachment;
+    if(redirects){
+        resources.callback_scope=[domain]{return domain->permits_current();};resources.original_scope=[domain]{return domain->permits_original_current();};
+        resources.connect_wait_scope=[domain]{return domain->permits_connect_wait_current();};resources.connect_body_scope=[domain]{return domain->permits_connect_body_current();};
+        auto concrete=callback_policy::make_policy_factory(std::move(resources));
+        nc::PolicyFactory observed=[&counter,domain,concrete=std::move(concrete)](nc::PolicyView view){domain->bind_connect_server_port(view.backend.configuration.server_port);counter=&view.callbacks.attempts;return concrete(view);};
+        attachment=nc::make_factory(b15_test::seed(),std::move(observed),permanent_errors,{},std::make_unique<fc::Admission>(domain),nc::ClosureProfile::OriginalCrt);
+    }else attachment=fc::make_factory(domain,b15_test::seed(),std::move(resources),permanent_errors,{},nc::ClosureProfile::OriginalCrt);
+    auto owner=attachment(f.driver.view());attachment={};owner->publish();owner->host_setup_begin();
+    auto& slot=f.driver.runtime.originals[0];publication->before_create(n::Callback::connect_00fd00,0x1000,slot);
+    slot=reinterpret_cast<std::uintptr_t>(&concurrent_original);publication->after_create(n::Callback::connect_00fd00,0x1000,slot,0);publication->before_enable(0x1000);
+    f.driver.runtime.server_ready=0;f.driver.execution.finish_server_startup(f.driver.runtime.server_ready,f.driver.configuration.server_port);
+    fc::Admission main(domain);main.enter(n::Callback::connect_00fd00);
+    const auto blocks=f.heap.memory.blocks.size();const auto port=f.driver.configuration.server_port;
+    ConcurrentOriginalProbe probe;probe.domain=domain;probe.fls=f.heap.domain->native_fls_index();probe.redirects=redirects;probe.bound=port;concurrent_original_probe=&probe;
+    std::array<int,3> results{};std::array<DWORD,3> errors{};std::array<bool,2> tails{true,true};
+    std::thread first([&]{
+        std::array<std::byte,8> address{std::byte{2},std::byte{0},std::byte{0x0c},std::byte{0x90},std::byte{0xa1},std::byte{0xa2},std::byte{0xa3},std::byte{0xa4}};const auto old=address;
+        ::SetLastError(0x5100);results[0]=n::connect_entry(0x701,redirects?reinterpret_cast<const sockaddr*>(address.data()):nullptr,redirects?16:-1);errors[0]=::GetLastError();
+        tails[0]=!redirects||(std::memcmp(address.data(),old.data(),2)==0&&std::memcmp(address.data()+4,old.data()+4,4)==0);
+    });
+    std::thread second([&]{
+        std::array<std::byte,8> address{std::byte{2},std::byte{0},static_cast<std::byte>(port>>8),static_cast<std::byte>(port),std::byte{0xb1},std::byte{0xb2},std::byte{0xb3},std::byte{0xb4}};const auto old=address;
+        std::array<std::byte,2> family{std::byte{99},std::byte{0}};
+        ::SetLastError(0x5101);results[1]=n::connect_entry(0x702,reinterpret_cast<const sockaddr*>(redirects?address.data():family.data()),16);errors[1]=::GetLastError();
+        tails[1]=!redirects||(std::memcmp(address.data(),old.data(),2)==0&&std::memcmp(address.data()+4,old.data()+4,4)==0);
+    });
+    std::thread third([&]{std::array<std::byte,4> address{std::byte{2},std::byte{0},std::byte{1},std::byte{0xbb}};::SetLastError(0x5102);results[2]=n::connect_entry(0x703,reinterpret_cast<const sockaddr*>(address.data()),16);errors[2]=::GetLastError();});
+    bool observed;
+    {std::unique_lock lock(probe.gate);observed=probe.cv.wait_for(lock,std::chrono::seconds(10),[&]{return probe.entered==3;});}
+    owner->host_setup_complete();const bool complete=domain->ready();
+    const bool paused=owner->pause_before_cleanup();main.leave(n::Callback::connect_00fd00);
+    const bool retained=domain->active();
+    {std::lock_guard lock(probe.gate);probe.release=true;probe.cv.notify_all();}
+    first.join();second.join();third.join();concurrent_original_probe=nullptr;
+    const bool clean=owner->pause_before_cleanup()&&owner->close_after_cleanup();const auto attempts=counter?*counter:0;owner.reset();
+    require(observed&&complete&&!paused&&retained&&clean&&milestones->bits()==1,"Three selected native connects overlap an admitted body using the live server cell and remain retained across Original setup completion/pause");
+    require(probe.valid[0]&&probe.valid[1]&&probe.valid[2]&&results[0]==-10035&&results[1]==-10035&&results[2]==-10035&&errors[0]==0x6100&&errors[1]==0x6101&&errors[2]==0x6102,"Concurrent selected routes reach SDK with exact arguments, original-only permission and per-thread LastError without PTD creation");
+    require(f.heap.memory.blocks.size()==blocks&&f.driver.configuration.server_port==port&&!domain->active()&&!n::active_calls(),"Connect lanes add no private source allocations, shared port mutation or residual callback bindings");
+    if(redirects){
+        const auto text=buffer->str();auto occurrences=[&](std::string_view token){unsigned count=0;for(auto pos=text.find(token);pos!=std::string::npos;pos=text.find(token,pos+token.size()))++count;return count;};
+        require(tails[0]&&tails[1]&&(attempts==1||attempts==2),"Actual concurrent redirect helpers preserve caller tails and native unlocked counter allows one or two retained increments");
+        require(occurrences("game connected on port ")==2&&occurrences("; redirecting to ")==2&&std::count(text.begin(),text.end(),'\n')==2,"Both actual redirect bodies flush through the same managed stream while allowing per-insertion interleaving");
+    }else require(buffer->str().empty(),"Untouched/web passthrough lanes produce no redirect log");
+}
+struct StagedProbe {
+    std::shared_ptr<fc::Domain> domain;std::mutex gate;std::condition_variable cv;
+    bool block=false,entered=false,release=false;unsigned calls=0;SOCKET socket=0;const sockaddr* pointer=nullptr;int length=0;DWORD incoming=0;
+    std::optional<DWORD> absent_fls;
+};
+StagedProbe* staged_probe=nullptr;
+int WSAAPI staged_original(SOCKET socket,const sockaddr* address,int length){
+    auto& p=*staged_probe;p.incoming=::GetLastError();
+    require(!p.domain->ready()&&!p.domain->permits_current()&&p.domain->permits_original_current(),"native staged original runs under restricted original-only permission");
+    if(p.absent_fls)require(!::FlsGetValue(*p.absent_fls),"Concurrent original wait reaches SDK without constructing a private PTD");
+    ++p.calls;p.socket=socket;p.pointer=address;p.length=length;
+    {std::unique_lock lock(p.gate);if(p.block){p.entered=true;p.cv.notify_all();p.cv.wait(lock,[&]{return p.release;});}}
+    ::SetLastError(0x7a55);return -10035;
+}
+void original_cold_web_connect(){
+    auto milestones=std::make_shared<startup_publication::Milestones>();Fixture f(milestones.get());
+    f.driver.runtime.server_ready=f.driver.runtime.online_ready=f.driver.runtime.libraries_ready=0;
+    f.driver.configuration.server_port=0;
+    auto publication=std::make_shared<original_provider::Publication>(std::make_shared<int>(1));
+    auto domain=std::make_shared<fc::Domain>(f.heap.domain,std::function<bool()>{},std::function<bool()>{},std::function<bool(std::uint16_t)>{},std::function<bool(std::uint16_t)>{},std::function<std::optional<std::uint16_t>()>{},[publication](n::Callback callback){const auto state=publication->snapshot();return callback==n::Callback::connect_00fd00&&state.phase==original_provider::PublicationPhase::Setup&&(state.published_mask&1u);});
+    StagedProbe probe;probe.domain=domain;probe.absent_fls=f.heap.domain->native_fls_index();staged_probe=&probe;
+    auto buffer=std::make_shared<std::stringbuf>();auto resources=f.resources();resources.stream=shared_log::make_stream(buffer);resources.originals=original_provider::make_publishing_factory(publication);
+    auto attachment=fc::make_factory(domain,b15_test::seed(),std::move(resources),permanent_errors,{},nc::ClosureProfile::OriginalCrt);
+    auto owner=attachment(f.driver.view());attachment={};owner->publish();owner->host_setup_begin();
+    auto& slot=f.driver.runtime.originals[0];publication->before_create(n::Callback::connect_00fd00,0x1000,slot);slot=reinterpret_cast<std::uintptr_t>(&staged_original);publication->after_create(n::Callback::connect_00fd00,0x1000,slot,0);
+    const auto blocks=f.heap.memory.blocks.size();
+    in_thread([&]{for(std::uint16_t requested:{80,443}){
+        sockaddr_in6 address{};address.sin6_family=AF_INET6;address.sin6_port=htons(requested);const auto old=address;
+        ::SetLastError(0x4400+requested);
+        require(n::connect_entry(0x130,reinterpret_cast<const sockaddr*>(&address),28)==-10035&&::GetLastError()==0x7a55&&probe.incoming==0x4400+requested,"Actual cold HTTP/HTTPS entry forwards SDK result and incoming/outgoing errors before Server completion");
+        require(probe.pointer==reinterpret_cast<const sockaddr*>(&address)&&probe.length==28&&std::memcmp(&address,&old,sizeof address)==0&&!::FlsGetValue(f.heap.domain->native_fls_index()),"Cold live-zero comparison leaves caller storage untouched without a private PTD");
+    }});
+    require(probe.calls==2&&!f.driver.platform.sleeps&&milestones->bits()==0&&buffer->str().empty()&&f.heap.memory.blocks.size()==blocks&&!domain->active(),"Actual cold web calls need neither a Server publication nor native wait, logging or allocation");
+    owner->host_setup_complete();require(owner->pause_before_cleanup()&&owner->close_after_cleanup(),"Cold web entries drain through ordinary Original closure");
+    owner.reset();staged_probe=nullptr;
+}
+struct LivePortLogBuffer final:std::stringbuf {
+    std::uint16_t& port;std::shared_ptr<fc::Domain> domain;
+    bool log_changed=false,final_changed=false,body_only=true;
+    LivePortLogBuffer(std::uint16_t& cell,std::shared_ptr<fc::Domain> value):port(cell),domain(std::move(value)){}
+    void observe_body(){body_only=body_only&&domain->permits_connect_body_current()&&!domain->permits_current()&&!domain->permits_original_current()&&!domain->permits_connect_wait_current();}
+    std::streamsize xsputn(const char* data,std::streamsize size)override{
+        const auto written=std::stringbuf::xsputn(data,size);
+        if(std::string_view(data,static_cast<std::size_t>(size))=="; redirecting to "){
+            observe_body();network_hook_recovered::store_server_port_0a3c90(port,4660);log_changed=true;
+        }
+        return written;
+    }
+    int sync()override{
+        const auto result=std::stringbuf::sync();observe_body();network_hook_recovered::store_server_port_0a3c90(port,6001);final_changed=true;::SetLastError(0x6b00);return result;
+    }
+};
+void original_live_port_rereads(){
+    auto milestones=std::make_shared<startup_publication::Milestones>();Fixture f(milestones.get());
+    f.driver.runtime.server_ready=f.driver.runtime.online_ready=f.driver.runtime.libraries_ready=0;
+    auto& port=f.driver.configuration.server_port;port=80;unsigned receipt_checks=0;bool completion_changed=false;
+    auto publication=std::make_shared<original_provider::Publication>(std::make_shared<int>(1));
+    auto domain=std::make_shared<fc::Domain>(f.heap.domain,std::function<bool()>{},std::function<bool()>{},std::function<bool(std::uint16_t)>{},std::function<bool(std::uint16_t)>{},std::function<std::optional<std::uint16_t>()>{},[publication,&port,&receipt_checks,&completion_changed](n::Callback callback){
+        const auto state=publication->snapshot();const bool published=callback==n::Callback::connect_00fd00&&state.phase==original_provider::PublicationPhase::Setup&&(state.published_mask&1u);
+        if(published&&++receipt_checks==2){network_hook_recovered::store_server_port_0a3c90(port,9000);completion_changed=true;}
+        return published;
+    });
+    StagedProbe probe;probe.domain=domain;probe.absent_fls=f.heap.domain->native_fls_index();staged_probe=&probe;
+    auto buffer=std::make_shared<LivePortLogBuffer>(port,domain);auto resources=f.resources();resources.stream=shared_log::make_stream(buffer);resources.originals=original_provider::make_publishing_factory(publication);
+    auto attachment=fc::make_factory(domain,b15_test::seed(),std::move(resources),permanent_errors,{},nc::ClosureProfile::OriginalCrt);
+    auto owner=attachment(f.driver.view());attachment={};owner->publish();owner->host_setup_begin();
+    auto& slot=f.driver.runtime.originals[0];publication->before_create(n::Callback::connect_00fd00,0x1000,slot);slot=reinterpret_cast<std::uintptr_t>(&staged_original);publication->after_create(n::Callback::connect_00fd00,0x1000,slot,0);
+    sockaddr_in6 address{};address.sin6_family=AF_INET6;address.sin6_port=htons(80);const auto old=address;
+    in_thread([&]{::SetLastError(0x6611);require(n::connect_entry(0x131,reinterpret_cast<const sockaddr*>(&address),28)==-10035&&::GetLastError()==0x7a55,"Decided live web redirect survives scalar changes and returns actual SDK result/error");});
+    require(receipt_checks==2&&completion_changed&&port==9000&&buffer->log_changed&&buffer->final_changed&&buffer->body_only,"Managed log and completion receipt checkpoints mutate the exact live scalar under narrow body/receipt phases");
+    require(buffer->str()=="game connected on port 80; redirecting to 4660\n"&&ntohs(address.sin6_port)==6001,"Route compared80, log reread4660, and final caller write reread6001 independently");
+    require(probe.calls==1&&probe.incoming==0x6b00&&probe.pointer==reinterpret_cast<const sockaddr*>(&address)&&probe.length==28&&std::memcmp(&address,&old,2)==0&&std::memcmp(reinterpret_cast<const std::byte*>(&address)+4,reinterpret_cast<const std::byte*>(&old)+4,sizeof address-4)==0,"Completion scalar9000 neither cancels route nor repeats caller write; SDK retains exact pointer/tail and real flush LastError");
+    require(!f.driver.platform.sleeps&&milestones->bits()==0&&!domain->active(),"Live matching web redirect neither waits nor requires startup milestones");
+    owner->host_setup_complete();require(owner->pause_before_cleanup()&&owner->close_after_cleanup(),"Live body drains before Original provider/Context retirement");
+    owner.reset();staged_probe=nullptr;
+}
+void staged_original_connect(bool reject_family=false,bool web_mode=false,std::uint16_t bound_port=4660){
+    auto milestones=web_mode?std::make_shared<startup_publication::Milestones>():nullptr;
+    Fixture f(milestones.get());auto publication=std::make_shared<original_provider::Publication>(std::make_shared<int>(1));
+    std::function<bool(std::uint16_t)> web;
+    if(milestones)web=[milestones](std::uint16_t requested){const auto port=milestones->server_port();return port&&*port!=requested;};
+    auto domain=std::make_shared<fc::Domain>(f.heap.domain,[]{return false;},[publication]{
+        const auto state=publication->snapshot();return (state.phase==original_provider::PublicationPhase::Setup||state.phase==original_provider::PublicationPhase::Ready)&&(state.published_mask&1u);
+    },std::move(web));
+    StagedProbe probe;probe.domain=domain;staged_probe=&probe;
+    auto resources=f.resources();resources.originals=original_provider::make_publishing_factory(publication);
+    auto attachment=fc::make_factory(domain,b15_test::seed(),std::move(resources),permanent_errors,[]{return true;});
+    auto owner=attachment(f.driver.view());attachment={};owner->publish();owner->host_setup_begin();
+    publication->before_create(n::Callback::connect_00fd00,0x1000,f.driver.runtime.originals[0]);
+    f.driver.runtime.originals[0]=reinterpret_cast<std::uintptr_t>(&staged_original);
+    publication->after_create(n::Callback::connect_00fd00,0x1000,f.driver.runtime.originals[0],0);publication->before_enable(0x1000);
+    if(web_mode){
+        fc::Admission probe_admission(domain);probe_admission.enter(n::Callback::connect_00fd00);
+        require(!probe_admission.connect_web_passthrough(80),"preseeded driver ready bytes do not grant web passthrough without actual payload/event");probe_admission.leave(n::Callback::connect_00fd00);
+        f.driver.configuration.server_port=bound_port;f.driver.execution.finish_server_startup(f.driver.runtime.server_ready,bound_port);
+        require(milestones->bits()==1&&milestones->server_port()==bound_port&&!domain->ready(),"actual same-Execution server finish publishes port without Online/Libraries/global readiness");
+    }
+    if(reject_family){
+        in_thread([&]{sockaddr_in address{};address.sin_family=AF_INET;address.sin_port=htons(web_mode?bound_port:80);
+            (void)n::connect_entry(1,reinterpret_cast<const sockaddr*>(&address),16);});
+        terminate_own(230);
+    }
+    const auto port=f.driver.configuration.server_port;const auto text=f.output->str();
+    in_thread([&]{
+        ::SetLastError(0x4422);require(n::connect_entry(0x123,nullptr,-1)==-10035&&::GetLastError()==0x7a55,
+            "native unknown-length passthrough preserves SDK result/outgoing error before host setup completion");
+        require(probe.socket==0x123&&!probe.pointer&&probe.length==-1&&probe.incoming==0x4422&&!::FlsGetValue(f.heap.domain->native_fls_index()),"native passthrough preserves incoming error/null pointer/length and clears temporary PTD");
+        std::array<std::byte,2> family{std::byte{99},std::byte{0}};
+        const auto* pointer=reinterpret_cast<const sockaddr*>(family.data());
+        require(n::connect_entry(0x124,pointer,16)==-10035&&probe.pointer==pointer&&probe.length==16&&family[0]==std::byte{99},
+            "native mismatched family needs only two readable bytes and forwards untouched pointer");
+    });
+    if(web_mode)in_thread([&]{
+        sockaddr_in v4{};v4.sin_family=AF_INET;v4.sin_port=htons(80);const auto old4=v4;
+        require(n::connect_entry(0x126,reinterpret_cast<const sockaddr*>(&v4),16)==-10035&&probe.pointer==reinterpret_cast<const sockaddr*>(&v4)&&std::memcmp(&v4,&old4,sizeof v4)==0,"warming HTTP original keeps full caller sockaddr untouched");
+        sockaddr_in6 v6{};v6.sin6_family=AF_INET6;v6.sin6_port=htons(443);const auto old6=v6;
+        require(n::connect_entry(0x127,reinterpret_cast<const sockaddr*>(&v6),28)==-10035&&probe.length==28&&std::memcmp(&v6,&old6,sizeof v6)==0,"warming HTTPS IPv6 uses published different server port and no redirect");
+    });
+    require(probe.calls==(web_mode?4u:2u)&&f.output->str()==text&&f.driver.configuration.server_port==port&&!domain->ready(),"early original calls do not log/change server port/promote readiness");
+    {std::lock_guard lock(probe.gate);probe.block=true;}
+    std::exception_ptr error;
+    std::thread callback([&]{try{require(n::connect_entry(0x125,nullptr,-1)==-10035,"admitted original finishes across source pause");}catch(...){error=std::current_exception();}});
+    {std::unique_lock lock(probe.gate);probe.cv.wait(lock,[&]{return probe.entered;});}
+    owner->host_setup_complete();
+    const bool retained=!owner->pause_before_cleanup()&&n::is_bound()&&domain->active()&&!domain->ready();
+    {std::lock_guard lock(probe.gate);probe.release=true;}probe.cv.notify_all();callback.join();if(error)std::rethrow_exception(error);
+    require(retained&&owner->pause_before_cleanup()&&owner->close_after_cleanup()&&!n::is_bound(),"setup completion never waits on early original; stop retains Context until callback leaves");
+    owner.reset();probe.domain.reset();domain.reset();publication.reset();staged_probe=nullptr;
+}
+void staged_wait_connect(bool redirect=false,bool original_profile=false,bool cold=false){
+    auto milestones=std::make_shared<startup_publication::Milestones>();Fixture f(milestones.get());
+    // Controlled seed, before publish: actual Execution finish calls below are
+    // the only way this scenario completes Online/Libraries during the wait.
+    f.driver.runtime.online_ready=f.driver.runtime.libraries_ready=0;
+    if(cold)f.driver.runtime.server_ready=0;
+    auto publication=std::make_shared<original_provider::Publication>(std::make_shared<int>(1));
+    auto published=[publication]{
+        const auto state=publication->snapshot();return (state.phase==original_provider::PublicationPhase::Setup||state.phase==original_provider::PublicationPhase::Ready)&&(state.published_mask&1u);
+    };
+    std::shared_ptr<fc::Domain> domain;
+    if(original_profile)domain=std::make_shared<fc::Domain>(f.heap.domain,std::function<bool()>{},std::function<bool()>{},std::function<bool(std::uint16_t)>{},std::function<bool(std::uint16_t)>{},std::function<std::optional<std::uint16_t>()>{},[published](n::Callback c){return c==n::Callback::connect_00fd00&&published();});
+    else domain=std::make_shared<fc::Domain>(f.heap.domain,[]{return false;},published,std::function<bool(std::uint16_t)>{},[milestones](std::uint16_t requested){const auto port=milestones->server_port();return port&&*port!=requested;});
+    StagedProbe probe;probe.domain=domain;staged_probe=&probe;auto resources=f.resources();resources.originals=original_provider::make_publishing_factory(publication);
+    auto original_log=std::make_shared<std::stringbuf>();
+    if(original_profile){probe.absent_fls=f.heap.domain->native_fls_index();resources.stream=shared_log::make_stream(original_log);}
+    nc::Quiescence external;if(!original_profile)external=[]{return true;};
+    auto attachment=fc::make_factory(domain,b15_test::seed(),std::move(resources),permanent_errors,std::move(external),original_profile?nc::ClosureProfile::OriginalCrt:nc::ClosureProfile::Cooperative);
+    auto owner=attachment(f.driver.view());attachment={};owner->publish();owner->host_setup_begin();
+    publication->before_create(n::Callback::connect_00fd00,0x1000,f.driver.runtime.originals[0]);
+    f.driver.runtime.originals[0]=reinterpret_cast<std::uintptr_t>(&staged_original);publication->after_create(n::Callback::connect_00fd00,0x1000,f.driver.runtime.originals[0],0);
+    if(!original_profile)in_thread([&]{fc::Admission admission(domain);admission.enter(n::Callback::connect_00fd00);
+        require(!admission.connect_wait_begin(4000),"no wait starts from seeded configuration without actual Server payload/event");admission.leave(n::Callback::connect_00fd00);});
+    f.driver.configuration.server_port=4660;if(!cold)f.driver.execution.finish_server_startup(f.driver.runtime.server_ready,4660);
+    fc::Admission held(domain);if(original_profile)held.enter(n::Callback::connect_00fd00);
+    if(redirect&&!original_profile){
+        f.driver.platform.sleep_hook=[]{terminate_own(230);};
+        in_thread([]{sockaddr_in address{};address.sin_family=AF_INET;address.sin_port=htons(3216);(void)n::connect_entry(1,reinterpret_cast<const sockaddr*>(&address),16);});terminate_own(230);
+    }
+    std::mutex gate;std::condition_variable cv;bool sleeping=false,resume=false,narrow=false;
+    f.driver.platform.sleep_hook=[&]{
+        narrow=domain->permits_connect_wait_current()&&!domain->permits_original_current()&&!domain->permits_current();
+        std::unique_lock lock(gate);sleeping=true;cv.notify_all();
+        if(!cv.wait_for(lock,std::chrono::seconds(2),[&]{return resume;}))throw std::runtime_error("controller failed to complete controlled wait");
+    };
+    sockaddr_in6 address{};address.sin6_family=AF_INET6;address.sin6_port=htons(redirect?3216:4000);const auto old=address;
+    int result=0;DWORD outgoing=0;std::exception_ptr error;
+    std::thread callback([&]{try{result=n::connect_entry(0x128,reinterpret_cast<const sockaddr*>(&address),28);outgoing=::GetLastError();}catch(...){error=std::current_exception();}});
+    bool entered;
+    {std::unique_lock lock(gate);entered=cv.wait_for(lock,std::chrono::seconds(2),[&]{return sleeping;});}
+    if(!entered){
+        {std::lock_guard lock(gate);resume=true;}cv.notify_all();callback.join();throw std::runtime_error("native callback did not enter recovered startup wait");
+    }
+    owner->host_setup_complete();
+    const bool retained=!owner->pause_before_cleanup()&&n::is_bound()&&domain->active()&&!domain->ready()&&n::active_calls()==1&&probe.calls==0&&publication->snapshot().phase==original_provider::PublicationPhase::Ready;
+    if(original_profile)held.leave(n::Callback::connect_00fd00);
+    if(cold)f.driver.execution.finish_server_startup(f.driver.runtime.server_ready,4660);
+    f.driver.execution.finish_flag_036820(f.driver.runtime.online_ready);
+    f.driver.execution.finish_flag_036820(f.driver.runtime.libraries_ready);
+    {std::lock_guard lock(gate);resume=true;}cv.notify_all();callback.join();if(error)std::rethrow_exception(error);
+    f.driver.platform.sleep_hook={};
+    require(retained&&narrow&&f.driver.platform.sleeps>0&&milestones->bits()==7,"controller completion/stop retains the actual waiting route while real Execution flag finish progresses outside sleep locks");
+    const bool redirected=original_profile&&redirect;
+    const bool preserved=redirected?(ntohs(address.sin6_port)==4660&&std::memcmp(&address,&old,2)==0&&std::memcmp(reinterpret_cast<const std::byte*>(&address)+4,reinterpret_cast<const std::byte*>(&old)+4,sizeof address-4)==0):std::memcmp(&address,&old,sizeof address)==0;
+    const auto log=original_profile?original_log->str():f.output->str();
+    require(result==-10035&&outgoing==0x7a55&&probe.calls==1&&probe.socket==0x128&&probe.pointer==reinterpret_cast<const sockaddr*>(&address)&&probe.length==28&&preserved&&log==(redirected?"game connected on port 3216; redirecting to 4660\n":""),"Actual wait returns into the selected redirect/original route once, preserving exact SDK arguments, caller tail and effect prefix");
+    require(owner->pause_before_cleanup()&&owner->close_after_cleanup()&&!n::is_bound(),"actual waiter return drains native lease before selected provider stop/Context close");
+    owner.reset();probe.domain.reset();domain.reset();publication.reset();staged_probe=nullptr;
+}
+std::shared_ptr<std::stringbuf> terminal_redirect_log;
+b12_test::Ui* terminal_redirect_ui=nullptr;
+const sockaddr_in6* terminal_redirect_address=nullptr;
+unsigned terminal_redirect_expected=191;
+[[noreturn]]void terminal_redirect_exit(std::uint32_t code){
+    const bool valid=code==0xffffffffu&&staged_probe&&staged_probe->calls==0&&staged_probe->domain->permits_connect_body_current()&&
+        terminal_redirect_log&&terminal_redirect_log->str()=="game connected on port 3216; redirecting to 4660\n"&&
+        terminal_redirect_ui&&terminal_redirect_ui->messages.size()==1&&terminal_redirect_ui->messages[0].title==L"error"&&terminal_redirect_ui->messages[0].flags==0x10&&
+        terminal_redirect_address&&ntohs(terminal_redirect_address->sin6_port)==3216;
+    terminate_own(valid?terminal_redirect_expected:230);
+}
+void staged_redirect_connect(std::uint16_t requested,std::uint16_t bound,bool terminal=false,bool original_profile=false){
+    auto milestones=std::make_shared<startup_publication::Milestones>();Fixture f(milestones.get());
+    auto publication=std::make_shared<original_provider::Publication>(std::make_shared<int>(1));
+    auto published=[publication]{
+        const auto state=publication->snapshot();return (state.phase==original_provider::PublicationPhase::Setup||state.phase==original_provider::PublicationPhase::Ready)&&(state.published_mask&1u);
+    };
+    std::shared_ptr<fc::Domain> domain;
+    if(original_profile)domain=std::make_shared<fc::Domain>(f.heap.domain,std::function<bool()>{},std::function<bool()>{},std::function<bool(std::uint16_t)>{},std::function<bool(std::uint16_t)>{},std::function<std::optional<std::uint16_t>()>{},[published](n::Callback c){return c==n::Callback::connect_00fd00&&published();});
+    else domain=std::make_shared<fc::Domain>(f.heap.domain,[]{return false;},published,std::function<bool(std::uint16_t)>{},std::function<bool(std::uint16_t)>{},[milestones]{return milestones->server_port();});
+    StagedProbe probe;probe.domain=domain;staged_probe=&probe;auto buffer=std::make_shared<std::stringbuf>();
+    auto resources=f.resources();resources.stream=shared_log::make_stream(buffer);resources.originals=original_provider::make_publishing_factory(publication);
+    auto seed=b15_test::seed();seed.attempts=terminal?14:0;if(terminal)resources.exit=terminal_redirect_exit;
+    nc::Quiescence external;if(!original_profile)external=[]{return true;};
+    auto attachment=fc::make_factory(domain,std::move(seed),std::move(resources),permanent_errors,std::move(external),original_profile?nc::ClosureProfile::OriginalCrt:nc::ClosureProfile::Cooperative);
+    auto owner=attachment(f.driver.view());attachment={};owner->publish();owner->host_setup_begin();
+    publication->before_create(n::Callback::connect_00fd00,0x1000,f.driver.runtime.originals[0]);
+    f.driver.runtime.originals[0]=reinterpret_cast<std::uintptr_t>(&staged_original);publication->after_create(n::Callback::connect_00fd00,0x1000,f.driver.runtime.originals[0],0);
+    f.driver.configuration.server_port=bound;f.driver.execution.finish_server_startup(f.driver.runtime.server_ready,bound);
+    f.driver.execution.finish_flag_036820(f.driver.runtime.online_ready);f.driver.execution.finish_flag_036820(f.driver.runtime.libraries_ready);
+    sockaddr_in6 address{};address.sin6_family=AF_INET6;address.sin6_port=htons(requested);const auto old=address;
+    if(terminal){terminal_redirect_log=buffer;terminal_redirect_ui=&f.ui;terminal_redirect_address=&address;}
+    in_thread([&]{
+        b12_test::ui=&f.ui;
+        require(n::connect_entry(0x129,reinterpret_cast<const sockaddr*>(&address),28)==-10035&&::GetLastError()==0x7a55,
+            "warming redirect invokes own original once with SDK result/error preserved");
+        b12_test::ui=nullptr;
+        require(ntohs(address.sin6_port)==bound&&std::memcmp(reinterpret_cast<const std::byte*>(&address)+4,reinterpret_cast<const std::byte*>(&old)+4,sizeof address-4)==0,
+            "warming redirect writes only network-order port and preserves caller IPv6 tail");
+        require(!::FlsGetValue(f.heap.domain->native_fls_index()),"redirect native return releases temporary same-domain PTD");
+    });
+    require(probe.calls==1&&probe.pointer==reinterpret_cast<const sockaddr*>(&address)&&probe.length==28&&buffer->str()=="game connected on port "+std::to_string(requested)+"; redirecting to "+std::to_string(bound)+"\n"&&!domain->ready()&&milestones->bits()==7,
+        "isolated redirect log/body/original finish without general callback activation");
+    owner->host_setup_complete();require(owner->pause_before_cleanup()&&owner->close_after_cleanup()&&!n::is_bound(),"completed redirect drains before provider/Context retirement");
+    owner.reset();probe.domain.reset();domain.reset();publication.reset();staged_probe=nullptr;
+}
+struct RevokingBodyBuffer final:std::stringbuf {
+    bool& grant;explicit RevokingBodyBuffer(bool& value):grant(value){}
+    int sync()override{grant=false;return 0;}
+};
+struct BodyPostcheckErrors final:n::Errors {
+    bool* grant=nullptr;std::uint32_t* attempts=nullptr;const sockaddr_in6* address=nullptr;StagedProbe* probe=nullptr;
+    std::shared_ptr<RevokingBodyBuffer> buffer;std::shared_ptr<fc::Domain> domain;std::weak_ptr<int> code;DWORD fls=FLS_OUT_OF_INDEXES;
+    [[noreturn]]void lifecycle(n::LifecycleFault)override{terminate_own(230);}
+    [[noreturn]]void callback_exception(n::Callback callback,std::exception_ptr failure)noexcept override{
+        bool rejected=false;try{std::rethrow_exception(failure);}catch(const std::logic_error&){rejected=true;}catch(...){}
+        const bool valid=rejected&&callback==n::Callback::connect_00fd00&&grant&&!*grant&&attempts&&*attempts==0&&address&&ntohs(address->sin6_port)==3216&&
+            probe&&probe->calls==0&&buffer&&buffer->str()=="game connected on port 3216; redirecting to 4660\n"&&domain&&!domain->active()&&n::active_calls()==0&&!::FlsGetValue(fls)&&!code.expired();
+        terminate_own(valid?192:230);
+    }
+};
+[[noreturn]]void body_postcheck_prefix(){
+    auto milestones=std::make_shared<startup_publication::Milestones>();Fixture f(milestones.get());bool grant=true;
+    auto code=std::make_shared<int>(1);auto publication=std::make_shared<original_provider::Publication>(code);
+    auto domain=std::make_shared<fc::Domain>(f.heap.domain,[]{return false;},[publication]{const auto state=publication->snapshot();return state.phase==original_provider::PublicationPhase::Setup&&(state.published_mask&1u);},
+        std::function<bool(std::uint16_t)>{},std::function<bool(std::uint16_t)>{},[milestones]{return milestones->server_port();});
+    StagedProbe probe;probe.domain=domain;staged_probe=&probe;sockaddr_in6 address{};address.sin6_family=AF_INET6;address.sin6_port=htons(3216);
+    auto buffer=std::make_shared<RevokingBodyBuffer>(grant);auto resources=f.resources();resources.stream=shared_log::make_stream(buffer);
+    resources.originals=original_provider::make_publishing_factory(publication);resources.callback_scope=[domain]{return domain->permits_current();};
+    resources.original_scope=[domain]{return domain->permits_original_current();};resources.connect_wait_scope=[domain]{return domain->permits_connect_wait_current();};
+    // Explicit grant revocation keeps actual Domain/FLS healthy, so normal
+    // native exception retirement can expose the exact counter/store prefix.
+    resources.connect_body_scope=[domain,&grant]{return domain->permits_connect_body_current()&&grant;};
+    BodyPostcheckErrors errors;errors.grant=&grant;errors.address=&address;errors.probe=&probe;errors.buffer=buffer;errors.domain=domain;errors.code=code;errors.fls=f.heap.domain->native_fls_index();code.reset();
+    auto concrete=callback_policy::make_policy_factory(std::move(resources));
+    nc::PolicyFactory observed=[&errors,concrete=std::move(concrete)](nc::PolicyView view){errors.attempts=&view.callbacks.attempts;return concrete(view);};
+    nc::Owner owner(f.driver.view(),b15_test::seed(),std::move(observed),errors,[]{return true;},std::make_unique<fc::Admission>(domain));owner.publish();owner.host_setup_begin();
+    publication->before_create(n::Callback::connect_00fd00,0x1000,f.driver.runtime.originals[0]);f.driver.runtime.originals[0]=reinterpret_cast<std::uintptr_t>(&staged_original);
+    publication->after_create(n::Callback::connect_00fd00,0x1000,f.driver.runtime.originals[0],0);
+    f.driver.configuration.server_port=4660;f.driver.execution.finish_server_startup(f.driver.runtime.server_ready,4660);
+    f.driver.execution.finish_flag_036820(f.driver.runtime.online_ready);f.driver.execution.finish_flag_036820(f.driver.runtime.libraries_ready);
+    in_thread([&]{(void)n::connect_entry(1,reinterpret_cast<const sockaddr*>(&address),28);terminate_own(230);});terminate_own(230);
+}
 struct Engine final:recovered_hooks::Api {
     b14_test::Engine calls;n::Resolver resolver;std::map<std::uintptr_t,std::size_t> slots;
     bool foreign_enable=false,reentry_original=false;unsigned during_enable=0;
@@ -121,6 +763,17 @@ void timeout_and_registration(){
 }
 int child(std::string_view mode){
     ::SetErrorMode(SEM_FAILCRITICALERRORS|SEM_NOGPFAULTERRORBOX);std::signal(SIGABRT,expected_abort);
+    if(mode=="--pure-forward-throw"){pure_forward_routes(false,true);return 230;}
+    if(mode.starts_with("--pure-negative-")){expected_code=195;expected_fault=fc::Fault::Overlap;pure_forward_routes(false,false,mode.substr(std::string_view("--pure-negative-").size()));return 230;}
+    if(mode=="--staged-matched"){expected_code=184;expected_fault=fc::Fault::Warming;staged_original_connect(true);return 230;}
+    if(mode=="--wait-redirect"){expected_code=187;expected_fault=fc::Fault::Warming;staged_wait_connect(true);return 230;}
+    if(mode=="--redirect-terminal"){staged_redirect_connect(3216,4660,true);return 230;}
+    if(mode=="--original-redirect-terminal"){terminal_redirect_expected=193;staged_redirect_connect(3216,4660,true,true);return 230;}
+    if(mode=="--body-postcheck-prefix")body_postcheck_prefix();
+    if(mode=="--web-redirect80"||mode=="--web-redirect443"){
+        const bool http=mode=="--web-redirect80";expected_code=http?185:186;expected_fault=fc::Fault::Warming;
+        staged_original_connect(true,true,http?80:443);return 230;
+    }
     Graph g(false,permanent_errors);
     if(mode=="--startup"){expected_code=160;expected_fault=fc::Fault::Warming;g.engine->foreign_enable=true;g.start();}
     else if(mode=="--overlap"){
@@ -138,7 +791,17 @@ int child(std::string_view mode){
     return 230;
 }
 }
-int main(int argc,char** argv){if(argc==2)return child(argv[1]);try{sequential_foreign();close_during_original();timeout_and_registration();
+int main(int argc,char** argv){if(argc==2)return child(argv[1]);try{registry_matched_sdk_paths();registry_sdk_nesting();pure_forward_routes();pure_forward_routes(true);concurrent_original_connect();concurrent_original_connect(true);original_cold_web_connect();original_live_port_rereads();sequential_foreign();close_during_original();timeout_and_registration();staged_original_connect();staged_original_connect(false,true);staged_wait_connect();staged_wait_connect(false,true);staged_wait_connect(false,true,true);staged_wait_connect(true,true,true);
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--pure-forward-throw",static_cast<const char*>(nullptr))==194,"Synthetic nested SDK exception retires its leaf frame/lease and restores the exact parent original scope before terminal error policy");
+    for(const auto* mode:{"--pure-negative-close","--pure-negative-query-a","--pure-negative-query-w","--pure-negative-open-a","--pure-negative-open-w","--pure-negative-process-a","--pure-negative-process-w","--pure-negative-folder-a","--pure-negative-folder-w"})require(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==195,"Excluded argument paths still reject overlap through ordinary exclusive admission before touching caller pointees");
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--body-postcheck-prefix",static_cast<const char*>(nullptr))==192,"own native child expects revoked final-flush permission before counter/port/original, with PTD/lease retired and code retained");
+    for(std::uint16_t requested:{3216,4660,80,443})staged_redirect_connect(requested,requested==3216?4660:requested);
+    for(std::uint16_t requested:{3216,4660,80,443})staged_redirect_connect(requested,requested==3216?4660:requested,false,true);
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--redirect-terminal",static_cast<const char*>(nullptr))==191,"own terminal15 observer expects dialog/exit before port write or original call");
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--original-redirect-terminal",static_cast<const char*>(nullptr))==193,"Original terminal15 source observer also requires dialog/exit before caller port write and SDK dispatch");
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--wait-redirect",static_cast<const char*>(nullptr))==187,"own child expects redirect3216 to remain excluded from wait-only passthrough");
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--staged-matched",static_cast<const char*>(nullptr))==184,"own child expects recognized HTTP family to remain warming before shared-state body");
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--web-redirect80",static_cast<const char*>(nullptr))==185&&_spawnl(_P_WAIT,argv[0],argv[0],"--web-redirect443",static_cast<const char*>(nullptr))==186,"own children expect matching bound HTTP/HTTPS port to keep redirect body warming");
     int code=160;for(const auto* mode:{"--startup","--overlap","--reentry"})require(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==code++,"own child proves warming/overlap/reentry before native body");
     const auto cleanup_status=static_cast<std::uint32_t>(_spawnl(_P_WAIT,argv[0],argv[0],"--cleanup-failure",static_cast<const char*>(nullptr)));
     require(cleanup_status==163,"own abort observer requires failed raw release marker; native callback must not return");

@@ -67,7 +67,8 @@ int ByteWide::copy_utf16(void* out,std::size_t capacity,const void* input){
 [[noreturn]] void compiler_exit(std::uint32_t code){std::exit(std::bit_cast<std::int32_t>(code));}
 Storage::Storage(Resources value,const native_recovered::OriginalSlots& slots):resources(std::move(value)),wide(resources.crt,resources.owned_crt),
     original_owner(resources.originals?resources.originals(slots):nullptr),
-    original_boundary(resources.callback_scope?std::make_shared<anadius::original_checkpoint::Boundary>(resources.callback_scope):nullptr){
+    original_boundary(resources.original_scope?std::make_shared<anadius::original_checkpoint::Boundary>(resources.original_scope):
+        resources.callback_scope?std::make_shared<anadius::original_checkpoint::Boundary>(resources.callback_scope):nullptr){
     if(!resources.memory||!resources.stream||!resources.encoding||!resources.errors||!resources.exit)
         throw std::invalid_argument("Owned memory/stream/conversion/terminal policies required");
     if(resources.originals&&!original_owner)throw std::invalid_argument("Original provider factory returned null");
@@ -87,6 +88,11 @@ void Policy::check_thread() const {
     if(::GetCurrentThreadId()!=controller_)throw std::logic_error("Callback policy requires its serialized controller thread");
 }
 std::size_t Policy::owned_handles() const{check_thread();return handles_.size();}
+void Policy::check_connect_body()const{
+    LastError error;
+    if(resources.connect_body_scope){if(!resources.connect_body_scope())throw std::logic_error("Network body requires its admitted PTD scope");return;}
+    check_thread();
+}
 std::string Policy::filesystem_narrow(std::u16string_view text){
     check_thread();auto& r=resources;
     const auto cp=encoding_recovered::filesystem_codepage_048ac0(*r.encoding);
@@ -107,7 +113,13 @@ void Policy::free_04b0f8(registry_recovered::Handle handle){
     catch(...){error.capture();throw;}
 }
 void Policy::wait_036880(std::int32_t n){check_thread();execution_.wait_steps_036880(n);}
-void Policy::wait_steps_036880(std::int32_t n){wait_036880(n);}
+void Policy::wait_steps_036880(std::int32_t n){
+    if(n==-1&&resources.connect_wait_scope){
+        {LastError error;if(!resources.connect_wait_scope())throw std::logic_error("Network startup wait requires its admitted PTD scope");}
+        execution_.wait_steps_036880(n);return;
+    }
+    wait_036880(n);
+}
 std::string_view Policy::registry_literal(std::uint64_t va){
     switch(va){
     case 0x180080528:return "fake key created";
@@ -122,14 +134,15 @@ void Policy::log_literal_006880(std::uint64_t va){check_thread();const auto text
 void Policy::log_text_007990(std::string_view text){check_thread();const auto shared=shared_log::acquire(*resources.stream);*resources.stream<<text;}
 void Policy::finish_log_0088e0(){check_thread();const auto shared=shared_log::acquire(*resources.stream);*resources.stream<<std::endl;}
 void Policy::log_literal_006880(std::string_view text){
-    check_thread();
-    if(text!="game connected on port "&&text!="; redirecting to ")throw std::domain_error("Network literal outside recovered domain");
-    const auto shared=shared_log::acquire(*resources.stream);*resources.stream<<(text=="game connected on port "?"game connected on port ":"; redirecting to ");
+    connect_body_call([&]{
+        if(text!="game connected on port "&&text!="; redirecting to ")throw std::domain_error("Network literal outside recovered domain");
+        const auto shared=shared_log::acquire(*resources.stream);*resources.stream<<(text=="game connected on port "?"game connected on port ":"; redirecting to ");
+    });
 }
-void Policy::log_port_00ad70(std::uint16_t value){check_thread();const auto shared=shared_log::acquire(*resources.stream);*resources.stream<<value;}
-void Policy::log_finish_0088e0(){finish_log_0088e0();}
-void Policy::dialog_038bc0(std::string_view title,std::string_view text,std::uint32_t flags){check_thread();resources.dialog.show(title,text,flags);}
-[[noreturn]] void Policy::exit_05cdc0(std::uint32_t code){check_thread();resources.exit(code);std::terminate();}
+void Policy::log_port_00ad70(std::uint16_t value){connect_body_call([&]{const auto shared=shared_log::acquire(*resources.stream);*resources.stream<<value;});}
+void Policy::log_finish_0088e0(){connect_body_call([&]{const auto shared=shared_log::acquire(*resources.stream);*resources.stream<<std::endl;});}
+void Policy::dialog_038bc0(std::string_view title,std::string_view text,std::uint32_t flags){connect_body_call([&]{resources.dialog.show(title,text,flags);});}
+[[noreturn]] void Policy::exit_05cdc0(std::uint32_t code){connect_body_call([&]{resources.exit(code);});std::terminate();}
 native_context::PolicyFactory make_policy_factory(Resources resources){
     struct State {Resources resources;bool used=false;};
     auto state=std::make_shared<State>(State{std::move(resources)});

@@ -1,0 +1,59 @@
+{
+  "schema": "original-parallel-handler-plan.v1",
+  "client_date": "2026-11-05",
+  "status": "CONFIRMED_NATIVE_GAP_COHERENT_SOURCE_INTEGRATION_PENDING",
+  "source_checkpoint": {
+    "path": "outputs/anadius-online-query-source/startup-overlap-20261105/evidence.json",
+    "sha256": "2a36acb4f734e0cbf3cea827be0c3ef58d7783f78f39e46599e1959b2a88d4da"
+  },
+  "pending_source_count": 71,
+  "native_proof": {
+    "path": "outputs/anadius-session-memory-source/parallel-frame-admission-20261105/native-evidence-index.json",
+    "sha256": "7e029217e996cc8a7c2990ccfa80d0087383bd116408b7ceb7e3e209540c5224"
+  },
+  "native_findings": {
+    "path": "outputs/anadius-session-memory-source/parallel-frame-admission-20261105/native-findings.md",
+    "sha256": "83f602687e4e2ffe5d09a69daf661c2615e8899b995c4d68c17da1c630a5282f"
+  },
+  "lower_design": {
+    "path": "outputs/anadius-session-memory-source/parallel-frame-admission-20261105/memory-design-review.md",
+    "sha256": "e6a0906a89801016a3bcc4ae810220aea79c89aa64b6c96571c73761f614d893"
+  },
+  "source_gate_proof": {
+    "path": "outputs/anadius-session-memory-source/handler-admission-overlap-20261105/source-gate-review.md",
+    "sha256": "afdc629e4869248d5abdcb11cafdee0e3d44c549d9be52fc5cb2f10261bc8948"
+  },
+  "required_trace": "Permit B GetConfig response while A remains in the supported unknown-message modal effect, for both distinct sessions and one warmed plaintext session; no source-imposed body-wide or session-wide wait.",
+  "phases": [
+    {
+      "id": 1,
+      "scope": "Parent exact actor/PTD/JobScope records and per-attempt metadata transactions; immutable Serialized default versus selected Original mode; exact live byte/header/map/IO resolvers and stable binding rows, no whole-catalog payload pin or deferred physical free."
+    },
+    {
+      "id": 2,
+      "scope": "Per-message Profile/NativeProfile/Graph/provider invocation ownership, explicit permits, independent router/writers/guarded files and same shared business/Online roots; Strings/Deque call state consumes authoritative catalogs."
+    },
+    {
+      "id": 3,
+      "scope": "Remove body-wide NativeJobs source_gate only after lower/upper ownership is coherent; original-worker accept/dispatch/receipt and sibling-friendly zero-wait physical reap continue while another body is active. Keep response completion before physical FLS reaping."
+    },
+    {
+      "id": 4,
+      "scope": "Wire exact Original assembly through the same Parent policy; author actual NativeJobs/Graph same-session and distinct-session A/B, growth/free/permit/reap regressions without manual work/readiness changes; independent static review. Execution still requires explicit rebuild."
+    }
+  ],
+  "prohibited_substitutes": [
+    "Unlock one mutex while singleton actor or vector-span assumptions remain",
+    "Serialize each session as final Native policy",
+    "Yield only around the selected dialog instead of permitting native message-body progress",
+    "Clone Runtime/config/business state or Online objects to hide shared identity",
+    "Add all-ready, SDK or unload barriers",
+    "Claim unexecuted assertions or source-only analysis prove compiled/runtime fidelity"
+  ],
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "overall_completion_percentage": null
+}

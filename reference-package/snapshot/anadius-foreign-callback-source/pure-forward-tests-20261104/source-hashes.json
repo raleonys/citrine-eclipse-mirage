@@ -1,0 +1,50 @@
+[
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign_tests.cpp",
+    "sha256": "0fbd95fe74f96de23774a3452701bd7ce83af2ec6e4c38da48e8eef886e6b5d1",
+    "lastWriteTimeUtc": "2026-11-03T21:21:52.7286041Z",
+    "bytes": 38807
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign_integration_tests.cpp",
+    "sha256": "8e25b409a2668230c1741312723a73ee848993151c59fd5a53bee391d4005b1b",
+    "lastWriteTimeUtc": "2026-11-03T21:19:58.9307182Z",
+    "bytes": 66083
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.cpp",
+    "sha256": "8f649acdd515ac92869a92bad574cfdc856942e8ff93ebb014f727f83ba8abc5",
+    "lastWriteTimeUtc": "2026-11-03T21:19:02.3181807Z",
+    "bytes": 30566
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\foreign.hpp",
+    "sha256": "54b3305fe5002a841cdbc251bdbd4a1cf0ef45d9a6902a05487cc8bb3f3c125c",
+    "lastWriteTimeUtc": "2026-11-03T21:20:37.0543441Z",
+    "bytes": 8914
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.cpp",
+    "sha256": "c85991c0e7515cc6250cf721f811fbb8403be7c68392576fbf82768547e4918e",
+    "lastWriteTimeUtc": "2026-11-03T21:18:48.2201479Z",
+    "bytes": 15579
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.hpp",
+    "sha256": "270b9ea85daee64225f18106e2df54833902ed19ea2f0fef9ea587ec8546a29e",
+    "lastWriteTimeUtc": "2026-11-03T21:18:47.8982949Z",
+    "bytes": 12437
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\original_effects.cpp",
+    "sha256": "2f8ec2eae9ce6463eed8871a8f5f01660c806744a94a22fbcd392b329496a898",
+    "lastWriteTimeUtc": "2026-10-30T13:49:53.0702547Z",
+    "bytes": 3892
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-original-checkpoint-source\\checkpoint.hpp",
+    "sha256": "9c5c09e8bffec21826adb0f2d9a0240a403510c09f58978cba7bdfffac18ee57",
+    "lastWriteTimeUtc": "2026-10-30T13:49:52.7276737Z",
+    "bytes": 775
+  }
+]

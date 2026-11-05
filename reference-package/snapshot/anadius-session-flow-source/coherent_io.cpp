@@ -12,7 +12,7 @@ AsyncSendOperation& CoherentIoMemory::project_async_send(OperationStorage& s){ac
 void CoherentIoMemory::free_cached_identity(std::uintptr_t id){accept_.free_cached_identity(id);}
 void CoherentIoMemory::construct_environment_023dd0(IoHandlerEnvironment& destination,std::uintptr_t allocator){
     const auto require_open=[&]{
-        (void)accept_.storage_bindings(); // existing admitted parent + accept phase
+        (void)accept_.storage_resolver(); // existing admitted parent + accept phase
         if(base_.snapshot().phase!=IoMemoryPhase::Open)throw std::logic_error("Coherent base IO is closed or poisoned");
     };
     require_open();

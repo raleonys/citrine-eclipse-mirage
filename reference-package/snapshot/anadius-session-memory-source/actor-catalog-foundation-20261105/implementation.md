@@ -1,0 +1,35 @@
+# Actor/catalog prerequisite checkpoint — source only
+
+2026-11-05. Seventeen existing canonical source/header units changed: twelve production and five test units. Twenty verified pre-edit snapshots include three untouched candidate test files. No new compilation unit/build registration was introduced. No compiler, project tests, linker, DLL or executable ran; the original DLL and historical build/delivery artifacts remain unchanged.
+
+## Concrete result
+
+The lower Parent can explicitly select independent Original actor records instead of storing one current thread/job and retaining its metadata gate for the whole handler. Each record captures its own actual thread/fiber/PTD/JobScope. Copying or expiring B's permit cannot alter A's permission. Legacy virtual memory/disposal callbacks can find only an already explicitly admitted record; an ambient ready PTD does not create permission. Pending admission has its own nonallocating exact-thread reservation before any metadata node allocation, and foreign Operation::job_permit rejects before lower PTD validation.
+
+Only the explicitly selected lower source fixture uses this policy. Both production constructor defaults and every existing actual production composition remain Serialized. The known NativeJobs/Profile/NativeProfile/Graph whole-body progress mismatch is STILL OPEN. This foundation must not be relabelled as an actual concurrent Graph/Original DLL fix.
+
+The concurrent Parent resolves exactly one current live byte/header/map ticket, retaining only that actual ticket for its requesting actor. Typed returned map spans are exact borrows too. No whole-catalog payload snapshot or deferred physical free was introduced. Own free drops the owner's old view and immediately follows the existing typed destroy/unmap/native HeapFree order; a real other-actor or SDK borrow protects its storage. Pins do not establish safe simultaneous writes to a shared business object or arbitrary provider memory. Unknown allocation/free/PTD outcomes retain their actual prefixes.
+
+ApplicationMemory prepares its extra tracking list node outside its nonrecursive mutex and rechecks tracking health before nonallocating splice. Parent allocation failure uses its own returned/raw/backing state, replacing the invalid global outstanding-count comparison that could be changed by a healthy sibling.
+
+The socket projection aggregates append authoritative optional resolver pointers. Miss and Ambiguous do not fall back to stale span tables. Frame025480/write025a70 keep their original large-header threshold/size arithmetic/alignment terminal/free order; old null-resolver HOST span behavior remains available. All changed aggregate/private layouts and constructors require consistent future rebuilding; old binary validation is historical.
+
+## Prepared reaper correction
+
+PreparedMemory::Borrow::reap_jobs now reserves its existing original-worker job-control transaction and captures the stable registry size, reserves compiler vector storage outside State.gate, then takes a bounded shared_ptr-only snapshot under the gate. Child rows can still acquire/return; the original reservation prevents offer insertion/removal during sizing/copy. OS polls and handle closes remain outside locks and use their prior timeout0 behavior. Each exact reaped list row is spliced out and its metadata node retired outside State.gate. No active sibling handle is waited as a prerequisite for a returned B.
+
+A known snapshot metadata-allocation failure occurs before native OS effects and leaves the lower Borrow healthy. Parent catch revalidates the exact Borrow/backing/PTD and healthy allocation tracking instead of inferring from exception type; it adds poison only if that lower state is invalid and never clears a prior Parent poison. Wait/close unknowns still poison the lower and retain their original prefixes. Adjacent historical Prepared invalid-argument diagnostic string construction paths are outside this bounded healthy-path snapshot correction; arbitrary reentrant CRT handlers and foreign fallback domains are not claimed solved.
+
+## Source fixtures and independent review
+
+The handoff fixture uses actual existing NativeThreads/PreparedMemory, two exact offered children, distinct ready PTDs and real native/FLS exits. A remains admitted with73-byte view/permit while B allocates/frees seventy typed maps plus a large aligned map. A's injected known93-byte allocation failure waits outside the heap ledger while B publishes/holds its own89-byte allocation; healthy sibling counts must not poison that individual attempt. B's foreign AOperation permit request and premature free both reject without poisoning. B completes physical cleanup and native exit, and original reaps B plus a canceled further offer before releasing A. A then rechecks its own permit/bytes and drains naturally. No manual work/readiness/PTD synthesis, duplicate Parent or special modal-only yield is used.
+
+Four socket fixtures additionally exercise actual010040/008350 byte growth,026670 map growth and025480/025a70 header destruction with deliberately stale legacy catalogs, authoritative Miss/Ambiguous and original invalid-header failure prefixes. These are authored assertions, NOT EXECUTED RESULTS. The lower handoff map allocation is a direct typed-map case, not a Graph/GetConfig end-to-end test.
+
+Root independently reviewed the subagent's eight socket production files and handoff fixture; alias reviewer independently reviewed root's four socket fixtures and domain.cpp; alias and SDK reviewers checked final Parent, and SDK reviewer checked root's Prepared reaper. Final hash-bearing reports accompany this checkpoint. One independent review's first round is preserved separately because the exact known-reap-failure catch correction changed its source hash.
+
+## Native evidence and remaining path
+
+Four fresh REA/Ghidra12.1.4 records classify033d70's observed entry references:028d99 is CALL inside028d30,0a8a90 is PE runtime-function metadata. Full replies/EIDs and exported bundle are retained; original hash was checked after close. This supplements the previous12capture-site observations and retained complete caller/FH4/cipher bodies. No function-reconstruction count or runtime result follows from this reference audit.
+
+Next mandatory work remains authoritative stable IO bindings and call-owned Strings/Deque state, then per-message Profile/NativeProfile/Graph/provider views over the same actual business/Online roots. Only after those consumers are coherent can the Original NativeJobs body gate be removed and the policy wired into actual production assembly. Both same-session and distinct-session warmed plaintext A-UnknownMessage/B-GetConfig response-before-A-release fixtures are required source coverage; no session-wide serialization substitute, cloned business roots or new readiness/SDK/unload barrier closes this requirement. Runtime/compiled validation still requires explicit rebuild authorization. No overall DLL completion percentage is inferred.

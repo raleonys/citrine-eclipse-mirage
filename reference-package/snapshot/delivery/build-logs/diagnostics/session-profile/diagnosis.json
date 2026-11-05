@@ -1,0 +1,30 @@
+{
+  "limitations": "Temporary diagnostic copies only. Root owns canonical repair and full builder continuation.",
+  "archive_edits": false,
+  "baseline_result": "terminate in Application destructor, diagnostic exit99",
+  "output_logs": [
+    "compile-link.log",
+    "run.log",
+    "stack-symbols.log",
+    "fixed-compile-link.log",
+    "fixed-run.log"
+  ],
+  "task": "session_profile_mock_tests fresh-build runtime termination diagnosis",
+  "evidence": {
+    "diagnostic_sha256": "7f2f1542d074bd0096ecb30ffc10b93ba5c3411a69868625ac09c21495b5802b",
+    "canonical_sha256": "91d359de8fc878baffcac3b8bdeec7570b292cfc1724d1324cd4d99967f3d4ba",
+    "lookup": "PostedEnvironment::current_storage reads live_storage when present",
+    "fixed_diagnostic_sha256": "7c5cf4e139e8f2bca676185ec731e6515cc1875a624909ff6842c3c5c38a8c1f",
+    "test": "profile_identity",
+    "site": "outputs/anadius-session-profile-source/profile_tests.cpp:304"
+  },
+  "repaired_stdout": "PASS: 5519 session-profile core checks; growing owner generations, string headers, deferred jobs/handoff preflight and ten isolated retention prefixes",
+  "command_logs": [
+    "commands.json",
+    "fixed-commands.json"
+  ],
+  "repaired_exit": 0,
+  "canonical_source_edits": false,
+  "proposed_fix": "After clearing wrong_storage.environment.storage.storage, also clear its live_storage pointer. This makes the existing empty-storage negative input genuinely invalid; assertion unchanged.",
+  "root_cause": "profile_identity wrong_storage negative fixture clears fallback span but preserves authoritative live_storage pointer; create succeeds, returned mandatory-close Application terminates on destruction."
+}

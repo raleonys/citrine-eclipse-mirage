@@ -1,0 +1,32 @@
+{
+  "server": {
+    "name": "rea",
+    "version": "6.8.0",
+    "started_at": "2026-11-03T15:27:34.521Z",
+    "command_path": "C:\\tools\\rea-6.8.0\\node_modules\\rea-agents\\scripts\\rea.mjs"
+  },
+  "package": {
+    "name": "rea-agents",
+    "version": "6.8.0",
+    "root_path": "C:\\tools\\rea-6.8.0\\node_modules\\rea-agents",
+    "build_commit": null
+  },
+  "alignment": {
+    "state": "aligned",
+    "reasons": [],
+    "remediation": null
+  },
+  "ghidra": {
+    "status": "available",
+    "install": "C:\\tools\\ghidra_12.1.4_PUBLIC",
+    "version": "12.1.4",
+    "java": "25.0.5"
+  },
+  "opened_target": {
+    "path": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+    "format": "pe",
+    "kind": "executable",
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "architecture": "x86_64"
+  }
+}

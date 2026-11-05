@@ -1,0 +1,120 @@
+{
+  "status": "THREE_FRESH_COMPLETE_SELECTED_MUTEX_INSTRUCTION_RECORDS",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "readiness_projection": {
+    "path": "outputs/anadius-execution-source/atomic-owner-projection-20261105/readiness-projection.json",
+    "sha256": "d575e25d1b056e22d34a70078f1313341712548ff3441c9294ba010871368cc3"
+  },
+  "open_reply": {
+    "path": "outputs/anadius-execution-source/atomic-owner-projection-20261105/open-binary.json",
+    "sha256": "2d889844cbfd5387f02194503ddcd9e9657f0c9eb1520103668d2e686d10f456"
+  },
+  "fresh_records": [
+    {
+      "path": "outputs/anadius-execution-source/atomic-owner-projection-20261105/instructions-18004a6ac.json",
+      "sha256": "75805d6aacaa4a145b1e37fd738c2ca80210357ccb8f4f0000f76c4fa03670ec",
+      "evidence_id": "ev_4347280839492f11ba4421f73c4198672732eced8d34e45394539dbd8e091fb2",
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0x18004a6ac",
+            "end": "0x18004a6b2"
+          }
+        ],
+        "total_bytes": 7,
+        "span_bytes": 7,
+        "non_contiguous": false,
+        "contains_entry": true
+      },
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "This fast path reads only the requested function and does not invoke the decompiler or whole-program string/name inventories.",
+        "Instruction text is Ghidra-specific and does not claim textual equivalence with Hopper output.",
+        "Ghidra Listing reports a terminal call at 0x18004a6ae to 0x18004a6d4 FUN_18004a6d4 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically.",
+        "Instruction text and ordering are Ghidra-specific representations.",
+        "The fast path does not invoke the decompiler or scan whole-program names and strings.",
+        "Ghidra Listing reports a terminal call at 0x18004a6ae to 0x18004a6d4 FUN_18004a6d4 (external=false, thunk=false, hasNoReturn=false); fallthrough is excluded by Ghidra's flow model. The reason for the terminal flow is not established by this observation."
+      ]
+    },
+    {
+      "path": "outputs/anadius-execution-source/atomic-owner-projection-20261105/instructions-18004a6d4.json",
+      "sha256": "c675a1809ea6026bea36a2b4383a8f604a54665bfb73e0e7201561bd5eb99fe1",
+      "evidence_id": "ev_4fa832afb7d8df63c59e00e1725e2ccf4e419b9938014f3c15738dbb6d4f0ea4",
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0x18004a6d4",
+            "end": "0x18004a804"
+          }
+        ],
+        "total_bytes": 305,
+        "span_bytes": 305,
+        "non_contiguous": false,
+        "contains_entry": true
+      },
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "This fast path reads only the requested function and does not invoke the decompiler or whole-program string/name inventories.",
+        "Instruction text is Ghidra-specific and does not claim textual equivalence with Hopper output.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically.",
+        "Instruction text and ordering are Ghidra-specific representations.",
+        "The fast path does not invoke the decompiler or scan whole-program names and strings."
+      ]
+    },
+    {
+      "path": "outputs/anadius-execution-source/atomic-owner-projection-20261105/instructions-18004a6b4.json",
+      "sha256": "4869b2367fa772dc1222983c1c0b978653d45fe221abf871a9e9e35940e004c7",
+      "evidence_id": "ev_cf0dc296024dde7ce00aa201ca3a686d0fff48453b9f9a88d1caf0cce6bf4baa",
+      "body": {
+        "available": true,
+        "provenance": "ghidra-function-body-address-set",
+        "ranges": [
+          {
+            "start": "0x18004a6b4",
+            "end": "0x18004a6d2"
+          }
+        ],
+        "total_bytes": 31,
+        "span_bytes": 31,
+        "non_contiguous": false,
+        "contains_entry": true
+      },
+      "limitations": [
+        "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+        "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+        "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+        "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+        "This fast path reads only the requested function and does not invoke the decompiler or whole-program string/name inventories.",
+        "Instruction text is Ghidra-specific and does not claim textual equivalence with Hopper output.",
+        "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+        "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+        "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically.",
+        "Instruction text and ordering are Ghidra-specific representations.",
+        "The fast path does not invoke the decompiler or scan whole-program names and strings."
+      ]
+    }
+  ],
+  "exported_bundle": {
+    "path": "outputs/anadius-execution-source/atomic-owner-projection-20261105/rea-evidence-bundle.json",
+    "sha256": "442008d08887a2e633ddfe050eea9c7705b0f157457adbfeeae6d6b9eda738a8"
+  },
+  "exported_records": 3,
+  "session_closed": true,
+  "original_hash_verified_after_close": true,
+  "runtime_observation": false
+}

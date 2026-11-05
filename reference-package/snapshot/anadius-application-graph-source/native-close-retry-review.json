@@ -1,0 +1,23 @@
+{
+  "reviewer": "author static source inspection; no independent agent review this step",
+  "result": "STATIC_SOURCE_INSPECTED_NOT_COMPILED_OR_EXECUTED",
+  "reviewed_source_hashes": {
+    "anadius-owned-server-source/server.hpp": "2b1ae850c2e05deae282e7978255c8fb86f5d7ab527b4d5506e5a5bb8941f634",
+    "anadius-owned-server-source/server.cpp": "66dfcc98d896c2f985cdfdf026fa56263fe03ff59c927642dccbc8975bc61dc0",
+    "anadius-application-graph-source/graph.cpp": "ede4d43b8181ebd1290808665611ed67be549f51b11561afb6eff2fd81b92a1e",
+    "anadius-application-graph-source/graph_integration_tests.cpp": "0e65bc0b1264cd97055bcd412e56328af26d96e2f618a85aa021e9330f6db66f"
+  },
+  "findings": [
+    "OwnedServerBackend previously threw generic logic_error after a normal false Runtime.quiescent return; Graph.Server.invoke caught every exception and poisoned Graph, making explicit retry impossible even though the backend retained Quiescing/live sockets.",
+    "New HOST QuiescenceDeferred signal is emitted only after a normally returned false lower drain and unchanged Quiescing backend. It does not change recovered virtual methods or server_start ordering.",
+    "Graph permits this signal only on destroy_pending_socket, with backend Quiescing/not-attested/both socket states live; server_active is cleared. Other exceptions or invalid/poisoned state retain terminal poisoning.",
+    "late-close source mode registers one owned original-thread WaitTarget after 70 real prepared bodies. Policy close must defer after NativeJobs/Environment/Deques closed and Graph drained. Caller cleans only this deliberate registry entry then retries pending/acceptor/context teardown on the same original actor; counters and handles must not replay.",
+    "early-stop source mode injects an explicit own IOCP stop before ready receipt. Worker return/source counts cannot attest the unconsumed closure; Profile remains Closing, Graph Bound and NativeJobs Bound/pending1. Prefix process195 retains owners without unwind or inferred recovery.",
+    "unknown-external mode throws the same exception type from opaque external proof. Policy/Profile/Runtime/backend poison; Graph rejects the poisoned backend as a known deferral. Prefix process196 must retain owners without retry.",
+    "Application Worker.run still catches all exceptions and poisons its own retained attempt. It is unchanged and needs a separate same-worker continuation/lifetime policy; this checkpoint establishes no end-to-end Worker retry."
+  ],
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

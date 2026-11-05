@@ -1,43 +1,43 @@
 {
-  "schema": "fresh-full-archive-dll-link.v1",
-  "checked_at": "2026-11-01T18:33:32.121469+00:00",
-  "diagnostic_validation": "PASS_EXPECTED_BLOCKER",
-  "production_dll_readiness": "BLOCKED",
+  "schema": "fresh-full-archive-dll-link.v3",
+  "checked_at": "2026-11-05T19:37:44.742764+00:00",
+  "diagnostic_validation": "LINKED_NOT_EXECUTED",
+  "production_dll_readiness": "LINKED_NOT_RUNTIME_VALIDATED",
   "dll_link_attempted": true,
-  "dll_link_succeeded": false,
-  "link_exit_code": 1,
-  "dll_created": false,
+  "dll_link_succeeded": true,
+  "link_exit_code": 0,
+  "dll_created": true,
   "dll_loaded_or_executed": false,
   "originals_accessed": false,
+  "dll_artifact": {
+    "path": "dll-link-gate-source/build-current-full/anadius64.reconstruction.dll",
+    "bytes": 4872192,
+    "sha256": "4a507e834c179bfe55ef2df87a60d3e423531aec506dcab3796a89f94d8e9381"
+  },
   "whole_archive": true,
   "selected_archives": [
     {
       "path": "source-workspace/build/anadius_core_partial.a",
-      "sha256": "62ee9567b5572a282226f7186b88c79c25bf268cd05e0c2eb8fef4f723be46ff"
+      "sha256": "25efc7d337b2a221c440e63feeb1347e8c32b97947c44ea8120316575f7e24e1"
     },
     {
       "path": "source-workspace/build/hook_engine_compat.a",
-      "sha256": "0c1c3a3233640cf9bcddb8cfb7d14152320afba3d40f98684f8bee477206dc50"
+      "sha256": "bc10eb34100017d5dd54a71820a37baf404a570daa1120d7d5bf6f6bce9ebd92"
     }
   ],
-  "selection_scope": "All288 anadius core objects and all5 selected hook compatibility objects; separate3preloader objects are outside anadius target",
+  "selection_scope": "All anadius core and hook compatibility archive members; separate preloader archive excluded",
   "frozen_source_files_verified": 1017,
-  "common_build_record_sha256": "e6112b9ade9c32c6dba2b4bec33ae09c2e8a8d3593b99c0db97fb29b836a66d6",
-  "source_snapshot_sha256": "34b84a9f1a12a48e58f886d76524976858def5b5782ebdcd3bfb4eca380e2047",
-  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
-  "undefined_symbols": [
-    "anadius::dll_link_gate::require_loader_attach_runtime(HINSTANCE__*, void*)",
-    "anadius::dll_link_gate::require_loader_detach_quiescence(HINSTANCE__*, void*)"
-  ],
-  "expected_missing_production_hooks": [
-    "require_loader_attach_runtime",
-    "require_loader_detach_quiescence"
-  ],
-  "entry_source_sha256": "98ad93b7314b5715ed5e19dc775259981947784f19f04167da233dfb659e974d",
-  "header_sha256": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866",
+  "common_build_record_sha256": "359927eea05c1d1f6dddc99be05a4a4f0df393ff82ac4bc9e5e2355a15ad7252",
+  "source_snapshot_sha256": "9199f873c0285d6614d033675d844e1e691c73ca686d3bef365b38923f077a90",
+  "compiler": "clang version 23.1.4 (https://github.com/llvm/llvm-project.git 7a941dfb2877a0b8cf30323fefa85ad019e0b0f5)",
+  "compiler_sha256": "f6599825884bd087a81ef01e7a662025a9553de01dc501c824b6c568aa4e5ec9",
+  "undefined_symbols": [],
+  "expected_missing_production_hooks": [],
+  "entry_source_sha256": "c0810bfc385c7159bdc559ad7bb3329799ca212d17ae4aba7fa49cd2243e09ca",
+  "header_sha256": "7853bba247ba243ba59fce8ec67fe08066a6bba40b14ae1d89f68dc513940829",
   "commands": [
     {
-      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang++.exe",
       "arguments": [
         "-std=c++20",
         "-O2",
@@ -54,7 +54,7 @@
       "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang++.exe",
       "arguments": [
         "-c",
         "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\export_leaf.S",
@@ -66,7 +66,7 @@
       "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang++.exe",
       "arguments": [
         "-shared",
         "-static",
@@ -87,11 +87,12 @@
         "-o",
         "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build-current-full\\anadius64.reconstruction.dll"
       ],
-      "exit_code": 1,
+      "exit_code": 0,
       "log": "dll-link-gate-source/build-current-full/link.log",
-      "log_sha256": "321da96cbf6d33d809be700cac824830930f3f8b87eea92b2502d8f587937fb7"
+      "log_sha256": "aef77a048eaaef4cf90ce3a1430f0947ec2b998f7e17348d3cea141c9e35c040"
     }
   ],
   "run_directory": "dll-link-gate-source/build-current-full",
+  "rebuild_run": "work/rebuild-20261105T182000Z",
   "runtime_or_loader_equivalence_established": false
 }

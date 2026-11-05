@@ -11,6 +11,7 @@
 #include <mutex>
 #include <sstream>
 #include <thread>
+#include <vector>
 namespace {
 namespace m=anadius::messages_recovered;namespace a=anadius::application_worker;namespace b=anadius::bootstrap_backend;namespace d=anadius::thread_domain;namespace t=anadius::threads_recovered;namespace s=anadius::socket_recovered;namespace e=anadius::execution_recovered;namespace sp=anadius::session_profile;namespace o=anadius::owned_server;
 std::atomic<unsigned> checks=0;
@@ -50,11 +51,13 @@ struct ExecutionPlatform final:e::Platform {
  std::uint32_t current_thread_id()override{return ::GetCurrentThreadId();}void acquire_srw_exclusive(std::uintptr_t& v)override{::AcquireSRWLockExclusive(reinterpret_cast<PSRWLOCK>(&v));}void release_srw_exclusive(std::uintptr_t& v)override{::ReleaseSRWLockExclusive(reinterpret_cast<PSRWLOCK>(&v));}std::int64_t query_performance_frequency()override{LARGE_INTEGER v{};if(!::QueryPerformanceFrequency(&v))throw std::runtime_error("Own QPF");return v.QuadPart;}std::int64_t query_performance_counter()override{LARGE_INTEGER v{};if(!::QueryPerformanceCounter(&v))throw std::runtime_error("Own QPC");return v.QuadPart;}void sleep_milliseconds(std::uint32_t n)override{::Sleep(n);}[[noreturn]]void raise_thread_error_04a648(int)override{throw std::runtime_error("Own Execution terminal");}
 };
 struct State:std::enable_shared_from_this<State> {
+ std::uint8_t show_lsx=0;
  NativeFixture native;anadius::configuration::State config{};b::RuntimeSeed runtime{};ExecutionPlatform platform;e::Execution execution;
  Event armed;std::atomic<unsigned> configured=0,startups=0,cleanups=0,socket_closes=0,port_closes=0,gate_deletes=0,accepts=0,gets=0,posts=0,relays=0,cancels=0,external=0,observed=0,retired_markers=0,retirement_calls=0;std::atomic<bool> retirement_valid=false;std::atomic<a::Inputs*> inputs=nullptr;std::atomic<OVERLAPPED*> accept_ov=nullptr;
- std::weak_ptr<void> marker;std::function<void(a::Inputs&)> configure_hook;std::function<void()> retirement_hook;
+ std::weak_ptr<void> marker;std::function<void(a::Inputs&)> configure_hook;std::function<void()> retirement_hook,dispatch_hook;std::function<bool()> close_hook;
  std::atomic<const anadius::license_recovered::AuthenticationCode*> authentication=nullptr;
  std::atomic<unsigned> authentication_binds=0,authentication_retirements=0;
+ std::vector<s::Socket> closed_sockets;
  State():execution(runtime.execution_mutex,{runtime.server_ready,runtime.online_ready,runtime.libraries_ready},runtime.frequency_cache,platform){e::initialize_mutex_04a698(runtime.execution_mutex,2);config.username="controller-config";}
 };
 State* selected=nullptr;
@@ -71,11 +74,11 @@ VOID PASCAL addresses(PVOID,DWORD,DWORD,DWORD,sockaddr**,int*,sockaddr**,int*){u
 SOCKET WSAAPI socket_factory(int family,int type,int protocol,LPWSAPROTOCOL_INFOW info,GROUP group,DWORD flags){require(family==2&&type==1&&protocol==6&&!info&&!group&&flags==1,"Actual pending factory uses exact selected source socket arguments");return 201;}
 BOOL WINAPI cancel(HANDLE,LPOVERLAPPED){++selected->cancels;return TRUE;}
 struct Sockets final:s::AcceptorApi {
- s::Socket create_socket(std::int32_t family)override{require(family==2,"Source opens IPv4 listener after injected IPv6 parse failure");return 200;}std::uintptr_t attach_completion_port(s::Socket socket,std::uintptr_t port)override{require(socket==200&&port==0x900,"Listener binds to selected owned completion identity");return port;}std::uint32_t get_win32_error()override{return ::GetLastError();}std::int32_t set_option(s::Socket socket,std::int32_t level,std::int32_t option,std::int32_t value)override{require(socket==200&&level==65535&&option==4&&value==1,"Source reuse-address option forwarded exactly");return 0;}std::int32_t bind_socket(s::Socket socket,std::span<const std::byte>,std::int32_t size)override{require(socket==200&&size==16,"IPv4 source bind uses16-byte sockaddr");return 0;}std::int32_t listen_socket(s::Socket socket,std::int32_t backlog)override{require(socket==200&&backlog==INT_MAX,"Source server listener uses INT_MAX backlog");return 0;}std::int32_t close_socket(s::Socket)override{++selected->socket_closes;return 0;}std::int32_t set_nonblocking(s::Socket,std::uint32_t,std::uint32_t&)override{unused();}
+ s::Socket create_socket(std::int32_t family)override{require(family==2,"Source opens IPv4 listener after injected IPv6 parse failure");return 200;}std::uintptr_t attach_completion_port(s::Socket socket,std::uintptr_t port)override{require(socket==200&&port==0x900,"Listener binds to selected owned completion identity");return port;}std::uint32_t get_win32_error()override{return ::GetLastError();}std::int32_t set_option(s::Socket socket,std::int32_t level,std::int32_t option,std::int32_t value)override{require(socket==200&&level==65535&&option==4&&value==1,"Source reuse-address option forwarded exactly");return 0;}std::int32_t bind_socket(s::Socket socket,std::span<const std::byte>,std::int32_t size)override{require(socket==200&&size==16,"IPv4 source bind uses16-byte sockaddr");return 0;}std::int32_t listen_socket(s::Socket socket,std::int32_t backlog)override{require(socket==200&&backlog==INT_MAX,"Source server listener uses INT_MAX backlog");return 0;}std::int32_t close_socket(s::Socket socket)override{selected->closed_sockets.push_back(socket);++selected->socket_closes;return 0;}std::int32_t set_nonblocking(s::Socket,std::uint32_t,std::uint32_t&)override{unused();}
 };
 struct Dispatcher final:s::DispatcherApi {
  DWORD error=0;void set_last_error(std::uint32_t n)override{error=n;}std::uint32_t get_last_error()override{return error;}
- std::int32_t get(std::uintptr_t port,std::uint32_t& bytes,std::uintptr_t& key,OVERLAPPED*& op,std::uint32_t)override{require(port==0x900&&selected->accepts==1,"Physical dispatch starts only after actual armed accept");const auto n=++selected->gets;bytes=0;key=0;if(n==1){op=selected->accept_ov.load();error=995;return 0;}require(n==2&&selected->posts==1,"Second actual physical wait consumes only the emitted stop relay");require(selected->relays.fetch_sub(1)==1,"Physical SDK driver consumes first actual posted stop relay");op=nullptr;error=0;return 1;}
+ std::int32_t get(std::uintptr_t port,std::uint32_t& bytes,std::uintptr_t& key,OVERLAPPED*& op,std::uint32_t)override{require(port==0x900&&selected->accepts==1,"Physical dispatch starts only after actual armed accept");const auto n=++selected->gets;if(selected->dispatch_hook)selected->dispatch_hook();bytes=0;key=0;if(n==1){op=selected->accept_ov.load();error=995;return 0;}require(n==2&&selected->posts==1,"Second actual physical wait consumes only the emitted stop relay");require(selected->relays.fetch_sub(1)==1,"Physical SDK driver consumes first actual posted stop relay");op=nullptr;error=0;return 1;}
  std::int32_t post(std::uintptr_t port,std::uint32_t bytes,std::uintptr_t key,OVERLAPPED* op)override{require(port==0x900&&!bytes&&!key&&!op,"No-session stop posts only selected empty relay");++selected->posts;++selected->relays;return 1;}std::int32_t set_timer(std::uintptr_t,LARGE_INTEGER&,std::int32_t,PTIMERAPCROUTINE,void*,std::int32_t)override{unused();}
 };
 struct CancelEffects final:s::CancellationEffects {void cancel_026aa0(s::CancellationEngine&,s::Socket,const s::Error&)override{++selected->cancels;}};
@@ -121,15 +124,16 @@ void configure(State& state,a::Inputs& input){
  g.policy.lifecycle.select_owner=[&state](sp::Application& app,s::IocpSchedulerEntry*,s::CancelOperation& op,const s::Error& error,std::uint32_t bytes){auto ports=app.ports();require(ports.accept.contains(&op)&&error.value==995&&!bytes&&!app.snapshot().live_sessions,"Selected actual observed accept995 uses owner0 without fabricated accepted session");++state.observed;return static_cast<s::IocpSchedulerEntry*>(nullptr);};
  g.policy.lifecycle.after=[](sp::Application& app){require(!app.snapshot().live_sessions&&!app.snapshot().live_jobs,"No-session actual completion retires without message/job work");};
  g.policy.lifecycle.returned=[](sp::Application& app,std::uint64_t count,const s::WorkerRunResult& result){require(count==1&&result.error&&result.error->value==0&&!app.snapshot().live_sessions&&!app.snapshot().live_jobs,"Actual source worker returns after exactly one selected observed owner0 packet");};
- g.policy.lifecycle.external_drained=[&state](o::ServerView view,sp::Application& app){bool outside=false;try{(void)view.memory.buffer_context();}catch(const std::logic_error&){outside=true;}require(outside&&state.observed==1&&state.gets==2&&state.posts==2&&!app.snapshot().live_sessions&&!app.snapshot().live_jobs,"Selected lower external proof observes exact consumed995 and stop relay outside Parent operation");require(state.relays.exchange(0)==1,"Selected lower explicitly consumes remaining real source-posted relay in injected SDK queue before true");++state.external;return true;};
+ g.policy.lifecycle.external_drained=[&state](o::ServerView view,sp::Application& app){bool outside=false;try{(void)view.memory.buffer_context();}catch(const std::logic_error&){outside=true;}require(outside&&state.observed==1&&state.gets==2&&state.posts==2&&!app.snapshot().live_sessions&&!app.snapshot().live_jobs,"Selected lower external proof observes exact consumed995 and stop relay outside Parent operation");const auto prior=state.external.fetch_add(1);require(state.relays.exchange(0)==(prior?0U:1U),"Selected lower consumes source-posted relay once; later proofs recheck empty injected SDK queue");return state.close_hook?state.close_hook():true;};
  auto sockets=std::make_shared<Sockets>();auto dispatcher=std::make_shared<Dispatcher>();auto& server=input.server;server.state_lifetime=state.shared_from_this();server.sockets=sockets;server.dispatcher=dispatcher;s::IocpConstructorImports iocp;iocp.create_completion_port=create_port;iocp.close_handle=close_port;server.iocp=std::make_shared<s::NativeIocpConstructorApi>(iocp);server.gates=std::make_shared<s::NativeServiceGateApi>();server.cancellation=std::make_shared<CancelEffects>();server.executor=std::make_shared<Executor>();server.kernel={startup,cleanup,local_name,environment,delete_gate};
  auto& runtime=input.runtime;runtime.state_lifetime=state.shared_from_this();runtime.sockets=sockets;runtime.dispatcher=dispatcher;runtime.accept=std::make_shared<s::NativeAsyncAcceptApi>(s::AsyncAcceptImports{accept_sdk,addresses,context,::WSAGetLastError});runtime.factory=std::make_shared<s::NativeSocketFactoryApi>(s::SocketFactoryImports{socket_factory});runtime.cancel=std::make_shared<s::NativeRetryCancelApi>(cancel);runtime.executor={nullptr,move_executor};runtime.capacity=16;
 }
 a::Settings settings(const std::shared_ptr<State>& state){a::Settings value;value.lifetime=state;value.configure=[state](a::Inputs& in){configure(*state,in);};value.state=a::Settings::StateSeed{17,u"core-host-seed"};return value;}
-std::unique_ptr<a::Worker> make_worker(const std::shared_ptr<State>& state,a::Settings opts){return a::Worker::create(state->native.domain,{state->config,state->runtime,state->execution},std::move(opts));}
+std::unique_ptr<a::Worker> make_worker(const std::shared_ptr<State>& state,a::Settings opts){return a::Worker::create(state->native.domain,{state->config,state->runtime,state->execution,&state->show_lsx},std::move(opts));}
 void finish_state(std::shared_ptr<State>& state){state->native.close();state.reset();selected=nullptr;}
 void passive_validation(){auto state=std::make_shared<State>();selected=state.get();auto base=settings(state);auto bad=[&](auto edit){auto copy=base;edit(copy);rejects<std::invalid_argument>([&]{auto worker=make_worker(state,std::move(copy));},"Incomplete explicit Worker settings rejected before native worker/Graph/SDK startup");};bad([](auto& x){x.lifetime.reset();});bad([](auto& x){x.configure={};});bad([](auto& x){x.state.reset();});bad([](auto& x){x.startup_timeout_ms=0;});bad([](auto& x){x.startup_timeout_ms=INFINITE;});rejects<std::invalid_argument>([&]{(void)a::Worker::create(nullptr,{state->config,state->runtime,state->execution},base);},"Worker requires ready controller-owned Domain");
- auto worker=make_worker(state,base);auto snap=worker->snapshot();require(snap.phase==a::Phase::Prepared&&!snap.worker_thread&&!snap.pending_retained&&!state->configured&&!state->startups&&snap.memory.phase==anadius::worker_handoff::Phase::Prepared,"Concrete Worker creation owns only controller-prepared memory without configure/startup effects");
+ bad([](auto& x){x.close_retry_timeout_ms=INFINITE;});
+ auto worker=make_worker(state,base);auto snap=worker->snapshot();require(snap.phase==a::Phase::Prepared&&!snap.worker_thread&&!snap.pending_retained&&!state->configured&&!state->startups&&snap.memory.phase==anadius::worker_handoff::Phase::Prepared&&!snap.close_epoch&&!snap.close_retries&&!worker->retry_close(1),"Concrete Worker creation owns only controller-prepared memory; close retry is unavailable before a current wait");
  require(worker->cancel_unpublished()&&worker->snapshot().phase==a::Phase::Closed&&worker->finish_after_join(),"Known never-started worker can explicitly cancel and finish without fabricated OS exit");worker.reset();base={};finish_state(state);
 }
 struct ComposeOrder {bool composer_alive=false,valid=true;unsigned capture_retired=0,composer_retired=0;};
@@ -147,6 +151,7 @@ void composition_constructor_failure(){
  opts={};closed.reset();finish_state(state);
 }
 void startup_gate_normal(bool host_first){anadius::license_recovered::AuthenticationCode authentication;e::MutexState achievement_mutex{};e::initialize_mutex_04a698(achievement_mutex,2);auto state=std::make_shared<State>();selected=state.get();auto worker=make_worker(state,settings(state));
+ state->show_lsx=7;state->configure_hook=[](a::Inputs& in){in.graph.show_lsx=3;};
  if(host_first){
   e::MutexState invalid{};rejects<std::invalid_argument>([&]{worker->bind_achievement_mutex(invalid,state->platform);},"Worker rejects noninitialized mutex before effect");
   std::atomic<bool> wrong_thread=false;std::thread other([&]{try{worker->bind_achievement_mutex(achievement_mutex,state->platform);}catch(const std::logic_error&){wrong_thread=true;}});other.join();require(wrong_thread,"Worker achievement binding requires original controller thread");
@@ -160,6 +165,7 @@ void startup_gate_normal(bool host_first){anadius::license_recovered::Authentica
  rejects([&]{worker->bind_authentication_code(authentication);},"Serving/waiting Worker rejects late binding");
  for(unsigned i=0;i<5000&&worker->snapshot().phase!=a::Phase::WaitingStartup;++i)::Sleep(1);auto waiting=worker->snapshot();require(waiting.phase==a::Phase::WaitingStartup&&state->config.server_port==12345&&state->runtime.server_ready==1&&state->accepts==1&&state->gets==0,"Actual029ea0 publishes ready/port and arms Accept before controller startup barrier; no physical dispatch occurred");
  auto* input=state->inputs.load();require(input&&input->graph.state.configuration==&state->config&&input->graph.state.online==&state->runtime.online&&input->graph.state.saved_avatar_size&&*input->graph.state.saved_avatar_size==17&&input->graph.state.achievement_file&&*input->graph.state.achievement_file==u"core-host-seed"&&input->runtime.tls_index&&*input->runtime.tls_index!=TLS_OUT_OF_INDEXES,"Worker installs exact live CallbackStateView and owns fresh TLS selector only after opaque configure returns");
+ require(input->graph.show_lsx==3,"Explicit Worker keeps its configured ShowLSX setting despite a different live Runtime flag");
  const auto first=host_first?e::ReadyStage::Host:e::ReadyStage::Online;const auto second=host_first?e::ReadyStage::Online:e::ReadyStage::Host;worker->startup_complete(first,&state->execution);require(::WaitForSingleObject(exited.handle,20)==WAIT_TIMEOUT&&state->gets==0,"One genuine identity-matched milestone is insufficient for dispatch even with server_ready already1");auto half=worker->snapshot();require((host_first?half.host_complete:half.online_complete)&&!(host_first?half.online_complete:half.host_complete),"Only explicitly signaled startup stage is recorded");
  state->runtime.online=1;worker->startup_complete(second,&state->execution);exited.wait();task.join();if(task.error)std::rethrow_exception(task.error);auto returned=worker->snapshot();require(returned.phase==a::Phase::Returned&&returned.memory.phase==anadius::worker_handoff::Phase::Returned&&state->configured==1&&state->external==1&&state->socket_closes==2&&state->port_closes==1&&state->gate_deletes==2&&state->cleanups==1,"Both genuine milestones permit actual native worker/no-session995 drain; Graph/Resources/Inputs retire on original worker before memory Returned");
  require(worker->finish_after_join()&&worker->snapshot().phase==a::Phase::Closed&&worker->snapshot().memory.worker_exit_verified,"Controller finishes only after actual Domain NativeThreads/FLS exit and independent memory self-handle join");
@@ -169,26 +175,115 @@ void startup_gate_normal(bool host_first){anadius::license_recovered::Authentica
  rejects([&]{worker->bind_authentication_code(authentication);},"Closed Worker rejects auth binding");worker.reset();state->configure_hook={};finish_state(state);
 }
 
+[[noreturn]]void original_dispatch_without_startup_milestones(){
+ auto state=std::make_shared<State>();selected=state.get();auto opts=settings(state);
+ auto configure_base=std::move(opts.configure);opts.configure={};
+ opts.configure=[configure_base=std::move(configure_base)](a::Inputs& in){
+  configure_base(in);auto& lifecycle=in.graph.policy.lifecycle;
+  lifecycle.select_owner={};lifecycle.after={};lifecycle.returned={};lifecycle.external_drained={};lifecycle.lifetime.reset();
+  lifecycle.mode=anadius::session_policy::LifecycleMode::OriginalApplication;
+ };
+ opts.startup_timeout_ms=500;
+ auto worker=make_worker(state,std::move(opts));Task task;
+ // Set after passive construction, before native launch: original Worker must
+ // read the actual startup cell at configure time rather than cache initial0.
+ state->show_lsx=7;
+ state->dispatch_hook=[&]{
+  const auto active=worker->snapshot();
+  require(active.phase==a::Phase::Serving&&!active.online_complete&&!active.host_complete&&active.pending_retained&&state->runtime.server_ready==1&&state->config.server_port==12345&&state->gets==1&&state->accepts==1,"Original application reaches actual first physical dispatch without Host/Online startup notifications");
+  require(::FlsGetValue(state->native.domain->native_fls_index())&&!state->external&&!state->socket_closes&&!state->port_closes&&!state->cleanups,"Observation retains live source/PTD/IO owners without fabricating completion or cleanup");
+  require(state->inputs.load()&&state->inputs.load()->graph.show_lsx==7,"Original Worker propagates late startup ShowLSX byte to the actual Graph options before first dispatch");
+  // This fixture's normal terminal995 path requires an explicit null-owner
+  // selector. OriginalApplication forwards the real owner and rearms accept.
+  // End this isolated observation without pretending the server retired.
+  ::ExitProcess(825);
+ };
+ task.launch(*state->native.threads,[&]{worker->run_server(state->config.server_port,state->runtime.server_ready,state->execution);});
+ task.join();throw std::runtime_error("Original dispatch observation was not reached");
+}
+
+void close_continuation(std::string_view mode){
+ auto state=std::make_shared<State>();selected=state.get();auto opts=settings(state);
+ opts.close_retry_timeout_ms=mode=="close-disabled"?0U:mode=="close-timeout"?200U:5000U;
+ DWORD original=0;void* fiber=nullptr;void* ptd=nullptr;
+ state->close_hook=[&]{
+  const auto here=::GetCurrentThreadId();auto* current=::FlsGetValue(state->native.domain->native_fls_index());
+  if(!original){original=here;fiber=::GetCurrentFiber();ptd=current;}
+  require(current&&original==here&&fiber==::GetCurrentFiber()&&ptd==current,"Every external close retry retains exact original worker/fiber/Domain PTD");
+  if(mode=="close-unknown")throw o::QuiescenceDeferred();
+  return mode=="close-normal"&&state->external>=3;
+ };
+ auto worker=make_worker(state,std::move(opts));Task task;
+ task.launch(*state->native.threads,[&]{worker->run_server(state->config.server_port,state->runtime.server_ready,state->execution);});state->armed.wait();
+ worker->startup_complete(e::ReadyStage::Online,&state->execution);worker->startup_complete(e::ReadyStage::Host,&state->execution);
+ auto waiting=[&](std::uint64_t epoch){
+  for(unsigned i=0;i<3000;++i){const auto snap=worker->snapshot();if(snap.phase==a::Phase::WaitingClose&&snap.close_epoch==epoch)return snap;if(snap.phase==a::Phase::Poisoned)break;::Sleep(1);}
+  ::ExitProcess(825); // never unwind owners while our native thread may be live
+ };
+ if(mode=="close-normal"||mode=="close-poison"){
+  const auto first=waiting(1);
+  require(first.pending_retained&&first.worker_thread==task.id&&first.memory.phase==anadius::worker_handoff::Phase::Borrowed&&!first.close_retries&&state->closed_sockets==std::vector<s::Socket>{201}&&!state->port_closes&&!state->cleanups,"Known false drain retains worker/providers/TLS/listener after observed accept995 retires only pending socket201");
+  require(!worker->finish_after_join()&&!worker->cancel_unpublished(),"Controller cannot finish or cancel a started waiting close attempt");
+  if(mode=="close-poison")worker->startup_failed(&state->execution);
+  else{
+   ::SetLastError(0x48d1);require(!worker->retry_close(0)&&!worker->retry_close(2)&&::GetLastError()==0x48d1,"Zero/future close epoch rejects without wake or LastError loss");
+   std::atomic<bool> wrong_thread=false;std::thread other([&]{try{(void)worker->retry_close(1);}catch(const std::logic_error&){wrong_thread=true;}});other.join();require(wrong_thread,"Close continuation signal belongs to exact original controller");
+   worker->startup_complete(e::ReadyStage::Online,&state->execution);worker->request_stop();
+   require(::WaitForSingleObject(task.handle,20)==WAIT_TIMEOUT&&worker->snapshot().close_epoch==1&&state->external==1,"Startup/stop wake cannot authorize close retry or replay external proof");
+   require(!worker->prepare_join(),"Join preparation signals current close epoch while requiring a later native join turn");
+   const auto second=waiting(2);require(second.close_retries==1&&state->external==2&&!worker->retry_close(1),"A second false result publishes a new epoch; stale first retry cannot wake it");
+   require(worker->retry_close(2),"Second exact epoch authorizes final known drain recheck");
+  }
+ }
+ task.join();const auto result=worker->snapshot();
+ if(mode=="close-normal"){
+  require(result.phase==a::Phase::Returned&&!result.pending_retained&&result.close_epoch==2&&result.close_retries==2&&state->configured==1&&state->startups==1&&state->accepts==1&&state->external==3&&state->closed_sockets==std::vector<s::Socket>{201,200}&&state->port_closes==1&&state->cleanups==1,"Full concrete Worker resumes teardown; socket201 closes once for accept995 and listener200 only after final drain proof, without startup/IO replay");
+  require(!worker->retry_close(2)&&worker->finish_after_join()&&worker->snapshot().memory.worker_exit_verified&&!worker->retry_close(2),"Close signal cannot replace actual native/FLS join or resurrect returned/closed Worker");worker.reset();state->close_hook={};finish_state(state);return;
+ }
+ require(result.phase==a::Phase::Poisoned&&result.pending_retained&&state->external==1&&state->closed_sockets==std::vector<s::Socket>{201}&&!state->port_closes&&!state->cleanups&&!worker->retry_close(result.close_epoch)&&!worker->finish_after_join(),"Timeout/disabled/opaque/poisoned close retains listener/providers after consumed accept995; no teardown or retry after native return");
+ if(mode=="close-timeout"){require(result.close_epoch==1&&!result.close_retries,"Close budget expiration does not invent controller retry");::ExitProcess(821);}
+ if(mode=="close-disabled"){require(!result.close_epoch,"Unselected close continuation keeps terminal deferral behavior");::ExitProcess(822);}
+ if(mode=="close-unknown"){require(!result.close_epoch,"Opaque exception with deferral type cannot enter close wait");::ExitProcess(823);}
+ if(mode=="close-poison")::ExitProcess(824);::ExitProcess(826);
+}
 struct RouteRecord {
+ const std::uint8_t* show_lsx=nullptr;
  unsigned factories=0,runs=0,requests=0,finishes=0,cancels=0,failures=0,probes=0;bool identities=true,finish_allowed=false,active_refused=false;anadius::configuration::State* config=nullptr;b::RuntimeSeed* runtime=nullptr;e::Execution* execution=nullptr;b::SourceBackend* backend=nullptr;std::vector<e::ReadyStage> stages;std::vector<std::string> order;std::function<void()> run_hook;
 };
 RouteRecord* route_record=nullptr;
 unsigned __stdcall own_probe(void*){++route_record->probes;return 0;}
-struct RouteWorker final:b::ApplicationWorker {
+struct RouteWorker:b::ApplicationWorker {
  RouteRecord& record;explicit RouteWorker(RouteRecord& r):record(r){}
  void run_server(std::uint16_t& port,std::uint8_t& ready,e::Execution& execution)noexcept override{++record.runs;record.identities&=&port==&record.config->server_port&&&ready==&record.runtime->server_ready&&&execution==record.execution;port=0x4321;try{execution.finish_flag_036820(ready);if(record.run_hook)record.run_hook();}catch(...){record.identities=false;}}
  void startup_complete(e::ReadyStage stage,const e::Execution* execution)noexcept override{record.identities&=execution==record.execution;if(stage==e::ReadyStage::Online)record.identities&=record.runtime->online_ready==1;record.stages.push_back(stage);}
  void startup_failed(const e::Execution* execution)noexcept override{++record.failures;record.identities&=execution==record.execution;}
  void request_stop()override{++record.requests;record.order.emplace_back("worker-stop");}bool finish_after_join()override{++record.finishes;record.order.emplace_back("worker-finish");return record.finish_allowed;}bool cancel_unpublished()override{++record.cancels;record.order.emplace_back("worker-cancel");return true;}
 };
+struct JoinRouteWorker final:RouteWorker,b::ApplicationJoinContinuation {
+ bool& allowed;unsigned& calls;
+ JoinRouteWorker(RouteRecord& r,bool& a,unsigned& c):RouteWorker(r),allowed(a),calls(c){}
+ bool prepare_join()override{++calls;record.order.emplace_back("join-prepare");return allowed;}
+};
+void backend_join_continuation(){
+ b4_test::Fixture fixture;RouteRecord record;route_record=&record;bool allowed=false;unsigned calls=0;
+ auto resources=fixture.resources();resources.server.reset();
+ resources.application_worker=[&](b::CallbackStateView){return std::make_unique<JoinRouteWorker>(record,allowed,calls);};
+ auto source=std::make_unique<b::SourceBackend>(fixture.runtime_seed(),std::move(resources));anadius::configuration::State config{};std::uint8_t x=0,y=0,z=0;source->bind_state(config,{x,y,z});source->register_exit(anadius::bootstrap_native_recovered::Resolver{}.exit_callback());
+ auto providers=source->providers();std::uint32_t id=0;const auto handle=t::begin_thread_05e8e0(nullptr,0,reinterpret_cast<std::uintptr_t>(&own_probe),0,0,&id,providers.threads);require(handle&&providers.threads.close_handle(handle),"Join-continuation route owns exact synthetic tracked native ticket");
+ const auto lower_wait=fixture.api_state.wait_hook;fixture.api_state.wait_hook=[&](HANDLE h,DWORD timeout){require(calls==fixture.stops&&record.requests==calls&&timeout==(allowed?7U:0U),"Controller stop and join continuation precede nonblocking seal/poll; configured blocking timeout used only after readiness");return allowed?lower_wait(h,timeout):DWORD{WAIT_TIMEOUT};};
+ require(!source->stop_and_join()&&calls==1&&!record.finishes&&source->tracked_jobs()==1,"False join preparation retains source routes/worker and skips finish after wait0 timeout");
+ allowed=true;record.finish_allowed=true;require(source->stop_and_join()&&calls==2&&record.finishes==1&&record.probes==1&&!source->tracked_jobs(),"Known later preparation still requires independent native join and route drain before finish");
+ require(source->stop_and_join()&&calls==2&&record.finishes==1,"Completed stop/join cannot repeat continuation or worker finish");source.reset();route_record=nullptr;
+}
 void backend_routes(){
  b::Resources defaults;require(!defaults.join_api.process&&!defaults.join_api.duplicate&&!defaults.join_api.wait&&!defaults.join_api.close&&!defaults.join_api.error&&!defaults.join_api.set_error&&defaults.join_timeout_ms==0,"Default Resources join selector is known-empty with explicit zero timeout, never indeterminate native operands");
  b4_test::Fixture fixture;RouteRecord record;route_record=&record;
  {auto mixed=fixture.resources();mixed.application_worker=[](b::CallbackStateView){return std::make_unique<RouteWorker>(*route_record);};rejects<std::invalid_argument>([&]{b::SourceBackend wrong(fixture.runtime_seed(),std::move(mixed));},"Resources refuses simultaneous legacy server and application-worker factory");}
  {auto missing=fixture.resources();missing.server.reset();rejects<std::invalid_argument>([&]{b::SourceBackend wrong(fixture.runtime_seed(),std::move(missing));},"Resources requires exactly one server or worker assembly route");}
- auto resources=fixture.resources();resources.server.reset();fixture.online->found=false;const auto source_stop=resources.stop_sources;resources.stop_sources=[&]{record.order.emplace_back("lower-stop");return source_stop();};resources.application_worker=[&](b::CallbackStateView view){++record.factories;record.config=&view.configuration;record.runtime=&view.runtime;record.execution=&view.execution;return std::make_unique<RouteWorker>(record);};
+ auto resources=fixture.resources();resources.server.reset();fixture.online->found=false;const auto source_stop=resources.stop_sources;resources.stop_sources=[&]{record.order.emplace_back("lower-stop");return source_stop();};resources.application_worker=[&](b::CallbackStateView view){++record.factories;record.config=&view.configuration;record.runtime=&view.runtime;record.execution=&view.execution;record.show_lsx=view.show_lsx;return std::make_unique<RouteWorker>(record);};
  auto source=std::make_unique<b::SourceBackend>(fixture.runtime_seed(),std::move(resources));record.backend=source.get();anadius::configuration::State config{};config.executable_path=u"own-synthetic.exe";std::uint8_t lsx=0,console=0,no_console=0;source->bind_state(config,{lsx,console,no_console});require(record.factories==1&&record.config==&config&&record.runtime==&source->state()&&record.execution&&fixture.stops==0,"SourceBackend invokes factory once with exact stable live configuration/runtime/Execution before source publication");rejects([&]{source->bind_state(config,{lsx,console,no_console});},"SourceBackend cannot rebind factory state or replace live application worker");
  source->register_exit(anadius::bootstrap_native_recovered::Resolver{}.exit_callback());source->worker(anadius::recovered::Worker::second_035b60); // obtain route without invoking before server flag
+ require(record.show_lsx==&lsx,"Backend factory receives the exact Runtime ConsoleState ShowLSX cell");lsx=7;require(*record.show_lsx==7,"Borrowed startup flag stays live after factory construction");
  source->between_workers();require(record.stages==std::vector<e::ReadyStage>{e::ReadyStage::Host},"Host milestone is emitted only after actual Host source callback returns");
  auto providers=source->providers();std::uint32_t id=0;const auto handle=t::begin_thread_05e8e0(nullptr,0,reinterpret_cast<std::uintptr_t>(&own_probe),0,0,&id,providers.threads);require(handle&&providers.threads.close_handle(handle),"Selected route test owns retained fake TrackingThreads job while original launch handle closes");
  const auto lower_wait=fixture.api_state.wait_hook;fixture.timeout_once=true;fixture.api_state.wait_hook=[&](HANDLE handle,DWORD timeout){record.order.emplace_back("join-wait");require(record.requests==fixture.stops&&record.requests>0,"Application request_stop and lower stop_sources precede every blocking tracker wait");return lower_wait(handle,timeout);};
@@ -260,7 +355,7 @@ struct IdentityOnline final:b::OnlineComponent {
  rejects([&]{worker->bind_effects_online(online);},"Caught identity callback reentry prevents outer binding from resuming");const auto snap=worker->snapshot();
  require(result&&nested==1&&snap.phase==a::Phase::Poisoned&&!snap.pending_retained&&!snap.worker_thread&&!snap.online_complete&&!state->configured&&!state->startups&&snap.memory.phase==anadius::worker_handoff::Phase::Prepared&&!worker->finish_after_join(),"Identity callback cannot mutate roots, enter worker, publish readiness or close prepared memory after caught reentry");::ExitProcess(result);
 }
-void child(std::string_view mode){if(mode.starts_with("identity-"))identity_child(mode);auto state=std::make_shared<State>();selected=state.get();auto opts=settings(state);if(mode=="timeout")opts.startup_timeout_ms=20;
+void child(std::string_view mode){if(mode=="original-dispatch")original_dispatch_without_startup_milestones();if(mode.starts_with("close-")){close_continuation(mode);return;}if(mode.starts_with("identity-"))identity_child(mode);auto state=std::make_shared<State>();selected=state.get();auto opts=settings(state);if(mode=="timeout")opts.startup_timeout_ms=20;
  if(mode=="configure")state->configure_hook=[&](a::Inputs& input){auto marker=std::make_shared<Marker>(*state);state->marker=marker;input.server.state_lifetime=marker;throw std::runtime_error("Opaque configured prefix");};
  if(mode=="protected")state->configure_hook=[](a::Inputs& input){static anadius::configuration::State foreign{};input.graph.state.configuration=&foreign;};
  auto worker=make_worker(state,std::move(opts));if(mode=="retirement")state->retirement_hook=[&]{try{const auto before=worker->snapshot();state->retirement_valid=before.phase==a::Phase::Serving&&before.pending_retained;worker->run_server(state->config.server_port,state->runtime.server_ready,state->execution);state->retirement_valid=state->retirement_valid.load()&&worker->snapshot().phase==a::Phase::Poisoned;}catch(...){state->retirement_valid=false;}};if(mode=="wrongworker"){worker->run_server(state->config.server_port,state->runtime.server_ready,state->execution);require(worker->snapshot().phase==a::Phase::Poisoned&&!state->configured&&!state->startups&&!worker->finish_after_join(),"Controller cannot impersonate native Domain server worker or synthesize successful finish");::ExitProcess(801);}
@@ -274,4 +369,4 @@ void child(std::string_view mode){if(mode.starts_with("identity-"))identity_chil
 }
 void isolated(std::wstring mode,DWORD expected){std::array<wchar_t,32768> path{};auto n=::GetModuleFileNameW(nullptr,path.data(),static_cast<DWORD>(path.size()));require(n&&n<path.size(),"Own application-worker fixture path found");std::wstring command=L"\""+std::wstring(path.data(),n)+L"\" --"+mode;STARTUPINFOW startup{};startup.cb=sizeof(startup);PROCESS_INFORMATION process{};require(::CreateProcessW(nullptr,command.data(),nullptr,nullptr,FALSE,CREATE_NO_WINDOW,nullptr,nullptr,&startup,&process)!=0,"Isolated retained application-worker fixture launched");DWORD code=0;require(::WaitForSingleObject(process.hProcess,30000)==WAIT_OBJECT_0&&::GetExitCodeProcess(process.hProcess,&code)&&code==expected,"Application-worker child reaches exact retained-prefix assertions");::CloseHandle(process.hThread);::CloseHandle(process.hProcess);}
 }
-int main(int argc,char** argv){try{if(argc==2)child(std::string_view(argv[1]).substr(2));passive_validation();composition_constructor_failure();backend_routes();backend_capture_retirement();worker_capture_retirement();startup_gate_normal(false);startup_gate_normal(true);isolated(L"wrongworker",801);isolated(L"configure",802);isolated(L"protected",803);isolated(L"stop",804);isolated(L"online-failed",805);isolated(L"host-failed",806);isolated(L"timeout",807);isolated(L"identity",808);isolated(L"retirement",809);isolated(L"identity-paths",811);isolated(L"identity-auth",812);isolated(L"identity-mutex",813);isolated(L"identity-finish",814);isolated(L"identity-run",815);isolated(L"identity-rebind",816);isolated(L"identity-ready",817);std::cout<<"PASS: "<<checks<<" application-worker core checks; actual startup barrier and SourceBackend routes with nine retained prefixes and seven identity-reentry children\n";return 0;}catch(const std::exception& ex){std::cerr<<ex.what()<<'\n'<<std::flush;::ExitProcess(1);}catch(...){std::cerr<<"Unknown own worker test failure\n"<<std::flush;::ExitProcess(2);}}
+int main(int argc,char** argv){try{if(argc==2){child(std::string_view(argv[1]).substr(2));return 0;}passive_validation();composition_constructor_failure();backend_routes();backend_join_continuation();backend_capture_retirement();worker_capture_retirement();startup_gate_normal(false);startup_gate_normal(true);isolated(L"original-dispatch",825);isolated(L"close-normal",0);isolated(L"close-timeout",821);isolated(L"close-disabled",822);isolated(L"close-unknown",823);isolated(L"close-poison",824);isolated(L"wrongworker",801);isolated(L"configure",802);isolated(L"protected",803);isolated(L"stop",804);isolated(L"online-failed",805);isolated(L"host-failed",806);isolated(L"timeout",807);isolated(L"identity",808);isolated(L"retirement",809);isolated(L"identity-paths",811);isolated(L"identity-auth",812);isolated(L"identity-mutex",813);isolated(L"identity-finish",814);isolated(L"identity-run",815);isolated(L"identity-rebind",816);isolated(L"identity-ready",817);std::cout<<"PASS: "<<checks<<" application-worker core checks; startup/SourceBackend routes, explicit close continuation and retained-prefix source scenarios\n";return 0;}catch(const std::exception& ex){std::cerr<<ex.what()<<'\n'<<std::flush;::ExitProcess(1);}catch(...){std::cerr<<"Unknown own worker test failure\n"<<std::flush;::ExitProcess(2);}}

@@ -1,0 +1,136 @@
+{
+  "schema": "native-system-category-conditions.static.v1",
+  "recorded_at": "2026-11-04T19:57:28.5003931Z",
+  "status": "FRESH_STATIC_EVIDENCE_EXPORTED_AND_CLOSED",
+  "original_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": "REA6.8.0/Ghidra12.1.4",
+  "fresh_records": [
+    {
+      "file": "bytes-180084248.json",
+      "evidence_id": "ev_1ea5000d1c7df80f8cb644f6b4cc8c202b2846fd2dbdb12b1cf46e5dc7e1b38d",
+      "operation": "read_bytes",
+      "parameters": {
+        "address": "0x180084248",
+        "length": 48
+      },
+      "sha256": "14498d9a5c6e1773dab0caa5c7b422e7649879e63943e3305cf6157cd1b67513"
+    },
+    {
+      "file": "pseudo-18000d120.json",
+      "evidence_id": "ev_2703e5d60e1552f400c965b6a04a319e112909726b223dc74229c85396952c5f",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x18000d120"
+      },
+      "sha256": "00588f5896dd6ade367a8a1b093fa09ca92abf1fd18369653e1faf2c5b7e16e4"
+    },
+    {
+      "file": "instructions-18000d120.json",
+      "evidence_id": "ev_b710b3fa2de15968bfcc2b9ea304533dc40f29a40df9aa8603949b4a7480cb0b",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x18000d120"
+      },
+      "sha256": "558c1f3fdd7e75c8597a380f4e88d89d75109941469219d8e232bfc295084944"
+    },
+    {
+      "file": "pseudo-18000e0c0.json",
+      "evidence_id": "ev_a758575bf117f7d07103c3cc4011ee9dae151c8d350e1373fd09cf786efe2083",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x18000e0c0"
+      },
+      "sha256": "07741f0c34aed81d8ca3be74fe539f3963591bbf9eaf6d85b09c5e3fe9d46b6a"
+    },
+    {
+      "file": "instructions-18000e0c0.json",
+      "evidence_id": "ev_505ed7772e43b9adf17a5dd278792b432e3746fe0cf412849c3f042a2467d0fe",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x18000e0c0"
+      },
+      "sha256": "ccba5e5701574546196d1d3f5d6626c93c74eb1e43b9e03e08d0fdacbe3811a1"
+    },
+    {
+      "file": "pseudo-18000e0e0.json",
+      "evidence_id": "ev_ee607098f38b6d028b9f425789b3f0c6c1cc8ce9f22ffb7a7be69ce68a2c6444",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x18000e0e0"
+      },
+      "sha256": "15e7499dfd2e2b943baeec71c1bb2917cbd3ad22fe2801aa0d702c7c9e1fcadc"
+    },
+    {
+      "file": "instructions-18000e0e0.json",
+      "evidence_id": "ev_a89be8389c95e312fd9c2182efa59ce6696f5db3f474657ab55e0157bb04af67",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x18000e0e0"
+      },
+      "sha256": "223579e97abee517d293fc06e8aaee2c2bf1b6a9991ebb1325bd8426161a67fc"
+    }
+  ],
+  "retained_files": [
+    {
+      "file": "session-before.json",
+      "bytes": 208834,
+      "sha256": "82a81461562a916a515de68a2606e8b572b003a04de0fb9982d662c0b6b36625"
+    },
+    {
+      "file": "session-aligned.json",
+      "bytes": 208664,
+      "sha256": "2ec73a36fe644744047cf18715ff8d0aae6f350c4f79d4e7d8adf89036eeecd8"
+    },
+    {
+      "file": "open.json",
+      "bytes": 583,
+      "sha256": "5b7ea33ba76688b393f2b34c4db25d8280fa94041da1053093eb3bc18527e599"
+    },
+    {
+      "file": "export.json",
+      "bytes": 603,
+      "sha256": "e40ed34a0dd472d85049541d012170fbfcdb419c71396d413fee50328d373ea7"
+    },
+    {
+      "file": "rea-evidence-bundle.json",
+      "bytes": 32775,
+      "sha256": "cceca0e9602b548af1610e315c63b716a427a7ac0112869b24ff660171e31ade"
+    },
+    {
+      "file": "close.json",
+      "bytes": 140,
+      "sha256": "ca82b91e779bad3a72ee58e39fbaaf09b81affadf49ff1db9f30e1ab8e56bc4d"
+    },
+    {
+      "file": "session-after.json",
+      "bytes": 208664,
+      "sha256": "2ec73a36fe644744047cf18715ff8d0aae6f350c4f79d4e7d8adf89036eeecd8"
+    },
+    {
+      "file": "original-hash.json",
+      "bytes": 285,
+      "sha256": "52ebba1edbf5516bd97840e0a4086917b0532771275dfb851836e3913fec64d2"
+    },
+    {
+      "file": "native-findings.md",
+      "bytes": 6417,
+      "sha256": "5b23e2090a6a8466c9ae811c693a7e7d71c021245a3647cdf52442c84efa1d43"
+    }
+  ],
+  "supplementary": {
+    "evidence_id": "ev_eb486a9416f6cbfeed05d5815675c4a981ffb8d4bb337a32016db6ebf9b5f4aa",
+    "scope": "Prior complete32-byte object self-identity andvtable binding; not fresh in this session",
+    "file": "outputs/anadius-session-policy-source/system-message-020950-20261104/bytes-1800a1110.json"
+  },
+  "result": "Default condition preserves value andthis; equivalent overloads compare category+8 selfkey andvalue. No Win32genericmapping in3completebodies. Inherited C++base normaltypedsemantics appropriateforselectedstableidentitydomain.",
+  "native_executed": false,
+  "source_edited": false,
+  "compiled_or_tested_or_linked": false,
+  "original_unchanged": true,
+  "session_closed": true,
+  "limitations": [
+    "No arbitrary foreign category+8 aliaslayout or crossmodule ABI reconstruction.",
+    "No MSVC class/RTTI/EH/catch/lifetime equivalence.",
+    "Zero bundled Unknown rows is not wholeprogram completeness."
+  ]
+}

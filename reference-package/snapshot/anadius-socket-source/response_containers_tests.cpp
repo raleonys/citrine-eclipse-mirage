@@ -55,5 +55,36 @@ void reloads(){
     {Fixture f;f.seed_map(8);f.bytes.pool.api.null_allocate=true;rejects<s::UnsupportedInput>([&]{f.grow(1);});check(f.bytes.pool.api.frees.empty()&&f.queue.map_size_d8==8,"small null new map rejected by bounded COPY, no invented invalid handler");}
     {Fixture f;f.seed_map(8);const auto address=f.bytes.maps.address_of(f.queue.map_d0);rejects<s::UnsupportedInput>([&]{f.bytes.maps.view(address+1,8);});rejects<s::UnsupportedInput>([&]{f.bytes.maps.view(address,7);});f.bytes.bindings[31]=f.bytes.bindings[0];rejects<s::UnsupportedInput>([&]{f.bytes.maps.address_of(f.queue.map_d0);});}
 }
+struct OwnerMaps final:s::DequeMapResolver {
+    s::DequeMapMemory owned;unsigned addresses=0,views=0;
+    explicit OwnerMaps(std::span<const s::DequeMapBinding> rows):owned{rows}{}
+    s::MemoryLookup lookup_address(std::span<s::WriteFinishString*> slots,std::uintptr_t& output)override{
+        ++addresses;return owned.lookup_address(slots,output);
+    }
+    s::MemoryLookup lookup_map(std::uintptr_t address,std::uint64_t bytes,std::span<s::WriteFinishString*>& output)override{
+        ++views;return owned.lookup_map(address,bytes,output);
+    }
+};
+void authoritative_maps(){
+    Fixture f;f.seed_map(8,3);OwnerMaps owner(f.bytes.maps.bindings);
+    const auto before=std::vector<s::WriteFinishString*>(f.queue.map_d0.begin(),f.queue.map_d0.end());
+    std::array<s::DequeMapBinding,2> stale{{f.bytes.bindings[0],f.bytes.bindings[0]}};
+    f.bytes.maps.bindings=stale;f.bytes.maps.resolver=&owner;
+    // Actual026670 must find the new map through its owner and preserve all
+    // pointer slots even though the legacy map table has duplicate old rows.
+    f.grow(1);check(f.queue.map_size_d8==16&&owner.addresses>0&&owner.views>0,"actual deque growth resolves old/new typed maps through exact owner");
+    for(std::size_t index=0;index<before.size();++index)
+        check(f.queue.map_d0[index>=3?index:8+index]==before[index],"owner-routed growth preserves saved suffix and relocated prefix");
+    const auto address=f.bytes.maps.address_of(f.queue.map_d0);
+    const auto current=owner.owned.bindings;
+    std::array<s::DequeMapBinding,1> valid{{{address,f.queue.map_d0}}};f.bytes.maps.bindings=valid;owner.owned.bindings={};
+    rejects<s::UnsupportedInput>([&]{f.bytes.maps.address_of(f.queue.map_d0);});
+    rejects<s::UnsupportedInput>([&]{f.bytes.maps.view(address,8);});
+    check(f.bytes.maps.address_of({})==0,"null map identity keeps existing source zero behavior without fabricated lookup");
+    owner.owned.bindings=current;
+    std::array<s::DequeMapBinding,2> ambiguous{{valid[0],valid[0]}};owner.owned.bindings=ambiguous;
+    rejects<s::UnsupportedInput>([&]{f.bytes.maps.address_of(f.queue.map_d0);});
+    rejects<s::UnsupportedInput>([&]{f.bytes.maps.view(address,8);});
 }
-int main(){try{copying();growth();reloads();std::cout<<"PASS: "<<checks<<" socket response container checks; actual009eb0/026670, independent copy/NUL/alignment, pointer permutation and zero oracle, cached/live fields and terminal prefixes\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}
+}
+int main(){try{copying();growth();reloads();authoritative_maps();std::cout<<"PASS: "<<checks<<" socket response container checks; actual009eb0/026670, independent copy/NUL/alignment, pointer permutation and zero oracle, cached/live fields and terminal prefixes\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}

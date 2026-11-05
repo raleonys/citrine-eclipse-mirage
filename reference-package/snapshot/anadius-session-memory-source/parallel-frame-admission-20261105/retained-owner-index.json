@@ -1,0 +1,50 @@
+[
+  {
+    "source": "outputs/anadius-all-functions.pseudo.c",
+    "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "address": "0x180023000",
+    "file": "retained-owner-180023000.pseudo.txt",
+    "sha256": "d6a96abcf6d51175f506b5aab767c99f31d04fca1c9389d62206a79606179d75",
+    "evidence_id": "ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f"
+  },
+  {
+    "source": "outputs/anadius-all-functions.pseudo.c",
+    "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "address": "0x180025c40",
+    "file": "retained-owner-180025c40.pseudo.txt",
+    "sha256": "b82764813cc39f4aea80b2e6c3b4c74e5dcaccfc76ece5f8f86eefe1e5b67b00",
+    "evidence_id": "ev_987f9b5735e7f43bac4690a5614f3bbd07f7463da6bc2081c7fff428c7a9fce8"
+  },
+  {
+    "source": "outputs/anadius-all-functions.pseudo.c",
+    "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "address": "0x1800280d0",
+    "file": "retained-owner-1800280d0.pseudo.txt",
+    "sha256": "c0d50f8a79308c8ef7b5419fdbefab291f99520471bbfa24b007de5788f8a61b",
+    "evidence_id": "ev_dcc519a12be00908ae90c988173ae9147418f1eb4771d95b34d3148914b0d9a2"
+  },
+  {
+    "source": "outputs/anadius-all-functions.asm.txt",
+    "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "address": "0x180023000",
+    "file": "retained-owner-180023000.assembly.txt",
+    "sha256": "9c7159182ebb41608241349d8b9a621b8eee7633c701c143387cf46c6389e70b",
+    "evidence_id": "ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575"
+  },
+  {
+    "source": "outputs/anadius-all-functions.asm.txt",
+    "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "address": "0x180025c40",
+    "file": "retained-owner-180025c40.assembly.txt",
+    "sha256": "5444961e19adc52da32b6869f45b2540c810155da686898e6b60775d2245c187",
+    "evidence_id": "ev_92dfa0f4b810ad3afcfb9df2b941fd14b2290a6abc953cfaa54c553b58d910e9"
+  },
+  {
+    "source": "outputs/anadius-all-functions.asm.txt",
+    "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "address": "0x1800280d0",
+    "file": "retained-owner-1800280d0.assembly.txt",
+    "sha256": "c3756e2ad49ea41d3fefa943b1b6e7cadd86c474efc293b26d2f422b7481901a",
+    "evidence_id": "ev_36d45e7ea060ccb9497a038a4fa3e7d55641d30c79a68da3da5ae7ff42e69c99"
+  }
+]

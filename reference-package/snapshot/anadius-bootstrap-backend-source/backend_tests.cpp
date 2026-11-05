@@ -24,7 +24,11 @@ void source_create_and_detach(){
         check(!value&&id==99&&f.lower.mapped==123,"failed source creation maps original lower LastError and leaves outputID alone");
         check(f.tracker.tracked_jobs()==0&&f.state.duplicated.empty()&&f.lower.contexts.empty(),"failure removes pre-reservation,does not duplicate,and source cleans Context");
         check(f.lower.libraries==std::vector<std::uintptr_t>{0x44},"original source failure releases acquired module");
-        check(f.tracker.stop_and_join(0),"empty failed-create graph can drain");
+        f.lower.create_hook={};id=0;
+        const auto retry=f.tracker.create_thread(nullptr,0,nullptr,0,&id);
+        check(retry&&id==55&&f.lower.creations==2&&f.tracker.tracked_jobs()==1&&!f.tracker.poisoned(),
+            "known null create leaves admission open for an explicitly retried request");
+        check(f.tracker.close_handle(retry)&&f.tracker.stop_and_join(0),"successful retry detaches original and drains retained duplicate");
     }
 }
 void retry_and_pending(){
@@ -79,7 +83,43 @@ void native_owned_thread(){
     check(::SetEvent(gate)!=FALSE&&tracker.stop_and_join(5000),"real SDK wait/close drains only our released native worker");
     check(::CloseHandle(gate)!=FALSE,"own gate closed after worker drain");
 }
+void require_poison_sealed(Fixture& f){
+    const auto before=f.lower.creations;const auto tickets=f.tracker.tracked_jobs();
+    bool rejected=false;
+    try{std::uint32_t id=0;f.tracker.create_thread(nullptr,0,nullptr,0,&id);}
+    catch(const std::logic_error&){rejected=true;}
+    catch(...){std::_Exit(84);}
+    if(!rejected||f.lower.creations!=before||f.tracker.tracked_jobs()!=tickets)std::_Exit(85);
+}
+int join_terminal(const std::string& mode){
+    std::set_terminate([]{std::_Exit(89);});Fixture f;
+    const bool prefix=mode=="--wait-suffix-throws"||mode=="--close-suffix-throws";
+    const bool waiting=mode=="--wait-throws"||mode=="--wait-suffix-throws";
+    f.create();if(prefix)f.create();
+    unsigned calls=0;
+    if(waiting)f.state.wait_hook=[&](auto,auto)->DWORD{
+        if(++calls==(prefix?2U:1U)){throw Failure{};}
+        return WAIT_OBJECT_0;
+    };
+    else f.state.close_hook=[&](auto)->BOOL{
+        // Model an injected boundary that throws after its opaque side effect.
+        // We cannot know whether the numeric HANDLE is still a live duplicate.
+        if(++calls==(prefix?2U:1U)){throw Failure{};}
+        return TRUE;
+    };
+    error_value=876;
+    bool threw=false;try{(void)f.tracker.stop_and_join(0);}catch(const Failure&){threw=true;}catch(...){std::_Exit(98);}
+    if(!threw||!f.tracker.poisoned()||f.tracker.tracked_jobs()!=1||error_value!=876)std::_Exit(97);
+    const auto waits=f.state.waited,closes=f.state.closed;
+    const auto expected=prefix?2U:1U;
+    if(waits.size()!=expected||closes.size()!=(waiting?expected-1:expected))std::_Exit(96);
+    f.state.wait_hook={};f.state.close_hook={};
+    if(f.tracker.stop_and_join(0)||f.state.waited!=waits||f.state.closed!=closes||f.tracker.tracked_jobs()!=1)std::_Exit(95);
+    require_poison_sealed(f);
+    return 90; // Unknown suffix remains retained; destructor must terminate.
+}
 int terminal(const std::string& mode){
+    if(mode=="--wait-throws"||mode=="--close-throws"||mode=="--wait-suffix-throws"||mode=="--close-suffix-throws")return join_terminal(mode);
     std::set_terminate([]{std::_Exit(89);});Fixture f;
     if(mode=="--poison")f.state.duplicate_hook=[](auto,auto){return FALSE;};
     if(mode=="--duplicate-throws")f.state.duplicate_hook=[](auto,auto)->BOOL{throw Failure{};};
@@ -88,14 +128,19 @@ int terminal(const std::string& mode){
     try{std::uint32_t id=0;f.tracker.create_thread(nullptr,0,nullptr,0,&id);}catch(const Failure&){threw=true;}catch(...){std::_Exit(94);}
     if((mode=="--duplicate-throws"||mode=="--create-throws")!=threw)std::_Exit(93);
     if(mode=="--create-throws"&&error_value!=867)std::_Exit(92);
-    if(mode!="--live"&&(!f.tracker.poisoned()||f.tracker.tracked_jobs()!=1||f.tracker.stop_and_join(0)))std::_Exit(91);
+    if(mode!="--live"){
+        if(!f.tracker.poisoned()||f.tracker.tracked_jobs()!=1)std::_Exit(91);
+        // Exercise poison admission BEFORE stop_and_join seals accepting.
+        require_poison_sealed(f);
+        if(f.tracker.stop_and_join(0))std::_Exit(91);
+    }
     return 90; // live/poisoned tracker destruction must terminate instead.
 }
 }
 int main(int argc,char** argv){
     if(argc==2)return terminal(argv[1]);
     try{source_create_and_detach();retry_and_pending();forwarding();native_owned_thread();
-        for(const auto* mode:{"--live","--poison","--duplicate-throws","--create-throws"})check(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==89,"undrained/poisoned tracker destruction is explicit terminal contract");
+        for(const auto* mode:{"--live","--poison","--duplicate-throws","--create-throws","--wait-throws","--close-throws","--wait-suffix-throws","--close-suffix-throws"})check(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==89,"undrained/poisoned tracker destruction is explicit terminal contract; unknown wait/close suffix never replayed");
         std::cout<<"PASS: "<<checks<<" bootstrap-backend tracking checks; source begin/detach,pre-create tickets,LastError,pending joins/retry/poison,alllower forwarding and one own real Win32 worker; no original target executed\n";
     }catch(const std::exception& e){std::cerr<<"FAIL after "<<checks<<" checks: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL after "<<checks<<" checks\n";return 1;}
 }

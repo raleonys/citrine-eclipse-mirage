@@ -1,4 +1,17 @@
+<!-- PENDING-SOURCE-CHANGES -->
+2026-11-05: Kullanıcının açık isteğiyle güncel tam ortak derleme ve testler geçti. Üretim DLL linki başarılı; DLL yüklenmedi/çalıştırılmadı. 296 nesne, 356 test grubu ve 19 framework terminal senaryosu doğrulandı. Güncel kaynakların son tam derlemeye göre bekleyen farkı 0. Bu sonuç tam davranış/loader/native ABI eşdeğerliği kanıtı değildir. Kanıt: `dll-critical-path/current-rebuild.evidence.json`. Önceki aşama metinleri tarihseldir; ZIP sonucu ayrı paket kaydındadır.
+<!-- END-PENDING-SOURCE-CHANGES -->
+
 # B46 — Somut uygulama grafiği ve event sahipliği
+
+**Güncel kaynak adımı, henüz derlenmedi:** Dar çocuk JobLogic kapsamı, açık
+Jobs seçimi, Information'ın iki çocuk çağrısı ve somut Content'in dar çocuk
+kapsamı eklendi. Mevcut033d70 kullanılır; Licensing çocuk yetkisi ve Profile'ın
+tam mesaj bağlantısı henüz açık.
+[Content ayrıntısı](../anadius-content-effects-source/job-content.md).
+Aynı-worker seçili
+Jobs entegrasyon test kaynağı eklendi, çalıştırılmadı; çocuk Graph testi değildir.
+[Ayrıntılar](job-graph.md). Aşağıdaki PASS sonuçları tarihseldir.
 
 `application_graph::Graph::create(Options)` ve `install_server(...)`, gerçek Policy/Profile/NativeLogic/XMLReader/Router/kripto/random kurulumunu tek fabrikada toplar. Caller SessionLogic/Router/XML/context/event sınıfları kurmaz. Exact StateView canlı configuration/online/avatar hücrelerini sahipleriyle tutar; state kopyası yapılmaz, her dispatch’te Router span/referansları yeniden kurulur. Controlled update yalnız aynı worker üzerinde yapılır.
 

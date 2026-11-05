@@ -7,6 +7,7 @@
 #include <ostream>
 
 namespace anadius::online_factory {
+enum class LifetimeProfile {Cooperative,OriginalCrt};
 struct Options {
     std::shared_ptr<void> lifetime;
     std::shared_ptr<std::ostream> stream;
@@ -18,14 +19,25 @@ struct Options {
     std::unique_ptr<file_recovered::Factory> files=std::make_unique<file_recovered::NativeFactory>();
     decltype(&::GetProcAddress) get_proc=::GetProcAddress;
     online_version::CodeLease code_lease;
-    // Explicit foreign callback/job admission stop AND completion attestation.
+    // Cooperative profile: explicit foreign callback/job admission stop AND
+    // completion attestation. OriginalCrt requires this slot to remain empty.
     // Invoked after source joins/exit cleanup, outside all component gates.
     // A true result is this selected host contract, not native/global proof.
     // stop_sources/the foreign-object contract MUST ALREADY exclude foreign
     // users before cleanup destroys the object/frees the module. This later
     // predicate cannot retroactively make those earlier operations safe.
     std::function<bool()> foreign_quiescent;
+    // OriginalCrt uses actual local module/object/call retirement, without an
+    // added external unload promise. It does not certify foreign/image safety.
+    // Appended HOST field: rebuild all by-value Options consumers together.
+    LifetimeProfile lifetime_profile=LifetimeProfile::Cooperative;
 };
+// Shared passive lifetime validation for this facade and Resources assembly.
+bool lifetime_configuration_valid(const Options&)noexcept;
+// Select original lifetime and the real native module-reference CodeLease.
+// Requires unselected profile and empty lease/proof slots. Construction calls
+// no module SDK; actual references are acquired only for loaded Online code.
+void select_native_original_online(Options&);
 // Consume callable donors while their receiving lifetime owner is alive.
 // A plain std::move of libc++ std::function may leave a small callable behind.
 Options take_options(Options&);

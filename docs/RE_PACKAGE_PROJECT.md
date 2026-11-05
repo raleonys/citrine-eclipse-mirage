@@ -25,6 +25,12 @@ The first snapshot contains 4,266 files and 758,168,656 bytes. The initial
 [archive 11 intake](RE_ARCHIVE11_REVIEW.md) records its manifest checks and
 supplied claims; its preliminary module map does not complete any file review.
 
+The current [archive 12 update](RE_ARCHIVE12_UPDATE.md) contains 6,514 files and
+860,673,543 bytes. Its [provenance](RE_ARCHIVE12_PROVENANCE.json) records the
+nine-part input identity and independent integrity checks. The supplied donor
+DLL status is now `LINKED_NOT_RUNTIME_VALIDATED`; the earlier blocked-link
+records describe Archive 11 only. Delivery intake does not complete file reviews.
+
 ## Review rules
 
 Every source, header, test, script, record and supplied artifact has a row.

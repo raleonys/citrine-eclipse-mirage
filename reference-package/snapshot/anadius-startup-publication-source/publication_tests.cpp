@@ -26,6 +26,30 @@ void mapping_and_failure(){
     release_platform.throw_release=true;rejects<std::runtime_error>([&]{release_execution.finish_flag_036820(release.server);},"injected unlock exception propagates");
     require(release.server==1&&release.mutex.count_4c==0&&release_events.bits()==0,"written flag retained but failed release emits no event");
 }
+void server_port_payload(){
+    for(std::uint16_t port:{0,80,443,65535}){
+        State state;Platform platform;sp::Milestones events;ex::Execution execution(state.mutex,state.flags(),state.cache,platform,&events);
+        require(!events.server_port(),"seed state supplies no bound-port snapshot");
+        ::SetLastError(0x6611);execution.finish_server_startup(state.server,port);
+        require(::GetLastError()==0x6611&&events.server_port()==port&&events.bits()==1&&!events.observed_all(),"bound port including zero publishes only with real Server event and preserves LastError");
+        std::optional<std::uint16_t> loaded;std::thread reader([&]{loaded=events.server_port();});reader.join();
+        require(loaded==port,"foreign atomic snapshot reads no raw configuration cell");
+        events.server_port_published(port,&execution);require(events.invalid()&&!events.server_port(),"second payload cannot replace published bound port");
+    }
+    State pending;Platform pending_platform;sp::Milestones pending_events;ex::Execution pending_execution(pending.mutex,pending.flags(),pending.cache,pending_platform,&pending_events);
+    pending_events.server_port_published(1234,&pending_execution);require(!pending_events.server_port(),"payload alone cannot impersonate Server completion");
+    pending_events.published(ex::ReadyStage::Server,&pending_execution);require(pending_events.server_port()==1234,"same-Execution Server event releases earlier payload");
+    State wrong;Platform wrong_platform;sp::Milestones wrong_events;ex::Execution wrong_execution(wrong.mutex,wrong.flags(),wrong.cache,wrong_platform,&wrong_events);
+    rejects<std::invalid_argument>([&]{wrong_execution.finish_server_startup(wrong.online,80);},"wrong flag rejected before port payload/native write");
+    require(wrong_events.bits()==0&&!wrong_events.server_port()&&wrong.online==0,"wrong-flag source composition changes no readiness");
+    wrong_events.server_port_published(80,&wrong);require(wrong_events.invalid()&&!wrong_events.server_port(),"foreign port issuer rejected");
+    State late;Platform late_platform;sp::Milestones late_events;ex::Execution late_execution(late.mutex,late.flags(),late.cache,late_platform,&late_events);
+    late_execution.finish_flag_036820(late.server);require(!late_events.server_port(),"Server event without payload grants no web decision");
+    late_events.server_port_published(80,&late_execution);require(late_events.invalid()&&!late_events.server_port(),"late payload cannot reuse an older finish event");
+    State failed;Platform failed_platform;sp::Milestones failed_events;ex::Execution failed_execution(failed.mutex,failed.flags(),failed.cache,failed_platform,&failed_events);
+    failed_platform.throw_release=true;rejects<std::runtime_error>([&]{failed_execution.finish_server_startup(failed.server,80);},"failed native release does not complete Server payload publication");
+    require(failed.server==1&&failed_events.bits()==0&&!failed_events.server_port(),"unknown release prefix retains written flag but no usable bound-port snapshot");
+}
 void waiter_and_clock(){
     State state;Platform platform;sp::Milestones milestones;ex::Execution execution(state.mutex,state.flags(),state.cache,platform,&milestones);
     std::mutex gate;std::condition_variable cv;bool sleeping=false,finished=false;std::exception_ptr failure;
@@ -67,4 +91,4 @@ void observer_release_and_payload(){
     a.join();b.join();c.join();require(visible,"all-bits acquire publishes plain prefix payloads from separate own threads");
 }
 }
-int main(){try{mapping_and_failure();waiter_and_clock();observer_release_and_payload();std::cout<<"PASS: "<<b19_test::checks<<" startup publication core checks\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+int main(){try{mapping_and_failure();server_port_payload();waiter_and_clock();observer_release_and_payload();std::cout<<"PASS: "<<b19_test::checks<<" startup publication core checks\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

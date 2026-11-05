@@ -1,0 +1,54 @@
+
+error_category.cpp.obj:	file format coff-x86-64
+
+Disassembly of section .text$_ZNSt3__114error_categoryD2Ev:
+
+0000000000000000 <std::__1::error_category::~error_category()>:
+       0: c3                           	retq
+
+Disassembly of section .text$unlikely$_ZNSt3__114error_categoryD0Ev:
+
+0000000000000000 <std::__1::error_category::~error_category()>:
+       0: 0f 0b                        	ud2
+
+Disassembly of section .text$_ZNKSt3__114error_category23default_error_conditionEi:
+
+0000000000000000 <std::__1::error_category::default_error_condition(int) const>:
+       0: 48 89 c8                     	movq	%rcx, %rax
+       3: 44 89 01                     	movl	%r8d, (%rcx)
+       6: 48 89 51 08                  	movq	%rdx, 0x8(%rcx)
+       a: c3                           	retq
+
+Disassembly of section .text$_ZNKSt3__114error_category10equivalentEiRKNS_15error_conditionE:
+
+0000000000000000 <std::__1::error_category::equivalent(int, std::__1::error_condition const&) const>:
+       0: 56                           	pushq	%rsi
+       1: 48 83 ec 30                  	subq	$0x30, %rsp
+       5: 4c 89 c6                     	movq	%r8, %rsi
+       8: 41 89 d0                     	movl	%edx, %r8d
+       b: 48 89 ca                     	movq	%rcx, %rdx
+       e: 48 8b 01                     	movq	(%rcx), %rax
+      11: 48 8b 40 18                  	movq	0x18(%rax), %rax
+      15: 48 8d 4c 24 20               	leaq	0x20(%rsp), %rcx
+      1a: ff 15 00 00 00 00            	callq	*(%rip)                 # 0x20 <std::__1::error_category::equivalent(int, std::__1::error_condition const&) const+0x20>
+		000000000000001c:  IMAGE_REL_AMD64_REL32	__guard_dispatch_icall_fptr
+      20: 48 8b 44 24 28               	movq	0x28(%rsp), %rax
+      25: 48 3b 46 08                  	cmpq	0x8(%rsi), %rax
+      29: 0f 94 c1                     	sete	%cl
+      2c: 8b 06                        	movl	(%rsi), %eax
+      2e: 39 44 24 20                  	cmpl	%eax, 0x20(%rsp)
+      32: 0f 94 c0                     	sete	%al
+      35: 20 c8                        	andb	%cl, %al
+      37: 48 83 c4 30                  	addq	$0x30, %rsp
+      3b: 5e                           	popq	%rsi
+      3c: c3                           	retq
+
+Disassembly of section .text$_ZNKSt3__114error_category10equivalentERKNS_10error_codeEi:
+
+0000000000000000 <std::__1::error_category::equivalent(std::__1::error_code const&, int) const>:
+       0: 48 3b 4a 08                  	cmpq	0x8(%rdx), %rcx
+       4: 0f 94 c1                     	sete	%cl
+       7: 44 39 02                     	cmpl	%r8d, (%rdx)
+       a: 0f 94 c0                     	sete	%al
+       d: 20 c8                        	andb	%cl, %al
+       f: c3                           	retq

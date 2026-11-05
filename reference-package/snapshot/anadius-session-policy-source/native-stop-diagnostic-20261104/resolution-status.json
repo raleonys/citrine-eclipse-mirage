@@ -1,0 +1,28 @@
+{
+  "source_resolution": {
+    "path": "outputs/anadius-session-policy-source/native-stop-diagnostic-20261104/evidence.json",
+    "sha256": "fbc54501e1df8602f303e77cbc2dd852249d2521a03512118b28b847995fe8c1"
+  },
+  "selected_stop_write_values_source_implemented": true,
+  "compiler_default_provider_changed": false,
+  "current_source_compiled_or_executed": false,
+  "pending_source_count": 55,
+  "mutable_status_proofs": [
+    {
+      "path": "outputs/dll-critical-path/active-work-plan.json",
+      "sha256": "0a50e7ae2148d4382941a72053c787fdf3ea143fc31ef0cb482f3cfb794df86a"
+    },
+    {
+      "path": "outputs/dll-critical-path/blockers.json",
+      "sha256": "692562c5f794f1cb9ba79e1c29be2dbf5b2654260503cab759f49d1d297a2e82"
+    },
+    {
+      "path": "outputs/dll-critical-path/validation.json",
+      "sha256": "1bfe72939287a560cb63e61e05f0d80c095361fc0d5fd53a3d3192c00018d3ed"
+    },
+    {
+      "path": "outputs/dll-critical-path/static-source-milestone-20261104.json",
+      "sha256": "3161410650ba171f10c612feb019260bce18f5c71d3b6d22026c1d27149375b2"
+    }
+  ]
+}

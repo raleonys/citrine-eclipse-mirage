@@ -1,12 +1,51 @@
 #include "factory.hpp"
 #include "../anadius-license-source/key_processor.hpp"
 #include "../anadius-path-source/paths.hpp"
+#include "../anadius-config-application-source/application.hpp"
+#include "../anadius-config-pipeline-source/pipeline.hpp"
 #include <stdexcept>
 #include <type_traits>
 
 namespace anadius::configuration_factory {
 namespace core=bootstrap_providers::configuration_routes;
 namespace platform=bootstrap_policies::configuration_routes;
+namespace {
+class ScalarDocuments final:public LegacyDocumentReader {
+    std::unique_ptr<file_recovered::Factory> files_;
+public:
+    explicit ScalarDocuments(std::unique_ptr<file_recovered::Factory> files):files_(std::move(files)){
+        if(!files_)throw std::invalid_argument("Owned source document file provider required");
+    }
+    configuration::Node read(const configuration::Path& path)override{
+        auto selected=config_application::read_config2(path,*files_);
+        configuration::Node document;
+        document.children.emplace("Config2",config_hash::to_configuration(selected));
+        document.iteration_order.emplace_back("Config2");
+        config_pipeline::require_scalar_application(document);
+        return document;
+    }
+};
+// Adopt separate public by-value parameters BEFORE any allocation or rejecting
+// validation. Parameter destruction order cannot keep Inputs::lifetime alive
+// through borrowed license/document deleters. This aggregate has a fixed order.
+struct PendingConfiguration {
+    Inputs inputs;
+    achievement_storage::Paths paths;
+    std::unique_ptr<LicenseEffects> license;
+    std::unique_ptr<LegacyDocumentReader> documents;
+};
+static_assert(std::is_nothrow_move_constructible_v<Inputs>);
+static_assert(std::is_nothrow_move_constructible_v<achievement_storage::Paths>);
+std::unique_ptr<configuration::Dependencies> build(PendingConfiguration&& pending,bool native_key){
+    // make_unique only binds forwarding references before facade allocation;
+    // pending still owns everything if that allocation fails.
+    if(native_key)return std::make_unique<Configuration>(std::move(pending.inputs),std::move(pending.paths),std::move(pending.documents));
+    return std::make_unique<Configuration>(std::move(pending.inputs),std::move(pending.paths),std::move(pending.license),std::move(pending.documents));
+}
+}
+std::unique_ptr<LegacyDocumentReader> make_scalar_documents(std::unique_ptr<file_recovered::Factory> files){
+    return std::make_unique<ScalarDocuments>(std::move(files));
+}
 struct Configuration::Impl {
     bool retiring=false;
     bool recovered_key=false;
@@ -19,9 +58,8 @@ struct Configuration::Impl {
     // are still alive. Their captured state must obey the header contract.
     std::unique_ptr<LicenseEffects> license;
     std::unique_ptr<LegacyDocumentReader> documents;
-    Impl(Inputs in,achievement_storage::Paths paths,std::unique_ptr<LicenseEffects> l,
-        std::unique_ptr<LegacyDocumentReader> d,bool native_key=false)
-        :recovered_key(native_key),inputs(std::move(in)),license(std::move(l)),documents(std::move(d)){
+    Impl(PendingConfiguration&& pending,bool native_key)
+        :recovered_key(native_key),inputs(std::move(pending.inputs)),license(std::move(pending.license)),documents(std::move(pending.documents)){
         const auto& a=inputs.crt;const auto& p=inputs.platform;const auto& r=inputs.persistence;
         if(!inputs.stream||!inputs.filesystem||!inputs.encoding||!inputs.errors||(!recovered_key&&!license)||!documents||
            !a.space||!a.lower||!a.environment||!p.module_filename||!p.environment||!p.last_error||!p.set_last_error||
@@ -30,17 +68,19 @@ struct Configuration::Impl {
         // These objects retain their addresses when their unique owners move
         // into Persistence; the engine remains owned until provider retirement.
         key_files=inputs.persistence.files.get();key_stats=inputs.persistence.stats.get();
-        persistence=std::make_unique<config_storage::Persistence>(inputs.filesystem,std::move(paths),std::move(inputs.persistence));
+        persistence=std::make_unique<config_storage::Persistence>(inputs.filesystem,std::move(pending.paths),std::move(inputs.persistence));
     }
 };
 Configuration::Configuration(Inputs inputs,achievement_storage::Paths paths,
     std::unique_ptr<LicenseEffects> license,std::unique_ptr<LegacyDocumentReader> documents)
     :impl_(nullptr){
-    impl_=std::make_unique<Impl>(std::move(inputs),std::move(paths),std::move(license),std::move(documents));
+    PendingConfiguration pending{std::move(inputs),std::move(paths),std::move(license),std::move(documents)};
+    impl_=std::make_unique<Impl>(std::move(pending),false);
 }
 Configuration::Configuration(Inputs inputs,achievement_storage::Paths paths,
     std::unique_ptr<LegacyDocumentReader> documents):impl_(nullptr){
-    impl_=std::make_unique<Impl>(std::move(inputs),std::move(paths),nullptr,std::move(documents),true);
+    PendingConfiguration pending{std::move(inputs),std::move(paths),nullptr,std::move(documents)};
+    impl_=std::make_unique<Impl>(std::move(pending),true);
 }
 Configuration::Impl& Configuration::open()const{
     if(!impl_||impl_->retiring)throw std::logic_error("Configuration factory is unattached or retiring");
@@ -98,22 +138,26 @@ void Configuration::update_achievement_storage_01eb00(configuration::State& s){o
 bool Configuration::set_environment_variable(std::string_view k,std::string_view v){return core::set_environment(open().inputs.crt,k,v);}
 std::unique_ptr<configuration::Dependencies> make_configuration(Inputs inputs,achievement_storage::Paths paths,
     std::unique_ptr<LicenseEffects> license,std::unique_ptr<LegacyDocumentReader> documents){
-    return std::make_unique<Configuration>(std::move(inputs),std::move(paths),std::move(license),std::move(documents));
+    PendingConfiguration pending{std::move(inputs),std::move(paths),std::move(license),std::move(documents)};
+    return build(std::move(pending),false);
 }
 std::unique_ptr<configuration::Dependencies> make_configuration(Inputs inputs,achievement_storage::Paths paths,
     std::unique_ptr<LegacyDocumentReader> documents){
-    return std::make_unique<Configuration>(std::move(inputs),std::move(paths),std::move(documents));
+    PendingConfiguration pending{std::move(inputs),std::move(paths),nullptr,std::move(documents)};
+    return build(std::move(pending),true);
 }
 void install_configuration(bootstrap_backend::Resources& resources,Inputs inputs,achievement_storage::Paths paths,
     std::unique_ptr<LicenseEffects> license,std::unique_ptr<LegacyDocumentReader> documents){
+    PendingConfiguration pending{std::move(inputs),std::move(paths),std::move(license),std::move(documents)};
     if(resources.configuration)throw std::invalid_argument("Configuration Resources slot must be empty");
-    auto built=make_configuration(std::move(inputs),std::move(paths),std::move(license),std::move(documents));
+    auto built=build(std::move(pending),false);
     resources.configuration=std::move(built);
 }
 void install_configuration(bootstrap_backend::Resources& resources,Inputs inputs,achievement_storage::Paths paths,
     std::unique_ptr<LegacyDocumentReader> documents){
+    PendingConfiguration pending{std::move(inputs),std::move(paths),nullptr,std::move(documents)};
     if(resources.configuration)throw std::invalid_argument("Configuration Resources slot must be empty");
-    auto built=make_configuration(std::move(inputs),std::move(paths),std::move(documents));
+    auto built=build(std::move(pending),true);
     resources.configuration=std::move(built);
 }
 static_assert(!std::is_abstract_v<Configuration>);

@@ -1,0 +1,133 @@
+{
+  "schema": "cem.archive12-intake.v1",
+  "previous_project_commit": "e10561b256a5793f857ec4bed4b5a9fb9fcfbadd",
+  "project_branch": "research/reconstruction-package",
+  "parts": [
+    {
+      "name": "dll-reverse-engineering(12).zip.001",
+      "bytes": 26214400,
+      "sha256": "0b2e28167de2589100746ba32b314288fd6fd306bd043f6b952f37763cfa330d"
+    },
+    {
+      "name": "dll-reverse-engineering(12).zip.002",
+      "bytes": 26214400,
+      "sha256": "4d9ef18ebade472fc22273e93b0e13ef361b53bb4010e4b58fe92ebdd3b87a43"
+    },
+    {
+      "name": "dll-reverse-engineering(12).zip.003",
+      "bytes": 26214400,
+      "sha256": "a7a9f8278c412f6a16b11169203362aba8bff6820fbac0284f23715331475806"
+    },
+    {
+      "name": "dll-reverse-engineering(12).zip.004",
+      "bytes": 26214400,
+      "sha256": "ca196956ca37a33008dee4cbbd20945f159e0e9fdad6e02abfa89b149bf7aee6"
+    },
+    {
+      "name": "dll-reverse-engineering(12).zip.005",
+      "bytes": 26214400,
+      "sha256": "5aefd3a731ce0bdcc06092f0a920db4c72d4698b076c17d4483b1258f7a26399"
+    },
+    {
+      "name": "dll-reverse-engineering(12).zip.006",
+      "bytes": 26214400,
+      "sha256": "ec6fbd1eca55f18073dc4ce8ff08e64ecbb6e8f32aa35b4a1fc8413d21926d89"
+    },
+    {
+      "name": "dll-reverse-engineering(12).zip.007",
+      "bytes": 26214400,
+      "sha256": "b97e07bfce3fb179a2e26fbded82de70dc2cf76dd0872706ed5ed306e310aafa"
+    },
+    {
+      "name": "dll-reverse-engineering(12).zip.008",
+      "bytes": 26214400,
+      "sha256": "21a16a40856ffb836ffe78fab66f98da19cf3e45892a48187021c1445183c34e"
+    },
+    {
+      "name": "dll-reverse-engineering(12).zip.009",
+      "bytes": 22730847,
+      "sha256": "4cf1ff0c91866a4088cb217da7d7dbf5e3ceff27cfb0be86d1887529760ced95"
+    }
+  ],
+  "combined_archive": {
+    "bytes": 232446047,
+    "sha256": "539fc80596bfa058afdfe74b01cee95c1c1b807be3e983127510e4dc170acb6d"
+  },
+  "independent_integrity": {
+    "entries": 7184,
+    "files": 6514,
+    "directories": 670,
+    "expanded_bytes": 860673543,
+    "manifest_rows": 6513,
+    "unlisted": [
+      "package-manifest.json"
+    ],
+    "canonical_source_hashes_checked": 1017,
+    "additional_dependency_header_hashes_checked": 3,
+    "build_artifact_hash_records_checked": 656,
+    "linked_dll_and_archive_hash_records_checked": 3,
+    "result": "PASS_BYTES_AND_RECORD_CONSISTENCY",
+    "execution": "No supplied script, executable, object, archive library or DLL was executed or loaded."
+  },
+  "delta": {
+    "added": 2294,
+    "removed": 46,
+    "changed": 898,
+    "unchanged": 3322
+  },
+  "reference_records": [
+    {
+      "path": "package-manifest.json",
+      "bytes": 1280001,
+      "sha256": "47f13797389b40a2f977a7cb04b8fd5eb8ee339181dee6af19e4a0748eb31f89"
+    },
+    {
+      "path": "source-workspace/source-snapshot.json",
+      "bytes": 176323,
+      "sha256": "9199f873c0285d6614d033675d844e1e691c73ca686d3bef365b38923f077a90"
+    },
+    {
+      "path": "source-workspace/build-record.json",
+      "bytes": 1065180,
+      "sha256": "359927eea05c1d1f6dddc99be05a4a4f0df393ff82ac4bc9e5e2355a15ad7252"
+    },
+    {
+      "path": "source-workspace/full-build-verification.json",
+      "bytes": 213362,
+      "sha256": "17adf10282ffcc203606bdfa421af13cd2666e30b16445c8abd9a8600271f4d9"
+    },
+    {
+      "path": "dll-link-gate-source/current-full-link.json",
+      "bytes": 5013,
+      "sha256": "0cb6b7f6a5333510d2d99eb988c79ea7e4ce636cde9a4a1a7fff411f6bf126d5"
+    },
+    {
+      "path": "delivery/latest-source-status.json",
+      "bytes": 10200,
+      "sha256": "634b6ef4bbfe870d668ff5782a2a46612cd84114523c0542ac70e355ecdcb89c"
+    },
+    {
+      "path": "package-omissions.json",
+      "bytes": 417,
+      "sha256": "f2bcf5c093372ccedc6bfe7d258dcb752e826980bcfeb4735b05107294cd1bae"
+    }
+  ],
+  "supplied_claims": {
+    "objects": 296,
+    "normal_test_groups": 356,
+    "normal_test_executables": 355,
+    "framework_terminal_cases": 19,
+    "compiler": "clang version 23.1.4 (https://github.com/llvm/llvm-project.git 7a941dfb2877a0b8cf30323fefa85ad019e0b0f5)",
+    "production_dll_readiness": "LINKED_NOT_RUNTIME_VALIDATED",
+    "dll_link_succeeded": true,
+    "dll_loaded_or_executed": false,
+    "undefined_symbols": [],
+    "runtime_or_loader_equivalence_established": false,
+    "independently_reexecuted_here": false
+  },
+  "review_state": "Changed and added rows are pending. Three changed RPK-0001 rows retain their earlier partial reviews in prior_reviews; the finding remains open.",
+  "product_adoption": "Research snapshot update only; no active product source, vendor or binary adoption.",
+  "file_inventory": "docs/RE_PACKAGE_FILES.json",
+  "update_journal": "docs/RE_PACKAGE_UPDATES.json",
+  "tracking_document": "docs/RE_ARCHIVE12_UPDATE.md"
+}

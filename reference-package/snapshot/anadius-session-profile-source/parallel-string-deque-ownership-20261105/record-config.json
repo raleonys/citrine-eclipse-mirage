@@ -1,0 +1,120 @@
+{
+  "schema": "original-string-deque-ownership.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_STRING_DEQUE_OWNERSHIP_PREREQUISITE",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Stateless Concurrent string/header ownership, exact producer last-use release preserving SDK/foreign views, per-call deque growth and authoritative residual destructors. Actual Original production remains Serialized; source only.",
+  "sources": [
+    {
+      "path": "anadius-session-profile-source/strings.hpp",
+      "before": "before/anadius-session-profile-source__strings.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-profile-source/strings.cpp",
+      "before": "before/anadius-session-profile-source__strings.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.hpp",
+      "before": "before/anadius-session-memory-source__memory.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.cpp",
+      "before": "before/anadius-session-memory-source__memory.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-owned-deque-source/deque.hpp",
+      "before": "before/anadius-owned-deque-source__deque.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-owned-deque-source/deque.cpp",
+      "before": "before/anadius-owned-deque-source__deque.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.cpp",
+      "before": "before/anadius-session-profile-source__profile.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "before": "before/anadius-worker-handoff-source__handoff_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch.cpp",
+      "before": "before/anadius-socket-source__message_dispatch.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/response_dispatch.cpp",
+      "before": "before/anadius-socket-source__response_dispatch.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/owned_response.cpp",
+      "before": "before/anadius-socket-source__owned_response.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch_tests.cpp",
+      "before": "before/anadius-socket-source__message_dispatch_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-socket-source/response_dispatch_tests.cpp",
+      "before": "before/anadius-socket-source__response_dispatch_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-socket-source/owned_response_tests.cpp",
+      "before": "before/anadius-socket-source__owned_response_tests.cpp",
+      "role": "test"
+    }
+  ],
+  "reviews": [
+    "root-and-strings-independent-review.md",
+    "deque-production-independent-review.md",
+    "handoff-fixture-independent-review.md",
+    "sdk-fixture-and-coupled-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "native-findings.md",
+    "string-parent-implementation.md",
+    "deque-implementation.md"
+  ],
+  "native_replies": [
+    "instruction-180025503.json",
+    "instruction-18002550a.json",
+    "instruction-180025516.json",
+    "instruction-18002551b.json",
+    "instruction-180025556.json",
+    "instruction-18002557f.json",
+    "instruction-1800255cf.json",
+    "instruction-180025607.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-session-profile-source/parallel-string-deque-ownership-20261105/native-evidence-index.json",
+    "outputs/anadius-session-profile-source/parallel-string-deque-ownership-20261105/sdk-review-source-hashes.json",
+    "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/evidence.json",
+    "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/remaining-integration.json",
+    "outputs/anadius-session-memory-source/handler-admission-overlap-20261105/caller-proof.md"
+  ],
+  "limits": [
+    "No compiler, project tests, link, DLL execution or ZIP update. Four changed test files contain authored unexecuted assertions.",
+    "Actual Original policy remains Serialized. Parent/IO/Strings/Deque prerequisites do not close the confirmed NativeJobs/Profile/Graph body-wide progress gap.",
+    "relinquish is last use of ALL current-actor aliases to one entire allocation. SDK and foreign actor views remain; each future asynchronous publication needs its own real ownership audit.",
+    "Different queue/actor growth is supported by source; a same-queue foreign conflict rejects without waiting/poisoning. Actual response-queue scheduling and control lifetime remain upper caller responsibilities.",
+    "Lower Prepared/OwnedIO null-response-control fixtures are not actual Session/Graph/NativeJobs, network/kernel or full strong-owner coverage; no execution result is claimed.",
+    "Accept body and mutable packet publications, private/composite views, same business roots and coherent actual policy enable remain mandatory. Stable metadata does not synchronize arbitrary payload writes.",
+    "Historical build/source snapshot/DLL/ZIP proofs unchanged, including pending added memory_lookup.hpp. Consistent rebuilding requires fresh explicit instruction. No artificial completion percentage or native ABI/EH equivalence claim."
+  ],
+  "completed_note": "SOURCE_ONLY8freshREAinstructions;10production+4testfiles implementstatelessauthoritativeStrings/requestlastuse,exactParentownershipandpercallDequegrowth;3subagentsandindependentstaticreviews. Fourtestfiles NOTRUN; actualOriginalparallelrouteSTILLPENDING.",
+  "observation": "REA6.8.0identityaligned/Ghidra12.1.4;8freshaddressedfullreplies/export/closed/originalhashunchanged; retained025480fullbodycontextexplicitlynotfresh. Three useful implementation/test/review subagents; no build.",
+  "next_scope": "Implement per-message Profile/NativeProfile token/call/Invocation and private-window composite resolver contexts, then Graph/router/provider views over the same business roots. Audit actual accept/packet ownership before coherent NativeJobs gate removal/policy enable and same-session/distinct-session A dialog/B GetConfig response-before-release source fixtures. No build authorization."
+}

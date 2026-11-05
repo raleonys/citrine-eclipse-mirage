@@ -1,7 +1,10 @@
 #include "backend.hpp"
 #include "backend_test_fixture.hpp"
 #include "../anadius-bootstrap-owner-source/owner_test_fixture.hpp"
+#include "../anadius-library-effects-source/phase_binding.hpp"
 #include <map>
+#include <process.h>
+#include <cstdlib>
 #include <type_traits>
 
 namespace {
@@ -196,7 +199,114 @@ void resource_and_route_prefixes(){
     require(two->stop_and_join()&&one->worker(recovered::Worker::first_029ea0)!=nullptr,"never-published backend closes without stealing another router");
     require(one->stop_and_join(),"first route owner can unpublish normally after failed registration");
 }
+struct FactoryRecord {unsigned workers=0,attachments=0,bindings=0,retired=0,cancelled=0,denied=0;};
+struct FactoryLibrary final:recovered::libraries::Effects,library_effects::PhaseBinding {
+    std::unique_ptr<recovered::libraries::Effects> lower;std::function<void()> on_bind;
+    FactoryLibrary(std::unique_ptr<recovered::libraries::Effects> l,std::function<void()> bind):lower(std::move(l)),on_bind(std::move(bind)){}
+    void bind_library_phase(execution_recovered::Execution&,std::uint8_t&)override{on_bind();}
+    void begin_load_log_0863e0()override{lower->begin_load_log_0863e0();}
+    void append_log_path_and_flush(std::string_view s)override{lower->append_log_path_and_flush(s);}
+    void message_038bc0(std::string a,std::string c,std::uint32_t f)override{lower->message_038bc0(std::move(a),std::move(c),f);}
+    [[noreturn]]void throw_runtime_00cd70(int c)override{lower->throw_runtime_00cd70(c);std::abort();}
+    [[noreturn]]void throw_filesystem_00cdb0(std::uint32_t c)override{lower->throw_filesystem_00cdb0(c);std::abort();}
+    void wait_steps_036880(int c)override{lower->wait_steps_036880(c);}
+    void finish_flag_036820()override{lower->finish_flag_036820();}
+};
+struct FactoryWorker final:b::ApplicationWorker {
+    FactoryRecord& record;explicit FactoryWorker(FactoryRecord& r):record(r){}
+    ~FactoryWorker()override{++record.retired;}
+    void run_server(std::uint16_t&,std::uint8_t&,execution_recovered::Execution&)noexcept override{std::abort();}
+    void startup_complete(execution_recovered::ReadyStage,const execution_recovered::Execution*)noexcept override{std::abort();}
+    void startup_failed(const execution_recovered::Execution*)noexcept override{std::abort();}
+    void request_stop()override{std::abort();}
+    bool finish_after_join()override{std::abort();}
+    bool cancel_unpublished()override{++record.cancelled;return true;}
+};
+struct FactoryAttachment final:b::CallbackAttachment {
+    FactoryRecord& record;explicit FactoryAttachment(FactoryRecord& r):record(r){}
+    ~FactoryAttachment()override{++record.retired;}
+    void publish()override{std::abort();}
+    bool close_after_cleanup()override{std::abort();}
+};
+void passive_bound_factories(){
+    Fixture f;FactoryRecord record;auto r=f.resources();r.server.reset();b::SourceBackend* source=nullptr;
+    r.library_effects=std::make_unique<FactoryLibrary>(std::move(r.library_effects),[&]{
+        ++record.bindings;require(source&&!source->tracked_jobs(),"phase binding can read passive tracking metadata during assembly");
+    });
+    r.application_worker=[&](b::CallbackStateView view){
+        ++record.workers;require(&source->state()==&view.runtime&&!source->tracked_jobs()&&!source->tracking_poisoned(),
+            "Worker factory can read passive exact-state/tracking metadata while binding");
+        return std::make_unique<FactoryWorker>(record);
+    };
+    r.callback_attachment=[&](b::CallbackStateView view){
+        ++record.attachments;require(&source->state()==&view.runtime&&!source->tracked_jobs(),
+            "attachment factory can read passive metadata while binding");
+        return std::make_unique<FactoryAttachment>(record);
+    };
+    auto backend=std::unique_ptr<b::SourceBackend>(new b::SourceBackend(f.runtime_seed(),b::take_resources(r)));source=backend.get();
+    configuration::State state{};std::uint8_t a=0,c=0,d=0;backend->bind_state(state,{a,c,d});
+    (void)backend->providers();
+    require(record.workers==1&&record.attachments==1&&record.bindings==1&&!record.retired&&!f.stops&&!f.remaining->exit_callback,
+        "normal bound factories return adopted owners and release reservation without publication/stop");
+    backend.reset();
+    require(record.cancelled==1&&record.retired==2,"unpublished normal factory owners cancel/retire through existing backend order");
 }
-int main(){try{full_owner_sources_and_retry();native_exit_cleanup_after_explicit_drain();delayed_worker_paths_and_control();resource_and_route_prefixes();
+void passive_factory_exceptions(){
+    for(bool worker:{false,true}){
+        Fixture f;FactoryRecord record;auto r=f.resources();
+        if(worker){
+            r.server.reset();r.application_worker=[&](b::CallbackStateView)->std::unique_ptr<b::ApplicationWorker>{
+                ++record.workers;throw std::runtime_error("passive worker factory failure");
+            };
+        }else{
+            r.callback_attachment=[&](b::CallbackStateView)->std::unique_ptr<b::CallbackAttachment>{
+                ++record.attachments;throw std::runtime_error("passive attachment factory failure");
+            };
+        }
+        auto backend=std::unique_ptr<b::SourceBackend>(new b::SourceBackend(f.runtime_seed(),b::take_resources(r)));
+        configuration::State state{};std::uint8_t a=0,c=0,d=0;
+        rejects<std::runtime_error>([&]{backend->bind_state(state,{a,c,d});},"passive factory exception propagates without invented successful binding");
+        (void)backend->providers();
+        require(!f.stops&&!f.remaining->exit_callback&&!backend->tracked_jobs(),
+            "exception releases factory reservation without source stop/publication when no reentry occurred");
+        backend.reset();
+        require(!record.retired&&!record.cancelled&&record.workers==(worker?1U:0U)&&record.attachments==(worker?0U:1U),
+            "throw-before-result leaves no adopted owner to cancel and unpublished prefix retires normally");
+    }
+}
+[[noreturn]]void factory_reentry_prefix(const std::string& mode){
+    Fixture f;FactoryRecord record;auto r=f.resources();b::SourceBackend* source=nullptr;
+    const bool worker=mode=="--worker-factory-reentry";
+    const bool phase=mode=="--phase-binding-reentry";
+    auto reenter=[&]{
+        // The opaque factory deliberately swallows each rejection and returns
+        // an owner. Backend must still reject the construction after adoption.
+        try{source->register_exit(n::Resolver{}.exit_callback());}catch(const std::logic_error&){++record.denied;}
+        try{(void)source->stop_and_join();}catch(const std::logic_error&){++record.denied;}
+        try{(void)source->providers();}catch(const std::logic_error&){++record.denied;}
+    };
+    if(phase){
+        r.library_effects=std::make_unique<FactoryLibrary>(std::move(r.library_effects),[&]{++record.bindings;reenter();});
+    }else if(worker){
+        r.server.reset();r.application_worker=[&](b::CallbackStateView){++record.workers;reenter();return std::make_unique<FactoryWorker>(record);};
+    }else{
+        r.callback_attachment=[&](b::CallbackStateView){++record.attachments;reenter();return std::make_unique<FactoryAttachment>(record);};
+    }
+    auto backend=std::unique_ptr<b::SourceBackend>(new b::SourceBackend(f.runtime_seed(),b::take_resources(r)));source=backend.get();
+    configuration::State state{};std::uint8_t a=0,c=0,d=0;bool rejected=false,sticky=false;
+    try{backend->bind_state(state,{a,c,d});}catch(const std::logic_error&){rejected=true;}
+    try{(void)backend->providers();}catch(const std::logic_error&){sticky=true;}
+    if(!rejected||!sticky||record.denied!=3||record.workers!=(worker?1U:0U)||record.attachments!=(!phase&&!worker?1U:0U)||record.bindings!=(phase?1U:0U)||
+        record.retired||record.cancelled||f.stops||f.remaining->exit_callback||backend->tracked_jobs()||n::is_bound())std::_Exit(182);
+    // Deliberate terminal retained prefix: no destructor/cleanup of an unknown
+    // factory outcome on controller. Adopted provider owners stay live.
+    std::_Exit(181);
+}
+}
+int main(int argc,char** argv){
+    if(argc==2){const std::string mode=argv[1];if(mode=="--worker-factory-reentry"||mode=="--attachment-factory-reentry"||mode=="--phase-binding-reentry")factory_reentry_prefix(mode);return 2;}
+    try{full_owner_sources_and_retry();native_exit_cleanup_after_explicit_drain();delayed_worker_paths_and_control();resource_and_route_prefixes();passive_bound_factories();passive_factory_exceptions();
+    for(const auto* mode:{"--worker-factory-reentry","--attachment-factory-reentry","--phase-binding-reentry"})
+        require(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==181,"swallowed provider-factory reentry retains adopted owner without publishing routes or running source stop");
     std::cout<<"PASS: "<<b2_test::checks+b3_tracking_test::checks<<" bootstrap-backend integration checks; concrete ProviderOwner with actual config/bootstrap/server/online/library/host/cleanup sources,shared flags,post-wait path reload,duplicate joins and shutdown retry; OS/foreign-provider/registrar/PE-entry remain controlled/open\n";
 }catch(const std::exception& e){std::cerr<<"FAIL after "<<b2_test::checks+b3_tracking_test::checks<<" checks: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL after "<<b2_test::checks+b3_tracking_test::checks<<" checks\n";return 1;}}

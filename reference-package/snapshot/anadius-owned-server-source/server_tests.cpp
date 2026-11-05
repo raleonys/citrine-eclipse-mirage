@@ -1,8 +1,12 @@
 #include "server.hpp"
+#include "../anadius-socket-source/native.hpp"
 #include "../anadius-socket-source/async_receive_test_fixture.hpp"
 #include "../anadius-thread-domain-source/domain_test_fixture.hpp"
 #include <iostream>
 #include <thread>
+#include <limits>
+#include <array>
+#include <optional>
 
 namespace {
 namespace own=anadius::owned_server;namespace s=anadius::socket_recovered;namespace td=anadius::thread_domain;namespace b=b6_core_test;
@@ -10,6 +14,68 @@ unsigned checks=0;
 void require(bool value,const char* text){++checks;if(!value){std::cerr<<"FAILED: "<<text<<"\n";throw std::runtime_error(text);}}
 template<class E,class F>void rejects(F&& fn,const char* text){bool caught=false;try{fn();}catch(const E&){caught=true;}require(caught,text);}
 struct Unknown{};
+struct WinsockProbe {unsigned starts=0,cleanups=0;int status=0,cleanup_result=SOCKET_ERROR;bool throw_start=false,throw_cleanup=false;std::function<void()> on_start;};
+WinsockProbe* winsock_probe=nullptr;
+int WSAAPI winsock_start(WORD version,LPWSADATA data){auto& p=*winsock_probe;++p.starts;require(version==WORD{2}&&data,"Shared native startup requests exact WORD2 and a real WSADATA output");data->wVersion=0x7711;if(p.on_start)p.on_start();if(p.throw_start)throw Unknown{};return p.status;}
+int WSAAPI winsock_cleanup(){auto& p=*winsock_probe;++p.cleanups;if(p.throw_cleanup)throw Unknown{};return p.cleanup_result;}
+void shared_winsock_ownership(){
+ WinsockProbe probe;winsock_probe=&probe;const own::WinsockImports imports{winsock_start,winsock_cleanup};own::WinsockModuleState module(imports);
+ ::SetLastError(0x6123);const auto& native=own::native_winsock_module();require(module.matches(imports)&&native.matches({::WSAStartup,::WSACleanup})&&&native==&own::native_winsock_module()&&::GetLastError()==0x6123&&!probe.starts&&!probe.cleanups,"Shared state construction/default lookup/import identity are passive and preserve metadata LastError");
+ bool image=false,first=false,second=false;module.acquire(image);require(image&&probe.starts==1&&!module.cached_status(),"Unchecked image owner acquires first native startup without validating returned WSADATA version");
+ module.acquire(first);module.acquire(second);require(first&&second&&probe.starts==1&&!module.cached_status(),"Checked-context claims share the image owner's cached status without another SDK startup");
+ module.release(first);module.release(image);require(!first&&!image&&!probe.cleanups,"Independent context/image claims do not clean up while another owner remains");module.release(second);require(!second&&probe.cleanups==1,"Only final owner cleans up and ignores the SDK's nonzero return");
+ probe.status=10091;module.acquire(image);module.acquire(first);require(image&&first&&probe.starts==2&&module.cached_status()==10091,"New first owner caches nonzero startup result; subsequent claim retains increment and sees it without retry");
+ module.release(first);require(!first&&probe.cleanups==1,"Cached failure does not cancel the image claim or clean up a nonlast context claim");module.release(image);require(!image&&probe.cleanups==2,"Explicit last release of a controlled failed-startup epoch still follows the native cleanup primitive");
+ own::WinsockModuleState reentrant(imports);bool outer=false,inner=false;int observed=-1;probe.status=10091;probe.on_start=[&]{reentrant.acquire(inner);observed=reentrant.cached_status();};const auto starts=probe.starts;reentrant.acquire(outer);probe.on_start={};
+ require(outer&&inner&&probe.starts==starts+1&&observed==0&&reentrant.cached_status()==10091,"Reentrant first-startup observer can acquire/read old cached0 before publication; no completion wait or invented retry is added");reentrant.release(inner);reentrant.release(outer);
+ for(const auto invalid:std::array<own::WinsockImports,2>{{{nullptr,winsock_cleanup},{winsock_start,nullptr}}}){own::WinsockModuleState missing(invalid);bool held=false;const auto before=probe.starts;rejects<std::invalid_argument>([&]{missing.acquire(held);},"Incomplete immutable pair rejects before claim/startup");require(!held&&probe.starts==before,"Rejected missing import cannot publish a claim or invoke startup");}
+ winsock_probe=nullptr;
+}
+[[noreturn]]void unknown_winsock_child(bool cleanup){
+ WinsockProbe probe;winsock_probe=&probe;own::WinsockModuleState module({winsock_start,winsock_cleanup});bool held=false;
+ if(cleanup){module.acquire(held);probe.throw_cleanup=true;rejects<Unknown>([&]{module.release(held);},"Unknown last cleanup effect propagates after claim consumption");require(!held&&probe.starts==1&&probe.cleanups==1,"Cleanup exception cannot authorize decrement replay");rejects<std::invalid_argument>([&]{module.release(held);},"Consumed cleanup claim rejects replay");require(probe.cleanups==1,"Rejected cleanup replay never calls SDK twice");}
+ else{probe.throw_start=true;rejects<Unknown>([&]{module.acquire(held);},"Unknown first startup retains its increment before opaque SDK effect");bool next=false;module.acquire(next);require(held&&next&&probe.starts==1&&!probe.cleanups&&module.cached_status()==0,"Unknown startup prefix retains both claims and the unpublished cache without replay or guessed cleanup");}
+ std::_Exit(0); // unknown SDK prefix is retained; no invented cleanup/unwind
+}
+void typed_source_error_values(){
+    const s::Category misc{0x3333,anadius::server_recovered::ErrorCategory::asio_misc};
+    std::string operation="open";own::SourceError error({1,misc},operation);operation="changed";
+    require(error.code().value()==1&&&error.code().category()==&s::misc_error_category()&&error.code().message()=="Already open","Typed owned-server error uses actual shared misc message/category rather than Windows system code1");
+    require(error.source_error().value==1&&error.source_error().category.name_identity==misc.name_identity&&error.source_error().category.logical==misc.logical&&error.operation()=="open"&&!error.context_address(),"Typed source error retains complete source category/code and owns operation text");
+    bool caught=false;try{throw error;}catch(const std::system_error& base){
+        const auto* typed=dynamic_cast<const own::SourceError*>(&base);caught=typed&&typed->source_error().category.name_identity==0x3333&&std::string_view(base.what()).find("open")!=std::string_view::npos&&std::string_view(base.what()).find("Already open")!=std::string_view::npos;
+    }require(caught,"SourceError remains catchable as std::system_error after copy/throw while retaining its typed metadata");
+    own::SourceError bare({1,misc});
+    const std::system_error compiler_bare(1,s::misc_error_category());
+    require(bare.operation().empty()&&!bare.context_address()&&bare.source_error().category.name_identity==misc.name_identity&&bare.code()==error.code(),"028210 projection retains typed error without an operation or context address");
+    require(std::string_view(bare.what())==compiler_bare.what(),"Context-free source error uses compiler's no-context system_error overload");
+    const s::Category system{0x2222,anadius::server_recovered::ErrorCategory::system};
+    const auto& native=s::system_error_category_028620();
+    struct Case {std::int32_t value;std::uintptr_t address;const char* context;};
+    for(const auto& item:std::array<Case,2>{{{std::numeric_limits<std::int32_t>::min(),0x180084428ULL,"mutex"},{5,0x180084528ULL,"iocp"}}}){
+        // A separate SDK oracle is computed once; the constructor's own SDK
+        // calls are not intercepted or claimed to have been counted here.
+        const auto expected=std::string(item.context)+": "+native.message(item.value);std::string operation=item.context;
+        own::SourceError selected({item.value,system},operation,item.address);operation="changed";
+        require(selected.code().value()==item.value&&&selected.code().category()==&native&&std::string_view(native.name())=="asio.system"&&selected.source_error().value==item.value&&selected.source_error().category.name_identity==system.name_identity&&selected.source_error().category.logical==system.logical,"Known constructor context preserves signed raw value and opaque source token while selecting native system category");
+        require(selected.operation()==item.context&&selected.context_address()==item.address&&std::string(selected.what())==expected,"Known mutex/iocp context stores owned operation and address with complete native SDK diagnostic");
+        const own::SourceError copy=selected;const std::system_error base=selected;const std::runtime_error sliced=selected;
+        require(copy.operation()==item.context&&copy.context_address()==item.address&&copy.source_error().category.name_identity==system.name_identity&&std::string(copy.what())==expected&&std::string(base.what())==expected&&std::string(sliced.what())==expected&&&base.code().category()==&native,"Typed copy, system_error base copy and runtime_error value slice own the same native diagnostic without re-querying message text");
+        bool caught=false;try{throw copy;}catch(const std::system_error& caught_base){const auto* typed=dynamic_cast<const own::SourceError*>(&caught_base);caught=typed&&typed->context_address()==item.address&&caught_base.code().value()==item.value&&&caught_base.code().category()==&native&&std::string(caught_base.what())==expected;}require(caught,"Native constructor diagnostic retains typed metadata through ordinary system_error catch");
+    }
+    own::SourceError caller_context({5,system},"caller-owned",0x180084528ULL);require(caller_context.operation()=="caller-owned"&&std::string_view(caller_context.what()).starts_with("caller-owned: ")&&&caller_context.code().category()==&native,"SourceError owns its caller operation rather than overriding text from a numeric address");
+    const std::system_error compiler_system(5,std::system_category(),"host");
+    own::SourceError unknown({5,system},"host",0x180099999ULL),no_address({5,system},"host"),context_free({5,system});const std::system_error compiler_context_free(5,std::system_category());
+    require(&unknown.code().category()==&std::system_category()&&&no_address.code().category()==&std::system_category()&&unknown.context_address()==0x180099999ULL&&std::string(unknown.what())==compiler_system.what()&&std::string(no_address.what())==compiler_system.what(),"Unknown and address-free HOST operations retain compiler system category and original operation formatting");
+    require(&context_free.code().category()==&std::system_category()&&context_free.operation().empty()&&!context_free.context_address()&&std::string(context_free.what())==compiler_context_free.what(),"Context-free logical system projection preserves its original compiler category/no-context overload");
+    const s::Category other{0x7777,anadius::server_recovered::ErrorCategory::other};own::SourceError non_system({5,other},"host",0x180084428ULL),known_misc({1,misc},"host",0x180084528ULL);
+    require(&non_system.code().category()==&std::system_category()&&std::string(non_system.what())==compiler_system.what()&&non_system.source_error().category.name_identity==other.name_identity&&&known_misc.code().category()==&s::misc_error_category()&&std::string(known_misc.what())=="host: Already open","Known numeric context alone does not reinterpret other/misc category inputs as native system errors");
+    std::optional<own::SourceError> explicit_native;std::string explicit_expected;
+    {std::string operation="typed open";const s::Error source{10013,system};explicit_expected=operation+": "+native.message(source.value);explicit_native.emplace(source,operation,native,0x180012345ULL);operation="expired caller text";}
+    require(explicit_native->operation()=="typed open"&&explicit_native->context_address()==0x180012345ULL&&explicit_native->source_error().value==10013&&explicit_native->source_error().category.name_identity==system.name_identity&&&explicit_native->code().category()==&native&&std::string(explicit_native->what())==explicit_expected,"Explicit stable category constructor owns caller text/source fields after caller-local arguments end without widening legacy HOST selection");
+    const own::SourceError explicit_copy=*explicit_native;const std::system_error explicit_base=*explicit_native;const std::runtime_error explicit_slice=*explicit_native;explicit_native.reset();
+    require(explicit_copy.operation()=="typed open"&&explicit_copy.context_address()==0x180012345ULL&&std::string(explicit_copy.what())==explicit_expected&&std::string(explicit_base.what())==explicit_expected&&std::string(explicit_slice.what())==explicit_expected&&explicit_base.code().value()==10013&&&explicit_base.code().category()==&native,"Explicit native exception copies/base slice retain owned what and stable module category after original exception destruction");
+}
 struct Faults {
     bool fail_alloc=false,throw_alloc=false,throw_after_free=false;
     void* fail_free=nullptr;unsigned free_calls=0;
@@ -149,6 +215,19 @@ void wait_boundary_and_error(){
      require(!admitted.post(~std::uintptr_t{0},0,0,nullptr)&&admitted.get_last_error()==ERROR_INVALID_HANDLE,"real failed PostQueuedCompletionStatus error survives parent metadata/PTD checkpoint");}
     f.finish();
 }
+void wait_maintenance_boundary(){
+    Fixture f;auto physical=std::make_shared<Physical>();unsigned calls=0;
+    {own::AdmittedDispatcherApi admitted(f.root,physical);
+     struct Probe {Fixture& f;Physical& physical;unsigned& calls;static void check(void* raw){auto& p=*static_cast<Probe*>(raw);++p.calls;require(p.physical.errors==1,"wait maintenance occurs after immediate SDK error capture");bool outside=false;try{(void)p.f.root->buffer_context();}catch(const std::logic_error&){outside=true;}require(outside,"maintenance has no Parent Operation held");{auto independent=p.f.root->enter();(void)p.f.root->buffer_context();}p.physical.status=17;::SetLastError(0x1234);}} probe{f,*physical,calls};
+     admitted.bind_wait_maintenance({&probe,Probe::check});
+     rejects<std::logic_error>([&]{admitted.bind_wait_maintenance({&probe,Probe::check});},"live wait maintenance cannot be replaced");
+     std::uint32_t bytes=0;std::uintptr_t key=0;OVERLAPPED* raw=nullptr;admitted.set_last_error(0);
+     require(!admitted.get(99,bytes,key,raw,17)&&calls==1&&bytes==7&&key==2&&!raw,"maintenance preserves returned physical packet fields");
+     require(admitted.get_last_error()==0x80000005U&&physical->errors==1,"maintenance cannot overwrite captured physical wait status");
+     (void)f.root->buffer_context();admitted.clear_wait_maintenance();
+     admitted.set_last_error(0);require(!admitted.get(99,bytes,key,raw,17)&&calls==1,"cleared POD context is not retained or invoked again");(void)admitted.get_last_error();
+    }f.finish();
+}
 void real_wait_concurrent_source(){
     Fixture f;auto callbacks=f.heap.root->make_callback_threads();auto native=std::make_shared<s::NativeDispatcherApi>();
     HANDLE port=::CreateIoCompletionPort(INVALID_HANDLE_VALUE,nullptr,0,0);require(port!=nullptr,"own real Win32 IOCP acquired without creating a network socket");
@@ -189,7 +268,7 @@ void child_check(const wchar_t* mode){
 }
 } // namespace
 int main(int argc,char** argv){try{
-    if(argc==2){if(std::string_view(argv[1])=="--unknown-wait")unknown_wait_child(false);if(std::string_view(argv[1])=="--unknown-post")unknown_wait_child(true);real_wait_concurrent_source();return 0;}
-    wait_boundary_and_error();child_check(L"--concurrent-source");child_check(L"--unknown-wait");child_check(L"--unknown-post");
+    if(argc==2){if(std::string_view(argv[1])=="--unknown-winsock-start")unknown_winsock_child(false);if(std::string_view(argv[1])=="--unknown-winsock-cleanup")unknown_winsock_child(true);if(std::string_view(argv[1])=="--unknown-wait")unknown_wait_child(false);if(std::string_view(argv[1])=="--unknown-post")unknown_wait_child(true);real_wait_concurrent_source();return 0;}
+    typed_source_error_values();shared_winsock_ownership();wait_boundary_and_error();wait_maintenance_boundary();child_check(L"--concurrent-source");child_check(L"--unknown-wait");child_check(L"--unknown-post");child_check(L"--unknown-winsock-start");child_check(L"--unknown-winsock-cleanup");
     std::cout<<"PASS: "<<checks<<" owned server worker-admission controls\n";return 0;
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"Unexpected server admission failure\n";return 1;}}

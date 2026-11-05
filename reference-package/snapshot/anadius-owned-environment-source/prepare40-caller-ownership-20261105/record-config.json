@@ -1,0 +1,76 @@
+{
+  "schema": "environment-prepare40-caller.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_WHOLE_PREPARE40_CALLER_AND_EXPLICIT_SCOPED_TRANSFORM",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Actual send0229d0 and receive027710 shared preparation body; selected Root and explicit Scope pure transformation own source/output/real temporary from before cache/query through move and guard. No deferred task context authority or scheduling permission added.",
+  "sources": [
+    {
+      "path": "anadius-socket-source/io_completion.hpp",
+      "before": "before/anadius-socket-source__io_completion.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/io_completion.cpp",
+      "before": "before/anadius-socket-source__io_completion.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/handler_dispatch.cpp",
+      "before": "before/anadius-socket-source__handler_dispatch.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/io_completion_tests.cpp",
+      "before": "before/anadius-socket-source__io_completion_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment.hpp",
+      "before": "before/anadius-owned-environment-source__environment.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment.cpp",
+      "before": "before/anadius-owned-environment-source__environment.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment_tests.cpp",
+      "before": "before/anadius-owned-environment-source__environment_tests.cpp",
+      "role": "test"
+    }
+  ],
+  "reviews": [
+    "prepare40-independent-review.md",
+    "root-seven-file-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "native-findings.md",
+    "root-prepare40-seam-implementation.md",
+    "prepare40-environment-implementation.md",
+    "prepare40-test-implementation.md"
+  ],
+  "native_replies": [
+    "instructions-1800229d0.json",
+    "instructions-180027710.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-owned-environment-source/prepare40-caller-ownership-20261105/native-evidence-index.json",
+    "outputs/anadius-owned-environment-source/root-copy-caller-ownership-20261105/evidence.json",
+    "outputs/anadius-owned-environment-source/root-copy-caller-ownership-20261105/remaining-integration.json"
+  ],
+  "limits": [
+    "Five production/two test files statically reviewed, no compiler/project tests/link/DLL execution/ZIP. Authored assertions are not runtime PASS.",
+    "Two complete fresh REA6.8/Ghidra12.1.4 bodies establish cached40-before-query/invoke/move/LIVE guard order at both real consumers. HOST hooks/interfaces are not native ABI slots or new recovered functions.",
+    "One owning effect reserves exact source/output/body-temporary before first checkpoint/cache; explicit Scope path is pure synchronous preparation. No deferred task context pointer, ambient current-effect lookup, shadow owner or new native work pin.",
+    "Scope positive real Runtime integration, naturally held tracked decrement/B physical-FLS reap and returned-child-old1 remain open. Controlled Host component fixtures cannot establish real child/Runtime authority.",
+    "Final empty temporary is no longer a native owned row; nonmutating checkpoint/raw stateless sentinel projection contracts remain explicit, not arbitrary raw-memory mutation safety.",
+    "Child complete-IO lineage/scheduling/response20/88/Worker/dispatcher/shared/accept/packet/fullnative028d30-021770 tail remain open; production Parent stays Serialized.",
+    "Original binaries and historical build/link/DLL/ZIP unchanged. Explicit consistent rebuild still required. No total completion percentage from source counts."
+  ],
+  "completed_note": "SOURCE_ONLY actualsend/receiveprepare40 bodyandRoot/Scopepuretransformownership implemented;5production+2testfiles staticallyreviewed; cachedexecutor deletion/replay/unknownprefix/selectedHost assertionsNOTRUN.",
+  "observation": "Fresh REA6.8/Ghidra12.1.4 send0229d0(619bytes) andreceive027710(774bytes) saved/exportedclosed. Source/test/independentreviewagents plus Root checked onebody exactsource/out/temp claims, replayguard, cached40/deleteexecutor/liveguard and no deferredauthority.",
+  "next_scope": "Resolve legitimate ONE-selected-owned-Environment composition (typed provider dependency, same concretePolicy/Runtime) and actual Prepared two-Scope tracked-family source scenarios; then explicit response20/88 and genuine child IO/scheduling/Worker/dispatcher/shared/accept/packet/fullnative tail. Production remains Serialized and no build authorized."
+}

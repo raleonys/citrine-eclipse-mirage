@@ -1,0 +1,34 @@
+{
+  "pending_source_count": 122,
+  "frozen_build_and_delivery_unchanged": true,
+  "updated_records": [
+    {
+      "path": "outputs/dll-critical-path/pending-source-status.json",
+      "sha256": "81909d71deb5b6dd618445776f9f7e006910f4297978969c8418810e6e637a81"
+    },
+    {
+      "path": "outputs/dll-critical-path/active-work-plan.json",
+      "sha256": "6a87e51868b07e9b9f6dbb9e7bc87a7038d030c4a98a38d6e20a9dbdca7c9163"
+    },
+    {
+      "path": "outputs/dll-critical-path/blockers.json",
+      "sha256": "65ad4300b14d20167a9fad9c933ec5d7ccff7a3a59ecab308260f9a598c18b4f"
+    },
+    {
+      "path": "outputs/dll-critical-path/validation.json",
+      "sha256": "508ae370389d04d04a586cd5c8a2a395af0c0b32838e56e153750e6fe12e4d43"
+    },
+    {
+      "path": "outputs/dll-critical-path/static-source-milestone-20261104.json",
+      "sha256": "91fa5a2f0b8f9f84d94e6599a16d0364f0b142b6ea252b1e364d29aa6f4fcba7"
+    }
+  ],
+  "remaining_integration": {
+    "path": "outputs/anadius-application-graph-source/scoped-runtime-integration-20261105/remaining-integration.json",
+    "sha256": "38bc45343af6332a8dd00900dd24a59d13b90442b405c579655b4f480a76454c"
+  },
+  "finalizer": {
+    "path": "work/finalize-scoped-runtime-pause-20261105.py",
+    "sha256": "452bb036bc3ba9048f436a563cf26459332ae0e746d1f508347ad06f14cdda50"
+  }
+}

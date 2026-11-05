@@ -1,0 +1,7 @@
+# Selected owned provider and actual two-Scope composition
+
+Four production and two test files changed. A trailing typed environment_owner dependency selects ONE supplied fresh Environment through the existing owned Profile path; Graph forwards the same object. Mixed legacy projections reject early; null defaults/custom legacy behavior remain, explicit provider classifier/capacity are preserved. No new permission getter or Policy/Runtime replacement.
+
+The new --prepared-scoped-runtime source mode composes actual Graph/Profile/Policy/Runtime, concurrent Parent, real NativeThreads/PreparedMemory and the selected Environment. A holds after a genuine tracked decrement; independent B performs tracked projections including Scope prepare40, closes/returns and physically exits/FLS/reaps while A remains held. Actual original source/session/Policy calls progress; A then naturally retires before pending receive EOF and typed accept995 complete normal source/graph cleanup. The mode explicitly uses manual genuine prepared actors, not NativeJobs message handoffs or fake work pins.
+
+All conclusions are source inspection and authored assertions, NOT executed PASS. No compiler/project tests/link/DLL execution/ZIP. Existing addressed REA/Ghidra prepare/family/drop/stop evidence is reused; no new native code claim/function credit. Returned child-old1 and remaining child response/IO/scheduling/shared/fulltail work remain open; production Parent remains Serialized.

@@ -1,0 +1,300 @@
+{
+  "schema": "scoped-job-policy-exit-cleanup.source-only.v1",
+  "recorded_at": "2026-11-01T21:44:57.146144+00:00",
+  "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+  "authority": "Selected HOST child permission and composition of existing04a47c/owned registry; no new native instruction/runtime evidence.",
+  "user_execution_policy": "No compiler, project tests, linker or binary execution without explicit user rebuild request.",
+  "production_sources_changed_this_step": 4,
+  "test_sources_changed": 0,
+  "source_files_changed_this_step": [
+    "anadius-session-policy-source/policy.hpp",
+    "anadius-session-policy-source/policy.cpp",
+    "anadius-session-profile-source/profile.hpp",
+    "anadius-session-profile-source/profile.cpp"
+  ],
+  "all_pending_sources_since_last_full_build": [
+    {
+      "path": "anadius-application-worker-source/worker.cpp",
+      "last_built_sha256": "a3502562d95b6f7d7d4182ac6c2f37f2ae64a19f448092d0fc2f31ab743572a9",
+      "current_sha256": "da42fa306cb6ddd53db70bb890281f2ccf86564c7a99ef561d04d5adc0b06589"
+    },
+    {
+      "path": "anadius-application-worker-source/worker.hpp",
+      "last_built_sha256": "923514f18bf5d32ecfa2487e982e571117d0809e0892f171803c06ae915408f1",
+      "current_sha256": "6cf84342444f3724c02dda3727d54569e7cf3fcecf3d972be71c65f48fb9aea5"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend_tests.cpp",
+      "last_built_sha256": "65005e8082e9fadfc06fb89a00539deda014ea710f00c3fadd0e718077410414",
+      "current_sha256": "8d653c11159bf39152d18a5709a0bc45bf5927ab267987016a181a978bf8c27c"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "last_built_sha256": "31fc08d0311ed281465d9ffe7e255581c6848a5f83c67f2b435e17084efc8573",
+      "current_sha256": "56ed1a15c770804607c3bf911a9401a6d18c5f03638eca0672e612444d43f973"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/tracked_threads.hpp",
+      "last_built_sha256": "414a94314cecedd2908a073a6206a0adfdb7847e80df75911d0ba29e792277a7",
+      "current_sha256": "1688b459b3585703989e902f1378609abcdc3d40a2296e7eddf58e0b117e086f"
+    },
+    {
+      "path": "anadius-bootstrap-providers-source/native_threads.hpp",
+      "last_built_sha256": "243bf515118b795e9bf8004d79f5b923bf40f0ad98ff7d68946ebe4fd264cac7",
+      "current_sha256": "b9f2cade216f3333614fb0d94ce25ca6e7a41a6c228f9bd38c4994eca41cfbfe"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.cpp",
+      "last_built_sha256": "be831aeeaf94ab99a75981613a124f522e9cffc8e35590c898ffc8e6af27dcca",
+      "current_sha256": "271861dbf9a661eee658ae4de200317010adbae341dbcb368305f3b2e0040435"
+    },
+    {
+      "path": "anadius-bootstrap-runtime-source/factory.hpp",
+      "last_built_sha256": "d55494573dc515eacdcf2197c5213d67893aecfb46466e835d07de4e3add99eb",
+      "current_sha256": "b6864109663f3b1894be37f1142b5a72802f66e4616379ed0d167770ce92b20d"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.cpp",
+      "last_built_sha256": "6db0b7461cae29db4ad1cb0a09eb02ef6426628b80d4ca1706acd9ca3a7363c2",
+      "current_sha256": "365d05409246c1e97c551590c1ddd0b907c7bf4f4b374ad0bd73eff5f509fd78"
+    },
+    {
+      "path": "anadius-host-platform-source/assembly.hpp",
+      "last_built_sha256": "c24b4a64d9be048f998531979fa7bba54173d51dc313c9359887daedd5811346",
+      "current_sha256": "e182db10c6487a270e2f040fdbcc144daff18790cc7e23270b69999a3e604fbd"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.cpp",
+      "last_built_sha256": "fed670a3e0937ff56cc0cf001d19873c5d068b546ddf8b7f7de7f878a1547849",
+      "current_sha256": "d3a5eb1687024a15aa7e031b4960aaa5d6e3ee6b7cc992f039fca367f068d85a"
+    },
+    {
+      "path": "anadius-host-platform-source/source_stop.hpp",
+      "last_built_sha256": "e127429b9bebd195cc7cd6e1d1ef81743547a1602431b41baf98baf4e16734f8",
+      "current_sha256": "e3f55458b5943b0db9f7662b8b591bfb818923898cf4f9ab5a03c4756d79ffa4"
+    },
+    {
+      "path": "anadius-owned-deque-source/deque.cpp",
+      "last_built_sha256": "459121324082f143c42cb6d70a95fa2eb9e44558a0e1487163a6400aa9545219",
+      "current_sha256": "b26400d2f592d6231610c997695786cf3798e59446e588e22c15368bc2869cac"
+    },
+    {
+      "path": "anadius-owned-deque-source/deque.hpp",
+      "last_built_sha256": "8a1321d225469fdd1fd29c0f7a31f5fc0c1da79a270dc822421ade972b3bc3d0",
+      "current_sha256": "7d12537b67ba147f4e902e745366636e0f9b787284c94113164fba83fbc2434d"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment.cpp",
+      "last_built_sha256": "9585e1894d5e3752bb00522388557082b058bbe274c93212167eb11095a98ec8",
+      "current_sha256": "fe8b080bc5b0eae4a58f7afd158cbeb86b2a21f1767664c015de044899648c18"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment.hpp",
+      "last_built_sha256": "e44cded137e816436a5ffc2ddd5ee68c230c9501212f0711f94a7f7f26af09c3",
+      "current_sha256": "cbb3048100274a1710b458ea5f1aa8a73528a8cd9cccd6510db2134c5cac887f"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment_tests.cpp",
+      "last_built_sha256": "a137384bdf4f4d73dc21db4d096e4c0ebf0b7d3924e3d37565a53d776dc8ef65",
+      "current_sha256": "570631227d1e8b4628c214f59a64326fa677e6b5fa95f8c5529986c333574cf8"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.cpp",
+      "last_built_sha256": "50193ac5c84e279207831100ae38bfa480626892cf237ddc401e7ca61eef1893",
+      "current_sha256": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.hpp",
+      "last_built_sha256": "865208b224507f1b708e0d7aea7bf3fff1433f9fe5d52260bcc0c1c6c4b136ca",
+      "current_sha256": "a9d1da810c6a94d4033cb9aa6973dfd9ccaf5f46e8b21f3173211129bf502ccb"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown_tests.cpp",
+      "last_built_sha256": "8f42a649fb93c1e74d477521f23ff5a702a63c54cc37a8cdb19ac85a768752bb",
+      "current_sha256": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.cpp",
+      "last_built_sha256": "dec7a66e5120e0c7064d95c53aa250d678160913486abf76409de08a4082d150",
+      "current_sha256": "a33af361f391a03658ccdcd9f16ee7474ca636bec48280309bf6f68bd29d26bb"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory.hpp",
+      "last_built_sha256": "8b3afb7a69b6a7d99a992b3dbc767845a5dfef49784b0500f157d76c499e2704",
+      "current_sha256": "e3e7fef3dea236a09225b19bc4ed6e92ea35172eb62c059fa322cc35a4f6f3a9"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "last_built_sha256": "23ed92f55c5bb8f6f70002a86f770aa242f72ddc9f148f22243d0a0d1c9d95ef",
+      "current_sha256": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.cpp",
+      "last_built_sha256": "905a59dd2e705056c072e5e72ebbd22566667f904a746ae0c9a45196239e37c4",
+      "current_sha256": "7829535f2d87c6d7fa4bec8967883010de2f34821c70400fcbfb31509059012e"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.hpp",
+      "last_built_sha256": "76b2a60370a20084228ab75fc0ce1450323f081e26aa2359b7a6a3080a1cfe3d",
+      "current_sha256": "75f59ff2264a2be13064cce7aaab69442e0bc4e7b68135dd93fb23641f3de0ce"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.cpp",
+      "last_built_sha256": "da35f76e1c414f24bdc6efda4d7ecc0ec814a3d63e64a01f9ef5ead63cdd4c24",
+      "current_sha256": "5ed95fda012839341bcc830935b0d62cb3ce2b5485e2241c66846fe36c93a8c6"
+    },
+    {
+      "path": "anadius-session-policy-source/policy.hpp",
+      "last_built_sha256": "06e2d9033ae8307ea2d87be0267d48e33bb353b87c4f23d34ec56abcfb5f41e2",
+      "current_sha256": "d14d02a1ecb5358646f52b97227c2f09a7b91137d86ad4600ea791b18ecff3a0"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.cpp",
+      "last_built_sha256": "8554bd2ddca2043fe7c199b9d058885879053bbbab7a58edfc539107c004b913",
+      "current_sha256": "6749d493304d44bc65a7733aac3e3105594d27ba9150a0c5c13e833dfe890e27"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.hpp",
+      "last_built_sha256": "b6a4412bc258ef7d47f63cfe8f889ec8ddd18170b1c334e6f127dd93ab1a2bef",
+      "current_sha256": "f92ac943421142a916011f87cf1b741da70131e904a1532f896a29c50852a43b"
+    },
+    {
+      "path": "anadius-session-profile-source/profile_tests.cpp",
+      "last_built_sha256": "60884c7e7e9b3aa495e9eea32db00486ec9debd8e73d9c37800bb07c0ca51b6b",
+      "current_sha256": "3f67b09f3984c54f59f0b98602f0a179c5bc3dae87274dac4867da5c3f5ea1d0"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "last_built_sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a",
+      "current_sha256": "31a36ff7c7e65a909e4e5a712113d67a565b6418edb50a4a38c02aa4ac4e04a5"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff.cpp",
+      "last_built_sha256": "8e2bb730bdf8d8ec1471ea6c8d0ea22a85450101c67d61d194a351bae2b696d7",
+      "current_sha256": "944914b063fceb4b7ef4ebfc9d9898394a367e7a05091a0357160186de192ef0"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff.hpp",
+      "last_built_sha256": "76c23df3621ce30be07f678decbf713ba655c783b5b4f658c3b0292f397c4049",
+      "current_sha256": "417165442cf848da4a4897284c2b041c734bfd89d6a0d0b4857db531c26f45d8"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "last_built_sha256": "6da9b872b45ab2a1ca8bf7ad5ba69183142908e6f77baafb54878645989be65f",
+      "current_sha256": "fe78962625ed2b4e3fc1ad835fa278ffb81d891af0132d432da6a1a320462756"
+    }
+  ],
+  "implementation": [
+    "Nonvirtual concrete Policy child cleanup pins self and same Parent provider lease; live JobPermit validates exact Parent/actor/Operation before active mutation. Distinct actual child required; other/default Policy methods retain original-worker affinity.",
+    "Prepare empty Call, reserve active under Policy gate, then swap checkpoint outside gate inside try. Authorized same-child reentry poisons before registry action; wrong Parent/actor/expired proof cannot poison active owner through reservation.",
+    "Validate permit/source/opaque checkpoint before and after actual owned registry.cleanup_current_thread. Counter records returned cleanup prefix; callback target retires while active, then final permit/source validation precedes leave. Errors poison, no cleanup replay.",
+    "Profile JobHandoff.cleanup_exit_waits pins dispatch, exact busy claim, Profile active call and child Parent Operation. Stable heap captures revalidate job/session generations, closure/control/function and same source claim; selected concrete Policy only, no legacy fallback.",
+    "Existing04a47c iterates only matching native thread_id entries and preserves other registrations. No request mutation, message execution, closure/strong release, job-count decrement or native/FLS exit attestation."
+  ],
+  "source_evidence": [
+    {
+      "path": "outputs/anadius-session-policy-source/policy.cpp",
+      "line": 149,
+      "anchor": "Policy::cleanup_job_exit_waits(",
+      "sha256": "5ed95fda012839341bcc830935b0d62cb3ce2b5485e2241c66846fe36c93a8c6"
+    },
+    {
+      "path": "outputs/anadius-session-policy-source/policy.cpp",
+      "line": 175,
+      "anchor": "call.checkpoint.swap(checkpoint)",
+      "sha256": "5ed95fda012839341bcc830935b0d62cb3ce2b5485e2241c66846fe36c93a8c6"
+    },
+    {
+      "path": "outputs/anadius-session-policy-source/policy.cpp",
+      "line": 177,
+      "anchor": "actual registry selects current native thread only",
+      "sha256": "5ed95fda012839341bcc830935b0d62cb3ce2b5485e2241c66846fe36c93a8c6"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "line": 528,
+      "anchor": "JobHandoff::cleanup_exit_waits()",
+      "sha256": "6749d493304d44bc65a7733aac3e3105594d27ba9150a0c5c13e833dfe890e27"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "line": 548,
+      "anchor": "checkpoint();policy->cleanup_job_exit_waits",
+      "sha256": "6749d493304d44bc65a7733aac3e3105594d27ba9150a0c5c13e833dfe890e27"
+    },
+    {
+      "path": "outputs/anadius-services-completion-source/exit_wait.cpp",
+      "line": 139,
+      "anchor": "ExitWaitRegistry::cleanup_current_thread()",
+      "sha256": "814af5ec8e30a72a9e76dedfb0ab5a1adb950df735efe7a89f865fa426524eaf"
+    },
+    {
+      "path": "outputs/anadius-services-completion-source/exit_wait.cpp",
+      "line": 108,
+      "anchor": "release_registered(tid)",
+      "sha256": "814af5ec8e30a72a9e76dedfb0ab5a1adb950df735efe7a89f865fa426524eaf"
+    },
+    {
+      "path": "outputs/anadius-source/bootstrap.cpp",
+      "line": 82,
+      "anchor": "void cleanup_exit_waits(",
+      "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6"
+    },
+    {
+      "path": "outputs/anadius-socket-source/message_dispatch.cpp",
+      "line": 102,
+      "anchor": "context.api.cleanup_exit_waits_04a47c();",
+      "sha256": "a8ca45a775c0fcd6bd485075ad3d459f8fd208a4922ade32e521c37bc2870014"
+    }
+  ],
+  "reused_native_body": {
+    "address": "0x18004a47c",
+    "fresh_binary_observation": false,
+    "basis": "Existing recovered bootstrap.cpp04a47c and owned ExitWaitRegistry; no new native body definition claimed."
+  },
+  "independent_static_review": {
+    "path": "outputs/anadius-session-policy-source/job-exit-cleanup-review.json",
+    "sha256": "eddf37ec315c4655cd20d5a1154bc69e0c692e7938e5c0e65b76bdd5c857e472",
+    "reviewer": "/root/b22_provider_audit",
+    "result": "STATIC_PASS_NO_REMAINING_REQUIRED_ISSUE",
+    "scope": "Four current C++ source/header files; explicit child exit-wait cleanup and exact Profile JobHandoff bridge only.",
+    "reviewed_source_hashes": {
+      "anadius-session-policy-source/policy.hpp": "d14d02a1ecb5358646f52b97227c2f09a7b91137d86ad4600ea791b18ecff3a0",
+      "anadius-session-policy-source/policy.cpp": "5ed95fda012839341bcc830935b0d62cb3ce2b5485e2241c66846fe36c93a8c6",
+      "anadius-session-profile-source/profile.hpp": "f92ac943421142a916011f87cf1b741da70131e904a1532f896a29c50852a43b",
+      "anadius-session-profile-source/profile.cpp": "6749d493304d44bc65a7733aac3e3105594d27ba9150a0c5c13e833dfe890e27"
+    },
+    "required_issue_fixed": "Call initially consumed std::function donor before active reservation. Empty Call now precedes reservation; swap and target retirement occur inside active try region/outside mutex. Authorized reentry poisons before registry cleanup.",
+    "findings": [
+      "Exact child permit rejects wrong Parent/actor/expired proof before active mutation; self and copied lease keep Policy and Parent backing alive.",
+      "Permit/source/checkpoint validation occurs outside Policy mutex; post-transfer and post-retirement checks prevent swallowed reentry from succeeding.",
+      "Existing registry selects current native thread only; cleanup invocation counter records actual returned prefix, while unknown postcheck remains poisoned with no speculative replay.",
+      "Profile pins Dispatch before Application access, exact claim under child Parent Operation, concrete-only Policy selection and unwinds active count before Parent Operation ends.",
+      "No default affinity relaxation, vtable/layout change, message execution, closure/strong release, job completion or native exit proof."
+    ],
+    "positive_prepared_profile_policy_test_source_present": false,
+    "edits_by_reviewer": false,
+    "compiled": false,
+    "tests_executed": false,
+    "link_attempted": false,
+    "binary_executed": false
+  },
+  "positive_prepared_profile_policy_test_source_present": false,
+  "limits": [
+    "No new test source and no dynamic PASS. Positive prepared Profile/JobHandoff/concrete Policy child cleanup integration remains absent.",
+    "Current/sibling/original thread registration isolation, callback transfer/retirement reentry, expired/wrong-Parent proof, SDK failures and logical-return-versus-OS-exit require targeted unexecuted scenarios plus authorized runtime validation.",
+    "Explicit JobHandoff helper only. Existing021770 Message bridge still calls default original-worker Policy path; child bridge selection remains to be implemented with Graph/Profile execution and response scheduling.",
+    "Graph/global state serialization, actual message body and closure/native runner/exit wiring remain open. Parent/provider freshness does not establish concurrent external online/global mutation safety.",
+    "Two production loader hooks and source/kernel/foreign/image/CRT finality remain independently open. No total DLL percentage or production DLL readiness claimed."
+  ],
+  "new_native_function_definitions": 0,
+  "new_translation_units": 0,
+  "public_vtable_or_layout_changes": false,
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "target_executed": false,
+  "original_access_or_modification": false,
+  "package_rebuilt": false,
+  "REA_queries_this_step": false
+}

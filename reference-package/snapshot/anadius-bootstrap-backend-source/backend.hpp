@@ -23,10 +23,21 @@ struct RuntimeSeed {
 // Source-only attachment point after the seed/config reach their stable owner.
 // Factory construction must not publish callbacks, start workers or install
 // hooks. The view is borrowed for this backend's lifetime, never copied state.
+// bind_state's provider bindings, Online/Worker/attachment factories and identity calls
+// run under a backend source-admission reservation. Reentry through guarded
+// backend source methods rejects and poisons construction even if swallowed by
+// opaque code. Returned owners are adopted before checking that reservation;
+// an unknown prefix retains the backend rather than guessing rollback. Passive
+// state()/tracking metadata remains readable; no mutex spans a factory call.
 struct CallbackStateView {
     configuration::State& configuration;
     RuntimeSeed& runtime;
     execution_recovered::Execution& execution;
+    // Optional borrowed RuntimeOwner ConsoleState byte. Backend supplies its
+    // actual cell before provider binding; Worker reads it after startup setup.
+    // Legacy three-field source views remain valid and retain configured flags.
+    // Appended HOST layout: rebuild all view/factory consumers consistently.
+    const std::uint8_t* show_lsx=nullptr;
 };
 class CallbackAttachment {
 public:
@@ -57,6 +68,15 @@ public:
     virtual bool cancel_unpublished()=0;
 };
 using ApplicationWorkerFactory=std::function<std::unique_ptr<ApplicationWorker>(CallbackStateView)>;
+// Optional independent HOST controller seam. Keeps ApplicationWorker's existing
+// virtual slots unchanged. Called after stop sources, worker stop and attachment
+// pause, before a blocking native join. False retains all owners and permits
+// only a nonblocking tracker seal/poll in this turn. It is never a drain proof.
+class ApplicationJoinContinuation {
+public:
+    virtual ~ApplicationJoinContinuation()=default;
+    virtual bool prepare_join()=0;
+};
 // Independent remaining-policy seam. SourceBackend itself supplies the six
 // worker/host/exit routes, so they are deliberately absent here. The existing
 // Services vtable and inheritance are unchanged.
@@ -91,6 +111,7 @@ using OnlineFactory=std::function<std::unique_ptr<OnlineComponent>(CallbackState
 // Existing provider interfaces only. Components must be concrete implementations
 // chosen by the caller. This backend supplies real application algorithms and
 // join bookkeeping, not the still-missing OS/foreign-provider implementations.
+enum class LifetimeProfile {Cooperative,OriginalCrt};
 struct Resources {
     // Optional backing state is destroyed last, after dependent providers.
     std::shared_ptr<void> state_lifetime;
@@ -107,11 +128,13 @@ struct Resources {
     std::unique_ptr<recovered::libraries::Effects> library_effects;
     std::unique_ptr<host_init_recovered::Effects> host;
     std::unique_ptr<network_hook_recovered::CleanupEffects> hook_cleanup;
-    // True must stop NEW application/worker/hook/late-exit/terminate admissions
+    // Cooperative: true must stop NEW application/worker/hook/late-exit/terminate admissions
     // and registrations, but allow already-created workers to finish. It must
     // not unload providers still in use. std::atexit alone cannot implement a
     // cancellable registrar. Application exit cleanup remains a separate source
     // route, not an invented part of this quiescence callback.
+    // OriginalCrt may leave this empty; original compiler-CRT exit dispatch
+    // does not call stop_and_join. Unselected manual close retains roots.
     std::function<bool()> stop_sources;
     // Default construction must expose a known empty API to Runtime's default
     // selector, rather than indeterminate callable pointers. Zero timeout is a
@@ -136,7 +159,12 @@ struct Resources {
     // Exclusive with legacy online. Constructed once after bind_state makes
     // the actual configuration/runtime/Execution addresses stable.
     OnlineFactory online_factory{};
+    // OriginalCrt uses the original compiler-CRT exit path. A cooperative stop
+    // callback is optional there; none is fabricated to satisfy construction.
+    // Appended HOST layout field: rebuild all Resources consumers together.
+    LifetimeProfile lifetime_profile=LifetimeProfile::Cooperative;
 };
+bool lifetime_configuration_valid(const Resources&)noexcept;
 // Explicit consuming transfer. std::function move may clone an SBO capture in
 // this toolchain; clear donor callables while the receiving owner is alive.
 // In particular pass take_resources(resources), rather than std::move alone,

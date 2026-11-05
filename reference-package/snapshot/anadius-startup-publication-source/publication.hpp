@@ -2,6 +2,7 @@
 #include "../anadius-foreign-callback-source/foreign.hpp"
 #include <atomic>
 #include <functional>
+#include <optional>
 
 namespace anadius::startup_publication {
 // Initialization milestones, NOT worker completion, hook success, health,
@@ -11,6 +12,10 @@ class Milestones final:public execution_recovered::Publication {
 public:
     void bind(const void*,execution_recovered::FlagReferences) override;
     void published(execution_recovered::ReadyStage,const void*) noexcept override;
+    void server_port_published(std::uint16_t,const void*) noexcept override;
+    // Only after both this payload and the real Server event. Port zero is a
+    // value, not absence. No raw configuration-cell access by the reader.
+    std::optional<std::uint16_t> server_port() const noexcept;
     bool observed_all() const noexcept;
     bool invalid() const noexcept;
     std::uint32_t bits() const noexcept;
@@ -19,6 +24,7 @@ private:
     std::atomic<const void*> execution_=nullptr;
     std::atomic<std::uint32_t> bits_=0;
     std::atomic<bool> invalid_=false;
+    std::atomic<std::uint32_t> server_port_=0; // valid bit16 + low16 port
 };
 bootstrap_backend::Resources bind(bootstrap_backend::Resources,std::shared_ptr<Milestones>);
 // Narrows the caller proof: all four SOURCE milestones must be published first.

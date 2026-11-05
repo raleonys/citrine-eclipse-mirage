@@ -1,3 +1,19 @@
+<!-- PENDING-SOURCE-CHANGES -->
+2026-11-05: Kullanıcının açık isteğiyle güncel tam ortak derleme ve testler geçti. Üretim DLL linki başarılı; DLL yüklenmedi/çalıştırılmadı. 296 nesne, 356 test grubu ve 19 framework terminal senaryosu doğrulandı. Güncel kaynakların son tam derlemeye göre bekleyen farkı 0. Bu sonuç tam davranış/loader/native ABI eşdeğerliği kanıtı değildir. Kanıt: `dll-critical-path/current-rebuild.evidence.json`. Önceki aşama metinleri tarihseldir; ZIP sonucu ayrı paket kaydındadır.
+<!-- END-PENDING-SOURCE-CHANGES -->
+
+Güncel özgün loader profili — 2026-11-03, DERLENMEDİ: detach helper kaynakta tanımlı; özgün uygulama reason0 gibi ek iş yapmaz. Gerçek exit cleanup compiler CRT callback sırasındadır. Ek zorunlu pre-cleanup proof kaldırıldı. Attach gerçek image Resources tanımı eksik kalıyor. Önceki iki-symbol link kayıtları tarihseldir. Ayrıntı: `original-loader-profile.md`.
+
+Güncel kaynak değişikliği — 2026-11-02, henüz derlenmedi/test edilmedi:
+`require_loader_attach_runtime` artık bütün senkron başlangıcın `BOOL` sonucunu
+döndürmekle yükümlüdür. `DllMain` ayrıca `ApplicationEntry` çağırmaz. Eski
+`Runtime*`/Bound-runtime açıklamaları aşağıdaki tarihsel kayda aittir. Aynı
+Runtime+Domain sahibinden gerçek kaynak başlangıcı için
+`pre_unload::Controller::start_application` eklendi; bu yolun loader lock dışında
+çalışma sözleşmesi devam eder. İki gerekli loader hook tanımı hâlâ eksiktir.
+Kaynak kaydı: `../anadius-pre-unload-source/owned-attach.evidence.json`.
+Son teslimin build/link/ZIP kayıtları bu kaynak değişikliklerini kapsamaz.
+
 # B54 update
 
 Current common build:946 sources,274 objects(270CPP/4C),337 groups+19 terminals.

@@ -27,4 +27,11 @@ private:
 // until actual Backend PathBinding. Construction has no I/O/UI/stream mutation.
 // Compiler-console FILE policy is not original MSVC FILE/object/CRT ABI.
 void install_configuration_console(bootstrap_backend::Resources&,ConfigurationInputs&);
+// Concrete image startup selection using native configuration/persistence/SDK,
+// compiler console/FILE identities and the real scalar legacy reader. The
+// Runtime FilePass still runs full recovered file/parser/reused hash-copy code.
+// Empty target slots and the image's managed stream are required. Construction
+// performs no configuration read, console setup or application publication.
+void install_native_configuration_console(bootstrap_backend::Resources&,
+    std::shared_ptr<shared_log::Stream>);
 }

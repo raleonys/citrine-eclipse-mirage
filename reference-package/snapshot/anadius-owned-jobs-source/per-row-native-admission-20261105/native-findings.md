@@ -1,0 +1,13 @@
+# Native launch and detach constraints
+
+This resumes the same stage that was explicitly paused on 2026-11-05. Its four original REA6.8.0/Ghidra12.1.4 replies and exported bundle were saved before that pause. They were read again, not reissued or counted twice. The resume readiness projection confirms an aligned REA6.8.0 server and available Ghidra12.1.4; readiness is not binary-analysis Evidence.
+
+Original SHA256: `9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c`.
+
+* `04a458` complete analyzed body, inclusive `18004a458..18004a472`, 27 bytes: `4a45c MOV RCX,[RCX]`, `4a45f CALL [18007f0a8]`, then BOOL mapping to0/4 and return. Address-name Evidence resolves that IAT to `PTR_CloseHandle_18007f0a8`. There is no event signaling or waiting in this body. Evidence `ev_e96e4d0d1bc911491e6be0de8637182614908744734c58f437235ab504993447` plus `ev_885b6131300f5bad3d151d683ba682cb8693c29c446cab5e83c82c534c2b7632`.
+* `05e8e0` complete analyzed body, inclusive `18005e8e0..18005e9b9`, 218 bytes: prepares CRT startup context through05e87c, selects05e7a8, loads caller flags at5e93e and copies them to the CreateThread argument at5e948, then calls `[18007f468]` at5e94c. The successful path copies native thread id at5e999/5e99d and returns the native handle. Address-name Evidence resolves that IAT to `PTR_CreateThread_18007f468`. No detach wait occurs in this body. Evidence `ev_4ce98b79108cf3f40e3dbf8e1c26b83fef80d05cc6dc6d65ac7b44ff33df84d6` plus `ev_79e2a53e3272243d2f11625d73cdf898abc6efd6bddeae2acbf3d75c926e3e02`.
+* Retained caller025480 and preceding Profile-stage selected instructions establish closure owner+20/function+28 publication, zero flags at025543, native launch025556 and later detach02557f. Retained child021770 calls its captured function at0217aa and cleanup04a47c at0217ac. Those are context, not four more fresh observations for this stage.
+
+The bounded reconstruction implication is that an exact prepublished child offer may run before native start returns or source detach completes. A scheduler-wide body mutex or detach event would add scheduling behavior unsupported by these bodies. Host source handles, completion receipts and actual wrapper/FLS lifetime still need separate exact ownership; removing an invented readiness condition does not authorize guessed cancellation or physical retirement.
+
+This is static instruction/name evidence. It does not establish runtime timing, all native exception paths, cross-provider pseudocode equivalence, full ABI/EH fidelity, or equivalence of the reconstructed original-worker response continuation to the native028d30 child tail. No newly recovered function credit and no overall completion percentage are assigned. Original executable bytes are unmodified.

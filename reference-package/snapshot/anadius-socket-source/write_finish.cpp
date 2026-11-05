@@ -1,6 +1,23 @@
 #include "write_finish.hpp"
 
 namespace anadius::socket_recovered {
+MemoryLookup lookup_allocation_header(std::uintptr_t header,
+    std::span<const WriteFinishAllocationHeader> headers,AllocationHeaderResolver* resolver,std::uintptr_t& output){
+    if(resolver){
+        std::uintptr_t found=0;
+        const auto match=resolver->lookup_header(header,found);
+        if(match==MemoryLookup::Found)output=found;
+        return match;
+    }
+    std::uintptr_t found=0;bool matched=false;
+    for(const auto& binding:headers){
+        if(binding.address!=header)continue;
+        if(matched)return MemoryLookup::Ambiguous;
+        matched=true;found=binding.allocation_base;
+    }
+    if(!matched)return MemoryLookup::Miss;
+    output=found;return MemoryLookup::Found;
+}
 namespace {
 std::uintptr_t heap_address(const WriteFinishString& string){
     std::uint64_t address=0;
@@ -31,13 +48,10 @@ WriteFinishCategory& category(const Category& value,WriteFinishContext& context)
     return *found;
 }
 std::uintptr_t allocation_base(std::uintptr_t header,WriteFinishContext& context){
-    std::uintptr_t found=0;bool matched=false;
-    for(const auto& binding:context.allocation_headers){
-        if(binding.address!=header)continue;
-        if(matched)throw UnsupportedInput("Write completion allocation header is ambiguous");
-        matched=true;found=binding.allocation_base;
-    }
-    if(!matched)throw UnsupportedInput("Write completion allocation header leaves bounded projection");
+    std::uintptr_t found=0;
+    const auto match=lookup_allocation_header(header,context.allocation_headers,context.allocation_header_resolver,found);
+    if(match==MemoryLookup::Ambiguous)throw UnsupportedInput("Write completion allocation header is ambiguous");
+    if(match!=MemoryLookup::Found)throw UnsupportedInput("Write completion allocation header leaves bounded projection");
     return found;
 }
 void destroy_heap(WriteFinishString& string,WriteFinishContext& context){

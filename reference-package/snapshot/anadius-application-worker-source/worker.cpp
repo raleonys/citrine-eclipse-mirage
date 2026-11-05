@@ -1,6 +1,7 @@
 #include "worker.hpp"
 #include <exception>
 #include <mutex>
+#include <limits>
 #include <stdexcept>
 #include <type_traits>
 #include <utility>
@@ -13,8 +14,8 @@ Settings take_settings(Settings& s){
     auto configure=std::move(s.configure);s.configure={};
     // Guaranteed-prvalue aggregate: receiver owns all backing before the local
     // std::function donor retires, including non-NRVO/SBO implementations.
-    return Settings{std::move(s.lifetime),std::move(s.state),std::move(s.effects),
-        std::move(configure),std::exchange(s.startup_timeout_ms,0)};
+    return Settings{std::move(s.lifetime),std::move(s.state),std::move(s.effects),std::move(s.accept_stop),
+        std::move(configure),std::exchange(s.startup_timeout_ms,0),std::exchange(s.close_retry_timeout_ms,0)};
 }
 struct Worker::Impl {
     struct Cells {
@@ -22,6 +23,9 @@ struct Worker::Impl {
     };
     struct Pending {
         Inputs inputs;std::shared_ptr<Cells> cells;
+        // Capture before Graph consumes its options. Only the explicit original
+        // application profile omits the additional HOST startup milestone wait.
+        bool original_application=false;
         application_effects::Providers effects;
         std::optional<worker_handoff::PreparedMemory::Borrow> borrow;
         b::Resources resources;std::shared_ptr<g::Graph> graph;
@@ -38,14 +42,15 @@ struct Worker::Impl {
     std::unique_ptr<worker_handoff::PreparedMemory> memory;
     HANDLE changed=nullptr;mutable std::mutex gate;Phase phase=Phase::Prepared;
     DWORD worker=0;void* fiber=nullptr;void* ptd=nullptr;
-    bool online=false,host=false,stop=false,entered=false,admitted=false,pending_present=false,online_binding=false;
+    bool online=false,host=false,stop=false,entered=false,admitted=false,pending_present=false,online_binding=false,stop_requesting=false;
+    bool close_retry_requested=false;std::uint64_t close_epoch=0,close_retries=0;
     std::unique_ptr<Pending> pending; // worker publishes BEFORE opaque configure
     Impl(std::shared_ptr<thread_domain::DomainStorage> d,b::CallbackStateView v,Settings&& s)
         :domain(std::move(d)),bound(v),settings(take_settings(s)),memory(worker_handoff::PreparedMemory::prepare(domain)){
         changed=::CreateEventW(nullptr,TRUE,FALSE,nullptr);
         if(!changed){if(!memory->cancel())std::terminate();throw std::runtime_error("Application worker startup event creation failed");}
     }
-    ~Impl()noexcept{if(phase!=Phase::Retiring||pending||changed)std::terminate();}
+    ~Impl()noexcept{if(phase!=Phase::Retiring||pending||changed||stop_requesting)std::terminate();}
     void control()const{
         if(::GetCurrentThreadId()!=controller||::GetCurrentFiber()!=controller_fiber)throw std::logic_error("Application worker lifecycle belongs to its original controller/fiber");
     }
@@ -65,7 +70,13 @@ struct Worker::Impl {
         if(phase==Phase::Poisoned||phase==Phase::Closed||phase==Phase::Finishing||(!admitted&&stop))throw std::logic_error("Application worker prefix is closed, stopped or unknown");
     }
     void startup_barrier(){
-        check();const auto begin=::GetTickCount64();
+        check();
+        if(pending->original_application){
+            std::lock_guard lock(gate);
+            if(phase==Phase::Poisoned||stop)throw std::logic_error("Original application dispatch lost Worker admission");
+            admitted=true;phase=Phase::Serving;return;
+        }
+        const auto begin=::GetTickCount64();
         for(;;){
             {
                 std::lock_guard lock(gate);
@@ -79,6 +90,37 @@ struct Worker::Impl {
             const auto result=::WaitForSingleObject(changed,settings.startup_timeout_ms-static_cast<DWORD>(elapsed));
             if(result!=WAIT_OBJECT_0)throw std::runtime_error("Online/host startup wait did not complete; started source retained");
             check();
+        }
+    }
+    void wait_close_retry(ULONGLONG begin){
+        check();
+        if(!settings.close_retry_timeout_ms)throw std::logic_error("Application worker close continuation is not selected");
+        // Graph/server calls and their Parent Operation have fully unwound.
+        // Validate the retained exact owned server, not just an exception name.
+        const auto backend=pending->graph->backend().snapshot();
+        const auto graph=pending->graph->snapshot().phase;
+        if(backend.phase!=owned_server::Phase::Quiescing||backend.quiescence_attested||!backend.acceptor_initialized||!backend.pending_initialized||backend.active_calls||
+           (graph!=g::Phase::Bound&&graph!=g::Phase::Installed&&graph!=g::Phase::Drained))
+            throw std::logic_error("Close continuation requires a known retained false drain");
+        {
+            std::lock_guard lock(gate);
+            if(phase!=Phase::Serving||!pending_present||!admitted||close_epoch==std::numeric_limits<std::uint64_t>::max())throw std::logic_error("Invalid close continuation reservation");
+            if(!::ResetEvent(changed)){phase=Phase::Poisoned;throw std::runtime_error("Cannot reset close continuation event");}
+            close_retry_requested=false;++close_epoch;phase=Phase::WaitingClose;
+        }
+        for(;;){
+            check();
+            const auto elapsed=::GetTickCount64()-begin;
+            if(elapsed>=settings.close_retry_timeout_ms)throw std::runtime_error("Application worker close continuation timed out; owners retained");
+            {
+                std::lock_guard lock(gate);
+                if(phase!=Phase::WaitingClose)throw std::logic_error("Close continuation wait was poisoned");
+                if(close_retry_requested){close_retry_requested=false;++close_retries;phase=Phase::Serving;return;}
+                // Stop/startup notifications wake us but cannot authorize retry.
+                if(!::ResetEvent(changed)){phase=Phase::Poisoned;throw std::runtime_error("Cannot reset close continuation wake");}
+            }
+            if(::WaitForSingleObject(changed,settings.close_retry_timeout_ms-static_cast<DWORD>(elapsed))!=WAIT_OBJECT_0)
+                throw std::runtime_error("Application worker close continuation wait failed; owners retained");
         }
     }
     struct Proxy final:server_recovered::ServerBackend {
@@ -96,10 +138,16 @@ struct Worker::Impl {
         bool set_environment_variable(std::string_view k,std::string_view s)override{return invoke([&]{return inner().set_environment_variable(k,s);});}
         void async_accept_021b00()override{invoke([&]{inner().async_accept_021b00();});}
         server_recovered::Error run_context_0298b0()override{
-            // This proxy is outside Graph::Server::invoke and Parent Operation.
+            // Outside Graph::Server::invoke and Parent Operation. The explicit
+            // original profile admits without adding an online/host wait;
+            // recovered source bodies retain their own Execution waits.
             v.startup_barrier();return invoke([&]{return inner().run_context_0298b0();});
         }
-        void destroy_pending_socket_024db0()override{invoke([&]{inner().destroy_pending_socket_024db0();});}
+        void destroy_pending_socket_024db0()override{
+            std::optional<ULONGLONG> begin;
+            for(;;){try{invoke([&]{inner().destroy_pending_socket_024db0();});return;}
+                catch(const owned_server::QuiescenceDeferred&){if(!begin)begin=::GetTickCount64();v.wait_close_retry(*begin);}}
+        }
         void destroy_acceptor_024db0()override{invoke([&]{inner().destroy_acceptor_024db0();});}
         void destroy_context()override{invoke([&]{inner().destroy_context();});}
         [[noreturn]]void raise_error(server_recovered::Error e,std::string_view s)override{invoke([&]{inner().raise_error(e,s);});std::terminate();}
@@ -109,7 +157,7 @@ struct Worker::Impl {
         {
             std::lock_guard lock(gate);prior=phase;
             if(phase==Phase::Closed)return true;
-            if(online_binding){phase=Phase::Poisoned;return false;}
+            if(online_binding||stop_requesting){phase=Phase::Poisoned;return false;}
             if(unpublished&&(entered||phase!=Phase::Prepared))return false;
             if(phase!=Phase::Prepared&&phase!=Phase::Returned)return false;
             if(pending_present)return false;
@@ -126,8 +174,10 @@ struct Worker::Impl {
 Worker::Worker(std::unique_ptr<Impl> p)noexcept:impl_(std::move(p)){}
 std::unique_ptr<Worker> Worker::create(std::shared_ptr<thread_domain::DomainStorage> domain,b::CallbackStateView bound,Settings settings){
     PreserveError error;
-    if(!domain||!settings.lifetime||!settings.configure||!settings.state||!settings.startup_timeout_ms||settings.startup_timeout_ms==INFINITE)
+    if(!domain||!settings.lifetime||!settings.configure||!settings.state||!settings.startup_timeout_ms||settings.startup_timeout_ms==INFINITE||settings.close_retry_timeout_ms==INFINITE)
         throw std::invalid_argument("Application worker requires a Domain, owning configure provider, explicit state seeds and finite startup timeout");
+    if(settings.accept_stop&&settings.accept_stop->snapshot().phase!=accept_stop::Phase::Fresh)
+        throw std::invalid_argument("Controller-selected server stop must be Fresh before Worker construction");
     // Allocate facade first: no prepared provider exists if this allocation fails.
     auto result=std::unique_ptr<Worker>(new Worker(nullptr));
     result->impl_=std::make_unique<Impl>(std::move(domain),bound,take_settings(settings));return result;
@@ -179,7 +229,7 @@ void Worker::bind_effects_online(b::OnlineComponent& online){
 Worker::~Worker()noexcept{
     PreserveError error;if(!impl_)return;auto& v=*impl_;
     {std::lock_guard lock(v.gate);
-        if(::GetCurrentThreadId()!=v.controller||::GetCurrentFiber()!=v.controller_fiber||v.phase!=Phase::Closed||v.pending_present||v.online_binding)std::terminate();
+        if(::GetCurrentThreadId()!=v.controller||::GetCurrentFiber()!=v.controller_fiber||v.phase!=Phase::Closed||v.pending_present||v.online_binding||v.stop_requesting)std::terminate();
         v.phase=Phase::Retiring;
     }
     // Explicitly retire opaque capture owners before Impl/gate/referents die.
@@ -187,6 +237,7 @@ Worker::~Worker()noexcept{
         // Configure captures may borrow Composer metadata. Retire both callable
         // donors while the receiving Composer and backing state still live.
         v.settings.configure={};retiring.configure={};
+        v.settings.accept_stop.reset();retiring.accept_stop.reset();
         v.settings.effects.reset();retiring.effects.reset();
         v.settings.state.reset();retiring.state.reset();
         v.settings.lifetime.reset();retiring.lifetime.reset();
@@ -214,6 +265,32 @@ void Worker::run_server(std::uint16_t& port,std::uint8_t& ready,execution_recove
         // Shared startup state is hidden until configure returns; configure may
         // build lowers/static settings, not read/mutate captured startup cells.
         v.settings.configure(p.inputs);v.check();
+        if(v.settings.accept_stop){
+            if(p.inputs.runtime.accept_stop&&p.inputs.runtime.accept_stop.get()!=v.settings.accept_stop.get())
+                throw std::invalid_argument("Configured Runtime stop differs from controller-selected Worker stop");
+            p.inputs.runtime.accept_stop=v.settings.accept_stop;
+        }
+        auto& lifecycle=p.inputs.graph.policy.lifecycle;
+        if(lifecycle.mode==session_policy::LifecycleMode::SourceOwned){
+            const auto& stop=p.inputs.runtime.accept_stop;
+            if(!stop||stop->scope()==accept_stop::Scope::AcceptOnly)
+                throw std::invalid_argument("Source-owned Worker lifecycle requires actual SessionIo Stop");
+            if(lifecycle.source_stop&&lifecycle.source_stop.get()!=stop.get())
+                throw std::invalid_argument("Source lifecycle proof differs from exact Runtime Stop");
+            lifecycle.source_stop=stop;
+        }else if(lifecycle.source_stop){
+            throw std::invalid_argument("Explicit lifecycle cannot carry a source-owned Stop proof");
+        }
+        // Original02d540 reads native global a3c98, this exact configuration's
+        // SDK string. Empty native configure version selects that actual cell
+        // after startup configuration, not the bootstrap log version constant.
+        if(lifecycle.mode==session_policy::LifecycleMode::OriginalApplication&&p.inputs.graph.version.empty())
+            p.inputs.graph.version=v.bound.configuration.sdk;
+        // Backend supplied the real RuntimeOwner startup flag, before the
+        // environment/arguments pass. Read now on the actual server worker,
+        // after startup has populated it. Legacy views keep configure's value.
+        if(lifecycle.mode==session_policy::LifecycleMode::OriginalApplication&&v.bound.show_lsx)
+            p.inputs.graph.show_lsx=*v.bound.show_lsx;
         const auto& s=p.inputs.graph.state;
         if(s.lifetime||s.configuration||s.online||s.saved_avatar_size||s.achievement_file||p.inputs.runtime.tls_index)
             throw std::invalid_argument("Application worker owns exact StateView and worker TLS; prebinding is refused");
@@ -242,6 +319,7 @@ void Worker::run_server(std::uint16_t& port,std::uint8_t& ready,execution_recove
             if(auto* binding=dynamic_cast<license_recovered::AuthenticationBinding*>(p.inputs.graph.licensing.get()))
                 binding->bind_authentication_code(*v.authentication_code);
         v.check();
+        p.original_application=lifecycle.mode==session_policy::LifecycleMode::OriginalApplication;
         p.graph=g::Graph::create(std::move(p.inputs.graph));v.check();
         if(v.achievement_mutex)p.graph->bind_achievement_mutex(*v.achievement_mutex,*v.achievement_platform);
         v.check();
@@ -261,7 +339,7 @@ void Worker::startup_complete(execution_recovered::ReadyStage stage,const execut
     PreserveError error;auto& v=*impl_;
     {
         std::lock_guard lock(v.gate);if(v.phase==Phase::Closed||v.phase==Phase::Retiring||v.phase==Phase::Finishing)return;
-        if(v.online_binding){v.phase=Phase::Poisoned;return;}
+        if(v.online_binding||(v.stop_requesting&&::GetCurrentThreadId()==v.controller)){v.phase=Phase::Poisoned;return;}
         if(execution!=&v.bound.execution||(stage!=execution_recovered::ReadyStage::Online&&stage!=execution_recovered::ReadyStage::Host))v.phase=Phase::Poisoned;
         else if(v.phase!=Phase::Poisoned){if(stage==execution_recovered::ReadyStage::Online)v.online=true;else v.host=true;}
         v.signal_locked();
@@ -272,12 +350,62 @@ void Worker::startup_failed(const execution_recovered::Execution*)noexcept{
 }
 void Worker::request_stop(){
     PreserveError error;auto& v=*impl_;v.control();
-    {std::lock_guard lock(v.gate);if(v.phase==Phase::Closed||v.phase==Phase::Retiring||v.phase==Phase::Finishing)return;if(v.online_binding){v.phase=Phase::Poisoned;return;}v.stop=true;if(v.entered&&!v.admitted&&v.phase!=Phase::Returned)v.phase=Phase::Poisoned;v.signal_locked();}
+    // Declared BEFORE selected: reservation outlives the local shared owner,
+    // including opaque retirement, and is never cleared under a lower call.
+    struct Request {
+        Impl& value;bool armed=false;
+        ~Request(){if(armed){std::lock_guard lock(value.gate);value.stop_requesting=false;}}
+    } request{v};
+    std::shared_ptr<accept_stop::Stop> selected;
+    {
+        std::lock_guard lock(v.gate);
+        if(v.phase==Phase::Closed||v.phase==Phase::Retiring||v.phase==Phase::Finishing)return;
+        if(v.stop_requesting){v.phase=Phase::Poisoned;throw std::logic_error("Application worker stop request reentry");}
+        if(v.online_binding){v.phase=Phase::Poisoned;return;}
+        v.stop=true;
+        if(v.entered&&!v.admitted&&v.phase!=Phase::Returned)v.phase=Phase::Poisoned;
+        v.signal_locked();
+        // Started-but-not-admitted/unknown prefixes retain their original
+        // policy. Do not infer a cancellable Runtime/SDK binding from them.
+        if(v.phase==Phase::Poisoned||!v.settings.accept_stop)return;
+        selected=v.settings.accept_stop;v.stop_requesting=true;request.armed=true;
+    }
+    try{
+        (void)selected->request(); // wake only; CancelIoEx stays on the worker
+        const auto phase=selected->snapshot().phase;
+        if(phase==accept_stop::Phase::Poisoned||phase==accept_stop::Phase::Retiring)
+            throw std::logic_error("Controller-selected server stop has an unknown outcome");
+        // Known FALSE is retained for the existing stop/join retry. TRUE does
+        // not finish Graph, release a loan, free an OV or certify completion.
+        std::lock_guard lock(v.gate);
+        if(v.phase==Phase::Poisoned)throw std::logic_error("Stop provider swallowed Worker lifecycle reentry");
+    }catch(...){v.poison();throw;}
 }
 bool Worker::finish_after_join(){return impl_->finish(false);}
 bool Worker::cancel_unpublished(){return impl_->finish(true);}
+bool Worker::retry_close(std::uint64_t epoch){
+    PreserveError error;auto& v=*impl_;v.control();std::lock_guard lock(v.gate);
+    if(v.phase==Phase::Retiring||v.phase==Phase::Closed||v.phase==Phase::Finishing)return false;
+    if(v.online_binding||v.stop_requesting){v.phase=Phase::Poisoned;v.signal_locked();throw std::logic_error("Close retry cannot reenter another Worker lifecycle call");}
+    if(v.phase!=Phase::WaitingClose||!epoch||epoch!=v.close_epoch||!v.pending_present||!v.settings.close_retry_timeout_ms)return false;
+    if(!v.close_retry_requested){v.close_retry_requested=true;v.signal_locked();if(v.phase==Phase::Poisoned)throw std::runtime_error("Cannot signal close continuation");}
+    return true;
+}
+bool Worker::prepare_join(){
+    PreserveError error;auto& v=*impl_;v.control();std::uint64_t epoch=0;
+    {
+        std::lock_guard lock(v.gate);
+        if(v.phase==Phase::Retiring||v.phase==Phase::Finishing)return false;
+        if(v.online_binding||v.stop_requesting){v.phase=Phase::Poisoned;v.signal_locked();throw std::logic_error("Worker join preparation cannot reenter lifecycle calls");}
+        if(!v.settings.close_retry_timeout_ms)return true;
+        if(v.phase==Phase::Prepared||v.phase==Phase::Returned||v.phase==Phase::Closed)return true;
+        if(v.phase==Phase::WaitingClose)epoch=v.close_epoch;
+    }
+    if(epoch)(void)retry_close(epoch); // only a wake; stale transition is harmless
+    return false; // retain route/owners; never block the sole signaling actor
+}
 Snapshot Worker::snapshot()const{
     PreserveError error;auto& v=*impl_;std::lock_guard lock(v.gate);
-    return {v.phase,v.controller,v.worker,v.online,v.host,v.stop,v.pending_present,v.memory->snapshot()};
+    return {v.phase,v.controller,v.worker,v.online,v.host,v.stop,v.pending_present,v.memory->snapshot(),v.close_epoch,v.close_retries};
 }
 } // namespace anadius::application_worker

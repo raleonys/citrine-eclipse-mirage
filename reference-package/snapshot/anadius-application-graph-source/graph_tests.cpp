@@ -242,6 +242,16 @@ void unstarted_and_foreign(){
  ::SetLastError(0x46c0);(void)f.graph->snapshot();require(::GetLastError()==0x46c0,"Graph metadata inspection preserves caller LastError");
  f.graph->close_unstarted();require(f.graph->snapshot().phase==g::Phase::Closed&&f.graph->backend().snapshot().phase==o::Phase::Closed,"Explicit unstarted close retires factory ownership without initializing backend");delete raw;
 }
+void original_install_and_unstarted_close(){
+ Fixture f;f.create([](g::Options& options){
+  options.policy.lifecycle.mode=anadius::session_policy::LifecycleMode::OriginalApplication;
+  options.policy.lifecycle.select_owner={};options.policy.lifecycle.external_drained={};
+ });f.install();
+ require(f.graph->snapshot().phase==g::Phase::Installed&&f.graph->policy()->snapshot().phase==anadius::session_policy::Phase::Fresh&&!f.state->external_calls,"Actual original Graph installation keeps external proof empty and constructs Policy/Runtime/owned server");
+ f.graph->close_unstarted();
+ require(f.graph->snapshot().phase==g::Phase::Closed&&!f.state->external_calls,"Known unstarted original Graph closes through its actual source route without an external proof");
+}
+
 void pipeline(bool encrypted){
  auto* f=new Fixture(encrypted);f->state->requests={request("<GetGameInfo GameInfoId=\"DISPLAY_NAME\"/>",1),request("<GetGameInfo GameInfoId=\"DISPLAY_NAME\"/>",2),request("<QueryContent/>",3),request("<GetInternetConnectedState/>",4),request("<GetProfile index=\"0\"/>",5)};if(encrypted){f->state->requests.clear();for(unsigned i=1;i<=8;++i)f->state->requests.push_back(request(i==8?"<ShowIGO/>":"<GetConfig/>",i));}
  f->state->configuration->game_attributes["DISPLAY_NAME"]="before";f->state->configuration->username="synthetic-name";f->state->configuration->content={{"old","oldname","1","installed"}};f->create();f->install();
@@ -256,6 +266,47 @@ void pipeline(bool encrypted){
  auto snap=f->graph->snapshot();require(snap.phase==g::Phase::Closed&&!snap.live_logics&&!snap.queued_events&&!snap.active&&!snap.event_locked&&!snap.parent_bound,"External true drains source-owned logics and remaining known queue strings before Parent lease release");require(f->state->queue_drained&&f->state->worker_done&&!f->native.root->provider_leases(),"Actual Runtime/Profile/jobs/environment/deque/graph close retires every provider lease");require(f->native.root->close()&&f->native.memory.blocks.empty()&&f->native.memory.allocations==f->native.memory.frees,"Explicit real Domain retirement releases every Parent event/header/frame/block/control and final PTD allocation");require(f->state->closed.size()==3&&f->state->closed.back()==200&&f->state->starts==1&&f->state->cleanups==1,"Known synthetic accepted/pending/listener sockets and WinSock context close exactly once");std::weak_ptr<g::Graph> weak=f->graph;std::weak_ptr<State> weak_state=f->state;std::weak_ptr<cp::Policy> weak_policy=f->graph->policy();std::weak_ptr<sp::Profile> weak_profile=f->graph->profile();f->state->after_hook={};f->state->prepare_hook={};delete f;require(weak.expired()&&weak_state.expired()&&weak_policy.expired()&&weak_profile.expired(),"Closed server/default Profile/native factory graph and exact live state have no strong owner cycle");
 }
 
+void plaintext_event_growth(){
+ auto* f=new Fixture(false);for(unsigned i=1;i<=70;++i)f->state->requests.push_back(request(i%2?"<ShowIGO/>":"<ShowIGOWindow/>",i));
+ f->create([](g::Options& opt){opt.event_capacity=64;});f->install();bool observed_backlog=false;
+ f->state->after_hook=[&]{if(f->state->responses==70&&!observed_backlog){const auto q=f->graph->snapshot();require(q.event_initialized&&q.queued_events==71&&!q.event_locked,"Seventy real plaintext IGO requests retain their events plus initial DOWN beyond initial64 slots");observed_backlog=true;}};
+ f->initialize();f->run();require(observed_backlog&&f->state->received==70&&f->state->responses==70&&f->state->event_logs.empty(),"Plaintext IGO requests all complete without consuming the growing event backlog");
+ std::size_t at=0;for(unsigned i=0;i<70;++i){const auto end=f->state->response_wire.find('\0',at);require(end!=std::string::npos&&f->state->response_wire.substr(at,end-at)==f->state->response_logs[i]&&f->state->response_logs[i].find("<ErrorSuccess Code=\"0\"")!=std::string::npos,"Actual ShowIGO/ShowIGOWindow source handlers preserve successful FIFO plaintext wire responses after queue growth");at=end+1;}
+ require(at==f->state->response_wire.size(),"Exactly seventy plaintext response frames reach the injected SDK");
+ f->close();require(f->graph->snapshot().phase==g::Phase::Closed&&!f->graph->snapshot().queued_events&&!f->native.root->provider_leases(),"Ordinary graph retirement drains the enlarged plaintext event backlog");
+ require(f->native.root->close()&&f->native.memory.blocks.empty()&&f->native.memory.allocations==f->native.memory.frees,"Grown event strings and maps leave no Parent or Domain allocation after normal retirement");f->state->after_hook={};delete f;
+}
+void wrapped_event_growth(){
+ auto* f=new Fixture(true);for(unsigned i=1;i<=13;++i)f->state->requests.push_back(request("<GetConfig/>",i));
+ const std::vector<std::string> first{"sso",std::string(15,'a'),std::string(16,'b'),std::string(4095,'c'),std::string("n\0ul",4),"last-initial"};
+ const std::vector<std::string> later{"wrapped-small",std::string(5000,'L'),std::string(16,'d'),std::string(4094,'e'),"tail","last-grown"};
+ f->create([](g::Options& opt){opt.event_capacity=8;});f->install();bool seeded=false,wrapped_growth=false;
+ f->state->after_hook=[&]{
+  if(!seeded){for(const auto& text:first)f->graph->enqueue(text);seeded=true;require(f->graph->snapshot().queued_events==7,"Initial8 event map holds DOWN plus six distinct small/large strings before any native pop");}
+  if(!wrapped_growth&&f->state->responses==3&&f->state->event_logs.size()==3){require(f->graph->snapshot().queued_events==4,"Three actual encrypted pops leave four live events with a nonzero head before wrapped growth");for(const auto& text:later)f->graph->enqueue(text);wrapped_growth=true;require(f->graph->snapshot().queued_events==10,"Wrapped insertion crosses old map8 and retains all ten pending FIFO event owners");}
+ };
+ f->initialize();f->run();require(seeded&&wrapped_growth&&f->state->responses==13&&f->state->event_logs.size()==13,"All thirteen actual native encrypted requests consume exactly the grown FIFO event sequence");
+ std::vector<std::string> expected{"<LSX><Event sender=\"EbisuSDK\"><IGOEvent State=\"DOWN\"/></Event></LSX>"};expected.insert(expected.end(),first.begin(),first.end());expected.insert(expected.end(),later.begin(),later.end());
+ require(f->state->event_logs==expected,"Growing a wrapped event map preserves exact SSO/heap/large-header and embedded-NUL FIFO payloads");
+ std::vector<std::string> frames;for(std::size_t at=0;at<f->state->response_wire.size();){const auto end=f->state->response_wire.find('\0',at);require(end!=std::string::npos,"Encrypted grown-queue wire retains NUL frame boundaries");auto text=f->state->response_wire.substr(at,end-at);m::hex_decode_03ce30(text);require(f->state->client.decrypt_042480(text),"Independent client decrypts actual source output after wrapped event-map growth");frames.push_back(std::move(text));at=end+1;}
+ require(frames.size()==26,"Thirteen native requests produce thirteen response/event frame pairs after wrapped growth");for(std::size_t i=0;i<13;++i)require(frames[i*2]==f->state->response_logs[i]&&frames[i*2+1]==expected[i],"Independent wire decode matches each response and exact FIFO event across map replacement");
+ f->close();require(f->graph->snapshot().phase==g::Phase::Closed&&!f->graph->snapshot().queued_events&&!f->native.root->provider_leases(),"Normal graph close retires all grown/wrapped queue state");require(f->native.root->close()&&f->native.memory.blocks.empty()&&f->native.memory.allocations==f->native.memory.frees,"Moved large event prefixes are freed exactly once after grown FIFO drain");f->state->after_hook={};delete f;
+}
+void large_event_header_ledger_growth(){
+ auto* f=new Fixture(true);for(unsigned i=1;i<=261;++i)f->state->requests.push_back(request("<GetConfig/>",i));
+ std::vector<std::string> expected{"<LSX><Event sender=\"EbisuSDK\"><IGOEvent State=\"DOWN\"/></Event></LSX>"};
+ for(unsigned i=0;i<260;++i)expected.push_back("header-event-"+std::to_string(i)+":"+std::string(5000,static_cast<char>('A'+i%26)));
+ f->create([](g::Options& opt){opt.event_capacity=64;opt.profile.headers=256;});f->install();bool seeded=false;
+ f->state->after_hook=[&]{if(!seeded){for(std::size_t i=1;i<expected.size();++i)f->graph->enqueue(expected[i]);seeded=true;const auto snapshot=f->graph->snapshot();require(snapshot.queued_events==261&&snapshot.event_initialized&&!snapshot.event_locked,"Actual Profile holds260 large aligned events plus DOWN after its initial256 header ledger must grow");}};
+ f->initialize();f->run();
+ require(seeded&&f->state->responses==261&&f->state->event_logs==expected&&!f->graph->snapshot().queued_events,"Actual encrypted Native033d70 drains the entire260-large-event FIFO through the grown Profile header ledger");
+ std::size_t offset=0;
+ const auto decode=[&]{const auto end=f->state->response_wire.find('\0',offset);require(end!=std::string::npos,"Grown-header wire retains its exact encrypted frame boundary");auto text=f->state->response_wire.substr(offset,end-offset);offset=end+1;m::hex_decode_03ce30(text);require(f->state->client.decrypt_042480(text),"Independent client decrypts actual large-event output after ledger relocation");return text;};
+ for(std::size_t i=0;i<expected.size();++i){const auto response=decode();const auto event=decode();require(response==f->state->response_logs[i]&&event==expected[i],"Real large WriteFinish frames retain exact response/event payloads while aligned headers are retired and reused");}
+ require(offset==f->state->response_wire.size(),"Exactly261 response/event pairs are written through actual Profile completion contexts");
+ f->close();require(f->graph->snapshot().phase==g::Phase::Closed&&!f->graph->snapshot().queued_events&&!f->native.root->provider_leases(),"Normal Graph retirement drains the grown ledger's actual session/profile owners");
+ require(f->native.root->close()&&f->native.memory.blocks.empty()&&f->native.memory.allocations==f->native.memory.frees,"Actual Profile auto-bound completion contexts free every aligned event/response allocation after header growth");f->state->after_hook={};delete f;
+}
 void repeated_true_drain(){
  auto* f=new Fixture(true);f->state->requests={request("<GetConfig/>")};f->create();f->install();f->state->after_hook=[f]{if(!f->state->events_queued){f->state->events_queued=true;f->graph->enqueue(std::string(5000,'z'));}};f->initialize();f->run();
  require(f->graph->snapshot().queued_events==1&&f->graph->snapshot().parent_bound,"Known large host event and provider lease remain after one native seeded event pop");
@@ -269,7 +320,7 @@ void repeated_true_drain(){
 }
 struct HookBuffer final:std::stringbuf {std::function<void()> hook;unsigned writes=0,syncs=0;std::streamsize xsputn(const char* text,std::streamsize n)override{++writes;if(hook){auto call=std::move(hook);call();}return std::stringbuf::xsputn(text,n);}int sync()override{++syncs;return std::stringbuf::sync();}};
 void retained_child(std::string_view mode){
- auto* f=new Fixture(mode=="false"||mode=="external"||mode=="overflow");f->state->requests={request("<GetConfig/>")};auto buffer=std::make_shared<HookBuffer>();f->create([&](g::Options& opt){if(mode=="overflow")opt.event_capacity=2;if(mode=="stream")opt.policy.stream=anadius::shared_log::make_stream(buffer);});f->install();
+ auto* f=new Fixture(mode=="false"||mode=="external");f->state->requests={request("<GetConfig/>")};auto buffer=std::make_shared<HookBuffer>();f->create([&](g::Options& opt){if(mode=="stream")opt.policy.stream=anadius::shared_log::make_stream(buffer);});f->install();
  auto swallowed=[f]{rejects<std::logic_error>([&]{f->graph->update([](g::StateView){});},"Opaque provider catches attempted Graph reentry before outer checkpoint");};
  if(mode=="information"){f->state->requests={request("<GetProfile index=\"0\"/>")};f->state->configuration->username="updated-user";f->state->information_hook=swallowed;}
  if(mode=="content"){f->state->requests={request("<QueryEntitlements Foo=\"x\" Bar=\"y\"/>")};f->state->content_hook=swallowed;}
@@ -280,17 +331,16 @@ void retained_child(std::string_view mode){
  if(mode=="log")f->state->log_hook=[](){throw std::runtime_error("Selected opaque observer failure");};
  if(mode=="false"){f->state->attest=false;f->state->after_hook=[f]{if(!f->state->events_queued){f->state->events_queued=true;f->graph->enqueue(std::string(5000,'r'));}};}
  if(mode=="external"){f->state->after_hook=[f]{if(!f->state->events_queued){f->state->events_queued=true;f->graph->enqueue(std::string(5000,'r'));}};f->state->external_hook=[](){throw std::runtime_error("Selected unknown external proof");};}
- if(mode=="overflow")f->state->after_hook=[f]{f->graph->enqueue("first");f->graph->enqueue("overflow");};
  if(mode=="reentry")f->state->after_hook=[f]{if(f->state->responses==1)f->graph->update([f](g::StateView){require(f->graph->snapshot().active,"Reentrant metadata snapshot observes active graph update");rejects<std::logic_error>([&]{f->graph->update([](g::StateView){});},"Nested lifecycle mutation is rejected before inner callback");});};
  if(mode=="update")f->state->after_hook=[f]{if(f->state->responses==1)f->graph->update([](g::StateView){throw std::runtime_error("Unknown state update prefix");});};
  bool caught=false;try{f->initialize();f->run();f->close();}catch(const std::exception&){caught=true;}
- require(caught,"Selected opaque/capacity failure propagates without guessed normal cleanup");auto snap=f->graph->snapshot();
+ require(caught,"Selected opaque failure propagates without guessed normal cleanup");auto snap=f->graph->snapshot();
  if(mode=="false"){require(snap.parent_bound&&snap.queued_events==1&&snap.phase!=g::Phase::Drained,"False external proof retains remaining large queue string and Parent lease");require(f->state->worker_done&&f->native.root->provider_leases()>0&&!f->native.memory.blocks.empty(),"Observed return and zero live sessions do not synthesize external drain");::ExitProcess(601);}
  if(mode=="external"){require(snap.parent_bound&&snap.queued_events==1&&snap.phase==g::Phase::Poisoned,"Unknown external callback retains known event allocation and poisons graph");::ExitProcess(602);}
  require(snap.phase==g::Phase::Poisoned&&f->native.root->provider_leases()>0,"Unknown source prefix seals graph and retains owned allocation lifetime");
  if(mode=="information"){require(f->state->information_calls==1&&!f->state->responses&&!f->state->sends&&f->graph->retained(f->state->token),"Swallowed information reentry stops source before response serialization/log/send and retains invocation");::ExitProcess(609);}if(mode=="content"){require(f->state->content_calls==1&&!f->state->responses&&!f->state->sends&&f->graph->retained(f->state->token),"Swallowed content reentry prevents second unknown-field callback and all response effects");::ExitProcess(610);}if(mode=="time"){require(f->state->time_calls==1&&f->state->greeting.empty()&&!f->state->received&&!f->state->responses,"Swallowed opaque clock reentry stops native greeting before any synchronous SDK send");::ExitProcess(611);}if(mode=="stream"){require(buffer->writes==1&&!buffer->syncs&&buffer->str()=="Received: "&&!f->state->received&&!f->state->responses&&!f->state->sends,"Swallowed streambuf reentry stops after prefix primitive before body/newline/flush/observer");::ExitProcess(612);}
- if(mode=="prepare")::ExitProcess(603);if(mode=="log"){require(f->graph->retained(f->state->token),"Unknown observer leaves actual Native invocation retained");::ExitProcess(604);}if(mode=="overflow"){require(snap.queued_events==2,"Ring overflow preserves seed and admitted first event");::ExitProcess(605);}if(mode=="update")::ExitProcess(606);if(mode=="reentry")::ExitProcess(607);::ExitProcess(699);
+ if(mode=="prepare")::ExitProcess(603);if(mode=="log"){require(f->graph->retained(f->state->token),"Unknown observer leaves actual Native invocation retained");::ExitProcess(604);}if(mode=="update")::ExitProcess(606);if(mode=="reentry")::ExitProcess(607);::ExitProcess(699);
 }
 void isolated(std::wstring mode,DWORD expected){std::array<wchar_t,32768> path{};auto n=::GetModuleFileNameW(nullptr,path.data(),static_cast<DWORD>(path.size()));require(n&&n<path.size(),"Own graph fixture EXE located");std::wstring command=L"\""+std::wstring(path.data(),n)+L"\" --"+mode;STARTUPINFOW startup{};startup.cb=sizeof(startup);PROCESS_INFORMATION process{};require(::CreateProcessW(nullptr,command.data(),nullptr,nullptr,FALSE,CREATE_NO_WINDOW,nullptr,nullptr,&startup,&process)!=0,"Isolated retained graph fixture launched");DWORD exit=0;auto wait=::WaitForSingleObject(process.hProcess,30000);require(wait==WAIT_OBJECT_0&&::GetExitCodeProcess(process.hProcess,&exit)&&exit==expected,"Graph child reaches exact retained-prefix assertions");::CloseHandle(process.hThread);::CloseHandle(process.hProcess);}
 }
-int main(int argc,char** argv){try{if(argc==2)retained_child(std::string_view(argv[1]).substr(2));passive_validation();unstarted_and_foreign();shared_achievement_mutex();complete_avatar_pipeline();licensing_checkpoint_pipeline();pipeline(false);pipeline(true);repeated_true_drain();isolated(L"false",601);isolated(L"external",602);isolated(L"prepare",603);isolated(L"log",604);isolated(L"overflow",605);isolated(L"update",606);isolated(L"reentry",607);isolated(L"fiber",608);isolated(L"information",609);isolated(L"content",610);isolated(L"time",611);isolated(L"stream",612);std::cout<<"PASS: "<<checks<<" application-graph core checks\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+int main(int argc,char** argv){try{if(argc==2)retained_child(std::string_view(argv[1]).substr(2));passive_validation();unstarted_and_foreign();original_install_and_unstarted_close();shared_achievement_mutex();complete_avatar_pipeline();licensing_checkpoint_pipeline();pipeline(false);pipeline(true);plaintext_event_growth();wrapped_event_growth();large_event_header_ledger_growth();repeated_true_drain();isolated(L"false",601);isolated(L"external",602);isolated(L"prepare",603);isolated(L"log",604);isolated(L"update",606);isolated(L"reentry",607);isolated(L"fiber",608);isolated(L"information",609);isolated(L"content",610);isolated(L"time",611);isolated(L"stream",612);std::cout<<"PASS: "<<checks<<" application-graph core checks\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

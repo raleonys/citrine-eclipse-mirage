@@ -1,0 +1,57 @@
+[
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-foreign-callback-source\\live-port-native-20261104-root\\connect-instructions.json",
+    "evidence_id": "ev_839077f99c02612bc8d409358a72a00b4078cf9a201c931361fd8e1c4381c349",
+    "sha256": "a0d2faa0503731860ea535a63dc54a3f5a9b809b79bf92ffa671b9c727021f67",
+    "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    }
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\server-port-native-review-20261103\\instructions-024480.json",
+    "evidence_id": "ev_4e8773ec4bcaae1dbadc4f0ef3ba6465ed4df416f35cdf6cc0f9d1a5444a8d2f",
+    "sha256": "ba2a6e5db37325e58296d9e0ece7729079f77d17ca1a1e45cdf03a21ff46f15c",
+    "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    }
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\server-port-native-review-20261103\\instructions-029ea0.json",
+    "evidence_id": "ev_875cf78952cc594dcb532411ad3a7808330fabe6372fbb126f62bff806f11043",
+    "sha256": "ced02237758b684fea7c5a585ed95ace944b42acfd3d011cafc03f4e29cd9529",
+    "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    }
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\server-port-native-review-20261103\\instructions-038970.json",
+    "evidence_id": "ev_3d7de1704f039245efc370ccfeeac36afcf6d505a03851d803acb8f63f2404a7",
+    "sha256": "37502b32696bfa798aa5c9c4eca6916d7280a88d3a1a7bf4c12c7fa4b340a214",
+    "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    }
+  },
+  {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-network-hook-source\\server-port-native-review-20261103\\xrefs-a3c90.json",
+    "evidence_id": "ev_428c49259e2143faad6bdac9a8767e4ae061b71dc5bc4a316344461061e300fe",
+    "sha256": "38336c4854eab446862d938ef39e3a1d65712d672882bb07101d3ab0cd3972b0",
+    "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    }
+  }
+]

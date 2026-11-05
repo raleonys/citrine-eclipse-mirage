@@ -98,5 +98,34 @@ void mapping_contracts(){
     Fixture duplicate;duplicate.seed(15,7);duplicate.regions[1]=duplicate.regions[0];rejects<s::UnsupportedInput>([&]{s::resize_receive_buffer_010040(duplicate.value,2,0,duplicate.context);});
     Fixture zero;zero.api.copy_bytes(0,0,0);zero.api.fill_bytes(0,0,0);check(zero.api.allocations.empty(),"selected byte adapter accepts zero counts without dereferencing null");
 }
+struct OwnerBytes final:s::ReceiveBufferResolver {
+    s::ReceiveBufferMemory owned;unsigned calls=0;
+    explicit OwnerBytes(std::span<s::ReceiveBufferRegion> rows):owned{rows}{}
+    s::MemoryLookup lookup_bytes(std::uintptr_t address,std::uint64_t count,std::span<std::uint8_t>& result)override{
+        ++calls;return owned.lookup_bytes(address,count,result);
+    }
+};
+void authoritative_mapping(){
+    Fixture f;f.seed(15,7);const auto expected=f.text()+std::string(41,'Z');
+    OwnerBytes owner(f.memory.regions);
+    const auto inline_row=f.regions[0];
+    std::array<s::ReceiveBufferRegion,2> stale{{inline_row,inline_row}};
+    f.memory.regions=stale;f.memory.resolver=&owner;
+    // Run the actual growth/copy/fill path with a deliberately unusable old
+    // catalog. Newly allocated rows belong to the owner, not the fallback.
+    s::resize_receive_buffer_010040(f.value,48,'Z',f.context);
+    check(f.text()==expected&&owner.calls>3,"actual string growth uses authoritative owner for old inline and new heap windows");
+    const auto address=s::receive_buffer_address(f.value);
+    auto saved=owner.owned.regions;owner.owned.regions={};
+    f.memory.regions=saved;
+    rejects<s::UnsupportedInput>([&]{f.memory.view(address,1);});
+    check(f.value.size_10==48,"revoked owner mapping never falls back to stale valid descriptor");
+    owner.owned.regions=saved;
+    auto bytes=f.memory.view(address,1);bytes[0]='Q';check(f.text()[0]=='Q',"restored exact owner window remains writable");
+    std::array<s::ReceiveBufferRegion,2> duplicate{{{address,bytes},{address,bytes}}};owner.owned.regions=duplicate;
+    std::span<std::uint8_t> unchanged=inline_row.bytes;
+    check(f.memory.lookup_bytes(address,1,unchanged)==s::MemoryLookup::Ambiguous&&unchanged.data()==inline_row.bytes.data(),"ambiguous exact lookup leaves caller output unchanged");
+    rejects<s::UnsupportedInput>([&]{f.memory.view(address,1);});
 }
-int main(){try{payload_oracle();capacities();failure_prefixes();symbolic_arithmetic_and_order();mapping_contracts();std::cout<<"PASS: "<<checks<<" receive buffer core checks; actual010040/008350, independent byte payload oracle, explicit growth anchors, alignment/header/free, symbolic max arithmetic and exact failure prefixes; no original CRT body claim\n";}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+}
+int main(){try{payload_oracle();capacities();failure_prefixes();symbolic_arithmetic_and_order();mapping_contracts();authoritative_mapping();std::cout<<"PASS: "<<checks<<" receive buffer core checks; actual010040/008350, independent byte payload oracle, explicit growth anchors, alignment/header/free, symbolic max arithmetic and exact failure prefixes; no original CRT body claim\n";}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

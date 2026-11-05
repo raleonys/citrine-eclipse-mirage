@@ -2,6 +2,7 @@
 #include "callbacks.hpp"
 #include "../anadius-bootstrap-backend-source/backend.hpp"
 
+namespace anadius::thread_domain {class DomainStorage;}
 namespace anadius::bootstrap_runtime {
 // Exact SDK boundaries, injectable for synthetic tests. This is a new adapter,
 // not a recovered native body or a claim about the original CRT exception ABI.
@@ -62,7 +63,14 @@ public:
     const configuration::State& configuration() const noexcept;
     const bootstrap_owner::ConsoleState& console() const noexcept;
     const SelectedDefaults& selected_defaults() const noexcept{return selected_;}
+    // Exact root certified by DomainStorage::make_threads, captured BEFORE
+    // Resources consumption. Null for standalone/custom thread providers.
+    // Does not attest all other providers or controller/fiber affinity.
+    const thread_domain::DomainStorage* memory_domain() const noexcept{return domain_.get();}
 private:
+    // Retains provenance through all provider and registry retirement. This is
+    // not a provider lease; caller still explicitly closes the Ready Domain.
+    std::shared_ptr<thread_domain::DomainStorage> domain_;
     // Reverse destruction: backend and its RegisteredServices die before registry.
     CallbackRegistry registry_;SelectedDefaults selected_;
     std::unique_ptr<bootstrap_owner::RuntimeOwner> owner_;

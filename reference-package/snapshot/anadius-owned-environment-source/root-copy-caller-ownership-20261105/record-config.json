@@ -1,0 +1,69 @@
+{
+  "schema": "root-message-copy-caller.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_ROOT_COPY_WHOLE_CALLER_OWNERSHIP",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Actual first and second028d30 message copies use explicit owning HOST body/slot seam; one source/destination effect spans pre-prefix through live executor tail. Raw slot08 remains payload/state-only; production Serialized and actual Runtime child integration remain open.",
+  "sources": [
+    {
+      "path": "anadius-socket-source/io_completion.hpp",
+      "before": "before/anadius-socket-source__io_completion.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch.hpp",
+      "before": "before/anadius-socket-source__message_dispatch.hpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch.cpp",
+      "before": "before/anadius-socket-source__message_dispatch.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch_tests.cpp",
+      "before": "before/anadius-socket-source__message_dispatch_tests.cpp",
+      "role": "test"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment.cpp",
+      "before": "before/anadius-owned-environment-source__environment.cpp",
+      "role": "production"
+    },
+    {
+      "path": "anadius-owned-environment-source/environment_tests.cpp",
+      "before": "before/anadius-owned-environment-source__environment_tests.cpp",
+      "role": "test"
+    }
+  ],
+  "reviews": [
+    "root-copy-independent-review.md",
+    "root-six-file-review.md"
+  ],
+  "reports": [
+    "implementation.md",
+    "native-findings.md",
+    "root-caller-seam-implementation.md",
+    "root-copy-environment-implementation.md",
+    "root-copy-test-implementation.md"
+  ],
+  "native_replies": [
+    "instructions-180028d30.json"
+  ],
+  "supplementary": [
+    "outputs/anadius-owned-environment-source/root-copy-caller-ownership-20261105/native-evidence-index.json",
+    "outputs/anadius-owned-environment-source/scoped-projection-calls-20261105/evidence.json",
+    "outputs/anadius-owned-environment-source/scoped-projection-calls-20261105/remaining-integration.json"
+  ],
+  "limits": [
+    "Four production/two test files statically reviewed. No compiler/project tests/link/DLL execution/ZIP; authored assertions are NOT runtime PASS.",
+    "Complete analyzed028d30 static body is656bytes in three ranges over658spanbytes. Provider terminal flags are not independent termination/EH proof. No new function coverage credit.",
+    "Selected actual message whole-copy caller ownership closes at source level; direct legacy raw slot08 remains partial trusted contract for external caller-owned tail. HOST hooks are not recovered native ABI slots.",
+    "Actual positive two-Scope tracked-family Runtime/B physical/FLS/Parent reap and naturally established returned-child-old1 remain open. Controlled Environment fixture is not actual child permission or real Runtime evidence.",
+    "Actor prepare40/response20/88/Worker/dispatcher, shared/accept/packet mutation and full native028d30/021770 child tail remain open. Production Parent stays Serialized.",
+    "Originals and frozen build/link/DLL/ZIP proofs remain unchanged. Explicit rebuild required; no overall completion percentage from pending file count."
+  ],
+  "completed_note": "SOURCE_ONLY actualRootmessagecopycaller guard closes preprefix-through-liveexecutor-tail ownership at BOTH realcopy sites;4production+2testfiles independentlyreviewed, assertionsNOTRUN.",
+  "observation": "Fresh saved/exported/closed REA6.8/Ghidra12.1.4 complete analyzed028d30 establishes both prefix/slot/liveexecutor sequences. Source/test/independentagents plus Root checked exact six-file freeze; raw callback partial contract preserved.",
+  "next_scope": "Use legitimate ONE-selected-Environment actual Prepared/Runtime two-Scope tracked-family source composition; integrate explicit actor prepare40/response20/88 at actual consumers with correct callback ownership handoff, then shared/accept/packet and fullnativechildtail. Production remains Serialized; no build authorization."
+}

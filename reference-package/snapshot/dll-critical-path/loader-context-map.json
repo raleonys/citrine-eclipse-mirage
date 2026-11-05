@@ -226,5 +226,21 @@
     "require_loader_attach_runtime",
     "require_loader_detach_quiescence"
   ],
-  "independent_read_only_audit": "/root/b22_provider_audit; source+primary-doc review, no edits/builds/target access"
+  "independent_read_only_audit": "/root/b22_provider_audit; source+primary-doc review, no edits/builds/target access",
+  "source_only_followup": {
+    "evidence": "outputs/anadius-bootstrap-runtime-source/closed-admission.evidence.json",
+    "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+    "finding": "The original process-termination audit described the old exit_dispatch locking path. Current source adds static lock-free admission before Hub access after managed pause/finish. In-flight admitted calls, unclosed termination and image/CRT lifetime remain OPEN; historical refs below describe their recorded source hashes."
+  },
+  "synchronous_followup": {
+    "path": "outputs/anadius-bootstrap-backend-source/synchronous-loader-audit.json",
+    "sha256": "20f229c10a383114bd44756c27ffb7b16fe9cf497f4c1b66407b419c9f5600b3",
+    "status": "STATIC_AUDIT_NO_CPP_CHANGE"
+  },
+  "startup_policy_user_confirmed": "Preserve original synchronous startup; continue resolving loader conditions. Explicitly selected by the user this turn.",
+  "hook_order_and_admission_followup": {
+    "path": "outputs/anadius-host-platform-source/synchronous-hook-order.audit.json",
+    "sha256": "32e03f00d78bdbd02c979bd12eb8b0d67ca5589c411ef35d3f81560ac3a5b949",
+    "status": "NATIVE_ORDER_MATCHES_BOUNDED_SCOPE_STARTUP_ADMISSION_GAP_OPEN"
+  }
 }

@@ -1,0 +1,24 @@
+{
+  "reviewer": "author static source inspection; no independent agent review this step",
+  "result": "STATIC_SOURCE_INSPECTED_NOT_COMPILED_OR_EXECUTED",
+  "reviewed_source_hashes": {
+    "anadius-application-graph-source/graph_integration_tests.cpp": "fccd0719c41d0c03040b113c9eddd4cdabecb2346aaceabeec1c15db8ce3dd31"
+  },
+  "findings": [
+    "Only the delayed-exit mode substitutes thread_native::Api.exit. Existing success/failure modes retain the default native exit API.",
+    "The first child is identified by a real launch id and blocked immediately before actual ExitThread, after NativeJobs entry/post has returned. No Parent/source/trace mutex is held across this wait. Actual FLS callback execution has not begun at this gate.",
+    "Original after_completion waits boundedly for exit-entered, asserts actual proof HANDLE WAIT_TIMEOUT/STILL_ACTIVE, completed1/source-livejobs0/native-pending1. The child at this point needs no Parent admission to reach the gate.",
+    "Next physical dispatcher get checks outside Parent, verifies exactly one receipt work decrement, invokes actual quiescent_prepared while child remains gated, expects false/Bound/pending1/no private or barrier closes/no further work change, then opens the gate.",
+    "Normal independent proof join and actual NativeJobs maintenance follow release; existing capacity1/70message FIFO/handle counters and controller backing/Domain retirement expectations remain enabled.",
+    "Controller owns trace pointer and two gate HANDLEs through physical original/child termination. Faults failfast without unwinding live stack owners. No production C++ changed."
+  ],
+  "limits": [
+    "Author inspection only; no compiler or runtime PASS.",
+    "This gates before ExitThread, not inside an FLS callback. It covers one controlled interleaving, not arbitrary scheduling.",
+    "Early stop/detach and later-provider close deferral/retry remain open."
+  ],
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

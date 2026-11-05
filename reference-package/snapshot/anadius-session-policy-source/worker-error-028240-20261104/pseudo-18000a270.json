@@ -1,0 +1,103 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"evidence_id\":\"ev_c4164937f426fe4363d7acf2c3b366d8481957236da7b03b09501e1b77279f18\",\"subject\":{\"name\":\"anadius64.dll\",\"digest\":{\"sha256\":\"9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c\"},\"local_path\":\"C:\\\\Users\\\\Skysect\\\\Downloads\\\\anadius64.dll\",\"format\":\"pe\",\"architecture\":\"x86_64\"},\"provider\":{\"id\":\"ghidra\",\"name\":\"Ghidra\",\"version\":\"12.1.4\"},\"analysis_profile\":{\"provider\":{\"id\":\"ghidra\",\"name\":\"Ghidra\",\"version\":\"12.1.4\"},\"parameters\":{\"target_kind\":\"executable\",\"target_format\":\"pe\",\"executable_role\":\"shared-library\",\"managed\":false,\"native_aot_metadata\":{\"contract_revision\":\"rtr-9.1-x64-pe-read-only-v7\",\"source_bytes\":134217728,\"work_units\":67108864,\"working_memory_bytes\":67108864,\"report_bytes\":4194304},\"architecture\":\"x86_64\",\"available_architectures\":[\"x86_64\"],\"import_mode\":\"ephemeral-source-immutable\",\"pdb_observations\":\"program-info-v5\",\"annotation_policy\":\"atomic-function-entry-metadata-v1\",\"load_image_observations\":\"source-mappings-entry-context-v2\",\"function_body_evidence\":\"complete-inclusive-ranges-v1\",\"function_references\":\"complete-body-and-entry-reference-manager-v2\",\"call_relationship_coverage\":\"function-body-call-coverage-v5\",\"function_dossier_coverage\":\"observed-facets-and-call-relationships-v1\",\"string_inventory_evidence\":\"defined-data-coverage-v1\",\"location_resolution\":\"explicit-address-exact-entry-symbol-first-v3\",\"procedure_file_offset_resolution\":\"address-first-unique-target-source-mapping-v2\",\"instruction_flow_evidence\":\"decoded-return-pcode-v1\",\"instruction_references\":\"exact-address-incoming-without-synthetic-entry-v2\",\"function_boundary_observations\":\"ghidra-function-boundary-limitations-v4\",\"no_return_repair\":\"disabled-windows-p0\",\"process_launch\":\"official-headless-script-v1\",\"jump_table_evidence\":\"typed-case-default-blocks-v1\",\"decompiler_jump_loads\":true,\"loader\":\"auto-from-header\",\"language_id\":\"auto-from-header\",\"compiler_spec_id\":\"auto-default\",\"analyzer_preset\":\"ghidra-default\",\"function_coordinate_context\":{\"kind\":\"native-function-coordinate-context-v1\",\"selected_image\":null,\"mapping_sha256\":\"55a7964dc0bcdf067484a281c658e6ca8457a49405e0ea9dbd080366ee4c3198\"}},\"digest\":\"64922283ade10fadf28df5d1689f74f28ec027c5180b774a9d26635c0e69c554\"},\"predicate_type\":\"rea.analysis\",\"operation\":\"procedure_pseudo_code\",\"parameters\":{\"procedure\":\"0x18000a270\"},\"raw_result\":null,\"normalized_result\":\"\\r\\n/* WARNING: Function: __security_check_cookie replaced with injection: security_check_cookie */\\r\\n\\r\\nundefined8 ***** FUN_18000a270(undefined8 *****param_1,ulonglong *param_2,undefined8 *param_3)\\r\\n\\r\\n{\\r\\n  undefined8 *****pppppuVar1;\\r\\n  undefined8 ****ppppuVar2;\\r\\n  undefined8 ****ppppuVar3;\\r\\n  undefined8 ******ppppppuVar4;\\r\\n  undefined8 ******ppppppuVar5;\\r\\n  undefined8 ****ppppuVar6;\\r\\n  undefined8 *******pppppppuVar7;\\r\\n  undefined1 auStackY_d8 [32];\\r\\n  undefined8 ******local_a8;\\r\\n  undefined1 local_a0;\\r\\n  undefined8 local_98 [4];\\r\\n  undefined8 ******local_78;\\r\\n  undefined8 ****ppppuStack_70;\\r\\n  undefined8 ****local_68;\\r\\n  undefined8 ****ppppuStack_60;\\r\\n  undefined8 ***local_58 [2];\\r\\n  ulonglong local_48;\\r\\n  ulonglong local_40;\\r\\n  ulonglong local_38;\\r\\n  \\r\\n  local_38 = DAT_1800a1580 ^ (ulonglong)auStackY_d8;\\r\\n  local_a8 = (undefined8 ******)param_1;\\r\\n  ppppppuVar4 = (undefined8 ******)FUN_180009eb0(local_98,param_3);\\r\\n  ppppuVar2 = (undefined8 ****)*param_2;\\r\\n  ppppuVar3 = (undefined8 ****)param_2[1];\\r\\n  pppppuVar1 = ppppppuVar4[2];\\r\\n  local_a8 = ppppppuVar4;\\r\\n  if (pppppuVar1 != (undefined8 *****)0x0) {\\r\\n    if ((ulonglong)((longlong)ppppppuVar4[3] - (longlong)pppppuVar1) < 2) {\\r\\n      FUN_180007e30(ppppppuVar4,2,0,(undefined8 *)&DAT_180080094,2);\\r\\n    }\\r\\n    else {\\r\\n      ppppppuVar4[2] = (undefined8 *****)((longlong)pppppuVar1 + 2);\\r\\n      ppppppuVar5 = ppppppuVar4;\\r\\n      if ((undefined8 *****)0xf < ppppppuVar4[3]) {\\r\\n        ppppppuVar5 = (undefined8 ******)*ppppppuVar4;\\r\\n      }\\r\\n      *(undefined2 *)((longlong)ppppppuVar5 + (longlong)pppppuVar1) = 0x203a;\\r\\n      *(undefined1 *)((longlong)ppppppuVar5 + (longlong)pppppuVar1 + 2) = 0;\\r\\n    }\\r\\n  }\\r\\n  (*(code *)(*ppppuVar3)[2])(ppppuVar3,local_58,(ulonglong)ppppuVar2 & 0xffffffff);\\r\\n  ppppuVar6 = local_58;\\r\\n  if (0xf < local_40) {\\r\\n    ppppuVar6 = (undefined8 ****)local_58[0];\\r\\n  }\\r\\n  FUN_18000cf50((longlong *)ppppppuVar4,ppppuVar6,local_48);\\r\\n  if (0xf < local_40) {\\r\\n    ppppuVar6 = (undefined8 ****)local_58[0];\\r\\n    if ((0xfff < local_40 + 1) &&\\r\\n       (ppppuVar6 = (undefined8 ****)local_58[0][-1],\\r\\n       0x1f < (ulonglong)((longlong)local_58[0] + (-8 - (longlong)ppppuVar6)))) {\\r\\n                    /* WARNING: Subroutine does not return */\\r\\n      FUN_18005c974();\\r\\n    }\\r\\n    thunk_FUN_18005caec(ppppuVar6);\\r\\n  }\\r\\n  local_78 = (undefined8 ******)*ppppppuVar4;\\r\\n  ppppuStack_70 = ppppppuVar4[1];\\r\\n  local_68 = ppppppuVar4[2];\\r\\n  ppppuStack_60 = ppppppuVar4[3];\\r\\n  ppppppuVar4[2] = (undefined8 *****)0x0;\\r\\n  ppppppuVar4[3] = (undefined8 *****)0xf;\\r\\n  *(undefined1 *)ppppppuVar4 = 0;\\r\\n  local_a8 = &local_78;\\r\\n  if ((undefined8 *****)0xf < ppppuStack_60) {\\r\\n    local_a8 = local_78;\\r\\n  }\\r\\n  *param_1 = (undefined8 ****)std::exception::vftable;\\r\\n  param_1[1] = (undefined8 ****)0x0;\\r\\n  param_1[2] = (undefined8 ****)0x0;\\r\\n  local_a0 = 1;\\r\\n  __std_exception_copy((longlong *)&local_a8,(longlong *)(param_1 + 1));\\r\\n  *param_1 = (undefined8 ****)std::runtime_error::vftable;\\r\\n  if ((undefined8 *****)0xf < ppppuStack_60) {\\r\\n    pppppppuVar7 = (undefined8 *******)local_78;\\r\\n    if ((0xfff < (longlong)ppppuStack_60 + 1U) &&\\r\\n       (pppppppuVar7 = (undefined8 *******)local_78[-1],\\r\\n       0x1f < (ulonglong)((longlong)local_78 + (-8 - (longlong)pppppppuVar7)))) {\\r\\n                    /* WARNING: Subroutine does not return */\\r\\n      FUN_18005c974();\\r\\n    }\\r\\n    thunk_FUN_18005caec(pppppppuVar7);\\r\\n  }\\r\\n  *param_1 = (undefined8 ****)std::_System_error::vftable;\\r\\n  param_1[3] = ppppuVar2;\\r\\n  param_1[4] = ppppuVar3;\\r\\n  return param_1;\\r\\n}\\r\\n\\r\\n\",\"confidence\":\"observed\",\"authority\":\"shipped-artifact\",\"environment\":null,\"limitations\":[\"The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.\",\"The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.\",\"Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.\",\"Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.\",\"Pseudocode is Ghidra decompiler output, not original source and not text-equivalent to Hopper output.\",\"External functions and functions without an analyzable body return null; other decompiler failures remain explicit.\",\"Ghidra Listing reports a terminal call at 0x18000a486 to 0x18005c974 FUN_18005c974 (external=false, thunk=false, hasNoReturn=true); fallthrough is excluded by Ghidra's flow model. This records Ghidra's FunctionManager flag, not an independent verification that the callee cannot return.\",\"Ghidra Listing reports a terminal call at 0x18000a48c to 0x18005c974 FUN_18005c974 (external=false, thunk=false, hasNoReturn=true); fallthrough is excluded by Ghidra's flow model. This records Ghidra's FunctionManager flag, not an independent verification that the callee cannot return.\",\"Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.\",\"The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.\",\"Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically.\"],\"relationship_coverage\":null,\"locations\":[],\"evidence_links\":[]}"
+    }
+  ],
+  "structuredContent": {
+    "evidence_id": "ev_c4164937f426fe4363d7acf2c3b366d8481957236da7b03b09501e1b77279f18",
+    "subject": {
+      "name": "anadius64.dll",
+      "digest": {
+        "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+      },
+      "local_path": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+      "format": "pe",
+      "architecture": "x86_64"
+    },
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    },
+    "analysis_profile": {
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "parameters": {
+        "target_kind": "executable",
+        "target_format": "pe",
+        "executable_role": "shared-library",
+        "managed": false,
+        "native_aot_metadata": {
+          "contract_revision": "rtr-9.1-x64-pe-read-only-v7",
+          "source_bytes": 134217728,
+          "work_units": 67108864,
+          "working_memory_bytes": 67108864,
+          "report_bytes": 4194304
+        },
+        "architecture": "x86_64",
+        "available_architectures": [
+          "x86_64"
+        ],
+        "import_mode": "ephemeral-source-immutable",
+        "pdb_observations": "program-info-v5",
+        "annotation_policy": "atomic-function-entry-metadata-v1",
+        "load_image_observations": "source-mappings-entry-context-v2",
+        "function_body_evidence": "complete-inclusive-ranges-v1",
+        "function_references": "complete-body-and-entry-reference-manager-v2",
+        "call_relationship_coverage": "function-body-call-coverage-v5",
+        "function_dossier_coverage": "observed-facets-and-call-relationships-v1",
+        "string_inventory_evidence": "defined-data-coverage-v1",
+        "location_resolution": "explicit-address-exact-entry-symbol-first-v3",
+        "procedure_file_offset_resolution": "address-first-unique-target-source-mapping-v2",
+        "instruction_flow_evidence": "decoded-return-pcode-v1",
+        "instruction_references": "exact-address-incoming-without-synthetic-entry-v2",
+        "function_boundary_observations": "ghidra-function-boundary-limitations-v4",
+        "no_return_repair": "disabled-windows-p0",
+        "process_launch": "official-headless-script-v1",
+        "jump_table_evidence": "typed-case-default-blocks-v1",
+        "decompiler_jump_loads": true,
+        "loader": "auto-from-header",
+        "language_id": "auto-from-header",
+        "compiler_spec_id": "auto-default",
+        "analyzer_preset": "ghidra-default",
+        "function_coordinate_context": {
+          "kind": "native-function-coordinate-context-v1",
+          "selected_image": null,
+          "mapping_sha256": "55a7964dc0bcdf067484a281c658e6ca8457a49405e0ea9dbd080366ee4c3198"
+        }
+      },
+      "digest": "64922283ade10fadf28df5d1689f74f28ec027c5180b774a9d26635c0e69c554"
+    },
+    "predicate_type": "rea.analysis",
+    "operation": "procedure_pseudo_code",
+    "parameters": {
+      "procedure": "0x18000a270"
+    },
+    "raw_result": null,
+    "normalized_result": "\r\n/* WARNING: Function: __security_check_cookie replaced with injection: security_check_cookie */\r\n\r\nundefined8 ***** FUN_18000a270(undefined8 *****param_1,ulonglong *param_2,undefined8 *param_3)\r\n\r\n{\r\n  undefined8 *****pppppuVar1;\r\n  undefined8 ****ppppuVar2;\r\n  undefined8 ****ppppuVar3;\r\n  undefined8 ******ppppppuVar4;\r\n  undefined8 ******ppppppuVar5;\r\n  undefined8 ****ppppuVar6;\r\n  undefined8 *******pppppppuVar7;\r\n  undefined1 auStackY_d8 [32];\r\n  undefined8 ******local_a8;\r\n  undefined1 local_a0;\r\n  undefined8 local_98 [4];\r\n  undefined8 ******local_78;\r\n  undefined8 ****ppppuStack_70;\r\n  undefined8 ****local_68;\r\n  undefined8 ****ppppuStack_60;\r\n  undefined8 ***local_58 [2];\r\n  ulonglong local_48;\r\n  ulonglong local_40;\r\n  ulonglong local_38;\r\n  \r\n  local_38 = DAT_1800a1580 ^ (ulonglong)auStackY_d8;\r\n  local_a8 = (undefined8 ******)param_1;\r\n  ppppppuVar4 = (undefined8 ******)FUN_180009eb0(local_98,param_3);\r\n  ppppuVar2 = (undefined8 ****)*param_2;\r\n  ppppuVar3 = (undefined8 ****)param_2[1];\r\n  pppppuVar1 = ppppppuVar4[2];\r\n  local_a8 = ppppppuVar4;\r\n  if (pppppuVar1 != (undefined8 *****)0x0) {\r\n    if ((ulonglong)((longlong)ppppppuVar4[3] - (longlong)pppppuVar1) < 2) {\r\n      FUN_180007e30(ppppppuVar4,2,0,(undefined8 *)&DAT_180080094,2);\r\n    }\r\n    else {\r\n      ppppppuVar4[2] = (undefined8 *****)((longlong)pppppuVar1 + 2);\r\n      ppppppuVar5 = ppppppuVar4;\r\n      if ((undefined8 *****)0xf < ppppppuVar4[3]) {\r\n        ppppppuVar5 = (undefined8 ******)*ppppppuVar4;\r\n      }\r\n      *(undefined2 *)((longlong)ppppppuVar5 + (longlong)pppppuVar1) = 0x203a;\r\n      *(undefined1 *)((longlong)ppppppuVar5 + (longlong)pppppuVar1 + 2) = 0;\r\n    }\r\n  }\r\n  (*(code *)(*ppppuVar3)[2])(ppppuVar3,local_58,(ulonglong)ppppuVar2 & 0xffffffff);\r\n  ppppuVar6 = local_58;\r\n  if (0xf < local_40) {\r\n    ppppuVar6 = (undefined8 ****)local_58[0];\r\n  }\r\n  FUN_18000cf50((longlong *)ppppppuVar4,ppppuVar6,local_48);\r\n  if (0xf < local_40) {\r\n    ppppuVar6 = (undefined8 ****)local_58[0];\r\n    if ((0xfff < local_40 + 1) &&\r\n       (ppppuVar6 = (undefined8 ****)local_58[0][-1],\r\n       0x1f < (ulonglong)((longlong)local_58[0] + (-8 - (longlong)ppppuVar6)))) {\r\n                    /* WARNING: Subroutine does not return */\r\n      FUN_18005c974();\r\n    }\r\n    thunk_FUN_18005caec(ppppuVar6);\r\n  }\r\n  local_78 = (undefined8 ******)*ppppppuVar4;\r\n  ppppuStack_70 = ppppppuVar4[1];\r\n  local_68 = ppppppuVar4[2];\r\n  ppppuStack_60 = ppppppuVar4[3];\r\n  ppppppuVar4[2] = (undefined8 *****)0x0;\r\n  ppppppuVar4[3] = (undefined8 *****)0xf;\r\n  *(undefined1 *)ppppppuVar4 = 0;\r\n  local_a8 = &local_78;\r\n  if ((undefined8 *****)0xf < ppppuStack_60) {\r\n    local_a8 = local_78;\r\n  }\r\n  *param_1 = (undefined8 ****)std::exception::vftable;\r\n  param_1[1] = (undefined8 ****)0x0;\r\n  param_1[2] = (undefined8 ****)0x0;\r\n  local_a0 = 1;\r\n  __std_exception_copy((longlong *)&local_a8,(longlong *)(param_1 + 1));\r\n  *param_1 = (undefined8 ****)std::runtime_error::vftable;\r\n  if ((undefined8 *****)0xf < ppppuStack_60) {\r\n    pppppppuVar7 = (undefined8 *******)local_78;\r\n    if ((0xfff < (longlong)ppppuStack_60 + 1U) &&\r\n       (pppppppuVar7 = (undefined8 *******)local_78[-1],\r\n       0x1f < (ulonglong)((longlong)local_78 + (-8 - (longlong)pppppppuVar7)))) {\r\n                    /* WARNING: Subroutine does not return */\r\n      FUN_18005c974();\r\n    }\r\n    thunk_FUN_18005caec(pppppppuVar7);\r\n  }\r\n  *param_1 = (undefined8 ****)std::_System_error::vftable;\r\n  param_1[3] = ppppuVar2;\r\n  param_1[4] = ppppuVar3;\r\n  return param_1;\r\n}\r\n\r\n",
+    "confidence": "observed",
+    "authority": "shipped-artifact",
+    "environment": null,
+    "limitations": [
+      "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+      "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+      "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+      "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+      "Pseudocode is Ghidra decompiler output, not original source and not text-equivalent to Hopper output.",
+      "External functions and functions without an analyzable body return null; other decompiler failures remain explicit.",
+      "Ghidra Listing reports a terminal call at 0x18000a486 to 0x18005c974 FUN_18005c974 (external=false, thunk=false, hasNoReturn=true); fallthrough is excluded by Ghidra's flow model. This records Ghidra's FunctionManager flag, not an independent verification that the callee cannot return.",
+      "Ghidra Listing reports a terminal call at 0x18000a48c to 0x18005c974 FUN_18005c974 (external=false, thunk=false, hasNoReturn=true); fallthrough is excluded by Ghidra's flow model. This records Ghidra's FunctionManager flag, not an independent verification that the callee cannot return.",
+      "Windows Ghidra P0 accepts native x86, x86-64, ARMNT (Thumb-2) and ARM64 PE applications and DLLs, and explicitly selected raw 6502 images; managed, hostile, sensitive, and mutable-path targets are unsupported.",
+      "The Windows bridge uses authenticated IPv4 loopback because Node path-based IPC does not expose Java AF_UNIX sockets; the endpoint file contains no bearer token.",
+      "Windows sessions require the matching packaged Windows x64 native addon, local NTFS targets and runtimes, and Windows 10 or later. Native handles enforce path admission, private DACLs, and Job Object ownership automatically."
+    ],
+    "relationship_coverage": null,
+    "locations": [],
+    "evidence_links": []
+  }
+}

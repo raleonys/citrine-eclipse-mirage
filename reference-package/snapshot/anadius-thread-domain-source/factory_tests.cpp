@@ -1,9 +1,21 @@
 #include "factory.hpp"
 #include "domain_test_fixture.hpp"
+#include "../anadius-crt-cache-source/cache.hpp"
 #include <iostream>
 
 namespace {
 using namespace anadius;namespace td=thread_domain;using b6_core_test::check;using b6_core_test::rejects;
+unsigned entropy_calls=0;bool counter_ok=true;
+void WINAPI entropy_time(LPFILETIME out){++entropy_calls;out->dwLowDateTime=0x12345678;out->dwHighDateTime=0x9876;::SetLastError(0x991);}
+DWORD WINAPI entropy_thread(){++entropy_calls;return 19;}
+DWORD WINAPI entropy_process(){++entropy_calls;return 41;}
+BOOL WINAPI entropy_counter(LARGE_INTEGER* out){++entropy_calls;if(!counter_ok)return FALSE;out->QuadPart=0x123456789;return TRUE;}
+td::EntropyImports entropy_api(){return {entropy_time,entropy_thread,entropy_process,entropy_counter};}
+void native_policy_selection(){
+    auto missing=entropy_api();missing.counter=nullptr;rejects<std::invalid_argument>([&]{(void)td::make_native_initial_policy(missing);},"Incomplete entropy imports reject before native observations");check(!entropy_calls,"Missing import creates no entropy/Domain prefix");
+    ::SetLastError(0x8182);auto selected=td::make_native_initial_policy(entropy_api());check(::GetLastError()==0x8182&&entropy_calls==4&&selected.security_cookie!=crt_cache_recovered::default_cookie&&!(selected.security_cookie>>48)&&!selected.new_mode&&!selected.new_handler&&!selected.invalid_handler&&!selected.thread_policy,"Native entropy feeds recovered cookie body and explicit source policy without starting compiler CRT or Domain");
+    counter_ok=false;rejects<crt_cache_recovered::UninitializedCounterDomain>([]{(void)td::make_native_initial_policy(entropy_api());},"Unknown QPC output cannot become a fabricated zero cookie input");check(::GetLastError()==0x8182&&entropy_calls==8,"Failed entropy prefix preserves caller LastError without Domain initialization");counter_ok=true;
+}
 td::InitialPolicy policy(){return {0x8f713a5268c4d209ULL,0,nullptr,nullptr,1};}
 LPVOID WINAPI application_alloc(HANDLE heap,DWORD flags,SIZE_T bytes){
     if(flags==HEAP_ZERO_MEMORY)return b6_core_test::alloc(heap,flags,bytes);
@@ -63,4 +75,4 @@ void owning_identity_and_retries(){
     check(!retired&&!weak.expired(),"closed but retained Domain still owns identity/SDK backing");auto alias=domain;domain.reset();check(!retired,"shared Domain alias retains backing");alias.reset();check(retired==1&&weak.expired()&&valid,"final root destruction retires backing after all dependents");
 }
 }
-int main(){try{complete_preflight();owning_identity_and_retries();std::cout<<"PASS: "<<b6_core_test::checks<<" initial-domain factory checks; complete SDK preflight, passive owned identity, actual PTD/allocator and existing initialization/FLS close retries\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+int main(){try{native_policy_selection();complete_preflight();owning_identity_and_retries();std::cout<<"PASS: "<<b6_core_test::checks<<" initial-domain factory checks; complete SDK preflight, passive owned identity, actual PTD/allocator and existing initialization/FLS close retries\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

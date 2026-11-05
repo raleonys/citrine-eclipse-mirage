@@ -1,0 +1,68 @@
+{
+  "diagnostic_baseline_exit": 1,
+  "hidden_error": "Session memory requires an explicitly admitted thread/fiber Operation",
+  "archive_edits": false,
+  "caller_chain": [
+    "Worker::run_server",
+    "server_start_029ea0",
+    "OwnedServerBackend::destroy_pending_socket_024db0",
+    "Runtime::quiescent",
+    "Profile::external_quiescent",
+    "Policy::external_quiescent",
+    "Policy::Impl::application",
+    "OwnedAcceptMemory::matches_storage",
+    "OwnedAcceptMemory::Impl::Access",
+    "SessionMemoryDomain::buffer_context",
+    "SessionMemoryDomain::Impl::current_locked"
+  ],
+  "root_cause": "Policy external_quiescent validates application storage before entering its existing local Parent Operation; strengthened accept storage validation now legitimately requires that Operation.",
+  "limitations": "Temporary copies only; canonical repair and full fresh builder continuation remain Root-owned.",
+  "repaired_stdout": "PASS: 65 application-effects checks; actual one-worker/six-request pipeline and 4 isolated retained prefixes",
+  "diagnostic_repaired_exit": 0,
+  "proposed_fix": "Move v.application(app) into local_idle immediately after auto outside=view.memory.enter(); keep external host/native proof outside Parent.",
+  "task": "application_effects_mock_tests fresh-build failure diagnosis",
+  "canonical_source_edits": false,
+  "output_logs": [
+    "compile.log",
+    "link.log",
+    "run.log",
+    "memory-compile.log",
+    "memory-link.log",
+    "memory-run.log",
+    "memory-stack-symbols.log",
+    "policy-compile.log",
+    "policy-link.log",
+    "policy-run.log"
+  ],
+  "hashes": [
+    {
+      "sha256": "a384138a6dbc7c2c4348e1c77b6d6cb33f3cff3fe2f45eb91822ad71cf09ff8a",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-application-worker-source\\worker.cpp"
+    },
+    {
+      "sha256": "2ca6df7d1ed04b7e32cf0db904824729fdfac20c735d1f07624b76f5073ae73a",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-memory-source\\memory.cpp"
+    },
+    {
+      "sha256": "c0649435800d5297f664f03c5c99a7f2c07c7de1803525e9560494790a7ab777",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-policy-source\\policy.cpp"
+    },
+    {
+      "sha256": "faaa50f4b9ff483c056e2628bd241b2770fd24190ae2c00a4b6e3d6f4a93fde2",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\application-effects\\worker-diagnostic.cpp"
+    },
+    {
+      "sha256": "0dff6f6a5d489dfa6576693669b0c1ce50bec5002cc5b177f2f5899135a3edac",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\application-effects\\memory-diagnostic.cpp"
+    },
+    {
+      "sha256": "c228ccca75778c55797609812635ffd7931acb3a1f8466a382c9a1a871c6231c",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\application-effects\\policy-diagnostic.cpp"
+    }
+  ],
+  "command_logs": [
+    "commands.json",
+    "memory-commands.json",
+    "policy-commands.json"
+  ]
+}

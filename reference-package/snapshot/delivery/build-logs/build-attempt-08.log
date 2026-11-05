@@ -1,0 +1,340 @@
+**********************
+PowerShell transcript start
+Start time: 20261105221307
+Username: HeonhideDeluxe\Skysect
+RunAs User: HeonhideDeluxe\Skysect
+Configuration Name: 
+Machine: HEONHIDEDELUXE (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Users\Skysect\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+& 'C:/Users/Skysect/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe' -X utf8 'work/apply-build-repair-20261105.py' 'work/build-repair-008-20261105.json'
+& './work/continue-rebuild-20261104.ps1'
+Process ID: 9364
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+PASS bootstrap_mock_tests
+PASS crt_threads_mock_tests
+PASS crt_runtime_mock_tests
+PASS crt_errors_mock_tests
+PASS crt_ptd_mock_tests
+PASS crt_ptd_data_mock_tests
+PASS crt_heap_mock_tests
+PASS crt_realloc_mock_tests
+PASS crt_recalloc_mock_tests
+PASS crt_recalloc_bridge_mock_tests
+PASS crt_conversion_mock_tests
+PASS crt_conversion_api_mock_tests
+PASS crt_conversion_bridge_mock_tests
+PASS crt_module_path_mock_tests
+PASS crt_find_native_mock_tests
+PASS crt_find_bridge_mock_tests
+PASS crt_locale_update_mock_tests
+PASS crt_locale_thread_mock_tests
+PASS crt_locale_bridge_mock_tests
+PASS crt_locale_ref_mock_tests
+PASS crt_locale_free_mock_tests
+PASS crt_locale_resource_bridge_mock_tests
+PASS crt_multibyte_support_mock_tests
+PASS crt_multibyte_control_mock_tests
+PASS crt_multibyte_bridge_mock_tests
+PASS crt_multibyte_tables_mock_tests
+PASS crt_multibyte_builder_mock_tests
+PASS crt_multibyte_record_bridge_mock_tests
+PASS crt_string_type_mock_tests
+PASS crt_lcmap_mock_tests
+PASS crt_nls_bridge_mock_tests
+PASS crt_locale_names_mock_tests
+PASS crt_nls_dispatch_mock_tests
+PASS crt_nls_dispatch_bridge_mock_tests
+PASS crt_nls_native_mock_tests
+PASS crt_nls_dispatch_native_mock_tests
+PASS crt_nls_native_bridge_mock_tests
+PASS crt_heap_native_mock_tests
+PASS crt_heap_native_bridge_mock_tests
+PASS crt_fls_native_mock_tests
+PASS crt_lock_native_mock_tests
+PASS crt_atomic_native_mock_tests
+PASS crt_sync_bridge_mock_tests
+PASS crt_counter_native_mock_tests
+PASS crt_locale_native_mock_tests
+PASS crt_initial_locale_mock_tests
+PASS crt_initial_multibyte_mock_tests
+PASS crt_initial_state_mock_tests
+PASS crt_locale_startup_mock_tests
+PASS crt_environment_cleanup_mock_tests
+PASS crt_lifecycle_callbacks_mock_tests
+PASS crt_pair_leaves_mock_tests
+PASS crt_lowio_lifecycle_mock_tests
+PASS crt_pair_bindings_mock_tests
+PASS crt_invalid_mock_tests
+PASS crt_glue_mock_tests
+PASS crt_cache_mock_tests
+PASS crt_onexit_mock_tests
+PASS crt_entry_mock_tests
+PASS crt_initializers_mock_tests
+PASS vcrt_ptd_mock_tests
+PASS vcrt_api_mock_tests
+PASS crt_locks_mock_tests
+PASS crt_cpu_mock_tests
+PASS vcrt_bridge_mock_tests
+PASS crt_support_mock_tests
+PASS crt_environment_mock_tests
+PASS crt_termination_mock_tests
+PASS crt_startup_bridge_mock_tests
+PASS crt_argv_parser_mock_tests
+PASS crt_argv_mock_tests
+PASS crt_byteclass_mock_tests
+PASS crt_argv_bridge_mock_tests
+PASS crt_wildcard_storage_mock_tests
+PASS crt_wildcard_search_mock_tests
+PASS crt_sort_mock_tests
+PASS crt_wildcard_mock_tests
+PASS thread_native_mock_tests
+PASS bootstrap_native_mock_tests
+PASS bootstrap_owner_mock_tests
+PASS bootstrap_owner_integration_mock_tests
+PASS bootstrap_backend_mock_tests
+PASS bootstrap_backend_integration_mock_tests
+PASS bootstrap_callbacks_mock_tests
+PASS bootstrap_factory_mock_tests
+PASS bootstrap_providers_mock_tests
+PASS bootstrap_providers_integration_mock_tests
+PASS thread_domain_mock_tests
+PASS thread_domain_integration_mock_tests
+PASS bootstrap_policies_mock_tests
+PASS bootstrap_policies_integration_mock_tests
+PASS config_storage_mock_tests
+PASS config_storage_integration_mock_tests
+PASS config_iteration_mock_tests
+PASS config_iteration_integration_mock_tests
+PASS services_completion_mock_tests
+PASS services_completion_integration_mock_tests
+PASS config_logging_mock_tests
+PASS config_logging_integration_mock_tests
+PASS library_effects_mock_tests
+PASS library_effects_integration_mock_tests
+PASS online_platform_mock_tests
+PASS online_platform_integration_mock_tests
+PASS host_platform_mock_tests
+PASS host_platform_integration_mock_tests
+PASS source_stop_mock_tests
+PASS initial_cells_mock_tests
+PASS native_context_mock_tests
+PASS native_context_integration_mock_tests
+PASS callback_policy_mock_tests
+PASS callback_policy_integration_mock_tests
+PASS callback_admission_mock_tests
+PASS callback_admission_integration_mock_tests
+PASS foreign_callback_mock_tests
+PASS foreign_callback_integration_mock_tests
+PASS startup_publication_mock_tests
+PASS startup_publication_integration_mock_tests
+PASS shared_log_mock_tests
+PASS shared_log_integration_mock_tests
+PASS callback_identity_mock_tests
+PASS callback_identity_integration_mock_tests
+PASS callback_provider_mock_tests
+PASS callback_provider_integration_mock_tests
+PASS original_provider_mock_tests
+PASS original_provider_integration_mock_tests
+PASS original_checkpoint_mock_tests
+PASS original_checkpoint_integration_mock_tests
+PASS online_version_mock_tests
+PASS online_version_integration_mock_tests
+PASS online_object_mock_tests
+PASS online_object_integration_mock_tests
+PASS online_query_mock_tests
+PASS online_application_queries_mock_tests
+PASS content_effects_mock_tests
+PASS information_effects_mock_tests
+PASS licensing_effects_mock_tests
+PASS application_effects_mock_tests
+PASS bound_library_mock_tests
+PASS resources_factory_mock_tests
+PASS online_query_integration_mock_tests
+PASS config_defaults_mock_tests
+PASS aggregate_teardown_mock_tests
+PASS observed_runtime_mock_tests
+PASS config_defaults_integration_mock_tests
+PASS socket_move_mock_tests
+PASS socket_move_integration_mock_tests
+PASS session_owner_mock_tests
+PASS session_owner_integration_mock_tests
+PASS session_dispose_mock_tests
+PASS session_dispose_integration_mock_tests
+PASS session_memory_mock_tests
+PASS session_memory_integration_mock_tests
+PASS io_memory_mock_tests
+PASS io_memory_integration_mock_tests
+PASS owned_server_mock_tests
+PASS owned_server_integration_mock_tests
+PASS async_accept_mock_tests
+PASS async_accept_integration_mock_tests
+PASS session_flow_mock_tests
+PASS session_flow_integration_mock_tests
+PASS async_accept_helpers_mock_tests
+PASS async_accept_helpers_integration_mock_tests
+PASS server_runtime_mock_tests
+PASS server_runtime_integration_mock_tests
+PASS session_profile_mock_tests
+PASS session_profile_integration_mock_tests
+PASS native_profile_mock_tests
+PASS native_profile_integration_mock_tests
+PASS owned_deque_mock_tests
+PASS owned_deque_integration_mock_tests
+PASS owned_environment_mock_tests
+PASS owned_environment_integration_mock_tests
+PASS owned_jobs_mock_tests
+PASS owned_jobs_integration_mock_tests
+PASS session_policy_mock_tests
+PASS session_policy_integration_mock_tests
+PASS application_graph_mock_tests
+PASS application_graph_integration_mock_tests
+PASS worker_handoff_mock_tests
+PASS worker_handoff_integration_mock_tests
+PASS application_worker_mock_tests
+PASS application_worker_integration_mock_tests
+PASS accept_stop_mock_tests
+PASS accept_stop_integration_mock_tests
+PASS session_stop_mock_tests
+PASS session_stop_integration_mock_tests
+PASS application_admission_mock_tests
+PASS application_admission_integration_mock_tests
+PASS configuration_factory_mock_tests
+PASS configuration_factory_integration_mock_tests
+PASS configuration_key_processor_mock_tests
+PASS configuration_key_binding_mock_tests
+PASS achievement_path_binding_mock_tests
+PASS services_factory_mock_tests
+PASS services_factory_integration_mock_tests
+PASS online_factory_mock_tests
+PASS online_factory_integration_mock_tests
+PASS host_init_mock_tests
+PASS hook_adapters_mock_tests
+PASS registry_mock_tests
+PASS native_callbacks_mock_tests
+PASS preloader_native_mock_tests
+PASS host_callbacks_mock_tests
+PASS network_hooks_mock_tests
+PASS online_mock_tests
+PASS configuration_mock_tests
+PASS execution_mock_tests
+PASS libraries_mock_tests
+PASS startup_mock_tests
+PASS parser_mock_tests
+PASS config_order_mock_tests
+PASS config_pipeline_mock_tests
+PASS config_hash_mock_tests
+PASS config_application_mock_tests
+PASS config_startup_mock_tests
+PASS achievement_writer_mock_tests
+PASS achievement_storage_mock_tests
+PASS calendar_mock_tests
+PASS timestamp_mock_tests
+PASS utc_mock_tests
+PASS achievement_runtime_mock_tests
+PASS event_queue_mock_tests
+PASS event_queue_integration_mock_tests
+PASS session_handler_mock_tests
+PASS session_integration_mock_tests
+PASS socket_operations_mock_tests
+PASS socket_native_mock_tests
+PASS socket_acceptor_mock_tests
+PASS socket_acceptor_native_mock_tests
+PASS socket_lifecycle_mock_tests
+PASS socket_lifecycle_native_mock_tests
+PASS socket_close_mock_tests
+PASS socket_closing_mock_tests
+PASS socket_cancellation_mock_tests
+PASS socket_cancellation_native_mock_tests
+PASS socket_recycle_mock_tests
+PASS socket_recycle_storage_mock_tests
+PASS socket_service_registry_mock_tests
+PASS socket_service_registry_integration_mock_tests
+PASS socket_service_constructor_mock_tests
+PASS socket_service_constructor_native_mock_tests
+PASS socket_scheduler_registry_mock_tests
+PASS socket_scheduler_registry_integration_mock_tests
+PASS socket_iocp_constructor_mock_tests
+PASS socket_iocp_constructor_native_mock_tests
+PASS socket_worker_startup_mock_tests
+PASS socket_worker_startup_native_mock_tests
+PASS socket_worker_run_mock_tests
+PASS socket_worker_run_native_mock_tests
+PASS socket_completion_dispatcher_mock_tests
+PASS socket_completion_dispatcher_native_mock_tests
+PASS socket_posted_operation_mock_tests
+PASS socket_posted_operation_integration_mock_tests
+PASS socket_io_completion_mock_tests
+PASS socket_io_completion_integration_mock_tests
+PASS socket_handler_dispatch_mock_tests
+PASS socket_handler_dispatch_integration_mock_tests
+PASS socket_composed_write_mock_tests
+PASS socket_composed_write_integration_mock_tests
+PASS socket_environment_constructor_mock_tests
+PASS socket_environment_constructor_integration_mock_tests
+PASS socket_write_finish_mock_tests
+PASS socket_write_finish_integration_mock_tests
+PASS socket_queued_write_mock_tests
+PASS socket_queued_write_integration_mock_tests
+PASS socket_async_receive_mock_tests
+PASS socket_async_receive_integration_mock_tests
+PASS socket_receive_buffer_mock_tests
+PASS socket_receive_buffer_integration_mock_tests
+PASS socket_composed_read_mock_tests
+PASS socket_composed_read_integration_mock_tests
+PASS socket_frame_read_mock_tests
+PASS socket_frame_read_integration_mock_tests
+PS>TerminatingError(): "C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-socket-source\message_dispatch_tests.cpp:30:67: error: missing field 'trace' initializer [-Werror,-Wmissing-field-initializers]
+   30 |         CopyCallerObservation p{&out,&source,&placeholder,&changed};copy_caller_observation=&p;CopyCallerBridge bridge(p);std::array<s::MessageEnvironmentCopyBinding,1> bindings{{{&table,&caller_copy_payload}}};f.context.copies=bindings;
+      |                                                                   ^
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-socket-source\message_dispatch_tests.cpp:38:67: error: missing field 'trace' initializer [-Werror,-Wmissing-field-initializers]
+   38 |         CopyCallerObservation p{&out,&source,&placeholder,&changed};copy_caller_observation=&p;
+      |                                                                   ^
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-socket-source\message_dispatch_tests.cpp:44:67: error: missing field 'trace' initializer [-Werror,-Wmissing-field-initializers]
+   44 |         CopyCallerObservation p{&out,&source,&placeholder,&changed};p.throwing=true;copy_caller_observation=&p;std::array<s::MessageEnvironmentCopyBinding,1> bindings{{{&table,&caller_copy_payload}}};f.context.copies=bindings;
+      |                                                                   ^
+3 errors generated.
+Exit code: 1
+Failed: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\toolchain\extracted\llvm-mingw-20261020-ucrt-x86_64\bin\clang++.exe"
+>> TerminatingError(): "C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-socket-source\message_dispatch_tests.cpp:30:67: error: missing field 'trace' initializer [-Werror,-Wmissing-field-initializers]
+   30 |         CopyCallerObservation p{&out,&source,&placeholder,&changed};copy_caller_observation=&p;CopyCallerBridge bridge(p);std::array<s::MessageEnvironmentCopyBinding,1> bindings{{{&table,&caller_copy_payload}}};f.context.copies=bindings;
+      |                                                                   ^
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-socket-source\message_dispatch_tests.cpp:38:67: error: missing field 'trace' initializer [-Werror,-Wmissing-field-initializers]
+   38 |         CopyCallerObservation p{&out,&source,&placeholder,&changed};copy_caller_observation=&p;
+      |                                                                   ^
+C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-socket-source\message_dispatch_tests.cpp:44:67: error: missing field 'trace' initializer [-Werror,-Wmissing-field-initializers]
+   44 |         CopyCallerObservation p{&out,&source,&placeholder,&changed};p.throwing=true;copy_caller_observation=&p;std::array<s::MessageEnvironmentCopyBinding,1> bindings{{{&table,&caller_copy_payload}}};f.context.copies=bindings;
+      |                                                                   ^
+3 errors generated.
+Exit code: 1
+Failed: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\toolchain\extracted\llvm-mingw-20261020-ucrt-x86_64\bin\clang++.exe"
+Exception: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\source-workspace\fresh-run-checkpoint.ps1:63
+Line |
+  63 |  … CODE -ne 0){throw (($result -join "`n")+"`nExit code: $LASTEXITCODE`n …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-socket-source\message_dispatch_tests.cpp:30:67:
+     | error: missing field 'trace' initializer [-Werror,-Wmissing-field-initializers]    30 |        
+     | CopyCallerObservation p{&out,&source,&placeholder,&changed};copy_caller_observation=&p;CopyCallerBridge
+     | bridge(p);std::array<s::MessageEnvironmentCopyBinding,1>
+     | bindings{{{&table,&caller_copy_payload}}};f.context.copies=bindings;       |                                    
+     | ^
+     | C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-socket-source\message_dispatch_tests.cpp:38:67:
+     | error: missing field 'trace' initializer [-Werror,-Wmissing-field-initializers]    38 |        
+     | CopyCallerObservation p{&out,&source,&placeholder,&changed};copy_caller_observation=&p;       |                 
+     | ^
+     | C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\anadius-socket-source\message_dispatch_tests.cpp:44:67:
+     | error: missing field 'trace' initializer [-Werror,-Wmissing-field-initializers]    44 |        
+     | CopyCallerObservation
+     | p{&out,&source,&placeholder,&changed};p.throwing=true;copy_caller_observation=&p;std::array<s::MessageEnvironmentCopyBinding,1> bindings{{{&table,&caller_copy_payload}}};f.context.copies=bindings;       |                                                                   ^ 3 errors generated. Exit code: 1 Failed: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\toolchain\extracted\llvm-mingw-20261020-ucrt-x86_64\bin\clang++.exe
+**********************
+PowerShell transcript end
+End time: 20261105221643
+**********************

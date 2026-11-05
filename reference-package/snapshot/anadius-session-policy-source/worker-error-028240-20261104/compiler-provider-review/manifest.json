@@ -1,0 +1,150 @@
+{
+  "schema": "compiler-provider-static-review.v1",
+  "recorded_at": "2026-11-04T19:47:04.9135343Z",
+  "scope": "READ_ONLY_STATIC_ARCHIVE_MEMBER_REVIEW_NO_BUILD_LINK_TEST_EXECUTION",
+  "tool_selection": "Dot-sourced work/use-tools.ps1 in each LLVM tooling session",
+  "provider_source": "No implementation .cpp source found in selected shipped toolchain; inspected actual COFF archive members",
+  "provider_archive": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\x86_64-w64-mingw32\\lib\\libc++.a",
+  "historical_selection": "build-current-full/link.log first line and2579 select exact archive path;2821 loads system_error.cpp.obj",
+  "historical_archive_hash_recorded": false,
+  "current_input_hashes": [
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\x86_64-w64-mingw32\\lib\\libc++.a",
+      "bytes": 3715512,
+      "sha256": "7951a18341870b622e67bea17bed9cd953d827cc7fbd0b521f01944f1ac7d22c"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\llvm-ar.exe",
+      "bytes": 65536,
+      "sha256": "4959819f15bcd31d15c2723dc24606dc6674e0af63d1c2ef0fe5bf9cd89c865a"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\llvm-nm.exe",
+      "bytes": 128000,
+      "sha256": "3cb652ed48b06e4d7ca0fc891923feabfa8a98cded84c2c18b6978267f8bd6d8"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\llvm-objdump.exe",
+      "bytes": 839680,
+      "sha256": "40d8a8a1f3cefecc6ca12e2fba674c28a9939bb13e609d67c311ba80baf70701"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build-current-full\\validation.json",
+      "bytes": 5013,
+      "sha256": "70d9d9dcbaed784530bee67928fe0ebbe27dbe931b07219545cd6988f50e4755"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build-current-full\\link.log",
+      "bytes": 687651,
+      "sha256": "74312a6ca0875c7587efe76de51130a349bf1161221dae051d57c9c88b4afdc1"
+    }
+  ],
+  "commands": [
+    "llvm-ar t <libc++.a>",
+    "llvm-ar x <libc++.a> error_category.cpp.obj system_error.cpp.obj",
+    "llvm-nm -C error_category.cpp.obj system_error.cpp.obj",
+    "llvm-objdump -dr --demangle error_category.cpp.obj",
+    "llvm-objdump -s error_category.cpp.obj",
+    "llvm-objdump -dr --demangle system_error.cpp.obj",
+    "llvm-objdump -s system_error.cpp.obj",
+    "llvm-ar x <libc++.a> stdlib_stdexcept.cpp.obj",
+    "llvm-objdump -dr --demangle stdlib_stdexcept.cpp.obj",
+    "llvm-objdump -r --demangle system_error.cpp.obj",
+    "llvm-ar/llvm-nm/llvm-objdump --version"
+  ],
+  "evidence_files": [
+    {
+      "file": "error_category.cpp.obj",
+      "bytes": 3448,
+      "sha256": "fa76ab9b44d1e856fffeb8460592ba702e3d83dfad4fc3e8a5447049a7e780ab"
+    },
+    {
+      "file": "error-category-disassembly.txt",
+      "bytes": 2783,
+      "sha256": "0790df734af307d01f169023fe2f9f3ac5748cceee7f73b40d41a9940c094c2c"
+    },
+    {
+      "file": "error-category-sections.txt",
+      "bytes": 4676,
+      "sha256": "0ab559ed8668a3d277a06e25608e6db1393ffeec8f2bf6e949b272fb0323b9c3"
+    },
+    {
+      "file": "focused-make-error-str.txt",
+      "bytes": 7178,
+      "sha256": "7a69159ec9cabfec75d607246f85ab91072f235eeae0d297564d87bab88ae03d"
+    },
+    {
+      "file": "focused-system-category-message.txt",
+      "bytes": 7014,
+      "sha256": "30ba1e631ea057bcf1a551a2e76c445cf2979a684dec51e69d13713d590e2dec"
+    },
+    {
+      "file": "historical-selected-link-excerpt.txt",
+      "bytes": 4569,
+      "sha256": "69db995b36780e8017fac17b0fef57ebd668e3e8ca297da603fa910603c9d370"
+    },
+    {
+      "file": "libcxx-members.txt",
+      "bytes": 1546,
+      "sha256": "539d742fbf36e25d5cea4c6080989511ec977e710570335e80c0b91fdb8d8e64"
+    },
+    {
+      "file": "llvm-ar-version.txt",
+      "bytes": 69,
+      "sha256": "8895279a2445c4a7312586f3ca36a75e2e406e36fee5f1c66187c9b3838b6a64"
+    },
+    {
+      "file": "llvm-nm-version.txt",
+      "bytes": 102,
+      "sha256": "2001dd346c325c1b21024cab7f4a937fd30ff7f1fcb813442ca4d3c9516a1562"
+    },
+    {
+      "file": "llvm-objdump-version.txt",
+      "bytes": 599,
+      "sha256": "2b1940f43e1c4dd3cf3ae964a6a23f068858349c0d3b4f4eef64be232b130917"
+    },
+    {
+      "file": "nm-focused.txt",
+      "bytes": 7232,
+      "sha256": "b3cbc6f281311bf9ec15ed154519e4cd498d145feb058d5beadf755c41753851"
+    },
+    {
+      "file": "stdlib_stdexcept.cpp.obj",
+      "bytes": 12504,
+      "sha256": "f702a3ff014fe41754270f6a042afdd0e987bd4b06e49450a5aa46dc021412a1"
+    },
+    {
+      "file": "stdlib-stdexcept-disassembly.txt",
+      "bytes": 17525,
+      "sha256": "168cc9502843a657af4e7d22e721d4ad68baf5e2644ccfc88e30aab0554c3d41"
+    },
+    {
+      "file": "system_error.cpp.obj",
+      "bytes": 32604,
+      "sha256": "31dfd7fc526dc8106710319b9c66cc4bf89bfac99c1614e254a774a9559452d7"
+    },
+    {
+      "file": "system-error-disassembly.txt",
+      "bytes": 91333,
+      "sha256": "7e3d9a665e034337bfc00d5d0af88bc687a5643a5871daea6235c2d860f39187"
+    },
+    {
+      "file": "system-error-relocations.txt",
+      "bytes": 61846,
+      "sha256": "1f0427c8ef98bdf773720d88a69e0748eeae7760fbeb6fc98a77aa8d48e008b4"
+    },
+    {
+      "file": "system-error-sections.txt",
+      "bytes": 47095,
+      "sha256": "feece0c6d705cb6e3a94ba574c717f1fdafb59b64028ac00ebb7f01851dab393"
+    },
+    {
+      "file": "findings.md",
+      "bytes": 8307,
+      "sha256": "4430e2c1a7df7e08d093b0702b14cb80b6fd0b0f1fd5bb65b6f77cbb67f1487a"
+    }
+  ],
+  "native_authority": "Prior fresh020950 six records and current worker-error028240 native records are supplementary; no REA calls by this reviewer",
+  "runtime_equivalence_established": false,
+  "production_source_modified": false
+}

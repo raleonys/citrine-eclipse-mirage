@@ -1,0 +1,82 @@
+Disassembly of section .text$_ZNSt3__112system_errorC2ENS_10error_codeERKNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE:
+
+0000000000000000 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)>:
+       0: 56                           	pushq	%rsi
+       1: 57                           	pushq	%rdi
+       2: 48 83 ec 58                  	subq	$0x58, %rsp
+       6: 48 89 d7                     	movq	%rdx, %rdi
+       9: 48 89 ce                     	movq	%rcx, %rsi
+       c: 41 f6 00 01                  	testb	$0x1, (%r8)
+      10: 74 17                        	je	0x29 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0x29>
+      12: 49 8b 40 08                  	movq	0x8(%r8), %rax
+      16: 49 8b 50 10                  	movq	0x10(%r8), %rdx
+      1a: 48 8d 4c 24 20               	leaq	0x20(%rsp), %rcx
+      1f: 49 89 c0                     	movq	%rax, %r8
+      22: e8 00 00 00 00               	callq	0x27 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0x27>
+		0000000000000023:  IMAGE_REL_AMD64_REL32	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE25__init_copy_ctor_externalEPKcy
+      27: eb 12                        	jmp	0x3b <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0x3b>
+      29: 49 8b 40 10                  	movq	0x10(%r8), %rax
+      2d: 48 89 44 24 30               	movq	%rax, 0x30(%rsp)
+      32: 41 0f 10 00                  	movups	(%r8), %xmm0
+      36: 0f 29 44 24 20               	movaps	%xmm0, 0x20(%rsp)
+      3b: 48 8d 4c 24 40               	leaq	0x40(%rsp), %rcx
+      40: 4c 8d 44 24 20               	leaq	0x20(%rsp), %r8
+      45: 48 89 fa                     	movq	%rdi, %rdx
+      48: e8 00 00 00 00               	callq	0x4d <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0x4d>
+		0000000000000049:  IMAGE_REL_AMD64_REL32	_ZNSt3__112_GLOBAL__N_114make_error_strERKNS_10error_codeENS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+      4d: 48 8d 54 24 40               	leaq	0x40(%rsp), %rdx
+      52: 48 89 f1                     	movq	%rsi, %rcx
+      55: e8 00 00 00 00               	callq	0x5a <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0x5a>
+		0000000000000056:  IMAGE_REL_AMD64_REL32	_ZNSt13runtime_errorC2ERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE
+      5a: f6 44 24 40 01               	testb	$0x1, 0x40(%rsp)
+      5f: 74 13                        	je	0x74 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0x74>
+      61: 48 8b 54 24 40               	movq	0x40(%rsp), %rdx
+      66: 48 8b 4c 24 50               	movq	0x50(%rsp), %rcx
+      6b: 48 83 e2 fe                  	andq	$-0x2, %rdx
+      6f: e8 00 00 00 00               	callq	0x74 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0x74>
+		0000000000000070:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+      74: f6 44 24 20 01               	testb	$0x1, 0x20(%rsp)
+      79: 74 13                        	je	0x8e <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0x8e>
+      7b: 48 8b 54 24 20               	movq	0x20(%rsp), %rdx
+      80: 48 8b 4c 24 30               	movq	0x30(%rsp), %rcx
+      85: 48 83 e2 fe                  	andq	$-0x2, %rdx
+      89: e8 00 00 00 00               	callq	0x8e <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0x8e>
+		000000000000008a:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+      8e: 48 8d 05 10 00 00 00         	leaq	0x10(%rip), %rax        # 0xa5 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0xa5>
+		0000000000000091:  IMAGE_REL_AMD64_REL32	_ZTVNSt3__112system_errorE
+      95: 48 89 06                     	movq	%rax, (%rsi)
+      98: 0f 10 07                     	movups	(%rdi), %xmm0
+      9b: 0f 11 46 10                  	movups	%xmm0, 0x10(%rsi)
+      9f: 48 83 c4 58                  	addq	$0x58, %rsp
+      a3: 5f                           	popq	%rdi
+      a4: 5e                           	popq	%rsi
+      a5: c3                           	retq
+      a6: 48 89 c6                     	movq	%rax, %rsi
+      a9: f6 44 24 40 01               	testb	$0x1, 0x40(%rsp)
+      ae: 75 0f                        	jne	0xbf <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0xbf>
+      b0: f6 44 24 20 01               	testb	$0x1, 0x20(%rsp)
+      b5: 75 2e                        	jne	0xe5 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0xe5>
+      b7: 48 89 f1                     	movq	%rsi, %rcx
+      ba: e8 00 00 00 00               	callq	0xbf <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0xbf>
+		00000000000000bb:  IMAGE_REL_AMD64_REL32	_Unwind_Resume
+      bf: 48 8b 54 24 40               	movq	0x40(%rsp), %rdx
+      c4: 48 8b 4c 24 50               	movq	0x50(%rsp), %rcx
+      c9: 48 83 e2 fe                  	andq	$-0x2, %rdx
+      cd: e8 00 00 00 00               	callq	0xd2 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0xd2>
+		00000000000000ce:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+      d2: f6 44 24 20 01               	testb	$0x1, 0x20(%rsp)
+      d7: 74 de                        	je	0xb7 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0xb7>
+      d9: eb 0a                        	jmp	0xe5 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0xe5>
+      db: 48 89 c6                     	movq	%rax, %rsi
+      de: f6 44 24 20 01               	testb	$0x1, 0x20(%rsp)
+      e3: 74 d2                        	je	0xb7 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0xb7>
+      e5: 48 8b 54 24 20               	movq	0x20(%rsp), %rdx
+      ea: 48 8b 4c 24 30               	movq	0x30(%rsp), %rcx
+      ef: 48 83 e2 fe                  	andq	$-0x2, %rdx
+      f3: e8 00 00 00 00               	callq	0xf8 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0xf8>
+		00000000000000f4:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+      f8: 48 89 f1                     	movq	%rsi, %rcx
+      fb: e8 00 00 00 00               	callq	0x100 <std::__1::system_error::system_error(std::__1::error_code, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)+0x100>
+		00000000000000fc:  IMAGE_REL_AMD64_REL32	_Unwind_Resume
+     100: cc                           	int3
+

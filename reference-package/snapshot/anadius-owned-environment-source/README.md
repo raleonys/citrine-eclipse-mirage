@@ -1,5 +1,12 @@
 # B43 — Profile-owned ortam ve zamanlama
 
+**Güncel kaynak adımı, henüz derlenmedi:** Canlı Parent JobPermit ve tam oturum
+kimliğine bağlı çocuk projection kapsamı ile `JobHandoff.clone_environment`
+eklendi. Geçici kopyalar kapanıştan önce yok edilir; scheduling ve mesaj yürütme
+henüz açılmadı. Yeni test kaynağı çalıştırılmadı; çocuk kapsamın pozitif entegrasyon
+testi henüz yoktur. Ayrıntı: [job-environment.md](job-environment.md). Aşağıdaki
+PASS sonuçları önceki kaynak sürümüne aittir.
+
 `Dependencies.environment` bütünüyle boş bırakıldığında Profile artık kendi vtable, type-query, executor factory, handler/response/accept scheduler ve copy bağlarını kurar. Varsayılan yol için uygulama Table/Types/thunk veya Policy session/accept override’ı sağlamaz. Açıkça verilen eski konfigürasyonlar korunur; eksik zorunlu legacy parçalar varsayılanlarla karıştırılmaz.
 
 Context almayan callbackler raw integer→object cast veya TLS singleton yerine weak registry ve monoton owner/projection capability kullanır. Her callback canlı Control pin’i alır. Copy yeni referans/capability oluşturur, move mevcut kaydı yeni adrese taşır, destroy tek release yapar. Empty helper’lar unspecified payload okumaz. Native partial move, source executor’u doğrular; destination’ın henüz yazılmamış alanlarını okumaz.

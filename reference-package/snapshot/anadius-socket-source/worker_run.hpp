@@ -22,23 +22,34 @@ struct WorkerRunEnvironment {
     // Logical mapping of constant category object1800a10f8, not its ABI/name VA.
     Category generic_category;
 };
-class WorkerRunApi {
+//02a190 needs only zero-packet posting and its immediately captured error.
+// A child-authorized stop provider cannot use this interface for TLS or waits.
+class WorkerStopApi {
 public:
-    virtual ~WorkerRunApi()=default;
-    virtual void* tls_get(std::uint32_t index)=0;
-    virtual std::int32_t tls_set(std::uint32_t index,void*)=0;
+    virtual ~WorkerStopApi()=default;
     virtual std::int32_t post_stop(std::uintptr_t port,std::uint32_t bytes,
         std::uintptr_t key,OVERLAPPED*)=0;
     virtual std::uint32_t get_last_error()=0;
 };
-class WorkerRunEffects {
+class WorkerRunApi:public WorkerStopApi {
 public:
-    virtual ~WorkerRunEffects()=default;
+    virtual ~WorkerRunApi()=default;
+    virtual void* tls_get(std::uint32_t index)=0;
+    virtual std::int32_t tls_set(std::uint32_t index,void*)=0;
+};
+class WorkerStopEffects {
+public:
+    virtual ~WorkerStopEffects()=default;
     // Exact low32 interlocked exchanges remain required storage/atomic effects.
     // They must affect the caller's corresponding scheduler fields; no aliasing
     // cast of word_38's uint64 storage or invented 64-bit atomic is performed.
     virtual std::uint32_t exchange_stop_34(IocpSchedulerEntry&,std::uint32_t)=0;
     virtual std::uint32_t exchange_wake_38(IocpSchedulerEntry&,std::uint32_t)=0;
+    [[noreturn]]virtual void raise_028240(Error,std::uintptr_t message_identity)=0;
+};
+class WorkerRunEffects:public WorkerStopEffects {
+public:
+    virtual ~WorkerRunEffects()=default;
     virtual std::uint64_t dispatch_027c10(IocpSchedulerEntry&,std::uint32_t timeout,
         WorkerThreadState&,WorkerRunResult&)=0;
     // Existing CRT boundaries remain providers; no CRT implementation added.
@@ -46,12 +57,11 @@ public:
     virtual void finish_04a2cc(std::array<std::uintptr_t,2>&)=0;
     virtual void free_cache_04b788(std::uintptr_t)=0;
     virtual void delete_function_04b0f8(IocpWorkerFunction&,std::uint32_t native_bytes)=0;
-    [[noreturn]]virtual void raise_028240(Error,std::uintptr_t message_identity)=0;
 };
 constexpr std::uint64_t increment_worker_count(std::uint64_t count){
     return count==std::numeric_limits<std::uint64_t>::max()?count:count+1;
 }
-void stop_worker_02a190(IocpSchedulerEntry&,WorkerRunApi&,Api& errors,WorkerRunEffects&);
+void stop_worker_02a190(IocpSchedulerEntry&,WorkerStopApi&,Api& errors,WorkerStopEffects&);
 std::uint64_t run_worker_0298b0(IocpSchedulerEntry&,WorkerRunResult&,
     WorkerRunEnvironment,WorkerRunApi&,Api& errors,WorkerRunEffects&);
 void run_worker_function_029890(IocpWorkerFunction&,WorkerRunEnvironment,

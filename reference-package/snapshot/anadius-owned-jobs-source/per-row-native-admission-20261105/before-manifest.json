@@ -1,0 +1,56 @@
+{
+  "status": "PRE_EDIT_SOURCE_SNAPSHOT",
+  "pending_source_count": 116,
+  "files": [
+    {
+      "path": "anadius-owned-jobs-source/jobs.hpp",
+      "exists": true,
+      "sha256": "a2a1f920550b3d9ef9112aa0e312733c8430dc1617141082595e2bfbf944743d",
+      "before": "before/anadius-owned-jobs-source__jobs.hpp"
+    },
+    {
+      "path": "anadius-owned-jobs-source/jobs.cpp",
+      "exists": true,
+      "sha256": "8973b5c6b1346fce65fcbf417f5b011919abc9f4bfd3cc9673a692552da3bfbf",
+      "before": "before/anadius-owned-jobs-source__jobs.cpp"
+    },
+    {
+      "path": "anadius-owned-jobs-source/jobs_tests.cpp",
+      "exists": true,
+      "sha256": "976ba611904a257e38c7b6f41607fc4ee4d014d8eeee4673430e7c07df4aeba3",
+      "before": "before/anadius-owned-jobs-source__jobs_tests.cpp"
+    },
+    {
+      "path": "anadius-owned-jobs-source/jobs_integration_tests.cpp",
+      "exists": true,
+      "sha256": "32e1b3d74cece5a1062de4d55773ce96807177fe09f1e6515c4be57a159565a6",
+      "before": "before/anadius-owned-jobs-source__jobs_integration_tests.cpp"
+    },
+    {
+      "path": "anadius-application-graph-source/graph_integration_tests.cpp",
+      "exists": true,
+      "sha256": "b80e0d82a7ee1c2a09f2ecd588148f7891d04936b9b7dd0f702ed757e1088354",
+      "before": "before/anadius-application-graph-source__graph_integration_tests.cpp"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.hpp",
+      "exists": true,
+      "sha256": "32e37805f2b01e992b4607a25bdff114dcac3f71d43280c3b48ffaed21dcdc19",
+      "before": "before/anadius-session-memory-source__memory.hpp"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.cpp",
+      "exists": true,
+      "sha256": "84cb386fa4f0093c431376bf14e292e379c19777ec2f9d51577e6a7769987276",
+      "before": "before/anadius-session-memory-source__memory.cpp"
+    },
+    {
+      "path": "anadius-worker-handoff-source/handoff_tests.cpp",
+      "exists": true,
+      "sha256": "931b2f1218829c58858916451e8740b80273a6309715e97a35523cba6a5ecc31",
+      "before": "before/anadius-worker-handoff-source__handoff_tests.cpp"
+    }
+  ],
+  "compile": false,
+  "tests_run": false
+}

@@ -1,0 +1,115 @@
+DIAG check tid22248: Actual two-Scope controller initializes its one real Domain
+DIAG check tid22248: Actual Scope fixture owns finite observation events
+DIAG check tid22248: Parallel fixture launches an actual same-Domain native wrapper
+DIAG ParallelThread body tid20116
+DIAG check tid20116: Actual two-Scope original owns real Runtime TLS
+DIAG check tid20116: Worker provider aliases borrow exact live bound configuration/Execution
+DIAG check tid20116: Owned context requests WSA2.2
+DIAG check tid20116: Actual024990 forwards observed selected IOCP construction arguments
+DIAG check tid20116: Concrete NativeApi forwards ACP exact loopback C string and bounded10 wide conversion
+DIAG check tid20116: Concrete NativeApi forwards persistent converted text, null protocol and initialized128byte sockaddr capacity
+DIAG check tid20116: Concrete NativeApi forwards ACP exact loopback C string and bounded10 wide conversion
+DIAG check tid20116: Concrete NativeApi forwards persistent converted text, null protocol and initialized128byte sockaddr capacity
+DIAG check tid20116: Actual020e20 opens selected family through synthetic socket SDK boundary
+DIAG check tid20116: Actual acceptor/accepted transfer attaches selected socket to same owned kernel completion port
+DIAG check tid20116: Acceptor enables source reuse-address option
+DIAG check tid20116: Actual bind lower receives family-specific initialized sockaddr length
+DIAG check tid20116: Actual listen uses observed INT_MAX backlog
+DIAG check tid20116: Local endpoint uses actual owned acceptor token and initialized SDK buffer
+DIAG check tid20116: Bound port environment publication precedes source readiness flag
+DIAG check tid20116: Actual Scope fixture captures the SAME concurrent Parent and genuine Runtime work capability
+DIAG check tid20116: Profile integration uses exact injected AcceptEx boundary with distinct201/202/203 sockets and90+90 endpoints
+DIAG check tid20116: Concrete Profile/native flow retains next accept SDK loan alongside active session
+DIAG check tid20116: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid20116: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG beforeQCS incoming0 observed0
+DIAG check tid20116: Observed completion releases accept loan before native endpoint address extraction
+DIAG check tid20116: Native0271a0 updates accepted context with captured listener pointer value and exact option700b/size8
+DIAG check tid20116: Actual acceptor/accepted transfer attaches selected socket to same owned kernel completion port
+DIAG check tid20116: Socket source destructor supplies selected executor identity
+DIAG check tid20116: Actual scoped source fixture accepts exactly one original session
+DIAG check tid20116: Graph prepare callback receives actual023000 owner after second native reset and supplies NOlogic/context graph
+DIAG check tid20116: Concrete NativeApi synchronous greeting uses exact WSASend one-buffer/zeroDWORD/flags0/nullOV/nullcallback imports
+DIAG check tid20116: Default NativeAsyncReceiveApi forwards exact WSARecv one-buffer/privateflags/zeroDWORD/realOV/nullcallback signature
+DIAG check tid20116: Scope fixture holds one actual source SDK receive loan and sends no XML input
+DIAG check tid20116: Native async import reads WSAGetLastError immediately and unconditionally, including successful non997 result
+DIAG check tid20116: Profile integration uses exact injected AcceptEx boundary with distinct201/202/203 sockets and90+90 endpoints
+DIAG check tid20116: Given prepare_session view is captured before the actual ready-session callback
+DIAG check tid20116: Scope actors begin only after actual greeting publication and a pending source receive protect the same Ready Session
+DIAG check tid20116: Exactly one selected Environment was bound by the actual Profile before Scope actors start
+DIAG check tid20116: Public Profile source registry resolves one exact stable session environment address
+DIAG check tid20116: Captured source belongs to the injected selected Environment, with no second business root
+DIAG check tid20116: Selected source has one canonical actual58 factory
+DIAG check tid20116: Canonical initial source factory exists before any child launch
+DIAG check tid20116: Fixture retains a real existing session strong owner through both manual Scope actors
+DIAG check tid20116: Parallel fixture launches an actual same-Domain native wrapper
+DIAG ParallelThread body tid14632
+DIAG check tid14632: Both real Scope actors use the exact SAME protected source capability/session
+DIAG check tid14632: Actual canonical58 initial-to-tracked factory contributes one genuine scheduler work retain
+DIAG check tid14632: Actual scoped tracked copy contributes its own genuine work retain
+DIAG check tid14632: Actual scoped move and moved-from empty cleanup transfer rather than add/drop the retained pin
+DIAG check tid14632: A's sole actual tracked release changes N to N-1 before B is launched; this is a nonfinal native drop
+DIAG check tid20116: Original observes actual A release suspended after decrement, before launching B
+DIAG check tid20116: Parallel fixture launches an actual same-Domain native wrapper
+DIAG ParallelThread body tid18324
+DIAG check tid18324: Both real Scope actors use the exact SAME protected source capability/session
+DIAG check tid18324: Actual canonical58 initial-to-tracked factory contributes one genuine scheduler work retain
+DIAG check tid18324: Actual scoped tracked copy contributes its own genuine work retain
+DIAG check tid18324: Actual scoped move and moved-from empty cleanup transfer rather than add/drop the retained pin
+DIAG check tid18324: B actual explicit Scope prepare40 adds one real tracked retain under its three-address caller claim
+DIAG check tid18324: B prepared output destruction releases exactly that actual Runtime-owned family pin
+DIAG check tid18324: Actual scoped moved-copy destruction consumes one native work retain without replay across unrelated original IO progress
+DIAG check tid18324: This actor's remaining actual tracked retain drains from its genuine current counter without a synthetic reset
+DIAG check tid18324: Actual Scope offer returns only after Scope close and whole Parent Operation exit
+DIAG check tid20116: B real Scope work and logical memory return complete while A's exact work release is held
+DIAG check tid20116: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid20116: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid20116: Manual Scope physical maintenance runs outside ANY original Parent Operation while A is held
+DIAG check tid20116: Actual parallel native/FLS exit joins before own handle retirement
+DIAG check tid20116: B's actual wrapper/FLS exit and Parent reaping leave only A's live borrowed offer
+DIAG check tid20116: Ordinary original Parent/Environment/Profile calls retain the exact Ready source/session while A work release remains live
+DIAG check tid20116: Actual original Policy cleanup progresses once without consuming foreign A's scoped release
+DIAG check tid14632: A genuine Runtime/Policy post-drop checkpoint continues only after B physical reap and ordinary original progress
+DIAG check tid14632: Actual pending IO keeps A's remaining tracked release nonfinal after unrelated original progress
+DIAG check tid14632: Actual scoped moved-copy destruction consumes one native work retain without replay across unrelated original IO progress
+DIAG check tid14632: A's pause was observed after its real decrement and is never armed or replayed again
+DIAG check tid14632: This actor's remaining actual tracked retain drains from its genuine current counter without a synthetic reset
+DIAG check tid14632: Actual Scope offer returns only after Scope close and whole Parent Operation exit
+DIAG check tid20116: Actual parallel native/FLS exit joins before own handle retirement
+DIAG check tid20116: Only A's actual Scope/Operation return and native/FLS exit retire its final prepared offer
+DIAG check tid20116: Both actual scoped families drain without altering the protected original source
+DIAG check tid20116: Actual pending SDK receive retains the session when the fixture's real strong hold is released
+DIAG check tid20116: The actual source receive loan remains pending until both Scope actors are physically reaped
+DIAG beforeQCS incoming0 observed0
+DIAG check tid20116: Socket source destructor supplies selected executor identity
+DIAG check tid20116: Final pending accept is completed only after both real Scope/native offers and the actual session hold drain
+DIAG check tid20116: Natural Scope fixture drain retains its real typed pending accept packet until scripted995
+DIAG check tid20116: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid20116: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid20116: AcceptOnly Stop request follows actual session/job/prepared/native retirement outside Parent
+DIAG check tid20116: Actual original Stop controller requests only its naturally drained pending accept
+DIAG beforeQCS incoming0 observed0
+DIAG check tid20116: Synthetic AcceptOnly cancellation targets exactly one actual pending accept after source/physical drain
+DIAG check tid20116: Selected real Stop cancels the current owned pending accept generation once
+DIAG check tid20116: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid20116: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid20116: AcceptOnly Stop request follows actual session/job/prepared/native retirement outside Parent
+DIAG check tid20116: Actual original Stop controller requests only its naturally drained pending accept
+DIAG beforeQCS incoming0 observed0
+DIAG check tid20116: Every physical wait belongs to own concrete Runtime IOCP
+DIAG check tid20116: AdmittedDispatcherApi releases root admission before physical SDK wait
+DIAG check tid20116: AcceptOnly Stop request follows actual session/job/prepared/native retirement outside Parent
+DIAG check tid20116: Actual original Stop controller requests only its naturally drained pending accept
+DIAG beforeQCS incoming0 observed0
+DIAG check tid20116: Actual Runtime/Policy source work, IO, both real Scope actors and the session/control naturally drain before original return
+DIAG check tid20116: Manual genuine prepared Scope actors are not represented as fabricated NativeJobs message jobs or scheduler pins
+DIAG check tid20116: Socket source destructor supplies selected executor identity
+DIAG check tid20116: Socket source destructor supplies selected executor identity
+DIAG check tid20116: Owned teardown closes the same actual kernel IOCP handle
+DIAG check tid20116: Selected real AcceptOnly Stop closes after one exact injected cancellation packet and acknowledged source receipt
+DIAG check tid20116: The SAME explicitly injected Environment/Policy/Profile/Runtime close normally after one real original cleanup and complete actor/source retirement
+DIAG check tid20116: Actual pending receive EOF and typed accept995 drain the injected SDK source without fabricated XML jobs or responses
+DIAG check tid20116: Original TLS and actual providers outlive all Scope actors and source retirement
+DIAG check tid22248: Actual parallel native/FLS exit joins before own handle retirement
+DIAG check tid22248: Controller observes the original and both actual Scope actor native/FLS exits before prepared backing release
+DIAG check tid22248: One real Domain and all selected providers retire after actual Scope/Runtime drain

@@ -1,0 +1,20 @@
+{
+  "reviewer": "author static source inspection; no independent agent review",
+  "result": "SOURCE_INSPECTED_NOT_COMPILED_OR_EXECUTED",
+  "reviewed_source_hashes": {
+    "anadius-bootstrap-runtime-source/callbacks.cpp": "94f888ea627af417fd70845dd526627a1fc744330de732553f246d24a19de2b8",
+    "anadius-bootstrap-runtime-source/callbacks.hpp": "abca37b5724e11cecb3574fa8d6a142d523a58fd4165eff1d444edd5f656e72c",
+    "anadius-bootstrap-runtime-source/callbacks_tests.cpp": "699d536149aac0c0156fe60cae57c4638d56eb04b94bded22c1b1c19881a2de4"
+  },
+  "findings": [
+    "Before this edit retained exit_dispatch always touched Hub and took its mutex even after successful managed shutdown. A statically initialized always-lock-free atomic admission flag now precedes any Hub access in exit_dispatch and terminate_dispatch.",
+    "Only activate under the existing Hub lock opens admission. Only pause/finish of the exact current State closes the flag; an unpublished or previously finished contender cannot close another live registry route.",
+    "A dispatcher that read true still takes the old mutex, rechecks current/paused/finished, and owns its counted State lease. The flag is a closed-route fast path, not a wait/join proof or replacement for the existing active/control/drain checks.",
+    "Manual drain never uses the flag: paused exit callbacks remain drainable exactly once. Inactive terminate dispatch still aborts; no claim that the CRT abort implementation is lock-free.",
+    "Header documents the bounded guarantee. Added unexecuted scenario preserves a live owner across inactive close, verifies paused natural callbacks leave manual drain pending, and checks retained thunks and LastError after owner destruction. Existing active-lease/rebind/terminate scenarios remain registered.",
+    "Current common build already uses C++20 and includes these units. No ABI layout, vtable, export, startup ordering, loader hook definition or build-script change."
+  ],
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false
+}

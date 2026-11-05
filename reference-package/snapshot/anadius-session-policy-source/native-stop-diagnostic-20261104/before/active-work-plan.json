@@ -1,0 +1,419 @@
+{
+  "schema": "dll-work-plan.v1",
+  "baseline": "B54",
+  "automatic_B55_factory_sequence_superseded": true,
+  "requested_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "entry_goal": "Preserve the observed synchronous application attach ordering. Deferred startup must not be silently substituted. Compiler CRT runs once; do not invoke the recovered outer CRT around it.",
+  "entry_implementation_status": "Both loader helpers and Image providers compiled with current source; whole-archive production DLL link passed. Runtime/loader equivalence remains unverified.",
+  "completed_now": [
+    "Separate actual missing code/bindings from behavior unknowns",
+    "Verify exact 07e0c0 tail transfer to037f70 with fresh native evidence",
+    "Implement02a830 normal body and pass42focused checks in6.922seconds; nofullbuild/link/package",
+    "Bind02a830 to actual RuntimeOwner state; focused50/42/170/96 checks pass; nofullbuild/link/package",
+    "Bind native+408 XML/+4a8 INI cells across Runtime/Persistence/Worker;42new and affected checks PASS in26.297seconds; nofullbuild/link/package",
+    "Own native+138 authentication cell and bind SourceBackend->Worker->native Handlers;four focused suites PASS in19.453seconds; nofullbuild/link/package",
+    "Own native+428 achievement mutex; bind Backend->Worker->Graph and use recoveredlock/unlock/countcell;threefocused suitesPASS in22.109seconds; nofullbuild/link/package",
+    "Implement owner-only normal037f70 host storage order after allproviders retire;60actual frees observed and5focused suitesPASS in26.594seconds; nofullbuild/link/package",
+    "Bind observed036d20 configuration/runtime defaults to actual owning Runtime with mandatory outside cells and passiveCFpathpreflight;4focused suitesPASS in24.969seconds; nofullbuild/link/package",
+    "Implement online slots28avatar/30auth andrepair031aad lostowner/size throughContent/Graph;5focused suitesPASS in28.672seconds; nofullbuild/link/package",
+    "Implement concrete Content all12Effects+completeavatar with actualOnline, memoryXML/INI/UTC andperprimitiveGraphchecks;5suitesPASS in31.75s plus3.094stest-onlyamendment;2rawfileretentionchildrenpass; nofullbuild/link/package",
+    "Implement concrete Information2Effects/perprimitiveGraphchecks andownedauth propagation throughactualWindows/LicenseFiles/Handlers;5suitesPASS aftertest-onlyGraphcasecorrection;24.406s+7.609s; nofullbuild/link/package",
+    "Implement concrete Licensing18Effects+authbound3Handlers using actualOnlinecopy_auth/SHA1/AES/status/files/UTC/paths; share retainedfileowner layer withContent;6focusedsuitesPASS in34.813s; nofullbuild/link/package",
+    "Compose actual Info/Content/Licensing on Worker against Backend-ownedOnline; stablePaths/auth+explicitattemptowner; persistentpartialoutput and failure-safeSettingsownership;6suites214/353/77/686/59/47PASS,3fresh+19verifiedobjects; nofullbuild/link/package",
+    "Select common Resources install: sameDomainNativeThreads/Remainingmemory/Worker,realRemaining/Online/BoundLibrary+3concreteGraphproviders;Libraryphasebindinglowerclosed;actualRuntime3workers/3requestsPASS55 plus14/39/274/686;3fresh+21verifiedobjects; nofullbuild/link/package",
+    "Recover033d70FH4 exactNoResponsecatch[340bf,341b1)->07be90->345da; implementtyped/semanticcatch+admittedCore/Graph/Nativecontrol; actual5requestsameSession wireNoResponse2+normal3;7suites60/841/1749/381/52/753/55PASS in30.297s;7fresh+20verifiedobjects; nofullbuild/link/package",
+    "Implement adjacent UnknownMessage07bd70 diagnostic/catch in semantic+typed033d70, checked Graph/Native/Core/Handlers; exact log2flush/ownedUI/currentResponse; same-session6requests3responses;7suites65/862/1816/479/58/753/55PASS;7fresh+20verifiedobjects then27reused; nofullbuild/link/package",
+    "Add owning install_host paired concreteHost/Cleanup/nativeResolver/exactBackendoriginals/sameDomainContext+publication; actualResourcesRuntime3workers+foreigncallback+externaldrainretry;5groups89/184/16/24/42PASS,13fresh+27verifiedobjects then40reused; newunitregistered; nofullbuild/link/package",
+    "Bind callback-first owning SourceStop: sealnewcallbacks\u2192externalcancellationevenwhileactive\u2192memoizedtrue+active-drainrecheck; stickyunknown/reentry+LastError; actualRuntimecachedApplicationfalse/stopretry/cleanupretention;4groups17/95/274/42PASS15.219s,2fresh+39verifiedobjects; nofullbuild/link/package",
+    "Verify9freshREAstaticrecords/65bytes+3retainedctors+independentPEtailmapping; bindfreshcallback3sets/lengths16,28/connect0+licenseattempt0/block0; atomicnooverwrite;actualforeignIPv4/6andlicensingfirst/cache/block;4groups16/97/58/30PASS15.688s,1fresh+41verifiedobjects; nofullbuild/link/package",
+    "VerifyoutsideRuntime3freshREA/128initializedvirtualzerobytes+001010/04a824retainedcode+independentPEQPFimport; addfreshoutsidefactory+combinedobservedowningRuntime; actual3workerResourcesusesfactory;4groups55/98/274/10201PASS11.703s,1fresh+42verifiedobjects; nofullbuild/link/package",
+    "Verifya1130file-backedffffffff=-1/fresh2REA+signedQueryImagebranch; selectWorkerfreshstateinsteadmanual0; actual8requestsmallavatarfail/retry/skip/upgrade3copies+savedlogs0/2;4groups25/119/1034/214PASS15.297s,1fresh+43verifiedobjects; nofullbuild/link/package",
+    "SelectconcretenativekeyConfiguration+CompilerConsole withcompletepreflight/passive2providercommit; actualRuntime3workers8requests nowFilePass/parser/hash/PNG/XML/INI/sharedPaths/console3reopens;4groups136/170/96/53PASS12.281s aftertestfixtureexpectationfixes;3fresh+44verifiedthen47reusedobjects; nofullbuild/link/package",
+    "Addselectedexact-baseWin32module-referenceCodeLease;allocatebeforeacquire/sharedaliasrelease/LastError/backing/failstop;actualOWNfixtureDLLretention/unload+Bindingobjectlifecycle;actualResourcesselectsprovider;3groups39/138/77PASS11.141s;1fresh+47verifiedobjects; nofullcommonbuild/productionlink/package",
+    "AddexplicitpermanentcompilerabortErrorsfornative+Bootstrap;alignedstaticplacementstorage/noautomaticdestructor/stabletypedbases/LastError;actualResourcesselectsboth;actualContext+RuntimeOwnerretirement/12isolatedterminalcachedpostclosethrowduplicateandordinaryatexit;2groups30/138PASS8.735s;1fresh+48verifiedobjects; nofullcommonbuild/productionlink/package",
+    "AddowninginitiallocaleDomainfactorywith21SDKpreflight/explicitpolicy/singleuse/opaquePTDidentity+backingretention;actualResourcesselectsroot;actualPTD/memory/initFLScloseretries/aliasretirement;3groups113/138/101PASS8.843s after2testfixturefailures;1fresh+49verifiedthen50reusedidenticalproductionobjects; nofullcommonbuild/productionlink/package",
+    "Adduniqueownedhookengine+sameAPIcodeownerselector/actualcleanupstatusANDexternalproofpostcheck;actualResourcesfaileduninitretainsContext/explicitknownrepair/noreplayedcleanup;reviewfixorderedconstructor+borrowingfactory3allocationprefixes+Retiring;3groups36/141/184PASS12.11s,2fresh+50verifiedobjects;V1compilefailureandV2V3limitedPASSretained; norealhooks/fullcommonbuild/productionlink/package",
+    "Auditloaderperoperation/primaryWindowsdocs:038970createsdetachedworkerswithoutjoin,main035850truebypasseswait; addcooperativeBOOLWINAPIcontextshutdownRuntimeclose->destruct->Domainclosewithretainedretries/lockfreeboundedreceipt;3groups13/142/274PASS10.828s,1fresh+52verifiedobjects; noexports/loaderhook/timingchange/fullbuild/link/package",
+    "SOURCE_ONLY bindcontrollerownedFreshStopinWorkerSettings->exactRuntimeStop;unlockedrequest/retrypoison/postchecks/retirementorder;independentSTATICreview;NOCOMPILE/TEST/LINK/EXECUTION peruser;3sourcesdifferfromlastfullbuild",
+    "SOURCE_ONLY bind exact callback-first SourceStopReceipt to controller Worker Stop prerequisite; preserve independent raw-work proof/scope and reserve Inputs through capture retirement; independent static review; no compile/test/link/execution.",
+    "SOURCE_ONLY certify NativeThreads exact Domain root -> Runtime retained provenance -> checked pre-unload adoption; source-test correction for new receipt alias and single native Domain limitation; independent static review; no compilation/tests/link/execution.",
+    "SOURCE_ONLY map025556->05e8e0/02557f->04a458 against same-worker Profile/Graph/Policy/prepared-memory contract; fix TrackingThreads unknown wait/close outcome to sticky poison/no SDK replay;4 source test modes NOT RUN; independent static review.",
+    "SOURCE_ONLY explicit move-only JobMemory offer/acquire for distinct same-Domain native child, exact backing/thread/PTD authority, logical versus physical exit/reap, retained backing and shared close wait budget;3 sources static-reviewed; tests NOT RUN; no compile/link/package.",
+    "SOURCE_ONLY exact JobMemory->stable JobScope->whole Parent Operation, pin blocks earlyreturn/survivesmove, defaultaffinity preserved, pendingjobclose preflight/unlockedreaper, sameDomainwrongroot andabandonmentsource scenarios;5 sources static-reviewed; no compile/test/link/package.",
+    "SOURCE_ONLY exact Profile JobHandoff binds job/session generation+closure+Parent control to prepared memory; tombstone-pinned child identity inspection only; original explicit release restores unexecuted legacyjob;3sources STATIC PASS; preflightsource tests NOT RUN; positivepreparedProfilechildfixture notpresent.",
+    "SOURCE_ONLY expiring per-Operation JobPermit and explicit child Deques026670 growth from exact Profile JobHandoff queue; fix internal callable donor retirement;7sources STATIC PASS; lowerpreparedParent/Deque scenarios added NOT RUN; no build/link/package.",
+    "SOURCE_ONLY exact Origin/epoch child Environment projection scope and Profile JobHandoff023dd0 clone/query/destroy; scoped temps must drain, active callback lifetime retained;5sources STATIC PASS; original-path lineage test NOT RUN; no build/link/package.",
+    "SOURCE_ONLY exact JobHandoff/child Parent permit -> concrete Policy current-thread owned04a47c cleanup; reserve before opaque callable transfer, retire target while active;4sources STATIC PASS; no new test source/positivepreparedProfilefixture; no build/link/package.",
+    "SOURCE_ONLY Graph JobLogic exact session/Parent scope around033d70, admission recursion seal/public access isolation, and missing optional Graph->Profile Jobs binding;4sources STATIC PASS; sameworker selectedJobs fixture added NOT RUN, no childGraphfixture; no build/link/package.",
+    "SOURCE_ONLY concrete Information two child log/UTC entries with live Parent permit/POD synchronous admission, metadata busy/checking/binding guards and Graph bridge;4sources STATIC PASS; lower prepared Information scenario added NOT RUN; no full preparedGraphProfilefixture/build/link/package.",
+    "SOURCE_ONLY concrete Content synchronous child scope and Graph bridge, per-method actor/busy/checking and known/no-pending file closure;4sources STATIC PASS; lower prepared memory/XML/INI/encoding/ownOnline and2childretainedfile scenarios added NOT RUN; no fullGraphProfilefixture/build/link/package.",
+    "SOURCE_ONLY concrete Licensing Core/Handlers synchronous child scopes + Graph handler/diagnostic bridge, separate metadata guards and fail-closed control/unknown classification;4sources STATIC PASS; lower prepared auth/SHA1/AES/cache/block/marker and2childrawinput scenarios added NOT RUN; no fullGraphProfilefixture/build/link/package.",
+    "SOURCE_ONLY Profile exact-child JobLogic033d70/current-child04a47c -> retained prepared response -> original021770/response/strong cleanup, before-Policy-hook ready-result drain and no legacy replay;5sources STATIC PASS;18case lower response-tail plus preparedtrampoline source NOT RUN; no fullpreparedProfilefixture/nativeJobs/build/link/package.",
+    "SOURCE_ONLY explicitly selected NativeJobs exact owning handoff/start/detach barrier/HOST receipt/workpin/originalresponse plus outsideParent maintenance/physicalexit reaping; Retiring/idempotentretry/SDKseals and sourcegate deadlock/starvation guards;15sources STATIC PASS,3lower test additions NOT RUN; no fullpreparedNativefixture/build/link/package.",
+    "TEST_SOURCE_ONLY full prepared real-Domain Graph/Profile/NativeJobs70mixedmessage capacity1 fixture with concrete Information/Content/Licensing, independent physical proof joins and4retained-prefix modes;1source STATIC PASS NOT RUN;0productionC++/nativealgorithms changed, no DLLpercentage credit/build/link/package.",
+    "TEST_SOURCE_ONLY delayed first native exit after receipt consumption: retained physical row/handles, actual false outside-Parent drain and exactly one work decrement before release/join/70message capacity1 reuse; author static inspection only, NOT RUN;0productionC++ changes/no DLLpercentage credit.",
+    "SOURCE_ONLY fix Graph/server known false quiescence propagation using typed state-checked pending-destruction deferral, preserving explicit same-worker retry;3production+1test sources author-inspected NOT RUN. Late Policy close/early stop/opaque exception scenarios added; upper Worker.run still terminal.",
+    "SOURCE_ONLY optional Worker same-original-actor close continuation: finite shared wait budget/current controller epoch wake, only pending teardown retried, owners/PTD retained;2production+1test files author-inspected NOT RUN, five isolated scenario sources; default disabled and production controller binding still open.",
+    "SOURCE_ONLY SourceBackend/ApplicationJoinContinuation->Worker controller epoch wake binding; false seals/polls TrackingThreads with0 then retains routes, true still requires native/FLS joins and source lease drain before finish;4production+2test sources author-inspected NOT RUN. Core and isolated full Runtime selected-policy scenarios added; legacy/default source paths retained.",
+    "SOURCE_ONLY opt-in finite Runtime prepared receipt stop deferral through independent Profile source-job query; original run stays admitted, exact NativeJobs receipt/one work transfer then stop resume wake;4production+1test sources author-inspected NOT RUN. Three retained-prefix source modes added and prior195 unreachable expectation corrected; SessionIo drain remains open.",
+    "SOURCE_ONLY explicit SessionIoPrepared scope joins finite prepared stop gate to cancellation/active-IO/receipt drain, including late response work; separate unmanaged proof preserved.4production+1test sources author-inspected NOT RUN; full synthetic native success plus201/202 retained prefixes; actual socket cancellation and combined delayed-FLS/close-retry remain unverified.",
+    "TEST_SOURCE_ONLY concrete Worker/NativeJobs/SessionIo delayed physical child close/retry and timeout203 scenarios, original provider alias/retire actor checks;1test source author-inspected NOT RUN,0production source changes/no DLLpercentage credit.",
+    "SOURCE_ONLY closed-route CRT thunk admission before Hub access; exact-owner pause/finish preserves competing registry and manual drain;2production files+1test source author-inspected NOT RUN. Both loader hooks/image/foreign contracts remain OPEN.",
+    "SOURCE_ONLY tracker rejects new creates on poison before ticket allocation/lower call; known-null create remains retryable.1production CPP+header+1test source author-inspected NOT RUN. Attach failure prefix ownership audited; no loader hook or complete rollback claim.",
+    "SOURCE_ONLY ordered PendingConfiguration across6 constructor/factory/installer routes; nonthrowing adoption before allocation/validation, backing outlives narrow effect retirement.1production CPP+header+1test source author-inspected NOT RUN;16 allocation-prefix+2 occupied-slot scenario expectations; no native-body/DLLpercentage credit.",
+    "SOURCE_ONLY whole SourceBackend.bind_state provider admission reservation, adopt-before-check and sticky swallowed reentry, RAII exception release/passive metadata.1production CPP+header+1integration test CPP author-inspected NOT RUN;3 terminal181 modes+normal/passive exceptions. Prepared/Selection bounded owner order required no edit; no native-body/DLLpercentage credit.",
+    "SOURCE_ONLY shared host/Policy per-hook original publication after successful create and before enable; exact array/cell/target, failed output excluded, unknown ownership poisoned.3production CPP+3headers+3scenario/support files author-inspected NOT RUN; HOST layout requires rebuild. Global warming admission unchanged; no native-body/DLLpercentage credit.",
+    "SOURCE_ONLY warming untouched connect classification/PTD probe/original-only permission, same Publication proof, no general Policy effects, nonwaiting setup completion/stop retention.5production CPP+6headers+3scenario CPP author-inspected NOT RUN; Context/Admission/Resources ABI consumers require rebuild. Recognized paths/activation/loader profile still OPEN; no percentage credit.",
+    "SOURCE_ONLY Server payload before exact flag finish; same-Execution one-shot atomic bound-port snapshot plus per-hook original proof opens only no-redirect80/443 during warming.7production CPP+6headers+5scenario CPP+2fixture headers author-inspected NOT RUN; ABI consumers require rebuild. Recognized wait/redirect/full activation/loader still OPEN; no percentage credit.",
+    "SOURCE_ONLY foreign no-redirect other-port wait through actual Policy/Execution(-1), wait-only PTD permission, post-wait original proof recheck and pause/completion retention.4production CPP+4headers+2scenario CPP author-inspected NOT RUN.101 pending files unchanged in count because all10already pending; hashes changed. Redirect/concurrency/activation/loader still OPEN; no percentage credit.",
+    "SOURCE_ONLY foreign3216/matching-port redirect: shared recovered body, private counter/managed log, wait-before-nonweb, body-only Policy and rechecked original completion.5production CPP+6headers+3scenario CPP author-inspected NOT RUN;101 pending files unchanged in count. Nested/overlap/general activation/loader still OPEN; no percentage credit.",
+    "SOURCE_ONLY concrete final-flush permission gap repaired: checked normal/exception returns for network log/dialog/exit, release stream lease before postcheck, preserve lower LastError/exception precedence.1production CPP+header+2scenario CPP author-inspected NOT RUN.102 pending files; native192 expectation, no PASS/percentage credit. Nested/overlap still OPEN.",
+    "SOURCE_ONLY real permanent native Image and synchronous attach definition; both loader helpers now source-defined. Worker SDK version binds actual configuration cell. No build/link/test/package.",
+    "SOURCE_ONLY bounded native Image startup review found/fixed OriginalApplication Worker extra Host/Online dispatch wait. One unexecuted normal scenario added; cooperative cases retained. No build/link/test/package.",
+    "SOURCE_ONLY original Graph install no longer injects forbidden external proof; real local Graph drain is separately retained/rechecked. Two new normal scenario functions plus passive rejection case written, NOT RUN. HOST Policy factory signature requires rebuild.",
+    "TEST_SOURCE_ONLY original terminal995 fixture assumption corrected to isolated actual first-dispatch observation; no production source changes, build, test, link or percentage credit. Bounded Graph retirement source review added.",
+    "TOOLING_SOURCE_ONLY active link preflight/result/artifact checks and package same-run validation corrected; per-run history replaces fixed historical target. Three Python helper sources parsed only; no C++/test source changes or execution.",
+    "SOURCE_ONLY actual Image native message Jobs selection added: same-Domain NativeThreads on controller, NativeJobs construction on real server worker. Existing default InlineJobs behavior for other callers retained. Four sources changed; no build/test/link/package.",
+    "SOURCE_ONLY actual Runtime ShowLSX startup flag now reaches original Worker Graph/native message gates. Three production files and one test source changed, no compile/test/link/package. HOST view ABI requires rebuild.",
+    "SOURCE_ONLY307-entry application/IO map refreshed against577 current files; first8 candidates reviewed. Exact asio.misc020a80 value body added and bound to existing category; source scenarios written NOT RUN. No native ABI closure or total percentage.",
+    "SOURCE_ONLY typed028240 error/category/operation and opaque IOCP context retained via SourceError; existing020a80/misc category shared in socket layer. Six production files and two test files changed; actual failed-constructor source child NOT RUN. REA binary_session read only, no target opened.",
+    "SOURCE_ONLY all three direct028210 call sites preserve context-free errors; SourceError no-context overload added, native local_endpoint028240 context retained. Four production files and two test sources changed; no compile/test/link/package.",
+    "SOURCE_ONLY025480/025a70 EOF/category/Graph bindings reviewed with no gap;025720 default prefix corrected to native Exception: using fresh REA/Ghidra80bytes plus independent PE mapping. One pending header changed; no compile/test/link/package.",
+    "SOURCE_ONLY bounded Original concurrent untouched00fd00 calls now use actual publication/SDK-only lane while another callback is active; no source PTD/shared effects. One unexecuted two-thread native integration source. Greeting/achievement/39command literal review plus all2076 current presence map retained.65pending sources, no build/test/link/package.",
+    "SOURCE_ONLY Original concurrent nonredirecting80/443 connect lane uses exact actual bound-port publication plus per-hook successful-create receipt; ordinary, Cooperative, matching-port and non-web routes retained. NOT COMPILED OR EXECUTED.",
+    "SOURCE_ONLY Original concurrent non-web nonredirecting connect calls retain actual036880(-1) wait-only phase, then recheck same bound-port/hook publication before exact SDK permission; no private callback PTD or synthetic completion. NOT COMPILED OR EXECUTED.",
+    "SOURCE_ONLY Original counted connect phases now retain native non-web wait including3216 and select actual redirect body before SDK; transient lock-free relaxed counter load/store preserves cached EAX terminal15. Three fresh native subagent audits integrated, seven production and two test sources changed. NOT COMPILED OR EXECUTED.",
+    "SOURCE_ONLY Original connect binds exact stable live uint16 configuration cell before Context publication, uses relaxed coherent server/connect accesses and independent native decision/log/final reads; removes cold-web snapshot fallback and post-route equality constraint. Eleven production and two test sources changed; no compiler/runtime validation. NOT COMPILED OR EXECUTED.",
+    "SOURCE_ONLY Six argument-only Original callbacks dispatch through existing typed OriginalEffects under counted automatic nested frames that mask parent general/wait/body permissions and restore exact actor state. Four production and two test sources changed; no new SDK-only phase gate, shared-set concurrency or compiler/runtime validation. NOT COMPILED OR EXECUTED.",
+    "AUTHORIZED REBUILD: current common build/tests PASS; production link PASS, DLL NOT EXECUTED.",
+    "SOURCE_ONLY fresh REA/Ghidra009520/009850 instruction review: retire narrow language logging temporary before replacement writer, independent static review; one source differs from last successful full build, no compile/test/link/package.",
+    "TEST_SOURCE_ONLY fresh7-record REA/Ghidra pointer-before-enable audit confirms existing early registry admission; actual OriginalCrt install_host typed nonnull RegOpenA enable-time controller/foreign scenarios added and static reviewed, NOT RUN. No production change or percentage credit.",
+    "SOURCE_ONLY exact typed-registry SDK-phase markers plus nested same-thread general frames, existing root PTD and actor restoration. Fresh6-record REA evidence, independent static review, recursive typed/test-source cases NOT RUN;5 production and2 test files changed,9 pending canonical sources total; no compiler/link/package.",
+    "TEST_SOURCE_ONLY fresh8-record native alias/handle audit; matched OpenW/nestedclose/reopen/capacity16 and A/W triple-output alias cases added/staticreviewed NOT RUN. No production change or percentage credit;10 canonical source changes pending.",
+    "SOURCE_ONLY actual production Graph event queue now grows with native034660 spare-slot/min8doubling rule. Fresh7-record REA evidence, independent static review;70plainIGO and wrapped encryptedFIFO regression sources NOT RUN.2 production+1test files changed;13pending canonical sources total, no compile/link/package.",
+    "SOURCE_ONLY actual Profile large-string header ledger grows beyond256; frame/finish live spans rebound before oldmetadata free. Fresh8supporting+2incidental REA records, independent static review;260-header two-context/actual Graph encrypted cases NOT RUN.3production+2test files changed;17pending sources, no compile/link/package.",
+    "SOURCE_ONLY Profile session and Graph Logic registries grow beyond initial16 with stable old objects and coherent internal views/queued aliases.6fresh REA records, independent production/test static reviews;20core owners vs2network peers explicitly distinguished.6production/header+3test sources changed;22pending, no build/link/package.",
+    "SOURCE_ONLY coupled Profile job/closure,NativeJobs physicalrow andPreparedMemory offer ceilings64 removed.7freshREA records;stableliveRow*/Jobrefs,coherentclosurespan,allocationreentryfindingfixed.Independent production/testreviews;70corejobs/70offers/65passiveinitial/2physicalrow sourcesNOTRUN.6production+4testfiles;28pending.No build/link/package.",
+    "SOURCE_ONLY IO/accept registries dynamicallygrow with stable oldrecords/OVERLAPPED/SDKpins,exactpacketaliases andliveownerviews acrosscopiedPorts/transientenvs.8freshREA records,14production+2testdiffs independentlyreviewed;70records/2SDKloans andinitial1Runtime sourcesNOTRUN.41pending.No build/link/package.",
+    "SOURCE_ONLY OwnedEnvironment private4096ledgercap removed with outsidegateallocation/retirement andsource/protectedjob/capability revalidation.7supporting+1incidentalREA records;independentproduction/testreviews.4100metadata refs/3reuses andinitial1two-peer source regressionsNOTRUN.2production+2tests;44pending.No build/link/package.Nativevirtualcalleesstillunknown.",
+    "SOURCE_ONLY actualOriginalGraph default023dd0classifier corrected toempty/state0,keepingrealSlot/job/copy/responseroots.20freshREA records+3tinyfunctionerrors retained;initial/trackedvtabletargets mapped.5production+1test independentlyreviewed;directcompletion+copy/response sourcecaseNOTRUN,Graphfunctionalcoverageunchanged.44pending.No build/link/package.",
+    "SOURCE_ONLY full concrete Initial/Tracked family now connected through actual factories/copy/move/prepare/response/typedhandler dispatch and Runtime/Profile/Policy immediate original/child lastrelease.8freshREA records exported/closed;12production+3test sources independently reviewed,NOTRUN.51pending.No build/link/package. Previous default-only deferral superseded.",
+    "SOURCE_ONLY actual selected systemcategory message020950 reconstructed and bound inPolicy.6freshREA records exported/closed;4production+2test sources independentlyreviewed,NOTRUN.54pending. Exact normal SDK/trim/Cstr/free sequence; nativeEH/compilerexceptionABI notclosed. No build/link/package.",
+    "SOURCE_ONLY prepared real-child LAST work release case authored and independently statically reviewed; three material source findings corrected; default future test entry reaches ordinary and child scenarios. Existing tracked native evidence reused explicitly, not relabeled fresh. 55pending; no build/test/link/DLL/package.",
+    "SOURCE_ONLY measured84530pqcs shared literal corrected in original and tracked Policy stop throws; exactprefix source assertions independentlyreviewed.7freshREA records exported/closed; full028240diagnostic/EH notdeclaredcomplete. 55pending; no build/test/link/DLL/package.",
+    "READ_ONLY actual selected current libc++ COFF provider disproves terminal system-message equivalence; exactlanguage/trim/count/fallback gaps proved. pqcs literal correction alone does not close native what. Historical archive SHA not retroactively claimed."
+  ],
+  "next_native_code_target": {
+    "scope": "Design and bind exact native system message provider for both original and child terminal paths, preserving catch/code value and retaining category/import/failure-state lifetime coherently. No duplicate formatting, ambient current category or category identity lifetime hacks. Full DLL objective remains active; child test sources remain unexecuted and child tracked-row/native ABI coverage remains open.",
+    "validation": "55 pending source/header changes. Full reconstruction objective remains active; explicit rebuild still required."
+  },
+  "parallel_critical_question": "Inspect complete source image wiring and unresolved behavior limits; a fresh full build/link requires explicit user instruction.",
+  "validation_policy": {
+    "full_build_on_every_step": false,
+    "full_link_on_every_step": false,
+    "repackage_on_every_step": false,
+    "development_checks": "Static source inspection only until explicit rebuild instruction; when authorized, compile changed units and affected ABI consumers plus focused behavior tests.",
+    "full_regression_triggers": [
+      "A coherent production integration milestone",
+      "A discovered regression affecting broader modules"
+    ],
+    "link_triggers": [
+      "Production loader hook definitions or actual entry assembly changes",
+      "A change to required link dependencies"
+    ],
+    "package_trigger": "Reviewed milestone with an actual useful deliverable",
+    "progress_metric": "Concrete missing algorithm or production dependency closed; test counts do not measure DLL completion.",
+    "explicit_user_rebuild_required": true,
+    "compile_test_link_without_explicit_user_request": false
+  },
+  "do_not_count_as_completion": [
+    "Repeated unchanged failed link",
+    "More test assertions or report files",
+    "Replacing undefined hooks with null/success stubs"
+  ],
+  "current_production_sources_changed": true,
+  "last_code_result": {
+    "path": "outputs/anadius-session-policy-source/worker-error-028240-20261104/evidence.json",
+    "sha256": "bc3384d9e56ade2d200047d4e296a0a74e74f8ed9672ef900d86ce2e74ef9c47",
+    "status": "SOURCE_IMPLEMENTED_STATIC_REVIEWED_NOT_COMPILED",
+    "scope": "Both Policy84530 context projections corrected from guessed post to measured pqcs. Full native category message/what equivalence remains OPEN; existing exception/code contracts preserved."
+  },
+  "delivery_milestone_pending": "Current common build/tests complete. Authorized ZIP update follows this record; actual runtime/loader validation remains open.",
+  "delivery_status": {
+    "status": "BUILD_AND_LINK_PASS_NOT_RUNTIME_VALIDATED",
+    "build": {
+      "path": "outputs/source-workspace/full-build-verification.json",
+      "sha256": "6cbded372c77eeb2a35b332dbe75fbc9bc6cfbd24da3b967bfaa03b124087e12"
+    },
+    "link": {
+      "path": "outputs/dll-link-gate-source/current-full-link.json",
+      "sha256": "70d9d9dcbaed784530bee67928fe0ebbe27dbe931b07219545cd6988f50e4755"
+    },
+    "ZIP": "Authorized update follows verification",
+    "runtime_equivalence_established": false
+  },
+  "pending_source_status": "outputs/dll-critical-path/pending-source-status.json",
+  "audit_history": [
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/synchronous-loader-audit.json",
+      "sha256": "20f229c10a383114bd44756c27ffb7b16fe9cf497f4c1b66407b419c9f5600b3",
+      "status": "STATIC_AUDIT_NO_CPP_CHANGE"
+    },
+    {
+      "path": "outputs/anadius-host-platform-source/synchronous-hook-order.audit.json",
+      "sha256": "32e03f00d78bdbd02c979bd12eb8b0d67ca5589c411ef35d3f81560ac3a5b949",
+      "status": "NATIVE_ORDER_MATCHES_BOUNDED_SCOPE_STARTUP_ADMISSION_GAP_OPEN"
+    },
+    {
+      "path": "outputs/anadius-config-hash-source/config-duplicate-assignment-20261104/evidence.json",
+      "sha256": "20f8752d2fcce823893de17fe49fbdcd83a821358fa3cf4850d1fb034379df3e",
+      "status": "CANDIDATE_CLOSED_NO_PRODUCTION_CHANGE",
+      "scope": "Config2 duplicate-child capacity/history candidate closed: fresh0164f0/014b10 MOVE clears/swaps fresh table, matching current parser; no source changes."
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/parse-status-native-audit-20261104/evidence.json",
+      "sha256": "86a2eb33fbdd1180db0955b19f28da44657434e9de3fb6e7a476b9925de3f34a",
+      "status": "CANDIDATE_CLOSED_NO_PRODUCTION_CHANGE",
+      "scope": "XML7/8 producer and protocol routing candidate closed without source change;12 fresh native records."
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/evidence.json",
+      "sha256": "f2228cb1a7edb676fcccbbf423f0ebb11e6fd3f6c29bc742b060c728a66ca16d",
+      "status": "CANDIDATE_CLOSED_NO_PRODUCTION_CHANGE",
+      "scope": "Initial response factories20/88 and actualforcepost/oneenqueueworkpin matchsource;11freshnative records, no sourcepatch."
+    }
+  ],
+  "entry_startup_policy_user_confirmed": "Preserve original synchronous startup; continue resolving loader conditions. Explicitly selected by the user this turn.",
+  "latest_loader_audit": {
+    "path": "outputs/anadius-host-platform-source/synchronous-hook-order.audit.json",
+    "sha256": "32e03f00d78bdbd02c979bd12eb8b0d67ca5589c411ef35d3f81560ac3a5b949",
+    "status": "NATIVE_ORDER_MATCHES_BOUNDED_SCOPE_STARTUP_ADMISSION_GAP_OPEN"
+  },
+  "priority_revisions": [
+    {
+      "recorded_at": "2026-11-02T20:36:11.434318+00:00",
+      "reason": "User challenged prolonged indirect work while both production loader hooks remain undefined. Redirect development to their explicit closure conditions.",
+      "previous_next_target": {
+        "scope": "Bounded read-only connect invocations during another callback wait/original: determine per-invocation PTD/lease/actor-stack and stop-drain ownership before relaxing single-active admission. Preserve mutable registry/redirect serialization and managed-log reentry constraints. Do not infer dynamic SDK hook edges as observed.",
+        "validation": "Post-effect permission continuity source repair present, not compiled/executed;102 pending source/header deltas. Explicit rebuild required. Parallel/nested callbacks, general activation, controller/pre-Server and loader/image/foreign/CRT contracts OPEN."
+      },
+      "source_or_build_changed": false
+    }
+  ],
+  "production_loader_priority": {
+    "order": [
+      "synchronous-attach-contract",
+      "production-attach-owner",
+      "detach-and-failed-attach",
+      "authorized-production-validation"
+    ],
+    "attach": {
+      "symbol": "require_loader_attach_runtime",
+      "status": "SOURCE_DEFINED_NOT_COMPILED",
+      "required_outcomes": [
+        "Assemble real per-image Domain, configuration, host/callback, Online and server/Graph Resources plus permanent error/log/root owners using existing fresh Runtime/default seeds.",
+        "Adopt actual roots before publication and invoke real ApplicationEntry once synchronously, preserving038970 worker/host/online/035850(true)/third-worker ordering.",
+        "Keep real owners alive through registered compiler-CRT source exit dispatch; do not add recovered outer CRT, deferred Initialize API, controller readiness wait or fake success."
+      ],
+      "owned_synchronous_start": {
+        "path": "outputs/anadius-pre-unload-source/owned-attach.evidence.json",
+        "sha256": "0bbb53d18fd390883a04e26707b3e0a0ff331f762a16021f0f2a2a1e07a8b855",
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "scope": "Ownership/startup source primitive only; required production hook remains undefined."
+      },
+      "native_worker_io": {
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/anadius-resources-factory-source/native-worker-io.evidence.json",
+        "sha256": "d053fdf97728983a312ca90ceb45a8be946505e21f665178ba6626e962719182",
+        "scope": "Concrete SDK provider selection and same-owner worker integration source; loader hook remains undefined."
+      },
+      "selected_socket_executor": {
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/anadius-socket-move-source/selected-executor.evidence.json",
+        "sha256": "be46cdbb60e862f9f6395622d3a0013f00de1741ec2ae89159e931e366f7da68",
+        "scope": "Actual0228c0 move, selected017a30 cleanup, no-engine cancellation profile; required hook remains undefined."
+      },
+      "source_owned_lifecycle": {
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/anadius-session-policy-source/source-lifecycle.evidence.json",
+        "sha256": "0aaa93e072156bbd04f89baf2c9458ac76891c880e47581478d87e96205e9366",
+        "scope": "Explicitly selected source-owned owner/reap/worker-return decisions and pre/post local IO guard; real external proof and both loader hook definitions remain required."
+      },
+      "source_stop_proof": {
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/anadius-accept-stop-source/source-proof.evidence.json",
+        "sha256": "add0bfc3e76b3ff5d0eb96a14f247d34da9a351ceb118426a7abf63e0b262e28",
+        "scope": "Exact Runtime Stop local source/packet/ack prerequisite bound into SourceOwned Policy; real external/image proof and both loader hook definitions remain open."
+      },
+      "pre_cleanup_quiescence": {
+        "status": "REMOVED_BY_USER_ORIGINAL_PROFILE",
+        "path": "outputs/dll-link-gate-source/original-loader-profile.evidence.json",
+        "sha256": "f13115d9c9f7e03ae8c5ada66bf8acebaad6944bd5d41364d59d4b70af10dd4b",
+        "scope": "Extra mandatory pre-cleanup proof reverted; historical source evidence retained."
+      },
+      "original_native_worker": {
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/anadius-resources-factory-source/original-native-worker.evidence.json",
+        "sha256": "c5a91bc5b07740478e70420c45355687925e3048473274266ef42dd62df32d20",
+        "scope": "Actual native Worker configure body plus shared Graph/Policy profile validation and source-only OriginalApplication retirement; attach image ownership/definition remains required."
+      },
+      "native_image_base": {
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/anadius-resources-factory-source/native-image-base.evidence.json",
+        "sha256": "a0d56f7960d7a45b30e2bcadb4d540c516895d043cc420aac144c805ca8ebb0b",
+        "scope": "Actual native configuration/console and Domain initial-policy constructors available; image/host/Online attach assembly not yet defined."
+      },
+      "original_image_bindings": {
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/anadius-host-platform-source/original-image-bindings.evidence.json",
+        "sha256": "2b5feb4fee17bcd59213417ab396ad042fd1f76946a75d52a14a1b50ed000ab7",
+        "scope": "Original host/Context/Online/Resources factory path without blanket ready/unload/stop placeholders; actual image owner and attach definition remain open."
+      },
+      "native_image_owner": {
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/dll-link-gate-source/native-image-owner.evidence.json",
+        "sha256": "95eed9c5bfc74860f7861805dbdd1a497a7f4156651d2b1e87762cc209a126c7",
+        "scope": "Both loader helpers source-defined; permanent native Image owns Domain/providers/Runtime before publish and invokes actual synchronous ApplicationEntry once."
+      },
+      "original_worker_dispatch": {
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/anadius-application-worker-source/original-dispatch.evidence.json",
+        "sha256": "23b8c71f2c455e7befe734e6a1055a57e5a070dc7c7b6d83616b4a9c1a092151",
+        "scope": "OriginalApplication Worker omits added HOST Host/Online dispatch barrier; cooperative startup barrier and actual source admission/native waits remain."
+      },
+      "original_graph_retirement": {
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/anadius-application-graph-source/original-retirement.evidence.json",
+        "sha256": "83eddab2ac32f62f8e7dfd345c2b7a1bc9f9baa99d8c616376c5066786b8a91a",
+        "scope": "Fix OriginalApplication Graph/Policy assembly conflict: external proof stays empty; real local Graph retirement is a separate factory-owned callback with actual IO/work checks."
+      },
+      "original_dispatch_observation": {
+        "status": "TEST_SOURCE_ONLY_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/anadius-application-worker-source/original-dispatch-observation.evidence.json",
+        "sha256": "515ac78eca17c9d726ad3e6c7aecb633b5318e42dbe8d6ce3538c555616648ce",
+        "scope": "Correct original Worker regression fixture: isolated real first-dispatch observation, no false terminal995 cleanup/return claim; bounded Graph retirement source audit."
+      },
+      "native_message_jobs": {
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/anadius-resources-factory-source/native-message-jobs.evidence.json",
+        "sha256": "cee0ee1ad7a19cea48d4ed6786c836362fb0e7a7fceb7b2c5802852f143a3394",
+        "scope": "Actual Image now selects existing NativeJobs instead of falling through to Profile default InlineJobs; same-Domain NativeThreads prepared on controller, Jobs created on server worker."
+      },
+      "startup_log_flag": {
+        "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+        "path": "outputs/anadius-application-worker-source/startup-log-flag.evidence.json",
+        "sha256": "4b3ece15ca7ca7bbd3d50135bb258be3ff9d2a0c515739a70b3ebb6b3d7d2644",
+        "scope": "Wire actual Runtime startup ShowLSX cell through Backend view to original Worker Graph before message execution; preserve other configured profiles."
+      }
+    },
+    "detach": {
+      "symbol": "require_loader_detach_quiescence",
+      "status": "SOURCE_DEFINED_NOT_COMPILED",
+      "required_outcomes": [
+        "Preserve original038870 no-action application reason0.",
+        "Compiler CRT retains normal reserved-aware detach/termination and real registered exit callback ordering; no duplicate source cleanup."
+      ],
+      "source_evidence": {
+        "path": "outputs/dll-link-gate-source/original-loader-profile.evidence.json",
+        "sha256": "f13115d9c9f7e03ae8c5ada66bf8acebaad6944bd5d41364d59d4b70af10dd4b"
+      }
+    },
+    "dependency_rule": "Additional callback/CRT/helper work is scheduled only when tied to a named unsatisfied requirement above, with a bounded change and return to the loader implementation.",
+    "completion_rule": "Detach source completion follows observed no-action application body; attach requires an actual definition owning and invoking real source startup. Neither source completion nor expected symbols imply a successful link or runtime validation.",
+    "build_policy": "Explicit user rebuild instruction remains required for compilation, tests, linking and DLL execution. Delivered ZIP and frozen build proofs are unchanged by this planning revision.",
+    "expected_missing_loader_hooks_in_current_source": [],
+    "progress_history_note": "Earlier subordinate scope descriptions describe their historical stages; current loader status and latest native_image_owner/original_worker_dispatch supersede their missing-definition statements.",
+    "active_build_helpers": {
+      "status": "TOOLING_SOURCE_ONLY_NOT_EXECUTED",
+      "path": "outputs/dll-link-gate-source/link-preparation.evidence.json",
+      "sha256": "054f69e149cd2adf455446182a6f3b020625a33d2eccf4ddebd39df1078925f9",
+      "scope": "Prepare active verified rebuild/link/package helpers for real source-defined loader entry, actual DLL hash/readiness and per-run history; no helper execution."
+    }
+  },
+  "current_source_matches_last_full_build": false,
+  "original_detach_profile_audit": {
+    "path": "outputs/dll-critical-path/original-detach-profile.audit.json",
+    "sha256": "61e5424ce5c997d2f098e7c7c6a45d322958a7d2eda7afcc1e5f8269037a8507"
+  },
+  "lifetime_profile_choice": "USER_SELECTED_ORIGINAL_SYNCHRONOUS_ATTACH_AND_COMPILER_CRT_DETACH: arbitrary safe live unload is not an added completion requirement.",
+  "current_source_route_review": {
+    "path": "outputs/dll-critical-path/current-source-route-review.evidence.json",
+    "sha256": "b936d8c86e35674dd91e642b81648b847fa40b14d20aa621544133594c7e4809"
+  },
+  "current_application_function_map": {
+    "path": "outputs/dll-critical-path/current-application-map-after-source-error",
+    "status": "SOURCE_PRESENCE_ONLY_NOT_NATIVE_EQUIVALENCE"
+  },
+  "current_full_source_map": {
+    "path": "outputs/dll-critical-path/current-full-source-map-after-connect-lane",
+    "status": "SOURCE_PRESENCE_MAP_BEFORE_LATEST_PURE_FORWARD_SOURCE_UPDATE"
+  },
+  "user_required_REA_workflow": {
+    "recorded_at": "2026-11-03T20:19:10.158156+00:00",
+    "authority": "Explicit user instruction: add continuous REA-assisted work to the goal; do not work on reconstruction independently of REA.",
+    "required": true,
+    "rules": [
+      "Obtain fresh REA/Ghidra evidence for each new reverse-engineering stage before deciding source changes.",
+      "Use retained evidence as supplementary and label it separately; do not present retained/source-only review as new REA analysis.",
+      "Tie source findings and changes to native addresses and complete Evidence artifacts.",
+      "Continue autonomously until the user stops; if REA is unavailable diagnose/recover once within skill rules, do not silently continue unsupported reconstruction.",
+      "No compile/project tests/link/DLL execution/package without explicit user rebuild instruction. Original binaries unchanged."
+    ],
+    "current_fresh_request": {
+      "status": "EVIDENCE_EXPORTED_SESSION_CLOSED",
+      "path": "outputs/anadius-session-policy-source/worker-error-028240-20261104",
+      "evidence": [
+        "ev_caec7170b7511491f6246f8be2c0ade711b4a9f8f832c135160483a471f02c0b",
+        "ev_ec5499f2bbbabf0cc78f8929ea229f5fa12d3aab6ba6eb1f7418806c34d66320",
+        "ev_39e04a3db4b2186c186f81478d7a5f8ccb9684791dc349a14fa470b897f368d1",
+        "ev_57aaaf1a60a65732e76c3d58854c2a8a4301a1347d3a591e2b1322fab9a66303",
+        "ev_c4164937f426fe4363d7acf2c3b366d8481957236da7b03b09501e1b77279f18",
+        "ev_de16e118a373e30ee8d8b81684c382c26798cce6f3283f4aa17584f47ca4c5d3",
+        "ev_9e3850282dbec7d20b4d26ecef4374ea44cd967544f4cf322f655cc55e91227d"
+      ]
+    },
+    "latest_observation": "Fresh84530bytes=pqcs and028240\u21920248b0\u219200a270 context/separator/categorymessage construction. Compiler category equivalence is unproven; only the independently measured literal correction is closed.",
+    "delegation_policy": {
+      "authority": "Explicit user request to use subagents where needed during continuous REA-assisted work.",
+      "required_when_useful": true,
+      "scope": "Delegate independent native evidence/source audits. Root integrates changes. Subagents must use fresh REA/Ghidra evidence, preserve originals and avoid any build/test/link/DLL execution/package.",
+      "current_tasks": [
+        "system-message-native-evidence-and-independent-review",
+        "system-message-source-and-baseline-recovery",
+        "system-message-test-sources-and-prepared-fixture-plan"
+      ]
+    }
+  },
+  "pending_source_status_proof": {
+    "path": "outputs/dll-critical-path/pending-source-status.json",
+    "sha256": "a1069b5154ad87b72e8b06ac019532d03c5f854aeafbce8da54d4484c047e355"
+  },
+  "continuous_user_goal": {
+    "active": true,
+    "authority": "User explicitly requested continuing REA/Ghidra with subagents until they stop the work.",
+    "explicit_rebuild_still_required": true,
+    "new_native_stage_requires_fresh_REA": true
+  },
+  "latest_native_audit": {
+    "path": "outputs/anadius-session-policy-source/worker-error-028240-20261104/evidence.json",
+    "sha256": "bc3384d9e56ade2d200047d4e296a0a74e74f8ed9672ef900d86ce2e74ef9c47"
+  },
+  "current_static_milestone": {
+    "path": "outputs/dll-critical-path/static-source-milestone-20261104.json",
+    "sha256": "4d37800993d08719733eee790f8d1858b9382eff9874e4b195130d230451a75f"
+  },
+  "latest_source_provider_audit": {
+    "path": "outputs/dll-critical-path/production-provider-source-audit-20261104.md",
+    "sha256": "625ef8d048d5b7295762a5de06385fbd9b94817b4194642fb0b1931fdaf7c6a9"
+  },
+  "latest_compiler_provider_audit": {
+    "path": "outputs/anadius-session-policy-source/worker-error-028240-20261104/compiler-provider-audit-index.json",
+    "sha256": "4084d937bcbf23e44f29c9eefe1d5bd9ca9226d4883daa76e55cf391b6f91827"
+  }
+}

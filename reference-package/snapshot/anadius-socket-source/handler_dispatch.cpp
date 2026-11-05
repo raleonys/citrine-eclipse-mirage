@@ -3,8 +3,9 @@
 namespace anadius::socket_recovered {
 namespace {
 OperationStorage& lookup_storage(std::uintptr_t identity,PostedEnvironment environment){
-    for(auto& binding:environment.storage)
-        if(binding.identity==identity && binding.storage)return *binding.storage;
+    OperationStorage* storage=nullptr;const auto result=environment.lookup_storage(identity,storage);
+    if(result==MemoryLookup::Found&&storage)return *storage;
+    if(result==MemoryLookup::Ambiguous)throw UnsupportedInput("Handler cache identity has ambiguous owned storage");
     throw UnsupportedInput("Handler cache identity has no live bounded storage");
 }
 std::byte read_storage(const OperationStorage& storage,std::uint64_t offset){
@@ -151,17 +152,8 @@ void schedule_receive_handler_022c60(IoHandlerEnvironment& environment,ReceiveHa
     if(remaining)remaining->call_slot_00(0); // reload mutable slot and live callback
 }
 void schedule_send_handler_0229d0(IoHandlerEnvironment& environment,SendHandler& handler,HandlerTaskContext& context){
-    auto* const executor=environment.executor_28;
-    if(!executor)throw UnsupportedInput("Native send executor has no projection");
-    const auto prepare=executor->prepare_slot_40;
-    if(!prepare)throw UnsupportedInput("Native send executor factory has no projection");
-    const auto query=environment_table(environment).query_slot_18(environment);
-    IoPrepareScratch scratch;IoHandlerEnvironment temporary;
-    prepare(temporary,query,scratch);
     IoHandlerEnvironment moved;
-    move_io_environment_023cb0(moved,temporary,context.environment.sentinels);
-    if(environment_table(temporary).destroy_identity!=context.environment.sentinels.guard_destroy_017a30)
-        environment_table(temporary).destroy_slot_00(temporary);
+    prepare_io_environment_40(moved,environment,context.environment.sentinels);
     auto& schedule=schedule_table(moved,context);
     const auto borrowed=schedule.borrowed_slot_18;
     if(borrowed){

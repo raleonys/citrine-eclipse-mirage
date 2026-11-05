@@ -1,0 +1,104 @@
+Disassembly of section .text$_ZNKSt3__123__system_error_category7messageEi:
+
+0000000000000000 <std::__1::__system_error_category::message(int) const>:
+       0: 41 57                        	pushq	%r15
+       2: 41 56                        	pushq	%r14
+       4: 56                           	pushq	%rsi
+       5: 57                           	pushq	%rdi
+       6: 53                           	pushq	%rbx
+       7: 48 83 ec 60                  	subq	$0x60, %rsp
+       b: 48 89 ce                     	movq	%rcx, %rsi
+       e: 0f 57 c0                     	xorps	%xmm0, %xmm0
+      11: 0f 11 01                     	movups	%xmm0, (%rcx)
+      14: 48 c7 41 10 00 00 00 00      	movq	$0x0, 0x10(%rcx)
+      1c: 48 c7 44 24 40 00 00 00 00   	movq	$0x0, 0x40(%rsp)
+      25: 48 8d 44 24 40               	leaq	0x40(%rsp), %rax
+      2a: 48 89 44 24 20               	movq	%rax, 0x20(%rsp)
+      2f: 48 c7 44 24 30 00 00 00 00   	movq	$0x0, 0x30(%rsp)
+      38: c7 44 24 28 00 00 00 00      	movl	$0x0, 0x28(%rsp)
+      40: b9 00 13 00 00               	movl	$0x1300, %ecx           # imm = 0x1300
+      45: 31 d2                        	xorl	%edx, %edx
+      47: 45 31 c9                     	xorl	%r9d, %r9d
+      4a: ff 15 00 00 00 00            	callq	*(%rip)                 # 0x50 <std::__1::__system_error_category::message(int) const+0x50>
+		000000000000004c:  IMAGE_REL_AMD64_REL32	__imp_FormatMessageA
+      50: 85 c0                        	testl	%eax, %eax
+      52: 74 37                        	je	0x8b <std::__1::__system_error_category::message(int) const+0x8b>
+      54: 48 8b 5c 24 40               	movq	0x40(%rsp), %rbx
+      59: 89 c7                        	movl	%eax, %edi
+      5b: 00 c0                        	addb	%al, %al
+      5d: 48 b9 00 24 00 00 01 00 00 00	movabsq	$0x100002400, %rcx      # imm = 0x100002400
+      67: 66 0f 1f 84 00 00 00 00 00   	nopw	(%rax,%rax)
+      70: 0f b6 54 3b ff               	movzbl	-0x1(%rbx,%rdi), %edx
+      75: 48 83 fa 20                  	cmpq	$0x20, %rdx
+      79: 77 4d                        	ja	0xc8 <std::__1::__system_error_category::message(int) const+0xc8>
+      7b: 48 0f a3 d1                  	btq	%rdx, %rcx
+      7f: 73 47                        	jae	0xc8 <std::__1::__system_error_category::message(int) const+0xc8>
+      81: 48 ff cf                     	decq	%rdi
+      84: 04 fe                        	addb	$-0x2, %al
+      86: 48 85 ff                     	testq	%rdi, %rdi
+      89: 75 e5                        	jne	0x70 <std::__1::__system_error_category::message(int) const+0x70>
+      8b: c6 06 1a                     	movb	$0x1a, (%rsi)
+      8e: 48 b8 55 6e 6b 6e 6f 77 6e 20	movabsq	$0x206e776f6e6b6e55, %rax # imm = 0x206E776F6E6B6E55
+      98: 48 89 46 01                  	movq	%rax, 0x1(%rsi)
+      9c: 48 b8 77 6e 20 65 72 72 6f 72	movabsq	$0x726f727265206e77, %rax # imm = 0x726F727265206E77
+      a6: 48 89 46 06                  	movq	%rax, 0x6(%rsi)
+      aa: c6 46 0e 00                  	movb	$0x0, 0xe(%rsi)
+      ae: 48 8b 4c 24 40               	movq	0x40(%rsp), %rcx
+      b3: ff 15 00 00 00 00            	callq	*(%rip)                 # 0xb9 <std::__1::__system_error_category::message(int) const+0xb9>
+		00000000000000b5:  IMAGE_REL_AMD64_REL32	__imp_LocalFree
+      b9: 48 89 f0                     	movq	%rsi, %rax
+      bc: 48 83 c4 60                  	addq	$0x60, %rsp
+      c0: 5b                           	popq	%rbx
+      c1: 5f                           	popq	%rdi
+      c2: 5e                           	popq	%rsi
+      c3: 41 5e                        	popq	%r14
+      c5: 41 5f                        	popq	%r15
+      c7: c3                           	retq
+      c8: 48 83 ff 16                  	cmpq	$0x16, %rdi
+      cc: 77 0b                        	ja	0xd9 <std::__1::__system_error_category::message(int) const+0xd9>
+      ce: 88 44 24 48                  	movb	%al, 0x48(%rsp)
+      d2: 4c 8d 74 24 49               	leaq	0x49(%rsp), %r14
+      d7: eb 28                        	jmp	0x101 <std::__1::__system_error_category::message(int) const+0x101>
+      d9: 41 89 ff                     	movl	%edi, %r15d
+      dc: 41 83 e7 f0                  	andl	$-0x10, %r15d
+      e0: 49 83 c7 10                  	addq	$0x10, %r15
+      e4: 4c 89 f9                     	movq	%r15, %rcx
+      e7: e8 00 00 00 00               	callq	0xec <std::__1::__system_error_category::message(int) const+0xec>
+		00000000000000e8:  IMAGE_REL_AMD64_REL32	_Znwy
+      ec: 49 89 c6                     	movq	%rax, %r14
+      ef: 49 ff c7                     	incq	%r15
+      f2: 4c 89 7c 24 48               	movq	%r15, 0x48(%rsp)
+      f7: 48 89 7c 24 50               	movq	%rdi, 0x50(%rsp)
+      fc: 48 89 44 24 58               	movq	%rax, 0x58(%rsp)
+     101: 4c 89 f1                     	movq	%r14, %rcx
+     104: 48 89 da                     	movq	%rbx, %rdx
+     107: 49 89 f8                     	movq	%rdi, %r8
+     10a: e8 00 00 00 00               	callq	0x10f <std::__1::__system_error_category::message(int) const+0x10f>
+		000000000000010b:  IMAGE_REL_AMD64_REL32	memmove
+     10f: 41 c6 04 3e 00               	movb	$0x0, (%r14,%rdi)
+     114: 0f 10 44 24 48               	movups	0x48(%rsp), %xmm0
+     119: 0f 11 06                     	movups	%xmm0, (%rsi)
+     11c: 48 8b 44 24 58               	movq	0x58(%rsp), %rax
+     121: 48 89 46 10                  	movq	%rax, 0x10(%rsi)
+     125: eb 87                        	jmp	0xae <std::__1::__system_error_category::message(int) const+0xae>
+     127: 48 89 c1                     	movq	%rax, %rcx
+     12a: e8 00 00 00 00               	callq	0x12f <std::__1::__system_error_category::message(int) const+0x12f>
+		000000000000012b:  IMAGE_REL_AMD64_REL32	_Unwind_Resume
+     12f: 48 89 c7                     	movq	%rax, %rdi
+     132: f6 06 01                     	testb	$0x1, (%rsi)
+     135: 74 10                        	je	0x147 <std::__1::__system_error_category::message(int) const+0x147>
+     137: 48 8b 16                     	movq	(%rsi), %rdx
+     13a: 48 8b 4e 10                  	movq	0x10(%rsi), %rcx
+     13e: 48 83 e2 fe                  	andq	$-0x2, %rdx
+     142: e8 00 00 00 00               	callq	0x147 <std::__1::__system_error_category::message(int) const+0x147>
+		0000000000000143:  IMAGE_REL_AMD64_REL32	_ZdlPvy
+     147: 48 89 f9                     	movq	%rdi, %rcx
+     14a: e8 00 00 00 00               	callq	0x14f <std::__1::__system_error_category::message(int) const+0x14f>
+		000000000000014b:  IMAGE_REL_AMD64_REL32	_Unwind_Resume
+     14f: 48 89 c1                     	movq	%rax, %rcx
+     152: e8 00 00 00 00               	callq	0x157 <std::__1::__system_error_category::message(int) const+0x157>
+		0000000000000153:  IMAGE_REL_AMD64_REL32	_Unwind_Resume
+     157: cc                           	int3
+
+Disassembly of section .text$_ZNKSt3__123__system_error_category23default_error_conditionEi:
+

@@ -1,6 +1,8 @@
 #include "execution.hpp"
+#include <atomic>
 #include <bit>
 #include <limits>
+#include <stdexcept>
 #ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -13,6 +15,19 @@
 
 namespace anadius::execution_recovered {
 namespace {
+using OwnerReference = std::atomic_ref<std::uint32_t>;
+static_assert(OwnerReference::is_always_lock_free);
+static_assert(alignof(MutexState) >= OwnerReference::required_alignment);
+static_assert(offsetof(MutexState, owner_48) % OwnerReference::required_alignment == 0);
+// Only the pre-lock ownership projection needs atomic access. The real SRW
+// still synchronizes protected data/count. Each reference ends in this helper,
+// before a platform call can release SRW to a raw, lock-owning borrower.
+std::uint32_t load_owner(MutexState& mutex) noexcept {
+    return OwnerReference(mutex.owner_48).load(std::memory_order_relaxed);
+}
+void store_owner(MutexState& mutex, std::uint32_t owner) noexcept {
+    OwnerReference(mutex.owner_48).store(owner, std::memory_order_relaxed);
+}
 struct PreserveError {
 #ifdef _WIN32
     DWORD value=::GetLastError();
@@ -51,19 +66,19 @@ int lock_04a6ac(MutexState& mutex, Platform& platform) {
     // are intentionally outside this untimed caller's recovered contract.
     const auto thread = platform.current_thread_id();
     if ((mutex.type & ~std::uint32_t{0x100}) == 1) {
-        if (mutex.owner_48 != thread) {
+        if (load_owner(mutex) != thread) {
             platform.acquire_srw_exclusive(mutex.srw_10);
-            mutex.owner_48 = thread;
+            store_owner(mutex, thread);
         }
         ++mutex.count_4c;
         return 0;
     }
-    if (mutex.owner_48 != thread) platform.acquire_srw_exclusive(mutex.srw_10);
+    if (load_owner(mutex) != thread) platform.acquire_srw_exclusive(mutex.srw_10);
     const auto previous = mutex.count_4c;
     const auto updated = previous + 1;
     mutex.count_4c = updated;
     if (std::bit_cast<std::int32_t>(updated) <= 1) {
-        mutex.owner_48 = thread;
+        store_owner(mutex, thread);
     } else if ((mutex.type & 0x100) == 0) {
         mutex.count_4c = previous;
         return 3;
@@ -74,7 +89,7 @@ int lock_04a6ac(MutexState& mutex, Platform& platform) {
 int unlock_04a6b4(MutexState& mutex, Platform& platform) {
     --mutex.count_4c;
     if (mutex.count_4c == 0) {
-        mutex.owner_48 = 0xffffffff;
+        store_owner(mutex, 0xffffffff);
         platform.release_srw_exclusive(mutex.srw_10);
     }
     return 0;
@@ -112,6 +127,11 @@ void Execution::acquire_checked() {
     }
 }
 
+void Execution::finish_server_startup(std::uint8_t& supplied_flag,std::uint16_t port){
+    if(&supplied_flag!=&flags_.first_0a3c3d)throw std::invalid_argument("Server port publication requires exact first flag");
+    if(publication_){PreserveError error;publication_->server_port_published(port,this);}
+    finish_flag_036820(supplied_flag);
+}
 void Execution::finish_flag_036820(std::uint8_t& supplied_flag) {
     {
         SourceGuard guard(source_gate_);

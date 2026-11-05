@@ -2,6 +2,20 @@
 #include "../anadius-messages-source/control.hpp"
 using namespace native_message_test;
 namespace {
+void shared_event_count_contract(){
+    std::array<s::ReceiveBufferString*,8> slots{};
+    s::NativeMessageEventQueue queue{slots,8,0,2};
+    const auto sampled=queue;
+    check(queue.count_20==2&&--queue.count_20==1&&sampled.count_20==2,"Queue aggregate/copy preserves a sampled count while the one shared source cell changes");
+    s::NativeMessageEventQueue assigned;assigned=queue;
+    check(++queue.count_20==2&&assigned.count_20==1,"Copied queue metadata does not alias the live count cell or become another queue owner");
+    queue={slots,8,0,0};
+    check(!queue.count_20&&sampled.count_20==2&&assigned.count_20==1,"Aggregate reassignment resets the selected live count without rewriting older value snapshots");
+    Fixture f;f.core.encrypted=1;f.seed(core_test::hex(core_test::request_xml));f.event("committed");
+    f.api.hook=[](std::string name){if(name=="unlock")throw Failure{83};};
+    rejects<Failure>([&]{f.run();});
+    check(!f.api.queue.count_20&&!f.api.queue.offset_18&&!f.events[0].size_10&&f.events[0].capacity_18==15&&!f.api.destroys,"Actual typed event pop commits shared count/head retirement BEFORE an unknown unlock outcome, without invented document cleanup");
+}
 void normal(){
     std::vector<unsigned> lengths;for(unsigned n=0;n<35;++n)lengths.push_back(n);for(auto n:{128U,2047U,2048U,4095U,4096U,8192U,150000U})lengths.push_back(n);
     for(bool encrypted:{false,true})for(bool show:{false,true})for(auto n:lengths){
@@ -84,5 +98,5 @@ void failures(){
     {Fixture f;f.seed(core_test::request_xml);f.api.hook=[](std::string name){if(name=="destroy-document")throw Failure{82};};rejects<Failure>([&]{f.run();});check(f.output()==framed(response("alpha"),false)&&!f.locals.response.size_10&&f.locals.response.capacity_18==15,"document destructor exception occurs after output move and local reset");}
 }
 }
-int main(){try{normal();retries();events();no_response_control();unknown_control();failures();std::cout<<"PASS: "<<checks<<" socket native message checks; typed033d70 request/cipher/parser retries, output codec/move, live event front and normal failure prefixes; lower providers/ABI/EH remain open\n";}catch(const std::exception& e){std::cerr<<"FAIL after "<<checks<<" checks: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}
+int main(){try{shared_event_count_contract();normal();retries();events();no_response_control();unknown_control();failures();std::cout<<"PASS: "<<checks<<" socket native message checks; typed033d70 request/cipher/parser retries, output codec/move, live event front and normal failure prefixes; lower providers/ABI/EH remain open\n";}catch(const std::exception& e){std::cerr<<"FAIL after "<<checks<<" checks: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}
 

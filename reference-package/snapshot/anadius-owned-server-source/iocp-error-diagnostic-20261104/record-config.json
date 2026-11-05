@@ -1,0 +1,24 @@
+{
+  "schema": "iocp-constructor-native-diagnostic.source.v1",
+  "kind": "NATIVE_GUIDED_PRODUCTION_SOURCE_CORRECTION",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Map measured024990 mutex/iocp contexts and native system diagnostics at exact84428/84528; preserve cached statuses/nonzero guards and unrelated HOST projections. Source-only, not compiled or run.",
+  "sources": [
+    {"path":"anadius-owned-server-source/server.cpp","before":"before/server.cpp","role":"production"},
+    {"path":"anadius-owned-server-source/server_tests.cpp","before":"before/server_tests.cpp","role":"test"},
+    {"path":"anadius-owned-server-source/server_integration_tests.cpp","before":"before/server_integration_tests.cpp","role":"test"}
+  ],
+  "reviews": ["root-production-review.md", "root-test-review.md"],
+  "reports": ["native-findings.md", "implementation.md", "test-source-notes.md"],
+  "native_replies": ["bytes-180084428.json", "bytes-180084528.json", "pseudo-180024990.json", "instructions-180024990.json"],
+  "supplementary": ["outputs/anadius-session-policy-source/native-stop-diagnostic-20261104/evidence.json", "outputs/anadius-session-policy-source/worker-error-028240-20261104/compiler-provider-audit-index.json"],
+  "limits": [
+    "No compile/project tests/link/DLL execution or ZIP update; all new assertions remain unexecuted.",
+    "Other string-context error providers and native exception ABI/EH/allocator/RTTI remain separate work.",
+    "Direct hypothetical zero-code contextual SourceError parity is unclaimed; measured producer branches raise only nonzero.",
+    "Lower constructor NULL/error0 fallthrough is unchanged; this does not certify every enclosing backend validity check or whole DLL behavior."
+  ],
+  "completed_note": "SOURCE_ONLY four freshREA/Ghidra024990/literal records bind mutex/iocp and Native system category at two exact IOCP failure contexts; one production/two test sources independently reviewed, authored gate/port retained-prefix children NOT RUN.",
+  "observation": "REA6.8.0/Ghidra12.1.4 original-only audit exported/closed four fresh records; production and test sources reviewed independently. Original hash and historical artifacts unchanged.",
+  "next_scope": "Bind the already-measured nonzero acceptor open/set_option/bind/listen and socket-service mutex diagnostic effects to the established native provider through an explicit typed category seam, preserving ambiguous HOST cases. Parallel bounded nonCRT behavioral-gap triage continues."
+}

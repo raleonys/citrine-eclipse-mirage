@@ -1,0 +1,18 @@
+[
+  {
+    "source": "outputs/anadius-all-functions.pseudo.c",
+    "source_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "address": "0x1800239c0",
+    "output": "retained-service-prepend.pseudo.txt",
+    "sha256": "6b1fa2a017c90a818e88348377303754bc5cbf85829d07d4a1bd8b5ec308f9bd",
+    "evidence_id": "ev_c935d546ffcfd9a015759eba276b6b86808a598ce42947d5ddbe6ef939153abb"
+  },
+  {
+    "source": "outputs/anadius-all-functions.asm.txt",
+    "source_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "address": "0x1800239c0",
+    "output": "retained-service-prepend.assembly.txt",
+    "sha256": "81c1276e7592400c973b934d17b24a9b7a436d0977167e51c1ef564888c838c2",
+    "evidence_id": "ev_245079b916f12d89c98287073bb82e89b00650e14f7fa967621e26699d2344a4"
+  }
+]

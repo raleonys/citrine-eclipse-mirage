@@ -1,5 +1,5 @@
 <!-- CURRENT-FULL-BUILD -->
-Güncel temiz tam ortak derleme (2026-11-01T18:35:16.689528+00:00): **296 nesne (292 C++ / 4 C), 356 test grubu ve 19 terminal senaryosu PASS**. Güncel kaynak snapshot'ı 1017 dosyadır. Tam arşiv seçimiyle üretim DLL linki denendi; `require_loader_attach_runtime` ve `require_loader_detach_quiescence` tanımları eksik olduğundan **BLOCKED**. Çalışan production DLL üretilmedi. Ayrıntı: `source-workspace/full-build-verification.json`, `dll-link-gate-source/current-full-link.json` ve `SON-DURUM.txt`. Aşağıdaki B54 ve önceki aşama kayıtları tarihseldir.
+Güncel temiz tam derleme (2026-11-05T19:38:00.051488+00:00): **296 nesne, 356 test grubu ve 19 framework terminal senaryosu PASS**. Derleyici: clang version 23.1.4 (https://github.com/llvm/llvm-project.git 7a941dfb2877a0b8cf30323fefa85ad019e0b0f5). 1017 kanonik kaynak ve 3 ek bağımlılık başlığı, toplam 1020 dosya güncel hashlerle doğrulandı; bekleyen derlenmemiş fark yok. Üretim DLL link durumu: **LINKED_NOT_RUNTIME_VALIDATED**. Link completed; DLL was not loaded or executed. Ayrıntı: `source-workspace/full-build-verification.json`, `dll-link-gate-source/current-full-link.json`, `SON-DURUM.txt`. Önceki aşama/araç kayıtları tarihseldir.
 <!-- END-CURRENT-FULL-BUILD -->
 
 # Koda nereden bakmalı?

@@ -1,0 +1,289 @@
+{
+  "schema": "profile-header-ledger-growth.v1",
+  "recorded_at": "2026-11-04T16:37:15.839804+00:00",
+  "client_date": "2026-11-04",
+  "status": "SOURCE_IMPLEMENTED_STATIC_REVIEWED_NOT_COMPILED",
+  "scope": "Selected Profile large-string header ledger grows beyond initial256 and republishes both live context spans;260-entry core/actual Graph regression sources added but not run.",
+  "fresh_REA_evidence": [
+    {
+      "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/instructions-180009eb0.json",
+      "sha256": "d7385666a1945d71785c3d54066706cebfa90fb5ed056a4eb9d10bda83beac0e",
+      "evidence_id": "ev_2c130f1067a7560ce2d1f9b5315c1ae1afdfc229addfd97cffa9acd3a616b4eb",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x180009eb0"
+      },
+      "supporting_header_path": true
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/instructions-18000aa50.json",
+      "sha256": "108834fb0107907bb7be60dac0596af32ed2105db76d7e69e1fd2d7f13434690",
+      "evidence_id": "ev_da581b282fc722c86d0b694756fe550083ecf335b5bb9b615a2efc94181d9478",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x18000aa50"
+      },
+      "supporting_header_path": true
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/instructions-180025a70.json",
+      "sha256": "f4e8c25e66de9f5acf01164d31a3801c57f827f78ec1c4be446f21308d314dde",
+      "evidence_id": "ev_4f9b9e84d54fa97ecf9360b805712e40d7c30f6302b1b4abca09b58af1ac7e89",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x180025a70"
+      },
+      "supporting_header_path": true
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/instructions-180028270.json",
+      "sha256": "4dddef556de6eb875a1f43040cdcc0c9724b3b5a5d16054669dccbccd115ee1f",
+      "evidence_id": "ev_f81ab7e365f604bb85bc26b504b80f97c76727eb8ca40b4d0f1dfc8c12cfff6e",
+      "operation": "read_function_instructions",
+      "parameters": {
+        "procedure": "0x180028270"
+      },
+      "supporting_header_path": true
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/pseudo-180009eb0.json",
+      "sha256": "72cd5b245d9a9e21056da1ffa765ab29a692560c810a1138282e61df9072b054",
+      "evidence_id": "ev_f6a34b9801d717458245286fe53047e1ae4b4decce54a939f1973fde5b7361ca",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x180009eb0"
+      },
+      "supporting_header_path": true
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/pseudo-180017a30.json",
+      "sha256": "5f6e8b9556322ec31334a8531e971cbccec7a106ff263fedb3454fe8cd7cda3a",
+      "evidence_id": "ev_b36ef2a8fcb814110cae1d4436bcd06a9413e775dce9f55043aa5aec1ca4817c",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x180017a30"
+      },
+      "supporting_header_path": false
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/pseudo-180025a70.json",
+      "sha256": "7cdc3a341ce2c9c1fffc2e6fa9537146ce2c30a2e3c44738922e749fdf041fda",
+      "evidence_id": "ev_90fab32321d59f4fa2d0bff3f7001a794ac746669e5b6768ccdcd626f5eae7b7",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x180025a70"
+      },
+      "supporting_header_path": true
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/pseudo-180028270.json",
+      "sha256": "9c6bd6287d9f84074407ce8fb0a269c8deac488c59898f0f395e0d498e0ce6b3",
+      "evidence_id": "ev_8149804826a5956d94d753ccced96634ec3cc96e7795d9dee30b19a7e3a2f701",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x180028270"
+      },
+      "supporting_header_path": true
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/pseudo-request-18000aa50.json",
+      "sha256": "7cbe46b321578cee021d7485211520191eda63b40e4e8ec89b94a0fc4c9efa9d",
+      "evidence_id": "ev_ed66c51633e265ea3fac53817520c91d709fe99450c96b409f9fea60ebe779a3",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x18000aa50"
+      },
+      "supporting_header_path": true
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/pseudo-request-18002a5d0.json",
+      "sha256": "49882aa5e832c5be1730b3d14b944a9d8a1cf4d1892d6901b63d7fe014a4f403",
+      "evidence_id": "ev_b79853ae65db7e3ebc1827273dd62fe269b0916d78385e117389b00706cba8ad",
+      "operation": "procedure_pseudo_code",
+      "parameters": {
+        "procedure": "0x18002a5d0"
+      },
+      "supporting_header_path": false
+    }
+  ],
+  "supporting_native_records": 8,
+  "incidental_records": 2,
+  "report": {
+    "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/report.md",
+    "sha256": "a8df8a6b4c9474362dd37530202c72cbeb4c65225a361f568755d0dd8f24e85e"
+  },
+  "native_findings": {
+    "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/native-findings.md",
+    "sha256": "d705dec036eb493f2de681a5b01be3b03f1c693839df463e67e8949d2a60e306"
+  },
+  "independent_review": {
+    "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/independent-review.md",
+    "sha256": "fbb08246970c53d01dad54b10e33df1bf1e42abf31713b9e6a7cba16bdae3877"
+  },
+  "implementation": {
+    "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/production-implementation.md",
+    "sha256": "1d1c86c5ff2c8337b2f57284c3ad37c639f2949d71e06e16cd2b90cdab8006cf"
+  },
+  "test_source_notes": {
+    "path": "outputs/anadius-session-profile-source/header-ledger-growth-20261104/header-growth-tests.md",
+    "sha256": "1e3e46863b2cd4a9175dd0ef6422b3ebc2cf018b658c8233594d06b5cf8a570d"
+  },
+  "source_changes": [
+    {
+      "path": "outputs/anadius-session-profile-source/strings.hpp",
+      "sha256": "18db9bc458ab1e14f50bbba812d4928ef8a02c7fb4b25d7b9fb860845caec7a5",
+      "before_sha256": "69210feb138eb968601beebcf546336fe475259bc34b94beabf9e3b4b7102297"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/strings.cpp",
+      "sha256": "48da5ac125507c245caf3cf7ba56b94112c79e27e4e327d954b4d30f9603d797",
+      "before_sha256": "19df7511fa66bb9383eb9dee64b6bc86b7c33881e5dbd9652dac7069d7ca1e64"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "sha256": "ea0220ea3db901da0d0c43483bc9fc8167ff14652bb089d01c187ddf27d793e6",
+      "before_sha256": "5428a7616fc900a934d51dbae3521709a240c3cb15acea70342aedb01dc895bd"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile_tests.cpp",
+      "sha256": "007fd4e0fbb2e7bb9aac01d895778164263f991e6506489f2d8879ec1c1e23cf",
+      "before_sha256": "3f67b09f3984c54f59f0b98602f0a179c5bc3dae87274dac4867da5c3f5ea1d0"
+    },
+    {
+      "path": "outputs/anadius-application-graph-source/graph_tests.cpp",
+      "sha256": "732042f790d54a16472d76398eb570d40e29bbefaddac4a09b8294376fcfe606",
+      "before_sha256": "017b75df2008e2a9507b3203bdb635a2338f3287ddf7726dc82aa8c93784cec1"
+    }
+  ],
+  "production_files_changed": 3,
+  "test_files_changed": 2,
+  "pending_source_count": 17,
+  "pending_sources": [
+    {
+      "path": "anadius-application-graph-source/graph.cpp",
+      "build_sha256": "e92828f00295c1fc3d797ea593dc323c8811fd05955912ed7ead315bd6d1f2ee",
+      "current_sha256": "b2915e54e501bb05a87fc51b98c34c6d88b01881fae27462b7f328239740406c"
+    },
+    {
+      "path": "anadius-application-graph-source/graph.hpp",
+      "build_sha256": "28480f23d4f240d862c5454d0886e0cb591a1f40efee925604f8190a47bd3eb9",
+      "current_sha256": "ca762275c8c5dad511395f932ad0fca4e2f50773f0050f04bb525ff43ec20d2a"
+    },
+    {
+      "path": "anadius-application-graph-source/graph_tests.cpp",
+      "build_sha256": "704919981328fc5b63a21b519c184f1995ca483312853fb8485ab285b7011406",
+      "current_sha256": "732042f790d54a16472d76398eb570d40e29bbefaddac4a09b8294376fcfe606"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign.cpp",
+      "build_sha256": "8f649acdd515ac92869a92bad574cfdc856942e8ff93ebb014f727f83ba8abc5",
+      "current_sha256": "bd28299de32cce8cfe9628ab4880a1eb86c38101cf0bcfa64ab481a550ef3732"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign.hpp",
+      "build_sha256": "54b3305fe5002a841cdbc251bdbd4a1cf0ef45d9a6902a05487cc8bb3f3c125c",
+      "current_sha256": "70da46e1d7fd4bbd74d8d32dc8a03d80d4bb733a3fa4dcd7ad695c65c95b08a5"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign_integration_tests.cpp",
+      "build_sha256": "8e25b409a2668230c1741312723a73ee848993151c59fd5a53bee391d4005b1b",
+      "current_sha256": "6ccb3eff5fd7f2fd773f24f265723b4b7191f8822207e618c9e051acc7f518ea"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign_tests.cpp",
+      "build_sha256": "0fbd95fe74f96de23774a3452701bd7ce83af2ec6e4c38da48e8eef886e6b5d1",
+      "current_sha256": "4e637b28b56f3fa012728a46376e7b769c76b038fd9484433af2e21153708f26"
+    },
+    {
+      "path": "anadius-native-context-source/context.cpp",
+      "build_sha256": "f62b9f3de5b59b1cd4e2f253fcdf00f94cc188c75616c5da3e34574d2838f5c1",
+      "current_sha256": "e1fab8143fc37d33dbe1e8db3cb6a90ef52d645a1cd4ce1ba3262bad388a0266"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.cpp",
+      "build_sha256": "c85991c0e7515cc6250cf721f811fbb8403be7c68392576fbf82768547e4918e",
+      "current_sha256": "2d37a2dba5a1f7cbcb2c47f0791edcb79153e4fd6abc6d5040168733e9b3d85f"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.hpp",
+      "build_sha256": "8efab4e8111178055777badfbc402fb6a06434f81a45ae9623ce72dee39d7962",
+      "current_sha256": "3091e29479502b304339ac2e6aa5aeff3d1bbbef23aa1ffec09cc007706174bf"
+    },
+    {
+      "path": "anadius-registry-source/registry.cpp",
+      "build_sha256": "757e2ffb52077852d9ca509635a10bc5191f2176f6d05a1dd8c88131965680f5",
+      "current_sha256": "be3a6151a754397231909e4fea9f2ade1e5e3512c3a48fabcb67f12da3701176"
+    },
+    {
+      "path": "anadius-registry-source/registry_tests.cpp",
+      "build_sha256": "14f9f7148e517d4241904add1c8aaa1c55b57aa97d20aa54830a67b896683da8",
+      "current_sha256": "8d8bc4717034b6cac5cc3d5893270fde4fe695fe6a02b0f88ca4f745d32450c1"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "build_sha256": "8125d09a886ad080e79f13fb31ee85f9260bfad311b980dc2202d06a8179446d",
+      "current_sha256": "247c7838c29b3b1790b327653bb8ffbc2d3f3a89ccebddbac118d11ff7b913c1"
+    },
+    {
+      "path": "anadius-session-profile-source/profile.cpp",
+      "build_sha256": "5428a7616fc900a934d51dbae3521709a240c3cb15acea70342aedb01dc895bd",
+      "current_sha256": "ea0220ea3db901da0d0c43483bc9fc8167ff14652bb089d01c187ddf27d793e6"
+    },
+    {
+      "path": "anadius-session-profile-source/profile_tests.cpp",
+      "build_sha256": "3f67b09f3984c54f59f0b98602f0a179c5bc3dae87274dac4867da5c3f5ea1d0",
+      "current_sha256": "007fd4e0fbb2e7bb9aac01d895778164263f991e6506489f2d8879ec1c1e23cf"
+    },
+    {
+      "path": "anadius-session-profile-source/strings.cpp",
+      "build_sha256": "19df7511fa66bb9383eb9dee64b6bc86b7c33881e5dbd9652dac7069d7ca1e64",
+      "current_sha256": "48da5ac125507c245caf3cf7ba56b94112c79e27e4e327d954b4d30f9603d797"
+    },
+    {
+      "path": "anadius-session-profile-source/strings.hpp",
+      "build_sha256": "69210feb138eb968601beebcf546336fe475259bc34b94beabf9e3b4b7102297",
+      "current_sha256": "18db9bc458ab1e14f50bbba812d4928ef8a02c7fb4b25d7b9fb860845caec7a5"
+    }
+  ],
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "original_unchanged": true,
+  "native_session_closed": true,
+  "frozen_build_and_delivery": [
+    {
+      "path": "outputs/source-workspace/build-record.json",
+      "sha256": "b9b5bd714c6b5744f379961b6ad60e7eb037a00c1677723bf7bcea6a664d4573"
+    },
+    {
+      "path": "outputs/source-workspace/source-snapshot.json",
+      "sha256": "b7362cf518727f6fc997bfc1377bc4d83e2751903ead78cf376251cb0bf87e6d"
+    },
+    {
+      "path": "outputs/source-workspace/full-build-verification.json",
+      "sha256": "6cbded372c77eeb2a35b332dbe75fbc9bc6cfbd24da3b967bfaa03b124087e12"
+    },
+    {
+      "path": "outputs/dll-link-gate-source/current-full-link.json",
+      "sha256": "70d9d9dcbaed784530bee67928fe0ebbe27dbe931b07219545cd6988f50e4755"
+    },
+    {
+      "path": "outputs/package-receipt.json",
+      "sha256": "35ca916ac996decc75abc35e6ebe0d7c6e33db9d1ffc9860693d27d176d3bd32"
+    },
+    {
+      "path": "outputs/dll-link-gate-source/build-current-full/anadius64.reconstruction.dll",
+      "sha256": "44bc309127e7cec7db7ed5c62ff6664a22e257b4edf3ed977a0fa8fa109b290b"
+    },
+    {
+      "path": "outputs/dll-reverse-engineering.zip",
+      "sha256": "790b71bbf92d02ff05a391d2985fdab4eaad3ab72f34de29ea51e79be13b267c"
+    }
+  ],
+  "overall_completion_percentage": null,
+  "new_normal_native_body_recoveries": 0,
+  "closed_source_behavior_gap": "Artificial256-live-large-string header limit removed with coherent Profile context bindings.",
+  "continuous_goal_active": true
+}

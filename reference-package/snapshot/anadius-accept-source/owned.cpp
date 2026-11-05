@@ -1,4 +1,5 @@
 #include "owned.hpp"
+#include <deque>
 #include <exception>
 #include <limits>
 #include <mutex>
@@ -7,6 +8,9 @@
 #include <vector>
 
 namespace anadius::socket_recovered {
+namespace {
+struct PreserveError {DWORD value=::GetLastError();~PreserveError(){::SetLastError(value);}};
+}
 struct OwnedAcceptMemory::Impl {
     struct Task final:AcceptTask {
         Impl& owner;Task(OperationStorage& s,Impl& o):AcceptTask(s),owner(o){}
@@ -25,8 +29,8 @@ struct OwnedAcceptMemory::Impl {
             const auto fixed=owner.require_region(r);
             if(bytes.data()!=fixed.data()||bytes.size()!=fixed.size())throw UnsupportedInput("SDK buffer is not the authoritative owned accept address region");
             if(prearmed){
-                const auto& op=std::get<AsyncAcceptOperation>(r.object);const auto h=owner.base.handle_for(*r.storage);
-                const auto& b=owner.base.dispatcher_bindings()[h.slot];
+                const auto& op=std::get<AsyncAcceptOperation>(r.object);
+                const auto& b=owner.base.packet_binding(*r.storage);
                 if(!r.pending||!r.pin||r.consumed||b.operation!=&op.operation||b.overlapped_identity!=&op.operation.overlapped)
                     throw std::logic_error("Retry SDK requires the same prearmed owned packet and buffer loan");
             }else owner.arm(r);
@@ -43,19 +47,37 @@ struct OwnedAcceptMemory::Impl {
         std::int32_t update_context(Socket s,Socket& listener)override{return owner.effect([&]{return owner.sdk.update_context(s,listener);});}
     };
     const std::shared_ptr<SessionMemoryDomain> memory;OwnedIoMemory& base;AcceptLower& lower;AsyncAcceptApi& sdk;
-    std::shared_ptr<void> lease;AsyncAcceptContext* bound=nullptr;std::vector<Row> rows;
-    mutable std::recursive_mutex gate;bool closed=false,retiring=false,poisoned=false,submitting=false;std::size_t active=0;
+    std::shared_ptr<void> lease;AsyncAcceptContext* bound=nullptr;std::deque<Row> rows;
+    mutable std::recursive_mutex gate;bool closed=false,retiring=false,poisoned=false,submitting=false,growing=false;std::size_t active=0;
     Pinned pinned{*this};Pinned prearmed{*this,true};
     Impl(std::shared_ptr<SessionMemoryDomain> m,OwnedIoMemory& b,std::size_t count,AcceptLower& l,AsyncAcceptApi& s)
         :memory(std::move(m)),base(b),lower(l),sdk(s),rows(count){lease=memory->acquire_provider_lease_from_operation();}
     struct Access {
         Impl& v;std::unique_lock<std::recursive_mutex> lock;
-        explicit Access(Impl& v):v(v),lock(v.gate,std::defer_lock){(void)v.memory->buffer_context();lock.lock();if(v.closed||v.retiring||v.poisoned)throw std::logic_error("Accept provider is closed or poisoned");}
+        explicit Access(Impl& v):v(v),lock(v.gate,std::defer_lock){(void)v.memory->buffer_context();lock.lock();if(v.growing)v.poisoned=true;if(v.closed||v.retiring||v.poisoned)throw std::logic_error("Accept provider is closed, poisoned or reentered during row growth");}
     };
     struct Call {Impl& v;explicit Call(Impl& v):v(v){++v.active;}~Call(){--v.active;}};
     template<class F>auto effect(F&& fn)->std::invoke_result_t<F>{Access access(*this);Call call(*this);try{return std::forward<F>(fn)();}catch(...){poisoned=true;throw;}}
     AsyncAcceptContext& context(){if(!bound)throw std::logic_error("Accept context is not bound");return *bound;}
-    std::size_t index(OperationStorage& storage){const auto h=base.handle_for(storage);if(h.slot>=rows.size())throw std::length_error("Accept row capacity does not cover base IO slot");return h.slot;}
+    std::size_t index(OperationStorage& storage){
+        const auto h=base.handle_for(storage);
+        if(h.slot<rows.size())return h.slot;
+        PreserveError error;
+        const auto limit=rows.max_size();
+        if(h.slot>=limit)throw std::length_error("Accept registry exceeds container capacity");
+        auto count=rows.size();
+        while(count<=h.slot)count=count>limit-count?limit:count*2;
+        struct Growing {Impl& v;explicit Growing(Impl& s):v(s){v.growing=true;}~Growing(){v.growing=false;}} growing_rows(*this);
+        try{
+            // Append only: old operations, Tasks and their raw OVERLAPPEDs
+            // retain their addresses, including an SDK borrower in another row.
+            rows.resize(count);
+            (void)memory->buffer_context();
+            if(closed||retiring||poisoned||base.handle_for(storage)!=h)
+                throw std::logic_error("Accept registry changed during row growth");
+        }catch(...){poisoned=true;throw;}
+        return h.slot;
+    }
     std::size_t find(const OVERLAPPED* ov)const{
         for(std::size_t i=0;i<rows.size();++i)if(auto* op=std::get_if<AsyncAcceptOperation>(&rows[i].object);op&&&op->operation.overlapped==ov)return i;
         throw std::invalid_argument("No live owned accept OVERLAPPED");
@@ -76,7 +98,13 @@ struct OwnedAcceptMemory::Impl {
     }
     void retire(Row& r){
         if(r.pending||r.pin)throw std::logic_error("Accept kernel borrower has not ended");
-        if(auto* old=std::get_if<AsyncAcceptOperation>(&r.object))for(auto& binding:base.dispatcher_bindings())if(binding.operation==&old->operation)binding={};
+        if(auto* old=std::get_if<AsyncAcceptOperation>(&r.object)){
+            // Forget the address of the packet field before destroying it.
+            // This also handles a prior base projection/free that cleared it.
+            auto* const binding=old->packet;
+            base.unbind_external_packet(old->packet);
+            if(binding&&binding->operation==&old->operation)*binding={};
+        }
         r.object.emplace<std::monostate>();r.storage=nullptr;r.consumed=false;
         r.submission_state=AcceptSubmission::NotSubmitted;r.submitted_listener=invalid_socket;
     }
@@ -84,7 +112,7 @@ struct OwnedAcceptMemory::Impl {
         if(r.pending||r.pin)throw std::logic_error("Accept already has an SDK borrower");
         if(r.submission==std::numeric_limits<std::uint64_t>::max())throw std::overflow_error("Accept submission sequence exhausted");
         (void)require_region(r); // also applies to the mandatory29660 retry lower
-        auto& op=std::get<AsyncAcceptOperation>(r.object);const auto h=base.handle_for(*r.storage);auto& b=base.dispatcher_bindings()[h.slot];
+        auto& op=std::get<AsyncAcceptOperation>(r.object);auto& b=base.packet_binding(*r.storage);
         if(b.operation!=&op.operation||b.overlapped_identity!=&op.operation.overlapped)throw std::logic_error("Accept packet binding was replaced before SDK submission");
         r.pin=memory->pin_buffer(r.storage->identity,r.storage->bytes.size());r.pending=true;r.consumed=false;
         ++r.submission;r.submission_state=AcceptSubmission::NotSubmitted;r.submitted_listener=invalid_socket;
@@ -104,8 +132,8 @@ void OwnedAcceptMemory::Impl::Task::call_slot_00(std::uint8_t flag){
     });
 }
 OwnedAcceptMemory::OwnedAcceptMemory(std::shared_ptr<SessionMemoryDomain> memory,OwnedIoMemory& base,std::size_t capacity,AcceptLower& lower,AsyncAcceptApi& sdk){
-    if(!memory||!capacity||capacity>65536)throw std::invalid_argument("Accept provider needs bounded row capacity and parent");
-    (void)memory->buffer_context();if(capacity<base.storage_bindings().size())throw std::invalid_argument("Accept rows must cover the fixed base IO binding table");
+    if(!memory||!capacity||capacity>65536)throw std::invalid_argument("Accept provider needs positive initial capacity at most 65536 and parent");
+    (void)memory->buffer_context();
     impl_=std::make_unique<Impl>(std::move(memory),base,capacity,lower,sdk);
 }
 OwnedAcceptMemory::~OwnedAcceptMemory()noexcept{if(!impl_->closed||impl_->active)std::terminate();}
@@ -133,7 +161,8 @@ AsyncAcceptOperation& OwnedAcceptMemory::project(OperationStorage& storage){
     // dispatcher always use the distinct accept operation installed below.
     (void)v.base.project_posted(storage);v.retire(r);
     r.storage=&storage;++r.generation;auto& op=r.object.emplace<AsyncAcceptOperation>(storage);op.address_buffer=storage.bytes.subspan(0x68,288);
-    auto& metadata=v.base.dispatcher_bindings()[i];metadata={&op.operation,{},0,&op.operation.overlapped};op.packet=&metadata;return op;
+    auto& metadata=v.base.packet_binding(storage);metadata={&op.operation,{},0,&op.operation.overlapped};op.packet=&metadata;
+    v.base.bind_external_packet(storage,op.packet);return op;
 }
 AcceptTask& OwnedAcceptMemory::project_task(OperationStorage& storage){auto& v=*impl_;Impl::Access access(v);auto& r=v.rows[v.index(storage)];v.retire(r);r.storage=&storage;return r.object.emplace<Impl::Task>(storage,v);}
 void OwnedAcceptMemory::start(AsyncAcceptService& service,AcceptorState& listener,AcceptPending& pending,AcceptEndpoint* output,const std::uintptr_t& handler,std::uintptr_t allocator){
@@ -165,17 +194,27 @@ void OwnedAcceptMemory::note_cancel_requested(AcceptHandle h){auto& v=*impl_;Imp
 void OwnedAcceptMemory::free_cached_identity(std::uintptr_t identity){auto& v=*impl_;Impl::Access access(v);for(auto& r:v.rows)if(r.storage&&r.storage->identity==identity){release(*r.storage);return;}v.base.free_cached_identity(identity);}
 std::span<OperationStorageBinding> OwnedAcceptMemory::storage_bindings(){auto& v=*impl_;Impl::Access access(v);return v.base.storage_bindings();}
 std::span<DispatcherOperationBinding> OwnedAcceptMemory::dispatcher_bindings(){auto& v=*impl_;Impl::Access access(v);return v.base.dispatcher_bindings();}
-AcceptMemorySnapshot OwnedAcceptMemory::snapshot()const{auto& v=*impl_;std::lock_guard lock(v.gate);AcceptMemorySnapshot result;result.active_calls=v.active;result.closed=v.closed;result.poisoned=v.poisoned;for(const auto& r:v.rows){if(!std::holds_alternative<std::monostate>(r.object))++result.projections;if(r.pending)++result.pending;}return result;}
+OperationStorageResolver& OwnedAcceptMemory::storage_resolver(){PreserveError error;auto& v=*impl_;Impl::Access access(v);return v.base.storage_resolver();}
+std::size_t OwnedAcceptMemory::storage_capacity(){PreserveError error;auto& v=*impl_;Impl::Access access(v);return v.base.registry_capacity();}
+bool OwnedAcceptMemory::matches_storage(const PostedEnvironment& environment){
+    PreserveError error;auto& v=*impl_;Impl::Access access(v);
+    if(v.memory->operation_policy()==OperationPolicy::OriginalConcurrentActors)
+        return environment.storage_resolver==&v.base.storage_resolver();
+    if(environment.storage_resolver)return false;
+    const auto expected=v.base.storage_bindings(),actual=environment.current_storage();
+    return expected.data()==actual.data()&&expected.size()==actual.size();
+}
+AcceptMemorySnapshot OwnedAcceptMemory::snapshot()const{auto& v=*impl_;std::lock_guard lock(v.gate);if(v.growing){v.poisoned=true;throw std::logic_error("Accept snapshot reentered row growth");}AcceptMemorySnapshot result;result.active_calls=v.active;result.closed=v.closed;result.poisoned=v.poisoned;for(const auto& r:v.rows){if(!std::holds_alternative<std::monostate>(r.object))++result.projections;if(r.pending)++result.pending;}return result;}
 bool OwnedAcceptMemory::close(){
     auto& v=*impl_;std::shared_ptr<void> lease;
-    {std::lock_guard lock(v.gate);if(v.closed)return true;if(v.retiring||v.poisoned||v.active||v.submitting)return false;}
+    {std::lock_guard lock(v.gate);if(v.closed)return true;if(v.retiring||v.poisoned||v.active||v.submitting||v.growing)return false;}
     // Do not hold Accept.gate while waiting on Base.gate: an existing base
     // completion may hold Base.gate and enter this adapter from its callback.
     // Nor seal admission before that callback finishes: a retryable failed
     // close must not turn its legitimate adapter call into a poisoned prefix.
     const auto base=v.base.snapshot();
     if(base.allocations||base.active_calls||base.phase!=IoMemoryPhase::Open)return false;
-    {std::lock_guard lock(v.gate);if(v.closed)return true;if(v.retiring||v.poisoned||v.active||v.submitting)return false;
+    {std::lock_guard lock(v.gate);if(v.closed)return true;if(v.retiring||v.poisoned||v.active||v.submitting||v.growing)return false;
      for(const auto& r:v.rows)if(r.pending||r.pin||!std::holds_alternative<std::monostate>(r.object))return false;
      v.retiring=true;lease=std::move(v.lease);}
     lease.reset();{std::lock_guard lock(v.gate);v.closed=true;v.retiring=false;}return true;

@@ -1,5 +1,6 @@
 #include "execution.hpp"
 #include <algorithm>
+#include <atomic>
 #include <bit>
 #include <cstring>
 #include <functional>
@@ -8,6 +9,15 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#ifdef _WIN32
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#endif
 
 using namespace anadius::execution_recovered;
 namespace {
@@ -111,6 +121,76 @@ void mutex_tests() {
         require(nested.platform.releases == 1, "outer unlock releases SRW");
     }
 }
+#ifdef _WIN32
+// Controller-only assertions: a failed finite wait must retain every stack
+// owner until process termination rather than unwind a live child/SRW prefix.
+void native_require(bool value,const char* text){++checks;if(!value){std::cerr<<"FAIL own SRW: "<<text<<'\n'<<std::flush;::ExitProcess(1);}}
+struct ActualSrw {
+    MutexState mutex{};const DWORD controller=::GetCurrentThreadId();
+    HANDLE attempted=nullptr,entered=nullptr;std::atomic<unsigned> errors=0,acquires=0,releases=0;
+    std::atomic<bool> contended=false;int protected_value=0;
+    static std::uint32_t owner(MutexState& value){return std::atomic_ref<std::uint32_t>(value.owner_48).load(std::memory_order_relaxed);}
+    struct Native final:Platform {
+        ActualSrw& state;explicit Native(ActualSrw& v):state(v){}
+        std::uint32_t current_thread_id()override{return ::GetCurrentThreadId();}
+        void acquire_srw_exclusive(std::uintptr_t& cell)override{
+            static_assert(sizeof(SRWLOCK)==sizeof(cell));
+            if(&cell!=&state.mutex.srw_10)::ExitProcess(1);
+            ++state.acquires;const bool child=::GetCurrentThreadId()!=state.controller;
+            if(child){
+                // Test-only observation of real native contention, before the
+                // recovered untimed acquire. No count/owner pre-lock peeking.
+                if(::TryAcquireSRWLockExclusive(reinterpret_cast<PSRWLOCK>(&cell))){::ReleaseSRWLockExclusive(reinterpret_cast<PSRWLOCK>(&cell));::ExitProcess(1);}
+                state.contended=true;if(!::SetEvent(state.attempted))::ExitProcess(1);
+            }
+            ::AcquireSRWLockExclusive(reinterpret_cast<PSRWLOCK>(&cell));
+            ::SetLastError(child?0x6a21:0x6a11);
+        }
+        void release_srw_exclusive(std::uintptr_t& cell)override{
+            // Still the actual SRW owner here: count is protected and the
+            // short atomic owner observation ends before physical release.
+            if(&cell!=&state.mutex.srw_10||owner(state.mutex)!=0xffffffffU||state.mutex.count_4c!=0)::ExitProcess(1);
+            ++state.releases;const bool child=::GetCurrentThreadId()!=state.controller;
+            ::ReleaseSRWLockExclusive(reinterpret_cast<PSRWLOCK>(&cell));
+            ::SetLastError(child?0x6a22:0x6a12);
+        }
+        std::int64_t query_performance_frequency()override{::ExitProcess(1);}
+        std::int64_t query_performance_counter()override{::ExitProcess(1);}
+        void sleep_milliseconds(std::uint32_t)override{::ExitProcess(1);}
+        [[noreturn]]void raise_thread_error_04a648(int)override{::ExitProcess(1);}
+    } platform{*this};
+    static DWORD WINAPI child(void* raw)noexcept{
+        auto& v=*static_cast<ActualSrw*>(raw);
+        try{
+            if(lock_04a6ac(v.mutex,v.platform)!=0){v.errors.fetch_or(1);return 1;}
+            if(::GetLastError()!=0x6a21)v.errors.fetch_or(2);
+            if(owner(v.mutex)!=::GetCurrentThreadId()||v.mutex.count_4c!=1)v.errors.fetch_or(4);
+            if(v.protected_value!=41)v.errors.fetch_or(8);
+            if(!::SetEvent(v.entered))v.errors.fetch_or(16);
+            v.protected_value=42;
+            if(unlock_04a6b4(v.mutex,v.platform)!=0)v.errors.fetch_or(32);
+            if(::GetLastError()!=0x6a22)v.errors.fetch_or(64);
+            return v.errors.load()?1:0;
+        }catch(...){v.errors.fetch_or(128);return 1;} // Never throw across WINAPI.
+    }
+};
+void actual_srw_two_actors(){
+    ActualSrw state;state.mutex.reserved_04=0x484c4f43;state.mutex.reserved_18[0]=std::byte{0x5a};initialize_mutex_04a698(state.mutex,2);
+    state.attempted=::CreateEventW(nullptr,TRUE,FALSE,nullptr);state.entered=::CreateEventW(nullptr,TRUE,FALSE,nullptr);
+    native_require(state.attempted&&state.entered,"owned finite handshake events created");
+    native_require(lock_04a6ac(state.mutex,state.platform)==0&&::GetLastError()==0x6a11,"A actual native acquire preserves the final SDK LastError through owner/count projection");
+    native_require(ActualSrw::owner(state.mutex)==state.controller&&state.mutex.count_4c==1,"A owns the exact recovered native mutex");state.protected_value=41;
+    DWORD id=0;HANDLE child=::CreateThread(nullptr,0,ActualSrw::child,&state,0,&id);native_require(child&&id&&id!=state.controller,"B is an actual distinct Win32 actor");
+    native_require(::WaitForSingleObject(state.attempted,10000)==WAIT_OBJECT_0&&state.contended,"B reaches the actual pre-acquire callback while A still owns the real SRW; no added helper body gate");
+    native_require(::WaitForSingleObject(state.entered,0)==WAIT_TIMEOUT&&state.acquires==2&&state.releases==0,"B cannot enter protected data before the actual owning A releases");
+    native_require(unlock_04a6b4(state.mutex,state.platform)==0&&::GetLastError()==0x6a12,"A clears owner/count before actual release while preserving its SDK result");
+    native_require(::WaitForSingleObject(child,10000)==WAIT_OBJECT_0,"B completes within the finite native join bound");DWORD code=1;
+    native_require(::GetExitCodeThread(child,&code)&&code==0&&!state.errors&&::WaitForSingleObject(state.entered,0)==WAIT_OBJECT_0,"B owns/counts/reads/writes and releases through actual helpers without worker assertions or C++ escape");
+    native_require(state.acquires==2&&state.releases==2&&state.protected_value==42&&state.mutex.owner_48==0xffffffffU&&!state.mutex.count_4c,"Actual two-actor handoff has exactly two native source acquires/releases and leaves quiescent owner/count idle");
+    native_require(state.mutex.type==2&&!state.mutex.storage_08&&state.mutex.reserved_04==0x484c4f43&&state.mutex.reserved_18[0]==std::byte{0x5a},"Native handoff preserves unrelated recovered mutex fields");
+    native_require(::CloseHandle(child)&&::CloseHandle(state.entered)&&::CloseHandle(state.attempted),"All own thread/event handles close only after actual child exit");
+}
+#endif
 void flag_and_error_tests() {
     Fixture f;
     f.execution.finish_flag_036820(f.unrelated);
@@ -213,7 +293,10 @@ void polling_tests() {
 int main() {
     try {
         mutex_tests();flag_and_error_tests();predicate_tests();clock_tests();polling_tests();
-        std::cout << "PASS " << checks << " checks; synthetic/mock tests only; no original DLL loaded\n";
+#ifdef _WIN32
+        actual_srw_two_actors();
+#endif
+        std::cout << "PASS " << checks << " execution source checks; own Win32 SRW case when available; no original DLL loaded\n";
         return 0;
     } catch(const std::exception& e) {std::cerr << "FAIL " << e.what() << '\n';return 1;}
       catch(...) {std::cerr << "FAIL unexpected exception\n";return 1;}

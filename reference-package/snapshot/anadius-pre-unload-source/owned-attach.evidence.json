@@ -1,0 +1,76 @@
+{
+  "schema": "owned-synchronous-attach.source-only.v1",
+  "recorded_at": "2026-11-02T20:47:37.442834+00:00",
+  "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+  "authority": "Author source inspection and source-byte comparison with the last full build; not a compiler/test/native-runtime result.",
+  "production_cpp_logic_files_changed": 2,
+  "production_headers_changed": 2,
+  "test_sources_changed_not_run": 2,
+  "source_changes": [
+    {
+      "path": "anadius-pre-unload-source/shutdown.cpp",
+      "last_built_sha256": "161b4f28fe5be71853ed128886e452a42f2e36f9af4f86dce5668d168d889a77",
+      "current_sha256": "2653388e3e007376b9e038648b3a3f34d29daa45e604cc7dd11f4455c7664d25"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown.hpp",
+      "last_built_sha256": "a9d1da810c6a94d4033cb9aa6973dfd9ccaf5f46e8b21f3173211129bf502ccb",
+      "current_sha256": "d4feb92ad786738bfa22f818ddff9e814576f4b8bcda21cf3934210f112e699e"
+    },
+    {
+      "path": "anadius-pre-unload-source/shutdown_tests.cpp",
+      "last_built_sha256": "c5628e99de94dd35118ff8020da39d0d97f83728983ff04e6d870ae79593643c",
+      "current_sha256": "b23cb1b4f6880051f2a7efe37cb4b4a9ff6f20338f602597a3475494e19de8e8"
+    },
+    {
+      "path": "anadius-resources-factory-source/factory_tests.cpp",
+      "last_built_sha256": "0fa62c7ea4e588a87577368d8c32aef1f5abba0cde1c30571197d1f8852b6253",
+      "current_sha256": "b50b7b978d8ff1d9bb73613ed46cce78e2ff57098e9016a030b8507b9c4d47c9"
+    },
+    {
+      "path": "dll-link-gate-source/entry.cpp",
+      "last_built_sha256": "98ad93b7314b5715ed5e19dc775259981947784f19f04167da233dfb659e974d",
+      "current_sha256": "af21559c039f7f723e96a32e0e1f30474071ef8740dcf47af919360bc9c3b5f3"
+    },
+    {
+      "path": "dll-link-gate-source/production_image.hpp",
+      "last_built_sha256": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866",
+      "current_sha256": "cf8681ad700ca65d201d42aadd514f332ca4140de93bc1adbd86bfe72d30d34c"
+    }
+  ],
+  "production_dependency": "require_loader_attach_runtime: one owning Runtime/Domain root exists before publication and all application startup effects.",
+  "implementation": [
+    "Controller consumes actual Runtime plus its certified Ready Domain before publication. New start_application requires the exact original controller/fiber, a nonnull module and a Constructed Runtime.",
+    "The owner publishes Runtime and invokes its real ApplicationEntry(module,DLL_PROCESS_ATTACH,reserved) synchronously once. No worker/milestone wait, extra initialization thread, fake Runtime or deferred startup is added.",
+    "Publication/startup/success phases live in the existing lock-free lifecycle record. Normal lower LastError is retained. Reentrant lifecycle use poisons the owner; precondition rejection leaves unpublished roots available for cooperative retirement.",
+    "After publication, exception or FALSE application return is sticky Poisoned with both roots retained. It throws to the owning source caller; it is not rollback and cannot be translated into safe DllMain FALSE. Existing noexcept native gateway may terminate before a source catch.",
+    "Actual Resources integration scenario now transfers roots before starting its three Domain workers and keeps that same owner through Runtime retirement/Domain lease retry. The raw Runtime pointer is an observer and is cleared before owner retirement.",
+    "Required production attach hook now returns BOOL for the entire owned synchronous startup. DllMain forwards that result and no longer obtains a Runtime pointer or independently invokes ApplicationEntry outside the hook. This is a HOST source contract change, not a definition of the required hook."
+  ],
+  "test_source_scenarios_not_run": [
+    "Null image and wrong-thread rejection before Runtime publication; never-published complete retirement.",
+    "Existing concrete Resources/three-native-worker/host/IOCP scenario uses owned synchronous startup, rejects second startup and retires via the same owner."
+  ],
+  "still_open": [
+    "Both required production loader hooks remain undefined.",
+    "Runtime/Domain/Controller outside-loader-lock contract is unchanged; this method is not yet a supported DllMain implementation.",
+    "Concrete per-image production assembly, automatic valid startup activation, image/foreign/CRT lifetime, failed attach and process termination policies remain open."
+  ],
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "package_rebuilt": false,
+  "original_binary_accessed": false,
+  "original_modified": false,
+  "new_native_function_definitions": 0,
+  "last_full_build": {
+    "path": "outputs/source-workspace/full-build-verification.json",
+    "sha256": "7f3e90cc3dfec32201053c493bbd2325df0047e71418af835ffade5deb9773c6",
+    "scope": "Historical build of source bytes before these four edits"
+  },
+  "last_delivered_zip": {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-reverse-engineering.zip",
+    "sha256": "bd8d2009a3290866f94cf52fa45ec0a7573dc005fa61d8ff0f7e7632609ad762",
+    "scope": "Unchanged prior delivery"
+  }
+}

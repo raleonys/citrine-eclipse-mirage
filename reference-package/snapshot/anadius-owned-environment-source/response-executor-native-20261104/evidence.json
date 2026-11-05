@@ -1,0 +1,142 @@
+{
+  "schema": "response-executor-native-audit.v1",
+  "recorded_at": "2026-11-04T18:31:10.988843+00:00",
+  "status": "CANDIDATE_CLOSED_NO_PRODUCTION_CHANGE",
+  "scope": "Initial native response factories produce(flags0|1)&~2=1, useowned022f90\u2192022e40\u2192028ca0 with one postedwork pin, matching selected hostforcepost1. Arbitrary tracked-family inputs/work retains remain outside equivalence claim.",
+  "fresh_REA_evidence": [
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/bytes-180022f90.json",
+      "sha256": "e7288f017f09e1d84fa30154b9b360f40bd6a9de5fc8e60d857c9b0adadf2a9f",
+      "evidence_id": "ev_4070fad86001feeebb1e83a4323241fd14693910c07e96a6e21d4ded4767dda9",
+      "parameters": {
+        "address": "0x180022f90",
+        "length": 32
+      }
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/bytes-180084908.json",
+      "sha256": "d210aced5b74fd6483ccc562f5cca66039b4921916c3807d4661e8b872d79f43",
+      "evidence_id": "ev_b2a75dec2224cc9360f98d117c6f36dc4a6f3e5b0dfcc32a5746f2d35ee71245",
+      "parameters": {
+        "address": "0x180084908",
+        "length": 272
+      }
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/instructions-180022e40.json",
+      "sha256": "ea648ecf1051715469c191ba24feb6e9caa6c0a6300b6cf4609038eb94c0a714",
+      "evidence_id": "ev_e5c61f5c9c230ffab846c7006cb3525c9ba3867d38379fa38eb5c757ac8150c8",
+      "parameters": {
+        "procedure": "0x180022e40"
+      }
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/instructions-180028ca0.json",
+      "sha256": "a9907c20c9acf888925ca7258ae3239e820df3919fdb121bf8d43a35d7361554",
+      "evidence_id": "ev_0f42f83d0480ca43dff44ab8645ba9393daf2d1d0f85245aafc18ac70fe7d1a5",
+      "parameters": {
+        "procedure": "0x180028ca0"
+      }
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/pseudo-180021420.json",
+      "sha256": "bf056e346ae43b0cdc53c2f5e26d9b044d37fc3496af9afc7b1e086c1cc772aa",
+      "evidence_id": "ev_d02f865246dbb1ce2e13b0bf9275f3cb4e3818a21b5fcd7610440c42ec47a4dd",
+      "parameters": {
+        "procedure": "0x180021420"
+      }
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/pseudo-180022e40.json",
+      "sha256": "63db6f54f9690c92fef4894e15a3f22707638d2b0bee1c16d26b192e8d7da234",
+      "evidence_id": "ev_beafe42932833e480345dc2e6152c82ff8ae79f641545de67d582d2ca903a851",
+      "parameters": {
+        "procedure": "0x180022e40"
+      }
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/pseudo-180023220.json",
+      "sha256": "457ca41f6baec853be23a466d54d408f9df52cf4fa11bd1b3d0406347ac99cf0",
+      "evidence_id": "ev_4367ac20cf5544100b1dd0810115b7e254219f0ec640e28cae9c8047352ef9ee",
+      "parameters": {
+        "procedure": "0x180023220"
+      }
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/pseudo-1800232c0.json",
+      "sha256": "0ec1d2083fdd98e925f1787cf193d9a0dee98a6d40a9096039946552a7f38045",
+      "evidence_id": "ev_6f651162d956ba7796bb91a99e9a45b96ebe88e6e71ea24671eb771820745aba",
+      "parameters": {
+        "procedure": "0x1800232c0"
+      }
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/pseudo-180023400.json",
+      "sha256": "7ec6ab2efd5844355d7268fa7a40a2e6e97032b7d6210b51a3ed9408c9346c06",
+      "evidence_id": "ev_ff9feb0b13a5de34c4e5512a0b292c6ce9e2d675c177a7c349f45cb133bf73b4",
+      "parameters": {
+        "procedure": "0x180023400"
+      }
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/pseudo-1800234c0.json",
+      "sha256": "962619c789153868d6ee559bab71fdaa70082c7d64016d51cab16604e9cf1d32",
+      "evidence_id": "ev_4542e19dbc5aa876c5f3ec9316e7ab904c9363a20ddafccedf029f5894b106b0",
+      "parameters": {
+        "procedure": "0x1800234c0"
+      }
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/pseudo-180028ca0.json",
+      "sha256": "284966dfe35db2093419450eb22f7461611d962749fe1fe6b2556590d80b9497",
+      "evidence_id": "ev_cd97b322e9f185059bb73f6f7615904034c6db6d75bc66be4f51d267a6525343",
+      "parameters": {
+        "procedure": "0x180028ca0"
+      }
+    }
+  ],
+  "tiny_stub_pseudo_errors": [
+    {
+      "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/pseudo-180022f90.json",
+      "sha256": "f14f5658d33eacc7dc3b5137db33896483424f7b8aeb82d5cf4adcf18f427f35"
+    }
+  ],
+  "native_findings": {
+    "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/native-findings.md",
+    "sha256": "e526f3107203e35cbd32e5974a6f682cecf280945a911b27442cab091dd2e8d3"
+  },
+  "source_flow_audit": {
+    "path": "outputs/anadius-owned-environment-source/response-executor-native-20261104/source-flow-audit.md",
+    "sha256": "af5400a5d2de57a768699739f74ccee2973f2130ae99577e42d23861bf6badd0"
+  },
+  "reviewed_unchanged_sources": [
+    {
+      "path": "outputs/anadius-owned-environment-source/environment.cpp",
+      "sha256": "7306d849d5ca78c59dd7aaa3b92825773bd236145e68d095df130e31ee7ea7d3"
+    },
+    {
+      "path": "outputs/anadius-socket-source/response_dispatch.cpp",
+      "sha256": "9b8659bdbaa95afc66e3759152168ad1add30bf5e856210e159f5e9f553401d0"
+    },
+    {
+      "path": "outputs/anadius-socket-source/owned_response.cpp",
+      "sha256": "a9125c30bf6d551a3eb32435ab088c8266a60f421e545e5e211c4fd34a7c821c"
+    },
+    {
+      "path": "outputs/anadius-socket-source/posted_operation.cpp",
+      "sha256": "6389460fc5978b609f4752581170eb8565cd1a8d959bd036692690760ede312a"
+    },
+    {
+      "path": "outputs/anadius-socket-source/completion_dispatcher.cpp",
+      "sha256": "56a9c5386a1e1615b222f26da95d918f3aeef8666fd16fb64fc9bfba7ea1ab95"
+    }
+  ],
+  "production_changes_for_this_audit": 0,
+  "native_session_closed": true,
+  "compile": false,
+  "tests_run": false,
+  "link": false,
+  "DLL_execution": false,
+  "ZIP_updated": false,
+  "overall_completion_percentage": null
+}

@@ -2,6 +2,7 @@
 #include <sstream>
 #include <locale>
 #include <system_error>
+#include <algorithm>
 #include "../anadius-config-iteration-source/thread_error.hpp"
 #include "../anadius-thread-domain-source/domain_test_fixture.hpp"
 #include <deque>
@@ -9,6 +10,7 @@
 #include <iostream>
 #include <optional>
 #include <thread>
+#include <limits>
 
 namespace pl=anadius::session_policy;namespace sl=anadius::shared_log;namespace ew=anadius::services_completion;namespace sp=anadius::session_profile;namespace s=anadius::socket_recovered;namespace o=anadius::owned_server;namespace r=anadius::server_runtime;namespace b=b6_core_test;
 namespace {
@@ -146,7 +148,7 @@ int WSAAPI select_spy(int nfds,fd_set* read,fd_set* write,fd_set* except,const t
 struct EmptyLogic final:sp::SessionLogic {std::string greeting()override{return {};}std::string process(std::string&)override{return {};}};
 struct PolicyFixture {
  Fixture host;Sdk imports;std::shared_ptr<LogBuffer> buffer=std::make_shared<LogBuffer>();std::shared_ptr<sl::Stream> stream=sl::make_stream(buffer);std::shared_ptr<pl::Policy> policy;sp::Dependencies dependencies;std::unique_ptr<sp::Profile> profile;std::unique_ptr<r::Application> application;sp::Application* app=nullptr;std::unique_ptr<s::CoherentIoMemory> coherent;std::optional<r::Ports> ports;std::optional<r::Environment> environment;std::array<std::uintptr_t,2> worker_context{};bool observed_worker=false,attested=true;unsigned selected=0,afters=0,returned=0,external=0;std::function<void()> after_hook,admission_hook;std::function<bool()> external_hook;std::function<std::string(s::Category,std::int32_t)> formatter;
- explicit PolicyFixture(std::function<void(pl::Options&)> configure={}){check(!sdk,"policy SDK fixtures do not overlap");sdk=&imports;host.initialize();host.submit();pl::Options options;options.stream=stream;options.guard_epoch=&host.state->epoch;options.imports={set_error_spy,get_error_spy,convert_spy,parse_spy,send_spy,select_spy};options.read_prefix="R:";options.write_prefix="W:";options.accept_prefix="A:";options.format_override=[&](s::Category category,std::int32_t code){if(formatter)return formatter(category,code);if(code==100)return std::string("A\0B",3);if(code==101)return std::string(16,'h');if(code==102)return std::string(5000,'L');return std::string("error-")+std::to_string(code);};options.lifecycle.select_owner=[&](sp::Application&,s::IocpSchedulerEntry* owner,s::CancelOperation&,const s::Error&,std::uint32_t){++selected;return owner;};options.lifecycle.after=[&](sp::Application&){++afters;if(after_hook)after_hook();};options.lifecycle.returned=[&](sp::Application&,std::uint64_t,const s::WorkerRunResult&){++returned;};options.lifecycle.external_drained=[&](o::ServerView view,sp::Application&){++external;bool outside=false;try{(void)view.memory.buffer_context();}catch(const std::logic_error&){outside=true;}check(outside,"opaque external decision runs outside Parent Operation");return external_hook?external_hook():attested;};if(configure)configure(options);policy=pl::Policy::create(std::move(options));policy->install(dependencies);dependencies.logic=[](sp::SessionView){return std::make_unique<EmptyLogic>();};
+ explicit PolicyFixture(std::function<void(pl::Options&)> configure={},pl::Policy::GraphRetirement retirement={}){check(!sdk,"policy SDK fixtures do not overlap");sdk=&imports;host.initialize();host.submit();pl::Options options;options.stream=stream;options.guard_epoch=&host.state->epoch;options.imports={set_error_spy,get_error_spy,convert_spy,parse_spy,send_spy,select_spy};options.read_prefix="R:";options.write_prefix="W:";options.accept_prefix="A:";options.format_override=[&](s::Category category,std::int32_t code){if(formatter)return formatter(category,code);if(code==100)return std::string("A\0B",3);if(code==101)return std::string(16,'h');if(code==102)return std::string(5000,'L');return std::string("error-")+std::to_string(code);};options.lifecycle.select_owner=[&](sp::Application&,s::IocpSchedulerEntry* owner,s::CancelOperation&,const s::Error&,std::uint32_t){++selected;return owner;};options.lifecycle.after=[&](sp::Application&){++afters;if(after_hook)after_hook();};options.lifecycle.returned=[&](sp::Application&,std::uint64_t,const s::WorkerRunResult&){++returned;};options.lifecycle.external_drained=[&](o::ServerView view,sp::Application&){++external;bool outside=false;try{(void)view.memory.buffer_context();}catch(const std::logic_error&){outside=true;}check(outside,"opaque external decision runs outside Parent Operation");return external_hook?external_hook():attested;};if(configure)configure(options);policy=pl::Policy::create(std::move(options),std::move(retirement));policy->install(dependencies);dependencies.logic=[](sp::SessionView){return std::make_unique<EmptyLogic>();};
    host.backend->with_operation([&](o::ServerView& view){profile=std::make_unique<sp::Profile>(dependencies);const auto original=*host.state->ports;environment.emplace(profile->environment(view,original.server_identity));coherent=std::make_unique<s::CoherentIoMemory>(original.accept,view.io,environment->sentinels,environment->constructor,environment->sources);auto completion=original.environment;completion.sentinels=environment->sentinels;ports.emplace(r::Ports{view,original.accept,*coherent,original.worker,original.completion,completion,original.server_identity});application=profile->create(*ports);app=dynamic_cast<sp::Application*>(application.get());check(app&&policy->snapshot().phase==pl::Phase::Bound&&!imports.calls,"retained actual Profile Application auto-binds concrete policy without SDK calls");});
  }
  template<class F>void operation(F fn){host.backend->with_operation([&](o::ServerView& view){fn(view);});}
@@ -168,6 +170,63 @@ void source_error_logging(){
    contexts.read_error(100,f.policy->generic_category());expected+="R:"+std::string("A\0B",3)+"#";check(f.buffer->str()==expected&&f.policy->snapshot().log_flushes==1,"actual025480 emits binary SSO message with locale-widened byte and flush");contexts.write_error(101,f.policy->system_category());expected+="W:"+std::string(16,'h')+"#";check(f.buffer->str()==expected&&f.policy->snapshot().log_flushes==2,"actual025a70 emits same-parent heap message through distinct system category");contexts.read_error(102,f.policy->misc_category());expected+="R:"+std::string(5000,'L')+"#";check(f.buffer->str()==expected&&f.policy->snapshot().log_flushes==3&&!contexts.strings.live_headers(),"actual error cleanup releases aligned large message after append/widen/flush");const auto calls=formatted.size();contexts.read_error(2,f.policy->misc_category());contexts.write_error(2,f.policy->misc_category());check(f.buffer->str()==expected&&formatted.size()==calls,"only actual misc identity plus code2 suppresses read/write EOF log");contexts.read_error(2,f.policy->generic_category());expected+="R:two#";check(f.buffer->str()==expected&&f.policy->snapshot().log_flushes==4&&f.buffer->syncs==4,"generic code2 remains logged and every completed source line flushes once");check(view.memory.snapshot().allocations==before&&!f.policy->snapshot().logging,"native string frees drain message tickets and release log state");
  });f.finish();delete retained;
 }
+void native_misc_category_messages(){
+ const std::pair<std::int32_t,const char*> cases[]={
+  {1,"Already open"},{2,"End of file"},{3,"Element not found"},
+  {4,"The descriptor does not fit into the select call's fd_set"},
+  {0,"asio.misc error"},{5,"asio.misc error"},{-1,"asio.misc error"},
+  {std::numeric_limits<std::int32_t>::min(),"asio.misc error"},
+  {std::numeric_limits<std::int32_t>::max(),"asio.misc error"}
+ };
+ for(const auto& [code,text]:cases)check(pl::misc_message_020a80(code)==text,"Recovered misc message value matches retained native literal/control-flow domain");
+ auto* retained=new PolicyFixture([](pl::Options& options){options.format_override={};});auto& f=*retained;
+ f.operation([&](o::ServerView& view){
+  ErrorContexts contexts(f);const auto before=view.memory.snapshot().allocations;std::string expected;
+  for(const auto& [code,text]:cases){
+   if(code==0)continue; // Successful writes require a real continuation owner;
+                       // code0's category value was checked directly above.
+   contexts.write_error(code,f.policy->misc_category());
+   if(code!=2)expected+="W:"+std::string(text)+"\n";
+   check(f.buffer->str()==expected,"Actual native write-finish path uses recovered default misc messages and preserves EOF suppression");
+  }
+  check(view.memory.snapshot().allocations==before&&!contexts.strings.live_headers()&&!f.policy->snapshot().logging,"SSO and heap misc messages retire actual Parent string ownership and log state");
+ });f.finish();delete retained;
+}
+struct SystemTextSdk {
+ std::vector<char> bytes,trimmed;DWORD code=0,count=0;bool supplies_buffer=true;unsigned formats=0,frees=0;std::vector<std::string> trace;std::function<void()> observe;
+ void message(std::int32_t value,std::string input,DWORD returned,std::string expected_trim,bool supply=true){code=static_cast<DWORD>(value);count=returned;supplies_buffer=supply;bytes.assign(input.begin(),input.end());trimmed.assign(expected_trim.begin(),expected_trim.end());bytes.push_back(0);trimmed.push_back(0);check(bytes.size()==trimmed.size()&&(!count||count<bytes.size()),"System text SDK fixture initializes counted bytes and final C terminator");trace.clear();}
+};
+SystemTextSdk* system_text_sdk=nullptr;
+DWORD WINAPI system_text_format(DWORD flags,LPCVOID source,DWORD code,DWORD language,LPSTR output,DWORD size,va_list* args){auto& f=*system_text_sdk;++f.formats;f.trace.push_back("format");check(flags==0x1300&&!source&&code==f.code&&language==0x400&&output&&!size&&!args,"Default Policy system category reaches exact actual020950 FormatMessageA signature");auto** buffer=reinterpret_cast<char**>(output);check(!*buffer,"Every Policy message starts with a cleared persistent SDK pointer");if(f.observe)f.observe();*buffer=f.supplies_buffer?f.bytes.data():nullptr;return f.count;}
+HLOCAL WINAPI system_text_free(HLOCAL pointer){auto& f=*system_text_sdk;++f.frees;f.trace.push_back("free");check(pointer==(f.supplies_buffer?static_cast<HLOCAL>(f.bytes.data()):nullptr)&&f.bytes==f.trimmed,"Default Policy frees the saved SDK buffer after exact native counted mutations");if(f.observe)f.observe();std::fill(f.bytes.begin(),f.bytes.end(),'#');return reinterpret_cast<HLOCAL>(std::uintptr_t{0x3456});}
+void native_system_category_messages(){
+ SystemTextSdk messages;check(!system_text_sdk,"System text SDK fixtures are sequential");system_text_sdk=&messages;
+ auto* retained=new PolicyFixture([](pl::Options& options){options.format_override={};options.system_message={system_text_format,system_text_free};});auto& f=*retained;
+ check(!messages.formats&&!messages.frees,"Constructing actual Policy/Profile with injected system imports invokes neither SDK method");
+ f.operation([&](o::ServerView& view){
+  ErrorContexts contexts(f);const auto before=view.memory.snapshot().allocations;std::string expected;
+  const auto line=[&](bool read,std::int32_t code,std::string input,DWORD count,std::string trimmed,std::string text,bool supplied=true){
+   messages.message(code,std::move(input),count,std::move(trimmed),supplied);const auto formats=messages.formats,frees=messages.frees;
+   const auto prefix=read?"R:":"W:";messages.observe=[&]{check(f.policy->snapshot().active&&f.policy->snapshot().logging&&f.buffer->str()==expected+prefix,"Default system SDK calls run after the visible source prefix and before message append while metadata remains active");};
+   if(read)contexts.read_error(code,f.policy->system_category());else contexts.write_error(code,f.policy->system_category());messages.observe={};
+   expected+=prefix+text+"\n";
+   check(f.buffer->str()==expected&&messages.formats==formats+1&&messages.frees==frees+1&&messages.trace==std::vector<std::string>{"format","free"},"Actual025480/025a70 use default native system text without format_override and survive SDK-buffer overwrite before append");
+   check(view.memory.snapshot().allocations==before&&!contexts.strings.live_headers()&&!f.policy->snapshot().logging,"Default system SSO/heap/fallback messages drain actual Parent string tickets after each completed log line");
+  };
+  line(false,55,"system\r\n",8,std::string("system\0\0",8),"system");
+  line(true,-7,std::string("A\0B\n",4),4,std::string("A\0B\0",4),"A");
+  line(false,2,"tail\n\r",6,std::string("tail\n\0",6),"tail\n");
+  line(true,66,"ignored",0,"ignored","asio.system error",false);
+  line(false,67,"\r\n",2,std::string(2,'\0'),"asio.system error");
+  line(true,68,"abTAIL",2,"abTAIL","abTAIL");
+  line(false,69,std::string(5000,'S')+"\r\n",5002,std::string(5000,'S')+std::string(2,'\0'),std::string(5000,'S'));
+  check(f.policy->snapshot().log_flushes==7&&f.buffer->syncs==7,"Every default system read/write line, including system code2, flushes once");
+ });f.finish();delete retained;
+ // An explicit override remains the first selected formatter even when both
+ // system SDK slots are present, and needs no platform-formatting fallback.
+ retained=new PolicyFixture([](pl::Options& options){options.system_message={system_text_format,system_text_free};options.format_override=[](s::Category,std::int32_t){return std::string("explicit-system");};});auto& overridden=*retained;const auto formats=messages.formats,frees=messages.frees;
+ overridden.operation([&](o::ServerView&){ErrorContexts contexts(overridden);contexts.write_error(55,overridden.policy->system_category());check(overridden.buffer->str()=="W:explicit-system\n"&&messages.formats==formats&&messages.frees==frees,"Explicit host format_override bypasses injected system SDK text entirely");});overridden.finish();delete retained;system_text_sdk=nullptr;
+}
 void guard_worker_and_exits(){
  auto* retained=new PolicyFixture;auto& f=*retained;
  f.operation([&](o::ServerView& view){auto& guard=f.policy->guards();const auto token=guard.capture_tls_slot();const auto old=guard.thread_epoch(token);check(f.policy->guard_epoch()>old&&!f.policy->snapshot().guard_initialized,"fresh owned guard takes real first-initialization branch");guard.guard_header_04b838(f.policy->guard_epoch());check(f.policy->guard_epoch()==-1,"owned header publishes native in-progress sentinel");guard.register_atexit_04b770(0x18007dff0ULL);guard.guard_footer_04b7cc(f.policy->guard_epoch());check(f.policy->snapshot().guard_initialized&&f.policy->guard_epoch()==1&&guard.thread_epoch(token)==1&&!(f.policy->guard_epoch()>guard.thread_epoch(token)),"exact07dff0 registration/footer establishes next dispatcher fast path");
@@ -177,9 +236,30 @@ void guard_worker_and_exits(){
  ew::ExitWaitRegistry unrelated(ew::InitialRegistry::empty_owned);auto own=std::make_shared<ew::WaitTarget>(2,0),other=std::make_shared<ew::WaitTarget>(2,0);own->lock();other->lock();f.policy->exit_waits().register_current_thread(own);unrelated.register_current_thread(other);f.operation([&](o::ServerView&){f.policy->cleanup_exit_waits();check(!own->is_locked()&&!own->registered()&&own->ready_value_quiescent()==1&&other->is_locked()&&other->registered()&&other->ready_value_quiescent()==0,"actual cleanup uses dedicated inline-job registry and leaves unrelated same-thread registration untouched");check(!f.policy->exit_waits().active()&&unrelated.active()==1&&f.policy->snapshot().exit_cleanups==1,"owned exit cleanup retires exactly its registered target");});unrelated.cleanup_current_thread();check(unrelated.close(),"unrelated owner explicitly cleans and closes its own registry");
  bool foreign=false;std::thread thread([&]{try{(void)f.policy->snapshot();}catch(const std::logic_error&){foreign=true;}});thread.join();check(foreign,"foreign worker metadata access is explicitly outside policy contract");f.finish();delete retained;
 }
+void native_system_category_lifetime(){
+ SystemTextSdk messages;check(!system_text_sdk,"Stable native category lifetime fixture is isolated");system_text_sdk=&messages;
+ const s::SystemMessageImports imports{system_text_format,system_text_free};const auto& category=s::system_error_category_028620(imports);
+ auto* retained=new PolicyFixture([&](pl::Options& options){options.system_message=imports;});std::weak_ptr<pl::Policy> weak=retained->policy;
+ check(!messages.formats&&!messages.frees&&&category==&s::system_error_category_028620(imports),"Policy construction and native category getter stay passive with stable typed import identity");
+ messages.message(77,"before\r\n",8,std::string("before\0\0",8));
+ const std::system_error original(77,category,"pqcs");const std::system_error copied=original;const std::runtime_error sliced=original;const std::error_code code=original.code();
+ check(std::string(original.what())=="pqcs: before"&&messages.formats==1&&messages.frees==1,"Native category constructs ordinary system_error what through actual020950 exactly once");
+ retained->finish();delete retained;
+ check(weak.expired()&&std::string(copied.what())=="pqcs: before"&&std::string(sliced.what())=="pqcs: before"&&code.value()==77&&&code.category()==&category&&messages.formats==1&&messages.frees==1,"Exception copies, base value slice and error_code outlive the fully destroyed Policy without invoking captured Policy state or formatting again");
+ messages.message(77,"after\r\n",7,std::string("after\0\0",7));
+ check(code.message()=="after"&&messages.formats==2&&messages.frees==2&&&s::system_error_category_028620(imports)==&code.category(),"Retained native error_code formats a new independent attempt after Policy destruction while the statically valid SDK fixture remains live");
+ system_text_sdk=nullptr;
+}
 void passive_validation(){
  check(!sdk,"passive configuration test owns SDK observation");Sdk imports;sdk=&imports;std::int32_t epoch=0;auto buffer=std::make_shared<LogBuffer>();pl::Options valid;valid.stream=sl::make_stream(buffer);valid.guard_epoch=&epoch;valid.imports={set_error_spy,get_error_spy,convert_spy,parse_spy,send_spy,select_spy};valid.lifecycle.select_owner=[](sp::Application&,s::IocpSchedulerEntry* owner,s::CancelOperation&,const s::Error&,std::uint32_t){return owner;};valid.lifecycle.after=[](sp::Application&){};valid.lifecycle.returned=[](sp::Application&,std::uint64_t,const s::WorkerRunResult&){};valid.lifecycle.external_drained=[](o::ServerView,sp::Application&){return false;};
  auto invalid=[&](auto change){auto options=valid;change(options);rejects<std::invalid_argument>([&]{auto policy=pl::Policy::create(std::move(options));},"passive policy rejects missing provider/native import or unsupported text bound");};invalid([](auto& o){o.stream.reset();});invalid([](auto& o){o.guard_epoch=nullptr;});invalid([](auto& o){o.lifecycle.select_owner={};});invalid([](auto& o){o.lifecycle.after={};});invalid([](auto& o){o.lifecycle.returned={};});invalid([](auto& o){o.lifecycle.external_drained={};});invalid([](auto& o){o.imports.set_last_error=nullptr;});invalid([](auto& o){o.imports.get_last_error=nullptr;});invalid([](auto& o){o.imports.convert=nullptr;});invalid([](auto& o){o.imports.parse=nullptr;});invalid([](auto& o){o.imports.send=nullptr;});invalid([](auto& o){o.imports.select_write=nullptr;});invalid([](auto& o){o.maximum_message_bytes=0;});invalid([](auto& o){o.maximum_message_bytes=1048577;});invalid([](auto& o){o.read_prefix=std::string("a\0b",3);});epoch=1;rejects<std::invalid_argument>([&]{auto policy=pl::Policy::create(valid);},"fresh policy requires exact zero guard-epoch cell");epoch=0;
+ invalid([](auto& o){o.system_message.format_message=nullptr;});invalid([](auto& o){o.system_message.local_free=nullptr;});
+ auto source=valid;source.lifecycle.mode=pl::LifecycleMode::SourceOwned;source.lifecycle.select_owner={};source.lifecycle.after={};source.lifecycle.returned={};
+ auto source_policy=pl::Policy::create(source);check(source_policy->snapshot().phase==pl::Phase::Fresh&&!imports.calls,"Explicit source lifecycle constructs without optional host observer callbacks or native IO");source_policy.reset();
+ auto no_proof=source;no_proof.lifecycle.external_drained={};rejects<std::invalid_argument>([&]{(void)pl::Policy::create(std::move(no_proof));},"Source lifecycle still requires independent external proof");
+ auto mixed_source=valid;mixed_source.lifecycle.mode=pl::LifecycleMode::SourceOwned;rejects<std::invalid_argument>([&]{(void)pl::Policy::create(std::move(mixed_source));},"Source lifecycle cannot mix in an owner-replacing callback");
+ auto unknown=source;unknown.lifecycle.mode=static_cast<pl::LifecycleMode>(99);rejects<std::invalid_argument>([&]{(void)pl::Policy::create(std::move(unknown));},"Unknown lifecycle profile rejects before publication");
+ rejects<std::invalid_argument>([&]{(void)pl::Policy::create(valid,[](o::ServerView,sp::Application&){return false;});},"Cooperative policy rejects an original-only Graph retirement callback");
  auto policy=pl::Policy::create(valid);sp::Dependencies installed;policy->install(installed);auto mixed=[&](auto change){sp::Dependencies d;change(d);rejects<std::invalid_argument>([&]{policy->install(d);},"install refuses mixed caller error/policy/category identities");};mixed([&](auto& d){d.errors=policy->errors();});mixed([&](auto& d){d.policy=policy;});mixed([&](auto& d){d.categories=installed.categories;});mixed([&](auto& d){d.success=policy->generic_category();});mixed([&](auto& d){d.misc=policy->misc_category();});check(!imports.calls&&policy->exit_waits().active()==0&&policy->snapshot().phase==pl::Phase::Fresh,"configuration owns dedicated initialized empty registry while making zero configured NativeApi import calls");installed={};policy.reset();sdk=nullptr;
 }
 void lifecycle_and_alias(){
@@ -189,10 +269,159 @@ void lifecycle_and_alias(){
  f.operation([&](o::ServerView& view){auto& raw=view.io.allocate_04b0bc(41);check(!f.policy->close(true),"attestation cannot retire policy with real source IO allocation");view.io.free_04b788(raw);view.scheduler.work_count_30=1;check(!f.policy->close(true),"attestation cannot override scheduler work counter");view.scheduler.work_count_30=0;s::CancelOperation queued;view.scheduler.completion.head=&queued;view.scheduler.completion.tail=&queued;check(!f.policy->close(true),"attestation cannot override source completion queue");view.scheduler.completion.head=nullptr;view.scheduler.completion.tail=nullptr;});
  f.finish();check(!weak.expired()&&errors->system_category_028620().name_identity==system.name_identity,"errors alias pins closed policy/catalog after Profile and outside policy owners reset");errors.reset();check(weak.expired(),"last alias releases closed policy after preserving catalog lifetime");delete retained;
 }
+void original_graph_retirement_contract(){
+ unsigned calls=0;s::OperationStorage* late=nullptr;
+ auto* retained=new PolicyFixture([](pl::Options& options){
+  options.lifecycle.mode=pl::LifecycleMode::OriginalApplication;
+  options.lifecycle.select_owner={};options.lifecycle.after={};options.lifecycle.returned={};options.lifecycle.external_drained={};
+ },[&](o::ServerView view,sp::Application& app){
+  ++calls;bool outside=false;try{(void)view.memory.buffer_context();}catch(const std::logic_error&){outside=true;}
+  check(outside&&!app.snapshot().live_sessions&&!app.snapshot().live_jobs,"Local Graph retirement runs outside Parent after actual session/job retirement");
+  if(calls==1)return false;
+  if(calls==2){auto operation=view.memory.enter();late=&view.io.allocate_04b0bc(41);}
+  return true;
+ });auto& f=*retained;f.host_return();
+ f.operation([&](o::ServerView& view){view.scheduler.work_count_30=1;});
+ check(!f.policy->external_quiescent(*f.host.state->view,*f.app)&&!calls,"Actual source work gates local Graph retirement before invocation");
+ f.operation([&](o::ServerView& view){view.scheduler.work_count_30=0;});
+ check(!f.policy->external_quiescent(*f.host.state->view,*f.app)&&calls==1&&!f.external,"False local retirement preserves admission without an external unload callback");
+ check(!f.policy->external_quiescent(*f.host.state->view,*f.app)&&calls==2&&late&&!f.external,"True local retirement cannot conceal newly introduced actual IO ownership");
+ f.operation([&](o::ServerView& view){view.io.free_04b788(*late);late=nullptr;});
+ check(f.policy->external_quiescent(*f.host.state->view,*f.app)&&calls==3&&!f.external,"Original source retirement succeeds only after actual IO/work recheck");
+ f.finish();check(calls==4,"Profile retirement rechecks the selected local source callback");delete retained;
+}
+void source_owned_lifecycle(pl::LifecycleMode mode=pl::LifecycleMode::SourceOwned){
+ auto* retained=new PolicyFixture([mode](pl::Options& options){options.lifecycle.mode=mode;options.lifecycle.select_owner={};options.lifecycle.after={};options.lifecycle.returned={};if(mode==pl::LifecycleMode::OriginalApplication)options.lifecycle.external_drained={};});auto& f=*retained;
+ f.operation([&](o::ServerView& view){s::CancelOperation operation;s::Error ok{0,f.policy->generic_category()};
+  check(f.policy->completion_owner(*f.app,&view.scheduler,operation,ok,5)==&view.scheduler&&f.policy->completion_owner(*f.app,nullptr,operation,ok,0)==nullptr&&!f.selected,"Source lifecycle preserves exact own/null owner without a host decision callback");
+  f.app->after_completion();check(!f.afters&&!f.app->snapshot().live_jobs,"Actual Profile reap runs without a required opaque after hook");
+ });
+ f.host_return();check(!f.returned&&f.policy->snapshot().worker_finishes==1&&!f.policy->snapshot().worker_active,"Actual Policy worker-finish/return state needs no host observer");
+ s::OperationStorage* late=nullptr;
+ f.operation([&](o::ServerView& view){late=&view.io.allocate_04b0bc(41);});
+ check(!f.policy->external_quiescent(*f.host.state->view,*f.app)&&!f.external,"Live tracked IO prevents source lifecycle from invoking external drain proof");
+ f.operation([&](o::ServerView& view){view.io.free_04b788(*late);late=nullptr;view.scheduler.work_count_30=1;});
+ check(!f.policy->external_quiescent(*f.host.state->view,*f.app)&&!f.external,"Source work pin also gates the external proof");
+ f.operation([&](o::ServerView& view){view.scheduler.work_count_30=0;});
+ if(mode==pl::LifecycleMode::OriginalApplication){f.attested=false;f.external_hook=[]{throw std::runtime_error("Original application must not call an external unload proof");return false;};check(f.policy->external_quiescent(*f.host.state->view,*f.app)&&!f.external&&!f.policy->snapshot().active,"Original application uses actual source retirement without Stop or a host external proof");f.finish();delete retained;return;}
+ f.attested=false;check(!f.policy->external_quiescent(*f.host.state->view,*f.app)&&f.external==1,"Idle local source state cannot replace a real false external decision");
+ f.external_hook=[&]{f.operation([&](o::ServerView& view){late=&view.io.allocate_04b0bc(41);});return true;};
+ check(!f.policy->external_quiescent(*f.host.state->view,*f.app)&&f.external==2&&late,"True opaque proof is rejected if it introduces tracked IO before returning");
+ f.external_hook={};f.operation([&](o::ServerView& view){view.io.free_04b788(*late);late=nullptr;});f.attested=true;
+ check(f.policy->external_quiescent(*f.host.state->view,*f.app)&&f.external==3,"Source lifecycle still requires the actual outside-Parent proof after tracked work retires");
+ f.finish();delete retained;
+}
+struct StopOnly final:s::WorkerStopApi {
+ std::uintptr_t port;int boolean=1;std::uint32_t status=0;unsigned posts=0,errors=0;std::function<void()> hook;
+ explicit StopOnly(std::uintptr_t p):port(p){}
+ std::int32_t post_stop(std::uintptr_t p,std::uint32_t n,std::uintptr_t key,OVERLAPPED* ov)override{check(p==port&&!n&&!key&&!ov,"narrow stop publishes only the exact zero packet");++posts;if(hook)hook();return boolean;}
+ std::uint32_t get_last_error()override{++errors;return status;}
+};
+// A std::function copy owns a distinct target. Observe only destruction of
+// that admitted copy, never destruction of the caller's unretired target.
+struct WorkCheckpointObservation {
+ unsigned calls=0,retirements=0;bool armed=false,hook_failed=false,active_at_retirement=false;
+ std::function<void()> copy,invoke,retire;
+};
+struct WorkCheckpointTarget {
+ std::shared_ptr<WorkCheckpointObservation> observation;bool source_copy=false;
+ explicit WorkCheckpointTarget(std::shared_ptr<WorkCheckpointObservation> p):observation(std::move(p)){}
+ WorkCheckpointTarget(const WorkCheckpointTarget& other):observation(other.observation),source_copy(true){if(observation->copy)observation->copy();}
+ WorkCheckpointTarget(WorkCheckpointTarget&&)=default;
+ void operator()()const{++observation->calls;observation->armed=true;if(observation->invoke)observation->invoke();}
+ ~WorkCheckpointTarget()noexcept{if(!source_copy||!observation||!observation->armed)return;++observation->retirements;try{if(observation->retire)observation->retire();}catch(...){observation->hook_failed=true;}}
+};
+void tracked_work_policy(){
+ auto* retained=new PolicyFixture;auto& f=*retained;
+ auto exercise=[&](o::ServerView& view){
+  auto& e=view.scheduler;const auto count=e.work_count_30.load();const auto stop=e.high_34;const auto wake=e.word_38;
+  StopOnly api(e.completion.port);auto errors=f.policy->errors();unsigned admissions=0;
+  const std::function<void()> checkpoint=[&]{(void)view.memory.buffer_context();++admissions;};
+  bool consumed=false;e.work_count_30=3;e.high_34=0;e.word_38=0xabcddcba00000000ULL;
+  f.policy->finish_environment_work(e,nullptr,api,*errors,checkpoint,consumed);
+  check(consumed&&e.work_count_30==2&&!e.high_34&&e.word_38==0xabcddcba00000000ULL&&!api.posts,"nonfinal tracked pin is consumed without any stop effect");
+  for(const auto prior_stop:{0U,7U})for(const auto prior_wake:{0U,9U})for(const auto result:{0,1}){
+   consumed=false;e.work_count_30=1;e.high_34=prior_stop;e.word_38=0xabcddcba00000000ULL|prior_wake;
+   api.boolean=result;api.status=0;const auto posts=api.posts,reads=api.errors;
+   f.policy->finish_environment_work(e,nullptr,api,*errors,checkpoint,consumed);
+   const bool posted=!prior_stop&&!prior_wake;
+   check(consumed&&!e.work_count_30&&e.high_34==1&&e.word_38==(0xabcddcba00000000ULL|(prior_stop?prior_wake:1U)),"last tracked pin preserves ordered stop/wake low32 effects");
+   check(api.posts==posts+posted&&api.errors==reads+(posted&&!result),"existing stop or wake suppresses post; false status0 completes without raise");
+  }
+  check(admissions&&f.policy->snapshot().phase==pl::Phase::Bound&&!f.policy->snapshot().active,"work release leaves ordinary Policy admission unreserved");
+  // This is a bounded single-actor Policy component test. The synthetic
+  // counter isolates one leaf drop; it does not attest a whole Environment.
+  auto observation=std::make_shared<WorkCheckpointObservation>();observation->invoke=[&]{(void)view.memory.buffer_context();};observation->retire=[&]{observation->active_at_retirement=f.policy->snapshot().active;check(f.policy->snapshot().phase==pl::Phase::Bound&&observation->active_at_retirement&&!f.policy->close(true),"Admitted checkpoint target retires outside metadata while its exact WorkCall remains published and prevents close");(void)view.memory.buffer_context();};
+  const std::function<void()> copied_checkpoint=WorkCheckpointTarget(observation);bool copied_consumed=false;e.work_count_30=3;e.high_34=0;e.word_38=0x1234567800000000ULL;const auto posts=api.posts,reads=api.errors;::SetLastError(0x51a7);
+  f.policy->finish_environment_work(e,nullptr,api,*errors,copied_checkpoint,copied_consumed);
+  check(::GetLastError()==0x51a7&&copied_consumed&&e.work_count_30==2&&!e.high_34&&e.word_38==0x1234567800000000ULL&&api.posts==posts&&api.errors==reads,"Copied checkpoint retirement preserves exact nonfinal work prefix and caller LastError");
+  check(observation->calls&&observation->retirements==1&&!observation->hook_failed&&observation->active_at_retirement&&f.policy->snapshot().phase==pl::Phase::Bound&&!f.policy->snapshot().active,"Only the admitted checkpoint copy retires during the call; final validation unpublishes its healthy work record afterwards");observation->invoke={};observation->retire={};
+  e.work_count_30=count;e.high_34=stop;e.word_38=wake;
+ };
+ f.operation(exercise);f.host_return();f.operation(exercise);f.finish();delete retained;
+}
 void zero_worker_result(){auto* retained=new PolicyFixture;auto& f=*retained;f.operation([&](o::ServerView&){s::WorkerRunResult result;result.error=s::Error{0,f.policy->generic_category()};f.app->worker_returned(0,result);f.observed_worker=true;check(f.returned==1&&!f.policy->snapshot().worker_initializations&&!f.policy->snapshot().worker_finishes&&!f.policy->snapshot().worker_active,"zero-work result accepts exact generic success with no invented worker exception context");});f.finish();delete retained;}
 }
 [[noreturn]]void retained_child(std::string_view mode){
- auto* retained=new PolicyFixture;auto& f=*retained;
+ SystemTextSdk native_diagnostic;const bool zero_raise=mode=="systemraisezero";const bool native_terminal=mode=="workerror"||mode=="systemraise"||zero_raise||mode=="write";
+ if(native_terminal){check(!system_text_sdk,"Native diagnostic terminal SDK fixture is isolated");system_text_sdk=&native_diagnostic;const std::string text=mode=="write"?"native write ":zero_raise?"injectedzero text":"native stop ";const auto input=text+"\r\n";native_diagnostic.message(mode=="write"?55:zero_raise?0:77,input,static_cast<DWORD>(input.size()),text+std::string(2,'\0'));}
+ auto* retained=new PolicyFixture([&](pl::Options& options){if(native_terminal)options.system_message={system_text_format,system_text_free};});auto& f=*retained;
+ if(mode=="systemraise"||zero_raise){
+  f.operation([&](o::ServerView&){const auto bindings=f.app->bindings();const s::Error error{zero_raise?0:77,f.policy->system_category()};const std::string expected=zero_raise?"pqcs: injectedzero text":"pqcs: native stop ";bool caught=false;
+   try{bindings.worker.raise(error,0x180084530ULL);}catch(const std::system_error& exception){const std::system_error copy=exception;const std::runtime_error sliced=exception;caught=exception.code().value()==error.value&&&exception.code().category()==&s::system_error_category_028620({system_text_format,system_text_free})&&std::string(exception.what())==expected&&std::string(copy.what())==exception.what()&&std::string(sliced.what())==exception.what();}
+   check(caught&&native_diagnostic.formats==1&&native_diagnostic.frees==1&&native_diagnostic.trace==std::vector<std::string>{"format","free"}&&f.profile->snapshot().phase==sp::Phase::Poisoned&&f.policy->snapshot().phase==pl::Phase::Poisoned,"Actual original worker system84530 raise preserves native asio.system code/category and once-formatted pqcs text through base catch and value copies after terminal poison");
+  });::ExitProcess(zero_raise?536:535);
+ }
+ if(mode=="workerror"||mode=="workthrow"||mode=="workadmission"||mode=="workforeign"){
+  f.operation([&](o::ServerView& view){
+   auto& e=view.scheduler;e.work_count_30=1;e.high_34=0;e.word_38=0xfacefeed00000000ULL;
+   StopOnly api(e.completion.port);api.boolean=0;api.status=77;bool consumed=false;unsigned admissions=0;auto errors=f.policy->errors();
+   const std::function<void()> checkpoint=[&]{++admissions;(void)view.memory.buffer_context();if(mode=="workadmission")throw std::runtime_error("controlled pre-drop admission failure");};
+   if(mode=="workthrow")api.hook=[]{throw std::runtime_error("controlled unknown post outcome");};
+   if(mode=="workforeign"){
+    struct Foreign final:s::IocpSchedulerEntry {using IocpSchedulerEntry::IocpSchedulerEntry;void scalar_delete(std::uint32_t)override{unused();}} foreign(e.completion.gate,e.section);
+    rejects<std::invalid_argument>([&]{f.policy->finish_environment_work(foreign,nullptr,api,*errors,checkpoint,consumed);},"foreign scheduler rejects before work decrement");
+    check(!consumed&&e.work_count_30==1&&!e.high_34&&e.word_38==0xfacefeed00000000ULL&&!api.posts&&!api.errors&&!admissions&&f.policy->snapshot().phase==pl::Phase::Bound&&!f.policy->snapshot().active,"foreign work stop rejects before a work record, counter/flag/post or checkpoint effect");::ExitProcess(534);
+   }
+   if(mode=="workerror"){
+    bool raised=false;try{f.policy->finish_environment_work(e,nullptr,api,*errors,checkpoint,consumed);}catch(const std::system_error& error){const std::system_error copy=error;const std::runtime_error sliced=error;raised=error.code().value()==77&&&error.code().category()==&s::system_error_category_028620({system_text_format,system_text_free})&&std::string(error.what())=="pqcs: native stop "&&std::string(copy.what())==error.what()&&std::string(sliced.what())==error.what();}
+    check(raised&&consumed&&!e.work_count_30&&e.high_34==1&&e.word_38==0xfacefeed00000001ULL&&api.posts==1&&api.errors==1,"failed last release retains native decrement/flags and exact system pqcs context exception");
+    check(native_diagnostic.formats==1&&native_diagnostic.frees==1&&native_diagnostic.trace==std::vector<std::string>{"format","free"},"Actual tracked last-release system84530 failure invokes native020950 once and preserves code77 without compiler system text");
+   }else{
+    rejects<std::runtime_error>([&]{f.policy->finish_environment_work(e,nullptr,api,*errors,checkpoint,consumed);},"throwing work effect retains its completed prefix");
+    const bool dropped=mode=="workthrow";
+    check(consumed==dropped&&e.work_count_30==(dropped?0U:1U)&&e.high_34==(dropped?1U:0U)&&api.posts==unsigned(dropped)&&!api.errors,"consumed distinguishes pre-decrement admission failure from unknown post outcome");
+   }
+   check(f.policy->snapshot().phase==pl::Phase::Poisoned&&f.policy->snapshot().active&&!f.policy->close(true),"failed work path retains its failed WorkCall in aggregate active membership and cannot close");
+   const auto count=e.work_count_30.load();const auto stop=e.high_34;const auto wake=e.word_38;const auto posts=api.posts,reads=api.errors,checked=admissions;const auto formats=native_diagnostic.formats,frees=native_diagnostic.frees;
+   bool retry_consumed=false;rejects<std::logic_error>([&]{f.policy->finish_environment_work(e,nullptr,api,*errors,checkpoint,retry_consumed);},"fresh caller bool cannot replay a failed admitted work record");
+   check(!retry_consumed&&e.work_count_30==count&&e.high_34==stop&&e.word_38==wake&&api.posts==posts&&api.errors==reads&&admissions==checked&&native_diagnostic.formats==formats&&native_diagnostic.frees==frees&&f.policy->snapshot().active,"failed work retry leaves exact pre/post-consumed native prefix and original diagnostic/checkpoint counts unchanged");
+  });check(!f.policy->external_quiescent(*f.host.state->view,*f.app)&&!f.external&&f.policy->snapshot().phase==pl::Phase::Poisoned&&f.policy->snapshot().active,"retained failed work blocks external quiescence before any opaque proof callback");::ExitProcess(mode=="workerror"?531:mode=="workthrow"?532:533);
+ }
+ if(mode=="workretire"){
+  f.operation([&](o::ServerView& view){
+   auto& e=view.scheduler;e.work_count_30=3;e.high_34=0;e.word_38=0x8765432100000000ULL;StopOnly api(e.completion.port);auto errors=f.policy->errors();bool consumed=false,reentry_rejected=false;
+   auto observation=std::make_shared<WorkCheckpointObservation>();observation->invoke=[&]{(void)view.memory.buffer_context();};
+   observation->retire=[&]{observation->active_at_retirement=f.policy->snapshot().active;try{(void)f.policy->exchange_stop(e,7);}catch(const std::logic_error&){reentry_rejected=true;}};
+   const std::function<void()> checkpoint=WorkCheckpointTarget(observation);
+   rejects<std::logic_error>([&]{f.policy->finish_environment_work(e,nullptr,api,*errors,checkpoint,consumed);},"checkpoint-target destructor cannot swallow same-actor reentry and let the outer work call complete");
+   check(consumed&&e.work_count_30==2&&!e.high_34&&e.word_38==0x8765432100000000ULL&&!api.posts&&!api.errors&&observation->calls&&observation->retirements==1&&!observation->hook_failed&&observation->active_at_retirement&&reentry_rejected,"destructor reentry runs outside metadata under a published WorkCall, preserving the completed nonfinal decrement without a guessed stop");
+   check(f.policy->snapshot().phase==pl::Phase::Poisoned&&f.policy->snapshot().active&&!f.policy->close(true),"final source validation retains failed call membership after swallowed target-destructor reentry");
+   const auto calls=observation->calls;bool retry_consumed=false;rejects<std::logic_error>([&]{f.policy->finish_environment_work(e,nullptr,api,*errors,checkpoint,retry_consumed);},"retired-target failure cannot be replayed through a fresh consumed flag");
+   check(!retry_consumed&&e.work_count_30==2&&!e.high_34&&e.word_38==0x8765432100000000ULL&&!api.posts&&!api.errors&&observation->calls==calls&&observation->retirements==1,"retired-target failure retains exact prefix and never reinvokes or destroys the same admitted target twice");observation->invoke={};observation->retire={};
+  });check(!f.policy->external_quiescent(*f.host.state->view,*f.app)&&!f.external,"retired-target failed membership blocks external proof without callbacks");::ExitProcess(537);
+ }
+ if(mode=="workcopy"){
+  f.operation([&](o::ServerView& view){
+   auto& e=view.scheduler;e.work_count_30=3;e.high_34=0;e.word_38=0x1020304000000000ULL;StopOnly api(e.completion.port);auto errors=f.policy->errors();bool consumed=false;unsigned copies=0;
+   auto observation=std::make_shared<WorkCheckpointObservation>();const std::function<void()> checkpoint=WorkCheckpointTarget(observation);
+   observation->copy=[&]{++copies;check(f.policy->snapshot().phase==pl::Phase::Bound&&f.policy->snapshot().active,"Opaque checkpoint copy runs outside metadata only after its exact work call has been published");(void)view.memory.buffer_context();throw std::runtime_error("controlled unknown checkpoint-copy outcome");};
+   rejects<std::runtime_error>([&]{f.policy->finish_environment_work(e,nullptr,api,*errors,checkpoint,consumed);},"throwing checkpoint target copy preserves its admitted pre-decrement prefix");
+   check(copies==1&&!consumed&&e.work_count_30==3&&!e.high_34&&e.word_38==0x1020304000000000ULL&&!api.posts&&!api.errors&&!observation->calls&&!observation->retirements&&f.policy->snapshot().phase==pl::Phase::Poisoned&&f.policy->snapshot().active&&!f.policy->close(true),"Failed admitted copy retains only work membership with no fabricated invocation, decrement, stop or target retirement");
+   bool retry_consumed=false;rejects<std::logic_error>([&]{f.policy->finish_environment_work(e,nullptr,api,*errors,checkpoint,retry_consumed);},"failed copy cannot be retried as a fresh work release");
+   check(copies==1&&!retry_consumed&&e.work_count_30==3&&!e.high_34&&e.word_38==0x1020304000000000ULL&&!api.posts&&!api.errors&&!observation->calls&&!observation->retirements,"Failed copy retry performs no new target copy or work effect");observation->copy={};
+  });check(!f.policy->external_quiescent(*f.host.state->view,*f.app)&&!f.external,"copy-failed registered work blocks external proof before callback");::ExitProcess(538);
+ }
  if(mode=="external"||mode=="externalheld"||mode=="foreignview"){
    f.host_return();if(mode=="external"){f.external_hook=[]{throw std::runtime_error("controlled unknown external decision");return false;};rejects<std::runtime_error>([&]{(void)f.policy->external_quiescent(*f.host.state->view,*f.app);},"unknown external proof outcome is never guessed as false or drain");check(f.external==1&&f.policy->snapshot().phase==pl::Phase::Poisoned&&!f.policy->snapshot().active,"unknown external callback retains policy ownership without cleanup");::ExitProcess(506);}
    if(mode=="foreignview"){auto view=*f.host.state->view;view.identity.value^=1;rejects<std::invalid_argument>([&]{(void)f.policy->external_quiescent(view,*f.app);},"foreign external graph rejected before required callback");check(!f.external&&f.policy->snapshot().phase==pl::Phase::Poisoned,"foreign source proof cannot attest another policy graph");::ExitProcess(508);}
@@ -205,7 +434,7 @@ void zero_worker_result(){auto* retained=new PolicyFixture;auto& f=*retained;f.o
    f.operation([&](o::ServerView&){auto bindings=f.app->bindings();if(mode=="guard"){auto& guard=f.policy->guards();guard.guard_header_04b838(f.policy->guard_epoch());rejects<std::invalid_argument>([&]{guard.register_atexit_04b770(0xdead);},"unknown cleanup identity cannot register scoped guard footer");check(f.policy->snapshot().phase==pl::Phase::Poisoned&&!f.policy->snapshot().guard_initialized&&f.policy->guard_epoch()==-1,"guard failure preserves explicit in-progress sentinel without invented footer");::ExitProcess(511);}f.policy->initialize(f.worker_context);if(mode=="pending"){std::array<std::uintptr_t,2> raw{0x11112222,0x33334444},out{9,10};rejects<s::UnsupportedInput>([&]{(void)bindings.guard.copy_exception_024100(out,raw);},"nonzero foreign pending-exception cells are rejected before any compiler exception_ptr interpretation");check(raw[0]==0x11112222&&out==std::array<std::uintptr_t,2>{9,10}&&f.policy->snapshot().worker_active&&f.policy->snapshot().phase==pl::Phase::Poisoned,"unsupported pending transfer retains source/output fields and registered worker context");::ExitProcess(509);}std::array<std::uintptr_t,2> foreign{};rejects<s::UnsupportedInput>([&]{bindings.worker.finish(foreign);},"zero context at wrong address cannot finish registered worker");check(f.policy->snapshot().worker_active&&!f.policy->snapshot().worker_finishes&&f.policy->snapshot().phase==pl::Phase::Poisoned,"foreign worker finish preserves original context registration");::ExitProcess(510);});
  }
  if(mode=="badweak"||mode=="length"||mode=="raise"||mode=="write"||mode.starts_with("thread")){
-   f.operation([&](o::ServerView&){const auto bindings=f.app->bindings();if(mode=="badweak"){rejects<std::bad_weak_ptr>([&]{bindings.frame.terminal.bad_weak_ptr_026860();},"Profile intentionally poisons before concrete terminal still forwards std bad_weak_ptr");check(f.profile->snapshot().phase==sp::Phase::Poisoned&&f.policy->snapshot().phase==pl::Phase::Poisoned,"bad weak terminal preserves Profile/Policy poisoned prefix");::ExitProcess(512);}if(mode=="length"){s::ReadLengthError error;bindings.frame.read->api.construct_length_error_024390(error,0x180084840ULL);rejects<std::length_error>([&]{bindings.frame.read->api.throw_length_error_023930(error);},"registered read length terminal forwards after intentional Profile poison");check(f.profile->snapshot().phase==sp::Phase::Poisoned&&f.policy->snapshot().phase==pl::Phase::Poisoned,"length terminal retains exact source error registration");::ExitProcess(513);}if(mode=="raise"||mode=="write"){const bool write=mode=="write";s::Error error{write?55:77,write?f.policy->system_category():f.policy->generic_category()};bool caught=false;try{if(write)f.app->raise_write(error,0x180084720ULL);else bindings.worker.raise(error,0x180084530ULL);}catch(const std::system_error& e){caught=e.code().value()==error.value&&&e.code().category()==(write?&std::system_category():&std::generic_category());}check(caught&&f.profile->snapshot().phase==sp::Phase::Poisoned&&f.policy->snapshot().phase==pl::Phase::Poisoned,"source worker/write terminal uses exact selected host category after Profile poison");::ExitProcess(write?515:514);}const int index=mode.back()-'0';const std::array<int,7> codes{16,22,3,12,1,36,11};const std::array<std::string_view,7> contexts{"device or resource busy","invalid argument","no such process","not enough memory","operation not permitted","resource deadlock would occur","resource unavailable try again"};bool caught=false;try{bindings.frame.api.thread_error_04a648(index);}catch(const std::system_error& e){caught=e.code().value()==codes[index]&&&e.code().category()==&std::generic_category()&&std::string_view(e.what()).find(contexts[index])!=std::string_view::npos;}check(caught&&f.profile->snapshot().phase==sp::Phase::Poisoned&&f.policy->snapshot().phase==pl::Phase::Poisoned,"actual existing04a648 indexed code/context forwards through poisoned Profile terminal");::ExitProcess(static_cast<UINT>(520+index));});
+   f.operation([&](o::ServerView&){const auto bindings=f.app->bindings();if(mode=="badweak"){rejects<std::bad_weak_ptr>([&]{bindings.frame.terminal.bad_weak_ptr_026860();},"Profile intentionally poisons before concrete terminal still forwards std bad_weak_ptr");check(f.profile->snapshot().phase==sp::Phase::Poisoned&&f.policy->snapshot().phase==pl::Phase::Poisoned,"bad weak terminal preserves Profile/Policy poisoned prefix");::ExitProcess(512);}if(mode=="length"){s::ReadLengthError error;bindings.frame.read->api.construct_length_error_024390(error,0x180084840ULL);rejects<std::length_error>([&]{bindings.frame.read->api.throw_length_error_023930(error);},"registered read length terminal forwards after intentional Profile poison");check(f.profile->snapshot().phase==sp::Phase::Poisoned&&f.policy->snapshot().phase==pl::Phase::Poisoned,"length terminal retains exact source error registration");::ExitProcess(513);}if(mode=="raise"||mode=="write"){const bool write=mode=="write";s::Error error{write?55:77,write?f.policy->system_category():f.policy->generic_category()};bool caught=false;try{if(write)f.app->raise_write(error,0x180084720ULL);else bindings.worker.raise(error,0x180084530ULL);}catch(const std::system_error& e){caught=e.code().value()==error.value&&&e.code().category()==(write?&s::system_error_category_028620({system_text_format,system_text_free}):&std::generic_category())&&(write?std::string(e.what())=="write: native write ":std::string_view(e.what()).starts_with("pqcs: "));}check(caught&&f.profile->snapshot().phase==sp::Phase::Poisoned&&f.policy->snapshot().phase==pl::Phase::Poisoned,"source worker/write terminal preserves exact selected category/context after Profile poison");if(write)check(native_diagnostic.formats==1&&native_diagnostic.frees==1&&native_diagnostic.trace==std::vector<std::string>{"format","free"},"Actual system-category write terminal invokes native020950 exactly once and owns its trailing-space diagnostic after SDK buffer free");::ExitProcess(write?515:514);}const int index=mode.back()-'0';const std::array<int,7> codes{16,22,3,12,1,36,11};const std::array<std::string_view,7> contexts{"device or resource busy","invalid argument","no such process","not enough memory","operation not permitted","resource deadlock would occur","resource unavailable try again"};bool caught=false;try{bindings.frame.api.thread_error_04a648(index);}catch(const std::system_error& e){caught=e.code().value()==codes[index]&&&e.code().category()==&std::generic_category()&&std::string_view(e.what()).find(contexts[index])!=std::string_view::npos;}check(caught&&f.profile->snapshot().phase==sp::Phase::Poisoned&&f.policy->snapshot().phase==pl::Phase::Poisoned,"actual existing04a648 indexed code/context forwards through poisoned Profile terminal");::ExitProcess(static_cast<UINT>(520+index));});
  }
  f.operation([&](o::ServerView& view){ErrorContexts contexts(f);const auto allocation_count=view.memory.snapshot().allocations;unsigned formatted=0;bool swallowed=false;
    if(mode=="admission"){s::SessionOwner invalid;s::ReceiveBufferString output;rejects<std::invalid_argument>([&]{(void)f.app->greeting(invalid,output);},"actual Profile rejects malformed caller owner and seals its admission");check(f.profile->snapshot().phase==sp::Phase::Poisoned&&f.policy->snapshot().phase==pl::Phase::Bound,"Profile admission can be poisoned independently before normal policy call");rejects<std::logic_error>([&]{contexts.read_error(100,f.policy->generic_category());},"ordinary policy call checks actual poisoned Profile admission before prefix or formatter");check(f.buffer->str().empty()&&f.policy->snapshot().phase==pl::Phase::Poisoned&&!f.policy->snapshot().logging,"admission poison retains metadata without publishing log prefix");::ExitProcess(504);}
@@ -216,5 +445,5 @@ void zero_worker_result(){auto* retained=new PolicyFixture;auto& f=*retained;f.o
  });::ExitProcess(599);
 }
 void isolated(std::wstring mode,DWORD expected){std::array<wchar_t,32768> path{};const auto n=::GetModuleFileNameW(nullptr,path.data(),static_cast<DWORD>(path.size()));check(n&&n<path.size(),"own policy fixture executable located");std::wstring command=L"\""+std::wstring(path.data(),n)+L"\" --"+mode;STARTUPINFOW startup{};startup.cb=sizeof(startup);PROCESS_INFORMATION process{};check(::CreateProcessW(nullptr,command.data(),nullptr,nullptr,FALSE,CREATE_NO_WINDOW,nullptr,nullptr,&startup,&process)!=0,"isolated fail-closed policy fixture launched");const auto wait=::WaitForSingleObject(process.hProcess,30000);DWORD code=0;check(wait==WAIT_OBJECT_0&&::GetExitCodeProcess(process.hProcess,&code)&&code==expected,"policy child reaches exact retained-prefix/terminal assertions");::CloseHandle(process.hThread);::CloseHandle(process.hProcess);}
-int main(int argc,char** argv){try{if(argc==2)retained_child(std::string_view(argv[1]).substr(2));catalog_and_sdk();source_error_logging();guard_worker_and_exits();passive_validation();lifecycle_and_alias();zero_worker_result();isolated(L"streambuf",501);isolated(L"formatter",502);isolated(L"formatthrow",503);isolated(L"admission",504);isolated(L"lifecycle",505);isolated(L"external",506);isolated(L"externalheld",507);isolated(L"foreignview",508);isolated(L"pending",509);isolated(L"foreignfinish",510);isolated(L"guard",511);isolated(L"badweak",512);isolated(L"length",513);isolated(L"raise",514);isolated(L"write",515);isolated(L"locale",517);for(unsigned i=0;i<7;++i)isolated(L"thread"+std::to_wstring(i),520+i);std::cout<<"PASS: "<<checks<<" session-policy core checks; managed native error logging/guard/registry and twenty-three isolated retained terminals\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+int main(int argc,char** argv){try{if(argc==2)retained_child(std::string_view(argv[1]).substr(2));catalog_and_sdk();source_error_logging();native_misc_category_messages();native_system_category_messages();native_system_category_lifetime();guard_worker_and_exits();passive_validation();lifecycle_and_alias();original_graph_retirement_contract();source_owned_lifecycle();source_owned_lifecycle(pl::LifecycleMode::OriginalApplication);zero_worker_result();tracked_work_policy();isolated(L"systemraise",535);isolated(L"systemraisezero",536);isolated(L"workerror",531);isolated(L"workthrow",532);isolated(L"workadmission",533);isolated(L"workforeign",534);isolated(L"workretire",537);isolated(L"workcopy",538);isolated(L"streambuf",501);isolated(L"formatter",502);isolated(L"formatthrow",503);isolated(L"admission",504);isolated(L"lifecycle",505);isolated(L"external",506);isolated(L"externalheld",507);isolated(L"foreignview",508);isolated(L"pending",509);isolated(L"foreignfinish",510);isolated(L"guard",511);isolated(L"badweak",512);isolated(L"length",513);isolated(L"raise",514);isolated(L"write",515);isolated(L"locale",517);for(unsigned i=0;i<7;++i)isolated(L"thread"+std::to_wstring(i),520+i);std::cout<<"PASS: "<<checks<<" session-policy core checks; managed native error logging/guard/registry, native020950/default system diagnostics and thirty-one isolated retained terminals\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
 

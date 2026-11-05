@@ -1,0 +1,24 @@
+{
+  "reviewer": "author static source inspection; no independent agent review",
+  "result": "STATIC_SOURCE_INSPECTED_NOT_COMPILED_OR_EXECUTED",
+  "reviewed_source_hashes": {
+    "anadius-accept-stop-source/stop.hpp": "e38b367b263588382293119fa4bd7e20680644f57d4efeb55807d048db1fda14",
+    "anadius-accept-stop-source/stop.cpp": "02687d1f84a3867933214f2e5d7219fca7e76cfd260f2bf41c50e1b5c5c1a429",
+    "anadius-server-runtime-source/runtime.hpp": "342e932853ddd15644a9885fc0f2be00f07a0380bd688c66d49f07636ca3d7bf",
+    "anadius-server-runtime-source/runtime.cpp": "474bfec679077f826220ee7e4d98f71cbe1454417791a32e091ccec9a4f0fd03",
+    "anadius-application-graph-source/graph_integration_tests.cpp": "5237407b35feb78c1959eaee14e52198eafb4fd352c969f74e28350eda749f30"
+  },
+  "findings": [
+    "New appended Scope::SessionIoPrepared explicitly permits Runtime-managed PreparedJobs while independent proof still seals new external admission and drains unmanaged raw/deferred/foreign work. Existing AcceptOnly/SessionIo requirements/defaults and enum values preserved.",
+    "Runtime rejects prepared scope without finite prepared-stop budget and verifies exact PreparedJobSourceDrain/selected PreparedJobs before Stop.bind(...,managed). Stop refuses new scope without explicit managed binding; no controller raw Parent access is added.",
+    "Stop.session_io_pending is original-worker/Parent-only and checks accepted stop state, pending loans, active IO packet bindings and unacknowledged stop routes. Inert accept aliases require exact OwnedAcceptMemory identity. close_worker independently checks active bindings as well as loans for new scope.",
+    "Runtime stop gate now pumps/queries selected IO alongside source jobs. Progress rechecked after ready receipt, after Stop.after releases each IO route, and after swallowed private stop wakes. Late response loans are cancelled/observed or queued Posted work discarded before stop resumes. Generic dispatcher work transfer and original worker initialize/finish are unchanged.",
+    "Controller active-post metadata is intentionally not used as an in-Parent drain predicate: consuming its only wake before post returns could otherwise strand the loop. Existing close_worker waits for posts_done outside Parent before releasing Stop backing.",
+    "Three source scenarios: session-drain expects one real native child body/receipt plus scripted accept/receive/send/Posted completion drain then closed Graph/Profile/NativeJobs/Stop and actual original/child join before controller backing release; cancel denial201 and missing scripted IO202 retain session/IO/control without worker finish or port close.",
+    "Fixture uses own actual IOCP and native thread/Domain paths as unexecuted source expectations, but sockets/CancelIoEx results are synthetic. Scripted995 is not observed kernel cancellation; constant external proof is an explicit private-fixture assumption. Normal independent physical proof joins still control child scheduling."
+  ],
+  "compiled": false,
+  "tests_executed": false,
+  "link_attempted": false,
+  "binary_executed": false
+}

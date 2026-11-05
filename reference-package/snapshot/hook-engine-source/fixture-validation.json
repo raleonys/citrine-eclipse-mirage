@@ -30,7 +30,7 @@
   ],
   "commands": [
     {
-      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang.exe",
+      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang.exe",
       "arguments": [
         "-std=c17",
         "-O2",
@@ -46,7 +46,7 @@
       ]
     },
     {
-      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang.exe",
+      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang.exe",
       "arguments": [
         "-std=c17",
         "-O2",
@@ -62,7 +62,7 @@
       ]
     },
     {
-      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang.exe",
+      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang.exe",
       "arguments": [
         "-std=c17",
         "-O2",
@@ -78,7 +78,7 @@
       ]
     },
     {
-      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang.exe",
+      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang.exe",
       "arguments": [
         "-std=c17",
         "-O2",
@@ -94,7 +94,7 @@
       ]
     },
     {
-      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang++.exe",
       "arguments": [
         "-std=c++20",
         "-O2",
@@ -116,19 +116,19 @@
   "objects": [
     {
       "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hook.fake.obj",
-      "sha256": "e9c0dfc0ae9576694760a5790f1fe805faeadfc980cef978fec3a02612726371"
+      "sha256": "fce5c385c563ea85eea79dfbac2795fda60acf3c026c9651915a826460fef1c1"
     },
     {
       "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\buffer.fake.obj",
-      "sha256": "c5721c406dbbdd8828d94a8fdc1b07d0d07d075f6e938b875c5982312601d0ce"
+      "sha256": "fe4a467ce921a7a21a68e416d723b46e3591a5db798b01a96737dc8862ec52c2"
     },
     {
       "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\trampoline.fake.obj",
-      "sha256": "efe3360e695d46a4f4f817c328b8bda150a6ae4a06a28004c57ff09be19288ae"
+      "sha256": "2d6c96284218eb701b49413dc77fcc06fc96f3468f2240efdb8e8ddb3a5dec36"
     },
     {
       "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hde_hde64.fake.obj",
-      "sha256": "165b05905be2b2e451e49d951549f6a8de8109e6e4d0adc9dbb3f42445fa331d"
+      "sha256": "885efc12677457b98d601e551acbbf9571e1c00aa9f94f3d050ce2e3adefaaae"
     }
   ],
   "imported_api_symbols_in_fixture_C_objects": [],
@@ -182,7 +182,7 @@
   ],
   "executable": {
     "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hook-engine-fixture-tests.exe",
-    "sha256": "64b282130f2e69c0e940caa1e6696c75b5516960db886f87dca291460d6eb826"
+    "sha256": "f8fe4a6b86f466703e938fa93fbf60fce7a3c9656a43e77a98752adf4232ebb5"
   },
   "output": [
     "hook_engine_fixture: 379 checks passed; upstream C engine, fake Win32, data buffers only"

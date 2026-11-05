@@ -1,0 +1,1112 @@
+{
+  "schema": "dll-critical-path.v1",
+  "baseline_package": "B54",
+  "baseline_zip_sha256": "daff8d56dd9d59b347a167c49af561c12f7c86479a365b7419b8c29f4df93fb4",
+  "supersedes_automatic_stage_sequence": true,
+  "scope": "Current selected source presence versus unvalidated native behavior; historical descriptions preserved. Not a whole-DLL completion ledger.",
+  "items": [
+    {
+      "id": "entry-lifecycle",
+      "class": "source_validation_pending",
+      "description_tr": "\u0130ki loader g\u00f6vdesi ve ger\u00e7ek Image kurulumu kaynakta mevcut. G\u00fcncel derleme/link ve loader/runtime davran\u0131\u015f\u0131 do\u011frulanmad\u0131.",
+      "status": "COMPILED_AND_LINKED_NATIVE_RUNTIME_UNVERIFIED",
+      "blocks": "fresh-production-link-and-runtime-validation",
+      "depends_on": [
+        "aggregate-lifetime",
+        "resource-assembly",
+        "host-startup"
+      ],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/dll-link-gate-source/entry.cpp",
+          "sha256": "5a5f4c0e4f27968dce4a15da2186ca7db6a461e0455d7736ff3267d4c41c8057",
+          "anchor": "BOOL require_loader_attach_runtime(HINSTANCE module,LPVOID reserved)noexcept"
+        },
+        {
+          "path": "outputs/dll-link-gate-source/native-image-owner.evidence.json",
+          "sha256": "95eed9c5bfc74860f7861805dbdd1a497a7f4156651d2b1e87762cc209a126c7"
+        }
+      ],
+      "selected_progress": {
+        "pre_unload_evidence": "outputs/anadius-pre-unload-source/evidence.json",
+        "loader_context_audit": "outputs/dll-critical-path/loader-context-map.json",
+        "closed_scope": "Callable cooperative managed Runtime.close/destruction->Domain.close with retained retries; no startup timing change.",
+        "remaining": "Fresh consistent compile/link and actual behavior validation await explicit rebuild. Original complete-session queued-event retirement remains uncovered; first-dispatch observation does not certify cleanup. Both loader bodies exist in source.",
+        "pre_unload_thread_domain_provenance": {
+          "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+          "evidence": "outputs/anadius-pre-unload-source/domain-provenance.evidence.json",
+          "scope": "Checked thread-provider root identity/retention only. Production loader hooks remain OPEN."
+        },
+        "closed_callback_admission": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "evidence": "outputs/anadius-bootstrap-runtime-source/closed-admission.evidence.json",
+          "scope": "Retained closed-route CRT thunks skip Hub mutex through static lock-free flag; not unload permission or loader hook definitions."
+        },
+        "synchronous_loader_audit": {
+          "path": "outputs/anadius-bootstrap-backend-source/synchronous-loader-audit.json",
+          "sha256": "20f229c10a383114bd44756c27ffb7b16fe9cf497f4c1b66407b419c9f5600b3",
+          "status": "STATIC_AUDIT_NO_CPP_CHANGE"
+        },
+        "startup_policy": "Preserve original synchronous startup; continue resolving loader conditions. Explicitly selected by the user this turn.",
+        "attach_failure_prefix": {
+          "path": "outputs/anadius-bootstrap-backend-source/attach-failure-prefix.evidence.json",
+          "sha256": "07818288d82ef5c385943a077a18f1a4c88797600e7f419f49dd2904c8433d4a",
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "scope": "Poisoned tracker rejects subsequent creates before stop; pre-/post-worker failure ownership audited. Loader rollback not implemented."
+        },
+        "configuration_construction_ownership": {
+          "path": "outputs/anadius-configuration-factory-source/construction-ownership.evidence.json",
+          "sha256": "d8107dca32110e89a057d1f02b81d2cb847a3c4e8e868d43418ed9c7bce6ff6c",
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "scope": "Six configuration entry paths order narrow-effect retirement before backing across allocation/rejection; source only, not full loader rollback."
+        },
+        "backend_provider_binding_admission": {
+          "path": "outputs/anadius-bootstrap-backend-source/provider-binding-admission.evidence.json",
+          "sha256": "02fc38e65ae8275bd00b851500a74680dcd62085d9d428d633f9f2648e969045",
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "scope": "Whole bind_state rejects guarded source reentry; adopted unknown result retained, no loader hook or rollback proof."
+        },
+        "synchronous_hook_order_and_admission": {
+          "path": "outputs/anadius-host-platform-source/synchronous-hook-order.audit.json",
+          "sha256": "32e03f00d78bdbd02c979bd12eb8b0d67ca5589c411ef35d3f81560ac3a5b949",
+          "status": "NATIVE_ORDER_MATCHES_BOUNDED_SCOPE_STARTUP_ADMISSION_GAP_OPEN"
+        },
+        "callback_startup_gap": "SOURCE_ONLY bounded foreign connect untouched, no-redirect web/other-wait and redirect body routes connected after required original/Server snapshot proofs. Controller/pre-Server, worker/nested hook overlap, general activation and loader profiles remain OPEN.",
+        "per_hook_original_publication": {
+          "path": "outputs/anadius-original-provider-source/per-hook-publication.evidence.json",
+          "sha256": "7c6e40712bf458c0eee5545ade2c242e72a2feb03dbfb99ff990a006197111ac",
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "scope": "Same host/policy owner seals successful create per slot before enable; callback-specific warming admission and loader contracts remain OPEN."
+        },
+        "warming_connect_original_only": {
+          "path": "outputs/anadius-foreign-callback-source/connect-passthrough.evidence.json",
+          "sha256": "d8d76c882ed02de2f411aa9d8f02b8ef359ee938e56ae5b173de15e7c683576e",
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "scope": "Untouched length/family connect admits only published original under PTD/native lease; recognized paths and full activation remain OPEN."
+        },
+        "server_port_web_no_redirect": {
+          "path": "outputs/anadius-startup-publication-source/server-port-web.evidence.json",
+          "sha256": "501f33efa5fccbe468d562e9ee50a71292822c30e7bc12eafa351f0276032ab2",
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "scope": "Atomic same-Execution bound-port + actual Server event permits no-redirect80/443 original-only flow. Other recognized paths and general activation/loader contracts remain OPEN."
+        },
+        "connect_wait_no_redirect": {
+          "path": "outputs/anadius-foreign-callback-source/connect-wait-passthrough.evidence.json",
+          "sha256": "f4f4b978524fa9d6aef6b19db782e38ca701bc369dac92dfb922ac286f7c394d",
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "scope": "Foreign-only other-port no-redirect wait(-1), narrow PTD permission, post-wait original check and stop retention. Redirect/concurrency/activation/loader still OPEN."
+        },
+        "connect_redirect_body": {
+          "path": "outputs/anadius-foreign-callback-source/connect-redirect-body.evidence.json",
+          "sha256": "e733e50a8fa5c234a4cdc6f76c401f83ad64c7e68730cd6030aa2024a6b94774",
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "scope": "Foreign3216/matching-port redirect with wait/body/original capability phases and managed log/private counter. Nested/overlap/activation/loader remain OPEN."
+        },
+        "network_effect_postcheck": {
+          "path": "outputs/anadius-callback-policy-source/network-effect-postcheck.evidence.json",
+          "sha256": "ec8e79ab6f178a4326f4e1d69178bcaf47a561765d923d292ed7ab2c8da9b193",
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "scope": "Post-opaque network permission check before counter/port commit; nested/parallel admission unchanged and OPEN."
+        },
+        "owned_synchronous_start": {
+          "path": "outputs/anadius-pre-unload-source/owned-attach.evidence.json",
+          "sha256": "0bbb53d18fd390883a04e26707b3e0a0ff331f762a16021f0f2a2a1e07a8b855",
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "scope": "Real Runtime/Domain adoption before publication, real synchronous application entry and retained failure prefix. No loader hook definition or loader-safety closure."
+        },
+        "native_worker_io": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-resources-factory-source/native-worker-io.evidence.json",
+          "sha256": "d053fdf97728983a312ca90ceb45a8be946505e21f665178ba6626e962719182",
+          "scope": "Seven SDK adapters selected on existing worker route. Actual cancellation/executor/lifecycle and loader/profile still required."
+        },
+        "selected_socket_executor": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-socket-move-source/selected-executor.evidence.json",
+          "sha256": "be46cdbb60e862f9f6395622d3a0013f00de1741ec2ae89159e931e366f7da68",
+          "scope": "Address-backed selected executor and real no-engine branch reduce Resources dependencies; no hook closure claim."
+        },
+        "source_owned_lifecycle": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-session-policy-source/source-lifecycle.evidence.json",
+          "sha256": "0aaa93e072156bbd04f89baf2c9458ac76891c880e47581478d87e96205e9366",
+          "scope": "Explicitly selected source-owned owner/reap/worker-return decisions and pre/post local IO guard; real external proof and both loader hook definitions remain required."
+        },
+        "source_stop_proof": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-accept-stop-source/source-proof.evidence.json",
+          "sha256": "add0bfc3e76b3ff5d0eb96a14f247d34da9a351ceb118426a7abf63e0b262e28",
+          "scope": "Exact Runtime Stop local source/packet/ack prerequisite bound into SourceOwned Policy; real external/image proof and both loader hook definitions remain open."
+        },
+        "pre_cleanup_quiescence": {
+          "status": "REMOVED_BY_USER_ORIGINAL_PROFILE",
+          "path": "outputs/dll-link-gate-source/original-loader-profile.evidence.json",
+          "sha256": "f13115d9c9f7e03ae8c5ada66bf8acebaad6944bd5d41364d59d4b70af10dd4b"
+        },
+        "original_loader_profile": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/dll-link-gate-source/original-loader-profile.evidence.json",
+          "sha256": "f13115d9c9f7e03ae8c5ada66bf8acebaad6944bd5d41364d59d4b70af10dd4b"
+        },
+        "original_native_worker": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-resources-factory-source/original-native-worker.evidence.json",
+          "sha256": "c5a91bc5b07740478e70420c45355687925e3048473274266ef42dd62df32d20",
+          "scope": "Actual native Worker configure body plus shared Graph/Policy profile validation and source-only OriginalApplication retirement; attach image ownership/definition remains required."
+        },
+        "native_image_base": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-resources-factory-source/native-image-base.evidence.json",
+          "sha256": "a0d56f7960d7a45b30e2bcadb4d540c516895d043cc420aac144c805ca8ebb0b",
+          "scope": "Actual native configuration/console and Domain initial-policy constructors available; image/host/Online attach assembly not yet defined."
+        },
+        "original_image_bindings": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-host-platform-source/original-image-bindings.evidence.json",
+          "sha256": "2b5feb4fee17bcd59213417ab396ad042fd1f76946a75d52a14a1b50ed000ab7",
+          "scope": "Original host/Context/Online/Resources factory path without blanket ready/unload/stop placeholders; actual image owner and attach definition remain open."
+        },
+        "native_image_owner": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/dll-link-gate-source/native-image-owner.evidence.json",
+          "sha256": "95eed9c5bfc74860f7861805dbdd1a497a7f4156651d2b1e87762cc209a126c7",
+          "scope": "Both loader helpers source-defined; permanent native Image owns Domain/providers/Runtime before publish and invokes actual synchronous ApplicationEntry once."
+        },
+        "original_worker_dispatch": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-application-worker-source/original-dispatch.evidence.json",
+          "sha256": "23b8c71f2c455e7befe734e6a1055a57e5a070dc7c7b6d83616b4a9c1a092151",
+          "scope": "OriginalApplication Worker omits added HOST Host/Online dispatch barrier; cooperative startup barrier and actual source admission/native waits remain."
+        },
+        "original_graph_retirement": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-application-graph-source/original-retirement.evidence.json",
+          "sha256": "83eddab2ac32f62f8e7dfd345c2b7a1bc9f9baa99d8c616376c5066786b8a91a",
+          "scope": "Fix OriginalApplication Graph/Policy assembly conflict: external proof stays empty; real local Graph retirement is a separate factory-owned callback with actual IO/work checks."
+        },
+        "original_dispatch_observation": {
+          "status": "TEST_SOURCE_ONLY_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-application-worker-source/original-dispatch-observation.evidence.json",
+          "sha256": "515ac78eca17c9d726ad3e6c7aecb633b5318e42dbe8d6ce3538c555616648ce",
+          "scope": "Correct original Worker regression fixture: isolated real first-dispatch observation, no false terminal995 cleanup/return claim; bounded Graph retirement source audit."
+        },
+        "active_build_helpers": {
+          "status": "TOOLING_SOURCE_ONLY_NOT_EXECUTED",
+          "path": "outputs/dll-link-gate-source/link-preparation.evidence.json",
+          "sha256": "054f69e149cd2adf455446182a6f3b020625a33d2eccf4ddebd39df1078925f9",
+          "scope": "Prepare active verified rebuild/link/package helpers for real source-defined loader entry, actual DLL hash/readiness and per-run history; no helper execution."
+        },
+        "native_message_jobs": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-resources-factory-source/native-message-jobs.evidence.json",
+          "sha256": "cee0ee1ad7a19cea48d4ed6786c836362fb0e7a7fceb7b2c5802852f143a3394",
+          "scope": "Actual Image now selects existing NativeJobs instead of falling through to Profile default InlineJobs; same-Domain NativeThreads prepared on controller, Jobs created on server worker."
+        },
+        "startup_log_flag": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-application-worker-source/startup-log-flag.evidence.json",
+          "sha256": "4b3ece15ca7ca7bbd3d50135bb258be3ff9d2a0c515739a70b3ebb6b3d7d2644",
+          "scope": "Wire actual Runtime startup ShowLSX cell through Backend view to original Worker Graph before message execution; preserve other configured profiles."
+        }
+      },
+      "original_detach_profile_audit": {
+        "path": "outputs/dll-critical-path/original-detach-profile.audit.json",
+        "sha256": "61e5424ce5c997d2f098e7c7c6a45d322958a7d2eda7afcc1e5f8269037a8507"
+      },
+      "title": "\u00d6zg\u00fcn senkron attach i\u00e7in ger\u00e7ek image Resources fabrikas\u0131",
+      "historical_baseline": {
+        "status": "SOURCE_IMPLEMENTED_PENDING_BUILD",
+        "class": "missing_binding",
+        "description_tr": "\u0130ki loader helper kaynakta tan\u0131ml\u0131. Attach ger\u00e7ek kal\u0131c\u0131 native Image/Domain/Resources/Runtime sahipli\u011fiyle senkron ApplicationEntry \u00e7a\u011f\u0131r\u0131yor; detach \u00f6zg\u00fcn reason0 gibi ek i\u015flem yapm\u0131yor. Yeni kaynak hen\u00fcz derlenmedi/linklenmedi; loader/runtime davran\u0131\u015f\u0131 do\u011frulanmad\u0131."
+      },
+      "current_source_review": {
+        "status": "SOURCE_REVIEW_ONLY",
+        "path": "outputs/dll-critical-path/current-source-route-review.evidence.json",
+        "sha256": "b936d8c86e35674dd91e642b81648b847fa40b14d20aa621544133594c7e4809",
+        "scope": "Bounded current Image/Worker/native message route review and correction of historical missing-code descriptions; no C++ or test source changes."
+      },
+      "source_evidence_scope": "Older entries retained as historical stage references; current_source_review describes current selected-source status."
+    },
+    {
+      "id": "aggregate-lifetime",
+      "class": "native_equivalence_unknown",
+      "description_tr": "Se\u00e7ili state/initial cells/storage/normal teardown projeksiyonlar\u0131 kaynakta mevcut. Tam native aggregate/CRT/EH ABI ve Image teardown e\u015fde\u011ferli\u011fi do\u011frulanmad\u0131.",
+      "status": "SELECTED_SOURCE_IMPLEMENTED_NATIVE_ABI_UNVERIFIED",
+      "blocks": "production-composition",
+      "depends_on": [],
+      "native_addresses": [
+        "0x180001390",
+        "0x180036d20",
+        "0x18007e0c0",
+        "0x180037f70"
+      ],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-config-defaults-source/defaults.hpp",
+          "line": 7,
+          "sha256": "8bbc25f4e3eb45469a653cb8746465adfe7d3b6365b5612d157ebec0fa4c9ef8",
+          "anchor": "enclosing MSVC aggregate"
+        },
+        {
+          "path": "outputs/anadius-config-defaults-source/README.md",
+          "line": 33,
+          "sha256": "f9735922ac987c94ae642b84394ccab29509a16805aea65620a5d6b786c0edd3",
+          "anchor": "Enclosing MSVC aggregate"
+        }
+      ],
+      "selected_progress": {
+        "map": "outputs/dll-critical-path/aggregate-map.json",
+        "path_binding_evidence": "outputs/anadius-achievement-storage-source/path_binding.evidence.json",
+        "closed_scope": "+138 authentication,+408/+4a8 paths,+428 mutex bindings; selected normal037f70 storage order and observed036d20 defaults into actual owning Runtime",
+        "remaining": "Current selected providers exist in source. See current_source_review for validation limits; earlier progress entries retain their historical scope.",
+        "authentication_binding_evidence": "outputs/anadius-license-source/auth_state.evidence.json",
+        "mutex_binding_evidence": "outputs/anadius-achievement-runtime-source/mutex_binding.evidence.json",
+        "normal_teardown_evidence": "outputs/anadius-config-defaults-source/teardown.evidence.json",
+        "observed_constructor_binding_evidence": "outputs/anadius-bootstrap-runtime-source/observed_runtime.evidence.json",
+        "fresh_outside_runtime_evidence": "outputs/anadius-initial-cells-source/runtime.evidence.json"
+      },
+      "historical_baseline": {
+        "status": "OPEN",
+        "class": "missing_algorithm_or_model",
+        "description_tr": "036d20 yaln\u0131z 41 configuration alan\u0131na projekte edilmi\u015f; \u00e7evre aggregate, mutex/module/storage ve tam 037f70 y\u0131k\u0131m\u0131 kurulmu\u015f de\u011fil. 07e0c0\u2192037f70 ba\u011f\u0131 bu incelemede iki talimatla do\u011fruland\u0131."
+      },
+      "current_source_review": {
+        "status": "SOURCE_REVIEW_ONLY",
+        "path": "outputs/dll-critical-path/current-source-route-review.evidence.json",
+        "sha256": "b936d8c86e35674dd91e642b81648b847fa40b14d20aa621544133594c7e4809",
+        "scope": "Bounded current Image/Worker/native message route review and correction of historical missing-code descriptions; no C++ or test source changes."
+      },
+      "source_evidence_scope": "Older entries retained as historical stage references; current_source_review describes current selected-source status."
+    },
+    {
+      "id": "configuration-key",
+      "class": "missing_algorithm",
+      "description_tr": "02a830 g\u00f6vdesi ve native Configuration \u00fczerinden ger\u00e7ek Runtime State ba\u011flant\u0131s\u0131 odakl\u0131 testte ge\u00e7ti. Native ABI/loader ve t\u00fcm Resources kurulumu kapanm\u0131\u015f say\u0131lmaz.",
+      "status": "CLOSED_IN_SELECTED_SOURCE_ROUTE",
+      "blocks": "production-composition",
+      "depends_on": [],
+      "native_addresses": [
+        "0x18002a830"
+      ],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-configuration-factory-source/factory.hpp",
+          "line": 13,
+          "sha256": "d612623742cb5d32c50246b5d274a66275f139d9789439e3d3869e6908cda5c5",
+          "anchor": "virtual void apply"
+        },
+        {
+          "path": "outputs/anadius-config-source/configuration.cpp",
+          "line": 149,
+          "sha256": "a2a2fa7980ddeeaece163b705213bdc5adfff48ae149ec39a122850032e25f6c",
+          "anchor": "deps.apply_license_key_02a830"
+        },
+        {
+          "path": "outputs/anadius-token-source/token.cpp",
+          "line": 28,
+          "sha256": "fba652fd5f6027ac2d0988237bac10f4cefc9a74fceecc2554667b8484fee020",
+          "anchor": "cipher.set_key_and_iv_042760"
+        }
+      ],
+      "implementation_evidence": "outputs/anadius-license-source/key_binding.evidence.json"
+    },
+    {
+      "id": "legacy-config",
+      "class": "bounded_legacy_route",
+      "description_tr": "Ger\u00e7ek image FilePass/read_config2 ve tam collection/hash yolunu kullan\u0131yor. Scalar load_document k\u0131s\u0131t\u0131 a\u00e7\u0131k HOST k\u00f6pr\u00fcs\u00fcne ait; bunu se\u00e7en \u00f6zg\u00fcn cfg/dialect yolu bulunmad\u0131. T\u00fcm cfg/native input e\u015fde\u011ferli\u011fi ayr\u0131ca do\u011frulanmal\u0131d\u0131r.",
+      "status": "HOST_BRIDGE_LIMIT_NOT_A_SELECTED_NATIVE_CFG_GAP",
+      "blocks": "production-composition",
+      "depends_on": [],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-configuration-factory-source/factory.hpp",
+          "line": 18,
+          "sha256": "d612623742cb5d32c50246b5d274a66275f139d9789439e3d3869e6908cda5c5",
+          "anchor": "virtual configuration::Node read"
+        },
+        {
+          "path": "outputs/anadius-config-startup-source/startup.cpp",
+          "line": 4,
+          "sha256": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88",
+          "anchor": "FilePass"
+        }
+      ],
+      "selected_progress": {
+        "configuration_console_evidence": "outputs/anadius-resources-factory-source/configuration.evidence.json",
+        "closed_scope": "Concrete active FilePass/Configuration/Persistence/CompilerConsole selected in actual Runtime; legacy reader remains explicit and was not invoked.",
+        "remaining": "Current selected providers exist in source. See current_source_review for validation limits; earlier progress entries retain their historical scope."
+      },
+      "historical_baseline": {
+        "status": "OPEN",
+        "class": "missing_binding",
+        "description_tr": "LegacyDocumentReader zorunlu constructor girdisi; aktif FilePass bu legacy rotay\u0131 atl\u0131yor. Parser yoklu\u011fu olarak say\u0131lmamal\u0131."
+      },
+      "current_source_review": {
+        "status": "SOURCE_REVIEW_ONLY",
+        "path": "outputs/dll-critical-path/current-source-route-review.evidence.json",
+        "sha256": "b936d8c86e35674dd91e642b81648b847fa40b14d20aa621544133594c7e4809",
+        "scope": "Bounded current Image/Worker/native message route review and correction of historical missing-code descriptions; no C++ or test source changes."
+      },
+      "source_evidence_scope": "Older entries retained as historical stage references; current_source_review describes current selected-source status.",
+      "latest_input_route_audit": {
+        "path": "outputs/dll-critical-path/legacy-config-input-route-audit-20261105.md",
+        "sha256": "77a2cc1ef33b7c80b09e7ae665f79b890ff3c56a3fc9d926afc580c0faee7ca0"
+      }
+    },
+    {
+      "id": "library-phases",
+      "class": "missing_binding",
+      "description_tr": "BoundLibrary t\u00fcm7 Effects metodunu lower olmadan sa\u011fl\u0131yor; Backend ayn\u0131 Execution/libraries_ready referanslar\u0131n\u0131 ba\u011fl\u0131yor. Mevcut LibraryExecution path-sync s\u0131ras\u0131 korunuyor. Legacy wrapper yolu ayr\u0131ca destekleniyor.",
+      "status": "CLOSED_IN_SELECTED_SOURCE_ROUTE",
+      "blocks": "production-composition",
+      "depends_on": [],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-library-effects-source/effects.cpp",
+          "line": 11,
+          "sha256": "4817011c56a72114d178e7b535a2b6c61ec3026c65ecbc226faed597ca3adb54",
+          "anchor": "!lower_"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+          "line": 59,
+          "sha256": "72713547523dcf06f2e9824778d89965e7b86d67b0a6c14222eaf0b71448f7da",
+          "anchor": "execution_.wait_steps_036880(c);sync_paths"
+        }
+      ],
+      "implementation_evidence": "outputs/anadius-resources-factory-source/factory.evidence.json"
+    },
+    {
+      "id": "resource-assembly",
+      "class": "source_validation_pending",
+      "description_tr": "Actual Image/Domain/configuration/console/host/Online/Worker ve NativeJobs se\u00e7imi kaynakta mevcut. SDK/loader/native davran\u0131\u015f sonu\u00e7lar\u0131 do\u011frulanmad\u0131; original profil i\u00e7in ek cooperative foreign proof gerekli say\u0131lmaz.",
+      "status": "COMPILED_AND_LINKED_NATIVE_RUNTIME_UNVERIFIED",
+      "blocks": "production-composition",
+      "depends_on": [
+        "configuration-key",
+        "legacy-config",
+        "library-phases",
+        "graph-leaves",
+        "online-lifetime"
+      ],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+          "line": 94,
+          "sha256": "72c0dcdf15bbdae395e17a6089277b5635bd2ef8334e1025dacab35f2646b838",
+          "anchor": "struct Resources"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+          "line": 62,
+          "sha256": "3828d09fbccad14dc04882726eb5bc7d60c76e452814c2e09f5b492c6c90f289",
+          "anchor": "Prepared prepare"
+        },
+        {
+          "path": "outputs/anadius-thread-domain-source/domain.hpp",
+          "line": 43,
+          "sha256": "6d5ca4b69c908862c742b0247b3547c5c8ae8f5eb47ec2940e24ad52de220932",
+          "anchor": "class DomainStorage"
+        }
+      ],
+      "selected_progress": {
+        "evidence": "outputs/anadius-resources-factory-source/factory.evidence.json",
+        "closed_scope": "Actual common Resources installer and real Runtime/3Domainworkers/concrete3provider pipeline with explicit synthetic configuration/host/socket boundaries",
+        "remaining": "Current selected providers exist in source. See current_source_review for validation limits; earlier progress entries retain their historical scope.",
+        "host_assembly_evidence": "outputs/anadius-host-platform-source/assembly.evidence.json",
+        "source_stop_evidence": "outputs/anadius-host-platform-source/source_stop.evidence.json",
+        "native_initial_cells_evidence": "outputs/anadius-initial-cells-source/defaults.evidence.json",
+        "fresh_runtime_defaults_evidence": "outputs/anadius-initial-cells-source/runtime.evidence.json",
+        "worker_native_defaults_evidence": "outputs/anadius-initial-cells-source/worker.evidence.json",
+        "configuration_console_evidence": "outputs/anadius-resources-factory-source/configuration.evidence.json",
+        "module_reference_evidence": "outputs/anadius-module-reference-source/evidence.json",
+        "permanent_errors_evidence": "outputs/anadius-permanent-errors-source/evidence.json",
+        "initial_domain_factory_evidence": "outputs/anadius-thread-domain-source/factory.evidence.json",
+        "owned_engine_evidence": "outputs/hook-engine-source/owned.evidence.json",
+        "pre_unload_evidence": "outputs/anadius-pre-unload-source/evidence.json",
+        "worker_stop_source_binding": "outputs/anadius-application-worker-source/stop-binding.evidence.json",
+        "worker_stop_status": "IMPLEMENTED_SOURCE_ONLY; same controller Stop request/Runtime pointer, not compiled or run. Independent external admission/raw-job proof and kernel packet finality still required.",
+        "source_stop_admission_binding": "outputs/anadius-resources-factory-source/stop-admission-binding.evidence.json",
+        "source_stop_admission_status": "IMPLEMENTED_SOURCE_ONLY: exact Domain receipt AND mandatory independent work proof composed into selected Worker Stop. Not compiled/run; external work/image/loader obligations remain open.",
+        "raw_message_worker": {
+          "status": "OPEN",
+          "evidence": "outputs/anadius-owned-jobs-source/join-exception.evidence.json",
+          "implemented": "SOURCE_ONLY physical join unknown wait/close outcome retention",
+          "missing": "Authorized compiler/runtime verification of 66 pending sources; full aggregate detached-child/controller scenario and real socket/FLS/module lifetime coverage; production loader hooks and CRT/image/foreign finality. Combined Worker physical-close scenario source now present, unverified.",
+          "job_memory_capability": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+            "evidence": "outputs/anadius-worker-handoff-source/job-memory.evidence.json",
+            "scope": "Backing-memory offer/actual child-thread finality only, no Parent/Profile/Graph admission yet."
+          },
+          "job_parent_operation": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+            "evidence": "outputs/anadius-session-memory-source/job-parent.evidence.json",
+            "scope": "Exact backing JobScope pins whole Parent only. No Profile/Graph/Policy eligibility."
+          },
+          "profile_job_identity_handoff": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+            "evidence": "outputs/anadius-session-profile-source/job-handoff.evidence.json",
+            "scope": "Exact source/closure/session claim and child identity inspection only; no message execution."
+          },
+          "scoped_child_deque": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+            "evidence": "outputs/anadius-owned-deque-source/job-deque.evidence.json",
+            "scope": "Live JobHandoff exact queue -> expiring Parent permit -> existing026670; no message dispatch."
+          },
+          "scoped_child_environment": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+            "evidence": "outputs/anadius-owned-environment-source/job-environment.evidence.json",
+            "scope": "Exact JobHandoff/expiring Parent permit/protected session projection -> existing023dd0 clone/query/destroy; no scheduling/message execution."
+          },
+          "scoped_child_policy_cleanup": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+            "evidence": "outputs/anadius-session-policy-source/job-exit-cleanup.evidence.json",
+            "scope": "Exact live JobHandoff/Parent permit -> selected concrete Policy -> current-thread owned registry04a47c only; no job completion."
+          },
+          "scoped_child_graph": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+            "evidence": "outputs/anadius-application-graph-source/job-graph.evidence.json",
+            "scope": "Exact session/Parent Graph JobLogic scope around existing033d70; explicit optional Graph->Profile Jobs selection. Leaf and Profile child eligibility still open."
+          },
+          "scoped_child_information": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+            "evidence": "outputs/anadius-information-effects-source/job-information.evidence.json",
+            "scope": "Graph exact JobCall -> concrete Information two child log/UTC calls; lower prepared scenario source only, not full message dispatch."
+          },
+          "scoped_child_content": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+            "evidence": "outputs/anadius-content-effects-source/job-content.evidence.json",
+            "scope": "Graph exact JobCall -> concrete Content synchronous scope with existing file/encoding/Online checks. Lower prepared source NOT RUN; no full message dispatch."
+          },
+          "scoped_child_licensing": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+            "evidence": "outputs/anadius-licensing-effects-source/job-licensing.evidence.json",
+            "scope": "Exact Graph JobCall -> concrete Core/Handlers synchronous scopes, known/control separation and guarded raw input retention. Lower prepared source NOT RUN; no full child Profile message dispatch."
+          },
+          "scoped_child_profile_pipeline": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+            "evidence": "outputs/anadius-session-profile-source/job-pipeline.evidence.json",
+            "scope": "Exact JobHandoff selects child Graph JobLogic033d70/current-child04a47c, retains prepared result, original complete_job/after_completion consumes response/021770 cleanup without replay. Selected HOST staged policy; no full prepared fixture or native scheduler."
+          },
+          "selected_native_jobs": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_AWAITING_EXPLICIT_BUILD",
+            "evidence": "outputs/anadius-owned-jobs-source/native-jobs.evidence.json",
+            "scope": "Explicit NativeJobs exact handoff/recovered thread start/detach barrier, HOST receipt/work pin and original response continuation, outside-Parent wait maintenance and physical wait/FLS reaping.15sources STATIC ONLY; no complete prepared fixture or executed evidence."
+          },
+          "prepared_native_fixture": {
+            "status": "SOURCE_TEST_SCENARIOS_ADDED_NOT_EXECUTED",
+            "evidence": "outputs/anadius-application-graph-source/prepared-native-fixture.evidence.json",
+            "positive_prepared_graph_profile_test_source_present": true,
+            "scope": "Source-only70mixed-message capacity1 prepared Graph/Profile/NativeJobs scenario +4retained-prefix modes; concrete providers and deterministic independent physical proof joins. NOT RUN; no runtime/ABI/finality proof."
+          },
+          "prepared_native_delayed_exit": {
+            "status": "SOURCE_TEST_SCENARIO_ADDED_NOT_EXECUTED",
+            "evidence": "outputs/anadius-application-graph-source/prepared-native-delayed-exit.evidence.json",
+            "scope": "First receipt consumed while child gated before ExitThread; source retired/native row retained, outside-Parent false drain, exact one work decrement, then release/join/capacity1 reuse. NOT RUN."
+          },
+          "known_close_retry": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_NOT_EXECUTED",
+            "evidence": "outputs/anadius-application-graph-source/native-close-retry.evidence.json",
+            "scope": "Fix Graph poisoning on normally false owned-server quiescence; explicit same-worker pending teardown retry. Early-stop/late-Policy-close/opaque-exception scenarios NOT RUN. Upper Worker remains terminal on any exception."
+          },
+          "worker_close_continuation": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_NOT_EXECUTED",
+            "evidence": "outputs/anadius-application-worker-source/close-continuation.evidence.json",
+            "scope": "Optional finite-budget same-worker Proxy pending-teardown continuation, exact controller epoch wake, default disabled; two production files and five isolated scenario sources NOT RUN. Production stop/join selection remains open."
+          },
+          "worker_join_continuation_binding": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_NOT_EXECUTED",
+            "evidence": "outputs/anadius-application-worker-source/join-binding.evidence.json",
+            "scope": "Optional SourceBackend prepare_join seam -> same-controller current epoch wake -> wait0 tracker seal/poll/false -> independent later native joins/source drain/finish; full Runtime scenario source NOT RUN, default policy unchanged."
+          },
+          "prepared_receipt_stop_deferral": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_NOT_EXECUTED",
+            "evidence": "outputs/anadius-server-runtime-source/prepared-stop-drain.evidence.json",
+            "scope": "Opt-in finite original-run receipt drain before stop; exact one work transfer/resume wake, missing-receipt/resume-post failure sources NOT RUN; prior195 unreachable expectation corrected; remaining session IO explicitly retained."
+          },
+          "prepared_session_io_drain": {
+            "status": "IMPLEMENTED_SOURCE_ONLY_NOT_EXECUTED",
+            "evidence": "outputs/anadius-server-runtime-source/prepared-session-drain.evidence.json",
+            "scope": "Explicit SessionIoPrepared + finite Runtime gate; source jobs, late response and tracked IO receipts drain before stop; original worker only. Synthetic full close/denial/missing-packet scenarios NOT RUN; old scopes/defaults preserved."
+          },
+          "combined_worker_physical_close": {
+            "status": "SOURCE_TEST_SCENARIOS_ADDED_NOT_EXECUTED",
+            "evidence": "outputs/anadius-application-graph-source/worker-physical-close.evidence.json",
+            "scope": "Concrete Worker + managed NativeJobs/SessionIo drain while child gated before ExitThread, two controller close epochs, original provider retirement; success/timeout203 scenario sources NOT RUN.0production sources changed."
+          }
+        },
+        "native_message_jobs": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-resources-factory-source/native-message-jobs.evidence.json",
+          "sha256": "cee0ee1ad7a19cea48d4ed6786c836362fb0e7a7fceb7b2c5802852f143a3394",
+          "scope": "Actual Image now selects existing NativeJobs instead of falling through to Profile default InlineJobs; same-Domain NativeThreads prepared on controller, Jobs created on server worker."
+        },
+        "startup_log_flag": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-application-worker-source/startup-log-flag.evidence.json",
+          "sha256": "4b3ece15ca7ca7bbd3d50135bb258be3ff9d2a0c515739a70b3ebb6b3d7d2644",
+          "scope": "Wire actual Runtime startup ShowLSX cell through Backend view to original Worker Graph before message execution; preserve other configured profiles."
+        }
+      },
+      "current_original_source_profile": "Actual Image/Domain/native configuration/host/Online/Worker and message NativeJobs selection now present in source. Remaining native behavior/ABI/loader/concurrency unknowns are validation scope, not a missing cooperative foreign-proof requirement.",
+      "historical_baseline": {
+        "status": "OPEN",
+        "class": "missing_binding",
+        "description_tr": "Ortak Resources/host/stop/Runtime/Worker, somut configuration/persistence/compiler-console, ek mod\u00fcl referans\u0131, kal\u0131c\u0131 hata politikas\u0131 ve sahip olunan initial-locale Domain kurulumu mevcut. Ger\u00e7ek API/handler/host-code k\u00f6keni, foreign drain ve loader ba\u011flant\u0131s\u0131 a\u00e7\u0131k."
+      },
+      "current_source_review": {
+        "status": "SOURCE_REVIEW_ONLY",
+        "path": "outputs/dll-critical-path/current-source-route-review.evidence.json",
+        "sha256": "b936d8c86e35674dd91e642b81648b847fa40b14d20aa621544133594c7e4809",
+        "scope": "Bounded current Image/Worker/native message route review and correction of historical missing-code descriptions; no C++ or test source changes."
+      },
+      "source_evidence_scope": "Older entries retained as historical stage references; current_source_review describes current selected-source status."
+    },
+    {
+      "id": "graph-leaves",
+      "class": "native_behavior_unknown",
+      "description_tr": "Somut Information/Content/Licensing sa\u011flay\u0131c\u0131lar\u0131 ve \u00e7ocuk mesaj\u0131 yetki yollar\u0131 kaynakta mevcut. Genel native EH, input-domain ve concurrency e\u015fde\u011ferli\u011fi do\u011frulanmad\u0131.",
+      "status": "SELECTED_SOURCE_IMPLEMENTED_NATIVE_BEHAVIOR_UNVERIFIED",
+      "blocks": "production-composition",
+      "depends_on": [],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-application-graph-source/graph.hpp",
+          "line": 31,
+          "sha256": "bc983d04c601b5abb9b2dacd11abecb64df6b62fbca06213bb89470933f61e53",
+          "anchor": "std::shared_ptr<handlers_recovered::Effects> information"
+        },
+        {
+          "path": "outputs/anadius-content-handlers-source/content_handlers.hpp",
+          "line": 66,
+          "sha256": "3d7e56eac5fe80d0a76cec2baa7a160dc7a2e32d06b1d2fb18ff006cdc514ba7",
+          "anchor": "online_avatar_virtual_28"
+        },
+        {
+          "path": "outputs/anadius-license-source/license.hpp",
+          "line": 34,
+          "sha256": "a949a169740b5bce16398f18f39a8f13a9d9065e343509c3791dca9e03816c36",
+          "anchor": "online_auth_virtual_30"
+        }
+      ],
+      "selected_progress": {
+        "evidence": "outputs/anadius-online-query-source/application_calls.evidence.json",
+        "closed_scope": "Concrete provider bodies plus actual Worker post-configure composition, automatic Backend owned-Online binding, root paths/auth references and worker facade retirement",
+        "remaining": "Current selected providers exist in source. See current_source_review for validation limits; earlier progress entries retain their historical scope.",
+        "content_provider_evidence": "outputs/anadius-content-effects-source/effects.evidence.json",
+        "information_and_owned_auth_evidence": "outputs/anadius-information-effects-source/effects.evidence.json",
+        "licensing_provider_evidence": "outputs/anadius-licensing-effects-source/effects.evidence.json",
+        "worker_composition_evidence": "outputs/anadius-application-effects-source/factory.evidence.json",
+        "resources_runtime_evidence": "outputs/anadius-resources-factory-source/factory.evidence.json",
+        "no_response_control_evidence": "outputs/anadius-no-response-source/control.evidence.json",
+        "unknown_message_control_evidence": "outputs/anadius-unknown-message-source/control.evidence.json",
+        "native_attempt_defaults_evidence": "outputs/anadius-initial-cells-source/defaults.evidence.json",
+        "worker_avatar_defaults_evidence": "outputs/anadius-initial-cells-source/worker.evidence.json",
+        "misc_message_020a80": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-session-policy-source/misc-message-020a80.evidence.json",
+          "sha256": "d6953e923214b9a24f46d06ce55cc7778d79ed4fb2d989bdbffe54c9c63c76f4",
+          "scope": "Refresh bounded application/IO source mapping; reconstruct and bind exact020a80 asio.misc message values instead of numbered host placeholder."
+        },
+        "error_category_028240": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-owned-server-source/error-category-028240.evidence.json",
+          "sha256": "479788ed6da4ee949fb2e7dc5736e571c71b546ab81f8f70caa352a82dc8b1c2",
+          "scope": "Preserve full typed source error/category/operation and opaque IOCP context through selected028240 OwnedServer exception boundary; share existing020a80 misc category in socket layer."
+        },
+        "error_no_context_028210": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-owned-server-source/error-no-context-028210.evidence.json",
+          "sha256": "0f90f141f2f476b49e7bfd1819f1ed7b1244018c8db7f4e6943f0acfb31e1192",
+          "scope": "Preserve context-free028210 construction at all three retained direct server call sites; keep actual local_endpoint028240 context."
+        },
+        "completion_error_review": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-session-policy-source/completion-error-review.evidence.json",
+          "sha256": "bac84ab583dc2ac704ddf76c2b9556fbc464655cc170347f3523e67f25924fe8",
+          "scope": "Audit025480/025a70 EOF/category/logging composition; correct default025720 prefix using fresh native0845f8 bytes."
+        }
+      },
+      "historical_baseline": {
+        "status": "OPEN",
+        "class": "missing_binding_or_algorithm",
+        "description_tr": "\u00dc\u00e7 somut sa\u011flay\u0131c\u0131 Resources/Runtime ak\u0131\u015f\u0131nda mevcut; native NoResponse ve UnknownMessage yakalama yollar\u0131 ayn\u0131 oturum testinde \u00e7al\u0131\u015f\u0131yor. Genel EH/ger\u00e7ek d\u0131\u015f ya\u015fam d\u00f6ng\u00fcs\u00fc a\u00e7\u0131k."
+      },
+      "current_source_review": {
+        "status": "SOURCE_REVIEW_ONLY",
+        "path": "outputs/dll-critical-path/current-source-route-review.evidence.json",
+        "sha256": "b936d8c86e35674dd91e642b81648b847fa40b14d20aa621544133594c7e4809",
+        "scope": "Bounded current Image/Worker/native message route review and correction of historical missing-code descriptions; no C++ or test source changes."
+      },
+      "source_evidence_scope": "Older entries retained as historical stage references; current_source_review describes current selected-source status."
+    },
+    {
+      "id": "online-lifetime",
+      "class": "native_lifetime_unknown",
+      "description_tr": "Actual module-reference sa\u011flay\u0131c\u0131s\u0131 ve OriginalCrt online se\u00e7imi kaynakta mevcut. Native mapping/vtable/SDK ve teardown davran\u0131\u015flar\u0131 do\u011frulanmad\u0131; ek foreign callback \u00fcretim biti\u015f \u015fart\u0131 de\u011fildir.",
+      "status": "SELECTED_SOURCE_IMPLEMENTED_NATIVE_BEHAVIOR_UNVERIFIED",
+      "blocks": "production-behavior-and-unload",
+      "depends_on": [],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-online-factory-source/factory.hpp",
+          "line": 20,
+          "sha256": "938c8409d9d345d6571a4d1c9768af5bed24a7a42f4d6037c6221cc8079161e4",
+          "anchor": "online_version::CodeLease code_lease"
+        },
+        {
+          "path": "outputs/anadius-online-factory-source/factory.hpp",
+          "line": 27,
+          "sha256": "938c8409d9d345d6571a4d1c9768af5bed24a7a42f4d6037c6221cc8079161e4",
+          "anchor": "foreign_quiescent"
+        }
+      ],
+      "selected_progress": {
+        "module_reference_evidence": "outputs/anadius-module-reference-source/evidence.json",
+        "closed_scope": "Concrete exact-base FROM_ADDRESS reference provider; real OWN fixture retention/unload+Binding object lifecycle; actual Resources uses selected provider with controlled SDK.",
+        "remaining": "Current selected providers exist in source. See current_source_review for validation limits; earlier progress entries retain their historical scope.",
+        "owned_engine_evidence": "outputs/hook-engine-source/owned.evidence.json"
+      },
+      "historical_baseline": {
+        "status": "OPEN",
+        "class": "external_contract_unverified",
+        "description_tr": "Online i\u00e7in ger\u00e7ek Win32 ek-mod\u00fcl-referans sa\u011flay\u0131c\u0131s\u0131 se\u00e7ilebilir ve kendi sentetik DLL \u00fczerinde do\u011fruland\u0131. Forwarded/vtable kod k\u00f6keni, ger\u00e7ek foreign drain ve loader ba\u011flam\u0131 h\u00e2l\u00e2 d\u0131\u015f s\u00f6zle\u015fme."
+      },
+      "current_source_review": {
+        "status": "SOURCE_REVIEW_ONLY",
+        "path": "outputs/dll-critical-path/current-source-route-review.evidence.json",
+        "sha256": "b936d8c86e35674dd91e642b81648b847fa40b14d20aa621544133594c7e4809",
+        "scope": "Bounded current Image/Worker/native message route review and correction of historical missing-code descriptions; no C++ or test source changes."
+      },
+      "source_evidence_scope": "Older entries retained as historical stage references; current_source_review describes current selected-source status."
+    },
+    {
+      "id": "host-startup",
+      "class": "native_behavior_unknown",
+      "description_tr": "Actual statik NativeApi/OwnedEngine ve original per-hook create yay\u0131m\u0131 kaynakta mevcut. Native callback concurrency, mapping ve loader davran\u0131\u015flar\u0131 do\u011frulanmad\u0131; all-ready aktivasyon bariyeri original yolun \u015fart\u0131 de\u011fildir.",
+      "status": "SELECTED_SOURCE_IMPLEMENTED_NATIVE_BEHAVIOR_UNVERIFIED",
+      "blocks": "production-composition",
+      "depends_on": [],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-foreign-callback-source/foreign.cpp",
+          "line": 30,
+          "sha256": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4",
+          "anchor": "void Domain::begin()"
+        },
+        {
+          "path": "outputs/anadius-foreign-callback-source/foreign.cpp",
+          "line": 38,
+          "sha256": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4",
+          "anchor": "(void)activate_foreign();"
+        },
+        {
+          "path": "outputs/anadius-startup-publication-source/publication.cpp",
+          "line": 13,
+          "sha256": "8b3136826699324edd0f0a44ee9b44927cc5617f180753828be5844c04cbc5bf",
+          "anchor": "void Milestones::published"
+        },
+        {
+          "path": "outputs/anadius-source/bootstrap.cpp",
+          "line": 39,
+          "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+          "anchor": "deps_.between_workers_00e310()"
+        }
+      ],
+      "selected_progress": {
+        "evidence": "outputs/anadius-host-platform-source/assembly.evidence.json",
+        "closed_scope": "Selected owning Resources host/hook/native callback pairing, real sameDomain callback and cleanup retry test.",
+        "remaining": "Current selected providers exist in source. See current_source_review for validation limits; earlier progress entries retain their historical scope.",
+        "source_stop_evidence": "outputs/anadius-host-platform-source/source_stop.evidence.json",
+        "native_initial_cells_evidence": "outputs/anadius-initial-cells-source/defaults.evidence.json",
+        "owned_engine_evidence": "outputs/hook-engine-source/owned.evidence.json",
+        "original_connect_concurrency": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-foreign-callback-source/original-connect-concurrency.evidence.json",
+          "sha256": "d1ff950ebd2267b9dbc12a1a91861f1742a2666fc60666d13064b6ba2f19f80b",
+          "scope": "Original-profile concurrent untouched00fd00 SDK route while a callback is active; no shared body/PTD permission. Bounded greeting/achievement/literal review and full current source-presence map."
+        },
+        "original-web-concurrency": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-foreign-callback-source/original-web-concurrency.evidence.json",
+          "sha256": "ce26b5500ba6fe7aa0299784e250978da384bdebbfd27fbe827d3d35caaaa3be",
+          "scope": "Original concurrent nonredirecting80/443 connect lane uses exact actual bound-port publication plus per-hook successful-create receipt; ordinary, Cooperative, matching-port and non-web routes retained."
+        },
+        "original-wait-concurrency": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-foreign-callback-source/original-wait-concurrency.evidence.json",
+          "sha256": "948382fcfab6d2638102f754c79d3e1cc48eb61c5f93fa8ead8f34f2250442b9",
+          "scope": "Original concurrent non-web nonredirecting connect calls retain actual036880(-1) wait-only phase, then recheck same bound-port/hook publication before exact SDK permission; no private callback PTD or synthetic completion."
+        },
+        "original-redirect-concurrency": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-foreign-callback-source/original-redirect-concurrency.evidence.json",
+          "sha256": "af247f392b81803ea7478d2d88709bff6c2ac2463d73b24dce3ccbd89bf53b33",
+          "scope": "Original counted connect phases now retain native non-web wait including3216 and select actual redirect body before SDK; transient lock-free relaxed counter load/store preserves cached EAX terminal15. Three fresh native subagent audits integrated, seven production and two test sources changed."
+        },
+        "original-live-server-port": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-foreign-callback-source/original-live-server-port.evidence.json",
+          "sha256": "a3bbeeb2df3e9b94124fe0a74e78122ae2d23e05d7626bd13afa12d445242899",
+          "scope": "Original connect binds exact stable live uint16 configuration cell before Context publication, uses relaxed coherent server/connect accesses and independent native decision/log/final reads; removes cold-web snapshot fallback and post-route equality constraint. Eleven production and two test sources changed; no compiler/runtime validation."
+        },
+        "original-pure-forward": {
+          "status": "SOURCE_IMPLEMENTED_NOT_COMPILED_OR_EXECUTED",
+          "path": "outputs/anadius-foreign-callback-source/original-pure-forward.evidence.json",
+          "sha256": "b43aadfd617bbda5e223e09812533975c8dccde69f4ea55fa46aed856ed47067",
+          "scope": "Six argument-only Original callbacks dispatch through existing typed OriginalEffects under counted automatic nested frames that mask parent general/wait/body permissions and restore exact actor state. Four production and two test sources changed; no new SDK-only phase gate, shared-set concurrency or compiler/runtime validation."
+        }
+      },
+      "historical_baseline": {
+        "status": "OPEN",
+        "class": "missing_binding",
+        "description_tr": "Somut host/callback kurulumu ve ayn\u0131 motor/code sahibi mevcut. Yeni guard ba\u015far\u0131s\u0131z motor temizli\u011fi sonras\u0131nda d\u0131\u015f true s\u00f6z\u00fcne ra\u011fmen Context kapan\u0131\u015f\u0131n\u0131 engelliyor. Ger\u00e7ek mapped-code k\u00f6keni, foreign drain, activation scheduling ve loader ba\u011flam\u0131 a\u00e7\u0131k."
+      },
+      "current_source_review": {
+        "status": "SOURCE_REVIEW_ONLY",
+        "path": "outputs/dll-critical-path/current-source-route-review.evidence.json",
+        "sha256": "b936d8c86e35674dd91e642b81648b847fa40b14d20aa621544133594c7e4809",
+        "scope": "Bounded current Image/Worker/native message route review and correction of historical missing-code descriptions; no C++ or test source changes."
+      },
+      "source_evidence_scope": "Older entries retained as historical stage references; current_source_review describes current selected-source status."
+    },
+    {
+      "id": "detach-and-hooks",
+      "class": "native_teardown_unknown",
+      "description_tr": "Original038870 reason0 gibi application detach ek i\u015flem yapmaz. Compiler CRT source exit s\u0131ras\u0131 korunur; tam native teardown/live FreeLibrary davran\u0131\u015f\u0131 do\u011frulanmad\u0131. Ek g\u00fcvenli unload protokol\u00fc eklenmez.",
+      "status": "SOURCE_DEFINED_NATIVE_TEARDOWN_UNVERIFIED",
+      "blocks": "production-behavior-and-unload",
+      "depends_on": [
+        "entry-lifecycle",
+        "host-startup"
+      ],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-network-hook-source/hook_cleanup.cpp",
+          "line": 3,
+          "sha256": "a0dc1b5726b78abad8066537f1b4abc45e0a9245da9bdac425a0aafa30da050b",
+          "anchor": "cleanup_hooks_0102b0"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+          "line": 71,
+          "sha256": "3e09b48ef634b7fd02ff7002659870f67eef3e5de09c25ff8a5e02a88ffcf887",
+          "anchor": "bool RuntimeOwner::close()"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-runtime-source/callbacks.hpp",
+          "line": 23,
+          "sha256": "0f15b4031dc4e71f32e52c0ef6b7061fb1ec8c9e0b2c7df424f0ee4fd72d13e4",
+          "anchor": "class CallbackRegistry"
+        }
+      ],
+      "historical_baseline": {
+        "status": "OPEN",
+        "class": "external_contract_unverified",
+        "description_tr": "Cleanup d\u00f6n\u00fc\u015f\u00fc hooks-disabled kan\u0131t\u0131 de\u011fil. FreeLibrary, process termination ve ba\u015far\u0131s\u0131z attach ayr\u0131 ele al\u0131nmal\u0131; kaynak lease s\u0131f\u0131r\u0131 Errors/thunk epilogue \u00f6mr\u00fcn\u00fc kan\u0131tlamaz."
+      },
+      "current_source_review": {
+        "status": "SOURCE_REVIEW_ONLY",
+        "path": "outputs/dll-critical-path/current-source-route-review.evidence.json",
+        "sha256": "b936d8c86e35674dd91e642b81648b847fa40b14d20aa621544133594c7e4809",
+        "scope": "Bounded current Image/Worker/native message route review and correction of historical missing-code descriptions; no C++ or test source changes."
+      },
+      "source_evidence_scope": "Older entries retained as historical stage references; current_source_review describes current selected-source status."
+    },
+    {
+      "id": "native-message-progress",
+      "class": "confirmed_source_behavior_gap",
+      "status": "PARENT_IO_FOUNDATIONS_IMPLEMENTED_ACTUAL_PARALLEL_ROUTE_PENDING",
+      "description_tr": "Parent actor ve sabit IO owner temelleri kaynakta tamamland\u0131; ger\u00e7ek \u00fcretim yolu Serialized kal\u0131yor. Strings/Deque/header, mesaj ba\u015f\u0131na \u00fcst katmanlar ve NativeJobs ger\u00e7ek se\u00e7im/entegrasyon olmadan A diyalo\u011fu s\u00fcrerken B yan\u0131t\u0131 fark\u0131 kapanm\u0131\u015f say\u0131lmaz. Ayn\u0131-session ve ayr\u0131-session plaintext \u00f6rnekleri zorunlu; sabit metadata pointer payload e\u015fzamanl\u0131l\u0131\u011f\u0131 kan\u0131t\u0131 de\u011fildir.",
+      "blocks": "original-message-interleaving-fidelity",
+      "source_plan": {
+        "path": "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/remaining-integration.json",
+        "sha256": "84c7e0f9c4f6e9a2f3ee43334872ce46a99d3f5181383ef7976f62f5b0feff43"
+      },
+      "native_evidence": {
+        "path": "outputs/anadius-session-memory-source/parallel-frame-admission-20261105/native-evidence-index.json",
+        "sha256": "7e029217e996cc8a7c2990ccfa80d0087383bd116408b7ceb7e3e209540c5224"
+      },
+      "lower_source_evidence": {
+        "path": "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/evidence.json",
+        "sha256": "f93751e53ea7e6a190545a4b319be4535e92110fad5a68c46c4934326c08240c"
+      }
+    }
+  ],
+  "native_selection": [
+    {
+      "address": "0x18002a830",
+      "definitions": [],
+      "pseudo_evidence": "ev_f896d1d300fedafcee6570b765c7cecc78a5c0ae23182cea35a454ec6d0199a7",
+      "assembly_evidence": "ev_15aca81fc2f57a75ce4a92b8ce30822f78fa1d0cee3366522019ef53c167e64e",
+      "presence_at_B54": "no_definition_mapping",
+      "current_pending_presence": "body_implemented_and_target_compiled",
+      "current_pending_definition": "anadius-license-source/key_processor.cpp"
+    },
+    {
+      "address": "0x18002af30",
+      "presence": "source_definition_mapped",
+      "definitions": [
+        {
+          "file": "anadius-license-source/license.cpp",
+          "symbol": "Handlers::token_path_02af30"
+        }
+      ],
+      "pseudo_evidence": "ev_a3e5ae032e3e308b95adb084795bc14e06bb970454ba2a3735f6cfe2057a72cd",
+      "assembly_evidence": "ev_b045aa79b4f2c1fabb580b482f52edf099392dda05721838cf45876772a166ec"
+    },
+    {
+      "address": "0x180036d20",
+      "presence": "no_definition_mapping",
+      "definitions": [],
+      "pseudo_evidence": "ev_0afb3b90dc9b59c4a3af0186fd6c29a0737d49e946a887f4b80f3f9dab0ad3d8",
+      "assembly_evidence": "ev_9499218ae591f1b20f05c73a1d096cc0653227eb0b1b87bff8348d5859aadaa9"
+    },
+    {
+      "address": "0x180037f70",
+      "presence": "no_definition_mapping",
+      "definitions": [],
+      "pseudo_evidence": "ev_c03fec66056719abadb29e535fb59a20827bd1c74e0bbe959590c8170e39714b",
+      "assembly_evidence": "ev_2ec7531b888601db062b01ddc9b261926b0bb2a9c39cf12579c0999519e4bb42"
+    },
+    {
+      "address": "0x1800423d0",
+      "presence": "source_definition_mapped",
+      "definitions": [
+        {
+          "file": "anadius-crypto-source/crypto.cpp",
+          "symbol": "CryptoFactory::create_0423d0"
+        },
+        {
+          "file": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "construct_session_cipher_0423d0"
+        },
+        {
+          "file": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "SessionCipherFactory::create_0423d0"
+        }
+      ],
+      "pseudo_evidence": "ev_5faa15cdd4a0e251b11f4a4b841a7d36cb933d79a06a0a53b3bd926fb86c2613",
+      "assembly_evidence": "ev_1a5eecedd9b2929ae9f1e885705987927e1309cc6991de8c01925d839d99ad34"
+    },
+    {
+      "address": "0x180042610",
+      "presence": "source_definition_mapped",
+      "definitions": [
+        {
+          "file": "anadius-crypto-source/crypto.cpp",
+          "symbol": "Cipher::encrypt_042610"
+        },
+        {
+          "file": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "SessionCipher::encrypt_042610"
+        },
+        {
+          "file": "anadius-socket-source/prefix_cipher.cpp",
+          "symbol": "encrypt_prefix_042610"
+        },
+        {
+          "file": "anadius-socket-source/prefix_cipher.cpp",
+          "symbol": "RecoveredMessageCipherApi::encrypt_042610"
+        }
+      ],
+      "pseudo_evidence": "ev_84196222f2218d2b0a060bb317b12da12a77b2f964a5902100ed78e154eb8375",
+      "assembly_evidence": "ev_46790ff61e14371172a73e53871ee23da992983094393729fe2474de81caee15"
+    },
+    {
+      "address": "0x180042760",
+      "presence": "source_definition_mapped",
+      "definitions": [
+        {
+          "file": "anadius-crypto-source/crypto.cpp",
+          "symbol": "Cipher::set_key_and_iv_042760"
+        },
+        {
+          "file": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "set_session_key_iv_042760"
+        },
+        {
+          "file": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "SessionCipher::set_key_and_iv_042760"
+        }
+      ],
+      "pseudo_evidence": "ev_b7191ccefe4f94753ba7877dd859eb4a7530a22a4d086b700584ccf2da34de7e",
+      "assembly_evidence": "ev_997fe5368937536a0756fb50ee6f4d70854abb04ae62c70396ae16dedd5bbafd"
+    }
+  ],
+  "preserve_existing": [
+    "B52 Configuration covered routes",
+    "B53 Remaining eleven routes",
+    "B54 Online twenty-seven routes",
+    "Domain/native threads/default adapters",
+    "Execution phase bodies",
+    "Parser/hash/FilePass",
+    "Tracked IO cancellation/completion"
+  ],
+  "workflow": {
+    "full_build_on_every_step": false,
+    "full_link_on_every_step": false,
+    "repackage_on_every_step": false,
+    "development_checks": "Only changed translation units and dependency consumers, plus focused tests; rebuild affected consumers for header/ABI changes. Do not reuse stale binary interfaces.",
+    "full_regression_triggers": [
+      "A coherent production integration milestone",
+      "A discovered regression affecting broader modules"
+    ],
+    "link_triggers": [
+      "Production loader hook definitions or actual entry assembly changes",
+      "A change to required link dependencies"
+    ],
+    "package_trigger": "Reviewed milestone with an actual useful deliverable",
+    "progress_metric": "Concrete missing algorithm or production dependency closed; test counts do not measure DLL completion."
+  },
+  "first_analysis_completed": "startup-cleanup label relation resolved in native-lifecycle-slice.json",
+  "next_code_candidate": {
+    "status": "CONFIRMED_COHERENT_INTEGRATION_REQUIRED",
+    "scope": "Permit B GetConfig response while A remains in the supported unknown-message modal effect, for both distinct sessions and one warmed plaintext session; no source-imposed body-wide or session-wide wait.",
+    "plan": {
+      "path": "outputs/anadius-session-memory-source/parallel-frame-admission-20261105/integration-plan.json",
+      "sha256": "89219fda9a963155890d29008a12da987a59d6dc905bb1cb7a250b857b3ca828"
+    },
+    "build_required_before_execution": true
+  },
+  "production_sources_changed": true,
+  "full_build_run": true,
+  "link_run": true,
+  "package_rebuilt": false,
+  "overall_completion_percentage": null,
+  "version_blocked_input_not_accessed": true,
+  "pending_source_delta": {
+    "status": "SOURCE_IMPLEMENTED_STATIC_REVIEWED_NOT_COMPILED",
+    "count": 90,
+    "new_files": [
+      "anadius-accept-stop-source/stop.cpp",
+      "anadius-session-flow-source/coherent_io.cpp",
+      "anadius-socket-source/completion_dispatcher_tests.cpp",
+      "anadius-socket-source/memory_lookup.hpp"
+    ],
+    "changed_sources": [
+      "anadius-accept-source/owned.cpp",
+      "anadius-accept-source/owned.hpp",
+      "anadius-accept-stop-source/stop.cpp",
+      "anadius-application-graph-source/graph.cpp",
+      "anadius-application-graph-source/graph.hpp",
+      "anadius-application-graph-source/graph_integration_tests.cpp",
+      "anadius-application-graph-source/graph_tests.cpp",
+      "anadius-foreign-callback-source/foreign.cpp",
+      "anadius-foreign-callback-source/foreign.hpp",
+      "anadius-foreign-callback-source/foreign_integration_tests.cpp",
+      "anadius-foreign-callback-source/foreign_tests.cpp",
+      "anadius-io-memory-source/io_memory.cpp",
+      "anadius-io-memory-source/io_memory.hpp",
+      "anadius-io-memory-source/io_memory_tests.cpp",
+      "anadius-native-context-source/context.cpp",
+      "anadius-native-source/native_callbacks.cpp",
+      "anadius-native-source/native_callbacks.hpp",
+      "anadius-online-factory-source/factory.cpp",
+      "anadius-online-factory-source/factory_tests.cpp",
+      "anadius-online-object-source/object.cpp",
+      "anadius-online-query-source/query.cpp",
+      "anadius-online-query-source/query_tests.cpp",
+      "anadius-online-version-source/version.cpp",
+      "anadius-online-version-source/version.hpp",
+      "anadius-owned-environment-source/environment.cpp",
+      "anadius-owned-environment-source/environment.hpp",
+      "anadius-owned-environment-source/environment_integration_tests.cpp",
+      "anadius-owned-environment-source/environment_tests.cpp",
+      "anadius-owned-jobs-source/jobs.cpp",
+      "anadius-owned-jobs-source/jobs.hpp",
+      "anadius-owned-jobs-source/jobs_tests.cpp",
+      "anadius-owned-server-source/server.cpp",
+      "anadius-owned-server-source/server.hpp",
+      "anadius-owned-server-source/server_integration_tests.cpp",
+      "anadius-owned-server-source/server_tests.cpp",
+      "anadius-registry-source/registry.cpp",
+      "anadius-registry-source/registry_tests.cpp",
+      "anadius-resources-factory-source/factory.cpp",
+      "anadius-resources-factory-source/factory_tests.cpp",
+      "anadius-server-runtime-source/runtime.cpp",
+      "anadius-server-runtime-source/runtime.hpp",
+      "anadius-session-flow-source/coherent_io.cpp",
+      "anadius-session-flow-source/coherent_io.hpp",
+      "anadius-session-memory-source/memory.cpp",
+      "anadius-session-memory-source/memory.hpp",
+      "anadius-session-policy-source/policy.cpp",
+      "anadius-session-policy-source/policy.hpp",
+      "anadius-session-policy-source/policy_tests.cpp",
+      "anadius-session-profile-source/profile.cpp",
+      "anadius-session-profile-source/profile.hpp",
+      "anadius-session-profile-source/profile_integration_tests.cpp",
+      "anadius-session-profile-source/profile_tests.cpp",
+      "anadius-session-profile-source/strings.cpp",
+      "anadius-session-profile-source/strings.hpp",
+      "anadius-socket-source/completion_dispatcher.cpp",
+      "anadius-socket-source/completion_dispatcher.hpp",
+      "anadius-socket-source/completion_dispatcher_tests.cpp",
+      "anadius-socket-source/environment_constructor.hpp",
+      "anadius-socket-source/frame_read.cpp",
+      "anadius-socket-source/frame_read.hpp",
+      "anadius-socket-source/frame_read_tests.cpp",
+      "anadius-socket-source/handler_dispatch.cpp",
+      "anadius-socket-source/handler_dispatch.hpp",
+      "anadius-socket-source/memory_lookup.hpp",
+      "anadius-socket-source/native.cpp",
+      "anadius-socket-source/native.hpp",
+      "anadius-socket-source/native_tests.cpp",
+      "anadius-socket-source/posted_operation.cpp",
+      "anadius-socket-source/posted_operation.hpp",
+      "anadius-socket-source/posted_operation_tests.cpp",
+      "anadius-socket-source/receive_buffer.cpp",
+      "anadius-socket-source/receive_buffer.hpp",
+      "anadius-socket-source/receive_buffer_tests.cpp",
+      "anadius-socket-source/response_containers.cpp",
+      "anadius-socket-source/response_containers.hpp",
+      "anadius-socket-source/response_containers_tests.cpp",
+      "anadius-socket-source/worker_run.cpp",
+      "anadius-socket-source/worker_run.hpp",
+      "anadius-socket-source/write_finish.cpp",
+      "anadius-socket-source/write_finish.hpp",
+      "anadius-socket-source/write_finish_tests.cpp",
+      "anadius-thread-domain-source/domain.cpp",
+      "anadius-timestamp-source/timestamp.cpp",
+      "anadius-timestamp-source/timestamp.hpp",
+      "anadius-timestamp-source/timestamp_tests.cpp",
+      "anadius-worker-handoff-source/handoff.cpp",
+      "anadius-worker-handoff-source/handoff.hpp",
+      "anadius-worker-handoff-source/handoff_integration_tests.cpp",
+      "anadius-worker-handoff-source/handoff_tests.cpp",
+      "dll-link-gate-source/entry.cpp"
+    ]
+  },
+  "latest_authorized_rebuild": {
+    "path": "outputs/dll-critical-path/current-rebuild.evidence.json",
+    "sha256": "904a573601421b8bd027d79e04370e46640c0b9b2b5d48cb45f07a897e279174"
+  },
+  "production_dll_readiness": "LINKED_NOT_RUNTIME_VALIDATED",
+  "latest_source_stage": {
+    "path": "outputs/anadius-io-memory-source/stable-owner-bindings-20261105/evidence.json",
+    "sha256": "f93751e53ea7e6a190545a4b319be4535e92110fad5a68c46c4934326c08240c"
+  },
+  "compiler_system_message_gap": {
+    "path": "outputs/anadius-session-policy-source/worker-error-028240-20261104/compiler-provider-audit-index.json",
+    "sha256": "4084d937bcbf23e44f29c9eefe1d5bd9ca9226d4883daa76e55cf391b6f91827",
+    "status": "SELECTED_STOP_WRITE_SOURCE_FIXED_STATIC_REVIEWED_NOT_BUILT",
+    "scope": "Design and bind exact native system message provider for both original and child terminal paths, preserving catch/code value and retaining category/import/failure-state lifetime coherently. No duplicate formatting, ambient current category or category identity lifetime hacks.",
+    "source_resolution": {
+      "path": "outputs/anadius-session-policy-source/native-stop-diagnostic-20261104/evidence.json",
+      "sha256": "fbc54501e1df8602f303e77cbc2dd852249d2521a03512118b28b847995fe8c1"
+    },
+    "remaining": "Default compiler provider remains different; measured Policy stop/write, IOCP mutex/iocp, service mutex, acceptor operations and Winsock diagnostics use explicit native projection. Other caller/category, ABI and runtime parity remain unverified.",
+    "additional_source_resolution": {
+      "path": "outputs/anadius-owned-server-source/typed-socket-diagnostic-20261104/evidence.json",
+      "sha256": "8db820f22385729f5d565a84870e3e88b3b046d782b6ee27f5ef09d644d5d4e7"
+    }
+  }
+}

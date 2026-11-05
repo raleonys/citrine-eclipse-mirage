@@ -12,6 +12,9 @@ public:
     CoherentIoMemory(OwnedAcceptMemory& a,OwnedIoMemory& b,IoHandlerSentinels s,
         IoEnvironmentConstructorContext& c,std::span<IoEnvironmentSourceBinding> sources)
         :accept_(a),base_(b),sentinels_(s),constructor_(c),sources_(sources){}
+    // Serialized Profile registry publication only; existing source objects
+    // remain stable while their lookup-array allocation changes.
+    void bind_environment_sources(std::span<IoEnvironmentSourceBinding> sources) noexcept {sources_=sources;}
     // The two posted base interfaces intentionally share the same overrides;
     // expose one unambiguous base for async contexts and guarded completion.
     PostedMemoryEffects& posted(){return static_cast<HandlerDispatchMemory&>(*this);}

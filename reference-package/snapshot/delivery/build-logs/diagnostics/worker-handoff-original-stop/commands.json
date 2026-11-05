@@ -1,0 +1,30 @@
+[
+  {
+    "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261020-ucrt-x86_64\\bin\\clang++.exe",
+    "exit": 0,
+    "arguments": [
+      "-std=c++20",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I",
+      "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-worker-handoff-source",
+      "-static",
+      "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\worker-handoff-original-stop\\handoff-tests-diagnostic.cpp",
+      "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+      "-lws2_32",
+      "-lmswsock",
+      "-o",
+      "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\worker-handoff-original-stop\\handoff-original-stop-diagnostic.exe"
+    ]
+  },
+  {
+    "duration_ms": 152,
+    "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\rebuild-20261105T182000Z\\diagnostics\\worker-handoff-original-stop\\handoff-original-stop-diagnostic.exe",
+    "exit": 137,
+    "arguments": [
+      "--original-stop-failure"
+    ]
+  }
+]

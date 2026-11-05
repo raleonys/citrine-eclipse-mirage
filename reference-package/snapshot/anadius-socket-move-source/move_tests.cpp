@@ -42,6 +42,24 @@ struct Fixture {
     s::AcceptorState p,t,o;s::SocketObject pending{p},temporary{t},owned{o};Ref reference;Executor executor;
     Fixture(){s::initialize_0211b0(pending,{0x1234},lifecycle);p.socket=0xfedcba9876543210ULL;p.socket_state=0x9a;p.protocol_40=23;p.byte_44=0xe1;p.slot_48=0x1122334455667788ULL;p.slot_50=0x8877665544332211ULL;p.slot_58=0xabcdef0987654321ULL;p.slot_60=0xdeadbeef;pending.cancellation={0xcafe,&reference};}
 };
+void selected_executor(){
+    s::ExecutorFields source,destination;source.context={0x1234};source.zero_74=0xabcdef12;
+    source.table_78=s::RecoveredSocketExecutor::table_identity;source.table_88=21;source.table_90=22;source.self_reference_80=false;
+    destination.context={0x9999};destination.zero_74=7;destination.table_78=source.table_78;destination.table_88=31;destination.table_90=32;
+    const auto selected=s::RecoveredSocketExecutor::move();selected.move(selected.context,destination,source,source.table_78);
+    require(destination.context.value==0x1234&&destination.zero_74==0xabcdef12&&destination.self_reference_80,"Actual0228c0 copies payload context/dword and installs destination self reference");
+    require(destination.table_88==31&&destination.table_90==32&&source.context.value==0x1234&&source.zero_74==0xabcdef12&&!source.self_reference_80&&source.table_90==22,"Selected executor move changes neither source nor unrelated destination tables");
+    rejects([&]{selected.move(selected.context,destination,source,9);},"Unobserved executor table cannot select0228c0");
+    s::AcceptorState state;s::SocketObject object(state);object.executor=source;s::RecoveredSocketExecutor cleanup;
+    cleanup.executor_cleanup(object,source.table_78);
+    require(object.executor.context.value==source.context.value&&object.executor.table_90==22&&!object.executor.self_reference_80,"Observed017a30 cleanup RET0 changes no fields");
+    rejects([&]{cleanup.executor_cleanup(object,9);},"Cleanup is not a universal no-op for foreign tables");
+    object.executor.table_78=9;rejects([&]{cleanup.executor_cleanup(object,source.table_78);},"Mismatching live table rejects before cleanup");
+    Fixture f;f.pending.executor.self_reference_80=false;
+    s::move_socket_023d20(f.temporary,f.pending,selected);
+    require(f.temporary.executor.self_reference_80&&!f.pending.executor.self_reference_80&&f.temporary.executor.context.value==0x1234,"Actual socket constructor invokes selected0228c0 rather than copying source self-reference state");
+    s::destroy_024db0(f.temporary,f.lifecycle);s::destroy_024db0(f.pending,f.lifecycle);
+}
 void two_moves_and_cleanup(){
     Fixture f;const auto original=f.p;const auto initial_gate=f.gate.enters;
     bool prefix=true;f.gate.observe=[&](bool){prefix=prefix&&f.gate.depth==1&&f.reference.strong==1;};
@@ -97,4 +115,4 @@ void release_reloads_and_gate_order(){
     require(f.reference.destroyed==1&&f.reference.deleted==1,"remaining original owner releases exactly once after controlled reentrant replacement");
 }
 }
-int main(){try{two_moves_and_cleanup();invalid_inputs_and_slot_throw();release_reloads_and_gate_order();std::cout<<"PASS: "<<checks<<" socket constructor/implementation move core checks\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+int main(){try{selected_executor();two_moves_and_cleanup();invalid_inputs_and_slot_throw();release_reloads_and_gate_order();std::cout<<"PASS: "<<checks<<" socket constructor/implementation move core checks\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

@@ -10,8 +10,9 @@
 namespace anadius::application_graph {
 namespace sp=session_profile;namespace np=native_profile;namespace rt=server_runtime;namespace o=owned_server;namespace s=socket_recovered;
 // Exact live objects, not a copy of RuntimeOwner configuration. The owner must
-// retain ALL pointed cells. Access/mutation is serialized on the graph worker;
-// concurrent online-worker/global mutation is outside this selected contract.
+// retain ALL pointed cells. Creator lifecycle/configuration changes remain
+// exclusive; explicit child message views share these actual business roots.
+// General simultaneous mutation of native string/map/scalar cells stays explicit.
 struct StateView {
     std::shared_ptr<void> lifetime;
     configuration::State* configuration=nullptr;
@@ -21,12 +22,26 @@ struct StateView {
 };
 enum class Log {Received,Response,Event,BadXml,DecryptionFailure};
 struct ProfileSettings {
+    // sessions is the initial registry size; live session/logic rows can grow.
     std::size_t sessions=16,jobs_capacity=64,headers=256,initial_output_slots=8,environment_capacity=4096;
     s::AsyncReceiveImports receive{};s::AsyncSendImports send{};
+    // Explicit HOST execution backend. Empty preserves owned InlineJobs.
+    // Selecting one does not grant child message/Graph/leaf-provider authority.
+    std::shared_ptr<sp::Jobs> jobs;
+    // Same fresh object is forwarded to Profile's existing owned-provider
+    // assembly, never a second environment or a permission getter. Exclusive
+    // one-Profile binding remains the caller's contract; Fresh export alone
+    // does not reserve it. Empty preserves automatic default construction.
+    // Its explicit classifier/capacity supersede automatic environment settings.
+    std::shared_ptr<owned_environment::Environment> environment_owner;
 };
 struct Options {
     StateView state;
-    // Policy stream/imports/four REQUIRED lifecycle decisions. guard_epoch MUST
+    // Policy stream/imports and explicit lifecycle profile. Default Explicit
+    // requires all four callbacks; SourceOwned retains mandatory external drain
+    // with source owner/reap/worker-return behavior. OriginalApplication uses
+    // real local source retirement without an external image/unload proof.
+    // Graph and Policy share lifecycle_configuration_valid. guard_epoch MUST
     // be null: the graph supplies one stable fresh cell to Policy and Runtime.
     session_policy::Options policy;
     std::shared_ptr<handlers_recovered::Effects> information;
@@ -36,7 +51,9 @@ struct Options {
     ProfileSettings profile;
     std::string version;
     std::uint8_t show_lsx=0;
-    std::size_t event_capacity=64; // fixed power-of-two bounded HOST ring
+    // Initial power-of-two map allocation, not a maximum event count. Native
+    //034660's one-spare-slot rule grows it by doubling with minimum8.
+    std::size_t event_capacity=64;
     // Optional explicit HOST customization/observation, never a SessionLogic,
     // XML/backend, Router, context registry or event implementation supplied by
     // the caller. All opaque callbacks run outside graph metadata locks.
@@ -51,6 +68,10 @@ struct Snapshot {Phase phase;std::size_t live_logics,queued_events;bool active,e
 // lock. Legacy install creates Domain memory on that same controller/worker.
 // Prepared install consumes a dedicated capability from a distinct controller;
 // no automatic whole bootstrap Resources/loader factory is claimed.
+// Its private NativeLogic additionally implements native_profile::JobLogic for
+// exact session/Parent scoped033d70 with registered per-message adapters and
+// concrete provider CallViews. This alone does not enable concurrent Parent,
+// Profile or NativeJobs admission. Lifecycle remains on the original worker.
 class Graph final:public std::enable_shared_from_this<Graph> {
 public:
     static std::shared_ptr<Graph> create(Options);
@@ -69,7 +90,7 @@ public:
     // Explicit cancellation for a published factory whose context was NEVER
     // initialized. No implicit cleanup of a partial/unknown started graph.
     void close_unstarted();
-    // Same worker + whole bound Parent Operation; queue capacity/unknown errors
+    // Same worker + whole bound Parent Operation; allocation/unknown errors
     // poison and retain known state. First event use inserts actual DOWN seed.
     void enqueue(std::string_view);
     // Rebuilds Router state views at every dispatch, so controlled vector/map

@@ -1,6 +1,9 @@
 #include "originals.hpp"
 #include "../anadius-callback-policy-source/policy_test_fixture.hpp"
 #include <climits>
+#include <csignal>
+#include <cstdlib>
+#include <process.h>
 
 namespace {
 using namespace anadius;namespace p=original_provider;namespace n=native_recovered;namespace c=callback_policy;
@@ -76,5 +79,48 @@ void owner_protocol(){
     }
     require(weak.expired(),"Context destruction releases selected code owner");
 }
+void progressive_publication(){
+    n::OriginalSlots slots{};slots.fill(0xabc);
+    auto code=std::make_shared<int>(4);std::weak_ptr<int> weak=code;
+    auto publication=std::make_shared<p::Publication>(code);code.reset();
+    auto factory=p::make_publishing_factory(publication);auto copied=factory;
+    auto provider=factory(slots);factory={};
+    require(provider.get()==publication.get()&&provider->slots_identity()==&slots,"matched factory binds exact stable slots to the shared publisher");
+    rejects<std::logic_error>([&]{copied(slots);},"copied publishing factory cannot bind a second time");copied={};
+    rejects<std::logic_error>([&]{publication->load(close_slot);},"seeded nonzero cell is not a successful-create receipt");
+    publication->setup_begin();const auto index=host_init_recovered::slot(close_slot);
+    std::uintptr_t wrong=0;
+    rejects<std::invalid_argument>([&]{publication->before_create(close_slot,0x300,wrong);},"equal-looking external output is not the exact bound cell");
+    ::SetLastError(0x7711);publication->before_create(close_slot,0x300,slots[index]);
+    require(publication->snapshot().creating&&::GetLastError()==0x7711,"create reservation preserves LastError before any lower effect");
+    slots[index]=0x400;publication->after_create(close_slot,0x300,slots[index],0);
+    require(::GetLastError()==0x7711&&!publication->snapshot().creating&&publication->snapshot().phase==p::PublicationPhase::Setup,
+        "successful receipt publishes one slot while global setup remains incomplete");
+    std::uintptr_t loaded=0;std::exception_ptr failure;
+    std::thread reader([&]{try{loaded=provider->load(close_slot);}catch(...){failure=std::current_exception();}});reader.join();
+    if(failure)std::rethrow_exception(failure);
+    require(loaded==0x400,"foreign reader can load the published immutable slot before global setup completion");
+    publication->before_enable(0x300);
+    rejects<std::logic_error>([&]{publication->before_enable(0x301);},"enable for an unreceived target is rejected");
+    rejects<std::logic_error>([&]{publication->before_create(close_slot,0x302,slots[index]);},"published slot rejects a later rewrite before lower create");
+    const auto open=n::Callback::reg_open_a_00f800;const auto open_index=host_init_recovered::slot(open);
+    publication->before_create(open,0x500,slots[open_index]);slots[open_index]=0x600;
+    publication->after_create(open,0x500,slots[open_index],8);
+    rejects<std::logic_error>([&]{publication->load(open);},"normal failed create with changed nonzero output publishes no pointer");
+    publication->before_create(open,0x500,slots[open_index]);slots[open_index]=0x700;
+    publication->after_create(open,0x500,slots[open_index],0);publication->before_enable(0x500);
+    publication->setup_complete();require(publication->load(open)==0x700,"known failed create can be explicitly retried before setup closes");
+    publication->stop();rejects<std::logic_error>([&]{publication->load(close_slot);},"stop excludes later original loads without manufacturing engine cleanup");
+    provider.reset();publication.reset();require(weak.expired(),"shared publisher retains code through all source-provider aliases");
 }
-int main(){try{protocol();binding_and_lifetime();owner_protocol();std::cout<<"PASS: "<<checks<<" original provider core checks\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+[[noreturn]]void unknown_publication(){
+    ::SetErrorMode(SEM_FAILCRITICALERRORS|SEM_NOGPFAULTERRORBOX);
+    std::signal(SIGABRT,[](int){std::_Exit(188);});
+    n::OriginalSlots slots{};auto publication=std::make_shared<p::Publication>(std::make_shared<int>(1));
+    publication->bind_slots(slots);publication->setup_begin();publication->before_create(close_slot,1,slots[3]);
+    publication->unknown();publication->stop();
+    if(publication->snapshot().phase!=p::PublicationPhase::Poisoned||!publication->snapshot().creating)std::_Exit(189);
+    publication.reset();std::_Exit(190); // unknown create cannot be retired by stop
+}
+}
+int main(int argc,char** argv){if(argc==2&&std::string(argv[1])=="--publication-unknown")unknown_publication();try{protocol();binding_and_lifetime();owner_protocol();progressive_publication();require(_spawnl(_P_WAIT,argv[0],argv[0],"--publication-unknown",static_cast<const char*>(nullptr))==188,"unknown publication remains terminal after stop");std::cout<<"PASS: "<<checks<<" original provider core checks\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

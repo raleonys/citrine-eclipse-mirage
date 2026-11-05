@@ -1,0 +1,25 @@
+{
+  "schema": "classic-timestamp-unconsumed-suffix.source.v1",
+  "client_date": "2026-11-05",
+  "kind": "NATIVE_GUIDED_PRODUCTION_INPUT_DOMAIN_CORRECTION",
+  "pending_before": "before/pending-source-status.json",
+  "scope": "Remove full-input ASCII rejection from classic fixed-format timestamps; retain native prefix completion and required-field/state behavior, including real Grant XML/storage/INI source fixture. Stage begun2026-11-04 and recorded after local midnight2026-11-05; not compiled or run.",
+  "sources": [
+    {"path":"anadius-timestamp-source/timestamp.cpp","before":"before/timestamp.cpp","role":"production"},
+    {"path":"anadius-timestamp-source/timestamp.hpp","before":"before/timestamp.hpp","role":"production"},
+    {"path":"anadius-timestamp-source/timestamp_tests.cpp","before":"before/timestamp_tests.cpp","role":"test"}
+  ],
+  "reviews": ["root-production-review.md", "independent-test-review.md"],
+  "reports": ["native-findings.md", "implementation.md", "independent-test-review.md"],
+  "native_replies": ["bytes-086a38.json", "instructions-03d8f0.json", "instructions-03e870.json", "instructions-03ef80.json", "instructions-03f190.json", "instructions-041760.json", "instructions-041e10.json", "pseudo-03d8f0.json", "pseudo-03e870.json", "pseudo-03ef80.json", "pseudo-03f190.json", "pseudo-041760.json", "pseudo-041e10.json"],
+  "supplementary": ["outputs/dll-critical-path/noncrt-input-domain-triage-20261104.md", "outputs/dll-critical-path/noncrt-input-domain-triage-second-batch-20261104.md", "outputs/anadius-config-storage-source/persistence.hpp", "outputs/anadius-config-storage-source/persistence.cpp", "outputs/anadius-achievement-storage-source/storage.cpp"],
+  "limits": [
+    "Static native control flow supports bounded classic/base-facet prefix parsing, not an executed sweep/replay or arbitrary native locale/custom facets.",
+    "A suffix can be peeked; no guarantee of zero byte inspection is claimed. Explicit-length parser NUL and XML C-string attribute boundaries remain distinct.",
+    "All256 byte suffix and XML/storage/INI assertions are authored and independently reviewed, not compiled or executed.",
+    "Native stream/allocator/EH/ABI, full input-domain/runtime and complete DLL equivalence remain open; no original/build/DLL/ZIP writes."
+  ],
+  "completed_note": "SOURCE_ONLY13freshREA/Ghidra records confirm completed classic ISO suffix acceptance; remove2-line globalbyteprecheck and updatecontract, independentlyreview all256suffix/requiredfield/XMLGrant-to-INI source regressions NOT RUN.",
+  "observation": "REA6.8.0/Ghidra12.1.4 session13records exported/closed, originalhashunchanged; independent source/test review. Parallel fresh WSA19-record audit identified a separate substantive startup/ownership/order discrepancy.",
+  "next_scope": "Implement measured original context registry-gate-before-shared-Winsock ownership, WORD0002 and cachedstatus/last-owner cleanup order, retaining explicit HOST profile; finish narrow CRT initializer-dispatch proof before selecting actual module initial owner. No compile/test/link/DLL/ZIP without new explicit request."
+}

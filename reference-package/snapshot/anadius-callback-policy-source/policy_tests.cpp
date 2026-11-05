@@ -3,6 +3,7 @@
 #include <csignal>
 #include <process.h>
 #include <limits>
+#include "../anadius-shared-log-source/stream.hpp"
 
 namespace {
 using namespace b16_test;
@@ -77,6 +78,35 @@ void policies(){
     rejects<std::logic_error>([&]{copied(f.view());},"copied policy factory cannot reuse resources");
     auto missing=f.resources();missing.memory.reset();rejects<std::invalid_argument>([&]{cp::Policy bad(f.view(),std::move(missing));},"missing memory rejected");
 }
+struct BodyBuffer final:std::stringbuf {
+    bool& permission;bool revoke=false;
+    explicit BodyBuffer(bool& p):permission(p){}
+    int sync()override{if(revoke)permission=false;::SetLastError(0x6a55);return 0;}
+};
+bool* exit_permission=nullptr;bool revoke_exit=false;
+void body_throwing_exit(std::uint32_t code){if(revoke_exit)*exit_permission=false;::SetLastError(0x6a66);throw Terminal{code};}
+void network_effect_postchecks(){
+    Fixture f;bool permission=true;auto buffer=std::make_shared<BodyBuffer>(permission);auto stream=shared_log::make_stream(buffer);
+    auto resources=f.resources();resources.stream=stream;resources.exit=body_throwing_exit;
+    resources.connect_body_scope=[&]{
+        // Probe can reacquire the managed stream: no effect lease may survive
+        // into either pre/postcheck. Error pollution is metadata only.
+        const auto lease=shared_log::acquire(*stream);::SetLastError(0xdead);return permission;
+    };
+    cp::Policy policy(f.view(),std::move(resources));
+    ::SetLastError(0x5511);policy.log_finish_0088e0();require(::GetLastError()==0x6a55,"postcheck preserves lower flush LastError and runs outside its lease");
+    buffer->str("");buffer->revoke=true;std::int32_t v4=16,v6=28;std::uint16_t port=4660;std::uint32_t attempts=0;
+    std::array<std::byte,4> address{std::byte{2},std::byte{0},std::byte{0x0c},std::byte{0x90}};const auto old=address;
+    rejects<std::logic_error>([&]{network_hook_recovered::connect_00fd00({v4,v6,port,attempts},policy,1,address,16);},"permission revoked by final flush fails before caller counter/port commit");
+    require(attempts==0&&address==old&&f.driver.probe->connects==0&&buffer->str()=="game connected on port 3216; redirecting to 4660\n"&&::GetLastError()==0x6a55,
+        "completed log prefix retained but counter/port/original remain untouched");
+    permission=true;exit_permission=&permission;revoke_exit=false;
+    bool identical=false;try{policy.exit_05cdc0(41);}catch(const Terminal& value){identical=value.code==41;}
+    require(identical&&::GetLastError()==0x6a66,"valid exceptional postcheck rethrows identical terminal value and retains lower error");
+    revoke_exit=true;rejects<std::logic_error>([&]{policy.exit_05cdc0(42);},"invalid exceptional postcheck takes precedence over lower terminal exception");
+    require(!permission&&::GetLastError()==0x6a66,"exceptional metadata check does not erase lower outgoing error");
+    exit_permission=nullptr;revoke_exit=false;
+}
 void expected_abort(int){std::_Exit(97);}
 int terminal(std::string_view mode){
     ::SetErrorMode(SEM_FAILCRITICALERRORS|SEM_NOGPFAULTERRORBOX);std::signal(SIGABRT,expected_abort);
@@ -86,6 +116,6 @@ int terminal(std::string_view mode){
     return 98;
 }
 }
-int main(int argc,char** argv){if(argc==2)return terminal(argv[1]);try{wide_operations();policies();
+int main(int argc,char** argv){if(argc==2)return terminal(argv[1]);try{wide_operations();policies();network_effect_postchecks();
     for(const auto* mode:{"--live-handle","--returning-exit"})require(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==97,"own terminal child enforces ownership/exit invariant");
     std::cout<<"PASS: "<<b16_test::checks<<" callback policy core checks\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

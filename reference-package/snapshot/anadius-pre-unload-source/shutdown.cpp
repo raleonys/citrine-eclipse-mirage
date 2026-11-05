@@ -8,8 +8,8 @@ Controller::Controller() noexcept:controller_(::GetCurrentThreadId()),fiber_(::G
 std::shared_ptr<Controller> Controller::take(std::unique_ptr<bootstrap_runtime::Runtime>& runtime,
     std::shared_ptr<thread_domain::DomainStorage>& domain){
     Error error;
-    if(!runtime||!domain||domain->phase()!=thread_domain::Phase::Ready)
-        throw std::invalid_argument("Owned Runtime and its Ready Domain required");
+    if(!runtime||!domain||domain->phase()!=thread_domain::Phase::Ready||runtime->memory_domain()!=domain.get())
+        throw std::invalid_argument("Owned Runtime and exact certified Ready thread Domain required");
     auto owner=std::shared_ptr<Controller>(new Controller);
     owner->domain_=std::move(domain);owner->runtime_=std::move(runtime);
     owner->phase_.store(Phase::Managed,std::memory_order_release);return owner;
@@ -23,6 +23,29 @@ Snapshot Controller::snapshot()const noexcept{return {phase_.load(std::memory_or
 bool Controller::closed()const noexcept{return phase_.load(std::memory_order_acquire)==Phase::Closed;}
 bool Controller::poisoned()const noexcept{return phase_.load()==Phase::Poisoned;}
 BOOL Controller::result(DWORD error)noexcept{error_.store(error);::SetLastError(error);return FALSE;}
+void Controller::start_application(HINSTANCE module,LPVOID reserved){
+    Error error;
+    if(!module)throw std::invalid_argument("Application attach requires its image module");
+    if(::GetCurrentThreadId()!=controller_||::GetCurrentFiber()!=fiber_)
+        throw std::logic_error("Application attach requires the original controller/fiber");
+    if(busy_.exchange(true)){phase_.store(Phase::Poisoned);throw std::logic_error("Application attach lifecycle reentry");}
+    struct Active {std::atomic<bool>& busy;~Active(){busy.store(false);}} active{busy_};
+    if(phase_.load()!=Phase::Managed||!runtime_||runtime_->phase()!=bootstrap_owner::Phase::Constructed)
+        throw std::logic_error("Application attach requires owned unpublished Runtime roots");
+    try{
+        phase_.store(Phase::PublishingApplication,std::memory_order_release);
+        runtime_->publish();error.value=::GetLastError();
+        if(poisoned())throw std::logic_error("Application publication was poisoned");
+        phase_.store(Phase::StartingApplication,std::memory_order_release);
+        const auto entry=runtime_->application_entry();
+        ::SetLastError(error.value);
+        const BOOL attached=entry(module,DLL_PROCESS_ATTACH,reserved);
+        error.value=::GetLastError();
+        if(poisoned())throw std::logic_error("Application attach was poisoned");
+        if(!attached)throw std::runtime_error("Application attach failed without proven rollback; roots retained");
+        phase_.store(Phase::ApplicationAttached,std::memory_order_release);error_.store(0);
+    }catch(...){error.value=::GetLastError();error_.store(ERROR_UNHANDLED_EXCEPTION);phase_.store(Phase::Poisoned,std::memory_order_release);throw;}
+}
 BOOL Controller::shutdown()noexcept{
     const DWORD incoming=::GetLastError();
     if(::GetCurrentThreadId()!=controller_)return result(ERROR_INVALID_THREAD_ID);

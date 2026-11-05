@@ -9,6 +9,7 @@
 #include <thread>
 #include <condition_variable>
 #include <exception>
+#include <chrono>
 
 namespace {
 namespace q=anadius::online_query;namespace v=anadius::online_version;
@@ -29,10 +30,11 @@ struct State {
 };
 State* current=nullptr;
 void observe(void* object,unsigned index){
-    auto& s=*current;++s.calls[index];s.incoming=::GetLastError();
-    const auto view=s.binding->snapshot();s.args=s.args&&object==reinterpret_cast<void*>(s.object());
-    s.claim=s.claim&&view.active&&view.object==s.object()&&!view.object_unknown&&!view.poisoned&&view.factory_code_retained;
-    {std::unique_lock lock(s.gate);if(s.block){s.entered=true;s.changed.notify_all();s.changed.wait(lock,[&]{return s.release;});}}
+    auto& s=*current;const auto incoming=::GetLastError();
+    {std::unique_lock lock(s.gate);++s.calls[index];s.incoming=incoming;
+     const auto view=s.binding->snapshot();s.args=s.args&&object==reinterpret_cast<void*>(s.object());
+     s.claim=s.claim&&view.active&&view.object==s.object()&&!view.object_unknown&&!view.poisoned&&view.factory_code_retained;
+     if(s.block&&index==1){s.entered=true;s.changed.notify_all();if(!s.changed.wait_for(lock,std::chrono::seconds(10),[&]{return s.release;}))throw std::runtime_error("query release timeout");}}
     ::SetLastError(0x8808+index);if(s.throwing==static_cast<int>(index))std::rethrow_exception(s.failure);
 }
 std::int32_t status(void* o){observe(o,0);return current->status;}
@@ -48,7 +50,7 @@ v::Object factory(const char16_t*){
 struct Pin {State& state;~Pin(){++state.retired;}};
 struct Fixture {
     State state;v::Binding binding;
-    explicit Fixture(bool paged=false):binding([this](v::Module){return std::shared_ptr<void>(new Pin{state});}){
+    explicit Fixture(bool paged=false,v::QueryPolicy policy=v::QueryPolicy::Serialized):binding([this](v::Module){return std::shared_ptr<void>(new Pin{state});},policy){
         current=&state;state.binding=&binding;
         if(paged){state.page=static_cast<std::byte*>(::VirtualAlloc(nullptr,4096,MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE));if(!state.page)throw std::bad_alloc();}
         binding.load([]{return v::Module{0x80};});
@@ -106,7 +108,36 @@ void concurrent_query(){
     require(denied==6&&lower==0&&before.active&&!before.object_unknown&&before.factory_code_retained,"shared reservation rejects overlapping destroy/free/rebind/raw/owned queries before side effects");
     require(copied==s.username&&outgoing==0x8809&&!f.binding.snapshot().active&&s.destroyed==0,"blocked query completes owned copy once before explicit cleanup");
 }
+void concurrent_original_queries(){
+    Fixture f(false,v::QueryPolicy::Concurrent);auto& s=f.state;const auto object=s.object();s.block=true;const auto expected=s.username;std::string first,second;std::exception_ptr worker_failure,body_failure;
+    std::thread worker([&]{try{first=f.binding.copy_getter(object,q::Slot::Username10);}catch(...){worker_failure=std::current_exception();}});
+    try{
+        {std::unique_lock lock(s.gate);require(s.changed.wait_for(lock,std::chrono::seconds(10),[&]{return s.entered;}),"first concurrent owned getter reached its bounded foreign-body hold");}
+        second=f.binding.copy_getter(object,q::Slot::Persona18);s.persona="changed after owned copy";
+        require(second=="pid"&&f.binding.snapshot().active&&s.retired==0,"Second owned query completes independently while first query retains object/code ownership");
+        require(f.binding.status(object)==s.status&&f.binding.snapshot().active,"Third typed query remains admissible after its sibling ended without clearing the first reservation");
+        rejects<std::logic_error>([&]{f.binding.destroy(object);},"Exact otherwise-valid destroy still rejects while first query remains live");
+        unsigned lower=0;rejects<std::logic_error>([&]{f.binding.free(0x80,[&]{++lower;return true;});},"Free cannot release adopted module during first query");require(!lower&&!s.destroyed&&!s.retired&&f.binding.snapshot().factory_code_retained,"Rejected lifecycle effects do not retire code or call the lower SDK");
+    }catch(...){body_failure=std::current_exception();}
+    {std::lock_guard lock(s.gate);s.release=true;s.changed.notify_all();}worker.join();
+    if(worker_failure)std::rethrow_exception(worker_failure);if(body_failure)std::rethrow_exception(body_failure);
+    s.username="changed after first copy";require(first==expected&&second=="pid"&&!f.binding.snapshot().active&&s.claim&&s.args,"All query reservations drain independently and returned owned strings survive provider mutation");
+    f.binding.destroy(object);require(s.destroyed==1&&!f.binding.snapshot().object,"Destroy becomes valid only after the actual last query returns");f.binding.free(0x80,[]{return true;});require(s.retired==1,"Existing factory code lease retires once only after quiescent explicit cleanup");
+}
 [[noreturn]]void terminal(unsigned code){::TerminateProcess(::GetCurrentProcess(),code);std::_Exit(239);}
+int concurrent_invalid_layout(){
+    Fixture f(true,v::QueryPolicy::Concurrent);auto& s=f.state;const auto object=s.object();s.block=true;std::string first;std::exception_ptr worker_failure,body_failure;bool retained=false;
+    std::thread worker([&]{try{first=f.binding.copy_getter(object,q::Slot::Username10);}catch(...){worker_failure=std::current_exception();}});
+    try{
+        {std::unique_lock lock(s.gate);require(s.changed.wait_for(lock,std::chrono::seconds(10),[&]{return s.entered;}),"invalid-layout sibling waits until first foreign query is active");}
+        const std::uintptr_t zero=0;std::memcpy(s.table_data()+0x18,&zero,8);bool caught=false;try{f.binding.copy_getter(object,q::Slot::Persona18);}catch(const anadius::online_recovered::OutOfEvidenceInput&){caught=true;}
+        const auto view=f.binding.snapshot();retained=caught&&view.poisoned&&view.object_unknown&&view.active&&view.factory_code_retained&&s.retired==0&&s.destroyed==0;
+        DWORD previous=0;require(::VirtualProtect(s.page,4096,PAGE_NOACCESS,&previous)!=0,"own invalid-layout page made unreadable before rejected retry");rejects<std::logic_error>([&]{f.binding.status(object);},"Poisoned sibling retry rejects metadata before unreadable vptr access");
+    }catch(...){body_failure=std::current_exception();}
+    {std::lock_guard lock(s.gate);s.release=true;s.changed.notify_all();}worker.join();
+    const auto final=f.binding.snapshot();if(retained&&!worker_failure&&!body_failure&&first==s.username&&!final.active&&final.poisoned&&final.object_unknown&&final.factory_code_retained&&s.retired==0&&s.destroyed==0)terminal(193);
+    terminal(239); // retained unknown layout; never fabricate cleanup/unwind
+}
 int child(bool null_vptr){
     ::SetErrorMode(SEM_FAILCRITICALERRORS|SEM_NOGPFAULTERRORBOX);Fixture f(true);auto& s=f.state;
     const auto object=s.object();const std::uintptr_t zero=0;
@@ -123,8 +154,9 @@ int child(bool null_vptr){
     return 237;
 }
 }
-int main(int argc,char** argv){if(argc==2)return child(std::string_view(argv[1])=="--null-vptr");try{
-    exact_queries();exceptions_and_null();concurrent_query();unsigned code=191;
+int main(int argc,char** argv){if(argc==2){if(std::string_view(argv[1])=="--concurrent-null-slot")return concurrent_invalid_layout();return child(std::string_view(argv[1])=="--null-vptr");}try{
+    exact_queries();exceptions_and_null();concurrent_query();concurrent_original_queries();unsigned code=191;
     for(const auto* mode:{"--null-vptr","--null-slot"})require(_spawnl(_P_WAIT,argv[0],argv[0],mode,static_cast<const char*>(nullptr))==code++,"own child reaches exact invalid-layout retention/no-retry predicate; generic abort cannot pass");
+    require(_spawnl(_P_WAIT,argv[0],argv[0],"--concurrent-null-slot",static_cast<const char*>(nullptr))==193,"bad-layout sibling retains the first query count/code lease until actual completion");
     std::cout<<"PASS: "<<checks<<" online typed query core checks\n";return 0;
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

@@ -39,7 +39,7 @@ threads_recovered::Handle TrackingThreads::create_thread(void* security,std::uin
     std::list<Impl::Ticket>::iterator ticket;
     {
         std::lock_guard lock(s.mutex);
-        if(!s.accepting)throw std::logic_error("Thread creation admission is closed");
+        if(!s.accepting||s.poison)throw std::logic_error("Thread creation admission is closed");
         // All tracking allocation precedes creation of a possibly-running job.
         s.tickets.emplace_back();ticket=std::prev(s.tickets.end());
     }
@@ -96,8 +96,15 @@ bool TrackingThreads::stop_and_join(std::uint32_t timeout_ms){
             if(s.tickets.empty())return true;
             ticket=s.tickets.begin();handle=ticket->join;
         }
-        if(s.api.wait(handle,timeout_ms)!=WAIT_OBJECT_0)return false;
-        if(!s.api.close(handle))return false;
+        try{
+            if(s.api.wait(handle,timeout_ms)!=WAIT_OBJECT_0)return false;
+            if(!s.api.close(handle))return false;
+        }catch(...){
+            // An injected boundary may throw AFTER closing the duplicate. Its
+            // numeric HANDLE could already name a different object on retry.
+            // Retain the unknown suffix and never repeat wait/close on it.
+            std::lock_guard lock(s.mutex);s.poison=true;throw;
+        }
         {
             std::lock_guard lock(s.mutex);s.tickets.erase(ticket);
         }
