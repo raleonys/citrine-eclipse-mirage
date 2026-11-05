@@ -41,10 +41,6 @@
       "bytes": 1637,
       "sha256": "111d55e3f0a857f909372181423f992c4169133016ddfaf2554ee11a4a304f8e"
     },
-    "include/preloader_l/config/vdf_grammar.hpp": {
-      "bytes": 2324,
-      "sha256": "d7dc1b2690f05b82c4546a21fe313f367c15d5c8d6a956162dfd42f30d0c90a5"
-    },
     "include/preloader_l/core/atomic_files.hpp": {
       "bytes": 1661,
       "sha256": "99e57616d41f22cf5f0170691c0430e860af96c7bf7b6b50c796559fff3f2e9a"
@@ -582,12 +578,16 @@
       "sha256": "c6ac786fac85640d98bbffb8b9455a00bc5fd613f1fce19c131a543f6f5aa164"
     },
     "src/config/parser.cpp": {
-      "bytes": 6245,
-      "sha256": "e67e6522dbfd171b6edf4a50e213e331c062bc94b6d7cab45835a6df4342ec1d"
+      "bytes": 6226,
+      "sha256": "91b5b5c5d2485d8991ba9ea0bb4e5dc9997b88ca0365383ea79904036077da88"
     },
     "src/config/pipeline.cpp": {
       "bytes": 2157,
       "sha256": "e07be1bdbb932dc0accf5bee4e9897d5905e0f597c286d0261273828919fdbe3"
+    },
+    "src/config/vdf_grammar.hpp": {
+      "bytes": 2324,
+      "sha256": "d7dc1b2690f05b82c4546a21fe313f367c15d5c8d6a956162dfd42f30d0c90a5"
     },
     "src/core/atomic_files.cpp": {
       "bytes": 2764,
@@ -962,32 +962,32 @@
       "sha256": "3897f8c066586682d1f022ac561c60c94c26581305b7f693785312dbd441ac6c"
     },
     "src/runtime/achievement_storage.cpp": {
-      "bytes": 5024,
-      "sha256": "f85ca5baa949c74c3b1a9d5380c3cdef465d6bd2bf25dff1d76d3f9e049d845e"
+      "bytes": 7038,
+      "sha256": "6c52e08b9d37528acf4384ffa1ae0a1464c491a882cf2f0da6aba4fd490f8932"
     },
     "src/runtime/achievement_utc.cpp": {
       "bytes": 1678,
       "sha256": "27f27b3324824698a7bda301a6514cc5121c42fcc90795dbcefcd3025baf00ee"
     },
     "src/runtime/achievement_writer.cpp": {
-      "bytes": 1784,
-      "sha256": "d4018b757421f9638861a4ac889f4a2393eb79d689860ba26710b8b2f2c9a605"
+      "bytes": 2591,
+      "sha256": "4078a7f4a5adc528cbad56d220d8eb5020b0f43f1073380fc0f87e89b2d70c05"
     },
     "src/runtime/application.cpp": {
-      "bytes": 29158,
-      "sha256": "83cd2049f9e36a99c62735e06b5455b38e6e7a222ecbcfb8299d0949deb6c866"
+      "bytes": 29326,
+      "sha256": "585b75300d912e734caaf6fefb80774eb3ec0b2067d469ca9f045e2e13f6ec21"
     },
     "src/runtime/application_defaults.cpp": {
       "bytes": 2261,
       "sha256": "cc36e01fb302d11d91e0a9245e53bfabf667e35d3fa30c7dedcc130ac46d8fd1"
     },
     "src/runtime/application_environment.cpp": {
-      "bytes": 13515,
-      "sha256": "05dea59776effff6f604189b2dcbc3935f596724ad02be7596419db8339efa41"
+      "bytes": 14136,
+      "sha256": "3e173cada7b4a4ab507aae07e656bdb57c511883480d4d80b2f06cf7dfc560d7"
     },
     "src/runtime/application_internal.hpp": {
-      "bytes": 7282,
-      "sha256": "807f9439621b227aa56038a5c13988d1dbdc1bae74d2d7c09a2b01bae0b7949c"
+      "bytes": 7320,
+      "sha256": "dd9bc8e716f89b18afd4e04ccd6a102e08f562bef2f9ba67db715e371bcaeb89"
     },
     "src/runtime/bootstrap.cpp": {
       "bytes": 4419,
@@ -1186,8 +1186,8 @@
       "sha256": "3108408fd67b132ec5fb7b604fca748ffc3979b2411dbfcda75e2ed892699771"
     },
     "tests/infrastructure/test_infrastructure.py": {
-      "bytes": 91333,
-      "sha256": "75fff766d438a8e9d13cfd79eb73c30b0d0722f00e788c2a7c79d6cbaba6dbc2"
+      "bytes": 105332,
+      "sha256": "65dd34fef2998d9db945a46f9e1e34d3dd7123d23d14e9cf986d1830cfce9a45"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
       "bytes": 27877,
@@ -1214,12 +1214,12 @@
       "sha256": "f89d13bdd00c2794773c5f152aa6c2ab19486493372c19cc72a8c99cad2491a4"
     },
     "tests/infrastructure/test_vendor_contract.py": {
-      "bytes": 15937,
-      "sha256": "2286ef8c2a00ade400c18e50e5e6b54ba906c9382380d6186732a93c3b0873f8"
+      "bytes": 17030,
+      "sha256": "f46f296cc8652bfacf443051c36fd31840d55ef5e9f385edff17fe4a50b8a11b"
     },
     "tests/infrastructure/test_weekly_release.py": {
-      "bytes": 20348,
-      "sha256": "1e6836ca0cc03abf7b72bb68de4bf0d346326fce22c2f494c840ab6ad239d418"
+      "bytes": 25857,
+      "sha256": "a6352ef8285b01e18340b1dace87d77cbd08c1c19b9977ba3df40e2f459c6810"
     },
     "tests/infrastructure/test_wine_runner.py": {
       "bytes": 1640,
@@ -1250,8 +1250,12 @@
       "sha256": "759d224a612606bae1d9856adc330994ec0cfe49fe0cf5808be609e254822be8"
     },
     "tests/native/configuration_platform_tests.cpp": {
-      "bytes": 11081,
-      "sha256": "c1c71f5514103ec38be1c48cfaf0ecfab56eff6370496476a04eb5caa8e1e850"
+      "bytes": 14498,
+      "sha256": "790a296c9058bc6be9be829d16f4c61652999021207b744c86eb151772d430ca"
+    },
+    "tests/native/crypt_diagnostic_failure_tests.cpp": {
+      "bytes": 3657,
+      "sha256": "e615d0e61e6ad9fd3af85aa742e20f558adcd64552d9b8c582eea1200352d321"
     },
     "tests/native/crypt_path_probe_tests.cpp": {
       "bytes": 7166,
@@ -1260,6 +1264,10 @@
     "tests/native/environment_dialog_tests.cpp": {
       "bytes": 10413,
       "sha256": "20f2216d5459c6a1b13abf2cb0e240694fbfd5263e227cf14550e13d1678c4c2"
+    },
+    "tests/native/environment_license_key_tests.cpp": {
+      "bytes": 13153,
+      "sha256": "1ff18ef77166407f437739b9ff406e719def7340887cc44d78ef9acf394ec40c"
     },
     "tests/native/extra_library_failure_tests.cpp": {
       "bytes": 10455,
@@ -1280,6 +1288,10 @@
     "tests/native/hook_freeze_tests.c": {
       "bytes": 12026,
       "sha256": "4c1e9407eb5c4aa35ece6fdbff4db3892bfd840bf9cfe33a053da2708061eebc"
+    },
+    "tests/native/license_ticket_time_tests.cpp": {
+      "bytes": 3716,
+      "sha256": "f09ffbf3f996a00523231adcdef004587f98cfc37c1d19232ea294c3f66ed90b"
     },
     "tests/native/listener_owners_tests.cpp": {
       "bytes": 8761,
@@ -1534,12 +1546,12 @@
       "sha256": "9891249febb35d4bf6093537a4d00e67704f815ed7481952b155f11e9a3e5ce3"
     },
     "tests/unit/achievement_storage/storage_tests.cpp": {
-      "bytes": 11818,
-      "sha256": "8815d507282d7adecdecefa0e7866cb3216fb52a252b6c54f19ba68477b22fdd"
+      "bytes": 18298,
+      "sha256": "eb7842f9f8eb4fdfefd985436f34587a9da69f65bfa32532ee3a5e15e0eab836"
     },
     "tests/unit/achievement_writer/writer_tests.cpp": {
-      "bytes": 8497,
-      "sha256": "f1d84bea9c1376f3023fc56ccea51d1f5551a8d1d5997b91a539a8701839f322"
+      "bytes": 9553,
+      "sha256": "50639cfc1977870dbf6a29bfd4cfdcbc72943c820152b5f53cd306123cab213e"
     },
     "tests/unit/bootstrap/bootstrap_tests.cpp": {
       "bytes": 12048,
@@ -1680,6 +1692,10 @@
     "tests/unit/online/online_tests.cpp": {
       "bytes": 23807,
       "sha256": "a2d92656166e271fa11ae6a3c43711a2613ec5a77792fff75d340de4240a1c84"
+    },
+    "tests/unit/parser/header_contract.cpp": {
+      "bytes": 236,
+      "sha256": "003692903fd427af633e9c2ce135f3efdd456e3a7c781f9e9ee07affb7d60d55"
     },
     "tests/unit/parser/parser_tests.cpp": {
       "bytes": 13979,
