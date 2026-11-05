@@ -7,6 +7,7 @@ import io
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -44,8 +45,11 @@ class ValidationReadinessTests(unittest.TestCase):
                       'before': 'e' * 40, 'after': self.head,
                       'repository': {'default_branch': 'main'},
                       'pull_request': {'head': {'sha': self.head},
+                                       'updated_at': '2026-11-04T12:00:00Z',
                                        'base': {'sha': 'c' * 40}}}
-        self.current = {'state': 'open', 'head': {'sha': self.head},
+        self.current = {'state': 'open', 'created_at': '2026-11-04T10:00:00Z',
+                        'head': {'sha': self.head, 'ref': 'feature/sync',
+                                 'repo': {'full_name': self.repository}},
                         'base': {'ref': 'main'}}
         self.main = self.base
         self.selected = self.head
@@ -53,6 +57,8 @@ class ValidationReadinessTests(unittest.TestCase):
         self.previous = {'status': 'diverged', 'merge_base_commit': {'sha': 'c' * 40}}
         self.associated = []
         self.calls = []
+        self.sync_runs = {1: []}
+        self.sync_jobs = {1: []}
 
     def api(self, endpoint):
         self.calls.append(endpoint)
@@ -67,11 +73,22 @@ class ValidationReadinessTests(unittest.TestCase):
             return {'object': {'sha': self.selected}}
         if endpoint == prefix + '/compare/' + self.main + '...' + self.head:
             return self.comparison
-        if endpoint == prefix + '/compare/' + self.main + '...' + self.event['before']:
+        if endpoint == prefix + '/compare/' + self.main + '...' + self.event.get('before', ''):
             return self.previous
+        match = re.fullmatch(re.escape(prefix + '/actions/workflows/msvc-reference-graph.yml/runs?'
+                                       'event=workflow_dispatch&head_sha=' + self.head +
+                                       '&per_page=100&page=') + r'([0-9]+)', endpoint)
+        if match:
+            return {'workflow_runs': self.sync_runs.get(int(match[1]), [])}
+        match = re.fullmatch(re.escape(prefix + '/actions/runs/101/jobs?filter=latest&per_page=100&page=') +
+                             r'([0-9]+)', endpoint)
+        if match:
+            return {'jobs': self.sync_jobs.get(int(match[1]), [])}
         self.fail('Unexpected GitHub endpoint: ' + endpoint)
 
     def decision(self, name='pull_request', ref='refs/heads/feature/sync'):
+        if name == 'workflow_dispatch':
+            self.event.setdefault('inputs', {'operation': 'diagnostic'})
         return ci_readiness.decide(name, self.event, self.repository, self.head, ref, self.api)
 
     def test_open_reopen_and_metadata_events_do_not_start_full_tests(self):
@@ -87,13 +104,22 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertNotEqual(self.event['pull_request']['base']['sha'], decision.base_sha)
         self.assertTrue(any(self.base + '...' + self.head in call for call in self.calls))
 
-    def request_pr_validation(self):
+    def request_pr_validation(self, verified=True):
         self.event['action'] = 'labeled'
         self.event['label'] = {'name': 'run-full-validation'}
         self.current['labels'] = [{'name': 'run-full-validation'}]
         # A real labeled webhook has neither synchronization identity field.
         del self.event['before']
         del self.event['after']
+        if verified:
+            self.sync_runs[1] = [{'id': 101, 'event': 'workflow_dispatch',
+                                  'path': ci_readiness.VALIDATION_WORKFLOW,
+                                  'head_sha': self.head, 'head_branch': 'feature/sync',
+                                  'status': 'completed', 'conclusion': 'success',
+                                  'created_at': '2026-11-04T11:00:00Z',
+                                  'updated_at': '2026-11-04T11:01:00Z'}]
+            self.sync_jobs[1] = [{'name': ci_readiness.sync_job_name(23, self.base, self.head),
+                                  'status': 'completed', 'conclusion': 'success'}]
 
     def test_explicit_label_requests_tests_in_pr_context_without_a_head_push(self):
         self.request_pr_validation()
@@ -102,6 +128,177 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertEqual(self.head, decision.head_sha)
         self.assertEqual(self.base, decision.base_sha)
         self.assertIn('repos/owner/project/pulls/23', self.calls)
+
+    def test_initial_label_on_a_current_branch_cannot_start_full_tests(self):
+        self.request_pr_validation(verified=False)
+        decision = self.decision()
+        self.assertFalse(decision.run_tests)
+        self.assertIn('subsequent PR synchronization request', decision.reason)
+
+    def test_repeated_initial_labels_cannot_create_their_own_sync_proof(self):
+        self.request_pr_validation(verified=False)
+        for _ in range(3):
+            self.assertFalse(self.decision().run_tests)
+
+    def test_sync_proof_is_bound_to_pr_number_head_and_current_main(self):
+        self.request_pr_validation()
+        for number, base, head in ((24, self.base, self.head),
+                                   (23, 'd' * 40, self.head),
+                                   (23, self.base, 'd' * 40)):
+            self.sync_jobs[1][0]['name'] = ci_readiness.sync_job_name(number, base, head)
+            self.assertFalse(self.decision().run_tests)
+
+    def test_only_a_successful_preparation_job_from_the_selected_workflow_is_proof(self):
+        self.request_pr_validation()
+        original = dict(self.sync_runs[1][0])
+        for key, value in (('event', 'pull_request'), ('path', '.github/workflows/other.yml'),
+                           ('head_sha', 'd' * 40), ('head_branch', 'other'),
+                           ('status', 'in_progress'), ('conclusion', 'failure')):
+            self.sync_runs[1] = [dict(original, **{key: value})]
+            self.assertFalse(self.decision().run_tests)
+        self.sync_runs[1] = [original]
+        for conclusion in ('skipped', 'failure', 'cancelled'):
+            self.sync_jobs[1][0]['conclusion'] = conclusion
+            self.assertFalse(self.decision().run_tests)
+
+    def test_premature_label_cannot_adopt_a_later_sync_request(self):
+        self.request_pr_validation()
+        self.event['pull_request']['updated_at'] = '2026-11-04T10:30:00Z'
+        self.assertFalse(self.decision().run_tests)
+        self.event['pull_request']['updated_at'] = '2026-11-04T12:00:00Z'
+        self.assertTrue(self.decision().run_tests)
+
+    def test_preparation_before_opening_or_after_labeling_is_not_proof(self):
+        self.request_pr_validation()
+        original = dict(self.sync_runs[1][0])
+        for changes in ({'created_at': '2026-11-04T09:00:00Z'},
+                        {'updated_at': '2026-11-04T13:00:00Z'},
+                        {'created_at': '2026-11-04T11:02:00Z'}):
+            self.sync_runs[1] = [dict(original, **changes)]
+            self.assertFalse(self.decision().run_tests)
+
+    def test_sync_proof_search_paginates_runs_and_jobs(self):
+        self.request_pr_validation()
+        self.sync_runs[2] = self.sync_runs[1]
+        self.sync_runs[1] = [{'event': 'push'}] * 100
+        self.sync_jobs[2] = self.sync_jobs[1]
+        self.sync_jobs[1] = [{'name': 'Standalone diagnostic'}] * 100
+        self.assertTrue(self.decision().run_tests)
+        self.assertTrue(any('runs?' in c and c.endswith('page=2') for c in self.calls))
+        self.assertTrue(any('jobs?' in c and c.endswith('page=2') for c in self.calls))
+
+    def prepare_sync_request(self):
+        self.event['inputs'] = {'operation': 'synchronize-pr', 'pr_number': '23',
+                                'sync_base': self.base}
+
+    def record_sync(self, ref='refs/heads/feature/sync'):
+        return ci_readiness.record_sync_request('workflow_dispatch', self.event,
+                                                self.repository, self.head, ref, self.api)
+
+    def test_later_noop_sync_verification_succeeds_without_starting_tests(self):
+        self.prepare_sync_request()
+        decision = self.record_sync()
+        self.assertFalse(decision.run_tests)
+        self.assertEqual(self.head, decision.head_sha)
+        self.assertEqual(self.base, decision.base_sha)
+        self.assertIn('verified', decision.reason)
+
+    def test_preparation_mode_cannot_fall_through_to_full_diagnostics(self):
+        self.prepare_sync_request()
+        self.assertFalse(self.decision('workflow_dispatch').run_tests)
+        self.assertEqual([], self.calls)
+
+    def test_missing_and_unknown_manual_operations_cannot_start_full_tests(self):
+        for inputs in ({}, {'operation': ''}, {'operation': 'sync'}, {'operation': 'DIAGNOSTIC'}):
+            self.event['inputs'] = inputs
+            self.assertFalse(self.decision('workflow_dispatch').run_tests)
+        self.assertEqual([], self.calls)
+
+    def test_sync_verification_requires_the_exact_open_owned_branch(self):
+        self.prepare_sync_request()
+        for ref in ('refs/heads/main', 'refs/tags/v1'):
+            with self.assertRaises(ValueError):
+                self.record_sync(ref)
+        original = json.loads(json.dumps(self.current))
+        for change in ('closed', 'head', 'fork', 'base'):
+            self.current = json.loads(json.dumps(original))
+            if change == 'closed': self.current['state'] = 'closed'
+            if change == 'head': self.current['head']['sha'] = 'd' * 40
+            if change == 'fork': self.current['head']['repo']['full_name'] = 'other/project'
+            if change == 'base': self.current['base']['ref'] = 'other'
+            with self.assertRaises(ValueError):
+                self.record_sync()
+
+    def test_sync_verification_rejects_stale_main_and_an_unremoved_initial_label(self):
+        self.prepare_sync_request()
+        self.current['labels'] = [{'name': 'run-full-validation'}]
+        with self.assertRaises(ValueError): self.record_sync()
+        self.current['labels'] = []
+        self.event['inputs']['sync_base'] = 'd' * 40
+        with self.assertRaises(ValueError): self.record_sync()
+        self.event['inputs']['sync_base'] = self.base
+        self.comparison = {'status': 'diverged'}
+        with self.assertRaises(ValueError): self.record_sync()
+
+    def test_preparation_validates_operation_pr_number_and_commit_inputs(self):
+        self.prepare_sync_request()
+        for number in ('', '0', '-1', '23/other', '023', 23):
+            self.event['inputs']['pr_number'] = number
+            with self.assertRaises(ValueError): self.record_sync()
+        self.event['inputs']['pr_number'] = '23'
+        self.event['inputs']['operation'] = 'diagnostic'
+        with self.assertRaises(ValueError): self.record_sync()
+
+    def test_bad_sync_receipt_identity_and_timestamp_fail_closed(self):
+        self.request_pr_validation()
+        self.sync_runs[1][0]['id'] = '101/jobs'
+        with self.assertRaises(ValueError): self.decision()
+        self.sync_runs[1][0]['id'] = 101
+        self.sync_runs[1][0]['updated_at'] = '2026-11-04T11:01:00'
+        with self.assertRaises(ValueError): self.decision()
+
+    def run_cli(self, directory, event_name, record=False):
+        root = Path(directory)
+        event = root / 'event.json'
+        event.write_text(json.dumps(self.event))
+        output = root / 'output'
+        argv = ['ci_validation_readiness.py', '--event-name', event_name,
+                '--event-path', str(event), '--repository', self.repository,
+                '--sha', self.head, '--ref', 'refs/heads/feature/sync',
+                '--output', str(output), '--summary', str(root / 'summary')]
+        if record: argv.append('--record-sync')
+        with patch.object(sys, 'argv', argv), \
+                patch.object(ci_readiness, 'github_json', side_effect=self.api), \
+                contextlib.redirect_stdout(io.StringIO()):
+            result = ci_readiness.main()
+        return result, output.read_text()
+
+    def test_cli_preparation_records_current_identity_without_full_test_permission(self):
+        self.prepare_sync_request()
+        with tempfile.TemporaryDirectory() as directory:
+            status, output = self.run_cli(directory, 'workflow_dispatch', record=True)
+        self.assertEqual(0, status)
+        self.assertIn('run_tests=false\n', output)
+        self.assertIn('head_sha=' + self.head + '\n', output)
+        self.assertIn('base_sha=' + self.base + '\n', output)
+        self.assertIn('verified', output)
+
+    def test_cli_premature_label_defers_without_fabricating_a_test_failure(self):
+        self.request_pr_validation(verified=False)
+        with tempfile.TemporaryDirectory() as directory:
+            status, output = self.run_cli(directory, 'pull_request')
+        self.assertEqual(0, status)
+        self.assertIn('run_tests=false\n', output)
+        self.assertNotIn('run_tests=true', output)
+
+    def test_cli_failed_preparation_cannot_create_a_successful_receipt(self):
+        self.prepare_sync_request()
+        self.event['inputs']['sync_base'] = 'd' * 40
+        with tempfile.TemporaryDirectory() as directory:
+            status, output = self.run_cli(directory, 'workflow_dispatch', record=True)
+        self.assertEqual(1, status)
+        self.assertIn('run_tests=false\n', output)
+        self.assertNotIn('head_sha=' + self.head, output)
 
     def test_removed_request_label_cannot_start_full_tests(self):
         self.request_pr_validation()
@@ -200,6 +397,7 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertFalse(self.decision('workflow_dispatch').changelog_exempt)
 
     def test_bad_commit_and_repository_identities_are_rejected(self):
+        self.event['inputs'] = {'operation': 'diagnostic'}
         with self.assertRaises(ValueError):
             ci_readiness.decide('workflow_dispatch', self.event, '../project', self.head,
                                 'refs/heads/main', self.api)
@@ -240,7 +438,12 @@ class ValidationReadinessTests(unittest.TestCase):
         blocks = dict(re.findall(r'^  ([a-z-]+):\n(.*?)(?=^  [a-z-]+:|\Z)',
                                  workflow.split('\njobs:\n', 1)[1], re.M | re.S))
         required = {'source-qa', 'windows', 'windows-portable', 'reference-graph'}
-        self.assertEqual(required | {'readiness'}, set(blocks))
+        self.assertEqual(required | {'readiness', 'sync-request'}, set(blocks))
+        self.assertIn("if: github.event_name != 'workflow_dispatch' || inputs.operation == 'diagnostic'", blocks['readiness'])
+        self.assertIn("if: github.event_name == 'workflow_dispatch' && inputs.operation == 'synchronize-pr'", blocks['sync-request'])
+        self.assertIn('scripts/ci_validation_readiness.py --record-sync', blocks['sync-request'])
+        self.assertIn("inputs.operation == 'synchronize-pr' && 'sync-request'", workflow)
+        self.assertIn("name: 'PR sync #${{ inputs.pr_number }}: ${{ inputs.sync_base }} / ${{ github.sha }}'", blocks['sync-request'])
         for name in required:
             block = blocks[name]
             self.assertIn("\n    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}", block)
@@ -353,6 +556,39 @@ class PackageTests(unittest.TestCase):
             'required_files': ['CMakeLists.txt'], 'source_directories': ['src', 'metadata']}))
         inventory.write_manifest(self.root)
         self.zip = self.base / 'source.zip'
+
+    def test_manifest_refresh_replaces_hardlink_without_modifying_other_owner(self):
+        destination = self.root / inventory.MANIFEST
+        original = destination.read_bytes()
+        unrelated = self.base / 'hardlink-owner.txt'
+        unrelated.write_bytes(original)
+        destination.unlink()
+        try:
+            os.link(unrelated, destination)
+        except OSError:
+            self.skipTest('hardlink creation unavailable on this filesystem')
+        (self.root / 'src/value.cpp').write_text('int value() { return 9; }\n')
+        inventory.write_manifest(self.root)
+        self.assertEqual(original, unrelated.read_bytes(),
+                         'manifest refresh must not truncate the other hardlink owner')
+        self.assertNotEqual(original, destination.read_bytes())
+        self.assertEqual([], inventory.verify_manifest(self.root))
+        self.assertFalse(list(destination.parent.glob('.' + destination.name + '.*.partial')))
+
+    def test_manifest_refresh_replace_failure_preserves_prior_manifest(self):
+        destination = self.root / inventory.MANIFEST
+        original = destination.read_bytes()
+        (self.root / 'src/value.cpp').write_text('int value() { return 9; }\n')
+        with patch.object(inventory.os, 'replace', side_effect=OSError('synthetic manifest commit failure')):
+            with self.assertRaisesRegex(OSError, 'synthetic manifest commit failure'):
+                inventory.write_manifest(self.root)
+        self.assertEqual(original, destination.read_bytes(),
+                         'failed publication must retain the complete old manifest')
+        self.assertFalse(list(destination.parent.glob('.' + destination.name + '.*.partial')))
+        self.assertTrue(inventory.verify_manifest(self.root),
+                        'the previous manifest must still reject changed source bytes')
+        inventory.write_manifest(self.root)
+        self.assertEqual([], inventory.verify_manifest(self.root))
 
     def test_flat_roundtrip_and_determinism(self):
         first = packaging.package(self.root, self.zip)
@@ -1026,13 +1262,202 @@ class GovernanceTests(unittest.TestCase):
             path = root / entry['launcher']
             path.write_text(original)
             self.assertEqual([], launchers.check(root))
-            for token in ['%*', 'exit /b %RC%', 'ForegroundColor Red', 'Exit code: %RC%', 'pause >nul']:
+            for token in ['%*', '-LauncherOwnsSummary %*', 'exit /b %RC%',
+                          'ForegroundColor Red', 'Exit code: %RC%', 'pause >nul']:
                 path.write_text(original.replace(token, 'REMOVED'))
                 self.assertTrue(launchers.check(root), token)
             path.write_text(original)
             automation=root/entry['automation']
             automation.write_text(automation.read_text().replace('exit $LASTEXITCODE','exit 0'))
             self.assertTrue(any('masks child exit' in e for e in launchers.check(root)))
+
+    def test_launcher_summary_ownership_must_reach_the_profile(self):
+        entries = json.loads((ROOT / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').read_text())['entrypoints']
+        for entry in entries:
+            with self.subTest(launcher=entry['launcher']), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                (root / 'metadata').mkdir()
+                (root / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').write_text(
+                    json.dumps({'entrypoints': [entry]}))
+                for name in (entry['launcher'], entry['automation']):
+                    path = root / name
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes((ROOT / name).read_bytes())
+                self.assertEqual([], launchers.check(root))
+                target = root / entry['automation']
+                original = target.read_text()
+                for token in ('[switch]$LauncherOwnsSummary',
+                              '-LauncherOwnsSummary:$LauncherOwnsSummary'):
+                    target.write_text(original.replace(token, ''))
+                    self.assertTrue(any('summary ownership' in e
+                                        for e in launchers.check(root)), token)
+
+
+class OperatorOutputTests(unittest.TestCase):
+    """Exercise actual wrappers/formatting; fake only the compiler/validator work."""
+
+    def make_fixture(self, tmp):
+        root = Path(tmp) / 'operator fixture (1)'
+        root.mkdir()
+        entries = json.loads((ROOT / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').read_text())['entrypoints']
+        for entry in entries:
+            for name in (entry['launcher'], entry['automation']):
+                target = root / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes((ROOT / name).read_bytes())
+        directory = root / 'scripts/build_orchestration'
+        shutil.copyfile(ROOT / 'scripts/build_orchestration/build_common.ps1',
+                        directory / 'build_common.ps1')
+        # No MSVC build or Golden acceptance is performed by this output fixture.
+        (directory / 'build_profile.ps1').write_text(r'''
+param([string]$Mode,[string]$BuildDir,[string]$Config,[switch]$LauncherOwnsSummary)
+. (Join-Path $PSScriptRoot 'build_common.ps1')
+$code = [int]$env:SURGE_OUTPUT_FIXTURE_EXIT
+$labels = @{Compile='COMPILE ONLY';Debug='DEBUG BUILD';Native='NATIVE ACCEPTANCE';Crt='STATIC CRT ACCEPTANCE';Golden='PRODUCTION BUILD'}
+$record = @{mode=$Mode;build_dir=$BuildDir;configuration=$Config;owns_summary=[bool]$LauncherOwnsSummary}
+Write-Host ('FIXTURE_ARGS:' + ($record | ConvertTo-Json -Compress))
+if ($code -eq 0 -or ($Mode -eq 'Golden' -and $code -eq 3)) {
+    Write-SelectedProfileResult -ProfileLabel $labels[$Mode] -Dll 'fixture/preloader_l.dll' -Sha256 ('a' * 64) -GoldenBlocked:($code -eq 3) -LauncherOwnsSummary:$LauncherOwnsSummary
+} else {
+    Write-Host 'ERROR: injected validation failure'
+}
+exit $code
+''', encoding='ascii')
+        (root / 'entries.json').write_text(json.dumps(entries), encoding='ascii')
+        return root, entries
+
+    @unittest.skipUnless(shutil.which('powershell.exe') or shutil.which('pwsh'),
+                         'PowerShell is required for the output-only fixture')
+    def test_powershell_routes_summary_and_preserves_arguments_and_exit_codes(self):
+        shell = shutil.which('powershell.exe') or shutil.which('pwsh')
+        with tempfile.TemporaryDirectory() as tmp:
+            root, entries = self.make_fixture(tmp)
+            harness = root / 'harness.ps1'
+            harness.write_text(r'''
+param([string]$FixtureRoot)
+$ErrorActionPreference = 'Stop'
+$entries = Get-Content -LiteralPath (Join-Path $FixtureRoot 'entries.json') -Raw | ConvertFrom-Json
+foreach ($entry in $entries) {
+    $codes = @(0,105)
+    if ($entry.mode -eq 'Golden') { $codes += 3 }
+    foreach ($code in $codes) {
+        foreach ($owned in @($false,$true)) {
+            $env:SURGE_OUTPUT_FIXTURE_EXIT = [string]$code
+            $lines = @(& (Join-Path $FixtureRoot $entry.automation) -BuildDir 'build\fixture path (1)' -Config RelWithDebInfo -LauncherOwnsSummary:$owned 6>&1 | ForEach-Object { [string]$_ })
+            $actualCode = $LASTEXITCODE
+            @{mode=$entry.mode;expected_code=$code;actual_code=$actualCode;owned=$owned;lines=$lines} | ConvertTo-Json -Compress -Depth 5
+        }
+    }
+}
+exit 0
+''', encoding='ascii')
+            result = subprocess.run([shell, '-NoLogo', '-NoProfile', '-NonInteractive',
+                                     '-ExecutionPolicy', 'Bypass', '-File', str(harness), str(root)],
+                                    capture_output=True, text=True, timeout=45)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            records = [json.loads(line) for line in result.stdout.splitlines() if line.strip()]
+            self.assertEqual(22, len(records), result.stdout)
+            labels = {entry['mode']: entry['label'] for entry in entries}
+            for record in records:
+                with self.subTest(mode=record['mode'], code=record['expected_code'], owned=record['owned']):
+                    self.assertEqual(record['expected_code'], record['actual_code'])
+                    lines = record['lines']
+                    args = json.loads(next(line.removeprefix('FIXTURE_ARGS:')
+                                           for line in lines if line.startswith('FIXTURE_ARGS:')))
+                    self.assertEqual(record['mode'], args['mode'])
+                    self.assertEqual(r'build\fixture path (1)', args['build_dir'])
+                    self.assertEqual('RelWithDebInfo', args['configuration'])
+                    self.assertEqual(record['owned'], args['owns_summary'])
+                    if record['expected_code'] == 0:
+                        self.assertEqual(0 if record['owned'] else 1,
+                                         lines.count(labels[record['mode']] + ': PASS'))
+                    elif record['expected_code'] == 3:
+                        self.assertEqual(0 if record['owned'] else 1,
+                                         sum('Golden: BLOCKED' in line for line in lines))
+                        self.assertEqual(0 if record['owned'] else 1, lines.count('Exit code 3.'))
+                        self.assertIn('See golden/GOLDEN_REPORT.json. This is not Golden acceptance.', lines)
+                    else:
+                        self.assertIn('ERROR: injected validation failure', lines)
+                        self.assertFalse(any(': PASS' in line for line in lines))
+                    if record['expected_code'] in (0, 3):
+                        self.assertEqual(1, lines.count('DLL: fixture/preloader_l.dll'))
+                        self.assertEqual(1, lines.count('SHA256: ' + 'a' * 64))
+
+    def run_cmd(self, launcher, code):
+        env = dict(os.environ, SURGE_OUTPUT_FIXTURE_EXIT=str(code))
+        # CMD parses its own quotes; list2cmdline's CRT-style backslash escapes
+        # become literal characters here. /s removes just the outer quote pair.
+        command = ('"' + os.environ.get('COMSPEC', 'cmd.exe') + '" /d /s /c ""' +
+                   str(launcher) + r'" -BuildDir "build\fixture path (1)" -Config RelWithDebInfo"')
+        return subprocess.run(command,
+                              input='\n', capture_output=True, text=True, env=env, timeout=25)
+
+    @unittest.skipUnless(os.name == 'nt', 'Requires real Windows CMD and Windows PowerShell')
+    def test_cmd_outputs_one_verdict_with_color_and_with_renderer_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, entries = self.make_fixture(tmp)
+            for fallback in (False, True):
+                for entry in entries:
+                    launcher = root / entry['launcher']
+                    if fallback:
+                        text = launcher.read_text(encoding='ascii')
+                        text, replacements = re.subn(
+                            r'^  powershell\.exe -NoLogo -NoProfile -Command .*$',
+                            '  cmd.exe /d /c exit 1', text, flags=re.MULTILINE)
+                        self.assertGreaterEqual(replacements, 2, 'Renderer fault was not injected')
+                        launcher.write_text(text, encoding='ascii')
+                    codes = (0, 105, 3) if entry['mode'] == 'Golden' else (0, 105)
+                    for code in codes:
+                        with self.subTest(mode=entry['mode'], code=code, fallback=fallback):
+                            result = self.run_cmd(launcher, code)
+                            output = result.stdout + result.stderr
+                            self.assertEqual(code, result.returncode, output)
+                            verdict = 'PASS' if code == 0 else ('BLOCKED' if code == 3 else 'FAIL')
+                            self.assertEqual(1, output.count(entry['label'] + ': ' + verdict), output)
+                            self.assertEqual(1, output.count('Exit code: ' + str(code)), output)
+                            self.assertEqual(1, output.count('Press any key to close this operator window.'), output)
+                            args_line = next(line for line in output.splitlines() if line.startswith('FIXTURE_ARGS:'))
+                            args = json.loads(args_line.removeprefix('FIXTURE_ARGS:'))
+                            self.assertTrue(args['owns_summary'])
+                            self.assertEqual(r'build\fixture path (1)', args['build_dir'])
+                            if code in (0, 3):
+                                self.assertEqual(1, output.count('DLL: fixture/preloader_l.dll'), output)
+                                self.assertEqual(1, output.count('SHA256: ' + 'a' * 64), output)
+                            if code == 3:
+                                self.assertNotIn('Golden: BLOCKED', output)
+                                self.assertIn('golden/GOLDEN_REPORT.json', output)
+                            if code == 105:
+                                self.assertIn('ERROR: injected validation failure', output)
+
+    @unittest.skipUnless(os.name == 'nt', 'Requires real Windows CMD and Windows PowerShell')
+    def test_cmd_missing_automation_retains_one_failure_and_exit_two(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, entries = self.make_fixture(tmp)
+            for entry in entries:
+                with self.subTest(mode=entry['mode']):
+                    (root / entry['automation']).unlink()
+                    result = self.run_cmd(root / entry['launcher'], 0)
+                    output = result.stdout + result.stderr
+                    self.assertEqual(2, result.returncode, output)
+                    self.assertEqual(1, output.count(entry['label'] + ': FAIL'), output)
+                    self.assertEqual(1, output.count('Exit code: 2'), output)
+                    self.assertIn('ERROR: Missing target', output)
+                    self.assertNotIn('FIXTURE_ARGS:', output)
+
+    @unittest.skipUnless(os.name == 'nt', 'Requires real Windows CMD and Windows PowerShell')
+    def test_cmd_negative_control_reproduces_the_previous_duplicate(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, entries = self.make_fixture(tmp)
+            entry = next(e for e in entries if e['mode'] == 'Golden')
+            launcher = root / entry['launcher']
+            text = launcher.read_text(encoding='ascii')
+            self.assertIn('-LauncherOwnsSummary %*', text)
+            # Restore the former CMD call: both layers now publish a verdict.
+            launcher.write_text(text.replace('-LauncherOwnsSummary %*', '%*'), encoding='ascii')
+            result = self.run_cmd(launcher, 0)
+            output = result.stdout + result.stderr
+            self.assertEqual(0, result.returncode, output)
+            self.assertEqual(2, output.count('PRODUCTION BUILD: PASS'), output)
 
 
 class BuildWordingTests(unittest.TestCase):
@@ -1119,6 +1544,41 @@ class DistTests(unittest.TestCase):
             self.assertNotIn('classification',value)
             self.assertNotIn('official_release',value)
             self.assertNotIn('library_publication',value)
+
+
+    def test_golden_output_symlink_cannot_overwrite_external_file(self):
+        self.output.mkdir(parents=True, exist_ok=True)
+        victim = self.root.parent / 'outside-golden-victim.bin'
+        victim.write_bytes(b'original external fixture bytes')
+        candidate_hash = golden.sha(self.raw)[:16]
+        output_name = 'preloader_l.' + candidate_hash + '.dll'
+        artifact = self.output / output_name
+        sidecar = Path(str(artifact) + '.sha256')
+        for unsafe in (artifact, sidecar):
+            with self.subTest(unsafe=unsafe.name):
+                try:
+                    unsafe.symlink_to(victim)
+                except (OSError, NotImplementedError):
+                    self.skipTest('Symlink fixtures are unavailable')
+                try:
+                    with self.assertRaisesRegex(ValueError, 'Unsafe existing Golden output member'):
+                        self.run_pipeline()
+                    self.assertEqual(b'original external fixture bytes', victim.read_bytes())
+                    self.assertTrue(unsafe.is_symlink())
+                    self.assertFalse((self.root / 'dist').exists())
+                    self.assertFalse(list(self.output.glob('.golden-*.partial')))
+                finally:
+                    unsafe.unlink()
+
+    def test_golden_output_staging_leaves_no_partial_files(self):
+        report, calls = self.run_pipeline()
+        self.assertEqual('GOLDEN_PASS', report['result'])
+        self.assertEqual(7, len(calls))
+        artifact = Path(report['artifact'])
+        self.assertEqual(self.raw.read_bytes(), artifact.read_bytes())
+        self.assertEqual(golden.sha(artifact) + '  ' + artifact.name + '\n',
+                         Path(report['sha256_file']).read_text())
+        self.assertFalse(list(self.output.glob('.golden-*.partial')))
 
     def test_every_golden_failure_preserves_previous_dist_and_skips_runtime(self):
         self.run_pipeline()

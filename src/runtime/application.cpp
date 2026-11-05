@@ -156,11 +156,11 @@ public:
     Path parent_path_019820(const Path& p) override{return env_.parent_path_019820(p);}
     Path join_016b00(const Path& a,const Path& b) override{return env_.join_016b00(a,b);}
     std::string path_utf8_01e3f0(const Path& p) override{return env_.path_to_utf8_031ca0(p);}
-    std::string current_time_041b60_null_true() override{return env_.current_time_041b60();}
+    std::string current_time_041b60_null_true() override{return env_.ticket_time_041b60();}
     bool wine_detected_045010() override{return GetProcAddress(GetModuleHandleW(L"ntdll.dll"),"wine_get_version")!=nullptr;}
     void log_literal_006880(std::string_view text) override{env_.debug_log({"licensing status: ",text});}
     void log_string_006860(std::string_view text) override{env_.debug_log({"licensing diagnostic: ",text});}
-    bool write_ticket_03c1d0(const Path& p,std::string_view v) override{return file::write_binary_03c1d0(p,v,files_);}
+    bool write_ticket_03c1d0(const Path& p,std::string_view v) override{return file::write_binary_checked(p,v,files_);}
     void dialog_038bc0(std::string_view,std::string_view body,std::uint32_t flags) override{MessageBoxW(nullptr,wide(env_.widen_0145d0(body)).c_str(),L"SURGE",flags);}
     [[noreturn]] void exit_05cdc0(std::int32_t code) override{ExitProcess(code);}
     [[noreturn]] void no_response_02bcd0_04d228() override{throw NoResponse();}
@@ -231,7 +231,9 @@ public:
     void crypt_observed(hooks::Selection) noexcept override {
 #ifndef NDEBUG
         thread_local bool logging=false;if(logging)return;logging=true;
-        env_.debug_log("phase");
+        // Diagnostics cannot escape this noexcept observer or prevent the
+        // original API result from reaching the host. Always reset reentry.
+        try{env_.debug_log("phase");}catch(...){}
         logging=false;
 #endif
     }
