@@ -12,6 +12,8 @@
 #include <chrono>
 #include <mutex>
 #include <new>
+#include <memory>
+#include <span>
 namespace receive_buffer_probe {
 struct Allocation{void* base;std::size_t bytes;};
 std::atomic<bool> recording{false};
@@ -55,6 +57,8 @@ namespace late_completion {
 // one actual dequeued OS packet intact until the controller releases delivery.
 struct Packet {HANDLE port{};BOOL ok{};DWORD error{},bytes{};ULONG_PTR key{};OVERLAPPED* operation{};};
 bool armed=false,holding=false,cached=false;
+bool capture_send=false;
+SOCKET send_socket=INVALID_SOCKET;
 OVERLAPPED* target=nullptr;
 char* buffer=nullptr;
 int submitted=0;DWORD submit_error=0;
@@ -92,6 +96,16 @@ int WSAAPI TestReceive(SOCKET value,LPWSABUF buffers,DWORD n,LPDWORD bytes,LPDWO
     if(selected){late_completion::submitted=result;late_completion::submit_error=error;}
     WSASetLastError(error);return result;
 }
+int WSAAPI TestSend(SOCKET value,LPWSABUF buffers,DWORD n,LPDWORD bytes,DWORD flags,
+    LPWSAOVERLAPPED operation,LPWSAOVERLAPPED_COMPLETION_ROUTINE callback){
+    const bool selected=late_completion::armed&&late_completion::capture_send&&
+        value==late_completion::send_socket&&n==1&&buffers[0].len==4;
+    if(selected){late_completion::target=operation;late_completion::buffer=buffers[0].buf;}
+    const auto result=::WSASend(value,buffers,n,bytes,flags,operation,callback);
+    const auto error=WSAGetLastError();
+    if(selected){late_completion::submitted=result;late_completion::submit_error=error;}
+    WSASetLastError(error);return result;
+}
 namespace fault {
 std::atomic<SOCKET> target{INVALID_SOCKET};
 std::atomic<int> error{0};
@@ -120,6 +134,7 @@ int WSAAPI TestSetSockOpt(SOCKET value,int level,int name,const char* data,int s
 #define closesocket TestCloseSocket
 #define setsockopt TestSetSockOpt
 #define WSARecv TestReceive
+#define WSASend TestSend
 #define GetQueuedCompletionStatus TestGetQueuedCompletionStatus
 #include <asio.hpp>
 #include "preloader_l/net/server.hpp"
@@ -141,6 +156,7 @@ public:
 #undef setsockopt
 #undef closesocket
 #undef WSARecv
+#undef WSASend
 #undef GetQueuedCompletionStatus
 
 namespace {
@@ -332,6 +348,94 @@ void delayed_receive_completion(bool success){
         <<" held_stops=2 elapsed_ms="<<std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count()
         <<" captures="<<late_completion::captures<<" deliveries="<<late_completion::deliveries<<'\n';
 }
+void delayed_send_completion(){
+    // B50: exercise the actual WSASend -> IOCP callback path with its packet
+    // held after kernel dequeue. This is distinct from WSARecv in PR #107.
+    Harness h(false);
+    require(!h.owner.runner.joinable(),"send completion fixture uses a single IO controller");
+    struct SendScope {
+        SendScope(SOCKET native){
+            require(!late_completion::armed&&!late_completion::cached,
+                "previous delayed completion must already be retired");
+            late_completion::target=nullptr;late_completion::buffer=nullptr;
+            late_completion::packet={};
+            late_completion::captures=late_completion::deliveries=late_completion::timeouts=0;
+            late_completion::submitted=0;late_completion::submit_error=0;
+            late_completion::send_socket=native;
+            late_completion::capture_send=true;
+            late_completion::holding=late_completion::armed=true;
+        }
+        void release(){late_completion::holding=late_completion::armed=false;}
+        ~SendScope(){
+            release();late_completion::capture_send=false;
+            late_completion::send_socket=INVALID_SOCKET;
+        }
+    } gate(h.client->socket.native_handle());
+    auto output=std::make_shared<std::string>("PING");
+    std::weak_ptr<std::string> borrowed=output;
+    std::weak_ptr<net::AsioService::Impl::Client> lifetime=h.client;
+    unsigned stale_callbacks=0;
+    h.client->async_send(std::span<const char>(output->data(),output->size()),
+        [output,&stale_callbacks](server::Error,std::size_t){++stale_callbacks;});
+    output.reset();
+    require(late_completion::target!=nullptr&&late_completion::buffer!=nullptr&&
+            late_completion::submitted!=SOCKET_ERROR ||
+            (late_completion::target!=nullptr&&late_completion::buffer!=nullptr&&
+             late_completion::submit_error==WSA_IO_PENDING),
+        "actual overlapped WSASend was submitted through the native adapter");
+    require(h.client->pending_writes==1&&!borrowed.expired(),
+        "completion closure owns the borrowed WSASend bytes until dispatch");
+    const auto end=std::chrono::steady_clock::now()+2s;
+    while(!late_completion::cached&&std::chrono::steady_clock::now()<end){
+        h.owner.io.restart();h.owner.io.poll_one();
+        if(!late_completion::cached)Sleep(1);
+    }
+    const auto packet=late_completion::packet;
+    require(late_completion::cached&&late_completion::captures==1&&
+            packet.operation==late_completion::target&&packet.port&&packet.key==0,
+        "the real IOCP send completion was captured exactly once");
+    require(packet.ok&&packet.error==ERROR_SUCCESS&&packet.bytes==4,
+        "captured send packet reports the actual successful four-byte write");
+    require(!borrowed.expired()&&!stale_callbacks,
+        "holding the send completion retains output and suppresses callbacks");
+    fault::target=late_completion::send_socket;
+    h.client->close();
+    h.client.reset();
+    require(!borrowed.expired()&&!lifetime.expired()&&h.owner.active_sessions==1,
+        "cancel/close and caller release cannot retire the undelivered send");
+    const auto started=std::chrono::steady_clock::now();
+    for(unsigned i=0;i<2;++i){
+        const auto waits=late_completion::timeouts;
+        require(stop_failed(h.owner),"held WSASend completion must reject bounded shutdown");
+        require(late_completion::timeouts>waits&&late_completion::cached&&
+                late_completion::captures==1&&!late_completion::deliveries,
+            "every failed shutdown preserves the original native completion packet");
+        auto kept=lifetime.lock();
+        require(kept&&kept->closed&&kept->pending_writes==1&&
+                !kept->retired()&&h.owner.active_sessions==1&&
+                h.owner.clients.size()==1,
+            "held send completion retains the Client and session capacity");
+        require(!borrowed.expired()&&!stale_callbacks,
+            "pending write bytes remain owned without a business callback");
+        require(fault::closes==1,"completed socket close must not be repeated during retry");
+    }
+    require(std::chrono::steady_clock::now()-started>=100ms,
+        "held send delivery crossed the unchanged first 100 ms drain interval");
+    gate.release();
+    h.owner.stop();
+    require(late_completion::captures==1&&late_completion::deliveries==1&&
+            !late_completion::cached&&!stale_callbacks,
+        "the exact send completion is delivered once without a stale callback");
+    require(borrowed.expired()&&lifetime.expired()&&
+            h.owner.active_sessions==0&&h.owner.clients.empty(),
+        "terminal send completion retires output and Client exactly once");
+    h.owner.stop();
+    require(late_completion::deliveries==1&&fault::closes==1,
+        "later idempotent shutdown cannot repeat native send or close");
+    std::cout<<"native delayed WSASend: packet_bytes="<<packet.bytes
+        <<" captures="<<late_completion::captures
+        <<" deliveries="<<late_completion::deliveries<<'\n';
+}
 void timer_retirement(){
     Harness h;fault::hold_timer=true;const bool pending=stop_failed(h.owner);fault::hold_timer=false;
     h.client->timer.cancel();h.owner.stop();
@@ -376,6 +480,7 @@ int main(int argc,char** argv)try{
         {"receive-completion",receive_cancellation_lifetime},
         {"late-receive-cancel",+[]{delayed_receive_completion(false);}},
         {"late-receive-success",+[]{delayed_receive_completion(true);}},
+        {"late-send-success",delayed_send_completion},
         {"timer",timer_retirement},{"constructor",constructor_rollback},{"bind",bind_rollback},{"listener",listener_retry}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");
