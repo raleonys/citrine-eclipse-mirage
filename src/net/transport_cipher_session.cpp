@@ -28,7 +28,7 @@ void SessionCipher::set_fixed_key_084c98(){set_session_key_042780(*this,crypto::
 void SessionCipher::set_key_042780(const crypto::Key& key){set_session_key_042780(*this,key);}
 void SessionCipher::set_key_and_iv_042760(const crypto::Key& key,const crypto::Key& iv){set_session_key_iv_042760(*this,key,iv);}
 namespace {
-// Local semantic strings borrow a reserved host buffer. No recovered native
+// Local semantic strings borrow a reserved host buffer. No native
 // allocation/free ABI is claimed. Real request/response prefixes use N11's
 // caller context directly and do not enter this local-string projection.
 struct BorrowedApi:BoundedReceiveBufferApi {
@@ -50,7 +50,7 @@ bool SessionCipher::transform_local(std::string& value,bool encrypt){
     for(unsigned i=0;i<8;++i)prefix.storage_00[i]=static_cast<std::uint8_t>(data>>(i*8));
     std::array<ReceiveBufferRegion,1> regions{{{data,{reinterpret_cast<std::uint8_t*>(value.data()),value.size()+1}}}};
     ReceiveBufferMemory memory{regions};BorrowedApi api{memory};ReceiveBufferContext strings{memory,api};
-    PrefixCipherBlocks blocks{memory};PrefixCipherContext context{strings,blocks};
+    PrefixCipherBlocksAdapter blocks{memory};PrefixCipherContext context{strings,blocks};
     const auto sync_length=[&](){if(prefix.size_10>value.size())throw UnsupportedInput("Local cipher result leaves host reserve");value.resize(static_cast<std::size_t>(prefix.size_10));};
     try{const auto result=encrypt?encrypt_prefix_042610(native_,prefix,0,context):decrypt_prefix_042480(native_,prefix,0,context);sync_length();return result;}
     catch(...){sync_length();throw;} // length projection only; never rollback payload/IV

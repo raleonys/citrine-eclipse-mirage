@@ -72,7 +72,7 @@ private:
     BootstrapDependencies& deps_;
 };
 
-// 04a47c's global list (head VA 1800a42b0). Only accessed fields are recovered.
+// 04a47c's global list (head VA 1800a42b0). Only accessed fields are modeled.
 struct ExitWaitEntry {
     std::uint64_t unobserved_00;
     std::uint32_t thread_id;

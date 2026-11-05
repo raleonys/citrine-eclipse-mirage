@@ -35,6 +35,16 @@ class SourceIdentityTests(unittest.TestCase):
             path.write_text('// SPDX-License-Identifier: GPL-3.0-only\nstruct RecoveredCipher {};\n')
             self.assertTrue(any('Legacy recovery-derived' in e for e in checker.inspect(tmp)[1]))
 
+    def test_recovery_wording_in_comments_and_messages_fail(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'src/example.cpp'
+            path.parent.mkdir(parents=True)
+            path.write_text('// SPDX-License-Identifier: GPL-3.0-only\n// recovered implementation note\n')
+            self.assertTrue(any('Legacy recovery wording' in e for e in checker.inspect(tmp)[1]))
+            path.write_text('// SPDX-License-Identifier: GPL-3.0-only\n'
+                            'const char* error = "Recovered input required";\n')
+            self.assertTrue(any('Legacy recovery wording' in e for e in checker.inspect(tmp)[1]))
+
     def test_vendor_and_fixture_excluded(self):
         with tempfile.TemporaryDirectory() as tmp:
             for name in ('third_party/lib/a.cpp', 'tests/vendors/lib.cpp', 'tests/fixtures/a.cpp'):

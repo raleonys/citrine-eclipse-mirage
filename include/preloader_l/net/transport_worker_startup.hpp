@@ -34,12 +34,12 @@ public:
     virtual void invoke_function_slot_08(IocpWorkerFunction&)=0;
 private:WorkerStartupApi& api_;Api& errors_;
 };
-// Reuses the already recovered CRT thread source without changing it. Entry
-// identity is data; the supplied threads::Effects must route it to the recovered
+// Reuses the existing CRT thread implementation without changing it. Entry
+// identity is data; the supplied threads::Effects must route it to the
 // worker_entry_02a4a0 using a valid live argument, never call an image VA.
-class WorkerStartupEffects:public WorkerStartupEffects {
+class WorkerStartupEffectsAdapter:public WorkerStartupEffects {
 public:
-    WorkerStartupEffects(WorkerStartupApi& api,Api& errors,threads::Effects& threads)
+    WorkerStartupEffectsAdapter(WorkerStartupApi& api,Api& errors,threads::Effects& threads)
         :WorkerStartupEffects(api,errors),threads_(threads){}
     std::uintptr_t begin_thread_05e8e0(std::uintptr_t,std::uint32_t,std::uintptr_t,
         IocpWorkerFunction*,std::uint32_t,std::uint32_t&) final;

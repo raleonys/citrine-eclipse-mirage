@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "preloader_l/protocol/messages.hpp"
+#include "preloader_l/xml/reader.hpp"
 #include <algorithm>
 #include <cstdio>
 #include <cstdlib>
@@ -179,6 +180,51 @@ static void dispatch_tests(){
     doc.root.next=&doc.command;doc.command.next=&doc.root;
     check(f.dispatch(doc)=="R"); // empty attributes and additional command siblings accepted
 }
+static void multi_command_request_contract_tests(){
+    // C21-RISK-001: retain observed first-child-only dispatch. This tests the
+    // real pugixml-backed document tree without inventing a Consumer acceptance rule.
+    preloader_l::xml_reader_bridge::Backend reader;
+    struct Accepted {const char* xml;std::string_view first_name;std::uint32_t rva;};
+    const Accepted accepted[]={
+        {R"XML(<LSX><Request id="multi" recipient="service"><GetConfig/><GetProfile/></Request></LSX>)XML",
+            "GetConfig",0x02e5f0},
+        {R"XML(<LSX><Request id="multi" recipient="service"><GetProfile/><UnknownCommand/></Request></LSX>)XML",
+            "GetProfile",0x02f530},
+        {R"XML(<LSX><Request id="multi" recipient="service"><GetConfig/><ChallengeResponse key="unused"/></Request></LSX>)XML",
+            "GetConfig",0x02e5f0},
+        {R"XML(<LSX><Request id="multi" recipient="service"><GetAuthCode/><GetConfig/><GetProfile/></Request></LSX>)XML",
+            "GetAuthCode",0x02e3b0}
+    };
+    for(const auto& sample:accepted){
+        auto parsed=reader.parse_c_string(sample.xml);
+        check(!parsed.has_error&&parsed.returned_code==0&&parsed.document!=nullptr);
+        Fixture f;
+        check(dispatch_032d00(*parsed.document,f.cipher,f.xml,f.factory,f.random,f.effects)=="R");
+        check(f.effects.handlers==std::vector<std::uint32_t>{sample.rva});
+        check(f.effects.invalids==0&&f.xml.printed.size()==1);
+        const auto& operations=f.xml.printed.front()->operations;
+        check(std::count(operations.begin(),operations.end(),
+                         "open:"+std::string(sample.first_name))==1);
+        check(operations[2]=="attr:id=multi"&&operations[3]=="attr:sender=service");
+        // A trailing ChallengeResponse cannot mutate cipher/key state.
+        check(f.factory.creates==0&&f.cipher.trace->key==0&&f.cipher.trace->fixed==0);
+    }
+    for(const auto* input:{
+        R"XML(<LSX><Request id="multi" recipient="service"><UnknownCommand/><GetConfig/></Request></LSX>)XML",
+        R"XML(<LSX><Request id="multi" recipient="service"/></LSX>)XML",
+        R"XML(<LSX><Request id="multi" recipient="service"><GetConfig/></Request><Request id="second" recipient="service"><GetProfile/></Request></LSX>)XML",
+        R"XML(<LSX><Request id="multi" recipient="service"><GetConfig/></Request><Other/></LSX>)XML"
+    }){
+        auto parsed=reader.parse_c_string(input);
+        check(!parsed.has_error&&parsed.returned_code==0&&parsed.document!=nullptr);
+        Fixture f;
+        bool rejected=false;
+        try{(void)dispatch_032d00(*parsed.document,f.cipher,f.xml,f.factory,f.random,f.effects);}
+        catch(const Invalid&){rejected=true;}
+        check(rejected&&f.effects.invalids==1&&f.effects.handlers.empty());
+        check(f.xml.printed.empty()&&f.factory.creates==0);
+    }
+}
 static void challenge_tests(){
     Fixture initial;
     check(initial_message_02d540(initial.xml,initial.random,"synthetic-version")==std::string("R\0",2));
@@ -267,4 +313,49 @@ static void process_tests(){
         check(f.process(input)==std::string("R\0",2));check(!f.encrypted); // error field controls success
     }
 }
-int main(){codec_tests();reset_tests();dispatch_tests();challenge_tests();process_tests();std::printf("PASS: %u checks; synthetic XML/crypto/queue only; no sockets or target execution\n",checks);}
+// A11-09: a syntactically parsed but invalid LSX Request is rejected by
+// the full message core before any response encryption or event dequeue.
+// This pins CURRENT product behavior, not donor exception compatibility.
+static void process_invalid_dispatch_boundaries(){
+    for(const bool encrypted:{false,true}){
+        for(unsigned invalid=0;invalid<4;++invalid){
+            Fixture f;
+            f.encrypted=encrypted;
+            f.show=1;
+            f.queue.values={"retained-event"};
+            switch(invalid){
+                case 0:f.xml.configure=[](Document& d){d.root.label="OtherRoot";};break;
+                case 1:f.xml.configure=[](Document& d){d.request.attributes.erase("id");};break;
+                case 2:f.xml.configure=[](Document& d){d.command.label="UnregisteredCommand";};break;
+                case 3:f.effects.handler_result=false;break;
+            }
+            std::string input=encrypted?"41":"validly-parsed-fixture";
+            if(encrypted)f.cipher.trace->decrypt_outputs={"decrypted-request"};
+            bool rejected=false;
+            try{(void)f.process(input);}catch(const Invalid&){rejected=true;}
+            check(rejected&&f.effects.invalids==1);
+            check(f.xml.parsed.size()==1&&f.effects.logs.size()==1&&
+                  f.effects.logs[0].starts_with("received:"));
+            check(f.effects.handlers.size()==(invalid==3?1u:0u));
+            check(f.cipher.trace->encrypted.empty()&&f.queue.trace.empty());
+            check(f.queue.values==std::deque<std::string>{"retained-event"});
+            // An independently valid next request must still use the same
+            // cipher and queue, with no replayed error or prematurely lost event.
+            f.xml.configure={};
+            f.effects.handler_result=true;
+            std::string followup=encrypted?"41":"followup-valid";
+            const auto result=f.process(followup);
+            if(encrypted) {
+                check(result==std::string("43\0" "43\0",6));
+                check(f.queue.values.empty());
+                check(f.queue.trace==std::vector<std::string>{"relaxed","lock","count","locked","copy","pop","unlock"});
+            } else {
+                check(result==std::string("R\0",2));
+                check(f.queue.values==std::deque<std::string>{"retained-event"}&&f.queue.trace.empty());
+            }
+            check(f.effects.invalids==1&&f.effects.handlers.size()==(invalid==3?2u:1u));
+            check(f.effects.logs.size()==(encrypted?4u:3u));
+        }
+    }
+}
+int main(){codec_tests();reset_tests();dispatch_tests();multi_command_request_contract_tests();challenge_tests();process_tests();process_invalid_dispatch_boundaries();std::printf("PASS: %u checks; real and synthetic XML; controlled crypto/queue; no sockets or target execution\n",checks);}

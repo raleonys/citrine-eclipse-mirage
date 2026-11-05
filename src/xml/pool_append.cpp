@@ -47,7 +47,7 @@ void append_pool_block_005440(std::uintptr_t array,std::uintptr_t block,PoolAppe
     const auto live_count=static_cast<std::uint32_t>(load(memory,array+0x5c,4));
     store(memory,array+0x5c,live_count+std::uint32_t{1},4);
 }
-void PoolAppendEffects::append_block_005440(std::uintptr_t array,std::uintptr_t block){
+void PoolAppendEffectsAdapter::append_block_005440(std::uintptr_t array,std::uintptr_t block){
     PoolAppendContext context{memory_,*this};
     append_pool_block_005440(array,block,context);
 }

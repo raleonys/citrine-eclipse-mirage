@@ -80,6 +80,117 @@ void duplicates_and_partial_state(){
     try{parse("\"R\"{/}",slash);require(false,"lone slash must fail");}
     catch(const ParseError& e){require(e.position.byte==5,"direct failed block opener consumes slash before throw");}
 }
+std::string nested_objects(std::size_t count) {
+    std::string text;
+    for(std::size_t i=0;i<count;++i)
+        text+=i==0?"\"Config2\"{":"\"node\"{";
+    text.append(count,'}');
+    return text;
+}
+void bounded_config_depth(){
+    State accepted;
+    require(parse(nested_objects(128),accepted),"128 nested objects remain accepted");
+    require(accepted.root.children.size()==1,"bounded document produces a root object");
+    const Node* leaf=&child(accepted.root,"Config2");
+    for(std::size_t i=1;i<128;++i)leaf=&child(*leaf,"node");
+    require(leaf->children.empty()&&accepted.open_objects.empty(),"all 128 objects complete without truncation");
+    struct DepthOrder final:BinaryIterationOrder {
+        std::vector<std::string> order_for(const Node& node,const std::vector<std::string>&)const override {
+            std::vector<std::string> names;
+            for(const auto& item:node.children)names.push_back(item.name);
+            return names; // One child per level: no hash-order ambiguity.
+        }
+    } order;
+    auto converted=to_configuration_node(accepted.root,order);
+    const auto* converted_leaf=&converted;
+    std::size_t converted_depth=0;
+    for(std::size_t i=0;i<128;++i) {
+        const auto found=converted_leaf->children.find(i?"node":"Config2");
+        if(found==converted_leaf->children.end())break;
+        converted_leaf=&found->second;++converted_depth;
+    }
+    require(converted_depth==128&&converted_leaf->children.empty(),
+            "accepted boundary also converts every level and destroys normally");
+    State sequential;
+    require(parse(nested_objects(128)+nested_objects(128),sequential)&&
+            sequential.root.completed_assignments==std::vector<std::string>{"Config2","Config2"},
+            "depth is maximum simultaneous nesting, not total object count");
+    const auto too_deep=nested_objects(129);
+    State rejected;
+    try {
+        (void)parse(too_deep,rejected);
+        require(false,"129 nested objects must be rejected");
+    } catch(const ParseError& error) {
+        require(error.rule==ErrorRule::grammar,"depth check uses existing grammar error");
+        std::size_t cursor=0;
+        for(std::size_t i=0;i<129;++i)cursor=too_deep.find('{',cursor)+1;
+        require(error.position.byte==cursor-1,"depth check points at the offending brace");
+        require(error.position.line==1&&error.position.column==cursor,"depth check column");
+    }
+    require(rejected.root.children.empty()&&rejected.open_objects.empty(),
+            "depth rejection occurs before any parser action");
+    State giant;
+    try {
+        (void)parse(nested_objects(22000),giant);
+        require(false,"very deep document must not enter recursive PEGTL");
+    } catch(const ParseError& error) {
+        require(error.rule==ErrorRule::grammar&&error.position.byte==905,
+                "deep input rejects at the same 129th brace before recursive actions");
+    }
+    const auto quoted=std::string("\"Config2\"{\"value\" \"")+
+        std::string(1000,'{')+"\\\""+std::string(1000,'}')+"\"}";
+    State quoted_state;
+    require(parse(quoted,quoted_state),"literal and escaped quoted braces are ignored");
+    const auto commented=std::string("/*")+std::string(1000,'{')+
+        "*/ \"Config2\"{ //"+std::string(1000,'{')+"\n\"key\" \"ok\"}";
+    State commented_state;
+    require(parse(commented,commented_state),"commented braces are ignored");
+    State bom;
+    try {
+        (void)parse(std::string("\xef\xbb\xbf",3)+"\n"+too_deep,bom);
+        require(false,"over-depth document with BOM must reject");
+    } catch(const ParseError& error) {
+        require(error.position.byte==906&&error.position.line==2&&error.position.column==906,
+                "one BOM is excluded from byte offsets and LF resets the column");
+    }
+    State mixed_lines;
+    const std::string prefix="\r\n/*x\r\n*/ //end\r\n";
+    try{(void)parse(prefix+too_deep,mixed_lines);require(false,"mixed-line depth must reject");}
+    catch(const ParseError& error){
+        require(error.position.byte==prefix.size()+905&&error.position.line==4&&error.position.column==906,
+                "depth position counts LF consistently through CRLF and comments");
+    }
+    std::string decorated="\"Config2\"{/* \" { } */";
+    for(unsigned i=1;i<128;++i)decorated+="// { } \"\r\n\"node\"/**/{";
+    decorated+=R"VDF("value" "brace{quote\"slash\\unknown\q}")VDF";
+    decorated.append(128,'}');
+    State decorated_state;
+    require(parse(decorated,decorated_state),"comments and escaped quote/backslash bytes do not inflate boundary depth");
+    const Node* decorated_leaf=&child(decorated_state.root,"Config2");
+    for(unsigned i=1;i<128;++i)decorated_leaf=&child(*decorated_leaf,"node");
+    require(child(*decorated_leaf,"value").value==R"VDF(brace{quote"slash\unknown\q})VDF",
+            "preflight preserves PEGTL byte decoding at the accepted boundary");
+    State retained;
+    retained.root.name="root";retained.root.completed_assignments={"old"};
+    retained.root.children.push_back({"old","value",{}, {}});
+    retained.open_objects.push_back({"orphan","open",{}, {}});
+    retained.accumulator="acc";retained.key="key";retained.value="value";
+    try{(void)parse(std::string("\xef\xbb\xbf",3)+too_deep,retained);require(false,"retained-State depth must reject");}
+    catch(const ParseError& error){require(error.position.byte==905,"retained-State rejection position");}
+    require(retained.root.name=="root"&&retained.root.children.size()==1&&
+            retained.root.children[0].name=="old"&&retained.root.children[0].value=="value"&&
+            retained.root.completed_assignments==std::vector<std::string>{"old"},
+            "preflight does not clear or append existing AST/assignment state");
+    require(retained.open_objects.size()==1&&retained.open_objects[0].name=="orphan"&&
+            retained.accumulator=="acc"&&retained.key=="key"&&retained.value=="value"&&retained.removed_utf8_bom,
+            "rejection preserves action fields while retaining existing BOM bookkeeping");
+    std::string nul_prefix="\"literal\"{\"value\" \"a";nul_prefix.push_back('\0');nul_prefix+="b\"}";
+    State after_nul;
+    try{(void)parse(nul_prefix+too_deep,after_nul);require(false,"depth scan must continue after quoted NUL");}
+    catch(const ParseError& error){require(error.position.byte==nul_prefix.size()+905,"depth scan uses the full byte view");}
+    require(after_nul.root.children.empty()&&after_nul.open_objects.empty(),
+            "whole-document depth preflight precedes earlier valid object actions");
+}
 class SyntheticOrder final:public BinaryIterationOrder {
 public:
     bool invalid=false;
@@ -102,6 +213,6 @@ void conversion_contract(){
     catch(const std::logic_error&){require(true,"incomplete provider order rejected");}
 }
 }
-int main(){try{syntax();bytes_and_escapes();duplicates_and_partial_state();conversion_contract();
+int main(){try{syntax();bytes_and_escapes();duplicates_and_partial_state();bounded_config_depth();conversion_contract();
  std::cout<<"PASS: "<<checks<<" synthetic parser assertions. No real CFG, original DLL/EXE, file I/O or environment actions.\n";return 0;}
  catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

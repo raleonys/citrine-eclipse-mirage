@@ -122,7 +122,7 @@ void composed_write_0261d0(SendHandler& handler,const Error& error,std::uint64_t
     if(!stream.service || !stream.implementation)throw UnsupportedInput("Native composed-write stream members have no live projection");
     start_async_send_021fd0(*stream.service,*stream.implementation,buffer,0,handler,stream.allocator_identity_68,context);
 }
-void ComposedWriteEffects::send_body_0261d0(SendHandler& handler,Error& error,std::uint64_t bytes,std::uint32_t flag){
+void ComposedWriteEffectsAdapter::send_body_0261d0(SendHandler& handler,Error& error,std::uint64_t bytes,std::uint32_t flag){
     composed_write_0261d0(handler,error,bytes,flag,context_);
 }
 } // namespace preloader_l::socket

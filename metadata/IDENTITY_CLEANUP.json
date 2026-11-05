@@ -1,6 +1,5 @@
 {
   "schema": "surge.identity-cleanup.v1",
-  "classification": "NOT_RELEASE",
   "scope": "Product identifiers and current schemas; original reference names remain in documentary provenance only",
   "source_change": "Five source/header comment edits; all application tokens unchanged",
   "application_token_identical_files": 268,

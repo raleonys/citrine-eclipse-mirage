@@ -91,7 +91,7 @@
       "role": "CURRENT_CONTRACT_OR_PROVENANCE",
       "purpose": "local data policy"
     },
-    "LOCAL_DIST_CONTRACT.json": {
+    "DIST_CONTRACT.json": {
       "owner": "SURGE final local output",
       "purpose": "Final runtime name, Golden/runtime gating, hash sidecar and bounded acceptance status",
       "role": "CURRENT_CONTRACT_OR_PROVENANCE"
@@ -215,6 +215,11 @@
       "owner": "SURGE historical evidence archive",
       "role": "CURRENT_CONTRACT",
       "purpose": "Locked byte-exact retained evidence and explicit historic-source SHA-256 references"
+    },
+    "WEEKLY_NAMING_POLICY.json": {
+      "owner": "Citrine Eclipse Mirage weekly release governance",
+      "role": "CURRENT_CONTRACT",
+      "purpose": "Owner-approved LUTRAVEX semantic-version/codename queue and permanent root reservations"
     }
   }
 }

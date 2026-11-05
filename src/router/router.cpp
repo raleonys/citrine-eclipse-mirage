@@ -52,10 +52,10 @@ content_handlers::RequestTree request_tree(const Node& request,NodeAccess& acces
 }
 }
 bool Router::registered_handler(std::uint32_t rva,const Node& request,messages::XmlPrinter& abstract_printer) {
-    // This integration route requires the concrete recovered serialization model;
+    // This integration route requires the concrete serialization model;
     // an unrelated XmlPrinter implementation is outside this adapter's contract.
     auto* printer=dynamic_cast<xml::MemoryPrinter*>(&abstract_printer);
-    if(!printer)throw std::invalid_argument("Router requires recovered memory XML printer");
+    if(!printer)throw std::invalid_argument("Router requires a memory XML printer");
     View xml(*printer,deps_.nodes);
     const auto input=handle(&request);
     namespace info=handlers;

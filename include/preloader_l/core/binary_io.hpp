@@ -11,7 +11,7 @@
 namespace preloader_l::file {
 using Path=configuration::Path;
 enum class Seek:std::uint32_t {begin=0,end=2};
-// Stream state/exception behavior belongs to the implementation. The recovered
+// Stream state/exception behavior belongs to the implementation. The
 // application bodies only inspect the initial state and explicitly close.
 class Input {
 public:

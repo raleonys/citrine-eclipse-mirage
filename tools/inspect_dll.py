@@ -61,7 +61,7 @@ def inspect(path, root, final=False):
     import_order=json.loads((root/'metadata/CORVEXON_GOLDEN_TRAIL.json').read_text(encoding='utf-8'))['import_policy'].get('module_order')
     import_order_matches=import_order is None or pe.imports()==[x.upper() for x in import_order]
     if final:passed=passed and not header_errors and header['checksum_valid'] and import_order_matches
-    return {'classification': 'NOT_RELEASE', 'execution_level': 'READ_ONLY_BINARY_INSPECTION',
+    return {'execution_level': 'READ_ONLY_BINARY_INSPECTION',
             'result': ('PASS_FINAL_METADATA_CHECK' if final else 'PASS_DEVELOPMENT_RESOURCE_CHECK') if passed else 'FAIL',
             'header_metadata':header,
             'infrastructure_metadata_validation':{'stage':'FINAL_DLL' if final else 'RAW_LINK_OUTPUT',

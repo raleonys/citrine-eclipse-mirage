@@ -132,7 +132,13 @@ void native(const std::filesystem::path& directory) {
     check(input->peek_043790()==0,"native peek byte");
     std::array<std::uint8_t,9000> chunk{};
     check(input->read_03b2a0(chunk)==8193,"native partial read gcount");
-    check(input->peek_043790()==-1,"native EOF peek");input->close_03ae70();
+    check(input->peek_043790()==-1,"native EOF peek");
+    // A failed tellg() must not wrap streampos(-1) into a huge file size.
+    bool invalid_position=false;
+    try{(void)input->position_sum_03ba50();}
+    catch(const std::ios_base::failure&){invalid_position=true;}
+    check(invalid_position,"native EOF-state tellg rejects invalid position");
+    input->close_03ae70();
 }
 #endif
 }

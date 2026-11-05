@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace preloader_l::dispatch {
-// tinyxml2 read/ownership boundary. Attribute iteration order and nullable GetText
+// Project XML read/ownership boundary. Attribute iteration order and nullable GetText
 // cannot be inferred from the narrower messages::XmlNode interface.
 class NodeAccess {
 public:
@@ -35,7 +35,7 @@ struct Dependencies {
     LicenseHandlers& licensing;
 };
 // Integration layer chosen for this reconstruction, NOT a separately identified
-// original function. It binds verified dispatcher RVAs to recovered source bodies.
+// original function. It binds verified dispatcher RVAs to implemented source bodies.
 class Router {
 public:
     Router(handlers::StateReferences information,

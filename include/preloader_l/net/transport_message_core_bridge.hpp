@@ -29,16 +29,16 @@ private:ReceiveBufferContext& context_;
 };
 struct MessageCoreContext {std::span<MessageCoreBinding> handlers;MessageCoreStrings& strings;};
 // Explicit NORMAL-RETURN compatibility composition of the existing semantic
-//033d70 body. This is not a newly recovered native body. Requests are committed
+// 033d70 body. This is not a verified native body. Requests are committed
 // after the semantic call returns, before response construction. No catch,
 // exception-state writeback or native callback-intermediate visibility is
 // invented. Sessions and referenced state/providers must outlive the call.
 void process_message_core(std::uintptr_t handler_f0,ReceiveBufferString& response,
     ReceiveBufferString& request,MessageCoreContext&);
-class CompatibleMessageCoreApi:public ResponseDispatchApi {
+class CompatibleMessageCoreApi:public ResponseDispatchApiAdapter {
 public:
     CompatibleMessageCoreApi(ResponseDispatchContext& responses,MessageCoreContext& core)
-        :ResponseDispatchApi(responses),core_(core){}
+        :ResponseDispatchApiAdapter(responses),core_(core){}
     void process_message_033d70(std::uintptr_t,ReceiveBufferString&,ReceiveBufferString&) final;
     // Empty-message destruction and CRT exit waits remain mandatory providers.
 private:MessageCoreContext& core_;

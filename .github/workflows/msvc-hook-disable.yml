@@ -1,0 +1,62 @@
+# SPDX-License-Identifier: GPL-3.0-only
+name: Windows MinHook single-disable acceptance
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hook-disable:
+    name: Windows x64 MinHook ${{ matrix.configuration }}
+    runs-on: windows-2022
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Preserve repository bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - name: Configure focused native hook acceptance
+        run: |
+          $build = 'build/ci-hook-${{ matrix.configuration }}'
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC hook configure failed' }
+      - name: Build actual patched engine and upstream comparison tests
+        run: |
+          $build = 'build/ci-hook-${{ matrix.configuration }}'
+          cmake --build $build --config '${{ matrix.configuration }}' --target hook_freeze_contracts hook_engine_fixture_tests --parallel 2 2>&1 | Tee-Object -FilePath "$build/hook-build.log"
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC hook build failed' }
+      - name: Run native hook regressions
+        run: |
+          $build = 'build/ci-hook-${{ matrix.configuration }}'
+          $junit = Join-Path (Resolve-Path $build) 'hook-junit.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(hook_freeze_contracts|hook_engine_fixtures)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/hook-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC hook regression failed' }
+      - name: Preserve native hook evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: msvc-hook-${{ matrix.configuration }}-evidence
+          path: |
+            build/ci-hook-${{ matrix.configuration }}/hook-build.log
+            build/ci-hook-${{ matrix.configuration }}/hook-ctest.log
+            build/ci-hook-${{ matrix.configuration }}/hook-junit.xml
+            build/ci-hook-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
+            build/ci-hook-${{ matrix.configuration }}/vendor_build/minhook/src/hook.c
+            build/ci-hook-${{ matrix.configuration }}/CMakeCache.txt
+            build/ci-hook-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
+            metadata/HOOK_ENGINE_PATCH.json
+          if-no-files-found: warn
+          retention-days: 14

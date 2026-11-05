@@ -47,7 +47,14 @@ public:
         state.use_last_online_profile,online};}
     template<class Fn> static Fn method(std::uintptr_t o,std::size_t slot) {
         if(!o)throw std::logic_error("Provider object is unavailable");
-        return reinterpret_cast<Fn>((*reinterpret_cast<std::uintptr_t**>(o))[slot]);
+        // The foreign object/table are readable byte layouts, not C++ objects
+        // created with this module's pointer types or alignment.
+        std::uintptr_t table=0,address=0;
+        std::memcpy(&table,reinterpret_cast<const void*>(o),sizeof(table));
+        if(!table)throw std::logic_error("Provider vtable is unavailable");
+        std::memcpy(&address,reinterpret_cast<const std::byte*>(table)+slot*sizeof(address),sizeof(address));
+        if(!address)throw std::logic_error("Provider method is unavailable");
+        return reinterpret_cast<Fn>(address);
     }
     std::uint32_t suppress_errors_0450a0() override {auto m=GetErrorMode();SetErrorMode(m|1);return m;}
     void restore_error_mode(std::uint32_t m) override {SetErrorMode(m);}
@@ -66,7 +73,7 @@ public:
     const char* username_virtual_10(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,2)(reinterpret_cast<void*>(o));}
     const char* persona_virtual_18(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,3)(reinterpret_cast<void*>(o));}
     const char* user_id_virtual_20(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,4)(reinterpret_cast<void*>(o));}
-    void destroy_virtual_00(std::uintptr_t o) override{method<void(*)(void*,unsigned)>(o,0)(reinterpret_cast<void*>(o),1);}
+    void destroy_virtual_00(std::uintptr_t o) override{method<void(*)(void*)>(o,0)(reinterpret_cast<void*>(o));}
     bool free_library(std::uintptr_t m) override {
         if(!FreeLibrary(reinterpret_cast<HMODULE>(m)))
             throw std::runtime_error("Online DLL cleanup incomplete");
@@ -149,7 +156,7 @@ public:
     Path parent_path_019820(const Path& p) override{return env_.parent_path_019820(p);}
     Path join_016b00(const Path& a,const Path& b) override{return env_.join_016b00(a,b);}
     std::string path_utf8_01e3f0(const Path& p) override{return env_.path_to_utf8_031ca0(p);}
-    std::string current_time_041b60_null_true() override{return env_.current_time_041b60();}
+    std::string current_time_041b60_null_true() override{return env_.ticket_time_041b60();}
     bool wine_detected_045010() override{return GetProcAddress(GetModuleHandleW(L"ntdll.dll"),"wine_get_version")!=nullptr;}
     void log_literal_006880(std::string_view text) override{env_.debug_log({"licensing status: ",text});}
     void log_string_006860(std::string_view text) override{env_.debug_log({"licensing diagnostic: ",text});}
@@ -201,7 +208,7 @@ public:
         if(!transaction_.owns_engine()||failed_)throw std::runtime_error("Selected hook installation failed; owner must abort startup");
         const std::size_t expected=7+(state_.block_reruns?2:0)+(!state_.documents.empty()?2:0);
         if(targets_.size()!=expected)throw std::runtime_error("Required native hook staging incomplete");
-        if(transaction_.activate()!=MH_OK)throw std::runtime_error("Native hook batch apply failed");
+        if(transaction_.activate()!=platform::hook_engine::status_code::ok)throw std::runtime_error("Native hook batch apply failed");
         }catch(...){
             // Keep this Hooks owner/context alive if rollback is incomplete.
             // Application abort releases startup gates before retrying teardown.
@@ -224,7 +231,9 @@ public:
     void crypt_observed(hooks::Selection) noexcept override {
 #ifndef NDEBUG
         thread_local bool logging=false;if(logging)return;logging=true;
-        env_.debug_log("phase");
+        // Diagnostics cannot escape this noexcept observer or prevent the
+        // original API result from reaching the host. Always reset reentry.
+        try{env_.debug_log("phase");}catch(...){}
         logging=false;
 #endif
     }
@@ -269,9 +278,9 @@ public:
     }
     std::int32_t create_hook_0466e0(std::uintptr_t target,host_init::Callback c,std::uintptr_t& original) override {
         void* result=nullptr;auto status=transaction_.create(reinterpret_cast<void*>(target),reinterpret_cast<void*>(resolver_.rebuilt_address(c)),&result);
-        original=reinterpret_cast<std::uintptr_t>(result);if(status!=MH_OK)failed_=true;return status;
+        original=reinterpret_cast<std::uintptr_t>(result);if(status!=platform::hook_engine::status_code::ok)failed_=true;return status;
     }
-    std::int32_t enable_hook_046a10(std::uintptr_t p) override{auto s=transaction_.queue(reinterpret_cast<void*>(p));if(s!=MH_OK)failed_=true;return s;}
+    std::int32_t enable_hook_046a10(std::uintptr_t p) override{auto s=transaction_.queue(reinterpret_cast<void*>(p));if(s!=platform::hook_engine::status_code::ok)failed_=true;return s;}
     void log_text_006880(std::string_view s) override {if(s=="Hooking function "||s=="Enabling hook for ")failed_=true;env_.debug_log({"hook installation status: ",s});}
     void log_integer_00af90(std::int32_t code) override{env_.debug_log_number("hook status code: ",code);}
 };
@@ -371,7 +380,8 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
             // seed is the same one the first source message getter would create.
             (void)event_queue::mutex_02c620(events.context);
             (void)event_queue::queue_02c400(events.context);
-            service=std::make_unique<net::AsioService>(*this,execution,state.server_port,server_ready);
+            service=std::make_unique<net::AsioService>(*this,execution,state.server_port,server_ready,
+                net::SessionPolicy{},true); // Bind first; leave accept callbacks inactive until ready.
             service->start();
             if(options.install_hooks){hooks=std::make_unique<Hooks>(state,environment,execution);hooks->start();}
             std::promise<std::exception_ptr> completed;
@@ -397,6 +407,7 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
             // A connect callback waiting for all three source phases must not
             // escape while the handler factory still rejects new sessions.
             execution.finish_flag_036820(extra_ready);
+            service->resume_accepts(); // IO executor arms accepts only after profile publication.
             started=true;environment.debug_log("application ready");
         }catch(...){stop();throw;}
     }

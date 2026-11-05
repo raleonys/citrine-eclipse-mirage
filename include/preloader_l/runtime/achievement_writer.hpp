@@ -15,7 +15,7 @@ public:
 // Ordered by the source achievement map key; section name is record.steam_id.
 std::string serialize_ini(const configuration::State&);
 // Empty ini_path skips all work. Byte format and parent policy are preserved;
-// checked atomic replacement supersedes the recovered ignored write result.
+// Checked atomic replacement supersedes the ignored write-result behavior.
 void write_ini_01f9a0(const configuration::Path& ini_path,
     const configuration::State&,Effects&,file::Factory&);
 } // namespace preloader_l::achievement_writer
