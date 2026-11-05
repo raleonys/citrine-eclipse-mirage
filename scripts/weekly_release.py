@@ -89,8 +89,47 @@ def plan(releases, source, start_tag=''):
 
 def junit(path):
     tree = ET.parse(path).getroot()
+    if tree.tag not in ('testsuite', 'testsuites'):
+        raise ValueError('CTest JUnit root must be testsuite or testsuites')
+    if tree.tag == 'testsuites' and any(child.tag != 'testsuite' for child in tree):
+        raise ValueError('CTest evidence has no valid test suites')
+    suites = list(tree.iter('testsuite'))
     cases = list(tree.iter('testcase'))
-    if not cases or any(node.tag in ('failure', 'error', 'skipped') for node in tree.iter()):
+    if not suites or not cases:
+        raise ValueError('CTest evidence is empty')
+    parents = {child: parent for parent in tree.iter() for child in parent}
+    totals = dict.fromkeys(suites, 0)
+    for node in tree.iter('testsuites'):
+        if node is not tree:
+            raise ValueError('CTest aggregate container must be the root')
+    for suite in suites:
+        parent = parents.get(suite)
+        if suite is not tree and parent not in totals and parent is not tree:
+            raise ValueError('CTest suite must belong directly to a suite or aggregate root')
+    for case in cases:
+        parent = parents.get(case)
+        if parent not in totals:
+            raise ValueError('CTest testcase must belong directly to a suite')
+        totals[parent] += 1
+
+    def declared_count(node):
+        count = node.get('tests', '')
+        if re.fullmatch(r'[0-9]+', count) is None:
+            raise ValueError('CTest declared tests must be an unsigned ASCII integer')
+        return int(count)
+
+    # Reverse document order visits children before parents without recursion or
+    # repeatedly walking each subtree. Each testcase contributes once to the result.
+    for suite in reversed(suites):
+        if declared_count(suite) != totals[suite]:
+            raise ValueError('CTest declared tests do not match testcases')
+        parent = parents.get(suite)
+        if parent in totals:
+            totals[parent] += totals[suite]
+    if tree.tag == 'testsuites' and tree.get('tests') is not None:
+        if declared_count(tree) != len(cases):
+            raise ValueError('CTest aggregate tests do not match testcases')
+    if any(node.tag in ('failure', 'error', 'skipped') for node in tree.iter()):
         raise ValueError('CTest evidence is empty, failed or skipped')
     for node in tree.iter():
         for key in ('failures', 'errors', 'skipped', 'disabled'):
