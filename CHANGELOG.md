@@ -36,6 +36,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 - Select the filename UTC format for licensing request-ticket output while retaining ISO timestamps for ordinary application output. Add a native regression through the shipping licensing adapter and actual file writer, covering safe basename separators, complete output bytes and the unchanged ISO path.
 
+- Publish refreshed active-source manifests through exclusively created same-directory temporary files and atomic replacement instead of truncating the existing manifest inode. Guard against collateral modification of an external hardlink and retain the complete previous manifest after publication failure; preserve source policy and exact inventory identities.
+
 - Correct current XML dependency documentation to name pugixml, identify pre-migration TinyXML2 audit/CSV findings as historical, and record PR #149 as integrated in the owner requirements. Refresh the changelog heading and link recent integrated PRs; retain original archive provenance and external diagnostic-control references.
 
 - [PR #117](https://github.com/raleonys/citrine-eclipse-mirage/pull/117): Pin C21 LSX multi-command request compatibility with the actual pugixml-backed reader: only the first child command is dispatched, trailing commands are ignored, and unknown first commands or invalid Request siblings fail closed. Cover four accepted and four rejected inputs without changing production protocol policy.

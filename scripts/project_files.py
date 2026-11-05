@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import tempfile
 
 MANIFEST = 'metadata/ACTIVE_SOURCE_MANIFEST.json'
 MANIFEST_SCHEMA = 'surge.active-source.v1'
@@ -124,7 +125,22 @@ def write_manifest(root):
                 'vendor_alias_storage': ALIAS_STORAGE,
                 'symlinks': vendor_symlinks(root),
                 'files': {name: digest(data) for name, data in files.items()}}
-    (root / MANIFEST).write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
+    # Never truncate an existing manifest inode: it can be hardlinked to an
+    # unrelated file. Publish a separately owned file at the same directory
+    # instead, and leave the previous manifest untouched on write/replace errors.
+    destination = root / MANIFEST
+    payload = json.dumps(manifest, indent=2) + '\n'
+    descriptor, name = tempfile.mkstemp(
+        prefix='.' + destination.name + '.', suffix='.partial', dir=destination.parent)
+    partial = Path(name)
+    try:
+        with os.fdopen(descriptor, 'w', encoding='utf-8') as stream:
+            stream.write(payload)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(partial, destination)
+    finally:
+        partial.unlink(missing_ok=True)
     return manifest
 
 
