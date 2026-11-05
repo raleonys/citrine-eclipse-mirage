@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace preloader_l::dispatch {
-// tinyxml2 read/ownership boundary. Attribute iteration order and nullable GetText
+// Project XML read/ownership boundary. Attribute iteration order and nullable GetText
 // cannot be inferred from the narrower messages::XmlNode interface.
 class NodeAccess {
 public:
