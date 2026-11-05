@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "preloader_l/xml/reader.hpp"
+#include <array>
 #include <iostream>
 #include <stdexcept>
 
@@ -48,6 +49,39 @@ void reading_and_ownership() {
     const auto* retained=child;
     for(unsigned i=0;i<20;++i){auto temporary=backend.parse_c_string("<Different/>");check(root(temporary).name()=="Different","independent docs");}
     check(retained->name()=="Child","original doc lives across later parses");
+}
+void counted_attribute_keys() {
+    reader::Backend backend;
+    const std::string name(96,'k');
+    auto parsed=backend.parse_c_string("<R "+name+"='retained' short='decoded&amp;value'/>");
+    const auto& node=root(parsed);
+    std::array<char,96> counted;counted.fill('k');
+    check(node.attribute(std::string_view(counted.data(),counted.size()))=="retained",
+          "long attribute key does not need a caller terminator");
+    const std::string bounded="short-trailing-bytes";
+    const auto value=node.attribute(std::string_view(bounded.data(),5));
+    check(value=="decoded&value","attribute lookup observes the counted key boundary");
+    std::string nul="short";nul.push_back('\0');nul+="ignored suffix";
+    const auto truncated=node.attribute(nul);
+    check(truncated==value&&truncated->data()==value->data(),
+          "attribute keys retain first-NUL semantics and decoded cache identity");
+    check(!node.attribute(std::string_view{}),"empty attribute key is absent");
+    check(!node.attribute("Short"),"counted lookup remains case sensitive");
+    check(!node.attribute(std::string(96,'x')),"long missing attribute is absent");
+    check(!node.attribute(std::string_view(counted.data(),counted.size()-1)),
+          "a shorter key does not match a long attribute name");
+    for(unsigned length:{127U,128U,512U}) {
+        const std::string key(length,'q');
+        auto large=backend.parse_c_string("<R "+key+"='fallback'/>");
+        const auto& element=root(large);
+        check(element.attribute(key)=="fallback","attribute lookup spans stack/owned-key boundaries");
+        const std::string bounded=key+"not-part-of-key";
+        check(element.attribute(std::string_view(bounded.data(),key.size()))=="fallback",
+              "both key paths preserve counted nonterminated input");
+        std::string nul_key=key;nul_key.push_back('\0');nul_key+="ignored";
+        check(element.attribute(nul_key)=="fallback","both key paths preserve first-NUL semantics");
+        check(!element.attribute(std::string(length,'x')),"both key paths reject missing names");
+    }
 }
 void errors_and_depth() {
     reader::Backend backend;
@@ -186,6 +220,6 @@ void decoded_value_ownership() {
     check(*value=="value&owned"&&std::string_view(text)=="text&owned","decoded values remain owned by their original document");
 }
 }
-int main(){try{reading_and_ownership();errors_and_depth();numeric_character_reference_bounds();bounded_input_and_wrapper_rehash();reference_values_and_contexts();decoded_value_ownership();
+int main(){try{reading_and_ownership();counted_attribute_keys();errors_and_depth();numeric_character_reference_bounds();bounded_input_and_wrapper_rehash();reference_values_and_contexts();decoded_value_ownership();
     std::cout<<"PASS: "<<checks<<" actual XML reader checks; selected upstream compatibility source, original target not executed\n";
     return 0;}catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}}

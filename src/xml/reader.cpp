@@ -56,8 +56,18 @@ public:
 const msg::XmlNode* Element::first_element()const{return owner.wrap(first(native));}
 const msg::XmlNode* Element::next_element()const{return owner.wrap(next(native));}
 std::optional<std::string_view> Element::attribute(std::string_view key)const {
-    const std::string name(key);
-    auto attribute=native.attribute(name.c_str());
+    // Terminate counted keys without changing the vendor's C-string search.
+    pugi::xml_attribute attribute;
+    if(key.size()<128) {
+        char name[128];
+        if(key.size()==1)name[0]=key.front();
+        else if(!key.empty())key.copy(name,key.size());
+        name[key.size()]='\0';
+        attribute=native.attribute(name);
+    } else {
+        const std::string name(key);
+        attribute=native.attribute(name.c_str());
+    }
     return attribute?std::optional<std::string_view>(owner.decoded(attribute.value())):std::nullopt;
 }
 const Element& checked(const msg::XmlNode& node) {
@@ -96,6 +106,9 @@ std::unique_ptr<msg::XmlPrinter> Backend::printer() {
 std::vector<std::pair<std::string,std::string>> Backend::attributes_in_order(const msg::XmlNode& node) {
     const auto& element=checked(node);
     std::vector<std::pair<std::string,std::string>> result;
+    std::size_t count=0;
+    for(auto attribute=element.native.first_attribute();attribute;attribute=attribute.next_attribute())++count;
+    result.reserve(count);
     for(auto attribute:element.native.attributes())
         result.emplace_back(attribute.name(),element.owner.decoded(attribute.value()));
     return result;

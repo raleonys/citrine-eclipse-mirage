@@ -4,7 +4,12 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## Unreleased — GitHub development
 
-### This PR
+### XML attribute allocation cleanup
+
+- Use a 128-byte local key buffer for counted XML attribute queries shorter than 128 bytes; keep the existing owned-string fallback for larger views and the vendor's native lookup. Preserve counted/nonterminated input, first-NUL and case-sensitive lookup semantics, decoded-value caches and borrowed lifetimes.
+- Reserve the ordered attribute result once from the native attribute count, retaining complete owned key/value strings, order and behavior after document release. Add functional boundary/ownership and allocation contracts plus an opt-in attribute benchmark with separate counting and timing passes. Compiler/LTCG settings, vendor sources, public interfaces and runtime policy are unchanged; local microbenchmarks do not establish native/game speed or DLL-size gains.
+
+### Previously recorded development changes
 
 - Preserve the last online-profile cache when a provider-supplied persona ID, user ID or username contains the unescaped semicolon delimiter: the existing offline reader only accepts exactly three fields. Keep the authenticated in-memory identity, normal valid profile cache bytes, and the original offline parser unchanged. Add source-linked online tests for each delimiter position, cache enabled/disabled and safe round-trip inputs; this is deliberate product hardening rather than a claim of donor binary parity. Keep the source-file inventory and its enclosing manifest hash synchronized for package and Golden verification.
 

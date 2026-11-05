@@ -58,6 +58,40 @@ std::size_t traverse(const preloader_l::messages::XmlNode* node){
     }
     return result;
 }
+void attribute_contracts(){
+    reader::Backend backend;
+    const std::string long_name(96,'k'),missing(96,'x');
+    auto parsed=backend.parse_c_string("<R short='v' "+long_name+"='v'/>");
+    const auto* root=parsed.document->first_element();
+    require(root&&root->attribute(long_name)=="v","long-key allocation fixture parses");
+    allocation_probe::begin();
+    for(unsigned i=0;i<1000;++i){
+        require(root->attribute(long_name)=="v","long key finds its borrowed value");
+        require(!root->attribute(missing),"long missing key stays absent");
+        require(root->attribute("short")=="v","short key remains unchanged");
+    }
+    const auto lookup=allocation_probe::end();
+    require(lookup.calls==0,"attribute lookup must not allocate a temporary key");
+    std::string input="<R";
+    constexpr unsigned count=64;
+    for(unsigned i=0;i<count;++i)input+=" k"+std::to_string(i)+"='v'";
+    input+="/>";parsed=backend.parse_c_string(input);
+    root=parsed.document->first_element();
+    require(root!=nullptr,"attribute list allocation fixture parses");
+    const auto entry_bytes=sizeof(std::pair<std::string,std::string>);
+    // Short fixture strings have no payload allocations. Checked-STL proxies
+    // are smaller than a pair, so count result-storage requests separately.
+    allocation_probe::begin(entry_bytes,count*entry_bytes);
+    auto attributes=backend.attributes_in_order(*root);
+    const auto storage=allocation_probe::end();
+    require(storage.input_buffers==1,"attribute list must allocate its result storage once");
+    parsed.document.reset();
+    require(attributes.size()==count,"owned attribute list retains every entry");
+    for(unsigned i=0;i<count;++i)
+        require(attributes[i].first=="k"+std::to_string(i)&&attributes[i].second=="v",
+                "attribute list preserves order and ownership after document release");
+    std::printf("PASS: attribute lookup allocates zero times; ordered attributes use one result buffer\n");
+}
 void contracts(){
     reader::Backend backend;
     const std::string input="<R>"+std::string(65536,'x')+"</R>";
@@ -82,6 +116,41 @@ void contracts(){
     const auto* system_services=retry.document->first_element();
     require(system_services&&system_services->name()=="R"&&system_services->first_element()->name()=="C","wrapper lookup retries after allocation failure without losing document ownership");
     std::printf("PASS: one owned input-sized buffer; repeated wrapper lookups allocate zero times\n");
+    attribute_contracts();
+}
+template<class Work> void measure_attributes(const char* name,unsigned iterations,Work work){
+    std::size_t digest=0;
+    for(unsigned i=0;i<100;++i)digest+=work();
+    allocation_probe::begin();
+    for(unsigned i=0;i<iterations;++i)digest+=work();
+    const auto counts=allocation_probe::end();
+    // Time a separate pass: allocation-counter overhead is excluded.
+    const auto start=std::chrono::steady_clock::now();
+    for(unsigned i=0;i<iterations;++i)digest+=work();
+    const auto elapsed=std::chrono::duration_cast<std::chrono::nanoseconds>(
+        std::chrono::steady_clock::now()-start).count();
+    result_sink=digest;
+    std::printf("{\"case\":\"%s\",\"iterations\":%u,\"allocation_calls\":%zu,\"allocated_bytes\":%zu,\"elapsed_ns\":%lld,\"result_digest\":%zu}\n",
+                name,iterations,counts.calls,counts.bytes,static_cast<long long>(elapsed),digest);
+}
+void benchmark_attributes(unsigned iterations){
+    reader::Backend backend;
+    const std::string long_name(96,'k'),missing(96,'x');
+    std::string input="<R short='value' "+long_name+"='value'";
+    for(unsigned i=0;i<64;++i)input+=" k"+std::to_string(i)+"='v'";
+    input+="/>";auto parsed=backend.parse_c_string(input);
+    require(!parsed.has_error,"attribute benchmark parses");
+    const auto* root=parsed.document->first_element();
+    const auto lookup=[&](std::string_view key){const auto value=root->attribute(key);return value?value->size():0;};
+    measure_attributes("lookup-short",iterations,[&]{return lookup("short");});
+    measure_attributes("lookup-long",iterations,[&]{return lookup(long_name);});
+    measure_attributes("lookup-missing",iterations,[&]{return lookup(missing);});
+    measure_attributes("ordered-attributes",iterations,[&]{
+        const auto attributes=backend.attributes_in_order(*root);
+        std::size_t digest=attributes.size();
+        for(const auto& [key,value]:attributes)digest+=key.size()+value.size();
+        return digest;
+    });
 }
 void measure(const char* name,const std::string& input,unsigned iterations){
     reader::Backend backend;
@@ -102,7 +171,11 @@ void measure(const char* name,const std::string& input,unsigned iterations){
 }
 int main(int argc,char** argv)try{
     pugi::set_memory_management_functions(pugi_allocate,pugi_release);
-    if(argc>1&&std::strcmp(argv[1],"--benchmark")==0){
+    if(argc>1&&std::strcmp(argv[1],"--benchmark-attributes")==0){
+        const unsigned iterations=argc>2?static_cast<unsigned>(std::stoul(argv[2])):10000;
+        require(iterations>0&&iterations<=100000,"benchmark iterations outside1..100000");
+        benchmark_attributes(iterations);
+    }else if(argc>1&&std::strcmp(argv[1],"--benchmark")==0){
         const unsigned iterations=argc>2?static_cast<unsigned>(std::stoul(argv[2])):1000;
         require(iterations>0&&iterations<=100000,"benchmark iterations outside1..100000");
         measure("small-request","<LSX><Request id='1' recipient='EbisuSDK'><GetProfile index='0'/></Request></LSX>",iterations);

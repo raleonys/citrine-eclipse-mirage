@@ -1106,8 +1106,8 @@
       "sha256": "c46953c3ae52b90675faf3a680abfec916b72c323a71dda15f2b7506327e78d9"
     },
     "src/xml/reader.cpp": {
-      "bytes": 5248,
-      "sha256": "9bba8eb75207cb2bebd275d3f0cc4d9697f4f91548fed35d7ef7472951863a22"
+      "bytes": 5770,
+      "sha256": "4c865c353dfa65cdc02f2282a6fb2f5a0e8f8561a5ce488d1098411a36b3296d"
     },
     "src/xml/reader_policy.cpp": {
       "bytes": 11240,
@@ -1342,8 +1342,8 @@
       "sha256": "f620b4d62b071eaeb1626a746f3c9241bc2038d344eb91e2bb9c8e6dc8f8e181"
     },
     "tests/performance/xml_reader_probe.cpp": {
-      "bytes": 6290,
-      "sha256": "25466a8026354dc0f56ec37608736889d4027e39094913feca551563d315f8cc"
+      "bytes": 10574,
+      "sha256": "38b7270bc4f8dbe0688e95ff6e8ec6afc9e406a8de2088269fdefa2b99253ca5"
     },
     "tests/support/fixture_ascii.hpp": {
       "bytes": 629,
@@ -2182,8 +2182,8 @@
       "sha256": "cb552436b7897071a0bf2eebdd4a56af303e839d52536a8661b69b68522c0369"
     },
     "tests/unit/xml_reader/reader_tests.cpp": {
-      "bytes": 12853,
-      "sha256": "cfb9ec00aa344a07c97115fa000de2a13668938a8de03798a9b9e19eb2681f4a"
+      "bytes": 14988,
+      "sha256": "4ab58fe81515cd139c83bb03a478cfd7256eb86445a392c575dabfdf60df4d89"
     },
     "tests/vendors/vendor_api_smoke.cpp": {
       "bytes": 1989,
