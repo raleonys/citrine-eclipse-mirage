@@ -1693,12 +1693,12 @@ else:
         report, _ = self.run_pipeline()
         before = self.dist_bytes()
         artifact = self._changed_candidate(report)
-        transaction = self.root / 'dist' / golden.DIST_TRANSACTION
+        transaction = (self.root / 'dist' / golden.DIST_TRANSACTION).resolve()
         replace = golden.os.replace
         failed = False
         def fail_retirement_once(source, target):
             nonlocal failed
-            if Path(source) == transaction and Path(target).name.startswith('.golden-retired-') and not failed:
+            if Path(source).resolve() == transaction and Path(target).name.startswith('.golden-retired-') and not failed:
                 failed = True
                 raise OSError('injected journal retirement failure')
             return replace(source, target)
