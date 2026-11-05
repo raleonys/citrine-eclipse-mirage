@@ -36,7 +36,7 @@ def validate_product_policy(name, policy):
 
 def load_target(root, name):
     policy = json.loads((Path(root) / 'metadata' / name).read_text(encoding='utf-8'))
-    if policy.get('activation') != 'READY_LOCAL_TARGET':
+    if policy.get('activation') != 'READY_TARGET':
         reasons = policy.get('unresolved', ['target values have not been established'])
         raise PolicyPending(name + ': ' + '; '.join(reasons))
     if policy.get('fixture_only'):

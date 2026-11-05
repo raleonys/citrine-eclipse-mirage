@@ -1,9 +1,8 @@
 {
   "schema": "surge.golden-target.v1",
   "policy": "CORVEXON Golden Trail",
-  "activation": "READY_LOCAL_TARGET",
+  "activation": "READY_TARGET",
   "fixture_only": false,
-  "classification": "NOT_RELEASE",
   "authority": "Owner-selected Infrastructure three-export ordinals and original RE import module order; existing avatar/import/CRT constraints retained",
   "native_acceptance": "REQUIRES_ACTUAL_MSVC_GOLDEN_RUN",
   "implementation": "scripts/verify_corvexon_golden_trail.py",
