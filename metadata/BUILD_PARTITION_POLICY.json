@@ -331,6 +331,7 @@
     "net_failure_contracts",
     "network_policy_contracts",
     "parser_contracts",
+    "parser_header_contracts",
     "path_contracts",
     "preloader_l_crt_host",
     "preloader_l_runtime_host",
