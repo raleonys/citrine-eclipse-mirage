@@ -1,6 +1,5 @@
 {
   "schema": "surge.recovery-review.v1",
-  "classification": "NOT_RELEASE",
   "owner": "Explicit owner authorization for proven bug fixes, tests and comprehensive comparative closure audit",
   "documentation": "docs/DONOR_RECOVERY.md",
   "validation": "metadata/evidence/recovery/VALIDATION.json",

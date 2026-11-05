@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
-"""Local Golden orchestration. Never publishes, and never substitutes fixture targets."""
+"""Build-bound Golden verification and distribution staging."""
 import argparse
 from contextlib import contextmanager
 import hashlib
@@ -46,8 +46,8 @@ def execute_steps(steps, run):
     return results
 
 
-DIST_NAMES = ('preloader_l.dll', 'preloader_l.dll.sha256', 'LOCAL_DIST_RECEIPT.json')
-DIST_TRANSACTION = '.local-golden-transaction'
+DIST_NAMES = ('preloader_l.dll', 'preloader_l.dll.sha256', 'DIST_RECEIPT.json')
+DIST_TRANSACTION = '.golden-transaction'
 
 
 def _is_link(path):
@@ -71,19 +71,20 @@ def _sync_directory(path):
 
 
 def _sync_file(path):
-    with Path(path).open('rb') as stream:
+    # FlushFileBuffers requires write access on Windows; these are owned copies.
+    with Path(path).open('r+b') as stream:
         os.fsync(stream.fileno())
 
 
 @contextmanager
-def _local_dist_lock(dist):
+def _dist_lock(dist):
     """Persistent lock pathname prevents the unlink/recreate inode race.
 
     The OS releases its actual byte/advisory lock when a writer process dies.
     """
-    lock = dist / '.local-golden.lock'
+    lock = dist / '.golden.lock'
     if _is_link(lock):
-        raise ValueError('Unsafe local dist writer lock')
+        raise ValueError('Unsafe dist writer lock')
     with lock.open('a+b') as stream:
         stream.seek(0, os.SEEK_END)
         if stream.tell() == 0:
@@ -110,69 +111,68 @@ def _bundle_hashes(directory):
     """Return the complete receipt-bound bundle hashes or None for an empty dist."""
     paths = [directory / name for name in DIST_NAMES]
     if any(_is_link(path) or (path.exists() and not path.is_file()) for path in paths):
-        raise ValueError('Unsafe local dist member')
+        raise ValueError('Unsafe dist member')
     present = [path.exists() for path in paths]
     if not any(present):
         return None
     if not all(present):
-        raise ValueError('Incomplete local dist bundle; recovery evidence required')
+        raise ValueError('Incomplete dist bundle; recovery evidence required')
     hashes = {name: sha(directory / name) for name in DIST_NAMES}
     digest = hashes[DIST_NAMES[0]]
     if (paths[1].read_text(encoding='utf-8') != digest + '  ' + DIST_NAMES[0] + '\n'):
-        raise ValueError('Local dist checksum sidecar mismatch')
+        raise ValueError('Dist checksum sidecar mismatch')
     receipt = json.loads(paths[2].read_text(encoding='utf-8'))
-    if (receipt.get('schema') != 'surge.local-dist-receipt.v1'
+    if (receipt.get('schema') != 'surge.dist-receipt.v1'
             or receipt.get('runtime_dll_name') != DIST_NAMES[0]
-            or receipt.get('result') != 'LOCAL_GOLDEN_PASS'
-            or receipt.get('sha256') != digest
-            or receipt.get('official_release') is not False):
-        raise ValueError('Local dist receipt mismatch')
+            or receipt.get('result') != 'GOLDEN_PASS'
+            or receipt.get('sha256') != digest):
+        raise ValueError('Dist receipt mismatch')
     return hashes
 
 
 def _retire_transaction(dist):
     """Deactivate the journal atomically before best-effort removal."""
     transaction = dist / DIST_TRANSACTION
-    retired = dist / ('.local-golden-retired-' + uuid.uuid4().hex)
+    retired = dist / ('.golden-retired-' + uuid.uuid4().hex)
     os.replace(transaction, retired)
     _sync_directory(dist)
     try:
         shutil.rmtree(retired)
     except OSError:
-        # Inactive retired data is not authoritative; a future local cleanup may remove it.
+        # Inactive retired data is not authoritative; a future cleanup may remove it.
         pass
 
 
-def _recover_local_dist_locked(dist):
+def _recover_dist_locked(dist):
     """Replay a complete verified previous snapshot, including interrupted replays."""
     transaction = dist / DIST_TRANSACTION
     if _is_link(transaction):
-        raise ValueError('Unsafe local dist recovery transaction')
+        raise ValueError('Unsafe dist recovery transaction')
     if not transaction.exists():
         return False
     if not transaction.is_dir() or _is_link(transaction / 'recovery.json'):
-        raise ValueError('Invalid local dist recovery transaction')
+        raise ValueError('Invalid dist recovery transaction')
     plan = json.loads((transaction / 'recovery.json').read_text(encoding='utf-8'))
-    if (plan.get('schema') != 'surge.local-dist-recovery.v1'
+    if (plan.get('schema') != 'surge.dist-recovery.v1'
             or 'previous' not in plan):
-        raise ValueError('Invalid local dist recovery record')
+        raise ValueError('Invalid dist recovery record')
     previous = plan['previous']
     if previous is not None:
         if not isinstance(previous, dict) or set(previous) != set(DIST_NAMES):
-            raise ValueError('Invalid local dist recovery snapshot index')
+            raise ValueError('Invalid dist recovery snapshot index')
         backup = transaction / 'previous'
         if _is_link(backup):
-            raise ValueError('Corrupt local dist recovery snapshot; refusing overwrite')
+            raise ValueError('Corrupt dist recovery snapshot; refusing overwrite')
         try:
             backup_hashes = _bundle_hashes(backup)
         except (OSError, ValueError, UnicodeError) as error:
-            raise ValueError('Corrupt local dist recovery snapshot; refusing overwrite') from error
+            raise ValueError('Corrupt dist recovery snapshot; refusing overwrite') from error
         if backup_hashes != previous:
-            raise ValueError('Corrupt local dist recovery snapshot; refusing overwrite')
+            raise ValueError('Corrupt dist recovery snapshot; refusing overwrite')
     for name in DIST_NAMES:
         path = dist / name
         if _is_link(path) or (path.exists() and not path.is_file()):
-            raise ValueError('Unsafe destination during local dist recovery')
+            raise ValueError('Unsafe destination during dist recovery')
     if previous is None:
         for name in DIST_NAMES:
             (dist / name).unlink(missing_ok=True)
@@ -189,66 +189,66 @@ def _recover_local_dist_locked(dist):
                 os.replace(staged / name, dist / name)
                 _sync_directory(dist)
     if _bundle_hashes(dist) != previous:
-        raise ValueError('Local dist recovery verification failed; journal retained')
+        raise ValueError('Dist recovery verification failed; journal retained')
     _sync_directory(dist)
     _retire_transaction(dist)
     return True
 
 
-def recover_local_dist(root):
+def recover_dist(root):
     """Recover an interrupted promotion if present; never delete a live writer's lock."""
     root = Path(root).resolve()
     dist = root / 'dist'
     if _is_link(dist) or dist.resolve() != dist or (dist.exists() and not dist.is_dir()):
-        raise ValueError('Local dist must be an owned directory, not a link')
+        raise ValueError('Dist must be an owned directory, not a link')
     if not dist.exists():
         return False
-    with _local_dist_lock(dist):
-        return _recover_local_dist_locked(dist)
+    with _dist_lock(dist):
+        return _recover_dist_locked(dist)
 
 
-def stage_local_dist(root, artifact, report):
-    """Promote a validated candidate with a replayable local rollback journal."""
+def stage_dist(root, artifact, report):
+    """Promote a validated candidate with a replayable rollback journal."""
     root, artifact = Path(root).resolve(), Path(artifact).resolve()
-    if (report.get('result') != 'LOCAL_GOLDEN_PASS'
+    if (report.get('result') != 'GOLDEN_PASS'
             or [s['stage'] for s in report.get('steps', [])] != ORDER
             or any(s['exit_code'] for s in report['steps'])
             or report.get('runtime_check', {}).get('exit_code') != 0):
-        raise ValueError('Local dist requires all six Golden stages and final-name runtime PASS')
-    contract = json.loads((root / 'metadata/LOCAL_DIST_CONTRACT.json').read_text(encoding='utf-8'))
+        raise ValueError('Dist requires all six Golden stages and final-name runtime PASS')
+    contract = json.loads((root / 'metadata/DIST_CONTRACT.json').read_text(encoding='utf-8'))
     if contract['runtime_dll_name'] != DIST_NAMES[0] or contract['directory'] != 'dist':
-        raise ValueError('Local runtime filename/directory contract drift')
+        raise ValueError('Runtime filename/directory contract drift')
     digest = sha(artifact)
     if digest != report['sha256'] or report['runtime_check']['sha256_after'] != digest:
-        raise ValueError('Validated candidate hash changed before local dist')
+        raise ValueError('Validated candidate hash changed before dist')
     dist = root / 'dist'
     if _is_link(dist) or dist.resolve() != dist or (dist.exists() and not dist.is_dir()):
-        raise ValueError('Local dist must be an owned directory, not a link')
+        raise ValueError('Dist must be an owned directory, not a link')
     dist.mkdir(exist_ok=True)
-    receipt = {'schema': 'surge.local-dist-receipt.v1', 'classification': 'NOT_RELEASE',
-               'result': 'LOCAL_GOLDEN_PASS', 'runtime_dll_name': DIST_NAMES[0], 'sha256': digest,
+    receipt = {'schema': 'surge.dist-receipt.v1',
+               'result': 'GOLDEN_PASS', 'runtime_dll_name': DIST_NAMES[0], 'sha256': digest,
                'input_sha256': report['input_sha256'],
                'source_manifest_sha256': sha(root / 'metadata/ACTIVE_SOURCE_MANIFEST.json'),
                'golden_artifact': str(artifact.relative_to(root)),
                'steps': [{'stage': s['stage'], 'exit_code': s['exit_code']} for s in report['steps']],
-               'runtime_check': report['runtime_check'], 'official_release': False, 'library_publication': False}
-    with _local_dist_lock(dist):
-        _recover_local_dist_locked(dist)
+               'runtime_check': report['runtime_check']}
+    with _dist_lock(dist):
+        _recover_dist_locked(dist)
         previous = _bundle_hashes(dist)
         transaction = dist / DIST_TRANSACTION
         if _is_link(transaction) or transaction.exists():
-            raise ValueError('Unexpected local dist recovery transaction')
+            raise ValueError('Unexpected dist recovery transaction')
         with tempfile.TemporaryDirectory(prefix='.candidate-', dir=dist) as td:
             stage = Path(td)
             fresh = stage / 'new'
             fresh.mkdir()
             shutil.copy2(artifact, fresh / DIST_NAMES[0])
             if sha(fresh / DIST_NAMES[0]) != digest:
-                raise ValueError('Local dist copy hash mismatch')
+                raise ValueError('Dist copy hash mismatch')
             (fresh / DIST_NAMES[1]).write_text(digest + '  ' + DIST_NAMES[0] + '\n', encoding='utf-8')
             (fresh / DIST_NAMES[2]).write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
             if _bundle_hashes(fresh) is None:
-                raise ValueError('Missing staged local dist bundle')
+                raise ValueError('Missing staged dist bundle')
             if previous is not None:
                 backup = stage / 'previous'
                 backup.mkdir()
@@ -259,7 +259,7 @@ def stage_local_dist(root, artifact, report):
                 if _bundle_hashes(backup) != previous:
                     raise ValueError('Existing dist snapshot verification failed')
             (stage / 'recovery.json').write_text(json.dumps({
-                'schema': 'surge.local-dist-recovery.v1', 'previous': previous
+                'schema': 'surge.dist-recovery.v1', 'previous': previous
             }, sort_keys=True) + '\n', encoding='utf-8')
             for path in list(fresh.iterdir()) + list((stage / 'previous').iterdir() if previous is not None else []):
                 _sync_file(path)
@@ -278,22 +278,23 @@ def stage_local_dist(root, artifact, report):
                     os.replace(transaction / 'new' / name, dist / name)
                     _sync_directory(dist)
                 if _bundle_hashes(dist)[DIST_NAMES[0]] != digest:
-                    raise ValueError('Local dist post-commit verification failed')
+                    raise ValueError('Dist post-commit verification failed')
+                _retire_transaction(dist)
             except BaseException:
-                _recover_local_dist_locked(dist)
+                _recover_dist_locked(dist)
                 raise
-            _retire_transaction(dist)
     return {'dist_artifact': str(dist / DIST_NAMES[0]), 'dist_sha256_file': str(dist / DIST_NAMES[1]),
             'dist_receipt': str(dist / DIST_NAMES[2])}
+
 
 def pipeline(root, dll, build_dir, output_dir):
     root, dll, build_dir, output_dir = map(lambda p: Path(p).resolve(), (root, dll, build_dir, output_dir))
     if (root / 'dist').exists() or _is_link(root / 'dist'):
-        recover_local_dist(root)
+        recover_dist(root)
     if not any(parent == root / 'build' for parent in output_dir.parents):
         raise ValueError('Golden output must be a subdirectory of this project build/')
-    report = {'schema': 'surge.local-golden.v1', 'classification': 'NOT_RELEASE',
-              'stage_order': ORDER, 'official_release': False, 'library_publication': False,
+    report = {'schema': 'surge.golden.v1',
+              'stage_order': ORDER,
               'result': 'BLOCKED_TARGET_SEMANTICS', 'steps': [], 'pending': pending_targets(root)}
     if report['pending']:
         return report
@@ -330,11 +331,11 @@ def pipeline(root, dll, build_dir, output_dir):
             index += 1
             return result
         report['steps'] = execute_steps(steps, run)
-        report['result'] = 'LOCAL_GOLDEN_PASS' if len(report['steps']) == 6 and all(s['exit_code'] == 0 for s in report['steps']) else 'FAIL'
-        if report['result'] == 'LOCAL_GOLDEN_PASS':
+        report['result'] = 'GOLDEN_PASS' if len(report['steps']) == 6 and all(s['exit_code'] == 0 for s in report['steps']) else 'FAIL'
+        if report['result'] == 'GOLDEN_PASS':
             candidate_before = sha(candidate)
             try:
-                cp = subprocess.run([str(build_dir / 'preloader_l_runtime_host.exe'), str(candidate)],
+                cp = subprocess.run([str(build_dir / 'preloader_l_runtime_host.exe'), str(candidate), '--xml-contracts'],
                                     cwd=root, text=True, capture_output=True, timeout=120, env=child_environment)
                 runtime = {'exit_code': cp.returncode, 'output': cp.stdout + cp.stderr}
             except subprocess.TimeoutExpired:
@@ -351,14 +352,41 @@ def pipeline(root, dll, build_dir, output_dir):
         if sha(dll) != before:
             report['result'] = 'FAIL'
             report['errors'] = ['Original build DLL changed during Golden execution']
-        if report['result'] == 'LOCAL_GOLDEN_PASS':
+        if report['result'] == 'GOLDEN_PASS':
             target = output_dir / ('preloader_l.' + sha(candidate)[:16] + '.dll')
-            shutil.copy2(candidate, target)
             sidecar = Path(str(target) + '.sha256')
-            sidecar.write_text(sha(target) + '  ' + target.name + '\n', encoding='utf-8')
-            report.update(artifact=str(target), sha256=sha(target), sha256_file=str(sidecar))
+            # Reject attacker-supplied final names before touching either output.
+            # A random exclusively opened temporary file is never written through
+            # the final path and cannot follow its pre-existing symlink target.
+            for destination in (target, sidecar):
+                if destination.is_symlink() or (destination.exists() and not destination.is_file()):
+                    raise ValueError('Unsafe existing Golden output member: ' + destination.name)
+            artifact_fd, artifact_name = tempfile.mkstemp(
+                prefix='.golden-artifact-', suffix='.partial', dir=output_dir)
+            artifact_partial = Path(artifact_name)
+            checksum_partial = None
             try:
-                report.update(stage_local_dist(root, target, report))
+                with os.fdopen(artifact_fd, 'wb') as stream, candidate.open('rb') as source:
+                    shutil.copyfileobj(source, stream)
+                digest = sha(candidate)
+                if sha(artifact_partial) != digest:
+                    raise ValueError('Golden output copy hash mismatch')
+                checksum_fd, checksum_name = tempfile.mkstemp(
+                    prefix='.golden-checksum-', suffix='.partial', dir=output_dir)
+                checksum_partial = Path(checksum_name)
+                with os.fdopen(checksum_fd, 'w', encoding='utf-8') as stream:
+                    stream.write(digest + '  ' + target.name + '\n')
+                # os.replace replaces an existing final symlink instead of
+                # following it. No partially written destination is exposed.
+                os.replace(artifact_partial, target)
+                os.replace(checksum_partial, sidecar)
+            finally:
+                artifact_partial.unlink(missing_ok=True)
+                if checksum_partial is not None:
+                    checksum_partial.unlink(missing_ok=True)
+            report.update(artifact=str(target), sha256=digest, sha256_file=str(sidecar))
+            try:
+                report.update(stage_dist(root, target, report))
             except (OSError, ValueError, KeyError) as error:
                 report.update(result='FAIL', dist_error=str(error))
     report['input_sha256'] = before
@@ -368,24 +396,23 @@ def pipeline(root, dll, build_dir, output_dir):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--check-target', action='store_true')
-    ap.add_argument('--recover-dist', action='store_true', help='Recover an interrupted local dist promotion')
+    ap.add_argument('--recover-dist', action='store_true', help='Recover an interrupted dist promotion')
     ap.add_argument('--dll', type=Path)
     ap.add_argument('--build-dir', type=Path)
-    ap.add_argument('--output-dir', type=Path, default=ROOT / 'build/golden-local')
+    ap.add_argument('--output-dir', type=Path, default=ROOT / 'build/golden')
     args = ap.parse_args()
     if args.check_target:
         pending = pending_targets(ROOT)
-        print(json.dumps({'result': 'BLOCKED_TARGET_SEMANTICS' if pending else 'READY_LOCAL_TARGET',
-                          'pending': pending, 'official_release': False}, indent=2))
+        print(json.dumps({'result': 'BLOCKED_TARGET_SEMANTICS' if pending else 'READY_TARGET',
+                          'pending': pending}, indent=2))
         return 3 if pending else 0
     if args.recover_dist:
         try:
-            restored = recover_local_dist(ROOT)
+            restored = recover_dist(ROOT)
         except (OSError, ValueError, KeyError) as error:
-            print('LOCAL_DIST_RECOVERY: FAIL:', error, file=sys.stderr)
+            print('DIST_RECOVERY: FAIL:', error, file=sys.stderr)
             return 1
-        print(json.dumps({'recovery': 'RESTORED_PREVIOUS' if restored else 'NO_TRANSACTION',
-                          'official_release': False}))
+        print(json.dumps({'recovery': 'RESTORED_PREVIOUS' if restored else 'NO_TRANSACTION'}))
         return 0
     if not args.dll or not args.build_dir:
         ap.error('--dll and --build-dir are required')
@@ -394,7 +421,7 @@ def main():
         args.output_dir.mkdir(parents=True, exist_ok=True)
         (args.output_dir / 'GOLDEN_REPORT.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
         print(json.dumps(report, indent=2))
-        return 0 if report['result'] == 'LOCAL_GOLDEN_PASS' else 3 if report['pending'] else 1
+        return 0 if report['result'] == 'GOLDEN_PASS' else 3 if report['pending'] else 1
     except (OSError, ValueError, KeyError) as error:
         print('GOLDEN_PIPELINE: FAIL:', error, file=sys.stderr)
         return 1

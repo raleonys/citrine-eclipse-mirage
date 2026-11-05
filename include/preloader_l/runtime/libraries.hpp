@@ -36,8 +36,8 @@ public:
     std::uint32_t last_error() override;
 };
 
-// Unrecovered logging/UI, CRT exception and execution-global bindings. No default
-// success implementations; the core below contains the recovered load decisions.
+// Logging/UI, CRT exception and execution-global bindings are not modeled. No default
+// success implementations; the core below defines the implemented load decisions.
 class Effects {
 public:
     virtual ~Effects() = default;

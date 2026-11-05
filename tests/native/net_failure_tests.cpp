@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include <winsock2.h>
+#include <windows.h>
 #include <atomic>
 #include <cstddef>
 #include <cstdlib>
@@ -47,6 +49,38 @@ void* aligned_malloc(std::size_t size,std::size_t alignment) noexcept {
 #undef ASIO_MSVC
 #undef FIXTURE_RESTORE_ASIO_MSVC
 #endif
+// A11-05: capture an actual Windows IOCP accept packet immediately after it
+// leaves the kernel, before the source-included Asio dispatcher observes it.
+// Only the single-owner accept fixture arms this hook; normal tests pass through.
+namespace held_accept {
+struct Packet {HANDLE port{};BOOL success{};DWORD error{},bytes{};ULONG_PTR key{};OVERLAPPED* operation{};};
+bool armed=false,holding=false,cached=false;
+unsigned captures=0,deliveries=0,waits=0;
+Packet packet;
+BOOL timeout(LPDWORD bytes,PULONG_PTR key,LPOVERLAPPED* operation,DWORD milliseconds){
+    if(milliseconds&&milliseconds!=INFINITE)Sleep(milliseconds);
+    *bytes=0;*key=0;*operation=nullptr;++waits;
+    SetLastError(WAIT_TIMEOUT);return FALSE;
+}
+}
+BOOL WINAPI TestAcceptCompletion(HANDLE port,LPDWORD bytes,PULONG_PTR key,
+    LPOVERLAPPED* operation,DWORD milliseconds){
+    using namespace held_accept;
+    if(cached&&packet.port==port){
+        if(holding)return timeout(bytes,key,operation,milliseconds);
+        *bytes=packet.bytes;*key=packet.key;*operation=packet.operation;
+        cached=false;++deliveries;SetLastError(packet.error);
+        return packet.success;
+    }
+    const auto ok=::GetQueuedCompletionStatus(port,bytes,key,operation,milliseconds);
+    const auto error=GetLastError();
+    if(armed&&!cached&&ok&&*operation){
+        packet={port,ok,error,*bytes,*key,*operation};cached=true;++captures;
+        return timeout(bytes,key,operation,0);
+    }
+    SetLastError(error);return ok;
+}
+#define GetQueuedCompletionStatus TestAcceptCompletion
 #include <asio.hpp>
 #include "preloader_l/net/server.hpp"
 #include "preloader_l/net/session_policy.hpp"
@@ -75,6 +109,7 @@ void operator delete[](void* p) noexcept{std::free(p);}
 void operator delete(void* p,std::size_t) noexcept{std::free(p);}
 void operator delete[](void* p,std::size_t) noexcept{std::free(p);}
 #include "src/net/asio_service.cpp"
+#undef GetQueuedCompletionStatus
 
 namespace {
 using namespace preloader_l;
@@ -188,6 +223,116 @@ void accept_cancellation_finality() {
         "stop drains the exact pending accept before acknowledging complete cleanup");
     require(c.factory.creates==0&&c.factory.errors==0,"cancelled accept completion cannot create a session or rearm a closed listener");
 }
+void dual_stack_accept_cancellation_finality() {
+    // Both Asio accept owners may have a pending kernel operation when the
+    // last admission is sealed. Cancellation intent is not completion.
+    for(bool connected_before_stop:{false,true}) {
+        Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.ready,{});
+        owner.used=true;
+        owner.acceptor.open(Tcp::v4());
+        owner.acceptor.bind({asio::ip::address_v4::loopback(),0});
+        owner.acceptor.listen();
+        owner.acceptor_v6=std::make_unique<decltype(owner.acceptor)>(
+            owner.io,&owner,&net::AsioService::Impl::retain_native);
+        owner.acceptor_v6->open(Tcp::v6());
+        owner.acceptor_v6->set_option(asio::ip::v6_only(true));
+        owner.acceptor_v6->bind({asio::ip::address_v6::loopback(),0});
+        owner.acceptor_v6->listen();
+        owner.queue_accept(owner.acceptor,0);
+        owner.queue_accept(*owner.acceptor_v6,1);
+        require(owner.accept_pending[0]&&owner.accept_pending[1],
+                "both listening families must own one pending accept before stop");
+        asio::io_context peer_io;
+        Tcp::socket peer4(peer_io),peer6(peer_io);
+        if(connected_before_stop) {
+            // Synchronous TCP connections make success possible while neither
+            // queued completion has yet executed on the owner's IO context.
+            peer4.connect(owner.acceptor.local_endpoint());
+            peer6.connect(owner.acceptor_v6->local_endpoint());
+        }
+        owner.stopping.store(true,std::memory_order_release);
+        asio::error_code error;
+        owner.acceptor.cancel(error);
+        require(!error&&owner.accept_pending[0]&&owner.accept_pending[1],
+                "cancel of first family cannot retire either pending completion");
+        owner.acceptor_v6->cancel(error);
+        require(!error&&owner.accept_pending[0]&&owner.accept_pending[1],
+                "cancel of second family cannot publish completion or a session");
+        owner.stop();owner.stop();
+        require(!owner.accept_pending[0]&&!owner.accept_pending[1]&&
+                owner.active_sessions==0&&owner.clients.empty(),
+                "both family completions drain and sessions remain absent after repeated stop");
+        require(c.factory.creates==0&&c.factory.errors==0,
+                "late accepted or cancelled sockets cannot create handlers after stop");
+        owner.io.restart();
+        require(owner.io.poll()==0&&!owner.accept_pending[0]&&!owner.accept_pending[1],
+                "post-stop polling must not rearm either listener");
+    }
+}
+void held_successful_accept_retirement() {
+    // Single actual pending AcceptEx on a loopback listener. With only one
+    // submitted operation, the captured successful IOCP packet belongs to it.
+    // A kernel dequeue is not Asio callback completion or buffer retirement.
+    Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.ready,{});
+    owner.used=true;
+    owner.acceptor.open(Tcp::v4());
+    owner.acceptor.bind({asio::ip::address_v4::loopback(),0});
+    owner.acceptor.listen();
+    owner.queue_accept(owner.acceptor,0);
+    require(owner.accept_pending[0]&&!owner.accept_pending[1]&&owner.active_sessions==0,
+        "one pending native accept owns admission before the peer connects");
+    struct Gate {
+        Gate(){
+            require(!held_accept::armed&&!held_accept::cached,
+                "previous held accept must be fully retired");
+            held_accept::packet={};
+            held_accept::captures=held_accept::deliveries=held_accept::waits=0;
+            held_accept::armed=held_accept::holding=true;
+        }
+        void release(){held_accept::armed=held_accept::holding=false;}
+        ~Gate(){release();}
+    } gate;
+    asio::io_context peer_io;
+    Tcp::socket peer(peer_io);
+    peer.connect(owner.acceptor.local_endpoint());
+    const auto deadline=std::chrono::steady_clock::now()+3s;
+    while(!held_accept::cached&&std::chrono::steady_clock::now()<deadline){
+        owner.io.restart();owner.io.poll_one();
+        if(!held_accept::cached)Sleep(1);
+    }
+    const auto packet=held_accept::packet;
+    require(held_accept::cached&&held_accept::captures==1&&
+            packet.success&&packet.port&&packet.operation&&packet.key==0,
+        "one real successful native accept completion is held after IOCP dequeue");
+    require(owner.accept_pending[0]&&owner.active_sessions==0&&c.factory.creates==0,
+        "dequeued but unconsumed accept cannot create a handler or release its owner");
+    owner.stopping.store(true,std::memory_order_release);
+    const auto begin=std::chrono::steady_clock::now();
+    for(unsigned i=0;i<2;++i){
+        const auto previous_waits=held_accept::waits;
+        bool incomplete=false;
+        try{owner.stop();}catch(const std::runtime_error&){incomplete=true;}
+        require(incomplete&&held_accept::waits>previous_waits,
+            "held accept completion must force each bounded stop to remain incomplete");
+        require(owner.accept_pending[0]&&owner.active_sessions==0&&
+                held_accept::cached&&held_accept::captures==1&&!held_accept::deliveries,
+            "stop cannot retire the pending accept or replay the original IOCP packet");
+        require(c.factory.creates==0&&owner.clients.empty(),
+            "a stopped listener cannot construct a session before accept completion");
+    }
+    require(std::chrono::steady_clock::now()-begin>=100ms,
+        "native accept packet must survive beyond the first 100 ms drain budget");
+    gate.release();
+    owner.stop();owner.stop();
+    require(!held_accept::cached&&held_accept::captures==1&&held_accept::deliveries==1,
+        "the original successful accept packet must be delivered exactly once");
+    require(!owner.accept_pending[0]&&!owner.accept_pending[1]&&
+            owner.active_sessions==0&&owner.clients.empty()&&c.factory.creates==0,
+        "post-stop successful accept never rearms or publishes a new handler");
+    owner.io.restart();
+    require(owner.io.poll()==0&&!owner.accept_pending[0],
+        "subsequent executor polling cannot resurrect a stopped accept");
+}
 void post_failure() {
     Context c;net::AsioService service(c.factory,c.execution,c.port,c.ready);service.start();
     Peer control(c.port);require(control.frame()=="hello","control greeting");control.send("fail");
@@ -231,7 +376,7 @@ void drain_retry() {
 int main(int argc,char** argv)try {
     const std::string_view selected=argc==2?argv[1]:"all";
     bool ran=false;
-    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms}})
+    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"held-accept-stop",held_successful_accept_retirement},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

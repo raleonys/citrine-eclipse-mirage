@@ -112,8 +112,8 @@ struct ThreadEffects final:t::Effects{
  std::uint32_t invoke_entry(std::uintptr_t identity,std::uintptr_t argument)override{return dispatch(identity,argument);}
  [[noreturn]]void free_library_and_exit_thread(t::Handle,std::uint32_t)override{unused();}[[noreturn]]void exit_thread(std::uint32_t)override{unused();}
 };
-struct Recovered final:s::WorkerStartupEffects{
- Fixture& f;Recovered(Fixture& f,ThreadEffects& t):WorkerStartupEffects(f.api,f.errors,t),f(f){}
+struct Recovered final:s::WorkerStartupEffectsAdapter{
+ Fixture& f;Recovered(Fixture& f,ThreadEffects& t):WorkerStartupEffectsAdapter(f.api,f.errors,t),f(f){}
  s::IocpWorker* allocate_worker_04b0bc(std::uint32_t)override{unused();}s::IocpWorkerFunction* allocate_function_04b0bc(std::uint32_t)override{unused();}
  void delete_worker_04b0f8(s::IocpWorker&,std::uint32_t)override{unused();}[[noreturn]]void raise_028240(s::Error e,std::uintptr_t c)override{throw Raised{e,c};}
  void delete_function_slot_00(s::IocpWorkerFunction& p,std::uint32_t flags)override{check(&p==f.expected && flags==1,"recovered bridge delete slot target");++f.deletes;}

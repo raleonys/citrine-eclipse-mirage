@@ -95,7 +95,7 @@ void failure_order(){
     }
 }
 void binding(){
-    Graph a(1,0),b(1,0);Failure failure;std::array<s::RecycleMap*,3> metadata{nullptr,&a.metadata,&b.metadata};s::CancellationRecycler recycler(metadata,failure);
+    Graph a(1,0),b(1,0);Failure failure;std::array<s::RecycleMap*,3> metadata{nullptr,&a.metadata,&b.metadata};s::CancellationRecyclerAdapter recycler(metadata,failure);
     auto projection=b.map;recycler.recycle_0283c0(projection,b.nodes[0]);
     check(b.metadata.map_size==2 && a.metadata.map_size==3,"copied map projection binds shared bucket/sentinel identity and correct counts");verify(b.free,{&b.nodes[0]});
     s::CancelNode stranger;auto different_sentinel=a.map;different_sentinel.sentinel=&stranger;auto different_buckets=a.map;std::array<s::CancelBucket,5> buckets{};different_buckets.buckets=buckets;auto different_count=a.map;different_count.buckets=different_count.buckets.first(4);

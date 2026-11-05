@@ -18,7 +18,7 @@ Path parent_path_019820(const Path& path);
 Path join_016b00(const Path& left, const Path& right);
 
 // Saved source pointers in the binary can be invalidated by self-append.
-// This exception marks that unrecovered allocation-dependent domain.
+// This exception marks allocation-dependent behavior not modeled here.
 class OutOfEvidenceAliasing : public std::invalid_argument {
 public:
     OutOfEvidenceAliasing();

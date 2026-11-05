@@ -58,7 +58,7 @@ Handle begin_thread_05e8e0(void* security, std::uint32_t stack_size,
 [[noreturn]] void end_thread_05e9bc(std::uint32_t code, Effects&);
 
 // New composition adapter. Other BootstrapDependencies remain mandatory.
-// A caller must bind entry tokens to its own recovered Bootstrap trampolines;
+// A caller must bind entry tokens to its own Bootstrap trampolines;
 // original-image addresses are documentation, never executable callbacks.
 class BootstrapThreadBridge : public system_services::BootstrapDependencies {
 public:

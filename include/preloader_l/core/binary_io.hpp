@@ -11,7 +11,7 @@
 namespace preloader_l::file {
 using Path=configuration::Path;
 enum class Seek:std::uint32_t {begin=0,end=2};
-// Stream state/exception behavior belongs to the implementation. The recovered
+// Stream state/exception behavior belongs to the implementation. The
 // application bodies only inspect the initial state and explicitly close.
 class Input {
 public:
@@ -42,6 +42,10 @@ public:
 };
 std::string read_binary_03b3f0(const Path&,Factory&);
 bool write_binary_03c1d0(const Path&,std::string_view,Factory&);
+// Opt-in ticket writer: NativeOutput must return its current stream status.
+// This is not an atomic replace or durable fsync, and the legacy RE helper
+// is intentionally unchanged.
+bool write_binary_checked(const Path&,std::string_view,Factory&);
 
 // Standard filesystem path/fstream backend restored from the supplied RE adapter.
 // Windows/MSVC uses its compiler-owned CRT/filebuf. Default exception mask is zero.

@@ -13,9 +13,9 @@ existing archive SHA-256 and complete member hashes:
 
 | Archive | Commit recorded in the supplied archive |
 | --- | --- |
-| Asio | `026dce530a6c39a8aa6d98e5177482310c4a01e5` |
+| Asio | `bdf337ddb1a667c274372a602de5857ad3cb3ed0` |
 | PEGTL | `3b075432e94f6f906425350b43d03cd9cebfa4f1` |
-| TinyXML2 | `8224e427b655b83dae5e2298f1e6919523a78737` |
+| pugixml | `f0a3faa76e04f35110257ca8713363dee3c890e8` |
 | MinHook | `8af6b4acae5a9388fd742b56fa79ece89d96f823` |
 
 These identifiers are evidence from SHA-pinned ZIP comments, not independently
@@ -63,6 +63,21 @@ expected/actual hashes. Reproduction and fresh checks are recorded in
 
 ## Lifecycle contract
 
+The existing `hook_engine::Api` / `BatchApi` boundary exposes application-owned
+integer status codes without including MinHook or Windows headers. `NativeApi`
+owns the MinHook include and compile-time checks for all native-to-application
+status values. Method signatures, numeric diagnostics and the selected native
+engine remain unchanged. Native tests that call MinHook directly include its
+header explicitly; source-included shutdown fixtures include it before their
+function interception macros.
+
+`portable_hook_transaction` runs the same real transaction source and fake-engine
+regressions on Linux and Windows without linking MinHook. It checks staging,
+queued activation, failed rollback, retained ownership, drain and cleanup retries.
+This proves the transaction boundary is independently buildable; it does not
+exercise SAFE-FREEZE, native thread suspension or live patches. Existing native
+engine and lifecycle tests retain those separate responsibilities.
+
 | Requirement | Concrete path |
 | --- | --- |
 | NtGetNextThread SAFE-FREEZE | Patched MinHook enumerates stable duplicated peer handles, checks suspend/context operations and retains failed resume/close/heap owners for retry. Missing Nt API fails closed; no Toolhelp fallback. |
@@ -87,6 +102,21 @@ activation for eleven staged hooks, partial staging, failed apply/rollback, live
 call drain, failed uninitialize and external ownership. `cleanup_retry_contracts`
 uses the actual DLL worker with a test-only Application that fails cleanup twice;
 the third shutdown must destroy the same single owner.
+
+Single-hook disable selects `ACTION_DISABLE` so suspended peer IPs are moved
+from trampoline instruction boundaries back to the target before unpatching.
+The build-copy transform requires exactly one single-hook action anchor;
+missing or ambiguous input fails before writing output. The source-linked
+Python regression checks the transform and exact output identity. The native
+`hook_freeze_contracts` fixture creates a real engine hook on executable test
+bytes (never called), verifies target-to-trampoline enable relocation, rejects
+disable with an unreadable peer context, then verifies trampoline-to-target
+relocation and original-byte restoration on retry. Native Windows execution is
+separate required evidence; source QA does not establish that result.
+The focused `Windows MinHook single-disable acceptance` PR workflow builds
+`hook_freeze_contracts` and the unchanged `hook_engine_fixture_tests` target
+with genuine MSVC in Debug and Release, and retains the CTest and patched-source
+artifacts. These two tests do not establish full native/Golden or game acceptance.
 
 The older `hook_engine_fixtures` intentionally compiles the immutable upstream
 source as a comparison baseline. Its stock failure expectations do not describe

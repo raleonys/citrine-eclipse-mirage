@@ -15,7 +15,7 @@ public:
     virtual std::optional<std::uint32_t> scan_decimal(std::string_view)=0; // %d
     virtual std::optional<std::uint32_t> scan_hex(std::string_view)=0;     // %x
 };
-// Explicit host-C-runtime compatibility choice, not recovered original CRT/ABI.
+// Explicit host-C-runtime compatibility choice, not a claim of original CRT/ABI equivalence.
 // Overflow/locale/malformed byte equality is not established.
 class HostCrtNumbers final:public Numbers {
 public:

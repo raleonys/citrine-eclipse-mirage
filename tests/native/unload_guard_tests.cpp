@@ -22,6 +22,8 @@ struct State {
     bool peer=true,resume_fail=false,thread_close_fail=false,snapshot_close_fail=false;
     bool suspend_fail=false,context_fail=false,terminated=false,enumeration_fail=false;
     bool reenter=false,reentry_rejected=false,in_module=false;
+    std::uint64_t register_value=0,instruction=0;
+    DWORD image_protection=PAGE_READWRITE;
 } state;
 HANDLE handle(){return reinterpret_cast<HANDLE>(static_cast<std::uintptr_t>(++state.next));}
 BOOL WINAPI module(DWORD,LPCWSTR,HMODULE* out){*out=reinterpret_cast<HMODULE>(state.image.data());return TRUE;}
@@ -54,6 +56,13 @@ BOOL WINAPI close(HANDLE h){
 }
 BOOL WINAPI context(HANDLE,LPCONTEXT);
 SIZE_T WINAPI query(LPCVOID address,PMEMORY_BASIC_INFORMATION out,SIZE_T){
+    const auto image=reinterpret_cast<std::uintptr_t>(state.image.data());
+    const auto requested=reinterpret_cast<std::uintptr_t>(address);
+    if(requested>=image&&requested<image+state.image.size()){
+        *out={};out->State=MEM_COMMIT;out->Protect=state.image_protection;
+        out->BaseAddress=state.image.data();out->AllocationBase=state.image.data();
+        out->RegionSize=state.image.size();return sizeof(*out);
+    }
     const auto start=reinterpret_cast<std::uintptr_t>(state.stack.data());
     const auto at=reinterpret_cast<std::uintptr_t>(address),end=start+sizeof(state.stack);
     *out={};out->State=MEM_COMMIT;out->Protect=PAGE_READWRITE;
@@ -96,6 +105,7 @@ BOOL WINAPI fake::context(HANDLE,LPCONTEXT out){
     if(state.context_fail)return FALSE;
     if(state.reenter)state.reentry_rejected=!preloader_l::external_threads_outside_module();
     *out={};out->Rsp=reinterpret_cast<std::uint64_t>(state.stack.data());
+    out->R11=state.register_value;out->Rip=state.instruction;
     if(state.in_module)out->Rip=reinterpret_cast<std::uint64_t>(state.image.data())+32;
     return TRUE;
 }
@@ -147,6 +157,31 @@ void other_failures(){
     s.terminated=true;s.depth=0;s.peer=false;
     require(scan()&&s.threads.empty()&&s.snapshots.empty()&&s.exit_queries>=2,"proven terminated peer can be released when resume remains unavailable");
 }
+void volatile_register_guard(){
+    reset();
+    auto& s=fake::state;
+    // Only the separately validated TLS endpoint qualifies for a data
+    // exemption. Other image references in R11 remain unsafe for unload.
+    const auto base=reinterpret_cast<std::uint64_t>(s.image.data());
+    s.register_value=base+128;
+    require(!scan()&&s.depth==0&&s.suspends==1&&s.resumes==1,
+        "foreign R11 image address defers unload despite safe RIP and stack");
+    require(s.threads.empty()&&s.snapshots.empty()&&s.closed_owned==0,
+        "R11-only rejection releases exact scan suspension and handles");
+    s.register_value=base+0x2000;
+    require(scan()&&s.depth==0&&s.suspends==2&&s.resumes==2,
+        "R11 outside image alone does not strand a finished scan");
+    require(s.threads.empty()&&s.snapshots.empty(),
+        "successful R11 scan has no leaked native owners");
+    s.register_value=base+128;
+    preloader_l::set_shutdown_caller(11);
+    const auto prior=s.suspends;
+    require(scan()&&s.suspends==prior&&s.depth==0,
+        "explicit DLL shutdown caller is excluded without suspending its stack");
+    preloader_l::set_shutdown_caller(0);
+    require(!scan()&&s.suspends==prior+1&&s.resumes==s.suspends,
+        "clearing caller exclusion restores conservative R11 protection");
+}
 void scan_behavior(){
     reset();auto& s=fake::state;s.in_module=true;
     require(!scan()&&s.depth==0,"live module instruction pointer defers unload with balanced resume");
@@ -155,6 +190,41 @@ void scan_behavior(){
     s.stack[2]=0;s.reenter=true;
     require(scan()&&s.reentry_rejected&&s.threads.empty()&&s.snapshots.empty(),"reentrant scan fails closed without acquiring owners");
 }
+void tls_data_marker(){
+    reset();auto& s=fake::state;
+    const auto base=reinterpret_cast<std::uint64_t>(s.image.data());
+    auto* nt=reinterpret_cast<IMAGE_NT_HEADERS64*>(s.image.data()+128);
+    nt->FileHeader.NumberOfSections=1;
+    nt->FileHeader.SizeOfOptionalHeader=sizeof(IMAGE_OPTIONAL_HEADER64);
+    nt->OptionalHeader.NumberOfRvaAndSizes=IMAGE_NUMBEROF_DIRECTORY_ENTRIES;
+    auto& directory=nt->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_TLS];
+    directory.VirtualAddress=512;directory.Size=sizeof(IMAGE_TLS_DIRECTORY64);
+    auto* tls=reinterpret_cast<IMAGE_TLS_DIRECTORY64*>(s.image.data()+512);
+    tls->StartAddressOfRawData=base+800;tls->EndAddressOfRawData=base+900;
+    auto* section=IMAGE_FIRST_SECTION(nt);
+    section->VirtualAddress=768;section->Misc.VirtualSize=256;
+    section->Characteristics=IMAGE_SCN_MEM_READ|IMAGE_SCN_MEM_WRITE;
+    s.register_value=base+900;
+    require(scan()&&s.depth==0,"non-executable PE TLS end data in R11 is not active image code");
+    s.stack[1]=base+900;
+    require(scan(),"same validated TLS endpoint on the stack is data, not a return address");
+    s.instruction=base+900;
+    require(!scan(),"instruction pointer inside the image always blocks unload, even at TLS end");
+    s.instruction=0;s.register_value=base+899;
+    require(!scan(),"adjacent image data receives no TLS endpoint exemption");
+    s.register_value=base+32;
+    require(!scan(),"other image addresses in R11 remain unsafe");
+    s.register_value=base+900;section->Characteristics|=IMAGE_SCN_MEM_EXECUTE;
+    require(!scan(),"executable PE section cannot qualify as a TLS data marker");
+    section->Characteristics&=~IMAGE_SCN_MEM_EXECUTE;s.image_protection=PAGE_EXECUTE_READWRITE;
+    require(!scan(),"executable page protection blocks the data exemption");
+    s.image_protection=PAGE_READWRITE;directory.VirtualAddress=1020;
+    require(!scan(),"out-of-image TLS directory fails closed");
+    directory.VirtualAddress=512;directory.Size=1;
+    require(!scan(),"truncated TLS directory fails closed");
+    directory.Size=sizeof(IMAGE_TLS_DIRECTORY64);tls->StartAddressOfRawData=base+901;
+    require(!scan(),"reversed TLS data range fails closed");
 }
-int main()try{resume_retry();close_retry();other_failures();scan_behavior();std::cout<<"PASS: "<<checks<<" actual unload guard failure/retry and stack checks\n";}
+}
+int main()try{resume_retry();close_retry();other_failures();volatile_register_guard();scan_behavior();tls_data_marker();std::cout<<"PASS: "<<checks<<" actual unload guard failure/retry and stack checks\n";}
 catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}

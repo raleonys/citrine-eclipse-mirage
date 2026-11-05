@@ -30,10 +30,10 @@ void factory(s::IoHandlerEnvironment& e,std::uintptr_t query,s::IoEnvironmentCon
     check(query==0x5678,"cached actual factory receives query-slot result");++factory_calls;
     e.payload_00={21,22};e.operations_10=factory_table;e.state_18=0;e.schedule_20=0x456;e.executor_28=nullptr;
 }
-struct Recovered:s::AsyncReceiveEffects {
+struct Recovered:s::AsyncReceiveEffectsAdapter {
     Fixture& f;
     Recovered(Fixture& f,s::IoHandlerSentinels sentinels,s::IoEnvironmentConstructorContext& constructor,std::span<s::IoEnvironmentSourceBinding> sources)
-        :AsyncReceiveEffects(sentinels,constructor,sources),f(f){}
+        :AsyncReceiveEffectsAdapter(sentinels,constructor,sources),f(f){}
     s::AsyncReceiveOperation& project_async_receive(s::OperationStorage& storage)override{return f.effects.project_async_receive(storage);}
 };
 struct CompletionEffects:s::IoCompletionEffects {
