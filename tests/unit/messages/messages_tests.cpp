@@ -313,4 +313,49 @@ static void process_tests(){
         check(f.process(input)==std::string("R\0",2));check(!f.encrypted); // error field controls success
     }
 }
-int main(){codec_tests();reset_tests();dispatch_tests();multi_command_request_contract_tests();challenge_tests();process_tests();std::printf("PASS: %u checks; real and synthetic XML; controlled crypto/queue; no sockets or target execution\n",checks);}
+// A11-09: a syntactically parsed but invalid LSX Request is rejected by
+// the full message core before any response encryption or event dequeue.
+// This pins CURRENT product behavior, not donor exception compatibility.
+static void process_invalid_dispatch_boundaries(){
+    for(const bool encrypted:{false,true}){
+        for(unsigned invalid=0;invalid<4;++invalid){
+            Fixture f;
+            f.encrypted=encrypted;
+            f.show=1;
+            f.queue.values={"retained-event"};
+            switch(invalid){
+                case 0:f.xml.configure=[](Document& d){d.root.label="OtherRoot";};break;
+                case 1:f.xml.configure=[](Document& d){d.request.attributes.erase("id");};break;
+                case 2:f.xml.configure=[](Document& d){d.command.label="UnregisteredCommand";};break;
+                case 3:f.effects.handler_result=false;break;
+            }
+            std::string input=encrypted?"41":"validly-parsed-fixture";
+            if(encrypted)f.cipher.trace->decrypt_outputs={"decrypted-request"};
+            bool rejected=false;
+            try{(void)f.process(input);}catch(const Invalid&){rejected=true;}
+            check(rejected&&f.effects.invalids==1);
+            check(f.xml.parsed.size()==1&&f.effects.logs.size()==1&&
+                  f.effects.logs[0].starts_with("received:"));
+            check(f.effects.handlers.size()==(invalid==3?1u:0u));
+            check(f.cipher.trace->encrypted.empty()&&f.queue.trace.empty());
+            check(f.queue.values==std::deque<std::string>{"retained-event"});
+            // An independently valid next request must still use the same
+            // cipher and queue, with no replayed error or prematurely lost event.
+            f.xml.configure={};
+            f.effects.handler_result=true;
+            std::string followup=encrypted?"41":"followup-valid";
+            const auto result=f.process(followup);
+            if(encrypted) {
+                check(result==std::string("43\0" "43\0",6));
+                check(f.queue.values.empty());
+                check(f.queue.trace==std::vector<std::string>{"relaxed","lock","count","locked","copy","pop","unlock"});
+            } else {
+                check(result==std::string("R\0",2));
+                check(f.queue.values==std::deque<std::string>{"retained-event"}&&f.queue.trace.empty());
+            }
+            check(f.effects.invalids==1&&f.effects.handlers.size()==(invalid==3?2u:1u));
+            check(f.effects.logs.size()==(encrypted?4u:3u));
+        }
+    }
+}
+int main(){codec_tests();reset_tests();dispatch_tests();multi_command_request_contract_tests();challenge_tests();process_tests();process_invalid_dispatch_boundaries();std::printf("PASS: %u checks; real and synthetic XML; controlled crypto/queue; no sockets or target execution\n",checks);}

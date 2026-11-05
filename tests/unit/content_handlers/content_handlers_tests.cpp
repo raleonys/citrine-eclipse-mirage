@@ -282,12 +282,52 @@ static void image_tests() {
     f.effects.atoi_value=832;MockXml another;
     require(query_image_0314f0(image("832","other"),another,f.refs(),f.effects));require(f.effects.copies.size()==copies&&f.saved_size==2);
     require(another.named("Image")[0].get("ResourcePath")=="synthetic-user\\_AVATAR_other_832");
-    f.effects.atoi_value=-417;MockXml negative;require(query_image_0314f0(image("-417"),negative,f.refs(),f.effects));require(f.saved_size==2&&f.effects.copies.size()==copies);
+    const auto calls_before_negative=f.effects.online_paths.size();
+    f.effects.atoi_value=-417;MockXml negative;require(query_image_0314f0(image("-417"),negative,f.refs(),f.effects));
+    require(f.saved_size==2&&f.effects.copies.size()==copies);
+    require(f.effects.online_paths.size()==calls_before_negative&&negative.named("Image")[0].get("ResourcePath")=="synthetic-avatar.png");
     // Exact original text is used in cache filename, no normalization of width.
     f.effects.atoi_value=416;MockXml leading;
     require(query_image_0314f0(image("00416"),leading,f.refs(),f.effects));require(f.effects.paths_widened.back()=="_AVATAR_user-test_00416");
     RequestTree multi{{{"Width",""},{"Height",""},{"ImageId","ignored:a:b"}}, {}};MockXml colon;
-    require(query_image_0314f0(multi,colon,f.refs(),f.effects));require(f.effects.paths_widened.back()=="_AVATAR_a:b_"&&colon.named("Image")[0].get("Width").empty());
+    const auto calls_before_colon=f.effects.online_paths.size();
+    require(query_image_0314f0(multi,colon,f.refs(),f.effects));
+    require(colon.named("Image")[0].get("Width").empty()&&colon.named("Image")[0].get("ResourcePath")=="synthetic-default.png");
+    require(f.effects.online_paths.size()==calls_before_colon);
+
+    // Reject only unsafe provider-bound components; preserve the caller's
+    // XML response identity and normal fallback, never rewrite the input.
+    const auto prior_online=f.effects.online_paths.size();
+    const auto prior_widen=f.effects.paths_widened.size();
+    const auto prior_atoi=f.effects.atoi_inputs.size();
+    const std::vector<std::pair<std::string,std::string>> invalid{
+        {"416","../another"}, {"416","..\\another"},
+        {"416","a:b"}, {"416","a/b"}, {"416","\\server"},
+        {"416","a?b"}, {"416","a.b"}, {"416",""},
+        {"416","a b"}, {"416",std::string("a\0b",3)},
+        {"416/../../escape","user-test"}, {"416\\another","user-test"},
+        {"-417","user-test"}, {"+416","user-test"},
+        {" 416","user-test"}, {"","user-test"},
+        {std::string(9,'9'),"user-test"},
+        {std::string("4\0" "16",4),"user-test"}
+    };
+    for(const auto& [width,owner]:invalid){
+        MockXml rejected;
+        require(query_image_0314f0(image(width,owner),rejected,f.refs(),f.effects));
+        const auto output=rejected.named("Image");
+        require(output.size()==1);
+        require(output[0].get("ResourcePath")==
+                (owner=="user-test"?"synthetic-avatar.png":"synthetic-default.png"));
+        require(f.effects.online_paths.size()==prior_online);
+        require(f.effects.paths_widened.size()==prior_widen);
+        require(f.effects.atoi_inputs.size()==prior_atoi);
+        require(f.effects.copies.size()==copies);
+    }
+    // Leading-zero widths remain byte-exact, and ordinary owner names
+    // continue to reach the provider and preserve online response semantics.
+    MockXml ordinary;require(query_image_0314f0(image("00416","owner_2"),ordinary,f.refs(),f.effects));
+    require(f.effects.paths_widened.back()=="_AVATAR_owner_2_00416");
+    require(ordinary.named("Image")[0].get("ResourcePath")=="synthetic-user\\_AVATAR_owner_2_00416");
     require(f.mutex.locks==0&&f.events.mutex.locks==0);
 }
 int main() {
