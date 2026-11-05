@@ -24,12 +24,26 @@ corroborates these inputs.
 | 012ff0 | Create an object frame after reading its name, before validating opening `{` |
 | 012cf0, 012bf0, 0164f0 | Complete assignment; replace duplicate subtree |
 
-`include/preloader_l/config/vdf_grammar.hpp` defines the byte-level rules.
+`src/config/vdf_grammar.hpp` privately defines the byte-level rules.
 `src/config/parser.cpp` provides PEGTL actions/controls, the owned
 `ParseError` interface, and current Node conversion.
 `parser::parse` always invokes the real
 `tao::pegtl::parse<vdf::Document,...>`. There is neither the former
 hand-written parser nor an alternate backend after failure.
+
+The consumer interface is `include/preloader_l/config/parser.hpp`: `Node`,
+`State`, `Position`, `ParseError` and `parse` use project/standard types only.
+PEGTL rules stay behind the parser implementation; consumers do not include
+its private grammar header. The move preserves the grammar bytes, actions,
+error mapping, depth policy and public parser interface.
+
+The compile-only `parser_header_contracts` target includes the public header
+with only the project include directory and generated rejecting headers for every vendored PEGTL include name
+placed before system includes. It has no vendor/runtime link dependency and
+is built with the portable and Windows test inventories. An accidental PEGTL
+include through the public interface therefore fails compilation even if a
+host has PEGTL installed. Existing parser, conversion and frozen-corpus tests
+continue to validate behavior separately.
 
 Scalar tokens are not accepted at the root; object names, keys, and
 values are quoted. Scalar key/value pairs require a separator, while
@@ -53,8 +67,9 @@ error locations. The numeric fixture tests only the vendor API.
 This binding does not select `surge.cfg` / `surge_override.cfg`
 or establish their precedence. Production Asio/filesystem adapters,
 automatic bootstrap, Consumer ABI, and native Windows/MSVC/game
-acceptance remain separate tasks. TinyXML2 owns XML; this grammar
-is not the XML/LSX parser. Vendored files and TinyXML2 depth 500
+acceptance remain separate tasks. Pugixml and the first-party compatibility
+layer own XML; this grammar is not the XML/LSX parser. Vendored files and
+the project XML depth-500 boundary
 remain unchanged.
 
 All 115 existing parser assertions were retained without modification.

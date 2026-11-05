@@ -12,6 +12,7 @@
 #include "preloader_l/platform/execution_windows.hpp"
 #include "../../src/runtime/application_internal.hpp"
 #include <asio.hpp>
+#include <MinHook.h>
 #include <filesystem>
 #include <iostream>
 #include <stdexcept>

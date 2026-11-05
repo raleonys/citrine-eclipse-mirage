@@ -1,7 +1,7 @@
 # Source cleanup and measured optimizations
 
 This document records historical measurements from the first
-optimization pass. The current 60/78 Production/reference split
+optimization pass. The reviewed 60/78 Production/reference split
 and subsequent narrow cleanup/TLS work are documented in
 [BUILD_CLEANUP.md](BUILD_CLEANUP.md). Earlier test counts,
 translation-unit totals, and export counts below are not
@@ -72,7 +72,7 @@ Compiler scope and boundaries:
 
 | Change | Rationale and preserved behavior |
 |---|---|
-| Remove staging string before XML parse | TinyXML2 already copies the owned terminated buffer. Preserve the first-NUL boundary of a counted view, empty input, truncated views, complete ErrorStr, and document ownership. |
+| Remove staging string before XML parse | The XML backend owns its parsed buffer. Preserve the first-NUL boundary of a counted view, empty input, truncated views, complete ErrorStr, and document ownership. |
 | Store the XML Element wrapper in the map node | Remove a second heap allocation per node. `unordered_map` rehash preserves node addresses; the vendor document is destroyed after its wrappers. |
 | Inline Debug gate for internal diagnostic calls | With Golden LTO disabled, empty Release log bodies in other translation units did not remove the caller's strings. Release calls are now eliminated within their own translation unit, while existing out-of-line development API logging symbols remain. |
 | Clean up private Environment fields | Remove the unused `xml_` reference. `log_mutex_`, used only in Debug, is absent from the Release class. Retain the XML constructor input for actual Storage use. Retain `clock_`/`formatter_` because they are used. |

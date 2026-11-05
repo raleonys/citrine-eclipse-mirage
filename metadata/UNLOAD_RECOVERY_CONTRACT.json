@@ -1,6 +1,5 @@
 {
   "schema": "surge.unload-recovery-contract.v1",
-  "classification": "NOT_RELEASE",
   "source": "src/platform/hook_unload_guard.cpp",
   "state": "IMAGE_OWNED_THREAD_SUSPENSION_AND_SNAPSHOT; ZERO_ALLOCATION",
   "retry_order": [

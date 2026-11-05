@@ -47,7 +47,7 @@ def inspect(path, root):
             errors.append('Wrong ordinal, missing body or forwarded export: ' + name)
     if hashlib.sha256(path.read_bytes()).hexdigest() != before:
         errors.append('Read-only export validation changed the DLL')
-    return {'schema': 'surge.public-abi-check.v1', 'classification': 'NOT_RELEASE',
+    return {'schema': 'surge.public-abi-check.v1',
             'result': 'FAIL' if errors else 'PASS_PUBLIC_C_EXPORT_CONTRACT',
             'dll_sha256': before, 'export_count': len(actual),
             'exports': {name: {'ordinal': v[0], 'rva': hex(v[1]), 'forwarded': v[2]}
