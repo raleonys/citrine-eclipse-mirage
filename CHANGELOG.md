@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Adopt Archive 12's bound-server-port boundary cases (0, 80, 443 and 65535) into the actual portable server source test. Verify decimal EALsxPort publication, readiness-before-accept ordering, balanced source locks and ignored environment-write failure without changing production behavior. Original DLL/native execution remains separate evidence.
+
 - Extend the native Application fixture with a real provider auth getter that reenters the active registry hooks after startup readiness. Assert configured ClientPath, one completed open/query/close probe, disabled-probe controls and single provider retirement after client reads drain; retain the provider ABI and fixture-only advapi32 dependency. Shipping behavior and vendor sources are unchanged.
 
 - Audit F-C24-001: route license-ticket output through opt-in write/close status checks so nonthrowing late failures cannot report ticket success. Preserve the recovered initial-open-only legacy writer, other file-write callers and public DLL ABI; add deterministic failure coverage and a portable file-I/O target. Isolate the checked-write native fixture from the existing 8193-byte partial-read/EOF fixture so both scenarios retain their own input bytes.
