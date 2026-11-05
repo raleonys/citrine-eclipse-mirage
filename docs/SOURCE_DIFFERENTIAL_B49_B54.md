@@ -5,7 +5,26 @@
 **Donor:** user-supplied `dll-reverse-engineering(11).zip`, ZIP SHA-256 `4b98177c7f7d827994e209fe75a918d9c54f25194c4adf19d9d419bdf061f0fe`.
 **Original review date:** 2026-11-01. **Original evidence quality:** static source comparison. The donor's 356 groups and 19 terminal scenarios are its own recorded results; they were **not rerun** in this GitHub worktree. Windows/MSVC, native game, and original donor runtime parity were **not run** for this differential.
 
-## Current reconciliation — 2026-11-02
+## Accepted-main update — 2026-11-05
+
+At `main@a08892f8`, the owner has integrated the following source-linked
+native regressions. The 2026-11-02 reconciliation below remains a dated
+checkpoint; its open packet-delay cases are superseded only as specified here.
+
+| Integrated change | Coverage now in source | Remaining boundary |
+|---|---|---|
+| [PR #107](https://github.com/raleonys/citrine-eclipse-mirage/pull/107) | Actual cancelled and successful WSARecv packets are held after kernel dequeue through repeated bounded stops; read allocation/client ownership persists until one release. | Controlled dispatch delay is not arbitrary kernel-pending duration or submission-generation/ABA proof. |
+| [PR #114](https://github.com/raleonys/citrine-eclipse-mirage/pull/114) | A real successful WSASend packet and callback-owned output lease survive two incomplete stops before exact delivery and retirement. | This closes the specified delayed-send fixture gap, not all send schedules or foreign Consumer equivalence. |
+| [PR #130](https://github.com/raleonys/citrine-eclipse-mirage/pull/130) | One real successful accept packet remains held across two incomplete stops; release clears pending ownership without constructing a post-stop handler or rearming. | Single-owner association does not prove exact pre-submit AcceptEx generation identity, duplicate packets or arbitrary NOT_FOUND races. |
+
+These additions address the bounded receive/send/accept delivery schedules
+previously listed as missing. Foreign provider lifetime, donor-specific parity
+and original-input retirement remain independent questions. Test registration
+is not execution evidence: inspect the exact selected head's full-validation
+results under [the current synchronization policy](GITHUB_WORKFLOW.md).
+The focused lifecycle workflow is manual; PR creation does not schedule it.
+
+## Reconciliation checkpoint — 2026-11-02
 
 **Reviewed integration baseline:** `e1f1d09208d3fdbeabeef1f5891d8f4748179883`, after the owner merged PR #91. The 2026-11-01 comparison below used an older baseline. Its open findings are historical inputs, not a statement that all of those scenarios remain untested today.
 
@@ -41,9 +60,9 @@ The dispositions below apply to the stated scenarios. A covered case is not gene
 
 The JUnit output and complete LastTest logs identify the actual executed tests; a declaration in CMake alone is not a PASS. That evidence includes the startup publication, socket retirement, net failure, online/module, reference closing and configuration/registry tests discussed above. The reference workflow separately runs the closing and ordered-session fixtures on Windows Debug/Release. [Repeated shutdown run 41437017662](https://github.com/raleonys/citrine-eclipse-mirage/actions/runs/41437017662) passed five independent actual DLL lifecycle attempts per configuration, as well as guard/diagnostic and dual-family cancellation tests.
 
-Those receipts are evidence for the **named baseline**, not a fresh acceptance claim for this documentation PR or a foreign Consumer. Current PR execution is tracked in [PR #82](https://github.com/raleonys/citrine-eclipse-mirage/pull/82). The CI now runs full native Debug/Release and Production/Golden on every PR; it does not need the duplicate startup-only workflow proposed in closed PR #92.
+Those receipts are evidence for the **named baseline**, not a fresh acceptance claim for this documentation PR or a foreign Consumer. Execution for that documentation checkpoint is tracked in [PR #82](https://github.com/raleonys/citrine-eclipse-mirage/pull/82). The then-active per-PR scheduling was superseded by #212/#225: current full validation follows main integration or a later verified synchronization request. The duplicate startup-only workflow proposed in closed PR #92 remains unnecessary.
 
-### Bounded remaining work
+### Remaining work identified at the 2026-11-02 checkpoint
 
 1. **D50-C / remaining D50-A socket lifetime proof:** hold delivery/reap of a real socket completion across the first drain budget, record pending operation and borrowed-buffer ownership, then require successful explicit retry without duplicate close or rearm. Existing timer and close-failure controls are baseline coverage, not substitutes for this schedule.
 2. **D54-A/B foreign provider proof:** block an actual fixture getter/callback while teardown is requested; verify local worker/session drains and physical image ownership. Separate the provider ABI's string/destructor responsibilities from module-reference ownership. Add a production correction only for a reproduced reachable violation.
