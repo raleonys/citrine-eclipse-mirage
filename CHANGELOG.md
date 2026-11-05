@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-03)
 
+- Bound host achievement XML Count/Progress parsing to representable 32-bit signed decimal and unsigned hexadecimal values, avoiding undefined out-of-range `sscanf` assignments. Retain whitespace, sign, prefix/suffix and signed low-bit contracts for supported input; use existing attribute fallback on overflow. Extend the real storage regression with exact limits, maliciously long values, embedded-NUL and end-to-end XML import checks. Donor CRT overflow parity remains unproven and is not asserted. Reject repeated numeric signs such as ++1 and -+1, with eight source-linked syntax regressions; retain the accepted achievement path-component guards.
+
 - Reject malformed vendor alias tables and non-string symlink targets as controlled source-validation failures; retain valid locked aliases and add regression tests for malformed JSON value types.
 
 - Keep Debug CryptQueryObject diagnostics from terminating the host when logging throws; restore the observer reentry guard and verify actual logger allocation failure, subsequent callback logging and the Release no-allocation path.
