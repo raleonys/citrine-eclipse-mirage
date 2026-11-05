@@ -170,3 +170,25 @@ function Invoke-ExternalChecked {
         Fail-Build "$Label failed (exit $rc)." $rc
     }
 }
+
+# A CMD launcher owns its colored final verdict. Direct PowerShell callers
+# still receive that verdict here; artifact details are available to both.
+function Write-SelectedProfileResult {
+    param(
+        [string]$ProfileLabel, [string]$Dll, [string]$Sha256,
+        [switch]$GoldenBlocked, [switch]$LauncherOwnsSummary
+    )
+    if (-not $LauncherOwnsSummary) {
+        if ($GoldenBlocked) {
+            Write-Host 'Golden: BLOCKED - product PE targets are incomplete; compilation and resource/export checks completed.' -ForegroundColor Yellow
+        } else {
+            Write-Host "$ProfileLabel`: PASS"
+        }
+    }
+    Write-Host "DLL: $Dll"
+    Write-Host "SHA256: $Sha256"
+    if ($GoldenBlocked) {
+        if (-not $LauncherOwnsSummary) { Write-Host 'Exit code 3.' }
+        Write-Host 'See golden/GOLDEN_REPORT.json. This is not Golden acceptance.'
+    }
+}
