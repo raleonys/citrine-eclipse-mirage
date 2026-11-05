@@ -6,13 +6,12 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Replace the campaign logo with the exact latest owner-supplied PNG from `citrine-eclipse-mirage.zip`: 1400 x 1100 RGBA, 627905 bytes, preserving encoded bytes and transparency at the existing README image path. Update its artwork provenance and active-source digest.
-- Reconcile the development history against GitHub merge records and accepted Git history through the integration of PR #115, including merged PRs #107, #114, #193 and #231. Replace duplicate proposal-era notes with the verified integration timeline below; retain the earlier merged checkpoint and source-import history.
-- Correct current documentation for the four active vendors, campaign/profile artwork and resource split, implemented VDF depth policy, real socket-completion coverage and synchronization-gated CI. Separate historical validation snapshots and former blockers from exact-head hosted validation and owner game acceptance.
+- Align 24 displayed source-path labels with their existing link targets in the historical RE and hook-reference comparison tables. Include the private PEGTL grammar path introduced by #231. Preserve targets, fragments, finding text, statuses, donor references and companion CSV records.
+- Preserve the historical hook-evidence link already integrated by PR #232, and record that merged logo/documentation refresh in the accepted-main timeline below.
 
 ### Accepted-main checkpoint — 2026-11-05
 
-Verified against [`main@9793d8f4587a3066294b186438cde86a823c446b`](https://github.com/raleonys/citrine-eclipse-mirage/commit/9793d8f4587a3066294b186438cde86a823c446b). All 78 PRs below have matching GitHub merge records and merge commits reachable from that source checkpoint after the earlier #62 checkpoint. Dates use Europe/Istanbul. The list records integrations, not passing tests, releases or unmerged proposals. Later entries supersede earlier implementation and policy decisions.
+Verified against [`main@97e84254df4edc111bb7c066bb5e587eda89dbb8`](https://github.com/raleonys/citrine-eclipse-mirage/commit/97e84254df4edc111bb7c066bb5e587eda89dbb8). All 79 PRs below have matching GitHub merge records and merge commits reachable from that source checkpoint after the earlier #62 checkpoint. Dates use Europe/Istanbul. The list records integrations, not passing tests, releases or unmerged proposals. Later entries supersede earlier implementation and policy decisions.
 
 The current XML backend is pugixml behind the project compatibility layer (#149/#150), with the self-aliasing printer correction (#193). MinHook uses the existing hook-engine adapter (#148); PEGTL grammar is private behind the parser interface (#231). The native completion fixtures cover held receive (#107), send/output (#114) and accept (#130) packets across bounded stop retries; these controlled schedules do not establish exhaustive kernel identity or Consumer equivalence.
 
@@ -21,6 +20,7 @@ Full validation follows actual main integration or a later verified synchronizat
 
 ### Integrated 2026-11-05
 
+- [PR #232](https://github.com/raleonys/citrine-eclipse-mirage/pull/232): update the exact owner campaign logo and provenance, reconcile the development changelog through #115, and correct current documentation for vendor/resource ownership, VDF policy, completion coverage and validation evidence.
 - [PR #115](https://github.com/raleonys/citrine-eclipse-mirage/pull/115): distinguish the retained Archive 11 ZIP (`db394434...`) from the historical B49–B54 same-named donor (`4b98177c...`). Preserve both evidence identities as `PROVENANCE_OPEN` and require per-file paths, byte lengths and SHA-256 verification before transferring donor-specific assertions; no donor equivalence or runtime change is established.
 - [PR #130](https://github.com/raleonys/citrine-eclipse-mirage/pull/130): test: hold a real accept IOCP completion across shutdown retries (A11-05/B49).
 - [PR #114](https://github.com/raleonys/citrine-eclipse-mirage/pull/114): test: retain a real WSASend completion and output lease across shutdown retries (B50).
