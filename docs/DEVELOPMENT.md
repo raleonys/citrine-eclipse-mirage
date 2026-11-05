@@ -21,6 +21,11 @@ The human-facing CMD window colors the final result, shows the exit code,
 and waits before closing. Automation should invoke the matching `.ps1`
 script directly without waiting. Arguments include
 `-BuildDir build\...` and `-Config Release|RelWithDebInfo|Debug`.
+Each CMD launcher passes the internal `-LauncherOwnsSummary` presentation
+switch so that its closing panel prints the selected profile verdict once.
+Direct PowerShell/CI calls retain the default result line. DLL paths, hashes,
+failure diagnostics and Golden blocked-report guidance remain visible in
+both routes; exit codes and validation steps are unchanged.
 The sole profile executor is `build_profile.ps1`; `build_common.ps1` is the
 shared helper. Each profile uses its own build directory, lock, toolchain
 hash record, and build receipt. MSVC environment variables are restored
@@ -85,3 +90,22 @@ Current five-launcher and cache-cleanup record:
 Successful cleanup does not print JSON to the console; details are stored
 in `PYTHON_CACHE_CLEANUP.json` in the selected build directory.
 Failures stop the build with a nonzero exit code.
+
+The focused operator output fixtures exercise all five CMD/PowerShell routes,
+including failure, missing-script and color-renderer fallback paths. They use
+injected build results and do not compile or establish native DLL/Golden
+acceptance. Run them on Windows with:
+
+```sh
+python -B tests/infrastructure/test_infrastructure.py OperatorOutputTests
+```
+
+To request just these Windows fixtures remotely, manually dispatch the existing
+Source integrity workflow on the selected branch:
+
+```sh
+gh workflow run ci.yml --ref <branch> -f operator_output=true
+```
+
+This optional job does not run on PR creation or ordinary pushes and does not
+replace the later eleven-check full validation gate.
