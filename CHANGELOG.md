@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Reject an invalid native binary-input `tellg()` position instead of converting its failure sentinel into a huge unsigned file length; add EOF-state regression coverage using the existing generated file fixture.
+
 - Preserve the last online-profile cache when a provider-supplied persona ID, user ID or username contains the unescaped semicolon delimiter: the existing offline reader only accepts exactly three fields. Keep the authenticated in-memory identity, normal valid profile cache bytes, and the original offline parser unchanged. Add source-linked online tests for each delimiter position, cache enabled/disabled and safe round-trip inputs; this is deliberate product hardening rather than a claim of donor binary parity. Keep the source-file inventory and its enclosing manifest hash synchronized for package and Golden verification.
 
 - Reject ASCII control characters U+0000–U+001F and DEL in canonical vendor alias targets while retaining the existing relative-path, escape and malformed-record checks. Preserve the locked aliases and all vendor bytes/pins.
