@@ -52,6 +52,35 @@ Those receipts are evidence for the **named baseline**, not a fresh acceptance c
 
 For an actual bug correction, reproduce source-bound RED behavior before the minimal GREEN change. For additional coverage of already-correct behavior, meaningful new tests and a controlled negative check may be sufficient; do not fabricate a baseline production failure to justify a test-only contribution. Existing assertions, cleanup ownership, timeout budgets, vendor pins and public ABI remain unchanged. This ledger does **not** retire the original reference inputs or certify full native equivalence.
 
+### Delayed native receive completion delivery: D50-A/C fixture
+
+`socket_retirement_contracts` now adds `late-receive-cancel` and
+`late-receive-success` to the existing source-included production Asio tests.
+Each starts an actual kernel-pending `WSARecv` on its own loopback TCP pair,
+records the exact submitted `OVERLAPPED` and observes the containing receive
+allocation. The test gates an actual `GetQueuedCompletionStatus` result for that
+operation before Asio consumes it; the packet's port, key, status and byte count
+are preserved. One case obtains a real cancellation result, and the other
+obtains the peer's successful one-byte receive before closing.
+
+Two successive calls to the unchanged `Impl::stop()` must report incomplete
+cleanup while that packet is held. The client, pending-read count, session
+capacity and observed buffer allocation stay owned; completed native close is
+not repeated and no business callback runs. Finite IOCP waits are honored so
+the test actually holds delivery beyond the first 100 ms drain interval. After
+release, another stop delivers the original packet exactly once, frees the
+buffer/client and completes without a stale business callback. A final stop
+checks idempotence.
+
+This schedules delayed **dispatch after physical kernel dequeue**. It does not
+claim that kernel I/O itself remains incomplete after cancellation, exercise
+delayed WSASend storage, or establish submission-generation/ABA equivalence.
+The fixture uses the actual Client and stop bodies with a single controlling
+IO dispatcher; no service runner is active in this controlled schedule. No
+vendor source, production implementation or drain/test timeout is changed.
+The existing Windows lifecycle workflow retains verbose Debug/Release output;
+actual exact-head execution is recorded separately in the PR's CI results.
+
 ## Original comparison — historical baseline
 
 The following text preserves the initial 2026-11-01 review against `d9c860d17769738fd6f03a58a7f3c4b9f875b067`. Its dispositions and future-work wording are superseded by the current reconciliation above; its donor-specific observations remain unverified in this follow-up.
