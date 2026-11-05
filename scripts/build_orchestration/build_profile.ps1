@@ -3,7 +3,8 @@
 param(
     [Parameter(Mandatory=$true)][ValidateSet('Compile','Debug','Native','Crt','Golden')][string]$Mode,
     [string]$BuildDir = '',
-    [ValidateSet('Release','RelWithDebInfo','Debug')][string]$Config = 'Release'
+    [ValidateSet('Release','RelWithDebInfo','Debug')][string]$Config = 'Release',
+    [switch]$LauncherOwnsSummary
 )
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'build_common.ps1')
@@ -111,15 +112,10 @@ try {
     $Receipt['validation_exit_code'] = if ($GoldenBlocked) { 3 } else { 0 }
     $Receipt | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $Out 'BUILD_RECEIPT.json') -Encoding UTF8
     if ($GoldenBlocked) {
-        Write-Host 'Golden: BLOCKED - product PE targets are incomplete; compilation and resource/export checks completed.' -ForegroundColor Yellow
-        Write-Host "DLL: $Dll"
-        Write-Host "SHA256: $BeforeHash"
-        Write-Host 'Exit code 3. See golden/GOLDEN_REPORT.json. This is not Golden acceptance.'
+        Write-SelectedProfileResult -ProfileLabel $ProfileLabel -Dll $Dll -Sha256 $BeforeHash -GoldenBlocked -LauncherOwnsSummary:$LauncherOwnsSummary
         exit 3
     }
-    Write-Host "$ProfileLabel`: PASS"
-    Write-Host "DLL: $ReportedDll"
-    Write-Host "SHA256: $ReportedHash"
+    Write-SelectedProfileResult -ProfileLabel $ProfileLabel -Dll $ReportedDll -Sha256 $ReportedHash -LauncherOwnsSummary:$LauncherOwnsSummary
 } finally {
     try {
         if ($null -ne $Lock) { $Lock.Dispose() }
