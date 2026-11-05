@@ -56,12 +56,12 @@ void publish_send_started_028c00(IocpSchedulerEntry&,CancelOperation&,Dispatcher
 void start_async_send_021fd0(AsyncSendService&,SendSocketImplementation&,SendBufferSlice&,
     std::uint32_t flags,SendHandler&,std::uintptr_t allocator_identity,ComposedWriteContext&);
 void composed_write_0261d0(SendHandler&,const Error&,std::uint64_t bytes,std::uint32_t flag,ComposedWriteContext&);
-// Closes the previous0261d0 provider using the actual recovered source. Native
+// Closes the previous 0261d0 provider using its implemented source. Native
 // receive body/factory/025a70 still remain mandatory. Context and dependencies
 // must outlive all operations; no native object/OVERLAPPED ABI overlay is used.
-class ComposedWriteEffects:public HandlerDispatchEffects,public ComposedWriteEffects {
+class ComposedWriteEffectsAdapter:public HandlerDispatchEffects,public ComposedWriteEffects {
 public:
-    ComposedWriteEffects(IoCompletionEnvironment environment,WorkerRunApi& worker,
+    ComposedWriteEffectsAdapter(IoCompletionEnvironment environment,WorkerRunApi& worker,
         HandlerDispatchMemory& memory,std::span<HandlerScheduleBinding> schedules,
         AsyncSendApi& send,DispatcherApi& completion,Api& errors,std::span<SendStreamBinding> streams)
         :HandlerDispatchEffects(environment,worker,memory,schedules),

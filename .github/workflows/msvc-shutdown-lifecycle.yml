@@ -1,0 +1,103 @@
+# SPDX-License-Identifier: GPL-3.0-only
+name: Windows shutdown listener acceptance
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shutdown-listener:
+    name: Windows x64 shutdown listener ${{ matrix.configuration }}
+    runs-on: windows-2022
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Preserve exact checkout bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - name: Configure lifecycle acceptance
+        run: |
+          $build = 'build/ci-shutdown-${{ matrix.configuration }}'
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown configure failed' }
+      - name: Build actual DLL, lifecycle host and native fault fixtures
+        id: native_build
+        run: |
+          $build = 'build/ci-shutdown-${{ matrix.configuration }}'
+          cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_runtime_host unload_guard_contracts listener_owners_contracts net_failure_contracts socket_retirement_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown build failed' }
+      - name: Verify unload ownership, TLS boundaries and listener diagnostic faults
+        run: |
+          $build = 'build/ci-shutdown-${{ matrix.configuration }}'
+          $junit = Join-Path (Resolve-Path $build) 'unload-guard-junit.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(unload_guard_contracts|listener_owners_contracts)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/unload-guard-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Unload guard or listener diagnostic contracts failed' }
+      - name: Repeat five independent DLL lifecycle tests
+        run: |
+          $build = 'build/ci-shutdown-${{ matrix.configuration }}'
+          $receipt = "$build/shutdown-receipt.txt"
+          "checkout_sha=$(git rev-parse HEAD)" | Set-Content $receipt
+          "pr_head=$env:GITHUB_HEAD_REF" | Add-Content $receipt
+          "configuration=${{ matrix.configuration }}" | Add-Content $receipt
+          $failed = 0
+          for ($attempt = 1; $attempt -le 5; $attempt++) {
+            "ATTEMPT $attempt/5" | Tee-Object -FilePath "$build/shutdown-ctest.log" -Append
+            $junit = Join-Path (Resolve-Path $build) "shutdown-junit-$attempt.xml"
+            ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^dll_public_lifecycle$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/shutdown-ctest.log" -Append
+            $exitCode = $LASTEXITCODE
+            "attempt=$attempt exit_code=$exitCode" | Add-Content $receipt
+            if ($exitCode -ne 0) { $failed++ }
+          }
+          "failed_attempts=$failed" | Add-Content $receipt
+          if ($failed -ne 0) { throw "$failed of five lifecycle attempts failed" }
+      - name: Verify retained native socket completions and cleanup retries
+        if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
+        run: |
+          $build = 'build/ci-shutdown-${{ matrix.configuration }}'
+          $junit = Join-Path (Resolve-Path $build) 'socket-retirement-junit.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^socket_retirement_contracts$' --no-tests=error --verbose --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/socket-retirement-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Native socket completion retirement failed' }
+      - name: Verify dual-family accept cancellation and closed admission
+        # Collect the focused test even if an independent lifecycle attempt
+        # fails. Both failures remain visible and fail the workflow.
+        if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
+        run: |
+          $build = 'build/ci-shutdown-${{ matrix.configuration }}'
+          $junit = Join-Path (Resolve-Path $build) 'dual-accept-junit.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^net_failure_contracts$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/dual-accept-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Windows Asio cancellation regressions failed' }
+      - name: Preserve build, lifecycle and source identity evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: msvc-shutdown-${{ matrix.configuration }}-evidence
+          path: |
+            build/ci-shutdown-${{ matrix.configuration }}/shutdown-build.log
+            build/ci-shutdown-${{ matrix.configuration }}/socket-retirement-ctest.log
+            build/ci-shutdown-${{ matrix.configuration }}/socket-retirement-junit.xml
+            build/ci-shutdown-${{ matrix.configuration }}/dual-accept-ctest.log
+            build/ci-shutdown-${{ matrix.configuration }}/dual-accept-junit.xml
+            build/ci-shutdown-${{ matrix.configuration }}/unload-guard-ctest.log
+            build/ci-shutdown-${{ matrix.configuration }}/unload-guard-junit.xml
+            build/ci-shutdown-${{ matrix.configuration }}/shutdown-ctest.log
+            build/ci-shutdown-${{ matrix.configuration }}/shutdown-receipt.txt
+            build/ci-shutdown-${{ matrix.configuration }}/shutdown-junit-*.xml
+            build/ci-shutdown-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
+            build/ci-shutdown-${{ matrix.configuration }}/CMakeCache.txt
+            build/ci-shutdown-${{ matrix.configuration }}/preloader.production.*.map
+            build/ci-shutdown-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
+          if-no-files-found: warn
+          retention-days: 14

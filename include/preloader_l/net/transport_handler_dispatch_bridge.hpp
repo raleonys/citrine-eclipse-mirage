@@ -4,7 +4,7 @@
 #include "preloader_l/net/transport_handler_dispatch.hpp"
 
 namespace preloader_l::socket {
-// Fills the previous IO-completion scheduling provider with recovered source.
+// Supplies an IO-completion scheduling provider with explicit source-linked behavior.
 // Native factory/vtable slots and the actual025c40/0261d0 algorithms remain
 // mandatory. The stable context and this object must outlive outstanding tasks.
 class HandlerDispatchEffects:public IoCompletionEffects {

@@ -22,7 +22,7 @@ public:
     // Native STL locale, stream state, allocation and exceptions belong here.
     virtual std::string put_time_03d610(const BrokenDown&,std::string_view)=0;
 };
-// Explicit host-runtime compatibility choices, not recovered original CRT/ABI.
+// Explicit host-runtime compatibility choices, not a claim of original CRT/ABI equivalence.
 class HostClock final:public Clock {
 public:
     std::int64_t time_05eeb8() override;

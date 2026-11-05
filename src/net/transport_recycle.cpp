@@ -40,7 +40,7 @@ void recycle_0283c0(RecycleMap& state,CancelNode& node,RecycleFailureEffects& fa
     node.previous=old_free_previous;
     --state.map_size;
 }
-void CancellationRecycler::recycle_0283c0(CancelMap& map,CancelNode& node){
+void CancellationRecyclerAdapter::recycle_0283c0(CancelMap& map,CancelNode& node){
     for(auto* metadata:maps_){
         if(metadata && metadata->map.buckets.data()==map.buckets.data()
             && metadata->map.buckets.size()==map.buckets.size()

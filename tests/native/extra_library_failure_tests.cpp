@@ -70,6 +70,40 @@ void provider_retry(const wchar_t* path) {
     require(f.provider.module==0&&f.provider.online==0&&fault::frees==3,
         "provider cleanup retry did not release exactly the retained lease");
 }
+// B54 source comparison: distinguish a retained numeric module record from
+// a real executable image lease during failed FreeLibrary cleanup.
+void provider_physical_lease(const wchar_t* path) {
+    Fixture f;
+    require(::GetModuleHandleW(path)==nullptr,"provider test DLL was already loaded");
+    f.provider.module=reinterpret_cast<std::uintptr_t>(TestLoadLibraryW(path));
+    auto* const module=reinterpret_cast<HMODULE>(f.provider.module);
+    require(module!=nullptr&&::GetModuleHandleW(path)==module,
+        "provider acquisition must hold the actual Windows image");
+    const auto reset=reinterpret_cast<void(*)(int)>(GetProcAddress(module,"FixtureMode"));
+    const auto create=reinterpret_cast<std::uintptr_t(*)(const wchar_t*)>(
+        GetProcAddress(module,"create_online"));
+    const auto destroyed=reinterpret_cast<int(*)()>(GetProcAddress(module,"FixtureDestroyed"));
+    const auto version=reinterpret_cast<int(*)()>(GetProcAddress(module,"version_check"));
+    require(reset&&create&&destroyed&&version,"provider test DLL has required native exports");
+    reset(0);
+    f.provider.object=create(L"NUL");
+    require(f.provider.object!=0&&destroyed()==0&&version()==2,
+        "live provider methods are executable before shutdown");
+    fault::fail_frees=1;
+    bool retained=false;
+    try{f.provider.close();}catch(const std::runtime_error&){retained=true;}
+    require(retained&&f.provider.object==0&&
+            f.provider.module==reinterpret_cast<std::uintptr_t>(module)&&fault::frees==1,
+        "failed FreeLibrary retains the exact module after one object destruction");
+    require(::GetModuleHandleW(path)==module&&destroyed()==1&&version()==2,
+        "failed release preserves executable provider code and one-time destruction");
+    f.provider.close();
+    require(f.provider.module==0&&f.provider.object==0&&fault::frees==2&&
+            ::GetModuleHandleW(path)==nullptr,
+        "successful retry physically unloads the same module exactly once");
+    f.provider.close();
+    require(fault::frees==2,"completed provider cleanup must not double-unload");
+}
 void provider_object_once(const wchar_t* path) {
     Fixture f;
     struct Observer {
@@ -91,12 +125,45 @@ void provider_object_once(const wchar_t* path) {
     require(f.provider.module==0&&destroyed()==1&&fault::frees==2,
         "provider cleanup destroyed the object or released the module twice");
 }
+void provider_empty_slot(const wchar_t*) {
+    std::array<std::uintptr_t,7> table{};
+    const std::uintptr_t object=reinterpret_cast<std::uintptr_t>(table.data());
+    bool rejected=false;
+    try{(void)application::Provider::method<int(*)(void*)>(reinterpret_cast<std::uintptr_t>(&object),1);}
+    catch(const std::logic_error&){rejected=true;}
+    require(rejected,"empty provider vtable slot must be rejected before an indirect call");
+}
+void provider_byte_layout(const wchar_t*) {
+    using Method=int(*)(void*);
+    const auto expected=+[](void*){return 73;};
+    // Deliberately unaligned readable storage: no pointer object is constructed
+    // in either buffer. Resolve/call the slot through the production adapter.
+    alignas(std::uintptr_t) std::array<std::byte,1+7*sizeof(std::uintptr_t)> table{};
+    alignas(std::uintptr_t) std::array<std::byte,1+sizeof(std::uintptr_t)> object{};
+    const auto table_address=reinterpret_cast<std::uintptr_t>(table.data()+1);
+    const auto function_address=reinterpret_cast<std::uintptr_t>(expected);
+    std::memcpy(object.data()+1,&table_address,sizeof(table_address));
+    std::memcpy(table.data()+1+sizeof(std::uintptr_t),&function_address,sizeof(function_address));
+    const auto object_address=reinterpret_cast<std::uintptr_t>(object.data()+1);
+    const auto function=application::Provider::method<Method>(object_address,1);
+    require(function==expected&&function(reinterpret_cast<void*>(object_address))==73,
+        "provider byte-backed vtable resolution changed the slot or object");
+    const std::uintptr_t null_table=0;
+    for(const auto address:{std::uintptr_t{0},reinterpret_cast<std::uintptr_t>(&null_table)}) {
+        bool rejected=false;
+        try{(void)application::Provider::method<Method>(address,1);}
+        catch(const std::logic_error&){rejected=true;}
+        require(rejected,"null provider object/table must fail before the foreign call");
+    }
+}
 }
 int wmain(int argc,wchar_t** argv)try {
     require(argc==2||argc==3,"expected fixture DLL path and optional case");
     const std::wstring_view selected=argc==3?argv[2]:L"all";bool ran=false;
     for(auto [name,fn]:{std::pair{L"acquire",acquisition_failure},{L"mixed",mixed_release},{L"retry",repeated_failure},
-                      {L"provider-retry",provider_retry},{L"provider-object",provider_object_once}})
+                      {L"provider-retry",provider_retry},{L"provider-object",provider_object_once},
+                      {L"provider-slot",provider_empty_slot},{L"provider-layout",provider_byte_layout},
+                      {L"provider-physical-lease",provider_physical_lease}})
         if(selected==L"all"||selected==name){fn(argv[1]);ran=true;}
     require(ran,"unknown case");std::cout<<"PASS: native-module acquisition/retained-release/retry controls\n";return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

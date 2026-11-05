@@ -1,6 +1,5 @@
 {
   "schema": "surge.asio-update-review.v1",
-  "classification": "NOT_RELEASE",
   "authority": "OWNER_SUPPLIED_ARCHIVE_BYTES",
   "old_archive_sha256": "1070a32d6c26ebf441d3de8b2fc89c5fc580f2fe0ca4aee8dfb5e818a5096af9",
   "new_archive_sha256": "d28dbc79b8c98b860ba6c06bd89de76bc352931560f9d169819e46280778975b",

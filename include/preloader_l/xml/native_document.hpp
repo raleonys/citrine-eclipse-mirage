@@ -42,11 +42,11 @@ void destroy_native_document_001e00(std::uintptr_t,NativeDocumentContext&);
 struct NativeDocumentBinding {NativeMessageDocument* projection=nullptr;std::uintptr_t address=0;};
 // NativeMessageDocument::error_6c is the actual mapped four-byte cell at+6c.
 // No copied status/writeback adapter. Other document bytes are caller-owned.
-class MessageDocumentApi:public MessageDispatchApi {
+class MessageDocumentApi:public MessageDispatchApiAdapter {
 public:
     MessageDocumentApi(PrefixCipherContext& cipher,std::span<PrefixCipherBinding> ciphers,
         NativeDispatchContext& dispatch,NativeDocumentContext& documents,std::span<NativeDocumentBinding> bindings)
-        :MessageDispatchApi(cipher,ciphers,dispatch),documents_(documents),bindings_(bindings){}
+        :MessageDispatchApiAdapter(cipher,ciphers,dispatch),documents_(documents),bindings_(bindings){}
     void construct_document_001830(NativeMessageDocument&,bool,std::uint32_t) final;
     int parse_document_004280(NativeMessageDocument&,std::uintptr_t,std::uint64_t) final;
     void destroy_document_001e00(NativeMessageDocument&) final;

@@ -16,7 +16,7 @@ struct Effects:mutation_test::Copy {
     void fill_bytes(std::uintptr_t p,std::uint8_t byte,std::uint64_t n)override{++fills;if(before_fill)before_fill();Copy::fill_bytes(p,byte,n);if(after_fill)after_fill();}
 };
 struct Blocks:s::PrefixCipherBlocks {
-    s::PrefixCipherBlocks real;bool noop=false;
+    s::PrefixCipherBlocksAdapter real;bool noop=false;
     struct Call{std::string kind;std::uintptr_t address;std::uint64_t count;};std::vector<Call> calls;
     std::function<void(const Call&)> before,after;
     explicit Blocks(s::ReceiveBufferMemory& memory):real(memory){}

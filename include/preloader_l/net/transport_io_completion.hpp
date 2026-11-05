@@ -91,7 +91,7 @@ class IoCompletionEffects {
 public:
     virtual ~IoCompletionEffects()=default;
     virtual Category misc_category_0285b0()=0;
-    // Remaining native algorithms, not empty callbacks or newly recovered code.
+    // Remaining native algorithms; no empty callbacks are supplied here.
     virtual void receive_body_025c40(ReceiveHandler&,Error& copied_error,std::uint64_t bytes,std::uint32_t flag)=0;
     virtual void send_body_0261d0(SendHandler&,Error& copied_error,std::uint64_t bytes,std::uint32_t flag)=0;
     virtual void schedule_send_0229d0(IoHandlerEnvironment&,SendHandler&)=0;

@@ -88,9 +88,9 @@ struct Fixture {
 struct ContainerApi final:s::ResponseContainersApi {
     ContainerApi(s::OwnedResponseContext& c,s::ReceiveBufferContext& strings):ResponseContainersApi(c,strings){}
 };
-struct QueueApi final:s::ResponseQueueApi {
+struct QueueApi final:s::ResponseQueueApiAdapter {
     std::vector<std::unique_ptr<s::WriteFinishString>> cells;unsigned allocations=0;
-    explicit QueueApi(s::DequeGrowthContext& c):ResponseQueueApi(c){}
+    explicit QueueApi(s::DequeGrowthContext& c):ResponseQueueApiAdapter(c){}
     s::WriteFinishString* allocate_string_04b0bc(std::uint64_t n)override{check(n==32,"queue cell allocation is separate32-byte object effect");++allocations;cells.push_back(std::make_unique<s::WriteFinishString>());return cells.back().get();}
 };
 struct ContainerFixture;inline ContainerFixture* active_container=nullptr;

@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       start_tag:
-        description: 'First candidate or an explicitly selected new series: <series>-R<NN>. Leave empty to continue.'
+        description: 'Optional exact next x.y.z-CODENAME; blank follows the approved LUTRAVEX queue.'
         type: string
         required: false
 
@@ -57,7 +57,8 @@ jobs:
         run: |
           cmake -S . -B build/weekly-portable -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON
           cmake --build build/weekly-portable --parallel 2
-          ctest --test-dir build/weekly-portable --output-on-failure --output-junit build/weekly-portable/CTEST_RESULTS.xml
+          ctest --test-dir build/weekly-portable --output-on-failure --output-junit "$GITHUB_WORKSPACE/build/weekly-portable/CTEST_RESULTS.xml"
+          test -s "$GITHUB_WORKSPACE/build/weekly-portable/CTEST_RESULTS.xml"
       - name: Package exact source and checksums
         if: steps.plan.outputs.ready == 'true'
         run: python -B scripts/weekly_release.py source --plan build/weekly-plan.json --output "$RUNNER_TEMP/weekly-source"
@@ -118,11 +119,11 @@ jobs:
         with:
           name: weekly-failed-${{ matrix.profile }}
           path: |
-            build/weekly-${{ matrix.profile }}/LOCAL_BUILD_RECEIPT.json
+            build/weekly-${{ matrix.profile }}/BUILD_RECEIPT.json
             build/weekly-${{ matrix.profile }}/BUILD_TOOLCHAIN_PROVENANCE.log
             build/weekly-${{ matrix.profile }}/CTEST_RESULTS.xml
             build/weekly-${{ matrix.profile }}/Testing/Temporary/*.log
-            build/weekly-${{ matrix.profile }}/golden-local/*.json
+            build/weekly-${{ matrix.profile }}/golden/*.json
           if-no-files-found: warn
           retention-days: 14
 

@@ -141,7 +141,7 @@ void BorrowedResponse::invoke(ResponseDispatchContext& context) const{
     if(!task || invoke_identity!=0x180022240ULL)throw UnsupportedInput("Borrowed response descriptor is unbound");
     invoke_borrowed_response_022240(*task,context);
 }
-void ResponseDispatchApi::dispatch_response_021420(IoHandlerEnvironment& env,MessageWriteTask& task,std::uint64_t,std::uint64_t){
+void ResponseDispatchApiAdapter::dispatch_response_021420(IoHandlerEnvironment& env,MessageWriteTask& task,std::uint64_t,std::uint64_t){
     socket::dispatch_response_021420(env,task,context_);
 }
 } // namespace preloader_l::socket

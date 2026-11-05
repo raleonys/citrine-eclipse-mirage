@@ -20,6 +20,7 @@
 #include <thread>
 #include <iostream>
 #include <chrono>
+#include <asio.hpp>
 
 namespace observer {
 using namespace std::chrono_literals;
@@ -58,9 +59,45 @@ int main()try{
     if(entered.wait_for(5s)!=std::future_status::ready)throw std::runtime_error("extra completion observer not reached");
     auto waiter=std::async(std::launch::async,[]{observer::execution->wait_steps_036880(-1);});
     const bool premature=waiter.wait_for(150ms)==std::future_status::ready;
+    // B48: the real listener has bound the port, but the Application
+    // has not completed provider/profile publication yet.
+    char port_text[32]{};
+    const auto length=GetEnvironmentVariableA("EALsxPort",port_text,sizeof port_text);
+    if(!length||length>=sizeof port_text)throw std::runtime_error("bound listener port not published");
+    asio::io_context io;
+    asio::ip::tcp::socket early(io);
+    early.connect({asio::ip::address_v4::loopback(),static_cast<std::uint16_t>(std::stoul(port_text))});
+    early.non_blocking(true);
+    bool closed_before_ready=false,delivered_before_ready=false;
+    const auto pre_deadline=std::chrono::steady_clock::now()+100ms;
+    while(std::chrono::steady_clock::now()<pre_deadline){
+        char bytes[2048]{};
+        asio::error_code error;
+        const auto count=early.read_some(asio::buffer(bytes),error);
+        if(count)delivered_before_ready=true;
+        if(error&&error!=asio::error::would_block&&error!=asio::error::try_again)closed_before_ready=true;
+        if(closed_before_ready||delivered_before_ready)break;
+        Sleep(1);
+    }
     release.now();start.get();
     if(waiter.wait_for(2s)!=std::future_status::ready)throw std::runtime_error("ready publication did not release waiting callback");
-    waiter.get();app.stop();
+    waiter.get();
+    std::string greeting;
+    const auto deadline=std::chrono::steady_clock::now()+3s;
+    while(greeting.find('\0')==std::string::npos&&std::chrono::steady_clock::now()<deadline){
+        char bytes[4096]{};
+        asio::error_code error;
+        const auto count=early.read_some(asio::buffer(bytes),error);
+        if(count)greeting.append(bytes,count);
+        if(error&&error!=asio::error::would_block&&error!=asio::error::try_again)
+            throw std::runtime_error("early client disconnected after application readiness");
+        if(!count)Sleep(1);
+    }
+    app.stop();
     if(premature)throw std::runtime_error("all-phase callback escaped before handler factory/profile publication");
-    std::cout<<"PASS: paused extra worker cannot publish callback readiness before the real application factory\n";
+    if(closed_before_ready||delivered_before_ready)
+        throw std::runtime_error("early client was accepted before application readiness");
+    if(greeting.find('\0')==std::string::npos)
+        throw std::runtime_error("early client never received the greeting after readiness");
+    std::cout<<"PASS: extra worker readiness gates callback publication and preserves early TCP clients\n";
 }catch(const std::exception& error){std::cerr<<"FAIL: "<<error.what()<<'\n';return 1;}
