@@ -298,6 +298,12 @@ void actual_reader_pipeline() {
     bool rejected=false;try{(void)f.process_actual("<lsx><Request id='42' recipient='EbisuSDK'><GoOnline/></Request></lsx>");}catch(const InvalidMessage&){rejected=true;}
     check(rejected,"actual XML names remain case-sensitive");
     check(f.effects.decrypt_failures==0,"valid encrypted request did not use failure fallback");
+    for(const std::string reference:{"prefix&#x100000000;suffix","prefix&#0;suffix","&amp;&#65;&x1f600;"}) {
+        const auto id=reference=="&amp;&#65;&x1f600;"?"&A&x1f600;":reference;
+        f.settings[id]="exact entity lookup";
+        const auto literal=f.process_actual("<LSX><Request id='42' recipient='EbisuSDK'><GetSetting SettingId='"+reference+"'/></Request></LSX>");
+        check(literal==wrapped("        <GetSettingResponse Setting=\"exact entity lookup\"/>\n")+std::string(1,'\0'),"entity reference preserves the exact settings key through actual router and serializer");
+    }
 }
 void recovered_license_pipeline() {
     Fixture f(true,true);f.online=0;

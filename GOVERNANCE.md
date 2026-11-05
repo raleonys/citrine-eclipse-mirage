@@ -21,13 +21,17 @@ This is the active governance authority. Historical task orders remain accessibl
 
 ## Quality assurance
 
-The intended public-repository configuration runs source integrity, portable tests, Windows native acceptance, and Production/Golden validation for each pull request. Required checks must finish successfully before a normal merge. Failed product checks are resolved on the pull request, not merged in anticipation of a revert.
+Pull request creation runs lightweight source/hash integrity without scheduling builds or the full regression suite. Full validation is deferred until a PR head update newly integrates current `main`, or is requested by a label after a successful later synchronization verification. An initial label alone does not authorize full validation. Required checks must finish successfully before a normal merge. Failed product checks are resolved on the pull request, not merged in anticipation of a revert.
+
+A manual synchronization preparation verifies the live open PR, selected branch head and exact current main without scheduling full tests. Its successful workflow job records the PR number, head SHA and main SHA. The validation label is accepted only after that job and its preparation run have completed, after PR creation and before the label event. A premature label cannot adopt a later verification: remove it before preparation and re-add it after success. This supports a later explicit synchronization request even when main has not changed and no merge commit is needed. Agents must not prepare or label a new PR merely to obtain initial green checks.
 
 A skipped check is not a PASS. CI infrastructure failures may be rerun or repaired without being classified as product defects. Source changes are checked against exact source and dependency identities; no test evidence is automatically inherited from a different commit.
 
-PR CI schedules Source QA, Linux portable, native Windows MSVC Release and Debug, Production/Golden Release, CRT Release, Debug, Compile Only, and full Windows portable Debug/Release. The reference object graph is also scheduled for every PR; specialized diagnostic workflows retain change-specific paths. Always verify actual check conclusions for the exact commit. The main ruleset requires the named Windows native and Windows production checks; additional check requirements are a separate ruleset decision.
+The full validation workflow accepts PR `synchronize` events, explicit `run-full-validation` PR label requests and standalone manual dispatch. Use the PR label request for merge validation: a standalone successful dispatch does not establish that GitHub has associated all required checks with the PR. It verifies the live head and current default-branch ancestry before scheduling Source QA, Linux portable, Windows MSVC Native Release/Debug, Production/Golden, CRT, Debug, Compile Only, Windows portable Debug/Release and the reference graph. Ordinary PR creation and accepted-main pushes do not start these builds. Specialized diagnostics are manual; weekly stable-release validation is unchanged.
 
-Local build, debug, and focused testing remain available developer tools; separate publication-governance credentials or repeated release gates are not prerequisites for ordinary development. During the migration, existing tracked hooks and QA scripts are updated only through reviewed changes, not silently bypassed.
+GitHub calls any PR head push `synchronize`; this event alone does not prove integration. Automatic full validation requires that current `main` was absent from the previous head and is present in the new head. Ordinary edits on an already synchronized branch wait for an explicit PR label request. Retaining the label does not automatically validate later ordinary head edits. Ineligible full jobs are skipped at job level, before matrix expansion or runner allocation; waiting is not reported as a product-test failure. Skipped placeholders are not native acceptance: the required expanded Windows status contexts remain absent until the actual matrices run, so merge protection still waits for real results. Readiness API errors remain errors of the readiness job. The active ruleset still requires all eleven source/portable/Windows/reference contexts and strict current-main integration. No branch-protection relaxation is part of this scheduling change.
+
+Build, debug, and focused testing remain available developer tools; separate publication-governance credentials or repeated release gates are not prerequisites for ordinary development. During the migration, existing tracked hooks and QA scripts are updated only through reviewed changes, not silently bypassed.
 
 ## Changelog maintenance
 
@@ -42,7 +46,7 @@ Maintain a source-linked `CHANGELOG.md` alongside relevant PRs. A PR-only CI cov
 - Prospective weekly semantic versions advance 3.2.6 TALVOR → 3.2.7 ERINTHAR → 3.2.8 FORMADRIL → 3.2.9 CETRION → 3.3.0 VESPERKAI and follow the owner-approved LUTRAVEX registry. The retired -RNN weekly model must not be used.
 - New archive names are `Citrine_Eclipse_Mirage_x.y.z_CODENAME.zip` (source companion `_source.zip`); minor and patch are one digit (0..9). Do not rename historical artifacts or compatibility-sensitive binary/Golden fields.
 - Associate released assets and retained results with the exact commit, binary and package checksums. Verify the actual distributed archive once; ordinary PR work does not require repeated ZIP fresh-extract campaigns.
-- Do not reintroduce Brownfield G0-G4 gates, mandatory eight-shard release cycles, Library current-pointer transactions, or obsolete non-release classifications as new requirements.
+- Do not reintroduce Brownfield G0-G4 gates, mandatory eight-shard release cycles, Library current-pointer transactions, or publication classifications on build and test results.
 
 ## Documentation and metadata ownership
 

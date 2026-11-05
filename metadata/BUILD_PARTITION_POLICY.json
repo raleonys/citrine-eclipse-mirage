@@ -1,6 +1,5 @@
 {
   "schema": "surge.build-partition.v1",
-  "classification": "NOT_RELEASE",
   "owner": "Explicit owner approval of audited runtime/reference/source-API separation without deleting source models",
   "production_targets": [
     "preloader_l",
@@ -70,7 +69,9 @@
     "src/runtime/timestamp.cpp",
     "src/xml/memory_printer.cpp",
     "src/xml/reader.cpp",
-    "src/platform/crypt_query_host.cpp"
+    "src/platform/crypt_query_host.cpp",
+    "src/xml/reader_policy.cpp",
+    "src/xml/reader_values.cpp"
   ],
   "vdf_sources": [
     "src/config/parser.cpp"
@@ -281,6 +282,7 @@
     "achievement_storage_startup_model_contracts"
   ],
   "production_test_targets": [
+    "crypt_diagnostic_failure_contracts",
     "achievement_runtime_contracts",
     "achievement_storage_contracts",
     "achievement_writer_contracts",
@@ -302,6 +304,7 @@
     "dll_public_c_consumer",
     "encoding_contracts",
     "environment_dialog_contracts",
+    "environment_license_key_contracts",
     "event_queue_contracts",
     "event_queue_integration_contracts",
     "execution_concurrency_contracts",
@@ -319,6 +322,7 @@
     "host_init_contracts",
     "libraries_contracts",
     "license_file_integration",
+    "license_ticket_time_contracts",
     "licensing_contracts",
     "listener_owners_contracts",
     "listener_port_contracts",
@@ -327,6 +331,7 @@
     "net_failure_contracts",
     "network_policy_contracts",
     "parser_contracts",
+    "parser_header_contracts",
     "path_contracts",
     "preloader_l_crt_host",
     "preloader_l_runtime_host",
@@ -363,7 +368,7 @@
     "preloader_l_source_api",
     "preloader_l_source_host",
     "preloader_l_source_minhook",
-    "preloader_l_source_tinyxml2"
+    "preloader_l_source_pugixml"
   ],
   "vendor_comparison_targets": [
     "hook_engine_fixture_tests"
@@ -392,5 +397,11 @@
     "socket_pool_release_integration_contracts"
   ],
   "cross_debug_reference_budget_seconds": 600,
-  "owner_acceptance": "metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json"
+  "owner_acceptance": "metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json",
+  "forbidden_production_source_prefixes": [
+    "third_party/tinyxml2/"
+  ],
+  "forbidden_production_object_stems": [
+    "tinyxml2"
+  ]
 }

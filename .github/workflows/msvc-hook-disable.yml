@@ -2,18 +2,6 @@
 name: Windows MinHook single-disable acceptance
 
 on:
-  pull_request:
-    paths:
-      - "cmake/PatchHookFreeze.cmake"
-      - "cmake/VendoredDependencies.cmake"
-      - "cmake/Tests.cmake"
-      - "CMakeLists.txt"
-      - "metadata/HOOK_ENGINE_PATCH.json"
-      - "scripts/prepare_hook_engine.py"
-      - "tests/native/hook_freeze_tests.c"
-      - "tests/native/hook_engine_fixture_tests.cpp"
-      - "tests/support/hook_engine/**"
-      - ".github/workflows/msvc-hook-disable.yml"
   workflow_dispatch:
 
 permissions:
