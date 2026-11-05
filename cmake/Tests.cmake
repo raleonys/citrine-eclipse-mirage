@@ -80,6 +80,12 @@ endif()
 add_test(NAME extra_library_failure_contracts COMMAND extra_library_failure_contracts $<TARGET_FILE:online_provider_fixture>)
 set_tests_properties(net_failure_contracts extra_library_failure_contracts PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
 
+add_executable(license_ticket_time_contracts tests/native/license_ticket_time_tests.cpp)
+target_include_directories(license_ticket_time_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
+target_link_libraries(license_ticket_time_contracts PRIVATE preloader_l_core)
+add_test(NAME license_ticket_time_contracts COMMAND license_ticket_time_contracts)
+set_tests_properties(license_ticket_time_contracts PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
+
 # Runtime-only copies of mixed source fixtures retain all original reference tests.
 add_executable(production_callback_contracts tests/unit/native/native_tests.cpp)
 target_compile_definitions(production_callback_contracts PRIVATE PRELOADER_L_PRODUCTION_CALLBACK_TESTS=1)

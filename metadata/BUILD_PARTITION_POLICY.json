@@ -322,6 +322,7 @@
     "host_init_contracts",
     "libraries_contracts",
     "license_file_integration",
+    "license_ticket_time_contracts",
     "licensing_contracts",
     "listener_owners_contracts",
     "listener_port_contracts",

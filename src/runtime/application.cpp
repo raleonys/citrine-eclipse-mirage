@@ -156,7 +156,7 @@ public:
     Path parent_path_019820(const Path& p) override{return env_.parent_path_019820(p);}
     Path join_016b00(const Path& a,const Path& b) override{return env_.join_016b00(a,b);}
     std::string path_utf8_01e3f0(const Path& p) override{return env_.path_to_utf8_031ca0(p);}
-    std::string current_time_041b60_null_true() override{return env_.current_time_041b60();}
+    std::string current_time_041b60_null_true() override{return env_.ticket_time_041b60();}
     bool wine_detected_045010() override{return GetProcAddress(GetModuleHandleW(L"ntdll.dll"),"wine_get_version")!=nullptr;}
     void log_literal_006880(std::string_view text) override{env_.debug_log({"licensing status: ",text});}
     void log_string_006860(std::string_view text) override{env_.debug_log({"licensing diagnostic: ",text});}

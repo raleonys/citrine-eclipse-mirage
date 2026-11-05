@@ -169,6 +169,7 @@ status::Status Environment::status_01ea20(const Path& p,std::uint32_t flags){ret
 std::int64_t Environment::timestamp_to_epoch_041e10(std::string_view s){return timestamp::timestamp_to_epoch_041e10(s,timestamp_);}
 void Environment::log_profile_name_084f48(std::string_view name){debug_log({"profile requested: ",name});}
 std::string Environment::current_time_041b60(){return achievement_runtime::utc_time_041b60(clock_,formatter_);}
+std::string Environment::ticket_time_041b60(){return achievement_runtime::utc_time_041b60(clock_,formatter_,nullptr,1);}
 std::int32_t Environment::atoi_05ee08(std::string_view s){return std::atoi(std::string(s).c_str());}
 void Environment::unknown_entitlement_field(std::string_view) {
     // This callback is reached while the shared handler state lock is held.
