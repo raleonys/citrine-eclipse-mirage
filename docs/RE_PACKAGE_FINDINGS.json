@@ -69,7 +69,7 @@
             "sha256": "7af4e858d48fc91b64989dde02db2fa4cc67de25995cf4c9681e435c78dccd4b"
           }
         ],
-        "note": "All three donor files changed. Historical comparison and source identities are retained; intake does not resolve the finding."
+        "note": "All three donor sources changed in Archive 12. A preliminary hash-pinned source crosswalk now records the updated source gate, clock test and optional publication observer in docs/RE_PACKAGE_COMPARISONS.md; product defect remains unconfirmed. Detailed per-file review, caller/native evidence and disposition remain pending. Historical comparison is preserved."
       }
     }
   ]
