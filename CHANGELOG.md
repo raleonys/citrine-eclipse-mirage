@@ -8,6 +8,8 @@ Current development entries are updated alongside their pull requests. They desc
 
 ### Current unreleased changes (updated 2026-11-05)
 
+- Keep PEGTL grammar implementation private under `src/config` while preserving the public parser interface, grammar bytes and behavior. Build an isolated public-header consumer with no vendor/runtime link dependencies and rejecting PEGTL include names in portable and Windows test builds, so implementation includes cannot leak through the parser facade. Retain existing parser/state/depth and frozen-corpus regressions; vendor inputs and runtime policy are unchanged.
+
 Accepted-main checkpoint: `bef33e52` includes the 2026-11-05 integrations of PRs #205, #216, #229, #206, #203 and #188. These integrations are source changes; no release or tag is implied.
 
 - [PR #226](https://github.com/raleonys/citrine-eclipse-mirage/pull/226): replace the campaign logo with the latest exact owner master from `citrine-eclipse-mirage.zip` (1400 x 1100 RGBA, 611501 bytes). Preserve transparency, encoded bytes and the existing README image path; update artwork provenance. This supersedes the earlier 613004-byte upload in the same PR.

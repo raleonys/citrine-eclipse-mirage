@@ -41,10 +41,6 @@
       "bytes": 1637,
       "sha256": "111d55e3f0a857f909372181423f992c4169133016ddfaf2554ee11a4a304f8e"
     },
-    "include/preloader_l/config/vdf_grammar.hpp": {
-      "bytes": 2324,
-      "sha256": "d7dc1b2690f05b82c4546a21fe313f367c15d5c8d6a956162dfd42f30d0c90a5"
-    },
     "include/preloader_l/core/atomic_files.hpp": {
       "bytes": 1661,
       "sha256": "99e57616d41f22cf5f0170691c0430e860af96c7bf7b6b50c796559fff3f2e9a"
@@ -582,12 +578,16 @@
       "sha256": "c6ac786fac85640d98bbffb8b9455a00bc5fd613f1fce19c131a543f6f5aa164"
     },
     "src/config/parser.cpp": {
-      "bytes": 6245,
-      "sha256": "e67e6522dbfd171b6edf4a50e213e331c062bc94b6d7cab45835a6df4342ec1d"
+      "bytes": 6226,
+      "sha256": "91b5b5c5d2485d8991ba9ea0bb4e5dc9997b88ca0365383ea79904036077da88"
     },
     "src/config/pipeline.cpp": {
       "bytes": 2157,
       "sha256": "e07be1bdbb932dc0accf5bee4e9897d5905e0f597c286d0261273828919fdbe3"
+    },
+    "src/config/vdf_grammar.hpp": {
+      "bytes": 2324,
+      "sha256": "d7dc1b2690f05b82c4546a21fe313f367c15d5c8d6a956162dfd42f30d0c90a5"
     },
     "src/core/atomic_files.cpp": {
       "bytes": 2764,
@@ -1692,6 +1692,10 @@
     "tests/unit/online/online_tests.cpp": {
       "bytes": 23807,
       "sha256": "a2d92656166e271fa11ae6a3c43711a2613ec5a77792fff75d340de4240a1c84"
+    },
+    "tests/unit/parser/header_contract.cpp": {
+      "bytes": 236,
+      "sha256": "003692903fd427af633e9c2ce135f3efdd456e3a7c781f9e9ee07affb7d60d55"
     },
     "tests/unit/parser/parser_tests.cpp": {
       "bytes": 13979,
