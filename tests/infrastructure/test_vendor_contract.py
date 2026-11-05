@@ -246,6 +246,20 @@ class LinkPackagingTests(unittest.TestCase):
         self.assertEqual([],project_files.verify_manifest(destination))
         self.assertFalse((destination/'third_party/asio/asio/include').is_symlink())
 
+    def test_vendor_alias_targets_reject_control_characters(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        original=json.loads(lock_path.read_text(encoding='utf-8'))
+        for control in map(chr,(10,13,9,127)):
+            with self.subTest(control=repr(control)):
+                bad=json.loads(json.dumps(original))
+                bad['vendors']['asio']['symlinks']['asio/include']='../in'+control+'clude'
+                lock_path.write_text(json.dumps(bad),encoding='utf-8')
+                with self.assertRaisesRegex(ValueError,'Unsafe vendor symlink target'):
+                    project_files.vendor_symlinks(self.root)
+        lock_path.write_text(json.dumps(original),encoding='utf-8')
+        self.assertEqual({'third_party/asio/asio/include':'../include'},
+                         project_files.vendor_symlinks(self.root))
+
     def test_vendor_alias_record_requires_text_targets_and_mapping(self):
         lock_path=self.root/'metadata/VENDOR_LOCK.json'
         original=json.loads(lock_path.read_text(encoding='utf-8'))

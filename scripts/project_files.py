@@ -59,7 +59,9 @@ def vendor_symlinks(root):
             if not isinstance(rel,str) or not isinstance(target,str):
                 raise ValueError('Malformed vendor symlink entry')
             safe_member(rel)
-            if not target or target.startswith('/') or any(c in target for c in ['\\',':','\x00']):
+            if (not target or target.startswith('/') or
+                    any(c in target for c in ['\\', ':']) or
+                    any(ord(c) < 32 or ord(c) == 127 for c in target)):
                 raise ValueError('Unsafe vendor symlink target')
             stack=list(PurePosixPath(rel).parent.parts)
             for part in target.split('/'):

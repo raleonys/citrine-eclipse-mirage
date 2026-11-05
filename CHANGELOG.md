@@ -6,12 +6,12 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Reject ordinary COFF and BigObj evidence with a nonzero symbol count but no symbol-table pointer, or a symbol/string table overlapping the file/section headers. Keep valid section accounting, string-table bounds and unsupported-object classification unchanged.
-- Exercise missing/maximum-count pointers, header overlap and valid zero/nonzero symbol-table extents in the existing size-evidence tests. This changes read-only evidence parsing, not product code or native acceptance claims.
+- Reject ASCII control characters U+0000–U+001F and DEL in canonical vendor alias targets while retaining the existing relative-path, escape and malformed-record checks. Preserve the locked aliases and all vendor bytes/pins.
+- Retain the control-character rejection/valid-descriptor regression alongside the malformed alias-table/target-type regression integrated in #218. This changes source validation, not runtime behavior or dependency versions.
 
 ### Accepted-main checkpoint — 2026-11-05
 
-Verified against [`main@12d4e33de381ae4bb6df47b46de6f7c6c4a8ab7f`](https://github.com/raleonys/citrine-eclipse-mirage/commit/12d4e33de381ae4bb6df47b46de6f7c6c4a8ab7f). All 81 PRs below have matching GitHub merge records and merge commits reachable from that source checkpoint after the earlier #62 checkpoint. Dates use Europe/Istanbul. The list records integrations, not passing tests, releases or unmerged proposals. Later entries supersede earlier implementation and policy decisions.
+Verified against [`main@2ef4ea9f8c2613540566f2dab6a208cfaf6b438e`](https://github.com/raleonys/citrine-eclipse-mirage/commit/2ef4ea9f8c2613540566f2dab6a208cfaf6b438e). All 82 PRs below have matching GitHub merge records and merge commits reachable from that source checkpoint after the earlier #62 checkpoint. Dates use Europe/Istanbul. The list records integrations, not passing tests, releases or unmerged proposals. Later entries supersede earlier implementation and policy decisions.
 
 The current XML backend is pugixml behind the project compatibility layer (#149/#150), with the self-aliasing printer correction (#193). MinHook uses the existing hook-engine adapter (#148); PEGTL grammar is private behind the parser interface (#231). The native completion fixtures cover held receive (#107), send/output (#114) and accept (#130) packets across bounded stop retries; these controlled schedules do not establish exhaustive kernel identity or Consumer equivalence.
 
@@ -20,6 +20,7 @@ Full validation follows actual main integration or a later verified synchronizat
 
 ### Integrated 2026-11-05
 
+- [PR #142](https://github.com/raleonys/citrine-eclipse-mirage/pull/142): reject missing and header-overlapping symbol-table pointers in ordinary COFF and BigObj size evidence, preserving valid section accounting and existing unsupported-object reporting.
 - [PR #187](https://github.com/raleonys/citrine-eclipse-mirage/pull/187): preserve committed Config2 state across recursive assignment failures; repair the checked-MSVC allocation fixture without changing iterator settings or timeouts. Validate actual-source rollback, sanitizer coverage and exact-head Windows Debug/native acceptance.
 - [PR #165](https://github.com/raleonys/citrine-eclipse-mirage/pull/165): repair 24 displayed source-path labels in historical comparison tables, including the private PEGTL grammar, while preserving finding text, link targets, fragments and donor references.
 - [PR #232](https://github.com/raleonys/citrine-eclipse-mirage/pull/232): update the exact owner campaign logo and provenance, reconcile the development changelog through #115, and correct current documentation for vendor/resource ownership, VDF policy, completion coverage and validation evidence.
