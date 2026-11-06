@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Cover D53-A throwing accepted-handler construction with real native Asio loopback sockets, both without a prior session and with an established peer. Require the rejected socket to close, exactly one construction error, continued peer request/response, listener rearm and complete ownership retirement after repeated stop. Preserve accepted-main IOCP, accept-cancellation and aligned-CRT allocation regressions; no production or ABI change.
+
 - Derive the native FileBasicInfo query buffer length from its Windows SDK FILE_BASIC_INFO object instead of a hard-coded 40 bytes. Preserve the actual Windows API call, metadata assignment and error forwarding; this is type/size consistency hardening without a reproduced runtime defect.
 
 - Minimize Windows toolchain provenance and build receipt paths while retaining tool digests, file versions and native/Golden evidence. Resolve basename compiler receipts only through the exact hash-bound CMake cache, retain matching absolute receipt compatibility and reject ambiguous, changed or mismatched identities. Apply basename DLL summaries through the current shared formatter; preserve CI report/artifact retention, current receipt vocabulary, console masks and the six-stage Golden summary. Initialize the provenance fixture from its running PowerShell's Utility module when CTest inherits a Core-only module path.
