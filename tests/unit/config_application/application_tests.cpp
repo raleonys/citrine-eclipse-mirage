@@ -291,6 +291,89 @@ void partial_failure() {
     s=seed();rejects<std::invalid_argument>([&]{config_application::apply_config2(s,reused,false,deps);},"reused descendant totals failure");
     require(s.achievements.at("a").field00==7 && s.achievements.at("i").field00==1,"positional reuse retains512bucket child table and changes partial-update order");
 }
+
+void csv_library_partial_failure() {
+    // B52: nonempty CSV clears a prior vector before resolving entries.
+    // A conversion error retains the successful prefix without continuing
+    // to the next list or any User/Content section.
+    {
+        Effects deps;auto state=seed();
+        state.extra_dlls_from_main={u"previous-main.dll"};
+        state.extra_dlls={u"previous-worker.dll"};
+        auto config=parsed(R"("Config2" {
+            "Game" {"Name" "committed-before-error"}
+            "Emulator" {"LoadExtraDLLsFromMain" "first.dll,,bad.dll,last.dll" "LoadExtraDLLs" "untouched.dll"}
+            "User" {"Username" "not-yet"}
+            "Content" {"later" {}}
+        })");
+        deps.fail_path="bad.dll";config_application::Trace trace;
+        rejects<std::runtime_error>(
+            [&]{config_application::apply_config2(state,config,false,deps,&trace);},
+            "main extra-DLL CSV conversion error propagates");
+        require(state.game_attributes.at("DISPLAY_NAME")=="committed-before-error" &&
+                state.extra_dlls_from_main==std::vector<configuration::Path>{u"first.dll"} &&
+                state.extra_dlls==std::vector<configuration::Path>{u"previous-worker.dll"} &&
+                state.username=="retained"&&state.content.empty()&&trace.copies.size()==2,
+            "main-list exception keeps the successful prefix and stops later sections");
+        deps.fail_path.clear();
+        config_application::apply_config2(state,config,false,deps);
+        require(state.extra_dlls_from_main==
+                    std::vector<configuration::Path>{u"first.dll",u"bad.dll",u"last.dll"} &&
+                state.extra_dlls==std::vector<configuration::Path>{u"untouched.dll"} &&
+                state.username=="not-yet"&&state.content.size()==1,
+            "explicit retry replaces incomplete lists and applies later sections");
+    }
+    for(bool override_pass:{false,true}) {
+        Effects deps;auto state=seed();
+        state.extra_dlls_from_main={u"previous-main.dll"};
+        state.extra_dlls={u"previous-worker.dll"};
+        auto config=parsed(R"("Config2" {
+            "Game" {"Name" "base-only"}
+            "Emulator" {"LoadExtraDLLsFromMain" "replacement-main.dll"
+                        "LoadExtraDLLs" "first-worker.dll,bad-worker.dll,last-worker.dll"}
+            "User" {"Username" "after-worker"}
+            "Content" {"after" {}}
+        })");
+        deps.fail_path="bad-worker.dll";config_application::Trace trace;
+        rejects<std::runtime_error>(
+            [&]{config_application::apply_config2(state,config,override_pass,deps,&trace);},
+            "worker extra-DLL conversion error propagates on both passes");
+        require(state.extra_dlls_from_main==
+                    std::vector<configuration::Path>{u"replacement-main.dll"} &&
+                state.extra_dlls==std::vector<configuration::Path>{u"first-worker.dll"} &&
+                state.username=="retained"&&state.content.empty()&&trace.copies.size()==2,
+            "worker-list error preserves complete main list and partial worker list");
+        const auto found=state.game_attributes.find("DISPLAY_NAME");
+        require(override_pass?
+                (found==state.game_attributes.end()||found->second.empty()):
+                (found!=state.game_attributes.end()&&found->second=="base-only"),
+            "base-only metadata is set before the failure only in the base pass");
+        deps.fail_path.clear();
+        config_application::apply_config2(state,config,override_pass,deps);
+        require(state.extra_dlls_from_main==
+                    std::vector<configuration::Path>{u"replacement-main.dll"} &&
+                state.extra_dlls==
+                    std::vector<configuration::Path>{u"first-worker.dll",u"bad-worker.dll",u"last-worker.dll"} &&
+                state.username=="after-worker"&&
+                state.content.size()==(override_pass?0U:1U),
+            "explicit retry completes both lists and keeps base-only Content policy");
+    }
+    {
+        Effects deps;auto state=seed();
+        state.extra_dlls_from_main={u"previous-main.dll"};
+        state.extra_dlls={u"previous-worker.dll"};
+        auto config=parsed(R"("Config2" {
+            "Emulator" {"LoadExtraDLLsFromMain" "" "LoadExtraDLLs" ",,,"}
+            "User" {"Username" "complete"}
+        })");
+        config_application::apply_config2(state,config,true,deps);
+        require(state.extra_dlls_from_main==
+                    std::vector<configuration::Path>{u"previous-main.dll"} &&
+                state.extra_dlls.empty()&&state.username=="complete",
+            "empty CSV retains the list but delimiter-only CSV clears the list");
+    }
+}
+
 void file_path_and_native(const std::filesystem::path& dir) {
     Files files;Effects deps;auto s=seed();config_application::Trace trace;
     files.base="\xef\xbb\xbf\"Config2\" {\"User\" {\"Username\" \"base-user\"} \"Content\" {\"a\" {} \"!\" {}}}";
@@ -316,6 +399,6 @@ void file_path_and_native(const std::filesystem::path& dir) {
 }
 }
 int main(int argc,char** argv) {
-    try {if(argc!=2)throw std::invalid_argument("requires own fixture directory");scalar_and_collections();active_field_bindings();profile_option_reaches_offline_consumer();capacity_and_override();license_content_id_boundary();obsolete_fixed_settings();partial_failure();file_path_and_native(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" Config2 application checks; no original execution or real user CFG\n";}
+    try {if(argc!=2)throw std::invalid_argument("requires own fixture directory");scalar_and_collections();active_field_bindings();profile_option_reaches_offline_consumer();capacity_and_override();license_content_id_boundary();obsolete_fixed_settings();partial_failure();csv_library_partial_failure();file_path_and_native(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" Config2 application checks; no original execution or real user CFG\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }

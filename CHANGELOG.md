@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Cover B52 Config2 extra-DLL CSV conversion-failure ordering in source-linked tests: assert partial lists on both base and override passes, stop subsequent User/Content processing on failure, permit explicit retry and distinguish empty from delimiter-only values. No change to runtime behavior, public DLL ABI, hooks, vendor bytes or release policy. Original donor-facade and Consumer/game parity remain unverified.
+
 - Strengthen active Config2 application coverage for token/hash/DLL/key/language/content bindings and false settings that replace true state. Exercise parsed UseLastOnlineProfile through the actual offline source worker with owned provider effects, including override disabling, absent cookies and malformed cached profiles. Preserve production behavior and the existing native own-file case; portable owned-effect probes do not establish native provider or Consumer acceptance.
 
 - PR #204: inspect the complete already-decoded first-party source text for duplicate or conflicting SPDX identifiers instead of only its first 3,000 characters. Reject late duplicate GPL-3.0-only and conflicting MIT markers, preserve accepted long files and existing identity/exclusion rules, and validate the full source inventory. This changes QA enforcement, not project licenses, shipping code or vendor inputs.
