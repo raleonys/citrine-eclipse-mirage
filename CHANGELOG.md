@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Add process-interruption recovery for Golden dist promotion: retain the current DLL/checksum/DIST_RECEIPT.json names and receipt schema, publish a verified previous-bundle journal before replacement, and recover under a persistent OS-held writer lock. Preserve current Golden output safety checks and test hard exits during promotion/recovery, damaged snapshots, lock contention and failed-run recovery. Flush owned staging copies with Windows write access and restore the previous bundle after a handled journal-retirement failure, with canonical temporary paths in Windows fault injection; power-loss durability and atomic visibility to direct readers remain outside this guarantee.
+
 - Extend the native Application fixture with a real provider auth getter that reenters the active registry hooks after startup readiness. Assert configured ClientPath, one completed open/query/close probe, disabled-probe controls and single provider retirement after client reads drain; retain the provider ABI and fixture-only advapi32 dependency. Shipping behavior and vendor sources are unchanged.
 
 - Audit F-C24-001: route license-ticket output through opt-in write/close status checks so nonthrowing late failures cannot report ticket success. Preserve the recovered initial-open-only legacy writer, other file-write callers and public DLL ABI; add deterministic failure coverage and a portable file-I/O target. Isolate the checked-write native fixture from the existing 8193-byte partial-read/EOF fixture so both scenarios retain their own input bytes.
