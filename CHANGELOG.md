@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Minimize Windows toolchain provenance and build receipt paths while retaining tool digests, file versions and native/Golden evidence. Resolve basename compiler receipts only through the exact hash-bound CMake cache, retain matching absolute receipt compatibility and reject ambiguous, changed or mismatched identities. Apply basename DLL summaries through the current shared formatter; preserve CI report/artifact retention, current receipt vocabulary, console masks and the six-stage Golden summary. Initialize the provenance fixture from its running PowerShell's Utility module when CTest inherits a Core-only module path.
+
 - Keep Golden subprocess and runtime diagnostics in the complete on-disk report while printing only the final result, executed-stage count and runtime exit state. Preserve current GOLDEN_PASS criteria, all six stages, per-stage announcements, exit codes and distribution recovery; cover successful, blocked, stage-failure and runtime-failure console/report contracts.
 
 - Register machine-specific Windows path masks before checkout/tool setup in the current full-validation Windows profiles, portable and reference jobs, plus the manual operator fixture. Normalize single backslashes to forward slashes, reject CR/LF before emitting logging commands and escape literal percent characters. Preserve integrity-only opening CI, the eleven-check synchronization gate, build/test commands and unmodified diagnostic artifacts; masking affects subsequent hosted console presentation.

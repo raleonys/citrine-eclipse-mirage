@@ -129,7 +129,7 @@ function Get-ToolRecord {
     $hash = (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
     $version = $item.VersionInfo.FileVersion
     if ([string]::IsNullOrWhiteSpace($version)) { $version = '<none>' }
-    return "$Label|path=$Path|file_version=$version|sha256=$hash"
+    return "$Label|tool=$([System.IO.Path]::GetFileName($Path))|file_version=$version|sha256=$hash"
 }
 
 function Write-ToolchainProvenance {
@@ -139,8 +139,8 @@ function Write-ToolchainProvenance {
     )
     $lines = @(
         'PRELOADER_L_TOOLCHAIN_PROVENANCE_V1',
-        "VS_INSTALLATION=$VsPath",
-        "VCVARS64=$VcVars",
+        "VS_INSTALLATION=<redacted>",
+        "VCVARS64=<redacted>",
         (Get-ToolRecord 'cmake' $CMakeExe),
         (Get-ToolRecord 'python' $PythonExe),
         (Get-ToolRecord 'cl' $ClExe),
@@ -185,7 +185,7 @@ function Write-SelectedProfileResult {
             Write-Host "$ProfileLabel`: PASS"
         }
     }
-    Write-Host "DLL: $Dll"
+    Write-Host "DLL: $([System.IO.Path]::GetFileName($Dll))"
     Write-Host "SHA256: $Sha256"
     if ($GoldenBlocked) {
         if (-not $LauncherOwnsSummary) { Write-Host 'Exit code 3.' }

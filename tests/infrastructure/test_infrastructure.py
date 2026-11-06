@@ -30,9 +30,81 @@ import generate_avatar_data as avatar_data
 import clear_tool_python_cache as tool_cache
 import check_repository_contract as repository
 import verify_sources as source_verification
+import check_msvc_build_evidence as msvc_evidence
 import run_source_qa as source_qa
 import ci_validation_readiness as ci_readiness
 from golden_policy import load_target, PolicyPending
+
+
+class MsvcCompilerReceiptTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name).resolve()
+        self.build = self.root / 'build'
+        self.build.mkdir()
+        (self.root / 'metadata').mkdir()
+        (self.root / 'metadata/ACTIVE_SOURCE_MANIFEST.json').write_bytes(b'owned source identity')
+        self.compiler = self.root / 'toolchain/cl.exe'
+        self.compiler.parent.mkdir()
+        self.compiler.write_bytes(b'owned executable identity fixture')
+        self.dll = self.build / 'owned.dll'
+        self.dll.write_bytes(b'owned DLL identity fixture')
+        self.cache = self.build / 'CMakeCache.txt'
+        self.cache.write_text('CMAKE_CXX_COMPILER:FILEPATH=' + str(self.compiler) + '\n', encoding='utf-8')
+        record = self.build / 'CMakeFiles/owned/CMakeCXXCompiler.cmake'
+        record.parent.mkdir(parents=True)
+        record.write_text('set(CMAKE_CXX_COMPILER_ID "MSVC")\n')
+        self.receipt = dict(build_succeeded=True, mode='Golden', configuration='Release',
+                            compiler='cl.exe', compiler_sha256=msvc_evidence.sha(self.compiler),
+                            dll_sha256=msvc_evidence.sha(self.dll), cmake_cache_sha256=msvc_evidence.sha(self.cache),
+                            source_manifest_sha256=msvc_evidence.sha(self.root / 'metadata/ACTIVE_SOURCE_MANIFEST.json'))
+
+    def errors(self):
+        (self.build / 'BUILD_RECEIPT.json').write_text(json.dumps(self.receipt), encoding='utf-8')
+        # This fixture isolates compiler identity; real Golden still audits its link rule.
+        with patch.object(msvc_evidence, 'collect_text', return_value=('owned fixture', None, [])), \
+             patch.object(msvc_evidence, 'audit', return_value=[]):
+            return msvc_evidence.check(self.root, self.build, self.dll)
+
+    def test_basename_and_matching_legacy_absolute_receipts_bind_to_cache_tool(self):
+        self.assertEqual([], self.errors())
+        self.receipt['compiler'] = str(self.compiler)
+        self.assertEqual([], self.errors())
+
+    def test_wrong_hash_or_different_receipt_tool_is_rejected(self):
+        self.receipt['compiler_sha256'] = '0' * 64
+        self.assertIn('MSVC compiler tool identity mismatch', self.errors())
+        self.receipt['compiler_sha256'] = msvc_evidence.sha(self.compiler)
+        self.receipt['compiler'] = str(self.root / 'other/cl.exe')
+        self.assertIn('MSVC compiler tool identity mismatch', self.errors())
+
+    def test_cwd_and_path_compiler_decoys_cannot_replace_the_cache_identity(self):
+        decoy = self.root / 'cl.exe'
+        decoy.write_bytes(b'different compiler in current directory and PATH')
+        previous = Path.cwd()
+        try:
+            os.chdir(self.root)
+            with patch.dict(os.environ, {'PATH': str(self.root)}):
+                self.assertEqual([], self.errors())
+                self.receipt['compiler_sha256'] = msvc_evidence.sha(decoy)
+                self.assertIn('MSVC compiler tool identity mismatch', self.errors())
+        finally:
+            os.chdir(previous)
+
+    def test_relative_receipt_directory_is_not_an_accepted_basename(self):
+        self.receipt['compiler'] = str(Path('toolchain') / 'cl.exe')
+        self.assertIn('MSVC compiler tool identity mismatch', self.errors())
+
+    def test_missing_ambiguous_relative_and_changed_cache_are_rejected(self):
+        original = self.cache.read_text(encoding='utf-8')
+        for text in ('', original + original, 'CMAKE_CXX_COMPILER:FILEPATH=cl.exe\n'):
+            with self.subTest(cache=text):
+                self.cache.write_text(text, encoding='utf-8')
+                self.receipt['cmake_cache_sha256'] = msvc_evidence.sha(self.cache)
+                self.assertTrue(self.errors())
+        self.cache.write_text(original, encoding='utf-8')
+        self.assertIn('Build identity mismatch: cmake_cache_sha256', self.errors())
 
 
 class ValidationReadinessTests(unittest.TestCase):
@@ -1296,6 +1368,44 @@ class GovernanceTests(unittest.TestCase):
 class OperatorOutputTests(unittest.TestCase):
     """Exercise actual wrappers/formatting; fake only the compiler/validator work."""
 
+    @unittest.skipUnless(shutil.which('powershell.exe') or shutil.which('pwsh'),
+                         'PowerShell is required for the provenance fixture')
+    def test_provenance_keeps_tool_hashes_and_versions_without_install_paths(self):
+        shell = shutil.which('powershell.exe') or shutil.which('pwsh')
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'private toolchain path (1)'
+            root.mkdir()
+            names = ['cmake.exe', 'python.exe', 'cl.exe', 'link.exe', 'nmake.exe']
+            for name in names:
+                (root / name).write_bytes(('synthetic tool identity: ' + name).encode('ascii'))
+            harness = root / 'provenance.ps1'
+            harness.write_text(r'''
+param([string]$FixtureRoot, [string]$Common)
+$ErrorActionPreference = 'Stop'
+# A Windows PowerShell child can inherit a Core-only PSModulePath from CTest.
+Import-Module (Join-Path $PSHOME 'Modules/Microsoft.PowerShell.Utility/Microsoft.PowerShell.Utility.psd1') -ErrorAction Stop
+. $Common
+Write-ToolchainProvenance (Join-Path $FixtureRoot 'provenance.log') `
+    (Join-Path $FixtureRoot 'Visual Studio') (Join-Path $FixtureRoot 'vcvars64.bat') `
+    (Join-Path $FixtureRoot 'cmake.exe') (Join-Path $FixtureRoot 'python.exe') `
+    (Join-Path $FixtureRoot 'cl.exe') (Join-Path $FixtureRoot 'link.exe') `
+    (Join-Path $FixtureRoot 'nmake.exe')
+''', encoding='ascii')
+            result = subprocess.run([shell, '-NoLogo', '-NoProfile', '-NonInteractive',
+                                     '-File', str(harness), str(root),
+                                     str(ROOT / 'scripts/build_orchestration/build_common.ps1')],
+                                    capture_output=True, text=True, timeout=20)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            text = (root / 'provenance.log').read_text(encoding='utf-8-sig')
+            lines = text.splitlines()
+            self.assertEqual(['PRELOADER_L_TOOLCHAIN_PROVENANCE_V1',
+                              'VS_INSTALLATION=<redacted>', 'VCVARS64=<redacted>'], lines[:3])
+            self.assertEqual(8, len(lines))
+            self.assertNotIn(str(root), text)
+            self.assertNotIn('|path=', text)
+            for label, name, line in zip(['cmake', 'python', 'cl', 'link', 'nmake'], names, lines[3:]):
+                self.assertEqual(f'{label}|tool={name}|file_version=<none>|sha256={msvc_evidence.sha(root / name)}', line)
+
     def make_fixture(self, tmp):
         root = Path(tmp) / 'operator fixture (1)'
         root.mkdir()
@@ -1380,7 +1490,7 @@ exit 0
                         self.assertIn('ERROR: injected validation failure', lines)
                         self.assertFalse(any(': PASS' in line for line in lines))
                     if record['expected_code'] in (0, 3):
-                        self.assertEqual(1, lines.count('DLL: fixture/preloader_l.dll'))
+                        self.assertEqual(1, lines.count('DLL: preloader_l.dll'))
                         self.assertEqual(1, lines.count('SHA256: ' + 'a' * 64))
 
     def run_cmd(self, launcher, code):
@@ -1421,7 +1531,7 @@ exit 0
                             self.assertTrue(args['owns_summary'])
                             self.assertEqual(r'build\fixture path (1)', args['build_dir'])
                             if code in (0, 3):
-                                self.assertEqual(1, output.count('DLL: fixture/preloader_l.dll'), output)
+                                self.assertEqual(1, output.count('DLL: preloader_l.dll'), output)
                                 self.assertEqual(1, output.count('SHA256: ' + 'a' * 64), output)
                             if code == 3:
                                 self.assertNotIn('Golden: BLOCKED', output)
