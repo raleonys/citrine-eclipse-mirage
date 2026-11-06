@@ -57,6 +57,7 @@ struct FakeServer final : ServerBackend {
     Endpoint observed;
     Error run_error;
     bool env_result=true;
+    bool fail_accept_submission=false;
     std::uint16_t expected_bound_port=12345;
     std::uint8_t* ready=nullptr;
     void initialize_context_0241b0() override {events.emplace_back("context");}
@@ -76,6 +77,7 @@ struct FakeServer final : ServerBackend {
     }
     void async_accept_021b00() override {
         check(!ready||*ready==1,"readiness before initial accept");events.emplace_back("accept");
+        if(fail_accept_submission)throw Raised{{10055,ErrorCategory::system},"async_accept"};
     }
     Error run_context_0298b0() override {events.emplace_back("run");return run_error;}
     void destroy_pending_socket_024db0() override {events.emplace_back("destroy_pending");}
@@ -206,6 +208,30 @@ void server_tests() {
         check(std::find(broken.events.begin(),broken.events.end(),"accept")==broken.events.end(),"failed startup does not accept");
     }
 }
+void initial_accept_submission_failure(){
+    // C15-RISK-001: source-linked pre-accept publication ordering, not a
+    // Consumer declaration that Application startup has succeeded.
+    FakeExecutionPlatform platform;
+    preloader_l::execution::MutexState mutex{};
+    preloader_l::execution::initialize_mutex_04a698(mutex,2);
+    std::uint8_t first=0,second=0,third=0;
+    std::int64_t frequency=0;
+    preloader_l::execution::Execution execution{mutex,{first,second,third},frequency,platform};
+    FakeServer server;server.ready=&first;server.fail_accept_submission=true;
+    std::uint16_t port=0;
+    bool failed=false;
+    try{server_start_029ea0(server,port,first,execution);}
+    catch(const Raised& error){failed=error.error.value==10055&&error.context=="async_accept";}
+    check(failed,"first accept submission error must escape startup");
+    check(port==12345&&first==1&&second==0&&third==0,
+          "source publishes port/readiness before the failing accept");
+    check(platform.acquired==1&&platform.released==1,
+          "readiness publication releases its event mutex");
+    check(server.events==std::vector<std::string>({
+          "context","parse6","parse4","acceptor","pending","local","environment","accept"}),
+          "failed initial accept cannot continue to run or report success");
+    // Application cleanup and real Windows readiness are separate native gates.
+}
 void read_tests() {
     Fixture f;check(f.handler.resets==1,"session constructor initializes Handler");
     f.handler.initial=std::string("hello\0",6);f.transport.sync_limit=2;
@@ -332,7 +358,7 @@ void greeting_release_before_read() {
     }
 }
 int main() {
-    try{server_tests();read_tests();write_tests();sizing_and_accept_tests();greeting_release_before_read();std::cout<<"PASS "<<checks<<" synthetic checks; no socket/network/original target execution\n";return 0;}
+    try{server_tests();initial_accept_submission_failure();read_tests();write_tests();sizing_and_accept_tests();greeting_release_before_read();std::cout<<"PASS "<<checks<<" synthetic checks; no socket/network/original target execution\n";return 0;}
     catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}
     catch(const Raised& e){std::cerr<<"FAIL unexpected Raised "<<e.context<<'\n';return 1;}
 }
