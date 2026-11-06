@@ -2,18 +2,6 @@
 name: Windows MinHook single-disable acceptance
 
 on:
-  pull_request:
-    paths:
-      - "cmake/PatchHookFreeze.cmake"
-      - "cmake/VendoredDependencies.cmake"
-      - "cmake/Tests.cmake"
-      - "CMakeLists.txt"
-      - "metadata/HOOK_ENGINE_PATCH.json"
-      - "scripts/prepare_hook_engine.py"
-      - "tests/native/hook_freeze_tests.c"
-      - "tests/native/hook_engine_fixture_tests.cpp"
-      - "tests/support/hook_engine/**"
-      - ".github/workflows/msvc-hook-disable.yml"
   workflow_dispatch:
 
 permissions:
@@ -48,13 +36,13 @@ jobs:
       - name: Build actual patched engine and upstream comparison tests
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target hook_freeze_contracts hook_engine_fixture_tests --parallel 2 2>&1 | Tee-Object -FilePath "$build/hook-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target hook_freeze_contracts hook_engine_fixture_tests hook_real_peer_contracts hook_real_peer_stale_control --parallel 2 2>&1 | Tee-Object -FilePath "$build/hook-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC hook build failed' }
       - name: Run native hook regressions
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
           $junit = Join-Path (Resolve-Path $build) 'hook-junit.xml'
-          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(hook_freeze_contracts|hook_engine_fixtures)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/hook-ctest.log"
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(hook_freeze_contracts|hook_engine_fixtures|hook_real_peer_contracts|hook_real_peer_stale_control)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/hook-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC hook regression failed' }
       - name: Preserve native hook evidence
         if: always()
@@ -67,6 +55,7 @@ jobs:
             build/ci-hook-${{ matrix.configuration }}/hook-junit.xml
             build/ci-hook-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
             build/ci-hook-${{ matrix.configuration }}/vendor_build/minhook/src/hook.c
+            build/ci-hook-${{ matrix.configuration }}/test_controls/minhook/src/hook.c
             build/ci-hook-${{ matrix.configuration }}/CMakeCache.txt
             build/ci-hook-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
             metadata/HOOK_ENGINE_PATCH.json
