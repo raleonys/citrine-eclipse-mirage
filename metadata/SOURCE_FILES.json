@@ -1270,8 +1270,8 @@
       "sha256": "1ff18ef77166407f437739b9ff406e719def7340887cc44d78ef9acf394ec40c"
     },
     "tests/native/extra_library_failure_tests.cpp": {
-      "bytes": 10455,
-      "sha256": "69089313138ac0b865d463c5c654a989af1b8c8712fd1a3d086fba079819531b"
+      "bytes": 13131,
+      "sha256": "d2656676838620eb5450fbdf78eb1f0cbc4ca227d2934016abfc790218ca2a41"
     },
     "tests/native/file_copy_windows_tests.cpp": {
       "bytes": 4816,
