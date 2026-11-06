@@ -86,7 +86,7 @@ struct MockDocument final:DocumentWriter {
     Xml& xml()override{return writer;}
     std::string c_string_without_nul()const override {require(writer.record->stack.empty());return payload;}
 };
-struct MockEffects final:Effects {
+struct MockEffects:Effects {
     std::vector<std::string> diagnostics,atoi_inputs,paths_widened;
     std::vector<Path> online_paths,utf8_paths;
     std::vector<std::pair<Path,Path>> copies;
@@ -258,6 +258,35 @@ static RequestTree image(std::string width="416",std::string owner="user-test") 
     return{{{"Width",std::move(width)},{"Height","odd-height"},{"ImageId","avatar:"+owner}}, {}};
 }
 static void image_tests() {
+    struct CompleteAvatar final:MockEffects,AvatarRequest {
+        std::string owner;std::int32_t size=0;
+        bool request_online_avatar(const Path& path,const char* who,std::int32_t scaled) override {
+            online_paths.push_back(path);owner=who;size=scaled;return avatar_success;
+        }
+        bool online_avatar_virtual_28(const Path&) override {throw std::logic_error("Complete avatar route required");}
+    };
+    {
+        Fixture f;f.online=1;CompleteAvatar effects;effects.avatar_success=true;
+        for(const auto& [width,scaled]:std::vector<std::pair<std::string,int>>{{"00416",2},{"624",3}}) {
+            effects.atoi_value=scaled*208;MockXml response;
+            const auto owner=std::string(96,'u')+"_tail";
+            require(query_image_0314f0(image(width,owner),response,f.refs(),effects));
+            require(effects.owner==owner&&effects.size==scaled);
+            const auto expected=u"synthetic-user\\_AVATAR_"+Path(owner.begin(),owner.end())+u"_"+Path(width.begin(),width.end());
+            require(effects.online_paths.back()==expected);
+            require(response.named("Image")[0].get("ResourcePath")==std::string(expected.begin(),expected.end()));
+        }
+        // Accepted cache-component hardening applies to the complete capability
+        // too; invalid input must not be converted or sent to either provider API.
+        const auto calls=effects.online_paths.size(),widened=effects.paths_widened.size(),parsed=effects.atoi_inputs.size();
+        for(const auto& [width,owner]:std::vector<std::pair<std::string,std::string>>{{"-417","user-test"},{"416","a:b"}}) {
+            MockXml response;
+            require(query_image_0314f0(image(width,owner),response,f.refs(),effects));
+            require(effects.online_paths.size()==calls&&effects.paths_widened.size()==widened&&effects.atoi_inputs.size()==parsed);
+            require(response.named("Image")[0].get("ResourcePath")==
+                (owner=="user-test"?"synthetic-avatar.png":"synthetic-default.png"));
+        }
+    }
     Fixture f;
     for(const auto& absent:{"Width","Height","ImageId"}) {
         auto q=image();std::erase_if(q.attributes,[&](const auto& a){return a.first==absent;});MockXml x;
