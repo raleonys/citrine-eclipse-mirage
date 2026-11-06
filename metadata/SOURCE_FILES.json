@@ -1622,8 +1622,8 @@
       "sha256": "28a23ea0c1675435ee00dd917dcb7ee3543335df1ace4be902bc5b21bd961b04"
     },
     "tests/unit/execution/concurrency_tests.cpp": {
-      "bytes": 3020,
-      "sha256": "24ff1f6d64c12cfe0d205656ad8571f092517b78f8a2fd00f7ac336cf2ecfff0"
+      "bytes": 8127,
+      "sha256": "a3acd4a20b6fe47d6705a9aa1499fc210b7c41dfaa80eb22e8e2c1a88e3cfba6"
     },
     "tests/unit/execution/execution_tests.cpp": {
       "bytes": 13488,

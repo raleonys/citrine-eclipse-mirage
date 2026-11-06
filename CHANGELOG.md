@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Exercise A11-02 startup flag admission with preseeded/duplicate and unrelated publications, both worker publication orders and observed worker payload values. Reopen the controlled sleep gate after each incomplete phase so early returns cannot hide behind the gate; retain the 10 ms test clock, bounded failure cleanup, cold-cache checks and 120000 contended critical sections. The control gate and worker joins also synchronize payloads, so this is bounded scenario coverage rather than an isolated memory-ordering proof. No production code or test timeout changes.
+
 - Target the later provider FreeLibrary call by its exact ordinal in the staged module cleanup test, so the second attempt actually retires the extra lease before the injected provider failure. Preserve all physical image, counter, retry and final-unload assertions.
 
 - Add an A11-06 source-linked native staged-cleanup regression: an extra-library FreeLibrary failure prevents provider retirement, the next explicit retry releases the extra lease before a separate provider FreeLibrary failure, and final/idempotent retries release exactly the remaining module without double-free. Test-only; no shipping owner, ABI or vendor behavior change.
