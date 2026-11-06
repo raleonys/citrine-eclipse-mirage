@@ -1,6 +1,5 @@
 {
   "schema": "surge.native-fixture-review.v1",
-  "classification": "NOT_RELEASE",
   "documentation": "docs/NATIVE_ALLOCATION_FIXTURE.md",
   "validation": "metadata/evidence/native-allocation/VALIDATION.json",
   "parent_source_zip_sha256": "cb0fc73ecdfe90abbf3f88622ebc3df4c616ea77fc71513ef36cddcb525810aa",

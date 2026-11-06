@@ -54,72 +54,93 @@ void cold_frequency_cache() {
         throw std::runtime_error("published frequency was queried again");
 }
 void startup_flag_payload_publication() {
-    // A11-02: this product exposes three native flag bytes, not the donor's
-    // four-bit Milestones observer. A preseeded/duplicate first flag and an
-    // unrelated publication cannot substitute for missing worker phases.
-    OS os;os.advancing_clock=true;
-    MutexState mutex{};initialize_mutex_04a698(mutex,2);
-    std::uint8_t first=1,second=0,third=0,unrelated=0;
-    std::int64_t cache=10'000'000;
-    Execution execution{mutex,{first,second,third},cache,os};
-    std::uint32_t profile_payload=0,library_payload=0; // Worker-written before mutex release.
-    std::mutex gate;std::condition_variable changed;
-    bool entered_sleep=false,release_sleep=false;
-    os.sleep_hook=[&] {
-        std::unique_lock lock(gate);
-        entered_sleep=true;changed.notify_all();
-        if(!changed.wait_for(lock,std::chrono::seconds(3),[&]{return release_sleep;}))
-            throw std::runtime_error("startup waiter sleep gate timed out");
-    };
-    std::exception_ptr waiter_error;
-    std::atomic<bool> waiter_finished{false};
-    std::thread waiter([&] {
+    // A11-02: both distinct worker flags are required, in either publication
+    // order. Reopen the sleep gate between incomplete phases so the source
+    // predicate actually runs; holding it until both finish hides early returns.
+    for(bool library_first:{false,true}) {
+        OS os;os.advancing_clock=true;
+        MutexState mutex{};initialize_mutex_04a698(mutex,2);
+        std::uint8_t first=1,second=0,third=0,unrelated=0;
+        std::int64_t cache=10'000'000;
+        Execution execution{mutex,{first,second,third},cache,os};
+        std::uint32_t profile_payload=0,library_payload=0;
+        std::mutex gate;std::condition_variable changed;
+        unsigned sleeps=0,permits=0;
+        bool stopping=false,waiter_done=false;
+        os.sleep_hook=[&] {
+            std::unique_lock lock(gate);
+            const auto entered=++sleeps;changed.notify_all();
+            if(!changed.wait_for(lock,std::chrono::seconds(3),[&]{return stopping||permits>=entered;}))
+                throw std::runtime_error("startup waiter sleep gate timed out");
+        };
+        std::exception_ptr waiter_error;
+        std::atomic<bool> waiter_finished{false};
+        std::thread waiter([&] {
+            try {
+                execution.wait_steps_036880(-1);
+                if(profile_payload!=0x1357u||library_payload!=0x2468u)
+                    throw std::runtime_error("worker prefix payload not visible after final flag");
+                waiter_finished.store(true,std::memory_order_release);
+            }catch(...){waiter_error=std::current_exception();}
+            {std::lock_guard lock(gate);waiter_done=true;}
+            changed.notify_all();
+        });
+        const auto observe_sleep=[&](unsigned expected) {
+            std::unique_lock lock(gate);
+            if(!changed.wait_for(lock,std::chrono::seconds(2),[&]{return sleeps>=expected||waiter_done;}))
+                throw std::runtime_error("waiter never entered the observed sleep boundary");
+            if(waiter_done||sleeps!=expected)
+                throw std::runtime_error("waiter returned before all distinct worker flags");
+        };
+        const auto resume_sleep=[&](unsigned entered) {
+            {std::lock_guard lock(gate);permits=entered;}
+            changed.notify_all();
+        };
+        const auto publish_worker=[&](bool library) {
+            std::thread worker([&] {
+                if(library){library_payload=0x2468u;execution.finish_flag_036820(third);}
+                else {profile_payload=0x1357u;execution.finish_flag_036820(second);}
+            });
+            worker.join();
+        };
         try {
-            execution.wait_steps_036880(-1);
-            if(profile_payload!=0x1357u||library_payload!=0x2468u)
-                throw std::runtime_error("worker prefix payload not visible after final flag");
-            waiter_finished.store(true,std::memory_order_release);
-        }catch(...){waiter_error=std::current_exception();}
-    });
-    bool saw_sleep=false;
-    {
-        std::unique_lock lock(gate);
-        saw_sleep=changed.wait_for(lock,std::chrono::seconds(2),[&]{return entered_sleep;});
+            observe_sleep(1);
+            execution.finish_flag_036820(first);
+            execution.finish_flag_036820(first);
+            execution.finish_flag_036820(unrelated);
+            resume_sleep(1);
+            // A new sleep proves that duplicates/unrelated publication did not
+            // satisfy the predicate, rather than merely observing a held gate.
+            observe_sleep(2);
+            publish_worker(library_first);
+            resume_sleep(2);
+            // Try each worker first: neither can stand in for the other one.
+            observe_sleep(3);
+            publish_worker(!library_first);
+            resume_sleep(3);
+            std::unique_lock lock(gate);
+            if(!changed.wait_for(lock,std::chrono::seconds(2),[&]{return waiter_done;}))
+                throw std::runtime_error("waiter did not finish after both worker flags");
+        }catch(...) {
+            // Retain the no-sleep failure cleanup: publish only missing flags,
+            // release any blocked sleep and join before reporting the failure.
+            // Do not write payloads here: a faulty waiter may already read them.
+            execution.finish_flag_036820(second);
+            execution.finish_flag_036820(third);
+            {std::lock_guard lock(gate);stopping=true;}
+            changed.notify_all();waiter.join();
+            throw;
+        }
+        waiter.join();
+        if(waiter_error)std::rethrow_exception(waiter_error);
+        if(!waiter_finished.load(std::memory_order_acquire)||
+           first!=1||second!=1||third!=1||unrelated!=1||
+           profile_payload!=0x1357u||library_payload!=0x2468u||
+           mutex.count_4c!=0||mutex.owner_48!=0xffffffff)
+            throw std::runtime_error("three-phase worker publication or ownership contract changed");
+        // Worker joins and the control gate also synchronize this fixture;
+        // payload observations do not isolate the source's memory-order proof.
     }
-    if(!saw_sleep) {
-        // A failed clock/sleep schedule must exit rather than leave a live
-        // waiter blocked forever on the missing two readiness flags.
-        execution.finish_flag_036820(second);
-        execution.finish_flag_036820(third);
-        {std::lock_guard lock(gate);release_sleep=true;}
-        changed.notify_all();waiter.join();
-        throw std::runtime_error("waiter never entered the observed sleep boundary");
-    }
-    execution.finish_flag_036820(first);
-    execution.finish_flag_036820(first);
-    execution.finish_flag_036820(unrelated);
-    const bool prematurely_completed=waiter_finished.load(std::memory_order_acquire);
-    std::thread online([&] {
-        profile_payload=0x1357u;
-        execution.finish_flag_036820(second);
-    });
-    online.join();
-    const bool completed_without_third=waiter_finished.load(std::memory_order_acquire);
-    std::thread libraries([&] {
-        library_payload=0x2468u;
-        execution.finish_flag_036820(third);
-    });
-    libraries.join();
-    {std::lock_guard lock(gate);release_sleep=true;}
-    changed.notify_all();
-    waiter.join();
-    if(waiter_error)std::rethrow_exception(waiter_error);
-    if(prematurely_completed||completed_without_third||
-       !waiter_finished.load(std::memory_order_acquire)||
-       first!=1||second!=1||third!=1||unrelated!=1||
-       profile_payload!=0x1357u||library_payload!=0x2468u||
-       mutex.count_4c!=0||mutex.owner_48!=0xffffffff)
-        throw std::runtime_error("three-phase worker publication or ownership contract changed");
 }
 int main()try {
     cold_frequency_cache();startup_flag_payload_publication();

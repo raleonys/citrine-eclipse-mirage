@@ -1,7 +1,7 @@
 # Native fault injection: Asio allocation path
 
 In the Windows/MSVC logs supplied by the owner, Compile Only,
-Production/LOCAL_GOLDEN, Debug, and Static CRT profiles passed.
+Production/Golden, Debug, and Static CRT profiles passed.
 Native Acceptance was 204/205; only `net_failure_contracts` stopped
 at the first scenario with
 `accept initiation allocation failure was not injected`.

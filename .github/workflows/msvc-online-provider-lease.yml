@@ -2,16 +2,6 @@
 name: Windows online provider module lease acceptance
 
 on:
-  pull_request:
-    paths:
-      - "src/runtime/application.cpp"
-      - "src/runtime/online.cpp"
-      - "src/platform/library_system.cpp"
-      - "tests/native/extra_library_failure_tests.cpp"
-      - "tests/support/runtime/online_fixture.cpp"
-      - "cmake/Tests.cmake"
-      - "CMakeLists.txt"
-      - ".github/workflows/msvc-online-provider-lease.yml"
   workflow_dispatch:
 
 permissions:

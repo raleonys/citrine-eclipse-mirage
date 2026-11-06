@@ -69,6 +69,26 @@ are written to `PYTHON_CACHE_CLEANUP.json` in the selected build
 directory. Cleanup errors stop the upstream build via stderr and
 nonzero exit code; silence on success does not conceal errors.
 
+## Standalone cache report boundary
+
+`clear_tool_python_cache.py --report` validates its destination before deleting
+any cache. Reports must be beneath the checkout's `build/` tree, with an
+existing parent directory and a regular-file target if the target already
+exists. Source paths, external paths, final symlinks and linked directories
+resolving outside that build tree are rejected. Windows tests exercise actual
+junctions without requiring symbolic-link privileges.
+
+The complete UTF-8 report is written through an exclusively created temporary
+file and published with `os.replace`. Replacing a hardlinked report name leaves
+the original source inode intact. Publication failure preserves an existing
+report and removes the temporary file; it does not roll back caches already
+removed after successful destination validation.
+
+Standalone execution assumes an operator-controlled checkout/build namespace.
+It does not prevent hostile same-credential directory swaps or certify ACLs.
+The Windows build profile separately pins its selected output components as
+described in [BUILD_PATH_TRUST.md](BUILD_PATH_TRUST.md).
+
 ## Outstanding game investigation
 
 Startup without configuration using defaults is preserved.
