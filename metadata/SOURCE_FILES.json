@@ -1214,8 +1214,8 @@
       "sha256": "f89d13bdd00c2794773c5f152aa6c2ab19486493372c19cc72a8c99cad2491a4"
     },
     "tests/infrastructure/test_vendor_contract.py": {
-      "bytes": 17894,
-      "sha256": "2985b588f9ef3b0940dc1dd2c69f0628b96c759df5db450b8735074f4bb278ab"
+      "bytes": 19711,
+      "sha256": "c15622d09abdb428f30bfc964db202ff71b56db2ef103eea179a2b3ce5f9ba95"
     },
     "tests/infrastructure/test_weekly_release.py": {
       "bytes": 25857,
@@ -13218,6 +13218,14 @@
     "tests/unit/registry/native_lifecycle_tests.cpp": {
       "bytes": 21594,
       "sha256": "2442f1fe81220ba95a71f7ee6bce7829bce8d7a792a9737c6311c3a6ae2656ac"
+    },
+    "tests/infrastructure/hook_real_peer_control.py": {
+      "bytes": 3580,
+      "sha256": "cbd95bbe0148a27f8508a3698ea645b6c9a741da781a1b0dfcbeb1679e120006"
+    },
+    "tests/native/hook_real_peer_tests.cpp": {
+      "bytes": 14749,
+      "sha256": "b3fdf6f0b75b9890c3c38719a7d70d6a18212b8aadda6db2fc442541ec21b14f"
     }
   }
 }
