@@ -942,8 +942,8 @@
       "sha256": "e384b7b52363274ae8cd956f0eb07f3a566264b8ce972b4ee36524605bd79ddf"
     },
     "src/platform/status_windows.cpp": {
-      "bytes": 2283,
-      "sha256": "cb0292fb68c387c86834f8ca3098bf8e13723767d2c9edf2ef8066a89ba7e34a"
+      "bytes": 2311,
+      "sha256": "24dbebab3a24613385be1b1818e07232ac6a5fed72caf91ccee1034b58e5b817"
     },
     "src/platform/windows_effects.cpp": {
       "bytes": 2531,
