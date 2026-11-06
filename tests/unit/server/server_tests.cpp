@@ -57,6 +57,7 @@ struct FakeServer final : ServerBackend {
     Endpoint observed;
     Error run_error;
     bool env_result=true;
+    std::uint16_t expected_bound_port=12345;
     std::uint8_t* ready=nullptr;
     void initialize_context_0241b0() override {events.emplace_back("context");}
     ParsedAddress parse_address_028690(std::uint16_t family,std::string_view literal) override {
@@ -70,7 +71,7 @@ struct FakeServer final : ServerBackend {
     void initialize_pending_socket_0211b0() override {events.emplace_back("pending");}
     LocalEndpoint local_endpoint() override {events.emplace_back("local");return local;}
     bool set_environment_variable(std::string_view key,std::string_view value) override {
-        check(key=="EALsxPort"&&value=="12345","bound port published as decimal");
+        check(key=="EALsxPort"&&value==std::to_string(expected_bound_port),"selected bound port published as decimal");
         check(!ready||*ready==0,"environment before ready flag");events.emplace_back("environment");return env_result;
     }
     void async_accept_021b00() override {
@@ -169,6 +170,27 @@ void server_tests() {
     check(server.observed.family==2&&server.observed.address[0]==127&&server.observed.address[3]==1,"IPv4 loopback fallback");
     check(server.observed.port_host_order==0,"caller supplied ephemeral port reaches bind");
     check(server.events==std::vector<std::string>({"context","parse6","parse4","acceptor","pending","local","environment","accept","run","destroy_pending","destroy_acceptor","destroy_context"}),"normal startup/cleanup order");
+    // Archive 12 donor publication_tests.cpp checks these four bound-port
+    // payload boundaries. Keep the current product contract: publish the
+    // selected decimal EALsxPort before the ready flag and first accept.
+    for(const std::uint16_t selected:{std::uint16_t{0},std::uint16_t{80},
+                                      std::uint16_t{443},std::uint16_t{65535}}) {
+        FakeServer boundary;
+        boundary.ready=&first;
+        boundary.expected_bound_port=selected;
+        boundary.local.port_network_order=static_cast<std::uint16_t>((selected>>8)|(selected<<8));
+        boundary.env_result=selected!=65535; // Original ignores publication BOOL.
+        first=0;port=0;
+        const auto previous_acquires=platform.acquired;
+        const auto previous_releases=platform.released;
+        construct_server_024480(boundary,port,first,execution);
+        check(port==selected&&first==1,"all selected port boundaries publish readiness");
+        check(platform.acquired==previous_acquires+1&&platform.released==previous_releases+1,
+              "each port publishes readiness under one balanced lock");
+        check(boundary.events==std::vector<std::string>({"parse6","parse4","acceptor",
+              "pending","local","environment","accept"}),
+              "each port publishes environment before readiness and initial accept");
+    }
     FakeServer six;six.ipv6={1,{},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},9};
     first=0;port=7777;construct_server_024480(six,port,first,execution);
     check(six.observed.family==23&&six.observed.scope_id==9&&six.observed.port_host_order==7777,"IPv6 parse success uses observed fields");

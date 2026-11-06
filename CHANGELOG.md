@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Adopt Archive 12's bound-server-port boundary cases (0, 80, 443 and 65535) into the actual portable server source test. Verify decimal EALsxPort publication, readiness-before-accept ordering, balanced source locks and ignored environment-write failure without changing production behavior. Original DLL/native execution remains separate evidence.
+
 - Restore the owner-selected reference NoResponse behavior: consume only the shared typed no-response terminal before response framing/encryption/event selection, keep the connection open and admit its next command. Bind both Application emitters to that type, retain unrelated error handling, and test consecutive silent commands, sequential/coalesced plaintext/encrypted frames, event retention/delivery and a valid same-session follow-up. Native Windows sockets/Golden and real Consumer acceptance remain separate from portable source tests.
 
 - Own a missing Config2 lookup key before traversal rehash can invalidate an aliased string_view, and erase its provisional child if table insertion throws. Cover long borrowed prefixes at 8-to-64 growth, independent traversal ordering, existing-key stability and failed-insert retry while retaining the recursive assignment allocation-failure campaign. Synchronize the source-file inventory and its enclosing manifest digest for packaging and Golden verification.
