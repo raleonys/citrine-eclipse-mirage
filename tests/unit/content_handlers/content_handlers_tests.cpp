@@ -258,6 +258,21 @@ static RequestTree image(std::string width="416",std::string owner="user-test") 
     return{{{"Width",std::move(width)},{"Height","odd-height"},{"ImageId","avatar:"+owner}}, {}};
 }
 static void image_tests() {
+    {
+        Fixture first;first.saved_size=-1;first.online=1;first.effects.atoi_value=128;
+        first.effects.avatar_success=true;first.effects.copy_success=false;MockXml denied;
+        require(query_image_0314f0(image("128"),denied,first.refs(),first.effects));
+        require(first.effects.copies.size()==1&&first.saved_size==-1&&first.effects.saved_logs.empty());
+        first.effects.copy_success=true;MockXml retry;
+        require(query_image_0314f0(image("128"),retry,first.refs(),first.effects));
+        require(first.effects.copies.size()==2&&first.saved_size==0&&first.effects.saved_logs==std::vector<int>{0});
+        require(first.effects.copies.back()==std::pair<Path,Path>{u"synthetic-user\\_AVATAR_user-test_128",u"synthetic-last.png"});
+        MockXml equal;require(query_image_0314f0(image("128"),equal,first.refs(),first.effects));
+        require(first.effects.copies.size()==2&&first.effects.saved_logs.size()==1);
+        first.effects.atoi_value=416;MockXml upgrade;
+        require(query_image_0314f0(image(),upgrade,first.refs(),first.effects));
+        require(first.effects.copies.size()==3&&first.saved_size==2&&first.effects.saved_logs==std::vector<int>({0,2}));
+    }
     struct CompleteAvatar final:MockEffects,AvatarRequest {
         std::string owner;std::int32_t size=0;
         bool request_online_avatar(const Path& path,const char* who,std::int32_t scaled) override {

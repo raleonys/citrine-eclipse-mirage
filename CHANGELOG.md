@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Initialize internal saved-avatar size to the observed -1 sentinel so the first successful own image below 208 pixels can update the last-avatar cache. Cover real file-sharing denial, retry, equal-size reuse and a later larger image without changing public configuration defaults.
+
 - Strengthen Config2 base/override log-failure ordering tests with nonempty scalar/collection changes and a same-state retry. Reject application before a failing path log without changing production behavior or Debug logging policy.
 
 - Cover B52 Config2 extra-DLL CSV conversion-failure ordering in source-linked tests: assert partial lists on both base and override passes, stop subsequent User/Content processing on failure, permit explicit retry and distinguish empty from delimiter-only values. No change to runtime behavior, public DLL ABI, hooks, vendor bytes or release policy. Original donor-facade and Consumer/game parity remain unverified.
