@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "storage_fixture.hpp"
+#include <limits>
 
 namespace {
 struct ReturnCodeXml final:messages::XmlBackend {
@@ -77,6 +78,68 @@ void numbers() {
     require(achievement_storage::attribute_003b70(node,"Count",0,spy)==17 && spy.route=="decimal" && spy.spaces==0,"high-bit byte bypasses CRT whitespace query and selects decimal");
     spy=SpyNumbers{};node.value=std::string("0x10\0ignored",12);
     require(achievement_storage::attribute_003b70(node,"Count",0,spy)==19 && spy.original=="0x10","arbitrary backend attribute obeys original C-string limit");
+}
+void bounded_numeric_overflow() {
+    achievement_storage::HostCrtNumbers host;
+    AttributeNode node;
+    // Out-of-range scanf conversions are undefined, not a documented way
+    // to wrap the result. They now use the existing fallback instead.
+    for(const auto* raw:{"2147483648","-2147483649",
+                         "9999999999999999999999999999",
+                         "-9999999999999999999999999999"}) {
+        require(!host.scan_decimal(raw),"out-of-range signed decimal is rejected");
+        node.value=raw;
+        require(achievement_storage::attribute_003b70(node,"Count",91,host)==91,
+                "invalid decimal attribute returns caller fallback");
+    }
+    for(const auto* raw:{"0x100000000","0xfffffffff",
+                         "0xffffffffffffffffffffffff","-0x100000000"}) {
+        require(!host.scan_hex(raw),"out-of-range unsigned hex is rejected");
+        node.value=raw;
+        if(raw[0]!='-')require(
+            achievement_storage::attribute_003b70(node,"Count",91,host)==91,
+            "invalid hex attribute returns caller fallback");
+    }
+    require(host.scan_decimal("-2147483648")==0x80000000U &&
+            host.scan_decimal("2147483647")==0x7fffffffU,
+            "both signed decimal limits remain supported exactly");
+    require(host.scan_hex("0xffffffff")==0xffffffffU &&
+            host.scan_hex("  -0x10tail")==0xfffffff0U,
+            "hexadecimal upper limit and optional negative sign keep low32 bits");
+    require(host.scan_hex("+0x10suffix")==16U &&
+            host.scan_decimal("  -12tail")==static_cast<std::uint32_t>(-12),
+            "optional signs, leading whitespace and trailing content remain compatible");
+    require(!host.scan_decimal("  +") && !host.scan_hex("- 0x1"),
+            "missing digits and separated sign do not parse");
+    for(const auto* raw:{"++1","-+1","+-0","--0",
+                         "++0x1","-+0x1","+-0x0","--0x0"})
+        require(!host.scan_decimal(raw)&&!host.scan_hex(raw),
+                "a numeric prefix accepts at most one optional sign");
+    node.value=std::string("13\0ignored",10);
+    require(achievement_storage::attribute_003b70(node,"Count",91,host)==13,
+            "existing XML C-string boundary ignores bytes after embedded NUL");
+
+    // Exercise the actual XML -> storage -> numeric adapter path. Invalid
+    // Count/Progress values must not corrupt fields or change import order.
+    Fixture f;
+    f.paths.xml_path=u"bounded-numbers.xml";
+    f.files.input[f.paths.xml_path]=
+        R"(<root><entry Id="overflow" Count="2147483648" Progress="0x100000000"/>
+        <entry Id="minimum" Count="-2147483648" Progress="0xffffffff"/>
+        <entry Id="normal" Count="12tail" Progress=" 0X10"/></root>)";
+    f.storage.update_01eb00(f.state);
+    require(f.state.achievements.size()==3,
+            "all three XML entries are imported despite invalid numeric fields");
+    require(f.state.achievements.at("overflow").field04==0 &&
+            f.state.achievements.at("overflow").field08==0,
+            "overflow Count and Progress use the established fallback zero");
+    require(f.state.achievements.at("minimum").field04==
+                std::numeric_limits<std::int32_t>::min() &&
+            f.state.achievements.at("minimum").field08==-1,
+            "signed decimal minimum and full-width hexadecimal survive XML import");
+    require(f.state.achievements.at("normal").field04==12 &&
+            f.state.achievements.at("normal").field08==16,
+            "ordinary suffixed decimal and prefixed hexadecimal remain unchanged");
 }
 void achievement_path_components() {
     // A11-09: Config2 sets are filenames and Steam app IDs are a single
@@ -159,6 +222,6 @@ void native_fixture(const std::filesystem::path& dir) {
 }
 }
 int main(int argc,char** argv) {
-    try{if(argc!=2)throw std::invalid_argument("requires owned fixture directory");xml_updates();numbers();achievement_path_components();steam_and_failures();native_fixture(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" achievement storage checks; own fixtures only, no original execution\n";}
+    try{if(argc!=2)throw std::invalid_argument("requires owned fixture directory");xml_updates();numbers();bounded_numeric_overflow();achievement_path_components();steam_and_failures();native_fixture(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" achievement storage checks; own fixtures only, no original execution\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }
