@@ -26,7 +26,7 @@ publish to a Library or official release pointer.
 ## Current product targets
 
 Following the owner's instruction to complete missing
-targets, four profiles entered `READY_LOCAL_TARGET`
+targets, four profiles entered `READY_TARGET`
 status. These are Citrine Eclipse Mirage product rules;
 fixed fixture identities under
 `tests/support/golden/` are not activated.
@@ -53,7 +53,7 @@ file bytes remain unchanged.
 python -B scripts/run_golden_pipeline.py --check-target
 ```
 
-A `READY_LOCAL_TARGET` / exit 0 result from that
+A `READY_TARGET` / exit 0 result from that
 command only shows that target definitions are
 ready. Full Golden requires `build_production.cmd`
 to build an actual MSVC Release DLL and run all
@@ -63,13 +63,12 @@ receipt hashes. LLVM/Wine or a synthetic PE
 does not replace MSVC build evidence.
 
 Exit 0 from the full pipeline represents only
-local Golden acceptance. Exit 1 is a validation
+Golden acceptance. Exit 1 is a validation
 or build error; exit 3 means BLOCKED because
 a required product target is missing. Target
 definition readiness is not actual MSVC Golden
-or game PASS. A successful local candidate
-receives a companion `.dll.sha256`; nothing
-is published. The source ZIP packager also
+or game PASS. A successfully validated DLL
+receives a companion `.dll.sha256`. The source ZIP packager also
 creates a `.zip.sha256` beside each archive.
 
 Candidate hashes must remain unchanged during
@@ -82,7 +81,7 @@ at the end. Fixture and malformed-input
 regressions are retained separately; fixtures
 cannot activate actual product policy.
 
-## Local dist output
+## Dist output
 
 After all six stages, the finalized copy is
 passed to the existing runtime host as
@@ -93,7 +92,7 @@ bytes. Only then are these files written:
 
 - `dist/preloader_l.dll`
 - `dist/preloader_l.dll.sha256`
-- `dist/LOCAL_DIST_RECEIPT.json`
+- `dist/DIST_RECEIPT.json`
 
 The runtime name thus matches the Bluefield
 hook-11 filter. The raw link output remains
@@ -104,8 +103,24 @@ hash-named build candidate is also retained.
 If Golden or final runtime validation fails,
 no new dist is published; any prior successful
 bundle is preserved with its hash/source
-receipt. Results of the current attempt are
-in `golden-local/GOLDEN_REPORT.json` under
+receipt. A persistent OS-held writer lock and a verified
+rollback journal under `dist/.golden-transaction`
+protect the three public filenames against process termination
+between replacements. On the next local pipeline invocation
+the previous receipt-bound bundle is restored **before** any
+Golden stage runs. Recovery can also be requested explicitly
+with `python -B scripts/run_golden_pipeline.py --recover-dist`.
+The `.golden.lock` pathname is intentionally retained;
+actual lock ownership is released by the OS when a writer exits.
+A missing or tampered backup fails closed without overwriting
+more files. A terminated writer can leave a temporarily mixed
+bundle until recovery; direct consumers must not treat an
+unverified dist directory as atomic publication.
+Process-exit regressions cover interrupted promotion and replay;
+NTFS crash recovery, junction/ACL races, power-loss durability and
+Consumer acceptance remain separate evidence.
+Results of the current attempt are
+in `golden/GOLDEN_REPORT.json` under
 the build directory. Compile, Debug, Native,
 and CRT profiles cannot be promoted to dist,
 and no official publication occurs.
@@ -129,7 +144,7 @@ application DLL profile, including `preloader.unsigned.dll`. The shared
 after the linker completes and before the build partition gate and raw-asset
 inspection; `build_profile.ps1` independently verifies the resulting
 unsigned DLL on both clean and incremental builds. It uses the exact same
-six-module order as URSYNEX/CORVEXON/LOCAL_DIST, changes no other bytes, and
+six-module order as URSYNEX/CORVEXON/DIST, changes no other bytes, and
 fails without replacing the file if the import module set is unexpected.
 
 This is explicitly **post-link normalization of the unsigned artifact**, not

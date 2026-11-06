@@ -12,6 +12,7 @@
 #include "preloader_l/platform/execution_windows.hpp"
 #include "../../src/runtime/application_internal.hpp"
 #include <asio.hpp>
+#include <MinHook.h>
 #include <filesystem>
 #include <iostream>
 #include <stdexcept>
@@ -19,6 +20,8 @@
 #include <future>
 #include <fstream>
 #include <iterator>
+#include <cstring>
+#include <algorithm>
 
 using namespace preloader_l;
 namespace fs=std::filesystem;
@@ -41,6 +44,24 @@ struct ScopedEnvironment {
         if(!SetEnvironmentVariableW(name,value.wstring().c_str()))throw std::runtime_error("set test environment");
     }
     ~ScopedEnvironment(){SetEnvironmentVariableW(name,existed?previous.c_str():nullptr);}
+};
+struct RegistryProviderProbe {
+    HMODULE module=nullptr;
+    void (*enable)(int)=nullptr;
+    unsigned (*value)(unsigned)=nullptr;
+    const wchar_t* (*path)()=nullptr;
+    int (*destroyed)()=nullptr;
+    ~RegistryProviderProbe(){if(module)FreeLibrary(module);}
+    void load(const fs::path& file){
+        module=LoadLibraryW(file.wstring().c_str());require(module!=nullptr,"registry provider observer lease");
+        enable=reinterpret_cast<decltype(enable)>(GetProcAddress(module,"FixtureRegistryProbe"));
+        value=reinterpret_cast<decltype(value)>(GetProcAddress(module,"FixtureRegistryValue"));
+        path=reinterpret_cast<decltype(path)>(GetProcAddress(module,"FixtureRegistryPath"));
+        destroyed=reinterpret_cast<decltype(destroyed)>(GetProcAddress(module,"FixtureDestroyed"));
+        auto mode=reinterpret_cast<void(*)(int)>(GetProcAddress(module,"FixtureMode"));
+        require(enable&&value&&path&&destroyed&&mode,"registry probe controls belong to the live provider image");
+        mode(0);
+    }
 };
 class Peer {
     asio::io_context io;
@@ -102,6 +123,51 @@ void event_mutex_contract(){
     mutex.unlock_04a6b4();peer.join();
     require(!premature&&acquired&&valid&&mutex.count_4c()==0,"another thread waits then acquires a released event mutex");
 }
+void avatar_provider_arguments(){
+    configuration::State state{};application::Options options;file::NativeFactory files;
+    xml_reader_bridge::Backend xml;achievement_storage::Paths paths;
+    achievement_runtime::HostClock clock;achievement_runtime::HostFormatter formatter;
+    application::detail::Environment env{state,options,files,xml,paths,clock,formatter};
+    struct Capture {
+        std::uintptr_t table;
+        std::wstring path;std::string owner;std::int32_t size=0;unsigned calls=0;
+        std::uint8_t result=0x80;
+    } capture{};
+    const auto avatar=+[](void* object,const wchar_t* path,const char* owner,std::int32_t size)->std::uint8_t {
+        auto& value=*static_cast<Capture*>(object);++value.calls;
+        value.path=path;value.owner=owner;value.size=size;
+        return value.result;
+    };
+    // Byte-backed unaligned table storage must use the same readable foreign
+    // layout contract as the other provider methods, without a typed overlay.
+    // Align the buffer so its +1 byte address is deliberately unaligned.
+    alignas(std::uintptr_t) std::array<unsigned char,1+7*sizeof(std::uintptr_t)> table{};
+    capture.table=reinterpret_cast<std::uintptr_t>(table.data()+1);
+    const auto address=reinterpret_cast<std::uintptr_t>(avatar);
+    std::memcpy(table.data()+1+5*sizeof(address),&address,sizeof(address));
+    env.provider=reinterpret_cast<std::uintptr_t>(&capture);
+    const configuration::Path cache=u"C:\\fixture\\cache-\u0131\u4e2d.png";
+    const std::string owner=std::string(96,'u')+":tail";
+    for(const auto size:{2,-2}) {
+        require(env.request_online_avatar(cache,owner.c_str(),size),"nonzero provider AL means avatar success");
+        require(capture.path==application::detail::wide(cache)&&capture.owner==owner&&capture.size==size,
+            "actual Environment forwards live UTF16 path, owner and signed size to slot5");
+    }
+    capture.result=0;
+    require(!env.request_online_avatar(cache,owner.c_str(),0)&&capture.size==0,"zero provider AL means avatar fallback");
+    const auto calls=capture.calls;
+    for(const auto failure:{0,1,2}) {
+        if(failure==0)env.provider=0;
+        if(failure==1){env.provider=reinterpret_cast<std::uintptr_t>(&capture);capture.table=0;}
+        if(failure==2){capture.table=reinterpret_cast<std::uintptr_t>(table.data()+1);const std::uintptr_t empty=0;std::memcpy(table.data()+1+5*sizeof(empty),&empty,sizeof(empty));}
+        bool rejected=false;
+        try{(void)env.request_online_avatar(cache,owner.c_str(),2);}catch(const std::logic_error&){rejected=true;}
+        require(rejected&&capture.calls==calls,"unavailable avatar object/table/slot rejects before a foreign call");
+    }
+    bool rejected=false;
+    try{(void)env.online_avatar_virtual_28(cache);}catch(const std::logic_error&){rejected=true;}
+    require(rejected,"incomplete production avatar call cannot invent owner or size");
+}
 void stop_blocked_greeting() {
     GreetingFixture fixture;auto entered=fixture.entered.get_future();
     execution::MutexState mutex{};execution::initialize_mutex_04a698(mutex,2);
@@ -126,6 +192,7 @@ void stop_blocked_greeting() {
 }
 int main(int argc,char** argv) try {
     event_mutex_contract();
+    avatar_provider_arguments();
     Directory directory;
     file::NativeFactory files;
     const auto cfg=directory.path/"surge.cfg";
@@ -258,6 +325,7 @@ int main(int argc,char** argv) try {
     FreeLibrary(provider_module);
     const auto hook_dir=directory.path/"hooks";fs::create_directories(hook_dir);
     fs::copy_file(fs::path(argv[1]),hook_dir/"fixture-extra.dll");
+    fs::copy_file(fs::path(argv[1]),hook_dir/"preloader_l_online.dll");
     require(file::write_binary_03c1d0((hook_dir/"surge.cfg").u16string(),R"("Config2" {"Emulator" {"Documents" "fixture-documents" "BlockReruns" "true" "LoadExtraDLLsFromMain" "fixture-extra.dll" "LoadExtraDLLs" "fixture-extra.dll"}})",files),"all conditional hooks config");
     require(MH_Initialize()==MH_OK,"external engine initialized for ownership failure test");
     bool rejected_owner=false;
@@ -269,8 +337,10 @@ int main(int argc,char** argv) try {
     require(MH_Initialize()==MH_ERROR_ALREADY_INITIALIZED,"rollback leaves external engine initialized");
     require(MH_Uninitialize()==MH_OK,"external engine remains releasable by its owner");
     {
+        RegistryProviderProbe probe;probe.load(hook_dir/"preloader_l_online.dll");
         application::Application hooked({(hook_dir/"host.exe").u16string(),(hook_dir/"data").u16string(),true});hooked.start();
         require(native::is_bound(),"actual native callback owner published");
+        require(hooked.configuration().username=="fixture-online","real provider and real hooks share the ready application owner");
         require(GetModuleHandleW(L"fixture-extra.dll")!=nullptr,"actual main/worker extra-library source phases loaded module");
         const char* names[]={"connect","RegOpenKeyExA","RegOpenKeyExW","RegCloseKey","RegQueryValueExA","RegQueryValueExW","CreateProcessA","CreateProcessW","SHGetFolderPathA","SHGetFolderPathW","CryptQueryObject"};
         const wchar_t* modules[]={L"crypt32.dll",L"ws2_32.dll",L"kernel32.dll",L"shell32.dll",L"KernelBase.dll",L"advapi32.dll"};
@@ -291,8 +361,29 @@ int main(int argc,char** argv) try {
         wchar_t client[4096]{};DWORD size=sizeof(client),type=0;
         require(RegQueryValueExW(key,L"ClientPath",nullptr,&type,reinterpret_cast<BYTE*>(client),&size)==ERROR_SUCCESS&&std::wstring(client)==exe,"real registry query reaches source values and original trampolines");
         require(RegCloseKey(key)==ERROR_SUCCESS,"real registry close releases tracked handle");
+        // Earlier provider tests disable hooks; the hook case previously had no
+        // online DLL. Exercise the complete socket/handler/provider/SDK path.
+        probe.enable(1);
+        Peer provider_peer(hooked.configuration().server_port);(void)provider_peer.frame();
+        require(provider_peer.request("provider-probe-control","<GetProfile index='0'/>").find("fixture-online")!=std::string::npos&&
+                probe.value(0)==0,"an unrelated handler cannot satisfy the auth getter probe");
+        require(provider_peer.request("provider-registry","<GetAuthCode ClientId='fixture-registry'/>").find("fixture-auth")!=std::string::npos,
+            "actual provider auth returns through the ready hooked application");
+        require(probe.value(0)==1&&probe.value(1)==ERROR_SUCCESS&&
+                probe.value(2)==ERROR_SUCCESS&&probe.value(3)==ERROR_SUCCESS,
+            "one foreign getter reaches real registry open/query/close callbacks");
+        const auto* observed=probe.path();require(observed!=nullptr,"provider publishes an owned registry view");
+        const auto* end=std::find(observed,observed+4096,L'\0');
+        require(end!=observed+4096&&std::wstring(observed,end)==exe,
+            "foreign registry reentry observes the configured client path, not an OS value or cached literal");
+        probe.enable(0);
+        require(provider_peer.request("provider-probe-disabled","<GetAuthCode ClientId='fixture-default'/>").find("fixture-auth")!=std::string::npos&&
+                probe.value(0)==0&&probe.value(1)==ERROR_IO_PENDING,
+            "disabled fixture preserves default auth behavior without fabricating SDK probe results");
         hooked.stop();require(!native::is_bound(),"hook owner closes binding after actual patch removal");
+        require(probe.destroyed()==1,"provider retires once after native callbacks and pending client reads drain");
         require(GetModuleHandleW(L"fixture-extra.dll")==nullptr,"extra-library leases released after actual source unload");
+        std::cout<<"PASS: live provider auth reenters actual registry hooks with configured owner state\n";
     }
     stop_blocked_greeting();
     std::cout<<"PASS: "<<checks<<" real application checks; four vendors, config collections, encrypted socket LSX, provider, resource, persistence, eleven enabled hooks and stop\n";

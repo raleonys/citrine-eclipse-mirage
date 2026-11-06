@@ -4,9 +4,9 @@
 #include "preloader_l/router/router.hpp"
 
 namespace preloader_l::xml_reader_bridge {
-// XML reader using the exact owner-provided TinyXML2 archive, with its unchanged
-// default depth=500. This vendor choice is NOT proof that the
-// original DLL embedded this exact release or that all malformed inputs match.
+// Pugixml-backed reader with project-owned syntax/error/value compatibility.
+// Preserve the established depth, reference-decoding and borrowed-view contract;
+// vendor implementation types are private to the source module.
 class Backend final:public messages::XmlBackend,
                     public dispatch::NodeAccess {
 public:

@@ -1,6 +1,5 @@
 {
   "schema": "surge.runtime-resilience.v1",
-  "classification": "NOT_RELEASE",
   "owner": "Explicit owner request: scoped connect, atomic achievement persistence and bounded handler scheduling",
   "documentation": "docs/RUNTIME_RESILIENCE.md",
   "connect": {
