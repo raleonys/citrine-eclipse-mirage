@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Restore the owner-selected reference NoResponse behavior: consume only the shared typed no-response terminal before response framing/encryption/event selection, keep the connection open and admit its next command. Bind both Application emitters to that type, retain unrelated error handling, and test consecutive silent commands, sequential/coalesced plaintext/encrypted frames, event retention/delivery and a valid same-session follow-up. Native Windows sockets/Golden and real Consumer acceptance remain separate from portable source tests.
+
 - Own a missing Config2 lookup key before traversal rehash can invalidate an aliased string_view, and erase its provisional child if table insertion throws. Cover long borrowed prefixes at 8-to-64 growth, independent traversal ordering, existing-key stability and failed-insert retry while retaining the recursive assignment allocation-failure campaign. Synchronize the source-file inventory and its enclosing manifest digest for packaging and Golden verification.
 
 - Preserve QueryImage owner ID and signed width/208 through the production avatar provider call. Keep the legacy path-only Effects interface available to source adapters, select the complete call in the application, and test real slot5 argument forwarding and nonzero-byte return handling. Make foreign-table byte offsets explicit with unsigned-character storage/pointers, retaining memcpy reads and unaligned-slot regression coverage; resolve all three PR #161 CodeQL sizeof-scaling findings without suppressing the rule. Preserve the accepted provider-auth Registry hook fixture and unsafe avatar-component rejection in both provider routes.

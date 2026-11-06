@@ -398,8 +398,8 @@
       "sha256": "ad10e87e8912025378cfcff3fc52390f3c58ec7bf1822ff7e7ead8ed311e1c32"
     },
     "include/preloader_l/protocol/messages.hpp": {
-      "bytes": 5125,
-      "sha256": "95890be5c067e73b48823896b4ea656c0046e0eb8408ae2ec1785097de2c9a67"
+      "bytes": 5421,
+      "sha256": "f1596310755ef4203be1f51e5915f38935e87afd098785e343aa9179520c3ec7"
     },
     "include/preloader_l/router/router.hpp": {
       "bytes": 2129,
@@ -950,8 +950,8 @@
       "sha256": "f91343269cf92b84583ba8aebc627740e2a0bbeae74a6978b52be9cbadf3c502"
     },
     "src/protocol/messages.cpp": {
-      "bytes": 9165,
-      "sha256": "d5953defb5aa50ffe502d73c96e986cb52ba561c154f2069ea54895e77e65aae"
+      "bytes": 9536,
+      "sha256": "e4c9fe9055c226cd5930f718b0b5c58487eeed93fb17e29582e8bb6d92c09950"
     },
     "src/router/router.cpp": {
       "bytes": 5798,
@@ -986,8 +986,8 @@
       "sha256": "e6c2640eebee00011ae82eb90c268c58071492fb216e5bb64098619df28b8310"
     },
     "src/runtime/application_internal.hpp": {
-      "bytes": 7463,
-      "sha256": "f7ac722a80ad9fe1168dcea442694a34c8430a3e08f740625c792b8525e64936"
+      "bytes": 7467,
+      "sha256": "045ba24398ca6e4a5d22e0a8f01bd8be48036b9ccd8c0947d65aafc0d8456281"
     },
     "src/runtime/bootstrap.cpp": {
       "bytes": 4419,
@@ -1314,8 +1314,8 @@
       "sha256": "5da1ec5126a435c0fe237c39d1f58f7239ece53e851ffa21ccb5fc55fa0434ba"
     },
     "tests/native/session_flow_tests.cpp": {
-      "bytes": 7840,
-      "sha256": "7c3bdd3821d6f31ebd70b4ee97669113252bb3afcf33c499fb2af979186d9c00"
+      "bytes": 14797,
+      "sha256": "a32977de0709c9891d792019544a0b860a113b4dd204d11cb6dc06bfb380889c"
     },
     "tests/native/socket_close_semantics_tests.cpp": {
       "bytes": 2598,
@@ -1606,8 +1606,8 @@
       "sha256": "d071c8e8fe9ecdabd1cd43b573db1fe8bd19e17445d2912d9b2be93003a94f39"
     },
     "tests/unit/dispatch/integration_tests.cpp": {
-      "bytes": 22005,
-      "sha256": "f2376f8af750ae80a925aa6fff675e4395287b500794204c54392d942237d8ca"
+      "bytes": 22918,
+      "sha256": "d1f8f33c8ecd0b901aa58dcfb1ac740b2a5773159c49b55d54665142fa18ab03"
     },
     "tests/unit/encoding/encoding_tests.cpp": {
       "bytes": 11319,
@@ -1674,8 +1674,8 @@
       "sha256": "7878639316fb203b68c3dde08e2ede1281d3eb135d1bbef82a6a811492e903ee"
     },
     "tests/unit/messages/messages_tests.cpp": {
-      "bytes": 21183,
-      "sha256": "0cfedc4897b17514319398c54e26b248fd99f3c4a050d38fedfa3afb1dae1294"
+      "bytes": 23161,
+      "sha256": "58c8046d1053e2ec80895d250ea345dcd74d81653ba205b96c452ce0c2cbae4f"
     },
     "tests/unit/misc_handlers/misc_handlers_tests.cpp": {
       "bytes": 9114,

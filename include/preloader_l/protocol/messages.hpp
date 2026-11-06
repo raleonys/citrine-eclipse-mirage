@@ -6,10 +6,16 @@
 #include <memory>
 #include <optional>
 #include <span>
+#include <stdexcept>
 #include <string>
 #include <string_view>
 
 namespace preloader_l::messages {
+// A recognized command deliberately emits no response. Only this typed
+// terminal is consumed by the message core; other failures still propagate.
+struct NoResponseRequiredError : std::runtime_error {
+    NoResponseRequiredError():std::runtime_error("RE no-response"){}
+};
 using Key = std::array<std::uint8_t,16>;
 struct Registration { std::string_view name; std::uint32_t rva; };
 std::span<const Registration> registrations_032d00();
