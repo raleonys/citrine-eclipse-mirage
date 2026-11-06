@@ -159,6 +159,18 @@ jobs:
       run:
         shell: pwsh
     steps:
+      - name: Mask machine-specific paths in CI console
+        shell: pwsh
+        run: |
+          $paths = @($env:GITHUB_WORKSPACE, (Get-Location).Path, $env:USERPROFILE, $env:TEMP, $env:TMP, $env:RUNNER_TEMP)
+          $paths = @($paths | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | Select-Object -Unique)
+          if ($paths | Where-Object { $_ -match '[\r\n]' }) { throw 'Unsafe path for GitHub log masking.' }
+          foreach ($path in $paths) {
+            foreach ($variant in (@($path, $path.Replace('\', '/')) | Select-Object -Unique)) {
+              $encoded = $variant.Replace('%', '%25')
+              Write-Output "::add-mask::$encoded"
+            }
+          }
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -222,6 +234,18 @@ jobs:
       run:
         shell: pwsh
     steps:
+      - name: Mask machine-specific paths in CI console
+        shell: pwsh
+        run: |
+          $paths = @($env:GITHUB_WORKSPACE, (Get-Location).Path, $env:USERPROFILE, $env:TEMP, $env:TMP, $env:RUNNER_TEMP)
+          $paths = @($paths | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | Select-Object -Unique)
+          if ($paths | Where-Object { $_ -match '[\r\n]' }) { throw 'Unsafe path for GitHub log masking.' }
+          foreach ($path in $paths) {
+            foreach ($variant in (@($path, $path.Replace('\', '/')) | Select-Object -Unique)) {
+              $encoded = $variant.Replace('%', '%25')
+              Write-Output "::add-mask::$encoded"
+            }
+          }
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -274,6 +298,18 @@ jobs:
       matrix:
         configuration: [Debug, Release]
     steps:
+      - name: Mask machine-specific paths in CI console
+        shell: pwsh
+        run: |
+          $paths = @($env:GITHUB_WORKSPACE, (Get-Location).Path, $env:USERPROFILE, $env:TEMP, $env:TMP, $env:RUNNER_TEMP)
+          $paths = @($paths | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | Select-Object -Unique)
+          if ($paths | Where-Object { $_ -match '[\r\n]' }) { throw 'Unsafe path for GitHub log masking.' }
+          foreach ($path in $paths) {
+            foreach ($variant in (@($path, $path.Replace('\', '/')) | Select-Object -Unique)) {
+              $encoded = $variant.Replace('%', '%25')
+              Write-Output "::add-mask::$encoded"
+            }
+          }
       - name: Preserve repository bytes
         run: git config --global core.autocrlf false
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
