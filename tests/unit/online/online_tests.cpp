@@ -189,6 +189,46 @@ static void live_profile() {
         CHECK(state.object==0);CHECK(state.module==41);CHECK(state.online==0);CHECK(!m.called("auth-status"));CHECK(!m.called("finish"));
     }
 }
+static void cache_delimiter_integrity() {
+    // Original unescaped persistence can store four fields from a provider
+    // name containing ';'. The later offline parser accepts exactly three.
+    for(unsigned field=0;field<3;++field)for(const bool cache:{false,true}) {
+        State state;Mock m;
+        state.use_last=cache;
+        m.written="previous-cache";
+        if(field==0)m.persona="person;extra";
+        if(field==1)m.user="user;extra";
+        if(field==2)m.name="name;extra";
+        const std::string unsafe=m.persona+";"+m.user+";"+m.name;
+        CHECK(o::split_profile_fields_03cf00(unsafe).size()==4);
+        o::worker_035b60(state.refs(),m);
+        CHECK(state.online==1&&state.object==m.created&&state.module==m.loaded);
+        CHECK(state.persona==m.persona&&state.user==m.user&&state.username==m.name);
+        CHECK(!m.called("write")&&m.written=="previous-cache");
+        CHECK(m.calls.back()=="finish");
+    }
+    // Valid punctuation and empty fields continue to use the legacy byte
+    // layout and can round-trip through the existing offline split function.
+    {
+        State state;Mock m;
+        state.use_last=1;
+        m.persona="owner:42";m.user="id_123-ABC";m.name="display name@host";
+        o::worker_035b60(state.refs(),m);
+        CHECK(m.called("write"));
+        CHECK(m.written=="owner:42;id_123-ABC;display name@host");
+        CHECK(o::split_profile_fields_03cf00(m.written)==
+              std::vector<std::string>({"owner:42","id_123-ABC","display name@host"}));
+        CHECK(m.calls.back()=="finish");
+    }
+    {
+        State state;Mock m;
+        state.use_last=1;m.persona="";m.user="";m.name="";
+        o::worker_035b60(state.refs(),m);
+        CHECK(m.called("write")&&m.written==";;");
+        CHECK(o::split_profile_fields_03cf00(m.written)==
+              std::vector<std::string>({"","",""}));
+    }
+}
 static void offline_profile() {
     for(auto status:std::array<std::int32_t,4>{1,2,-1,0x7fffffff})
         for(bool cache:{false,true})for(bool cookie:{false,true})for(bool avatar:{false,true}) {
@@ -392,7 +432,7 @@ static void cookie_release_before_status() {
     }
 }
 int main() {
-    try {entry_branches();live_profile();offline_profile();split_cases();status_and_cleanup();exceptions();
+    try {entry_branches();live_profile();cache_delimiter_integrity();offline_profile();split_cases();status_and_cleanup();exceptions();
 #if !defined(PRELOADER_L_PORTABLE_ONLINE_TESTS)
         composition();
 #endif

@@ -7,6 +7,7 @@ import io
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -29,9 +30,81 @@ import generate_avatar_data as avatar_data
 import clear_tool_python_cache as tool_cache
 import check_repository_contract as repository
 import verify_sources as source_verification
+import check_msvc_build_evidence as msvc_evidence
 import run_source_qa as source_qa
 import ci_validation_readiness as ci_readiness
 from golden_policy import load_target, PolicyPending
+
+
+class MsvcCompilerReceiptTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name).resolve()
+        self.build = self.root / 'build'
+        self.build.mkdir()
+        (self.root / 'metadata').mkdir()
+        (self.root / 'metadata/ACTIVE_SOURCE_MANIFEST.json').write_bytes(b'owned source identity')
+        self.compiler = self.root / 'toolchain/cl.exe'
+        self.compiler.parent.mkdir()
+        self.compiler.write_bytes(b'owned executable identity fixture')
+        self.dll = self.build / 'owned.dll'
+        self.dll.write_bytes(b'owned DLL identity fixture')
+        self.cache = self.build / 'CMakeCache.txt'
+        self.cache.write_text('CMAKE_CXX_COMPILER:FILEPATH=' + str(self.compiler) + '\n', encoding='utf-8')
+        record = self.build / 'CMakeFiles/owned/CMakeCXXCompiler.cmake'
+        record.parent.mkdir(parents=True)
+        record.write_text('set(CMAKE_CXX_COMPILER_ID "MSVC")\n')
+        self.receipt = dict(build_succeeded=True, mode='Golden', configuration='Release',
+                            compiler='cl.exe', compiler_sha256=msvc_evidence.sha(self.compiler),
+                            dll_sha256=msvc_evidence.sha(self.dll), cmake_cache_sha256=msvc_evidence.sha(self.cache),
+                            source_manifest_sha256=msvc_evidence.sha(self.root / 'metadata/ACTIVE_SOURCE_MANIFEST.json'))
+
+    def errors(self):
+        (self.build / 'BUILD_RECEIPT.json').write_text(json.dumps(self.receipt), encoding='utf-8')
+        # This fixture isolates compiler identity; real Golden still audits its link rule.
+        with patch.object(msvc_evidence, 'collect_text', return_value=('owned fixture', None, [])), \
+             patch.object(msvc_evidence, 'audit', return_value=[]):
+            return msvc_evidence.check(self.root, self.build, self.dll)
+
+    def test_basename_and_matching_legacy_absolute_receipts_bind_to_cache_tool(self):
+        self.assertEqual([], self.errors())
+        self.receipt['compiler'] = str(self.compiler)
+        self.assertEqual([], self.errors())
+
+    def test_wrong_hash_or_different_receipt_tool_is_rejected(self):
+        self.receipt['compiler_sha256'] = '0' * 64
+        self.assertIn('MSVC compiler tool identity mismatch', self.errors())
+        self.receipt['compiler_sha256'] = msvc_evidence.sha(self.compiler)
+        self.receipt['compiler'] = str(self.root / 'other/cl.exe')
+        self.assertIn('MSVC compiler tool identity mismatch', self.errors())
+
+    def test_cwd_and_path_compiler_decoys_cannot_replace_the_cache_identity(self):
+        decoy = self.root / 'cl.exe'
+        decoy.write_bytes(b'different compiler in current directory and PATH')
+        previous = Path.cwd()
+        try:
+            os.chdir(self.root)
+            with patch.dict(os.environ, {'PATH': str(self.root)}):
+                self.assertEqual([], self.errors())
+                self.receipt['compiler_sha256'] = msvc_evidence.sha(decoy)
+                self.assertIn('MSVC compiler tool identity mismatch', self.errors())
+        finally:
+            os.chdir(previous)
+
+    def test_relative_receipt_directory_is_not_an_accepted_basename(self):
+        self.receipt['compiler'] = str(Path('toolchain') / 'cl.exe')
+        self.assertIn('MSVC compiler tool identity mismatch', self.errors())
+
+    def test_missing_ambiguous_relative_and_changed_cache_are_rejected(self):
+        original = self.cache.read_text(encoding='utf-8')
+        for text in ('', original + original, 'CMAKE_CXX_COMPILER:FILEPATH=cl.exe\n'):
+            with self.subTest(cache=text):
+                self.cache.write_text(text, encoding='utf-8')
+                self.receipt['cmake_cache_sha256'] = msvc_evidence.sha(self.cache)
+                self.assertTrue(self.errors())
+        self.cache.write_text(original, encoding='utf-8')
+        self.assertIn('Build identity mismatch: cmake_cache_sha256', self.errors())
 
 
 class ValidationReadinessTests(unittest.TestCase):
@@ -555,6 +628,39 @@ class PackageTests(unittest.TestCase):
             'required_files': ['CMakeLists.txt'], 'source_directories': ['src', 'metadata']}))
         inventory.write_manifest(self.root)
         self.zip = self.base / 'source.zip'
+
+    def test_manifest_refresh_replaces_hardlink_without_modifying_other_owner(self):
+        destination = self.root / inventory.MANIFEST
+        original = destination.read_bytes()
+        unrelated = self.base / 'hardlink-owner.txt'
+        unrelated.write_bytes(original)
+        destination.unlink()
+        try:
+            os.link(unrelated, destination)
+        except OSError:
+            self.skipTest('hardlink creation unavailable on this filesystem')
+        (self.root / 'src/value.cpp').write_text('int value() { return 9; }\n')
+        inventory.write_manifest(self.root)
+        self.assertEqual(original, unrelated.read_bytes(),
+                         'manifest refresh must not truncate the other hardlink owner')
+        self.assertNotEqual(original, destination.read_bytes())
+        self.assertEqual([], inventory.verify_manifest(self.root))
+        self.assertFalse(list(destination.parent.glob('.' + destination.name + '.*.partial')))
+
+    def test_manifest_refresh_replace_failure_preserves_prior_manifest(self):
+        destination = self.root / inventory.MANIFEST
+        original = destination.read_bytes()
+        (self.root / 'src/value.cpp').write_text('int value() { return 9; }\n')
+        with patch.object(inventory.os, 'replace', side_effect=OSError('synthetic manifest commit failure')):
+            with self.assertRaisesRegex(OSError, 'synthetic manifest commit failure'):
+                inventory.write_manifest(self.root)
+        self.assertEqual(original, destination.read_bytes(),
+                         'failed publication must retain the complete old manifest')
+        self.assertFalse(list(destination.parent.glob('.' + destination.name + '.*.partial')))
+        self.assertTrue(inventory.verify_manifest(self.root),
+                        'the previous manifest must still reject changed source bytes')
+        inventory.write_manifest(self.root)
+        self.assertEqual([], inventory.verify_manifest(self.root))
 
     def test_flat_roundtrip_and_determinism(self):
         first = packaging.package(self.root, self.zip)
@@ -1228,13 +1334,240 @@ class GovernanceTests(unittest.TestCase):
             path = root / entry['launcher']
             path.write_text(original)
             self.assertEqual([], launchers.check(root))
-            for token in ['%*', 'exit /b %RC%', 'ForegroundColor Red', 'Exit code: %RC%', 'pause >nul']:
+            for token in ['%*', '-LauncherOwnsSummary %*', 'exit /b %RC%',
+                          'ForegroundColor Red', 'Exit code: %RC%', 'pause >nul']:
                 path.write_text(original.replace(token, 'REMOVED'))
                 self.assertTrue(launchers.check(root), token)
             path.write_text(original)
             automation=root/entry['automation']
             automation.write_text(automation.read_text().replace('exit $LASTEXITCODE','exit 0'))
             self.assertTrue(any('masks child exit' in e for e in launchers.check(root)))
+
+    def test_launcher_summary_ownership_must_reach_the_profile(self):
+        entries = json.loads((ROOT / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').read_text())['entrypoints']
+        for entry in entries:
+            with self.subTest(launcher=entry['launcher']), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                (root / 'metadata').mkdir()
+                (root / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').write_text(
+                    json.dumps({'entrypoints': [entry]}))
+                for name in (entry['launcher'], entry['automation']):
+                    path = root / name
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes((ROOT / name).read_bytes())
+                self.assertEqual([], launchers.check(root))
+                target = root / entry['automation']
+                original = target.read_text()
+                for token in ('[switch]$LauncherOwnsSummary',
+                              '-LauncherOwnsSummary:$LauncherOwnsSummary'):
+                    target.write_text(original.replace(token, ''))
+                    self.assertTrue(any('summary ownership' in e
+                                        for e in launchers.check(root)), token)
+
+
+class OperatorOutputTests(unittest.TestCase):
+    """Exercise actual wrappers/formatting; fake only the compiler/validator work."""
+
+    @unittest.skipUnless(shutil.which('powershell.exe') or shutil.which('pwsh'),
+                         'PowerShell is required for the provenance fixture')
+    def test_provenance_keeps_tool_hashes_and_versions_without_install_paths(self):
+        shell = shutil.which('powershell.exe') or shutil.which('pwsh')
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'private toolchain path (1)'
+            root.mkdir()
+            names = ['cmake.exe', 'python.exe', 'cl.exe', 'link.exe', 'nmake.exe']
+            for name in names:
+                (root / name).write_bytes(('synthetic tool identity: ' + name).encode('ascii'))
+            harness = root / 'provenance.ps1'
+            harness.write_text(r'''
+param([string]$FixtureRoot, [string]$Common)
+$ErrorActionPreference = 'Stop'
+# A Windows PowerShell child can inherit a Core-only PSModulePath from CTest.
+Import-Module (Join-Path $PSHOME 'Modules/Microsoft.PowerShell.Utility/Microsoft.PowerShell.Utility.psd1') -ErrorAction Stop
+. $Common
+Write-ToolchainProvenance (Join-Path $FixtureRoot 'provenance.log') `
+    (Join-Path $FixtureRoot 'Visual Studio') (Join-Path $FixtureRoot 'vcvars64.bat') `
+    (Join-Path $FixtureRoot 'cmake.exe') (Join-Path $FixtureRoot 'python.exe') `
+    (Join-Path $FixtureRoot 'cl.exe') (Join-Path $FixtureRoot 'link.exe') `
+    (Join-Path $FixtureRoot 'nmake.exe')
+''', encoding='ascii')
+            result = subprocess.run([shell, '-NoLogo', '-NoProfile', '-NonInteractive',
+                                     '-File', str(harness), str(root),
+                                     str(ROOT / 'scripts/build_orchestration/build_common.ps1')],
+                                    capture_output=True, text=True, timeout=20)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            text = (root / 'provenance.log').read_text(encoding='utf-8-sig')
+            lines = text.splitlines()
+            self.assertEqual(['PRELOADER_L_TOOLCHAIN_PROVENANCE_V1',
+                              'VS_INSTALLATION=<redacted>', 'VCVARS64=<redacted>'], lines[:3])
+            self.assertEqual(8, len(lines))
+            self.assertNotIn(str(root), text)
+            self.assertNotIn('|path=', text)
+            for label, name, line in zip(['cmake', 'python', 'cl', 'link', 'nmake'], names, lines[3:]):
+                self.assertEqual(f'{label}|tool={name}|file_version=<none>|sha256={msvc_evidence.sha(root / name)}', line)
+
+    def make_fixture(self, tmp):
+        root = Path(tmp) / 'operator fixture (1)'
+        root.mkdir()
+        entries = json.loads((ROOT / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').read_text())['entrypoints']
+        for entry in entries:
+            for name in (entry['launcher'], entry['automation']):
+                target = root / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes((ROOT / name).read_bytes())
+        directory = root / 'scripts/build_orchestration'
+        shutil.copyfile(ROOT / 'scripts/build_orchestration/build_common.ps1',
+                        directory / 'build_common.ps1')
+        # No MSVC build or Golden acceptance is performed by this output fixture.
+        (directory / 'build_profile.ps1').write_text(r'''
+param([string]$Mode,[string]$BuildDir,[string]$Config,[switch]$LauncherOwnsSummary)
+. (Join-Path $PSScriptRoot 'build_common.ps1')
+$code = [int]$env:SURGE_OUTPUT_FIXTURE_EXIT
+$labels = @{Compile='COMPILE ONLY';Debug='DEBUG BUILD';Native='NATIVE ACCEPTANCE';Crt='STATIC CRT ACCEPTANCE';Golden='PRODUCTION BUILD'}
+$record = @{mode=$Mode;build_dir=$BuildDir;configuration=$Config;owns_summary=[bool]$LauncherOwnsSummary}
+Write-Host ('FIXTURE_ARGS:' + ($record | ConvertTo-Json -Compress))
+if ($code -eq 0 -or ($Mode -eq 'Golden' -and $code -eq 3)) {
+    Write-SelectedProfileResult -ProfileLabel $labels[$Mode] -Dll 'fixture/preloader_l.dll' -Sha256 ('a' * 64) -GoldenBlocked:($code -eq 3) -LauncherOwnsSummary:$LauncherOwnsSummary
+} else {
+    Write-Host 'ERROR: injected validation failure'
+}
+exit $code
+''', encoding='ascii')
+        (root / 'entries.json').write_text(json.dumps(entries), encoding='ascii')
+        return root, entries
+
+    @unittest.skipUnless(shutil.which('powershell.exe') or shutil.which('pwsh'),
+                         'PowerShell is required for the output-only fixture')
+    def test_powershell_routes_summary_and_preserves_arguments_and_exit_codes(self):
+        shell = shutil.which('powershell.exe') or shutil.which('pwsh')
+        with tempfile.TemporaryDirectory() as tmp:
+            root, entries = self.make_fixture(tmp)
+            harness = root / 'harness.ps1'
+            harness.write_text(r'''
+param([string]$FixtureRoot)
+$ErrorActionPreference = 'Stop'
+$entries = Get-Content -LiteralPath (Join-Path $FixtureRoot 'entries.json') -Raw | ConvertFrom-Json
+foreach ($entry in $entries) {
+    $codes = @(0,105)
+    if ($entry.mode -eq 'Golden') { $codes += 3 }
+    foreach ($code in $codes) {
+        foreach ($owned in @($false,$true)) {
+            $env:SURGE_OUTPUT_FIXTURE_EXIT = [string]$code
+            $lines = @(& (Join-Path $FixtureRoot $entry.automation) -BuildDir 'build\fixture path (1)' -Config RelWithDebInfo -LauncherOwnsSummary:$owned 6>&1 | ForEach-Object { [string]$_ })
+            $actualCode = $LASTEXITCODE
+            @{mode=$entry.mode;expected_code=$code;actual_code=$actualCode;owned=$owned;lines=$lines} | ConvertTo-Json -Compress -Depth 5
+        }
+    }
+}
+exit 0
+''', encoding='ascii')
+            result = subprocess.run([shell, '-NoLogo', '-NoProfile', '-NonInteractive',
+                                     '-ExecutionPolicy', 'Bypass', '-File', str(harness), str(root)],
+                                    capture_output=True, text=True, timeout=45)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            records = [json.loads(line) for line in result.stdout.splitlines() if line.strip()]
+            self.assertEqual(22, len(records), result.stdout)
+            labels = {entry['mode']: entry['label'] for entry in entries}
+            for record in records:
+                with self.subTest(mode=record['mode'], code=record['expected_code'], owned=record['owned']):
+                    self.assertEqual(record['expected_code'], record['actual_code'])
+                    lines = record['lines']
+                    args = json.loads(next(line.removeprefix('FIXTURE_ARGS:')
+                                           for line in lines if line.startswith('FIXTURE_ARGS:')))
+                    self.assertEqual(record['mode'], args['mode'])
+                    self.assertEqual(r'build\fixture path (1)', args['build_dir'])
+                    self.assertEqual('RelWithDebInfo', args['configuration'])
+                    self.assertEqual(record['owned'], args['owns_summary'])
+                    if record['expected_code'] == 0:
+                        self.assertEqual(0 if record['owned'] else 1,
+                                         lines.count(labels[record['mode']] + ': PASS'))
+                    elif record['expected_code'] == 3:
+                        self.assertEqual(0 if record['owned'] else 1,
+                                         sum('Golden: BLOCKED' in line for line in lines))
+                        self.assertEqual(0 if record['owned'] else 1, lines.count('Exit code 3.'))
+                        self.assertIn('See golden/GOLDEN_REPORT.json. This is not Golden acceptance.', lines)
+                    else:
+                        self.assertIn('ERROR: injected validation failure', lines)
+                        self.assertFalse(any(': PASS' in line for line in lines))
+                    if record['expected_code'] in (0, 3):
+                        self.assertEqual(1, lines.count('DLL: preloader_l.dll'))
+                        self.assertEqual(1, lines.count('SHA256: ' + 'a' * 64))
+
+    def run_cmd(self, launcher, code):
+        env = dict(os.environ, SURGE_OUTPUT_FIXTURE_EXIT=str(code))
+        # CMD parses its own quotes; list2cmdline's CRT-style backslash escapes
+        # become literal characters here. /s removes just the outer quote pair.
+        command = ('"' + os.environ.get('COMSPEC', 'cmd.exe') + '" /d /s /c ""' +
+                   str(launcher) + r'" -BuildDir "build\fixture path (1)" -Config RelWithDebInfo"')
+        return subprocess.run(command,
+                              input='\n', capture_output=True, text=True, env=env, timeout=25)
+
+    @unittest.skipUnless(os.name == 'nt', 'Requires real Windows CMD and Windows PowerShell')
+    def test_cmd_outputs_one_verdict_with_color_and_with_renderer_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, entries = self.make_fixture(tmp)
+            for fallback in (False, True):
+                for entry in entries:
+                    launcher = root / entry['launcher']
+                    if fallback:
+                        text = launcher.read_text(encoding='ascii')
+                        text, replacements = re.subn(
+                            r'^  powershell\.exe -NoLogo -NoProfile -Command .*$',
+                            '  cmd.exe /d /c exit 1', text, flags=re.MULTILINE)
+                        self.assertGreaterEqual(replacements, 2, 'Renderer fault was not injected')
+                        launcher.write_text(text, encoding='ascii')
+                    codes = (0, 105, 3) if entry['mode'] == 'Golden' else (0, 105)
+                    for code in codes:
+                        with self.subTest(mode=entry['mode'], code=code, fallback=fallback):
+                            result = self.run_cmd(launcher, code)
+                            output = result.stdout + result.stderr
+                            self.assertEqual(code, result.returncode, output)
+                            verdict = 'PASS' if code == 0 else ('BLOCKED' if code == 3 else 'FAIL')
+                            self.assertEqual(1, output.count(entry['label'] + ': ' + verdict), output)
+                            self.assertEqual(1, output.count('Exit code: ' + str(code)), output)
+                            self.assertEqual(1, output.count('Press any key to close this operator window.'), output)
+                            args_line = next(line for line in output.splitlines() if line.startswith('FIXTURE_ARGS:'))
+                            args = json.loads(args_line.removeprefix('FIXTURE_ARGS:'))
+                            self.assertTrue(args['owns_summary'])
+                            self.assertEqual(r'build\fixture path (1)', args['build_dir'])
+                            if code in (0, 3):
+                                self.assertEqual(1, output.count('DLL: preloader_l.dll'), output)
+                                self.assertEqual(1, output.count('SHA256: ' + 'a' * 64), output)
+                            if code == 3:
+                                self.assertNotIn('Golden: BLOCKED', output)
+                                self.assertIn('golden/GOLDEN_REPORT.json', output)
+                            if code == 105:
+                                self.assertIn('ERROR: injected validation failure', output)
+
+    @unittest.skipUnless(os.name == 'nt', 'Requires real Windows CMD and Windows PowerShell')
+    def test_cmd_missing_automation_retains_one_failure_and_exit_two(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, entries = self.make_fixture(tmp)
+            for entry in entries:
+                with self.subTest(mode=entry['mode']):
+                    (root / entry['automation']).unlink()
+                    result = self.run_cmd(root / entry['launcher'], 0)
+                    output = result.stdout + result.stderr
+                    self.assertEqual(2, result.returncode, output)
+                    self.assertEqual(1, output.count(entry['label'] + ': FAIL'), output)
+                    self.assertEqual(1, output.count('Exit code: 2'), output)
+                    self.assertIn('ERROR: Missing target', output)
+                    self.assertNotIn('FIXTURE_ARGS:', output)
+
+    @unittest.skipUnless(os.name == 'nt', 'Requires real Windows CMD and Windows PowerShell')
+    def test_cmd_negative_control_reproduces_the_previous_duplicate(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, entries = self.make_fixture(tmp)
+            entry = next(e for e in entries if e['mode'] == 'Golden')
+            launcher = root / entry['launcher']
+            text = launcher.read_text(encoding='ascii')
+            self.assertIn('-LauncherOwnsSummary %*', text)
+            # Restore the former CMD call: both layers now publish a verdict.
+            launcher.write_text(text.replace('-LauncherOwnsSummary %*', '%*'), encoding='ascii')
+            result = self.run_cmd(launcher, 0)
+            output = result.stdout + result.stderr
+            self.assertEqual(0, result.returncode, output)
+            self.assertEqual(2, output.count('PRODUCTION BUILD: PASS'), output)
 
 
 class BuildWordingTests(unittest.TestCase):
@@ -1302,6 +1635,68 @@ class DistTests(unittest.TestCase):
 
     def dist_bytes(self):
         return {p.name:p.read_bytes() for p in (self.root/'dist').iterdir() if p.is_file()}
+
+    def test_cli_keeps_stage_and_runtime_diagnostics_in_report_only(self):
+        diagnostic = 'private diagnostic: C:\\operator\\workspace\\candidate.dll'
+        for failed_stage, runtime_failure in [(None, False), *[(i, False) for i in range(6)], (None, True)]:
+            with self.subTest(failed_stage=failed_stage, runtime_failure=runtime_failure):
+                calls = []
+                def run(command, **kwargs):
+                    index = len(calls)
+                    calls.append(command)
+                    code = 37 if index == failed_stage or (index == 6 and runtime_failure) else 0
+                    return subprocess.CompletedProcess(command, code, diagnostic + '\n', 'stderr: ' + diagnostic)
+                stdout, stderr = io.StringIO(), io.StringIO()
+                argv = ['run_golden_pipeline.py', '--dll', str(self.raw),
+                        '--build-dir', str(self.build), '--output-dir', str(self.output)]
+                with patch.object(golden, 'ROOT', self.root), patch.object(sys, 'argv', argv), \
+                     patch.object(golden, 'pending_targets', return_value=[]), \
+                     patch.object(golden.subprocess, 'run', side_effect=run), \
+                     contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                    code = golden.main()
+                report = json.loads((self.output / 'GOLDEN_REPORT.json').read_text(encoding='utf-8'))
+                success = failed_stage is None and not runtime_failure
+                count = 6 if failed_stage is None else failed_stage + 1
+                state = 'GOLDEN_PASS' if success else 'FAIL'
+                runtime_exit = 37 if runtime_failure else 0 if failed_stage is None else 'NOT_RUN'
+                self.assertEqual(0 if success else 1, code)
+                self.assertEqual(state, report['result'])
+                self.assertEqual(golden.ORDER[:count], [step['stage'] for step in report['steps']])
+                self.assertEqual(count + (failed_stage is None), len(calls))
+                for step in report['steps']:
+                    self.assertEqual(diagnostic + '\nstderr: ' + diagnostic, step['output'])
+                if failed_stage is None:
+                    self.assertEqual(runtime_exit, report['runtime_check']['exit_code'])
+                    self.assertEqual(diagnostic + '\nstderr: ' + diagnostic, report['runtime_check']['output'])
+                    self.assertIn('Final-name runtime check: ' + ('PASS' if success else 'FAIL'), stdout.getvalue())
+                else:
+                    self.assertNotIn('runtime_check', report)
+                for index, stage in enumerate(golden.ORDER[:count]):
+                    status = 'FAIL' if index == failed_stage else 'PASS'
+                    self.assertIn(f'[{index+1}/6] {stage}: {status}', stdout.getvalue())
+                self.assertEqual(f'GOLDEN_PIPELINE: {state} stages={count} runtime_exit={runtime_exit}',
+                                 stdout.getvalue().splitlines()[-1])
+                self.assertNotIn(diagnostic, stdout.getvalue() + stderr.getvalue())
+                self.assertNotIn('"output":', stdout.getvalue())
+                self.assertEqual('', stderr.getvalue())
+
+    def test_cli_blocked_target_keeps_pending_details_in_report(self):
+        pending = ['policy unresolved at C:\\operator\\workspace\\policy.json']
+        stdout = io.StringIO()
+        argv = ['run_golden_pipeline.py', '--dll', str(self.raw),
+                '--build-dir', str(self.build), '--output-dir', str(self.output)]
+        with patch.object(golden, 'ROOT', self.root), patch.object(sys, 'argv', argv), \
+             patch.object(golden, 'pending_targets', return_value=pending), \
+             patch.object(golden.subprocess, 'run') as child, contextlib.redirect_stdout(stdout):
+            code = golden.main()
+        self.assertEqual(3, code)
+        child.assert_not_called()
+        report = json.loads((self.output / 'GOLDEN_REPORT.json').read_text(encoding='utf-8'))
+        self.assertEqual(pending, report['pending'])
+        self.assertEqual([], report['steps'])
+        self.assertEqual('BLOCKED_TARGET_SEMANTICS', report['result'])
+        self.assertEqual('GOLDEN_PIPELINE: BLOCKED_TARGET_SEMANTICS stages=0 runtime_exit=NOT_RUN\n',
+                         stdout.getvalue())
 
     def test_success_stages_exact_final_name_hash_receipt_and_original_bytes(self):
         before=self.raw.read_bytes()
@@ -1389,14 +1784,142 @@ class DistTests(unittest.TestCase):
         report['runtime_check'].update(sha256_before=report['sha256'],sha256_after=report['sha256'])
         replace=golden.os.replace
         def fail_sidecar(source,target):
-            if Path(source).name=='preloader_l.dll.sha256' and Path(source).parent.name.startswith('.candidate-'):
+            if Path(source).name=='preloader_l.dll.sha256' and '.golden-transaction' in Path(source).parts:
                 raise OSError('injected sidecar commit failure')
             return replace(source,target)
         with patch.object(golden.os,'replace',side_effect=fail_sidecar):
             with self.assertRaises(OSError):golden.stage_dist(self.root,artifact,report)
         self.assertEqual(before,self.dist_bytes())
-        self.assertFalse((self.root/'dist/.golden.lock').exists())
+        self.assertTrue((self.root/'dist/.golden.lock').is_file())
         self.assertFalse(list((self.root/'dist').glob('.candidate-*')))
+
+
+    def _crash_dist_operation(self, artifact, report, replace_number, operation="promote"):
+        """Terminate a real child immediately after one public file replacement."""
+        report_path = self.build / 'crash-report.json'
+        report_path.write_text(json.dumps(report), encoding='utf-8')
+        script = """
+import json
+import os
+from pathlib import Path
+import sys
+sys.path.insert(0, sys.argv[1])
+import run_golden_pipeline as golden
+root = Path(sys.argv[2]).resolve()
+artifact = Path(sys.argv[3]).resolve()
+report = json.loads(Path(sys.argv[4]).read_text(encoding='utf-8'))
+stop_after = int(sys.argv[5])
+original_replace = golden.os.replace
+count = 0
+def replace_and_exit(source, target):
+    global count
+    original_replace(source, target)
+    if Path(target).parent == root / 'dist' and Path(target).name in golden.DIST_NAMES:
+        count += 1
+        if count == stop_after:
+            os._exit(79)
+golden.os.replace = replace_and_exit
+if sys.argv[6] == "recover":
+    golden.recover_dist(root)
+else:
+    golden.stage_dist(root, artifact, report)
+"""
+        result = subprocess.run(
+            [sys.executable, '-B', '-c', script, str(ROOT / 'scripts'),
+             str(self.root), str(artifact), str(report_path), str(replace_number), operation],
+            capture_output=True, text=True, timeout=25)
+        self.assertEqual(79, result.returncode, result.stdout + result.stderr)
+
+    def _changed_candidate(self, report):
+        artifact = Path(report['artifact'])
+        artifact.write_bytes(b'synthetic replacement candidate; not a PE')
+        report['sha256'] = golden.sha(artifact)
+        report['runtime_check'].update(sha256_before=report['sha256'], sha256_after=report['sha256'])
+        return artifact
+
+    def test_process_exit_after_each_replace_replays_previous_bundle(self):
+        for count in (1, 2, 3):
+            with self.subTest(replace_count=count):
+                report, _ = self.run_pipeline()
+                before = self.dist_bytes()
+                artifact = self._changed_candidate(report)
+                self._crash_dist_operation(artifact, report, count)
+                self.assertTrue((self.root / 'dist' / golden.DIST_TRANSACTION).is_dir())
+                self.assertTrue(golden.recover_dist(self.root))
+                self.assertEqual(before, self.dist_bytes())
+                self.assertFalse((self.root / 'dist' / golden.DIST_TRANSACTION).exists())
+                self.assertFalse(golden.recover_dist(self.root))
+
+    def test_interrupted_recovery_replays_original_snapshot_again(self):
+        report, _ = self.run_pipeline()
+        before = self.dist_bytes()
+        artifact = self._changed_candidate(report)
+        self._crash_dist_operation(artifact, report, 2)
+        self._crash_dist_operation(artifact, report, 1, operation="recover")
+        self.assertTrue((self.root / 'dist' / golden.DIST_TRANSACTION).is_dir())
+        self.assertTrue(golden.recover_dist(self.root))
+        self.assertEqual(before, self.dist_bytes())
+        self.assertFalse(golden.recover_dist(self.root))
+
+    def test_journal_retirement_failure_restores_previous_bundle(self):
+        report, _ = self.run_pipeline()
+        before = self.dist_bytes()
+        artifact = self._changed_candidate(report)
+        transaction = (self.root / 'dist' / golden.DIST_TRANSACTION).resolve()
+        replace = golden.os.replace
+        failed = False
+        def fail_retirement_once(source, target):
+            nonlocal failed
+            if Path(source).resolve() == transaction and Path(target).name.startswith('.golden-retired-') and not failed:
+                failed = True
+                raise OSError('injected journal retirement failure')
+            return replace(source, target)
+        with patch.object(golden.os, 'replace', side_effect=fail_retirement_once):
+            with self.assertRaisesRegex(OSError, 'journal retirement failure'):
+                golden.stage_dist(self.root, artifact, report)
+        self.assertTrue(failed)
+        self.assertEqual(before, self.dist_bytes())
+        self.assertFalse(transaction.exists())
+
+    def test_failed_golden_run_recovers_old_bundle_before_testing(self):
+        report, _ = self.run_pipeline()
+        before = self.dist_bytes()
+        artifact = self._changed_candidate(report)
+        self._crash_dist_operation(artifact, report, 2)
+        failure, calls = self.run_pipeline(failed_stage=0)
+        self.assertEqual('FAIL', failure['result'])
+        self.assertEqual(1, len(calls))
+        self.assertEqual(before, self.dist_bytes())
+
+    def test_tampered_recovery_snapshot_fails_closed(self):
+        report, _ = self.run_pipeline()
+        artifact = self._changed_candidate(report)
+        self._crash_dist_operation(artifact, report, 1)
+        transaction = self.root / 'dist' / golden.DIST_TRANSACTION
+        (transaction / 'previous' / golden.DIST_NAMES[0]).write_bytes(b'corrupted rollback data')
+        before = self.dist_bytes()
+        with self.assertRaisesRegex(ValueError, 'recovery snapshot'):
+            golden.recover_dist(self.root)
+        self.assertEqual(before, self.dist_bytes())
+        self.assertTrue(transaction.is_dir())
+
+    def test_first_publish_interruption_reverts_to_no_bundle(self):
+        report, _ = self.run_pipeline()
+        for name in golden.DIST_NAMES:
+            (self.root / 'dist' / name).unlink()
+        artifact = self._changed_candidate(report)
+        self._crash_dist_operation(artifact, report, 1)
+        self.assertTrue(golden.recover_dist(self.root))
+        for name in golden.DIST_NAMES:
+            self.assertFalse((self.root / 'dist' / name).exists())
+
+    def test_second_writer_cannot_acquire_live_dist_lock(self):
+        self.run_pipeline()
+        dist = self.root / 'dist'
+        with golden._dist_lock(dist):
+            with self.assertRaises(OSError):
+                with golden._dist_lock(dist):
+                    self.fail('Second writer entered a live dist lock')
 
     def test_final_filename_matches_unchanged_hook_filter(self):
         contract=json.loads((ROOT/'metadata/DIST_CONTRACT.json').read_text())

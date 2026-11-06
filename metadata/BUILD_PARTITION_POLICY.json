@@ -317,11 +317,13 @@
     "handlers_contracts",
     "hash_contracts",
     "hook_freeze_contracts",
+    "hook_real_peer_contracts",
     "hook_transaction_contracts",
     "host_callback_contracts",
     "host_init_contracts",
     "libraries_contracts",
     "license_file_integration",
+    "license_ticket_time_contracts",
     "licensing_contracts",
     "listener_owners_contracts",
     "listener_port_contracts",
@@ -330,6 +332,7 @@
     "net_failure_contracts",
     "network_policy_contracts",
     "parser_contracts",
+    "parser_header_contracts",
     "path_contracts",
     "preloader_l_crt_host",
     "preloader_l_runtime_host",
@@ -369,7 +372,8 @@
     "preloader_l_source_pugixml"
   ],
   "vendor_comparison_targets": [
-    "hook_engine_fixture_tests"
+    "hook_engine_fixture_tests",
+    "hook_real_peer_stale_control"
   ],
   "production_exports": [
     "DllMain",
