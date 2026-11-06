@@ -24,7 +24,8 @@ and catches parser exceptions, so separate static CRT instances are unsafe at
 this boundary. The Debug timeout was observed immediately before destruction of
 the invalid-input parser state, after all functional checks completed and before
 shutdown. This identifies a destructor boundary, not a captured native stack.
-The shared-CRT correction still requires fresh native Debug/Release execution.
+The diagnosis above describes the correction's original checkpoint; current
+native Debug/Release acceptance belongs to the selected head's CI results.
 Production and static reference/test targets retain `/MT` or `/MTd` and their
 existing objects. The MSVC development DLL must not link those static-CRT
 objects or archives. Non-MSVC development builds retain their existing graph.
@@ -43,8 +44,8 @@ The external TinyXML2 control exists only in the standalone comparison.
 ## Evidence and limits
 
 The matrices and measurements below describe the historical first partition of
-74 sources. The current additional four-source review, split test coverage and
-fresh results are in [build-cleanup/VALIDATION.json](../metadata/evidence/build-cleanup/VALIDATION.json).
+74 sources. The later four-source review, split test coverage and its checkpoint
+results are in [build-cleanup/VALIDATION.json](../metadata/evidence/build-cleanup/VALIDATION.json).
 The historical 898-symbol count and development export count are not current
 totals and are not used as current acceptance gates.
 
@@ -103,7 +104,8 @@ first clean configure. The build produces a production linker map and checks:
 
 The check runs after linking and as an incremental `ALL` target. Unsupported or
 empty maps fail. Both LLVM-MinGW and MSVC map syntax have negative fixtures;
-actual MSVC linker execution is still pending. Raw compiler DLLs and maps stay
+actual MSVC linker acceptance is recorded by the selected head's Windows
+jobs rather than these historical fixtures. Raw compiler DLLs and maps stay
 in the build directory; no dist promotion or publication is performed here.
 
 The original callback mixed tests remain intact. Additional `production_callback_contracts`

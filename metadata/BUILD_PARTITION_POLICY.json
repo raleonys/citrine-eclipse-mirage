@@ -282,6 +282,7 @@
     "achievement_storage_startup_model_contracts"
   ],
   "production_test_targets": [
+    "crypt_diagnostic_failure_contracts",
     "achievement_runtime_contracts",
     "achievement_storage_contracts",
     "achievement_writer_contracts",
@@ -303,6 +304,7 @@
     "dll_public_c_consumer",
     "encoding_contracts",
     "environment_dialog_contracts",
+    "environment_license_key_contracts",
     "event_queue_contracts",
     "event_queue_integration_contracts",
     "execution_concurrency_contracts",
@@ -320,6 +322,7 @@
     "host_init_contracts",
     "libraries_contracts",
     "license_file_integration",
+    "license_ticket_time_contracts",
     "licensing_contracts",
     "listener_owners_contracts",
     "listener_port_contracts",
@@ -328,6 +331,7 @@
     "net_failure_contracts",
     "network_policy_contracts",
     "parser_contracts",
+    "parser_header_contracts",
     "path_contracts",
     "preloader_l_crt_host",
     "preloader_l_runtime_host",
