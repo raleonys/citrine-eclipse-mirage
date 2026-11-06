@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Recover exclusively owned readonly atomic backups after a post-copy exception: clear the copied readonly flag only during deletion, retain ownership on cleanup errors, and cover original preservation plus same-factory retry in the native staging fixture.
+
 - Decode source-package manifest and repository-contract JSON explicitly as UTF-8. Test valid Unicode metadata under an ANSI default and reject malformed UTF-8 before replacing an existing ZIP/checksum pair.
 
 - Initialize internal saved-avatar size to the observed -1 sentinel so the first successful own image below 208 pixels can update the last-avatar cache. Cover real file-sharing denial, retry, equal-size reuse and a later larger image without changing public configuration defaults.
