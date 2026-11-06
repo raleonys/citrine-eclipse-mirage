@@ -1526,6 +1526,68 @@ class DistTests(unittest.TestCase):
     def dist_bytes(self):
         return {p.name:p.read_bytes() for p in (self.root/'dist').iterdir() if p.is_file()}
 
+    def test_cli_keeps_stage_and_runtime_diagnostics_in_report_only(self):
+        diagnostic = 'private diagnostic: C:\\operator\\workspace\\candidate.dll'
+        for failed_stage, runtime_failure in [(None, False), *[(i, False) for i in range(6)], (None, True)]:
+            with self.subTest(failed_stage=failed_stage, runtime_failure=runtime_failure):
+                calls = []
+                def run(command, **kwargs):
+                    index = len(calls)
+                    calls.append(command)
+                    code = 37 if index == failed_stage or (index == 6 and runtime_failure) else 0
+                    return subprocess.CompletedProcess(command, code, diagnostic + '\n', 'stderr: ' + diagnostic)
+                stdout, stderr = io.StringIO(), io.StringIO()
+                argv = ['run_golden_pipeline.py', '--dll', str(self.raw),
+                        '--build-dir', str(self.build), '--output-dir', str(self.output)]
+                with patch.object(golden, 'ROOT', self.root), patch.object(sys, 'argv', argv), \
+                     patch.object(golden, 'pending_targets', return_value=[]), \
+                     patch.object(golden.subprocess, 'run', side_effect=run), \
+                     contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                    code = golden.main()
+                report = json.loads((self.output / 'GOLDEN_REPORT.json').read_text(encoding='utf-8'))
+                success = failed_stage is None and not runtime_failure
+                count = 6 if failed_stage is None else failed_stage + 1
+                state = 'GOLDEN_PASS' if success else 'FAIL'
+                runtime_exit = 37 if runtime_failure else 0 if failed_stage is None else 'NOT_RUN'
+                self.assertEqual(0 if success else 1, code)
+                self.assertEqual(state, report['result'])
+                self.assertEqual(golden.ORDER[:count], [step['stage'] for step in report['steps']])
+                self.assertEqual(count + (failed_stage is None), len(calls))
+                for step in report['steps']:
+                    self.assertEqual(diagnostic + '\nstderr: ' + diagnostic, step['output'])
+                if failed_stage is None:
+                    self.assertEqual(runtime_exit, report['runtime_check']['exit_code'])
+                    self.assertEqual(diagnostic + '\nstderr: ' + diagnostic, report['runtime_check']['output'])
+                    self.assertIn('Final-name runtime check: ' + ('PASS' if success else 'FAIL'), stdout.getvalue())
+                else:
+                    self.assertNotIn('runtime_check', report)
+                for index, stage in enumerate(golden.ORDER[:count]):
+                    status = 'FAIL' if index == failed_stage else 'PASS'
+                    self.assertIn(f'[{index+1}/6] {stage}: {status}', stdout.getvalue())
+                self.assertEqual(f'GOLDEN_PIPELINE: {state} stages={count} runtime_exit={runtime_exit}',
+                                 stdout.getvalue().splitlines()[-1])
+                self.assertNotIn(diagnostic, stdout.getvalue() + stderr.getvalue())
+                self.assertNotIn('"output":', stdout.getvalue())
+                self.assertEqual('', stderr.getvalue())
+
+    def test_cli_blocked_target_keeps_pending_details_in_report(self):
+        pending = ['policy unresolved at C:\\operator\\workspace\\policy.json']
+        stdout = io.StringIO()
+        argv = ['run_golden_pipeline.py', '--dll', str(self.raw),
+                '--build-dir', str(self.build), '--output-dir', str(self.output)]
+        with patch.object(golden, 'ROOT', self.root), patch.object(sys, 'argv', argv), \
+             patch.object(golden, 'pending_targets', return_value=pending), \
+             patch.object(golden.subprocess, 'run') as child, contextlib.redirect_stdout(stdout):
+            code = golden.main()
+        self.assertEqual(3, code)
+        child.assert_not_called()
+        report = json.loads((self.output / 'GOLDEN_REPORT.json').read_text(encoding='utf-8'))
+        self.assertEqual(pending, report['pending'])
+        self.assertEqual([], report['steps'])
+        self.assertEqual('BLOCKED_TARGET_SEMANTICS', report['result'])
+        self.assertEqual('GOLDEN_PIPELINE: BLOCKED_TARGET_SEMANTICS stages=0 runtime_exit=NOT_RUN\n',
+                         stdout.getvalue())
+
     def test_success_stages_exact_final_name_hash_receipt_and_original_bytes(self):
         before=self.raw.read_bytes()
         report,calls=self.run_pipeline()

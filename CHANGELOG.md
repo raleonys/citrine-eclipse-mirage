@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Keep Golden subprocess and runtime diagnostics in the complete on-disk report while printing only the final result, executed-stage count and runtime exit state. Preserve current GOLDEN_PASS criteria, all six stages, per-stage announcements, exit codes and distribution recovery; cover successful, blocked, stage-failure and runtime-failure console/report contracts.
+
 - Register machine-specific Windows path masks before checkout/tool setup in the current full-validation Windows profiles, portable and reference jobs, plus the manual operator fixture. Normalize single backslashes to forward slashes, reject CR/LF before emitting logging commands and escape literal percent characters. Preserve integrity-only opening CI, the eleven-check synchronization gate, build/test commands and unmodified diagnostic artifacts; masking affects subsequent hosted console presentation.
 
 - Exercise A11-02 startup flag admission with preseeded/duplicate and unrelated publications, both worker publication orders and observed worker payload values. Reopen the controlled sleep gate after each incomplete phase so early returns cannot hide behind the gate; retain the 10 ms test clock, bounded failure cleanup, cold-cache checks and 120000 contended critical sections. The control gate and worker joins also synchronize payloads, so this is bounded scenario coverage rather than an isolated memory-ordering proof. No production code or test timeout changes.

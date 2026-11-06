@@ -420,7 +420,10 @@ def main():
         report = pipeline(ROOT, args.dll, args.build_dir, args.output_dir)
         args.output_dir.mkdir(parents=True, exist_ok=True)
         (args.output_dir / 'GOLDEN_REPORT.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
-        print(json.dumps(report, indent=2))
+        # Keep full diagnostics in the local report, not public CI console logs.
+        print('GOLDEN_PIPELINE:', report['result'],
+              'stages=' + str(len(report.get('steps', []))),
+              'runtime_exit=' + str(report.get('runtime_check', {}).get('exit_code', 'NOT_RUN')))
         return 0 if report['result'] == 'GOLDEN_PASS' else 3 if report['pending'] else 1
     except (OSError, ValueError, KeyError) as error:
         print('GOLDEN_PIPELINE: FAIL:', error, file=sys.stderr)
