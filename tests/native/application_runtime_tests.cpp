@@ -20,6 +20,7 @@
 #include <future>
 #include <fstream>
 #include <iterator>
+#include <cstring>
 #include <algorithm>
 
 using namespace preloader_l;
@@ -122,6 +123,51 @@ void event_mutex_contract(){
     mutex.unlock_04a6b4();peer.join();
     require(!premature&&acquired&&valid&&mutex.count_4c()==0,"another thread waits then acquires a released event mutex");
 }
+void avatar_provider_arguments(){
+    configuration::State state{};application::Options options;file::NativeFactory files;
+    xml_reader_bridge::Backend xml;achievement_storage::Paths paths;
+    achievement_runtime::HostClock clock;achievement_runtime::HostFormatter formatter;
+    application::detail::Environment env{state,options,files,xml,paths,clock,formatter};
+    struct Capture {
+        std::uintptr_t table;
+        std::wstring path;std::string owner;std::int32_t size=0;unsigned calls=0;
+        std::uint8_t result=0x80;
+    } capture{};
+    const auto avatar=+[](void* object,const wchar_t* path,const char* owner,std::int32_t size)->std::uint8_t {
+        auto& value=*static_cast<Capture*>(object);++value.calls;
+        value.path=path;value.owner=owner;value.size=size;
+        return value.result;
+    };
+    // Byte-backed unaligned table storage must use the same readable foreign
+    // layout contract as the other provider methods, without a typed overlay.
+    // Align the buffer so its +1 byte address is deliberately unaligned.
+    alignas(std::uintptr_t) std::array<unsigned char,1+7*sizeof(std::uintptr_t)> table{};
+    capture.table=reinterpret_cast<std::uintptr_t>(table.data()+1);
+    const auto address=reinterpret_cast<std::uintptr_t>(avatar);
+    std::memcpy(table.data()+1+5*sizeof(address),&address,sizeof(address));
+    env.provider=reinterpret_cast<std::uintptr_t>(&capture);
+    const configuration::Path cache=u"C:\\fixture\\cache-\u0131\u4e2d.png";
+    const std::string owner=std::string(96,'u')+":tail";
+    for(const auto size:{2,-2}) {
+        require(env.request_online_avatar(cache,owner.c_str(),size),"nonzero provider AL means avatar success");
+        require(capture.path==application::detail::wide(cache)&&capture.owner==owner&&capture.size==size,
+            "actual Environment forwards live UTF16 path, owner and signed size to slot5");
+    }
+    capture.result=0;
+    require(!env.request_online_avatar(cache,owner.c_str(),0)&&capture.size==0,"zero provider AL means avatar fallback");
+    const auto calls=capture.calls;
+    for(const auto failure:{0,1,2}) {
+        if(failure==0)env.provider=0;
+        if(failure==1){env.provider=reinterpret_cast<std::uintptr_t>(&capture);capture.table=0;}
+        if(failure==2){capture.table=reinterpret_cast<std::uintptr_t>(table.data()+1);const std::uintptr_t empty=0;std::memcpy(table.data()+1+5*sizeof(empty),&empty,sizeof(empty));}
+        bool rejected=false;
+        try{(void)env.request_online_avatar(cache,owner.c_str(),2);}catch(const std::logic_error&){rejected=true;}
+        require(rejected&&capture.calls==calls,"unavailable avatar object/table/slot rejects before a foreign call");
+    }
+    bool rejected=false;
+    try{(void)env.online_avatar_virtual_28(cache);}catch(const std::logic_error&){rejected=true;}
+    require(rejected,"incomplete production avatar call cannot invent owner or size");
+}
 void stop_blocked_greeting() {
     GreetingFixture fixture;auto entered=fixture.entered.get_future();
     execution::MutexState mutex{};execution::initialize_mutex_04a698(mutex,2);
@@ -146,6 +192,7 @@ void stop_blocked_greeting() {
 }
 int main(int argc,char** argv) try {
     event_mutex_contract();
+    avatar_provider_arguments();
     Directory directory;
     file::NativeFactory files;
     const auto cfg=directory.path/"surge.cfg";

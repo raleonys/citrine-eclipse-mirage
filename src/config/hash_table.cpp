@@ -99,8 +99,14 @@ const Node* Node::find(std::string_view key) const {
 Node& Node::lookup(std::string_view key) {
     const auto found=children.find(key);
     if(found!=children.end())return found->second;
-    table.insert_unique(key);
-    return children.try_emplace(std::string(key)).first->second;
+    // A missing key may borrow a substring of table.traversal. Rehashing
+    // invalidates that view, so first own the key in its stable map node.
+    // On insertion failure, discard the provisional child before retry.
+    const auto [row,inserted]=children.try_emplace(std::string(key));
+    if(!inserted)return row->second;
+    try {table.insert_unique(row->first);}
+    catch(...) {children.erase(row);throw;}
+    return row->second;
 }
 void Node::validate() const {
     table.validate();

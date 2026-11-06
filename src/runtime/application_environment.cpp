@@ -177,10 +177,22 @@ void Environment::unknown_entitlement_field(std::string_view) {
     // (which may include secrets or line breaks) into diagnostic storage.
     debug_log("QueryEntitlements ignored unknown field");
 }
-bool Environment::online_avatar_virtual_28(const Path& p) {
+bool Environment::online_avatar_virtual_28(const Path&) {
+    throw std::logic_error("Online avatar requires owner and size");
+}
+bool Environment::request_online_avatar(const Path& p,const char* owner,std::int32_t size) {
     if(!provider)throw std::logic_error("Online avatar requested without provider");
-    using Fn=bool(*)(void*,const wchar_t*);auto object=reinterpret_cast<void*>(provider);
-    auto table=*reinterpret_cast<std::uintptr_t**>(object);return reinterpret_cast<Fn>(table[5])(object,wide(p).c_str());
+    // 031aa0..031aad passes size in R9D and owner in R8, alongside RCX/RDX.
+    // Unsigned-character pointer arithmetic explicitly counts bytes; memcpy
+    // reads the foreign object/table without alignment or typed-overlay assumptions.
+    std::uintptr_t table=0,address=0;
+    auto* object=reinterpret_cast<void*>(provider);
+    std::memcpy(&table,object,sizeof(table));
+    if(!table)throw std::logic_error("Provider vtable is unavailable");
+    std::memcpy(&address,reinterpret_cast<const unsigned char*>(table)+5*sizeof(address),sizeof(address));
+    if(!address)throw std::logic_error("Provider method is unavailable");
+    using Fn=std::uint8_t(*)(void*,const wchar_t*,const char*,std::int32_t);
+    return reinterpret_cast<Fn>(address)(object,wide(p).c_str(),owner,size)!=0;
 }
 bool Environment::copy_overwrite_048d20(const Path& from,const Path& to){return file_copy::copy_file_windows_048d20(from,to,2).copied;}
 void Environment::log_saved_size_085530(std::int32_t size){

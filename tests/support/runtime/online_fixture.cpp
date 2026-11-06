@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <cstdint>
 #include <cstdio>
+#include <string_view>
 #include <array>
 #include <atomic>
 namespace {
@@ -17,7 +18,10 @@ int status(Object*){return mode;}
 const char* username(Object*){return "fixture-online";}
 const char* persona(Object*){return "fixture-persona";}
 const char* user(Object*){return "fixture-user-id";}
-bool avatar(Object*,const wchar_t* path){auto* file=_wfopen(path,L"wb");if(!file)return false;std::fputs("fixture-provider-avatar",file);std::fclose(file);return true;}
+std::uint8_t avatar(Object*,const wchar_t* path,const char* owner,std::int32_t size){
+    if(!owner||std::string_view(owner)!="fixture-user-id"||size!=2)return 0;
+    auto* file=_wfopen(path,L"wb");if(!file)return 0;std::fputs("fixture-provider-avatar",file);std::fclose(file);return 0x80;
+}
 const char* auth(Object*,const char*){
     if(registry_probe.load(std::memory_order_acquire)){
         HKEY key=nullptr;

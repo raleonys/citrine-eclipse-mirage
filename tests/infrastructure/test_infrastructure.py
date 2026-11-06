@@ -1612,14 +1612,142 @@ class DistTests(unittest.TestCase):
         report['runtime_check'].update(sha256_before=report['sha256'],sha256_after=report['sha256'])
         replace=golden.os.replace
         def fail_sidecar(source,target):
-            if Path(source).name=='preloader_l.dll.sha256' and Path(source).parent.name.startswith('.candidate-'):
+            if Path(source).name=='preloader_l.dll.sha256' and '.golden-transaction' in Path(source).parts:
                 raise OSError('injected sidecar commit failure')
             return replace(source,target)
         with patch.object(golden.os,'replace',side_effect=fail_sidecar):
             with self.assertRaises(OSError):golden.stage_dist(self.root,artifact,report)
         self.assertEqual(before,self.dist_bytes())
-        self.assertFalse((self.root/'dist/.golden.lock').exists())
+        self.assertTrue((self.root/'dist/.golden.lock').is_file())
         self.assertFalse(list((self.root/'dist').glob('.candidate-*')))
+
+
+    def _crash_dist_operation(self, artifact, report, replace_number, operation="promote"):
+        """Terminate a real child immediately after one public file replacement."""
+        report_path = self.build / 'crash-report.json'
+        report_path.write_text(json.dumps(report), encoding='utf-8')
+        script = """
+import json
+import os
+from pathlib import Path
+import sys
+sys.path.insert(0, sys.argv[1])
+import run_golden_pipeline as golden
+root = Path(sys.argv[2]).resolve()
+artifact = Path(sys.argv[3]).resolve()
+report = json.loads(Path(sys.argv[4]).read_text(encoding='utf-8'))
+stop_after = int(sys.argv[5])
+original_replace = golden.os.replace
+count = 0
+def replace_and_exit(source, target):
+    global count
+    original_replace(source, target)
+    if Path(target).parent == root / 'dist' and Path(target).name in golden.DIST_NAMES:
+        count += 1
+        if count == stop_after:
+            os._exit(79)
+golden.os.replace = replace_and_exit
+if sys.argv[6] == "recover":
+    golden.recover_dist(root)
+else:
+    golden.stage_dist(root, artifact, report)
+"""
+        result = subprocess.run(
+            [sys.executable, '-B', '-c', script, str(ROOT / 'scripts'),
+             str(self.root), str(artifact), str(report_path), str(replace_number), operation],
+            capture_output=True, text=True, timeout=25)
+        self.assertEqual(79, result.returncode, result.stdout + result.stderr)
+
+    def _changed_candidate(self, report):
+        artifact = Path(report['artifact'])
+        artifact.write_bytes(b'synthetic replacement candidate; not a PE')
+        report['sha256'] = golden.sha(artifact)
+        report['runtime_check'].update(sha256_before=report['sha256'], sha256_after=report['sha256'])
+        return artifact
+
+    def test_process_exit_after_each_replace_replays_previous_bundle(self):
+        for count in (1, 2, 3):
+            with self.subTest(replace_count=count):
+                report, _ = self.run_pipeline()
+                before = self.dist_bytes()
+                artifact = self._changed_candidate(report)
+                self._crash_dist_operation(artifact, report, count)
+                self.assertTrue((self.root / 'dist' / golden.DIST_TRANSACTION).is_dir())
+                self.assertTrue(golden.recover_dist(self.root))
+                self.assertEqual(before, self.dist_bytes())
+                self.assertFalse((self.root / 'dist' / golden.DIST_TRANSACTION).exists())
+                self.assertFalse(golden.recover_dist(self.root))
+
+    def test_interrupted_recovery_replays_original_snapshot_again(self):
+        report, _ = self.run_pipeline()
+        before = self.dist_bytes()
+        artifact = self._changed_candidate(report)
+        self._crash_dist_operation(artifact, report, 2)
+        self._crash_dist_operation(artifact, report, 1, operation="recover")
+        self.assertTrue((self.root / 'dist' / golden.DIST_TRANSACTION).is_dir())
+        self.assertTrue(golden.recover_dist(self.root))
+        self.assertEqual(before, self.dist_bytes())
+        self.assertFalse(golden.recover_dist(self.root))
+
+    def test_journal_retirement_failure_restores_previous_bundle(self):
+        report, _ = self.run_pipeline()
+        before = self.dist_bytes()
+        artifact = self._changed_candidate(report)
+        transaction = (self.root / 'dist' / golden.DIST_TRANSACTION).resolve()
+        replace = golden.os.replace
+        failed = False
+        def fail_retirement_once(source, target):
+            nonlocal failed
+            if Path(source).resolve() == transaction and Path(target).name.startswith('.golden-retired-') and not failed:
+                failed = True
+                raise OSError('injected journal retirement failure')
+            return replace(source, target)
+        with patch.object(golden.os, 'replace', side_effect=fail_retirement_once):
+            with self.assertRaisesRegex(OSError, 'journal retirement failure'):
+                golden.stage_dist(self.root, artifact, report)
+        self.assertTrue(failed)
+        self.assertEqual(before, self.dist_bytes())
+        self.assertFalse(transaction.exists())
+
+    def test_failed_golden_run_recovers_old_bundle_before_testing(self):
+        report, _ = self.run_pipeline()
+        before = self.dist_bytes()
+        artifact = self._changed_candidate(report)
+        self._crash_dist_operation(artifact, report, 2)
+        failure, calls = self.run_pipeline(failed_stage=0)
+        self.assertEqual('FAIL', failure['result'])
+        self.assertEqual(1, len(calls))
+        self.assertEqual(before, self.dist_bytes())
+
+    def test_tampered_recovery_snapshot_fails_closed(self):
+        report, _ = self.run_pipeline()
+        artifact = self._changed_candidate(report)
+        self._crash_dist_operation(artifact, report, 1)
+        transaction = self.root / 'dist' / golden.DIST_TRANSACTION
+        (transaction / 'previous' / golden.DIST_NAMES[0]).write_bytes(b'corrupted rollback data')
+        before = self.dist_bytes()
+        with self.assertRaisesRegex(ValueError, 'recovery snapshot'):
+            golden.recover_dist(self.root)
+        self.assertEqual(before, self.dist_bytes())
+        self.assertTrue(transaction.is_dir())
+
+    def test_first_publish_interruption_reverts_to_no_bundle(self):
+        report, _ = self.run_pipeline()
+        for name in golden.DIST_NAMES:
+            (self.root / 'dist' / name).unlink()
+        artifact = self._changed_candidate(report)
+        self._crash_dist_operation(artifact, report, 1)
+        self.assertTrue(golden.recover_dist(self.root))
+        for name in golden.DIST_NAMES:
+            self.assertFalse((self.root / 'dist' / name).exists())
+
+    def test_second_writer_cannot_acquire_live_dist_lock(self):
+        self.run_pipeline()
+        dist = self.root / 'dist'
+        with golden._dist_lock(dist):
+            with self.assertRaises(OSError):
+                with golden._dist_lock(dist):
+                    self.fail('Second writer entered a live dist lock')
 
     def test_final_filename_matches_unchanged_hook_filter(self):
         contract=json.loads((ROOT/'metadata/DIST_CONTRACT.json').read_text())
