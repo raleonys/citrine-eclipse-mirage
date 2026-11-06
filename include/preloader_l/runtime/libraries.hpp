@@ -22,6 +22,11 @@ public:
     virtual int wide_to_narrow(std::uint32_t codepage, std::uint32_t flags,
         const wchar_t*, int count, char* destination, int capacity, bool* used_default) = 0;
     virtual std::uint32_t last_error() = 0;
+    // Explicit suppression interval. Defaults preserve the source get/set
+    // effects; concrete shared owners may coordinate overlapping load leases.
+    virtual std::uint32_t begin_error_suppression();
+    virtual void end_error_suppression(std::uint32_t previous);
+
 };
 
 // Genuine Win32 adapter; used by the concrete application extra-library owner.

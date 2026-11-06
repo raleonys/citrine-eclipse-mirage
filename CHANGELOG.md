@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Coordinate overlapping provider and extra-library process error-mode suppression with shared leases, preserving suppression until the final loader completes and restoring the incoming mode on success or unwind before readiness publication. Consolidate the extra-library exception restoration and acquired-prefix regressions with native overlap/finish-interval tests. Preserve retained source-model get/set effects through explicit boundaries; rebuild internal C++ adapters without changing public DLL exports.
+
 - Cover D53-A throwing accepted-handler construction with real native Asio loopback sockets, both without a prior session and with an established peer. Require the rejected socket to close, exactly one construction error, continued peer request/response, listener rearm and complete ownership retirement after repeated stop. Preserve accepted-main IOCP, accept-cancellation and aligned-CRT allocation regressions; no production or ABI change.
 
 - Derive the native FileBasicInfo query buffer length from its Windows SDK FILE_BASIC_INFO object instead of a hard-coded 40 bytes. Preserve the actual Windows API call, metadata assignment and error forwarding; this is type/size consistency hardening without a reproduced runtime defect.
