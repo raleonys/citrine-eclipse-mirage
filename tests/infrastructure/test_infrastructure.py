@@ -1382,6 +1382,8 @@ class OperatorOutputTests(unittest.TestCase):
             harness.write_text(r'''
 param([string]$FixtureRoot, [string]$Common)
 $ErrorActionPreference = 'Stop'
+# A Windows PowerShell child can inherit a Core-only PSModulePath from CTest.
+Import-Module (Join-Path $PSHOME 'Modules/Microsoft.PowerShell.Utility/Microsoft.PowerShell.Utility.psd1') -ErrorAction Stop
 . $Common
 Write-ToolchainProvenance (Join-Path $FixtureRoot 'provenance.log') `
     (Join-Path $FixtureRoot 'Visual Studio') (Join-Path $FixtureRoot 'vcvars64.bat') `
