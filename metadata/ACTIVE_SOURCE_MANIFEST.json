@@ -17,7 +17,7 @@
     ".github/workflows/weekly-release.yml": "9d85e6436413c32efc62ebeb7da94dfe1616cc07139c49b204672f5a1551aebc",
     ".gitignore": "bf9a372905163d561d6ee5df727eb86e2ac54417601a01981977bfd43aa823e7",
     "AGENTS.md": "5bb97f6e4ff3c0f39db567715b8cc90d7650a66762c82715a3e3a931cabd9700",
-    "CHANGELOG.md": "353f42f4f698bf6485b3bc53f7ddd423a5714293a768f4dd6376ea3010a80ca9",
+    "CHANGELOG.md": "f1e683c0ffd03555ace68d1e580f9e566f550aad3e5aa8dfadca68c2fbd35173",
     "cmake/BuildPartition.cmake": "b4229b1fb79e2fbcfed232358aabcfba0c7e41807a9841d07445f3a0177ac870",
     "cmake/InfrastructureChecks.cmake": "e189fdd293f9556d157eea620a2e4ad39c0d30b36ac86c6cf150ec4f7147d07d",
     "cmake/PatchHookFreeze.cmake": "c55ddf218353acf8bf6994ef486771c1f807212c2f39772c298afd19a612cacb",
