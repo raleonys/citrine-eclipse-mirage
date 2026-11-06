@@ -2,6 +2,7 @@
 
 """Archive-pin, tamper and symlink-preserving vendoring/package regressions."""
 from pathlib import Path
+import hashlib
 import json
 import shutil
 import stat
@@ -19,9 +20,39 @@ import package_source
 import extract_source
 import restore_vendor_links
 import prepare_hook_engine
+import hook_real_peer_control as peer_control
 
 
 class VendorTests(unittest.TestCase):
+    def test_real_peer_counterfactual_requires_exact_current_and_historical_sources(self):
+        cmake = shutil.which('cmake')
+        if not cmake:
+            self.skipTest('CMake needed for the actual verified engine copy')
+        parent = ROOT / 'build/qa'
+        parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=parent, prefix='real-peer-control-') as tmp:
+            stage = Path(tmp) / 'engine'
+            prepare_hook_engine.prepare(ROOT, stage, cmake)
+            current = (stage / 'src/hook.c').read_bytes()
+            stale = peer_control.stale_source(current)
+            self.assertEqual(peer_control.STALE_SHA256, hashlib.sha256(stale).hexdigest())
+            self.assertEqual(current, (stage / 'src/hook.c').read_bytes())
+            for bad in (current + b'X', stale, current.replace(peer_control.ANCHOR, peer_control.STALE)):
+                with self.assertRaises(ValueError):
+                    peer_control.stale_source(bad)
+
+    def test_real_peer_control_rejects_success_unrelated_errors_and_incomplete_cleanup(self):
+        peer_control.require_failure(42, peer_control.CLEANUP + '\n', peer_control.MISMATCH + '\n')
+        for code, stdout, stderr in (
+                (0, peer_control.CLEANUP, peer_control.MISMATCH),
+                (1, peer_control.CLEANUP, peer_control.MISMATCH),
+                (42, '', peer_control.MISMATCH),
+                (42, peer_control.CLEANUP, 'unrelated error'),
+                (42, peer_control.CLEANUP, peer_control.MISMATCH + '\nFAIL: cleanup')):
+            with self.subTest(code=code, stdout=stdout, stderr=stderr):
+                with self.assertRaises(RuntimeError):
+                    peer_control.require_failure(code, stdout, stderr)
+
     def test_archive_comment_commit_is_bound_to_the_pinned_payload(self):
         record=vendor_sync.load_lock(ROOT)['vendors']['minhook'].copy()
         expected=vendor_sync.expected_files(ROOT,record)
@@ -245,6 +276,41 @@ class LinkPackagingTests(unittest.TestCase):
         with zipfile.ZipFile(self.archive) as archive:archive.extractall(destination)
         self.assertEqual([],project_files.verify_manifest(destination))
         self.assertFalse((destination/'third_party/asio/asio/include').is_symlink())
+
+    def test_vendor_alias_targets_reject_control_characters(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        original=json.loads(lock_path.read_text(encoding='utf-8'))
+        for control in map(chr,(10,13,9,127)):
+            with self.subTest(control=repr(control)):
+                bad=json.loads(json.dumps(original))
+                bad['vendors']['asio']['symlinks']['asio/include']='../in'+control+'clude'
+                lock_path.write_text(json.dumps(bad),encoding='utf-8')
+                with self.assertRaisesRegex(ValueError,'Unsafe vendor symlink target'):
+                    project_files.vendor_symlinks(self.root)
+        lock_path.write_text(json.dumps(original),encoding='utf-8')
+        self.assertEqual({'third_party/asio/asio/include':'../include'},
+                         project_files.vendor_symlinks(self.root))
+
+    def test_vendor_alias_record_requires_text_targets_and_mapping(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        original=json.loads(lock_path.read_text(encoding='utf-8'))
+        invalid_aliases=(
+            ['../include'], '../include', 17,
+            {'asio/include':17}, {'asio/include':['../include']},
+            {'asio/include':{'path':'../include'}},
+        )
+        try:
+            for aliases in invalid_aliases:
+                with self.subTest(aliases=aliases):
+                    broken=json.loads(json.dumps(original))
+                    broken['vendors']['asio']['symlinks']=aliases
+                    lock_path.write_text(json.dumps(broken),encoding='utf-8')
+                    with self.assertRaisesRegex(ValueError,'Malformed vendor symlink'):
+                        project_files.vendor_symlinks(self.root)
+        finally:
+            lock_path.write_text(json.dumps(original),encoding='utf-8')
+        self.assertEqual({'third_party/asio/asio/include':'../include'},
+                         project_files.vendor_symlinks(self.root))
 
     def test_descriptor_single_byte_mutation_is_rejected(self):
         self.link.unlink();self.link.write_bytes(b'../include\n')

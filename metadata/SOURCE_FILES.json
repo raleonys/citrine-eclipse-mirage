@@ -41,17 +41,13 @@
       "bytes": 1637,
       "sha256": "111d55e3f0a857f909372181423f992c4169133016ddfaf2554ee11a4a304f8e"
     },
-    "include/preloader_l/config/vdf_grammar.hpp": {
-      "bytes": 2324,
-      "sha256": "d7dc1b2690f05b82c4546a21fe313f367c15d5c8d6a956162dfd42f30d0c90a5"
-    },
     "include/preloader_l/core/atomic_files.hpp": {
       "bytes": 1661,
       "sha256": "99e57616d41f22cf5f0170691c0430e860af96c7bf7b6b50c796559fff3f2e9a"
     },
     "include/preloader_l/core/binary_io.hpp": {
-      "bytes": 2443,
-      "sha256": "33423d35a3ace12e967d69bcf4eb6a36cdbab135454010334cf8a01175e5fdf2"
+      "bytes": 2693,
+      "sha256": "e8b2cda335298a0f1f277c76a67e58eaf2a17668ba5b0deff654ae88cea6e38f"
     },
     "include/preloader_l/core/license.hpp": {
       "bytes": 3654,
@@ -86,8 +82,8 @@
       "sha256": "e2620e7091169e1caee4aba7fd8e954f2b8a85511422db0631d2c0c16b1668f1"
     },
     "include/preloader_l/handlers/content_handlers.hpp": {
-      "bytes": 4725,
-      "sha256": "c9f0643cdb666ff04d4b4d9c90b383f0b729595761147f8596cf38767da0a5db"
+      "bytes": 5050,
+      "sha256": "4328c6230d2ce4544d87670f13d788378ad42ea2300c679f39ad4bd2af390b12"
     },
     "include/preloader_l/handlers/handlers.hpp": {
       "bytes": 1615,
@@ -402,8 +398,8 @@
       "sha256": "ad10e87e8912025378cfcff3fc52390f3c58ec7bf1822ff7e7ead8ed311e1c32"
     },
     "include/preloader_l/protocol/messages.hpp": {
-      "bytes": 5125,
-      "sha256": "95890be5c067e73b48823896b4ea656c0046e0eb8408ae2ec1785097de2c9a67"
+      "bytes": 5421,
+      "sha256": "f1596310755ef4203be1f51e5915f38935e87afd098785e343aa9179520c3ec7"
     },
     "include/preloader_l/router/router.hpp": {
       "bytes": 2129,
@@ -458,8 +454,8 @@
       "sha256": "4e24c96e9fe16443c2780b5b869fafec22a7a6978a9a334e3f94394d2ea7729f"
     },
     "include/preloader_l/runtime/libraries.hpp": {
-      "bytes": 2902,
-      "sha256": "a4a741f524e7c38366be653b99597327a8d7cb7760b744147020e21b0e0aa025"
+      "bytes": 3174,
+      "sha256": "51cff9ebfd2741cc0cd74245a49cc51324a00985676daf6b8620b8fa06af77c4"
     },
     "include/preloader_l/runtime/online.hpp": {
       "bytes": 3237,
@@ -562,8 +558,8 @@
       "sha256": "368a40c93f702fdfbc9d8ae950e8c7b42db124dafed077121daf7954ce8318b6"
     },
     "src/config/application.cpp": {
-      "bytes": 8231,
-      "sha256": "497ef74d0b21255ef6748a9d5d71e092d73bebfbd979438eaff65bfb8cc28936"
+      "bytes": 9681,
+      "sha256": "b245ad091d6e8c287a837500263d279fdbf6a5e24e66b5ea7c508d99a1dac60c"
     },
     "src/config/config_startup.cpp": {
       "bytes": 1488,
@@ -574,36 +570,40 @@
       "sha256": "01f28d700b1eb7de7933f1b51831eb575372e31d2f0c0ac6873002c8e7f5afe5"
     },
     "src/config/hash_table.cpp": {
-      "bytes": 7025,
-      "sha256": "e5a194dec67e2f21631e3bbf9fef0cab9c937f6728b923746069e4b4e2cb7a24"
+      "bytes": 7743,
+      "sha256": "5fdebb1739828ec4c657709c3c18a0369495480ac9d788fbc5b217c19f85a7f6"
     },
     "src/config/order.cpp": {
       "bytes": 2255,
       "sha256": "c6ac786fac85640d98bbffb8b9455a00bc5fd613f1fce19c131a543f6f5aa164"
     },
     "src/config/parser.cpp": {
-      "bytes": 6245,
-      "sha256": "e67e6522dbfd171b6edf4a50e213e331c062bc94b6d7cab45835a6df4342ec1d"
+      "bytes": 6226,
+      "sha256": "91b5b5c5d2485d8991ba9ea0bb4e5dc9997b88ca0365383ea79904036077da88"
     },
     "src/config/pipeline.cpp": {
       "bytes": 2157,
       "sha256": "e07be1bdbb932dc0accf5bee4e9897d5905e0f597c286d0261273828919fdbe3"
+    },
+    "src/config/vdf_grammar.hpp": {
+      "bytes": 2324,
+      "sha256": "d7dc1b2690f05b82c4546a21fe313f367c15d5c8d6a956162dfd42f30d0c90a5"
     },
     "src/core/atomic_files.cpp": {
       "bytes": 2764,
       "sha256": "2c077e82e12bdfa96a593ee1cae6478b72add8c5d4bd36f3ba08ecfa2e50349a"
     },
     "src/core/binary_io.cpp": {
-      "bytes": 1505,
-      "sha256": "47c98952ffb4dc4ef3dcf835ded7084588538f4027e30879de7a54d57d47b2fe"
+      "bytes": 2077,
+      "sha256": "8b34f83e3f1c953127c0dd261c49d704c63c584250f8353fe336cbbc37373572"
     },
     "src/core/license.cpp": {
       "bytes": 6709,
       "sha256": "cc4341801af69680fe2b372c6be11772f993e2d5ff1811a2583a46d7c7b97e54"
     },
     "src/core/license_files.cpp": {
-      "bytes": 4615,
-      "sha256": "283458bde9242cd5f0069999b65c1cd6bdacbbe8b1968880165aeb11012dee73"
+      "bytes": 4616,
+      "sha256": "5a732d022f2c014741ef125ce2371bf5df63bf0feed0b0ef23752180d67b0be7"
     },
     "src/core/paths.cpp": {
       "bytes": 3339,
@@ -614,8 +614,8 @@
       "sha256": "d09099adbd26697e1bdaa46d0fffb9ccbd633ac7364179a488f99ccbe92daadb"
     },
     "src/handlers/content_handlers.cpp": {
-      "bytes": 9633,
-      "sha256": "dd8d3536d13bff3f20a1e2670d8eb3fad07c3546e65578e0bde6bcd140b3a713"
+      "bytes": 10660,
+      "sha256": "d102026f034a0d6c90b49ef65620240d51ebbcbf8deec032e0f42ad383afa67d"
     },
     "src/handlers/handlers.cpp": {
       "bytes": 5890,
@@ -870,8 +870,8 @@
       "sha256": "1b1474464ca87f5c2869e2e9dbb569d6d636361ac2f57ca836d695fba3896e71"
     },
     "src/platform/encoding_windows.cpp": {
-      "bytes": 2245,
-      "sha256": "203b075c2345fa5017fe94578887ce2a027d6121e54c51b424bb4383156f67a1"
+      "bytes": 2387,
+      "sha256": "5c8065e07c2badfc50c3506a88785b5ad32eb349b3f732e9e1f259bd4ca87209"
     },
     "src/platform/execution_windows.cpp": {
       "bytes": 1253,
@@ -886,8 +886,8 @@
       "sha256": "5b92c197b26f309b5593df95b762c1811ebc0fec61a60dd3b08458f564804a7e"
     },
     "src/platform/file_io_windows.cpp": {
-      "bytes": 2708,
-      "sha256": "248db3000dca769c64df84498f40fc94332eeeef61c3f5517090c6e8de870545"
+      "bytes": 2877,
+      "sha256": "8e706ee2c162e96a2f7e0a873b1912ca7dfcc7408ed0ed66199b1426dc78b045"
     },
     "src/platform/hook_cleanup.cpp": {
       "bytes": 624,
@@ -942,16 +942,16 @@
       "sha256": "e384b7b52363274ae8cd956f0eb07f3a566264b8ce972b4ee36524605bd79ddf"
     },
     "src/platform/status_windows.cpp": {
-      "bytes": 2283,
-      "sha256": "cb0292fb68c387c86834f8ca3098bf8e13723767d2c9edf2ef8066a89ba7e34a"
+      "bytes": 2311,
+      "sha256": "24dbebab3a24613385be1b1818e07232ac6a5fed72caf91ccee1034b58e5b817"
     },
     "src/platform/windows_effects.cpp": {
       "bytes": 2531,
       "sha256": "f91343269cf92b84583ba8aebc627740e2a0bbeae74a6978b52be9cbadf3c502"
     },
     "src/protocol/messages.cpp": {
-      "bytes": 9165,
-      "sha256": "d5953defb5aa50ffe502d73c96e986cb52ba561c154f2069ea54895e77e65aae"
+      "bytes": 9536,
+      "sha256": "e4c9fe9055c226cd5930f718b0b5c58487eeed93fb17e29582e8bb6d92c09950"
     },
     "src/router/router.cpp": {
       "bytes": 5798,
@@ -962,32 +962,32 @@
       "sha256": "3897f8c066586682d1f022ac561c60c94c26581305b7f693785312dbd441ac6c"
     },
     "src/runtime/achievement_storage.cpp": {
-      "bytes": 5024,
-      "sha256": "f85ca5baa949c74c3b1a9d5380c3cdef465d6bd2bf25dff1d76d3f9e049d845e"
+      "bytes": 7038,
+      "sha256": "6c52e08b9d37528acf4384ffa1ae0a1464c491a882cf2f0da6aba4fd490f8932"
     },
     "src/runtime/achievement_utc.cpp": {
       "bytes": 1678,
       "sha256": "27f27b3324824698a7bda301a6514cc5121c42fcc90795dbcefcd3025baf00ee"
     },
     "src/runtime/achievement_writer.cpp": {
-      "bytes": 1784,
-      "sha256": "d4018b757421f9638861a4ac889f4a2393eb79d689860ba26710b8b2f2c9a605"
+      "bytes": 2591,
+      "sha256": "4078a7f4a5adc528cbad56d220d8eb5020b0f43f1073380fc0f87e89b2d70c05"
     },
     "src/runtime/application.cpp": {
-      "bytes": 29158,
-      "sha256": "83cd2049f9e36a99c62735e06b5455b38e6e7a222ecbcfb8299d0949deb6c866"
+      "bytes": 31265,
+      "sha256": "3eb972ce7a6f4aee6d59a3b24ca4c29353fe536b0495ee1476e9cb18627b7aa9"
     },
     "src/runtime/application_defaults.cpp": {
       "bytes": 2261,
       "sha256": "cc36e01fb302d11d91e0a9245e53bfabf667e35d3fa30c7dedcc130ac46d8fd1"
     },
     "src/runtime/application_environment.cpp": {
-      "bytes": 13411,
-      "sha256": "e519757c341f522865cc5698c88b9ddf66c64e5d53a799df60dda8c8f6f65e67"
+      "bytes": 14872,
+      "sha256": "e6c2640eebee00011ae82eb90c268c58071492fb216e5bb64098619df28b8310"
     },
     "src/runtime/application_internal.hpp": {
-      "bytes": 7282,
-      "sha256": "807f9439621b227aa56038a5c13988d1dbdc1bae74d2d7c09a2b01bae0b7949c"
+      "bytes": 7467,
+      "sha256": "045ba24398ca6e4a5d22e0a8f01bd8be48036b9ccd8c0947d65aafc0d8456281"
     },
     "src/runtime/bootstrap.cpp": {
       "bytes": 4419,
@@ -1014,12 +1014,12 @@
       "sha256": "9f3d96c4b58c813f7fafad1d25d5c5ebaa3f2a8f36c28af6935fbcb20ee4e1bf"
     },
     "src/runtime/libraries.cpp": {
-      "bytes": 4234,
-      "sha256": "c1fe5cb7d706b91bab95c7ee4a2c2083d4745be02b186a98f665ecbf5b1ac6ff"
+      "bytes": 4419,
+      "sha256": "83330e8bc69879f09ab63dab3a44e416c286fa17fdb379ff440a768ceae626d3"
     },
     "src/runtime/online.cpp": {
-      "bytes": 5295,
-      "sha256": "1123c574ddd354a06a119970c8ad8fd69cf53c2fdb1e4188750a0ce4ce191486"
+      "bytes": 5797,
+      "sha256": "c6bae1dbfa4e574c680e04d397c108feeb86f6e3f2911dbfc88addf320662e5f"
     },
     "src/runtime/startup.cpp": {
       "bytes": 4726,
@@ -1046,8 +1046,8 @@
       "sha256": "bed84b57abb15a3818cbe0902ed5fe91fa685ca5503af0b606aacf6c591f2d0b"
     },
     "src/xml/memory_printer.cpp": {
-      "bytes": 2832,
-      "sha256": "d2ac9bfff90009c2fcb4c4384c74186bf20c02e2fd3ceb830946ffa67fad3570"
+      "bytes": 3980,
+      "sha256": "a7a204978dea17e777fa18348755cdea50cdbd9d1c6416739beb9a2d9eb039ca"
     },
     "src/xml/native_document.cpp": {
       "bytes": 6061,
@@ -1186,8 +1186,8 @@
       "sha256": "3108408fd67b132ec5fb7b604fca748ffc3979b2411dbfcda75e2ed892699771"
     },
     "tests/infrastructure/test_infrastructure.py": {
-      "bytes": 64659,
-      "sha256": "507a3f8122beca2074518b0d97f934c343c5577d1dbc462195fb2e508c2f96c9"
+      "bytes": 126243,
+      "sha256": "e22a640298ba092fa861dcde3b1b04b994fbbb5410bc7798ea0c4ebc1a898c97"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
       "bytes": 27877,
@@ -1206,20 +1206,20 @@
       "sha256": "8c9da6aef1e4069e1209a87ccba507053d4267de92457bdd2bdeff89d02a8a94"
     },
     "tests/infrastructure/test_size_evidence.py": {
-      "bytes": 6864,
-      "sha256": "9b4657135951eafe3d9195ab3280a8256b2e402d06d6cb972eeb0bcb58493323"
+      "bytes": 8606,
+      "sha256": "fddbdae37f140fdcfffb835edf4cb0fe74f889971a91aa35b411c0080e01b3c0"
     },
     "tests/infrastructure/test_source_identity_license.py": {
-      "bytes": 2915,
-      "sha256": "f89d13bdd00c2794773c5f152aa6c2ab19486493372c19cc72a8c99cad2491a4"
+      "bytes": 4026,
+      "sha256": "c965340608f4d9866838ed8dd01faf6fe2e56cb5d104e5b192a668ffd449b57c"
     },
     "tests/infrastructure/test_vendor_contract.py": {
-      "bytes": 15937,
-      "sha256": "2286ef8c2a00ade400c18e50e5e6b54ba906c9382380d6186732a93c3b0873f8"
+      "bytes": 19711,
+      "sha256": "c15622d09abdb428f30bfc964db202ff71b56db2ef103eea179a2b3ce5f9ba95"
     },
     "tests/infrastructure/test_weekly_release.py": {
-      "bytes": 20348,
-      "sha256": "1e6836ca0cc03abf7b72bb68de4bf0d346326fce22c2f494c840ab6ad239d418"
+      "bytes": 25857,
+      "sha256": "a6352ef8285b01e18340b1dace87d77cbd08c1c19b9977ba3df40e2f459c6810"
     },
     "tests/infrastructure/test_wine_runner.py": {
       "bytes": 1640,
@@ -1230,8 +1230,8 @@
       "sha256": "dd0e73c17f4ae7102ab6675fcd4484bbb46ed41be7203b0c524318399b862bc6"
     },
     "tests/native/application_runtime_tests.cpp": {
-      "bytes": 22444,
-      "sha256": "8d8afc7300ac322e1dcb82a2d1ee1046546bd31a9bea67e272f392dce388d82a"
+      "bytes": 30821,
+      "sha256": "156c15eb8a7c26ddb1b48efeb38d2d1e6c220fa4b2509e24bc8866e3b5c79972"
     },
     "tests/native/application_shutdown_failure_tests.cpp": {
       "bytes": 5710,
@@ -1250,20 +1250,28 @@
       "sha256": "759d224a612606bae1d9856adc330994ec0cfe49fe0cf5808be609e254822be8"
     },
     "tests/native/configuration_platform_tests.cpp": {
-      "bytes": 11081,
-      "sha256": "c1c71f5514103ec38be1c48cfaf0ecfab56eff6370496476a04eb5caa8e1e850"
+      "bytes": 14498,
+      "sha256": "790a296c9058bc6be9be829d16f4c61652999021207b744c86eb151772d430ca"
+    },
+    "tests/native/crypt_diagnostic_failure_tests.cpp": {
+      "bytes": 3657,
+      "sha256": "e615d0e61e6ad9fd3af85aa742e20f558adcd64552d9b8c582eea1200352d321"
     },
     "tests/native/crypt_path_probe_tests.cpp": {
       "bytes": 7166,
       "sha256": "4dd291bb6d380f3e01ba041c67a79df928a5584a6cc366a865044e0a2cb112aa"
     },
     "tests/native/environment_dialog_tests.cpp": {
-      "bytes": 8098,
-      "sha256": "569c65ef825bab01f6e838e7330d75cb99c43a5cdebffa2a6a801bd0af032140"
+      "bytes": 10413,
+      "sha256": "20f2216d5459c6a1b13abf2cb0e240694fbfd5263e227cf14550e13d1678c4c2"
+    },
+    "tests/native/environment_license_key_tests.cpp": {
+      "bytes": 13153,
+      "sha256": "1ff18ef77166407f437739b9ff406e719def7340887cc44d78ef9acf394ec40c"
     },
     "tests/native/extra_library_failure_tests.cpp": {
-      "bytes": 10455,
-      "sha256": "69089313138ac0b865d463c5c654a989af1b8c8712fd1a3d086fba079819531b"
+      "bytes": 20836,
+      "sha256": "a446f97614fb5b4ce5329ca52724876ae88913534f0b6e0af319fcaf1dcecbce"
     },
     "tests/native/file_copy_windows_tests.cpp": {
       "bytes": 4816,
@@ -1281,6 +1289,10 @@
       "bytes": 12026,
       "sha256": "4c1e9407eb5c4aa35ece6fdbff4db3892bfd840bf9cfe33a053da2708061eebc"
     },
+    "tests/native/license_ticket_time_tests.cpp": {
+      "bytes": 3716,
+      "sha256": "f09ffbf3f996a00523231adcdef004587f98cfc37c1d19232ea294c3f66ed90b"
+    },
     "tests/native/listener_owners_tests.cpp": {
       "bytes": 8761,
       "sha256": "d9c384d843804532142e200d0a379397cc250f4e3933851ec6d078985999ddaf"
@@ -1290,8 +1302,8 @@
       "sha256": "b0550335f1670b935100e22bfabfafef07f03711b9d6f5f0e430a5a6c1fdfb29"
     },
     "tests/native/net_failure_tests.cpp": {
-      "bytes": 14989,
-      "sha256": "721a2c7a36b4b0d32a927a0dbdd2e32b4b713f4387028c92d648c26bcbf1eff8"
+      "bytes": 22629,
+      "sha256": "b34d915f1c6b319e2cbb8ce6424b22b925e7bedc53908a47a6448231f7286687"
     },
     "tests/native/network_policy_tests.cpp": {
       "bytes": 10394,
@@ -1302,8 +1314,8 @@
       "sha256": "5da1ec5126a435c0fe237c39d1f58f7239ece53e851ffa21ccb5fc55fa0434ba"
     },
     "tests/native/session_flow_tests.cpp": {
-      "bytes": 7840,
-      "sha256": "7c3bdd3821d6f31ebd70b4ee97669113252bb3afcf33c499fb2af979186d9c00"
+      "bytes": 14797,
+      "sha256": "a32977de0709c9891d792019544a0b860a113b4dd204d11cb6dc06bfb380889c"
     },
     "tests/native/socket_close_semantics_tests.cpp": {
       "bytes": 2598,
@@ -1314,8 +1326,8 @@
       "sha256": "62bf85f31096066ba7df9cdd3bf0a5e9b3300f5fe94fb60c4d82598d16665cb2"
     },
     "tests/native/socket_retirement_tests.cpp": {
-      "bytes": 15833,
-      "sha256": "0950867e3d13ce44d7f66965bb2383e5711a483a4e0f22ecd0d9079f04b5d79c"
+      "bytes": 29569,
+      "sha256": "adbf06243cccce7afb42ea7e3a89de1707d76ad0c8455c082f7da838c10a4345"
     },
     "tests/native/startup_publication_tests.cpp": {
       "bytes": 5378,
@@ -1378,8 +1390,8 @@
       "sha256": "e40de0c37906f32cf5e5d45e5436d0413272e9c9f31b52386c8e606463e5d95b"
     },
     "tests/support/runtime/online_fixture.cpp": {
-      "bytes": 1405,
-      "sha256": "2b53eeee1ad4e68c9a5e96a9e248b2dde009e7dd8eecc53229beb5a618d14f31"
+      "bytes": 3981,
+      "sha256": "49b0ce1ec8d6f37ffffdec0e3509a78d4d429c232529265c77bd10659b93b0dd"
     },
     "tests/support/runtime/socket_retirement_fixture.cpp": {
       "bytes": 2795,
@@ -1518,8 +1530,8 @@
       "sha256": "11e45b62309c558e0d546b37f15541aa874dde67d3f892cfb3e667cb90b972c8"
     },
     "tests/unit/achievement_runtime/runtime_tests.cpp": {
-      "bytes": 18274,
-      "sha256": "661645a5f230e9b2a3e51b7c3a531b9c32e6fd15ce598641f1f2b1e8b5b15b11"
+      "bytes": 22148,
+      "sha256": "4facfba563fc90a8e37ea621c113776ed842a92477c2ed2810d453e85f91b06d"
     },
     "tests/unit/achievement_runtime/utc_tests.cpp": {
       "bytes": 5366,
@@ -1534,12 +1546,12 @@
       "sha256": "9891249febb35d4bf6093537a4d00e67704f815ed7481952b155f11e9a3e5ce3"
     },
     "tests/unit/achievement_storage/storage_tests.cpp": {
-      "bytes": 11818,
-      "sha256": "8815d507282d7adecdecefa0e7866cb3216fb52a252b6c54f19ba68477b22fdd"
+      "bytes": 18298,
+      "sha256": "eb7842f9f8eb4fdfefd985436f34587a9da69f65bfa32532ee3a5e15e0eab836"
     },
     "tests/unit/achievement_writer/writer_tests.cpp": {
-      "bytes": 8497,
-      "sha256": "f1d84bea9c1376f3023fc56ccea51d1f5551a8d1d5997b91a539a8701839f322"
+      "bytes": 9553,
+      "sha256": "50639cfc1977870dbf6a29bfd4cfdcbc72943c820152b5f53cd306123cab213e"
     },
     "tests/unit/bootstrap/bootstrap_tests.cpp": {
       "bytes": 12048,
@@ -1554,8 +1566,8 @@
       "sha256": "982e47b5a7a9dd6b41eeee107d942d4919632bcf891fc5abfd8cba97100e0870"
     },
     "tests/unit/config_application/application_tests.cpp": {
-      "bytes": 17466,
-      "sha256": "bc737a67a22e1d90c9af5bed3693077ce2df2129cc15688932a8cc4727e72d68"
+      "bytes": 35795,
+      "sha256": "5532cf93142c57d78ffac4ce10389b8d92a1d1da8b3fe48ba732f911f5387e32"
     },
     "tests/unit/config_defaults/defaults_integration_tests.cpp": {
       "bytes": 15899,
@@ -1566,8 +1578,8 @@
       "sha256": "d9b60bd31a1dbc55f9c609e4cceb57fc97738adc81fa03ba307e70b5d826bd22"
     },
     "tests/unit/config_hash/hash_table_tests.cpp": {
-      "bytes": 10565,
-      "sha256": "5694442ce5cfe580183022d66b7d22e9671c0c9e0643eb83ef9ee42a77c11a76"
+      "bytes": 18265,
+      "sha256": "f0bf46a663891d60a9bac16970d007b4e6e973fc16a2ed42206764756a163437"
     },
     "tests/unit/config_hash/order_differential_tests.cpp": {
       "bytes": 1254,
@@ -1586,20 +1598,20 @@
       "sha256": "47fdd6a091d3c40613da92d81e2ed789f9257e1930110543bbcd980b97509a56"
     },
     "tests/unit/content_handlers/content_handlers_tests.cpp": {
-      "bytes": 22463,
-      "sha256": "9c3a0fa4775f17103a4be97bc33ffb1fe3a10326c0c8ea91f6a8c6532685d715"
+      "bytes": 27989,
+      "sha256": "7155d2df82956915d3d69c29c1cd44e2fbcf6fb7c60859d9dbdd6e5c2f9c3d7e"
     },
     "tests/unit/crypto/crypto_tests.cpp": {
       "bytes": 9783,
       "sha256": "d071c8e8fe9ecdabd1cd43b573db1fe8bd19e17445d2912d9b2be93003a94f39"
     },
     "tests/unit/dispatch/integration_tests.cpp": {
-      "bytes": 22005,
-      "sha256": "f2376f8af750ae80a925aa6fff675e4395287b500794204c54392d942237d8ca"
+      "bytes": 22918,
+      "sha256": "d1f8f33c8ecd0b901aa58dcfb1ac740b2a5773159c49b55d54665142fa18ab03"
     },
     "tests/unit/encoding/encoding_tests.cpp": {
-      "bytes": 8211,
-      "sha256": "4f7640067cecd0448a58e1c5242e14b545476075cf425f8d0b75c067548cd536"
+      "bytes": 11319,
+      "sha256": "137c72e687f1ca1b51d9cbf4c3f89979d6959636c5b793610f6c7047cca9885b"
     },
     "tests/unit/event_queue/integration_tests.cpp": {
       "bytes": 15023,
@@ -1610,16 +1622,16 @@
       "sha256": "28a23ea0c1675435ee00dd917dcb7ee3543335df1ace4be902bc5b21bd961b04"
     },
     "tests/unit/execution/concurrency_tests.cpp": {
-      "bytes": 3020,
-      "sha256": "24ff1f6d64c12cfe0d205656ad8571f092517b78f8a2fd00f7ac336cf2ecfff0"
+      "bytes": 8127,
+      "sha256": "a3acd4a20b6fe47d6705a9aa1499fc210b7c41dfaa80eb22e8e2c1a88e3cfba6"
     },
     "tests/unit/execution/execution_tests.cpp": {
       "bytes": 13488,
       "sha256": "f0f2476bdfc4336c323a3360be098d5b30803cb5e7cb6c4bca37399af92e4c90"
     },
     "tests/unit/file/binary_io_tests.cpp": {
-      "bytes": 6796,
-      "sha256": "7374e32cbe6cb5e8fd7194ca1e1955b217f1c71932600cb380ba9d3e1a6ac75e"
+      "bytes": 9694,
+      "sha256": "a0879d17f2cb3427a605f8014feae3b294dbd9a59fe4e37762d0da0751e6f3cd"
     },
     "tests/unit/file/file_copy_tests.cpp": {
       "bytes": 9422,
@@ -1630,8 +1642,8 @@
       "sha256": "ce9d940c2131ae4bc1c9b6e6b36e14f4c7ad946c0db955a3992b12155bc158c2"
     },
     "tests/unit/handlers/handlers_tests.cpp": {
-      "bytes": 7916,
-      "sha256": "96310405c7eb81e9a8f09f780dba4e5bfaa74bcf206383febd2599d5f2b0e02b"
+      "bytes": 10949,
+      "sha256": "4f775107160cc0d36c03fe685bd4b13fd141cbf40d2cd5f12f30ae051c5593e0"
     },
     "tests/unit/hash/hash_tests.cpp": {
       "bytes": 8230,
@@ -1662,8 +1674,8 @@
       "sha256": "7878639316fb203b68c3dde08e2ede1281d3eb135d1bbef82a6a811492e903ee"
     },
     "tests/unit/messages/messages_tests.cpp": {
-      "bytes": 18622,
-      "sha256": "f810ff16e3cec2faa6659d394b85b19016a433d31aa8714e92f4309eeac06e83"
+      "bytes": 23161,
+      "sha256": "58c8046d1053e2ec80895d250ea345dcd74d81653ba205b96c452ce0c2cbae4f"
     },
     "tests/unit/misc_handlers/misc_handlers_tests.cpp": {
       "bytes": 9114,
@@ -1678,8 +1690,12 @@
       "sha256": "19edde46a81aed0610f478e64a35d63dd3c3a42e3dec71e67b6da5b326181f96"
     },
     "tests/unit/online/online_tests.cpp": {
-      "bytes": 23807,
-      "sha256": "a2d92656166e271fa11ae6a3c43711a2613ec5a77792fff75d340de4240a1c84"
+      "bytes": 25709,
+      "sha256": "a846723a980ffa883ff4d6f7cc0f0909fd8fafb2a3fbf5d31a1c87a156a4f257"
+    },
+    "tests/unit/parser/header_contract.cpp": {
+      "bytes": 236,
+      "sha256": "003692903fd427af633e9c2ce135f3efdd456e3a7c781f9e9ee07affb7d60d55"
     },
     "tests/unit/parser/parser_tests.cpp": {
       "bytes": 13979,
@@ -1698,8 +1714,8 @@
       "sha256": "99a5b21413109c5a39d437dd7b1dc8b5d9262628abc2474712b33f5fcdf1f268"
     },
     "tests/unit/server/server_tests.cpp": {
-      "bytes": 20984,
-      "sha256": "0fc03c14798265fdab92226b1f19258e9d4a05dcd7e93a44945d6311af7e834c"
+      "bytes": 23994,
+      "sha256": "42f6c70ab748650949ce803fb239558cc6bf63be778a4fcb85d4d685fc4b982a"
     },
     "tests/unit/session/handler_tests.cpp": {
       "bytes": 5695,
@@ -2158,8 +2174,8 @@
       "sha256": "fde14fd68b2d74cedb46d37f84953b10cdab2d3597bad71e3f0914593331aed9"
     },
     "tests/unit/xml/printer_tests.cpp": {
-      "bytes": 5615,
-      "sha256": "f7aeceaba6f5811834b46bf3d8c30d88ad64c3825d415d38935ea88aa87c5964"
+      "bytes": 7562,
+      "sha256": "c241ad1d05b1d8cf95bf4cca0fec930c5957b3e4619f6d7f41c3c1810883bdf1"
     },
     "tests/unit/xml_reader/corpus_tests.cpp": {
       "bytes": 6387,
@@ -13200,8 +13216,16 @@
       "sha256": "6068f347c704b21b97c326585a015dce845398ed32925c6e12dfdb710f6a59aa"
     },
     "tests/unit/registry/native_lifecycle_tests.cpp": {
-      "bytes": 18013,
-      "sha256": "b60cb1679f801f4676f6942df38790d0142a3ca56911dadaa30ba6f01b42d846"
+      "bytes": 21594,
+      "sha256": "2442f1fe81220ba95a71f7ee6bce7829bce8d7a792a9737c6311c3a6ae2656ac"
+    },
+    "tests/infrastructure/hook_real_peer_control.py": {
+      "bytes": 3580,
+      "sha256": "cbd95bbe0148a27f8508a3698ea645b6c9a741da781a1b0dfcbeb1679e120006"
+    },
+    "tests/native/hook_real_peer_tests.cpp": {
+      "bytes": 14749,
+      "sha256": "b3fdf6f0b75b9890c3c38719a7d70d6a18212b8aadda6db2fc442541ec21b14f"
     }
   }
 }
