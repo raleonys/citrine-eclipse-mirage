@@ -33,6 +33,8 @@ target_compile_definitions(portable_network_hook PRIVATE PRELOADER_L_PRODUCTION_
 target_link_libraries(portable_network_hook PRIVATE Threads::Threads)
 portable_check(portable_parser src/config/parser.cpp tests/unit/parser/parser_tests.cpp)
 portable_check(portable_hash src/hash/hash.cpp tests/unit/hash/hash_tests.cpp)
+portable_check(portable_file_io src/core/binary_io.cpp tests/unit/file/binary_io_tests.cpp)
+target_compile_definitions(portable_file_io PRIVATE PRELOADER_L_PORTABLE_FILE_IO_TESTS=1)
 portable_check(portable_config_order src/config/parser.cpp src/config/order.cpp tests/unit/config_order/order_tests.cpp)
 portable_check(portable_config_hash src/config/parser.cpp src/config/hash_table.cpp tests/unit/config_hash/hash_table_tests.cpp)
 portable_check(portable_config_hash_model_differential src/config/parser.cpp src/config/order.cpp src/config/hash_table.cpp tests/unit/config_hash/order_differential_tests.cpp)

@@ -2,19 +2,6 @@
 name: Isolated XML backend comparison
 
 on:
-  pull_request:
-    paths:
-      - "tests/diagnostics/xml_backend/**"
-      - "src/xml/**"
-      - "include/preloader_l/xml/**"
-      - "third_party/pugixml/**"
-      - "tests/unit/xml_reader/**"
-      - "tests/performance/xml_reader_probe.cpp"
-      - "tests/fixtures/xml_reader/**"
-      - "tests/infrastructure/test_xml_performance.py"
-      - "tools/preloader_l_runtime_host/**"
-      - "docs/XML_BACKEND_COMPARISON.md"
-      - ".github/workflows/xml-backend-comparison.yml"
   workflow_dispatch:
 
 permissions:
