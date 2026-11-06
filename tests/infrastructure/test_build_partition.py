@@ -57,6 +57,27 @@ def graph():
 
 
 class MapBoundaryTests(unittest.TestCase):
+    def test_retired_xml_vendor_cannot_reenter_production(self):
+        policy=copy.deepcopy(POLICY)
+        policy['forbidden_production_source_prefixes']=['third_party/tinyxml2/']
+        allowed=graph()
+        allowed['xml_vendor']=target('xml_vendor',['third_party/pugixml/src/pugixml.cpp'])
+        allowed['preloader_l_core']['dependencies'].append({'id':'xml_vendor'})
+        self.assertEqual(boundary.codemodel_errors(allowed,policy),[])
+        for path in ['third_party/tinyxml2/tinyxml2.cpp','C:/source/third_party/tinyxml2/tinyxml2.cpp',
+                     r'C:\source\THIRD_PARTY\TINYXML2\tinyxml2.cpp']:
+            broken=copy.deepcopy(allowed)
+            broken['xml_vendor']['sources']=[{'path':path}]
+            self.assertTrue(any('Retired vendor source' in e for e in boundary.codemodel_errors(broken,policy)),path)
+
+    def test_retired_xml_object_cannot_hide_in_production_archive(self):
+        policy=copy.deepcopy(POLICY)
+        policy['forbidden_production_object_stems']=['tinyxml2']
+        self.assertEqual(boundary.map_errors(LLVM_MAP,policy)[0],[])
+        for text in [LLVM_MAP+' preloader_l_core.a(tinyxml2.cpp.obj):(.text)',
+                     MSVC_MAP+' preloader_l_core.lib:tinyxml2.obj']:
+            self.assertTrue(any('Retired vendor object' in e for e in boundary.map_errors(text,policy)[0]))
+
     def test_current_model_members_cannot_hide_in_production_named_archives(self):
         policy = json.loads((Path(__file__).resolve().parents[2] / 'metadata/BUILD_PARTITION_POLICY.json').read_text())
         for name in ['src/config/order.cpp', 'src/config/config_startup.cpp',
@@ -283,7 +304,7 @@ class TargetBoundaryTests(unittest.TestCase):
             self.assertTrue(boundary.codemodel_errors(broken, POLICY), source)
         for dependency in ['preloader_l_core', 'preloader_l_objects', 'preloader_l_vdf_objects',
                            'preloader_l_reference_objects', 'preloader_l_reference_models',
-                           'preloader_l_minhook', 'preloader_l_tinyxml2']:
+                           'preloader_l_minhook', 'preloader_l_pugixml']:
             broken = copy.deepcopy(g)
             broken.setdefault(dependency, target(dependency))
             broken['preloader_l_source_api']['dependencies'].append({'id': dependency})
@@ -302,15 +323,15 @@ class TargetBoundaryTests(unittest.TestCase):
         block = text.split('\nif(PRELOADER_L_BUILD_SOURCE_API_DLL)\n', 1)[1]
         block = 'if(PRELOADER_L_BUILD_SOURCE_API_DLL)\n' + block.split('\nadd_executable(preloader_l_runtime_host', 1)[0]
         dev = ['preloader_l_source_api', 'preloader_l_source_host',
-               'preloader_l_source_minhook', 'preloader_l_source_tinyxml2']
+               'preloader_l_source_minhook', 'preloader_l_source_pugixml']
         static = ['preloader_l_core', 'preloader_l_objects', 'preloader_l_vdf_objects',
-                  'preloader_l_reference_objects', 'preloader_l_minhook', 'preloader_l_tinyxml2']
+                  'preloader_l_reference_objects', 'preloader_l_minhook', 'preloader_l_pugixml']
         with tempfile.TemporaryDirectory() as tmp:
             source = Path(tmp) / 'src'; source.mkdir()
             for name in ['application.cpp', 'parser.cpp', 'reference.cpp', 'hook.c',
                          'src/platform/crypt_query_host.cpp', 'src/platform/dll_entry.cpp',
                          'tools/preloader_l_source_host/main.cpp', 'resources/surge.rc',
-                         'third_party/tinyxml2/tinyxml2.cpp', 'avatar.hpp']:
+                         'third_party/pugixml/src/pugixml.cpp', 'avatar.hpp']:
                 path = source / name; path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text('// configure fixture\n')
             cmake = '''cmake_minimum_required(VERSION 3.20)
@@ -349,7 +370,7 @@ add_library(preloader_l_pegtl INTERFACE)
                     self.assertEqual(modes[name], 'MultiThreaded' + suffix, name)
                 links = (build / 'dev-links.txt').read_text().split(';')
                 self.assertIn('preloader_l_source_minhook', links)
-                self.assertIn('preloader_l_source_tinyxml2', links)
+                self.assertIn('preloader_l_source_pugixml', links)
                 self.assertFalse(set(links) & set(static), links)
 
     def test_every_source_is_owned_and_overlap_is_rejected(self):

@@ -61,7 +61,7 @@ std::string LicenseFiles::load_token_02afa0(const Path& path) {
     TokenFiles files(*this,files_);return token::load_token_02afa0(path,files);
 }
 bool LicenseFiles::write_ticket_03c1d0(const Path& path,std::string_view bytes) {
-    return write_binary_03c1d0(path,bytes,files_);
+    return write_binary_checked(path,bytes,files_);
 }
 const char* LicenseFiles::online_auth_virtual_30(const char* value){return remaining_.online_auth_virtual_30(value);}
 license::FileStatus LicenseFiles::status_01ea20(const Path& path,std::uint32_t flags){return remaining_.status_01ea20(path,flags);}

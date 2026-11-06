@@ -61,7 +61,7 @@ def product_order(root):
     root = Path(root)
     gold = json.loads((root / 'metadata/URSYNEX_GOLDEN_FINALIZER.json').read_text(encoding='utf-8'))
     cor = json.loads((root / 'metadata/CORVEXON_GOLDEN_TRAIL.json').read_text(encoding='utf-8'))
-    dist = json.loads((root / 'metadata/LOCAL_DIST_CONTRACT.json').read_text(encoding='utf-8'))
+    dist = json.loads((root / 'metadata/DIST_CONTRACT.json').read_text(encoding='utf-8'))
     ordered = gold['import_module_order']
     if (not isinstance(ordered, list) or not ordered or
             len(set(ordered)) != len(ordered) or
