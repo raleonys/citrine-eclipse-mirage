@@ -140,6 +140,35 @@ target_include_directories(hook_freeze_contracts PRIVATE "${_hook_build_copy}/sr
 target_link_libraries(hook_freeze_contracts PRIVATE preloader_l_minhook)
 add_test(NAME hook_freeze_contracts COMMAND hook_freeze_contracts)
 set_tests_properties(hook_freeze_contracts PROPERTIES TIMEOUT 30)
+add_executable(hook_real_peer_contracts tests/native/hook_real_peer_tests.cpp)
+target_link_libraries(hook_real_peer_contracts PRIVATE preloader_l_minhook)
+add_test(NAME hook_real_peer_contracts COMMAND hook_real_peer_contracts)
+set_tests_properties(hook_real_peer_contracts PROPERTIES TIMEOUT 30)
+
+# Counterfactual source lives outside the verified engine tree and is never a
+# shipping input. Require the exact pre-fix SHA, not an arbitrary test mutation.
+set(_stale_hook_dir "${CMAKE_CURRENT_BINARY_DIR}/test_controls/minhook")
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+  "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_real_peer_control.py")
+execute_process(COMMAND "${Python3_EXECUTABLE}" -B
+  "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_real_peer_control.py" prepare
+  --source "${_hook_build_copy}/src/hook.c"
+  --output "${_stale_hook_dir}/src/hook.c"
+  RESULT_VARIABLE _stale_hook_status OUTPUT_VARIABLE _stale_hook_output ERROR_VARIABLE _stale_hook_error)
+if(NOT _stale_hook_status EQUAL 0)
+  message(FATAL_ERROR "Real-peer control preparation failed: ${_stale_hook_output}${_stale_hook_error}")
+endif()
+# hook.c uses relative ../include/MinHook.h and local internal headers.
+file(MAKE_DIRECTORY "${_stale_hook_dir}/include")
+configure_file("${_hook_build_copy}/include/MinHook.h" "${_stale_hook_dir}/include/MinHook.h" COPYONLY)
+add_executable(hook_real_peer_stale_control tests/native/hook_real_peer_tests.cpp
+  "${_stale_hook_dir}/src/hook.c")
+target_include_directories(hook_real_peer_stale_control PRIVATE "${_hook_build_copy}/src")
+target_link_libraries(hook_real_peer_stale_control PRIVATE preloader_l_minhook)
+add_test(NAME hook_real_peer_stale_control COMMAND "${Python3_EXECUTABLE}" -B
+  "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_real_peer_control.py" run --
+  ${CMAKE_CROSSCOMPILING_EMULATOR} "$<TARGET_FILE:hook_real_peer_stale_control>")
+set_tests_properties(hook_real_peer_stale_control PROPERTIES TIMEOUT 30)
 add_executable(hook_transaction_contracts tests/unit/hooks/transaction_tests.cpp)
 target_link_libraries(hook_transaction_contracts PRIVATE preloader_l_core)
 add_test(NAME hook_transaction_contracts COMMAND hook_transaction_contracts)

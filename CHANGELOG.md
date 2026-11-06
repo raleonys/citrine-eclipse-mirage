@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Add controlled real Windows suspended-peer MinHook acceptance using unmodified OS thread/context APIs: single, queued, ALL, relay/hotpatch, nonidentity CALL offsets, enabled/disabled removal and uninitialization. Verify suspension/handle ownership and safe worker cleanup; require the exact historical stale-action build copy to fail the same fixture for the intended IP mismatch. Preserve shipping/vendor sources and existing injected-failure tests; update the manual hook workflow and current patch provenance documentation.
+
 - Minimize Windows toolchain provenance and build receipt paths while retaining tool digests, file versions and native/Golden evidence. Resolve basename compiler receipts only through the exact hash-bound CMake cache, retain matching absolute receipt compatibility and reject ambiguous, changed or mismatched identities. Apply basename DLL summaries through the current shared formatter; preserve CI report/artifact retention, current receipt vocabulary, console masks and the six-stage Golden summary. Initialize the provenance fixture from its running PowerShell's Utility module when CTest inherits a Core-only module path.
 
 - Keep Golden subprocess and runtime diagnostics in the complete on-disk report while printing only the final result, executed-stage count and runtime exit state. Preserve current GOLDEN_PASS criteria, all six stages, per-stage announcements, exit codes and distribution recovery; cover successful, blocked, stage-failure and runtime-failure console/report contracts.
