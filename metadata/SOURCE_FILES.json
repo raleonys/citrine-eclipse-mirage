@@ -11763,7 +11763,7 @@
       "bytes": 2217,
       "sha256": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749"
     },
-    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": {
+    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": {
       "bytes": 154,
       "sha256": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c"
     },
@@ -12975,7 +12975,7 @@
       "bytes": 3304,
       "sha256": "49b7b0c9dfbaf3c8333e1d18117204d47f5f7ead7ac8b3fce60c30e835bb1bed"
     },
-    "third_party/pugixml/tests/data/тест.xml": {
+    "third_party/pugixml/tests/data/\u0442\u0435\u0441\u0442.xml": {
       "bytes": 7,
       "sha256": "fc2cdda67a4e845899692e57d0e54e12d10dbd2e3f7ef65f50c340426c4ff0d8"
     },
