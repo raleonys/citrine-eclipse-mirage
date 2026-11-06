@@ -6,6 +6,10 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- PR #113: exercise real HKEYs issued by alternate RegOpenKeyA/W and RegCreateKeyExA/W SDK paths through the existing native Registry query/close callbacks. Verify native value bytes, original LastError, one close and fabricated-ownership isolation in volatile HKCU fixtures; retain lifecycle/reuse regressions and document the bounded D03 evidence without claiming Consumer/MinHook provenance.
+
+### Recent integrated changes
+
 - Coordinate overlapping provider and extra-library process error-mode suppression with shared leases, preserving suppression until the final loader completes and restoring the incoming mode on success or unwind before readiness publication. Consolidate the extra-library exception restoration and acquired-prefix regressions with native overlap/finish-interval tests. Preserve retained source-model get/set effects through explicit boundaries; rebuild internal C++ adapters without changing public DLL exports.
 
 - Cover D53-A throwing accepted-handler construction with real native Asio loopback sockets, both without a prior session and with an established peer. Require the rejected socket to close, exactly one construction error, continued peer request/response, listener rearm and complete ownership retirement after repeated stop. Preserve accepted-main IOCP, accept-cancellation and aligned-CRT allocation regressions; no production or ABI change.
@@ -49,17 +53,40 @@ This file distinguishes integrated source changes, imported source history and p
 - Reject ASCII control characters U+0000–U+001F and DEL in canonical vendor alias targets while retaining the existing relative-path, escape and malformed-record checks. Preserve the locked aliases and all vendor bytes/pins.
 - Retain the control-character rejection/valid-descriptor regression alongside the malformed alias-table/target-type regression integrated in #218. This changes source validation, not runtime behavior or dependency versions.
 
-### Accepted-main checkpoint — 2026-11-05
+### Accepted-main checkpoint — 2026-11-06
 
-Verified against [`main@2ef4ea9f8c2613540566f2dab6a208cfaf6b438e`](https://github.com/raleonys/citrine-eclipse-mirage/commit/2ef4ea9f8c2613540566f2dab6a208cfaf6b438e). All 82 PRs below have matching GitHub merge records and merge commits reachable from that source checkpoint after the earlier #62 checkpoint. Dates use Europe/Istanbul. The list records integrations, not passing tests, releases or unmerged proposals. Later entries supersede earlier implementation and policy decisions.
+Verified against [`main@52dc116c058743f03d29bab69afcb4ea9899eddc`](https://github.com/raleonys/citrine-eclipse-mirage/commit/52dc116c058743f03d29bab69afcb4ea9899eddc). The 102 integration entries below have matching GitHub merge records and merge commits reachable from that source checkpoint after the earlier #62 checkpoint. Dates use Europe/Istanbul. The list records integrations, not passing tests, releases or unmerged proposals. Later entries supersede earlier implementation and policy decisions.
 
 The current XML backend is pugixml behind the project compatibility layer (#149/#150), with the self-aliasing printer correction (#193). MinHook uses the existing hook-engine adapter (#148); PEGTL grammar is private behind the parser interface (#231). The native completion fixtures cover held receive (#107), send/output (#114) and accept (#130) packets across bounded stop retries; these controlled schedules do not establish exhaustive kernel identity or Consumer equivalence.
 
 Full validation follows actual main integration or a later verified synchronization/label request (#212/#225); opening a PR runs lightweight integrity checks. The eleven required checks remain mandatory. Single-PR branches are temporary; the continuing research and owner-designated audit exceptions from #103/#110 supersede #100's broader original wording. Weekly release preparation remains owner-published and separate from PR integration.
 
 
+### Integrated 2026-11-06
+
+- [PR #157](https://github.com/raleonys/citrine-eclipse-mirage/pull/157): fix: coordinate overlapping loader error-mode leases. Includes #153 through the same merge ancestry; GitHub records #153 as indirectly merged.
+- [PR #105](https://github.com/raleonys/citrine-eclipse-mirage/pull/105): test: verify Asio accepted-handler construction rollback and rearm (D53-A).
+- [PR #169](https://github.com/raleonys/citrine-eclipse-mirage/pull/169): audit: derive Windows status buffer length from SDK type.
+- [PR #112](https://github.com/raleonys/citrine-eclipse-mirage/pull/112): security: minimize Windows build provenance and bind compiler receipts.
+- [PR #123](https://github.com/raleonys/citrine-eclipse-mirage/pull/123): security: keep Golden stage diagnostics out of public console logs.
+- [PR #133](https://github.com/raleonys/citrine-eclipse-mirage/pull/133): security: mask machine-specific paths in Windows CI console logs.
+- [PR #128](https://github.com/raleonys/citrine-eclipse-mirage/pull/128): test: exercise A11-02 worker payload visibility and startup flag admission.
+- [PR #125](https://github.com/raleonys/citrine-eclipse-mirage/pull/125): test: retain extra-DLL and provider leases across staged shutdown retries (A11-06).
+- [PR #121](https://github.com/raleonys/citrine-eclipse-mirage/pull/121): test: document pre-accept readiness failure ordering (C15).
+- [PR #237](https://github.com/raleonys/citrine-eclipse-mirage/pull/237): test: adopt Archive 12 bound-port publication boundaries.
+- [PR #234](https://github.com/raleonys/citrine-eclipse-mirage/pull/234): fix: continue the same connection after NoResponse commands.
+- [PR #170](https://github.com/raleonys/citrine-eclipse-mirage/pull/170): fix: prevent Config2 lookup use-after-free on aliased keys.
+- [PR #161](https://github.com/raleonys/citrine-eclipse-mirage/pull/161): Fix online avatar provider owner and size arguments.
+- [PR #75](https://github.com/raleonys/citrine-eclipse-mirage/pull/75): audit: recover interrupted Golden dist promotion (C35-F001).
+- [PR #224](https://github.com/raleonys/citrine-eclipse-mirage/pull/224): test: cover provider auth reentry through live registry hooks.
+
 ### Integrated 2026-11-05
 
+- [PR #78](https://github.com/raleonys/citrine-eclipse-mirage/pull/78): audit: report license ticket write/close failures (F-C24-001).
+- [PR #74](https://github.com/raleonys/citrine-eclipse-mirage/pull/74): audit: validate Config2 ContentId before license path construction (C36-F002).
+- [PR #177](https://github.com/raleonys/citrine-eclipse-mirage/pull/177): fix: reject invalid native input stream positions.
+- [PR #219](https://github.com/raleonys/citrine-eclipse-mirage/pull/219): fix: preserve last online profile cache on invalid field delimiters.
+- [PR #200](https://github.com/raleonys/citrine-eclipse-mirage/pull/200): fix: reject control characters in vendor alias targets.
 - [PR #142](https://github.com/raleonys/citrine-eclipse-mirage/pull/142): reject missing and header-overlapping symbol-table pointers in ordinary COFF and BigObj size evidence, preserving valid section accounting and existing unsupported-object reporting.
 - [PR #187](https://github.com/raleonys/citrine-eclipse-mirage/pull/187): preserve committed Config2 state across recursive assignment failures; repair the checked-MSVC allocation fixture without changing iterator settings or timeouts. Validate actual-source rollback, sanitizer coverage and exact-head Windows Debug/native acceptance.
 - [PR #165](https://github.com/raleonys/citrine-eclipse-mirage/pull/165): repair 24 displayed source-path labels in historical comparison tables, including the private PEGTL grammar, while preserving finding text, link targets, fragments and donor references.
