@@ -55,9 +55,10 @@ if(NOT PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS)
   message(WARNING "Diagnostic-only build: required PEGTL public API is unavailable; vendor unchanged.")
 endif()
 
-add_library(preloader_l_tinyxml2 STATIC "${PROJECT_SOURCE_DIR}/third_party/tinyxml2/tinyxml2.cpp")
-target_include_directories(preloader_l_tinyxml2 PUBLIC "${PROJECT_SOURCE_DIR}/third_party/tinyxml2")
-add_dependencies(preloader_l_tinyxml2 preloader_l_verify_vendors)
+add_library(preloader_l_pugixml STATIC "${PROJECT_SOURCE_DIR}/third_party/pugixml/src/pugixml.cpp")
+target_include_directories(preloader_l_pugixml PUBLIC "${PROJECT_SOURCE_DIR}/third_party/pugixml/src")
+target_compile_definitions(preloader_l_pugixml PUBLIC PUGIXML_NO_XPATH)
+add_dependencies(preloader_l_pugixml preloader_l_verify_vendors)
 add_dependencies(preloader_l_asio preloader_l_verify_vendors)
 add_dependencies(preloader_l_pegtl preloader_l_verify_vendors)
 

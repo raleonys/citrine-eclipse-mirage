@@ -4,6 +4,7 @@
 #include "preloader_l/runtime/application.hpp"
 #include "preloader_l/platform/hook_engine_api.hpp"
 #include "preloader_l/platform/hook_unload_guard.hpp"
+#include <MinHook.h>
 #include <atomic>
 #include <filesystem>
 
