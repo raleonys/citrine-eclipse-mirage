@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Decode source-package manifest and repository-contract JSON explicitly as UTF-8. Test valid Unicode metadata under an ANSI default and reject malformed UTF-8 before replacing an existing ZIP/checksum pair.
+
 - Initialize internal saved-avatar size to the observed -1 sentinel so the first successful own image below 208 pixels can update the last-avatar cache. Cover real file-sharing denial, retry, equal-size reuse and a later larger image without changing public configuration defaults.
 
 - Strengthen Config2 base/override log-failure ordering tests with nonempty scalar/collection changes and a same-state retry. Reject application before a failing path log without changing production behavior or Debug logging policy.
