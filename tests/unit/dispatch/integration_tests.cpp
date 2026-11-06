@@ -24,7 +24,7 @@ void check(bool value,const char* why){++checks;if(!value)throw std::runtime_err
 [[noreturn]] void unused(){throw std::logic_error("Unexpected synthetic dependency use");}
 struct InvalidMessage{};
 struct MissingLicense{};
-struct NoResponseSignal{};
+using NoResponseSignal=msg::NoResponseRequiredError;
 struct Node final:msg::XmlNode {
     std::string tag,text;
     bool has_text=false;
@@ -253,8 +253,7 @@ void alias_content_and_errors() {
     // must propagate invalid-message instead of manufacturing success.
     bool invalid=false;try{(void)f.process("QueryImage");}catch(const InvalidMessage&){invalid=true;}
     check(invalid,"missing image attributes rejected");
-    bool no_response=false;try{(void)f.process("QueryChunkStatus");}catch(const NoResponseSignal&){no_response=true;}
-    check(no_response,"typed no-response propagation");
+    check(f.process("QueryChunkStatus").empty(),"recognized no-response command returns no wire frame");
     for(const auto* name:{"GetAuthCode","RequestLicense","InvalidateLicense"}) {
         bool missing=false;try{(void)f.process(name);}catch(const MissingLicense&){missing=true;}
         check(missing,"license body remains required external dependency");
@@ -298,6 +297,12 @@ void actual_reader_pipeline() {
     bool rejected=false;try{(void)f.process_actual("<lsx><Request id='42' recipient='EbisuSDK'><GoOnline/></Request></lsx>");}catch(const InvalidMessage&){rejected=true;}
     check(rejected,"actual XML names remain case-sensitive");
     check(f.effects.decrypt_failures==0,"valid encrypted request did not use failure fallback");
+    for(const std::string reference:{"prefix&#x100000000;suffix","prefix&#0;suffix","&amp;&#65;&x1f600;"}) {
+        const auto id=reference=="&amp;&#65;&x1f600;"?"&A&x1f600;":reference;
+        f.settings[id]="exact entity lookup";
+        const auto literal=f.process_actual("<LSX><Request id='42' recipient='EbisuSDK'><GetSetting SettingId='"+reference+"'/></Request></LSX>");
+        check(literal==wrapped("        <GetSettingResponse Setting=\"exact entity lookup\"/>\n")+std::string(1,'\0'),"entity reference preserves the exact settings key through actual router and serializer");
+    }
 }
 void recovered_license_pipeline() {
     Fixture f(true,true);f.online=0;
@@ -316,10 +321,22 @@ void recovered_license_pipeline() {
     check(f.license_value.empty()&&f.attempted_files==0&&f.license_blocked==0,"invalidation clears only in-memory token");
     bool invalid=false;try{(void)f.process_actual(prefix+"<RequestLicense/>"+suffix);}catch(const InvalidMessage&){invalid=true;}
     check(invalid&&f.license_blocked==1&&f.attempted_files==2&&f.license_effects.token_reads==2,"missing ticket after two empty synthetic files blocks subsequent request");
-    bool no_response=false;try{(void)f.process_actual(prefix+"<RequestLicense/>"+suffix);}catch(const NoResponseSignal&){no_response=true;}
-    check(no_response,"blocked request propagates typed no-response");
+    check(f.process_actual(prefix+"<RequestLicense/>"+suffix).empty(),"blocked request emits no wire frame");
 }
+void actual_reader_no_response() {
+    for(bool encrypted:{false,true}) {
+        Fixture f(true);f.cipher.set_fixed_key_084c98();const auto key=f.cipher.round_keys();
+        const std::string prefix="<LSX><Request id='42' recipient='EbisuSDK'>",suffix="</Request></LSX>";
+        check(f.process_actual(prefix+"<QueryChunkStatus/>"+suffix,encrypted).empty(),"actual Router no-response emits no plaintext or AES wire frame");
+        check(f.encrypted==encrypted&&f.cipher.round_keys()==key,"no-response retains real AES key and mode");
+        auto reply=f.process_actual(prefix+"<GetInternetConnectedState/>"+suffix,encrypted);
+        check(!reply.empty()&&reply.back()=='\0',"valid follow-up still produces a framed response");reply.pop_back();
+        if(encrypted){msg::hex_decode_03ce30(reply);check(f.cipher.decrypt_042480(reply),"real AES follow-up decrypts");}
+        check(reply==wrapped("        <InternetConnectedState connected=\"1\"/>\n"),"actual reader/Router follow-up retains exact valid response");
+    }
 }
-int main(){try{plaintext_and_aes();alias_content_and_errors();actual_reader_pipeline();recovered_license_pipeline();
+
+}
+int main(){try{plaintext_and_aes();alias_content_and_errors();actual_reader_pipeline();recovered_license_pipeline();actual_reader_no_response();
     std::cout<<"PASS: "<<checks<<" integration checks; actual XML compatibility reader/AES/dispatcher/handlers/serializer and synthetic boundaries; original targets not executed\n";
     return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

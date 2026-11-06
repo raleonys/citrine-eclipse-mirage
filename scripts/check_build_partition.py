@@ -67,6 +67,9 @@ def map_errors(text, policy):
     for name in policy['reference_targets']:
         if name.lower() in lower:
             errors.append('Reference target/archive present in production map: ' + name)
+    for stem in policy.get('forbidden_production_object_stems', []):
+        if object_pattern(stem).search(text):
+            errors.append('Retired vendor object present in production map: ' + stem)
     for stem in ['dll_entry', 'crypt_query_host']:
         if stem not in present:
             errors.append('Production object evidence missing: ' + stem)
@@ -138,6 +141,9 @@ def codemodel_errors(targets, policy):
         for dependency in closure:
             for source in targets[dependency].get('sources', []):
                 path = source['path'].replace('\\', '/')
+                for prefix in policy.get('forbidden_production_source_prefixes', []):
+                    if path.lower().startswith(prefix.lower()) or '/' + prefix.lower() in path.lower():
+                        errors.append('Retired vendor source in production closure: ' + name + ' -> ' + path)
                 for reference in policy['reference_sources']:
                     if (path == reference or path.endswith('/' + reference) or
                             object_pattern(Path(reference).stem).search(path)):
@@ -163,7 +169,7 @@ def codemodel_errors(targets, policy):
             if actual != expected:
                 errors.append('Source API lost the retained reference object payload or complete development source set')
             static_targets = set(policy['production_targets'] + policy['reference_targets'] +
-                                 ['preloader_l_minhook', 'preloader_l_tinyxml2'])
+                                 ['preloader_l_minhook', 'preloader_l_pugixml'])
             overlap = closure & static_targets
             if overlap:
                 errors.append('Separate source API graph reuses shipping static-CRT targets: ' + ', '.join(sorted(overlap)))
@@ -209,7 +215,7 @@ def main():
                 errors.append('Linked production binary missing')
     except (OSError, ValueError, KeyError, TypeError) as error:
         errors.append(str(error))
-    result = {'schema': 'surge.build-partition-check.v1', 'classification': 'NOT_RELEASE',
+    result = {'schema': 'surge.build-partition-check.v1',
               'result': 'FAIL' if errors else 'PASS_SOURCE_PARTITION' if args.source_only else 'PASS_TARGET_GRAPH' if args.graph_only else 'PASS_PRODUCTION_BOUNDARY',
               'map_format': format_name, 'errors': errors,
               'native_msvc_and_game_acceptance': 'SEPARATE_REQUIRED_EVIDENCE'}

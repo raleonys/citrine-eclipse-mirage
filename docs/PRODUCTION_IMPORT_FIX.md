@@ -60,7 +60,7 @@ basename during unload checks instead of hard-coding
 the unsigned name. The filter remains
 `preloader_l.dll`.
 See [Golden and dist flow](GOLDEN_PROTOCOLS.md) and
-[local output contract](../metadata/LOCAL_DIST_CONTRACT.json).
+[distribution contract](../metadata/DIST_CONTRACT.json).
 
 Synthetic orchestration tests verify stop-on-first-error
 at each Golden failure, withholding dist after runtime
