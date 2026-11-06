@@ -128,11 +128,18 @@ std::string process_message_033d70(State state,std::string& input,XmlBackend& xm
                 return {};
             }
         }
-        // tinyxml2 gets a C string with size_t(-1), so embedded NUL ends parsing.
+        // The project XML interface preserves C-string semantics: embedded NUL ends parsing.
         auto parsed=xml.parse_c_string(std::string_view(input.c_str()));
         if(!parsed.has_error) {
             if(state.show_lsx_0a3ef0)effects.log_received(input);
-            auto response=dispatch_032d00(*parsed.document,state.cipher,xml,factory,random,effects);
+            std::string response;
+            try{response=dispatch_032d00(*parsed.document,state.cipher,xml,factory,random,effects);}
+            catch(const NoResponseRequiredError&){
+                // Reference033d70 returns before response logging/encryption,
+                // NUL framing or event selection. An ordered Session completes
+                // this empty result without socket output and admits the next frame.
+                return {};
+            }
             if(state.show_lsx_0a3ef0)effects.log_response(response);
             if(!state.encrypted_0c4) {
                 response.push_back('\0');
