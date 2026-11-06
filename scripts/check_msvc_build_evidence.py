@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
-"""Bind the local MSVC link audit to its exact DLL, cache and source receipt."""
+"""Bind the MSVC link audit to its exact DLL, cache and source receipt."""
 import argparse
 import hashlib
 import json
@@ -15,10 +15,10 @@ def sha(path):
 
 def check(root, build_dir, dll):
     root, build_dir, dll = map(Path, (root, build_dir, dll))
-    receipt = json.loads((build_dir / 'LOCAL_BUILD_RECEIPT.json').read_text(encoding='utf-8-sig'))
+    receipt = json.loads((build_dir / 'BUILD_RECEIPT.json').read_text(encoding='utf-8-sig'))
     errors = []
     if receipt.get('build_succeeded') is not True or receipt.get('mode') != 'Golden' or receipt.get('configuration') != 'Release':
-        errors.append('Missing successful local Golden/Release MSVC build receipt')
+        errors.append('Missing successful Golden/Release MSVC build receipt')
     for field, path in [('dll_sha256', dll), ('cmake_cache_sha256', build_dir / 'CMakeCache.txt'),
                         ('source_manifest_sha256', root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')]:
         if receipt.get(field) != sha(path):
@@ -60,5 +60,5 @@ if __name__ == '__main__':
         errors = [str(error)]
     for error in errors:
         print(' -', error)
-    print('MSVC_BUILD_EVIDENCE:', 'FAIL' if errors else 'PASS_LOCAL_BUILD_ONLY')
+    print('MSVC_BUILD_EVIDENCE:', 'FAIL' if errors else 'PASS_MSVC_BUILD')
     raise SystemExit(1 if errors else 0)

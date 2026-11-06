@@ -9,7 +9,7 @@
 | READ_ONLY_BINARY_INSPECTION | PE import/export/resource reporting and byte identity of the owner-supplied avatar |
 | WINDOWS_MSVC / WINDOWS_NATIVE | Recorded only when actually executed on Windows with MSVC |
 | GOLDEN_TARGET_ACCEPTANCE | Full pipeline against the actual product policy and exact DLL; fixture PASS is insufficient |
-| CONSUMER_GAME | Actual named/versioned game and Consumer flow; currently NOT_RUN |
+| CONSUMER_GAME | Owner execution of the named/versioned game and Consumer flow against an identified DLL; earlier owner results do not validate a new candidate |
 
 Run `python -B scripts/run_source_qa.py`. CTest infrastructure tests are
 registered in both the portable configuration and the Windows test group.
@@ -24,7 +24,7 @@ reject incorrect/private manifests, source drift, duplicate or unsafe ZIP
 paths, nested archives, symlinks, write failures, unowned metadata, missing
 command arguments/exit codes, and premature Golden termination.
 
-Current VDF implementation/compiler results are in
+Historical VDF implementation/compiler results are in
 [VDF_PARSER_STATUS.json](../metadata/evidence/VDF_PARSER_STATUS.json);
 the adaptation scope is recorded in
 [BROWNFIELD_TRANSFER_MATRIX_V2.json](../metadata/INFRASTRUCTURE_TRANSFER_MATRIX.json).
@@ -38,10 +38,18 @@ recorded in [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.jso
 
 Current application C interface and separation of source DLL variants:
 [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
-Current validation:
+Historical interface validation:
 [PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json).
 
 Production/reference target partitioning and per-file use checks:
-[BUILD_PARTITION.md](BUILD_PARTITION.md). The latest comparative verification
+[BUILD_PARTITION.md](BUILD_PARTITION.md). Historical comparative verification
 is [BUILD_PARTITION.json](../metadata/evidence/BUILD_PARTITION.json);
 earlier reports retain their original historical results.
+
+Current hosted acceptance belongs to the selected commit's GitHub Actions
+jobs and artifacts, not a repository-wide PASS/NOT_RUN flag in an older
+snapshot. PR creation checks lightweight integrity; the later full-validation
+gate requires all eleven source/portable/Windows/reference contexts. See
+[GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md) for scheduling and exact-head checks.
+Merge records, configured tests and skipped jobs do not substitute for
+executed native or Golden evidence. Owner game acceptance remains separate.
