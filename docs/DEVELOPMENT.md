@@ -4,8 +4,9 @@ Windows requires Visual Studio C++ x64 tools/SDK, CMake >= 3.20, and Python
 3.9 or later. Production and static-test builds use the compiler's standard CRT:
 MSVC Release `/MT` and Debug `/MTd`. The separate C++ development DLL and its
 host use `/MD` and `/MDd`, with their own matching vendor builds, because STL
-objects cross that module boundary. This Linux session does not claim PowerShell/CMD or MSVC
-execution.
+objects cross that module boundary. Linux portable or Wine results do not
+establish PowerShell/CMD or native MSVC execution; inspect the selected
+commit's Windows results separately.
 
 Human-facing commands under `scripts/build_orchestration/`:
 
@@ -21,6 +22,11 @@ The human-facing CMD window colors the final result, shows the exit code,
 and waits before closing. Automation should invoke the matching `.ps1`
 script directly without waiting. Arguments include
 `-BuildDir build\...` and `-Config Release|RelWithDebInfo|Debug`.
+Each CMD launcher passes the internal `-LauncherOwnsSummary` presentation
+switch so that its closing panel prints the selected profile verdict once.
+Direct PowerShell/CI calls retain the default result line. DLL paths, hashes,
+failure diagnostics and Golden blocked-report guidance remain visible in
+both routes; exit codes and validation steps are unchanged.
 The sole profile executor is `build_profile.ps1`; `build_common.ps1` is the
 shared helper. Each profile uses its own build directory, lock, toolchain
 hash record, and build receipt. MSVC environment variables are restored
@@ -73,15 +79,39 @@ or timeout behavior.
 
 Current application C interface and source DLL separation:
 [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
-Current verification:
+Historical interface verification:
 [PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json).
 
-The latest owner-provided native logs report Compile/Debug/CRT PASS;
-the remaining Native test build correction is documented in
-[MSVC_NATIVE_LOOKUP_FIX.md](MSVC_NATIVE_LOOKUP_FIX.md).
+The earlier owner-log Native build failure and its source correction are
+documented in [MSVC_NATIVE_LOOKUP_FIX.md](MSVC_NATIVE_LOOKUP_FIX.md); that
+checkpoint is not a current build blocker. Current validation belongs to the
+selected head's GitHub Actions results. PR creation runs source integrity;
+full Source QA, portable, Windows/MSVC and Golden checks follow integration
+of current main or a later verified synchronization request. See
+[GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md) for the eleven required contexts
+and request sequence. A historical PASS does not validate a changed head.
 
 Current five-launcher and cache-cleanup record:
 [STARTUP_BUILD_FIX.md](STARTUP_BUILD_FIX.md).
 Successful cleanup does not print JSON to the console; details are stored
 in `PYTHON_CACHE_CLEANUP.json` in the selected build directory.
 Failures stop the build with a nonzero exit code.
+
+The focused operator output fixtures exercise all five CMD/PowerShell routes,
+including failure, missing-script and color-renderer fallback paths. They use
+injected build results and do not compile or establish native DLL/Golden
+acceptance. Run them on Windows with:
+
+```sh
+python -B tests/infrastructure/test_infrastructure.py OperatorOutputTests
+```
+
+To request just these Windows fixtures remotely, manually dispatch the existing
+Source integrity workflow on the selected branch:
+
+```sh
+gh workflow run ci.yml --ref <branch> -f operator_output=true
+```
+
+This optional job does not run on PR creation or ordinary pushes and does not
+replace the later eleven-check full validation gate.
