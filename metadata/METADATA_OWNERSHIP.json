@@ -91,7 +91,7 @@
       "role": "CURRENT_CONTRACT_OR_PROVENANCE",
       "purpose": "local data policy"
     },
-    "LOCAL_DIST_CONTRACT.json": {
+    "DIST_CONTRACT.json": {
       "owner": "SURGE final local output",
       "purpose": "Final runtime name, Golden/runtime gating, hash sidecar and bounded acceptance status",
       "role": "CURRENT_CONTRACT_OR_PROVENANCE"

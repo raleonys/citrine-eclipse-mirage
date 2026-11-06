@@ -1,9 +1,8 @@
 {
   "schema": "surge.golden-target.v1",
   "policy": "ARYRA Golden Layout",
-  "activation": "READY_LOCAL_TARGET",
+  "activation": "READY_TARGET",
   "fixture_only": false,
-  "classification": "NOT_RELEASE",
   "authority": "Latest owner correction: Infrastructure compiled DLL metadata was correct; check/adopt its full declared metadata profile, including Compilation Timestamp",
   "native_acceptance": "REQUIRES_ACTUAL_MSVC_GOLDEN_RUN",
   "implementation": "scripts/verify_aryra_golden_layout.py",

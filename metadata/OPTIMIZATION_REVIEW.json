@@ -1,6 +1,5 @@
 {
   "schema": "surge.optimization-review.v1",
-  "classification": "NOT_RELEASE",
   "owner": "Explicit owner authorization for whole-codebase dead-code and measured optimization review",
   "documentation": "docs/CODEBASE_OPTIMIZATION.md",
   "validation": "metadata/evidence/optimization/VALIDATION.json",
