@@ -9,7 +9,7 @@
 #include <thread>
 #include <stdexcept>
 
-namespace fault {thread_local bool next=false;unsigned loads=0,frees=0,fail_frees=0;void(*on_load)()=nullptr;void(*on_mode)(UINT)=nullptr;}
+namespace fault {thread_local bool next=false;unsigned loads=0,frees=0,fail_frees=0,fail_on_free=0;void(*on_load)()=nullptr;void(*on_mode)(UINT)=nullptr;}
 void* operator new(std::size_t n){if(fault::next){fault::next=false;throw std::bad_alloc();}if(auto p=std::malloc(n?n:1))return p;throw std::bad_alloc();}
 void* operator new[](std::size_t n){return ::operator new(n);}
 void operator delete(void* p)noexcept{std::free(p);}
@@ -17,7 +17,12 @@ void operator delete[](void* p)noexcept{std::free(p);}
 void operator delete(void* p,std::size_t)noexcept{std::free(p);}
 void operator delete[](void* p,std::size_t)noexcept{std::free(p);}
 HMODULE WINAPI TestLoadLibraryW(LPCWSTR path){++fault::loads;if(fault::on_load)fault::on_load();return ::LoadLibraryW(path);}
-BOOL WINAPI TestFreeLibrary(HMODULE module){++fault::frees;if(fault::fail_frees){--fault::fail_frees;SetLastError(ERROR_BUSY);return FALSE;}return ::FreeLibrary(module);}
+BOOL WINAPI TestFreeLibrary(HMODULE module){
+    ++fault::frees;
+    if(fault::fail_frees){--fault::fail_frees;SetLastError(ERROR_BUSY);return FALSE;}
+    if(fault::fail_on_free==fault::frees){fault::fail_on_free=0;SetLastError(ERROR_BUSY);return FALSE;}
+    return ::FreeLibrary(module);
+}
 UINT WINAPI TestSetErrorMode(UINT value){if(fault::on_mode)fault::on_mode(value);return ::SetErrorMode(value);}
 #define SetErrorMode TestSetErrorMode
 #define LoadLibraryW TestLoadLibraryW
@@ -42,7 +47,7 @@ struct Fixture {
     execution::Execution execution{mutex,{a,b,c},frequency,platform};
     application::ExtraLibraries extras{env,execution,c};
     application::Provider provider{state,env,files,execution,b};
-    Fixture(){execution::initialize_mutex_04a698(mutex,2);fault::loads=fault::frees=fault::fail_frees=0;}
+    Fixture(){execution::initialize_mutex_04a698(mutex,2);fault::loads=fault::frees=fault::fail_frees=fault::fail_on_free=0;}
 };
 struct ModeInterleave {
     std::promise<void> enter,entered,release,finished;
@@ -110,6 +115,7 @@ void overlapping_error_modes(const wchar_t* path) {
             "extra completion restored process mode while provider still held suppression");
         require(final_mode==expected,"overlapping loaders left a stale process error mode");
     }
+    std::cout<<"PASS: overlap-error-mode (16 combinations)\n";
 }
 namespace interval {
 std::uint8_t* ready=nullptr;unsigned changes=0;bool early=true;
@@ -124,6 +130,7 @@ void error_mode_finish_interval(const wchar_t*) {
     f.extras.load(false);fault::on_mode=nullptr;
     require(interval::changes==2&&interval::early&&f.c==1&&GetErrorMode()==expected,
         "suppression must begin/end before worker finish_flag publishes readiness");
+    std::cout<<"PASS: mode-finish-interval\n";
 }
 void acquisition_failure(const wchar_t* path) {
     Fixture f;bool threw=false;fault::next=true;fault::fail_frees=1;
@@ -168,6 +175,7 @@ void load_error_mode_unwind(const wchar_t* path) {
         require(GetErrorMode()==expected&&success.c==(main?0:1),
             "successful empty phase must retain error mode and readiness semantics");
     }
+    std::cout<<"PASS: load-error-mode\n";
 }
 void mixed_release(const wchar_t* path) {
     Fixture f;require(f.extras.load_library(path)!=0&&f.extras.load_library(path)!=0,"fixture DLL load");
@@ -193,6 +201,50 @@ void provider_retry(const wchar_t* path) {
     f.provider.close();f.provider.close();
     require(f.provider.module==0&&f.provider.online==0&&fault::frees==3,
         "provider cleanup retry did not release exactly the retained lease");
+}
+// A11-06: two different native module cleanup stages fail in sequence. This
+// uses the real source-included ExtraLibraries and Provider cleanup paths;
+// the full Application::stop orchestration is tested separately.
+void extra_provider_stage_retry(const wchar_t* path) {
+    Fixture f;
+    require(::GetModuleHandleW(path)==nullptr,"staged retry fixture DLL already loaded");
+    const auto extra=f.extras.load_library(path);
+    f.provider.module=reinterpret_cast<std::uintptr_t>(TestLoadLibraryW(path));
+    const auto provider_module=f.provider.module;
+    require(extra&&provider_module&&extra==provider_module&&fault::loads==2,
+        "staged retry must acquire two owned native module references");
+    f.provider.online=1;
+    auto cleanup=[&]{f.extras.close();f.provider.close();};
+
+    // Failure in the earlier extra-library stage must not invoke the provider
+    // stage. Both physical image leases remain outstanding.
+    fault::fail_frees=1;
+    bool first_failed=false;
+    try{cleanup();}catch(const std::runtime_error&){first_failed=true;}
+    require(first_failed&&fault::frees==1&&f.provider.module==provider_module&&
+            f.provider.online==1&&
+            ::GetModuleHandleW(path)==reinterpret_cast<HMODULE>(provider_module),
+        "failed extra cleanup must stop before provider retirement and retain both leases");
+
+    // The extra stage now retires once. A distinct failure in the later
+    // provider stage must retain that lease without reviving the extra one.
+    // Skip this attempt's successful extra release; fail its provider release.
+    fault::fail_on_free=fault::frees+2;
+    bool second_failed=false;
+    try{cleanup();}catch(const std::runtime_error&){second_failed=true;}
+    require(second_failed&&fault::frees==3&&fault::fail_on_free==0&&f.provider.module==provider_module&&
+            f.provider.online==1&&
+            ::GetModuleHandleW(path)==reinterpret_cast<HMODULE>(provider_module),
+        "second attempt must retire extra ownership and retain failed provider ownership");
+
+    // The completed extra stage must not double-free on the final retry.
+    cleanup();
+    require(fault::frees==4&&f.provider.module==0&&f.provider.online==0&&
+            ::GetModuleHandleW(path)==nullptr,
+        "final retry must unload only the remaining provider reference");
+    cleanup();
+    require(fault::frees==4,
+        "idempotent staged cleanup must not release either module again");
 }
 // B54 source comparison: distinguish a retained numeric module record from
 // a real executable image lease during failed FreeLibrary cleanup.
@@ -285,7 +337,8 @@ int wmain(int argc,wchar_t** argv)try {
     require(argc==2||argc==3,"expected fixture DLL path and optional case");
     const std::wstring_view selected=argc==3?argv[2]:L"all";bool ran=false;
     for(auto [name,fn]:{std::pair{L"acquire",acquisition_failure},{L"mixed",mixed_release},{L"retry",repeated_failure},
-                      {L"provider-retry",provider_retry},{L"provider-object",provider_object_once},
+                      {L"provider-retry",provider_retry},{L"extra-provider-stage",extra_provider_stage_retry},
+                      {L"provider-object",provider_object_once},
                       {L"provider-slot",provider_empty_slot},{L"provider-layout",provider_byte_layout},
                       {L"provider-physical-lease",provider_physical_lease},
                       {L"load-error-mode",load_error_mode_unwind},{L"overlap-error-mode",overlapping_error_modes},{L"mode-finish-interval",error_mode_finish_interval}})

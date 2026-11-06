@@ -100,6 +100,13 @@ void load_online_035bd0(StateRefs state, Effects& effects) {
         exists_035b00(state.last_avatar_0a3a60, effects))
         state.avatar_0a3a90 = state.last_avatar_0a3a60;
     if (!state.use_last_profile_0a3c38) return;
+    // The disk format has exactly two unescaped semicolon separators.
+    // A delimiter inside a provider field would make this profile unreadable
+    // by split_profile_fields_03cf00 on the next offline startup. Keep the
+    // authenticated in-memory identity, but do not overwrite the last cache.
+    if (state.persona_id_0a3bf8.find(';') != std::string::npos ||
+        state.user_id_0a3c18.find(';') != std::string::npos ||
+        state.username_0a3bd8.find(';') != std::string::npos) return;
     // String lengths, rather than C-string scans, control the saved profile.
     std::string saved = state.persona_id_0a3bf8;
     saved += ';';

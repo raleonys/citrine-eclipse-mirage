@@ -18,6 +18,7 @@ struct Effects final:configuration::Dependencies {
     bool fail_log=false;
     std::string fail_path;
     configuration::State* state_for_callback=nullptr;
+    std::vector<std::string> license_keys;
     configuration::Path executable_path_03c6d0()override{throw std::logic_error("not invoked");}
     configuration::Path parent_path_019820(const configuration::Path& p)override{require(p==u"C:/fixture/host.exe","state executable path");return u"C:/fixture";}
     configuration::Path join_016b00(const configuration::Path& a,const configuration::Path& b)override{return a+u"/"+b;}
@@ -33,7 +34,7 @@ struct Effects final:configuration::Dependencies {
     void log_config_path(const configuration::Path& p)override{logs.push_back(p);if(fail_log)throw std::runtime_error("synthetic log failure");}
     bool crt_is_space(unsigned char c)override{return c==' ' || (c>='\t' && c<='\r');}
     int crt_tolower(int c)override{return c>='A' && c<='Z'?c+32:c;}
-    void apply_license_key_02a830(std::string_view)override{throw std::logic_error("licensing effect forbidden");}
+    void apply_license_key_02a830(std::string_view key)override{license_keys.emplace_back(key);}
     void create_directories_018e00(const configuration::Path&)override{throw std::logic_error("OS effect forbidden");}
     void write_embedded_png_03c020(const configuration::Path&,configuration::EmbeddedPng)override{throw std::logic_error("OS effect forbidden");}
     std::vector<configuration::Path> directory_entries(const configuration::Path&)override{throw std::logic_error("OS effect forbidden");}
@@ -127,6 +128,64 @@ void capacity_and_override() {
     std::vector<std::string> ids=content_ids(m);std::sort(ids.begin(),ids.end());
     require(std::adjacent_find(ids.begin(),ids.end())==ids.end(),"grown collection has no duplicate/lost records");
 }
+
+void license_content_id_boundary() {
+    const auto document=parsed(R"("Config2" {"Game" {"ContentId" "Origin.OFB.50-1" "KeyForLicense" "synthetic-key"}})");
+    for(const auto& id:std::vector<std::string>{"Origin.OFB.50-1","id_2026","ABC-123.456","a..b"}) {
+        auto cfg=document;
+        cfg.lookup("Game").lookup("ContentId").value=id;
+        Effects deps;auto state=seed();
+        config_application::apply_config2(state,cfg,false,deps);
+        require(state.content_id==id,"safe license identifier retained byte-exact");
+        require(state.license_directory==u"SYNTHETIC/Electronic Arts/EA Services/License/"+wide(id),
+                "safe identifier remains one child of the License directory");
+        require(deps.license_keys==std::vector<std::string>{"synthetic-key"},
+                "known-safe ContentId retains license effect callback");
+    }
+
+    const std::vector<std::string> invalid={
+        "..",".","../escape",R"(..\escape)","/rooted",R"(\rooted)",
+        R"(\\server\share)",R"(C:\outside)","C:/outside","dir/sub","a:b",
+        "trailing.","bad name","AUX","NUL.dlf","CON","PRN","COM1",
+        "lpt9.bin","folder?name","file*name","a<value",
+        std::string("safe\0unsafe",11),std::string(129,'x')
+    };
+    for(const auto& id:invalid) {
+        auto cfg=document;
+        cfg.lookup("Game").lookup("ContentId").value=id;
+        Effects deps;auto state=seed();
+        rejects<std::invalid_argument>(
+            [&]{config_application::apply_config2(state,cfg,false,deps);},
+            "unsafe Config2 ContentId must be rejected");
+        require(state.license_directory.empty(),
+                "invalid ContentId rejected before deriving a license filename");
+        require(deps.license_keys.empty(),"invalid ContentId cannot reach licensing callback");
+    }
+
+    // A preexisting inherited state value must not bypass the guard when the
+    // Config2 Game section omitted a new ContentId.
+    auto inherited=parsed(R"("Config2" {"Game" {"KeyForLicense" "synthetic-key"}})");
+    Effects prior_deps;auto prior=seed();prior.content_id="../old";
+    rejects<std::invalid_argument>(
+        [&]{config_application::apply_config2(prior,inherited,true,prior_deps);},
+        "inherited unsafe ContentId is rejected on override passes");
+    require(prior_deps.license_keys.empty()&&prior.license_directory.empty(),
+            "override path does not publish a license path for inherited unsafe ID");
+
+    // Ordinary missing-ContentId configuration remains supported. License
+    // writing, however, must never target the License base with an empty stem.
+    auto missing=parsed(R"("Config2" {"Game" {"Name" "fixture"}})");
+    Effects no_key_deps;auto no_key=seed();
+    config_application::apply_config2(no_key,missing,false,no_key_deps);
+    require(no_key.license_directory==u"SYNTHETIC/Electronic Arts/EA Services/License/",
+            "no-license configurations preserve the original empty-ID path model");
+    Effects missing_deps;auto empty_id=seed();
+    auto needs_id=parsed(R"("Config2" {"Game" {"KeyForLicense" "synthetic-key"}})");
+    rejects<std::invalid_argument>(
+        [&]{config_application::apply_config2(empty_id,needs_id,false,missing_deps);},
+        "license write requires a nonempty safe ContentId");
+    require(missing_deps.license_keys.empty(),"empty ID never reaches license callback");
+}
 void obsolete_fixed_settings() {
     Effects deps;
     for(const auto* key:{"ServerPort","SDK"})for(bool over:{false,true})for(const auto* text:{"default","random","-1","65536","invalid","70000suffix"}) {
@@ -175,6 +234,6 @@ void file_path_and_native(const std::filesystem::path& dir) {
 }
 }
 int main(int argc,char** argv) {
-    try {if(argc!=2)throw std::invalid_argument("requires own fixture directory");scalar_and_collections();capacity_and_override();obsolete_fixed_settings();partial_failure();file_path_and_native(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" Config2 application checks; no original execution or real user CFG\n";}
+    try {if(argc!=2)throw std::invalid_argument("requires own fixture directory");scalar_and_collections();capacity_and_override();license_content_id_boundary();obsolete_fixed_settings();partial_failure();file_path_and_native(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" Config2 application checks; no original execution or real user CFG\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }
