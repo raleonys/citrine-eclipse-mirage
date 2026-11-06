@@ -384,6 +384,7 @@ void alternate_sdk_routes(bool wide) {
     }
     require(fixture.effects.allocations == 0 && fixture.effects.frees == 0,
         "alternate native SDK routes never allocate or release fabricated handles");
+    std::cout << "PASS: alternate SDK Registry routes " << (wide ? "W" : "A") << '\n';
 }
 
 void numeric_reuse(bool wide) {

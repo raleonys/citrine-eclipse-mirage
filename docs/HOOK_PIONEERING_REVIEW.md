@@ -69,7 +69,7 @@ Consumer/game call graph. The design and evidence gaps below remain open.
 
 ## Bounded D03 alternative Registry API evidence
 
-The source-included native [Registry lifecycle fixture](../tests/unit/registry/native_lifecycle_tests.cpp)
+The source-linked native [Registry lifecycle fixture](../tests/unit/registry/native_lifecycle_tests.cpp)
 now also exercises direct SDK `RegOpenKeyA/W` and `RegCreateKeyExA/W`
 issuance of real HKEY values, with callback entrypoints handling subsequent
 `RegQueryValueExA/W` and `RegCloseKey`. The tests verify original SDK

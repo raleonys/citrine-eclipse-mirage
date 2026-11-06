@@ -15,11 +15,36 @@
 #include <atomic>
 #include <cstring>
 #include <future>
+#include <mutex>
+#include <optional>
 #include <thread>
 
 namespace preloader_l::application {
 namespace {
 using namespace detail;
+// Provider and main-thread extra loads intentionally overlap. Their process-wide
+// suppression is one shared lease, not independent save/restore transactions.
+// Hold the mutex only while updating the mode/count, never across loader calls
+// or foreign callbacks. Unrelated host SetErrorMode calls remain outside this
+// module's coordination contract.
+class ErrorModeLease final {
+    struct Shared {std::mutex mutex;std::size_t users=0;DWORD previous=0;};
+    static Shared& shared(){static Shared value;return value;}
+    DWORD previous_;
+public:
+    ErrorModeLease() {
+        auto& state=shared();std::lock_guard lock(state.mutex);
+        if(!state.users){state.previous=GetErrorMode();SetErrorMode(state.previous|SEM_FAILCRITICALERRORS);}
+        previous_=state.previous;++state.users;
+    }
+    ~ErrorModeLease() {
+        auto& state=shared();std::lock_guard lock(state.mutex);
+        if(!--state.users)SetErrorMode(state.previous);
+    }
+    ErrorModeLease(const ErrorModeLease&)=delete;
+    ErrorModeLease& operator=(const ErrorModeLease&)=delete;
+    DWORD previous()const noexcept{return previous_;}
+};
 class Console final:public startup::NativeConsolePlatform {
     std::uintptr_t stream_052238(unsigned n) override {
         if(n==0)return reinterpret_cast<std::uintptr_t>(stdin);
@@ -40,6 +65,7 @@ public:
     std::uint8_t& ready;
     std::uintptr_t module=0,object=0;
     std::uint8_t online=0;
+    std::optional<ErrorModeLease> error_mode;
     Provider(configuration::State& s,Environment& e,file::Factory& f,
         execution::Execution& x,std::uint8_t& r):state(s),env(e),files(f),execution(x),ready(r){}
     online::StateRefs refs(){return {state.executable_path,state.cookie_path,state.last_profile_path,
@@ -56,8 +82,11 @@ public:
         if(!address)throw std::logic_error("Provider method is unavailable");
         return reinterpret_cast<Fn>(address);
     }
-    std::uint32_t suppress_errors_0450a0() override {auto m=GetErrorMode();SetErrorMode(m|1);return m;}
-    void restore_error_mode(std::uint32_t m) override {SetErrorMode(m);}
+    std::uint32_t suppress_errors_0450a0() override {
+        if(error_mode)throw std::logic_error("Provider error suppression already active");
+        error_mode.emplace();return error_mode->previous();
+    }
+    void restore_error_mode(std::uint32_t) override {error_mode.reset();}
     Path filesystem_widen_006d70(std::string_view s) override {
         return env.filesystem_widen_006d70(s);
     }
@@ -99,13 +128,19 @@ class ExtraLibraries final:public system_services::libraries::SystemCalls,
     system_services::libraries::NativeSystemCalls native_;
     system_services::libraries::State state_;
     std::vector<std::uintptr_t> leases_;
+    std::optional<ErrorModeLease> error_mode_;
 public:
     ExtraLibraries(Environment& e,execution::Execution& x,std::uint8_t& r):env_(e),execution_(x),ready_(r){}
     void configure(const configuration::State& s) {
         for(const auto& p:s.extra_dlls_from_main)state_.from_main.push_back(wide(p));
         for(const auto& p:s.extra_dlls)state_.from_worker.push_back(wide(p));
     }
-    void load(bool main){system_services::libraries::load_phase_035850(*this,*this,state_,main);}
+    void load(bool main) {
+        // The normal helper exit releases before publication/finish_flag. On
+        // unwind, release the remaining lease while preserving the exception.
+        struct Cleanup {std::optional<ErrorModeLease>& mode;~Cleanup(){mode.reset();}} cleanup{error_mode_};
+        system_services::libraries::load_phase_035850(*this,*this,state_,main);
+    }
     void close() {
         bool pending=false;
         for(auto& module:leases_)if(module) {
@@ -119,6 +154,11 @@ public:
     }
     std::uint32_t get_error_mode() override{return native_.get_error_mode();}
     std::uint32_t set_error_mode(std::uint32_t m) override{return native_.set_error_mode(m);}
+    std::uint32_t begin_error_suppression() override {
+        if(error_mode_)throw std::logic_error("Extra-library error suppression already active");
+        error_mode_.emplace();return error_mode_->previous();
+    }
+    void end_error_suppression(std::uint32_t) override {error_mode_.reset();}
     std::uintptr_t load_library(const wchar_t* p) override {
         // Reserve ownership before native acquisition; a vector allocation
         // failure must not leave an untracked module and fallible rollback.
@@ -156,11 +196,11 @@ public:
     Path parent_path_019820(const Path& p) override{return env_.parent_path_019820(p);}
     Path join_016b00(const Path& a,const Path& b) override{return env_.join_016b00(a,b);}
     std::string path_utf8_01e3f0(const Path& p) override{return env_.path_to_utf8_031ca0(p);}
-    std::string current_time_041b60_null_true() override{return env_.current_time_041b60();}
+    std::string current_time_041b60_null_true() override{return env_.ticket_time_041b60();}
     bool wine_detected_045010() override{return GetProcAddress(GetModuleHandleW(L"ntdll.dll"),"wine_get_version")!=nullptr;}
     void log_literal_006880(std::string_view text) override{env_.debug_log({"licensing status: ",text});}
     void log_string_006860(std::string_view text) override{env_.debug_log({"licensing diagnostic: ",text});}
-    bool write_ticket_03c1d0(const Path& p,std::string_view v) override{return file::write_binary_03c1d0(p,v,files_);}
+    bool write_ticket_03c1d0(const Path& p,std::string_view v) override{return file::write_binary_checked(p,v,files_);}
     void dialog_038bc0(std::string_view,std::string_view body,std::uint32_t flags) override{MessageBoxW(nullptr,wide(env_.widen_0145d0(body)).c_str(),L"SURGE",flags);}
     [[noreturn]] void exit_05cdc0(std::int32_t code) override{ExitProcess(code);}
     [[noreturn]] void no_response_02bcd0_04d228() override{throw NoResponse();}
@@ -208,7 +248,7 @@ public:
         if(!transaction_.owns_engine()||failed_)throw std::runtime_error("Selected hook installation failed; owner must abort startup");
         const std::size_t expected=7+(state_.block_reruns?2:0)+(!state_.documents.empty()?2:0);
         if(targets_.size()!=expected)throw std::runtime_error("Required native hook staging incomplete");
-        if(transaction_.activate()!=MH_OK)throw std::runtime_error("Native hook batch apply failed");
+        if(transaction_.activate()!=platform::hook_engine::status_code::ok)throw std::runtime_error("Native hook batch apply failed");
         }catch(...){
             // Keep this Hooks owner/context alive if rollback is incomplete.
             // Application abort releases startup gates before retrying teardown.
@@ -231,7 +271,9 @@ public:
     void crypt_observed(hooks::Selection) noexcept override {
 #ifndef NDEBUG
         thread_local bool logging=false;if(logging)return;logging=true;
-        env_.debug_log("phase");
+        // Diagnostics cannot escape this noexcept observer or prevent the
+        // original API result from reaching the host. Always reset reentry.
+        try{env_.debug_log("phase");}catch(...){}
         logging=false;
 #endif
     }
@@ -276,9 +318,9 @@ public:
     }
     std::int32_t create_hook_0466e0(std::uintptr_t target,host_init::Callback c,std::uintptr_t& original) override {
         void* result=nullptr;auto status=transaction_.create(reinterpret_cast<void*>(target),reinterpret_cast<void*>(resolver_.rebuilt_address(c)),&result);
-        original=reinterpret_cast<std::uintptr_t>(result);if(status!=MH_OK)failed_=true;return status;
+        original=reinterpret_cast<std::uintptr_t>(result);if(status!=platform::hook_engine::status_code::ok)failed_=true;return status;
     }
-    std::int32_t enable_hook_046a10(std::uintptr_t p) override{auto s=transaction_.queue(reinterpret_cast<void*>(p));if(s!=MH_OK)failed_=true;return s;}
+    std::int32_t enable_hook_046a10(std::uintptr_t p) override{auto s=transaction_.queue(reinterpret_cast<void*>(p));if(s!=platform::hook_engine::status_code::ok)failed_=true;return s;}
     void log_text_006880(std::string_view s) override {if(s=="Hooking function "||s=="Enabling hook for ")failed_=true;env_.debug_log({"hook installation status: ",s});}
     void log_integer_00af90(std::int32_t code) override{env_.debug_log_number("hook status code: ",code);}
 };

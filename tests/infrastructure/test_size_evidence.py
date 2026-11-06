@@ -79,6 +79,39 @@ class CoffEvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'symbol/string'):
             coff_sections(data)
 
+    def test_nonzero_symbol_count_requires_a_table_pointer(self):
+        for big in (False, True):
+            for count in (1, 0xffffffff):
+                with self.subTest(bigobj=big, symbols=count):
+                    data = object_bytes(big=big)
+                    struct.pack_into('<I', data, 52 if big else 12, count)
+                    with self.assertRaisesRegex(ValueError, 'symbol.*table'):
+                        coff_sections(data)
+
+    def test_symbol_string_table_cannot_overlap_section_headers(self):
+        for big in (False, True):
+            with self.subTest(bigobj=big):
+                data = object_bytes(big=big)
+                pointer = (56 if big else 20) + 8
+                struct.pack_into('<I', data, 48 if big else 8, pointer)
+                # A plausible four-byte empty string table in the section's
+                # otherwise ignored VirtualSize field must not count as data.
+                struct.pack_into('<I', data, pointer, 4)
+                with self.assertRaisesRegex(ValueError, 'overlap'):
+                    coff_sections(data)
+
+    def test_valid_zero_and_nonzero_symbol_table_extents(self):
+        for big in (False, True):
+            for count in (0, 1):
+                with self.subTest(bigobj=big, symbols=count):
+                    data = object_bytes(big=big)
+                    expected = coff_sections(data)
+                    symbol = struct.pack('<8sIiHBB' if big else '<8sIhHBB',
+                                         b'owned', 0, 1, 0, 2, 0)
+                    struct.pack_into('<II', data, 48 if big else 8, len(data), count)
+                    data += symbol * count + struct.pack('<I', 4)
+                    self.assertEqual(expected, coff_sections(data))
+
     def test_unknown_machine_is_rejected(self):
         data = object_bytes()
         struct.pack_into('<H', data, 0, 0xbeef)

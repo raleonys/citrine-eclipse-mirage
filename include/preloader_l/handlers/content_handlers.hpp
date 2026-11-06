@@ -16,7 +16,7 @@ using Path = configuration::Path;
 using Achievement = configuration::Achievement;
 using AchievementMap = std::map<std::string,Achievement,std::less<>>;
 
-// Decoded tinyxml2 view. Adapter preserves attribute/document order, absence,
+// Decoded project XML view. Adapter preserves attribute/document order, absence,
 // empty text and case. No file or XML parsing happens in this module.
 struct ChildText { std::optional<std::string> name, text; };
 struct RequestTree {
@@ -53,6 +53,13 @@ public:
     // Reserve the event under the existing lock, perform persistence, then
     // publish without another allocation. Failure must discard the reservation.
     virtual void push_persisted_locked(std::string,const std::function<void()>&) = 0;
+};
+// Optional complete provider call; older Effects implementations retain their
+// path-only source API. Owner and signed width/208 are borrowed for this call.
+class AvatarRequest {
+public:
+    virtual ~AvatarRequest() = default;
+    virtual bool request_online_avatar(const Path&,const char* owner,std::int32_t size) = 0;
 };
 class Effects {
 public:

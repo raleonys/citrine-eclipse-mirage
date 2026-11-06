@@ -1,9 +1,8 @@
 {
   "schema": "surge.golden-target.v1",
   "policy": "URSYNEX Golden Finalizer",
-  "activation": "READY_LOCAL_TARGET",
+  "activation": "READY_TARGET",
   "fixture_only": false,
-  "classification": "NOT_RELEASE",
   "authority": "Owner reference DLL metadata plus existing final-copy mutation and import descriptor ordering policy",
   "native_acceptance": "REQUIRES_ACTUAL_MSVC_GOLDEN_RUN",
   "implementation": "scripts/ursynex_golden_finalizer.py",
