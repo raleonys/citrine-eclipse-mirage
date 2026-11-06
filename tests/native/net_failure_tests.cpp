@@ -125,6 +125,8 @@ struct HandlerFailure{};
 struct Factory final:net::HandlerFactory {
     std::atomic<unsigned> creates{0},errors{0},dispatch_errors{0};
     std::atomic<bool> null_handler{false};
+    std::atomic<bool> fail_create_once{false};
+    std::atomic<unsigned> construction_errors{0};
     struct Handler final:server::Handler {
         void reset_02bc70()override{}
         std::string initial_message_02d540()override{return std::string("hello\0",6);}
@@ -135,10 +137,14 @@ struct Factory final:net::HandlerFactory {
         }
     };
     std::unique_ptr<server::Handler> create()override {
-        ++creates;return null_handler.load()?nullptr:std::make_unique<Handler>();
+        ++creates;
+        if(fail_create_once.exchange(false))throw std::bad_alloc();
+        return null_handler.load()?nullptr:std::make_unique<Handler>();
     }
     void error(std::string_view op,std::exception_ptr)noexcept override {
-        ++errors;if(op=="cleanup dispatch")++dispatch_errors;
+        ++errors;
+        if(op=="cleanup dispatch")++dispatch_errors;
+        if(op=="accepted session")++construction_errors;
     }
 };
 struct Context {
@@ -207,6 +213,44 @@ void factory_failure_rearms() {
     healthy.send("recovered");
     require(healthy.frame()=="recovered","new handler cannot process traffic after factory recovery");
     service.stop();service.stop();
+}
+void throwing_handler_factory_rearms() {
+    // D53-A: a real accepted TCP socket has no published session until the
+    // handler factory succeeds. A throwing factory must release that socket,
+    // preserve any existing live peer, and rearm the listener once.
+    for(const bool keep_existing:{false,true}) {
+        Context c;net::AsioService service(c.factory,c.execution,c.port,c.ready);
+        service.start();
+        std::unique_ptr<Peer> existing;
+        if(keep_existing) {
+            existing=std::make_unique<Peer>(c.port);
+            require(existing->frame()=="hello","existing peer greeting before factory failure");
+        }
+        c.factory.fail_create_once.store(true);
+        Peer rejected(c.port);
+        require(rejected.closed(),"throwing handler factory retained accepted socket");
+        require(until([&]{return c.factory.construction_errors.load()==1;}),
+                "throwing factory did not report the accepted-session error");
+        if(existing) {
+            existing->send("still-live");
+            require(existing->frame()=="still-live",
+                    "rejected construction affected an unrelated established session");
+        }
+        Peer recovered(c.port);
+        require(recovered.frame()=="hello",
+                "listener did not rearm after throwing accepted-handler construction");
+        recovered.send("rearmed");
+        require(recovered.frame()=="rearmed",
+                "rearmed accepted session cannot complete real socket request/response");
+        service.stop();service.stop();
+        require(c.factory.creates.load()==(keep_existing?3U:2U),
+                "factory failure unexpectedly retried or duplicated handler creation");
+        require(c.factory.construction_errors.load()==1,
+                "throwing factory failure was reported more than once");
+        require(service.impl_->active_sessions==0&&service.impl_->clients.empty()&&
+                !service.impl_->accept_pending[0]&&!service.impl_->accept_pending[1],
+                "shutdown retained a session or listener after construction rollback");
+    }
 }
 void accept_cancellation_finality() {
     Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.ready,{});
@@ -376,7 +420,7 @@ void drain_retry() {
 int main(int argc,char** argv)try {
     const std::string_view selected=argc==2?argv[1]:"all";
     bool ran=false;
-    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"held-accept-stop",held_successful_accept_retirement},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms}})
+    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"held-accept-stop",held_successful_accept_retirement},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms},{"throwing-factory-rearm",throwing_handler_factory_rearms}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

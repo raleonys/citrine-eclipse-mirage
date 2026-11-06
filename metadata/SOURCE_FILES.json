@@ -454,8 +454,8 @@
       "sha256": "4e24c96e9fe16443c2780b5b869fafec22a7a6978a9a334e3f94394d2ea7729f"
     },
     "include/preloader_l/runtime/libraries.hpp": {
-      "bytes": 2902,
-      "sha256": "a4a741f524e7c38366be653b99597327a8d7cb7760b744147020e21b0e0aa025"
+      "bytes": 3174,
+      "sha256": "51cff9ebfd2741cc0cd74245a49cc51324a00985676daf6b8620b8fa06af77c4"
     },
     "include/preloader_l/runtime/online.hpp": {
       "bytes": 3237,
@@ -974,8 +974,8 @@
       "sha256": "4078a7f4a5adc528cbad56d220d8eb5020b0f43f1073380fc0f87e89b2d70c05"
     },
     "src/runtime/application.cpp": {
-      "bytes": 29327,
-      "sha256": "d34aa3f8f464b5ee3ce580dbbdbf7d3f9c348c12933989d2f8fccb4b32df926a"
+      "bytes": 31264,
+      "sha256": "579fef1876899dec699fe835c3d586df80f27deea4692db9bb30bb4420091f25"
     },
     "src/runtime/application_defaults.cpp": {
       "bytes": 2261,
@@ -1014,8 +1014,8 @@
       "sha256": "9f3d96c4b58c813f7fafad1d25d5c5ebaa3f2a8f36c28af6935fbcb20ee4e1bf"
     },
     "src/runtime/libraries.cpp": {
-      "bytes": 4234,
-      "sha256": "c1fe5cb7d706b91bab95c7ee4a2c2083d4745be02b186a98f665ecbf5b1ac6ff"
+      "bytes": 4419,
+      "sha256": "83330e8bc69879f09ab63dab3a44e416c286fa17fdb379ff440a768ceae626d3"
     },
     "src/runtime/online.cpp": {
       "bytes": 5797,
@@ -1270,8 +1270,8 @@
       "sha256": "1ff18ef77166407f437739b9ff406e719def7340887cc44d78ef9acf394ec40c"
     },
     "tests/native/extra_library_failure_tests.cpp": {
-      "bytes": 13131,
-      "sha256": "d2656676838620eb5450fbdf78eb1f0cbc4ca227d2934016abfc790218ca2a41"
+      "bytes": 20836,
+      "sha256": "a446f97614fb5b4ce5329ca52724876ae88913534f0b6e0af319fcaf1dcecbce"
     },
     "tests/native/file_copy_windows_tests.cpp": {
       "bytes": 4816,
@@ -1302,8 +1302,8 @@
       "sha256": "b0550335f1670b935100e22bfabfafef07f03711b9d6f5f0e430a5a6c1fdfb29"
     },
     "tests/native/net_failure_tests.cpp": {
-      "bytes": 20220,
-      "sha256": "c47abbfd5ac6d63128d6c2cfba377f38ebf3e9bd1135947cb124300b24b122b2"
+      "bytes": 22629,
+      "sha256": "b34d915f1c6b319e2cbb8ce6424b22b925e7bedc53908a47a6448231f7286687"
     },
     "tests/native/network_policy_tests.cpp": {
       "bytes": 10394,
@@ -13216,8 +13216,8 @@
       "sha256": "6068f347c704b21b97c326585a015dce845398ed32925c6e12dfdb710f6a59aa"
     },
     "tests/unit/registry/native_lifecycle_tests.cpp": {
-      "bytes": 18013,
-      "sha256": "b60cb1679f801f4676f6942df38790d0142a3ca56911dadaa30ba6f01b42d846"
+      "bytes": 21594,
+      "sha256": "2442f1fe81220ba95a71f7ee6bce7829bce8d7a792a9737c6311c3a6ae2656ac"
     },
     "tests/infrastructure/hook_real_peer_control.py": {
       "bytes": 3580,
