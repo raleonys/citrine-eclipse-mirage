@@ -3,7 +3,8 @@
 param(
     [Parameter(Mandatory=$true)][ValidateSet('Compile','Debug','Native','Crt','Golden')][string]$Mode,
     [string]$BuildDir = '',
-    [ValidateSet('Release','RelWithDebInfo','Debug')][string]$Config = 'Release'
+    [ValidateSet('Release','RelWithDebInfo','Debug')][string]$Config = 'Release',
+    [switch]$LauncherOwnsSummary
 )
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'build_common.ps1')
@@ -67,7 +68,7 @@ try {
     # Verify even on incremental builds that bypass the link POST_BUILD hook.
     Invoke-ExternalChecked $PythonExe @('-B',(Join-Path $Root 'scripts/import_descriptor_order.py'),'--root',$Root,'--dll',$Dll,'--verify') 'Unsigned DLL import descriptor order' 118
     $BeforeHash = (Get-FileHash -LiteralPath $Dll -Algorithm SHA256).Hash.ToLowerInvariant()
-    $Receipt = @{schema='surge.build-receipt.v1'; build_succeeded=$true; mode=$Mode; configuration=$Config; dll_sha256=$BeforeHash; compiler=$ClExe; compiler_sha256=(Get-FileHash -LiteralPath $ClExe -Algorithm SHA256).Hash.ToLowerInvariant(); cmake_cache_sha256=(Get-FileHash -LiteralPath (Join-Path $Out 'CMakeCache.txt') -Algorithm SHA256).Hash.ToLowerInvariant(); source_manifest_sha256=(Get-FileHash -LiteralPath (Join-Path $Root 'metadata/ACTIVE_SOURCE_MANIFEST.json') -Algorithm SHA256).Hash.ToLowerInvariant(); real_game_acceptance='NOT_RUN'}
+    $Receipt = @{schema='surge.build-receipt.v1'; build_succeeded=$true; mode=$Mode; configuration=$Config; dll_sha256=$BeforeHash; compiler=([System.IO.Path]::GetFileName($ClExe)); compiler_sha256=(Get-FileHash -LiteralPath $ClExe -Algorithm SHA256).Hash.ToLowerInvariant(); cmake_cache_sha256=(Get-FileHash -LiteralPath (Join-Path $Out 'CMakeCache.txt') -Algorithm SHA256).Hash.ToLowerInvariant(); source_manifest_sha256=(Get-FileHash -LiteralPath (Join-Path $Root 'metadata/ACTIVE_SOURCE_MANIFEST.json') -Algorithm SHA256).Hash.ToLowerInvariant(); real_game_acceptance='NOT_RUN'}
     $Receipt['validation_result'] = 'NOT_COMPLETED'
     $Receipt | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $Out 'BUILD_RECEIPT.json') -Encoding UTF8
     Write-Host '[3/3] Validate selected profile'
@@ -98,10 +99,10 @@ try {
             }
             $ReportedHash = (Get-FileHash -LiteralPath $ReportedDll -Algorithm SHA256).Hash.ToLowerInvariant()
             if ($ReportedHash -ne $GoldenReport.sha256) { Fail-Build 'Dist hash differs from the validated Golden DLL.' 117 }
-            $Receipt['dist_artifact'] = $ReportedDll
+            $Receipt['dist_artifact'] = [System.IO.Path]::GetFileName($ReportedDll)
             $Receipt['dist_sha256'] = $ReportedHash
-            $Receipt['dist_sha256_file'] = $GoldenReport.dist_sha256_file
-            $Receipt['dist_receipt'] = $GoldenReport.dist_receipt
+            $Receipt['dist_sha256_file'] = [System.IO.Path]::GetFileName($GoldenReport.dist_sha256_file)
+            $Receipt['dist_receipt'] = [System.IO.Path]::GetFileName($GoldenReport.dist_receipt)
         }
     } else {
         Invoke-ExternalChecked (Join-Path $Out 'preloader_l_runtime_host.exe') @($Dll) 'Application public API and real load/socket/shutdown/unload cycles' 111
@@ -111,15 +112,10 @@ try {
     $Receipt['validation_exit_code'] = if ($GoldenBlocked) { 3 } else { 0 }
     $Receipt | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $Out 'BUILD_RECEIPT.json') -Encoding UTF8
     if ($GoldenBlocked) {
-        Write-Host 'Golden: BLOCKED - product PE targets are incomplete; compilation and resource/export checks completed.' -ForegroundColor Yellow
-        Write-Host "DLL: $Dll"
-        Write-Host "SHA256: $BeforeHash"
-        Write-Host 'Exit code 3. See golden/GOLDEN_REPORT.json. This is not Golden acceptance.'
+        Write-SelectedProfileResult -ProfileLabel $ProfileLabel -Dll $Dll -Sha256 $BeforeHash -GoldenBlocked -LauncherOwnsSummary:$LauncherOwnsSummary
         exit 3
     }
-    Write-Host "$ProfileLabel`: PASS"
-    Write-Host "DLL: $ReportedDll"
-    Write-Host "SHA256: $ReportedHash"
+    Write-SelectedProfileResult -ProfileLabel $ProfileLabel -Dll $ReportedDll -Sha256 $ReportedHash -LauncherOwnsSummary:$LauncherOwnsSummary
 } finally {
     try {
         if ($null -ne $Lock) { $Lock.Dispose() }
