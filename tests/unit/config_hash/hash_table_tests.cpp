@@ -148,6 +148,54 @@ config_hash::Node parsed(std::string_view bytes) {
     parser::State state;require(parser::parse(bytes,state),"synthetic parser succeeds");
     return config_hash::from_parser(*state.root.find("Config2"));
 }
+void lookup_alias_and_failure_rollback() {
+    using namespace config_hash;
+    Node node;Oracle oracle;
+    std::string key(240,'X');
+    key.back()='!';
+    node.lookup(key);oracle.insert(key);
+    for(unsigned i=0;i<7;++i) {
+        const auto next="padding-"+std::to_string(i);
+        node.lookup(next);oracle.insert(next);
+    }
+    node.validate();
+    // A borrowed, missing prefix of a long row forces a ninth insertion.
+    // Before the fix, growing 8 -> 64 buckets freed the borrowed buffer
+    // before children.try_emplace attempted to copy that string_view.
+    const auto row=std::find(node.table.traversal.begin(),node.table.traversal.end(),key);
+    require(row!=node.table.traversal.end(),"long source row is in traversal");
+    const std::string_view borrowed(row->data(),row->size()-1);
+    const std::string expected(borrowed);
+    require(node.find(expected)==nullptr,"borrowed prefix is not an existing key");
+    auto& created=node.lookup(borrowed);
+    oracle.insert(expected);
+    node.validate();
+    require(node.table.bucket_count==64&&node.table.traversal==oracle.order(),
+        "borrowed prefix survives rehash and follows independent list-splice order");
+    require(node.find(expected)==&created&&created.name.empty()&&created.value.empty(),
+        "provisional map row owns the intended prefix with untouched defaults");
+    const auto stable=node.table.traversal;
+    node.lookup(expected);
+    require(node.table.traversal==stable&&node.children.size()==9,
+        "existing lookup is unchanged after rehash");
+
+    // Test-only invalid capacity injects a table exception after new map
+    // ownership; rollback must leave prior rows intact for a clean retry.
+    Node retry;
+    retry.lookup("stable");
+    retry.table.bucket_count=9;
+    rejects<std::invalid_argument>([&]{(void)retry.lookup("retry");},
+        "table capacity validation propagates the original exception");
+    require(retry.find("retry")==nullptr&&retry.children.size()==1&&
+            retry.table.traversal==std::vector<std::string>{"stable"},
+        "failed table insert erases its provisional child and retains old records");
+    retry.table.bucket_count=8;
+    retry.validate();
+    retry.lookup("retry");
+    retry.validate();
+    require(retry.find("retry")!=nullptr&&retry.children.size()==2,
+        "a corrected table can accept the new key after failure");
+}
 bool same_node(const config_hash::Node& a,const config_hash::Node& b) {
     if(a.name!=b.name||a.value!=b.value||a.table.bucket_count!=b.table.bucket_count||
        a.table.traversal!=b.table.traversal||a.children.size()!=b.children.size())return false;
@@ -274,6 +322,6 @@ int main() {
         std::fflush(stderr);std::_Exit(86);
     });
 #endif
-    try {growth_and_oracle();recursive_assignment();assignment_failure_rollback();std::cout<<"PASS: "<<checks<<" Config2 growth/copy/positional-reuse checks\n";}
+    try {growth_and_oracle();recursive_assignment();assignment_failure_rollback();lookup_alias_and_failure_rollback();std::cout<<"PASS: "<<checks<<" Config2 growth/copy/positional-reuse checks\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }
