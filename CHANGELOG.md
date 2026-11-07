@@ -6,6 +6,10 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Check retained foreign exception provenance without comparing independent current_exception captures, preserving the native regression on MSVC runtimes that copy the active exception.
+
+- Quarantine the online-provider object and module when foreign destruction throws, preserve the original exception, and reject later calls or unload attempts before dereferencing possibly consumed storage. Keep pre-call slot failures retryable and preserve module-only retries after successful destruction; add source-linked failure controls.
+
 - Reject duplicate JSON object keys at any depth in SOURCE_FILES and ACTIVE_SOURCE_MANIFEST source identity records; add negative tests for duplicate file entries, top-level records and nested byte-count attributes without altering accepted unique-key inventories. Retain JSON CLI reporting and cover successful/failed verification exit statuses through the actual command-line entrypoint.
 
 - Reject source ZIP destinations whose parent-directory alias resolves exactly to the source root before staging any file. Add negative source-root and positive external-directory symlink tests; preserve runtime, vendor, public ABI and release policy.

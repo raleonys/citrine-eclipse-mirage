@@ -301,6 +301,74 @@ void provider_object_once(const wchar_t* path) {
     require(f.provider.module==0&&destroyed()==1&&fault::frees==2,
         "provider cleanup destroyed the object or released the module twice");
 }
+struct ForeignDestroyFailure {unsigned marker;const void* origin;};
+struct ForeignObject {
+    std::uintptr_t table;
+    unsigned calls=0,effects=0;
+    bool before_effect=false,poison=false;
+};
+void foreign_destroy(void* raw) {
+    auto& object=*static_cast<ForeignObject*>(raw);++object.calls;
+    if(object.before_effect)throw ForeignDestroyFailure{0x7351,&object};
+    ++object.effects;
+    if(object.poison)object.table=1; // A retry must reject before reading this address.
+    throw ForeignDestroyFailure{0x7351,&object};
+}
+void foreign_destroy_ok(void* raw){++static_cast<ForeignObject*>(raw)->calls;}
+void provider_unknown_destruction(const wchar_t* path) {
+    for(const bool before:{false,true}) {
+        // Quarantined owners, object storage, table and real module leases
+        // stay allocated until process exit. This case runs last in "all".
+        auto& f=*new Fixture;
+        f.provider.module=reinterpret_cast<std::uintptr_t>(TestLoadLibraryW(path));
+        const auto module=f.provider.module;require(module!=0,"quarantine provider module lease");
+        auto& table=*new std::array<std::uintptr_t,7>{};table[0]=reinterpret_cast<std::uintptr_t>(&foreign_destroy);
+        auto& object=*new ForeignObject{reinterpret_cast<std::uintptr_t>(table.data()),0,0,before,!before};
+        f.provider.object=reinterpret_cast<std::uintptr_t>(&object);f.provider.online=1;
+        f.env.provider=f.provider.object;
+        bool original=false;std::exception_ptr first_failure;
+        try{f.provider.close();}catch(const ForeignDestroyFailure& error){original=error.marker==0x7351&&error.origin==&object;}
+        first_failure=f.provider.destruction_failure;
+        require(first_failure!=nullptr,"foreign failure was not retained");
+        require(original&&object.calls==1&&object.effects==(before?0u:1u),
+            "foreign destructor failure was replaced or its effects changed");
+        const auto retained=f.provider.object;
+        auto rejected=[&](auto operation){bool blocked=false;try{operation();}catch(const ForeignDestroyFailure& error){blocked=error.marker==0x7351&&error.origin==&object&&f.provider.destruction_failure==first_failure;}require(blocked,"unknown destruction allowed another foreign operation");};
+        rejected([&]{f.provider.close();});
+        rejected([&]{f.provider.destroy_virtual_00(retained);});
+        rejected([&]{(void)f.provider.status_virtual_08(retained);});
+        rejected([&]{(void)f.provider.username_virtual_10(retained);});
+        rejected([&]{(void)f.provider.persona_virtual_18(retained);});
+        rejected([&]{(void)f.provider.user_id_virtual_20(retained);});
+        rejected([&]{(void)f.provider.checked_method<const char*(*)(void*,const char*)>(retained,6);});
+        rejected([&]{(void)f.provider.free_library(module);});
+        rejected([&]{f.provider.load();});
+        require(object.calls==1&&fault::frees==0&&f.provider.object==retained&&
+                f.provider.module==module&&f.provider.online==1&&f.env.provider==0,
+            "unknown destruction lost retained ownership or repeated destruction/release");
+        require(::GetModuleHandleW(path)==reinterpret_cast<HMODULE>(module),
+            "quarantined provider module was unloaded");
+    }
+}
+void provider_resolution_retry(const wchar_t* path) {
+    Fixture f;f.provider.module=reinterpret_cast<std::uintptr_t>(TestLoadLibraryW(path));
+    require(f.provider.module!=0,"resolution retry module lease");
+    std::array<std::uintptr_t,7> table{};
+    ForeignObject object{0};f.provider.object=reinterpret_cast<std::uintptr_t>(&object);
+    for(unsigned attempt=0;attempt<2;++attempt) {
+        bool rejected=false;try{f.provider.close();}catch(const std::logic_error&){rejected=true;}
+        require(rejected&&object.calls==0&&fault::frees==0,"slot resolution consumed ownership");
+        object.table=reinterpret_cast<std::uintptr_t>(table.data());
+    }
+    table[0]=reinterpret_cast<std::uintptr_t>(&foreign_destroy_ok);
+    fault::fail_frees=1;bool failed=false;
+    try{f.provider.close();}catch(const std::runtime_error&){failed=true;}
+    require(failed&&object.calls==1&&f.provider.object==0&&f.provider.module!=0&&fault::frees==1,
+        "normal destruction did not preserve the failed module-only lease");
+    f.provider.close();f.provider.close();
+    require(object.calls==1&&f.provider.module==0&&fault::frees==2,
+        "pre-call retry or module-only retry repeated successful destruction");
+}
 void provider_empty_slot(const wchar_t*) {
     std::array<std::uintptr_t,7> table{};
     const std::uintptr_t object=reinterpret_cast<std::uintptr_t>(table.data());
@@ -341,7 +409,9 @@ int wmain(int argc,wchar_t** argv)try {
                       {L"provider-object",provider_object_once},
                       {L"provider-slot",provider_empty_slot},{L"provider-layout",provider_byte_layout},
                       {L"provider-physical-lease",provider_physical_lease},
-                      {L"load-error-mode",load_error_mode_unwind},{L"overlap-error-mode",overlapping_error_modes},{L"mode-finish-interval",error_mode_finish_interval}})
+                      {L"load-error-mode",load_error_mode_unwind},{L"overlap-error-mode",overlapping_error_modes},{L"mode-finish-interval",error_mode_finish_interval},
+                      {L"provider-resolution-retry",provider_resolution_retry},
+                      {L"provider-unknown-destruction",provider_unknown_destruction}})
         if(selected==L"all"||selected==name){fn(argv[1]);ran=true;}
     require(ran,"unknown case");std::cout<<"PASS: native-module acquisition/retained-release/retry controls\n";return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
