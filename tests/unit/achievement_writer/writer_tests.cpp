@@ -70,10 +70,22 @@ void exact_bytes() {
     }
     state.achievements["id"]=record(2,2147483647,2147483647,"id",0);
     require(achievement_writer::serialize_ini(state)=="[id]\r\nAchieved=2147483647\r\nCurProgress=2147483647\r\nMaxProgress=2\r\nUnlockTime=0\r\n\r\n","total2 enables progress; count is numeric not boolean");
-    const std::string section("x\0]\r\ny",6);
-    state.achievements["id"]=record(1,-1,0,section,1);
-    std::string expected="[";expected+=section;expected+="]\r\nAchieved=-1\r\nUnlockTime=1\r\n\r\n";
-    require(achievement_writer::serialize_ini(state)==expected,"section explicit bytes including NUL/INI delimiters are unescaped");
+    // Existing original-byte parity fixture deliberately admitted INI
+    // delimiters; this production writer now rejects section injection.
+    const std::vector<std::string> unsafe{
+        "a]suffix","[opening","cr\rname","lf\nname",
+        "safe]\r\nAchieved=1\r\n[forged",std::string("x\0tail",6),
+        std::string("x\0]\r\ny",6)
+    };
+    for(const auto& section:unsafe) {
+        state.achievements["id"]=record(1,-1,0,section,1);
+        rejects<std::invalid_argument>([&]{(void)achievement_writer::serialize_ini(state);},
+            "unsafe INI section ID must be rejected rather than emitted");
+    }
+    state.achievements["id"]=record(1,-1,0,"owner:game-42.v1",1);
+    require(achievement_writer::serialize_ini(state)==
+        "[owner:game-42.v1]\r\nAchieved=-1\r\nUnlockTime=1\r\n\r\n",
+        "safe punctuation keeps the original exact byte layout");
     state.achievements.clear();state.achievements["map-a"]=record(0,0,0,"same",0);state.achievements["map-b"]=record(0,0,0,"same",0);
     require(achievement_writer::serialize_ini(state)=="[same]\r\nAchieved=0\r\nUnlockTime=0\r\n\r\n[same]\r\nAchieved=0\r\nUnlockTime=0\r\n\r\n","duplicate steam sections not deduplicated");
 }
@@ -96,6 +108,14 @@ void writer_flow() {
     files.state=0;events.clear();effects.fail=true;
     rejects<std::runtime_error>([&]{achievement_writer::write_ini_01f9a0(u"fixture.ini",state,effects,files);},"directory failure propagates");
     require(events==Events{"mkdir"},"directory failure prevents replacement");effects.fail=false;
+    // Rejected sections must not even create directories or publish output.
+    state.achievements["a"]=record(1,0,0,"bad]\r\n[forged",0);
+    events.clear();files.captured="unchanged";
+    rejects<std::invalid_argument>(
+        [&]{achievement_writer::write_ini_01f9a0(u"fixture.ini",state,effects,files);},
+        "unsafe INI section is rejected by the real writer entry");
+    require(events.empty()&&files.captured=="unchanged",
+        "invalid INI section has no directory or atomic replacement effects");
     state.achievements.clear();events.clear();
     achievement_writer::write_ini_01f9a0(u"fixture.ini",state,effects,files);
     require(files.captured.empty()&&events==Events{"mkdir","atomic"},"empty map still replaces with empty file");
