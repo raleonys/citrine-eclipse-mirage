@@ -2162,8 +2162,8 @@
       "sha256": "6ad1718fd0fc47185f366bd4372a4c291bc1478892ee8d073739774a4c9fab8b"
     },
     "tests/unit/timestamp/timestamp_tests.cpp": {
-      "bytes": 12095,
-      "sha256": "fe09b110462b8754b3477ac3b2d371f0d07d3bed6c703a06f8487be3a398a4b5"
+      "bytes": 13574,
+      "sha256": "e8f12e29e4ae916da8ac2e957fa4fe32b01207eda8e25df5cbe98e2b4c8efecc"
     },
     "tests/unit/token/token_tests.cpp": {
       "bytes": 7604,
