@@ -28,7 +28,29 @@ using namespace preloader_l;
 namespace fs=std::filesystem;
 namespace {
 int checks=0;
-void require(bool b,const char* text){++checks;if(!b)throw std::runtime_error(text);}
+void progress(const char* text) {
+    // Application startup can rebind the CRT streams to a console. Preserve
+    // CTest's original capture pipe so a timeout still identifies its phase.
+    struct Capture {
+        HANDLE stream=INVALID_HANDLE_VALUE;
+        Capture(){
+            const auto source=GetStdHandle(STD_ERROR_HANDLE);
+            if(source&&source!=INVALID_HANDLE_VALUE)
+                if(!DuplicateHandle(GetCurrentProcess(),source,GetCurrentProcess(),&stream,
+                    0,FALSE,DUPLICATE_SAME_ACCESS))stream=INVALID_HANDLE_VALUE;
+        }
+        ~Capture(){if(stream!=INVALID_HANDLE_VALUE)CloseHandle(stream);}
+    };
+    const auto error=GetLastError();
+    static Capture capture;
+    if(capture.stream!=INVALID_HANDLE_VALUE){
+        const auto line="runtime check "+std::to_string(checks)+": "+text+"\n";
+        DWORD written=0;
+        (void)WriteFile(capture.stream,line.data(),static_cast<DWORD>(line.size()),&written,nullptr);
+    }
+    SetLastError(error);
+}
+void require(bool b,const char* text){++checks;progress(text);if(!b)throw std::runtime_error(text);}
 struct Directory {
     fs::path path=fs::temp_directory_path()/("surge-runtime-"+std::to_string(GetCurrentProcessId()));
     Directory(){fs::remove_all(path);fs::create_directories(path);}
@@ -192,6 +214,7 @@ void stop_blocked_greeting() {
 }
 }
 int main(int argc,char** argv) try {
+    progress("begin event mutex contract");
     event_mutex_contract();
     avatar_provider_arguments();
     Directory directory;

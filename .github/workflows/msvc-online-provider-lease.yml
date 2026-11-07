@@ -36,13 +36,13 @@ jobs:
       - name: Build source-linked provider and failure fixtures
         run: |
           $build = 'build/ci-provider-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target extra_library_failure_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/provider-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target extra_library_failure_contracts application_runtime_contracts online_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/provider-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'Provider lease build failed' }
       - name: Exercise real Windows image ownership and retry
         run: |
           $build = 'build/ci-provider-${{ matrix.configuration }}'
           $junit = Join-Path (Resolve-Path $build) 'provider-junit.xml'
-          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^extra_library_failure_contracts$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/provider-ctest.log"
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(extra_library_failure_contracts|application_runtime_contracts|online_contracts)$' --no-tests=error --verbose --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/provider-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'Native provider lease fixture failed' }
       - name: Preserve native acceptance evidence
         if: always()

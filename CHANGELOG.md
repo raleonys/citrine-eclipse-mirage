@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Preserve the native Application test's original CTest output capture across console stream rebinding, and include the Application and online profile tests in the manual Windows provider diagnostic. Report the last completed check when the native runtime times out; assertions and timeout budgets are unchanged.
+
 - Retain provider profile copy ownership when successive getters reuse one borrowed scratch buffer. Exercise short and heap-sized fields, cached output, partial null-getter failures and destructive cleanup in the existing online Effects tests; runtime behavior, vendor bytes and ABI are unchanged. This is sequential copy ownership evidence, not concurrent foreign-module or Consumer acceptance.
 
 - Extend B53 partial-publication retirement coverage: force the first native greeting to throw after a real Asio Client is counted and registered, then require exact session-slot rollback, one error report, listener rearm, uninterrupted existing-peer traffic and clean repeated stop. This is independent of handler factory creation failures; no production code, ABI, hook or vendor changes, and Consumer/game parity remains unverified.
