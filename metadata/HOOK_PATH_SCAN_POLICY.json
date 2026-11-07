@@ -1,6 +1,5 @@
 {
   "schema": "surge.hook-path-scan.v1",
-  "classification": "NOT_RELEASE",
   "owner": "Explicit owner adoption of bounded heap-free hook11 path inspection",
   "documentation": "docs/HOOK_PATH_SCAN.md",
   "max_utf16_units_including_nul": 32768,
