@@ -403,7 +403,34 @@ int main(int argc,char** argv) try {
         application::Application offline({(online_dir/"host.exe").u16string(),(online_dir/"offline-data").u16string(),false});offline.start();
         require(offline.configuration().username=="SURGE"&&destroyed()==1,"provider auth failure keeps source offline state and releases object");offline.stop();
     }
-    FreeLibrary(provider_module);
+    // B54: real DLL/Export, Application worker, and physical loader lease.
+    // Source-linked mocks already cover null pointers, but not failure teardown
+    // across the actual Windows module and Application startup owner.
+    for(int failure_mode:{3,4,5,6}) {
+        mode(failure_mode);
+        const auto failure_data=online_dir/("failure-"+std::to_string(failure_mode));
+        application::Application failing({
+            (online_dir/"host.exe").u16string(),failure_data.u16string(),false});
+        bool rejected=false;
+        try{failing.start();}
+        catch(const online::OutOfEvidenceInput&){rejected=true;}
+        require(rejected,"real online provider null factory/getter rejects startup");
+        const auto expected_destroyed=failure_mode==3?0:1;
+        require(destroyed()==expected_destroyed,
+            "null factory must not destroy a nonexistent object; null getter destroys once");
+        const auto& partial=failing.configuration();
+        require(partial.username==(failure_mode<5?"SURGE":"fixture-online"),
+            "native getter error preserves only previously committed username");
+        if(failure_mode==6)
+            require(partial.persona_id=="fixture-persona",
+                "third native getter failure preserves prior copied persona");
+        failing.stop();
+        require(destroyed()==expected_destroyed,
+            "post-failure stop cannot double-destroy provider object");
+    }
+    require(FreeLibrary(provider_module)!=FALSE,"release the independent native provider observer lease");
+    require(GetModuleHandleW(provider_file.wstring().c_str())==nullptr,
+        "all failed provider startups release the physical DLL image");
     const auto hook_dir=directory.path/"hooks";fs::create_directories(hook_dir);
     fs::copy_file(fs::path(argv[1]),hook_dir/"fixture-extra.dll");
     fs::copy_file(fs::path(argv[1]),hook_dir/"preloader_l_online.dll");
