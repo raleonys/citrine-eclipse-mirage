@@ -6,7 +6,9 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Use UTC for public changelog dates and release schedules without location-bearing zone names. Reconcile all 158 dated PR entries against GitHub merge timestamps, correct four calendar-day boundaries, and keep the weekly cron instant unchanged. Add a source QA guard for regional time-zone names in active first-party authoring inputs; preserve historical evidence, vendor data and technical test fixtures for separate review.
+- Use UTC for public changelog dates and release schedules without location-bearing zone names. Reconcile all 158 dated PR entries against GitHub merge timestamps, correct four calendar-day boundaries, and keep the weekly cron instant unchanged. Add a source QA guard for regional time-zone names in active first-party authoring inputs; preserve vendor data and technical test fixtures.
+
+- Apply the owner's separately approved privacy redaction to seven retained logs (66 user-profile path occurrences), one retained schedule record and three linked identity receipts. Preserve original and redacted SHA-256 provenance, reconcile current-copy byte counts and retain every historical outcome, binary digest and acceptance limit. This is current-copy redaction, not new native execution or an accepted Git-history rewrite.
 
 - Extend B53 partial-publication retirement coverage: force the first native greeting to throw after a real Asio Client is counted and registered, then require exact session-slot rollback, one error report, listener rearm, uninterrupted existing-peer traffic and clean repeated stop. This is independent of handler factory creation failures; no production code, ABI, hook or vendor changes, and Consumer/game parity remains unverified.
 
