@@ -36,6 +36,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 - PR #204: inspect the complete already-decoded first-party source text for duplicate or conflicting SPDX identifiers instead of only its first 3,000 characters. Reject late duplicate GPL-3.0-only and conflicting MIT markers, preserve accepted long files and existing identity/exclusion rules, and validate the full source inventory. This changes QA enforcement, not project licenses, shipping code or vendor inputs.
 
+- Cover simultaneous fixed-key and response-derived encrypted TCP peers on one real Application. Check interleaved request identities, either peer closing without disrupting the survivor, and replacement admission without resetting the survivor cipher. Test-only coverage preserves production behavior, shared event ownership and vendor inputs.
+
 ### Accepted-main checkpoint — 2026-11-06
 
 Verified against [`main@a91c9ffb41e822ff0f851d6f41f2d25b662be1cd`](https://github.com/raleonys/citrine-eclipse-mirage/commit/a91c9ffb41e822ff0f851d6f41f2d25b662be1cd). The 106 integration entries below have matching GitHub merge records and merge commits reachable from that source checkpoint after the earlier #62 checkpoint. Dates are GitHub merge dates in Europe/Istanbul; detailed change notes appear under the same dated PR entries. The list records integrations, not passing tests, releases or unmerged proposals. Later entries supersede earlier implementation and policy decisions.
