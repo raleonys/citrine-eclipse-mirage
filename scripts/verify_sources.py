@@ -5,11 +5,11 @@ from pathlib import Path
 import hashlib
 import json
 import re
-from project_files import vendor_symlinks, source_payload, alias_payload
+from project_files import vendor_symlinks, source_payload, alias_payload, load_unique_json
 
 
 def verify(root):
-    manifest=json.loads((root/'metadata/SOURCE_FILES.json').read_text())
+    manifest=load_unique_json(root/'metadata/SOURCE_FILES.json')
     errors=[]
     expected=manifest['files']
     allowed_links=vendor_symlinks(root)
@@ -38,7 +38,13 @@ def verify(root):
         if root.resolve() not in p.resolve().parents:
             errors.append('Missing/unsafe source: '+name)
             continue
-        if hashlib.sha256(source_payload(p)).hexdigest()!=entry['sha256']:
+        payload=source_payload(p)
+        size=entry.get('bytes')
+        if type(size) is not int or size<0:
+            errors.append('Invalid source size: '+name)
+        elif len(payload)!=size:
+            errors.append('Source size differs: '+name)
+        if hashlib.sha256(payload).hexdigest()!=entry['sha256']:
             errors.append('Source differs: '+name)
     for name in actual:
         if not name.startswith('third_party/') and any(part.endswith('-source') or part=='recovered' for part in Path(name).parts):
