@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Extend selected-library timestamp coverage to all 256 trailing byte values and a UTF-8 Grant suffix through the actual XML/storage/INI fixture. Preserve the existing ClassicIso ASCII restriction, production behavior and exact watcher output.
+
 - Exercise event delivery receipt generations, competing success/cancellation callbacks, and completion while a separate event holds the queue mutex for successful or failed persistence. Reject stale receipts, preserve FIFO and retry ownership, and keep disk commit independent from delivery. Extend the existing event queue contract target without changing runtime code or test budgets.
 
 - Extend C14 protected Windows CryptQuery path-read acceptance with a real cross-page partial UTF-16 code unit, a complete read-only path and an entirely inaccessible page; require fail-closed selection and zero C++ heap allocations without modifying hook policy.
