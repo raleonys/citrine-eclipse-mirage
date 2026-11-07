@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Adopt the Archive 12 execution-source two-actor Win32 SRW regression in the existing execution test target. Verify observed contention, protected-data handoff, owner/count clearing before native release, unrelated mutex bytes and the final callback LastError, with finite waits and no live-child stack unwind. Runtime sources, build targets and existing portable checks remain unchanged.
+
 - Extend selected-library timestamp coverage to all 256 trailing byte values and a UTF-8 Grant suffix through the actual XML/storage/INI fixture. Preserve the existing ClassicIso ASCII restriction, production behavior and exact watcher output.
 
 - Exercise event delivery receipt generations, competing success/cancellation callbacks, and completion while a separate event holds the queue mutex for successful or failed persistence. Reject stale receipts, preserve FIFO and retry ownership, and keep disk commit independent from delivery. Extend the existing event queue contract target without changing runtime code or test budgets.
