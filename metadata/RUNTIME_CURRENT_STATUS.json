@@ -1,7 +1,7 @@
 {
   "schema": "surge.runtime-current.v1",
   "role": "CURRENT_RUNTIME_STATE",
-  "task": "SURGE-ASIO-OWNER-SNAPSHOT",
+  "task": "OWNER_AUTHORIZED_PUGIXML_PRODUCTION_MIGRATION_PR149",
   "owner": "application::Application",
   "dll_entry": "src/platform/dll_entry.cpp",
   "exports": {
@@ -20,7 +20,7 @@
     "asio": "1.38.2; owner snapshot bdf337ddb1a667c274372a602de5857ad3cb3ed0; active asynchronous transport",
     "minhook": "1.3.4 owner input; pinned NtGetNextThread SAFE-FREEZE build copy",
     "pegtl": "4; existing RE Config2/VDF grammar",
-    "tinyxml2": "11; actual XML/router/persistence backend; default depth500 unchanged"
+    "pugixml": "1.16; owner snapshot f0a3faa76e04f35110257ca8713363dee3c890e8; actual XML/router/persistence backend with project-owned compatibility"
   },
   "vendor_source_changes": false,
   "windows_filesystem_backend": "STANDARD_COMPILER_FILESYSTEM_AND_FSTREAM",
@@ -114,9 +114,21 @@
     "source": "src/runtime/application.cpp",
     "failed_release": "REPORT_CLEANUP_FAILURE_AND_RETAIN_EXACT_MODULE_FOR_RETRY",
     "partial_cleanup": "DESTROY_PROVIDER_OBJECT_ONCE_THEN_RETRY_ONLY_MODULE_RELEASE",
-    "regression": "extra_library_failure_contracts: provider-retry and provider-object",
+    "foreign_destructor_throw": "RETAIN_OBJECT_AND_MODULE_QUARANTINE_OWNER_RETHROW_ORIGINAL_EXCEPTION_NO_REENTRY_OR_UNLOAD",
+    "pre_call_resolution_failure": "RETAIN_OBJECT_AND_MODULE_ALLOW_SLOT_REPAIR_AND_RETRY",
+    "regression": "extra_library_failure_contracts: provider-retry, provider-object, provider-unknown-destruction and provider-resolution-retry",
     "native_msvc_golden": "NOT_RUN_FOR_THIS_CHANGE",
     "game_acceptance": "NOT_RUN_FOR_THIS_CHANGE",
     "donor_retirement": "STILL_BLOCKED"
+  },
+  "xml_backend": {
+    "implementation": "pugixml",
+    "public_interface": "xml_reader_bridge::Backend; messages::XmlBackend and dispatch::NodeAccess",
+    "policy_sources": [
+      "src/xml/reader_policy.cpp",
+      "src/xml/reader_values.cpp"
+    ],
+    "oracle": "Separate pinned PR108 checkout; no TinyXML2 production or development-DLL link",
+    "native_acceptance": "Exact-head receipts in PR #149; not real Consumer acceptance"
   }
 }

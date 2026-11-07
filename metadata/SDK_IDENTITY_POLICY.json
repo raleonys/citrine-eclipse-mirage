@@ -1,6 +1,5 @@
 {
   "schema": "surge.sdk-identity-policy.v1",
-  "classification": "NOT_RELEASE",
   "authority": "OWNER_PROVIDED_VERSION_TEXT",
   "supplied_text": "10.6.2.31",
   "wire_value": "10,6,2,31",

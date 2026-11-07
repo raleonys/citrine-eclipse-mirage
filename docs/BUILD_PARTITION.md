@@ -1,6 +1,6 @@
 # Production and retained reference sources
 
-The application now has 60 first-party C++ translation units in its production
+The application now has 62 first-party C++ translation units in its production
 inputs. Another 78 translation units remain in the source tree, reference tests
 and the separate development DLL. They are **not globally dead code**. Four more
 test/model compositions were removed from the production link without deleting
@@ -15,7 +15,7 @@ recorded in [BUILD_CLEANUP.md](BUILD_CLEANUP.md).
 | `preloader_l_reference_objects` | 52 transport models, 16 XML models and ten reference adapters/compositions |
 | `preloader_l_reference_models` | Retained models; may depend on the production core |
 | `preloader_l_source_api` | Both source sets, preserving the development C++ API |
-| `preloader_l_source_minhook`, `preloader_l_source_tinyxml2` | MSVC shared-CRT vendor builds used only by the C++ development DLL |
+| `preloader_l_source_minhook`, `preloader_l_source_pugixml` | MSVC shared-CRT vendor builds used only by the C++ development DLL |
 
 MSVC compiles the complete development DLL source set separately with `/MD`
 (Release) or `/MDd` (Debug); its C++ host and vendor libraries use the same CRT.
@@ -24,21 +24,28 @@ and catches parser exceptions, so separate static CRT instances are unsafe at
 this boundary. The Debug timeout was observed immediately before destruction of
 the invalid-input parser state, after all functional checks completed and before
 shutdown. This identifies a destructor boundary, not a captured native stack.
-The shared-CRT correction still requires fresh native Debug/Release execution.
+The diagnosis above describes the correction's original checkpoint; current
+native Debug/Release acceptance belongs to the selected head's CI results.
 Production and static reference/test targets retain `/MT` or `/MTd` and their
 existing objects. The MSVC development DLL must not link those static-CRT
 objects or archives. Non-MSVC development builds retain their existing graph.
 
 Production must never depend on a reference target or the source API DLL. With
 `BUILD_TESTING=OFF` and `PRELOADER_L_BUILD_SOURCE_API_DLL=OFF`, reference targets
-are not configured. Four supplied vendor trees are unchanged. `xml/reader.cpp`
-and `xml/memory_printer.cpp` remain production inputs.
+are not configured. The owner-selected pugixml archive replaces TinyXML2; the other three vendor
+pins are unchanged. `xml/reader.cpp`, `xml/reader_policy.cpp`,
+`xml/reader_values.cpp` and `xml/memory_printer.cpp` are production inputs.
+Production and test targets link `preloader_l_pugixml`; the MSVC development
+DLL links `preloader_l_source_pugixml`. No legacy XML vendor target aliases
+are provided.
+The evaluated production graph rejects `third_party/tinyxml2/` sources.
+The external TinyXML2 control exists only in the standalone comparison.
 
 ## Evidence and limits
 
 The matrices and measurements below describe the historical first partition of
-74 sources. The current additional four-source review, split test coverage and
-fresh results are in [build-cleanup/VALIDATION.json](../metadata/evidence/build-cleanup/VALIDATION.json).
+74 sources. The later four-source review, split test coverage and its checkpoint
+results are in [build-cleanup/VALIDATION.json](../metadata/evidence/build-cleanup/VALIDATION.json).
 The historical 898-symbol count and development export count are not current
 totals and are not used as current acceptance gates.
 
@@ -82,7 +89,7 @@ objects. These MinGW imports are separate from native MSVC shipping acceptance.
 
 ## Enforced build boundary
 
-`metadata/BUILD_PARTITION_POLICY.json` explicitly owns all 138 C++ source files
+`metadata/BUILD_PARTITION_POLICY.json` explicitly owns all 140 C++ source files
 and classifies executable targets. Configure rejects overlaps and unowned source
 files. CMake emits an evaluated target graph during generation, including on the
 first clean configure. The build produces a production linker map and checks:
@@ -97,7 +104,8 @@ first clean configure. The build produces a production linker map and checks:
 
 The check runs after linking and as an incremental `ALL` target. Unsupported or
 empty maps fail. Both LLVM-MinGW and MSVC map syntax have negative fixtures;
-actual MSVC linker execution is still pending. Raw compiler DLLs and maps stay
+actual MSVC linker acceptance is recorded by the selected head's Windows
+jobs rather than these historical fixtures. Raw compiler DLLs and maps stay
 in the build directory; no dist promotion or publication is performed here.
 
 The original callback mixed tests remain intact. Additional `production_callback_contracts`

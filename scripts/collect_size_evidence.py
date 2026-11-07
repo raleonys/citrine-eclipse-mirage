@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
-"""Collect read-only DLL/MAP/COFF evidence from an existing local build.
+"""Collect read-only DLL/MAP/COFF evidence from an existing build.
 
 Object section sizes are pre-link contributions, never final function sizes.
 No build, binary execution, finalization, publication or source repair is performed.
@@ -52,6 +52,10 @@ def coff_sections(data):
         raise ValueError('Unsupported object machine')
     if not count or count > (len(data) - offset) // 40:
         raise ValueError('Truncated or empty COFF section table')
+    if symbol_count and not symbols:
+        raise ValueError('COFF symbol count has no symbol table pointer')
+    if symbols and symbols < offset + count * 40:
+        raise ValueError('COFF symbol/string table overlaps headers')
     strings = symbols + symbol_count * symbol_size
     string_end = 0
     if symbols:
@@ -215,16 +219,16 @@ def collect(root, build, config, dll, output, with_symbols=False):
         p = build / name
         if p.is_file():
             records[name] = add('link/' + name, p)
-    receipt = root / 'dist/LOCAL_DIST_RECEIPT.json'
+    receipt = root / 'dist/DIST_RECEIPT.json'
     if receipt.is_file():
-        records['dist_receipt'] = add('link/LOCAL_DIST_RECEIPT.json', receipt)
+        records['dist_receipt'] = add('link/DIST_RECEIPT.json', receipt)
     compilation = build / 'compile_commands.json'
     if compilation.is_file():
         commands = json.loads(compilation.read_text(encoding='utf-8'))
         selected = [x for x in commands if Path(x['file']).resolve().is_relative_to(root / 'src')]
         payload['commands/compile_commands.json'] = (json.dumps(selected, indent=2) + '\n').encode()
     targets = set(policy['production_targets'] + policy['reference_targets'] + policy['source_api_targets'])
-    targets.update(['preloader_l_minhook', 'preloader_l_tinyxml2'])
+    targets.update(['preloader_l_minhook', 'preloader_l_pugixml'])
     objects, failures = [], []
     dumpbin = shutil.which('dumpbin') if with_symbols else None
     if with_symbols and not dumpbin:
@@ -271,7 +275,6 @@ def collect(root, build, config, dll, output, with_symbols=False):
         writer.writerow([row.get(k, '') for k in ['object', 'target', 'file_bytes', 'code_raw_bytes', 'rdata_raw_bytes', 'comdat_sections', 'sha256', 'unsupported']])
     payload['analysis/object_sections.csv'] = csv_out.getvalue().encode()
     report = {'schema': 'surge.size-evidence.v1', 'result': 'PARTIAL_UNSUPPORTED_OBJECTS' if failures else 'COLLECTED',
-              'classification': 'READ_ONLY_LOCAL_EVIDENCE_NOT_SHIPPING_ACCEPTANCE',
               'configuration': config, 'binary': dll_record, 'binary_sections': section_rows,
               'exports': pe.exports(), 'production_map': map_record, 'contracts_and_reports': records,
               'objects': objects, 'unsupported_objects': failures,

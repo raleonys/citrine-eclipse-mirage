@@ -10,8 +10,8 @@
 | `exports/` | The application's fixed C export table of three names/ordinals |
 | `tests/unit/`, `tests/native/` | Current Citrine Eclipse Mirage source and adapter tests |
 | `tests/infrastructure/`, `tests/support/golden/` | Adapted infrastructure tests and explicitly synthetic policies |
-| `resources/branding/` | Owner-supplied, byte-pinned SURGE PNG; RCDATA 101 |
-| `third_party/` | Exact source trees from the five original owner-supplied archives; Brownfield vendor trees are not copied |
+| `resources/branding/` | Repository campaign logo plus separate SURGE/profile and fallback avatars; avatar bytes are read-only C++ data, not PNG PE resources |
+| `third_party/` | Four immutable owner-supplied vendor trees: Asio, MinHook, PEGTL and pugixml; retired archive provenance is retained separately |
 | `docs/`, `metadata/` | Current technical documents and machine-readable records; root `GOVERNANCE.md` and `AGENTS.md` own policy and agent workflow |
 | `build/`, `dist/` | Transient local outputs; excluded from source ZIP packages |
 
@@ -32,13 +32,13 @@ src/platform/hook_setup.cpp
 src/platform/dll_entry.cpp
 src/runtime/achievement_storage.cpp
 src/runtime/calendar.cpp
-src/xml/native_document.cpp
+src/xml/reader.cpp
 
 include/preloader_l/net/asio_service.hpp
 include/preloader_l/platform/hook_setup.hpp
 include/preloader_l/runtime/achievement_storage.hpp
 include/preloader_l/runtime/calendar.hpp
-include/preloader_l/xml/native_document.hpp
+include/preloader_l/xml/reader.hpp
 ```
 
 No additional module subdirectories exist beneath `src/<module>/<file>` or
