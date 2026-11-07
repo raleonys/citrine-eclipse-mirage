@@ -28,7 +28,29 @@ using namespace preloader_l;
 namespace fs=std::filesystem;
 namespace {
 int checks=0;
-void require(bool b,const char* text){++checks;if(!b)throw std::runtime_error(text);}
+void progress(const char* text) {
+    // Application startup can rebind the CRT streams to a console. Preserve
+    // CTest's original capture pipe so a timeout still identifies its phase.
+    struct Capture {
+        HANDLE stream=INVALID_HANDLE_VALUE;
+        Capture(){
+            const auto source=GetStdHandle(STD_ERROR_HANDLE);
+            if(source&&source!=INVALID_HANDLE_VALUE)
+                if(!DuplicateHandle(GetCurrentProcess(),source,GetCurrentProcess(),&stream,
+                    0,FALSE,DUPLICATE_SAME_ACCESS))stream=INVALID_HANDLE_VALUE;
+        }
+        ~Capture(){if(stream!=INVALID_HANDLE_VALUE)CloseHandle(stream);}
+    };
+    const auto error=GetLastError();
+    static Capture capture;
+    if(capture.stream!=INVALID_HANDLE_VALUE){
+        const auto line="runtime check "+std::to_string(checks)+": "+text+"\n";
+        DWORD written=0;
+        (void)WriteFile(capture.stream,line.data(),static_cast<DWORD>(line.size()),&written,nullptr);
+    }
+    SetLastError(error);
+}
+void require(bool b,const char* text){++checks;progress(text);if(!b)throw std::runtime_error(text);}
 struct Directory {
     fs::path path=fs::temp_directory_path()/("surge-runtime-"+std::to_string(GetCurrentProcessId()));
     Directory(){fs::remove_all(path);fs::create_directories(path);}
@@ -192,6 +214,7 @@ void stop_blocked_greeting() {
 }
 }
 int main(int argc,char** argv) try {
+    progress("begin event mutex contract");
     event_mutex_contract();
     avatar_provider_arguments();
     Directory directory;
@@ -353,13 +376,22 @@ int main(int argc,char** argv) try {
         const auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(5);
         while(!auth_entered()&&std::chrono::steady_clock::now()<deadline)Sleep(1);
         require(auth_entered()!=0,"real online getter did not enter its held foreign callback");
-        auto shutdown=std::async(std::launch::async,[&]{online.stop();});
+        // MSVC async uses a reusable task-pool worker. This statically linked
+        // test later scans its own image for native callback quiescence, so a
+        // completed task is insufficient: its worker must actually exit.
+        std::promise<void> stopped;
+        auto shutdown=stopped.get_future();
+        std::jthread shutdown_worker([&]{
+            try{online.stop();stopped.set_value();}
+            catch(...){stopped.set_exception(std::current_exception());}
+        });
         const bool premature=shutdown.wait_for(std::chrono::milliseconds(150))==std::future_status::ready;
         const bool image_present=GetModuleHandleW(provider_file.wstring().c_str())==provider_module;
         const bool object_live=destroyed()==0;
         // Always unblock the getter before waiting for stop; no hanging test
         // future or injected production behavior in the critical section.
         release_auth();
+        shutdown_worker.join();
         shutdown.get();
         require(!premature&&image_present&&object_live,
             "Application retired a foreign provider while its auth callback was active");

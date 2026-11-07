@@ -1230,8 +1230,8 @@
       "sha256": "dd0e73c17f4ae7102ab6675fcd4484bbb46ed41be7203b0c524318399b862bc6"
     },
     "tests/native/application_runtime_tests.cpp": {
-      "bytes": 32735,
-      "sha256": "58782817de35b603fe9526eec43dc2e1278d65931419ecdb84bbe3dec5403ccc"
+      "bytes": 34244,
+      "sha256": "20a76cb1f1a9a95fa0544dcdbb46eeb7e4c06f334b3c507a6390df399e9a74c3"
     },
     "tests/native/application_shutdown_failure_tests.cpp": {
       "bytes": 12978,
@@ -1690,8 +1690,8 @@
       "sha256": "19edde46a81aed0610f478e64a35d63dd3c3a42e3dec71e67b6da5b326181f96"
     },
     "tests/unit/online/online_tests.cpp": {
-      "bytes": 25709,
-      "sha256": "a846723a980ffa883ff4d6f7cc0f0909fd8fafb2a3fbf5d31a1c87a156a4f257"
+      "bytes": 29324,
+      "sha256": "48bc8ca97f042a39cf5e50e0357f22677a7eab49d85bccb67c1babad25247c16"
     },
     "tests/unit/parser/header_contract.cpp": {
       "bytes": 236,

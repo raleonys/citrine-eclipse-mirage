@@ -10,6 +10,10 @@ This file distinguishes integrated source changes, imported source history and p
 
 - Apply the owner's separately approved privacy redaction to seven retained logs (66 user-profile path occurrences), one retained schedule record and three linked identity receipts. Preserve original and redacted SHA-256 provenance, reconcile current-copy byte counts and retain every historical outcome, binary digest and acceptance limit. This is current-copy redaction, not new native execution or an accepted Git-history rewrite.
 
+- Join a dedicated Application shutdown thread before native module-quiescence checks in the Windows test. MSVC async task completion can leave a reusable pool worker in the statically linked image. Preserve CTest progress across console rebinding and repeat the manual provider/Application/profile checks without changing production cleanup, assertions or timeouts.
+
+- Retain provider profile copy ownership when successive getters reuse one borrowed scratch buffer. Exercise short and heap-sized fields, cached output, partial null-getter failures and destructive cleanup in the existing online Effects tests; runtime behavior, vendor bytes and ABI are unchanged. This is sequential copy ownership evidence, not concurrent foreign-module or Consumer acceptance.
+
 - Extend B53 partial-publication retirement coverage: force the first native greeting to throw after a real Asio Client is counted and registered, then require exact session-slot rollback, one error report, listener rearm, uninterrupted existing-peer traffic and clean repeated stop. This is independent of handler factory creation failures; no production code, ABI, hook or vendor changes, and Consumer/game parity remains unverified.
 
 - Add a B50 native socket-retirement regression for simultaneous real WSARecv/WSASend loans across an injected would-block native close. Require the first shutdown attempt to retain the client and fail closed; an explicit successful retry must free both buffers, dispatch no cancelled business callbacks and never double-close. This is a bounded close-retry scenario, not a claim of physically delayed kernel completion or Consumer/game parity.
