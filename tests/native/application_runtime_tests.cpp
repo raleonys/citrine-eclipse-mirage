@@ -18,6 +18,7 @@
 #include <stdexcept>
 #include <thread>
 #include <future>
+#include <chrono>
 #include <fstream>
 #include <iterator>
 #include <cstring>
@@ -306,7 +307,10 @@ int main(int argc,char** argv) try {
     auto provider_module=LoadLibraryW(provider_file.wstring().c_str());require(provider_module!=nullptr,"real provider DLL loaded");
     auto mode=reinterpret_cast<void(*)(int)>(GetProcAddress(provider_module,"FixtureMode"));
     auto destroyed=reinterpret_cast<int(*)()>(GetProcAddress(provider_module,"FixtureDestroyed"));
-    require(mode&&destroyed,"fixture control exports");
+    auto hold_auth=reinterpret_cast<void(*)(int)>(GetProcAddress(provider_module,"FixtureHoldAuth"));
+    auto auth_entered=reinterpret_cast<int(*)()>(GetProcAddress(provider_module,"FixtureAuthEntered"));
+    auto release_auth=reinterpret_cast<void(*)()>(GetProcAddress(provider_module,"FixtureReleaseAuth"));
+    require(mode&&destroyed&&hold_auth&&auth_entered&&release_auth,"fixture control exports");
     mode(0);
     {
         application::Application online({(online_dir/"host.exe").u16string(),(online_dir/"data").u16string(),false});online.start();
@@ -337,7 +341,30 @@ int main(int argc,char** argv) try {
         require(file::read_binary_03b3f0(last_avatar,files)==equal_marker,"equal scaled-zero avatar does not overwrite last-avatar again");
         require(peer.request("provider-avatar","<QueryImage Width='416' Height='416' ImageId='AVATAR:fixture-user-id'/>").find("_AVATAR_")!=std::string::npos,"RE provider avatar method bound");
         require(file::read_binary_03b3f0(online.configuration().last_avatar_path,files)=="fixture-provider-avatar","real provider avatar cache/copy path");
-        online.stop();require(destroyed()==1,"RE provider destructor called exactly once after session drain");
+        // B54: hold a real exported provider getter on the shipping Asio
+        // dispatch thread while the Application owner begins shutdown.
+        Peer held(online.configuration().server_port);(void)held.frame();
+        hold_auth(1);
+        struct ReleaseHeldAuth {
+            void(*release)();
+            ~ReleaseHeldAuth(){release();}
+        } release_guard{release_auth};
+        held.send("<LSX><Request id='held-provider' recipient='EbisuSDK'><GetAuthCode ClientId='fixture-held'/></Request></LSX>");
+        const auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(5);
+        while(!auth_entered()&&std::chrono::steady_clock::now()<deadline)Sleep(1);
+        require(auth_entered()!=0,"real online getter did not enter its held foreign callback");
+        auto shutdown=std::async(std::launch::async,[&]{online.stop();});
+        const bool premature=shutdown.wait_for(std::chrono::milliseconds(150))==std::future_status::ready;
+        const bool image_present=GetModuleHandleW(provider_file.wstring().c_str())==provider_module;
+        const bool object_live=destroyed()==0;
+        // Always unblock the getter before waiting for stop; no hanging test
+        // future or injected production behavior in the critical section.
+        release_auth();
+        shutdown.get();
+        require(!premature&&image_present&&object_live,
+            "Application retired a foreign provider while its auth callback was active");
+        require(destroyed()==1,"RE provider destructor called exactly once after session drain");
+        online.stop();require(destroyed()==1,"repeated stop cannot destroy provider object twice");
     }
     mode(1);
     {

@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Add a source-linked Windows B54 provider-lifetime regression: pause an actual native DLL auth getter during an accepted LSX session, request real Application shutdown concurrently, require no early provider destruction, then release the getter and verify exactly-once teardown and repeat-stop behavior. Only the native fixture and test harness change; foreign-originated jobs and Consumer/game parity remain unverified.
+
 - Extend the source-included public DllShutdown fixture with a bounded A11-06-X1 staged retry: test-only exception immediately after real file recovery, followed by a real hook-disable failure, then successful single-owner retirement. Distinguish this boundary injection from a genuine incomplete native rollback; no product, vendor or ABI change. Distinguish three requested file-recovery visits from the additional idempotent destructor recovery; retain exact hook and owner-retirement counts.
 
 - Make the atomic-file recovery ledger noncopyable and nonmovable so a second destructor cannot consume another owner's retained rollback files. Add compile-time ownership contracts to the existing atomic persistence regression; preserve file replacement, recovery, native I/O and public DLL behavior.
