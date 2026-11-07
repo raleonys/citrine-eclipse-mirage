@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Reject duplicate JSON object keys at any depth in SOURCE_FILES and ACTIVE_SOURCE_MANIFEST source identity records; add negative tests for duplicate file entries, top-level records and nested byte-count attributes without altering accepted unique-key inventories. Retain JSON CLI reporting and cover successful/failed verification exit statuses through the actual command-line entrypoint.
+
 - Reject source ZIP destinations whose parent-directory alias resolves exactly to the source root before staging any file. Add negative source-root and positive external-directory symlink tests; preserve runtime, vendor, public ABI and release policy.
 
 - Recover exclusively owned readonly atomic backups after a post-copy exception: clear the copied readonly flag only during deletion, retain ownership on cleanup errors, and cover original preservation plus same-factory retry in the native staging fixture.

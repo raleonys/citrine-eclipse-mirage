@@ -614,6 +614,59 @@ class IdentityBoundaryTests(unittest.TestCase):
         self.assertEqual('PASS',verify(entry)['status'])
 
 
+    def test_source_verifier_cli_reports_result_and_exit_status(self):
+        for folder in ('include', 'tests', 'third_party', 'scripts'):
+            (self.root / folder).mkdir()
+        for name in ('verify_sources.py', 'project_files.py'):
+            shutil.copyfile(ROOT / 'scripts' / name, self.root / 'scripts' / name)
+        payload = b'namespace preloader_l::fixture {}\n'
+        (self.root / 'src/module.cpp').write_bytes(payload)
+        manifest = self.root / 'metadata/SOURCE_FILES.json'
+        for valid in (True, False):
+            with self.subTest(valid=valid):
+                manifest.write_text(json.dumps({'files': {'src/module.cpp': {
+                    'bytes': len(payload),
+                    'sha256': inventory.digest(payload) if valid else '0' * 64,
+                }}}), encoding='utf-8')
+                result = subprocess.run(
+                    [sys.executable, '-B', str(self.root / 'scripts/verify_sources.py')],
+                    cwd=self.root, capture_output=True, text=True, timeout=10)
+                self.assertEqual(0 if valid else 1, result.returncode, result.stderr)
+                report = json.loads(result.stdout)
+                self.assertEqual('PASS' if valid else 'FAIL', report['status'])
+                self.assertEqual(1, report['files_checked'])
+                self.assertEqual(not valid, bool(report['errors']))
+
+    def test_duplicate_source_inventory_object_keys_fail_closed(self):
+        for folder in ('include', 'tests', 'third_party'):
+            (self.root / folder).mkdir()
+        payload=b'namespace preloader_l::fixture {}\n'
+        (self.root / 'src/module.cpp').write_bytes(payload)
+        entry={'bytes':len(payload), 'sha256':inventory.digest(payload)}
+        serialized=json.dumps(entry, separators=(',', ':'))
+        record='"src/module.cpp":'+serialized
+        valid='{"files":{'+record+'}}'
+        destination=self.root / 'metadata/SOURCE_FILES.json'
+        destination.write_text(valid, encoding='utf-8')
+        self.assertEqual('PASS', source_verification.verify(self.root)['status'])
+        ambiguous=[
+            '{"files":{'+record+','+record+'}}',
+            '{"files":{},"files":{'+record+'}}',
+            '{"files":{"src/module.cpp":{"bytes":'+str(len(payload))+
+                ',"bytes":'+str(len(payload))+',"sha256":'+json.dumps(entry['sha256'])+'}}}',
+        ]
+        for index, body in enumerate(ambiguous):
+            with self.subTest(duplicate=index):
+                # Standard json.loads silently accepts the semantically identical
+                # duplicate; the source verifier must not.
+                self.assertEqual(json.loads(valid), json.loads(body))
+                destination.write_text(body, encoding='utf-8')
+                with self.assertRaisesRegex(ValueError, 'Duplicate JSON object key'):
+                    source_verification.verify(self.root)
+        destination.write_text(valid, encoding='utf-8')
+        self.assertEqual('PASS', source_verification.verify(self.root)['status'])
+
+
 class PackageTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -831,6 +884,33 @@ class PackageTests(unittest.TestCase):
             packaging.package(self.root, self.zip)
         self.assertFalse(self.zip.exists())
 
+
+    def test_duplicate_active_manifest_object_keys_fail_closed(self):
+        path=self.root / inventory.MANIFEST
+        original=path.read_text(encoding='utf-8')
+        self.assertEqual([], inventory.verify_manifest(self.root))
+        original_files=json.loads(original)['files']
+        name='src/value.cpp'
+        existing=json.dumps(name)+': '+json.dumps(original_files[name])
+        self.assertIn(existing, original)
+        malformed=[
+            original.replace(existing,existing+',\n    '+existing,1),
+            original.replace('"files": {','"files": {},\n  "files": {',1),
+            original.replace('"schema": "'+inventory.MANIFEST_SCHEMA+'",',
+                '"schema": "'+inventory.MANIFEST_SCHEMA+'",\n  "schema": "'+
+                inventory.MANIFEST_SCHEMA+'",',1),
+        ]
+        try:
+            for index, body in enumerate(malformed):
+                with self.subTest(duplicate=index):
+                    self.assertNotEqual(body, original)
+                    self.assertEqual(json.loads(original), json.loads(body))
+                    path.write_text(body, encoding='utf-8')
+                    with self.assertRaisesRegex(ValueError, 'Duplicate JSON object key'):
+                        inventory.verify_manifest(self.root)
+        finally:
+            path.write_text(original, encoding='utf-8')
+        self.assertEqual([], inventory.verify_manifest(self.root))
 
     def test_source_manifest_schema_and_release_classification_fail_closed(self):
         manifest_path = self.root / inventory.MANIFEST
