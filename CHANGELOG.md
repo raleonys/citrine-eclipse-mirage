@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Make the atomic-file recovery ledger noncopyable and nonmovable so a second destructor cannot consume another owner's retained rollback files. Add compile-time ownership contracts to the existing atomic persistence regression; preserve file replacement, recovery, native I/O and public DLL behavior.
+
 - Check retained foreign exception provenance without comparing independent current_exception captures, preserving the native regression on MSVC runtimes that copy the active exception.
 
 - Quarantine the online-provider object and module when foreign destruction throws, preserve the original exception, and reject later calls or unload attempts before dereferencing possibly consumed storage. Keep pre-call slot failures retryable and preserve module-only retries after successful destruction; add source-linked failure controls.

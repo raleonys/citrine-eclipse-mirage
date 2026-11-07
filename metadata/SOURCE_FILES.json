@@ -42,8 +42,8 @@
       "sha256": "111d55e3f0a857f909372181423f992c4169133016ddfaf2554ee11a4a304f8e"
     },
     "include/preloader_l/core/atomic_files.hpp": {
-      "bytes": 1661,
-      "sha256": "99e57616d41f22cf5f0170691c0430e860af96c7bf7b6b50c796559fff3f2e9a"
+      "bytes": 1999,
+      "sha256": "06470ea3a86765683bda118e59c21d0821b46a2ab40ae912329269fa8823aee0"
     },
     "include/preloader_l/core/binary_io.hpp": {
       "bytes": 2693,
@@ -1238,8 +1238,8 @@
       "sha256": "d2ca4acf091c3e3cf4db00b4f2d015e60172ce3fbf52bbc7b1eae82b9e3f8e5d"
     },
     "tests/native/atomic_persistence_tests.cpp": {
-      "bytes": 6840,
-      "sha256": "26c58732fec8d80839ef966f87b2502f46ec4b9b86096b6c6fa995887974e43c"
+      "bytes": 7331,
+      "sha256": "2feb7e4348c6962fe1ae5c37cb537034ed3382cc1a05b50ec32d4e09d072b6e2"
     },
     "tests/native/atomic_staging_tests.cpp": {
       "bytes": 7690,
