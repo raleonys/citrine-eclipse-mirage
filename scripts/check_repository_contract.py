@@ -9,6 +9,38 @@ import re
 import subprocess
 
 
+def check_public_timezones(root):
+    """Reject regional zone names in current first-party authoring inputs.
+
+    This is a narrow source guard, not a general location/PII detector or a
+    claim about retained history, third-party material or hosted GitHub text.
+    """
+    from project_files import load_unique_json, safe_member
+    root = Path(root).resolve()
+    manifest = load_unique_json(root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')
+    regional = re.compile(
+        r'\b(?:Africa|America|Antarctica|Arctic|Asia|Atlantic|Australia|Europe|Indian|Pacific)'
+        r'/[A-Za-z_+-]+(?:/[A-Za-z_+-]+)?\b', re.I)
+    extensions = {'.md', '.txt', '.json', '.yml', '.yaml', '.py', '.ps1', '.cmd',
+                  '.cmake', '.c', '.cpp', '.h', '.hpp', '.rc'}
+    errors = []
+    for name in sorted(manifest['files']):
+        safe_member(name)
+        if name.startswith(('third_party/', 'metadata/evidence/', 'docs/evidence/',
+                            'metadata/vendor_files/', 'tests/')):
+            continue
+        path = root / name
+        if path.suffix.lower() not in extensions and path.name != 'CMakeLists.txt':
+            continue
+        if path.is_symlink() or not path.resolve().is_relative_to(root) or not path.is_file():
+            raise ValueError('Nonregular public time-metadata input: ' + name)
+        for number, line in enumerate(path.read_text(encoding='utf-8-sig').splitlines(), 1):
+            if regional.search(line):
+                # Do not repeat the location-bearing token into public CI logs.
+                errors.append(f'Regional time-zone name in active source: {name}:{number}; use UTC')
+    return errors
+
+
 def load_active_name_policy(root):
     text=(Path(root)/'docs/IDENTIFIER_POLICY.md').read_text(encoding='utf-8')
     match=re.search(r'<!-- active-name-policy -->\s*```json\s*(.*?)\s*```',text,re.S)
@@ -169,9 +201,16 @@ def check_layout_migration_reference(root, contract):
     return []
 
 
+def declared_application_sources(text):
+    # A vendor path such as third_party/pugixml/src/pugixml.cpp is not
+    # an application-relative src/ path. Keep complete path boundaries.
+    return set(re.findall(r'(?<![A-Za-z0-9_./\\-])src/[A-Za-z0-9_/.-]+\.cpp\b', text))
+
+
 def check(root):
     root = Path(root)
     errors = check_active_identifiers(root)
+    errors.extend(check_public_timezones(root))
     errors.extend(check_archived_evidence(root))
     contract = json.loads((root / 'metadata/REPOSITORY_CONTRACT.json').read_text())
     errors.extend(check_layout_migration_reference(root, contract))
@@ -188,7 +227,7 @@ def check(root):
             if path.is_file() and len(path.relative_to(base).parts) > 2:
                 errors.append('Nested first-party module directory: ' + path.relative_to(root).as_posix())
     sources = (root / 'cmake/Sources.cmake').read_text() + (root / 'CMakeLists.txt').read_text()
-    declared = set(re.findall(r'\bsrc/[A-Za-z0-9_/.-]+\.cpp\b', sources))
+    declared = declared_application_sources(sources)
     actual = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*.cpp')}
     if declared != actual:
         errors.append('Application CMake source ownership differs: missing=' + str(sorted(actual-declared)) + ', stale=' + str(sorted(declared-actual)))

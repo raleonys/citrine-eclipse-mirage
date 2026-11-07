@@ -17,7 +17,7 @@ import re
 import tempfile
 import zipfile
 
-VENDORS = ('asio','minhook','pegtl','tinyxml2')
+VENDORS = ('asio','minhook','pegtl','pugixml')
 MAX_ARCHIVE_BYTES = 100 * 1024 * 1024
 MAX_MEMBER_BYTES = 32 * 1024 * 1024
 

@@ -42,6 +42,27 @@ the worker to the IO executor and through every partial-write callback. Cancella
 resolves the receipt but retains the buffer until the outstanding operation's
 completion object is destroyed. A closed session never resumes buffered input.
 
+## Commands with no response
+
+The owner selected reference-compatible continuation for a recognized command
+that raises `messages::NoResponseRequiredError`, including QueryChunkStatus and
+an already blocked RequestLicense. The message core consumes only this typed
+terminal and returns an empty result before response logging, encryption,
+terminating NUL or event selection. Application's internal NoResponse name is
+an alias of that shared type.
+
+An ordered Session completes the empty result without a socket send, then
+admits the next buffered frame or rearms receive on the same connection. Cipher
+state and queued events remain intact; ordinary idle/frame deadlines still apply.
+No empty LSX Response or lone NUL is sent. Invalid requests, handler failures,
+allocation failures and other exceptions retain their existing error paths; this
+is not a catch-all continuation policy. Exit/dialog licensing behavior is unchanged.
+
+Tests cover consecutive silent commands followed by a valid request, separately
+received and coalesced frames, plaintext/encrypted modes, retained events and the
+full-delivery boundary. Memory transport and controlled cipher evidence remain
+separate from native Windows socket, actual AES and Consumer evidence.
+
 ## Event reservation and retry
 
 The real native MessageHandler reserves the front plaintext event under the event
