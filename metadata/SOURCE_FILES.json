@@ -922,8 +922,8 @@
       "sha256": "a2c7a2a6059a00da0b706736dfb4f587eba60b7ac07f22df69617283e08adadf"
     },
     "src/platform/hook_transaction.cpp": {
-      "bytes": 2503,
-      "sha256": "b6f05966e902a146b50a1acca87305d5b1de396ceb26ae1d47f81ad037d5c2c0"
+      "bytes": 2719,
+      "sha256": "31baf0445957cb21db25c80c0c6ce055e275eb59338a4d7106d89260b8504fab"
     },
     "src/platform/hook_unload_guard.cpp": {
       "bytes": 7613,
@@ -1654,8 +1654,8 @@
       "sha256": "ef20b30c19a0553bf654a86da332f1026a7f65d8507bc9be24f37bc0515a3866"
     },
     "tests/unit/hooks/transaction_tests.cpp": {
-      "bytes": 6095,
-      "sha256": "aa2421eeac67f815d3b9e9cb0fac945829faa665dd8fce4ceb63b6510e2e4862"
+      "bytes": 6503,
+      "sha256": "b63e65c63d2154ef116a89294f155567550a90c5d3ed5a9d052ff483777e8e89"
     },
     "tests/unit/host_callbacks/callbacks_tests.cpp": {
       "bytes": 18346,

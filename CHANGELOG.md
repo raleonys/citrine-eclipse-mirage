@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Complete hook transaction cleanup immediately when initialization acquired no engine. Rejected initialization cannot have installed this transaction's callbacks, so rollback must not suspend unrelated live service threads. Preserve owned-engine disable, drain and retry behavior; cover external ownership and initialization failure with a failing quiescence observer.
+
 - Preserve the native Application test's original CTest output capture across console stream rebinding, and include the Application and online profile tests in the manual Windows provider diagnostic. Report the last completed check when the native runtime times out; assertions and timeout budgets are unchanged.
 
 - Retain provider profile copy ownership when successive getters reuse one borrowed scratch buffer. Exercise short and heap-sized fields, cached output, partial null-getter failures and destructive cleanup in the existing online Effects tests; runtime behavior, vendor bytes and ABI are unchanged. This is sequential copy ownership evidence, not concurrent foreign-module or Consumer acceptance.

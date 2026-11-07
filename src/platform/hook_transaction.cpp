@@ -29,6 +29,9 @@ int Transaction::activate(){
     return status;
 }
 bool Transaction::teardown(std::chrono::milliseconds timeout,bool rollback) noexcept {
+    // A rejected initialization never stages our callbacks or owns a patch.
+    // Do not suspend unrelated threads for an engine owned by someone else.
+    if(!owns_){state_=TransactionState::Stopped;return true;}
     try {
         if(owns_&&!disabled_){
             const auto status=api_.disable(nullptr);
