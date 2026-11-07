@@ -1,6 +1,5 @@
 {
   "schema": "surge.public-dll-abi.v1",
-  "classification": "NOT_RELEASE",
   "task": "SURGE-WINDOWS-IO-20261029",
   "target": "preloader_l",
   "dll": "preloader.unsigned.dll",

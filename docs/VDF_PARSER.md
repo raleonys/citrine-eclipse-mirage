@@ -24,12 +24,26 @@ corroborates these inputs.
 | 012ff0 | Create an object frame after reading its name, before validating opening `{` |
 | 012cf0, 012bf0, 0164f0 | Complete assignment; replace duplicate subtree |
 
-`include/preloader_l/config/vdf_grammar.hpp` defines the byte-level rules.
+`src/config/vdf_grammar.hpp` privately defines the byte-level rules.
 `src/config/parser.cpp` provides PEGTL actions/controls, the owned
 `ParseError` interface, and current Node conversion.
 `parser::parse` always invokes the real
 `tao::pegtl::parse<vdf::Document,...>`. There is neither the former
 hand-written parser nor an alternate backend after failure.
+
+The consumer interface is `include/preloader_l/config/parser.hpp`: `Node`,
+`State`, `Position`, `ParseError` and `parse` use project/standard types only.
+PEGTL rules stay behind the parser implementation; consumers do not include
+its private grammar header. The move preserves the grammar bytes, actions,
+error mapping, depth policy and public parser interface.
+
+The compile-only `parser_header_contracts` target includes the public header
+with only the project include directory and generated rejecting headers for every vendored PEGTL include name
+placed before system includes. It has no vendor/runtime link dependency and
+is built with the portable and Windows test inventories. An accidental PEGTL
+include through the public interface therefore fails compilation even if a
+host has PEGTL installed. Existing parser, conversion and frozen-corpus tests
+continue to validate behavior separately.
 
 Scalar tokens are not accepted at the root; object names, keys, and
 values are quoted. Scalar key/value pairs require a separator, while
@@ -53,8 +67,9 @@ error locations. The numeric fixture tests only the vendor API.
 This binding does not select `surge.cfg` / `surge_override.cfg`
 or establish their precedence. Production Asio/filesystem adapters,
 automatic bootstrap, Consumer ABI, and native Windows/MSVC/game
-acceptance remain separate tasks. TinyXML2 owns XML; this grammar
-is not the XML/LSX parser. Vendored files and TinyXML2 depth 500
+acceptance remain separate tasks. Pugixml and the first-party compatibility
+layer own XML; this grammar is not the XML/LSX parser. Vendored files and
+the project XML depth-500 boundary
 remain unchanged.
 
 All 115 existing parser assertions were retained without modification.
@@ -81,7 +96,7 @@ The former implementation is not added back to the product tree.
 The baseline check compiled the same test harness with the earlier
 parser and configuration source as a separate executable. Normal
 CTest compares the new PEGTL parser against the pinned observations.
-Current raw results are in
+Historical binding results are in
 [VDF_PARSER_STATUS.json](../metadata/evidence/VDF_PARSER_STATUS.json).
 
 Current runtime binding:
@@ -89,10 +104,10 @@ Current runtime binding:
 here are historical snapshot evidence; new application tests are
 tracked in [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json).
 
-## C25-F001 depth exhaustion mitigation candidate
+## Integrated C25-F001 depth exhaustion policy
 
 A linear lexical preflight rejects the 129th simultaneously open structural
-object before PEGTL recursively enters its Object rules. The candidate limit
+object before PEGTL recursively enters its Object rules. The implemented limit
 is 128, including the root object, across the entire raw VDF document (also
 subtrees that a later Config2 selection might ignore). Adjacent or repeated
 root objects do not accumulate depth. Quoted braces, supported quote/backslash
@@ -105,7 +120,7 @@ post-BOM byte, LF-counted line and column. No PEGTL actions run: prior AST,
 open frames, accumulator, key and value remain untouched; the BOM flag still
 reflects the attempted input. Because the whole input is scanned first, an
 over-depth suffix takes precedence over earlier syntax errors or otherwise
-completed objects. This behavior is part of the proposed policy, not historical
+completed objects. This behavior is part of the integrated product policy, not historical
 RE error-order parity. Inputs below the limit still use only the real PEGTL
 parser, including its existing partial-action and syntax-error semantics.
 
@@ -117,9 +132,10 @@ VDF corpus and expected full-state fingerprint remain unchanged. Native MSVC
 Debug/Release must execute the boundary and conversion/destruction checks;
 portable or Wine execution alone does not establish Windows stack headroom.
 
-**Compatibility decision:** 128 is a new product input restriction, not a
-recovered RE limit. Owner review/approval of this explicit policy and real
-configuration compatibility is required before merge. Passing synthetic tests
-and the existing corpus does not prove every Consumer configuration or arbitrary
-host-thread stack size. No DLL export, error-enum layout or CFG path precedence
-change is proposed. Exact-head validation and its limits are tracked in PR #77.
+**Compatibility decision:** the owner integrated this input restriction in
+[PR #77](https://github.com/raleonys/citrine-eclipse-mirage/pull/77).
+The 128-level limit is product policy, not a recovered RE limit. Passing
+synthetic tests and the existing corpus does not prove every Consumer
+configuration or arbitrary host-thread stack size. DLL exports, error-enum
+layout and CFG path precedence are unchanged. Validation remains tied to the
+exact tested source; the merged PR does not certify all real configurations.
