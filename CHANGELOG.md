@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Add a B50 native socket-retirement regression for simultaneous real WSARecv/WSASend loans across an injected would-block native close. Require the first shutdown attempt to retain the client and fail closed; an explicit successful retry must free both buffers, dispatch no cancelled business callbacks and never double-close. This is a bounded close-retry scenario, not a claim of physically delayed kernel completion or Consumer/game parity.
+
 - Add native public-shutdown overlap tests at two real Application startup publication boundaries. Queue zero-wait and bounded-wait shutdown calls while startup is paused, then verify retained ownership, successful completion without a third request, startup-exception unwind and exactly-once cleanup. Extend only the source-included test DLL and existing Windows Debug/Release fixture workflow; production runtime, exports and startup/shutdown behavior are unchanged.
 
 - Add a source-linked Windows B54 provider-lifetime regression: pause an actual native DLL auth getter during an accepted LSX session, request real Application shutdown concurrently, require no early provider destruction, then release the getter and verify exactly-once teardown and repeat-stop behavior. Only the native fixture and test harness change; foreign-originated jobs and Consumer/game parity remain unverified.
