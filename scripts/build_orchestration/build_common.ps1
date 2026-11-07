@@ -10,9 +10,7 @@ function Fail-Build {
     exit $Code
 }
 
-# Local build is not an official release/promotion transaction.
-# No Library access, G0 release intent, or publication receipt is required to compile.
-# Retain toolchain, build-directory confinement, source/build failures and binary QA.
+# Validate prerequisites before configuring the selected build profile.
 function Assert-DevelopmentBuildPreflight {
     $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..\..')).Path
     if (-not (Test-Path -LiteralPath (Join-Path $root 'CMakeLists.txt') -PathType Leaf)) {
@@ -131,7 +129,7 @@ function Get-ToolRecord {
     $hash = (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
     $version = $item.VersionInfo.FileVersion
     if ([string]::IsNullOrWhiteSpace($version)) { $version = '<none>' }
-    return "$Label|path=$Path|file_version=$version|sha256=$hash"
+    return "$Label|tool=$([System.IO.Path]::GetFileName($Path))|file_version=$version|sha256=$hash"
 }
 
 function Write-ToolchainProvenance {
@@ -141,8 +139,8 @@ function Write-ToolchainProvenance {
     )
     $lines = @(
         'PRELOADER_L_TOOLCHAIN_PROVENANCE_V1',
-        "VS_INSTALLATION=$VsPath",
-        "VCVARS64=$VcVars",
+        "VS_INSTALLATION=<redacted>",
+        "VCVARS64=<redacted>",
         (Get-ToolRecord 'cmake' $CMakeExe),
         (Get-ToolRecord 'python' $PythonExe),
         (Get-ToolRecord 'cl' $ClExe),
@@ -170,5 +168,27 @@ function Invoke-ExternalChecked {
     if ($rc -ne 0) {
         if ($rc -lt 1 -or $rc -gt 255) { $rc = $FallbackCode }
         Fail-Build "$Label failed (exit $rc)." $rc
+    }
+}
+
+# A CMD launcher owns its colored final verdict. Direct PowerShell callers
+# still receive that verdict here; artifact details are available to both.
+function Write-SelectedProfileResult {
+    param(
+        [string]$ProfileLabel, [string]$Dll, [string]$Sha256,
+        [switch]$GoldenBlocked, [switch]$LauncherOwnsSummary
+    )
+    if (-not $LauncherOwnsSummary) {
+        if ($GoldenBlocked) {
+            Write-Host 'Golden: BLOCKED - product PE targets are incomplete; compilation and resource/export checks completed.' -ForegroundColor Yellow
+        } else {
+            Write-Host "$ProfileLabel`: PASS"
+        }
+    }
+    Write-Host "DLL: $([System.IO.Path]::GetFileName($Dll))"
+    Write-Host "SHA256: $Sha256"
+    if ($GoldenBlocked) {
+        if (-not $LauncherOwnsSummary) { Write-Host 'Exit code 3.' }
+        Write-Host 'See golden/GOLDEN_REPORT.json. This is not Golden acceptance.'
     }
 }

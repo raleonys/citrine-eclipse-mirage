@@ -15,12 +15,17 @@
 #include "preloader_l/platform/callback_lock.hpp"
 #include "preloader_l/platform/hook_transaction.hpp"
 #include <algorithm>
+#include <MinHook.h>
 #include <atomic>
 #include <cstring>
 #include <filesystem>
 #include <future>
+#include <exception>
+#include <mutex>
+#include <optional>
 #include <string_view>
 #include <thread>
+#include <stdexcept>
 
 namespace fixture {
 std::atomic<unsigned> mode{},ready{},attempts{},created{},destroyed{},disables{},releases{};
@@ -29,6 +34,8 @@ std::atomic<unsigned> startup_phase{},startup_held{},startup_release{},startup_v
 std::atomic<unsigned> startup_returns{},startup_failures{},startup_throw{},startup_thread{},paused_thread{},startup_aborting{};
 // No native patching or thread suspension is permitted in this fixture. Engine,
 // unload-scan and test startup barriers are controlled; owners are real.
+std::atomic<unsigned> file_recovery_visits{},fail_after_file_recovery{};
+std::atomic<unsigned> requested_file_recovery_visits{};
 int initialize(){return MH_OK;}
 int create(void* target,void*,void** original){*original=target;return MH_OK;}
 int queue(void*){return MH_OK;}
@@ -89,7 +96,18 @@ public:
 }
 #define Execution StartupExecution
 #define external_threads_outside_module fixture_threads_outside_module
+namespace fixture {
+void after_file_recovery() {
+    file_recovery_visits.fetch_add(1,std::memory_order_acq_rel);
+    if(fail_after_file_recovery.exchange(0,std::memory_order_acq_rel))
+        throw std::runtime_error("test-only fault after real NativeFactory recovery");
+}
+}
+// Only in the source-included Application. Calls the real recovery first.
+// This is not an injected native atomic-rollback failure.
+#define recover_atomic() recover_atomic(), ::fixture::after_file_recovery()
 #include "src/runtime/application.cpp"
+#undef recover_atomic
 #undef external_threads_outside_module
 #undef Execution
 
@@ -128,7 +146,17 @@ public:
             fixture::held_before_loop=0;
         }
     }
-    void stop(){++fixture::attempts;app.stop();}
+    void stop(){
+        // Count only recovery calls made during this requested stop. Member
+        // destruction performs a separate idempotent Impl::stop afterward.
+        struct Visits {
+            unsigned before=fixture::file_recovery_visits.load(std::memory_order_acquire);
+            ~Visits(){fixture::requested_file_recovery_visits.fetch_add(
+                fixture::file_recovery_visits.load(std::memory_order_acquire)-before,
+                std::memory_order_acq_rel);}
+        } visits;
+        ++fixture::attempts;app.stop();
+    }
 };
 }
 // Exercise the actual entry worker and DllShutdown implementation. The wrapper
@@ -139,6 +167,7 @@ public:
 extern "C" __declspec(dllexport) void FixtureMode(unsigned mode){
     fixture::mode=mode;
     if(mode==5)fixture::fail_next_scan=1;
+    if(mode==6)fixture::fail_after_file_recovery.store(1,std::memory_order_release);
     if(mode==2)fixture::held_call=std::make_unique<preloader_l::native::Lease>();
     else fixture::held_call.reset();
 }
@@ -150,14 +179,16 @@ extern "C" __declspec(dllexport) unsigned FixtureValue(unsigned key){
     case 5:return fixture::releases;case 6:return preloader_l::native::is_bound();
     case 7:return static_cast<unsigned>(preloader_l::native::active_calls());
     case 8:return fixture::held_before_loop.load(std::memory_order_acquire);
-    case 9:return fixture::startup_held.load(std::memory_order_acquire);
-    case 10:return fixture::startup_visits;
-    case 11:return fixture::startup_returns;
-    case 12:return fixture::startup_failures;
-    case 13:return static_cast<unsigned>(shutdown_requests.load(std::memory_order_acquire));
-    case 14:return WaitForSingleObject(worker_thread,0);
-    case 15:return fixture::startup_thread;
-    case 16:return fixture::paused_thread;
-    case 17:return fixture::startup_aborting;
+    case 9:return fixture::file_recovery_visits.load(std::memory_order_acquire);
+    case 10:return fixture::requested_file_recovery_visits.load(std::memory_order_acquire);
+    case 11:return fixture::startup_held.load(std::memory_order_acquire);
+    case 12:return fixture::startup_visits;
+    case 13:return fixture::startup_returns;
+    case 14:return fixture::startup_failures;
+    case 15:return static_cast<unsigned>(shutdown_requests.load(std::memory_order_acquire));
+    case 16:return WaitForSingleObject(worker_thread,0);
+    case 17:return fixture::startup_thread;
+    case 18:return fixture::paused_thread;
+    case 19:return fixture::startup_aborting;
     default:return ~0u;}
 }
