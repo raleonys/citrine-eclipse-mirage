@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import tempfile
 
 MANIFEST = 'metadata/ACTIVE_SOURCE_MANIFEST.json'
 MANIFEST_SCHEMA = 'surge.active-source.v1'
@@ -68,9 +69,16 @@ def vendor_symlinks(root):
         base=record['source_install_path']
         if base!='third_party/'+name:
             raise ValueError('Vendor root is not owned by its declared name')
-        for rel,target in record.get('symlinks',{}).items():
+        aliases=record.get('symlinks',{})
+        if not isinstance(aliases,dict):
+            raise ValueError('Malformed vendor symlink table')
+        for rel,target in aliases.items():
+            if not isinstance(rel,str) or not isinstance(target,str):
+                raise ValueError('Malformed vendor symlink entry')
             safe_member(rel)
-            if not target or target.startswith('/') or any(c in target for c in ['\\',':','\x00']):
+            if (not target or target.startswith('/') or
+                    any(c in target for c in ['\\', ':']) or
+                    any(ord(c) < 32 or ord(c) == 127 for c in target)):
                 raise ValueError('Unsafe vendor symlink target')
             stack=list(PurePosixPath(rel).parent.parts)
             for part in target.split('/'):
@@ -136,7 +144,22 @@ def write_manifest(root):
                 'vendor_alias_storage': ALIAS_STORAGE,
                 'symlinks': vendor_symlinks(root),
                 'files': {name: digest(data) for name, data in files.items()}}
-    (root / MANIFEST).write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
+    # Never truncate an existing manifest inode: it can be hardlinked to an
+    # unrelated file. Publish a separately owned file at the same directory
+    # instead, and leave the previous manifest untouched on write/replace errors.
+    destination = root / MANIFEST
+    payload = json.dumps(manifest, indent=2) + '\n'
+    descriptor, name = tempfile.mkstemp(
+        prefix='.' + destination.name + '.', suffix='.partial', dir=destination.parent)
+    partial = Path(name)
+    try:
+        with os.fdopen(descriptor, 'w', encoding='utf-8') as stream:
+            stream.write(payload)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(partial, destination)
+    finally:
+        partial.unlink(missing_ok=True)
     return manifest
 
 

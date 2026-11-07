@@ -3,6 +3,7 @@
 """Check the declared application/test/vendor source bytes and layout boundary."""
 from pathlib import Path
 import hashlib
+import json
 import re
 from project_files import vendor_symlinks, source_payload, alias_payload, load_unique_json
 
