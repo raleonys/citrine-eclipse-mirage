@@ -951,6 +951,38 @@ class PackageTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             packaging.package(self.root, self.root / 'bundle.zip')
 
+    def test_output_directory_alias_to_source_root_is_rejected_before_staging(self):
+        alias = self.base / 'source-root-alias'
+        try:
+            alias.symlink_to(self.root, target_is_directory=True)
+        except (OSError, NotImplementedError):
+            self.skipTest('Directory symlinks unavailable on this host')
+        destination = alias / 'source.zip'
+        before = (self.root / inventory.MANIFEST).read_bytes()
+        # The old guard reaches mkstemp through the alias before FALCION
+        # discovers the unrecorded source-tree partial. Reject earlier.
+        with patch.object(packaging.tempfile, 'mkstemp',
+                          side_effect=AssertionError('staging reached source root')):
+            with self.assertRaisesRegex(ValueError, 'Write the source ZIP outside'):
+                packaging.package(self.root, destination)
+        self.assertEqual(before, (self.root / inventory.MANIFEST).read_bytes())
+        self.assertFalse((self.root / 'source.zip').exists())
+        self.assertFalse((self.root / 'source.zip.sha256').exists())
+        self.assertFalse(list(self.root.glob('.source.zip.*')))
+
+    def test_output_directory_alias_to_external_tree_is_supported(self):
+        external = self.base / 'external-output'
+        external.mkdir()
+        alias = self.base / 'external-output-alias'
+        try:
+            alias.symlink_to(external, target_is_directory=True)
+        except (OSError, NotImplementedError):
+            self.skipTest('Directory symlinks unavailable on this host')
+        receipt = packaging.package(self.root, alias / 'source.zip')
+        self.assertEqual(receipt['sha256'], inventory.digest((external / 'source.zip').read_bytes()))
+        self.assertEqual(receipt['sha256'] + '  source.zip\n',
+                         (external / 'source.zip.sha256').read_text(encoding='utf-8'))
+
     def test_duplicate_package_member(self):
         packaging.package(self.root, self.zip)
         with zipfile.ZipFile(self.zip, 'a') as archive:

@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Reject source ZIP destinations whose parent-directory alias resolves exactly to the source root before staging any file. Add negative source-root and positive external-directory symlink tests; preserve runtime, vendor, public ABI and release policy.
+
 - Recover exclusively owned readonly atomic backups after a post-copy exception: clear the copied readonly flag only during deletion, retain ownership on cleanup errors, and cover original preservation plus same-factory retry in the native staging fixture.
 
 - Decode source-package manifest and repository-contract JSON explicitly as UTF-8. Test valid Unicode metadata under an ANSI default and reject malformed UTF-8 before replacing an existing ZIP/checksum pair.
