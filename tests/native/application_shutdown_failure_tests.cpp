@@ -44,6 +44,37 @@ void scenario(const char* path,unsigned fault){
     std::cout<<"PASS: actual entry/Application/hook cleanup fault "<<fault<<'\n';
 }
 }
+void staged_file_hook_public_shutdown(const char* path){
+    // A11-06-X1 limited test: actual recovery returns before the injected
+    // boundary exception; no native rollback failure is fabricated.
+    Module m(path);
+    const auto until=std::chrono::steady_clock::now()+std::chrono::seconds(10);
+    while(!m.value(0)&&std::chrono::steady_clock::now()<until)Sleep(1);
+    require(m.value(0)&&m.value(6),"staged retry starts with one live Application and binding");
+    m.mode(6);
+    require(m.stop(1000)==DLL_SHUTDOWN_CLEANUP_FAILED,
+        "first request reports the file-recovery boundary exception");
+    require(m.value(1)==1&&m.value(2)==1&&m.value(3)==0&&m.value(6)&&
+        m.value(9)==1&&m.value(10)==1&&m.value(4)==0&&m.value(5)==0,
+        "file boundary fault retains owner and prevents hook disable and engine release");
+    m.mode(1);
+    require(m.stop(1000)==DLL_SHUTDOWN_CLEANUP_FAILED,
+        "second request reports the real hook-disable failure");
+    require(m.value(1)==2&&m.value(2)==1&&m.value(3)==0&&m.value(6)&&
+        m.value(9)==2&&m.value(10)==2&&m.value(4)==1&&m.value(5)==0,
+        "hook failure retains same owner and engine for an explicit retry");
+    m.mode(0);
+    require(m.stop(10000)==DLL_SHUTDOWN_OK,"third explicit request retires same Application");
+    // The worker's successful stop is followed by owner.reset(). Impl's
+    // destructor repeats idempotent recovery, outside the requested-stop scope.
+    require(m.value(1)==3&&m.value(2)==1&&m.value(3)==1&&!m.value(6)&&
+        m.value(9)==4&&m.value(10)==3&&m.value(4)==2&&m.value(5)==1,
+        "final attempt retries unfinished hook disable and releases engine exactly once");
+    require(m.stop(0)==DLL_SHUTDOWN_OK,"completed public shutdown is idempotent");
+    require(m.value(1)==3&&m.value(9)==4&&m.value(10)==3&&m.value(4)==2&&m.value(5)==1,
+        "idempotent shutdown never replays completed stages");
+    std::cout<<"PASS: staged public shutdown file boundary and hook retries\n";
+}
 void queued_shutdown_requests(const char* path,bool persistent=false){
     // Keep the worker before its first event wait. Both public calls must be
     // enqueued before the first ResetEvent, not raced by test scheduling.
@@ -95,6 +126,9 @@ int main(int argc,char** argv)try{
     }
     if(argc==2||std::string_view(argv[2])=="queued-failure"){
         queued_shutdown_requests(argv[1],true);ran=true;
+    }
+    if(argc==2||std::string_view(argv[2])=="stage-file-hook"){
+        staged_file_hook_public_shutdown(argv[1]);ran=true;
     }
     require(ran,"unknown fault mode");
     return 0;
