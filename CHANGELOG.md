@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Adopt the Archive 12 execution-source two-actor Win32 SRW regression in the existing execution test target. Verify observed contention, protected-data handoff, owner/count clearing before native release, unrelated mutex bytes and the final callback LastError, with finite waits and no live-child stack unwind. Runtime sources, build targets and existing portable checks remain unchanged.
+
 - Add native public-shutdown overlap tests at two real Application startup publication boundaries. Queue zero-wait and bounded-wait shutdown calls while startup is paused, then verify retained ownership, successful completion without a third request, startup-exception unwind and exactly-once cleanup. Extend only the source-included test DLL and existing Windows Debug/Release fixture workflow; production runtime, exports and startup/shutdown behavior are unchanged.
 
 - Add a source-linked Windows B54 provider-lifetime regression: pause an actual native DLL auth getter during an accepted LSX session, request real Application shutdown concurrently, require no early provider destruction, then release the getter and verify exactly-once teardown and repeat-stop behavior. Only the native fixture and test harness change; foreign-originated jobs and Consumer/game parity remain unverified.

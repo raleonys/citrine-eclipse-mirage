@@ -1626,8 +1626,8 @@
       "sha256": "a3acd4a20b6fe47d6705a9aa1499fc210b7c41dfaa80eb22e8e2c1a88e3cfba6"
     },
     "tests/unit/execution/execution_tests.cpp": {
-      "bytes": 13488,
-      "sha256": "f0f2476bdfc4336c323a3360be098d5b30803cb5e7cb6c4bca37399af92e4c90"
+      "bytes": 20067,
+      "sha256": "7b604a2d71370971bbeae9175342f8853f81b4face0c9bb75a0d1d67ca95ed55"
     },
     "tests/unit/file/binary_io_tests.cpp": {
       "bytes": 9694,
