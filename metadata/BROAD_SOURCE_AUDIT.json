@@ -1,6 +1,5 @@
 {
   "schema": "surge.broad-source-audit.v1",
-  "classification": "NOT_RELEASE",
   "owner": "Explicit owner continuation: whole source and adapter review beyond the previous delta findings",
   "documentation": "docs/BROAD_SOURCE_AUDIT.md",
   "file_inventory": "metadata/evidence/BROAD_SOURCE_INVENTORY.json",

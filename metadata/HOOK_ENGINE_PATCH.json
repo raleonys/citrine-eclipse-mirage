@@ -1,6 +1,5 @@
 {
   "schema": "surge.hook-engine-patch.v1",
-  "classification": "NOT_RELEASE",
   "input_commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
   "input_hook_sha256": "3060d3c42f03a2f11324cbee95d853071757ed0fe4b1bc9eb5f0d8fc9e346a37",
   "patch_script": "cmake/PatchHookFreeze.cmake",

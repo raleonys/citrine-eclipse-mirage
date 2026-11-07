@@ -19,12 +19,12 @@ SURGE: PRODUCTION BUILD / Release
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Found Python3: C:/Users/Skysect/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
+-- Found Python3: C:/Users/<USER>/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
 -- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS
 -- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS - Success
 -- Configuring done (22.8s)
 -- Generating done (0.3s)
--- Build files have been written to: C:/Users/Skysect/Desktop/preloader_l_3.2.6_TALVOR_R17_source/build/golden_msvc
+-- Build files have been written to: C:/Users/<USER>/Desktop/preloader_l_3.2.6_TALVOR_R17_source/build/golden_msvc
 [2/3] Compile and link
 [  1%] Verify the four active owner-supplied vendor trees
 asio: INSTALLED_MEMBER_HASHES_PASS
@@ -421,15 +421,15 @@ Final-name runtime check: PASS
     "sha256_after": "4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b",
     "runtime_dll_name": "preloader_l.dll"
   },
-  "artifact": "C:\\Users\\Skysect\\Desktop\\preloader_l_3.2.6_TALVOR_R17_source\\build\\golden_msvc\\golden-local\\preloader_l.4a0f37c9328ecf31.dll",
+  "artifact": "C:\\Users\\<USER>\\Desktop\\preloader_l_3.2.6_TALVOR_R17_source\\build\\golden_msvc\\golden-local\\preloader_l.4a0f37c9328ecf31.dll",
   "sha256": "4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b",
-  "sha256_file": "C:\\Users\\Skysect\\Desktop\\preloader_l_3.2.6_TALVOR_R17_source\\build\\golden_msvc\\golden-local\\preloader_l.4a0f37c9328ecf31.dll.sha256",
-  "dist_artifact": "C:\\Users\\Skysect\\Desktop\\preloader_l_3.2.6_TALVOR_R17_source\\dist\\preloader_l.dll",
-  "dist_sha256_file": "C:\\Users\\Skysect\\Desktop\\preloader_l_3.2.6_TALVOR_R17_source\\dist\\preloader_l.dll.sha256",
-  "dist_receipt": "C:\\Users\\Skysect\\Desktop\\preloader_l_3.2.6_TALVOR_R17_source\\dist\\LOCAL_DIST_RECEIPT.json"
+  "sha256_file": "C:\\Users\\<USER>\\Desktop\\preloader_l_3.2.6_TALVOR_R17_source\\build\\golden_msvc\\golden-local\\preloader_l.4a0f37c9328ecf31.dll.sha256",
+  "dist_artifact": "C:\\Users\\<USER>\\Desktop\\preloader_l_3.2.6_TALVOR_R17_source\\dist\\preloader_l.dll",
+  "dist_sha256_file": "C:\\Users\\<USER>\\Desktop\\preloader_l_3.2.6_TALVOR_R17_source\\dist\\preloader_l.dll.sha256",
+  "dist_receipt": "C:\\Users\\<USER>\\Desktop\\preloader_l_3.2.6_TALVOR_R17_source\\dist\\LOCAL_DIST_RECEIPT.json"
 }
 PRODUCTION BUILD: PASS
-DLL: C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\dist\preloader_l.dll
+DLL: C:\Users\<USER>\Desktop\preloader_l_3.2.6_TALVOR_R17_source\dist\preloader_l.dll
 SHA256: 4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b
 
 ============================================================

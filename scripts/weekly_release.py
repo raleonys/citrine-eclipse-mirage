@@ -89,8 +89,47 @@ def plan(releases, source, start_tag=''):
 
 def junit(path):
     tree = ET.parse(path).getroot()
+    if tree.tag not in ('testsuite', 'testsuites'):
+        raise ValueError('CTest JUnit root must be testsuite or testsuites')
+    if tree.tag == 'testsuites' and any(child.tag != 'testsuite' for child in tree):
+        raise ValueError('CTest evidence has no valid test suites')
+    suites = list(tree.iter('testsuite'))
     cases = list(tree.iter('testcase'))
-    if not cases or any(node.tag in ('failure', 'error', 'skipped') for node in tree.iter()):
+    if not suites or not cases:
+        raise ValueError('CTest evidence is empty')
+    parents = {child: parent for parent in tree.iter() for child in parent}
+    totals = dict.fromkeys(suites, 0)
+    for node in tree.iter('testsuites'):
+        if node is not tree:
+            raise ValueError('CTest aggregate container must be the root')
+    for suite in suites:
+        parent = parents.get(suite)
+        if suite is not tree and parent not in totals and parent is not tree:
+            raise ValueError('CTest suite must belong directly to a suite or aggregate root')
+    for case in cases:
+        parent = parents.get(case)
+        if parent not in totals:
+            raise ValueError('CTest testcase must belong directly to a suite')
+        totals[parent] += 1
+
+    def declared_count(node):
+        count = node.get('tests', '')
+        if re.fullmatch(r'[0-9]+', count) is None:
+            raise ValueError('CTest declared tests must be an unsigned ASCII integer')
+        return int(count)
+
+    # Reverse document order visits children before parents without recursion or
+    # repeatedly walking each subtree. Each testcase contributes once to the result.
+    for suite in reversed(suites):
+        if declared_count(suite) != totals[suite]:
+            raise ValueError('CTest declared tests do not match testcases')
+        parent = parents.get(suite)
+        if parent in totals:
+            totals[parent] += totals[suite]
+    if tree.tag == 'testsuites' and tree.get('tests') is not None:
+        if declared_count(tree) != len(cases):
+            raise ValueError('CTest aggregate tests do not match testcases')
+    if any(node.tag in ('failure', 'error', 'skipped') for node in tree.iter()):
         raise ValueError('CTest evidence is empty, failed or skipped')
     for node in tree.iter():
         for key in ('failures', 'errors', 'skipped', 'disabled'):
@@ -104,7 +143,7 @@ def validate_profile(folder, profile, manifest, source):
     identity = load(folder / 'EVIDENCE_IDENTITY.json')
     if identity != {'source_sha': source, 'source_manifest_sha256': manifest, 'profile': profile}:
         raise ValueError('Evidence belongs to a different source or profile')
-    receipt = load(folder / 'LOCAL_BUILD_RECEIPT.json')
+    receipt = load(folder / 'BUILD_RECEIPT.json')
     mode = 'Native' if profile == 'native' else 'Golden'
     if (receipt.get('mode') != mode or receipt.get('configuration') != 'Release'
             or receipt.get('build_succeeded') is not True
@@ -122,10 +161,10 @@ def validate_profile(folder, profile, manifest, source):
     dll = folder / 'dist/preloader_l.dll'
     digest = sha(dll)
     verify_sidecar(dll)
-    dist = load(folder / 'dist/LOCAL_DIST_RECEIPT.json')
+    dist = load(folder / 'dist/DIST_RECEIPT.json')
     golden = load(folder / 'GOLDEN_REPORT.json')
     for report in (dist, golden):
-        if (report.get('result') != 'LOCAL_GOLDEN_PASS' or report.get('sha256') != digest
+        if (report.get('result') != 'GOLDEN_PASS' or report.get('sha256') != digest
                 or [s['stage'] for s in report.get('steps', [])] != ORDER
                 or any(s['exit_code'] for s in report['steps'])):
             raise ValueError('All six Golden gates must pass for this exact DLL')
@@ -160,14 +199,17 @@ def capture(root, profile, build, output, source):
         raise ValueError('Checkout does not match planned source')
     folder = output / profile
     folder.mkdir(parents=True, exist_ok=False)
-    for name in ('LOCAL_BUILD_RECEIPT.json', 'BUILD_TOOLCHAIN_PROVENANCE.log',
+    for name in ('BUILD_RECEIPT.json', 'BUILD_TOOLCHAIN_PROVENANCE.log',
                  'PUBLIC_DLL_ABI_CHECK.json', 'DLL_RESOURCE_CHECK.json'):
         shutil.copyfile(build / name, folder / name)
     if profile == 'native':
         shutil.copyfile(build / 'CTEST_RESULTS.xml', folder / 'CTEST_RESULTS.xml')
     else:
-        shutil.copyfile(build / 'golden-local/GOLDEN_REPORT.json', folder / 'GOLDEN_REPORT.json')
-        shutil.copytree(root / 'dist', folder / 'dist')
+        shutil.copyfile(build / 'golden/GOLDEN_REPORT.json', folder / 'GOLDEN_REPORT.json')
+        dist = folder / 'dist'
+        dist.mkdir()
+        for name in ('preloader_l.dll', 'preloader_l.dll.sha256', 'DIST_RECEIPT.json'):
+            shutil.copyfile(root / 'dist' / name, dist / name)
     manifest = sha(root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')
     write(folder / 'EVIDENCE_IDENTITY.json',
           {'source_sha': source, 'source_manifest_sha256': manifest, 'profile': profile})
@@ -199,7 +241,7 @@ def bundle(root, payload, output):
     output.mkdir(parents=True)
     shutil.copyfile(source, output / source.name)
     shutil.copyfile(Path(str(source) + '.sha256'), output / (source.name + '.sha256'))
-    receipt = {'schema': 'surge.draft-release-receipt.v1', 'classification': 'DRAFT_NOT_RELEASED',
+    receipt = {'schema': 'surge.draft-release-receipt.v1', 'publication_status': 'DRAFT',
                'tag': p['tag'], 'source_sha': p['source_sha'], 'source_manifest_sha256': manifest,
                'source_qa_groups': len(qa['checks']), 'portable_tests': portable_tests,
                'native_tests': native['tests'], 'dll_sha256': golden['dll_sha256'],
@@ -208,12 +250,12 @@ def bundle(root, payload, output):
     write(output / 'RELEASE_RECEIPT.json', receipt)
     binary = output / binary_name
     files = {path.name: path for path in (payload / 'production/dist').iterdir() if path.is_file()}
-    if set(files) != {'preloader_l.dll', 'preloader_l.dll.sha256', 'LOCAL_DIST_RECEIPT.json'}:
+    if set(files) != {'preloader_l.dll', 'preloader_l.dll.sha256', 'DIST_RECEIPT.json'}:
         raise ValueError('Unexpected runtime payload')
     files['RELEASE_RECEIPT.json'] = output / 'RELEASE_RECEIPT.json'
     files['LICENSE'] = root / 'LICENSE'
     for vendor, license_file in (('asio', 'LICENSE_1_0.txt'), ('minhook', 'LICENSE.txt'),
-                                 ('pegtl', 'LICENSE_1_0.txt'), ('tinyxml2', 'LICENSE.txt')):
+                                 ('pegtl', 'LICENSE_1_0.txt'), ('pugixml', 'LICENSE.md')):
         files['licenses/' + vendor + '.txt'] = root / 'third_party' / vendor / license_file
     for profile in ('native', 'production'):
         for path in (payload / profile).rglob('*'):
@@ -281,7 +323,7 @@ def publish_draft(github, p, assets):
     tag = p['tag']
     require_tag(tag)
     if (not p['ready'] or receipt['source_sha'] != p['source_sha'] or receipt['tag'] != tag
-            or receipt.get('classification') != 'DRAFT_NOT_RELEASED'
+            or receipt.get('publication_status') != 'DRAFT'
             or receipt.get('publication') is not False
             or receipt.get('game_acceptance') != 'NOT_RUN'):
         raise ValueError('Draft receipt/source mismatch')

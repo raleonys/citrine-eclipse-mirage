@@ -50,7 +50,7 @@ def inspect(root=ROOT):
             errors.append('Source is not UTF-8: ' + rel)
             continue
         checked += 1
-        ids = IDENTIFIER.findall(data[:3000])
+        ids = IDENTIFIER.findall(data)
         if ids != ['GPL-3.0-only']:
             errors.append(f'Expected exactly one GPL-3.0-only SPDX header: {rel} {ids}')
         if path.suffix.lower() in C_FAMILY and LEGACY.search(data):
