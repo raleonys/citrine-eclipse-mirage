@@ -84,6 +84,29 @@ The dispositions below apply to the stated scenarios. A covered case is not gene
 - Reference close contract: [closing implementation](../src/net/transport_closing.cpp), [closing tests](../tests/unit/socket/closing_tests.cpp), [service registry integration](../tests/unit/socket/service_registry_integration_tests.cpp).
 - Startup and configuration: [publication test](../tests/native/startup_publication_tests.cpp), [shutdown failure test](../tests/native/application_shutdown_failure_tests.cpp), [pipeline tests](../tests/unit/config_pipeline/pipeline_tests.cpp), [application tests](../tests/unit/config_application/application_tests.cpp), [startup tests](../tests/unit/config_startup/startup_tests.cpp), [platform tests](../tests/native/configuration_platform_tests.cpp).
 
+### Borrowed profile scratch-buffer regression: D54-B sequential ownership
+
+`borrowed_profile_copy_ownership()` in the existing online model tests supplies
+all three provider profile getters from the same fixed scratch-buffer address.
+Each subsequent getter overwrites the previous bytes. A filesystem-status
+callback overwrites the final borrowed result before optional profile saving;
+provider destruction and module release overwrite the storage again.
+
+The fixture checks distinct owned username/persona/user values and exact cached
+profile output, with both short and heap-sized strings. A null second or third
+getter preserves the existing partial-update/exception behavior, and explicit
+cleanup leaves already-copied values intact without duplicate object/module
+release on repeated cleanup. It runs in the existing `portable_online` and
+Windows `online_contracts` targets without production or build-policy changes.
+
+This fixture invokes the actual loader through synthetic Effects. The borrowed
+storage remains stable during each getter-to-copy interval; reuse occurs only
+at later calls. It does **not** establish a provider ABI guarantee that storage
+is stable, make concurrently invalidated C strings safe, prove physical DLL
+retirement, or close the concurrent foreign-lifetime portion of D54-B. The
+active-call shutdown schedule in PR #101 remains separate work. Platform results
+must be read from exact-head CI, not inferred from this source description.
+
 ### Executed baseline evidence and its limits
 
 [PR #91's source/Windows workflow, run 41437017683](https://github.com/raleonys/citrine-eclipse-mirage/actions/runs/41437017683), tested head `0d5a1f5e47280a2820f773c070454c58c0c76909`. Its source tree is identical to the accepted merge baseline above. Both Windows/MSVC Native configurations passed **210/210 tests with no skips**. Their artifact digests, raw source-manifest hash, successful build receipts and JUnit inventories were checked; the previous 209 test names remain and only `listener_owners_contracts` was added.
