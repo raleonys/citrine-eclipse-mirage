@@ -1,11 +1,10 @@
 {
   "schema": "surge.golden-target.v1",
   "policy": "MUSTAVEX Golden Metadata",
-  "activation": "READY_LOCAL_TARGET",
+  "activation": "READY_TARGET",
   "fixture_only": false,
   "implementation": "scripts/verify_mustavex_golden_metadata.py",
   "infrastructure_policy_values_inherited": false,
-  "classification": "NOT_RELEASE",
   "required": {
     "versioninfo": {
       "fixed": {

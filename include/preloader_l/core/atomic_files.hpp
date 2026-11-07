@@ -27,6 +27,12 @@ public:
 class AtomicFiles final {
 public:
     explicit AtomicFiles(AtomicFileOps& ops):ops_(ops){}
+    // Recovery paths belong to one stable ledger; duplicating them lets one
+    // owner's cleanup consume the other owner's pending rollback files.
+    AtomicFiles(const AtomicFiles&)=delete;
+    AtomicFiles& operator=(const AtomicFiles&)=delete;
+    AtomicFiles(AtomicFiles&&)=delete;
+    AtomicFiles& operator=(AtomicFiles&&)=delete;
     ~AtomicFiles();
     void replace(std::span<const FileWrite>);
     void recover();

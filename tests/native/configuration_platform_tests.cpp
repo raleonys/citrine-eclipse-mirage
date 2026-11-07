@@ -3,6 +3,9 @@
 #include "../../src/runtime/application_internal.hpp"
 #include "preloader_l/config/application.hpp"
 #include "preloader_l/core/paths.hpp"
+#include "preloader_l/codec/crypto.hpp"
+#include "preloader_l/core/token_constants.hpp"
+#include <map>
 #include <algorithm>
 #include <array>
 #include <fstream>
@@ -86,6 +89,61 @@ void avatar(){
     f.options.executable_path=(dir.path/"host.exe").u16string();f.options.data_root=data.u16string();
     f.env.configure();require(f.state.default_avatar==(data/"default.png").u16string(),"runtime configure continues past initial avatar open failure");
 }
+void license_xml_text_escaping() {
+    // Use the actual product Environment, filesystem, AES and XML reader.
+    // Markup in local Config2 text must remain text, never inject new nodes.
+    Directory dir;Fixture f;
+    f.state.license_directory=(dir.path/"markup-license").u16string();
+    f.state.content_id="game&<item>";
+    f.state.user_id="user<&>\"'";
+    const std::string key="secret&<Injected/>\"'";
+    const auto path=dir.path/"markup-license.dlf";
+    f.env.apply_license_key_02a830(key);
+    auto encrypted=read(path);
+    require(encrypted.size()>65&&(encrypted.size()-65)%16==0,
+        "license has the same 65-byte AES envelope");
+    crypto::Cipher cipher;
+    cipher.set_key_and_iv_042760(token::constants::key_084a50,token::constants::iv_084a60);
+    require(cipher.decrypt_with_offset(encrypted,65),
+        "real license file decrypts with product key and IV");
+    const auto xml=encrypted.substr(65);
+    require(xml.find("<CipherKey>secret&amp;&lt;Injected/&gt;\"'</CipherKey>")!=std::string::npos,
+        "CipherKey escapes markup and entities before encryption");
+    require(xml.find("<ContentId>game&amp;&lt;item&gt;</ContentId>")!=std::string::npos,
+        "ContentId cannot add markup or unresolved entities");
+    require(xml.find("<UserId>user&lt;&amp;&gt;\"'</UserId>")!=std::string::npos,
+        "UserId is escaped while ordinary quotes remain unchanged");
+    auto parsed=f.xml.parse_c_string(xml);
+    require(parsed.document!=nullptr&&!parsed.has_error,
+        "actual XML backend accepts decrypted license");
+    const auto* root=parsed.document->first_element();
+    require(root&&root->name()=="License","license keeps its single XML root");
+    std::map<std::string,std::string> fields;
+    for(auto* child=root->first_element();child;child=child->next_element()) {
+        const char* value=f.xml.text_003860(*child);
+        require(value!=nullptr,"all license elements keep text values");
+        const auto [it,inserted]=fields.emplace(std::string(child->name()),value);
+        (void)it;require(inserted,"no injected or repeated XML elements");
+    }
+    require(fields.size()==6&&fields.at("CipherKey")==key&&
+            fields.at("ContentId")==f.state.content_id&&
+            fields.at("UserId")==f.state.user_id&&fields.at("MachineHash")=="1",
+        "six children round-trip all raw local identifiers exactly");
+    const auto preserved=read(path);
+    f.env.apply_license_key_02a830("different");
+    require(read(path)==preserved,"existing license is never overwritten");
+
+    f.state.license_directory=(dir.path/"plain-license").u16string();
+    f.state.content_id="42";f.state.user_id="user123";
+    f.env.apply_license_key_02a830("plain-KEY");
+    auto ordinary=read(dir.path/"plain-license.dlf");
+    cipher.set_key_and_iv_042760(token::constants::key_084a50,token::constants::iv_084a60);
+    require(cipher.decrypt_with_offset(ordinary,65),"normal file decrypts identically");
+    require(ordinary.substr(65).find(
+            "<CipherKey>plain-KEY</CipherKey><MachineHash>1</MachineHash>"
+            "<ContentId>42</ContentId><UserId>user123</UserId>")!=std::string::npos,
+        "ordinary values preserve the old XML byte format and field order");
+}
 void directory(){
     Fixture f;Directory dir;
     for(const auto* name:{"a_AVATAR_x.png","b_AVATAR_y","lower_avatar_z.png","keep.txt"})
@@ -149,9 +207,10 @@ void event_initializer_retry(){
 }
 int main(int argc,char** argv)try{
     const std::string_view group=argc>1?argv[1]:"all";
-    require(group=="all"||group=="paths"||group=="avatar"||group=="directory"||group=="thread-errors","known test group");
+    require(group=="all"||group=="paths"||group=="avatar"||group=="directory"||group=="thread-errors"||group=="license-xml","known test group");
     if(group=="all"||group=="paths")paths();
     if(group=="all"||group=="avatar")avatar();
+    if(group=="all"||group=="license-xml")license_xml_text_escaping();
     if(group=="all"||group=="directory"){directory();directory_failure();}
     if(group=="all"||group=="thread-errors"){thread_errors();event_initializer_retry();}
     std::cout<<"PASS: "<<checks<<" configuration platform checks\n";return 0;

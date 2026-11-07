@@ -2,11 +2,15 @@
 
 #include "preloader_l/runtime/control.h"
 #include "../runtime_probe.hpp"
+#include "../../tests/fixtures/xml_reader/wire_contracts.hpp"
 #include <chrono>
 #include "listener_owners.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <string_view>
+#include <vector>
+#include <utility>
 
 namespace {
 void require(bool condition,const char* message) {
@@ -43,7 +47,44 @@ struct Module {
         image=nullptr;
     }
 };
-void cycle(const wchar_t* path,unsigned index) {
+std::string exchange(asio::ip::tcp::socket& socket,std::string& buffered,std::string request) {
+    request.push_back('\0');socket.non_blocking(false);
+    asio::write(socket,asio::buffer(request));socket.non_blocking(true);
+    return preloader_l::tools::frame(socket,buffered);
+}
+void xml_contracts(asio::ip::tcp::socket& socket,std::string& buffered,
+                   const std::string& canonical_response) {
+    // These transformations must preserve the complete real DLL response bytes.
+    // The existing profile response contains no timestamp/random challenge field.
+    using namespace xml_contract_fixture;
+    const auto canonical=profile_request();
+    require(canonical_response.find("id=\"public-dll\"")!=std::string::npos&&
+            canonical_response.find("UserIndex=\"0\"")!=std::string::npos,
+            "real DLL canonical response omitted expected id/index");
+    for(const auto& [name,request]:equivalent_forms())
+        if(exchange(socket,buffered,request)!=canonical_response)
+            throw std::runtime_error("Real DLL XML equivalence failed: "+name);
+    for(const auto& value:equivalent_values()) {
+        const auto expected=exchange(socket,buffered,profile_request(value.literal));
+        // Literal fixtures already contain the exact expected XML escaping.
+        require(expected.find("UserIndex=\""+value.literal+"\"")!=std::string::npos,
+                "real DLL did not return the explicit expected attribute value");
+        require(exchange(socket,buffered,profile_request(value.reference))==expected,
+                "real DLL changed decoded/literal/Unicode attribute semantics");
+    }
+    const auto next=exchange(socket,buffered,profile_request("A","EbisuSDK","wire-next"));
+    require(next.find("id=\"wire-next\"")!=std::string::npos&&next.find("UserIndex=\"A\"")!=std::string::npos,
+            "real DLL returned stale request id/value");
+    for(const auto& invalid:malformed_frames()) {
+        // No reply for malformed XML; the same session must process the next
+        // valid frame in FIFO order. A bogus reply has a distinct request id.
+        auto pipelined=invalid; pipelined.push_back('\0');pipelined+=canonical;
+        require(exchange(socket,buffered,std::move(pipelined))==canonical_response,
+                "real DLL malformed-frame rejection/recovery changed");
+    }
+    std::cout<<"PASS: real DLL XML contracts: 8 equivalent forms, 5 value pairs, fresh id/value, 3 malformed/recovery pairs\n";
+}
+void cycle(const wchar_t* path,unsigned index,bool validate_xml) {
     const std::wstring supplied(path);
     const auto separator=supplied.find_last_of(L"\\/");
     const auto module_name=supplied.substr(separator==std::wstring::npos?0:separator+1);
@@ -70,7 +111,9 @@ void cycle(const wchar_t* path,unsigned index) {
     socket.non_blocking(false);
     std::string request="<LSX><Request id='public-dll' recipient='EbisuSDK'><GetProfile index='0'/></Request></LSX>";
     request.push_back('\0');asio::write(socket,asio::buffer(request));socket.non_blocking(true);
-    require(preloader_l::tools::frame(socket,buffered).find("GetProfileResponse")!=std::string::npos,"missing real profile response");
+    const auto response=preloader_l::tools::frame(socket,buffered);
+    require(response.find("GetProfileResponse")!=std::string::npos,"missing real profile response");
+    if(validate_xml)xml_contracts(socket,buffered,response);
     auto complete_shutdown=[&](const char* failure) {
         const DWORD result=shutdown(20000);
         if(result!=DLL_SHUTDOWN_OK)
@@ -100,8 +143,9 @@ void cycle(const wchar_t* path,unsigned index) {
 }
 int wmain(int argc,wchar_t** argv) {
     try {
-        require(argc==2,"usage: preloader_l_runtime_host <application DLL>");
-        for(unsigned i=0;i<3;++i)cycle(argv[1],i);
+        require(argc==2||(argc==3&&std::wstring_view(argv[2])==L"--xml-contracts"),
+                "usage: preloader_l_runtime_host <application DLL> [--xml-contracts]");
+        for(unsigned i=0;i<3;++i)cycle(argv[1],i,argc==3);
         std::cout<<"PASS: public C API names/ordinals; 3 actual load/start/socket/profile/stop/unload cycles; single DllShutdown with bounded wait/retry; removed alias/ordinal absent\n";
         return 0;
     }catch(const std::exception& error) {

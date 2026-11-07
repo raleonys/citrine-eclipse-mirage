@@ -2,8 +2,11 @@
 
 The current machine-readable record is
 [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json);
-latest validation is in
-[native-allocation/VALIDATION.json](../metadata/evidence/native-allocation/VALIDATION.json).
+its task and validation fields retain earlier Asio/XML migration checkpoints. Current
+validation belongs to the selected head's GitHub Actions results, following
+[the synchronization workflow](GITHUB_WORKFLOW.md). The
+[native-allocation/VALIDATION.json](../metadata/evidence/native-allocation/VALIDATION.json)
+record describes an earlier checkpoint.
 Earlier evidence is retained with its original source snapshots.
 
 One Application owner manages configuration, Asio service, handler/event/
@@ -13,7 +16,7 @@ DllShutdown@3**; the C++ source API is a separate `preloader.source.dll`
 target. There are no readiness/port test exports; tools observe existing
 `EALsxPort` and LSX responses.
 
-The most recent correction changes only MSVC aligned-CRT allocation injection
+An earlier correction changed only MSVC aligned-CRT allocation injection
 in the native `net_failure` test; product `src/include` bodies were unchanged.
 The owner's four successful Windows profiles, Native Acceptance 204/205 result,
 and local validation of the correction are separately documented in
@@ -24,14 +27,16 @@ The application is RE-based. Bluefield supplies selected hook 11/lifetime
 dependencies; Brownfield supplies infrastructure/metadata and approved
 resilience approaches. Entire application runtimes are not imported.
 The standard compiler CRT is used. The Production/reference split remains
-60/78 CPP files; reference sources were not deleted. Four model compositions
+62/78 CPP files; reference sources were not deleted. Four model compositions
 were removed from Production linkage, and mixed tests were separated.
 The crypt diagnostic TLS guard remains Debug-only.
 See [cleanup scope](BUILD_CLEANUP.md).
 
 Four owner-supplied vendors remain active: Asio 1.38.2, MinHook 1.3.4,
-PEGTL 4, and TinyXML2 11. Vendor bytes are immutable; TinyXML depth is
-500. SAFE-FREEZE applies only to the pinned MinHook build copy. Windows I/O
+PEGTL 4, and pugixml 1.16. Vendor bytes are immutable. The project XML
+compatibility layer preserves the previous depth-500 boundary and corrected
+reference decoding, with no TinyXML2 production fallback. See
+[XML_BACKEND_COMPARISON.md](XML_BACKEND_COMPARISON.md). SAFE-FREEZE applies only to the pinned MinHook build copy. Windows I/O
 uses standard filesystem/fstream and approved atomic persistence adapters.
 Gulrak is not an active dependency.
 
@@ -75,6 +80,8 @@ event/error/config values through the existing `showLSX` gate; Release
 neither creates `surge.log` nor appends to an existing Debug log.
 
 Local LLVM-MinGW/Wine results are not native Windows/MSVC, Golden, or game
-acceptance. Those checks remain pending for the latest changed source.
+acceptance. Hosted native and Golden results must be checked for the selected
+source head; historical NOT_RUN fields are not evidence that no later native
+execution occurred. Real game acceptance remains owner-run and DLL-specific.
 Donor retirement is unapproved; registry provenance, aggregate memory
 budgets, shutdown liveness, and remaining source/test/tooling reviews are open.
