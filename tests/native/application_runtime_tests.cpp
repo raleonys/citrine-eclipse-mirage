@@ -376,13 +376,22 @@ int main(int argc,char** argv) try {
         const auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(5);
         while(!auth_entered()&&std::chrono::steady_clock::now()<deadline)Sleep(1);
         require(auth_entered()!=0,"real online getter did not enter its held foreign callback");
-        auto shutdown=std::async(std::launch::async,[&]{online.stop();});
+        // MSVC async uses a reusable task-pool worker. This statically linked
+        // test later scans its own image for native callback quiescence, so a
+        // completed task is insufficient: its worker must actually exit.
+        std::promise<void> stopped;
+        auto shutdown=stopped.get_future();
+        std::jthread shutdown_worker([&]{
+            try{online.stop();stopped.set_value();}
+            catch(...){stopped.set_exception(std::current_exception());}
+        });
         const bool premature=shutdown.wait_for(std::chrono::milliseconds(150))==std::future_status::ready;
         const bool image_present=GetModuleHandleW(provider_file.wstring().c_str())==provider_module;
         const bool object_live=destroyed()==0;
         // Always unblock the getter before waiting for stop; no hanging test
         // future or injected production behavior in the critical section.
         release_auth();
+        shutdown_worker.join();
         shutdown.get();
         require(!premature&&image_present&&object_live,
             "Application retired a foreign provider while its auth callback was active");

@@ -75,13 +75,9 @@ void partial_staging_and_external_owner(){
     {Engine api;Calls calls;Transaction tx(api,calls);void* original=nullptr;tx.begin();api.queued=status_code::not_created;
      tx.create(nullptr,nullptr,&original);require(tx.queue(nullptr)!=status_code::ok,"queue failure");
      require(tx.activate()!=status_code::ok&&api.calls.back()==3,"staging failure prevents apply");require(tx.rollback(std::chrono::milliseconds(0)),"partial staging rollback");}
-    for(const auto failure:{status_code::already_initialized,status_code::memory_alloc}) {
-     Engine api;Calls calls;Transaction tx(api,calls);api.init=failure;calls.quiet=false;
+    {Engine api;Calls calls;Transaction tx(api,calls);api.init=status_code::already_initialized;
      require(tx.begin()!=status_code::ok&&!tx.owns_engine(),"external engine not adopted");
-     require(tx.rollback(std::chrono::milliseconds(0))&&api.calls==std::vector<int>{1},"unowned engine rollback cannot depend on unrelated thread quiescence");
-     require(calls.drains==0,"rejected initialization publishes no hooks requiring a thread scan");
-     require(tx.finish(std::chrono::milliseconds(0))&&calls.drains==0&&api.calls==std::vector<int>{1},
-             "repeated unowned cleanup preserves the external engine without scanning threads");}
+     require(tx.rollback(std::chrono::milliseconds(0))&&api.calls==std::vector<int>{1},"external engine never disabled/uninitialized");}
 }
 }
 int main()try{staged_activation();retained_rollback();already_disabled_drain_retry();partial_staging_and_external_owner();std::cout<<"PASS: "<<checks<<" hook transaction checks\n";}

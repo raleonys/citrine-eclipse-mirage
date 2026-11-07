@@ -92,7 +92,7 @@ engine and lifecycle tests retain those separate responsibilities.
 | NtGetNextThread SAFE-FREEZE | Patched MinHook enumerates stable duplicated peer handles, checks suspend/context operations and retains failed resume/close/heap owners for retry. Missing Nt API fails closed; no Toolhelp fallback. |
 | One queued activation | Application stages all selected callbacks with queue-enable, then calls apply once. No individual enable in application installation. |
 | Loader safety | DllMain schedules the worker only. Windows serializes thread DLL notifications; the worker additionally acquires a module lease through GetModuleHandleEx before constructing Application. Freeze/patch runs after the loader boundary. |
-| Failed installation | Transaction disables the owned set, drains calls and releases the engine. Failed rollback enters RollbackIncomplete and retains original slots, callback context and engine ownership. Rejected initialization stages no callbacks, so cleanup neither scans unrelated threads nor disables or uninitializes an externally owned engine. |
+| Failed installation | Transaction disables the owned set, drains calls and releases the engine. Failed rollback enters RollbackIncomplete and retains original slots, callback context and engine ownership. An externally initialized engine is never adopted or uninitialized. |
 | Trampoline lifetime | Disable precedes in-flight binding-lease drain and the existing external-thread module guard; uninitialize occurs only after both succeed. |
 | Retryable teardown | CleanupIncomplete retains the same owner. Application retries hook quiescence; the actual DLL worker also accepts a subsequent shutdown request if Application::stop throws. It retains its image lease and owner until success. |
 
