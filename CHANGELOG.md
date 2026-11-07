@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Extend C14 protected Windows CryptQuery path-read acceptance with a real cross-page partial UTF-16 code unit, a complete read-only path and an entirely inaccessible page; require fail-closed selection and zero C++ heap allocations without modifying hook policy.
+
 - Add C08 bounded Windows native regression for the prior-cleanup ERROR_BUSY result visible to a newly queued zero-wait DllShutdown caller; verify worker request retention and eventual retry without changing shutdown status semantics or public ABI.
 
 - Use UTC for public changelog dates and release schedules without location-bearing zone names. Reconcile all 158 dated PR entries against GitHub merge timestamps, correct four calendar-day boundaries, and keep the weekly cron instant unchanged. Add a source QA guard for regional time-zone names in active first-party authoring inputs; preserve vendor data and technical test fixtures.
