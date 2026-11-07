@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Add C08 bounded Windows native regression for the prior-cleanup ERROR_BUSY result visible to a newly queued zero-wait DllShutdown caller; verify worker request retention and eventual retry without changing shutdown status semantics or public ABI.
+
 - Use UTC for public changelog dates and release schedules without location-bearing zone names. Reconcile all 158 dated PR entries against GitHub merge timestamps, correct four calendar-day boundaries, and keep the weekly cron instant unchanged. Add a source QA guard for regional time-zone names in active first-party authoring inputs; preserve vendor data and technical test fixtures.
 
 - Apply the owner's separately approved privacy redaction to seven retained logs (66 user-profile path occurrences), one retained schedule record and three linked identity receipts. Preserve original and redacted SHA-256 provenance, reconcile current-copy byte counts and retain every historical outcome, binary digest and acceptance limit. This is current-copy redaction, not new native execution or an accepted Git-history rewrite.
