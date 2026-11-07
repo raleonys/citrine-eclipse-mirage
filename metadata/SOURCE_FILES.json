@@ -1202,8 +1202,8 @@
       "sha256": "20e5b259e169a05d15d9ccdfd852d0067e13397552d28e6b929767759387816c"
     },
     "tests/infrastructure/test_root_ownership.py": {
-      "bytes": 14064,
-      "sha256": "8c9da6aef1e4069e1209a87ccba507053d4267de92457bdd2bdeff89d02a8a94"
+      "bytes": 16287,
+      "sha256": "dd0591291789d9423903ced0c3c0ee6f01483479cb7193cd5ccdb300dce961eb"
     },
     "tests/infrastructure/test_size_evidence.py": {
       "bytes": 8606,
@@ -1230,12 +1230,12 @@
       "sha256": "dd0e73c17f4ae7102ab6675fcd4484bbb46ed41be7203b0c524318399b862bc6"
     },
     "tests/native/application_runtime_tests.cpp": {
-      "bytes": 32735,
-      "sha256": "58782817de35b603fe9526eec43dc2e1278d65931419ecdb84bbe3dec5403ccc"
+      "bytes": 35906,
+      "sha256": "469a7ba0c0c9299b722cad26a62ba545751983d08c28a95d14e8de611f9a647e"
     },
     "tests/native/application_shutdown_failure_tests.cpp": {
-      "bytes": 12978,
-      "sha256": "26a39ca9e510e1f539083fff2c11e26452182f95790e22d2618e243b7b12090e"
+      "bytes": 15579,
+      "sha256": "4fb04224ccbc492b294c6a8c4cee37b565459665e053c49816c9cb7dba2f878f"
     },
     "tests/native/atomic_persistence_tests.cpp": {
       "bytes": 7331,
@@ -1258,8 +1258,8 @@
       "sha256": "e615d0e61e6ad9fd3af85aa742e20f558adcd64552d9b8c582eea1200352d321"
     },
     "tests/native/crypt_path_probe_tests.cpp": {
-      "bytes": 7166,
-      "sha256": "4dd291bb6d380f3e01ba041c67a79df928a5584a6cc366a865044e0a2cb112aa"
+      "bytes": 8892,
+      "sha256": "3c66e7f6ab5ef8c6be51ba77e85b8d246be4a9d7ff53ff949f24d9b70f7e55e4"
     },
     "tests/native/environment_dialog_tests.cpp": {
       "bytes": 10413,
@@ -1302,8 +1302,8 @@
       "sha256": "b0550335f1670b935100e22bfabfafef07f03711b9d6f5f0e430a5a6c1fdfb29"
     },
     "tests/native/net_failure_tests.cpp": {
-      "bytes": 22629,
-      "sha256": "b34d915f1c6b319e2cbb8ce6424b22b925e7bedc53908a47a6448231f7286687"
+      "bytes": 24807,
+      "sha256": "bd7853bd8f30d48ce83d2225993ce48a2816f64574d856681f9775731d9806a3"
     },
     "tests/native/network_policy_tests.cpp": {
       "bytes": 10394,
@@ -1326,8 +1326,8 @@
       "sha256": "62bf85f31096066ba7df9cdd3bf0a5e9b3300f5fe94fb60c4d82598d16665cb2"
     },
     "tests/native/socket_retirement_tests.cpp": {
-      "bytes": 29569,
-      "sha256": "adbf06243cccce7afb42ea7e3a89de1707d76ad0c8455c082f7da838c10a4345"
+      "bytes": 32926,
+      "sha256": "cd70246c3aca1fe0571aff9ea596ad9f0aa0432c8ecc14b681a21d7b93a12312"
     },
     "tests/native/startup_publication_tests.cpp": {
       "bytes": 5378,
@@ -1382,16 +1382,16 @@
       "sha256": "aadd4065f25dcaf4751018f7a6df4f3081c328d07905614f4de7f52b21b4be61"
     },
     "tests/support/runtime/application_shutdown_fixture.cpp": {
-      "bytes": 9500,
-      "sha256": "30c4d122c47ebbae17440517c4925baf07e3b5451670db91f6544bb0f448bf08"
+      "bytes": 10816,
+      "sha256": "bbd8ed886e8d32e8e74396a30d0ce0ce93d624bbbfac5e7884d0f6f491754537"
     },
     "tests/support/runtime/cleanup_retry_fixture.cpp": {
       "bytes": 1163,
       "sha256": "e40de0c37906f32cf5e5d45e5436d0413272e9c9f31b52386c8e606463e5d95b"
     },
     "tests/support/runtime/online_fixture.cpp": {
-      "bytes": 4836,
-      "sha256": "dde5583eb7c5ffd0dbc20ae9426d14b6c94d9e4123eb00f1476f62ca68967e93"
+      "bytes": 5083,
+      "sha256": "80447db06fd8cd0a39ac8838f84de2aa283881b96ea55b2a9ea47e43856c336e"
     },
     "tests/support/runtime/socket_retirement_fixture.cpp": {
       "bytes": 2795,
@@ -1618,8 +1618,8 @@
       "sha256": "14703fc09912215ed47f9a04970e8958684374824e0e0a72a76e37ae0f17d343"
     },
     "tests/unit/event_queue/queue_tests.cpp": {
-      "bytes": 7042,
-      "sha256": "28a23ea0c1675435ee00dd917dcb7ee3543335df1ace4be902bc5b21bd961b04"
+      "bytes": 15602,
+      "sha256": "946172ecb33f21e0c507471fc335de89f7102541bf77745acd247e07ba7ecad8"
     },
     "tests/unit/execution/concurrency_tests.cpp": {
       "bytes": 8127,
@@ -1690,8 +1690,8 @@
       "sha256": "19edde46a81aed0610f478e64a35d63dd3c3a42e3dec71e67b6da5b326181f96"
     },
     "tests/unit/online/online_tests.cpp": {
-      "bytes": 25709,
-      "sha256": "a846723a980ffa883ff4d6f7cc0f0909fd8fafb2a3fbf5d31a1c87a156a4f257"
+      "bytes": 29324,
+      "sha256": "48bc8ca97f042a39cf5e50e0357f22677a7eab49d85bccb67c1babad25247c16"
     },
     "tests/unit/parser/header_contract.cpp": {
       "bytes": 236,

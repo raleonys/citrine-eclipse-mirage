@@ -17,6 +17,8 @@ struct Module {
     unsigned (*value)(unsigned)=nullptr;
     void (*resume)()=nullptr;
     void (*resume_startup)()=nullptr;
+    void (*hold_after_failure)()=nullptr;
+    void (*release_failure_wait)()=nullptr;
     explicit Module(const char* path){
         module=LoadLibraryA(path);require(module!=nullptr,"fixture DLL load");
         stop=reinterpret_cast<decltype(stop)>(GetProcAddress(module,"DllShutdown"));
@@ -24,10 +26,14 @@ struct Module {
         value=reinterpret_cast<decltype(value)>(GetProcAddress(module,"FixtureValue"));
         resume=reinterpret_cast<decltype(resume)>(GetProcAddress(module,"FixtureReleaseWorker"));
         resume_startup=reinterpret_cast<decltype(resume_startup)>(GetProcAddress(module,"FixtureReleaseStartup"));
-        require(stop&&mode&&value&&resume&&resume_startup,"fixture methods");
+        hold_after_failure=reinterpret_cast<decltype(hold_after_failure)>(GetProcAddress(module,"FixtureHoldAfterFailure"));
+        release_failure_wait=reinterpret_cast<decltype(release_failure_wait)>(GetProcAddress(module,"FixtureReleaseFailureWait"));
+        require(stop&&mode&&value&&resume&&resume_startup&&hold_after_failure&&release_failure_wait,
+                "fixture methods");
     }
     ~Module(){
-        // Release either controlled barrier even when an assertion throws.
+        // Release all controlled barriers even when an assertion throws.
+        if(release_failure_wait)release_failure_wait();
         if(resume_startup)resume_startup();
         if(resume)resume();
         if(mode&&stop){mode(0);if(stop(10000)==DLL_SHUTDOWN_OK)FreeLibrary(module);}
@@ -194,6 +200,38 @@ void queued_shutdown_requests(const char* path,bool persistent=false){
         "completed queued shutdown must retain the public success contract");
     std::cout<<"PASS: two queued public shutdown requests preserve exactly two cleanup attempts\n";
 }
+void stale_cleanup_status_window(const char* path){
+    // C08-CAND-001: the previous cleanup failure can still be visible to
+    // the next caller while its newly enqueued attempt has not executed.
+    Module m(path);
+    const auto ready_until=std::chrono::steady_clock::now()+std::chrono::seconds(10);
+    while(!m.value(0)&&std::chrono::steady_clock::now()<ready_until)Sleep(1);
+    require(m.value(0)&&m.value(6)&&m.value(1)==0,
+            "live application/worker required before testing shutdown status");
+    m.hold_after_failure();
+    m.mode(4); // Persistently fail the owned native unload scan.
+    const auto first=m.stop(1000);
+    require(first==DLL_SHUTDOWN_CLEANUP_FAILED&&m.value(1)==1&&m.value(3)==0,
+            "first request must finish with a retained owner and ERROR_BUSY");
+    const auto hold_until=std::chrono::steady_clock::now()+std::chrono::seconds(3);
+    while(!m.value(20)&&std::chrono::steady_clock::now()<hold_until)Sleep(1);
+    require(m.value(20)==1&&m.value(1)==1&&m.value(6),
+            "worker must be paused before handling the second public request");
+    const auto second=m.stop(0);
+    require(second==DLL_SHUTDOWN_CLEANUP_FAILED&&m.value(1)==1,
+            "zero-wait second request can report prior ERROR_BUSY before its own stop");
+    // The observation is classification of an incomplete request, not a
+    // spurious OK, lost retry, premature image unload or new bug verdict.
+    m.mode(0);
+    m.release_failure_wait();
+    const auto done_until=std::chrono::steady_clock::now()+std::chrono::seconds(5);
+    while(m.value(3)!=1&&std::chrono::steady_clock::now()<done_until)Sleep(1);
+    require(m.value(1)==2&&m.value(2)==1&&m.value(3)==1&&!m.value(6),
+            "released worker must process exactly the queued retry and retire once");
+    require(m.stop(10000)==DLL_SHUTDOWN_OK&&m.value(1)==2,
+            "completed worker retains idempotent public shutdown success");
+    std::cout<<"PASS: C08 prior cleanup status is observable before queued retry begins\n";
+}
 int main(int argc,char** argv)try{
     require(argc==2||argc==3,"fixture DLL path and optional mode required");
     bool ran=false;
@@ -212,6 +250,9 @@ int main(int argc,char** argv)try{
     }
     if(argc==2||std::string_view(argv[2])=="stage-file-hook"){
         staged_file_hook_public_shutdown(argv[1]);ran=true;
+    }
+    if(argc==2||std::string_view(argv[2])=="stale-status"){
+        stale_cleanup_status_window(argv[1]);ran=true;
     }
     require(ran,"unknown fault mode");
     return 0;
