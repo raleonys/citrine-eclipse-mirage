@@ -66,6 +66,8 @@ Third-party material and vendor sources retain their separate applicable license
 
 Public documents should not disclose unnecessary implementation or integration details. Review the full source tree, metadata, history, license status, and distributed assets before any public visibility change. Repository visibility is changed only with explicit owner approval.
 
+Public project dates and schedules use UTC without owner location or regional time-zone names. Changelog dates come from the UTC date of GitHub's `merged_at`; converting a displayed schedule must preserve its actual instant. New Git author and committer timestamps use UTC. Retained historical evidence, existing Git history and previously distributed artifacts require a separate preservation review before redaction; editing the current source does not erase older public copies.
+
 ## Migration record
 
 Remaining work includes metadata rationalization, verifying first PR-triggered Windows/Golden acceptance on the exact commit, and evaluating additional required check contexts. A configured CI job is not a PASS before actual execution.
