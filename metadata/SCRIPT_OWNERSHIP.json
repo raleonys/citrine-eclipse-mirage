@@ -136,8 +136,13 @@
       "purpose": "Fail-closed SPDX and legacy C++ naming audit",
       "role": "AUTOMATION"
     },
+    "scripts/ci_validation_readiness.py": {
+      "owner": "Citrine Eclipse Mirage CI scheduling",
+      "purpose": "Verify current PR/manual heads and newly integrated main ancestry before full validation",
+      "role": "AUTOMATION"
+    },
     "scripts/clear_tool_python_cache.py": {
-      "owner": "SURGE local build hygiene",
+      "owner": "SURGE build hygiene",
       "purpose": "Remove only known generated Python caches for manifest-owned first-party tools; never refresh source manifests",
       "role": "PYTHON_TOOL_OR_MODULE"
     },

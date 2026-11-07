@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "preloader_l/config/parser.hpp"
-#include "preloader_l/config/vdf_grammar.hpp"
+#include "vdf_grammar.hpp"
 #include <type_traits>
 #include <utility>
 

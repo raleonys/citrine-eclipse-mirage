@@ -4,6 +4,7 @@
 from copy import deepcopy
 import json
 from pathlib import Path
+import shutil
 import sys
 import tempfile
 import subprocess
@@ -207,17 +208,47 @@ class PayloadTests(unittest.TestCase):
             dll.write_bytes(b'MZ fixture; not real MSVC or game acceptance')
             release.sidecar(dll)
             digest = release.sha(dll)
-            golden = {'result': 'LOCAL_GOLDEN_PASS', 'sha256': digest,
+            golden = {'result': 'GOLDEN_PASS', 'sha256': digest,
                       'steps': [{'stage': stage, 'exit_code': 0} for stage in release.ORDER],
                       'runtime_check': {'exit_code': 0, 'sha256_before': digest, 'sha256_after': digest}}
             release.write(folder / 'GOLDEN_REPORT.json', golden)
-            release.write(dist / 'LOCAL_DIST_RECEIPT.json', {
+            release.write(dist / 'DIST_RECEIPT.json', {
                 **golden, 'source_manifest_sha256': self.manifest, 'input_sha256': 'c' * 64})
             receipt['dist_sha256'] = digest
-        release.write(folder / 'LOCAL_BUILD_RECEIPT.json', receipt)
+        release.write(folder / 'BUILD_RECEIPT.json', receipt)
 
     def validate(self, name):
         return release.validate_profile(self.payload / name, name, self.manifest, SOURCE)
+
+    def test_capture_uses_current_receipts_and_only_declared_dist_members(self):
+        root=self.base/'capture-source'
+        (root/'metadata').mkdir(parents=True)
+        shutil.copyfile(ROOT/'metadata/ACTIVE_SOURCE_MANIFEST.json',
+                        root/'metadata/ACTIVE_SOURCE_MANIFEST.json')
+        build=root/'build/production'
+        (build/'golden').mkdir(parents=True)
+        fixture=self.payload/'production'
+        for name in ('BUILD_RECEIPT.json','BUILD_TOOLCHAIN_PROVENANCE.log',
+                     'PUBLIC_DLL_ABI_CHECK.json','DLL_RESOURCE_CHECK.json'):
+            shutil.copyfile(fixture/name,build/name)
+        shutil.copyfile(fixture/'GOLDEN_REPORT.json',build/'golden/GOLDEN_REPORT.json')
+        shutil.copytree(fixture/'dist',root/'dist')
+        historical=root/'dist/LOCAL_DIST_RECEIPT.json'
+        historical.write_bytes(b'previous receipt retained outside the new package')
+        output=self.base/'captured'
+        with patch.object(release,'head',return_value=SOURCE):
+            release.capture(root,'production',build,output,SOURCE)
+        self.assertEqual({'preloader_l.dll','preloader_l.dll.sha256','DIST_RECEIPT.json'},
+                         {path.name for path in (output/'production/dist').iterdir()})
+        self.assertEqual(b'previous receipt retained outside the new package',historical.read_bytes())
+        self.assertEqual(self.validate('production'),
+                         release.validate_profile(output/'production','production',self.manifest,SOURCE))
+
+    def test_renamed_build_receipt_is_required(self):
+        folder=self.payload/'native'
+        (folder/'BUILD_RECEIPT.json').rename(folder/'LOCAL_BUILD_RECEIPT.json')
+        with self.assertRaises(FileNotFoundError):
+            self.validate('native')
 
     def test_profile_receipt_must_match_the_exact_source(self):
         path = self.payload / 'native/EVIDENCE_IDENTITY.json'
@@ -228,7 +259,7 @@ class PayloadTests(unittest.TestCase):
             self.validate('native')
 
     def test_manifest_drift_is_not_native_acceptance(self):
-        path = self.payload / 'native/LOCAL_BUILD_RECEIPT.json'
+        path = self.payload / 'native/BUILD_RECEIPT.json'
         data = release.load(path)
         data['source_manifest_sha256'] = '0' * 64
         release.write(path, data)
@@ -241,13 +272,104 @@ class PayloadTests(unittest.TestCase):
             with self.subTest(body=body), self.assertRaises(ValueError):
                 self.validate('native')
 
+    def assert_junit_rejected_by_candidate_paths(self, xml):
+        native = self.payload / 'native/CTEST_RESULTS.xml'
+        native.write_text(xml, encoding='utf-8')
+        with self.assertRaises(ValueError):
+            release.junit(native)
+        with self.assertRaises(ValueError):
+            self.validate('native')
+        self.xml(native)
+        (self.payload / 'PORTABLE_CTEST.xml').write_text(xml, encoding='utf-8')
+        output = self.base / 'assets'
+        with patch.object(release, 'head', return_value=SOURCE), self.assertRaises(ValueError):
+            release.bundle(ROOT, self.payload, output)
+        self.assertFalse(output.exists())
+
+    def test_junit_valid_flat_and_nested_suites_count_each_case_once(self):
+        leaf = '<testsuite tests="1"><testcase name="a"/></testsuite>'
+        nested = ('<testsuite tests="3"><testcase name="direct"/>'
+                  '<testsuite tests="2"><testcase name="a"/><testcase name="b"/>'
+                  '</testsuite></testsuite>')
+        valid = [
+            ('single', leaf, 1),
+            ('aggregate', '<testsuites tests="2">' + leaf * 2 + '</testsuites>', 2),
+            ('optional-aggregate', '<testsuites>' + leaf * 2 + '</testsuites>', 2),
+            ('nested-single', nested, 3),
+            ('nested-aggregate', '<testsuites tests="4">' + nested + leaf + '</testsuites>', 4),
+            ('empty-sibling', '<testsuites>' + leaf + '<testsuite tests="0"/></testsuites>', 1),
+            ('metadata', '<testsuite tests="01"><properties><property name="x" value="y"/>'
+             '</properties><testcase/><system-out>&lt;testcase/&gt;</system-out></testsuite>', 1),
+        ]
+        path = self.payload / 'native/CTEST_RESULTS.xml'
+        for name, xml, expected in valid:
+            with self.subTest(valid=name):
+                path.write_text(xml, encoding='utf-8')
+                self.assertEqual(expected, release.junit(path))
+                self.assertEqual({'tests': expected}, self.validate('native'))
+
+    def test_junit_rejects_inconsistent_counts_in_native_and_portable_candidates(self):
+        leaf = '<testsuite tests="1"><testcase/></testsuite>'
+        invalid_counts = ('', '-1', '+1', ' 1', '1 ', '1.0', '0x1', 'one', '\u0661', '\u00b2', '0', '2')
+        for count in invalid_counts:
+            for scope, xml in (
+                    ('suite', '<testsuite tests="' + count + '"><testcase/></testsuite>'),
+                    ('aggregate', '<testsuites tests="' + count + '">' + leaf + '</testsuites>')):
+                with self.subTest(count=count, scope=scope):
+                    self.assert_junit_rejected_by_candidate_paths(xml)
+        for xml in (
+                '<testsuite><testcase/></testsuite>',
+                '<testsuite tests="1"><testcase/><testcase/></testsuite>',
+                '<testsuite tests="1">' + leaf + '<testcase/></testsuite>',
+                '<testsuite tests="1"><testsuite tests="2"><testcase/></testsuite></testsuite>',
+                '<testsuite tests="1">' + leaf + '<testsuite tests="99"/></testsuite>',
+                '<testsuite tests="1">' + leaf + '<testsuite/></testsuite>'):
+            with self.subTest(xml=xml):
+                self.assert_junit_rejected_by_candidate_paths(xml)
+
+    def test_junit_rejects_wrong_roots_and_hidden_or_orphan_nodes(self):
+        leaf = '<testsuite tests="1"><testcase/></testsuite>'
+        for xml in (
+                '<report>' + leaf + '</report>', '<testcase/>', '<testsuites/>',
+                '<testsuite tests="0"/>',
+                '<testsuites tests="2">' + leaf + '<testcase/></testsuites>',
+                '<testsuites><wrapper>' + leaf + '</wrapper></testsuites>',
+                '<testsuite tests="1"><wrapper><testcase/></wrapper></testsuite>',
+                '<testsuite tests="2"><testcase><testcase/></testcase></testsuite>',
+                '<testsuite tests="1"><wrapper>' + leaf + '</wrapper></testsuite>',
+                '<testsuite tests="1"><testcase><testsuite tests="0"/></testcase></testsuite>',
+                '<testsuite tests="1"><testcase/><wrapper><testsuite tests="0"/></wrapper></testsuite>',
+                '<testsuite tests="1"><testsuites>' + leaf + '</testsuites></testsuite>'):
+            with self.subTest(xml=xml):
+                self.assert_junit_rejected_by_candidate_paths(xml)
+
+    def test_junit_nested_failure_statuses_still_reject_candidates(self):
+        for marker in ('failure', 'error', 'skipped'):
+            xml = ('<testsuites tests="1"><testsuite tests="1"><testsuite tests="1">'
+                   '<testcase><' + marker + '/></testcase></testsuite></testsuite></testsuites>')
+            with self.subTest(marker=marker):
+                self.assert_junit_rejected_by_candidate_paths(xml)
+        for status in ('failures', 'errors', 'skipped', 'disabled'):
+            xml = ('<testsuites tests="1"><testsuite tests="1"><testsuite tests="1" '
+                   + status + '="1"><testcase/></testsuite></testsuite></testsuites>')
+            with self.subTest(status=status):
+                self.assert_junit_rejected_by_candidate_paths(xml)
+
+    def test_junit_deep_suites_do_not_recurse_or_double_count(self):
+        depth = 1200
+        xml = '<testsuite tests="1">' * depth + '<testcase/>' + '</testsuite>' * depth
+        path = self.payload / 'native/CTEST_RESULTS.xml'
+        path.write_text(xml, encoding='utf-8')
+        self.assertEqual(1, release.junit(path))
+        self.assertEqual({'tests': 1}, self.validate('native'))
+
     def test_empty_junit_is_not_a_successful_native_run(self):
         (self.payload / 'native/CTEST_RESULTS.xml').write_text('<testsuite tests="0"/>')
         with self.assertRaises(ValueError):
             self.validate('native')
 
     def test_wrong_profile_and_non_msvc_receipts_are_rejected(self):
-        path = self.payload / 'native/LOCAL_BUILD_RECEIPT.json'
+        path = self.payload / 'native/BUILD_RECEIPT.json'
         original = release.load(path)
         for change in ({'mode': 'Compile'}, {'compiler': '/fixture/clang++'}, {'validation_exit_code': 1}):
             release.write(path, {**original, **change})
@@ -275,6 +397,8 @@ class PayloadTests(unittest.TestCase):
         with patch.object(release, 'head', return_value=SOURCE):
             receipt = release.bundle(ROOT, self.payload, output)
         self.assertFalse(receipt['publication'])
+        self.assertEqual('DRAFT',receipt['publication_status'])
+        self.assertNotIn('classification',receipt)
         self.assertEqual('NOT_RUN', receipt['game_acceptance'])
         self.assertEqual(6, len(list(output.iterdir())))
         for path in output.iterdir():
@@ -282,6 +406,8 @@ class PayloadTests(unittest.TestCase):
                 release.verify_sidecar(path)
         with zipfile.ZipFile(output / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip') as archive:
             self.assertIn('preloader_l.dll', archive.namelist())
+            self.assertIn('DIST_RECEIPT.json', archive.namelist())
+            self.assertNotIn('LOCAL_DIST_RECEIPT.json', archive.namelist())
             self.assertIn('evidence/native/CTEST_RESULTS.xml', archive.namelist())
             self.assertEqual((self.payload / 'production/dist/preloader_l.dll').read_bytes(),
                              archive.read('preloader_l.dll'))
@@ -300,7 +426,7 @@ class DraftTests(unittest.TestCase):
         self.assets = Path(self.temporary.name).resolve()
         self.p = {'ready': True, 'tag': '3.2.6-TALVOR', 'source_sha': SOURCE, 'existing_id': None}
         release.write(self.assets / 'RELEASE_RECEIPT.json', {
-            'tag': '3.2.6-TALVOR', 'source_sha': SOURCE, 'classification': 'DRAFT_NOT_RELEASED',
+            'tag': '3.2.6-TALVOR', 'source_sha': SOURCE, 'publication_status': 'DRAFT',
             'publication': False, 'game_acceptance': 'NOT_RUN'})
         for name in ('Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip', 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'):
             (self.assets / name).write_bytes(b'fixture package')
@@ -317,6 +443,16 @@ class DraftTests(unittest.TestCase):
         self.assertEqual('complete', release.state(result)['status'])
         self.assertTrue(self.github.writes[0]['draft'])
         self.assertNotIn('draft', self.github.writes[-1])
+
+    def test_invalid_publication_status_cannot_prepare_a_draft(self):
+        path=self.assets/'RELEASE_RECEIPT.json'
+        original=release.load(path)
+        for status in (None,'PUBLISHED','COMPLETE'):
+            release.write(path,{**original,'publication_status':status})
+            release.sidecar(path)
+            with self.subTest(status=status),self.assertRaisesRegex(ValueError,'Draft receipt/source mismatch'):
+                self.publish()
+            self.assertEqual([],self.github.writes)
 
     def test_upload_interruption_retains_incomplete_draft_for_retry(self):
         self.github.fail_upload = True

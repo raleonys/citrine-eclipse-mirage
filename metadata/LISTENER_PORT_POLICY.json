@@ -1,6 +1,5 @@
 {
   "schema": "surge.listener-port-policy.v1",
-  "classification": "NOT_RELEASE",
   "selection": "AUTOMATIC_ASCENDING_BOUNDED_RANGE",
   "first_port": 3226,
   "last_port": 3236,

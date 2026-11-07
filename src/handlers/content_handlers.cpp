@@ -20,6 +20,22 @@ public:
     Guard(const Guard&)=delete;
     Guard& operator=(const Guard&)=delete;
 };
+// A filename component must not contain path separators, ADS syntax, device
+// escapes, controls or opaque bytes. The original ImageId and Width remain
+// unchanged in the response; only the provider-bound cache name is constrained.
+bool safe_avatar_owner(std::string_view owner) {
+    if(owner.empty()||owner.size()>128)return false;
+    for(const unsigned char c:owner)
+        if(!((c>='a'&&c<='z')||(c>='A'&&c<='Z')||
+             (c>='0'&&c<='9')||c=='_'||c=='-'))return false;
+    return true;
+}
+bool safe_avatar_width(std::string_view width) {
+    if(width.empty()||width.size()>8)return false;
+    for(const unsigned char c:width)
+        if(c<'0'||c>'9')return false;
+    return true;
+}
 void open(Xml& x,const char* name){x.open_004080(name,false);}
 void close(Xml& x){x.close_virtual_48(false);}
 void attr(Xml& x,const char* key,std::string_view value) {
@@ -174,11 +190,14 @@ bool query_image_0314f0(const RequestTree& request,Xml& x,StateReferences s,Effe
         const auto owner=id->substr(separator+1);
         const bool own=owner==s.user_id_0a3c18;
         if(!own)result=s.default_avatar_0a3ab0;
-        if(s.online_0a3c3b!=0) {
+        // Invalid cache components retain the established fallback response,
+        // but must never reach the path converter or online provider.
+        if(s.online_0a3c3b!=0&&safe_avatar_owner(owner)&&safe_avatar_width(*width)) {
             const auto size=effects.atoi_05ee08(*width)/208;
             const auto filename="_AVATAR_"+owner+"_"+*width;
             const auto cache=effects.path_append_016b50(s.user_directory_0a3a00,effects.filesystem_widen_006d70(filename));
-            if(effects.online_avatar_virtual_28(cache)) {
+            auto* avatar=dynamic_cast<AvatarRequest*>(&effects);
+            if(avatar?avatar->request_online_avatar(cache,owner.c_str(),size):effects.online_avatar_virtual_28(cache)) {
                 result=cache;
                 if(own&&s.saved_avatar_size_0a1130<size&&effects.copy_overwrite_048d20(cache,s.last_avatar_0a3a60)) {
                     s.saved_avatar_size_0a1130=size;
