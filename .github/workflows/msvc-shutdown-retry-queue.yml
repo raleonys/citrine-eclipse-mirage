@@ -38,11 +38,11 @@ jobs:
           $build = 'build/ci-queued-shutdown-${{ matrix.configuration }}'
           cmake --build $build --config '${{ matrix.configuration }}' --target application_shutdown_failure_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/queued-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'Shutdown queue fixture build failed' }
-      - name: Verify two caller requests remain distinct through failed cleanup
+      - name: Verify startup overlap and distinct queued shutdown retries
         run: |
           $build = 'build/ci-queued-shutdown-${{ matrix.configuration }}'
           $junit = Join-Path (Resolve-Path $build) 'queued-junit.xml'
-          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^application_shutdown_failure_contracts$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/queued-ctest.log"
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^application_shutdown_failure_contracts$' --no-tests=error --verbose --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/queued-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'Queued shutdown retry regression failed' }
       - name: Preserve native acceptance evidence
         if: always()
