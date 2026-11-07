@@ -27,7 +27,10 @@ public:
         stream_.seekg(static_cast<std::streamoff>(offset),origin==Seek::end?std::ios::end:std::ios::beg);
     }
     std::uint64_t position_sum_03ba50()override {
-        return static_cast<std::uint64_t>(static_cast<std::streamoff>(stream_.tellg()));
+        const auto position = stream_.tellg();
+        if(position == std::streampos(-1))
+            throw std::ios_base::failure("Native input stream position unavailable");
+        return static_cast<std::uint64_t>(static_cast<std::streamoff>(position));
     }
     std::int32_t peek_043790()override {
         const auto value=stream_.peek();

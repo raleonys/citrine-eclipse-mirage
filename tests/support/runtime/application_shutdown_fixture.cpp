@@ -14,6 +14,7 @@ namespace fixture {
 std::atomic<unsigned> mode{},ready{},attempts{},created{},destroyed{},disables{},releases{};
 std::atomic<unsigned> held_before_loop{},release_before_loop{},fail_next_scan{};
 std::atomic<unsigned> file_recovery_visits{},fail_after_file_recovery{};
+std::atomic<unsigned> requested_file_recovery_visits{};
 // No native patching or thread suspension is permitted in this fixture. Only
 // the engine and unload-scan boundaries are controlled; owners are real.
 int initialize(){return MH_OK;}
@@ -81,7 +82,17 @@ public:
             fixture::held_before_loop=0;
         }
     }
-    void stop(){++fixture::attempts;app.stop();}
+    void stop(){
+        // Count only recovery calls made during this requested stop. Member
+        // destruction performs a separate idempotent Impl::stop afterward.
+        struct Visits {
+            unsigned before=fixture::file_recovery_visits.load(std::memory_order_acquire);
+            ~Visits(){fixture::requested_file_recovery_visits.fetch_add(
+                fixture::file_recovery_visits.load(std::memory_order_acquire)-before,
+                std::memory_order_acq_rel);}
+        } visits;
+        ++fixture::attempts;app.stop();
+    }
 };
 }
 // Exercise the actual entry worker and DllShutdown implementation. The wrapper
@@ -104,5 +115,6 @@ extern "C" __declspec(dllexport) unsigned FixtureValue(unsigned key){
     case 7:return static_cast<unsigned>(preloader_l::native::active_calls());
     case 8:return fixture::held_before_loop.load(std::memory_order_acquire);
     case 9:return fixture::file_recovery_visits.load(std::memory_order_acquire);
+    case 10:return fixture::requested_file_recovery_visits.load(std::memory_order_acquire);
     default:return ~0u;}
 }

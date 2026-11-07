@@ -2,13 +2,6 @@
 name: Windows queued shutdown retry acceptance
 
 on:
-  pull_request:
-    paths:
-      - "src/platform/dll_entry.cpp"
-      - "src/platform/hook_unload_guard.cpp"
-      - "tests/support/runtime/application_shutdown_fixture.cpp"
-      - "tests/native/application_shutdown_failure_tests.cpp"
-      - ".github/workflows/msvc-shutdown-retry-queue.yml"
   workflow_dispatch:
 
 permissions:

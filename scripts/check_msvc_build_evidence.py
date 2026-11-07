@@ -23,8 +23,21 @@ def check(root, build_dir, dll):
                         ('source_manifest_sha256', root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')]:
         if receipt.get(field) != sha(path):
             errors.append('Build identity mismatch: ' + field)
-    compiler = Path(receipt['compiler'])
-    if compiler.name.lower() != 'cl.exe' or sha(compiler) != receipt.get('compiler_sha256'):
+    # The public receipt keeps a basename. Resolve the actual executable from
+    # this build's already hash-bound cache, never from the current PATH.
+    compiler_entries = re.findall(r'^CMAKE_CXX_COMPILER:FILEPATH=(.+)$',
+                                 (build_dir / 'CMakeCache.txt').read_text(encoding='utf-8'), re.M)
+    if len(compiler_entries) != 1:
+        errors.append('Exact build compiler path is missing or ambiguous')
+        return errors
+    compiler = Path(compiler_entries[0].strip())
+    recorded = Path(receipt['compiler'])
+    if not compiler.is_absolute() or compiler.name.lower() != 'cl.exe':
+        errors.append('Exact build compiler path is not an absolute MSVC executable')
+    elif (recorded.name.lower() != compiler.name.lower() or
+          (recorded.is_absolute() and recorded.resolve() != compiler.resolve()) or
+          (not recorded.is_absolute() and len(recorded.parts) != 1) or
+          sha(compiler) != receipt.get('compiler_sha256')):
         errors.append('MSVC compiler tool identity mismatch')
     compiler_records = list((build_dir / 'CMakeFiles').glob('*/CMakeCXXCompiler.cmake'))
     if len(compiler_records) != 1 or not re.search(r'set\(CMAKE_CXX_COMPILER_ID\s+"MSVC"\)', compiler_records[0].read_text()):

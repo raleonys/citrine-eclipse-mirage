@@ -55,21 +55,23 @@ void staged_file_hook_public_shutdown(const char* path){
     require(m.stop(1000)==DLL_SHUTDOWN_CLEANUP_FAILED,
         "first request reports the file-recovery boundary exception");
     require(m.value(1)==1&&m.value(2)==1&&m.value(3)==0&&m.value(6)&&
-        m.value(9)==1&&m.value(4)==0&&m.value(5)==0,
+        m.value(9)==1&&m.value(10)==1&&m.value(4)==0&&m.value(5)==0,
         "file boundary fault retains owner and prevents hook disable and engine release");
     m.mode(1);
     require(m.stop(1000)==DLL_SHUTDOWN_CLEANUP_FAILED,
         "second request reports the real hook-disable failure");
     require(m.value(1)==2&&m.value(2)==1&&m.value(3)==0&&m.value(6)&&
-        m.value(9)==2&&m.value(4)==1&&m.value(5)==0,
+        m.value(9)==2&&m.value(10)==2&&m.value(4)==1&&m.value(5)==0,
         "hook failure retains same owner and engine for an explicit retry");
     m.mode(0);
     require(m.stop(10000)==DLL_SHUTDOWN_OK,"third explicit request retires same Application");
+    // The worker's successful stop is followed by owner.reset(). Impl's
+    // destructor repeats idempotent recovery, outside the requested-stop scope.
     require(m.value(1)==3&&m.value(2)==1&&m.value(3)==1&&!m.value(6)&&
-        m.value(9)==3&&m.value(4)==2&&m.value(5)==1,
+        m.value(9)==4&&m.value(10)==3&&m.value(4)==2&&m.value(5)==1,
         "final attempt retries unfinished hook disable and releases engine exactly once");
     require(m.stop(0)==DLL_SHUTDOWN_OK,"completed public shutdown is idempotent");
-    require(m.value(1)==3&&m.value(9)==3&&m.value(4)==2&&m.value(5)==1,
+    require(m.value(1)==3&&m.value(9)==4&&m.value(10)==3&&m.value(4)==2&&m.value(5)==1,
         "idempotent shutdown never replays completed stages");
     std::cout<<"PASS: staged public shutdown file boundary and hook retries\n";
 }
