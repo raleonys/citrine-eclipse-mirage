@@ -189,6 +189,97 @@ static void live_profile() {
         CHECK(state.object==0);CHECK(state.module==41);CHECK(state.online==0);CHECK(!m.called("auth-status"));CHECK(!m.called("finish"));
     }
 }
+static void cache_delimiter_integrity() {
+    // Original unescaped persistence can store four fields from a provider
+    // name containing ';'. The later offline parser accepts exactly three.
+    for(unsigned field=0;field<3;++field)for(const bool cache:{false,true}) {
+        State state;Mock m;
+        state.use_last=cache;
+        m.written="previous-cache";
+        if(field==0)m.persona="person;extra";
+        if(field==1)m.user="user;extra";
+        if(field==2)m.name="name;extra";
+        const std::string unsafe=m.persona+";"+m.user+";"+m.name;
+        CHECK(o::split_profile_fields_03cf00(unsafe).size()==4);
+        o::worker_035b60(state.refs(),m);
+        CHECK(state.online==1&&state.object==m.created&&state.module==m.loaded);
+        CHECK(state.persona==m.persona&&state.user==m.user&&state.username==m.name);
+        CHECK(!m.called("write")&&m.written=="previous-cache");
+        CHECK(m.calls.back()=="finish");
+    }
+    // Valid punctuation and empty fields continue to use the legacy byte
+    // layout and can round-trip through the existing offline split function.
+    {
+        State state;Mock m;
+        state.use_last=1;
+        m.persona="owner:42";m.user="id_123-ABC";m.name="display name@host";
+        o::worker_035b60(state.refs(),m);
+        CHECK(m.called("write"));
+        CHECK(m.written=="owner:42;id_123-ABC;display name@host");
+        CHECK(o::split_profile_fields_03cf00(m.written)==
+              std::vector<std::string>({"owner:42","id_123-ABC","display name@host"}));
+        CHECK(m.calls.back()=="finish");
+    }
+    {
+        State state;Mock m;
+        state.use_last=1;m.persona="";m.user="";m.name="";
+        o::worker_035b60(state.refs(),m);
+        CHECK(m.called("write")&&m.written==";;");
+        CHECK(o::split_profile_fields_03cf00(m.written)==
+              std::vector<std::string>({"","",""}));
+    }
+}
+// Each getter borrows the same address. Later calls and teardown overwrite it;
+// the fixture never mutates a string while the loader is scanning that string.
+struct SharedProfileBuffer : Mock {
+    std::array<char,1024> scratch{};
+    std::array<const char*,3> returned{};
+    unsigned getters=0, destroyed=0, freed=0, invalidated=0;
+    int missing=-1;
+    const char* borrow(o::Object object,const char* label,const std::string& text,int slot) {
+        CHECK(object==created);event(label);CHECK(text.size()<scratch.size());
+        scratch.fill('~');std::copy(text.begin(),text.end(),scratch.begin());
+        scratch[text.size()]=0;returned[slot]=scratch.data();++getters;
+        return missing==slot?nullptr:scratch.data();
+    }
+    const char* username_virtual_10(o::Object object) override {return borrow(object,"name",name,0);}
+    const char* persona_virtual_18(o::Object object) override {return borrow(object,"persona",persona,1);}
+    const char* user_id_virtual_20(o::Object object) override {return borrow(object,"user",user,2);}
+    void invalidate() {scratch.fill('!');scratch.back()=0;++invalidated;}
+    void destroy_virtual_00(o::Object object) override {Mock::destroy_virtual_00(object);++destroyed;invalidate();}
+    bool free_library(o::Module module) override {const auto result=Mock::free_library(module);++freed;invalidate();return result;}
+};
+static void borrowed_profile_copy_ownership() {
+    for(bool large:{false,true})for(bool cache:{false,true})for(int missing:{-1,1,2}) {
+        State state;SharedProfileBuffer m;state.use_last=cache;m.missing=missing;
+        if(large){m.name="name:"+std::string(257,'n');m.persona="persona:"+std::string(389,'p');m.user="user:"+std::string(521,'u');}
+        const std::array<std::string,3> expected{m.name,m.persona,m.user};
+        // This callback happens after the last profile getter, before saving
+        // the profile. Cached output must therefore use the owned copies too.
+        m.inspect=[&](std::string_view event){if(event=="status-cookie")m.invalidate();};
+        if(missing<0)o::worker_035b60(state.refs(),m);
+        else throws<o::OutOfEvidenceInput>([&]{o::worker_035b60(state.refs(),m);});
+        CHECK(m.getters==static_cast<unsigned>(missing<0?3:missing+1));
+        CHECK(m.returned[0]==m.scratch.data()&&m.returned[1]==m.returned[0]);
+        if(missing!=1)CHECK(m.returned[2]==m.returned[0]);
+        CHECK(state.online==1&&state.object==m.created&&state.module==m.loaded);
+        CHECK(state.username==expected[0]);
+        CHECK(state.persona==(missing==1?"old-persona":expected[1]));
+        CHECK(state.user==(missing<0?expected[2]:"old-user"));
+        CHECK(m.called("finish")==bool(missing<0));
+        CHECK(m.called("write")==bool(missing<0&&cache));
+        if(missing<0&&cache)CHECK(m.written==expected[1]+";"+expected[2]+";"+expected[0]);
+        CHECK(m.invalidated==static_cast<unsigned>(missing<0));
+        const std::array<std::string,3> owned{state.username,state.persona,state.user};
+        o::cleanup_0366f0(state.refs(),m);
+        CHECK(m.destroyed==1&&m.freed==1&&state.object==0&&state.module==0);
+        CHECK(state.username==owned[0]&&state.persona==owned[1]&&state.user==owned[2]);
+        CHECK(m.scratch.front()=='!'&&state.username.front()!='!');
+        const auto invalidations=m.invalidated;o::cleanup_0366f0(state.refs(),m);
+        CHECK(m.destroyed==1&&m.freed==1&&m.invalidated==invalidations);
+    }
+    std::cout<<"PASS: borrowed provider profile copies survive shared-buffer reuse, partial failure and cleanup (synthetic effects)\n";
+}
 static void offline_profile() {
     for(auto status:std::array<std::int32_t,4>{1,2,-1,0x7fffffff})
         for(bool cache:{false,true})for(bool cookie:{false,true})for(bool avatar:{false,true}) {
@@ -392,7 +483,7 @@ static void cookie_release_before_status() {
     }
 }
 int main() {
-    try {entry_branches();live_profile();offline_profile();split_cases();status_and_cleanup();exceptions();
+    try {entry_branches();live_profile();borrowed_profile_copy_ownership();cache_delimiter_integrity();offline_profile();split_cases();status_and_cleanup();exceptions();
 #if !defined(PRELOADER_L_PORTABLE_ONLINE_TESTS)
         composition();
 #endif
