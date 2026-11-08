@@ -16,31 +16,44 @@ std::optional<std::string_view> attribute(const messages::XmlNode& node,std::str
     if(!value)return std::nullopt;
     return value->substr(0,value->find('\0')); // Original attributes are C strings.
 }
-// These Config2 strings become filename/directory components, not paths.
-// Reject lexical escapes and alternate-stream syntax before any filesystem or
+// These Config2 strings are single path components, not paths. Reject
+// separators and alternate-stream syntax before any filesystem or
 // achievement-state side effect. This is not a symlink/reparse-point guarantee.
-void require_safe_achievement_leaf(std::string_view value) {
+void require_one_component(std::string_view value) {
     if(value=="." || value==".." ||
        value.find_first_of("/\\:")!=std::string_view::npos ||
        value.find('\0')!=std::string_view::npos)
         throw std::invalid_argument("Achievement identifier is not one path component");
-    // Win32 strips a trailing dot or space, so "42." and "42 " are the same
-    // directory as "42". Reserved device stems (CON, NUL, COM1, ...) are also
-    // one component even with an extension, and a control byte is not a name.
-    // ContentId already rejects this set; the watcher directory is the raw id.
+}
+// AchievementsSet is embedded in "achievement-<set>.xml". CON, COM1, a
+// trailing dot and a trailing space remain part of that larger filename;
+// they are not themselves the directory Win32 opens.
+// SteamAppId is the watcher directory. Win32 strips a trailing dot or space,
+// and a control byte is not a name. Device-name comparison happens after the
+// file-code-page conversion: the ISO-8859-1 superscript digits U+00B9,
+// U+00B2 and U+00B3 count as COM and LPT digits there.
+void require_watcher_directory_bytes(std::string_view value) {
+    require_one_component(value);
     for(unsigned char c:value) if(c<0x20||c==0x7f)
         throw std::invalid_argument("Achievement identifier is not one path component");
     if(!value.empty()&&(value.back()=='.'||value.back()==' '))
         throw std::invalid_argument("Achievement identifier is not one path component");
-    const auto head=value.substr(0,value.find('.'));
-    std::string upper;
+}
+bool reserved_win32_directory(std::u16string_view value) {
+    if(value.empty())return false;
+    if(value.back()==u'.'||value.back()==u' ')return true;
+    const auto head=value.substr(0,value.find(u'.'));
+    std::u16string upper;
     upper.reserve(head.size());
-    for(unsigned char c:head)
-        upper.push_back(c>='a'&&c<='z'?static_cast<char>(c-'a'+'A'):static_cast<char>(c));
-    if(upper=="CON"||upper=="PRN"||upper=="AUX"||upper=="NUL"||
-       (upper.size()==4&&(upper.starts_with("COM")||upper.starts_with("LPT"))&&
-        upper[3]>='1'&&upper[3]<='9'))
-        throw std::invalid_argument("Achievement identifier is not one path component");
+    for(char16_t c:head)
+        upper.push_back(c>=u'a'&&c<=u'z'?static_cast<char16_t>(c-u'a'+u'A'):c);
+    if(upper==u"CON"||upper==u"PRN"||upper==u"AUX"||upper==u"NUL")return true;
+    if(upper.size()==4&&(upper.starts_with(u"COM")||upper.starts_with(u"LPT"))) {
+        const auto digit=upper[3];
+        if((digit>=u'1'&&digit<=u'9')||digit==u'\u00B9'||digit==u'\u00B2'||digit==u'\u00B3')
+            return true;
+    }
+    return false;
 }
 }
 bool HostCrtNumbers::is_space(unsigned char c) {return std::isspace(c)!=0;}
@@ -102,10 +115,19 @@ configuration::Path append(configuration::Path base,const configuration::Path& c
 }
 }
 void Storage::update_01eb00(configuration::State& state) {
-    // Validate both input components up front: rejecting either must not read
-    // an XML file, update a retained path, or write a watcher INI elsewhere.
-    if(!state.achievements_set.empty())require_safe_achievement_leaf(state.achievements_set);
-    if(!state.steam_app_id.empty())require_safe_achievement_leaf(state.steam_app_id);
+    // Validate both inputs up front: rejecting either must not read an XML
+    // file, update a retained path, or write a watcher INI elsewhere.
+    // The app id is converted here, before import, so a code-page device
+    // digit is visible. That directory component is reused below.
+    if(!state.achievements_set.empty())require_one_component(state.achievements_set);
+    configuration::Path app_directory;
+    const bool have_app=!state.steam_app_id.empty();
+    if(have_app) {
+        require_watcher_directory_bytes(state.steam_app_id);
+        app_directory=effects_.filesystem_widen_006d70(state.steam_app_id);
+        if(reserved_win32_directory(app_directory))
+            throw std::invalid_argument("Achievement identifier is not one path component");
+    }
     if(!state.achievements_set.empty()) {
         const auto filename="achievement-"+state.achievements_set+".xml";
         const auto component=effects_.filesystem_widen_006d70(filename);
@@ -132,13 +154,13 @@ void Storage::update_01eb00(configuration::State& state) {
             }
         }
     }
-    if(!state.steam_app_id.empty()) {
-        // Preserve the observed conversion order: filename, app id, directory.
+    if(have_app) {
+        // Filename and watcher directory keep their conversion order. The app
+        // id was already converted and accepted above.
         const auto filename=effects_.filesystem_widen_006d70("achievements.ini");
-        const auto app=effects_.filesystem_widen_006d70(state.steam_app_id);
         const auto watcher=effects_.filesystem_widen_006d70("achievement_watcher");
         auto path=append(state.user_directory,watcher);
-        path=append(std::move(path),app);
+        path=append(std::move(path),app_directory);
         paths_.ini_path=append(std::move(path),filename);
         for(auto& [id,achievement]:state.achievements) {
             (void)id;

@@ -962,8 +962,8 @@
       "sha256": "b53d484ae91abc34f35ebaaf8e3df780939e16319b0ab84bded024757e6cc7c1"
     },
     "src/runtime/achievement_storage.cpp": {
-      "bytes": 8190,
-      "sha256": "26797dc13bc4f26a45a7a1971fc61c4367c01a7351a3f0203bd2268996ef8eff"
+      "bytes": 9049,
+      "sha256": "c59c3ce548a7feb47b17f9ae58fedd8ba89c811229d6b85ada4da1500ff9a11d"
     },
     "src/runtime/achievement_utc.cpp": {
       "bytes": 1711,
@@ -1566,12 +1566,12 @@
       "sha256": "c26da71f81b5f844d7339e1ef17cdabdf32c4f03abaeadd983dee9594a23cbbf"
     },
     "tests/unit/achievement_storage/storage_fixture.hpp": {
-      "bytes": 4189,
-      "sha256": "c50fc5d95e86b2ff48ece54ee3149d25295d6f99b13b76097e73eb1616a976c6"
+      "bytes": 4259,
+      "sha256": "a9608f6f05ba3fdb24c7082bd30bb0d66f7b423a079f6344d086e66ce6dd6624"
     },
     "tests/unit/achievement_storage/storage_tests.cpp": {
-      "bytes": 18805,
-      "sha256": "9f7abc5b887bc13457d157239470d8bbbd5e74d08463cfc2ca893a1d48119166"
+      "bytes": 21780,
+      "sha256": "d867ae2368234080027224e2c172a41fe73ad93cc044305e115dc7e1e7646b6c"
     },
     "tests/unit/achievement_writer/writer_tests.cpp": {
       "bytes": 9575,

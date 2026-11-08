@@ -142,15 +142,13 @@ void bounded_numeric_overflow() {
             "ordinary suffixed decimal and prefixed hexadecimal remain unchanged");
 }
 void achievement_path_components() {
-    // A11-09: Config2 sets are filenames and Steam app IDs are a single
-    // directory leaf. No original or game files are opened by these fixtures.
-    const std::vector<std::string> unsafe{
+    // A set name is only the middle of achievement-<set>.xml. The Steam app
+    // id is the watcher directory. No original or game files are opened.
+    const std::vector<std::string> structural{
         ".", "..", "../outside", "..\\..\\outside", "nested/../outside",
-        "C:stream", "C:\\victim", "\\\\host\\share", std::string("42\0outside",10),
-        "CON", "con", "Prn", "AUX", "NUL", "COM1", "com9", "LPT1", "lpt9",
-        "CON.txt", "com1.txt", "42.", "42 ", "42.\n"
+        "C:stream", "C:\\victim", "\\\\host\\share", std::string("42\0outside",10)
     };
-    for(const auto& value:unsafe)for(const bool steam:{false,true}) {
+    for(const auto& value:structural)for(const bool steam:{false,true}) {
         Fixture f;
         f.paths.xml_path=u"kept.xml";f.paths.ini_path=u"kept.ini";
         f.state.achievements["retained"]=record();
@@ -165,7 +163,63 @@ void achievement_path_components() {
                 f.state.achievements.at("retained").field70==77,
             "rejected identifier has zero path, IO, status or achievement side effects");
     }
-    for(const char* ok:{"console","com10","lpt","NULLED","legitimate.v1"}) {
+    const std::vector<std::string> directory_bytes{
+        "42.", "42 ", "42.\n"
+    };
+    for(const auto& value:directory_bytes) {
+        Fixture f;
+        f.paths.xml_path=u"kept.xml";f.paths.ini_path=u"kept.ini";
+        f.state.achievements["retained"]=record();
+        f.state.steam_app_id=value;
+        f.state.achievements_set="legitimate";
+        f.files.input[join(u"USER",wide("achievement-legitimate.xml"))]=
+            R"(<root><record Id="must-not-load" Count="1"/></root>)";
+        rejects<std::invalid_argument>([&]{f.storage.update_01eb00(f.state);},
+            "trailing dot, space or control is rejected before conversion");
+        require(f.paths.xml_path==u"kept.xml"&&f.effects.widened.empty()&&
+                f.files.reads.empty()&&!f.state.achievements.contains("must-not-load"),
+            "byte-level directory rejection performs no conversion or import");
+    }
+    const std::vector<std::string> devices{
+        "CON", "con", "Prn", "AUX", "NUL", "COM1", "com9", "LPT1", "lpt9",
+        "CON.txt", "com1.txt", "NUL.tar.gz",
+        std::string("COM")+'\xB9', std::string("lpt")+'\xB2'+".txt",
+        std::string("CoM")+'\xB3'
+    };
+    for(const auto& value:devices) {
+        Fixture f;
+        f.paths.xml_path=u"kept.xml";f.paths.ini_path=u"kept.ini";
+        f.state.achievements["retained"]=record();
+        f.state.steam_app_id=value;
+        f.state.achievements_set="legitimate";
+        f.files.input[join(u"USER",wide("achievement-legitimate.xml"))]=
+            R"(<root><record Id="must-not-load" Count="1"/></root>)";
+        rejects<std::invalid_argument>([&]{f.storage.update_01eb00(f.state);},
+            "Windows device directory is rejected after code-page conversion");
+        require(f.paths.xml_path==u"kept.xml"&&f.paths.ini_path==u"kept.ini"&&
+                f.effects.widened==std::vector<std::string>{value}&&
+                f.files.reads.empty()&&f.effects.status_paths.empty()&&
+                !f.state.achievements.contains("must-not-load")&&
+                f.state.achievements.at("retained").field70==77,
+            "device rejection stops before XML import and the status query");
+    }
+    for(const char* set:{"CON","COM1","CON.txt","42.","42 "}) {
+        Fixture f;
+        f.state.achievements_set=set;
+        const auto filename="achievement-"+std::string(set)+".xml";
+        const auto xml=join(u"USER",wide(filename));
+        f.files.input[xml]=R"(<root><record Id="loaded" Count="4"/></root>)";
+        f.storage.update_01eb00(f.state);
+        require(f.paths.xml_path==xml&&f.files.reads==std::vector<Path>{xml}&&
+                f.state.achievements.at("loaded").field04==4&&
+                f.effects.status_paths.empty(),
+            "a set token embedded in achievement-<set>.xml is not a device directory");
+    }
+    const std::vector<std::string> ordinary{
+        "console","com10","lpt","NULLED","legitimate.v1","COM0",
+        std::string("COM")+'\xB0'
+    };
+    for(const auto& ok:ordinary) {
         Fixture kept;kept.state.steam_app_id=ok;
         kept.storage.update_01eb00(kept.state);
         require(kept.paths.ini_path==join(join(join(u"USER",u"achievement_watcher"),wide(ok)),u"achievements.ini"),
@@ -180,6 +234,7 @@ void achievement_path_components() {
     rejects<std::invalid_argument>([&]{mixed.storage.update_01eb00(mixed.state);},
         "invalid watcher app id is rejected before otherwise-valid XML import");
     require(mixed.files.reads.empty()&&mixed.paths.xml_path.empty()&&
+            mixed.effects.widened.empty()&&
             !mixed.state.achievements.contains("must-not-load"),
         "both identifier guards run before document and state publication");
 
@@ -192,16 +247,17 @@ void achievement_path_components() {
     valid.storage.update_01eb00(valid.state);
     require(valid.paths.xml_path==xml&&valid.paths.ini_path==ini&&
             valid.files.reads==std::vector<Path>{xml}&&
-            valid.effects.widened==std::vector<std::string>{"achievement-legitimate.v1.xml",
-                                                           "achievements.ini","42-test","achievement_watcher"}&&
+            valid.effects.widened==std::vector<std::string>{"42-test",
+                                                           "achievement-legitimate.v1.xml",
+                                                           "achievements.ini","achievement_watcher"}&&
             valid.effects.status_paths==std::vector<Path>{ini},
-        "ordinary identifiers retain exact filename, conversion and status order");
+        "ordinary identifiers convert the app id before the filename and still query status once");
 }
 void steam_and_failures() {
     Fixture f;f.state.steam_app_id="42";f.state.achievements["z"]=record();f.state.achievements["a"]=record();f.state.achievements["a"].timestamp="negative";
     f.storage.update_01eb00(f.state);
     const auto ini=join(join(join(u"USER",u"achievement_watcher"),u"42"),u"achievements.ini");
-    require(f.paths.ini_path==ini && f.effects.widened==std::vector<std::string>{"achievements.ini","42","achievement_watcher"},"INI path and exact conversion order");
+    require(f.paths.ini_path==ini && f.effects.widened==std::vector<std::string>{"42","achievements.ini","achievement_watcher"},"app id is converted before the INI filename so a device digit is rejected before import");
     require(f.effects.epochs==std::vector<std::string>{"negative","old-grant"} && f.state.achievements.at("a").field70==0xffffffffffffffffULL,"epoch traversal lexical and low64 signed result");
     require(f.files.writes.empty() && f.effects.directories.empty(),"existing regular file kind2 skips writer");
     for(const auto kind:{-1,0,1,2,3,9}){

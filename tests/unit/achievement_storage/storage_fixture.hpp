@@ -17,7 +17,11 @@ unsigned checks=0;
 void require(bool ok,const char* label){++checks;if(!ok)throw std::runtime_error(label);}
 template<class E,class F>void rejects(F f,const char* label){bool hit=false;try{f();}catch(const E&){hit=true;}require(hit,label);}
 using Path=configuration::Path;
-Path wide(std::string_view s){return {s.begin(),s.end()};}
+Path wide(std::string_view s){
+    Path out;out.reserve(s.size());
+    for(unsigned char c:s)out.push_back(c);
+    return out;
+}
 Path join(const Path& a,const Path& b){return path::join_016b00(a,b);}
 configuration::Achievement record(std::string name={}){return {5,9,8,"old-grant",std::move(name),"steam-id",77};}
 struct Input final:file::Input {
