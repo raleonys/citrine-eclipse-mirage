@@ -440,6 +440,47 @@ class PayloadTests(unittest.TestCase):
                              + '  citrine_eclipse_mirage.dll',
                              archive.read('citrine_eclipse_mirage.dll.sha256').decode('utf-8').strip())
 
+    def test_invalid_runtime_member_set_does_not_claim_bundle_output(self):
+        # Limit this fixture to output preflight; the successful real ZIP path
+        # and source manifest are covered by the regular bundle test above.
+        source_name, _ = release.asset_names(self.p['tag'])
+        source = self.payload / source_name
+        source.write_bytes(b'synthetic source package fixture')
+        release.sidecar(source)
+        extra = self.payload / 'production/dist/unexpected.bin'
+        extra.write_bytes(b'extra runtime payload')
+        output = self.base / 'assets'
+        with patch.object(release, 'head', return_value=SOURCE), \
+                patch.object(release, 'check', return_value=[]):
+            with self.assertRaisesRegex(ValueError, 'Unexpected runtime payload'):
+                release.bundle(ROOT, self.payload, output)
+            self.assertFalse(output.exists())
+            extra.unlink()
+            receipt = release.bundle(ROOT, self.payload, output)
+        self.assertFalse(receipt['publication'])
+        self.assertTrue((output / release.asset_names(self.p['tag'])[1]).is_file())
+
+    def test_symlinked_runtime_input_does_not_claim_bundle_output(self):
+        source_name, _ = release.asset_names(self.p['tag'])
+        source = self.payload / source_name
+        source.write_bytes(b'synthetic source package fixture')
+        release.sidecar(source)
+        original = self.payload / 'production/dist/citrine_eclipse_mirage.dll'
+        target = self.base / 'borrowed-dll'
+        target.write_bytes(original.read_bytes())
+        original.unlink()
+        try:
+            original.symlink_to(target)
+        except (OSError, NotImplementedError):
+            self.skipTest('Host does not permit symlinks')
+        output = self.base / 'assets'
+        with patch.object(release, 'head', return_value=SOURCE), \
+                patch.object(release, 'check', return_value=[]), \
+                self.assertRaisesRegex(ValueError, 'cannot contain symlinks'):
+            release.bundle(ROOT, self.payload, output)
+        self.assertFalse(output.exists())
+        self.assertEqual(b'MZ fixture; not real MSVC or game acceptance', target.read_bytes())
+
     def test_failed_portable_run_stops_before_creating_assets(self):
         self.xml(self.payload / 'PORTABLE_CTEST.xml', '<failure/>')
         with patch.object(release, 'head', return_value=SOURCE), self.assertRaises(ValueError):
