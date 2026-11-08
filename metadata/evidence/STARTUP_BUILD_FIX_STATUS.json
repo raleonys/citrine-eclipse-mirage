@@ -15,11 +15,14 @@
   "game_failure_root_cause": "NOT_CONFIRMED_WITH_ACTUAL_GAME",
   "input_log": {
     "path": "metadata/STARTUP_BUILD_FIX_USER_NATIVE_INPUT.log",
-    "bytes": 79850,
-    "sha256": "02ab1157edb38dc1f9c4afbcaa72771d691f4230fdde8ccfb004c66b5bd45dbd",
+    "bytes": 79826,
+    "sha256": "651e12004d8a56c3e2209b13b2d1dfddb009abd11d4dc1ce91737c73154c162e",
     "reported_checkout_basename": "yellowfield-production-import-fix-source",
     "observed_error": "C2589 fake_win32.cpp159/160; native build exits2; no CTest/game execution in this log",
-    "exact_user_source_zip_identity": "NOT_VERIFIED_FROM_FOLDER_NAME"
+    "exact_user_source_zip_identity": "NOT_VERIFIED_FROM_FOLDER_NAME",
+    "original_evidence_sha256": "02ab1157edb38dc1f9c4afbcaa72771d691f4230fdde8ccfb004c66b5bd45dbd",
+    "evidence_copy": "OWNER_APPROVED_PRIVACY_REDACTION; execution result is historical and unchanged",
+    "original_evidence_bytes": 79850
   },
   "verified_defects": {
     "registry_startup_wait": {

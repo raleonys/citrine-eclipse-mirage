@@ -48,15 +48,18 @@ for every transferred file, applied path/namespace transformations, and
 selected/excluded modules. This is not proof of native behavioral equivalence
 to the original or an independent owner signature.
 
-## Actual DLL and outstanding product integration
+## Production DLL and development interface
 
 `preloader_l` is a SHARED target: all selected application objects are
-linked into the actual DLL. `preloader_l_source_host` links against this
-DLL rather than a static archive. This is a verifiable build difference
-from the prior static-collection output.
+linked into the production DLL. `preloader_l_source_host` links against the
+separate `preloader_l_source_api` development DLL, which also retains the
+reference models. It does not expand the shipping three-export interface.
+See [BUILD_PARTITION.md](BUILD_PARTITION.md) and
+[PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md) for the current target boundaries.
 
-Development C++ exports of the compiled DLL do not form the final
-game/Consumer public ABI. The product cannot be claimed to run before
-automatic startup, concrete application owner/provider bindings, SURGE ABI,
-and actual native hook/teardown acceptance are complete. Missing
-functionality is not replaced with implementations returning false success.
+Development C++ exports do not form the production game/Consumer ABI.
+Automatic startup, the Application owner, provider adapters and the fixed
+SURGE interface are bound as described in [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md).
+Native hook/teardown and real Consumer acceptance remain separate evidence
+classes tied to the tested commit and DLL; these bindings alone do not prove
+arbitrary host compatibility.

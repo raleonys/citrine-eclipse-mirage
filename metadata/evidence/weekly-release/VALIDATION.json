@@ -13,8 +13,8 @@
   "readme_ci_paragraph": "OWNER_PREVIEW_APPROVED",
   "schedule": {
     "cron_utc": "30 13 * * 5",
-    "owner_timezone": "Europe/Istanbul",
-    "owner_local_time": "Friday 16:30"
+    "timezone": "UTC",
+    "time_utc": "Friday 13:30"
   },
   "release_series_storage": "EXTERNAL_DISPATCH_INPUT_AND_DRAFT_TAGS_ONLY",
   "application_source_changes": 0,
