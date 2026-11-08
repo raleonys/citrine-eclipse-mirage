@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "../../src/runtime/application_internal.hpp"
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <filesystem>
@@ -16,9 +17,70 @@ int WINAPI show(HWND,LPCWSTR text,LPCWSTR caption,UINT flags){
     if(flags!=MB_OK)std::terminate();body=text;title=caption;++calls;return IDOK;
 }
 }
+namespace environment_path_fixture {
+enum class Mode {value,empty,missing,grow_then_missing};
+Mode mode=Mode::value;
+std::wstring expected,name;
+std::vector<DWORD> capacities;
+void require(bool value,const char* message) {
+    if(!value)throw std::runtime_error(message);
+}
+void select(std::wstring variable,Mode next,std::wstring value={}) {
+    name=std::move(variable);mode=next;expected=std::move(value);capacities.clear();
+}
+DWORD WINAPI read(LPCWSTR variable,LPWSTR output,DWORD capacity) {
+    require(variable&&std::wstring_view(variable)==name,"environment path selects the exact variable name");
+    require(output!=nullptr,"environment path owns its native output buffer");
+    capacities.push_back(capacity);
+    require(capacities.size()<=4,"environment path makes bounded progress for supplied results");
+    require(capacity==260u*capacities.size(),"environment path grows in 260 UTF16 code unit steps");
+    if(mode==Mode::missing||(mode==Mode::grow_then_missing&&capacities.size()==2)) {
+        SetLastError(ERROR_ENVVAR_NOT_FOUND);return 0;
+    }
+    if(mode==Mode::empty) {SetLastError(ERROR_SUCCESS);return 0;}
+    if(mode==Mode::grow_then_missing||expected.size()>=capacity) {
+        std::fill_n(output,capacity,L'?');
+        // An insufficient environment buffer reports required size INCLUDING NUL.
+        SetLastError(ERROR_INSUFFICIENT_BUFFER);
+        return mode==Mode::grow_then_missing?781u:static_cast<DWORD>(expected.size()+1);
+    }
+    std::fill_n(output,capacity,L'!');
+    std::copy(expected.begin(),expected.end(),output);output[expected.size()]=L'\0';
+    SetLastError(ERROR_ACCESS_DENIED); // Success does not require cleared last error.
+    return static_cast<DWORD>(expected.size()); // Successful count EXCLUDES NUL.
+}
+void check(citrine_eclipse_mirage::application::detail::Environment& env,citrine_eclipse_mirage::application::Options& options) {
+    using citrine_eclipse_mirage::configuration::Path;
+    options.program_data=u"D:\\configured\\\u00e9-data";
+    select(L"ProgramData",Mode::missing);
+    require(env.program_data_03c920()==options.program_data&&capacities.empty(),
+        "configured ProgramData path bypasses the native environment query");
+    options.program_data.clear();
+    for(const auto* variable:{L"ProgramData",L"LocalAppData"}) {
+        const auto path=[&]{return std::wstring_view(variable)==L"ProgramData"?env.program_data_03c920():env.local_app_data_03c6f0();};
+        for(const auto length:{259u,260u,779u,780u}) {
+            const std::wstring value(length,L'\u00e9');select(variable,Mode::value,value);
+            require(path()==Path(value.begin(),value.end()),"environment path returns exactly the counted UTF16 value");
+            const auto calls=length/260u+1;
+            require(capacities.size()==calls,"capacity minus one succeeds; equal length requires another buffer");
+        }
+        for(const auto selected:{Mode::empty,Mode::missing,Mode::grow_then_missing}) {
+            select(variable,selected);
+            require(path().empty(),"zero native count yields empty under the existing missing/empty-variable policy");
+            require(capacities.size()==(selected==Mode::grow_then_missing?2u:1u),"zero native count stops lookup immediately");
+            select(variable,Mode::value,L"C:\\retry");
+            require(path()==u"C:\\retry"&&capacities==std::vector<DWORD>{260},"retry starts with fresh storage after empty or missing result");
+        }
+    }
+    std::cout<<"PASS: actual Environment environment-path counted growth, zero result, retry and override contracts\n";
+}
+}
+
+#define GetEnvironmentVariableW environment_path_fixture::read
 #define MessageBoxW dialog::show
 #include "../../src/runtime/application_environment.cpp"
 #undef MessageBoxW
+#undef GetEnvironmentVariableW
 
 namespace logging_fixture {
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
@@ -165,6 +227,7 @@ int main()try{
     file::NativeFactory files;xml_reader_bridge::Backend xml;achievement_storage::Paths paths;
     achievement_runtime::HostClock clock;achievement_runtime::HostFormatter formatter;
     application::detail::Environment env{state,options,files,xml,paths,clock,formatter};
+    environment_path_fixture::check(env,options);
     env.unknown_entitlement_field("QueryEntitlements unknown attr: unexpected|value");
     if(dialog::calls!=0)
         throw std::runtime_error("unknown entitlement input must not invoke a blocking dialog");

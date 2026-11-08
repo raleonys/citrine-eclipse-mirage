@@ -8,6 +8,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 - Rename active first-party namespaces, include paths, build targets, tools and DLL artifacts to citrine_eclipse_mirage. Retain the CryptQuery compatibility filename and public export ordinals. Replace reference VERSIONINFO branding with Citrine Eclipse Mirage and Copyright 2026 SURGE; derive matching numeric/string file and product versions from the selected release version. Bind weekly build receipts to that version without changing published releases or retained evidence.
 
+- Test the actual Environment ProgramData and LocalAppData adapters with required-size counts, repeated 260-code-unit growth, exact UTF-16 lengths, empty/missing results, retry and configured ProgramData bypass. Production behavior is unchanged.
+
 - Add a live Latest release badge to the README linking to the latest published GitHub release. Keep the version dynamic so future releases require no README edit.
 
 - Strengthen server startup failure tests with exact error values, categories, accepted operation labels and pre-publication stop order. Cover an IO-context run error after readiness without normal destruction; adapt Archive 12 test principles without changing product diagnostics, runtime policy or backend ownership.
