@@ -40,6 +40,27 @@ class ProjectVersionTests(unittest.TestCase):
             self.assertEqual('3.2.7', policy['versioninfo']['strings']['ProductVersion'])
             self.assertEqual([], validate_versioninfo_root(resource_node(policy), policy))
 
+
+    def test_versioninfo_uses_one_consistent_selected_version(self):
+        policy = {
+            'version_source': 'metadata/BRANDING_AND_IDENTITY.json',
+            'required': {'versioninfo': {'fixed': {}, 'strings': {}}},
+        }
+        original = copy.deepcopy(policy)
+        # A mutable environment or metadata file must not mix versions within
+        # one VERSIONINFO policy. Later selections are a counterfactual.
+        with patch.object(version, 'selected_version',
+                          side_effect=['3.2.7', '3.2.8', '3.3.0']) as select:
+            expanded = version.resolve_policy(policy, ROOT)
+        select.assert_called_once_with(ROOT)
+        fixed = expanded['required']['versioninfo']['fixed']
+        strings = expanded['required']['versioninfo']['strings']
+        for kind in ('File', 'Product'):
+            self.assertEqual('0x00030002', fixed['dw' + kind + 'VersionMS'])
+            self.assertEqual('0x00070000', fixed['dw' + kind + 'VersionLS'])
+            self.assertEqual('3.2.7', strings[kind + 'Version'])
+        self.assertEqual(original, policy)
+
     def test_invalid_versions_fail_closed(self):
         for value in ('', '3.2', '3.2.6.0', '03.2.6', '3.2.6-TALVOR', '-1.2.3',
                       '65536.0.0', '3.2.6\n', '3.2.6;anything', '3.2.x'):
