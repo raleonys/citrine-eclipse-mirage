@@ -24,6 +24,23 @@ void require_safe_achievement_leaf(std::string_view value) {
        value.find_first_of("/\\:")!=std::string_view::npos ||
        value.find('\0')!=std::string_view::npos)
         throw std::invalid_argument("Achievement identifier is not one path component");
+    // Win32 strips a trailing dot or space, so "42." and "42 " are the same
+    // directory as "42". Reserved device stems (CON, NUL, COM1, ...) are also
+    // one component even with an extension, and a control byte is not a name.
+    // ContentId already rejects this set; the watcher directory is the raw id.
+    for(unsigned char c:value) if(c<0x20||c==0x7f)
+        throw std::invalid_argument("Achievement identifier is not one path component");
+    if(!value.empty()&&(value.back()=='.'||value.back()==' '))
+        throw std::invalid_argument("Achievement identifier is not one path component");
+    const auto head=value.substr(0,value.find('.'));
+    std::string upper;
+    upper.reserve(head.size());
+    for(unsigned char c:head)
+        upper.push_back(c>='a'&&c<='z'?static_cast<char>(c-'a'+'A'):static_cast<char>(c));
+    if(upper=="CON"||upper=="PRN"||upper=="AUX"||upper=="NUL"||
+       (upper.size()==4&&(upper.starts_with("COM")||upper.starts_with("LPT"))&&
+        upper[3]>='1'&&upper[3]<='9'))
+        throw std::invalid_argument("Achievement identifier is not one path component");
 }
 }
 bool HostCrtNumbers::is_space(unsigned char c) {return std::isspace(c)!=0;}

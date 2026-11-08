@@ -146,7 +146,9 @@ void achievement_path_components() {
     // directory leaf. No original or game files are opened by these fixtures.
     const std::vector<std::string> unsafe{
         ".", "..", "../outside", "..\\..\\outside", "nested/../outside",
-        "C:stream", "C:\\victim", "\\\\host\\share", std::string("42\0outside",10)
+        "C:stream", "C:\\victim", "\\\\host\\share", std::string("42\0outside",10),
+        "CON", "con", "Prn", "AUX", "NUL", "COM1", "com9", "LPT1", "lpt9",
+        "CON.txt", "com1.txt", "42.", "42 ", "42.\n"
     };
     for(const auto& value:unsafe)for(const bool steam:{false,true}) {
         Fixture f;
@@ -162,6 +164,12 @@ void achievement_path_components() {
                 f.effects.directories.empty()&&f.effects.epochs.empty()&&
                 f.state.achievements.at("retained").field70==77,
             "rejected identifier has zero path, IO, status or achievement side effects");
+    }
+    for(const char* ok:{"console","com10","lpt","NULLED","legitimate.v1"}) {
+        Fixture kept;kept.state.steam_app_id=ok;
+        kept.storage.update_01eb00(kept.state);
+        require(kept.paths.ini_path==join(join(join(u"USER",u"achievement_watcher"),wide(ok)),u"achievements.ini"),
+            "names that only resemble a device stay a single watcher directory");
     }
     // A bad second component must not partially import a good XML set.
     Fixture mixed;
