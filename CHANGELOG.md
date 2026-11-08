@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Pin retained socket dispatch continuation when the message core consumes a previously nonempty request. Cover exact empty/binary responses, inline and heap capacities, live request allocations and core-released input without changing runtime behavior or production session policy.
+
 - Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Put exactly preloader_l.dll, its DLL SHA-256 sidecar and the project LICENSE at the ZIP root. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts and all other files out of the runtime ZIP, preserve native/Golden gates, and leave published releases unchanged.
 
 - Add source-included native Application rollback regressions for controlled first/second worker-launch exceptions, retained provider-thread draining and normal startup. Keep production workers exactly `std::thread` through a private fixture seam; preserve listener cleanup, public options/exports and compiler CRT policy.
