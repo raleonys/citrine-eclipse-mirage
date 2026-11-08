@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Add source-included native Application rollback regressions for controlled first/second worker-launch exceptions, retained provider-thread draining and normal startup. Keep production workers exactly `std::thread` through a private fixture seam; preserve listener cleanup, public options/exports and compiler CRT policy.
+
 - Cover startup command-line decoding failure on a later argument after an earlier argument succeeds; verify exactly one argv allocation release and no partially published language/console flags or environment override.
 
 - Cover the actual Windows UTC HostClock adapter against direct `_gmtime64_s` at signed negative, Unix epoch, leap day, year 9999, first year 10000 and time64 maximum boundaries; compare success and all nine returned fields.

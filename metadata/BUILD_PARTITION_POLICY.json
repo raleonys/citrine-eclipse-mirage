@@ -288,6 +288,7 @@
     "achievement_writer_contracts",
     "application_runtime_contracts",
     "application_shutdown_failure_contracts",
+    "application_worker_launch_contracts",
     "atomic_persistence_contracts",
     "atomic_staging_contracts",
     "calendar_contracts",
