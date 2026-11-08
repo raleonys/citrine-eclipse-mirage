@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Extend the actual Windows Asio timer-fault fixture to include receive-to-send deadline transitions. Inject timer cancel/wait failures as the real ordered Session begins a response on the live IO executor, and require caller containment, peer close, zero orphan writes and discarded output ownership. No production behavior or socket/vendor policy is changed; native test execution is still required.
+
 - Cover fail-closed unload stack observations and safe retry after query, protection, commitment, region-progress and scan-budget refusals. A protected-page probe verifies that an oversized region is rejected before stack reads; production unload policy is unchanged.
 
 - Exercise the actual Environment UTF-8 wrapper and native conversion adapter with controlled query/fill failures, counted NUL data, short-fill length retention and retry. Verify registry flag/key partial state and filesystem-codepage isolation; leave the existing real-API native checks unarmed. Production behavior is unchanged.
