@@ -169,6 +169,9 @@ class TransportTests(unittest.TestCase):
 
 class PayloadTests(unittest.TestCase):
     def setUp(self):
+        version_selection = patch.dict('os.environ', {'CITRINE_ECLIPSE_MIRAGE_VERSION': '3.2.6'})
+        version_selection.start()
+        self.addCleanup(version_selection.stop)
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.base = Path(self.temporary.name).resolve()
@@ -198,7 +201,7 @@ class PayloadTests(unittest.TestCase):
                    'configuration': 'Release', 'build_succeeded': True,
                    'validation_result': 'PASS_SELECTED_PROFILE', 'validation_exit_code': 0,
                    'source_manifest_sha256': self.manifest, 'dll_sha256': 'c' * 64,
-                   'compiler': 'C:/fixture/cl.exe'}
+                   'compiler': 'C:/fixture/cl.exe', 'project_version': '3.2.6'}
         for file in ('BUILD_TOOLCHAIN_PROVENANCE.log', 'PUBLIC_DLL_ABI_CHECK.json', 'DLL_RESOURCE_CHECK.json'):
             (folder / file).write_text('fixture evidence')
         if name == 'native':
@@ -206,7 +209,7 @@ class PayloadTests(unittest.TestCase):
         else:
             dist = folder / 'dist'
             dist.mkdir()
-            dll = dist / 'preloader_l.dll'
+            dll = dist / 'citrine_eclipse_mirage.dll'
             dll.write_bytes(b'MZ fixture; not real MSVC or game acceptance')
             release.sidecar(dll)
             digest = release.sha(dll)
@@ -221,6 +224,22 @@ class PayloadTests(unittest.TestCase):
 
     def validate(self, name):
         return release.validate_profile(self.payload / name, name, self.manifest, SOURCE)
+
+    def test_stale_or_missing_release_version_is_rejected(self):
+        path = self.payload / 'native/BUILD_RECEIPT.json'
+        receipt = release.load(path)
+        for value in (None, '3.2.5', '3.2.7', '3.2.6-TALVOR'):
+            release.write(path, {**receipt, 'project_version': value})
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'version'):
+                self.validate('native')
+
+    def test_next_release_requires_next_version_in_both_builds(self):
+        for name in ('native', 'production'):
+            with self.assertRaisesRegex(ValueError, 'version'):
+                release.validate_profile(self.payload / name, name, self.manifest, SOURCE, '3.2.7')
+            path = self.payload / name / 'BUILD_RECEIPT.json'
+            release.write(path, {**release.load(path), 'project_version': '3.2.7'})
+            release.validate_profile(self.payload / name, name, self.manifest, SOURCE, '3.2.7')
 
     def test_capture_uses_current_receipts_and_only_declared_dist_members(self):
         root=self.base/'capture-source'
@@ -240,7 +259,7 @@ class PayloadTests(unittest.TestCase):
         output=self.base/'captured'
         with patch.object(release,'head',return_value=SOURCE):
             release.capture(root,'production',build,output,SOURCE)
-        self.assertEqual({'preloader_l.dll','preloader_l.dll.sha256','DIST_RECEIPT.json'},
+        self.assertEqual({'citrine_eclipse_mirage.dll','citrine_eclipse_mirage.dll.sha256','DIST_RECEIPT.json'},
                          {path.name for path in (output/'production/dist').iterdir()})
         self.assertEqual(b'previous receipt retained outside the new package',historical.read_bytes())
         self.assertEqual(self.validate('production'),
@@ -379,7 +398,7 @@ class PayloadTests(unittest.TestCase):
                 self.validate('native')
 
     def test_changed_dll_is_rejected_even_if_it_has_a_new_sidecar(self):
-        dll = self.payload / 'production/dist/preloader_l.dll'
+        dll = self.payload / 'production/dist/citrine_eclipse_mirage.dll'
         dll.write_bytes(b'changed DLL')
         release.sidecar(dll)
         with self.assertRaises(ValueError):
@@ -412,14 +431,14 @@ class PayloadTests(unittest.TestCase):
         self.assertTrue((self.payload / 'native/CTEST_RESULTS.xml').is_file())
         self.assertTrue((self.payload / 'production/GOLDEN_REPORT.json').is_file())
         with zipfile.ZipFile(output / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip') as archive:
-            self.assertEqual({'preloader_l.dll', 'preloader_l.dll.sha256', 'LICENSE'},
+            self.assertEqual({'citrine_eclipse_mirage.dll', 'citrine_eclipse_mirage.dll.sha256', 'LICENSE'},
                              set(archive.namelist()))
-            self.assertEqual((self.payload / 'production/dist/preloader_l.dll').read_bytes(),
-                             archive.read('preloader_l.dll'))
+            self.assertEqual((self.payload / 'production/dist/citrine_eclipse_mirage.dll').read_bytes(),
+                             archive.read('citrine_eclipse_mirage.dll'))
             self.assertEqual((ROOT / 'LICENSE').read_bytes(), archive.read('LICENSE'))
-            self.assertEqual(release.sha(self.payload / 'production/dist/preloader_l.dll')
-                             + '  preloader_l.dll',
-                             archive.read('preloader_l.dll.sha256').decode('utf-8').strip())
+            self.assertEqual(release.sha(self.payload / 'production/dist/citrine_eclipse_mirage.dll')
+                             + '  citrine_eclipse_mirage.dll',
+                             archive.read('citrine_eclipse_mirage.dll.sha256').decode('utf-8').strip())
 
     def test_failed_portable_run_stops_before_creating_assets(self):
         self.xml(self.payload / 'PORTABLE_CTEST.xml', '<failure/>')

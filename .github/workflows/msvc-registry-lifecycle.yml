@@ -31,7 +31,7 @@ jobs:
       - name: Configure source-linked native Registry fixtures
         run: |
           $build = 'build/ci-registry-${{ matrix.configuration }}'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF
           if ($LASTEXITCODE -ne 0) { throw 'Native Registry configure failed' }
       - name: Build Registry lifecycle and allocation regressions
         run: |

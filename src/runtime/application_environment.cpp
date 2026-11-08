@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "application_internal.hpp"
-#include "preloader_l/config/application.hpp"
-#include "preloader_l/core/paths.hpp"
-#include "preloader_l/core/product_identity.hpp"
-#include "preloader_l/platform/file_copy.hpp"
-#include "preloader_l/codec/crypto.hpp"
-#include "preloader_l/core/token_constants.hpp"
+#include "citrine_eclipse_mirage/config/application.hpp"
+#include "citrine_eclipse_mirage/core/paths.hpp"
+#include "citrine_eclipse_mirage/core/product_identity.hpp"
+#include "citrine_eclipse_mirage/platform/file_copy.hpp"
+#include "citrine_eclipse_mirage/codec/crypto.hpp"
+#include "citrine_eclipse_mirage/core/token_constants.hpp"
 #include <algorithm>
 #include <cctype>
 #include <cstdlib>
@@ -16,7 +16,7 @@
 #include <limits>
 #include "avatar_data.hpp"
 
-namespace preloader_l::application::detail {
+namespace citrine_eclipse_mirage::application::detail {
 namespace {
 // Match the existing 65-byte envelope and AES policy while making text
 // fields structurally safe in the XML document before encryption.

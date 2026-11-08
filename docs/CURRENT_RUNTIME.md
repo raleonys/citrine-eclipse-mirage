@@ -12,7 +12,7 @@ Earlier evidence is retained with its original source snapshots.
 One Application owner manages configuration, Asio service, handler/event/
 achievement storage, provider, companion DLL, and hook lifetimes. Its startup
 worker runs outside loader lock. Production exports are **DllMain@1, SURGE@2,
-DllShutdown@3**; the C++ source API is a separate `preloader.source.dll`
+DllShutdown@3**; the C++ source API is a separate `citrine_eclipse_mirage.source.dll`
 target. There are no readiness/port test exports; tools observe existing
 `EALsxPort` and LSX responses.
 

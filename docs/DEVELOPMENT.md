@@ -10,6 +10,28 @@ commit's Windows results separately.
 
 Human-facing commands under `scripts/build_orchestration/`:
 
+The first-party namespace, include root and build target prefix are
+`citrine_eclipse_mirage`. Raw application output is
+`citrine_eclipse_mirage.unsigned.dll`; Production promotes the validated copy to
+`citrine_eclipse_mirage.dll`. The separate development API is
+`citrine_eclipse_mirage.source.dll`, and the optional online provider is
+`citrine_eclipse_mirage_online.dll`. Reconfigure in a fresh build directory after
+this rename; external C++ consumers and provider deployments must migrate too.
+Public C exports and ordinals remain unchanged.
+
+`resources/version.rc` uses a generated `project_version.h`. The default semantic
+version is recorded in `metadata/BRANDING_AND_IDENTITY.json`. Set
+`CITRINE_ECLIPSE_MIRAGE_VERSION=3.2.7` for the entire configure/build/validation
+session to select another release version. Numeric FILEVERSION and PRODUCTVERSION
+are `3,2,7,0`; FileVersion and ProductVersion strings are `3.2.7`. The revision
+component is always zero. Reconfigure after changing the environment value.
+Build receipts and Golden checks use the same selection and reject stale values.
+Weekly Windows jobs receive the version from the approved planned release tag.
+
+The CryptQuery compatibility target retains its historical filename, independently
+of the new product DLL name. Retained evidence and vendor sources remain exact
+historical inputs; they are not renamed product source.
+
 | Command | Output / verification |
 |---|---|
 | `build_unstable.cmd` | Release application DLL; checks exports/resources and actual load/socket/shutdown/unload |
@@ -72,7 +94,7 @@ operator launcher or GitHub Actions.
 Application ownership, actual vendor I/O, and DLL worker startup are
 described in [RUNTIME_BINDING.md](RUNTIME_BINDING.md).
 Normal Windows/MSVC builds do not use Wine. For LLVM-MinGW/Wine cross-tests,
-the CMake option `-DPRELOADER_L_WINE_EXECUTABLE=/path/to/wine64` selects
+the CMake option `-DCITRINE_ECLIPSE_MIRAGE_WINE_EXECUTABLE=/path/to/wine64` selects
 `scripts/run_wine_test.py`, which preserves the actual process exit code.
 Output descriptors inherited by Wine services do not determine test success
 or timeout behavior.

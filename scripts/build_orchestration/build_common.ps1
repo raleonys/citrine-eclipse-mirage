@@ -138,7 +138,7 @@ function Write-ToolchainProvenance {
         [string]$CMakeExe,[string]$PythonExe,[string]$ClExe,[string]$LinkExe,[string]$NMakeExe
     )
     $lines = @(
-        'PRELOADER_L_TOOLCHAIN_PROVENANCE_V1',
+        'CITRINE_ECLIPSE_MIRAGE_TOOLCHAIN_PROVENANCE_V1',
         "VS_INSTALLATION=<redacted>",
         "VCVARS64=<redacted>",
         (Get-ToolRecord 'cmake' $CMakeExe),

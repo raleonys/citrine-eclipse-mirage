@@ -16,12 +16,12 @@
       "inherits": "llvm-mingw-x64",
       "binaryDir": "${sourceDir}/build/llvm-mingw-x64-vendors",
       "cacheVariables": {
-        "PRELOADER_L_REQUIRE_VENDOR_COMPATIBILITY": "ON"
+        "CITRINE_ECLIPSE_MIRAGE_REQUIRE_VENDOR_COMPATIBILITY": "ON"
       }
     }
   ],
   "buildPresets": [
-    {"name": "dll", "configurePreset": "llvm-mingw-x64", "targets": ["preloader_l", "preloader_l_runtime_host", "preloader_l_source_host"]},
+    {"name": "dll", "configurePreset": "llvm-mingw-x64", "targets": ["citrine_eclipse_mirage", "citrine_eclipse_mirage_runtime_host", "citrine_eclipse_mirage_source_host"]},
     {"name": "tests", "configurePreset": "llvm-mingw-x64"},
     {"name": "vendors", "configurePreset": "llvm-mingw-x64-vendors"}
   ]

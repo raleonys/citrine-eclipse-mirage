@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/application.hpp"
-#include "preloader_l/platform/hook_unload_guard.hpp"
+#include "citrine_eclipse_mirage/runtime/application.hpp"
+#include "citrine_eclipse_mirage/platform/hook_unload_guard.hpp"
 #include <atomic>
 #include <stdexcept>
 namespace {std::atomic<int> created{},attempts{},destroyed{};std::atomic<std::uint32_t> caller{};}
@@ -9,7 +9,7 @@ extern "C" __declspec(dllexport) std::uint32_t FixtureCaller(){return caller;}
 extern "C" __declspec(dllexport) int FixtureCreated(){return created;}
 extern "C" __declspec(dllexport) int FixtureAttempts(){return attempts;}
 extern "C" __declspec(dllexport) int FixtureDestroyed(){return destroyed;}
-namespace preloader_l {
+namespace citrine_eclipse_mirage {
 void set_shutdown_caller(std::uint32_t id) noexcept {caller=id;} // Test-only scan boundary.
 namespace application {
 struct Application::Impl {};

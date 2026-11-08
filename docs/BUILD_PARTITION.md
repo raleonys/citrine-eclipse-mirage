@@ -9,13 +9,13 @@ recorded in [BUILD_CLEANUP.md](BUILD_CLEANUP.md).
 
 | Target | Inputs and purpose |
 | --- | --- |
-| `preloader_l_objects`, `preloader_l_vdf_objects` | Production application, native callbacks and parser |
-| `preloader_l_core` | Production-only static library for integration tests |
-| `preloader_l` | Production objects, entry point, resources and three fixed exports |
-| `preloader_l_reference_objects` | 52 transport models, 16 XML models and ten reference adapters/compositions |
-| `preloader_l_reference_models` | Retained models; may depend on the production core |
-| `preloader_l_source_api` | Both source sets, preserving the development C++ API |
-| `preloader_l_source_minhook`, `preloader_l_source_pugixml` | MSVC shared-CRT vendor builds used only by the C++ development DLL |
+| `citrine_eclipse_mirage_objects`, `citrine_eclipse_mirage_vdf_objects` | Production application, native callbacks and parser |
+| `citrine_eclipse_mirage_core` | Production-only static library for integration tests |
+| `citrine_eclipse_mirage` | Production objects, entry point, resources and three fixed exports |
+| `citrine_eclipse_mirage_reference_objects` | 52 transport models, 16 XML models and ten reference adapters/compositions |
+| `citrine_eclipse_mirage_reference_models` | Retained models; may depend on the production core |
+| `citrine_eclipse_mirage_source_api` | Both source sets, preserving the development C++ API |
+| `citrine_eclipse_mirage_source_minhook`, `citrine_eclipse_mirage_source_pugixml` | MSVC shared-CRT vendor builds used only by the C++ development DLL |
 
 MSVC compiles the complete development DLL source set separately with `/MD`
 (Release) or `/MDd` (Debug); its C++ host and vendor libraries use the same CRT.
@@ -31,12 +31,12 @@ existing objects. The MSVC development DLL must not link those static-CRT
 objects or archives. Non-MSVC development builds retain their existing graph.
 
 Production must never depend on a reference target or the source API DLL. With
-`BUILD_TESTING=OFF` and `PRELOADER_L_BUILD_SOURCE_API_DLL=OFF`, reference targets
+`BUILD_TESTING=OFF` and `CITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF`, reference targets
 are not configured. The owner-selected pugixml archive replaces TinyXML2; the other three vendor
 pins are unchanged. `xml/reader.cpp`, `xml/reader_policy.cpp`,
 `xml/reader_values.cpp` and `xml/memory_printer.cpp` are production inputs.
-Production and test targets link `preloader_l_pugixml`; the MSVC development
-DLL links `preloader_l_source_pugixml`. No legacy XML vendor target aliases
+Production and test targets link `citrine_eclipse_mirage_pugixml`; the MSVC development
+DLL links `citrine_eclipse_mirage_source_pugixml`. No legacy XML vendor target aliases
 are provided.
 The evaluated production graph rejects `third_party/tinyxml2/` sources.
 The external TinyXML2 control exists only in the standalone comparison.
@@ -127,7 +127,7 @@ ctest --test-dir <build-directory> -C Release -L production --output-on-failure
 ```
 
 Repeat for Debug. A separate clean production-only configuration must set both
-`BUILD_TESTING=OFF` and `PRELOADER_L_BUILD_SOURCE_API_DLL=OFF`. Do not reuse a
+`BUILD_TESTING=OFF` and `CITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF`. Do not reuse a
 testing build as the sole proof that production can build independently.
 
 To regenerate the symbol matrix from a built Ninja cross-build:

@@ -2,7 +2,7 @@
 
 | Path | Responsibility |
 |---|---|
-| `src/`, `include/preloader_l/` | Application sources selected from the RE inputs; detailed provenance in SOURCE_LAYOUT.json |
+| `src/`, `include/citrine_eclipse_mirage/` | Application sources selected from the RE inputs; detailed provenance in SOURCE_LAYOUT.json |
 | `cmake/` | Explicit source lists, Windows DLL, portable targets, and infrastructure test targets |
 | `scripts/build_orchestration/` | Five registered human-facing launchers and automation-ready PowerShell profiles |
 | `scripts/` | Golden tools, source QA, manifest handling, and package validation |
@@ -34,15 +34,15 @@ src/runtime/achievement_storage.cpp
 src/runtime/calendar.cpp
 src/xml/reader.cpp
 
-include/preloader_l/net/asio_service.hpp
-include/preloader_l/platform/hook_setup.hpp
-include/preloader_l/runtime/achievement_storage.hpp
-include/preloader_l/runtime/calendar.hpp
-include/preloader_l/xml/reader.hpp
+include/citrine_eclipse_mirage/net/asio_service.hpp
+include/citrine_eclipse_mirage/platform/hook_setup.hpp
+include/citrine_eclipse_mirage/runtime/achievement_storage.hpp
+include/citrine_eclipse_mirage/runtime/calendar.hpp
+include/citrine_eclipse_mirage/xml/reader.hpp
 ```
 
 No additional module subdirectories exist beneath `src/<module>/<file>` or
-`include/preloader_l/<module>/<file>`. Former `transport`, `session`, `hooks`,
+`include/citrine_eclipse_mirage/<module>/<file>`. Former `transport`, `session`, `hooks`,
 `hook_engine`, `windows`, `achievements`, `events`, `time`, `files`, and `native`
 layers are represented by filenames. The pre-migration source package is
 retained. A total of 177 files were moved, and 261 source/header bodies were

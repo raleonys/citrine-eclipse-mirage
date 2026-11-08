@@ -81,8 +81,8 @@ values and guards all other bytes. It fails closed if the module set differs.
 The null descriptor is preserved, the checksum recomputed, and CORVEXON
 separately verifies final order.
 
-This order applies only to `dist/preloader_l.dll` after Golden finalization.
-The raw `build/preloader.unsigned.dll` retains linker order. The LLVM
+This order applies only to `dist/citrine_eclipse_mirage.dll` after Golden finalization.
+The raw `build/citrine_eclipse_mirage.unsigned.dll` retains linker order. The LLVM
 development DLL includes dynamic CRT modules and cannot count as shipping
 acceptance; runtime load/LSX/shutdown/unload tests of the same permutation
 helper are separately evidenced.

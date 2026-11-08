@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/protocol/messages.hpp"
-#include "preloader_l/xml/reader.hpp"
+#include "citrine_eclipse_mirage/protocol/messages.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
 #include <algorithm>
 #include <cstdio>
 #include <cstdlib>
@@ -11,7 +11,7 @@
 #include <map>
 #include <stdexcept>
 #include <vector>
-using namespace preloader_l::messages;
+using namespace citrine_eclipse_mirage::messages;
 static unsigned checks;
 static void check(bool v){++checks;if(!v)throw std::runtime_error("check "+std::to_string(checks));}
 struct Invalid {};
@@ -186,7 +186,7 @@ static void dispatch_tests(){
 static void multi_command_request_contract_tests(){
     // C21-RISK-001: retain observed first-child-only dispatch. This tests the
     // real pugixml-backed document tree without inventing a Consumer acceptance rule.
-    preloader_l::xml_reader_bridge::Backend reader;
+    citrine_eclipse_mirage::xml_reader_bridge::Backend reader;
     struct Accepted {const char* xml;std::string_view first_name;std::uint32_t rva;};
     const Accepted accepted[]={
         {R"XML(<LSX><Request id="multi" recipient="service"><GetConfig/><GetProfile/></Request></LSX>)XML",

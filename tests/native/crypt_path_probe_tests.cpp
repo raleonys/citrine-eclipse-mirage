@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/crypt_query.hpp"
+#include "citrine_eclipse_mirage/platform/crypt_query.hpp"
 #include <atomic>
 #include <cstdlib>
 #include <cstring>
@@ -22,8 +22,8 @@ void operator delete[](void* p)noexcept{std::free(p);}
 void operator delete(void* p,std::size_t)noexcept{std::free(p);}
 void operator delete[](void* p,std::size_t)noexcept{std::free(p);}
 
-namespace hooks=preloader_l::hooks;
-namespace platform=preloader_l::platform;
+namespace hooks=citrine_eclipse_mirage::hooks;
+namespace platform=citrine_eclipse_mirage::platform;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

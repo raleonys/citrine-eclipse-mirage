@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/codec/encoding.hpp"
+#include "citrine_eclipse_mirage/codec/encoding.hpp"
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <locale.h>
 #include <cstring>
 #include <stdexcept>
 
-namespace preloader_l::encoding {
+namespace citrine_eclipse_mirage::encoding {
 static_assert(sizeof(wchar_t)==2);
 std::uint32_t NativeCalls::locale_codepage_0629ec(){return ___lc_codepage_func();}
 bool NativeCalls::are_file_apis_ansi(){return AreFileApisANSI()!=FALSE;}
@@ -44,4 +44,4 @@ int NativeCalls::wide_to_multi_byte(std::uint32_t cp,std::uint32_t flags,const c
     if(used_default)*used_default=replaced!=FALSE;
     SetLastError(saved);return count;
 }
-} // namespace preloader_l::encoding
+} // namespace citrine_eclipse_mirage::encoding

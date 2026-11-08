@@ -103,7 +103,7 @@ SIZE_T WINAPI query(LPCVOID address,PMEMORY_BASIC_INFORMATION out,SIZE_T){
 
 BOOL WINAPI fake::context(HANDLE,LPCONTEXT out){
     if(state.context_fail)return FALSE;
-    if(state.reenter)state.reentry_rejected=!preloader_l::external_threads_outside_module();
+    if(state.reenter)state.reentry_rejected=!citrine_eclipse_mirage::external_threads_outside_module();
     *out={};out->Rsp=reinterpret_cast<std::uint64_t>(state.stack.data());
     out->R11=state.register_value;out->Rip=state.instruction;
     if(state.in_module)out->Rip=reinterpret_cast<std::uint64_t>(state.image.data())+32;
@@ -117,9 +117,9 @@ void reset(int foreign=0){
     fake::state=fake::State{};fake::state.depth=fake::state.foreign_depth=foreign;
     auto* dos=reinterpret_cast<IMAGE_DOS_HEADER*>(fake::state.image.data());dos->e_lfanew=128;
     auto* nt=reinterpret_cast<IMAGE_NT_HEADERS64*>(fake::state.image.data()+128);nt->OptionalHeader.SizeOfImage=1024;
-    preloader_l::set_shutdown_caller(0);
+    citrine_eclipse_mirage::set_shutdown_caller(0);
 }
-bool scan(){return preloader_l::external_threads_outside_module();}
+bool scan(){return citrine_eclipse_mirage::external_threads_outside_module();}
 void resume_retry(){
     reset();auto& s=fake::state;s.resume_fail=true;
     require(!scan(),"failed resume rejects unload");
@@ -174,11 +174,11 @@ void volatile_register_guard(){
     require(s.threads.empty()&&s.snapshots.empty(),
         "successful R11 scan has no leaked native owners");
     s.register_value=base+128;
-    preloader_l::set_shutdown_caller(11);
+    citrine_eclipse_mirage::set_shutdown_caller(11);
     const auto prior=s.suspends;
     require(scan()&&s.suspends==prior&&s.depth==0,
         "explicit DLL shutdown caller is excluded without suspending its stack");
-    preloader_l::set_shutdown_caller(0);
+    citrine_eclipse_mirage::set_shutdown_caller(0);
     require(!scan()&&s.suspends==prior+1&&s.resumes==s.suspends,
         "clearing caller exclusion restores conservative R11 protection");
 }

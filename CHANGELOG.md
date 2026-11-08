@@ -6,7 +6,9 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Pin retained socket dispatch continuation when the message core consumes a previously nonempty request. Cover exact empty/binary responses, inline and heap capacities, live request allocations and core-released input without changing runtime behavior or production session policy.
+- Extend retained socket message dispatch tests with 48 consumed-request scenarios: retain one exact counted response after the core empties or releases initially nonempty input. Verify scheduling-time owner/task/allocation state, exact cleanup and no double-free across inline/heap boundaries, empty output and embedded NUL. Test-only; production Asio behavior and Consumer parity are not claimed.
+
+- Rename active first-party namespaces, include paths, build targets, tools and DLL artifacts to citrine_eclipse_mirage. Retain the CryptQuery compatibility filename and public export ordinals. Replace reference VERSIONINFO branding with Citrine Eclipse Mirage and Copyright 2026 SURGE; derive matching numeric/string file and product versions from the selected release version. Bind weekly build receipts to that version without changing published releases or retained evidence.
 
 - Test the actual Environment ProgramData and LocalAppData adapters with required-size counts, repeated 260-code-unit growth, exact UTF-16 lengths, empty/missing results, retry and configured ProgramData bypass. Production behavior is unchanged.
 
@@ -20,7 +22,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 - Add native callback binding regressions for simultaneous constructor admission and destruction of a closed owner while its replacement remains active. Verify one winning context, callback usability and sole cleanup ownership.
 
-- Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Put exactly preloader_l.dll, its DLL SHA-256 sidecar and the project LICENSE at the ZIP root. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts and all other files out of the runtime ZIP, preserve native/Golden gates, and leave published releases unchanged.
+- Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Put exactly citrine_eclipse_mirage.dll, its DLL SHA-256 sidecar and the project LICENSE at the ZIP root. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts and all other files out of the runtime ZIP, preserve native/Golden gates, and leave published releases unchanged.
 
 - Add source-included native Application rollback regressions for controlled first/second worker-launch exceptions, retained provider-thread draining and normal startup. Keep production workers exactly `std::thread` through a private fixture seam; preserve listener cleanup, public options/exports and compiler CRT policy.
 

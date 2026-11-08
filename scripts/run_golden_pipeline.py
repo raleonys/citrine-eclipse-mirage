@@ -46,7 +46,7 @@ def execute_steps(steps, run):
     return results
 
 
-DIST_NAMES = ('preloader_l.dll', 'preloader_l.dll.sha256', 'DIST_RECEIPT.json')
+DIST_NAMES = ('citrine_eclipse_mirage.dll', 'citrine_eclipse_mirage.dll.sha256', 'DIST_RECEIPT.json')
 DIST_TRANSACTION = '.golden-transaction'
 
 
@@ -303,7 +303,7 @@ def pipeline(root, dll, build_dir, output_dir):
     child_environment = dict(os.environ, PYTHONDONTWRITEBYTECODE='1')
     output_dir.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='candidate-', dir=output_dir) as td:
-        candidate = Path(td) / 'preloader_l.dll'
+        candidate = Path(td) / 'citrine_eclipse_mirage.dll'
         shutil.copy2(dll, candidate)
         scripts = root / 'scripts'
         steps = [
@@ -335,7 +335,7 @@ def pipeline(root, dll, build_dir, output_dir):
         if report['result'] == 'GOLDEN_PASS':
             candidate_before = sha(candidate)
             try:
-                cp = subprocess.run([str(build_dir / 'preloader_l_runtime_host.exe'), str(candidate), '--xml-contracts'],
+                cp = subprocess.run([str(build_dir / 'citrine_eclipse_mirage_runtime_host.exe'), str(candidate), '--xml-contracts'],
                                     cwd=root, text=True, capture_output=True, timeout=120, env=child_environment)
                 runtime = {'exit_code': cp.returncode, 'output': cp.stdout + cp.stderr}
             except subprocess.TimeoutExpired:
@@ -353,7 +353,7 @@ def pipeline(root, dll, build_dir, output_dir):
             report['result'] = 'FAIL'
             report['errors'] = ['Original build DLL changed during Golden execution']
         if report['result'] == 'GOLDEN_PASS':
-            target = output_dir / ('preloader_l.' + sha(candidate)[:16] + '.dll')
+            target = output_dir / ('citrine_eclipse_mirage.' + sha(candidate)[:16] + '.dll')
             sidecar = Path(str(target) + '.sha256')
             # Reject attacker-supplied final names before touching either output.
             # A random exclusively opened temporary file is never written through

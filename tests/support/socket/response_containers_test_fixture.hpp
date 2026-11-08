@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "preloader_l/net/transport_response_containers.hpp"
+#include "citrine_eclipse_mirage/net/transport_response_containers.hpp"
 #include "tests/support/socket/owned_response_test_fixture.hpp"
 #include <cstring>
 
 namespace container_test {
-namespace s=preloader_l::socket;namespace b=buffer_test;namespace r=receive_test;
+namespace s=citrine_eclipse_mirage::socket;namespace b=buffer_test;namespace r=receive_test;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Failure {int code;};
 struct MapBlock {std::uintptr_t raw=0,address=0;std::vector<s::WriteFinishString*> cells;};

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/startup.hpp"
+#include "citrine_eclipse_mirage/runtime/startup.hpp"
 #include <algorithm>
 #include <cstdio>
 #include <deque>
@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <tuple>
 
-using namespace preloader_l::startup;
+using namespace citrine_eclipse_mirage::startup;
 static unsigned checks;
 static void require(bool value) { if (++checks && !value) throw std::runtime_error("check "+std::to_string(checks)); }
 struct Fixture {

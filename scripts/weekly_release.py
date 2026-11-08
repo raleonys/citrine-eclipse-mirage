@@ -16,6 +16,7 @@ from weekly_naming import FIRST, successor, approved_tag, require_tag, asset_nam
 from check_falcion_golden_cleaning import check
 from package_source import package
 from run_golden_pipeline import ORDER
+from project_version import selected_version
 
 ROOT = Path(__file__).resolve().parents[1]
 COMMIT = re.compile(r'[0-9a-f]{40}\Z')
@@ -138,12 +139,14 @@ def junit(path):
     return len(cases)
 
 
-def validate_profile(folder, profile, manifest, source):
+def validate_profile(folder, profile, manifest, source, version=None):
     folder = Path(folder)
     identity = load(folder / 'EVIDENCE_IDENTITY.json')
     if identity != {'source_sha': source, 'source_manifest_sha256': manifest, 'profile': profile}:
         raise ValueError('Evidence belongs to a different source or profile')
     receipt = load(folder / 'BUILD_RECEIPT.json')
+    if receipt.get('project_version') != (version or selected_version()):
+        raise ValueError('Build resource version does not match the planned release')
     mode = 'Native' if profile == 'native' else 'Golden'
     if (receipt.get('mode') != mode or receipt.get('configuration') != 'Release'
             or receipt.get('build_succeeded') is not True
@@ -158,7 +161,7 @@ def validate_profile(folder, profile, manifest, source):
             raise ValueError('Missing build evidence: ' + name)
     if profile == 'native':
         return {'tests': junit(folder / 'CTEST_RESULTS.xml')}
-    dll = folder / 'dist/preloader_l.dll'
+    dll = folder / 'dist/citrine_eclipse_mirage.dll'
     digest = sha(dll)
     verify_sidecar(dll)
     dist = load(folder / 'dist/DIST_RECEIPT.json')
@@ -208,7 +211,7 @@ def capture(root, profile, build, output, source):
         shutil.copyfile(build / 'golden/GOLDEN_REPORT.json', folder / 'GOLDEN_REPORT.json')
         dist = folder / 'dist'
         dist.mkdir()
-        for name in ('preloader_l.dll', 'preloader_l.dll.sha256', 'DIST_RECEIPT.json'):
+        for name in ('citrine_eclipse_mirage.dll', 'citrine_eclipse_mirage.dll.sha256', 'DIST_RECEIPT.json'):
             shutil.copyfile(root / 'dist' / name, dist / name)
     manifest = sha(root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')
     write(folder / 'EVIDENCE_IDENTITY.json',
@@ -230,8 +233,9 @@ def bundle(root, payload, output):
             c['exit_code'] != 0 for c in qa['checks']):
         raise ValueError('Source QA did not pass')
     portable_tests = junit(payload / 'PORTABLE_CTEST.xml')
-    native = validate_profile(payload / 'native', 'native', manifest, p['source_sha'])
-    golden = validate_profile(payload / 'production', 'production', manifest, p['source_sha'])
+    version = require_tag(p['tag'])
+    native = validate_profile(payload / 'native', 'native', manifest, p['source_sha'], version)
+    golden = validate_profile(payload / 'production', 'production', manifest, p['source_sha'], version)
     source_name, binary_name = asset_names(p['tag'])
     source = payload / source_name
     verify_sidecar(source)
@@ -247,10 +251,10 @@ def bundle(root, payload, output):
                'publication': False}
     binary = output / binary_name
     dist_files = {path.name: path for path in (payload / 'production/dist').iterdir() if path.is_file()}
-    if set(dist_files) != {'preloader_l.dll', 'preloader_l.dll.sha256', 'DIST_RECEIPT.json'}:
+    if set(dist_files) != {'citrine_eclipse_mirage.dll', 'citrine_eclipse_mirage.dll.sha256', 'DIST_RECEIPT.json'}:
         raise ValueError('Unexpected runtime payload')
-    files = {'preloader_l.dll': dist_files['preloader_l.dll'],
-             'preloader_l.dll.sha256': dist_files['preloader_l.dll.sha256'],
+    files = {'citrine_eclipse_mirage.dll': dist_files['citrine_eclipse_mirage.dll'],
+             'citrine_eclipse_mirage.dll.sha256': dist_files['citrine_eclipse_mirage.dll.sha256'],
              'LICENSE': root / 'LICENSE'}
     with zipfile.ZipFile(binary, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
         for name, path in sorted(files.items()):
@@ -412,7 +416,8 @@ def main():
         write(args.output, p)
         if 'GITHUB_OUTPUT' in os.environ:
             with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out:
-                out.write('ready=' + str(p['ready']).lower() + '\nsource=' + p['source_sha'] + '\n')
+                version = require_tag(p['tag']) if p['ready'] else ''
+                out.write('ready=' + str(p['ready']).lower() + '\nsource=' + p['source_sha'] + '\nversion=' + version + '\n')
         print(json.dumps(p))
     elif args.command == 'source':
         p = load(args.plan)
