@@ -8,7 +8,7 @@ GitHub itself cannot have an outage.
 
 ## Badge ownership and updates
 
-`scripts/repository_badges.py` publishes nine badges using the Python standard
+`scripts/repository_badges.py` publishes eleven badges using the Python standard
 library. The six static SVGs are downloaded snapshots of the original Shields
 responses, including the embedded C++, Python and CMake logos. The Windows and
 license responses retain their original styling. Changelog uses the same style.
@@ -29,11 +29,12 @@ was retrieved from this repository's original `ci.yml/badge.svg?branch=main`
 endpoint. These cached assets are retained rather than represented as newly
 drawn project logos.
 
-The live CI, Latest release and Release integrity images are read from the same repository's
+The live CI, Latest release, Release integrity, Tests and Checksums images are read from the same repository's
 long-lived `badges` branch, at `resources/badges/ci.svg` and
-`resources/badges/latest-release.svg`, plus `resources/badges/release-integrity.svg`.
-All nine generated SVGs live there, and
-only those nine paths are permitted. That branch is generated image data, not
+`resources/badges/latest-release.svg`, plus `resources/badges/release-integrity.svg`,
+`resources/badges/tests.svg` and `resources/badges/checksums.svg`.
+All eleven generated SVGs live there, and
+only those eleven paths are permitted. That branch is generated image data, not
 an application/source branch or a PR head. Keep it after ordinary PR cleanup.
 
 The small Update repository badges workflow runs after a completed main-push
@@ -59,7 +60,7 @@ fast-forward reference updates and refuse an unexpected existing branch tree.
 The publisher never writes main, application sources, tags or release assets.
 The generated-only branch is maintained through the GitHub Git-data API;
 application source inventories and pre-push QA apply to the source PR, not to
-this nine-image data tree. Initialize or refresh it from reviewed source with:
+this eleven-image data tree. Initialize or refresh it from reviewed source with:
 
 ```sh
 python -B scripts/repository_badges.py --publish
@@ -68,6 +69,33 @@ python -B scripts/repository_badges.py --publish
 The workflow supplies its scoped GH_TOKEN; local execution uses existing GitHub
 CLI authentication without extracting or storing credentials. Initial SVG
 snapshots can be rendered locally with `--output build/badges-preview`.
+
+## Test count and checksum badges
+
+Tests (native) displays passed/total CTest cases from Windows Native Release,
+without adding repeated Debug/Release/portable executions together. The existing
+native job reads its actual JUnit report and records the numeric counts in a
+completed step name. This adds no job, compilation or test execution. Failures,
+errors and skipped cases are excluded from passed and remain in total.
+
+The publisher reads GitHub job metadata, not logs or downloaded PR artifacts.
+It considers only this repository's full-validation PR runs whose tested Git
+tree exactly equals current main. A merge commit may have a different SHA but
+the same tested tree. An ancestor, an unrelated PR or a standalone diagnostic
+cannot supply the count. Missing, incomplete or older reports without a count
+step display not available; zero tests cannot produce a green 0/0. A failing
+native job never receives a green count. The scan is bounded to the latest 30
+PR validation runs. The badge describes this native CTest inventory, not test
+coverage, all platform executions, CodeQL or game acceptance.
+
+Checksums displays SHA-256 when the latest published stable release has both
+its correctly named binary ZIP and the matching .zip.sha256 sidecar uploaded
+with nonzero sizes. Otherwise it reports missing, unknown or no release. It
+checks availability, not a fresh cryptographic verification of the download.
+Both badges use the existing small main/release publisher; neither runs a
+workflow when a PR opens. The bounded data publisher permits a one-time
+upgrade from exactly the original nine SVG paths to exactly eleven; missing
+or extra files outside those two recognized layouts remain an error.
 
 ## One basic check when a PR opens
 

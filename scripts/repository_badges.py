@@ -4,6 +4,7 @@ import argparse
 import hashlib
 from html import escape
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -15,7 +16,8 @@ BRANCH = 'badges'
 DIRECTORY = 'resources/badges'
 ROOT = Path(__file__).resolve().parents[1]
 STATIC = frozenset({'windows.svg', 'cpp.svg', 'python.svg', 'cmake.svg', 'license.svg', 'changelog.svg'})
-NAMES = STATIC | {'ci.svg', 'latest-release.svg', 'release-integrity.svg'}
+NAMES = STATIC | {'ci.svg', 'latest-release.svg', 'release-integrity.svg', 'tests.svg', 'checksums.svg'}
+LEGACY_NAMES = NAMES - {'tests.svg', 'checksums.svg'}
 CONCLUSIONS = {
     'success': ('passing', '#4c1'),
     'failure': ('failing', '#e05d44'),
@@ -108,7 +110,7 @@ def render_ci(conclusion):
     return ET.tostring(root, encoding='unicode') + '\n'
 
 
-def images(tag, conclusion, immutable=None):
+def images(tag, conclusion, immutable=None, tests=None, checksum=None):
     if tag is not None:
         require_tag(tag)
     if conclusion is not None and conclusion not in CONCLUSIONS:
@@ -122,7 +124,88 @@ def images(tag, conclusion, immutable=None):
         ('immutable', '#4c1') if immutable is True else
         ('mutable', '#dfb317') if immutable is False else ('unknown', '#9f9f9f'))
     result['release-integrity.svg'] = render('Release integrity', *integrity)
+    if tests is None:
+        result['tests.svg'] = render('Tests (native)', 'not available', '#9f9f9f')
+    else:
+        passed, total, status = tests
+        if (type(passed) is not int or type(total) is not int or not 0 <= passed <= total <= 100000
+                or total == 0 or status not in {'success', 'failure'}):
+            raise ValueError('Invalid native test totals')
+        result['tests.svg'] = render('Tests (native)', f'{passed}/{total}',
+                                     '#4c1' if passed == total and status == 'success' else '#e05d44')
+    if checksum is not None and type(checksum) is not bool:
+        raise ValueError('Invalid checksum availability')
+    checksum_state = ('no release', '#9f9f9f') if tag is None else (
+        ('SHA-256', '#4c1') if checksum is True else
+        ('missing', '#e05d44') if checksum is False else ('unknown', '#9f9f9f'))
+    result['checksums.svg'] = render('Checksums', *checksum_state)
     return result
+
+
+def test_counts(path):
+    data = path.read_bytes()
+    if len(data) > 8 * 1024 * 1024 or b'<!DOCTYPE' in data or b'<!ENTITY' in data:
+        raise ValueError('Unexpected native test report')
+    root = ET.fromstring(data)
+    if root.tag not in {'testsuite', 'testsuites'}:
+        raise ValueError('Expected CTest JUnit report')
+    cases = list(root.iter('testcase'))
+    if not 0 < len(cases) <= 100000:
+        raise ValueError('Native test report must contain testcases')
+    for suite in root.iter():
+        if suite.tag in {'testsuite', 'testsuites'} and suite.get('tests') is not None:
+            if not re.fullmatch(r'[0-9]+', suite.get('tests')) or int(suite.get('tests')) != len(list(suite.iter('testcase'))):
+                raise ValueError('Native test count does not match testcases')
+    passed = sum(not any(case.find(tag) is not None for tag in ('failure', 'error', 'skipped')) for case in cases)
+    return passed, len(cases)
+
+
+def native_result(api, base, default, repository):
+    # Main's merge commit may differ from the tested PR SHA. Require an exact
+    # Git tree match, never merely an ancestor or an unrelated latest PR.
+    main = api.request('GET', base + '/commits/' + default)
+    target = main['commit']['tree']['sha']
+    trees = {main['sha']: target}
+    runs = api.request('GET', base + '/actions/workflows/msvc-reference-graph.yml/runs?event=pull_request&per_page=30')['workflow_runs']
+    for run in runs:
+        if (run.get('event') != 'pull_request' or run.get('head_repository', {}).get('full_name') != repository
+                or not re.fullmatch(r'[0-9a-f]{40}', run.get('head_sha', '')) or type(run.get('id')) is not int):
+            continue
+        sha = run['head_sha']
+        if sha not in trees:
+            commit = api.request('GET', base + '/git/commits/' + sha, missing_ok=True)
+            if commit is None:
+                continue
+            trees[sha] = commit['tree']['sha']
+        if trees[sha] != target:
+            continue
+        jobs = api.request('GET', base + '/actions/runs/' + str(run['id']) + '/jobs?per_page=100')['jobs']
+        for job in jobs:
+            if job['name'] != 'Windows native':
+                continue
+            # Do not replace a newer pending/failed native run with an older PASS.
+            if job['status'] != 'completed' or job['conclusion'] not in {'success', 'failure'}:
+                return None
+            for step in reversed(job.get('steps', [])):
+                match = re.fullmatch(r'Native tests: ([0-9]+)/([0-9]+)', step['name'])
+                if match and step['conclusion'] == 'success':
+                    return int(match[1]), int(match[2]), job['conclusion']
+            return None
+    return None
+
+
+def checksum_available(release):
+    if release is None:
+        return None
+    tag = release['tag_name']
+    require_tag(tag)
+    name = 'Citrine_Eclipse_Mirage_' + tag.replace('-', '_') + '.zip'
+    assets = release.get('assets')
+    if not isinstance(assets, list):
+        return None
+    return all(any(asset.get('name') == expected and asset.get('state') == 'uploaded'
+                   and type(asset.get('size')) is int and asset['size'] > 0 for asset in assets)
+               for expected in (name, name + '.sha256'))
 
 
 class GitHub:
@@ -160,7 +243,8 @@ def live_images(api, repository):
                  or runs[0]['status'] != 'completed'):
         raise ValueError('CI badge requires a completed default-branch push run')
     return images(release['tag_name'] if release else None, runs[0]['conclusion'] if runs else None,
-                  release.get('immutable') if release else None)
+                  release.get('immutable') if release else None,
+                  native_result(api, base, default, repository), checksum_available(release))
 
 
 def blob_sha(content):
@@ -170,7 +254,7 @@ def blob_sha(content):
 
 def publish(api, repository, rendered):
     if set(rendered) != NAMES:
-        raise ValueError('Only the nine badge SVGs may be published')
+        raise ValueError('Only the eleven badge SVGs may be published')
     base = repository_path(repository)
     expected = {DIRECTORY + '/' + name: blob_sha(value) for name, value in rendered.items()}
     ref = api.request('GET', base + '/git/ref/heads/' + BRANCH, missing_ok=True)
@@ -182,7 +266,8 @@ def publish(api, repository, rendered):
         commit = api.request('GET', base + '/git/commits/' + parent)
         tree = api.request('GET', base + '/git/trees/' + commit['tree']['sha'] + '?recursive=1')
         actual = {entry['path']: entry['sha'] for entry in tree['tree'] if entry['type'] == 'blob'}
-        if (tree.get('truncated') or set(actual) != set(expected)
+        legacy = {DIRECTORY + '/' + name for name in LEGACY_NAMES}
+        if (tree.get('truncated') or set(actual) not in (set(expected), legacy)
                 or any(entry['type'] not in {'tree', 'blob'} or
                        (entry['type'] == 'blob' and entry['mode'] != '100644') or
                        (entry['type'] == 'tree' and entry['path'] not in {'resources', DIRECTORY})
@@ -208,7 +293,15 @@ if __name__ == '__main__':
     parser.add_argument('--repository', default='raleonys/citrine-eclipse-mirage')
     parser.add_argument('--output', type=Path)
     parser.add_argument('--publish', action='store_true')
+    parser.add_argument('--record-tests', type=Path)
     args = parser.parse_args()
+    if args.record_tests:
+        if args.output or args.publish:
+            parser.error('Test recording cannot publish images')
+        passed, total = test_counts(args.record_tests)
+        with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+            output.write(f'passed={passed}\ntotal={total}\n')
+        raise SystemExit(0)
     if not args.output and not args.publish:
         parser.error('Select --output and/or --publish')
     api = GitHub()

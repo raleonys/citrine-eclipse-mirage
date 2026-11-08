@@ -223,6 +223,13 @@ jobs:
         run: |
           & "./scripts/build_orchestration/${{ matrix.script }}" -BuildDir "build/ci-${{ matrix.profile }}" -Config '${{ matrix.configuration }}'
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Read native CTest totals
+        id: native-counts
+        if: always() && matrix.profile == 'native'
+        run: python -B scripts/repository_badges.py --record-tests build/ci-native/CTEST_RESULTS.xml
+      - name: 'Native tests: ${{ steps.native-counts.outputs.passed }}/${{ steps.native-counts.outputs.total }}'
+        if: always() && matrix.profile == 'native' && steps.native-counts.outcome == 'success'
+        run: Write-Output 'Native CTest totals recorded for the repository badge.'
       - name: Retain Windows validation evidence
         if: always() && needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

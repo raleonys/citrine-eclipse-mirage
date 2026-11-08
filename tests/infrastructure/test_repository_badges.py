@@ -3,9 +3,12 @@
 import copy
 import base64
 import json
+import os
 from pathlib import Path
 import re
 import sys
+import subprocess
+import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 
@@ -23,6 +26,9 @@ class API:
         self.tree = tree
         self.release = {'tag_name': '3.2.7-ERINTHAR', 'draft': False, 'prerelease': False, 'immutable': True}
         self.runs = [{'head_branch': 'main', 'event': 'push', 'status': 'completed', 'conclusion': 'success'}]
+        self.full_runs = []
+        self.jobs = {}
+        self.trees = {}
 
     def request(self, method, path, payload=None, missing_ok=False):
         self.calls.append((method, path, copy.deepcopy(payload)))
@@ -31,12 +37,18 @@ class API:
                 return {'default_branch': 'main'}
             if path.endswith('/releases/latest'):
                 return self.release
-            if '/actions/workflows/' in path:
+            if path.endswith('/commits/main'):
+                return {'sha': 'e'*40, 'commit': {'tree': {'sha': 'f'*40}}}
+            if '/actions/workflows/msvc-reference-graph.yml/' in path:
+                return {'workflow_runs': self.full_runs}
+            if '/actions/workflows/ci.yml/' in path:
                 return {'workflow_runs': self.runs}
+            if '/actions/runs/' in path and '/jobs?' in path:
+                return {'jobs': self.jobs[int(path.split('/actions/runs/')[1].split('/')[0])]}
             if '/git/ref/' in path:
                 return {'ref': 'refs/heads/badges', 'object': {'type': 'commit', 'sha': 'a'*40}} if self.existing else None
             if '/git/commits/' in path:
-                return {'tree': {'sha': 'c'*40}}
+                return {'tree': {'sha': self.trees.get(path.rsplit('/', 1)[1], 'c'*40)}}
             if '/git/trees/' in path:
                 return self.tree
         if method == 'POST' and path.endswith('/git/trees'):
@@ -108,7 +120,7 @@ class BadgeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             badges.images('3.2.7-ERINTHAR', 'success', 'true')
 
-    def test_initial_publish_writes_only_nine_svg_paths_to_badges_ref(self):
+    def test_initial_publish_writes_only_eleven_svg_paths_to_badges_ref(self):
         api = API();rendered = badges.images('3.2.7-ERINTHAR', 'success')
         result = badges.publish(api, REPOSITORY, rendered)
         self.assertTrue(result['changed'])
@@ -179,7 +191,7 @@ class BadgeTests(unittest.TestCase):
     def test_readme_badges_are_repository_owned_and_source_seeds_are_valid(self):
         text = (ROOT / 'README.md').read_text()
         images = re.findall(r'\[!\[[^\]]+\]\(([^)]+)\)\]', text)
-        self.assertEqual(9, len(images))
+        self.assertEqual(11, len(images))
         for path in images:
             self.assertTrue(path.startswith(('resources/badges/',
                 'https://raw.githubusercontent.com/raleonys/citrine-eclipse-mirage/badges/resources/badges/')), path)
@@ -212,6 +224,74 @@ class BadgeTests(unittest.TestCase):
                 self.assertTrue(root.findall('.//'+svg+'linearGradient'))
                 self.assertTrue(root.find(".//"+svg+"path[@id='workflow-bg']") is not None)
                 self.assertIn(badges.CONCLUSIONS.get(conclusion, ('not run',))[0], root.attrib['aria-label'])
+
+    def test_native_report_counts_failures_and_skips_without_claiming_them_as_passes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'report.xml'
+            path.write_text('<testsuite tests="4"><testcase/><testcase><failure/></testcase>'
+                            '<testcase><error/></testcase><testcase><skipped/></testcase></testsuite>')
+            self.assertEqual((1, 4), badges.test_counts(path))
+            output = Path(tmp) / 'outputs'
+            run = subprocess.run([sys.executable, '-B', str(ROOT/'scripts/repository_badges.py'),
+                                  '--record-tests', str(path)], capture_output=True, text=True,
+                                 env={**os.environ, 'GITHUB_OUTPUT': str(output), 'PATH': tmp})
+            self.assertEqual(0, run.returncode, run.stderr)
+            self.assertEqual('passed=1\ntotal=4\n', output.read_text())
+            for data in ('<testsuite tests="2"><testcase/></testsuite>', '<testsuite tests="0"/>',
+                         '<html/>', '<!DOCTYPE testsuite><testsuite><testcase/></testsuite>'):
+                path.write_text(data)
+                with self.subTest(data=data), self.assertRaises(ValueError):
+                    badges.test_counts(path)
+
+    def test_native_badge_requires_the_same_git_tree_as_main_and_does_not_hide_failure(self):
+        api = API()
+        api.full_runs = [dict(id=12, event='pull_request', head_sha='1'*40,
+                             head_repository={'full_name': REPOSITORY}),
+                         dict(id=11, event='pull_request', head_sha='2'*40,
+                             head_repository={'full_name': REPOSITORY})]
+        api.trees = {'1'*40: 'a'*40, '2'*40: 'f'*40}
+        api.jobs[11] = [dict(name='Windows native', status='completed', conclusion='success',
+                            steps=[dict(name='Native tests: 222/222', conclusion='success')])]
+        result = badges.live_images(api, REPOSITORY)
+        self.assertIn('Tests (native): 222/222', result['tests.svg'])
+        self.assertFalse(any('/runs/12/jobs?' in path for _, path, _ in api.calls))
+        api.jobs[11][0].update(status='in_progress', conclusion=None)
+        self.assertIn('not available', badges.live_images(api, REPOSITORY)['tests.svg'])
+        api.jobs[11][0].update(status='completed', conclusion='failure')
+        api.jobs[11][0]['steps'][0]['name'] = 'Native tests: 220/222'
+        result = badges.live_images(api, REPOSITORY)['tests.svg']
+        self.assertIn('220/222', result)
+        self.assertIn('#e05d44', result)
+        for totals in ((2, 1, 'success'), (True, 1, 'success'), (0, 0, 'success')):
+            with self.assertRaises(ValueError):
+                badges.images(None, None, tests=totals)
+
+    def test_checksum_badge_requires_the_matching_uploaded_zip_and_sidecar(self):
+        api = API()
+        name = 'Citrine_Eclipse_Mirage_3.2.7_ERINTHAR.zip'
+        api.release['assets'] = [dict(name=name, state='uploaded', size=100),
+                                 dict(name=name+'.sha256', state='uploaded', size=108)]
+        self.assertIn('Checksums: SHA-256', badges.live_images(api, REPOSITORY)['checksums.svg'])
+        for problem in ('missing_zip', 'wrong_release', 'empty', 'uploading'):
+            bad = copy.deepcopy(api.release)
+            if problem == 'missing_zip': bad['assets'].pop(0)
+            elif problem == 'wrong_release': bad['assets'][1]['name'] = name.replace('3.2.7', '3.2.6')+'.sha256'
+            elif problem == 'empty': bad['assets'][1]['size'] = 0
+            else: bad['assets'][1]['state'] = 'starter'
+            with self.subTest(problem=problem):
+                self.assertFalse(badges.checksum_available(bad))
+        self.assertIsNone(badges.checksum_available(None))
+
+    def test_only_the_exact_legacy_nine_file_tree_can_upgrade_to_eleven(self):
+        rendered = badges.images(None, None)
+        tree = tree_for({name: value for name, value in rendered.items() if name in badges.LEGACY_NAMES})
+        api = API(existing=True, tree=tree)
+        self.assertTrue(badges.publish(api, REPOSITORY, rendered)['changed'])
+        tree['tree'].pop()
+        api = API(existing=True, tree=tree)
+        with self.assertRaises(ValueError):
+            badges.publish(api, REPOSITORY, rendered)
+        self.assertEqual([], api.writes())
 
 
 if __name__ == '__main__':
