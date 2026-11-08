@@ -59,6 +59,53 @@ static void byte_semantics() {
         require(one.bytes_without_terminator()=="<R>"+expected+"</R>\n");
     }
 }
+static void self_aliased_writer_inputs() {
+    // A caller may feed bytes_without_terminator() right back into this
+    // printer. Large expansions force vector/string storage relocation.
+    {
+        MemoryPrinter writer;
+        const std::string payload(8192,'x');
+        writer.open("R");writer.push_text(payload);
+        const auto borrowed=writer.bytes_without_terminator().substr(3);
+        require(borrowed.size()==payload.size());
+        writer.push_text(borrowed);
+        writer.close();
+        require(writer.bytes_without_terminator()=="<R>"+payload+payload+"</R>\n");
+    }
+    {
+        MemoryPrinter writer;
+        const std::string payload(8192,'q');
+        writer.open("R");writer.attribute("seed",payload+"data");
+        const auto source=writer.bytes_without_terminator();
+        const auto name=source.substr(source.size()-5,4);
+        const auto value=source.substr(9,payload.size());
+        writer.attribute(name,value);
+        writer.close();
+        require(writer.bytes_without_terminator()==
+            "<R seed=\""+payload+"data\" data=\""+payload+"\"/>\n");
+    }
+    {
+        MemoryPrinter writer;
+        const std::string payload(8192,'b');
+        writer.open("R");writer.push_text(payload);
+        const auto borrowed=writer.bytes_without_terminator().substr(3);
+        writer.push_text(borrowed,true);
+        writer.close();
+        require(writer.bytes_without_terminator()==
+            "<R>"+payload+"<![CDATA["+payload+"]]></R>\n");
+    }
+    {
+        MemoryPrinter writer;
+        const std::string payload(8192,'n');
+        writer.open("R");writer.push_text(payload);
+        const auto borrowed=writer.bytes_without_terminator().substr(3);
+        writer.open_element(borrowed,true);
+        writer.close_element(true);
+        writer.close();
+        require(writer.bytes_without_terminator()==
+            "<R>"+payload+"<"+payload+"/></R>\n");
+    }
+}
 static void actual_handler_and_greeting() {
     using namespace preloader_l::handlers;
     Attributes game,settings;Profile profile{};std::uint8_t online=0,pretend=7;
@@ -80,4 +127,4 @@ static void actual_handler_and_greeting() {
     const auto greeting=preloader_l::messages::initial_message_02d540(backend,random,"sdk<&");
     require(greeting==terminated("<LSX>\n    <Event sender=\"EALS\">\n        <Challenge version=\"sdk&lt;&amp;\" build=\"release\" key=\"00000000000000000000000000000000\"/>\n    </Event>\n</LSX>\n"));
 }
-int main(){shapes();byte_semantics();actual_handler_and_greeting();std::printf("PASS: %u checks; concrete recovered serializer; synthetic readers/random only\n",checks);}
+int main(){shapes();byte_semantics();self_aliased_writer_inputs();actual_handler_and_greeting();std::printf("PASS: %u checks; concrete recovered serializer; synthetic readers/random only\n",checks);}
