@@ -15,10 +15,12 @@ std::atomic<unsigned> registry_calls{0};
 std::atomic<LSTATUS> registry_open{ERROR_IO_PENDING},registry_query{ERROR_IO_PENDING},registry_close{ERROR_IO_PENDING};
 std::array<wchar_t,4096> registry_path{};
 void destroy(Object*){destroyed.fetch_add(1);}
-int status(Object*){return mode.load();}
-const char* username(Object*){return "fixture-online";}
-const char* persona(Object*){return "fixture-persona";}
-const char* user(Object*){return "fixture-user-id";}
+// Fault-only modes: 1 = offline status, 3 = null factory, 4/5/6 = null
+// username/persona/user getter. Production provider ABI is unchanged.
+int status(Object*){return mode.load()==1?1:0;}
+const char* username(Object*){return mode.load()==4?nullptr:"fixture-online";}
+const char* persona(Object*){return mode.load()==5?nullptr:"fixture-persona";}
+const char* user(Object*){return mode.load()==6?nullptr:"fixture-user-id";}
 std::uint8_t avatar(Object*,const wchar_t* path,const char* owner,std::int32_t size){
     if(!owner||std::string_view(owner)!="fixture-user-id"||(size!=0&&size!=2))return 0;
     auto* file=_wfopen(path,L"wb");if(!file)return 0;std::fputs("fixture-provider-avatar",file);std::fclose(file);return 0x80;
@@ -56,7 +58,8 @@ Object object{table};
 }
 extern "C" __declspec(dllexport) int version_check(){return 2;}
 extern "C" __declspec(dllexport) Object* create_online(const wchar_t* cookie) {
-    if(auto* file=_wfopen(cookie,L"wb")){std::fputs("fixture-cookie",file);std::fclose(file);}return &object;
+    if(auto* file=_wfopen(cookie,L"wb")){std::fputs("fixture-cookie",file);std::fclose(file);}
+    return mode.load()==3?nullptr:&object;
 }
 extern "C" __declspec(dllexport) void FixtureMode(int m){
     mode.store(m);destroyed.store(0);

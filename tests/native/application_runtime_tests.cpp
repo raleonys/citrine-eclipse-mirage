@@ -28,7 +28,29 @@ using namespace preloader_l;
 namespace fs=std::filesystem;
 namespace {
 int checks=0;
-void require(bool b,const char* text){++checks;if(!b)throw std::runtime_error(text);}
+void progress(const char* text) {
+    // Application startup can rebind the CRT streams to a console. Preserve
+    // CTest's original capture pipe so a timeout still identifies its phase.
+    struct Capture {
+        HANDLE stream=INVALID_HANDLE_VALUE;
+        Capture(){
+            const auto source=GetStdHandle(STD_ERROR_HANDLE);
+            if(source&&source!=INVALID_HANDLE_VALUE)
+                if(!DuplicateHandle(GetCurrentProcess(),source,GetCurrentProcess(),&stream,
+                    0,FALSE,DUPLICATE_SAME_ACCESS))stream=INVALID_HANDLE_VALUE;
+        }
+        ~Capture(){if(stream!=INVALID_HANDLE_VALUE)CloseHandle(stream);}
+    };
+    const auto error=GetLastError();
+    static Capture capture;
+    if(capture.stream!=INVALID_HANDLE_VALUE){
+        const auto line="runtime check "+std::to_string(checks)+": "+text+"\n";
+        DWORD written=0;
+        (void)WriteFile(capture.stream,line.data(),static_cast<DWORD>(line.size()),&written,nullptr);
+    }
+    SetLastError(error);
+}
+void require(bool b,const char* text){++checks;progress(text);if(!b)throw std::runtime_error(text);}
 struct Directory {
     fs::path path=fs::temp_directory_path()/("surge-runtime-"+std::to_string(GetCurrentProcessId()));
     Directory(){fs::remove_all(path);fs::create_directories(path);}
@@ -265,6 +287,7 @@ void stop_blocked_greeting() {
 }
 }
 int main(int argc,char** argv) try {
+    progress("begin event mutex contract");
     event_mutex_contract();
     avatar_provider_arguments();
     Directory directory;
@@ -427,13 +450,22 @@ int main(int argc,char** argv) try {
         const auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(5);
         while(!auth_entered()&&std::chrono::steady_clock::now()<deadline)Sleep(1);
         require(auth_entered()!=0,"real online getter did not enter its held foreign callback");
-        auto shutdown=std::async(std::launch::async,[&]{online.stop();});
+        // MSVC async uses a reusable task-pool worker. This statically linked
+        // test later scans its own image for native callback quiescence, so a
+        // completed task is insufficient: its worker must actually exit.
+        std::promise<void> stopped;
+        auto shutdown=stopped.get_future();
+        std::jthread shutdown_worker([&]{
+            try{online.stop();stopped.set_value();}
+            catch(...){stopped.set_exception(std::current_exception());}
+        });
         const bool premature=shutdown.wait_for(std::chrono::milliseconds(150))==std::future_status::ready;
         const bool image_present=GetModuleHandleW(provider_file.wstring().c_str())==provider_module;
         const bool object_live=destroyed()==0;
         // Always unblock the getter before waiting for stop; no hanging test
         // future or injected production behavior in the critical section.
         release_auth();
+        shutdown_worker.join();
         shutdown.get();
         require(!premature&&image_present&&object_live,
             "Application retired a foreign provider while its auth callback was active");
@@ -445,7 +477,34 @@ int main(int argc,char** argv) try {
         application::Application offline({(online_dir/"host.exe").u16string(),(online_dir/"offline-data").u16string(),false});offline.start();
         require(offline.configuration().username=="SURGE"&&destroyed()==1,"provider auth failure keeps source offline state and releases object");offline.stop();
     }
-    FreeLibrary(provider_module);
+    // B54: real DLL/Export, Application worker, and physical loader lease.
+    // Source-linked mocks already cover null pointers, but not failure teardown
+    // across the actual Windows module and Application startup owner.
+    for(int failure_mode:{3,4,5,6}) {
+        mode(failure_mode);
+        const auto failure_data=online_dir/("failure-"+std::to_string(failure_mode));
+        application::Application failing({
+            (online_dir/"host.exe").u16string(),failure_data.u16string(),false});
+        bool rejected=false;
+        try{failing.start();}
+        catch(const online::OutOfEvidenceInput&){rejected=true;}
+        require(rejected,"real online provider null factory/getter rejects startup");
+        const auto expected_destroyed=failure_mode==3?0:1;
+        require(destroyed()==expected_destroyed,
+            "null factory must not destroy a nonexistent object; null getter destroys once");
+        const auto& partial=failing.configuration();
+        require(partial.username==(failure_mode<5?"SURGE":"fixture-online"),
+            "native getter error preserves only previously committed username");
+        if(failure_mode==6)
+            require(partial.persona_id=="fixture-persona",
+                "third native getter failure preserves prior copied persona");
+        failing.stop();
+        require(destroyed()==expected_destroyed,
+            "post-failure stop cannot double-destroy provider object");
+    }
+    require(FreeLibrary(provider_module)!=FALSE,"release the independent native provider observer lease");
+    require(GetModuleHandleW(provider_file.wstring().c_str())==nullptr,
+        "all failed provider startups release the physical DLL image");
     const auto hook_dir=directory.path/"hooks";fs::create_directories(hook_dir);
     fs::copy_file(fs::path(argv[1]),hook_dir/"fixture-extra.dll");
     fs::copy_file(fs::path(argv[1]),hook_dir/"preloader_l_online.dll");
