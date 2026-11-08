@@ -33,9 +33,9 @@ fixed fixture identities under
 
 | Profile | Current rule |
 |---|---|
-| URSYNEX | Apply Brownfield's explicitly selected timestamp 0xCD268EB1, linker 14.0 and no-Rich-header profile to the copy, then recompute checksum. Following the owner's later instruction, permute complete import descriptors into the fixed DLL order; preserve names/thunks/IAT data. |
+| URSYNEX | Apply the selected timestamp 0xA6FD7C8F, linker 14.0 and no-Rich-header profile to the copy, then recompute checksum. Permute complete import descriptors into the fixed DLL order; preserve names/thunks/IAT data. |
 | ARYRA | MSVC six sections, or seven with the static UCRT `.fptable`: verify ordering, alignment, file bounds and non-overlap. `.fptable` must have virtual 0x100, raw 0x200, index 4, characteristics 0xC0000040 and all-zero data. Other section RVAs/sizes are not fixed. |
-| MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem 6.0, linker 14.0, timestamp 0xCD268EB1, no Rich header, Brownfield VERSIONINFO byte-for-byte. No PNG/RCDATA/manifest or COFF symbol/debug/certificate. Internal export name `preloader.unsigned.dll`. |
+| MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem 6.0, linker 14.0, timestamp 0xA6FD7C8F, no Rich header. Citrine Eclipse Mirage VERSIONINFO, Copyright 2026 SURGE, and matching selected numeric/string file and product versions. No PNG/RCDATA/manifest or COFF symbol/debug/certificate. Internal export name `citrine_eclipse_mirage.unsigned.dll`. |
 | CORVEXON | Exactly three C exports/ordinals. The CRT entrypoint is separate from exported DllMain and lies in executable `.text`. No static imports outside CRYPT32/WS2_32/KERNEL32/USER32/SHELL32/MSWSOCK; MSWSOCK only AcceptEx/GetAcceptExSockaddrs, CRYPT32 only CryptQueryObject. `/MT`, writable image-backed `/GS` cookie and valid checksum. |
 
 OLE32 originated in the earlier COM known-folder adapter
@@ -46,8 +46,9 @@ lookup. The final owner correction uses
 CRYPT32 is a normal PE import. The earlier
 five-module restriction excluded this authorized
 extension and was corrected. PNG is ordinary
-read-only C++ data. Brownfield's VERSIONINFO
-file bytes remain unchanged.
+read-only C++ data. The owner's project identity decision supersedes reference
+VERSIONINFO branding and random version values. Other resource structure and
+Golden checks remain strict. Synthetic fixture metadata remains independent.
 
 ```sh
 python -B scripts/run_golden_pipeline.py --check-target
@@ -85,25 +86,41 @@ cannot activate actual product policy.
 
 After all six stages, the finalized copy is
 passed to the existing runtime host as
-**preloader_l.dll**. Three actual
+**citrine_eclipse_mirage.dll**. Three actual
 load/start/socket/profile/stop/unload cycles
 must pass without mutation of the candidate
 bytes. Only then are these files written:
 
-- `dist/preloader_l.dll`
-- `dist/preloader_l.dll.sha256`
+- `dist/citrine_eclipse_mirage.dll`
+- `dist/citrine_eclipse_mirage.dll.sha256`
 - `dist/DIST_RECEIPT.json`
 
 The runtime name thus matches the Bluefield
 hook-11 filter. The raw link output remains
-`preloader.unsigned.dll`; copying does not
+`citrine_eclipse_mirage.unsigned.dll`; copying does not
 change the export-directory internal name
 or the three C exports. The earlier
 hash-named build candidate is also retained.
 If Golden or final runtime validation fails,
 no new dist is published; any prior successful
 bundle is preserved with its hash/source
-receipt. Results of the current attempt are
+receipt. A persistent OS-held writer lock and a verified
+rollback journal under `dist/.golden-transaction`
+protect the three public filenames against process termination
+between replacements. On the next local pipeline invocation
+the previous receipt-bound bundle is restored **before** any
+Golden stage runs. Recovery can also be requested explicitly
+with `python -B scripts/run_golden_pipeline.py --recover-dist`.
+The `.golden.lock` pathname is intentionally retained;
+actual lock ownership is released by the OS when a writer exits.
+A missing or tampered backup fails closed without overwriting
+more files. A terminated writer can leave a temporarily mixed
+bundle until recovery; direct consumers must not treat an
+unverified dist directory as atomic publication.
+Process-exit regressions cover interrupted promotion and replay;
+NTFS crash recovery, junction/ACL races, power-loss durability and
+Consumer acceptance remain separate evidence.
+Results of the current attempt are
 in `golden/GOLDEN_REPORT.json` under
 the build directory. Compile, Debug, Native,
 and CRT profiles cannot be promoted to dist,
@@ -123,7 +140,7 @@ former preserve-compiler decision are in
 [metadata audit](REFERENCE_METADATA_AUDIT.md).
 
 The owner requires the same import descriptor order in every MSVC
-application DLL profile, including `preloader.unsigned.dll`. The shared
+application DLL profile, including `citrine_eclipse_mirage.unsigned.dll`. The shared
 `scripts/import_descriptor_order.py` normalizes the unsigned image immediately
 after the linker completes and before the build partition gate and raw-asset
 inspection; `build_profile.ps1` independently verifies the resulting

@@ -8,6 +8,7 @@
 [![CMake 3.20+](https://img.shields.io/badge/CMake-3.20%2B-064F8C?logo=cmake&logoColor=white)](CMakeLists.txt)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![CI](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/raleonys/citrine-eclipse-mirage?label=Latest%20release)](https://github.com/raleonys/citrine-eclipse-mirage/releases/latest)
 
 A Windows-native C++ utility library focused on compatibility, maintainability, and controlled changes.
 

@@ -1,5 +1,10 @@
 # Reference metadata, profile avatar and native acceptance fixes
 
+Historical reference adoption record: the later project identity decision
+supersedes the reference VERSIONINFO branding and versions described below.
+Current `resources/version.rc` uses Citrine Eclipse Mirage and the selected
+semantic release version. See [DEVELOPMENT.md](DEVELOPMENT.md).
+
 The owner supplied a new metadata-reference DLL and a ZIP containing the new
 SURGE avatar. The source adopts the selected metadata fields and preserves the
 PNG bytes exactly. Delivery labels remain external to the source package.
@@ -18,8 +23,8 @@ Reference DLL SHA-256:
 New avatar SHA-256:
 `7ef474ef2d4f52bc6859a5db2d1fc164891eed5793330aa73f57e386056fa639`.
 
-`resources/preloader_version.rc` and its source hash, the resource contract,
-MUSTAVEX requirements and URSYNEX timestamp mutation agree on the new reference.
+At reference adoption, the resource source and its hash, the resource contract,
+MUSTAVEX requirements and URSYNEX timestamp mutation agreed on the new reference.
 The historical synthetic parser policies keep their historical values. The
 product-finalizer regression uses the active product timestamp. Original supplied
 DLL bytes stay outside the product source; the extraction is read-only.

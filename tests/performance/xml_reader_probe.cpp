@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/xml/reader.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
 #include <atomic>
 #include <pugixml.hpp>
 #include <chrono>
@@ -47,10 +47,10 @@ void operator delete[](void* p,std::size_t) noexcept {std::free(p);}
 namespace {
 void* pugi_allocate(std::size_t size){try{return ::operator new(size);}catch(const std::bad_alloc&){return nullptr;}}
 void pugi_release(void* pointer){::operator delete(pointer);}
-namespace reader=preloader_l::xml_reader_bridge;
+namespace reader=citrine_eclipse_mirage::xml_reader_bridge;
 std::atomic<std::size_t> result_sink{0};
 void require(bool value,const char* reason){if(!value)throw std::runtime_error(reason);}
-std::size_t traverse(const preloader_l::messages::XmlNode* node){
+std::size_t traverse(const citrine_eclipse_mirage::messages::XmlNode* node){
     std::size_t result=0;
     for(;node;node=node->next_element()){
         result+=node->name().size();if(auto value=node->attribute("v"))result+=value->size();

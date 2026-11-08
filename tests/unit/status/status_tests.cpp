@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/status.hpp"
+#include "citrine_eclipse_mirage/runtime/status.hpp"
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <filesystem>
@@ -8,7 +8,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-using namespace preloader_l::status;
+using namespace citrine_eclipse_mirage::status;
 namespace {
 int checks = 0;
 void check(bool value) { ++checks; if (!value) throw std::runtime_error("status test failed at check " + std::to_string(checks)); }
