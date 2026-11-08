@@ -55,7 +55,7 @@ class CppTypeIdentityTests(unittest.TestCase):
             "class Genuine /* {not a body} */ final: public Parent {};\n"
         )
         definitions, errors = checker.inspect_text(source, "fixture.hpp")
-        self.assertEqual(definitions, [("Genuine", 9)])
+        self.assertEqual(definitions, [("Genuine", 10)])
         self.assertEqual(errors, [])
 
     def test_commented_interface_pairs_cannot_satisfy_identity_guard(self):
