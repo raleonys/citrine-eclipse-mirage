@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Test the actual Environment ProgramData and LocalAppData adapters with required-size counts, repeated 260-code-unit growth, exact UTF-16 lengths, empty/missing results, retry and configured ProgramData bypass. Production behavior is unchanged.
+
 - Add a live Latest release badge to the README linking to the latest published GitHub release. Keep the version dynamic so future releases require no README edit.
 
 - Strengthen server startup failure tests with exact error values, categories, accepted operation labels and pre-publication stop order. Cover an IO-context run error after readiness without normal destruction; adapt Archive 12 test principles without changing product diagnostics, runtime policy or backend ownership.
