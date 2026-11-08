@@ -1238,8 +1238,8 @@
       "sha256": "dd0e73c17f4ae7102ab6675fcd4484bbb46ed41be7203b0c524318399b862bc6"
     },
     "tests/native/application_runtime_tests.cpp": {
-      "bytes": 48443,
-      "sha256": "d872f6eecd1e891afb1c952a57f39789dc5f39e2401004aac7ffed96a13b170d"
+      "bytes": 48402,
+      "sha256": "65be5e8f0c46c5e1df2bd96da5b957f3356936f10f7c11f5f4ce430ec9274103"
     },
     "tests/native/application_shutdown_failure_tests.cpp": {
       "bytes": 15590,
