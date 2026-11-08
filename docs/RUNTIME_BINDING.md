@@ -84,7 +84,7 @@ owner even if allocation to append it to the source
 list fails. Cleanup releases leases once.
 
 A later owner correction imported Brownfield's
-`resources/preloader_version.rc` byte-identically.
+`resources/version.rc` byte-identically.
 Fixed VERSIONINFO numeric fields, four string fields,
 and translation profile 0409/1200 were retained.
 Following the last owner correction, the PNG is
@@ -98,3 +98,19 @@ The selected contract is in
 and the then-current two-resource allowlist, not just
 the image. That historical resource profile does not
 automatically activate other PE header/ABI/Golden policies.
+
+The production provider adapter treats an exception after foreign destructor entry
+as an unknown destruction outcome. It retains the exact object and module records
+and the original exception, rejects later calls before object/table access, and
+keeps cleanup unsuccessful so the application owner remains retained. A missing
+object/table/slot detected before entry remains retryable. Successful destruction
+still clears the object and permits module-only retry if FreeLibrary fails. This
+adapter policy does not change the recovered online source or establish native
+provider ABI equivalence.
+
+The stored foreign exception stays owned alongside the pinned provider module;
+there is no reset or automatic retry after an unknown destruction outcome.
+An ordinary successful destructor return creates no stored failure. The DLL
+worker reaches owner.reset() and reports shutdown success only after stop()
+returns, so this retained failure keeps both the application and worker image
+lease alive until process termination.

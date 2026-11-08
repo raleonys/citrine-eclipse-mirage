@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/hook_engine_api.hpp"
+#include "citrine_eclipse_mirage/platform/hook_engine_api.hpp"
 #include <MinHook.h>
-namespace preloader_l::platform::hook_engine {
+namespace citrine_eclipse_mirage::platform::hook_engine {
 // This backend returns the application codes directly. Fail compilation if a
 // future vendor selection changes that mapping; keep vendor details here.
 static_assert(MH_UNKNOWN==status_code::unknown && MH_OK==status_code::ok);

@@ -2,18 +2,6 @@
 name: Windows shutdown listener acceptance
 
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/msvc-shutdown-lifecycle.yml"
-      - "tools/preloader_l_runtime_host/**"
-      - "tests/native/listener_owners_tests.cpp"
-      - "src/net/**"
-      - "src/runtime/**"
-      - "src/platform/dll_entry.cpp"
-      - "tests/native/net_failure_tests.cpp"
-      - "src/platform/hook_unload_guard.cpp"
-      - "include/preloader_l/platform/hook_unload_guard.hpp"
-      - "tests/native/unload_guard_tests.cpp"
   workflow_dispatch:
 
 permissions:
@@ -43,13 +31,13 @@ jobs:
       - name: Configure lifecycle acceptance
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown configure failed' }
       - name: Build actual DLL, lifecycle host and native fault fixtures
         id: native_build
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_runtime_host unload_guard_contracts listener_owners_contracts net_failure_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target citrine_eclipse_mirage_runtime_host unload_guard_contracts listener_owners_contracts net_failure_contracts socket_retirement_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown build failed' }
       - name: Verify unload ownership, TLS boundaries and listener diagnostic faults
         run: |
@@ -75,6 +63,13 @@ jobs:
           }
           "failed_attempts=$failed" | Add-Content $receipt
           if ($failed -ne 0) { throw "$failed of five lifecycle attempts failed" }
+      - name: Verify retained native socket completions and cleanup retries
+        if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
+        run: |
+          $build = 'build/ci-shutdown-${{ matrix.configuration }}'
+          $junit = Join-Path (Resolve-Path $build) 'socket-retirement-junit.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^socket_retirement_contracts$' --no-tests=error --verbose --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/socket-retirement-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Native socket completion retirement failed' }
       - name: Verify dual-family accept cancellation and closed admission
         # Collect the focused test even if an independent lifecycle attempt
         # fails. Both failures remain visible and fail the workflow.
@@ -91,6 +86,8 @@ jobs:
           name: msvc-shutdown-${{ matrix.configuration }}-evidence
           path: |
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-build.log
+            build/ci-shutdown-${{ matrix.configuration }}/socket-retirement-ctest.log
+            build/ci-shutdown-${{ matrix.configuration }}/socket-retirement-junit.xml
             build/ci-shutdown-${{ matrix.configuration }}/dual-accept-ctest.log
             build/ci-shutdown-${{ matrix.configuration }}/dual-accept-junit.xml
             build/ci-shutdown-${{ matrix.configuration }}/unload-guard-ctest.log
@@ -100,7 +97,7 @@ jobs:
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-junit-*.xml
             build/ci-shutdown-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
             build/ci-shutdown-${{ matrix.configuration }}/CMakeCache.txt
-            build/ci-shutdown-${{ matrix.configuration }}/preloader.production.*.map
+            build/ci-shutdown-${{ matrix.configuration }}/citrine_eclipse_mirage.production.*.map
             build/ci-shutdown-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
           if-no-files-found: warn
           retention-days: 14

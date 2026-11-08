@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include <asio.hpp>
-#include "preloader_l/runtime/control.h"
+#include "citrine_eclipse_mirage/runtime/control.h"
 #include "tools/runtime_probe.hpp"
 #include <filesystem>
 #include <iostream>
@@ -17,7 +17,7 @@ void scenario(const wchar_t* path,std::wstring_view selected){
     const auto value=reinterpret_cast<unsigned(*)(unsigned)>(GetProcAddress(module,"FixtureValue"));
     require(stop&&mode&&value,"fixture methods");
     asio::io_context io;asio::ip::tcp::socket peer(io);std::string buffered;
-    preloader_l::tools::wait_for_application(peer,buffered);
+    citrine_eclipse_mirage::tools::wait_for_application(peer,buffered);
     const auto ready_deadline=std::chrono::steady_clock::now()+std::chrono::seconds(10);
     while(!value(0)&&std::chrono::steady_clock::now()<ready_deadline)Sleep(1);
     require(value(0)&&value(2)==1,"real Application ready");

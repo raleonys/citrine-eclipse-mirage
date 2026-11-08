@@ -3,6 +3,7 @@
 """Golden target activation; fixtures never activate a product contract."""
 import json
 from pathlib import Path
+from project_version import resolve_policy
 
 
 class PolicyPending(ValueError):
@@ -42,4 +43,4 @@ def load_target(root, name):
     if policy.get('fixture_only'):
         raise PolicyPending('Synthetic fixtures cannot activate a product target')
     validate_product_policy(name, policy)
-    return policy
+    return resolve_policy(policy, root)

@@ -2,11 +2,13 @@
 
 #include "../../support/fixture_ascii.hpp"
 #include <ws2tcpip.h>
-#include "preloader_l/platform/hook_native_callbacks.hpp"
-#include "preloader_l/platform/callback_lock.hpp"
+#include "citrine_eclipse_mirage/platform/hook_native_callbacks.hpp"
+#include "citrine_eclipse_mirage/platform/callback_lock.hpp"
 #include <algorithm>
 #include <atomic>
 #include <bit>
+#include <barrier>
+#include <memory>
 #include <cstring>
 #include <iostream>
 #include <thread>
@@ -17,8 +19,8 @@
 #include <condition_variable>
 #include <chrono>
 #include <functional>
-using namespace preloader_l::native;
-using preloader_l::host_init::callback_count;
+using namespace citrine_eclipse_mirage::native;
+using citrine_eclipse_mirage::host_init::callback_count;
 namespace {
 int checks;
 void require(bool b,const char* s){++checks;if(!b)throw std::runtime_error(s);}
@@ -83,11 +85,11 @@ BOOL WINAPI original_crypt(DWORD type,const void* object,DWORD content,DWORD for
     if(context)*context=reinterpret_cast<const void*>(0x666);
     SetLastError(0x1234abcd);return seen.crypt_result;
 }
-struct CryptHost final:preloader_l::platform::CryptQueryHost {
-    preloader_l::platform::WindowsCryptQueryHost native;
+struct CryptHost final:citrine_eclipse_mirage::platform::CryptQueryHost {
+    citrine_eclipse_mirage::platform::WindowsCryptQueryHost native;
     bool readable=true;
-    preloader_l::hooks::PathProbe inspect_path(const void* p)noexcept override{
-        const auto result=readable?native.inspect_path(p):preloader_l::hooks::PathProbe{};SetLastError(991);return result;
+    citrine_eclipse_mirage::hooks::PathProbe inspect_path(const void* p)noexcept override{
+        const auto result=readable?native.inspect_path(p):citrine_eclipse_mirage::hooks::PathProbe{};SetLastError(991);return result;
     }
 };
 LSTATUS WINAPI original_open_a(HKEY k,LPCSTR s,DWORD o,REGSAM a,PHKEY p){++seen.open_a;seen.key=k;seen.name=s;seen.options=o;seen.access=a;seen.result=p;if(p)*p=reinterpret_cast<HKEY>(0x4567);SetLastError(321);return -5;}
@@ -125,17 +127,17 @@ struct Effects final:OriginalEffects {
     int waits{},allocs{},frees{},crypt_observations{};std::vector<std::string> events;
     std::function<void()> registry_wait;
     std::function<void()> network_wait;
-    void crypt_observed(preloader_l::hooks::Selection) noexcept override{++crypt_observations;SetLastError(993);}
+    void crypt_observed(citrine_eclipse_mirage::hooks::Selection) noexcept override{++crypt_observations;SetLastError(993);}
     Effects(const std::array<std::uintptr_t,callback_count>& s,Wide& w,CryptHost& h):OriginalEffects(s,w,h){}
-    std::string filesystem_narrow(std::u16string_view s)override{return preloader_l::test_support::fixture_ascii(s);}
+    std::string filesystem_narrow(std::u16string_view s)override{return citrine_eclipse_mirage::test_support::fixture_ascii(s);}
     int crt_stricmp(const char* a,const char* b)override{std::string x(a),y(b);for(auto& c:x)if(c>='A'&&c<='Z')c+=32;for(auto& c:y)if(c>='A'&&c<='Z')c+=32;return x.compare(y);}
     int crt_strcpy_s(char* d,std::size_t n,const char* s)override{const auto len=std::strlen(s)+1;if(!d||len>n)return 34;std::memcpy(d,s,len);return 0;}
-    preloader_l::registry::Handle allocate_4_04b0bc()override{++allocs;return 0x9876;}
-    void free_04b0f8(preloader_l::registry::Handle p)override{require(p==0x9876,"fabricated handle identity freed");++frees;}
+    citrine_eclipse_mirage::registry::Handle allocate_4_04b0bc()override{++allocs;return 0x9876;}
+    void free_04b0f8(citrine_eclipse_mirage::registry::Handle p)override{require(p==0x9876,"fabricated handle identity freed");++frees;}
     void wait_036880(std::int32_t n)override{
         require(n==-1,"registry startup count");++waits;
         const auto incoming=GetLastError();
-        {preloader_l::callback_lock::Pause pause;if(registry_wait)registry_wait();}
+        {citrine_eclipse_mirage::callback_lock::Pause pause;if(registry_wait)registry_wait();}
         SetLastError(incoming);
     }
     void wait_steps_036880(std::int32_t n)override{require(n==-1,"network startup count");++waits;if(network_wait)network_wait();}
@@ -149,8 +151,8 @@ struct Effects final:OriginalEffects {
     [[noreturn]]void exit_05cdc0(std::uint32_t)override{throw std::runtime_error("unexpected exit");}
 };
 struct Fixture {
-    preloader_l::host_init::Values values{{"ClientKey",u"Client\\Key"},{"ClientKey2",u"Client\\Key2"},{"ClientValue",u"ClientPath"},{"ClientPath",u"C:\\game.exe"},{"Documents",u"D:\\docs"}};
-    preloader_l::registry::Handles clients,languages,fabricated;std::uint8_t language=0;
+    citrine_eclipse_mirage::host_init::Values values{{"ClientKey",u"Client\\Key"},{"ClientKey2",u"Client\\Key2"},{"ClientValue",u"ClientPath"},{"ClientPath",u"C:\\game.exe"},{"Documents",u"D:\\docs"}};
+    citrine_eclipse_mirage::registry::Handles clients,languages,fabricated;std::uint8_t language=0;
     std::int32_t v4=16,v6=28;std::uint16_t port=6099;std::uint32_t attempts=0;
     std::array<std::uintptr_t,callback_count> originals{};Wide wide;CryptHost crypt_host;Effects effects;Context context;Binding binding;
     explicit Fixture(Errors& policy=faults):originals{reinterpret_cast<std::uintptr_t>(&original_connect),reinterpret_cast<std::uintptr_t>(&original_open_a),reinterpret_cast<std::uintptr_t>(&original_open_w),reinterpret_cast<std::uintptr_t>(&original_close),reinterpret_cast<std::uintptr_t>(&original_query_a),reinterpret_cast<std::uintptr_t>(&original_query_w),reinterpret_cast<std::uintptr_t>(&original_process_a),reinterpret_cast<std::uintptr_t>(&original_process_w),reinterpret_cast<std::uintptr_t>(&original_folder_a),reinterpret_cast<std::uintptr_t>(&original_folder_w),reinterpret_cast<std::uintptr_t>(&original_crypt)},
@@ -397,6 +399,115 @@ void test_binding_lifecycle(){
     {Binding replacement(f.context,faults);require(is_bound(),"context may be bound again explicitly after quiescence");}
     require(!is_bound(),"binding destructor closes idle context");
 }
+void test_concurrent_binding_constructors(){
+    Fixture first;first.binding.close();
+    Fixture second;second.binding.close();
+    first.values["Documents"]=u"C:\\first";
+    second.values["Documents"]=u"D:\\second";
+    std::array<Context*,2> contexts{&first.context,&second.context};
+    std::array<std::unique_ptr<Binding>,2> owners;
+    std::array<bool,2> rejected{};
+    std::array<std::exception_ptr,2> unexpected{};
+    std::barrier start(3);
+    auto construct=[&](std::size_t index){
+        start.arrive_and_wait();
+        try{owners[index]=std::make_unique<Binding>(*contexts[index],faults);}
+        catch(const Life& error){rejected[index]=error.fault==LifecycleFault::AlreadyBound;}
+        catch(...){unexpected[index]=std::current_exception();}
+        // Hold the winner until both constructors finish, so the loser cannot
+        // succeed merely because the first owner was already destroyed.
+    };
+    std::thread left(construct,0),right(construct,1);
+    start.arrive_and_wait();left.join();right.join();
+    require(!unexpected[0]&&!unexpected[1],"concurrent binding construction has no unexpected exception");
+    require(static_cast<bool>(owners[0])!=static_cast<bool>(owners[1])&&
+            rejected[0]!=rejected[1]&&is_bound(),
+            "concurrent constructors admit exactly one binding and reject the other");
+    const std::size_t winner=owners[0]?0:1;
+    std::array<wchar_t,260> output{};
+    require(folder_w_entry(nullptr,5,nullptr,0,output.data())==0&&
+            std::wstring(output.data())==(winner==0?L"C:\\first":L"D:\\second")&&active_calls()==0,
+            "native callback observes the winning constructor's context");
+    owners[winner].reset();
+    require(!is_bound(),"winning constructor retains sole cleanup ownership");
+}
+void test_closed_binding_destruction_with_live_replacement(){
+    Fixture f;f.binding.close();
+    auto old=std::make_unique<Binding>(f.context,faults);
+    old->close();
+    Binding replacement(f.context,faults);
+    old.reset();
+    require(is_bound(),"destroying a closed binding preserves its live replacement");
+    std::array<wchar_t,260> output{};
+    require(folder_w_entry(nullptr,5,nullptr,0,output.data())==0&&
+            std::wstring(output.data())==L"D:\\docs"&&active_calls()==0,
+            "replacement remains callable after closed owner destruction");
+    replacement.close();
+    require(!is_bound(),"replacement closes normally after old owner destruction");
+}
+void test_staged_cross_family_binding_drain(){
+    // A11-04/B51 comparison: current product owns a *shared native hook*
+    // lease counter, not a donor-only Application-entry admission gate.
+    // Hold two different SDK callback families independently; a successful
+    // first return must not release the second callback's Binding ownership.
+    Fixture f;
+    const auto before_process=seen.process_a.load();
+    const auto before_connect=seen.connect.load();
+    {std::lock_guard lock(seen.mutex);seen.block=true;seen.entered=false;seen.release=false;}
+    std::mutex peer_mutex;std::condition_variable peer_cv;
+    bool peer_entered=false,peer_release=false;
+    seen.connect_wait=[&](SOCKET socket){
+        if(socket!=202)return;
+        std::unique_lock lock(peer_mutex);
+        peer_entered=true;peer_cv.notify_all();
+        peer_cv.wait(lock,[&]{return peer_release;});
+    };
+    BOOL process_result=0;DWORD process_error=0;
+    int connect_result=0;DWORD connect_error=0;
+    std::thread process_thread([&]{
+        SetLastError(0xa110);
+        process_result=process_a_entry("other",nullptr,nullptr,nullptr,0,0,nullptr,nullptr,nullptr,nullptr);
+        process_error=GetLastError();
+    });
+    bool process_entered=false;
+    {std::unique_lock lock(seen.mutex);
+     process_entered=seen.cv.wait_for(lock,std::chrono::seconds(5),[]{return seen.entered;});}
+    std::thread connect_thread([&]{
+        SetLastError(0xa111);
+        connect_result=connect_entry(202,nullptr,-1);
+        connect_error=GetLastError();
+    });
+    bool connect_entered=false;
+    {std::unique_lock lock(peer_mutex);
+     connect_entered=peer_cv.wait_for(lock,std::chrono::seconds(5),[&]{return peer_entered;});}
+    const auto both_active=active_calls();
+    bool both_busy=false;
+    try{f.binding.close();}catch(const Life& error){both_busy=error.fault==LifecycleFault::Busy;}
+    const bool both_bound=is_bound();
+    {std::lock_guard lock(seen.mutex);seen.release=true;seen.cv.notify_all();}
+    process_thread.join();
+    const auto one_active=active_calls();
+    bool one_busy=false;
+    try{f.binding.close();}catch(const Life& error){one_busy=error.fault==LifecycleFault::Busy;}
+    const bool one_bound=is_bound();
+    {std::lock_guard lock(peer_mutex);peer_release=true;peer_cv.notify_all();}
+    connect_thread.join();
+    seen.connect_wait={};
+    {std::lock_guard lock(seen.mutex);seen.block=false;}
+    const auto drained=active_calls();
+    const bool bound_before_final_close=is_bound();
+    if(drained==0&&bound_before_final_close)f.binding.close();
+    require(process_entered&&connect_entered&&both_active==2&&both_busy&&both_bound,
+        "two independent OS callback families retain distinct native Binding leases");
+    require(one_active==1&&one_busy&&one_bound,
+        "Binding close must remain busy after the first callback returns");
+    require(drained==0&&bound_before_final_close&&!is_bound(),
+        "only final callback retirement permits a successful Binding close");
+    require(process_result==7&&process_error==325&&connect_result==-10035&&connect_error==327,
+        "each admitted native callback retains its exact return and thread-local error");
+    require(seen.process_a==before_process+1&&seen.connect==before_connect+1,
+        "exactly one original process and one original connect call complete");
+}
 void test_live_owner_state_identity(){
     Fixture f;
     // Mutations AFTER Effects/Context/Binding construction must reach callbacks.
@@ -466,7 +577,7 @@ void test_crypt_forwarding(){
     std::memcpy(truncated,matching,units*sizeof(wchar_t));
     const auto partial=f.crypt_host.native.inspect_path(truncated);
     require(!partial.valid,"matching suffix without readable terminator remains unreadable");
-    require(preloader_l::hooks::select_object(1,false,partial)==preloader_l::hooks::Selection::original,"unreadable matching suffix does not substitute");
+    require(citrine_eclipse_mirage::hooks::select_object(1,false,partial)==citrine_eclipse_mirage::hooks::Selection::original,"unreadable matching suffix does not substitute");
     auto* terminated=pages+system.dwPageSize-sizeof(matching);
     std::memcpy(terminated,matching,sizeof(matching));
     const auto complete=f.crypt_host.native.inspect_path(terminated);
@@ -526,13 +637,13 @@ void test_terminal_policy_lifetime() {
                 "retired callback policy cannot run; live policy still handles exceptions");
     }
 }
-#if !defined(PRELOADER_L_PRODUCTION_CALLBACK_TESTS)
-struct InitRemaining final:preloader_l::host_init::Effects {
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PRODUCTION_CALLBACK_TESTS)
+struct InitRemaining final:citrine_eclipse_mirage::host_init::Effects {
     std::array<std::uintptr_t,callback_count>& targets;std::size_t index{};
     explicit InitRemaining(std::array<std::uintptr_t,callback_count>& t):targets(t){}
     std::u16string filesystem_widen_006d70(std::string_view s)override{return {s.begin(),s.end()};}
     std::uint64_t version_condition_mask(std::uint64_t m,std::uint32_t t,std::uint8_t)override{return m+t;}
-    bool verify_version(const preloader_l::host_init::VersionRequest&,std::uint32_t,std::uint64_t)override{return true;}
+    bool verify_version(const citrine_eclipse_mirage::host_init::VersionRequest&,std::uint32_t,std::uint64_t)override{return true;}
     std::int32_t initialize_engine_046a20()override{throw std::logic_error("unrouted engine init");}
     std::uintptr_t get_module_handle(std::u16string_view)override{return 1;}
     std::uintptr_t get_proc_address(std::uintptr_t,std::string_view)override{return targets.at(index++);}
@@ -542,7 +653,7 @@ struct InitRemaining final:preloader_l::host_init::Effects {
     void log_integer_00af90(std::int32_t)override{}
     void finish_log_0088e0()override{}
 };
-struct InitApi final:preloader_l::platform::hook_engine::Api {
+struct InitApi final:citrine_eclipse_mirage::platform::hook_engine::Api {
     std::array<std::uintptr_t,callback_count>& targets;std::array<std::uintptr_t,callback_count> detours{};std::size_t enabled{};
     explicit InitApi(std::array<std::uintptr_t,callback_count>& t):targets(t){}
     int initialize()override{return 0;}
@@ -576,10 +687,10 @@ struct InitApi final:preloader_l::platform::hook_engine::Api {
 };
 void test_actual_host_install_binding(){
     Fixture f;auto targets=f.originals;f.originals.fill(0);InitRemaining remaining(targets);InitApi api(targets);Resolver resolver;
-    preloader_l::platform::hook_engine::HostInitEffects effects(remaining,api,resolver);preloader_l::configuration::State config{};
+    citrine_eclipse_mirage::platform::hook_engine::HostInitEffects effects(remaining,api,resolver);citrine_eclipse_mirage::configuration::State config{};
     config.executable_path=u"C:\\synthetic\\game.exe";config.block_reruns=1;config.documents=u"D:\\synthetic-docs";
     std::vector<std::uintptr_t> enabled;
-    preloader_l::host_init::initialize_host_00e310({config,f.values,enabled,f.originals},effects);
+    citrine_eclipse_mirage::host_init::initialize_host_00e310({config,f.values,enabled,f.originals},effects);
     require(api.enabled==callback_count&&enabled==std::vector<std::uintptr_t>(targets.begin(),targets.end()),"actual host-init/native resolver/callback/original-effect graph installs eleven synthetic callbacks");
     require(f.originals==targets,"all original slots populated before callback can run");
 }
@@ -614,8 +725,8 @@ int main(int argc,char** argv){try{
         else if(std::strcmp(argv[1],"--crypt-invalid")==0){const wchar_t invalid[]={0xd800,0};require(crypt_query_entry(1,invalid,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr)==7,"invalid UTF16 forwards instead of trapping");return 0;}
         return 98;
     }
-    test_resolver_and_registry();test_process_folder_connect();test_binding_lifecycle();test_live_owner_state_identity();test_crypt_forwarding();test_crypt_lifetime();
-#if !defined(PRELOADER_L_PRODUCTION_CALLBACK_TESTS)
+    test_resolver_and_registry();test_process_folder_connect();test_binding_lifecycle();test_concurrent_binding_constructors();test_closed_binding_destruction_with_live_replacement();test_staged_cross_family_binding_drain();test_live_owner_state_identity();test_crypt_forwarding();test_crypt_lifetime();
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PRODUCTION_CALLBACK_TESTS)
     test_actual_host_install_binding();
 #endif
     test_registry_startup_wait_allows_peer_callbacks();

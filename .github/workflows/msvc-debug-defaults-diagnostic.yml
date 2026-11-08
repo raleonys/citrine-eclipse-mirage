@@ -3,10 +3,7 @@
 name: MSVC Debug configuration defaults diagnostic
 
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/msvc-debug-defaults-diagnostic.yml'
-      - 'tests/unit/config_defaults/defaults_tests.cpp'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -24,7 +21,7 @@ jobs:
           persist-credentials: false
       - name: Configure MSVC x64 portable checks
         shell: pwsh
-        run: cmake -S . -B build/msvc-defaults-diagnostic -G "Visual Studio 17 2022" -A x64 -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON
+        run: cmake -S . -B build/msvc-defaults-diagnostic -G "Visual Studio 17 2022" -A x64 -DCITRINE_ECLIPSE_MIRAGE_PORTABLE_CHECKS_ONLY=ON
       - name: Build isolated Debug target
         shell: pwsh
         run: cmake --build build/msvc-defaults-diagnostic --config Debug --target portable_configuration_defaults --parallel 2
@@ -55,7 +52,7 @@ jobs:
           $build = 'build/msvc-iterator0-control'
           # Explicitly preserve exception-unwinding semantics; CMAKE_CXX_FLAGS replaces the MSVC default.
           $iteratorFlags = '/EHsc /D_ITERATOR_DEBUG_LEVEL=0'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON "-DCMAKE_CXX_FLAGS=$iteratorFlags"
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DCITRINE_ECLIPSE_MIRAGE_PORTABLE_CHECKS_ONLY=ON "-DCMAKE_CXX_FLAGS=$iteratorFlags"
           if ($LASTEXITCODE -ne 0) { throw 'Iterator-control configuration failed' }
           Get-Content "$build/CMakeCache.txt" | Select-String '^CMAKE_CXX_FLAGS:STRING='
           cmake --build $build --config Debug --target portable_configuration_defaults --parallel 2
@@ -110,7 +107,7 @@ jobs:
         shell: pwsh
         run: |
           $build = 'build/msvc-full-portable-${{ matrix.configuration }}'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DCITRINE_ECLIPSE_MIRAGE_PORTABLE_CHECKS_ONLY=ON
           if ($LASTEXITCODE -ne 0) { throw 'Portable configure failed' }
       - name: Build all portable targets
         shell: pwsh

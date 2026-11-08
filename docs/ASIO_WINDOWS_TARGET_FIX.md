@@ -13,7 +13,7 @@ _WIN32_WINNT=0x0601 WINVER=0x0601
 
 These definitions were missing from the Yellowfield adaptation, so Asio emitted
 its default-assumption message for each affected translation unit. Both values
-were added to the Windows `preloader_l_asio INTERFACE` target. Application,
+were added to the Windows `citrine_eclipse_mirage_asio INTERFACE` target. Application,
 host, and test targets that consume it now receive the same definitions before
 including the corresponding headers.
 

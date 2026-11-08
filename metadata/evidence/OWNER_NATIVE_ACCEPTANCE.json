@@ -5,15 +5,17 @@
   "profiles": {
     "compile": {
       "evidence": "OWNER_ACCEPTANCE_COMPILE.log",
-      "sha256": "b45544db043237df57bb6cd15daf5abc1c67d3d6683766f13b8f2b83f56de721",
+      "sha256": "cc9b03fabca6526dd4f7dcb7ad8cc597292bd34e621d9caf5617c25a1a0c42e9",
       "result": "PASS_USER_SUPPLIED_WINDOWS_LOG",
       "dll_sha256": "bdda588afad1ec2110c4170174f92757cb4dbb0e21fb5d8fb2b79b35ef2c3ddb",
       "tests": null,
-      "warning_count": 0
+      "warning_count": 0,
+      "original_evidence_sha256": "b45544db043237df57bb6cd15daf5abc1c67d3d6683766f13b8f2b83f56de721",
+      "evidence_copy": "OWNER_APPROVED_PRIVACY_REDACTION; execution result is historical and unchanged"
     },
     "production": {
       "evidence": "OWNER_ACCEPTANCE_PRODUCTION.log",
-      "sha256": "346ad5d7fc8394a67ecdff75295fe3e716e94017d681db6a8ff2a931f7c98d08",
+      "sha256": "b26a8217397f6e60226709077869bd1f31e770f287f78a5805d7627ef3ff265d",
       "result": "PASS_USER_SUPPLIED_WINDOWS_LOG",
       "dll_sha256": "4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b",
       "tests": null,
@@ -25,31 +27,39 @@
         "MUSTAVEX Golden Metadata",
         "CORVEXON Golden Trail",
         "FALCION Golden Cleaning"
-      ]
+      ],
+      "original_evidence_sha256": "346ad5d7fc8394a67ecdff75295fe3e716e94017d681db6a8ff2a931f7c98d08",
+      "evidence_copy": "OWNER_APPROVED_PRIVACY_REDACTION; execution result is historical and unchanged"
     },
     "debug": {
       "evidence": "OWNER_ACCEPTANCE_DEBUG.log",
-      "sha256": "115141f1f81ea094e87a7b153a1a79ad01e0b1a97a1420b962a8d9c1a556fc99",
+      "sha256": "967770bca21097c2e895bfe4a84dd4f51c9ddf61be8a085d13fd2cab9a12f91f",
       "result": "PASS_USER_SUPPLIED_WINDOWS_LOG",
       "dll_sha256": "ec63df6c2c9b347e8983de07a98644986b932348191ed1e522a75f958e43c89b",
       "tests": null,
-      "warning_count": 0
+      "warning_count": 0,
+      "original_evidence_sha256": "115141f1f81ea094e87a7b153a1a79ad01e0b1a97a1420b962a8d9c1a556fc99",
+      "evidence_copy": "OWNER_APPROVED_PRIVACY_REDACTION; execution result is historical and unchanged"
     },
     "crt": {
       "evidence": "OWNER_ACCEPTANCE_CRT.log",
-      "sha256": "0984e1bf653dee4b6614fb08c4592dff6e0c3a8cfaa3713f17ef402a84778387",
+      "sha256": "6517f1193ae0ba04337dddd622839d6cba4c0cf2545197e7359985aa217cc896",
       "result": "PASS_USER_SUPPLIED_WINDOWS_LOG",
       "dll_sha256": "6973dd5e85c1b9aee0c2e91a99b2f0ec1e55547b22550a493467363a028d698a",
       "tests": 6,
-      "warning_count": 0
+      "warning_count": 0,
+      "original_evidence_sha256": "0984e1bf653dee4b6614fb08c4592dff6e0c3a8cfaa3713f17ef402a84778387",
+      "evidence_copy": "OWNER_APPROVED_PRIVACY_REDACTION; execution result is historical and unchanged"
     },
     "native": {
       "evidence": "OWNER_ACCEPTANCE_NATIVE.log",
-      "sha256": "7f3af5e1636e74526c8fabe8f33f78edab633a394aeab1994b15cdb4bcaf2a57",
+      "sha256": "844d1da840fa88274a3216f2911002294494b364fe07266d8ddb008a74337907",
       "result": "PASS_USER_SUPPLIED_WINDOWS_LOG",
       "dll_sha256": "60872c91c2c27c999441a3da26a55d85dcb3c6d7de3d9b26961f3de2672dcba8",
       "tests": 193,
-      "warning_count": 12
+      "warning_count": 12,
+      "original_evidence_sha256": "7f3af5e1636e74526c8fabe8f33f78edab633a394aeab1994b15cdb4bcaf2a57",
+      "evidence_copy": "OWNER_APPROVED_PRIVACY_REDACTION; execution result is historical and unchanged"
     }
   },
   "uploaded_final_dll_sha256": "4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b",

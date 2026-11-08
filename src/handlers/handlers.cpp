@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/handlers/handlers.hpp"
+#include "citrine_eclipse_mirage/handlers/handlers.hpp"
 #include <array>
 #include <utility>
 
-namespace preloader_l::handlers {
+namespace citrine_eclipse_mirage::handlers {
 bool get_config_02e5f0(Xml& xml) {
     static constexpr std::pair<const char*,const char*> services[] = {
         {"EbisuSDK","SDK"},{"EbisuSDK","PROFILE"},{"XMPP","PRESENCE"},
@@ -114,4 +114,4 @@ bool get_all_game_info_02da90(Xml& xml,StateReferences state,Effects& effects) {
     xml.close_virtual_48(false);
     return true;
 }
-} // namespace preloader_l::handlers
+} // namespace citrine_eclipse_mirage::handlers

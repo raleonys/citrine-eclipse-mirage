@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "preloader_l/xml/pool_append.hpp"
-#include "preloader_l/xml/pool_release.hpp"
+#include "citrine_eclipse_mirage/xml/pool_append.hpp"
+#include "citrine_eclipse_mirage/xml/pool_release.hpp"
 #include <algorithm>
 #include <array>
 #include <cstring>
@@ -15,7 +15,7 @@
 #include <vector>
 
 namespace pool_append_test {
-namespace s=preloader_l::socket;
+namespace s=citrine_eclipse_mirage::socket;
 inline unsigned checks=0;
 inline void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
 inline std::uint64_t word(std::span<const std::uint8_t> b,std::size_t at,unsigned n=8){std::uint64_t v=0;for(unsigned i=0;i<n;++i)v|=std::uint64_t(b[at+i])<<(i*8);return v;}

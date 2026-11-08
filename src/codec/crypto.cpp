@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/codec/crypto.hpp"
-#include "preloader_l/codec/crypto_constants.hpp"
+#include "citrine_eclipse_mirage/codec/crypto.hpp"
+#include "citrine_eclipse_mirage/codec/crypto_constants.hpp"
 #include <algorithm>
 #include <bit>
 #include <limits>
 #include <windows.h>
 
-namespace preloader_l::crypto {
+namespace citrine_eclipse_mirage::crypto {
 namespace {
 std::uint8_t multiply(std::uint8_t a,std::uint8_t b){
     std::uint8_t result=0;
