@@ -15,7 +15,7 @@
 #include <crtdbg.h>
 #endif
 
-// This executable-only allocation probe is disabled outside one bounded test.
+// This executable-only allocation probe is disabled outside bounded campaigns.
 namespace allocation_probe {
 thread_local bool armed=false;
 thread_local std::size_t count=0;
@@ -205,6 +205,104 @@ bool same_node(const config_hash::Node& a,const config_hash::Node& b) {
     }
     return true;
 }
+void lookup_allocation_failure_rollback() {
+    using namespace config_hash;
+    Node original;Oracle original_order;
+    original.name="lookup-owner";original.value=std::string(96,'O');
+    std::array<std::string,8> keys;
+    keys[0]=std::string(240,'X')+'!';
+    for(std::size_t i=0;i<keys.size();++i) {
+        if(i)keys[i]="padding-"+std::to_string(i);
+        auto& child=original.lookup(keys[i]);original_order.insert(keys[i]);
+        child.name="existing-child-"+std::to_string(i);child.value=std::string(96,'V');
+        auto& nested=child.lookup("nested");
+        nested.name="existing-leaf-"+std::to_string(i);nested.value=std::string(96,'D');
+    }
+    original.validate();
+    require(original.table.bucket_count==8&&original.table.traversal==original_order.order(),
+        "lookup allocation fixture starts at the eighth-row boundary");
+    const std::string owned_key=keys[0].substr(0,keys[0].size()-1);
+    const auto borrowed_key=[&](const Node& owner) {
+        const auto row=std::find(owner.table.traversal.begin(),owner.table.traversal.end(),keys[0]);
+        require(row!=owner.table.traversal.end(),"lookup fixture retains the borrowed source row");
+        return std::string_view(row->data(),row->size()-1);
+    };
+    using Addresses=std::array<std::array<const Node*,2>,8>;
+    const auto addresses=[&](const Node& owner) {
+        Addresses result{};
+        for(std::size_t i=0;i<keys.size();++i) {
+            const auto* child=owner.find(keys[i]);
+            require(child&&child->find("nested"),"lookup fixture owns each nested child");
+            result[i]={child,child->find("nested")};
+        }
+        return result;
+    };
+    const auto retained=[&](const Node& owner,const Addresses& previous) {
+        require(owner.name==original.name&&owner.value==original.value,
+            "lookup preserves the parent payload");
+        for(std::size_t i=0;i<keys.size();++i) {
+            const auto* child=owner.find(keys[i]);
+            require(child&&child==previous[i][0]&&child->find("nested")==previous[i][1],
+                "lookup preserves existing child and nested owner addresses");
+            require(same_node(*child,original.children.at(keys[i])),
+                "lookup preserves every existing recursive child payload");
+        }
+    };
+    auto success=original;const auto success_addresses=addresses(success);
+    const auto success_input=borrowed_key(success);
+    allocation_probe::count=0;allocation_probe::proxies=0;
+    allocation_probe::fail_at=static_cast<std::size_t>(-1);allocation_probe::armed=true;
+    auto& created=success.lookup(success_input);
+    allocation_probe::armed=false;
+    const auto allocations=allocation_probe::count;const auto proxies=allocation_probe::proxies;
+    require(allocations>0&&allocations<10000,"bounded lookup allocation campaign");
+#if defined(_MSC_VER) && _ITERATOR_DEBUG_LEVEL != 0
+    require(proxies>0,"lookup keeps checked STL iterator bookkeeping enabled");
+#else
+    require(proxies==0,"lookup campaign excludes no ordinary allocation sites");
+#endif
+    auto completed_order=original_order;completed_order.insert(owned_key);
+    auto rehashed_order=original_order;rehashed_order.rehash(64);
+    success.validate();retained(success,success_addresses);
+    require(success.table.bucket_count==64&&success.table.traversal==completed_order.order(),
+        "successful borrowed lookup follows the independent growth and traversal oracle");
+    require(success.find(owned_key)==&created&&created.name.empty()&&created.value.empty()&&
+            created.table.bucket_count==8&&created.table.traversal.empty()&&created.children.empty(),
+        "successful lookup publishes the owned prefix with a default inner node");
+    std::size_t before_rehash=0,after_rehash=0;
+    for(std::size_t ordinal=1;ordinal<=allocations;++ordinal) {
+        auto destination=original;const auto previous=addresses(destination);
+        const auto borrowed=borrowed_key(destination);
+        allocation_probe::count=0;allocation_probe::fail_at=ordinal;allocation_probe::armed=true;
+        bool failed=false;
+        try{(void)destination.lookup(borrowed);}
+        catch(const std::bad_alloc&){failed=true;}
+        allocation_probe::armed=false;
+        require(failed,"each counted lookup allocation must be injectable");
+        require(!destination.find(owned_key)&&destination.children.size()==original.children.size()&&
+                std::find(destination.table.traversal.begin(),destination.table.traversal.end(),owned_key)==destination.table.traversal.end(),
+            "failed lookup removes its provisional child without leaving an orphan traversal key");
+        destination.validate();retained(destination,previous);
+        // Rehash can commit before the final insertion allocates. Both valid
+        // states retain the old children; failure need not restore capacity8.
+        if(destination.table.bucket_count==8) {
+            ++before_rehash;
+            require(destination.table.traversal==original_order.order(),
+                "failure before rehash preserves the original traversal");
+        }else {
+            ++after_rehash;
+            require(destination.table.bucket_count==64&&destination.table.traversal==rehashed_order.order(),
+                "failure after rehash preserves the independently regrouped traversal");
+        }
+        // The borrowed view may now dangle; retry only from the owned snapshot.
+        destination.lookup(owned_key);destination.validate();retained(destination,previous);
+        require(same_node(destination,success),"owned retry after failed lookup matches normal success");
+    }
+    require(before_rehash>0&&after_rehash>0,"lookup faults cover both sides of rehash publication");
+    std::cout<<"lookup rollback: "<<allocations<<" injected data allocation sites; "
+             <<before_rehash<<" before and "<<after_rehash<<" after rehash; "
+             <<proxies<<" unfaulted MSVC iterator-proxy requests\n";
+}
 config_hash::Node assignment_fixture(const std::string& prefix) {
     config_hash::Node root;
     root.name=prefix;root.value=std::string(96,prefix.front());
@@ -322,6 +420,6 @@ int main() {
         std::fflush(stderr);std::_Exit(86);
     });
 #endif
-    try {growth_and_oracle();recursive_assignment();assignment_failure_rollback();lookup_alias_and_failure_rollback();std::cout<<"PASS: "<<checks<<" Config2 growth/copy/positional-reuse checks\n";}
+    try {growth_and_oracle();recursive_assignment();assignment_failure_rollback();lookup_alias_and_failure_rollback();lookup_allocation_failure_rollback();std::cout<<"PASS: "<<checks<<" Config2 growth/copy/positional-reuse checks\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }
