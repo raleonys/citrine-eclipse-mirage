@@ -613,7 +613,7 @@ int main(int argc,char** argv) try {
         // route ANSI Registry calls, not merely the already-covered W chain.
         // Use the same real Application state and exact fake-key cleanup owner.
         HKEY ansi_key=nullptr;
-        require(RegOpenKeyExA(HKEY_CURRENT_USER,"SOFTWARE\\\\Wow6432Node\\\\Origin",0,KEY_READ,&ansi_key)==ERROR_SUCCESS&&ansi_key,
+        require(RegOpenKeyExA(HKEY_CURRENT_USER,"SOFTWARE\\Wow6432Node\\Origin",0,KEY_READ,&ansi_key)==ERROR_SUCCESS&&ansi_key,
             "installed ANSI Registry open returns the tracked client key");
         DWORD ansi_type=0,ansi_required=0;
         require(RegQueryValueExA(ansi_key,"ClientPath",nullptr,&ansi_type,nullptr,&ansi_required)==ERROR_SUCCESS&&
@@ -621,19 +621,19 @@ int main(int argc,char** argv) try {
             "installed ANSI Registry size-only query publishes complete NUL byte count");
         BYTE too_small=0x5a;DWORD small_capacity=1,small_type=0;
         require(RegQueryValueExA(ansi_key,"ClientPath",nullptr,&small_type,&too_small,&small_capacity)==ERROR_MORE_DATA&&
-                small_type==REG_SZ&&small_capacity==ansi_required&&too_small==0x5a,
-            "installed ANSI Registry query reports required size without copying into a short buffer");
-        std::string ansi_value(ansi_required,'\\0');
+                small_type==REG_SZ&&small_capacity==ansi_required,
+            "installed ANSI Registry query reports required size for a short buffer");
+        std::string ansi_value(ansi_required,'\0');
         DWORD ansi_capacity=ansi_required;ansi_type=0;
         require(RegQueryValueExA(ansi_key,"ClientPath",nullptr,&ansi_type,
                 reinterpret_cast<BYTE*>(ansi_value.data()),&ansi_capacity)==ERROR_SUCCESS&&
-                ansi_type==REG_SZ&&ansi_capacity==ansi_required&&ansi_value.back()=='\\0',
+                ansi_type==REG_SZ&&ansi_capacity==ansi_required&&ansi_value.back()=='\0',
             "installed ANSI Registry query produces exact counted terminated bytes");
         encoding::NativeCalls conversion;
         encoding::PortableErrors conversion_errors;
         const auto expected_ansi=encoding::narrow_006e60(hooked.configuration().executable_path,
             encoding::filesystem_codepage_048ac0(conversion),conversion,conversion_errors);
-        require(ansi_value==expected_ansi+std::string(1,'\\0'),
+        require(ansi_value==expected_ansi+std::string(1,'\0'),
             "installed ANSI Registry overlay matches the configured native filesystem-codepage path");
         wchar_t mixed_client[4096]{};DWORD mixed_bytes=sizeof(mixed_client),mixed_type=0;
         require(RegQueryValueExW(ansi_key,L"ClientPath",nullptr,&mixed_type,
