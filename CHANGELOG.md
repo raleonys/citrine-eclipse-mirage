@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Exercise actual Application dispatch rejection over TCP for well-formed invalid LSX in plaintext and negotiated encryption. Require silent closure of only the rejected peer, continued replies on a live encrypted peer, and fresh listener admission. Preserve current product policy; donor same-session continuation and modal diagnostics remain unresolved compatibility decisions.
+
 - Cover fail-closed unload stack observations and safe retry after query, protection, commitment, region-progress and scan-budget refusals. A protected-page probe verifies that an oversized region is rejected before stack reads; production unload policy is unchanged.
 
 - Exercise the actual Environment UTF-8 wrapper and native conversion adapter with controlled query/fill failures, counted NUL data, short-fill length retention and retry. Verify registry flag/key partial state and filesystem-codepage isolation; leave the existing real-API native checks unarmed. Production behavior is unchanged.
