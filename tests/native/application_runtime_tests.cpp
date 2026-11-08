@@ -28,7 +28,29 @@ using namespace preloader_l;
 namespace fs=std::filesystem;
 namespace {
 int checks=0;
-void require(bool b,const char* text){++checks;if(!b)throw std::runtime_error(text);}
+void progress(const char* text) {
+    // Application startup can rebind the CRT streams to a console. Preserve
+    // CTest's original capture pipe so a timeout still identifies its phase.
+    struct Capture {
+        HANDLE stream=INVALID_HANDLE_VALUE;
+        Capture(){
+            const auto source=GetStdHandle(STD_ERROR_HANDLE);
+            if(source&&source!=INVALID_HANDLE_VALUE)
+                if(!DuplicateHandle(GetCurrentProcess(),source,GetCurrentProcess(),&stream,
+                    0,FALSE,DUPLICATE_SAME_ACCESS))stream=INVALID_HANDLE_VALUE;
+        }
+        ~Capture(){if(stream!=INVALID_HANDLE_VALUE)CloseHandle(stream);}
+    };
+    const auto error=GetLastError();
+    static Capture capture;
+    if(capture.stream!=INVALID_HANDLE_VALUE){
+        const auto line="runtime check "+std::to_string(checks)+": "+text+"\n";
+        DWORD written=0;
+        (void)WriteFile(capture.stream,line.data(),static_cast<DWORD>(line.size()),&written,nullptr);
+    }
+    SetLastError(error);
+}
+void require(bool b,const char* text){++checks;progress(text);if(!b)throw std::runtime_error(text);}
 struct Directory {
     fs::path path=fs::temp_directory_path()/("surge-runtime-"+std::to_string(GetCurrentProcessId()));
     Directory(){fs::remove_all(path);fs::create_directories(path);}
@@ -68,11 +90,13 @@ class Peer {
     asio::io_context io;
     asio::ip::tcp::socket socket{io};
     std::string input;
+    crypto::Cipher cipher;
 public:
     explicit Peer(std::uint16_t port) {
+        cipher.set_fixed_key_084c98();
         socket.connect({asio::ip::address_v4::loopback(),port});
         DWORD timeout=5000;
-        setsockopt(socket.native_handle(),SOL_SOCKET,SO_RCVTIMEO,reinterpret_cast<const char*>(&timeout),sizeof(timeout));
+        require(setsockopt(socket.native_handle(),SOL_SOCKET,SO_RCVTIMEO,reinterpret_cast<const char*>(&timeout),sizeof(timeout))==0,"peer receive timeout installed");
     }
     std::string frame() {
         for(;;){auto end=input.find('\0');if(end!=std::string::npos){auto value=input.substr(0,end);input.erase(0,end+1);return value;}
@@ -82,16 +106,87 @@ public:
     std::string request(std::string_view id,std::string_view command) {
         send("<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>");return frame();
     }
-    std::string encrypted_request(std::string_view id,std::string_view command) {
+    void encrypted_send(std::string_view id,std::string_view command) {
         auto bytes="<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>";
-        crypto::Cipher cipher;cipher.set_fixed_key_084c98();require(cipher.encrypt_042610(bytes),"client encrypt");
-        messages::hex_encode_03d190(bytes);send(bytes);return encrypted_frame();
+        require(cipher.encrypt_042610(bytes),"client encrypt");
+        messages::hex_encode_03d190(bytes);send(bytes);
+    }
+    std::string encrypted_request(std::string_view id,std::string_view command) {
+        encrypted_send(id,command);return encrypted_frame();
     }
     std::string encrypted_frame() {
         auto bytes=frame();messages::hex_decode_03ce30(bytes);
-        crypto::Cipher cipher;cipher.set_fixed_key_084c98();require(cipher.decrypt_042480(bytes),"client decrypt");return bytes;
+        require(cipher.decrypt_042480(bytes),"client decrypt");return bytes;
+    }
+    void negotiate(std::string_view id,std::string_view key,int version) {
+        const auto response=request(id,"<ChallengeResponse key='"+std::string(key)+"' version='"+std::to_string(version)+"'/>");
+        xml_reader_bridge::Backend xml;auto parsed=xml.parse_c_string(response);
+        require(!parsed.has_error,"peer handshake response parses");
+        const auto* root=parsed.document->first_element();
+        const auto* answer=root?root->first_element():nullptr;
+        const auto* accepted=answer?answer->first_element():nullptr;
+        require(root&&root->name()=="LSX"&&answer&&answer->name()=="Response"&&
+                answer->attribute("id")==id&&accepted&&accepted->name()=="ChallengeAccepted",
+                "peer handshake response belongs to the requested connection and id");
+        const auto value=accepted->attribute("response");
+        std::string expected(key);crypto::Cipher fixed;fixed.set_fixed_key_084c98();
+        require(fixed.encrypt_042610(expected),"independent handshake reference encryption");
+        messages::hex_encode_03d190(expected);
+        require(value&&*value==expected,"actual accepted response matches fixed-key challenge encryption");
+        if(version>2){
+            crypto::WindowsTimeSource time;crypto::Random random{time};
+            cipher.set_key_042780(random.key_from_response_034c30(*value));
+        }else cipher.set_fixed_key_084c98();
+    }
+    bool same_cipher(const Peer& other)const{return cipher.round_keys()==other.cipher.round_keys();}
+    void close() {
+        asio::error_code error;socket.shutdown(asio::ip::tcp::socket::shutdown_both,error);
+        socket.close(error);require(!error,"explicit encrypted peer close succeeds");
     }
 };
+void require_profile(std::string_view bytes,std::string_view id) {
+    xml_reader_bridge::Backend xml;auto parsed=xml.parse_c_string(bytes);
+    require(!parsed.has_error,"encrypted profile response parses");
+    const auto* root=parsed.document->first_element();
+    const auto* response=root?root->first_element():nullptr;
+    require(root&&root->name()=="LSX"&&response&&response->name()=="Response"&&
+            response->attribute("id")==id&&bytes.find("fixture-override")!=std::string_view::npos,
+            "encrypted profile response retains its exact peer request id and configured owner");
+}
+void encrypted_peer_isolation(std::uint16_t port) {
+    // The earlier encrypted round trip has drained the shared initial DOWN
+    // event. Profile requests below do not enqueue new events.
+    for(const bool close_fixed:{true,false}){
+        Peer fixed(port),derived(port);
+        require(fixed.frame().find("<Challenge ")!=std::string::npos&&
+                derived.frame().find("<Challenge ")!=std::string::npos,"two real peers receive independent greetings");
+        fixed.negotiate("fixed-handshake","fixture-fixed-peer",2);
+        derived.negotiate("derived-handshake","fixture-derived-peer",3);
+        require(!fixed.same_cipher(derived),"simultaneously live encrypted peers use genuinely different AES keys");
+        for(int round=0;round<3;++round){
+            const auto first="fixed-"+std::to_string(round),second="derived-"+std::to_string(round);
+            // Submit both before reading either reply; do not serialize the
+            // two connections into separate single-peer lifetimes.
+            fixed.encrypted_send(first,"<GetProfile index='0'/>");
+            derived.encrypted_send(second,"<GetProfile index='0'/>");
+            require_profile(derived.encrypted_frame(),second);
+            require_profile(fixed.encrypted_frame(),first);
+        }
+        Peer& retired=close_fixed?fixed:derived;
+        Peer& survivor=close_fixed?derived:fixed;
+        retired.close();
+        require_profile(survivor.encrypted_request("survivor-after-close","<GetProfile index='0'/>"),"survivor-after-close");
+        // Admission/reset of another handler must not break the survivor's
+        // encrypted requests or negotiated cipher.
+        Peer replacement(port);require(replacement.frame().find("<Challenge ")!=std::string::npos,"listener admits a peer after the other peer closes");
+        replacement.negotiate("replacement-handshake","fixture-replacement-peer",close_fixed?2:3);
+        require(!replacement.same_cipher(survivor),"replacement and survivor retain distinct cipher keys");
+        replacement.encrypted_send("replacement-profile","<GetProfile index='0'/>");
+        survivor.encrypted_send("survivor-after-admission","<GetProfile index='0'/>");
+        require_profile(replacement.encrypted_frame(),"replacement-profile");
+        require_profile(survivor.encrypted_frame(),"survivor-after-admission");
+    }
+}
 struct GreetingFixture final:net::HandlerFactory {
     std::promise<void> entered;
     struct Handler final:server::Handler {
@@ -192,6 +287,7 @@ void stop_blocked_greeting() {
 }
 }
 int main(int argc,char** argv) try {
+    progress("begin event mutex contract");
     event_mutex_contract();
     avatar_provider_arguments();
     Directory directory;
@@ -254,6 +350,7 @@ int main(int argc,char** argv) try {
         peer.send("<LSX>broken"); // Controlled failure must not kill the IO owner.
         require(peer.request("after-bad-xml","<GetProfile index='0'/>").find("fixture-override")!=std::string::npos,"XML parse failure leaves the session usable");
     }
+    encrypted_peer_isolation(state.server_port);
     // Stop while an accepted socket still owns a pending read.
     Peer waiting(state.server_port);(void)waiting.frame();app.stop();app.stop();
     require(true,"pending read cancelled and idempotent stop completed");
@@ -353,13 +450,22 @@ int main(int argc,char** argv) try {
         const auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(5);
         while(!auth_entered()&&std::chrono::steady_clock::now()<deadline)Sleep(1);
         require(auth_entered()!=0,"real online getter did not enter its held foreign callback");
-        auto shutdown=std::async(std::launch::async,[&]{online.stop();});
+        // MSVC async uses a reusable task-pool worker. This statically linked
+        // test later scans its own image for native callback quiescence, so a
+        // completed task is insufficient: its worker must actually exit.
+        std::promise<void> stopped;
+        auto shutdown=stopped.get_future();
+        std::jthread shutdown_worker([&]{
+            try{online.stop();stopped.set_value();}
+            catch(...){stopped.set_exception(std::current_exception());}
+        });
         const bool premature=shutdown.wait_for(std::chrono::milliseconds(150))==std::future_status::ready;
         const bool image_present=GetModuleHandleW(provider_file.wstring().c_str())==provider_module;
         const bool object_live=destroyed()==0;
         // Always unblock the getter before waiting for stop; no hanging test
         // future or injected production behavior in the critical section.
         release_auth();
+        shutdown_worker.join();
         shutdown.get();
         require(!premature&&image_present&&object_live,
             "Application retired a foreign provider while its auth callback was active");
@@ -371,7 +477,34 @@ int main(int argc,char** argv) try {
         application::Application offline({(online_dir/"host.exe").u16string(),(online_dir/"offline-data").u16string(),false});offline.start();
         require(offline.configuration().username=="SURGE"&&destroyed()==1,"provider auth failure keeps source offline state and releases object");offline.stop();
     }
-    FreeLibrary(provider_module);
+    // B54: real DLL/Export, Application worker, and physical loader lease.
+    // Source-linked mocks already cover null pointers, but not failure teardown
+    // across the actual Windows module and Application startup owner.
+    for(int failure_mode:{3,4,5,6}) {
+        mode(failure_mode);
+        const auto failure_data=online_dir/("failure-"+std::to_string(failure_mode));
+        application::Application failing({
+            (online_dir/"host.exe").u16string(),failure_data.u16string(),false});
+        bool rejected=false;
+        try{failing.start();}
+        catch(const online::OutOfEvidenceInput&){rejected=true;}
+        require(rejected,"real online provider null factory/getter rejects startup");
+        const auto expected_destroyed=failure_mode==3?0:1;
+        require(destroyed()==expected_destroyed,
+            "null factory must not destroy a nonexistent object; null getter destroys once");
+        const auto& partial=failing.configuration();
+        require(partial.username==(failure_mode<5?"SURGE":"fixture-online"),
+            "native getter error preserves only previously committed username");
+        if(failure_mode==6)
+            require(partial.persona_id=="fixture-persona",
+                "third native getter failure preserves prior copied persona");
+        failing.stop();
+        require(destroyed()==expected_destroyed,
+            "post-failure stop cannot double-destroy provider object");
+    }
+    require(FreeLibrary(provider_module)!=FALSE,"release the independent native provider observer lease");
+    require(GetModuleHandleW(provider_file.wstring().c_str())==nullptr,
+        "all failed provider startups release the physical DLL image");
     const auto hook_dir=directory.path/"hooks";fs::create_directories(hook_dir);
     fs::copy_file(fs::path(argv[1]),hook_dir/"fixture-extra.dll");
     fs::copy_file(fs::path(argv[1]),hook_dir/"preloader_l_online.dll");

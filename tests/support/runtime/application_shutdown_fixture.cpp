@@ -30,6 +30,9 @@
 namespace fixture {
 std::atomic<unsigned> mode{},ready{},attempts{},created{},destroyed{},disables{},releases{};
 std::atomic<unsigned> held_before_loop{},release_before_loop{},fail_next_scan{};
+// C08 test-only gate: pause the worker before its next event wait *after*
+// one cleanup attempt failed, so the public caller sees the earlier status.
+std::atomic<unsigned> hold_after_failure{},entered_wait{},release_wait{};
 std::atomic<unsigned> startup_phase{},startup_held{},startup_release{},startup_visits{};
 std::atomic<unsigned> startup_returns{},startup_failures{},startup_throw{},startup_thread{},paused_thread{},startup_aborting{};
 // No native patching or thread suspension is permitted in this fixture. Engine,
@@ -161,9 +164,23 @@ public:
 }
 // Exercise the actual entry worker and DllShutdown implementation. The wrapper
 // supplies isolated Options and counters, delegating every lifecycle operation.
+DWORD WINAPI FixtureWorkerWait(HANDLE handle,DWORD timeout);
+#define WaitForSingleObject FixtureWorkerWait
 #define Application FixtureApplication
 #include "src/platform/dll_entry.cpp"
 #undef Application
+#undef WaitForSingleObject
+DWORD WINAPI FixtureWorkerWait(HANDLE handle,DWORD timeout){
+    if(timeout==INFINITE&&handle==stop_event&&fixture::hold_after_failure.load()&&
+       fixture::attempts.load()>=1&&!fixture::entered_wait.exchange(1)){
+        // Release automatically even on a broken test to avoid leaving a
+        // live fixture thread stuck inside an unloadable DLL indefinitely.
+        const auto start=GetTickCount64();
+        while(!fixture::release_wait.load(std::memory_order_acquire)&&
+              GetTickCount64()-start<6000)Sleep(1);
+    }
+    return ::WaitForSingleObject(handle,timeout);
+}
 extern "C" __declspec(dllexport) void FixtureMode(unsigned mode){
     fixture::mode=mode;
     if(mode==5)fixture::fail_next_scan=1;
@@ -173,6 +190,14 @@ extern "C" __declspec(dllexport) void FixtureMode(unsigned mode){
 }
 extern "C" __declspec(dllexport) void FixtureReleaseWorker(){fixture::release_before_loop=1;}
 extern "C" __declspec(dllexport) void FixtureReleaseStartup(){fixture::startup_release=1;}
+extern "C" __declspec(dllexport) void FixtureHoldAfterFailure(){
+    fixture::release_wait=0;
+    fixture::entered_wait=0;
+    fixture::hold_after_failure=1;
+}
+extern "C" __declspec(dllexport) void FixtureReleaseFailureWait(){
+    fixture::release_wait.store(1,std::memory_order_release);
+}
 extern "C" __declspec(dllexport) unsigned FixtureValue(unsigned key){
     switch(key){case 0:return fixture::ready;case 1:return fixture::attempts;
     case 2:return fixture::created;case 3:return fixture::destroyed;case 4:return fixture::disables;
@@ -190,5 +215,6 @@ extern "C" __declspec(dllexport) unsigned FixtureValue(unsigned key){
     case 17:return fixture::startup_thread;
     case 18:return fixture::paused_thread;
     case 19:return fixture::startup_aborting;
+    case 20:return fixture::entered_wait.load(std::memory_order_acquire);
     default:return ~0u;}
 }
