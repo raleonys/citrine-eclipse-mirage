@@ -1198,8 +1198,8 @@
       "sha256": "5164cf46bbd0b91296032ba6053af0a61b458bf4d9d4b603705a005443aaa965"
     },
     "tests/infrastructure/test_project_version.py": {
-      "bytes": 4598,
-      "sha256": "f2bf7fd4cba30e38014a855bc84f2237a9d68b7b7cf051de772a0c8fa2a08b7e"
+      "bytes": 7112,
+      "sha256": "099419b5e9499c20ff4020451cd0a17cb9560274e064fe79a1ba0eb49c497554"
     },
     "tests/infrastructure/test_public_abi.py": {
       "bytes": 2128,
