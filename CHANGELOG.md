@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Cover parsed unknown-command propagation through the ordered Session/message bridge in plaintext and controlled encrypted modes. Verify no receive rearm, output, buffered-successor admission or queued-event consumption after rejection. Pin current behavior without adopting donor dialog/continuation policy; actual socket containment is proposed separately in PR #258.
+
 - Cover fail-closed unload stack observations and safe retry after query, protection, commitment, region-progress and scan-budget refusals. A protected-page probe verifies that an oversized region is rejected before stack reads; production unload policy is unchanged.
 
 - Exercise the actual Environment UTF-8 wrapper and native conversion adapter with controlled query/fill failures, counted NUL data, short-fill length retention and retry. Verify registry flag/key partial state and filesystem-codepage isolation; leave the existing real-API native checks unarmed. Production behavior is unchanged.
