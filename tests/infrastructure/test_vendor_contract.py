@@ -205,6 +205,284 @@ class VendorTests(unittest.TestCase):
             self.assertIn('changed=2',detail)
             for rel in links:self.assertIn('changed: '+rel,detail)
 
+    def test_vendor_archive_rejects_windows_unsafe_member_names(self):
+        # Validate archive entries and manifest entries through one path policy.
+        unsafe = (
+            'CON', 'aux.txt', 'dir/NUL.bin', 'dir/COM1', 'dir/COM\u00b9.txt',
+            'LPT\u00b2.log', 'CONIN        for name in ['../escape','/absolute','C:/drive','a/../b','a\\b','a//b']:
+            with self.subTest(name=name),self.assertRaises(ValueError):vendor_sync.safe_rel(name)
+        for target in ['../../../escape','/absolute','C:drive','a\\b','bad\nname']:
+            with self.subTest(target=target),self.assertRaises(ValueError):vendor_sync.validate_symlink('asio/include',target)
+        self.assertTrue(vendor_sync.validate_symlink('asio/include','../include'))
+
+
+class LinkPackagingTests(unittest.TestCase):
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
+        self.base=Path(self.temp.name);self.root=self.base/'source'
+        (self.root/'metadata').mkdir(parents=True)
+        (self.root/'third_party/asio/asio').mkdir(parents=True)
+        (self.root/'third_party/asio/include').mkdir()
+        (self.root/'third_party/asio/include/header.hpp').write_bytes(b'unchanged vendor fixture')
+        (self.root/'CMakeLists.txt').write_text('source fixture')
+        lock={'vendors':{'asio':{'source_install_path':'third_party/asio','symlinks':{'asio/include':'../include'}}}}
+        (self.root/'metadata/VENDOR_LOCK.json').write_text(json.dumps(lock))
+        contract={'required_files':['CMakeLists.txt'],'source_directories':['metadata','third_party']}
+        (self.root/'metadata/REPOSITORY_CONTRACT.json').write_text(json.dumps(contract))
+        self.link=self.root/'third_party/asio/asio/include'
+        self.link.write_bytes(b'../include')
+        project_files.write_manifest(self.root)
+        self.archive=self.base/'source.zip'
+
+    def test_registered_alias_roundtrip_uses_portable_exact_descriptor(self):
+        package_source.package(self.root,self.archive)
+        with zipfile.ZipFile(self.archive) as archive:
+            info=archive.getinfo('third_party/asio/asio/include')
+            self.assertTrue(stat.S_ISREG(info.external_attr>>16))
+            self.assertEqual(b'../include',archive.read(info))
+        destination=self.base/'restored'
+        with patch.object(extract_source.os,'symlink',side_effect=OSError('No Windows symlink privilege')) as create_link:
+            extract_source.extract(self.archive,destination)
+            create_link.assert_not_called()
+        restored=destination/'third_party/asio/asio/include'
+        self.assertFalse(restored.is_symlink())
+        self.assertEqual(b'../include',restored.read_bytes())
+        self.assertEqual(b'unchanged vendor fixture',(destination/'third_party/asio/include/header.hpp').read_bytes())
+        self.assertEqual([],project_files.verify_manifest(destination))
+
+    def test_unexpected_symlink_type_in_portable_archive_is_rejected(self):
+        package_source.package(self.root,self.archive)
+        with zipfile.ZipFile(self.archive) as archive:
+            members=[(i,archive.read(i)) for i in archive.infolist()]
+        with zipfile.ZipFile(self.archive,'w') as archive:
+            for info,data in members:
+                if info.filename=='third_party/asio/asio/include':info.external_attr=0o120777<<16
+                archive.writestr(info,data)
+        destination=self.base/'rejected'
+        with self.assertRaisesRegex(ValueError,'source/link type mismatch'):
+            extract_source.extract(self.archive,destination)
+        self.assertFalse(destination.exists())
+
+    def test_restore_only_exact_descriptors(self):
+        self.link.unlink();self.link.write_bytes(b'../include')
+        self.assertEqual(b'../include',project_files.source_files(self.root)['third_party/asio/asio/include'])
+        try:restore_vendor_links.restore(self.root)
+        except (OSError,NotImplementedError):self.skipTest('Optional restoration to a real symlink requires OS privilege')
+        self.assertTrue(self.link.is_symlink())
+        self.link.unlink();self.link.write_bytes(b'actual user file')
+        with self.assertRaisesRegex(ValueError,'non-descriptor'):restore_vendor_links.restore(self.root)
+        self.assertEqual(b'actual user file',self.link.read_bytes())
+
+    def test_standard_zip_extraction_needs_no_link_support(self):
+        package_source.package(self.root,self.archive)
+        destination=self.base/'standard-unzip'
+        with zipfile.ZipFile(self.archive) as archive:archive.extractall(destination)
+        self.assertEqual([],project_files.verify_manifest(destination))
+        self.assertFalse((destination/'third_party/asio/asio/include').is_symlink())
+
+    def test_vendor_alias_targets_reject_control_characters(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        original=json.loads(lock_path.read_text(encoding='utf-8'))
+        for control in map(chr,(10,13,9,127)):
+            with self.subTest(control=repr(control)):
+                bad=json.loads(json.dumps(original))
+                bad['vendors']['asio']['symlinks']['asio/include']='../in'+control+'clude'
+                lock_path.write_text(json.dumps(bad),encoding='utf-8')
+                with self.assertRaisesRegex(ValueError,'Unsafe vendor symlink target'):
+                    project_files.vendor_symlinks(self.root)
+        lock_path.write_text(json.dumps(original),encoding='utf-8')
+        self.assertEqual({'third_party/asio/asio/include':'../include'},
+                         project_files.vendor_symlinks(self.root))
+
+    def test_vendor_alias_record_requires_text_targets_and_mapping(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        original=json.loads(lock_path.read_text(encoding='utf-8'))
+        invalid_aliases=(
+            ['../include'], '../include', 17,
+            {'asio/include':17}, {'asio/include':['../include']},
+            {'asio/include':{'path':'../include'}},
+        )
+        try:
+            for aliases in invalid_aliases:
+                with self.subTest(aliases=aliases):
+                    broken=json.loads(json.dumps(original))
+                    broken['vendors']['asio']['symlinks']=aliases
+                    lock_path.write_text(json.dumps(broken),encoding='utf-8')
+                    with self.assertRaisesRegex(ValueError,'Malformed vendor symlink'):
+                        project_files.vendor_symlinks(self.root)
+        finally:
+            lock_path.write_text(json.dumps(original),encoding='utf-8')
+        self.assertEqual({'third_party/asio/asio/include':'../include'},
+                         project_files.vendor_symlinks(self.root))
+
+    def test_descriptor_single_byte_mutation_is_rejected(self):
+        self.link.unlink();self.link.write_bytes(b'../include\n')
+        with self.assertRaisesRegex(ValueError,'altered source symlink/descriptor'):
+            project_files.source_files(self.root)
+
+    def test_descriptor_directory_cannot_replace_locked_alias(self):
+        self.link.unlink();self.link.mkdir()
+        with self.assertRaisesRegex(ValueError,'invalid locked vendor alias'):
+            project_files.source_files(self.root)
+
+    def test_changed_link_target_is_rejected(self):
+        self.link.unlink()
+        try:self.link.symlink_to('../../../../outside',target_is_directory=True)
+        except (OSError,NotImplementedError):self.skipTest('Host cannot create altered symlink fixture')
+        with self.assertRaisesRegex(ValueError,'altered source symlink'):project_files.source_files(self.root)
+
+    def test_extractor_never_overwrites_existing_destination(self):
+        destination=self.base/'existing';destination.mkdir()
+        marker=destination/'keep';marker.write_bytes(b'keep')
+        with self.assertRaisesRegex(ValueError,'refusing overwrite'):
+            extract_source.extract(self.archive,destination)
+        self.assertEqual(b'keep',marker.read_bytes())
+
+
+if __name__=='__main__':unittest.main(verbosity=2)
+, 'CONOUT        for name in ['../escape','/absolute','C:/drive','a/../b','a\\b','a//b']:
+            with self.subTest(name=name),self.assertRaises(ValueError):vendor_sync.safe_rel(name)
+        for target in ['../../../escape','/absolute','C:drive','a\\b','bad\nname']:
+            with self.subTest(target=target),self.assertRaises(ValueError):vendor_sync.validate_symlink('asio/include',target)
+        self.assertTrue(vendor_sync.validate_symlink('asio/include','../include'))
+
+
+class LinkPackagingTests(unittest.TestCase):
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
+        self.base=Path(self.temp.name);self.root=self.base/'source'
+        (self.root/'metadata').mkdir(parents=True)
+        (self.root/'third_party/asio/asio').mkdir(parents=True)
+        (self.root/'third_party/asio/include').mkdir()
+        (self.root/'third_party/asio/include/header.hpp').write_bytes(b'unchanged vendor fixture')
+        (self.root/'CMakeLists.txt').write_text('source fixture')
+        lock={'vendors':{'asio':{'source_install_path':'third_party/asio','symlinks':{'asio/include':'../include'}}}}
+        (self.root/'metadata/VENDOR_LOCK.json').write_text(json.dumps(lock))
+        contract={'required_files':['CMakeLists.txt'],'source_directories':['metadata','third_party']}
+        (self.root/'metadata/REPOSITORY_CONTRACT.json').write_text(json.dumps(contract))
+        self.link=self.root/'third_party/asio/asio/include'
+        self.link.write_bytes(b'../include')
+        project_files.write_manifest(self.root)
+        self.archive=self.base/'source.zip'
+
+    def test_registered_alias_roundtrip_uses_portable_exact_descriptor(self):
+        package_source.package(self.root,self.archive)
+        with zipfile.ZipFile(self.archive) as archive:
+            info=archive.getinfo('third_party/asio/asio/include')
+            self.assertTrue(stat.S_ISREG(info.external_attr>>16))
+            self.assertEqual(b'../include',archive.read(info))
+        destination=self.base/'restored'
+        with patch.object(extract_source.os,'symlink',side_effect=OSError('No Windows symlink privilege')) as create_link:
+            extract_source.extract(self.archive,destination)
+            create_link.assert_not_called()
+        restored=destination/'third_party/asio/asio/include'
+        self.assertFalse(restored.is_symlink())
+        self.assertEqual(b'../include',restored.read_bytes())
+        self.assertEqual(b'unchanged vendor fixture',(destination/'third_party/asio/include/header.hpp').read_bytes())
+        self.assertEqual([],project_files.verify_manifest(destination))
+
+    def test_unexpected_symlink_type_in_portable_archive_is_rejected(self):
+        package_source.package(self.root,self.archive)
+        with zipfile.ZipFile(self.archive) as archive:
+            members=[(i,archive.read(i)) for i in archive.infolist()]
+        with zipfile.ZipFile(self.archive,'w') as archive:
+            for info,data in members:
+                if info.filename=='third_party/asio/asio/include':info.external_attr=0o120777<<16
+                archive.writestr(info,data)
+        destination=self.base/'rejected'
+        with self.assertRaisesRegex(ValueError,'source/link type mismatch'):
+            extract_source.extract(self.archive,destination)
+        self.assertFalse(destination.exists())
+
+    def test_restore_only_exact_descriptors(self):
+        self.link.unlink();self.link.write_bytes(b'../include')
+        self.assertEqual(b'../include',project_files.source_files(self.root)['third_party/asio/asio/include'])
+        try:restore_vendor_links.restore(self.root)
+        except (OSError,NotImplementedError):self.skipTest('Optional restoration to a real symlink requires OS privilege')
+        self.assertTrue(self.link.is_symlink())
+        self.link.unlink();self.link.write_bytes(b'actual user file')
+        with self.assertRaisesRegex(ValueError,'non-descriptor'):restore_vendor_links.restore(self.root)
+        self.assertEqual(b'actual user file',self.link.read_bytes())
+
+    def test_standard_zip_extraction_needs_no_link_support(self):
+        package_source.package(self.root,self.archive)
+        destination=self.base/'standard-unzip'
+        with zipfile.ZipFile(self.archive) as archive:archive.extractall(destination)
+        self.assertEqual([],project_files.verify_manifest(destination))
+        self.assertFalse((destination/'third_party/asio/asio/include').is_symlink())
+
+    def test_vendor_alias_targets_reject_control_characters(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        original=json.loads(lock_path.read_text(encoding='utf-8'))
+        for control in map(chr,(10,13,9,127)):
+            with self.subTest(control=repr(control)):
+                bad=json.loads(json.dumps(original))
+                bad['vendors']['asio']['symlinks']['asio/include']='../in'+control+'clude'
+                lock_path.write_text(json.dumps(bad),encoding='utf-8')
+                with self.assertRaisesRegex(ValueError,'Unsafe vendor symlink target'):
+                    project_files.vendor_symlinks(self.root)
+        lock_path.write_text(json.dumps(original),encoding='utf-8')
+        self.assertEqual({'third_party/asio/asio/include':'../include'},
+                         project_files.vendor_symlinks(self.root))
+
+    def test_vendor_alias_record_requires_text_targets_and_mapping(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        original=json.loads(lock_path.read_text(encoding='utf-8'))
+        invalid_aliases=(
+            ['../include'], '../include', 17,
+            {'asio/include':17}, {'asio/include':['../include']},
+            {'asio/include':{'path':'../include'}},
+        )
+        try:
+            for aliases in invalid_aliases:
+                with self.subTest(aliases=aliases):
+                    broken=json.loads(json.dumps(original))
+                    broken['vendors']['asio']['symlinks']=aliases
+                    lock_path.write_text(json.dumps(broken),encoding='utf-8')
+                    with self.assertRaisesRegex(ValueError,'Malformed vendor symlink'):
+                        project_files.vendor_symlinks(self.root)
+        finally:
+            lock_path.write_text(json.dumps(original),encoding='utf-8')
+        self.assertEqual({'third_party/asio/asio/include':'../include'},
+                         project_files.vendor_symlinks(self.root))
+
+    def test_descriptor_single_byte_mutation_is_rejected(self):
+        self.link.unlink();self.link.write_bytes(b'../include\n')
+        with self.assertRaisesRegex(ValueError,'altered source symlink/descriptor'):
+            project_files.source_files(self.root)
+
+    def test_descriptor_directory_cannot_replace_locked_alias(self):
+        self.link.unlink();self.link.mkdir()
+        with self.assertRaisesRegex(ValueError,'invalid locked vendor alias'):
+            project_files.source_files(self.root)
+
+    def test_changed_link_target_is_rejected(self):
+        self.link.unlink()
+        try:self.link.symlink_to('../../../../outside',target_is_directory=True)
+        except (OSError,NotImplementedError):self.skipTest('Host cannot create altered symlink fixture')
+        with self.assertRaisesRegex(ValueError,'altered source symlink'):project_files.source_files(self.root)
+
+    def test_extractor_never_overwrites_existing_destination(self):
+        destination=self.base/'existing';destination.mkdir()
+        marker=destination/'keep';marker.write_bytes(b'keep')
+        with self.assertRaisesRegex(ValueError,'refusing overwrite'):
+            extract_source.extract(self.archive,destination)
+        self.assertEqual(b'keep',marker.read_bytes())
+
+
+if __name__=='__main__':unittest.main(verbosity=2)
+, 'dir/trailing.',
+            'dir/trailing ', 'dir/<bad>.hpp', 'dir/pipe|name.hpp',
+            'dir/control\x7f.hpp', 'dir/line\nbreak.hpp',
+            'dir/component?flag.hpp', 'dir/with*star.hpp', 'dir/stream:ads',
+        )
+        for name in unsafe:
+            with self.subTest(member=name), self.assertRaises(ValueError):
+                vendor_sync.safe_rel(name)
+        for name in ('include/MinHook.h', 'src/COM10.hpp', 'src/conveyor.hpp'):
+            with self.subTest(member=name):
+                self.assertEqual(name, vendor_sync.safe_rel(name).as_posix())
+
     def test_member_and_link_escape_rejected(self):
         for name in ['../escape','/absolute','C:/drive','a/../b','a\\b','a//b']:
             with self.subTest(name=name),self.assertRaises(ValueError):vendor_sync.safe_rel(name)
