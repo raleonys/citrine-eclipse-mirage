@@ -1,0 +1,10 @@
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+<svg xmlns="http://www.w3.org/2000/svg" width="235" height="20" role="img" aria-label="Latest release: v3.2.7-ERINTHAR">
+<title>Latest release: v3.2.7-ERINTHAR</title>
+<rect width="235" height="20" rx="3" fill="#007ec6"/>
+<path d="M3 0h111v20H3a3 3 0 0 1-3-3V3a3 3 0 0 1 3-3z" fill="#555"/>
+<g fill="#fff" text-anchor="middle" font-family="Verdana,DejaVu Sans,sans-serif" font-size="11">
+<text x="57" y="14">Latest release</text>
+<text x="174.5" y="14">v3.2.7-ERINTHAR</text>
+</g>
+</svg>

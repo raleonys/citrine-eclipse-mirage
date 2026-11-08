@@ -1,0 +1,10 @@
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
+<svg xmlns="http://www.w3.org/2000/svg" width="102" height="20" role="img" aria-label="Python: 3.9+">
+<title>Python: 3.9+</title>
+<rect width="102" height="20" rx="3" fill="#3776ab"/>
+<path d="M3 0h55v20H3a3 3 0 0 1-3-3V3a3 3 0 0 1 3-3z" fill="#555"/>
+<g fill="#fff" text-anchor="middle" font-family="Verdana,DejaVu Sans,sans-serif" font-size="11">
+<text x="29" y="14">Python</text>
+<text x="80" y="14">3.9+</text>
+</g>
+</svg>
