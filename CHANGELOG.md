@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Require first-party SPDX markers at the beginning of each source file, allowing only launcher shebang or CMD echo preambles. Test that a lone late marker cannot masquerade as a license header; preserve the existing full-file duplicate marker scan. No shipping runtime or vendor changes.
+
 - Host all README badge SVGs in the repository under resources/badges, retain automatic latest-release and main-CI status updates through a bounded generated-data branch, place Latest release immediately after License, preserve the original embedded logos and Shields/GitHub badge styling, add Changelog and release-immutability badges, report actual main-matching native CTest passed/total counts and latest-release ZIP checksum availability, and remove the Shields dependency. Reduce opening CI to one basic source-integrity job; move manual Windows output fixtures out of that workflow and gate Actions/C++/Python CodeQL analyses on verified later synchronization. Document the required owner migration of GitHub's separate Default Setup while preserving all eleven merge-required validation contexts.
 
 - Cover fail-closed unload stack observations and safe retry after query, protection, commitment, region-progress and scan-budget refusals. A protected-page probe verifies that an oversized region is rejected before stack reads; production unload policy is unchanged.
