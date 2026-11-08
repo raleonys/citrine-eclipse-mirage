@@ -6,6 +6,10 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Synchronize the staged callback-lease test with accepted main and recompute only reviewed merged source identities, including the SOURCE_FILES digest used by packaging and Golden. Preserve all callback lease assertions and acceptance gates.
+
+- Exercise A11-04 native callback owner retention with a staged two-family Binding drain: hold the real process and connect entry wrappers concurrently, reject close with two then one live lease, and preserve per-thread original results/errors through final retirement. This source-included test does not claim a donor Application gate, a real patched MinHook callback or Consumer unload acceptance.
+
 - Adopt the Archive 12 execution-source two-actor Win32 SRW regression in the existing execution test target. Verify observed contention, protected-data handoff, owner/count clearing before native release, unrelated mutex bytes and the final callback LastError, with finite waits and no live-child stack unwind. Runtime sources, build targets and existing portable checks remain unchanged.
 
 - Extend selected-library timestamp coverage to all 256 trailing byte values and a UTF-8 Grant suffix through the actual XML/storage/INI fixture. Preserve the existing ClassicIso ASCII restriction, production behavior and exact watcher output.
