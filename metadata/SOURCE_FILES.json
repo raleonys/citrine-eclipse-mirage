@@ -1226,8 +1226,8 @@
       "sha256": "c15622d09abdb428f30bfc964db202ff71b56db2ef103eea179a2b3ce5f9ba95"
     },
     "tests/infrastructure/test_weekly_release.py": {
-      "bytes": 31236,
-      "sha256": "0f00f07933fc8a6a65a0fee985298e1ba1fdb4fe7a2c5d00f9e7a52b23cf6590"
+      "bytes": 31576,
+      "sha256": "704d2fe719d0fdcdf939f63f1bce515dd582c922bbc5c9bde450a402cf685a73"
     },
     "tests/infrastructure/test_wine_runner.py": {
       "bytes": 1640,
