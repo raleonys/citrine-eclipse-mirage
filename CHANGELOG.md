@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Add a scoped GetAuthCode borrowed-provider-scratch regression: snapshot a C-string (including first-NUL/empty fallback and XML escaping) before response-printer effects recycle provider storage. Preserve the actual license handler, online library API, standard CRT, existing failure policy, and public DLL exports.
+
 - Test the actual Environment executable-path adapter with full nonterminated native results, repeated buffer growth, counted UTF-16 success, native failure and retry, and configured-path bypass. Test-only coverage; production path resolution and buffer policy are unchanged.
 
 - Synchronize the staged callback-lease test with accepted main and recompute only reviewed merged source identities, including the SOURCE_FILES digest used by packaging and Golden. Preserve all callback lease assertions and acceptance gates.
