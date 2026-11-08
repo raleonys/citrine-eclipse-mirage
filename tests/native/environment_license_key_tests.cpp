@@ -155,6 +155,72 @@ void directory_and_write_failures(){
         if(mode==1)require(plaintext(f.calls.bytes)==canonical,"late stream flags do not truncate counted encryption input");
     }
 }
+// A license failure occurs inside Game application, before the remaining
+// Game fields and all Emulator/User/collection sections. Verify this boundary
+// through both Config2 consumers and the actual Environment writer.
+void configuration_failure_prefix_and_retry(){
+    for(const bool hashed:{false,true})for(const unsigned mode:{0u,1u,2u}){
+        Fixture f;f.state.content_id="OLD-ID";f.state.username="retained-name";
+        f.state.game_attributes["LANGUAGES"]="retained-languages";
+        f.state.game_attributes["INSTALLED_LANGUAGE"]="retained-language";
+        f.state.documents=u"retained-documents";f.state.fake_auth=1;
+        f.state.content.push_back({"retained-content","retained", "1","INSTALLED"});
+        f.calls.path=(f.directory.path/"Electronic Arts"/"EA Services"/"License"/"fixture-id.dlf").u16string();
+        const auto obstruction=f.directory.path/"Electronic Arts";
+        if(mode==0)f.calls.error=5;
+        if(mode==1){std::ofstream output(obstruction,std::ios::binary);output<<"sentinel";output.close();require(static_cast<bool>(output),"own the obstructing parent file");}
+        if(mode==2)f.calls.write_throws=true;
+        config_hash::Node node;
+        auto& game=node.lookup("Game");
+        game.lookup("Name").value="prefix-game";game.lookup("ContentId").value="fixture-id";
+        game.lookup("KeyForLicense").value="fixture-key";
+        game.lookup("Languages").value="later-languages";game.lookup("Language").value="en_US";
+        node.lookup("Emulator").lookup("Documents").value="later-documents";
+        node.lookup("Emulator").lookup("FakeAuth").value="false";
+        node.lookup("User").lookup("UserId").value="NEW-USER";
+        node.lookup("User").lookup("Username").value="NEW-NAME";
+        node.lookup("Content").lookup("new-content").lookup("Name").value="new-item";
+        const auto apply=[&](config_application::Trace& trace){
+            if(hashed)config_application::apply_config2(f.state,node,false,f.environment,&trace);
+            else configuration::apply_config2(f.state,config_hash::to_configuration(node),false,f.environment);
+        };
+        config_application::Trace denied;bool caught=false;
+        try{apply(denied);}
+        catch(const Injected&){require(mode==2,"only the armed write boundary raises Injected");caught=true;}
+        catch(const fs::filesystem_error& error){
+            require(mode<2&&error.code().value()!=0,"status or parent creation failure preserves a filesystem exception");
+            if(mode==0)require(error.code().value()==5&&error.path1()==fs::path(f.calls.path),"status error retains its native value and license target");
+            caught=true;
+        }
+        require(caught,"license failure propagates through the configuration consumer");
+        require(f.state.content_id=="fixture-id"&&f.state.game_attributes.at("DISPLAY_NAME")=="prefix-game"&&
+                f.state.license_directory+u".dlf"==f.calls.path&&
+                f.calls.content_at_status=="fixture-id"&&f.calls.user_at_status=="OLD-USER",
+            "failure retains the completed Game prefix and the identity observed by the writer");
+        require(f.state.game_attributes.at("LANGUAGES")=="retained-languages"&&
+                f.state.game_attributes.at("INSTALLED_LANGUAGE")=="retained-language"&&
+                f.state.documents==u"retained-documents"&&f.state.fake_auth==1&&
+                f.state.username=="retained-name"&&f.state.user_id=="OLD-USER"&&
+                f.state.content.size()==1&&f.state.content.front().id=="retained-content",
+            "license failure cannot apply later Game fields, Emulator, User or collection entries");
+        if(hashed)require(denied.copies.size()==1&&denied.copies.front().section=="Game","hashed failure stops before copying another configuration section");
+        const auto failed_prefix=mode==2?std::vector<std::string>{"status","open","state","write"}:std::vector<std::string>{"status"};
+        require(f.calls.calls==failed_prefix&&f.calls.destructions==(mode==2?1u:0u),"failure retains its exact writer operation prefix and output lifetime");
+        if(mode==1){require(fs::file_size(obstruction)==8,"directory failure preserves the owned obstruction");require(fs::remove(obstruction),"repair only the owned parent obstruction");}
+        f.calls.error=2;f.calls.write_throws=false;f.calls.calls.clear();
+        const auto prior_destructions=f.calls.destructions;
+        config_application::Trace retry;apply(retry);
+        require(f.calls.calls==std::vector<std::string>{"status","open","state","write","close"}&&
+                f.calls.destructions==prior_destructions+1&&plaintext(f.calls.bytes)==canonical,
+            "same-state retry emits one complete known license with one output lifetime");
+        require(f.calls.user_at_status=="OLD-USER"&&f.state.user_id=="NEW-USER"&&f.state.username=="NEW-NAME"&&
+                f.state.game_attributes.at("LANGUAGES")=="later-languages"&&
+                f.state.game_attributes.at("INSTALLED_LANGUAGE")=="en_US"&&f.state.fake_auth==0&&
+                fs::path(f.state.documents).filename()=="later-documents"&&
+                f.state.content.size()==2&&f.state.content.back().id=="new-content",
+            "repaired retry resumes all later fields and appends the new collection entry once");
+    }
+}
 void configuration_live_callpoint(){
     for(const bool hashed:{false,true}){
         Fixture f;f.state.content_id="OLD-ID";
@@ -199,5 +265,6 @@ std::unique_ptr<Output> NativeFactory::open_output_03a1a0(const Path& path,std::
 int main()try{
     key_fixture::complete_bytes_and_counted_values();key_fixture::existing_and_status_failures();
     key_fixture::directory_and_write_failures();key_fixture::configuration_live_callpoint();
+    key_fixture::configuration_failure_prefix_and_retry();
     std::cout<<"PASS: "<<key_fixture::checks<<" actual Environment license-key contracts with controlled status/file boundaries\n";
 }catch(const std::exception& error){std::cerr<<"FAIL: "<<error.what()<<'\n';return 1;}
