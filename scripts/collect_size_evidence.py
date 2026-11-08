@@ -116,8 +116,16 @@ def vs_object_paths(project, config, sources):
         raise ValueError('VS IntDir is absent for ' + target)
     intdir = expand(intdirs[-1])
     result = {}
+    # A VS project can contain the same source under configuration-specific
+    # ItemGroups or ClCompile entries. Ignore inactive ancestors as well.
+    parents = {child: parent for parent in tree.iter() for child in parent}
     for item in tree.iter():
         if item.tag.rsplit('}', 1)[-1] != 'ClCompile' or not item.get('Include'):
+            continue
+        node = item
+        while node is not None and applies(node.get('Condition')):
+            node = parents.get(node)
+        if node is not None:
             continue
         source = (project.parent / expand(item.get('Include'))).resolve()
         if source not in sources:
