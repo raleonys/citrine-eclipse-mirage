@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Test the actual Environment executable-path adapter with full nonterminated native results, repeated buffer growth, counted UTF-16 success, native failure and retry, and configured-path bypass. Test-only coverage; production path resolution and buffer policy are unchanged.
+
 - Synchronize the staged callback-lease test with accepted main and recompute only reviewed merged source identities, including the SOURCE_FILES digest used by packaging and Golden. Preserve all callback lease assertions and acceptance gates.
 
 - Exercise A11-04 native callback owner retention with a staged two-family Binding drain: hold the real process and connect entry wrappers concurrently, reject close with two then one live lease, and preserve per-thread original results/errors through final retirement. This source-included test does not claim a donor Application gate, a real patched MinHook callback or Consumer unload acceptance.
