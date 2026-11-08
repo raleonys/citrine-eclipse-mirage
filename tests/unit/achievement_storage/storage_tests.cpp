@@ -192,14 +192,28 @@ void achievement_path_components() {
     require(device_mixed.files.reads.empty()&&device_mixed.paths.xml_path.empty()&&
             !device_mixed.state.achievements.contains("must-not-import"),
         "invalid watcher leaf cannot publish partial XML state");
-    Fixture prefixed_device;
-    prefixed_device.state.achievements_set="CON";
-    const auto prefixed_xml=join(u"USER",u"achievement-CON.xml");
-    prefixed_device.files.input[prefixed_xml]="<root/>";
-    prefixed_device.storage.update_01eb00(prefixed_device.state);
-    require(prefixed_device.paths.xml_path==prefixed_xml&&
-            prefixed_device.files.reads==std::vector<Path>{prefixed_xml},
-        "safe prefixed XML filename preserves a non-directory device-like set");
+    // Positive watcher controls retained from PR #281: matching a prefix is
+    // insufficient to classify an otherwise valid leaf as a device name.
+    for(const char* ok:{"console","com10","lpt","NULLED","legitimate.v1"}) {
+        Fixture kept;kept.state.steam_app_id=ok;
+        kept.storage.update_01eb00(kept.state);
+        require(kept.paths.ini_path==join(join(join(u"USER",u"achievement_watcher"),wide(ok)),u"achievements.ini"),
+            "names that only resemble a device stay a single watcher directory");
+    }
+    // Set IDs are embedded in a filename, not used as raw directory names.
+    // Verify actual XML import so a directory-only restriction cannot be
+    // accidentally extended to these safe prefixed/suffixed filenames.
+    for(const char* set:{"CON","CON.txt","COM1","42.","42 "}) {
+        Fixture prefixed_device;
+        prefixed_device.state.achievements_set=set;
+        const auto prefixed_xml=join(u"USER",wide(std::string("achievement-")+set+".xml"));
+        prefixed_device.files.input[prefixed_xml]=R"(<root><record Id="preserved" Count="7"/></root>)";
+        prefixed_device.storage.update_01eb00(prefixed_device.state);
+        require(prefixed_device.paths.xml_path==prefixed_xml&&
+                prefixed_device.files.reads==std::vector<Path>{prefixed_xml}&&
+                prefixed_device.state.achievements.at("preserved").field04==7,
+            "safe prefixed XML filename preserves set identity and imports its record");
+    }
 
     // A bad second component must not partially import a good XML set.
     Fixture mixed;

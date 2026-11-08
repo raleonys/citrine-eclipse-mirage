@@ -1566,8 +1566,8 @@
       "sha256": "c50fc5d95e86b2ff48ece54ee3149d25295d6f99b13b76097e73eb1616a976c6"
     },
     "tests/unit/achievement_storage/storage_tests.cpp": {
-      "bytes": 20666,
-      "sha256": "1741c523f453f3f88927e67fa8c30e11716ad34b83761b49726c694a7bfb0599"
+      "bytes": 21666,
+      "sha256": "f57c63faabacfdfaa34fb1321cc2f8b53ae4b14f4e09d2c690e1e2bf5226c2b6"
     },
     "tests/unit/achievement_writer/writer_tests.cpp": {
       "bytes": 9575,
