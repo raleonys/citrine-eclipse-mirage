@@ -54,6 +54,13 @@ public:
     // publish without another allocation. Failure must discard the reservation.
     virtual void push_persisted_locked(std::string,const std::function<void()>&) = 0;
 };
+// Optional complete provider call; older Effects implementations retain their
+// path-only source API. Owner and signed width/208 are borrowed for this call.
+class AvatarRequest {
+public:
+    virtual ~AvatarRequest() = default;
+    virtual bool request_online_avatar(const Path&,const char* owner,std::int32_t size) = 0;
+};
 class Effects {
 public:
     virtual ~Effects() = default;
