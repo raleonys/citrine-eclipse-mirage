@@ -196,6 +196,11 @@
       "purpose": "Select and validate semantic version for resources, Golden policies and receipts",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
+    "scripts/repository_badges.py": {
+      "owner": "Citrine Eclipse Mirage repository presentation",
+      "purpose": "Render SVG badges and update only the generated nine-image branch",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
     "scripts/restore_vendor_links.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "restore vendor links",
