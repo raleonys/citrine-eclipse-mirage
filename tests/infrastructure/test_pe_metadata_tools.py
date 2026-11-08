@@ -79,6 +79,20 @@ with tempfile.TemporaryDirectory() as td:
     assert (b[opt2+2],b[opt2+3])==(14,0)
     errors,names=ary.inspect(p,ary_policy)
     assert not errors and names==ary_policy['sections_in_order']
+    # A geometrically aligned PE can still declare an invalid non-power-of-two
+    # SectionAlignment. Keep valid alternate power-of-two alignments accepted.
+    for alignment, allowed in ((0x1800, False), (0x2000, True)):
+        bad=bytearray(p.read_bytes())
+        struct.pack_into('<I',bad,opt+32,alignment)
+        for index in range(len(ary_policy['sections_in_order'])):
+            struct.pack_into('<I',bad,sec+index*40+12,alignment*(index+1))
+        sample=Path(td,f'aryra_section_alignment_{alignment:x}.dll')
+        sample.write_bytes(bad)
+        errors,names=ary.inspect(sample,ary_policy)
+        if allowed:
+            assert not errors and names==ary_policy['sections_in_order'], errors
+        else:
+            assert errors==[f'SectionAlignment=0x{alignment:X} is not a power of two'], errors
     # Audit3 F323-S0106-001: file bytes beyond SizeOfOptionalHeader do not authorize reads.
     short=bytearray(p.read_bytes()); struct.pack_into('<H',short,coff2+16,0x20); shortp=Path(td,'bad_declared_optional_header.dll'); shortp.write_bytes(short)
     for label,fn in [('URSYNEX',lambda: fin.parse_core(bytearray(shortp.read_bytes()))),('ARYRA',lambda: ary.inspect(shortp,ary_policy)),('MUSTAVEX',lambda: mus.inspect(shortp,mustavex))]:

@@ -43,6 +43,8 @@ def inspect(dll, policy):
         errors.append(f'FileAlignment=0x{file_alignment:X}')
     if not section_alignment:
         errors.append('SectionAlignment=0')
+    elif section_alignment & (section_alignment - 1):
+        errors.append(f'SectionAlignment=0x{section_alignment:X} is not a power of two')
     elif section_alignment < 0x1000 and section_alignment != file_alignment:
         errors.append(f'low SectionAlignment 0x{section_alignment:X} must equal FileAlignment 0x{file_alignment:X}')
     elif section_alignment >= 0x1000 and section_alignment < file_alignment:
