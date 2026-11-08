@@ -158,6 +158,43 @@ class PE:
             if i>4096: raise PEError('import descriptor runaway')
         return modules
 
+def validate_application_export_targets(pe, exports, required_names):
+    """Check entry bytes for application functions, without restricting data exports."""
+    errors=[]
+    headers_end=max(u32(pe.b,pe.opt+60),pe.opt+pe.optsz+pe.nsec*40)
+    for name in required_names:
+        target=exports.get(name)
+        # Missing, null and forwarded entries have their existing ABI checks.
+        if target is None or not target[1] or target[2]:
+            continue
+        rva=target[1]
+        label=f'{name} export RVA 0x{rva:X}'
+        if rva<headers_end:
+            errors.append(label+' points into PE headers')
+            continue
+        owners=[section for section in pe.sections
+                if section[1]<=rva<section[1]+section[2]]
+        if not owners:
+            errors.append(label+' has no section owner (unmapped target)')
+            continue
+        if len(owners)!=1:
+            errors.append(label+' has ambiguous section ownership: '+str([s[0] for s in owners]))
+            continue
+        section,va,_span,raw_pointer,raw_size,characteristics=owners[0]
+        if not (characteristics&0x20000000):  # IMAGE_SCN_MEM_EXECUTE
+            errors.append(label+f' belongs to non-executable section {section!r}')
+            continue
+        delta=rva-va
+        if delta>=raw_size:
+            errors.append(label+f' points into virtual-only bytes of section {section!r}')
+            continue
+        if raw_pointer<headers_end:
+            errors.append(label+f' has section raw storage overlapping PE headers (PointerToRawData=0x{raw_pointer:X})')
+            continue
+        if raw_pointer+delta>=len(pe.b):
+            errors.append(label+f' maps beyond EOF at file offset 0x{raw_pointer+delta:X}')
+    return errors
+
 def validate_restricted_named_imports(pe, import_policy, modules):
     errors=[]
     for module,expected in import_policy.get('restricted_named_imports',{}).items():
@@ -200,6 +237,7 @@ def inspect_shipping_abi(path:Path,policy:dict):
             errors.append(f'{name} RVA 0x{rva:X} != AddressOfEntryPoint 0x{entry:X}')
         if spec.get('must_not_equal_entrypoint') and rva==entry:
             errors.append(f'{name} RVA 0x{rva:X} unexpectedly equals AddressOfEntryPoint; normalized CRT startup was bypassed')
+    errors.extend(validate_application_export_targets(pe,ex,wanted))
     entry_section=None; entry_characteristics=None
     for sec_name,va,span,_rp,_rs,chars in pe.sections:
         if va <= entry < va+span:
