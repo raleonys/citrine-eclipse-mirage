@@ -381,7 +381,12 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
     std::unique_ptr<net::AsioService> service;
     std::atomic<bool> accepting{false};
     bool started=false,used=false;
-    std::thread provider_worker,extra_worker;
+#ifdef PRELOADER_L_TEST_APPLICATION_WORKER_THREAD
+    using WorkerThread=PRELOADER_L_TEST_APPLICATION_WORKER_THREAD;
+#else
+    using WorkerThread=std::thread;
+#endif
+    WorkerThread provider_worker,extra_worker;
     std::exception_ptr extra_failure;
     explicit Impl(Options o):options(std::move(o)) {
         execution::initialize_mutex_04a698(mutex,2);
@@ -450,11 +455,11 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
             auto provider_result=completed.get_future().share();
             // Preserve the source worker/main-extra overlap and dependency
             // order using standard-CRT threads owned until stop/join.
-            provider_worker=std::thread([this,done=std::move(completed)]() mutable {
+            provider_worker=WorkerThread([this,done=std::move(completed)]() mutable {
                 try{provider.load();done.set_value(nullptr);}catch(...){done.set_value(std::current_exception());}
             });
             extras.load(true);
-            extra_worker=std::thread([this,provider_result] {
+            extra_worker=WorkerThread([this,provider_result] {
                 if(provider_result.get())return; // Failed predecessor must not leave an infinite wait_steps loop.
                 try{extras.load(false);}
                 catch(...){extra_failure=std::current_exception();}

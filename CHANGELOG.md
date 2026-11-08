@@ -6,13 +6,51 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Keep completed release notes ready for publication: omit draft headings and owner-only publishing instructions while retaining source identity, validation results, download guidance and the generated changelog. Preserve the incomplete-upload warning and internal acceptance evidence.
+
 - Pin the retained native-message event retirement boundary before a lower unlock failure, across last/nonlast, inline/heap and accepted/rejected event-cipher cases. Check exact committed queue state, local response bytes and absence of output/document finalization after the unknown unlock outcome. Reference-model tests only; production behavior and ABI are unchanged.
+
+- Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Put exactly preloader_l.dll, its DLL SHA-256 sidecar and the project LICENSE at the ZIP root. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts and all other files out of the runtime ZIP, preserve native/Golden gates, and leave published releases unchanged.
+
+- Add source-included native Application rollback regressions for controlled first/second worker-launch exceptions, retained provider-thread draining and normal startup. Keep production workers exactly `std::thread` through a private fixture seam; preserve listener cleanup, public options/exports and compiler CRT policy.
+
+- Cover startup command-line decoding failure on a later argument after an earlier argument succeeds; verify exactly one argv allocation release and no partially published language/console flags or environment override.
+
+- Cover the actual Windows UTC HostClock adapter against direct `_gmtime64_s` at signed negative, Unix epoch, leap day, year 9999, first year 10000 and time64 maximum boundaries; compare success and all nine returned fields.
+
+- Add a scoped GetAuthCode borrowed-provider-scratch regression: snapshot a C-string (including first-NUL/empty fallback and XML escaping) before response-printer effects recycle provider storage. Preserve the actual license handler, online library API, standard CRT, existing failure policy, and public DLL exports.
+
+- Test the actual Environment executable-path adapter with full nonterminated native results, repeated buffer growth, counted UTF-16 success, native failure and retry, and configured-path bypass. Test-only coverage; production path resolution and buffer policy are unchanged.
+
+- Synchronize the staged callback-lease test with accepted main and recompute only reviewed merged source identities, including the SOURCE_FILES digest used by packaging and Golden. Preserve all callback lease assertions and acceptance gates.
+
+- Exercise A11-04 native callback owner retention with a staged two-family Binding drain: hold the real process and connect entry wrappers concurrently, reject close with two then one live lease, and preserve per-thread original results/errors through final retirement. This source-included test does not claim a donor Application gate, a real patched MinHook callback or Consumer unload acceptance.
+
+- Adopt the Archive 12 execution-source two-actor Win32 SRW regression in the existing execution test target. Verify observed contention, protected-data handoff, owner/count clearing before native release, unrelated mutex bytes and the final callback LastError, with finite waits and no live-child stack unwind. Runtime sources, build targets and existing portable checks remain unchanged.
+
+- Extend selected-library timestamp coverage to all 256 trailing byte values and a UTF-8 Grant suffix through the actual XML/storage/INI fixture. Preserve the existing ClassicIso ASCII restriction, production behavior and exact watcher output.
+
+- Exercise event delivery receipt generations, competing success/cancellation callbacks, and completion while a separate event holds the queue mutex for successful or failed persistence. Reject stale receipts, preserve FIFO and retry ownership, and keep disk commit independent from delivery. Extend the existing event queue contract target without changing runtime code or test budgets.
+
+- Extend C14 protected Windows CryptQuery path-read acceptance with a real cross-page partial UTF-16 code unit, a complete read-only path and an entirely inaccessible page; require fail-closed selection and zero C++ heap allocations without modifying hook policy.
+
+- Add C08 bounded Windows native regression for the prior-cleanup ERROR_BUSY result visible to a newly queued zero-wait DllShutdown caller; verify worker request retention and eventual retry without changing shutdown status semantics or public ABI.
+
+- Use UTC for public changelog dates and release schedules without location-bearing zone names. Reconcile all 158 dated PR entries against GitHub merge timestamps, correct four calendar-day boundaries, and keep the weekly cron instant unchanged. Add a source QA guard for regional time-zone names in active first-party authoring inputs; preserve vendor data and technical test fixtures.
+
+- Apply the owner's separately approved privacy redaction to seven retained logs (66 user-profile path occurrences), one retained schedule record and three linked identity receipts. Preserve original and redacted SHA-256 provenance, reconcile current-copy byte counts and retain every historical outcome, binary digest and acceptance limit. This is current-copy redaction, not new native execution or an accepted Git-history rewrite.
+
+- Join a dedicated Application shutdown thread before native module-quiescence checks in the Windows test. MSVC async task completion can leave a reusable pool worker in the statically linked image. Preserve CTest progress across console rebinding and repeat the manual provider/Application/profile checks without changing production cleanup, assertions or timeouts.
+
+- Retain provider profile copy ownership when successive getters reuse one borrowed scratch buffer. Exercise short and heap-sized fields, cached output, partial null-getter failures and destructive cleanup in the existing online Effects tests; runtime behavior, vendor bytes and ABI are unchanged. This is sequential copy ownership evidence, not concurrent foreign-module or Consumer acceptance.
 
 - Extend B53 partial-publication retirement coverage: force the first native greeting to throw after a real Asio Client is counted and registered, then require exact session-slot rollback, one error report, listener rearm, uninterrupted existing-peer traffic and clean repeated stop. This is independent of handler factory creation failures; no production code, ABI, hook or vendor changes, and Consumer/game parity remains unverified.
 
 - Add a B50 native socket-retirement regression for simultaneous real WSARecv/WSASend loans across an injected would-block native close. Require the first shutdown attempt to retain the client and fail closed; an explicit successful retry must free both buffers, dispatch no cancelled business callbacks and never double-close. This is a bounded close-retry scenario, not a claim of physically delayed kernel completion or Consumer/game parity.
 
 - Add native public-shutdown overlap tests at two real Application startup publication boundaries. Queue zero-wait and bounded-wait shutdown calls while startup is paused, then verify retained ownership, successful completion without a third request, startup-exception unwind and exactly-once cleanup. Extend only the source-included test DLL and existing Windows Debug/Release fixture workflow; production runtime, exports and startup/shutdown behavior are unchanged.
+
+- Add a B54 Windows provider failure-lifetime regression using the actual test DLL: null create_online and null username/persona/user getters must fail Application startup, preserve only previously copied profile fields, destroy constructed objects exactly once, survive repeated stop and release the real module lease. This stacks on the existing active-getter shutdown fixture; shipping runtime/exports, vendor pins and game behavior are unchanged.
 
 - Add a source-linked Windows B54 provider-lifetime regression: pause an actual native DLL auth getter during an accepted LSX session, request real Application shutdown concurrently, require no early provider destruction, then release the getter and verify exactly-once teardown and repeat-stop behavior. Only the native fixture and test harness change; foreign-originated jobs and Consumer/game parity remain unverified.
 
@@ -42,9 +80,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 - PR #204: inspect the complete already-decoded first-party source text for duplicate or conflicting SPDX identifiers instead of only its first 3,000 characters. Reject late duplicate GPL-3.0-only and conflicting MIT markers, preserve accepted long files and existing identity/exclusion rules, and validate the full source inventory. This changes QA enforcement, not project licenses, shipping code or vendor inputs.
 
+- Cover simultaneous fixed-key and response-derived encrypted TCP peers on one real Application. Check interleaved request identities, either peer closing without disrupting the survivor, and replacement admission without resetting the survivor cipher. Test-only coverage preserves production behavior, shared event ownership and vendor inputs.
+
 ### Accepted-main checkpoint — 2026-11-06
 
-Verified against [`main@a91c9ffb41e822ff0f851d6f41f2d25b662be1cd`](https://github.com/raleonys/citrine-eclipse-mirage/commit/a91c9ffb41e822ff0f851d6f41f2d25b662be1cd). The 106 integration entries below have matching GitHub merge records and merge commits reachable from that source checkpoint after the earlier #62 checkpoint. Dates are GitHub merge dates in Europe/Istanbul; detailed change notes appear under the same dated PR entries. The list records integrations, not passing tests, releases or unmerged proposals. Later entries supersede earlier implementation and policy decisions.
+Verified against [`main@a91c9ffb41e822ff0f851d6f41f2d25b662be1cd`](https://github.com/raleonys/citrine-eclipse-mirage/commit/a91c9ffb41e822ff0f851d6f41f2d25b662be1cd). The 106 integration entries below have matching GitHub merge records and merge commits reachable from that source checkpoint after the earlier #62 checkpoint. All dated integration entries use the UTC date of GitHub `merged_at`; detailed change notes appear under the same dated PR entries. The list records integrations, not passing tests, releases or unmerged proposals. Later entries supersede earlier implementation and policy decisions.
 
 The current XML backend is pugixml behind the project compatibility layer (#149/#150), with the self-aliasing printer correction (#193). MinHook uses the existing hook-engine adapter (#148); PEGTL grammar is private behind the parser interface (#231). The native completion fixtures cover held receive (#107), send/output (#114) and accept (#130) packets across bounded stop retries; these controlled schedules do not establish exhaustive kernel identity or Consumer equivalence.
 
@@ -71,10 +111,10 @@ Full validation follows actual main integration or a later verified synchronizat
 - [PR #170](https://github.com/raleonys/citrine-eclipse-mirage/pull/170): fix: prevent Config2 lookup use-after-free on aliased keys. Own a missing Config2 lookup key before traversal rehash can invalidate an aliased string_view, and erase its provisional child if table insertion throws. Cover long borrowed prefixes at 8-to-64 growth, independent traversal ordering, existing-key stability and failed-insert retry while retaining the recursive assignment allocation-failure campaign. Synchronize the source-file inventory and its enclosing manifest digest for packaging and Golden verification.
 - [PR #161](https://github.com/raleonys/citrine-eclipse-mirage/pull/161): Fix online avatar provider owner and size arguments. Preserve QueryImage owner ID and signed width/208 through the production avatar provider call. Keep the legacy path-only Effects interface available to source adapters, select the complete call in the application, and test real slot5 argument forwarding and nonzero-byte return handling. Make foreign-table byte offsets explicit with unsigned-character storage/pointers, retaining memcpy reads and unaligned-slot regression coverage; resolve all three PR #161 CodeQL sizeof-scaling findings without suppressing the rule. Preserve the accepted provider-auth Registry hook fixture and unsafe avatar-component rejection in both provider routes.
 - [PR #75](https://github.com/raleonys/citrine-eclipse-mirage/pull/75): audit: recover interrupted Golden dist promotion (C35-F001). Add process-interruption recovery for Golden dist promotion: retain the current DLL/checksum/DIST_RECEIPT.json names and receipt schema, publish a verified previous-bundle journal before replacement, and recover under a persistent OS-held writer lock. Preserve current Golden output safety checks and test hard exits during promotion/recovery, damaged snapshots, lock contention and failed-run recovery. Flush owned staging copies with Windows write access and restore the previous bundle after a handled journal-retirement failure, with canonical temporary paths in Windows fault injection; power-loss durability and atomic visibility to direct readers remain outside this guarantee.
-- [PR #224](https://github.com/raleonys/citrine-eclipse-mirage/pull/224): test: cover provider auth reentry through live registry hooks. Extend the native Application fixture with a real provider auth getter that reenters the active registry hooks after startup readiness. Assert configured ClientPath, one completed open/query/close probe, disabled-probe controls and single provider retirement after client reads drain; retain the provider ABI and fixture-only advapi32 dependency. Shipping behavior and vendor sources are unchanged.
 
 ### Integrated 2026-11-05
 
+- [PR #224](https://github.com/raleonys/citrine-eclipse-mirage/pull/224): test: cover provider auth reentry through live registry hooks. Extend the native Application fixture with a real provider auth getter that reenters the active registry hooks after startup readiness. Assert configured ClientPath, one completed open/query/close probe, disabled-probe controls and single provider retirement after client reads drain; retain the provider ABI and fixture-only advapi32 dependency. Shipping behavior and vendor sources are unchanged.
 - [PR #78](https://github.com/raleonys/citrine-eclipse-mirage/pull/78): audit: report license ticket write/close failures (F-C24-001). Audit F-C24-001: route license-ticket output through opt-in write/close status checks so nonthrowing late failures cannot report ticket success. Preserve the recovered initial-open-only legacy writer, other file-write callers and public DLL ABI; add deterministic failure coverage and a portable file-I/O target. Isolate the checked-write native fixture from the existing 8193-byte partial-read/EOF fixture so both scenarios retain their own input bytes.
 - [PR #74](https://github.com/raleonys/citrine-eclipse-mirage/pull/74): audit: validate Config2 ContentId before license path construction (C36-F002). Audit C36-F002: reject unsafe Config2 ContentId filename components before license-path construction, and reject empty-ID license writes before the license callback. Preserve supported ASCII IDs and no-license empty-ID configurations; retain source-linked boundary regressions. This conservative input policy still requires owner compatibility review; lexical checks do not establish reparse-safe filesystem confinement.
 - [PR #177](https://github.com/raleonys/citrine-eclipse-mirage/pull/177): fix: reject invalid native input stream positions. Reject an invalid native binary-input `tellg()` position instead of converting its failure sentinel into a huge unsigned file length; add EOF-state regression coverage using the existing generated file fixture.
@@ -113,10 +153,10 @@ Full validation follows actual main integration or a later verified synchronizat
 - [PR #212](https://github.com/raleonys/citrine-eclipse-mirage/pull/212): ci: defer full validation until main synchronization or manual request.
 - [PR #144](https://github.com/raleonys/citrine-eclipse-mirage/pull/144): test: retain grant XML/INI rollback after native locked destination (A11-09).
 - [PR #69](https://github.com/raleonys/citrine-eclipse-mirage/pull/69): audit: retain buffered Debug log entries after failed file open (F-C28-001).
-- [PR #156](https://github.com/raleonys/citrine-eclipse-mirage/pull/156): docs: refresh current XML dependency and changelog scope.
 
 ### Integrated 2026-11-03
 
+- [PR #156](https://github.com/raleonys/citrine-eclipse-mirage/pull/156): docs: refresh current XML dependency and changelog scope.
 - [PR #117](https://github.com/raleonys/citrine-eclipse-mirage/pull/117): test: pin LSX multi-command first-child dispatch behavior (C21).
 - [PR #155](https://github.com/raleonys/citrine-eclipse-mirage/pull/155): fix: validate source manifest byte counts alongside hashes.
 - [PR #152](https://github.com/raleonys/citrine-eclipse-mirage/pull/152): chore: remove obsolete build labels from operator tools and reports.
@@ -161,10 +201,10 @@ Full validation follows actual main integration or a later verified synchronizat
 - [PR #93](https://github.com/raleonys/citrine-eclipse-mirage/pull/93): policy: restore LUTRAVEX-approved weekly semver and Citrine release archives.
 - [PR #89](https://github.com/raleonys/citrine-eclipse-mirage/pull/89): fix: preserve shutdown retries and avoid TLS marker false positives (R-03).
 - [PR #95](https://github.com/raleonys/citrine-eclipse-mirage/pull/95): ci: run full Windows Native, Golden, CRT, Debug and portable QA on every PR.
-- [PR #84](https://github.com/raleonys/citrine-eclipse-mirage/pull/84): fix: prevent stale native callback error-policy use (packet R-01).
 
 ### Integrated 2026-11-01
 
+- [PR #84](https://github.com/raleonys/citrine-eclipse-mirage/pull/84): fix: prevent stale native callback error-policy use (packet R-01).
 - [PR #83](https://github.com/raleonys/citrine-eclipse-mirage/pull/83): test: PR23 post-merge Windows listener shutdown acceptance (draft).
 - [PR #23](https://github.com/raleonys/citrine-eclipse-mirage/pull/23): Guard connect sockaddr inspection without changing original Winsock errors.
 - [PR #73](https://github.com/raleonys/citrine-eclipse-mirage/pull/73): audit: remove blocking entitlement modal from shared handler lock (C36-F003).
@@ -173,6 +213,9 @@ Full validation follows actual main integration or a later verified synchronizat
 - [PR #76](https://github.com/raleonys/citrine-eclipse-mirage/pull/76): test: fix MSVC Debug fault injection and validate Windows portable checks.
 - [PR #79](https://github.com/raleonys/citrine-eclipse-mirage/pull/79): chore: retire recovery-era wording from active C++ source.
 - [PR #71](https://github.com/raleonys/citrine-eclipse-mirage/pull/71): refactor: normalize internal identifiers and enforce SPDX headers.
+
+### Integrated 2026-10-31
+
 - [PR #63](https://github.com/raleonys/citrine-eclipse-mirage/pull/63): docs/license: adopt GPLv3 and correct campaign artwork with build badges.
 
 ### Historical merged-PR checkpoint through #62
