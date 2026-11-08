@@ -21,6 +21,8 @@ The workflow still verifies the exact source package, Source QA, portable CTest,
 
 `DRAFT` in an internal preparation receipt describes the workflow's draft step. Publishing a release does not rewrite uploaded ZIP bytes, so publication-state receipts must not be embedded in downloadable packages. The owner reviews and manually publishes the draft after separate game acceptance.
 
+Completed release notes contain the source identity, validated build summary, download guidance and generated changelog. They contain no draft heading or instruction to publish the draft, so the same text remains suitable after owner publication. The incomplete-asset warning exists only during preparation and is removed once both uploads verify. Internal game-acceptance status remains in workflow evidence; the notes do not claim game acceptance.
+
 This policy applies to future candidates. Published `3.2.6-TALVOR` assets and earlier historical artifacts are retained unchanged; historical Brownfield `preloader_l_...FINAL_RELEASE.zip` artifacts use their separate former grammar.
 
 Source QA, portable CTest, Windows Native MSVC, Production/Golden six gates and finalized DLL acceptance must complete on one source SHA before marking a draft complete. No new ZIP naming alters compatibility-sensitive PE VERSIONINFO, exports, compiled DLL filename, CRT, SDK protocol or runtime ABI. Only the owner publishes the draft after separate game acceptance.

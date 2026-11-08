@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <atomic>
 #include <bit>
+#include <barrier>
+#include <memory>
 #include <cstring>
 #include <iostream>
 #include <thread>
@@ -397,6 +399,52 @@ void test_binding_lifecycle(){
     {Binding replacement(f.context,faults);require(is_bound(),"context may be bound again explicitly after quiescence");}
     require(!is_bound(),"binding destructor closes idle context");
 }
+void test_concurrent_binding_constructors(){
+    Fixture first;first.binding.close();
+    Fixture second;second.binding.close();
+    first.values["Documents"]=u"C:\\first";
+    second.values["Documents"]=u"D:\\second";
+    std::array<Context*,2> contexts{&first.context,&second.context};
+    std::array<std::unique_ptr<Binding>,2> owners;
+    std::array<bool,2> rejected{};
+    std::array<std::exception_ptr,2> unexpected{};
+    std::barrier start(3);
+    auto construct=[&](std::size_t index){
+        start.arrive_and_wait();
+        try{owners[index]=std::make_unique<Binding>(*contexts[index],faults);}
+        catch(const Life& error){rejected[index]=error.fault==LifecycleFault::AlreadyBound;}
+        catch(...){unexpected[index]=std::current_exception();}
+        // Hold the winner until both constructors finish, so the loser cannot
+        // succeed merely because the first owner was already destroyed.
+    };
+    std::thread left(construct,0),right(construct,1);
+    start.arrive_and_wait();left.join();right.join();
+    require(!unexpected[0]&&!unexpected[1],"concurrent binding construction has no unexpected exception");
+    require(static_cast<bool>(owners[0])!=static_cast<bool>(owners[1])&&
+            rejected[0]!=rejected[1]&&is_bound(),
+            "concurrent constructors admit exactly one binding and reject the other");
+    const std::size_t winner=owners[0]?0:1;
+    std::array<wchar_t,260> output{};
+    require(folder_w_entry(nullptr,5,nullptr,0,output.data())==0&&
+            std::wstring(output.data())==(winner==0?L"C:\\first":L"D:\\second")&&active_calls()==0,
+            "native callback observes the winning constructor's context");
+    owners[winner].reset();
+    require(!is_bound(),"winning constructor retains sole cleanup ownership");
+}
+void test_closed_binding_destruction_with_live_replacement(){
+    Fixture f;f.binding.close();
+    auto old=std::make_unique<Binding>(f.context,faults);
+    old->close();
+    Binding replacement(f.context,faults);
+    old.reset();
+    require(is_bound(),"destroying a closed binding preserves its live replacement");
+    std::array<wchar_t,260> output{};
+    require(folder_w_entry(nullptr,5,nullptr,0,output.data())==0&&
+            std::wstring(output.data())==L"D:\\docs"&&active_calls()==0,
+            "replacement remains callable after closed owner destruction");
+    replacement.close();
+    require(!is_bound(),"replacement closes normally after old owner destruction");
+}
 void test_staged_cross_family_binding_drain(){
     // A11-04/B51 comparison: current product owns a *shared native hook*
     // lease counter, not a donor-only Application-entry admission gate.
@@ -677,7 +725,7 @@ int main(int argc,char** argv){try{
         else if(std::strcmp(argv[1],"--crypt-invalid")==0){const wchar_t invalid[]={0xd800,0};require(crypt_query_entry(1,invalid,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr)==7,"invalid UTF16 forwards instead of trapping");return 0;}
         return 98;
     }
-    test_resolver_and_registry();test_process_folder_connect();test_binding_lifecycle();test_staged_cross_family_binding_drain();test_live_owner_state_identity();test_crypt_forwarding();test_crypt_lifetime();
+    test_resolver_and_registry();test_process_folder_connect();test_binding_lifecycle();test_concurrent_binding_constructors();test_closed_binding_destruction_with_live_replacement();test_staged_cross_family_binding_drain();test_live_owner_state_identity();test_crypt_forwarding();test_crypt_lifetime();
 #if !defined(PRELOADER_L_PRODUCTION_CALLBACK_TESTS)
     test_actual_host_install_binding();
 #endif

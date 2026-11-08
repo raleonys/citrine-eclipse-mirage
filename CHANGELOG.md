@@ -8,6 +8,16 @@ This file distinguishes integrated source changes, imported source history and p
 
 - Pin retained socket dispatch continuation when the message core consumes a previously nonempty request. Cover exact empty/binary responses, inline and heap capacities, live request allocations and core-released input without changing runtime behavior or production session policy.
 
+- Add a live Latest release badge to the README linking to the latest published GitHub release. Keep the version dynamic so future releases require no README edit.
+
+- Strengthen server startup failure tests with exact error values, categories, accepted operation labels and pre-publication stop order. Cover an IO-context run error after readiness without normal destruction; adapt Archive 12 test principles without changing product diagnostics, runtime policy or backend ownership.
+
+- Keep completed release notes ready for publication: omit draft headings and owner-only publishing instructions while retaining source identity, validation results, download guidance and the generated changelog. Preserve the incomplete-upload warning and internal acceptance evidence.
+
+- Pin the retained native-message event retirement boundary before a lower unlock failure, across last/nonlast, inline/heap and accepted/rejected event-cipher cases. Check exact committed queue state, local response bytes and absence of output/document finalization after the unknown unlock outcome. Reference-model tests only; production behavior and ABI are unchanged.
+
+- Add native callback binding regressions for simultaneous constructor admission and destruction of a closed owner while its replacement remains active. Verify one winning context, callback usability and sole cleanup ownership.
+
 - Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Put exactly preloader_l.dll, its DLL SHA-256 sidecar and the project LICENSE at the ZIP root. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts and all other files out of the runtime ZIP, preserve native/Golden gates, and leave published releases unchanged.
 
 - Add source-included native Application rollback regressions for controlled first/second worker-launch exceptions, retained provider-thread draining and normal startup. Keep production workers exactly `std::thread` through a private fixture seam; preserve listener cleanup, public options/exports and compiler CRT policy.

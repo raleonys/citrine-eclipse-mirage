@@ -469,14 +469,35 @@ class DraftTests(unittest.TestCase):
                 self.publish()
             self.assertEqual([],self.github.writes)
 
+    def test_completed_release_notes_are_ready_for_owner_publication(self):
+        result = self.publish()
+        body = result['body']
+        self.assertTrue(result['draft'])
+        self.assertEqual('complete', release.state(result)['status'])
+        for leftover in ('# Draft candidate', 'publish this draft',
+                         'Game acceptance is NOT RUN', 'Asset preparation is incomplete'):
+            self.assertNotIn(leftover, body)
+        self.assertIn('Source: `' + SOURCE + '`', body)
+        self.assertIn('Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip', body)
+        self.assertIn('## Changes\n\nOwner-reviewed changes.', body)
+        self.assertIn('Source code (zip/tar.gz)', body)
+        # Publishing changes GitHub's draft flag; the already prepared notes
+        # must remain suitable for readers without another metadata rewrite.
+        self.github.items[-1]['draft'] = False
+        self.assertEqual(body, self.github.items[-1]['body'])
+        self.assertEqual('NOT_RUN', release.load(self.receipt)['game_acceptance'])
+
     def test_upload_interruption_retains_incomplete_draft_for_retry(self):
         self.github.fail_upload = True
         with self.assertRaises(OSError):
             self.publish()
         self.assertEqual('preparing', release.state(self.github.items[0])['status'])
+        self.assertIn('Asset preparation is incomplete', self.github.items[0]['body'])
         self.github.fail_upload = False
         self.assertEqual('complete', release.state(self.publish())['status'])
         self.assertEqual(1, len(self.github.items))
+        self.assertNotIn('Asset preparation is incomplete', self.github.items[0]['body'])
+        self.assertNotIn('# Draft candidate', self.github.items[0]['body'])
 
     def test_published_release_is_never_modified(self):
         self.github.items = [candidate(draft=False)]
