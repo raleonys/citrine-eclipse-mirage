@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <limits>
 #include <stdexcept>
+#include <string>
 
 namespace citrine_eclipse_mirage::achievement_storage {
 namespace {
@@ -19,11 +20,27 @@ std::optional<std::string_view> attribute(const messages::XmlNode& node,std::str
 // These Config2 strings become filename/directory components, not paths.
 // Reject lexical escapes and alternate-stream syntax before any filesystem or
 // achievement-state side effect. This is not a symlink/reparse-point guarantee.
-void require_safe_achievement_leaf(std::string_view value) {
+void require_safe_achievement_leaf(std::string_view value,bool watcher_directory) {
     if(value=="." || value==".." ||
-       value.find_first_of("/\\:")!=std::string_view::npos ||
-       value.find('\0')!=std::string_view::npos)
-        throw std::invalid_argument("Achievement identifier is not one path component");
+       value.find_first_of("/\\:<>\"|?*")!=std::string_view::npos)
+        throw std::invalid_argument("Achievement identifier is not one Windows path component");
+    for(const unsigned char byte:value)
+        if(byte<0x20)
+            throw std::invalid_argument("Achievement identifier contains an invalid Windows filename byte");
+    if(!watcher_directory||value.empty())return;
+    // SteamAppId is a bare directory leaf; unlike the achievement XML file it
+    // has no prefix/suffix to disambiguate Win32 device names.
+    if(value.front()==' '||value.back()==' '||value.back()=='.')
+        throw std::invalid_argument("Achievement watcher directory has an ambiguous Win32 name");
+    auto stem=value.substr(0,value.find('.'));
+    while(!stem.empty()&&stem.back()==' ')stem.remove_suffix(1);
+    std::string upper;upper.reserve(stem.size());
+    for(const char byte:stem)
+        upper.push_back(byte>='a'&&byte<='z'?static_cast<char>(byte-'a'+'A'):byte);
+    if(upper=="CON"||upper=="PRN"||upper=="AUX"||upper=="NUL"||
+       (upper.size()==4&&(upper.starts_with("COM")||upper.starts_with("LPT"))&&
+        upper[3]>='1'&&upper[3]<='9'))
+        throw std::invalid_argument("Achievement watcher directory uses a reserved Win32 device name");
 }
 }
 bool HostCrtNumbers::is_space(unsigned char c) {return std::isspace(c)!=0;}
@@ -87,8 +104,8 @@ configuration::Path append(configuration::Path base,const configuration::Path& c
 void Storage::update_01eb00(configuration::State& state) {
     // Validate both input components up front: rejecting either must not read
     // an XML file, update a retained path, or write a watcher INI elsewhere.
-    if(!state.achievements_set.empty())require_safe_achievement_leaf(state.achievements_set);
-    if(!state.steam_app_id.empty())require_safe_achievement_leaf(state.steam_app_id);
+    if(!state.achievements_set.empty())require_safe_achievement_leaf(state.achievements_set,false);
+    if(!state.steam_app_id.empty())require_safe_achievement_leaf(state.steam_app_id,true);
     if(!state.achievements_set.empty()) {
         const auto filename="achievement-"+state.achievements_set+".xml";
         const auto component=effects_.filesystem_widen_006d70(filename);
