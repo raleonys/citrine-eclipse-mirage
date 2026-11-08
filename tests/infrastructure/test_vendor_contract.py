@@ -270,6 +270,38 @@ class LinkPackagingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'non-descriptor'):restore_vendor_links.restore(self.root)
         self.assertEqual(b'actual user file',self.link.read_bytes())
 
+    def test_restore_preflights_all_aliases_before_mutating_first(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        lock=json.loads(lock_path.read_text(encoding='utf-8'))
+        lock['vendors']['asio']['symlinks']['asio/src']='../src'
+        lock_path.write_text(json.dumps(lock),encoding='utf-8')
+        later=self.root/'third_party/asio/asio/src'
+        later.write_bytes(b'altered later descriptor')
+        with patch.object(restore_vendor_links.os,'symlink',
+                          side_effect=AssertionError('mutated alias before complete validation')) as create:
+            with self.assertRaisesRegex(ValueError,'non-descriptor'):
+                restore_vendor_links.restore(self.root)
+            create.assert_not_called()
+        self.assertFalse(self.link.is_symlink())
+        self.assertEqual(b'../include',self.link.read_bytes())
+        self.assertEqual(b'altered later descriptor',later.read_bytes())
+
+    def test_restore_two_valid_locked_aliases(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        lock=json.loads(lock_path.read_text(encoding='utf-8'))
+        lock['vendors']['asio']['symlinks']['asio/src']='../src'
+        lock_path.write_text(json.dumps(lock),encoding='utf-8')
+        later=self.root/'third_party/asio/asio/src'
+        later.write_bytes(b'../src')
+        try:
+            restore_vendor_links.restore(self.root)
+        except (OSError,NotImplementedError):
+            self.skipTest('Optional symlink restoration requires OS privilege')
+        self.assertTrue(self.link.is_symlink())
+        self.assertTrue(later.is_symlink())
+        self.assertEqual('../include',self.link.readlink().as_posix())
+        self.assertEqual('../src',later.readlink().as_posix())
+
     def test_standard_zip_extraction_needs_no_link_support(self):
         package_source.package(self.root,self.archive)
         destination=self.base/'standard-unzip'

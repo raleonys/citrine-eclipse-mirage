@@ -9,6 +9,7 @@ from project_files import vendor_symlinks
 
 def restore(root):
     root=Path(root).resolve()
+    pending=[]
     for name,target in vendor_symlinks(root).items():
         path=Path(root)/name
         for parent in path.parents:
@@ -19,7 +20,15 @@ def restore(root):
             continue
         if not path.is_file() or path.read_bytes()!=target.encode('utf-8'):
             raise ValueError('Refusing to replace a non-descriptor vendor path: '+name)
-        data=path.read_bytes();path.unlink()
+        pending.append((name,path,target))
+    # Validate the complete locked descriptor set before changing any alias.
+    for name,path,target in pending:
+        if path.is_symlink() or not path.is_file():
+            raise ValueError('Vendor descriptor changed during restoration: '+name)
+        data=path.read_bytes()
+        if data!=target.encode('utf-8'):
+            raise ValueError('Vendor descriptor changed during restoration: '+name)
+        path.unlink()
         try:os.symlink(target,path,target_is_directory=True)
         except OSError:
             path.write_bytes(data)
