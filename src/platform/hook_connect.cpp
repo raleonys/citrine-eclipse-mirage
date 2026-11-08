@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/hook_connect.hpp"
+#include "citrine_eclipse_mirage/platform/hook_connect.hpp"
 #include <algorithm>
 #include <array>
 
-namespace preloader_l::network_hook {
+namespace citrine_eclipse_mirage::network_hook {
 namespace {
 std::uint16_t little_word(std::span<const std::byte> buffer, std::size_t offset) {
     if (offset + 2 > buffer.size())

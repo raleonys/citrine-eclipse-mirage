@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/achievement_storage.hpp"
-#include "preloader_l/core/paths.hpp"
+#include "citrine_eclipse_mirage/runtime/achievement_storage.hpp"
+#include "citrine_eclipse_mirage/core/paths.hpp"
 #include <bit>
 #include <cerrno>
 #include <cctype>
@@ -9,7 +9,7 @@
 #include <limits>
 #include <stdexcept>
 
-namespace preloader_l::achievement_storage {
+namespace citrine_eclipse_mirage::achievement_storage {
 namespace {
 std::optional<std::string_view> attribute(const messages::XmlNode& node,std::string_view key) {
     const auto value=node.attribute(key);
@@ -133,4 +133,4 @@ void Storage::update_01eb00(configuration::State& state) {
         if(status.kind!=2)achievement_writer::write_ini_01f9a0(paths_.ini_path,state,effects_,files_);
     }
 }
-} // namespace preloader_l::achievement_storage
+} // namespace citrine_eclipse_mirage::achievement_storage

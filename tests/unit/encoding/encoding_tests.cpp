@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/codec/encoding.hpp"
+#include "citrine_eclipse_mirage/codec/encoding.hpp"
 #include <algorithm>
 #include <climits>
 #include <deque>
@@ -11,7 +11,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-namespace enc=preloader_l::encoding;
+namespace enc=citrine_eclipse_mirage::encoding;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

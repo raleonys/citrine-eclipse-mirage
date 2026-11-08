@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "application_internal.hpp"
-#include "preloader_l/codec/crypto.hpp"
-#include "preloader_l/core/protocol_identity.hpp"
-#include "preloader_l/net/asio_service.hpp"
-#include "preloader_l/net/session_handler.hpp"
-#include "preloader_l/net/session_routing.hpp"
-#include "preloader_l/runtime/startup.hpp"
-#include "preloader_l/runtime/libraries.hpp"
-#include "preloader_l/platform/hook_unload_guard.hpp"
-#include "preloader_l/platform/callback_lock.hpp"
-#include "preloader_l/platform/hook_transaction.hpp"
+#include "citrine_eclipse_mirage/codec/crypto.hpp"
+#include "citrine_eclipse_mirage/core/protocol_identity.hpp"
+#include "citrine_eclipse_mirage/net/asio_service.hpp"
+#include "citrine_eclipse_mirage/net/session_handler.hpp"
+#include "citrine_eclipse_mirage/net/session_routing.hpp"
+#include "citrine_eclipse_mirage/runtime/startup.hpp"
+#include "citrine_eclipse_mirage/runtime/libraries.hpp"
+#include "citrine_eclipse_mirage/platform/hook_unload_guard.hpp"
+#include "citrine_eclipse_mirage/platform/callback_lock.hpp"
+#include "citrine_eclipse_mirage/platform/hook_transaction.hpp"
 #include <algorithm>
 #include <atomic>
 #include <cstring>
@@ -20,7 +20,7 @@
 #include <optional>
 #include <thread>
 
-namespace preloader_l::application {
+namespace citrine_eclipse_mirage::application {
 namespace {
 using namespace detail;
 // Provider and main-thread extra loads intentionally overlap. Their process-wide
@@ -381,8 +381,8 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
     std::unique_ptr<net::AsioService> service;
     std::atomic<bool> accepting{false};
     bool started=false,used=false;
-#ifdef PRELOADER_L_TEST_APPLICATION_WORKER_THREAD
-    using WorkerThread=PRELOADER_L_TEST_APPLICATION_WORKER_THREAD;
+#ifdef CITRINE_ECLIPSE_MIRAGE_TEST_APPLICATION_WORKER_THREAD
+    using WorkerThread=CITRINE_ECLIPSE_MIRAGE_TEST_APPLICATION_WORKER_THREAD;
 #else
     using WorkerThread=std::thread;
 #endif

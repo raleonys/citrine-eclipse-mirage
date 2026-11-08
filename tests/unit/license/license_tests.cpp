@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/core/license.hpp"
-#include "preloader_l/xml/memory_printer.hpp"
+#include "citrine_eclipse_mirage/core/license.hpp"
+#include "citrine_eclipse_mirage/xml/memory_printer.hpp"
 #include <algorithm>
 #include <array>
 #include <functional>
@@ -13,7 +13,7 @@
 #include <vector>
 
 namespace {
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 using namespace license;
 int checked=0;
 void check(bool condition,const char* description) {

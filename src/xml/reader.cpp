@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/xml/reader.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
 #include "reader_policy.hpp"
 #include <pugixml.hpp>
 #include <stdexcept>
 #include <unordered_map>
 
-namespace preloader_l::xml_reader_bridge {
+namespace citrine_eclipse_mirage::xml_reader_bridge {
 namespace {
-namespace msg=preloader_l::messages;
+namespace msg=citrine_eclipse_mirage::messages;
 pugi::xml_node first(pugi::xml_node node) {
     for(auto child:node.children())if(child.type()==pugi::node_element)return child;
     return {};
@@ -91,7 +91,7 @@ msg::ParseResult Backend::parse_c_string(std::string_view input) {
     return {std::move(document),code,code!=0};
 }
 std::unique_ptr<msg::XmlPrinter> Backend::printer() {
-    return std::make_unique<preloader_l::xml::MemoryPrinter>();
+    return std::make_unique<citrine_eclipse_mirage::xml::MemoryPrinter>();
 }
 std::vector<std::pair<std::string,std::string>> Backend::attributes_in_order(const msg::XmlNode& node) {
     const auto& element=checked(node);

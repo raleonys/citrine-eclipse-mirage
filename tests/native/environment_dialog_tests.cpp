@@ -35,7 +35,7 @@ std::string expected(unsigned worker,unsigned row,unsigned phase){
     default:return "config loaded: C:/fixture/"+id+"file.cfg";
     }
 }
-void write(preloader_l::application::detail::Environment& env,unsigned worker,unsigned row,unsigned phase){
+void write(citrine_eclipse_mirage::application::detail::Environment& env,unsigned worker,unsigned row,unsigned phase){
     const auto id=prefix(worker,row,phase),bytes=payload();
     switch(worker){
     case 0:env.log({id,bytes});break;
@@ -46,7 +46,7 @@ void write(preloader_l::application::detail::Environment& env,unsigned worker,un
     default:{const auto path="C:/fixture/"+id+"file.cfg";env.log_config_path({path.begin(),path.end()});break;}
     }
 }
-void concurrent_phase(preloader_l::application::detail::Environment& env,unsigned phase){
+void concurrent_phase(citrine_eclipse_mirage::application::detail::Environment& env,unsigned phase){
     std::mutex gate;std::exception_ptr failure;
     {
         std::vector<std::jthread> workers;
@@ -57,7 +57,7 @@ void concurrent_phase(preloader_l::application::detail::Environment& env,unsigne
     }
     if(failure)std::rethrow_exception(failure);
 }
-void actual_environment_logging(preloader_l::application::detail::Environment& env,preloader_l::configuration::State& state){
+void actual_environment_logging(citrine_eclipse_mirage::application::detail::Environment& env,citrine_eclipse_mirage::configuration::State& state){
     namespace fs=std::filesystem;
     const auto directory=fs::temp_directory_path()/("surge-log-fixture-"+std::to_string(GetCurrentProcessId())+"-"+std::to_string(GetTickCount64()));
     require(fs::create_directory(directory),"own fresh logging fixture directory");
@@ -83,8 +83,8 @@ void actual_environment_logging(preloader_l::application::detail::Environment& e
 #endif
 }
 
-void failed_open_preserves_startup(preloader_l::application::detail::Environment& env,
-                                   preloader_l::configuration::State& state) {
+void failed_open_preserves_startup(citrine_eclipse_mirage::application::detail::Environment& env,
+                                   citrine_eclipse_mirage::configuration::State& state) {
     namespace fs=std::filesystem;
     const auto directory=fs::temp_directory_path()/("surge-log-open-retry-"+
         std::to_string(GetCurrentProcessId())+"-"+std::to_string(GetTickCount64()));
@@ -115,8 +115,8 @@ void failed_open_preserves_startup(preloader_l::application::detail::Environment
 #endif
 }
 
-void unknown_entitlement_is_nonmodal_and_redacted(preloader_l::application::detail::Environment& env,
-                                                  preloader_l::configuration::State& state) {
+void unknown_entitlement_is_nonmodal_and_redacted(citrine_eclipse_mirage::application::detail::Environment& env,
+                                                  citrine_eclipse_mirage::configuration::State& state) {
     namespace fs=std::filesystem;
     const auto directory=fs::temp_directory_path()/("surge-unknown-field-fixture-"+
         std::to_string(GetCurrentProcessId())+"-"+std::to_string(GetTickCount64()));
@@ -160,7 +160,7 @@ void unknown_entitlement_is_nonmodal_and_redacted(preloader_l::application::deta
 }
 
 int main()try{
-    using namespace preloader_l;
+    using namespace citrine_eclipse_mirage;
     configuration::State state{};application::Options options;
     file::NativeFactory files;xml_reader_bridge::Backend xml;achievement_storage::Paths paths;
     achievement_runtime::HostClock clock;achievement_runtime::HostFormatter formatter;

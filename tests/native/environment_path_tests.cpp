@@ -48,7 +48,7 @@ void select(Mode next,std::wstring value={}) {
 #undef GetModuleFileNameW
 
 namespace {
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 using namespace module_path_fixture;
 struct Fixture {
     configuration::State state{};

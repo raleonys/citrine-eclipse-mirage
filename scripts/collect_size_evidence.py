@@ -201,8 +201,8 @@ def collect(root, build, config, dll, output, with_symbols=False):
     for name in ['ACTIVE_SOURCE_MANIFEST.json', 'BUILD_PARTITION_POLICY.json', 'PUBLIC_DLL_ABI.json']:
         records[name] = add('contracts/' + name, root / 'metadata' / name)
     if dll is None:
-        candidate = root / 'dist/preloader_l.dll'
-        dll = candidate if candidate.is_file() else build / 'preloader.unsigned.dll'
+        candidate = root / 'dist/citrine_eclipse_mirage.dll'
+        dll = candidate if candidate.is_file() else build / 'citrine_eclipse_mirage.unsigned.dll'
     dll = dll.resolve()
     pe = PE(dll)
     dll_record = add('binary/' + dll.name, dll)
@@ -211,7 +211,7 @@ def collect(root, build, config, dll, output, with_symbols=False):
         virtual_size = u32(pe.b, pe.opt + pe.optsz + index * 40 + 8)
         section_rows.append({'name': name, 'virtual_bytes': virtual_size, 'raw_bytes': size,
                              'rva': va, 'sha256_raw': sha(pe.b[raw:raw + size])})
-    maps = sorted(build.rglob('preloader.production.' + config + '.map'))
+    maps = sorted(build.rglob('citrine_eclipse_mirage.production.' + config + '.map'))
     if len(maps) != 1:
         raise ValueError('Expected exactly one matching production MAP; build the selected configuration first')
     map_record = add('link/' + maps[0].name, maps[0])
@@ -228,7 +228,7 @@ def collect(root, build, config, dll, output, with_symbols=False):
         selected = [x for x in commands if Path(x['file']).resolve().is_relative_to(root / 'src')]
         payload['commands/compile_commands.json'] = (json.dumps(selected, indent=2) + '\n').encode()
     targets = set(policy['production_targets'] + policy['reference_targets'] + policy['source_api_targets'])
-    targets.update(['preloader_l_minhook', 'preloader_l_pugixml'])
+    targets.update(['citrine_eclipse_mirage_minhook', 'citrine_eclipse_mirage_pugixml'])
     objects, failures = [], []
     dumpbin = shutil.which('dumpbin') if with_symbols else None
     if with_symbols and not dumpbin:

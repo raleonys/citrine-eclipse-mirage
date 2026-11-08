@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/config/application.hpp"
-#include "preloader_l/runtime/online.hpp"
+#include "citrine_eclipse_mirage/config/application.hpp"
+#include "citrine_eclipse_mirage/runtime/online.hpp"
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
 
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 namespace {
 int checks=0;
 void require(bool ok,const char* label){++checks;if(!ok)throw std::runtime_error(label);}

@@ -2,4 +2,4 @@
 
 // This consumer compiles without any vendor/runtime target. InfrastructureChecks
 // supplies rejecting PEGTL include names before system include paths.
-#include "preloader_l/config/parser.hpp"
+#include "citrine_eclipse_mirage/config/parser.hpp"
