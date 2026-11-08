@@ -234,6 +234,48 @@ void license_xml_text_escaping() {
             "<ContentId>42</ContentId><UserId>user123</UserId>")!=std::string::npos,
         "ordinary values preserve the old XML byte format and field order");
 }
+void license_xml_control_bytes() {
+    // Exercise actual Environment, status, AES writer and pugixml reader on
+    // owned paths. Invalid XML text must not create a partially usable DLF.
+    Directory dir;Fixture f;
+    for(const unsigned byte:{0u,1u,8u,11u,12u,14u,31u}) {
+        for(unsigned field=0;field<3;++field) {
+            const auto stem="invalid-"+std::to_string(byte)+"-"+std::to_string(field);
+            f.state.license_directory=(dir.path/stem).u16string();
+            f.state.content_id="game";f.state.user_id="user";
+            std::string key="key",invalid="a";
+            invalid.push_back(static_cast<char>(byte));invalid.push_back('b');
+            if(field==0)key=invalid;
+            else if(field==1)f.state.content_id=invalid;
+            else f.state.user_id=invalid;
+            rejects<std::invalid_argument>([&]{f.env.apply_license_key_02a830(key);},
+                                           "forbidden XML control rejected in every text field");
+            require(!fs::exists(dir.path/(stem+".dlf")),
+                    "rejected control byte cannot publish encrypted license");
+        }
+    }
+    f.state.license_directory=(dir.path/"valid-whitespace").u16string();
+    f.state.content_id="game\tid";f.state.user_id="user\nid";
+    f.env.apply_license_key_02a830("key\rname");
+    const auto path=dir.path/"valid-whitespace.dlf";
+    auto encrypted=read(path);
+    crypto::Cipher cipher;
+    cipher.set_key_and_iv_042760(token::constants::key_084a50,token::constants::iv_084a60);
+    require(cipher.decrypt_with_offset(encrypted,65),
+            "legal XML whitespace license decrypts using production cipher");
+    const auto xml=encrypted.substr(65);
+    require(xml.find("<CipherKey>key\rname</CipherKey>")!=std::string::npos &&
+            xml.find("<ContentId>game\tid</ContentId>")!=std::string::npos &&
+            xml.find("<UserId>user\nid</UserId>")!=std::string::npos,
+            "TAB, LF and CR remain byte-exact in legal XML text");
+    const auto parsed=f.xml.parse_c_string(xml);
+    require(parsed.document!=nullptr&&!parsed.has_error,
+            "real XML reader accepts legal whitespace content");
+    const auto original=read(path);
+    f.env.apply_license_key_02a830(std::string(1,'\0'));
+    require(read(path)==original,
+            "existing license skips invalid replacement without touching its bytes");
+}
 void directory(){
     Fixture f;Directory dir;
     for(const auto* name:{"a_AVATAR_x.png","b_AVATAR_y","lower_avatar_z.png","keep.txt"})
@@ -300,7 +342,7 @@ int main(int argc,char** argv)try{
     require(group=="all"||group=="paths"||group=="avatar"||group=="directory"||group=="thread-errors"||group=="license-xml","known test group");
     if(group=="all"||group=="paths"){encoding_failure_boundaries();paths();}
     if(group=="all"||group=="avatar")avatar();
-    if(group=="all"||group=="license-xml")license_xml_text_escaping();
+    if(group=="all"||group=="license-xml"){license_xml_text_escaping();license_xml_control_bytes();}
     if(group=="all"||group=="directory"){directory();directory_failure();}
     if(group=="all"||group=="thread-errors"){thread_errors();event_initializer_retry();}
     std::cout<<"PASS: "<<checks<<" configuration platform checks\n";return 0;
