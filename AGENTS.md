@@ -22,6 +22,7 @@ This document is the operational entrypoint for agents and contributors. [GOVERN
 - Report only tests actually run. Source/static, portable, Wine, native Windows/MSVC, Golden, and real Consumer/game execution are distinct evidence classes. Neither a skipped check, old receipt nor synthetic fixture is a fresh native PASS.
 - Keep generated build/test outputs under ignored `build/`, `dist/` or hosted workflow artifacts. Do not add new files under `docs/evidence/` or `metadata/evidence/`. Do not delete or rewrite retained historical evidence without a separately approved preservation review.
 - PR creation runs lightweight source/hash integrity only. Full Source QA, Linux portable, Windows/MSVC, Golden and reference checks run after a `synchronize` update newly incorporates current `main`, or by a `run-full-validation` label added after a successful later synchronization verification for that exact PR/head/main. Standalone manual dispatch remains diagnostic. Ordinary commits on an already synchronized branch do not automatically start full validation. Never add `run-full-validation` or dispatch synchronization preparation merely because a PR was opened. The initial label alone must not start full validation. Focused diagnostics are manual; weekly release validation remains separate.
+- Opening CI has one basic source-integrity job. CodeQL's three language analyses use the full-validation readiness gate; the separate GitHub Default Setup must be migrated by an account with the required setting permission. Repository YAML does not disable an inaccessible server setting. See `docs/REPOSITORY_BADGES_AND_OPENING_CI.md`.
 - When the owner requests synchronization, merge current `main` normally, push and inspect the exact-head full validation run. If no push is needed and no successful or active eligible PR full-validation run exists, explicitly prepare the later synchronization request using `operation=synchronize-pr`, the PR number and exact current main SHA; wait for that preparation run to succeed, then add `run-full-validation`. Remove an old/premature label before preparing, and never select standalone diagnostics to bypass this sequence; a readiness-only or skipped run is not an active test run. Do not create empty commits to trigger CI, duplicate automatic runs, relax required checks or count a skipped/unrequested test as PASS. See `docs/GITHUB_WORKFLOW.md` for the label request and retry commands.
 
 ## Technical invariants
@@ -37,6 +38,13 @@ This document is the operational entrypoint for agents and contributors. [GOVERN
 - Do not import unrelated Brownfield application/CRT implementations or carry forward historical acceptance as current execution. Internal compatibility identifiers are not public project branding.
 
 ## Navigation and change discipline
+
+README SVGs belong under `resources/badges/`. The long-lived `badges` branch
+contains only the nine generated SVGs in that same folder and is not a source
+PR branch to retire after merge. Its bounded Git-data publisher may update
+those images without application manifests; source changes still require the
+normal inventories, local QA and tracked pre-push hook. Never use this data
+branch or its automation to write main, application code or release assets.
 
 Read `docs/DEVELOPMENT.md` for build commands, `docs/GITHUB_WORKFLOW.md` for PR rules, `docs/VALIDATION.md` for evidence semantics, and `docs/WEEKLY_RELEASE.md` for the current weekly draft flow. Read relevant subsystem docs and exact metadata before touching affected behavior.
 
