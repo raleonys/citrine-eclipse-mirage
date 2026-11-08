@@ -34,6 +34,33 @@ class CppTypeIdentityTests(unittest.TestCase):
         self.assertEqual(definitions, [("Effects", 2)])
         self.assertEqual(errors, [])
 
+    def test_block_comments_and_raw_strings_do_not_invent_definitions(self):
+        sample = (
+            'class Effects {};\n'
+            '/*\nclass Effects {};\nclass FalseSelf:public FalseSelf {};\n*/\n'
+            'constexpr auto text = R"tag(\nclass Effects {};\n)tag";\n'
+            'class RealType {};\n'
+        )
+        definitions, errors = checker.inspect_text(sample, 'fixture.hpp')
+        self.assertEqual([('Effects', 1), ('RealType', 9)], definitions)
+        self.assertEqual([], errors)
+
+    def test_quoted_comment_markers_do_not_hide_real_definitions(self):
+        source = (
+            'auto url = "https://example.com/a/*literal*/";\n'
+            'class Effects {};\n'
+            "auto character = '/';\n"
+            'class Effects final {};\n'
+        )
+        definitions, errors = checker.inspect_text(source)
+        self.assertEqual([('Effects', 2), ('Effects', 4)], definitions)
+        self.assertTrue(any('duplicate' in item for item in errors))
+
+    def test_valid_self_inheritance_is_still_rejected_after_comments(self):
+        _, errors = checker.inspect_text(
+            '/* commentary */\nclass Actual: public /* note */ Actual {};\n')
+        self.assertTrue(any('direct self-inheritance' in item for item in errors))
+
     def test_duplicate_types_across_socket_headers_are_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             folder = Path(tmp) / "include" / "citrine_eclipse_mirage" / "net"
