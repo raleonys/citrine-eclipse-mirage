@@ -146,7 +146,9 @@ void achievement_path_components() {
     // directory leaf. No original or game files are opened by these fixtures.
     const std::vector<std::string> unsafe{
         ".", "..", "../outside", "..\\..\\outside", "nested/../outside",
-        "C:stream", "C:\\victim", "\\\\host\\share", std::string("42\0outside",10)
+        "C:stream", "C:\\victim", "\\\\host\\share", std::string("42\0outside",10),
+        "a<b", "a>b", "a\"b", "a|b", "a?b", "a*b",
+        std::string("x\n",2),std::string("x\t",2),std::string("x\1z",3)
     };
     for(const auto& value:unsafe)for(const bool steam:{false,true}) {
         Fixture f;
@@ -163,6 +165,42 @@ void achievement_path_components() {
                 f.state.achievements.at("retained").field70==77,
             "rejected identifier has zero path, IO, status or achievement side effects");
     }
+    // A raw Steam app ID is a Windows directory name. Unlike the prefixed
+    // achievement XML filename, it must not alias a device or normalized leaf.
+    for(const auto& value:std::vector<std::string>{
+            "CON","con.txt","PRN","AUX","NUL","COM1","com9.foo",
+            "LPT1","lpt9","42 "," 42","42.","CON .txt"}) {
+        Fixture f;
+        f.paths.xml_path=u"kept.xml";f.paths.ini_path=u"kept.ini";
+        f.state.steam_app_id=value;f.state.achievements["retained"]=record();
+        rejects<std::invalid_argument>([&]{f.storage.update_01eb00(f.state);},
+            "Win32 reserved or ambiguous watcher directory must fail closed");
+        require(f.paths.xml_path==u"kept.xml"&&f.paths.ini_path==u"kept.ini"&&
+                f.files.reads.empty()&&f.files.writes.empty()&&
+                f.effects.widened.empty()&&f.effects.status_paths.empty()&&
+                f.effects.directories.empty()&&f.effects.epochs.empty()&&
+                f.state.achievements.at("retained").field70==77,
+            "invalid Win32 watcher leaf has zero persistence and state effects");
+    }
+    Fixture device_mixed;
+    device_mixed.state.achievements_set="legitimate";
+    device_mixed.state.steam_app_id="NUL";
+    device_mixed.files.input[join(u"USER",u"achievement-legitimate.xml")]=
+        R"(<root><record Id="must-not-import" Count="1"/></root>)";
+    rejects<std::invalid_argument>([&]{device_mixed.storage.update_01eb00(device_mixed.state);},
+        "device-name watcher rejected before otherwise-valid XML import");
+    require(device_mixed.files.reads.empty()&&device_mixed.paths.xml_path.empty()&&
+            !device_mixed.state.achievements.contains("must-not-import"),
+        "invalid watcher leaf cannot publish partial XML state");
+    Fixture prefixed_device;
+    prefixed_device.state.achievements_set="CON";
+    const auto prefixed_xml=join(u"USER",u"achievement-CON.xml");
+    prefixed_device.files.input[prefixed_xml]="<root/>";
+    prefixed_device.storage.update_01eb00(prefixed_device.state);
+    require(prefixed_device.paths.xml_path==prefixed_xml&&
+            prefixed_device.files.reads==std::vector<Path>{prefixed_xml},
+        "safe prefixed XML filename preserves a non-directory device-like set");
+
     // A bad second component must not partially import a good XML set.
     Fixture mixed;
     mixed.state.achievements_set="legitimate";
