@@ -106,6 +106,40 @@ class MsvcCompilerReceiptTests(unittest.TestCase):
         self.cache.write_text(original, encoding='utf-8')
         self.assertIn('Build identity mismatch: cmake_cache_sha256', self.errors())
 
+    def test_actual_receipt_link_audit_rejects_dash_option_conflicts(self):
+        # Real receipt/cache/compiler binding and link-text collection, with
+        # owned byte fixtures only: no MSVC executable or DLL is run here.
+        (self.build / 'BUILD_RECEIPT.json').write_text(json.dumps(self.receipt), encoding='utf-8')
+        target = self.build / 'CMakeFiles/citrine_eclipse_mirage.dir'
+        target.mkdir()
+        source = target / 'link.txt'
+        response = self.build / 'shipping.rsp'
+        flags = '/DLL /DEBUG:NONE /INCREMENTAL:NO /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO a.obj'
+        forbidden = (
+            ('-DEBUG:FULL', 'forbidden debug'),
+            ('-INCREMENTAL:YES', 'forbidden incremental'),
+            ('-LTCG', 'forbidden LTCG'),
+            ('-MANIFEST:EMBED', 'forbidden manifest'),
+            ('-NODEFAULTLIB', '/NODEFAULTLIB is forbidden'),
+            ('-ENTRY:UserEntry', 'custom /ENTRY is forbidden'),
+            ('-Brepro', '/Brepro is forbidden'),
+        )
+        for use_response in (False, True):
+            def command(text):
+                source.write_text('link.exe @shipping.rsp\n' if use_response else 'link.exe ' + text + '\n', encoding='utf-8')
+                if use_response:
+                    response.write_text(text + '\n', encoding='utf-8')
+            command(flags)
+            self.assertEqual([], msvc_evidence.check(self.root, self.build, self.dll))
+            command(flags.replace('/', '-'))
+            with self.subTest(response_file=use_response, recognized_dash_options=True):
+                self.assertEqual([], msvc_evidence.check(self.root, self.build, self.dll))
+            for option, diagnostic in forbidden:
+                with self.subTest(response_file=use_response, option=option):
+                    command(flags + ' ' + option)
+                    errors = msvc_evidence.check(self.root, self.build, self.dll)
+                    self.assertTrue(any(diagnostic in error for error in errors), errors)
+
 
 class ValidationReadinessTests(unittest.TestCase):
     head = 'a' * 40
