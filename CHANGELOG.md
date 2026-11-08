@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Cover startup command-line decoding failure on a later argument after an earlier argument succeeds; verify exactly one argv allocation release and no partially published language/console flags or environment override.
+
 - Cover the actual Windows UTC HostClock adapter against direct `_gmtime64_s` at signed negative, Unix epoch, leap day, year 9999, first year 10000 and time64 maximum boundaries; compare success and all nine returned fields.
 
 - Add a scoped GetAuthCode borrowed-provider-scratch regression: snapshot a C-string (including first-NUL/empty fallback and XML escaping) before response-printer effects recycle provider storage. Preserve the actual license handler, online library API, standard CRT, existing failure policy, and public DLL exports.
