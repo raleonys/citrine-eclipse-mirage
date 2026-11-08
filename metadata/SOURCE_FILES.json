@@ -1226,8 +1226,8 @@
       "sha256": "d868e417a1ed714f6796ec2a7340ba15e18aa3d7f2a9b2f43a774c3183609ee6"
     },
     "tests/infrastructure/test_vendor_contract.py": {
-      "bytes": 19711,
-      "sha256": "c15622d09abdb428f30bfc964db202ff71b56db2ef103eea179a2b3ce5f9ba95"
+      "bytes": 36040,
+      "sha256": "7e0c1948ebcf36ade8fbd9a3b5dd1544d011b3484a85aee201e9860884f9d140"
     },
     "tests/infrastructure/test_weekly_release.py": {
       "bytes": 31236,
