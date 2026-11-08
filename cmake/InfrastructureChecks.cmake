@@ -2,6 +2,9 @@
 
 # Host-Python infrastructure tests run on Linux as well as native Windows.
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
+add_test(NAME infrastructure_repository_badges COMMAND "${Python3_EXECUTABLE}" -B
+  "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_repository_badges.py")
+set_tests_properties(infrastructure_repository_badges PROPERTIES TIMEOUT 30)
 add_test(NAME infrastructure_project_version COMMAND "${Python3_EXECUTABLE}" -B
   "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_project_version.py")
 set_tests_properties(infrastructure_project_version PROPERTIES TIMEOUT 30)
