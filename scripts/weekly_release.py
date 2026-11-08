@@ -16,6 +16,7 @@ from weekly_naming import FIRST, successor, approved_tag, require_tag, asset_nam
 from check_falcion_golden_cleaning import check
 from package_source import package
 from run_golden_pipeline import ORDER
+from run_source_qa import CHECKS as SOURCE_QA_CHECKS
 from project_version import selected_version
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -139,6 +140,26 @@ def junit(path):
     return len(cases)
 
 
+def validate_source_qa(report):
+    if not isinstance(report, dict) or report.get('result') != 'PASS_SOURCE_QA':
+        raise ValueError('Source QA did not pass')
+    checks = report.get('checks')
+    expected = {name for name, _ in SOURCE_QA_CHECKS}
+    if not isinstance(checks, list) or len(checks) != len(expected):
+        raise ValueError('Source QA must contain every required check exactly once')
+    seen = set()
+    for check in checks:
+        if not isinstance(check, dict) or not isinstance(check.get('check'), str):
+            raise ValueError('Source QA check record is invalid')
+        name = check['check']
+        if name not in expected or name in seen:
+            raise ValueError('Source QA must contain every required check exactly once')
+        if type(check.get('exit_code')) is not int or check['exit_code'] != 0:
+            raise ValueError('Source QA did not pass')
+        seen.add(name)
+    return len(seen)
+
+
 def validate_profile(folder, profile, manifest, source, version=None):
     folder = Path(folder)
     identity = load(folder / 'EVIDENCE_IDENTITY.json')
@@ -229,9 +250,7 @@ def bundle(root, payload, output):
         raise ValueError('Candidate checkout does not match planned source')
     manifest = sha(root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')
     qa = load(payload / 'SOURCE_QA.json')
-    if qa.get('result') != 'PASS_SOURCE_QA' or not qa.get('checks') or any(
-            c['exit_code'] != 0 for c in qa['checks']):
-        raise ValueError('Source QA did not pass')
+    source_qa_groups = validate_source_qa(qa)
     portable_tests = junit(payload / 'PORTABLE_CTEST.xml')
     version = require_tag(p['tag'])
     native = validate_profile(payload / 'native', 'native', manifest, p['source_sha'], version)
@@ -245,7 +264,7 @@ def bundle(root, payload, output):
     output.mkdir(parents=True)
     receipt = {'schema': 'surge.draft-release-receipt.v1', 'publication_status': 'DRAFT',
                'tag': p['tag'], 'source_sha': p['source_sha'], 'source_manifest_sha256': manifest,
-               'source_qa_groups': len(qa['checks']), 'portable_tests': portable_tests,
+               'source_qa_groups': source_qa_groups, 'portable_tests': portable_tests,
                'native_tests': native['tests'], 'dll_sha256': golden['dll_sha256'],
                'source_zip_sha256': sha(source), 'game_acceptance': 'NOT_RUN',
                'publication': False}
