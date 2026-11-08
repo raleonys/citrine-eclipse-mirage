@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Exercise timer cancellation and wait-submission failures while the actual Asio adapter starts a prepared response over loopback TCP. Require silent peer retirement, one delivery cancellation/destruction, drained IO ownership and an unarmed successful-send control. Preserve shipping transport, timer policy and existing test budgets.
+
 - Cover fail-closed unload stack observations and safe retry after query, protection, commitment, region-progress and scan-budget refusals. A protected-page probe verifies that an oversized region is rejected before stack reads; production unload policy is unchanged.
 
 - Exercise the actual Environment UTF-8 wrapper and native conversion adapter with controlled query/fill failures, counted NUL data, short-fill length retention and retry. Verify registry flag/key partial state and filesystem-codepage isolation; leave the existing real-API native checks unarmed. Production behavior is unchanged.
