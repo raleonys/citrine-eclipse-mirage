@@ -15,7 +15,7 @@
   "gate": "ALL_SIX_GOLDEN_STAGES_THEN_FINAL_NAME_RUNTIME_LOAD_START_SOCKET_PROFILE_SHUTDOWN_UNLOAD_PASS",
   "runtime_check": "Existing runtime host validates three actual finalized-DLL cycles via the existing EALsxPort/LSX greeting/profile protocol, then DllShutdown/unload; removed management exports must be absent",
   "failed_run": "No new dist bundle; preserve any previous completed bundle. Its receipt binds its own DLL and source manifest hashes. Current build/GOLDEN_REPORT.json records the failed attempt.",
-  "commit": "Writer lock; staged files with hash verification; receipt committed last; handled replace failure restores previous bundle",
+  "commit": "Persistent OS-held writer lock; byte-verified previous bundle snapshot and journal published before public filename replacements; receipt written last, recovery replays previous snapshot after process interruption",
   "other_profiles": "Compile/Debug/Native/CRT never promote to dist",
   "no_signing_or_publication": true,
   "native_msvc_final_dist_generation": "NOT_RUN_IN_THIS_ENVIRONMENT",
@@ -44,5 +44,6 @@
     "SHELL32.DLL",
     "MSWSOCK.DLL"
   ],
-  "import_order_finalization": "Final copy only; raw compiler DLL preserved; finalizer permutes complete descriptor records and checksum then read-only order validation"
+  "import_order_finalization": "Final copy only; raw compiler DLL preserved; finalizer permutes complete descriptor records and checksum then read-only order validation",
+  "recovery": "Re-run the local pipeline or invoke scripts/run_golden_pipeline.py --recover-dist to replay a verified pending journal. Corrupt/absent recovery evidence fails closed. Persistent .golden.lock is not a stale-writer marker; OS lock ownership ends on process death."
 }
