@@ -12,10 +12,10 @@ Minor and patch may be 0..9 only. On patch 9, increment minor and reset patch: `
 
 Each new release uploads exactly two files. For example, tag `3.2.7-ERINTHAR` has:
 
-- `Citrine_Eclipse_Mirage_3.2.7_ERINTHAR.zip`: the validated `preloader_l.dll`, project `LICENSE` and four vendor license notices under `licenses/`.
+- `Citrine_Eclipse_Mirage_3.2.7_ERINTHAR.zip`: exactly three files at the archive root: validated `preloader_l.dll`, `preloader_l.dll.sha256` (the DLL's checksum), and the project's `LICENSE`.
 - `Citrine_Eclipse_Mirage_3.2.7_ERINTHAR.zip.sha256`: the SHA-256 checksum of that ZIP, with its exact filename.
 
-GitHub supplies the automatic **Source code (zip)** and **Source code (tar.gz)** links for the release tag. Do not upload an additional source ZIP, source checksum, receipt or test log. The binary ZIP also excludes receipts, publication status, test evidence and DLL checksum sidecars.
+GitHub supplies the automatic **Source code (zip)** and **Source code (tar.gz)** links for the release tag. Do not upload an additional source ZIP, source checksum, receipt or test log. The binary ZIP has no other files or directories: receipts, publication status, test evidence and separate vendor license files stay outside it. Third-party license files remain intact in the repository's source archives.
 
 The workflow still verifies the exact source package, Source QA, portable CTest, native MSVC and all six Production/Golden gates before preparing a draft. Source validation and Windows evidence stay in their Actions artifacts. The separate `weekly-release-receipt` artifact retains `RELEASE_RECEIPT.json` and its checksum for 14 days, alongside the existing evidence retention period. This internal receipt binds the source, DLL and final binary ZIP hashes; the uploader requires a matching receipt outside the public asset directory and rejects extra local or remote assets.
 

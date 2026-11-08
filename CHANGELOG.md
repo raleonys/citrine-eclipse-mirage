@@ -6,7 +6,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts out of the runtime ZIP, preserve DLL/license contents and native/Golden gates, and leave published releases unchanged.
+- Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Put exactly preloader_l.dll, its DLL SHA-256 sidecar and the project LICENSE at the ZIP root. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts and all other files out of the runtime ZIP, preserve native/Golden gates, and leave published releases unchanged.
 
 - Add source-included native Application rollback regressions for controlled first/second worker-launch exceptions, retained provider-thread draining and normal startup. Keep production workers exactly `std::thread` through a private fixture seam; preserve listener cleanup, public options/exports and compiler CRT policy.
 
@@ -75,6 +75,8 @@ This file distinguishes integrated source changes, imported source history and p
 - Strengthen active Config2 application coverage for token/hash/DLL/key/language/content bindings and false settings that replace true state. Exercise parsed UseLastOnlineProfile through the actual offline source worker with owned provider effects, including override disabling, absent cookies and malformed cached profiles. Preserve production behavior and the existing native own-file case; portable owned-effect probes do not establish native provider or Consumer acceptance.
 
 - PR #204: inspect the complete already-decoded first-party source text for duplicate or conflicting SPDX identifiers instead of only its first 3,000 characters. Reject late duplicate GPL-3.0-only and conflicting MIT markers, preserve accepted long files and existing identity/exclusion rules, and validate the full source inventory. This changes QA enforcement, not project licenses, shipping code or vendor inputs.
+
+- Cover simultaneous fixed-key and response-derived encrypted TCP peers on one real Application. Check interleaved request identities, either peer closing without disrupting the survivor, and replacement admission without resetting the survivor cipher. Test-only coverage preserves production behavior, shared event ownership and vendor inputs.
 
 ### Accepted-main checkpoint — 2026-11-06
 

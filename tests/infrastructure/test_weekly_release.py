@@ -393,7 +393,7 @@ class PayloadTests(unittest.TestCase):
             with self.subTest(change=change), self.assertRaises(ValueError):
                 self.validate('production')
 
-    def test_bundle_ships_only_runtime_and_licenses_with_zip_checksum(self):
+    def test_bundle_ships_exactly_dll_dll_checksum_and_project_license(self):
         release.package(ROOT, self.payload / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip')
         output = self.base / 'assets'
         with patch.object(release, 'head', return_value=SOURCE):
@@ -412,12 +412,14 @@ class PayloadTests(unittest.TestCase):
         self.assertTrue((self.payload / 'native/CTEST_RESULTS.xml').is_file())
         self.assertTrue((self.payload / 'production/GOLDEN_REPORT.json').is_file())
         with zipfile.ZipFile(output / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip') as archive:
-            self.assertEqual({'preloader_l.dll', 'LICENSE', 'licenses/asio.txt',
-                              'licenses/minhook.txt', 'licenses/pegtl.txt', 'licenses/pugixml.txt'},
+            self.assertEqual({'preloader_l.dll', 'preloader_l.dll.sha256', 'LICENSE'},
                              set(archive.namelist()))
             self.assertEqual((self.payload / 'production/dist/preloader_l.dll').read_bytes(),
                              archive.read('preloader_l.dll'))
             self.assertEqual((ROOT / 'LICENSE').read_bytes(), archive.read('LICENSE'))
+            self.assertEqual(release.sha(self.payload / 'production/dist/preloader_l.dll')
+                             + '  preloader_l.dll',
+                             archive.read('preloader_l.dll.sha256').decode('utf-8').strip())
 
     def test_failed_portable_run_stops_before_creating_assets(self):
         self.xml(self.payload / 'PORTABLE_CTEST.xml', '<failure/>')

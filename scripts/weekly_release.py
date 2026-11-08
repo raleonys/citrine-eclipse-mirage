@@ -249,10 +249,9 @@ def bundle(root, payload, output):
     dist_files = {path.name: path for path in (payload / 'production/dist').iterdir() if path.is_file()}
     if set(dist_files) != {'preloader_l.dll', 'preloader_l.dll.sha256', 'DIST_RECEIPT.json'}:
         raise ValueError('Unexpected runtime payload')
-    files = {'preloader_l.dll': dist_files['preloader_l.dll'], 'LICENSE': root / 'LICENSE'}
-    for vendor, license_file in (('asio', 'LICENSE_1_0.txt'), ('minhook', 'LICENSE.txt'),
-                                 ('pegtl', 'LICENSE_1_0.txt'), ('pugixml', 'LICENSE.md')):
-        files['licenses/' + vendor + '.txt'] = root / 'third_party' / vendor / license_file
+    files = {'preloader_l.dll': dist_files['preloader_l.dll'],
+             'preloader_l.dll.sha256': dist_files['preloader_l.dll.sha256'],
+             'LICENSE': root / 'LICENSE'}
     with zipfile.ZipFile(binary, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
         for name, path in sorted(files.items()):
             if path.is_symlink():
