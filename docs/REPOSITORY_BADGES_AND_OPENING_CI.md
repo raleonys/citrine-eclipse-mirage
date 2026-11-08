@@ -8,9 +8,26 @@ GitHub itself cannot have an outage.
 
 ## Badge ownership and updates
 
-`scripts/repository_badges.py` renders all nine badges with the Python standard
-library. The six platform/tool/license/changelog images in the source tree are
-static. The source tree also contains reviewable initial CI/release snapshots.
+`scripts/repository_badges.py` publishes nine badges using the Python standard
+library. The six static SVGs are downloaded snapshots of the original Shields
+responses, including the embedded C++, Python and CMake logos. The Windows and
+license responses retain their original styling. Changelog uses the same style.
+The publisher copies these static bytes unchanged; no logo or font is loaded
+from a remote service by the reader or publisher.
+
+Dynamic release badges retain Shields typography, gradients, clipping and text
+shadows. The CI renderer retains the original GitHub workflow badge template,
+including its embedded Octocat path, workflow label and gradients, while changing
+the actual status and its color. No network image generator or font package is
+needed during updates. The source tree contains reviewable CI/release snapshots.
+
+The static responses were retrieved from the image URLs previously used by the
+README; Changelog uses `https://img.shields.io/badge/Changelog-view-blue.svg`.
+Shields is published under CC0; embedded Simple Icons and product marks retain
+their original attribution and brand identities. The GitHub workflow template
+was retrieved from this repository's original `ci.yml/badge.svg?branch=main`
+endpoint. These cached assets are retained rather than represented as newly
+drawn project logos.
 
 The live CI, Latest release and Release integrity images are read from the same repository's
 long-lived `badges` branch, at `resources/badges/ci.svg` and

@@ -1,10 +1,12 @@
 <!-- SPDX-License-Identifier: GPL-3.0-only -->
-<svg xmlns="http://www.w3.org/2000/svg" width="214" height="20" role="img" aria-label="Release integrity: immutable">
+<svg xmlns="http://www.w3.org/2000/svg" width="172" height="20" role="img" aria-label="Release integrity: immutable">
 <title>Release integrity: immutable</title>
-<rect width="214" height="20" rx="3" fill="#4c1"/>
-<path d="M3 0h132v20H3a3 3 0 0 1-3-3V3a3 3 0 0 1 3-3z" fill="#555"/>
-<g fill="#fff" text-anchor="middle" font-family="Verdana,DejaVu Sans,sans-serif" font-size="11">
-<text x="67.5" y="14">Release integrity</text>
-<text x="174.5" y="14">immutable</text>
+<filter id="blur"><feGaussianBlur stdDeviation="16"/></filter>
+<linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient>
+<clipPath id="r"><rect width="172" height="20" rx="3"/></clipPath>
+<g clip-path="url(#r)"><rect width="103" height="20" fill="#555"/><rect x="103" width="69" height="20" fill="#4c1"/><rect width="172" height="20" fill="url(#s)"/></g>
+<g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110">
+<g transform="scale(.1)"><g aria-hidden="true" fill="#010101"><text x="525" y="150" fill-opacity=".8" filter="url(#blur)" textLength="930">Release integrity</text><text x="525" y="150" fill-opacity=".3" textLength="930">Release integrity</text></g><text x="525" y="140" textLength="930">Release integrity</text></g>
+<g transform="scale(.1)"><g aria-hidden="true" fill="#010101"><text x="1365" y="150" fill-opacity=".8" filter="url(#blur)" textLength="590">immutable</text><text x="1365" y="150" fill-opacity=".3" textLength="590">immutable</text></g><text x="1365" y="140" textLength="590">immutable</text></g>
 </g>
 </svg>

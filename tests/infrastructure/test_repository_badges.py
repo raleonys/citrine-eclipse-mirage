@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 """Badge publication boundaries and initial-PR workload regressions."""
 import copy
+import base64
 import json
 from pathlib import Path
 import re
@@ -87,7 +88,7 @@ class BadgeTests(unittest.TestCase):
         api = API();api.release = None;api.runs = []
         result = badges.live_images(api, REPOSITORY)
         self.assertIn('Latest release: none', result['latest-release.svg'])
-        self.assertIn('CI: not run', result['ci.svg'])
+        self.assertIn('Source integrity: not run', result['ci.svg'])
         self.assertIn('Release integrity: no release', result['release-integrity.svg'])
         for tag in ('3.2.7-WRONG', '../main', '<svg/>'):
             with self.subTest(tag=tag), self.assertRaises(ValueError):
@@ -187,6 +188,30 @@ class BadgeTests(unittest.TestCase):
         for name in badges.NAMES:
             source = (ROOT / badges.DIRECTORY / name).read_text()
             self.assertEqual('{http://www.w3.org/2000/svg}svg', ET.fromstring(source).tag)
+
+    def test_original_logos_are_embedded_and_all_badges_render_without_network_assets(self):
+        svg = '{http://www.w3.org/2000/svg}'
+        rendered = badges.images('3.2.7-ERINTHAR', 'success', True)
+        for name, source in rendered.items():
+            with self.subTest(name=name):
+                root = ET.fromstring(source)
+                self.assertEqual('20', root.attrib['height'])
+                for node in root.iter():
+                    self.assertNotIn(node.tag, {svg+'script', svg+'foreignObject'})
+                    self.assertFalse(any(key.lower().startswith('on') for key in node.attrib))
+                    for key, value in node.attrib.items():
+                        if key.endswith('href'):
+                            self.assertTrue(value.startswith('data:image/svg+xml;base64,'))
+                            logo = ET.fromstring(base64.b64decode(value.split(',', 1)[1], validate=True))
+                            self.assertTrue(any(n.tag == svg+'path' for n in logo.iter()))
+                if name in {'cpp.svg', 'python.svg', 'cmake.svg'}:
+                    self.assertTrue(root.findall('.//'+svg+'image'), 'Keep original embedded logo')
+        for conclusion in [None, *badges.CONCLUSIONS]:
+            with self.subTest(conclusion=conclusion):
+                root = ET.fromstring(badges.images(None, conclusion)['ci.svg'])
+                self.assertTrue(root.findall('.//'+svg+'linearGradient'))
+                self.assertTrue(root.find(".//"+svg+"path[@id='workflow-bg']") is not None)
+                self.assertIn(badges.CONCLUSIONS.get(conclusion, ('not run',))[0], root.attrib['aria-label'])
 
 
 if __name__ == '__main__':
