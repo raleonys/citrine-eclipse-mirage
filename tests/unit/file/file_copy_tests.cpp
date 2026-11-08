@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/file_copy.hpp"
+#include "citrine_eclipse_mirage/platform/file_copy.hpp"
 #include <deque>
 #include <iostream>
 #include <limits>
@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace {
-using namespace preloader_l::file_copy;
+using namespace citrine_eclipse_mirage::file_copy;
 std::size_t checks=0;
 void require(bool condition,const char* message) {
     ++checks;if(!condition)throw std::runtime_error(message);

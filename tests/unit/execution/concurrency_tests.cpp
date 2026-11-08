@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/execution.hpp"
+#include "citrine_eclipse_mirage/runtime/execution.hpp"
 #include <atomic>
 #include <barrier>
 #include <chrono>
@@ -12,7 +12,7 @@
 #include <thread>
 #include <vector>
 
-using namespace preloader_l::execution;
+using namespace citrine_eclipse_mirage::execution;
 struct OS final:Platform {
     std::mutex gate;
     std::atomic<unsigned> next{1};

@@ -52,7 +52,7 @@ def verify(root):
         if name.startswith(('src/','include/')):
             text=(root/name).read_text()
             qualified=re.findall(r'\bnamespace\s+([A-Za-z_]\w*(?:::\w+)+)\s*\{',text)
-            if any(value.split('::',1)[0]!='preloader_l' for value in qualified):
+            if any(value.split('::',1)[0]!='citrine_eclipse_mirage' for value in qualified):
                 errors.append('Foreign first-party namespace: '+name)
     return {'status':'FAIL' if errors else 'PASS','files_checked':len(expected),
             'scope':'declared source bytes and project boundaries, not native equivalence or signed authorization',

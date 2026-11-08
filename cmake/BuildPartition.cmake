@@ -14,25 +14,25 @@ if(NOT _partition_status EQUAL 0)
   message(FATAL_ERROR "Build partition source contract failed:\n${_partition_output}${_partition_error}")
 endif()
 
-function(preloader_l_install_partition_gate)
-  set(_map "${CMAKE_CURRENT_BINARY_DIR}/preloader.production.$<CONFIG>.map")
+function(citrine_eclipse_mirage_install_partition_gate)
+  set(_map "${CMAKE_CURRENT_BINARY_DIR}/citrine_eclipse_mirage.production.$<CONFIG>.map")
   if(MSVC)
-    target_link_options(preloader_l PRIVATE "/MAP:${_map}")
+    target_link_options(citrine_eclipse_mirage PRIVATE "/MAP:${_map}")
   elseif(MINGW)
-    target_link_options(preloader_l PRIVATE "-Wl,-Map,${_map}")
+    target_link_options(citrine_eclipse_mirage PRIVATE "-Wl,-Map,${_map}")
   else()
     message(FATAL_ERROR "Production partition evidence requires a supported Windows linker map")
   endif()
-  set_property(TARGET preloader_l APPEND PROPERTY LINK_DEPENDS
+  set_property(TARGET citrine_eclipse_mirage APPEND PROPERTY LINK_DEPENDS
     "${PROJECT_SOURCE_DIR}/scripts/check_build_partition.py"
     "${PROJECT_SOURCE_DIR}/metadata/BUILD_PARTITION_POLICY.json"
     "${CMAKE_CURRENT_BINARY_DIR}/partition.$<CONFIG>.targets")
-  add_custom_target(preloader_l_verify_partition ALL
+  add_custom_target(citrine_eclipse_mirage_verify_partition ALL
     COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/scripts/check_build_partition.py"
       --root "${PROJECT_SOURCE_DIR}" --build-dir "${CMAKE_CURRENT_BINARY_DIR}"
-      --config "$<CONFIG>" --map "${_map}" --binary "$<TARGET_FILE:preloader_l>"
+      --config "$<CONFIG>" --map "${_map}" --binary "$<TARGET_FILE:citrine_eclipse_mirage>"
       --report "${CMAKE_CURRENT_BINARY_DIR}/production-boundary.$<CONFIG>.json"
-    DEPENDS preloader_l
+    DEPENDS citrine_eclipse_mirage
     COMMENT "Recheck production boundary on incremental builds" VERBATIM)
   # Emit evaluated source lists and a conservative target dependency graph.
   # A file-API query first written during configure is answered only on a later
@@ -72,27 +72,27 @@ function(preloader_l_install_partition_gate)
   # Keep the unsigned application output in the same import order as Golden.
   # MSVC may emit a different descriptor sequence from transitive Asio libs.
   if(MSVC)
-    set_property(TARGET preloader_l APPEND PROPERTY LINK_DEPENDS
+    set_property(TARGET citrine_eclipse_mirage APPEND PROPERTY LINK_DEPENDS
       "${PROJECT_SOURCE_DIR}/scripts/import_descriptor_order.py"
       "${PROJECT_SOURCE_DIR}/metadata/URSYNEX_GOLDEN_FINALIZER.json"
       "${PROJECT_SOURCE_DIR}/metadata/CORVEXON_GOLDEN_TRAIL.json"
       "${PROJECT_SOURCE_DIR}/metadata/DIST_CONTRACT.json")
-    add_custom_command(TARGET preloader_l POST_BUILD
+    add_custom_command(TARGET citrine_eclipse_mirage POST_BUILD
       COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/scripts/import_descriptor_order.py"
-        --root "${PROJECT_SOURCE_DIR}" --dll "$<TARGET_FILE:preloader_l>"
+        --root "${PROJECT_SOURCE_DIR}" --dll "$<TARGET_FILE:citrine_eclipse_mirage>"
       COMMENT "Normalize unsigned DLL import descriptors before validation" VERBATIM)
   endif()
-  add_custom_command(TARGET preloader_l POST_BUILD
+  add_custom_command(TARGET citrine_eclipse_mirage POST_BUILD
     COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/scripts/check_build_partition.py"
       --root "${PROJECT_SOURCE_DIR}" --build-dir "${CMAKE_CURRENT_BINARY_DIR}"
-      --config "$<CONFIG>" --map "${_map}" --binary "$<TARGET_FILE:preloader_l>"
+      --config "$<CONFIG>" --map "${_map}" --binary "$<TARGET_FILE:citrine_eclipse_mirage>"
       --report "${CMAKE_CURRENT_BINARY_DIR}/production-boundary.$<CONFIG>.json"
     COMMENT "Verify production target closure and linked object boundary" VERBATIM)
   if(BUILD_TESTING)
     file(READ "${PROJECT_SOURCE_DIR}/metadata/BUILD_PARTITION_POLICY.json" _policy)
     # These exhaustive model fixtures encrypt large payload matrices with an
     # unoptimized CRT/codec under Wine. This is a test-process budget only.
-    if(CMAKE_CROSSCOMPILING AND PRELOADER_L_WINE_EXECUTABLE AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+    if(CMAKE_CROSSCOMPILING AND CITRINE_ECLIPSE_MIRAGE_WINE_EXECUTABLE AND CMAKE_BUILD_TYPE STREQUAL "Debug")
       string(JSON _slow_count LENGTH "${_policy}" "cross_debug_large_reference_tests")
       string(JSON _slow_timeout GET "${_policy}" "cross_debug_reference_budget_seconds")
       math(EXPR _runner_timeout "${_slow_timeout}+60")
@@ -101,7 +101,7 @@ function(preloader_l_install_partition_gate)
         string(JSON _slow GET "${_policy}" "cross_debug_large_reference_tests" ${_i})
         set_tests_properties("${_slow}" PROPERTIES TIMEOUT "${_slow_timeout}")
         set_property(TARGET "${_slow}" PROPERTY CROSSCOMPILING_EMULATOR
-          "${Python3_EXECUTABLE};${PROJECT_SOURCE_DIR}/scripts/run_wine_test.py;--timeout;${_runner_timeout};${PRELOADER_L_WINE_EXECUTABLE}")
+          "${Python3_EXECUTABLE};${PROJECT_SOURCE_DIR}/scripts/run_wine_test.py;--timeout;${_runner_timeout};${CITRINE_ECLIPSE_MIRAGE_WINE_EXECUTABLE}")
       endforeach()
     endif()
     foreach(_kind IN ITEMS reference production)

@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Rename active first-party namespaces, include paths, build targets, tools and DLL artifacts to citrine_eclipse_mirage. Retain the CryptQuery compatibility filename and public export ordinals. Replace reference VERSIONINFO branding with Citrine Eclipse Mirage and Copyright 2026 SURGE; derive matching numeric/string file and product versions from the selected release version. Bind weekly build receipts to that version without changing published releases or retained evidence.
+
 - Test the actual Environment ProgramData and LocalAppData adapters with required-size counts, repeated 260-code-unit growth, exact UTF-16 lengths, empty/missing results, retry and configured ProgramData bypass. Production behavior is unchanged.
 
 - Add a live Latest release badge to the README linking to the latest published GitHub release. Keep the version dynamic so future releases require no README edit.
@@ -18,7 +20,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 - Add native callback binding regressions for simultaneous constructor admission and destruction of a closed owner while its replacement remains active. Verify one winning context, callback usability and sole cleanup ownership.
 
-- Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Put exactly preloader_l.dll, its DLL SHA-256 sidecar and the project LICENSE at the ZIP root. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts and all other files out of the runtime ZIP, preserve native/Golden gates, and leave published releases unchanged.
+- Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Put exactly citrine_eclipse_mirage.dll, its DLL SHA-256 sidecar and the project LICENSE at the ZIP root. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts and all other files out of the runtime ZIP, preserve native/Golden gates, and leave published releases unchanged.
 
 - Add source-included native Application rollback regressions for controlled first/second worker-launch exceptions, retained provider-thread draining and normal startup. Keep production workers exactly `std::thread` through a private fixture seam; preserve listener cleanup, public options/exports and compiler CRT policy.
 

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/file_copy.hpp"
+#include "citrine_eclipse_mirage/platform/file_copy.hpp"
 
-namespace preloader_l::file_copy {
+namespace citrine_eclipse_mirage::file_copy {
 std::uint32_t file_identity_04895c(Handle handle,Identity& out,SystemCalls& system) {
     const auto error = system.file_id_info(handle,out);
     if(error!=50 && error!=87)return error;

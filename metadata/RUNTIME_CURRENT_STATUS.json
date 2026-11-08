@@ -55,7 +55,7 @@
     "release_file_logging": "FORBIDDEN",
     "existing_debug_log_in_release": "PRESERVE_UNCHANGED"
   },
-  "resource_policy": "Owner-reference VERSIONINFO; owner profile and preserved fallback PNG in read-only C++ data, no PNG PE resource",
+  "resource_policy": "Citrine Eclipse Mirage VERSIONINFO with selected release version; avatar and fallback remain read-only C++ data",
   "hook11": "Hook reference selector/protected reader/forwarding and lifetime; static SDK CRYPT32!CryptQueryObject import",
   "historical_runtime_snapshot": "metadata/evidence/RUNTIME_BINDING_STATUS.json",
   "validation_status": "metadata/evidence/asio-update/VALIDATION.json",

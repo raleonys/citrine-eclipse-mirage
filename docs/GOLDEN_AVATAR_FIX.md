@@ -22,7 +22,7 @@ from the supplied `anadius-rea-evidence.json` memory data; all PNG
 chunk CRCs were verified. No Brownfield/Bluefield application code was
 copied. Hash, address, and evidence records:
 [AVATAR_DATA_CONTRACT.json](../metadata/AVATAR_DATA_CONTRACT.json).
-`preloader_version.rc` bytes and the VERSIONINFO profile did not change.
+`version.rc` bytes and the VERSIONINFO profile did not change.
 
 `OLE32.dll` was not an export; its import resulted from
 `SHGetKnownFolderPath` and `CoTaskMemFree` in the earlier adapter.
@@ -36,7 +36,7 @@ The latest owner-provided Native log passed the prior `unexpected()`
 error but encountered C2589 for `std::min` in an encoding unit test.
 NOMINMAX preventing the Windows `min` macro was set on an object
 library but did not propagate to core consumers through
-`$<TARGET_OBJECTS>`. `preloader_l_core PUBLIC NOMINMAX` corrected
+`$<TARGET_OBJECTS>`. `citrine_eclipse_mirage_core PUBLIC NOMINMAX` corrected
 this propagation. Vendor sources were not modified and tests were
 not skipped.
 

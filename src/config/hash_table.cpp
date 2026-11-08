@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/config/hash_table.hpp"
+#include "citrine_eclipse_mirage/config/hash_table.hpp"
 #include <algorithm>
 #include <bit>
 #include <cmath>
 #include <set>
 #include <stdexcept>
 
-namespace preloader_l::config_hash {
+namespace citrine_eclipse_mirage::config_hash {
 std::uint64_t fnv1a64(std::string_view bytes) noexcept {
     std::uint64_t hash=0xcbf29ce484222325ULL;
     for(unsigned char byte:bytes)hash=(hash^byte)*0x100000001b3ULL;
@@ -163,4 +163,4 @@ configuration::Node to_configuration(const Node& source) {
         result.children.emplace(key,to_configuration(source.children.at(key)));
     return result;
 }
-} // namespace preloader_l::config_hash
+} // namespace citrine_eclipse_mirage::config_hash

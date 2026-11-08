@@ -34,7 +34,7 @@ UINT WINAPI TestSetErrorMode(UINT value){if(fault::on_mode)fault::on_mode(value)
 #undef SetErrorMode
 
 namespace {
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 struct Fixture {
     configuration::State state=application::initial_state();application::Options options;

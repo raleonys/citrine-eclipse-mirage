@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/core/binary_io.hpp"
+#include "citrine_eclipse_mirage/core/binary_io.hpp"
 #include <algorithm>
 #include <array>
 #include <filesystem>
@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <vector>
 
-namespace io=preloader_l::file;
+namespace io=citrine_eclipse_mirage::file;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -109,7 +109,7 @@ void core() {
     thrown=false;try{(void)io::read_binary_03b3f0(u"fixture",impossible);}catch(const std::length_error&){thrown=true;}
     check(thrown&&impossible.t.calls.back()=="destroy-input","invalid tell size reaches resize exception");
 }
-#if !defined(PRELOADER_L_PORTABLE_FILE_IO_TESTS)
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
 void native(const std::filesystem::path& directory) {
     const auto root=std::filesystem::absolute(directory).lexically_normal();
     check(root.filename()=="file-io-fixtures","dedicated generated-fixture directory required");
@@ -146,7 +146,7 @@ void native(const std::filesystem::path& directory) {
 }
 int main(int argc,char** argv){try{
     core();
-#if defined(PRELOADER_L_PORTABLE_FILE_IO_TESTS)
+#if defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
     (void)argc;(void)argv;
 #else
     if(argc!=2)throw std::invalid_argument("Pass a dedicated file-io-fixtures directory");

@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/application.hpp"
-#include "preloader_l/core/binary_io.hpp"
-#include "preloader_l/hash/hash.hpp"
-#include "preloader_l/xml/reader.hpp"
-#include "preloader_l/core/token_constants.hpp"
-#include "preloader_l/runtime/event_queue.hpp"
-#include "preloader_l/platform/hook_native_callbacks.hpp"
-#include "preloader_l/net/asio_service.hpp"
-#include "preloader_l/net/listener_policy.hpp"
-#include "preloader_l/platform/execution_windows.hpp"
+#include "citrine_eclipse_mirage/runtime/application.hpp"
+#include "citrine_eclipse_mirage/core/binary_io.hpp"
+#include "citrine_eclipse_mirage/hash/hash.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "citrine_eclipse_mirage/core/token_constants.hpp"
+#include "citrine_eclipse_mirage/runtime/event_queue.hpp"
+#include "citrine_eclipse_mirage/platform/hook_native_callbacks.hpp"
+#include "citrine_eclipse_mirage/net/asio_service.hpp"
+#include "citrine_eclipse_mirage/net/listener_policy.hpp"
+#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
 #include "../../src/runtime/application_internal.hpp"
 #include <asio.hpp>
 #include <MinHook.h>
@@ -24,7 +24,7 @@
 #include <cstring>
 #include <algorithm>
 
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 namespace fs=std::filesystem;
 namespace {
 int checks=0;
@@ -399,7 +399,7 @@ int main(int argc,char** argv) try {
     bool rejected=false;try{Peer peer(state.server_port);}catch(const std::system_error&){rejected=true;}
     require(rejected,"stopped listener rejects new connections");
     const auto online_dir=directory.path/"online";fs::create_directories(online_dir);
-    const auto provider_file=online_dir/"preloader_l_online.dll";
+    const auto provider_file=online_dir/"citrine_eclipse_mirage_online.dll";
     fs::copy_file(fs::path(argv[1]),provider_file);
     auto provider_module=LoadLibraryW(provider_file.wstring().c_str());require(provider_module!=nullptr,"real provider DLL loaded");
     auto mode=reinterpret_cast<void(*)(int)>(GetProcAddress(provider_module,"FixtureMode"));
@@ -507,7 +507,7 @@ int main(int argc,char** argv) try {
         "all failed provider startups release the physical DLL image");
     const auto hook_dir=directory.path/"hooks";fs::create_directories(hook_dir);
     fs::copy_file(fs::path(argv[1]),hook_dir/"fixture-extra.dll");
-    fs::copy_file(fs::path(argv[1]),hook_dir/"preloader_l_online.dll");
+    fs::copy_file(fs::path(argv[1]),hook_dir/"citrine_eclipse_mirage_online.dll");
     require(file::write_binary_03c1d0((hook_dir/"surge.cfg").u16string(),R"("Config2" {"Emulator" {"Documents" "fixture-documents" "BlockReruns" "true" "LoadExtraDLLsFromMain" "fixture-extra.dll" "LoadExtraDLLs" "fixture-extra.dll"}})",files),"all conditional hooks config");
     require(MH_Initialize()==MH_OK,"external engine initialized for ownership failure test");
     bool rejected_owner=false;
@@ -519,7 +519,7 @@ int main(int argc,char** argv) try {
     require(MH_Initialize()==MH_ERROR_ALREADY_INITIALIZED,"rollback leaves external engine initialized");
     require(MH_Uninitialize()==MH_OK,"external engine remains releasable by its owner");
     {
-        RegistryProviderProbe probe;probe.load(hook_dir/"preloader_l_online.dll");
+        RegistryProviderProbe probe;probe.load(hook_dir/"citrine_eclipse_mirage_online.dll");
         application::Application hooked({(hook_dir/"host.exe").u16string(),(hook_dir/"data").u16string(),true});hooked.start();
         require(native::is_bound(),"actual native callback owner published");
         require(hooked.configuration().username=="fixture-online","real provider and real hooks share the ready application owner");

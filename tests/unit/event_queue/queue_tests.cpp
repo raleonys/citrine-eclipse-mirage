@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/event_queue.hpp"
+#include "citrine_eclipse_mirage/runtime/event_queue.hpp"
 #include <array>
 #include <chrono>
 #include <exception>
@@ -12,7 +12,7 @@
 #include <stdexcept>
 #include <thread>
 #include <vector>
-namespace eq=preloader_l::event_queue;
+namespace eq=citrine_eclipse_mirage::event_queue;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

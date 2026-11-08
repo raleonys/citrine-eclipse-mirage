@@ -1,23 +1,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/router/router.hpp"
-#include "preloader_l/codec/crypto.hpp"
-#include "preloader_l/xml/reader.hpp"
-#include "preloader_l/core/license.hpp"
+#include "citrine_eclipse_mirage/router/router.hpp"
+#include "citrine_eclipse_mirage/codec/crypto.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "citrine_eclipse_mirage/core/license.hpp"
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>
 
-namespace msg=preloader_l::messages;
-namespace xml=preloader_l::xml;
-namespace info=preloader_l::handlers;
-namespace misc=preloader_l::misc_handlers;
-namespace content=preloader_l::content_handlers;
-namespace dispatch=preloader_l::dispatch;
-namespace crypto=preloader_l::crypto;
-namespace config=preloader_l::configuration;
-namespace reader=preloader_l::xml_reader_bridge;
-namespace license=preloader_l::license;
+namespace msg=citrine_eclipse_mirage::messages;
+namespace xml=citrine_eclipse_mirage::xml;
+namespace info=citrine_eclipse_mirage::handlers;
+namespace misc=citrine_eclipse_mirage::misc_handlers;
+namespace content=citrine_eclipse_mirage::content_handlers;
+namespace dispatch=citrine_eclipse_mirage::dispatch;
+namespace crypto=citrine_eclipse_mirage::crypto;
+namespace config=citrine_eclipse_mirage::configuration;
+namespace reader=citrine_eclipse_mirage::xml_reader_bridge;
+namespace license=citrine_eclipse_mirage::license;
 namespace {
 int checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

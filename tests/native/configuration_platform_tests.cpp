@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "../../src/runtime/application_internal.hpp"
-#include "preloader_l/config/application.hpp"
-#include "preloader_l/core/paths.hpp"
-#include "preloader_l/codec/crypto.hpp"
-#include "preloader_l/core/token_constants.hpp"
+#include "citrine_eclipse_mirage/config/application.hpp"
+#include "citrine_eclipse_mirage/core/paths.hpp"
+#include "citrine_eclipse_mirage/codec/crypto.hpp"
+#include "citrine_eclipse_mirage/core/token_constants.hpp"
 #include <map>
 #include <algorithm>
 #include <array>
@@ -13,7 +13,7 @@
 #include <iterator>
 #include <thread>
 
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 namespace fs=std::filesystem;
 namespace {
 unsigned checks=0;

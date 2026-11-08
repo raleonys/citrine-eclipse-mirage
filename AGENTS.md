@@ -26,8 +26,8 @@ This document is the operational entrypoint for agents and contributors. [GOVERN
 
 ## Technical invariants
 
-- First-party sources follow `src/<module>/` and `include/preloader_l/<module>/`; tests belong to `tests/`, pinned third-party source to `third_party/`. Preserve explicit build target ownership and separate production/reference/test-only link graphs. See `docs/BUILD_PARTITION.md`.
-- The production DLL preserves exactly `DllMain@1`, `SURGE@2`, and `DllShutdown@3`. Do not add management exports, change ordinal/layout or mix the separate C++ development API into the public ABI. See `exports/preloader_l.def` and `metadata/PUBLIC_DLL_ABI.json`.
+- First-party sources follow `src/<module>/` and `include/citrine_eclipse_mirage/<module>/`; tests belong to `tests/`, pinned third-party source to `third_party/`. Preserve explicit build target ownership and separate production/reference/test-only link graphs. See `docs/BUILD_PARTITION.md`.
+- The production DLL preserves exactly `DllMain@1`, `SURGE@2`, and `DllShutdown@3`. Do not add management exports, change ordinal/layout or mix the separate C++ development API into the public ABI. See `exports/citrine_eclipse_mirage.def` and `metadata/PUBLIC_DLL_ABI.json`.
 - Keep `DllMain` loader-safe. Perform runtime/network/hook initialization and teardown outside loader lock. Preserve retries, held leases, callback drain, failure-atomic rollback, cleanup ownership and native quiescence. See `docs/ARCHITECTURE.md`, `docs/UNLOAD_RECOVERY.md` and `metadata/UNLOAD_RECOVERY_CONTRACT.json`.
 - Preserve the scoped eleven-hook architecture and destination-aware Winsock redirect. A process-wide `ws2_32!htons` detour is prohibited. Protect original-call effects, LastError, rollback and trampoline ownership; use `docs/HOOK_ENGINE_HARDENING.md` and relevant `metadata/` contracts.
 - Keep standard compiler CRT and the accepted exact four vendor trees: Asio, MinHook, PEGTL and pugixml. Preserve their source pins and required portable alias descriptors. No custom CRT, unapproved vendor modification, new VDF policy or default changes. Consult `metadata/VENDOR_LOCK.json`, `docs/VENDORING.md`, and parser contracts.

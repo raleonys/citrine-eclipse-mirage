@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "../../support/fixture_ascii.hpp"
-#include "preloader_l/handlers/content_handlers.hpp"
+#include "citrine_eclipse_mirage/handlers/content_handlers.hpp"
 #include <algorithm>
 #include <cstdio>
 #include <functional>
@@ -9,7 +9,7 @@
 #include <stdexcept>
 #include <tuple>
 
-using namespace preloader_l::content_handlers;
+using namespace citrine_eclipse_mirage::content_handlers;
 static unsigned checks;
 static void require(bool value) {++checks;if(!value)throw std::runtime_error("check "+std::to_string(checks));}
 struct ThreadError {int code;};
@@ -34,7 +34,7 @@ struct MockXml final:Xml {
     int fail_attribute=-1;
     int writes=0;
     std::function<void()> after_open;
-    const char* attribute_002cc0(preloader_l::handlers::Request,const char*)override {
+    const char* attribute_002cc0(citrine_eclipse_mirage::handlers::Request,const char*)override {
         throw std::runtime_error("request snapshot should be used");
     }
     void open_004080(const char* name,bool compact)override {
@@ -121,13 +121,13 @@ struct MockEffects:Effects {
     Path path_append_016b50(const Path& a,const Path& b)override{return a+u"\\"+b;}
     bool online_avatar_virtual_28(const Path& path)override{online_paths.push_back(path);return avatar_success;}
     bool copy_overwrite_048d20(const Path& a,const Path& b)override{copies.emplace_back(a,b);return copy_success;}
-    std::string path_to_utf8_031ca0(const Path& path)override{utf8_paths.push_back(path);return preloader_l::test_support::fixture_ascii(path);}
+    std::string path_to_utf8_031ca0(const Path& path)override{utf8_paths.push_back(path);return citrine_eclipse_mirage::test_support::fixture_ascii(path);}
     void log_saved_size_085530(std::int32_t size)override{saved_logs.push_back(size);}
 };
 struct Fixture {
-    std::vector<preloader_l::configuration::Content> contents{{"C2","Second","v2","TEST_STATE"},{"C1","First","v1","INSTALLED"}};
-    std::vector<preloader_l::configuration::Entitlement> entitlements{{"itemA","group1","verA","typeA","tagA"},{"itemB","group2","verB","typeB","tagB"},{"itemC","group1","verC","typeC","tagC"}};
-    preloader_l::handlers::Attributes game{{"DISPLAY_NAME","Synthetic Game"}};
+    std::vector<citrine_eclipse_mirage::configuration::Content> contents{{"C2","Second","v2","TEST_STATE"},{"C1","First","v1","INSTALLED"}};
+    std::vector<citrine_eclipse_mirage::configuration::Entitlement> entitlements{{"itemA","group1","verA","typeA","tagA"},{"itemB","group2","verB","typeB","tagB"},{"itemC","group1","verC","typeC","tagC"}};
+    citrine_eclipse_mirage::handlers::Attributes game{{"DISPLAY_NAME","Synthetic Game"}};
     AchievementMap achievements{{"z",{3,0,0,"old","Name Z","Steam Z",33}},{"a",{5,1,5,"won","Name A","Steam A",44}}};
     std::string set="TEST_SET",content_id="TEST_CONTENT",user_id="user-test";
     Path achievement_file=u"synthetic-achievements.xml",avatar=u"synthetic-avatar.png",default_avatar=u"synthetic-default.png",user_directory=u"synthetic-user",last_avatar=u"synthetic-last.png";

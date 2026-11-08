@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/session_handler.hpp"
-#include "preloader_l/xml/reader.hpp"
+#include "citrine_eclipse_mirage/net/session_handler.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-namespace msg=preloader_l::messages;
-namespace bridge=preloader_l::session_bridge;
+namespace msg=citrine_eclipse_mirage::messages;
+namespace bridge=citrine_eclipse_mirage::session_bridge;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -49,7 +49,7 @@ struct Effects final:msg::Effects {
 };
 void contracts(){
     std::uint8_t encrypted=9,unknown=8,show=0;std::string version="one";
-    Cipher cipher;Factory factory;Random random;Events events;Effects effects;preloader_l::xml_reader_bridge::Backend xml;
+    Cipher cipher;Factory factory;Random random;Events events;Effects effects;citrine_eclipse_mirage::xml_reader_bridge::Backend xml;
     bridge::MessageHandler handler({encrypted,unknown,show,version,cipher,events},xml,factory,random,effects);
     require(cipher.resets==0 && encrypted==9 && unknown==8,"bridge construction adds no reset");
     handler.reset_02bc70();require(cipher.resets==1 && encrypted==0 && unknown==0,"reset changes shared flags and actual cipher");
