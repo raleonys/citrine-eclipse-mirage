@@ -26,6 +26,25 @@ class SourceIdentityTests(unittest.TestCase):
             path.write_text('// SPDX-License-Identifier: MIT\nint main() { return 0; }\n')
             self.assertTrue(checker.inspect(tmp)[1])
 
+    def test_late_duplicate_spdx_marker_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'src/late.cpp'
+            path.parent.mkdir(parents=True)
+            header = '// SPDX-License-Identifier: GPL-3.0-only\n'
+            padding = '// ordinary source comment\n' * 150
+            self.assertGreater(len(header + padding), 3000)
+            path.write_text(header + padding, encoding='utf-8')
+            self.assertEqual((1, []), checker.inspect(tmp))
+            for second_license in ('GPL-3.0-only', 'MIT'):
+                with self.subTest(second_license=second_license):
+                    path.write_text(header + padding +
+                                    '// SPDX-License-Identifier: ' + second_license + '\n',
+                                    encoding='utf-8')
+                    checked, errors = checker.inspect(tmp)
+                    self.assertEqual(1, checked)
+                    self.assertTrue(any('Expected exactly one GPL-3.0-only SPDX header'
+                                        in error for error in errors), errors)
+
     def test_legacy_namespace_and_type_fail(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / 'include/preloader_l/a.hpp'

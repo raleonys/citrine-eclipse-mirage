@@ -57,6 +57,8 @@ struct FakeServer final : ServerBackend {
     Endpoint observed;
     Error run_error;
     bool env_result=true;
+    bool fail_accept_submission=false;
+    std::uint16_t expected_bound_port=12345;
     std::uint8_t* ready=nullptr;
     void initialize_context_0241b0() override {events.emplace_back("context");}
     ParsedAddress parse_address_028690(std::uint16_t family,std::string_view literal) override {
@@ -70,11 +72,12 @@ struct FakeServer final : ServerBackend {
     void initialize_pending_socket_0211b0() override {events.emplace_back("pending");}
     LocalEndpoint local_endpoint() override {events.emplace_back("local");return local;}
     bool set_environment_variable(std::string_view key,std::string_view value) override {
-        check(key=="EALsxPort"&&value=="12345","bound port published as decimal");
+        check(key=="EALsxPort"&&value==std::to_string(expected_bound_port),"selected bound port published as decimal");
         check(!ready||*ready==0,"environment before ready flag");events.emplace_back("environment");return env_result;
     }
     void async_accept_021b00() override {
         check(!ready||*ready==1,"readiness before initial accept");events.emplace_back("accept");
+        if(fail_accept_submission)throw Raised{{10055,ErrorCategory::system},"async_accept"};
     }
     Error run_context_0298b0() override {events.emplace_back("run");return run_error;}
     void destroy_pending_socket_024db0() override {events.emplace_back("destroy_pending");}
@@ -169,6 +172,27 @@ void server_tests() {
     check(server.observed.family==2&&server.observed.address[0]==127&&server.observed.address[3]==1,"IPv4 loopback fallback");
     check(server.observed.port_host_order==0,"caller supplied ephemeral port reaches bind");
     check(server.events==std::vector<std::string>({"context","parse6","parse4","acceptor","pending","local","environment","accept","run","destroy_pending","destroy_acceptor","destroy_context"}),"normal startup/cleanup order");
+    // Archive 12 donor publication_tests.cpp checks these four bound-port
+    // payload boundaries. Keep the current product contract: publish the
+    // selected decimal EALsxPort before the ready flag and first accept.
+    for(const std::uint16_t selected:{std::uint16_t{0},std::uint16_t{80},
+                                      std::uint16_t{443},std::uint16_t{65535}}) {
+        FakeServer boundary;
+        boundary.ready=&first;
+        boundary.expected_bound_port=selected;
+        boundary.local.port_network_order=static_cast<std::uint16_t>((selected>>8)|(selected<<8));
+        boundary.env_result=selected!=65535; // Original ignores publication BOOL.
+        first=0;port=0;
+        const auto previous_acquires=platform.acquired;
+        const auto previous_releases=platform.released;
+        construct_server_024480(boundary,port,first,execution);
+        check(port==selected&&first==1,"all selected port boundaries publish readiness");
+        check(platform.acquired==previous_acquires+1&&platform.released==previous_releases+1,
+              "each port publishes readiness under one balanced lock");
+        check(boundary.events==std::vector<std::string>({"parse6","parse4","acceptor",
+              "pending","local","environment","accept"}),
+              "each port publishes environment before readiness and initial accept");
+    }
     FakeServer six;six.ipv6={1,{},{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},9};
     first=0;port=7777;construct_server_024480(six,port,first,execution);
     check(six.observed.family==23&&six.observed.scope_id==9&&six.observed.port_host_order==7777,"IPv6 parse success uses observed fields");
@@ -178,11 +202,75 @@ void server_tests() {
         if(mode==0)broken.ipv4.error={7,ErrorCategory::other};
         if(mode==1)broken.local.error={0x2719,ErrorCategory::system};
         if(mode==2)broken.local.returned_size=129;
-        try {construct_server_024480(broken,port,first,execution);check(false,"expected startup failure");}
-        catch(const Raised& e){check(e.error.value!=0,"startup preserves nonzero error");}
-        check(first==0&&port==11,"failed startup does not publish readiness/port");
-        check(std::find(broken.events.begin(),broken.events.end(),"accept")==broken.events.end(),"failed startup does not accept");
+        const auto previous_acquires=platform.acquired;
+        const auto previous_releases=platform.released;
+        bool raised=false;
+        try {construct_server_024480(broken,port,first,execution);}
+        catch(const Raised& e){
+            raised=true;
+            check(e.error.value==(mode==0?7:mode==1?0x2719:0x2726),
+                  "startup preserves the exact selected error value");
+            check(e.error.category==(mode==0?ErrorCategory::other:ErrorCategory::system),
+                  "startup preserves the selected error category");
+            // Adapt Archive 12's stronger error checks to the accepted product
+            // operation labels, rather than importing the donor's empty labels.
+            check(e.context==(mode==0?"address":mode==1?"local_endpoint":"endpoint_size"),
+                  "startup reports the accepted operation context");
+        }
+        check(raised,"startup error must escape construction");
+        check(first==0&&second==0&&third==0&&port==11,
+              "failed startup does not publish readiness/port");
+        check(platform.acquired==previous_acquires&&platform.released==previous_releases,
+              "failed construction never enters the readiness mutex");
+        const std::vector<std::string> expected=mode==0
+            ?std::vector<std::string>{"parse6","parse4"}
+            :std::vector<std::string>{"parse6","parse4","acceptor","pending","local"};
+        check(broken.events==expected,"failed construction stops before environment publication and accept");
     }
+    FakeServer failed_run;failed_run.ready=&first;
+    failed_run.run_error={4,ErrorCategory::asio_misc};first=0;port=11;
+    const auto previous_acquires=platform.acquired;
+    const auto previous_releases=platform.released;
+    bool raised=false;
+    try {server_start_029ea0(failed_run,port,first,execution);}
+    catch(const Raised& e){
+        raised=true;
+        check(e.error.value==4,"context run preserves the exact error value");
+        check(e.error.category==ErrorCategory::asio_misc,"context run preserves the error category");
+        check(e.context=="io_context::run","context run reports the accepted operation context");
+    }
+    check(raised,"context run error must escape startup");
+    check(first==1&&second==0&&third==0&&port==12345,
+          "context run failure follows port and readiness publication");
+    check(platform.acquired==previous_acquires+1&&platform.released==previous_releases+1,
+          "context run failure follows one balanced readiness lock");
+    check(failed_run.events==std::vector<std::string>({
+          "context","parse6","parse4","acceptor","pending","local","environment","accept","run"}),
+          "context run failure bypasses the normal destruction sequence");
+}
+void initial_accept_submission_failure(){
+    // C15-RISK-001: source-linked pre-accept publication ordering, not a
+    // Consumer declaration that Application startup has succeeded.
+    FakeExecutionPlatform platform;
+    preloader_l::execution::MutexState mutex{};
+    preloader_l::execution::initialize_mutex_04a698(mutex,2);
+    std::uint8_t first=0,second=0,third=0;
+    std::int64_t frequency=0;
+    preloader_l::execution::Execution execution{mutex,{first,second,third},frequency,platform};
+    FakeServer server;server.ready=&first;server.fail_accept_submission=true;
+    std::uint16_t port=0;
+    bool failed=false;
+    try{server_start_029ea0(server,port,first,execution);}
+    catch(const Raised& error){failed=error.error.value==10055&&error.context=="async_accept";}
+    check(failed,"first accept submission error must escape startup");
+    check(port==12345&&first==1&&second==0&&third==0,
+          "source publishes port/readiness before the failing accept");
+    check(platform.acquired==1&&platform.released==1,
+          "readiness publication releases its event mutex");
+    check(server.events==std::vector<std::string>({
+          "context","parse6","parse4","acceptor","pending","local","environment","accept"}),
+          "failed initial accept cannot continue to run or report success");
+    // Application cleanup and real Windows readiness are separate native gates.
 }
 void read_tests() {
     Fixture f;check(f.handler.resets==1,"session constructor initializes Handler");
@@ -310,7 +398,7 @@ void greeting_release_before_read() {
     }
 }
 int main() {
-    try{server_tests();read_tests();write_tests();sizing_and_accept_tests();greeting_release_before_read();std::cout<<"PASS "<<checks<<" synthetic checks; no socket/network/original target execution\n";return 0;}
+    try{server_tests();initial_accept_submission_failure();read_tests();write_tests();sizing_and_accept_tests();greeting_release_before_read();std::cout<<"PASS "<<checks<<" synthetic checks; no socket/network/original target execution\n";return 0;}
     catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}
     catch(const Raised& e){std::cerr<<"FAIL unexpected Raised "<<e.context<<'\n';return 1;}
 }

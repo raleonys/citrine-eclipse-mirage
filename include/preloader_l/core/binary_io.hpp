@@ -42,6 +42,10 @@ public:
 };
 std::string read_binary_03b3f0(const Path&,Factory&);
 bool write_binary_03c1d0(const Path&,std::string_view,Factory&);
+// Opt-in ticket writer: NativeOutput must return its current stream status.
+// This is not an atomic replace or durable fsync, and the legacy RE helper
+// is intentionally unchanged.
+bool write_binary_checked(const Path&,std::string_view,Factory&);
 
 // Standard filesystem path/fstream backend restored from the supplied RE adapter.
 // Windows/MSVC uses its compiler-owned CRT/filebuf. Default exception mask is zero.
