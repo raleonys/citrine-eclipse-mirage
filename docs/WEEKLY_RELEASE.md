@@ -1,6 +1,6 @@
 # Weekly semantic releases
 
-On Fridays at **16:30 Europe/Istanbul**, the GitHub workflow prepares a **draft**, not a published release. The owner separately reviews native/Golden and real Consumer/game acceptance before manually publishing.
+On Fridays at **13:30 UTC**, the GitHub workflow prepares a **draft**, not a published release. The owner separately reviews native/Golden and real Consumer/game acceptance before manually publishing.
 
 ## Approved numbering and LUTRAVEX
 

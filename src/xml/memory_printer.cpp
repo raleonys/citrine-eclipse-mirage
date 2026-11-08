@@ -2,7 +2,27 @@
 
 #include "preloader_l/xml/memory_printer.hpp"
 
+#include <functional>
+
 namespace preloader_l::xml {
+namespace {
+// bytes_without_terminator() lends a view directly into buffer_. Appending
+// to that same string may reallocate before the writer finishes reading it.
+// Snapshot only overlapping inputs, leaving all ordinary borrowed inputs on
+// their existing no-copy path.
+std::string_view stable_input(std::string_view value,const std::string& destination,
+                              std::string& snapshot) {
+    if(!value.empty()&&!destination.empty()) {
+        const std::less<const char*> less;
+        if(!less(value.data(),destination.data()) &&
+           less(value.data(),destination.data()+destination.size())) {
+            snapshot.assign(value);
+            return snapshot;
+        }
+    }
+    return value;
+}
+}
 std::string_view MemoryPrinter::c_string(std::string_view value) {
     const auto end=value.find('\0');
     return end==std::string_view::npos?value:value.substr(0,end);
@@ -12,6 +32,8 @@ void MemoryPrinter::indent(int depth) {
     for(int i=0;i<depth;++i)buffer_.append("    ");
 }
 void MemoryPrinter::open_element(std::string_view name,bool compact) {
+    std::string snapshot;
+    name=stable_input(c_string(name),buffer_,snapshot);
     if(element_just_opened_) {element_just_opened_=false;buffer_.push_back('>');}
     if(!compact) {
         if(first_element_ || text_depth_<0) {
@@ -27,7 +49,8 @@ void MemoryPrinter::open_element(std::string_view name,bool compact) {
     element_just_opened_=true;
 }
 void MemoryPrinter::print_string(std::string_view value,bool text_entities) {
-    value=c_string(value);
+    std::string snapshot;
+    value=stable_input(c_string(value),buffer_,snapshot);
     for(const unsigned char byte:value) {
         switch(byte) {
         case '&':buffer_.append("&amp;");break;
@@ -40,10 +63,15 @@ void MemoryPrinter::print_string(std::string_view value,bool text_entities) {
     }
 }
 void MemoryPrinter::attribute(std::string_view name,std::string_view value) {
+    std::string name_snapshot,value_snapshot;
+    name=stable_input(c_string(name),buffer_,name_snapshot);
+    value=stable_input(c_string(value),buffer_,value_snapshot);
     buffer_.push_back(' ');buffer_.append(c_string(name));buffer_.append("=\"");
     print_string(value,false);buffer_.push_back('"');
 }
 void MemoryPrinter::push_text(std::string_view value,bool cdata) {
+    std::string snapshot;
+    value=stable_input(c_string(value),buffer_,snapshot);
     text_depth_=depth_-1;
     if(element_just_opened_){element_just_opened_=false;buffer_.push_back('>');}
     if(cdata) {buffer_.append("<![CDATA[");buffer_.append(c_string(value));buffer_.append("]]>");}
