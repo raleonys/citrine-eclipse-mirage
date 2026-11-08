@@ -26,13 +26,15 @@ def normalized_link_source(build_dir: Path):
     """Return the target-local source that CMake generated for citrine_eclipse_mirage linking."""
     root = build_dir.resolve()
     target_dir = root / 'CMakeFiles' / 'citrine_eclipse_mirage.dir'
-    link_txt = target_dir / 'link.txt'
-    if link_txt.is_file():
-        return link_txt.resolve(), 'link.txt', []
-
-    build_make = target_dir / 'build.make'
-    if build_make.is_file():
-        return build_make.resolve(), 'build.make', []
+    # Apply the same build-root confinement to canonical target-local rules
+    # as to the fallback search and recursively referenced response files.
+    for kind in ('link.txt', 'build.make'):
+        candidate = target_dir / kind
+        if candidate.is_file():
+            safe = _safe_under(root, candidate)
+            if safe is None:
+                return None, None, [f'target-local {kind} link rule escapes build root: {candidate}']
+            return safe, kind, []
 
     candidates = []
     for name in ('link.txt', 'build.make'):
@@ -233,6 +235,7 @@ def self_test():
         if actual != expected:
             failed.append(name)
 
+    symlink_checks = 0
     with tempfile.TemporaryDirectory() as td:
         root = Path(td)
         target = root / 'CMakeFiles' / 'citrine_eclipse_mirage.dir'
@@ -269,10 +272,61 @@ def self_test():
         if not errors:
             failed.append('missing_referenced_rsp_fails_closed')
 
+        # Canonical target-local files must be confined just like discovered
+        # rules and response files. Preserve ordinary linker rule precedence.
+        (target / 'build.make').unlink()
+        valid_command = ('link.exe /DLL /INCREMENTAL:NO /DEBUG:NONE /LTCG:OFF '
+                         '/NOCOFFGRPINFO /MANIFEST:NO a.obj\n')
+        for kind in ('link.txt', 'build.make'):
+            rule = target / kind
+            rule.write_text(valid_command, encoding='utf-8')
+            text, selected, errors = collect_text(root)
+            if errors or selected != kind or audit(text or ''):
+                failed.append('target_local_' + kind)
+            rule.unlink()
+
+        # Outside-root symlink targets must never supply shipping link evidence.
+        # Symlink cases are counted only when the host supports their creation.
+        with tempfile.TemporaryDirectory() as outside_dir:
+            for kind in ('link.txt', 'build.make'):
+                foreign = Path(outside_dir) / kind
+                foreign.write_text(valid_command, encoding='utf-8')
+                alias = target / kind
+                try:
+                    alias.symlink_to(foreign)
+                except (OSError, NotImplementedError):
+                    continue
+                try:
+                    text, selected, errors = collect_text(root)
+                    if text is not None or selected is not None or not any(
+                            'escapes build root' in message for message in errors):
+                        failed.append('external_target_local_' + kind)
+                    symlink_checks += 1
+                finally:
+                    alias.unlink()
+
+        owned = root / 'owned-link-rule.txt'
+        owned.write_text(valid_command, encoding='utf-8')
+        contained = target / 'link.txt'
+        try:
+            contained.symlink_to(owned)
+        except (OSError, NotImplementedError):
+            pass
+        else:
+            try:
+                text, selected, errors = collect_text(root)
+                if errors or selected != 'link.txt' or audit(text or ''):
+                    failed.append('contained_target_local_symlink')
+                symlink_checks += 1
+            finally:
+                contained.unlink()
+
     if failed:
         return fail(['self-test mismatch: ' + ', '.join(failed)])
-    total = len(cases) + 4
+    total = len(cases) + 4 + 2 + symlink_checks
     print(f'MSVC_SHIPPING_LINK_POLICY_SELF_TEST: PASS ({total}/{total})')
+    if symlink_checks < 3:
+        print(f'MSVC_SHIPPING_LINK_POLICY_SELF_TEST: SKIPPED ({3 - symlink_checks} symlink cases unsupported by host)')
     return 0
 
 
