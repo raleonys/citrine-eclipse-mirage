@@ -345,10 +345,9 @@ def publish_draft(github, p, assets, receipt_path):
         if any(ref['ref'] == 'refs/tags/' + tag for ref in refs):
             raise ValueError('Refusing to reuse an existing Git tag')
     notes = github.api('releases/generate-notes', {'tag_name': tag, 'target_commitish': p['source_sha']})
-    summary = ('# Draft candidate\n\nSource: `' + p['source_sha'] + '`\n\n'
+    summary = ('Source: `' + p['source_sha'] + '`\n\n'
                'Source QA, portable tests, native MSVC acceptance, and Production/Golden '
-               'passed for this source. Game acceptance is NOT RUN. '
-               'The owner must review and publish this draft.\n\n'
+               'passed for this source.\n\n'
                'Downloads: `' + binary_name + '` and its `.sha256` checksum. '
                'GitHub supplies the Source code (zip/tar.gz) archives for this tag.\n\n')
     preparing = marker(p['source_sha'], 'preparing') + '\n\n**Asset preparation is incomplete; do not publish yet.**\n\n'

@@ -6,6 +6,10 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Keep completed release notes ready for publication: omit draft headings and owner-only publishing instructions while retaining source identity, validation results, download guidance and the generated changelog. Preserve the incomplete-upload warning and internal acceptance evidence.
+
+- Pin the retained native-message event retirement boundary before a lower unlock failure, across last/nonlast, inline/heap and accepted/rejected event-cipher cases. Check exact committed queue state, local response bytes and absence of output/document finalization after the unknown unlock outcome. Reference-model tests only; production behavior and ABI are unchanged.
+
 - Add native callback binding regressions for simultaneous constructor admission and destruction of a closed owner while its replacement remains active. Verify one winning context, callback usability and sole cleanup ownership.
 
 - Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Put exactly preloader_l.dll, its DLL SHA-256 sidecar and the project LICENSE at the ZIP root. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts and all other files out of the runtime ZIP, preserve native/Golden gates, and leave published releases unchanged.

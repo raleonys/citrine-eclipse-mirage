@@ -1218,8 +1218,8 @@
       "sha256": "c15622d09abdb428f30bfc964db202ff71b56db2ef103eea179a2b3ce5f9ba95"
     },
     "tests/infrastructure/test_weekly_release.py": {
-      "bytes": 28653,
-      "sha256": "b0fbe7a28f6610c9240602fc65c2af4c667da21fef597f94de1943c191f7effe"
+      "bytes": 29958,
+      "sha256": "edaf9aab7604c6a8dd6ac9a10b3aa2c67c196da721f728bf46a76015590e234b"
     },
     "tests/infrastructure/test_wine_runner.py": {
       "bytes": 1640,
@@ -1906,8 +1906,8 @@
       "sha256": "034d37c8fa3ae80b357799b5cf5e649935efe211e56e32ef18a4ff9d8923b1cc"
     },
     "tests/unit/socket/native_message_tests.cpp": {
-      "bytes": 11700,
-      "sha256": "db9b1de15b2a34bfa0d1aac30f234261d6424eb79d55485a02fa39575779b65c"
+      "bytes": 14292,
+      "sha256": "0f3555e66751ec29f7455d257f8f628b3bb298525c565187bcf4beaa7bd403d5"
     },
     "tests/unit/socket/native_tests.cpp": {
       "bytes": 10682,
