@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Extend the installed-hook native Application fixture with ANSI Registry open/query/close and mixed A/W handle use, size-only and undersized-buffer behavior, native-codepage client path equality, and unmatched-value refusal. This uses real callback routes under the existing live fixture, not a donor CRT or a simulated Registry owner; original Consumer and Windows acceptance are still separate evidence.
+
 - Cover fail-closed unload stack observations and safe retry after query, protection, commitment, region-progress and scan-budget refusals. A protected-page probe verifies that an oversized region is rejected before stack reads; production unload policy is unchanged.
 
 - Exercise the actual Environment UTF-8 wrapper and native conversion adapter with controlled query/fill failures, counted NUL data, short-fill length retention and retry. Verify registry flag/key partial state and filesystem-codepage isolation; leave the existing real-API native checks unarmed. Production behavior is unchanged.
