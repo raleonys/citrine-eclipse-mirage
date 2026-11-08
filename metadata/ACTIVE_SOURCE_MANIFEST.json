@@ -640,7 +640,7 @@
     "tests/infrastructure/test_weekly_release.py": "0f00f07933fc8a6a65a0fee985298e1ba1fdb4fe7a2c5d00f9e7a52b23cf6590",
     "tests/infrastructure/test_wine_runner.py": "7c8372a4398d7c7af51de6dd20952b4ae463e4167baedd5e20bd71a01499955e",
     "tests/infrastructure/test_xml_performance.py": "dd0e73c17f4ae7102ab6675fcd4484bbb46ed41be7203b0c524318399b862bc6",
-    "tests/native/application_runtime_tests.cpp": "d872f6eecd1e891afb1c952a57f39789dc5f39e2401004aac7ffed96a13b170d",
+    "tests/native/application_runtime_tests.cpp": "65be5e8f0c46c5e1df2bd96da5b957f3356936f10f7c11f5f4ce430ec9274103",
     "tests/native/application_shutdown_failure_tests.cpp": "cf6859408767beed320bbf679b866f1377aa0597ee97d04c5701215aecf6eb3b",
     "tests/native/application_worker_launch_tests.cpp": "e4444c76665479eada4ed6366c7386acde0e8d2453b1f67bf7870dad21c35d89",
     "tests/native/atomic_persistence_tests.cpp": "a8b9a79e43c2eed7ba4994af4168501990b2c8d56d3cfabd24356f0d7b79ef2d",
