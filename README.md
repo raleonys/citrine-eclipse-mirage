@@ -7,8 +7,8 @@
 [![Python 3.9+](resources/badges/python.svg)](docs/DEVELOPMENT.md)
 [![CMake 3.20+](resources/badges/cmake.svg)](CMakeLists.txt)
 [![License: GPL v3](resources/badges/license.svg)](LICENSE)
-[![CI](https://raw.githubusercontent.com/raleonys/citrine-eclipse-mirage/badges/resources/badges/ci.svg)](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml)
 [![Latest release](https://raw.githubusercontent.com/raleonys/citrine-eclipse-mirage/badges/resources/badges/latest-release.svg)](https://github.com/raleonys/citrine-eclipse-mirage/releases/latest)
+[![CI](https://raw.githubusercontent.com/raleonys/citrine-eclipse-mirage/badges/resources/badges/ci.svg)](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml)
 [![Release integrity](https://raw.githubusercontent.com/raleonys/citrine-eclipse-mirage/badges/resources/badges/release-integrity.svg)](https://github.com/raleonys/citrine-eclipse-mirage/releases/latest)
 [![Changelog](resources/badges/changelog.svg)](CHANGELOG.md)
 
