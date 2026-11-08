@@ -20,12 +20,69 @@ INTERFACES = (
 )
 
 
+def mask_cpp_literals_and_comments(text):
+    """Hide comments and quoted literals without changing line positions.
+
+    This is a bounded lexical prepass, not a C++ parser: preprocessor branches
+    and compiler type resolution remain the authoritative build checks.
+    """
+    masked = list(text)
+    size = len(text)
+
+    def blank(start, stop):
+        for index in range(start, stop):
+            if text[index] not in "\r\n":
+                masked[index] = " "
+
+    index = 0
+    while index < size:
+        if text.startswith("//", index):
+            end = text.find("\n", index)
+            end = size if end < 0 else end
+            blank(index, end)
+            index = end
+        elif text.startswith("/*", index):
+            end = text.find("*/", index + 2)
+            end = size if end < 0 else end + 2
+            blank(index, end)
+            index = end
+        elif text.startswith('R"', index):
+            # C++ raw-string delimiter ends at the first '(' and is <=16 chars.
+            opening = text.find("(", index + 2, min(size, index + 19))
+            if opening >= 0 and all(c not in "\r\n\t ()\\" for c in text[index+2:opening]):
+                terminator = ")" + text[index+2:opening] + '"'
+                closing = text.find(terminator, opening + 1)
+                end = size if closing < 0 else closing + len(terminator)
+                blank(index, end)
+                index = end
+            else:
+                index += 1
+        elif text[index] in ("\'", '"'):
+            quote = text[index]
+            end = index + 1
+            while end < size:
+                if text[end] == "\\":
+                    end += 2
+                elif text[end] == quote:
+                    end += 1
+                    break
+                else:
+                    end += 1
+            end = min(end, size)
+            blank(index, end)
+            index = end
+        else:
+            index += 1
+    return "".join(masked)
+
+
 def inspect_text(text, filename="<fixture>"):
     """Inspect individual header definitions, not forward declarations."""
     seen = {}
     definitions = []
     errors = []
-    for match in DECL.finditer(text):
+    clean = mask_cpp_literals_and_comments(text)
+    for match in DECL.finditer(clean):
         name, suffix = match.group(1), match.group(2)
         line = text.count("\n", 0, match.start()) + 1
         if name in seen:
