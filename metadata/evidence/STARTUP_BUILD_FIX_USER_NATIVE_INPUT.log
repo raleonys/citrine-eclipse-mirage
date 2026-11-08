@@ -23,12 +23,12 @@ SURGE: Native / Release; local build, NOT_RELEASE
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Found Python3: C:/Users/Skysect/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
+-- Found Python3: C:/Users/<USER>/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
 -- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS
 -- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS - Success
 -- Configuring done (13.6s)
 -- Generating done (4.0s)
--- Build files have been written to: C:/Users/Skysect/Desktop/yellowfield-production-import-fix-source/build/native_msvc
+-- Build files have been written to: C:/Users/<USER>/Desktop/yellowfield-production-import-fix-source/build/native_msvc
 [2/3] Compile and link
 [  0%] Verify the five owner-supplied vendor trees
 asio: INSTALLED_MEMBER_HASHES_PASS
@@ -403,14 +403,14 @@ registry_tests.cpp
 native_tests.cpp
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): warning C4244: '=': 'const char16_t' - 'char' dönüşümü; veri kaybı olabilir
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): note: şablon örneği oluşturma bağlamı (önce en eski olan)
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\native\native_tests.cpp(88): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_view_iterator<_Traits>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\native\native_tests.cpp(88): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_view_iterator<_Traits>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
         with
         [
             _Traits=std::char_traits<char16_t>,
             _Iter=std::_String_view_iterator<std::char_traits<char16_t>>,
             _Alloc=std::allocator<char>
         ]
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\native\native_tests.cpp(88): note: '`anonymous-namespace'::Effects::filesystem_narrow' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\native\native_tests.cpp(88): note: '`anonymous-namespace'::Effects::filesystem_narrow' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(862): note: derlenen şablon işlevi 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<const char16_t*,const char16_t*,_Size_type>(_Iter,const _Sent,_Size)' örneği oluşturma başvurusuna bakın
         with
         [
@@ -439,21 +439,21 @@ hook_tests.cpp
 [ 36%] Built target network_hook_contracts
 [ 37%] Building CXX object CMakeFiles/online_contracts.dir/tests/unit/online/online_tests.cpp.obj
 online_tests.cpp
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\online\online_tests.cpp(320): warning C4805: '==': işlemde 'uint8_t' ve 'bool' türlerinin güvenli olmayan karışımı
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\online\online_tests.cpp(320): warning C4805: '==': işlemde 'uint8_t' ve 'bool' türlerinin güvenli olmayan karışımı
 [ 37%] Linking CXX executable online_contracts.exe
 [ 37%] Built target online_contracts
 [ 37%] Building CXX object CMakeFiles/configuration_contracts.dir/tests/unit/config/configuration_tests.cpp.obj
 configuration_tests.cpp
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): warning C4244: '=': 'const char16_t' - 'char' dönüşümü; veri kaybı olabilir
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): note: şablon örneği oluşturma bağlamı (önce en eski olan)
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\config\configuration_tests.cpp(15): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\config\configuration_tests.cpp(15): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
         with
         [
             _Elem=char16_t,
             _Iter=std::_String_const_iterator<std::_String_val<std::_Simple_types<char16_t>>>,
             _Alloc=std::allocator<char>
         ]
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\config\configuration_tests.cpp(15): note: '`anonymous-namespace'::ascii' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\config\configuration_tests.cpp(15): note: '`anonymous-namespace'::ascii' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(862): note: derlenen şablon işlevi 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<const char16_t*,const char16_t*,_Size_type>(_Iter,const _Sent,_Size)' örneği oluşturma başvurusuna bakın
         with
         [
@@ -494,7 +494,7 @@ order_tests.cpp
 [ 40%] Built target config_order_contracts
 [ 41%] Building CXX object CMakeFiles/config_pipeline_contracts.dir/tests/unit/config_pipeline/pipeline_tests.cpp.obj
 pipeline_tests.cpp
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\config_pipeline\pipeline_tests.cpp(156): warning C4805: '==': işlemde '__int64' ve 'bool' türlerinin güvenli olmayan karışımı
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\config_pipeline\pipeline_tests.cpp(156): warning C4805: '==': işlemde '__int64' ve 'bool' türlerinin güvenli olmayan karışımı
 [ 41%] Linking CXX executable config_pipeline_contracts.exe
 [ 41%] Built target config_pipeline_contracts
 [ 41%] Building CXX object CMakeFiles/config_hash_contracts.dir/tests/unit/config_hash/hash_table_tests.cpp.obj
@@ -509,14 +509,14 @@ application_tests.cpp
 startup_tests.cpp
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): warning C4244: '=': 'const char16_t' - 'char' dönüşümü; veri kaybı olabilir
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): note: şablon örneği oluşturma bağlamı (önce en eski olan)
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\config_startup\startup_tests.cpp(16): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\config_startup\startup_tests.cpp(16): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
         with
         [
             _Elem=char16_t,
             _Iter=std::_String_const_iterator<std::_String_val<std::_Simple_types<char16_t>>>,
             _Alloc=std::allocator<char>
         ]
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\config_startup\startup_tests.cpp(16): note: '`anonymous-namespace'::ascii' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\config_startup\startup_tests.cpp(16): note: '`anonymous-namespace'::ascii' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(862): note: derlenen şablon işlevi 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<const char16_t*,const char16_t*,_Size_type>(_Iter,const _Sent,_Size)' örneği oluşturma başvurusuna bakın
         with
         [
@@ -543,14 +543,14 @@ writer_tests.cpp
 storage_tests.cpp
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): warning C4244: '=': 'const char16_t' - 'char' dönüşümü; veri kaybı olabilir
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): note: şablon örneği oluşturma bağlamı (önce en eski olan)
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\achievement_storage\storage_tests.cpp(165): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\achievement_storage\storage_tests.cpp(165): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
         with
         [
             _Elem=char16_t,
             _Iter=std::_String_const_iterator<std::_String_val<std::_Simple_types<char16_t>>>,
             _Alloc=std::allocator<char>
         ]
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\achievement_storage\storage_tests.cpp(165): note: '`anonymous-namespace'::Configuration::narrow_path' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\achievement_storage\storage_tests.cpp(165): note: '`anonymous-namespace'::Configuration::narrow_path' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(862): note: derlenen şablon işlevi 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<const char16_t*,const char16_t*,_Size_type>(_Iter,const _Sent,_Size)' örneği oluşturma başvurusuna bakın
         with
         [
@@ -695,7 +695,7 @@ worker_run_tests.cpp
 [ 54%] Built target socket_worker_run_contracts
 [ 55%] Building CXX object CMakeFiles/socket_worker_run_native_contracts.dir/tests/unit/socket/worker_run_native_tests.cpp.obj
 worker_run_native_tests.cpp
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\socket\worker_run_native_tests.cpp(82): warning C4312: 'reinterpret_cast': 'unsigned int' öğesinden daha büyük boyutlu 'void *' öğesine dönüştürme
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\socket\worker_run_native_tests.cpp(82): warning C4312: 'reinterpret_cast': 'unsigned int' öğesinden daha büyük boyutlu 'void *' öğesine dönüştürme
 [ 55%] Linking CXX executable socket_worker_run_native_contracts.exe
 [ 55%] Built target socket_worker_run_native_contracts
 [ 56%] Building CXX object CMakeFiles/socket_completion_dispatcher_contracts.dir/tests/unit/socket/completion_dispatcher_tests.cpp.obj
@@ -704,7 +704,7 @@ completion_dispatcher_tests.cpp
 [ 56%] Built target socket_completion_dispatcher_contracts
 [ 56%] Building CXX object CMakeFiles/socket_completion_dispatcher_native_contracts.dir/tests/unit/socket/completion_dispatcher_native_tests.cpp.obj
 completion_dispatcher_native_tests.cpp
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\socket\completion_dispatcher_native_tests.cpp(31): warning C4312: 'reinterpret_cast': 'unsigned int' öğesinden daha büyük boyutlu 'void *' öğesine dönüştürme
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\socket\completion_dispatcher_native_tests.cpp(31): warning C4312: 'reinterpret_cast': 'unsigned int' öğesinden daha büyük boyutlu 'void *' öğesine dönüştürme
 [ 56%] Linking CXX executable socket_completion_dispatcher_native_contracts.exe
 [ 56%] Built target socket_completion_dispatcher_native_contracts
 [ 56%] Building CXX object CMakeFiles/socket_posted_operation_contracts.dir/tests/unit/socket/posted_operation_tests.cpp.obj
@@ -1053,7 +1053,7 @@ reader_tests.cpp
 [ 93%] Built target xml_reader_contracts
 [ 93%] Building CXX object CMakeFiles/licensing_contracts.dir/tests/unit/license/license_tests.cpp.obj
 license_tests.cpp
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\license\license_tests.cpp(179): warning C4834: [[nodiscard]] özniteliğine sahip işlevin dönüş değerinin atılması
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\license\license_tests.cpp(179): warning C4834: [[nodiscard]] özniteliğine sahip işlevin dönüş değerinin atılması
 [ 94%] Linking CXX executable licensing_contracts.exe
 [ 94%] Built target licensing_contracts
 [ 94%] Building CXX object CMakeFiles/hash_contracts.dir/tests/unit/hash/hash_tests.cpp.obj
@@ -1092,14 +1092,14 @@ windows_tests.cpp
 content_handlers_tests.cpp
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): warning C4244: '=': 'const char16_t' - 'char' dönüşümü; veri kaybı olabilir
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): note: şablon örneği oluşturma bağlamı (önce en eski olan)
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\content_handlers\content_handlers_tests.cpp(118): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\content_handlers\content_handlers_tests.cpp(118): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
         with
         [
             _Elem=char16_t,
             _Iter=std::_String_const_iterator<std::_String_val<std::_Simple_types<char16_t>>>,
             _Alloc=std::allocator<char>
         ]
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\unit\content_handlers\content_handlers_tests.cpp(118): note: 'MockEffects::path_to_utf8_031ca0' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\unit\content_handlers\content_handlers_tests.cpp(118): note: 'MockEffects::path_to_utf8_031ca0' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
 C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(862): note: derlenen şablon işlevi 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<const char16_t*,const char16_t*,_Size_type>(_Iter,const _Sent,_Size)' örneği oluşturma başvurusuna bakın
         with
         [
@@ -1151,12 +1151,12 @@ hde64.c
 hook_engine_fixture_tests.cpp
 [ 99%] Building CXX object CMakeFiles/hook_engine_fixture_tests.dir/tests/support/hook_engine/fake_win32.cpp.obj
 fake_win32.cpp
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\support\hook_engine\fake_win32.cpp(109): warning C4312: 'reinterpret_cast': 'unsigned long' öğesinden daha büyük boyutlu 'HANDLE' öğesine dönüştürme
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\support\hook_engine\fake_win32.cpp(159): error C2589: '(': '::' sağ tarafında geçersiz belirteç var
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\support\hook_engine\fake_win32.cpp(160): error C2589: '(': '::' sağ tarafında geçersiz belirteç var
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\support\hook_engine\fake_win32.cpp(161): warning C4312: 'reinterpret_cast': 'int' öğesinden daha büyük boyutlu 'void *' öğesine dönüştürme
-C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\tests\support\hook_engine\fake_win32.cpp(162): warning C4312: 'reinterpret_cast': 'int' öğesinden daha büyük boyutlu 'void *' öğesine dönüştürme
-NMAKE : fatal error U1077: '"C:\Program Files\CMake\bin\cmake.exe" -E cmake_cl_compile_depends --dep-file=CMakeFiles\hook_engine_fixture_tests.dir\tests\support\hook_engine\fake_win32.cpp.obj.d --working-dir=C:\Users\Skysect\Desktop\yellowfield-production-import-fix-source\build\native_msvc --filter-prefix="Not: eklenen dosya:  " -- C:\PROGRA~1\MICROS~3\18\COMMUN~1\VC\Tools\MSVC\1451~1.362\bin\Hostx64\x64\cl.exe @C:\Users\Skysect\AppData\Local\Temp\nmBD35.tmp' : Dönüş kodu '0x2'
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\support\hook_engine\fake_win32.cpp(109): warning C4312: 'reinterpret_cast': 'unsigned long' öğesinden daha büyük boyutlu 'HANDLE' öğesine dönüştürme
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\support\hook_engine\fake_win32.cpp(159): error C2589: '(': '::' sağ tarafında geçersiz belirteç var
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\support\hook_engine\fake_win32.cpp(160): error C2589: '(': '::' sağ tarafında geçersiz belirteç var
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\support\hook_engine\fake_win32.cpp(161): warning C4312: 'reinterpret_cast': 'int' öğesinden daha büyük boyutlu 'void *' öğesine dönüştürme
+C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\tests\support\hook_engine\fake_win32.cpp(162): warning C4312: 'reinterpret_cast': 'int' öğesinden daha büyük boyutlu 'void *' öğesine dönüştürme
+NMAKE : fatal error U1077: '"C:\Program Files\CMake\bin\cmake.exe" -E cmake_cl_compile_depends --dep-file=CMakeFiles\hook_engine_fixture_tests.dir\tests\support\hook_engine\fake_win32.cpp.obj.d --working-dir=C:\Users\<USER>\Desktop\yellowfield-production-import-fix-source\build\native_msvc --filter-prefix="Not: eklenen dosya:  " -- C:\PROGRA~1\MICROS~3\18\COMMUN~1\VC\Tools\MSVC\1451~1.362\bin\Hostx64\x64\cl.exe @C:\Users\<USER>\AppData\Local\Temp\nmBD35.tmp' : Dönüş kodu '0x2'
 Stop.
 NMAKE : fatal error U1077: '"C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\bin\HostX64\x64\nmake.exe" -s -f CMakeFiles\hook_engine_fixture_tests.dir\build.make /nologo -SL                 CMakeFiles\hook_engine_fixture_tests.dir\build' : Dönüş kodu '0x2'
 Stop.
