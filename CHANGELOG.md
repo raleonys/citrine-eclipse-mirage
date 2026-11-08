@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Exercise the actual Environment UTF-8 wrapper and native conversion adapter with controlled query/fill failures, counted NUL data, short-fill length retention and retry. Verify registry flag/key partial state and filesystem-codepage isolation; leave the existing real-API native checks unarmed. Production behavior is unchanged.
+
 - Exercise actual Application RequestLicense over TCP with independent OpenSSL token ciphertext: a malformed file closes only its peer without consuming the normal-file attempt, repair retries that file, invalidation advances to cached data, and invalid-padding decrypted bytes retain the counted token while XML uses its C-string prefix.
 
 - Cover Registry query output cells sharing type, size and data storage across narrow/wide client and language replacements. Preserve the live output ordering, captured capacity, short-buffer result and final type fixup; shipping Registry behavior and Windows SDK tests are unchanged.

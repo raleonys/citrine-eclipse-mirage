@@ -11,7 +11,59 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <locale.h>
 #include <thread>
+
+namespace controlled_encoding {
+enum class Mode { complete, short_fill, query_error, fill_error };
+bool armed=false;
+Mode mode=Mode::complete;
+unsigned calls=0;
+const std::string bytes("\xc3\xa9\0Z",4);
+const auto real_convert=&::MultiByteToWideChar;
+const auto real_codepage=&___lc_codepage_func;
+const auto real_ansi=&::AreFileApisANSI;
+void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
+struct Scope {
+    explicit Scope(Mode selected){mode=selected;calls=0;armed=true;}
+    ~Scope(){armed=false;}
+};
+unsigned int codepage(){
+    require(!armed,"UTF8 Environment route must not query the filesystem locale");
+    return real_codepage();
+}
+BOOL WINAPI ansi(){
+    require(!armed,"UTF8 Environment route must not query file API encoding");
+    return real_ansi();
+}
+int WINAPI convert(UINT cp,DWORD flags,LPCCH input,int size,LPWSTR output,int capacity){
+    if(!armed)return real_convert(cp,flags,input,size,output,capacity);
+    require(cp==65001&&flags==8,"Environment uses strict UTF8 for both conversion passes");
+    require(input&&size==4&&std::string_view(input,4)==bytes,"conversion retains counted embedded NUL input");
+    ++calls;require(calls<=2,"Environment query/fill conversion makes bounded progress");
+    if(calls==1){
+        require(!output&&capacity==0,"first conversion pass queries required UTF16 length");
+        if(mode==Mode::query_error){SetLastError(ERROR_NO_UNICODE_TRANSLATION);return 0;}
+        SetLastError(ERROR_ACCESS_DENIED);return 3;
+    }
+    require(output&&capacity==3,"fill receives exactly the queried UTF16 capacity");
+    require(output[0]==0&&output[1]==0&&output[2]==0,"fill owns fresh initialized storage");
+    if(mode==Mode::fill_error){output[0]=L'?';SetLastError(ERROR_INVALID_DATA);return 0;}
+    output[0]=L'\u00e9';
+    // Short fill is a controlled response, not a claim about usual Win32 output.
+    if(mode==Mode::short_fill){SetLastError(ERROR_ACCESS_DENIED);return 1;}
+    output[1]=0;output[2]=L'Z';SetLastError(ERROR_ACCESS_DENIED);return 3;
+}
+}
+
+#define MultiByteToWideChar controlled_encoding::convert
+#define ___lc_codepage_func controlled_encoding::codepage
+#define AreFileApisANSI controlled_encoding::ansi
+#include "../../src/platform/encoding_windows.cpp"
+#undef AreFileApisANSI
+#undef ___lc_codepage_func
+#undef MultiByteToWideChar
+#include "../../src/runtime/application_environment.cpp"
 
 using namespace citrine_eclipse_mirage;
 namespace fs=std::filesystem;
@@ -36,6 +88,44 @@ struct Fixture {
     achievement_runtime::HostFormatter formatter;
     application::detail::Environment env{state,options,files,xml,paths,clock,formatter};
 };
+void encoding_failure_boundaries(){
+    using controlled_encoding::Scope;using controlled_encoding::Mode;
+    using controlled_encoding::calls;using controlled_encoding::bytes;
+    Fixture f;
+    {
+        Scope probe(Mode::complete);
+        require(f.env.widen_0145d0({}).empty()&&calls==0,"empty UTF8 path skips native conversion");
+        require(f.env.resolve_path_0192d0(bytes,u"C:\\game\\host.exe",false)==configuration::Path(u"\u00e9\0Z",3)&&calls==2,
+            "actual resolver retains exact counted UTF16 and ignores stale success error");
+    }
+    {
+        Scope probe(Mode::short_fill);
+        require(f.env.widen_0145d0(bytes)==configuration::Path(u"\u00e9\0\0",3)&&calls==2,
+            "controlled short fill retains the first-pass length and initialized suffix");
+    }
+    for(const auto selected:{Mode::query_error,Mode::fill_error}){
+        f.state.registry_spoof=0;f.state.language_registry_key=u"retained-key";
+        {
+            Scope probe(selected);bool caught=false;
+            try{configuration::apply_registry_path(f.state,bytes,f.env);}
+            catch(const std::system_error& error){
+                caught=error.code().category()==std::system_category()&&
+                    error.code().value()==(selected==Mode::query_error?ERROR_NO_UNICODE_TRANSLATION:ERROR_INVALID_DATA);
+            }
+            require(caught&&calls==(selected==Mode::query_error?1u:2u),"query/fill failures report their own native error and stop");
+            require(f.state.registry_spoof==1&&f.state.language_registry_key==u"retained-key",
+                "actual registry path failure retains the old key after publishing its flag");
+        }
+        {
+            Scope retry(Mode::complete);
+            configuration::apply_registry_path(f.state,bytes,f.env);
+            require(calls==2&&f.state.language_registry_key==configuration::Path(u"\u00e9\0Z",3),
+                "conversion retry starts with fresh storage and publishes only complete counted output");
+        }
+    }
+    require(!controlled_encoding::armed,"controlled responses are disarmed before real filesystem/path checks");
+    std::cout<<"PASS: actual Environment UTF8 query/fill failures, counted results, registry partial state and retry\n";
+}
 std::string read(const fs::path& path){std::ifstream f(path,std::ios::binary);return {std::istreambuf_iterator<char>(f),{}};}
 void paths(){
     Fixture f;const configuration::Path exe=u"C:\\game\\host.exe";
@@ -208,7 +298,7 @@ void event_initializer_retry(){
 int main(int argc,char** argv)try{
     const std::string_view group=argc>1?argv[1]:"all";
     require(group=="all"||group=="paths"||group=="avatar"||group=="directory"||group=="thread-errors"||group=="license-xml","known test group");
-    if(group=="all"||group=="paths")paths();
+    if(group=="all"||group=="paths"){encoding_failure_boundaries();paths();}
     if(group=="all"||group=="avatar")avatar();
     if(group=="all"||group=="license-xml")license_xml_text_escaping();
     if(group=="all"||group=="directory"){directory();directory_failure();}
