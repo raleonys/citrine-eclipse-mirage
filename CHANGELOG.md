@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Cover response handoff refusal after actual ordered Session/message preparation. Require event reservation cancellation, no output or buffered-successor admission, and exact event retry on a separate Session with acknowledgement only after full delivery. Production scheduling and transport policy are unchanged.
+
 - Cover fail-closed unload stack observations and safe retry after query, protection, commitment, region-progress and scan-budget refusals. A protected-page probe verifies that an oversized region is rejected before stack reads; production unload policy is unchanged.
 
 - Exercise the actual Environment UTF-8 wrapper and native conversion adapter with controlled query/fill failures, counted NUL data, short-fill length retention and retry. Verify registry flag/key partial state and filesystem-codepage isolation; leave the existing real-API native checks unarmed. Production behavior is unchanged.
