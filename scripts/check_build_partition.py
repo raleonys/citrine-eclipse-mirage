@@ -10,8 +10,49 @@ import re
 POLICY = 'metadata/BUILD_PARTITION_POLICY.json'
 
 
+def _cmake_without_comments(text):
+    """Hide line and bracket comments without discarding quoted CMake arguments."""
+    active = []
+    index = 0
+    quoted = False
+    while index < len(text):
+        char = text[index]
+        if char == '\\' and index + 1 < len(text):
+            active.extend((char, text[index + 1]))
+            index += 2
+            continue
+        if char == '"':
+            quoted = not quoted
+        if char == '[' and not quoted:
+            bracket = re.match(r'\[(=*)\[', text[index:])
+            if bracket:
+                closing = ']' + bracket.group(1) + ']'
+                end = text.find(closing, index + bracket.end())
+                if end < 0:
+                    raise ValueError('Unterminated CMake bracket argument')
+                active.append(text[index:end + len(closing)])
+                index = end + len(closing)
+                continue
+        if char == '#' and not quoted:
+            bracket = re.match(r'#\[(=*)\[', text[index:])
+            if bracket:
+                closing = ']' + bracket.group(1) + ']'
+                end = text.find(closing, index + bracket.end())
+                if end < 0:
+                    raise ValueError('Unterminated CMake bracket comment')
+                index = end + len(closing)
+            else:
+                end = text.find('\n', index)
+                index = len(text) if end < 0 else end
+            active.append(' ')
+            continue
+        active.append(char)
+        index += 1
+    return ''.join(active)
+
+
 def declared_sources(root, variable):
-    text = (root / 'cmake/Sources.cmake').read_text(encoding='utf-8')
+    text = _cmake_without_comments((root / 'cmake/Sources.cmake').read_text(encoding='utf-8'))
     match = re.search(r'\bset\(\s*' + re.escape(variable) + r'\b([^)]*)\)', text, re.S)
     if not match:
         raise ValueError('Missing CMake source list: ' + variable)
