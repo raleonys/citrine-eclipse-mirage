@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Cover Registry query output cells sharing type, size and data storage across narrow/wide client and language replacements. Preserve the live output ordering, captured capacity, short-buffer result and final type fixup; shipping Registry behavior and Windows SDK tests are unchanged.
+
 - Extend retained socket message dispatch tests with 48 consumed-request scenarios: retain one exact counted response after the core empties or releases initially nonempty input. Verify scheduling-time owner/task/allocation state, exact cleanup and no double-free across inline/heap boundaries, empty output and embedded NUL. Test-only; production Asio behavior and Consumer parity are not claimed.
 
 - Rename active first-party namespaces, include paths, build targets, tools and DLL artifacts to citrine_eclipse_mirage. Retain the CryptQuery compatibility filename and public export ordinals. Replace reference VERSIONINFO branding with Citrine Eclipse Mirage and Copyright 2026 SURGE; derive matching numeric/string file and product versions from the selected release version. Bind weekly build receipts to that version without changing published releases or retained evidence.
