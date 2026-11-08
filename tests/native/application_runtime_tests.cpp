@@ -2,6 +2,7 @@
 
 #include "citrine_eclipse_mirage/runtime/application.hpp"
 #include "citrine_eclipse_mirage/core/binary_io.hpp"
+#include "citrine_eclipse_mirage/codec/encoding.hpp"
 #include "citrine_eclipse_mirage/hash/hash.hpp"
 #include "citrine_eclipse_mirage/xml/reader.hpp"
 #include "citrine_eclipse_mirage/core/token_constants.hpp"
@@ -608,6 +609,42 @@ int main(int argc,char** argv) try {
         wchar_t client[4096]{};DWORD size=sizeof(client),type=0;
         require(RegQueryValueExW(key,L"ClientPath",nullptr,&type,reinterpret_cast<BYTE*>(client),&size)==ERROR_SUCCESS&&std::wstring(client)==exe,"real registry query reaches source values and original trampolines");
         require(RegCloseKey(key)==ERROR_SUCCESS,"real registry close releases tracked handle");
+        // Archive 12 / A11-09 D03: the installed product hooks must also
+        // route ANSI Registry calls, not merely the already-covered W chain.
+        // Use the same real Application state and exact fake-key cleanup owner.
+        HKEY ansi_key=nullptr;
+        require(RegOpenKeyExA(HKEY_CURRENT_USER,"SOFTWARE\\\\Wow6432Node\\\\Origin",0,KEY_READ,&ansi_key)==ERROR_SUCCESS&&ansi_key,
+            "installed ANSI Registry open returns the tracked client key");
+        DWORD ansi_type=0,ansi_required=0;
+        require(RegQueryValueExA(ansi_key,"ClientPath",nullptr,&ansi_type,nullptr,&ansi_required)==ERROR_SUCCESS&&
+                ansi_type==REG_SZ&&ansi_required>1,
+            "installed ANSI Registry size-only query publishes complete NUL byte count");
+        BYTE too_small=0x5a;DWORD small_capacity=1,small_type=0;
+        require(RegQueryValueExA(ansi_key,"ClientPath",nullptr,&small_type,&too_small,&small_capacity)==ERROR_MORE_DATA&&
+                small_type==REG_SZ&&small_capacity==ansi_required&&too_small==0x5a,
+            "installed ANSI Registry query reports required size without copying into a short buffer");
+        std::string ansi_value(ansi_required,'\\0');
+        DWORD ansi_capacity=ansi_required;ansi_type=0;
+        require(RegQueryValueExA(ansi_key,"ClientPath",nullptr,&ansi_type,
+                reinterpret_cast<BYTE*>(ansi_value.data()),&ansi_capacity)==ERROR_SUCCESS&&
+                ansi_type==REG_SZ&&ansi_capacity==ansi_required&&ansi_value.back()=='\\0',
+            "installed ANSI Registry query produces exact counted terminated bytes");
+        encoding::NativeCalls conversion;
+        encoding::PortableErrors conversion_errors;
+        const auto expected_ansi=encoding::narrow_006e60(hooked.configuration().executable_path,
+            encoding::filesystem_codepage_048ac0(conversion),conversion,conversion_errors);
+        require(ansi_value==expected_ansi+std::string(1,'\\0'),
+            "installed ANSI Registry overlay matches the configured native filesystem-codepage path");
+        wchar_t mixed_client[4096]{};DWORD mixed_bytes=sizeof(mixed_client),mixed_type=0;
+        require(RegQueryValueExW(ansi_key,L"ClientPath",nullptr,&mixed_type,
+                reinterpret_cast<BYTE*>(mixed_client),&mixed_bytes)==ERROR_SUCCESS&&
+                mixed_type==REG_SZ&&std::wstring(mixed_client)==exe,
+            "ANSI-opened Registry handle reaches the installed wide query callback");
+        DWORD unknown_capacity=0;
+        require(RegQueryValueExA(ansi_key,"NotClientPath",nullptr,nullptr,nullptr,&unknown_capacity)==ERROR_FILE_NOT_FOUND,
+            "unmatched ANSI Registry value does not fabricate a replacement");
+        require(RegCloseKey(ansi_key)==ERROR_SUCCESS,
+            "installed Registry close releases the ANSI-opened fabricated key");
         // Earlier provider tests disable hooks; the hook case previously had no
         // online DLL. Exercise the complete socket/handler/provider/SDK path.
         probe.enable(1);
