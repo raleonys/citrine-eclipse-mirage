@@ -11,6 +11,21 @@ import tempfile
 import zipfile
 from project_files import MANIFEST, ALIAS_STORAGE, safe_member, digest, verify_manifest
 
+# Bound decompression before CRC verification or whole-member reads.
+MAX_MEMBER_BYTES = 64 * 1024 * 1024
+MAX_ARCHIVE_BYTES = 256 * 1024 * 1024
+
+
+def check_expansion_budget(infos):
+    total = 0
+    for info in infos:
+        if info.file_size > MAX_MEMBER_BYTES:
+            raise ValueError('Source archive member exceeds extraction budget: ' + info.filename)
+        total += info.file_size
+        if total > MAX_ARCHIVE_BYTES:
+            raise ValueError('Source archive exceeds total extraction budget')
+
+
 
 def extract(archive_path, destination):
     destination=Path(destination).absolute()
@@ -20,8 +35,9 @@ def extract(archive_path, destination):
     temp=Path(tempfile.mkdtemp(prefix='.surge-extract-',dir=destination.parent))
     try:
         with zipfile.ZipFile(archive_path) as archive:
-            if archive.testzip():raise ValueError('ZIP CRC failed')
             infos=archive.infolist();names=[safe_member(i.filename) for i in infos]
+            check_expansion_budget(infos)
+            if archive.testzip():raise ValueError('ZIP CRC failed')
             if len(names)!=len(set(n.casefold() for n in names)):
                 raise ValueError('Duplicate or case-fold archive members')
             manifest=json.loads(archive.read(MANIFEST));links=manifest.get('symlinks',{})
