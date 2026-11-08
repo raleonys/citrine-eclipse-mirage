@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "preloader_l/xml/node_string.hpp"
+#include "citrine_eclipse_mirage/xml/node_string.hpp"
 #include "tests/support/socket/node_parse_test_fixture.hpp"
 
 namespace node_string_test {
-namespace s=preloader_l::socket;
+namespace s=citrine_eclipse_mirage::socket;
 using node_parse_test::check;using node_parse_test::checks;using node_parse_test::put;using node_parse_test::word;
 using node_parse_test::Failure;using node_parse_test::fails;using node_parse_test::unmapped;
 struct Characters:s::NativeParseEntryEffects {

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/hook_transaction.hpp"
+#include "citrine_eclipse_mirage/platform/hook_transaction.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-using namespace preloader_l::platform::hook_engine;
+using namespace citrine_eclipse_mirage::platform::hook_engine;
 namespace {
 int checks;
 void require(bool value,const char* message){++checks;if(!value)throw std::runtime_error(message);}

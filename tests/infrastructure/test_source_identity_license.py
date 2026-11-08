@@ -47,9 +47,9 @@ class SourceIdentityTests(unittest.TestCase):
 
     def test_legacy_namespace_and_type_fail(self):
         with tempfile.TemporaryDirectory() as tmp:
-            path = Path(tmp) / 'include/preloader_l/a.hpp'
+            path = Path(tmp) / 'include/citrine_eclipse_mirage/a.hpp'
             path.parent.mkdir(parents=True)
-            path.write_text('// SPDX-License-Identifier: GPL-3.0-only\nnamespace preloader_l::crypto_recovered {}\n')
+            path.write_text('// SPDX-License-Identifier: GPL-3.0-only\nnamespace citrine_eclipse_mirage::crypto_recovered {}\n')
             self.assertTrue(any('Legacy recovery-derived' in e for e in checker.inspect(tmp)[1]))
             path.write_text('// SPDX-License-Identifier: GPL-3.0-only\nstruct RecoveredCipher {};\n')
             self.assertTrue(any('Legacy recovery-derived' in e for e in checker.inspect(tmp)[1]))
@@ -69,9 +69,28 @@ class SourceIdentityTests(unittest.TestCase):
             for name in ('third_party/lib/a.cpp', 'tests/vendors/lib.cpp', 'tests/fixtures/a.cpp'):
                 path = Path(tmp) / name
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text('namespace preloader_l::crypto_recovered {}\n')
+                path.write_text('namespace citrine_eclipse_mirage::crypto_recovered {}\n')
             count, errors = checker.inspect(tmp)
             self.assertEqual((count, errors), (0, []))
+
+    def test_retired_namespace_and_runtime_filename_are_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'src/example.cpp'
+            path.parent.mkdir(parents=True)
+            for source in ('namespace ' + 'preloader' + '_l {}',
+                           'const char* dll = "preloader' + '_l.dll";'):
+                path.write_text('// SPDX-License-Identifier: GPL-3.0-only\n' + source + '\n')
+                self.assertTrue(any('Retired project identity' in error for error in checker.inspect(tmp)[1]))
+
+    def test_cryptquery_compatibility_literal_is_the_only_source_exception(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'include/citrine_eclipse_mirage/platform/crypt_query.hpp'
+            path.parent.mkdir(parents=True)
+            source = '// SPDX-License-Identifier: GPL-3.0-only\n' + 'inline constexpr auto target_suffix=u"preloader' + '_l.dll";\n'
+            path.write_text(source)
+            self.assertEqual((1, []), checker.inspect(tmp))
+            path.write_text(source + 'namespace ' + 'preloader' + '_l {}\n')
+            self.assertTrue(checker.inspect(tmp)[1])
 
 
 if __name__ == '__main__':

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/xml/reader.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
 #include <iostream>
 #include <stdexcept>
 
-namespace reader=preloader_l::xml_reader_bridge;
-namespace msg=preloader_l::messages;
+namespace reader=citrine_eclipse_mirage::xml_reader_bridge;
+namespace msg=citrine_eclipse_mirage::messages;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* reason){++checks;if(!value)throw std::runtime_error(reason);}

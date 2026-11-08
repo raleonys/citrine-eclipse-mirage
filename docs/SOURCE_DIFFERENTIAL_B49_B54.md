@@ -84,6 +84,29 @@ The dispositions below apply to the stated scenarios. A covered case is not gene
 - Reference close contract: [closing implementation](../src/net/transport_closing.cpp), [closing tests](../tests/unit/socket/closing_tests.cpp), [service registry integration](../tests/unit/socket/service_registry_integration_tests.cpp).
 - Startup and configuration: [publication test](../tests/native/startup_publication_tests.cpp), [shutdown failure test](../tests/native/application_shutdown_failure_tests.cpp), [pipeline tests](../tests/unit/config_pipeline/pipeline_tests.cpp), [application tests](../tests/unit/config_application/application_tests.cpp), [startup tests](../tests/unit/config_startup/startup_tests.cpp), [platform tests](../tests/native/configuration_platform_tests.cpp).
 
+### Borrowed profile scratch-buffer regression: D54-B sequential ownership
+
+`borrowed_profile_copy_ownership()` in the existing online model tests supplies
+all three provider profile getters from the same fixed scratch-buffer address.
+Each subsequent getter overwrites the previous bytes. A filesystem-status
+callback overwrites the final borrowed result before optional profile saving;
+provider destruction and module release overwrite the storage again.
+
+The fixture checks distinct owned username/persona/user values and exact cached
+profile output, with both short and heap-sized strings. A null second or third
+getter preserves the existing partial-update/exception behavior, and explicit
+cleanup leaves already-copied values intact without duplicate object/module
+release on repeated cleanup. It runs in the existing `portable_online` and
+Windows `online_contracts` targets without production or build-policy changes.
+
+This fixture invokes the actual loader through synthetic Effects. The borrowed
+storage remains stable during each getter-to-copy interval; reuse occurs only
+at later calls. It does **not** establish a provider ABI guarantee that storage
+is stable, make concurrently invalidated C strings safe, prove physical DLL
+retirement, or close the concurrent foreign-lifetime portion of D54-B. The
+active-call shutdown schedule in PR #101 remains separate work. Platform results
+must be read from exact-head CI, not inferred from this source description.
+
 ### Executed baseline evidence and its limits
 
 [PR #91's source/Windows workflow, run 41437017683](https://github.com/raleonys/citrine-eclipse-mirage/actions/runs/41437017683), tested head `0d5a1f5e47280a2820f773c070454c58c0c76909`. Its source tree is identical to the accepted merge baseline above. Both Windows/MSVC Native configurations passed **210/210 tests with no skips**. Their artifact digests, raw source-manifest hash, successful build receipts and JUnit inventories were checked; the previous 209 test names remain and only `listener_owners_contracts` was added.
@@ -100,6 +123,44 @@ Those receipts are evidence for the **named baseline**, not a fresh acceptance c
 4. **D50-B parity decision:** retain the tested reference behavior while independent original evidence is absent. The exception-gate repair is complete for its tested scenarios; it does not settle whether original close-return semantics should ever change.
 
 For an actual bug correction, reproduce source-bound RED behavior before the minimal GREEN change. For additional coverage of already-correct behavior, meaningful new tests and a controlled negative check may be sufficient; do not fabricate a baseline production failure to justify a test-only contribution. Existing assertions, cleanup ownership, timeout budgets, vendor pins and public ABI remain unchanged. This ledger does **not** retire the original reference inputs or certify full native equivalence.
+
+### Public shutdown during real startup: native fixture
+
+The A11-04 scenario reference is the separately indexed reconstruction package
+at commit `e10561b256a5793f857ec4bed4b5a9fb9fcfbadd`, delivery ZIP SHA-256
+`db394434e38c7edad33607a846ffdc36b04a1e5978d2fbe3d74da24bda5179da`.
+Its [admission integration scenario](https://github.com/raleonys/citrine-eclipse-mirage/blob/e10561b256a5793f857ec4bed4b5a9fb9fcfbadd/reference-package/snapshot/anadius-application-admission-source/admission_integration_tests.cpp)
+informs this test; its source graph and supplied PASS records are not imported.
+
+The `application_shutdown_failure_contracts` host now also issues public
+`DllShutdown` calls before the source-included Application has returned from
+startup. The test DLL observes two real readiness-publication boundaries:
+the provider worker's completion and the entry worker's final ready phase.
+Each is exercised with normal return and an injected startup exception.
+
+While the selected phase is held, zero-wait and bounded-wait calls must return
+`DLL_SHUTDOWN_TIMEOUT`, retain the single Application and callback binding, and
+leave engine cleanup untouched. Recorded thread identities distinguish the
+provider worker from the entry worker; abort-cleanup flag publication cannot
+impersonate the startup barrier. After release, the real entry worker must
+terminate from the already queued requests without a third public shutdown
+call. The host then verifies single-owner destruction, drained callback leases,
+exact engine retirement and idempotent completed shutdown. The exception cases
+also distinguish the entry worker's implicit cleanup request.
+
+This adapts the A11-04/D51-A test scenario to the accepted serialized worker
+instead of importing the donor's RuntimeOwner, custom CRT or foreign admission
+API. Instrumentation and extra exports exist only in the test DLL. Engine
+patching and unload scans retain this fixture's existing controlled boundaries;
+this is not a real-MinHook or foreign-callback quiescence proof. Production
+source, its three exports, timeout budgets and current behavior are unchanged.
+
+The existing focused queued-shutdown workflow runs all old and new scenarios on
+Windows MSVC Debug/Release and retains verbose per-case output. Merely adding
+these cases is not a native PASS; exact-head execution belongs in the PR's CI
+record. The earlier D51-A row describes the named historical baseline above;
+these cases address its paused-startup scheduling gap without closing the
+remaining foreign callback, service-construction or original-donor parity work.
 
 ### Delayed native receive completion delivery: D50-A/C fixture
 

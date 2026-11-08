@@ -69,10 +69,10 @@ vendored sources offline at configure time;
 it does not execute upstream CMake, fetch
 dependencies or use a package manager.
 Project CMake targets are
-`preloader_l_asio`, `preloader_l_minhook`,
-`preloader_l_pegtl`, and
-`preloader_l_pugixml`. The development DLL uses its own shared-CRT
-`preloader_l_source_pugixml` build. No legacy XML vendor target aliases are provided.
+`citrine_eclipse_mirage_asio`, `citrine_eclipse_mirage_minhook`,
+`citrine_eclipse_mirage_pegtl`, and
+`citrine_eclipse_mirage_pugixml`. The development DLL uses its own shared-CRT
+`citrine_eclipse_mirage_source_pugixml` build. No legacy XML vendor target aliases are provided.
 XPath is disabled with the public `PUGIXML_NO_XPATH` definition.
 Build-time member-hash verification also runs.
 On mismatch, the checker reports missing,
@@ -141,7 +141,7 @@ Vendor files were not patched and the
 PEGTL version was not changed.
 
 The default
-`PRELOADER_L_REQUIRE_VENDOR_COMPATIBILITY=ON`
+`CITRINE_ECLIPSE_MIRAGE_REQUIRE_VENDOR_COMPATIBILITY=ON`
 gate stops CMake if the PEGTL public API
 cannot compile, even with
 `BUILD_TESTING=OFF`. The previously
@@ -167,7 +167,7 @@ Results and tool provenance are in
 
 For diagnosing an old/incompatible compiler
 only, a separate build directory may use
-`-DPRELOADER_L_REQUIRE_VENDOR_COMPATIBILITY=OFF`.
+`-DCITRINE_ECLIPSE_MIRAGE_REQUIRE_VENDOR_COMPATIBILITY=OFF`.
 This mode is solely for vendor diagnostics.
 The PEGTL test remains **SKIPPED/UNAVAILABLE**;
 the real VDF parser target still fails

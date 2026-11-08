@@ -44,7 +44,7 @@ Maintain a source-linked `CHANGELOG.md` alongside relevant PRs. A PR-only CI cov
 - The owner separately runs real Consumer/game acceptance before stable publication. This acceptance is not repeated for every pull request.
 - A failing unmerged pull request does not stop a weekly draft based on an already accepted `main` commit. A failed weekly candidate remains unpublished until resolved.
 - Prospective weekly semantic versions advance 3.2.6 TALVOR → 3.2.7 ERINTHAR → 3.2.8 FORMADRIL → 3.2.9 CETRION → 3.3.0 VESPERKAI and follow the owner-approved LUTRAVEX registry. The retired -RNN weekly model must not be used.
-- New archive names are `Citrine_Eclipse_Mirage_x.y.z_CODENAME.zip` (source companion `_source.zip`); minor and patch are one digit (0..9). Do not rename historical artifacts or compatibility-sensitive binary/Golden fields.
+- Upload exactly `Citrine_Eclipse_Mirage_x.y.z_CODENAME.zip` and its `.zip.sha256` checksum as release assets. The binary ZIP contains exactly `citrine_eclipse_mirage.dll`, `citrine_eclipse_mirage.dll.sha256` and the project `LICENSE` at its root, with no other files or directories. GitHub supplies the tag's automatic source archives; source companion ZIPs, receipts and test evidence remain workflow artifacts, outside the release assets and binary ZIP. Minor and patch are one digit (0..9). Do not change historical releases or compatibility-sensitive binary/Golden fields.
 - Associate released assets and retained results with the exact commit, binary and package checksums. Verify the actual distributed archive once; ordinary PR work does not require repeated ZIP fresh-extract campaigns.
 - Do not reintroduce Brownfield G0-G4 gates, mandatory eight-shard release cycles, Library current-pointer transactions, or publication classifications on build and test results.
 
@@ -60,11 +60,15 @@ Keep meaningful negative tests, source/vendor identity, ABI, lifetime, and actua
 
 Project-owned first-party source code and project-authored accompanying material are licensed under **GNU General Public License version 3 only** (`GPL-3.0-only`), not `GPL-3.0-or-later`. The root [LICENSE](LICENSE) contains the full, unmodified GNU GPL version 3 text (29 June 2007).
 
-Third-party material and vendor sources retain their separate applicable licenses and notices. This first-party license does not replace, reassign or silently sublicense third-party notices. Existing third-party source, license files, attribution and vendor SHA pins must remain intact. All future release artifacts must include the complete root license and the applicable third-party notices; source availability and other GPL obligations must be reviewed before publication.
+Third-party material and vendor sources retain their separate applicable licenses and notices. This first-party license does not replace, reassign or silently sublicense third-party notices. Existing third-party source, license files, attribution and vendor SHA pins remain intact in the repository and source archives. The binary release ZIP includes the complete project root license under the three-file packaging rule above; source availability and other GPL obligations must be reviewed before publication.
 
 ## Public readiness and disclosure
 
 Public documents should not disclose unnecessary implementation or integration details. Review the full source tree, metadata, history, license status, and distributed assets before any public visibility change. Repository visibility is changed only with explicit owner approval.
+
+Public project dates and schedules use UTC without owner location or regional time-zone names. Changelog dates come from the UTC date of GitHub's `merged_at`; converting a displayed schedule must preserve its actual instant. New Git author and committer timestamps use UTC. Retained historical evidence, existing Git history and previously distributed artifacts require a separate preservation review before redaction; editing the current source does not erase older public copies.
+
+An owner-approved privacy redaction records both original and replacement SHA-256 identities and updates the corresponding current-copy references and byte counts. Preserve all historical execution outcomes, binary digests and evidence limits; a redacted copy is not a new test result. Retained-file hash verification remains mandatory for the approved replacement bytes.
 
 ## Migration record
 
@@ -77,6 +81,6 @@ The former scope ledger mixed superseded task decisions with live application co
 - Preserve the exact three-entry production export/ordinal contract and the separate development C++ ABI. An ABI change requires explicit owner review.
 - The shipping hook architecture retains scoped native callback, rollback, safe quiescence, destination filtering, resource lifetime and original-call semantics; no process-wide byte-order hook may be introduced.
 - Preserve accepted vendor pins, the standard compiler CRT, source/reference link partition, current configuration and network protocols, and the existing startup/shutdown contracts.
-- Golden checks still validate actual finalized production PE copies and not merely synthetic fixtures. Do not change PE identity, imports or resources without independent review.
+- Golden checks still validate actual finalized production PE copies and not merely synthetic fixtures. The owner-approved project identity uses Citrine Eclipse Mirage resources and release-derived matching file/product versions. Other PE identity, import and resource changes require independent review.
 - Tie published source, binary, and archive receipts to the precise accepted commit and checksums. A ZIP package is an output, not a second release authority.
 - `metadata/` and specialist `docs/` files provide detailed machine and implementation constraints. Retiring a stale task log does not authorize source rewrites or waive existing tests.

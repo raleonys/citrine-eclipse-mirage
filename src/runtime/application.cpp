@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "application_internal.hpp"
-#include "preloader_l/codec/crypto.hpp"
-#include "preloader_l/core/protocol_identity.hpp"
-#include "preloader_l/net/asio_service.hpp"
-#include "preloader_l/net/session_handler.hpp"
-#include "preloader_l/net/session_routing.hpp"
-#include "preloader_l/runtime/startup.hpp"
-#include "preloader_l/runtime/libraries.hpp"
-#include "preloader_l/platform/hook_unload_guard.hpp"
-#include "preloader_l/platform/callback_lock.hpp"
-#include "preloader_l/platform/hook_transaction.hpp"
+#include "citrine_eclipse_mirage/codec/crypto.hpp"
+#include "citrine_eclipse_mirage/core/protocol_identity.hpp"
+#include "citrine_eclipse_mirage/net/asio_service.hpp"
+#include "citrine_eclipse_mirage/net/session_handler.hpp"
+#include "citrine_eclipse_mirage/net/session_routing.hpp"
+#include "citrine_eclipse_mirage/runtime/startup.hpp"
+#include "citrine_eclipse_mirage/runtime/libraries.hpp"
+#include "citrine_eclipse_mirage/platform/hook_unload_guard.hpp"
+#include "citrine_eclipse_mirage/platform/callback_lock.hpp"
+#include "citrine_eclipse_mirage/platform/hook_transaction.hpp"
 #include <algorithm>
 #include <atomic>
 #include <cstring>
@@ -20,7 +20,7 @@
 #include <optional>
 #include <thread>
 
-namespace preloader_l::application {
+namespace citrine_eclipse_mirage::application {
 namespace {
 using namespace detail;
 // Provider and main-thread extra loads intentionally overlap. Their process-wide
@@ -381,7 +381,12 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
     std::unique_ptr<net::AsioService> service;
     std::atomic<bool> accepting{false};
     bool started=false,used=false;
-    std::thread provider_worker,extra_worker;
+#ifdef CITRINE_ECLIPSE_MIRAGE_TEST_APPLICATION_WORKER_THREAD
+    using WorkerThread=CITRINE_ECLIPSE_MIRAGE_TEST_APPLICATION_WORKER_THREAD;
+#else
+    using WorkerThread=std::thread;
+#endif
+    WorkerThread provider_worker,extra_worker;
     std::exception_ptr extra_failure;
     explicit Impl(Options o):options(std::move(o)) {
         execution::initialize_mutex_04a698(mutex,2);
@@ -450,11 +455,11 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
             auto provider_result=completed.get_future().share();
             // Preserve the source worker/main-extra overlap and dependency
             // order using standard-CRT threads owned until stop/join.
-            provider_worker=std::thread([this,done=std::move(completed)]() mutable {
+            provider_worker=WorkerThread([this,done=std::move(completed)]() mutable {
                 try{provider.load();done.set_value(nullptr);}catch(...){done.set_value(std::current_exception());}
             });
             extras.load(true);
-            extra_worker=std::thread([this,provider_result] {
+            extra_worker=WorkerThread([this,provider_result] {
                 if(provider_result.get())return; // Failed predecessor must not leave an infinite wait_steps loop.
                 try{extras.load(false);}
                 catch(...){extra_failure=std::current_exception();}

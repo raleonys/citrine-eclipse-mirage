@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/protocol/messages.hpp"
+#include "citrine_eclipse_mirage/protocol/messages.hpp"
 #include <limits>
 #include <stdexcept>
 
-namespace preloader_l::messages {
+namespace citrine_eclipse_mirage::messages {
 std::uint64_t EventQueue::reserve_front_locked(){throw std::logic_error("Event queue lacks delivery reservations");}
 bool EventDelivery::finish(bool success) noexcept {
     if(!token_)return true;
@@ -186,4 +186,4 @@ std::string process_message_033d70(State state,std::string& input,XmlBackend& xm
         return {};
     }
 }
-} // namespace preloader_l::messages
+} // namespace citrine_eclipse_mirage::messages

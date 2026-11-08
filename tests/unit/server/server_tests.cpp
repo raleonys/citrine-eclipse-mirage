@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/server.hpp"
+#include "citrine_eclipse_mirage/net/server.hpp"
 #include <algorithm>
 #include <iostream>
 #include <limits>
@@ -34,12 +34,12 @@ void operator delete(void* p) noexcept {greeting_lifetime::release(p);}
 void operator delete[](void* p) noexcept {greeting_lifetime::release(p);}
 void operator delete(void* p,std::size_t) noexcept {greeting_lifetime::release(p);}
 void operator delete[](void* p,std::size_t) noexcept {greeting_lifetime::release(p);}
-using namespace preloader_l::server;
+using namespace citrine_eclipse_mirage::server;
 namespace {
 int checks=0;
 void check(bool value,const char* text) {++checks;if(!value)throw std::runtime_error(text);}
 struct Raised {Error error; std::string context;};
-struct FakeExecutionPlatform final : preloader_l::execution::Platform {
+struct FakeExecutionPlatform final : citrine_eclipse_mirage::execution::Platform {
     int acquired=0,released=0;
     std::uint32_t current_thread_id() override {return 7;}
     void acquire_srw_exclusive(std::uintptr_t&) override {++acquired;}
@@ -159,11 +159,11 @@ struct Fixture {
 };
 void server_tests() {
     FakeExecutionPlatform platform;
-    preloader_l::execution::MutexState mutex{};
-    preloader_l::execution::initialize_mutex_04a698(mutex,2);
+    citrine_eclipse_mirage::execution::MutexState mutex{};
+    citrine_eclipse_mirage::execution::initialize_mutex_04a698(mutex,2);
     std::uint8_t first=0,second=0,third=0;
     std::int64_t frequency=0;
-    preloader_l::execution::Execution execution{mutex,{first,second,third},frequency,platform};
+    citrine_eclipse_mirage::execution::Execution execution{mutex,{first,second,third},frequency,platform};
     FakeServer server;server.ready=&first;server.env_result=false;
     std::uint16_t port=0;
     server_start_029ea0(server,port,first,execution);
@@ -202,21 +202,61 @@ void server_tests() {
         if(mode==0)broken.ipv4.error={7,ErrorCategory::other};
         if(mode==1)broken.local.error={0x2719,ErrorCategory::system};
         if(mode==2)broken.local.returned_size=129;
-        try {construct_server_024480(broken,port,first,execution);check(false,"expected startup failure");}
-        catch(const Raised& e){check(e.error.value!=0,"startup preserves nonzero error");}
-        check(first==0&&port==11,"failed startup does not publish readiness/port");
-        check(std::find(broken.events.begin(),broken.events.end(),"accept")==broken.events.end(),"failed startup does not accept");
+        const auto previous_acquires=platform.acquired;
+        const auto previous_releases=platform.released;
+        bool raised=false;
+        try {construct_server_024480(broken,port,first,execution);}
+        catch(const Raised& e){
+            raised=true;
+            check(e.error.value==(mode==0?7:mode==1?0x2719:0x2726),
+                  "startup preserves the exact selected error value");
+            check(e.error.category==(mode==0?ErrorCategory::other:ErrorCategory::system),
+                  "startup preserves the selected error category");
+            // Adapt Archive 12's stronger error checks to the accepted product
+            // operation labels, rather than importing the donor's empty labels.
+            check(e.context==(mode==0?"address":mode==1?"local_endpoint":"endpoint_size"),
+                  "startup reports the accepted operation context");
+        }
+        check(raised,"startup error must escape construction");
+        check(first==0&&second==0&&third==0&&port==11,
+              "failed startup does not publish readiness/port");
+        check(platform.acquired==previous_acquires&&platform.released==previous_releases,
+              "failed construction never enters the readiness mutex");
+        const std::vector<std::string> expected=mode==0
+            ?std::vector<std::string>{"parse6","parse4"}
+            :std::vector<std::string>{"parse6","parse4","acceptor","pending","local"};
+        check(broken.events==expected,"failed construction stops before environment publication and accept");
     }
+    FakeServer failed_run;failed_run.ready=&first;
+    failed_run.run_error={4,ErrorCategory::asio_misc};first=0;port=11;
+    const auto previous_acquires=platform.acquired;
+    const auto previous_releases=platform.released;
+    bool raised=false;
+    try {server_start_029ea0(failed_run,port,first,execution);}
+    catch(const Raised& e){
+        raised=true;
+        check(e.error.value==4,"context run preserves the exact error value");
+        check(e.error.category==ErrorCategory::asio_misc,"context run preserves the error category");
+        check(e.context=="io_context::run","context run reports the accepted operation context");
+    }
+    check(raised,"context run error must escape startup");
+    check(first==1&&second==0&&third==0&&port==12345,
+          "context run failure follows port and readiness publication");
+    check(platform.acquired==previous_acquires+1&&platform.released==previous_releases+1,
+          "context run failure follows one balanced readiness lock");
+    check(failed_run.events==std::vector<std::string>({
+          "context","parse6","parse4","acceptor","pending","local","environment","accept","run"}),
+          "context run failure bypasses the normal destruction sequence");
 }
 void initial_accept_submission_failure(){
     // C15-RISK-001: source-linked pre-accept publication ordering, not a
     // Consumer declaration that Application startup has succeeded.
     FakeExecutionPlatform platform;
-    preloader_l::execution::MutexState mutex{};
-    preloader_l::execution::initialize_mutex_04a698(mutex,2);
+    citrine_eclipse_mirage::execution::MutexState mutex{};
+    citrine_eclipse_mirage::execution::initialize_mutex_04a698(mutex,2);
     std::uint8_t first=0,second=0,third=0;
     std::int64_t frequency=0;
-    preloader_l::execution::Execution execution{mutex,{first,second,third},frequency,platform};
+    citrine_eclipse_mirage::execution::Execution execution{mutex,{first,second,third},frequency,platform};
     FakeServer server;server.ready=&first;server.fail_accept_submission=true;
     std::uint16_t port=0;
     bool failed=false;

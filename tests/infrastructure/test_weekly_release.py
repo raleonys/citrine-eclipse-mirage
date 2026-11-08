@@ -64,7 +64,9 @@ class FakeGitHub:
     def upload(self, tag, paths):
         if self.fail_upload:
             raise OSError('injected upload interruption')
-        self.items[-1]['assets'] = [
+        names = {p.name for p in paths}
+        retained = [a for a in self.items[-1]['assets'] if a['name'] not in names]
+        self.items[-1]['assets'] = retained + [
             {'name': p.name, 'size': p.stat().st_size,
              'digest': 'sha256:' + ('0' * 64 if self.corrupt_digest else release.sha(p))}
             for p in paths]
@@ -167,6 +169,9 @@ class TransportTests(unittest.TestCase):
 
 class PayloadTests(unittest.TestCase):
     def setUp(self):
+        version_selection = patch.dict('os.environ', {'CITRINE_ECLIPSE_MIRAGE_VERSION': '3.2.6'})
+        version_selection.start()
+        self.addCleanup(version_selection.stop)
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.base = Path(self.temporary.name).resolve()
@@ -196,7 +201,7 @@ class PayloadTests(unittest.TestCase):
                    'configuration': 'Release', 'build_succeeded': True,
                    'validation_result': 'PASS_SELECTED_PROFILE', 'validation_exit_code': 0,
                    'source_manifest_sha256': self.manifest, 'dll_sha256': 'c' * 64,
-                   'compiler': 'C:/fixture/cl.exe'}
+                   'compiler': 'C:/fixture/cl.exe', 'project_version': '3.2.6'}
         for file in ('BUILD_TOOLCHAIN_PROVENANCE.log', 'PUBLIC_DLL_ABI_CHECK.json', 'DLL_RESOURCE_CHECK.json'):
             (folder / file).write_text('fixture evidence')
         if name == 'native':
@@ -204,7 +209,7 @@ class PayloadTests(unittest.TestCase):
         else:
             dist = folder / 'dist'
             dist.mkdir()
-            dll = dist / 'preloader_l.dll'
+            dll = dist / 'citrine_eclipse_mirage.dll'
             dll.write_bytes(b'MZ fixture; not real MSVC or game acceptance')
             release.sidecar(dll)
             digest = release.sha(dll)
@@ -219,6 +224,22 @@ class PayloadTests(unittest.TestCase):
 
     def validate(self, name):
         return release.validate_profile(self.payload / name, name, self.manifest, SOURCE)
+
+    def test_stale_or_missing_release_version_is_rejected(self):
+        path = self.payload / 'native/BUILD_RECEIPT.json'
+        receipt = release.load(path)
+        for value in (None, '3.2.5', '3.2.7', '3.2.6-TALVOR'):
+            release.write(path, {**receipt, 'project_version': value})
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'version'):
+                self.validate('native')
+
+    def test_next_release_requires_next_version_in_both_builds(self):
+        for name in ('native', 'production'):
+            with self.assertRaisesRegex(ValueError, 'version'):
+                release.validate_profile(self.payload / name, name, self.manifest, SOURCE, '3.2.7')
+            path = self.payload / name / 'BUILD_RECEIPT.json'
+            release.write(path, {**release.load(path), 'project_version': '3.2.7'})
+            release.validate_profile(self.payload / name, name, self.manifest, SOURCE, '3.2.7')
 
     def test_capture_uses_current_receipts_and_only_declared_dist_members(self):
         root=self.base/'capture-source'
@@ -238,7 +259,7 @@ class PayloadTests(unittest.TestCase):
         output=self.base/'captured'
         with patch.object(release,'head',return_value=SOURCE):
             release.capture(root,'production',build,output,SOURCE)
-        self.assertEqual({'preloader_l.dll','preloader_l.dll.sha256','DIST_RECEIPT.json'},
+        self.assertEqual({'citrine_eclipse_mirage.dll','citrine_eclipse_mirage.dll.sha256','DIST_RECEIPT.json'},
                          {path.name for path in (output/'production/dist').iterdir()})
         self.assertEqual(b'previous receipt retained outside the new package',historical.read_bytes())
         self.assertEqual(self.validate('production'),
@@ -377,7 +398,7 @@ class PayloadTests(unittest.TestCase):
                 self.validate('native')
 
     def test_changed_dll_is_rejected_even_if_it_has_a_new_sidecar(self):
-        dll = self.payload / 'production/dist/preloader_l.dll'
+        dll = self.payload / 'production/dist/citrine_eclipse_mirage.dll'
         dll.write_bytes(b'changed DLL')
         release.sidecar(dll)
         with self.assertRaises(ValueError):
@@ -391,7 +412,7 @@ class PayloadTests(unittest.TestCase):
             with self.subTest(change=change), self.assertRaises(ValueError):
                 self.validate('production')
 
-    def test_bundle_contains_verified_runtime_evidence_and_all_checksums(self):
+    def test_bundle_ships_exactly_dll_dll_checksum_and_project_license(self):
         release.package(ROOT, self.payload / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip')
         output = self.base / 'assets'
         with patch.object(release, 'head', return_value=SOURCE):
@@ -400,17 +421,24 @@ class PayloadTests(unittest.TestCase):
         self.assertEqual('DRAFT',receipt['publication_status'])
         self.assertNotIn('classification',receipt)
         self.assertEqual('NOT_RUN', receipt['game_acceptance'])
-        self.assertEqual(6, len(list(output.iterdir())))
-        for path in output.iterdir():
-            if not path.name.endswith('.sha256'):
-                release.verify_sidecar(path)
+        binary = output / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'
+        self.assertEqual({binary.name, binary.name + '.sha256'},
+                         {path.name for path in output.iterdir()})
+        release.verify_sidecar(binary)
+        self.assertEqual(release.sha(binary), receipt['binary_zip_sha256'])
+        self.assertEqual(receipt, release.load(self.payload / 'RELEASE_RECEIPT.json'))
+        release.verify_sidecar(self.payload / 'RELEASE_RECEIPT.json')
+        self.assertTrue((self.payload / 'native/CTEST_RESULTS.xml').is_file())
+        self.assertTrue((self.payload / 'production/GOLDEN_REPORT.json').is_file())
         with zipfile.ZipFile(output / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip') as archive:
-            self.assertIn('preloader_l.dll', archive.namelist())
-            self.assertIn('DIST_RECEIPT.json', archive.namelist())
-            self.assertNotIn('LOCAL_DIST_RECEIPT.json', archive.namelist())
-            self.assertIn('evidence/native/CTEST_RESULTS.xml', archive.namelist())
-            self.assertEqual((self.payload / 'production/dist/preloader_l.dll').read_bytes(),
-                             archive.read('preloader_l.dll'))
+            self.assertEqual({'citrine_eclipse_mirage.dll', 'citrine_eclipse_mirage.dll.sha256', 'LICENSE'},
+                             set(archive.namelist()))
+            self.assertEqual((self.payload / 'production/dist/citrine_eclipse_mirage.dll').read_bytes(),
+                             archive.read('citrine_eclipse_mirage.dll'))
+            self.assertEqual((ROOT / 'LICENSE').read_bytes(), archive.read('LICENSE'))
+            self.assertEqual(release.sha(self.payload / 'production/dist/citrine_eclipse_mirage.dll')
+                             + '  citrine_eclipse_mirage.dll',
+                             archive.read('citrine_eclipse_mirage.dll.sha256').decode('utf-8').strip())
 
     def test_failed_portable_run_stops_before_creating_assets(self):
         self.xml(self.payload / 'PORTABLE_CTEST.xml', '<failure/>')
@@ -423,19 +451,22 @@ class DraftTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
-        self.assets = Path(self.temporary.name).resolve()
+        self.assets = Path(self.temporary.name).resolve() / 'assets'
+        self.assets.mkdir()
+        self.receipt = self.assets.parent / 'evidence/RELEASE_RECEIPT.json'
         self.p = {'ready': True, 'tag': '3.2.6-TALVOR', 'source_sha': SOURCE, 'existing_id': None}
-        release.write(self.assets / 'RELEASE_RECEIPT.json', {
+        binary = self.assets / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'
+        binary.write_bytes(b'fixture package')
+        release.sidecar(binary)
+        release.write(self.receipt, {
             'tag': '3.2.6-TALVOR', 'source_sha': SOURCE, 'publication_status': 'DRAFT',
-            'publication': False, 'game_acceptance': 'NOT_RUN'})
-        for name in ('Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip', 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'):
-            (self.assets / name).write_bytes(b'fixture package')
-        for name in ('Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip', 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip', 'RELEASE_RECEIPT.json'):
-            release.sidecar(self.assets / name)
+            'publication': False, 'game_acceptance': 'NOT_RUN',
+            'binary_zip_sha256': release.sha(binary)})
+        release.sidecar(self.receipt)
         self.github = FakeGitHub()
 
     def publish(self):
-        return release.publish_draft(self.github, self.p, self.assets)
+        return release.publish_draft(self.github, self.p, self.assets, self.receipt)
 
     def test_all_uploaded_assets_finish_a_draft_without_publishing(self):
         result = self.publish()
@@ -443,9 +474,12 @@ class DraftTests(unittest.TestCase):
         self.assertEqual('complete', release.state(result)['status'])
         self.assertTrue(self.github.writes[0]['draft'])
         self.assertNotIn('draft', self.github.writes[-1])
+        self.assertEqual({'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip',
+                          'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip.sha256'},
+                         {asset['name'] for asset in result['assets']})
 
     def test_invalid_publication_status_cannot_prepare_a_draft(self):
-        path=self.assets/'RELEASE_RECEIPT.json'
+        path=self.receipt
         original=release.load(path)
         for status in (None,'PUBLISHED','COMPLETE'):
             release.write(path,{**original,'publication_status':status})
@@ -454,14 +488,35 @@ class DraftTests(unittest.TestCase):
                 self.publish()
             self.assertEqual([],self.github.writes)
 
+    def test_completed_release_notes_are_ready_for_owner_publication(self):
+        result = self.publish()
+        body = result['body']
+        self.assertTrue(result['draft'])
+        self.assertEqual('complete', release.state(result)['status'])
+        for leftover in ('# Draft candidate', 'publish this draft',
+                         'Game acceptance is NOT RUN', 'Asset preparation is incomplete'):
+            self.assertNotIn(leftover, body)
+        self.assertIn('Source: `' + SOURCE + '`', body)
+        self.assertIn('Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip', body)
+        self.assertIn('## Changes\n\nOwner-reviewed changes.', body)
+        self.assertIn('Source code (zip/tar.gz)', body)
+        # Publishing changes GitHub's draft flag; the already prepared notes
+        # must remain suitable for readers without another metadata rewrite.
+        self.github.items[-1]['draft'] = False
+        self.assertEqual(body, self.github.items[-1]['body'])
+        self.assertEqual('NOT_RUN', release.load(self.receipt)['game_acceptance'])
+
     def test_upload_interruption_retains_incomplete_draft_for_retry(self):
         self.github.fail_upload = True
         with self.assertRaises(OSError):
             self.publish()
         self.assertEqual('preparing', release.state(self.github.items[0])['status'])
+        self.assertIn('Asset preparation is incomplete', self.github.items[0]['body'])
         self.github.fail_upload = False
         self.assertEqual('complete', release.state(self.publish())['status'])
         self.assertEqual(1, len(self.github.items))
+        self.assertNotIn('Asset preparation is incomplete', self.github.items[0]['body'])
+        self.assertNotIn('# Draft candidate', self.github.items[0]['body'])
 
     def test_published_release_is_never_modified(self):
         self.github.items = [candidate(draft=False)]
@@ -504,10 +559,45 @@ class DraftTests(unittest.TestCase):
             self.assertEqual('preparing', release.state(self.github.items[0])['status'])
 
     def test_local_checksum_failure_happens_before_any_external_write(self):
-        (self.assets / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip').write_bytes(b'changed package')
+        (self.assets / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip').write_bytes(b'changed package')
         with self.assertRaisesRegex(ValueError, 'Checksum'):
             self.publish()
         self.assertEqual([], self.github.writes)
+
+    def test_different_binary_with_valid_sidecar_cannot_reuse_receipt(self):
+        binary = self.assets / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'
+        binary.write_bytes(b'different package with its own checksum')
+        release.sidecar(binary)
+        with self.assertRaisesRegex(ValueError, 'receipt/binary mismatch'):
+            self.publish()
+        self.assertEqual([], self.github.writes)
+
+    def test_extra_source_receipt_and_log_assets_are_rejected_before_writes(self):
+        for name in ('Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip',
+                     'RELEASE_RECEIPT.json', 'RELEASE_RECEIPT.json.sha256', 'build.log'):
+            path = self.assets / name
+            path.write_bytes(b'internal evidence')
+            with self.subTest(name=name), self.assertRaisesRegex(ValueError, 'Unexpected release assets'):
+                self.publish()
+            path.unlink()
+            self.assertEqual([], self.github.writes)
+
+    def test_receipt_inside_public_assets_is_rejected(self):
+        path = self.assets / 'RELEASE_RECEIPT.json'
+        shutil.copyfile(self.receipt, path)
+        release.sidecar(path)
+        with self.assertRaisesRegex(ValueError, 'outside release assets'):
+            release.publish_draft(self.github, self.p, self.assets, path)
+        self.assertEqual([], self.github.writes)
+
+    def test_old_extra_remote_assets_keep_an_incomplete_draft_blocked(self):
+        existing = candidate(status='preparing')
+        existing['assets'] = [{'name': 'RELEASE_RECEIPT.json', 'size': 1}]
+        self.github.items = [existing]
+        with self.assertRaisesRegex(ValueError, 'unexpected remote asset set'):
+            self.publish()
+        self.assertEqual('preparing', release.state(self.github.items[0])['status'])
+        self.assertIn('RELEASE_RECEIPT.json', {a['name'] for a in self.github.items[0]['assets']})
 
 
 if __name__ == '__main__':

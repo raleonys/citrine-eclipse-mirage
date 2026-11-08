@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/control.h"
+#include "citrine_eclipse_mirage/runtime/control.h"
 #include <chrono>
 #include <iostream>
+#include <initializer_list>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -15,16 +16,99 @@ struct Module {
     void (*mode)(unsigned)=nullptr;
     unsigned (*value)(unsigned)=nullptr;
     void (*resume)()=nullptr;
+    void (*resume_startup)()=nullptr;
+    void (*hold_after_failure)()=nullptr;
+    void (*release_failure_wait)()=nullptr;
     explicit Module(const char* path){
         module=LoadLibraryA(path);require(module!=nullptr,"fixture DLL load");
         stop=reinterpret_cast<decltype(stop)>(GetProcAddress(module,"DllShutdown"));
         mode=reinterpret_cast<decltype(mode)>(GetProcAddress(module,"FixtureMode"));
         value=reinterpret_cast<decltype(value)>(GetProcAddress(module,"FixtureValue"));
         resume=reinterpret_cast<decltype(resume)>(GetProcAddress(module,"FixtureReleaseWorker"));
-        require(stop&&mode&&value&&resume,"fixture methods");
+        resume_startup=reinterpret_cast<decltype(resume_startup)>(GetProcAddress(module,"FixtureReleaseStartup"));
+        hold_after_failure=reinterpret_cast<decltype(hold_after_failure)>(GetProcAddress(module,"FixtureHoldAfterFailure"));
+        release_failure_wait=reinterpret_cast<decltype(release_failure_wait)>(GetProcAddress(module,"FixtureReleaseFailureWait"));
+        require(stop&&mode&&value&&resume&&resume_startup&&hold_after_failure&&release_failure_wait,
+                "fixture methods");
     }
-    ~Module(){if(mode&&stop){mode(0);if(stop(10000)==DLL_SHUTDOWN_OK)FreeLibrary(module);}}
+    ~Module(){
+        // Release all controlled barriers even when an assertion throws.
+        if(release_failure_wait)release_failure_wait();
+        if(resume_startup)resume_startup();
+        if(resume)resume();
+        if(mode&&stop){mode(0);if(stop(10000)==DLL_SHUTDOWN_OK)FreeLibrary(module);}
+    }
 };
+struct EnvironmentValue {
+    const char* name;
+    std::string previous;
+    bool present=false;
+    EnvironmentValue(const char* key,const char* value):name(key){
+        SetLastError(ERROR_SUCCESS);
+        const auto size=GetEnvironmentVariableA(name,nullptr,0);
+        if(size){
+            previous.resize(size);
+            SetLastError(ERROR_SUCCESS);
+            const auto copied=GetEnvironmentVariableA(name,previous.data(),size);
+            require(copied<size&&(copied||GetLastError()==ERROR_SUCCESS),"capture prior fixture environment value");
+            previous.resize(copied);present=true;
+        }else{
+            const auto error=GetLastError();
+            require(error==ERROR_SUCCESS||error==ERROR_ENVVAR_NOT_FOUND,"query prior fixture environment value");
+            present=error==ERROR_SUCCESS;
+        }
+        require(SetEnvironmentVariableA(name,value)!=FALSE,"set startup fixture environment");
+    }
+    ~EnvironmentValue(){SetEnvironmentVariableA(name,present?previous.c_str():nullptr);}
+};
+void shutdown_during_startup(const char* path,unsigned phase,bool fail){
+    const std::string selection=std::string(phase==1?"provider":"ready")+(fail?"-fail":"");
+    EnvironmentValue startup("SURGE_TEST_PAUSE_STARTUP",selection.c_str());
+    EnvironmentValue no_post_start_pause("SURGE_TEST_HOLD_WORKER_BEFORE_STOP",nullptr);
+    Module m(path);
+    const auto until=std::chrono::steady_clock::now()+std::chrono::seconds(10);
+    while(!m.value(11)&&std::chrono::steady_clock::now()<until)Sleep(1);
+    require(m.value(11)==phase&&m.value(12)==1,"real startup must reach the selected pre-publication barrier");
+    require(m.value(17)&&m.value(18),"actual startup and paused thread identities recorded");
+    require((m.value(17)==m.value(18))==(phase==2),
+        "provider barrier runs on provider worker; ready barrier runs inside entry startup worker");
+    auto retained=[&]{
+        require(m.value(11)==phase&&!m.value(0)&&!m.value(13)&&!m.value(14),
+            "startup remains in progress without reporting ready, return or failure");
+        require(!m.value(19),"paused publication is actual startup, not abort-cleanup gate release");
+        require(m.value(2)==1&&!m.value(3)&&!m.value(1),
+            "queued shutdown cannot stop or destroy the single starting application");
+        require(m.value(6)&&!m.value(4)&&!m.value(5),
+            "real callback binding and engine ownership remain live during startup");
+        require(m.value(16)==WAIT_TIMEOUT,"entry worker remains alive while startup is paused");
+    };
+    retained();
+    require(m.value(15)==0,"no shutdown request exists before the public calls");
+    require(m.stop(0)==DLL_SHUTDOWN_TIMEOUT,"zero-wait shutdown during startup must forbid unload");
+    require(m.value(15)==1,"first public request is queued during startup");
+    retained();
+    require(m.stop(25)==DLL_SHUTDOWN_TIMEOUT,"bounded shutdown must time out while startup is held");
+    require(m.value(15)==2,"second public request remains distinct before startup returns");
+    retained();
+    m.resume_startup();
+    // Observe actual worker termination without another shutdown call: a late
+    // caller must not hide loss of the requests queued before startup ended.
+    const auto done_until=std::chrono::steady_clock::now()+std::chrono::seconds(10);
+    while(m.value(16)==WAIT_TIMEOUT&&std::chrono::steady_clock::now()<done_until)Sleep(1);
+    require(m.value(16)==WAIT_OBJECT_0,"queued requests finish the actual worker without a third public call");
+    require(!m.value(11)&&m.value(12)==1,"startup barrier retires once and does not rearm during abort cleanup");
+    require(m.value(13)==(fail?0u:1u)&&m.value(14)==(fail?1u:0u)&&m.value(0)==(fail?0u:1u),
+        "real startup takes exactly the selected success or exception path");
+    require(m.value(15)==(fail?3u:2u),"only a startup exception adds the worker's implicit cleanup request");
+    require(m.value(1)==1&&m.value(2)==1&&m.value(3)==1,
+        "successful queued cleanup stops and destroys the single owner exactly once");
+    require(!m.value(6)&&!m.value(7)&&m.value(4)==1&&m.value(5)==1,
+        "callback leases drain and engine ownership retires without duplicate cleanup");
+    require(m.stop(0)==DLL_SHUTDOWN_OK,"completed startup-overlap shutdown remains idempotent");
+    std::cout<<"PASS: public shutdown queued during "<<(phase==1?"provider":"ready")
+        <<" startup; "<<(fail?"exception unwind":"normal return")
+        <<" retains ownership until release and exits without a third request\n";
+}
 void scenario(const char* path,unsigned fault){
     Module m(path);
     const auto until=std::chrono::steady_clock::now()+std::chrono::seconds(10);
@@ -116,6 +200,38 @@ void queued_shutdown_requests(const char* path,bool persistent=false){
         "completed queued shutdown must retain the public success contract");
     std::cout<<"PASS: two queued public shutdown requests preserve exactly two cleanup attempts\n";
 }
+void stale_cleanup_status_window(const char* path){
+    // C08-CAND-001: the previous cleanup failure can still be visible to
+    // the next caller while its newly enqueued attempt has not executed.
+    Module m(path);
+    const auto ready_until=std::chrono::steady_clock::now()+std::chrono::seconds(10);
+    while(!m.value(0)&&std::chrono::steady_clock::now()<ready_until)Sleep(1);
+    require(m.value(0)&&m.value(6)&&m.value(1)==0,
+            "live application/worker required before testing shutdown status");
+    m.hold_after_failure();
+    m.mode(4); // Persistently fail the owned native unload scan.
+    const auto first=m.stop(1000);
+    require(first==DLL_SHUTDOWN_CLEANUP_FAILED&&m.value(1)==1&&m.value(3)==0,
+            "first request must finish with a retained owner and ERROR_BUSY");
+    const auto hold_until=std::chrono::steady_clock::now()+std::chrono::seconds(3);
+    while(!m.value(20)&&std::chrono::steady_clock::now()<hold_until)Sleep(1);
+    require(m.value(20)==1&&m.value(1)==1&&m.value(6),
+            "worker must be paused before handling the second public request");
+    const auto second=m.stop(0);
+    require(second==DLL_SHUTDOWN_CLEANUP_FAILED&&m.value(1)==1,
+            "zero-wait second request can report prior ERROR_BUSY before its own stop");
+    // The observation is classification of an incomplete request, not a
+    // spurious OK, lost retry, premature image unload or new bug verdict.
+    m.mode(0);
+    m.release_failure_wait();
+    const auto done_until=std::chrono::steady_clock::now()+std::chrono::seconds(5);
+    while(m.value(3)!=1&&std::chrono::steady_clock::now()<done_until)Sleep(1);
+    require(m.value(1)==2&&m.value(2)==1&&m.value(3)==1&&!m.value(6),
+            "released worker must process exactly the queued retry and retire once");
+    require(m.stop(10000)==DLL_SHUTDOWN_OK&&m.value(1)==2,
+            "completed worker retains idempotent public shutdown success");
+    std::cout<<"PASS: C08 prior cleanup status is observable before queued retry begins\n";
+}
 int main(int argc,char** argv)try{
     require(argc==2||argc==3,"fixture DLL path and optional mode required");
     bool ran=false;
@@ -127,8 +243,16 @@ int main(int argc,char** argv)try{
     if(argc==2||std::string_view(argv[2])=="queued-failure"){
         queued_shutdown_requests(argv[1],true);ran=true;
     }
+    if(argc==2||std::string_view(argv[2])=="startup"){
+        for(const unsigned phase:{1u,2u})for(const bool fail:{false,true})
+            shutdown_during_startup(argv[1],phase,fail);
+        ran=true;
+    }
     if(argc==2||std::string_view(argv[2])=="stage-file-hook"){
         staged_file_hook_public_shutdown(argv[1]);ran=true;
+    }
+    if(argc==2||std::string_view(argv[2])=="stale-status"){
+        stale_cleanup_status_window(argv[1]);ran=true;
     }
     require(ran,"unknown fault mode");
     return 0;

@@ -8,21 +8,30 @@
 #include <atomic>
 namespace {
 struct Object {std::uintptr_t* table;};
-int mode=0,destroyed=0;
+std::atomic<int> mode{0},destroyed{0};
+std::atomic<bool> hold_auth{false},auth_entered{false},auth_released{true};
 std::atomic<bool> registry_probe{false};
 std::atomic<unsigned> registry_calls{0};
 std::atomic<LSTATUS> registry_open{ERROR_IO_PENDING},registry_query{ERROR_IO_PENDING},registry_close{ERROR_IO_PENDING};
 std::array<wchar_t,4096> registry_path{};
-void destroy(Object*){++destroyed;}
-int status(Object*){return mode;}
-const char* username(Object*){return "fixture-online";}
-const char* persona(Object*){return "fixture-persona";}
-const char* user(Object*){return "fixture-user-id";}
+void destroy(Object*){destroyed.fetch_add(1);}
+// Fault-only modes: 1 = offline status, 3 = null factory, 4/5/6 = null
+// username/persona/user getter. Production provider ABI is unchanged.
+int status(Object*){return mode.load()==1?1:0;}
+const char* username(Object*){return mode.load()==4?nullptr:"fixture-online";}
+const char* persona(Object*){return mode.load()==5?nullptr:"fixture-persona";}
+const char* user(Object*){return mode.load()==6?nullptr:"fixture-user-id";}
 std::uint8_t avatar(Object*,const wchar_t* path,const char* owner,std::int32_t size){
     if(!owner||std::string_view(owner)!="fixture-user-id"||(size!=0&&size!=2))return 0;
     auto* file=_wfopen(path,L"wb");if(!file)return 0;std::fputs("fixture-provider-avatar",file);std::fclose(file);return 0x80;
 }
 const char* auth(Object*,const char*){
+    if(hold_auth.load()) {
+        auth_entered.store(true);
+        // A failed host assertion must not strand the test runner indefinitely.
+        const auto deadline=GetTickCount64()+10000;
+        while(!auth_released.load()&&GetTickCount64()<deadline)Sleep(1);
+    }
     if(registry_probe.load(std::memory_order_acquire)){
         HKEY key=nullptr;
         const auto opened=RegOpenKeyExW(HKEY_CURRENT_USER,L"SOFTWARE\\Wow6432Node\\Origin",0,KEY_READ,&key);
@@ -49,10 +58,21 @@ Object object{table};
 }
 extern "C" __declspec(dllexport) int version_check(){return 2;}
 extern "C" __declspec(dllexport) Object* create_online(const wchar_t* cookie) {
-    if(auto* file=_wfopen(cookie,L"wb")){std::fputs("fixture-cookie",file);std::fclose(file);}return &object;
+    if(auto* file=_wfopen(cookie,L"wb")){std::fputs("fixture-cookie",file);std::fclose(file);}
+    return mode.load()==3?nullptr:&object;
 }
-extern "C" __declspec(dllexport) void FixtureMode(int m){mode=m;destroyed=0;}
-extern "C" __declspec(dllexport) int FixtureDestroyed(){return destroyed;}
+extern "C" __declspec(dllexport) void FixtureMode(int m){
+    mode.store(m);destroyed.store(0);
+    hold_auth.store(false);auth_entered.store(false);auth_released.store(true);
+}
+extern "C" __declspec(dllexport) int FixtureDestroyed(){return destroyed.load();}
+extern "C" __declspec(dllexport) void FixtureHoldAuth(int enabled){
+    auth_entered.store(false);auth_released.store(!enabled);hold_auth.store(enabled!=0);
+}
+extern "C" __declspec(dllexport) int FixtureAuthEntered(){return auth_entered.load()?1:0;}
+extern "C" __declspec(dllexport) void FixtureReleaseAuth(){
+    auth_released.store(true);hold_auth.store(false);
+}
 // Test-only controls; version_check/create_online and the seven slots above
 // retain the same ABI and default behavior. Enable only after startup is ready.
 extern "C" __declspec(dllexport) void FixtureRegistryProbe(int enabled){
