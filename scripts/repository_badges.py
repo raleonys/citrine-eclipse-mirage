@@ -153,9 +153,19 @@ def test_counts(path):
     if not 0 < len(cases) <= 100000:
         raise ValueError('Native test report must contain testcases')
     for suite in root.iter():
-        if suite.tag in {'testsuite', 'testsuites'} and suite.get('tests') is not None:
-            if not re.fullmatch(r'[0-9]+', suite.get('tests')) or int(suite.get('tests')) != len(list(suite.iter('testcase'))):
-                raise ValueError('Native test count does not match testcases')
+        if suite.tag in {'testsuite', 'testsuites'}:
+            suite_cases = list(suite.iter('testcase'))
+            if suite.get('tests') is not None:
+                if not re.fullmatch(r'[0-9]+', suite.get('tests')) or int(suite.get('tests')) != len(suite_cases):
+                    raise ValueError('Native test count does not match testcases')
+            # Optional JUnit summary totals must not contradict case outcomes.
+            # A malformed declared failure count must never render a green badge.
+            for field, tag in (('failures', 'failure'), ('errors', 'error'), ('skipped', 'skipped')):
+                declared = suite.get(field)
+                if declared is not None:
+                    observed = sum(case.find(tag) is not None for case in suite_cases)
+                    if not re.fullmatch(r'[0-9]+', declared) or int(declared) != observed:
+                        raise ValueError('Native test ' + field + ' count does not match testcases')
     passed = sum(not any(case.find(tag) is not None for tag in ('failure', 'error', 'skipped')) for case in cases)
     return passed, len(cases)
 
