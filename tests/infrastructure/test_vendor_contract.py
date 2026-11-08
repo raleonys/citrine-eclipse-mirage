@@ -28,16 +28,16 @@ class VendorTests(unittest.TestCase):
     def test_pegtl_toolchain_status_requires_single_active_cache_record(self):
         probe = 'CITRINE_ECLIPSE_MIRAGE_PEGTL_PUBLIC_INPUT_WORKS:INTERNAL='
         fixtures = (
-            ('valid', probe + '1\\n', 0),
-            ('unavailable_empty', probe + '\\n', 77),
-            ('unavailable_zero', probe + '0\\n', 77),
-            ('commented_success', '// ' + probe + '1\\n' + probe + '\\n', 77),
-            ('prefixed_success', 'UNRELATED_' + probe + '1\\n' + probe + '0\\n', 77),
-            ('suffix_spoof', probe + '10\\n', 1),
-            ('duplicate_success', probe + '1\\n' + probe + '0\\n', 1),
-            ('missing', 'OTHER:INTERNAL=1\\n', 1),
-            ('bare_comment', '// ' + probe + '1\\n', 1),
-            ('malformed', probe + 'TRUE\\n', 1),
+            ('valid', probe + '1\n', 0),
+            ('unavailable_empty', probe + '\n', 77),
+            ('unavailable_zero', probe + '0\n', 77),
+            ('commented_success', '// ' + probe + '1\n' + probe + '\n', 77),
+            ('prefixed_success', 'UNRELATED_' + probe + '1\n' + probe + '0\n', 77),
+            ('suffix_spoof', probe + '10\n', 1),
+            ('duplicate_success', probe + '1\n' + probe + '0\n', 1),
+            ('missing', 'OTHER:INTERNAL=1\n', 1),
+            ('bare_comment', '// ' + probe + '1\n', 1),
+            ('malformed', probe + 'TRUE\n', 1),
         )
         with tempfile.TemporaryDirectory() as tmp:
             cache = Path(tmp) / 'CMakeCache.txt'
