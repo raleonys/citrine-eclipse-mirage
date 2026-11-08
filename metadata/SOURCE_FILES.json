@@ -1222,8 +1222,8 @@
       "sha256": "fddbdae37f140fdcfffb835edf4cb0fe74f889971a91aa35b411c0080e01b3c0"
     },
     "tests/infrastructure/test_source_identity_license.py": {
-      "bytes": 5245,
-      "sha256": "d868e417a1ed714f6796ec2a7340ba15e18aa3d7f2a9b2f43a774c3183609ee6"
+      "bytes": 6969,
+      "sha256": "f7070b8f72d5c2881c146b3e875a2df498d5ab8f93cf4073aea9e578b62ebfbc"
     },
     "tests/infrastructure/test_vendor_contract.py": {
       "bytes": 19711,
