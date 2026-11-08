@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Exercise actual Application RequestLicense over TCP with independent OpenSSL token ciphertext: a malformed file closes only its peer without consuming the normal-file attempt, repair retries that file, invalidation advances to cached data, and invalid-padding decrypted bytes retain the counted token while XML uses its C-string prefix.
+
 - Cover Registry query output cells sharing type, size and data storage across narrow/wide client and language replacements. Preserve the live output ordering, captured capacity, short-buffer result and final type fixup; shipping Registry behavior and Windows SDK tests are unchanged.
 
 - Extend retained socket message dispatch tests with 48 consumed-request scenarios: retain one exact counted response after the core empties or releases initially nonempty input. Verify scheduling-time owner/task/allocation state, exact cleanup and no double-free across inline/heap boundaries, empty output and embedded NUL. Test-only; production Asio behavior and Consumer parity are not claimed.
