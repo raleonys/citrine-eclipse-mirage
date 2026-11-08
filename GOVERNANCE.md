@@ -44,7 +44,7 @@ Maintain a source-linked `CHANGELOG.md` alongside relevant PRs. A PR-only CI cov
 - The owner separately runs real Consumer/game acceptance before stable publication. This acceptance is not repeated for every pull request.
 - A failing unmerged pull request does not stop a weekly draft based on an already accepted `main` commit. A failed weekly candidate remains unpublished until resolved.
 - Prospective weekly semantic versions advance 3.2.6 TALVOR → 3.2.7 ERINTHAR → 3.2.8 FORMADRIL → 3.2.9 CETRION → 3.3.0 VESPERKAI and follow the owner-approved LUTRAVEX registry. The retired -RNN weekly model must not be used.
-- New archive names are `Citrine_Eclipse_Mirage_x.y.z_CODENAME.zip` (source companion `_source.zip`); minor and patch are one digit (0..9). Do not rename historical artifacts or compatibility-sensitive binary/Golden fields.
+- Upload exactly `Citrine_Eclipse_Mirage_x.y.z_CODENAME.zip` and its `.zip.sha256` checksum as release assets. The binary ZIP contains exactly `preloader_l.dll`, `preloader_l.dll.sha256` and the project `LICENSE` at its root, with no other files or directories. GitHub supplies the tag's automatic source archives; source companion ZIPs, receipts and test evidence remain workflow artifacts, outside the release assets and binary ZIP. Minor and patch are one digit (0..9). Do not change historical releases or compatibility-sensitive binary/Golden fields.
 - Associate released assets and retained results with the exact commit, binary and package checksums. Verify the actual distributed archive once; ordinary PR work does not require repeated ZIP fresh-extract campaigns.
 - Do not reintroduce Brownfield G0-G4 gates, mandatory eight-shard release cycles, Library current-pointer transactions, or publication classifications on build and test results.
 
@@ -60,7 +60,7 @@ Keep meaningful negative tests, source/vendor identity, ABI, lifetime, and actua
 
 Project-owned first-party source code and project-authored accompanying material are licensed under **GNU General Public License version 3 only** (`GPL-3.0-only`), not `GPL-3.0-or-later`. The root [LICENSE](LICENSE) contains the full, unmodified GNU GPL version 3 text (29 June 2007).
 
-Third-party material and vendor sources retain their separate applicable licenses and notices. This first-party license does not replace, reassign or silently sublicense third-party notices. Existing third-party source, license files, attribution and vendor SHA pins must remain intact. All future release artifacts must include the complete root license and the applicable third-party notices; source availability and other GPL obligations must be reviewed before publication.
+Third-party material and vendor sources retain their separate applicable licenses and notices. This first-party license does not replace, reassign or silently sublicense third-party notices. Existing third-party source, license files, attribution and vendor SHA pins remain intact in the repository and source archives. The binary release ZIP includes the complete project root license under the three-file packaging rule above; source availability and other GPL obligations must be reviewed before publication.
 
 ## Public readiness and disclosure
 

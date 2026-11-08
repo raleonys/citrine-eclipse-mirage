@@ -239,37 +239,30 @@ def bundle(root, payload, output):
     if errors:
         raise ValueError('Source package mismatch: ' + '; '.join(errors))
     output.mkdir(parents=True)
-    shutil.copyfile(source, output / source.name)
-    shutil.copyfile(Path(str(source) + '.sha256'), output / (source.name + '.sha256'))
     receipt = {'schema': 'surge.draft-release-receipt.v1', 'publication_status': 'DRAFT',
                'tag': p['tag'], 'source_sha': p['source_sha'], 'source_manifest_sha256': manifest,
                'source_qa_groups': len(qa['checks']), 'portable_tests': portable_tests,
                'native_tests': native['tests'], 'dll_sha256': golden['dll_sha256'],
                'source_zip_sha256': sha(source), 'game_acceptance': 'NOT_RUN',
                'publication': False}
-    write(output / 'RELEASE_RECEIPT.json', receipt)
     binary = output / binary_name
-    files = {path.name: path for path in (payload / 'production/dist').iterdir() if path.is_file()}
-    if set(files) != {'preloader_l.dll', 'preloader_l.dll.sha256', 'DIST_RECEIPT.json'}:
+    dist_files = {path.name: path for path in (payload / 'production/dist').iterdir() if path.is_file()}
+    if set(dist_files) != {'preloader_l.dll', 'preloader_l.dll.sha256', 'DIST_RECEIPT.json'}:
         raise ValueError('Unexpected runtime payload')
-    files['RELEASE_RECEIPT.json'] = output / 'RELEASE_RECEIPT.json'
-    files['LICENSE'] = root / 'LICENSE'
-    for vendor, license_file in (('asio', 'LICENSE_1_0.txt'), ('minhook', 'LICENSE.txt'),
-                                 ('pegtl', 'LICENSE_1_0.txt'), ('pugixml', 'LICENSE.md')):
-        files['licenses/' + vendor + '.txt'] = root / 'third_party' / vendor / license_file
-    for profile in ('native', 'production'):
-        for path in (payload / profile).rglob('*'):
-            if path.is_file() and 'dist' not in path.relative_to(payload / profile).parts:
-                files['evidence/' + path.relative_to(payload).as_posix()] = path
-    for name in ('SOURCE_QA.json', 'PORTABLE_CTEST.xml'):
-        files['evidence/' + name] = payload / name
+    files = {'preloader_l.dll': dist_files['preloader_l.dll'],
+             'preloader_l.dll.sha256': dist_files['preloader_l.dll.sha256'],
+             'LICENSE': root / 'LICENSE'}
     with zipfile.ZipFile(binary, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
         for name, path in sorted(files.items()):
             if path.is_symlink():
                 raise ValueError('Candidate payload cannot contain symlinks')
             archive.writestr(name, path.read_bytes())
     sidecar(binary)
-    sidecar(output / 'RELEASE_RECEIPT.json')
+    receipt['binary_zip_sha256'] = sha(binary)
+    # Receipts describe preparation, not the eventual publication state. Keep
+    # them with workflow evidence instead of shipping stale DRAFT data to users.
+    write(payload / 'RELEASE_RECEIPT.json', receipt)
+    sidecar(payload / 'RELEASE_RECEIPT.json')
     return receipt
 
 
@@ -317,9 +310,12 @@ class GitHub:
                         '--clobber', *map(str, paths)], check=True, timeout=300)
 
 
-def publish_draft(github, p, assets):
-    assets = Path(assets)
-    receipt = load(assets / 'RELEASE_RECEIPT.json')
+def publish_draft(github, p, assets, receipt_path):
+    assets, receipt_path = Path(assets).resolve(), Path(receipt_path).resolve()
+    if receipt_path.is_relative_to(assets):
+        raise ValueError('Release receipt must stay outside release assets')
+    verify_sidecar(receipt_path)
+    receipt = load(receipt_path)
     tag = p['tag']
     require_tag(tag)
     if (not p['ready'] or receipt['source_sha'] != p['source_sha'] or receipt['tag'] != tag
@@ -328,13 +324,13 @@ def publish_draft(github, p, assets):
             or receipt.get('game_acceptance') != 'NOT_RUN'):
         raise ValueError('Draft receipt/source mismatch')
     paths = sorted(assets.iterdir())
-    source_name, binary_name = asset_names(tag)
-    expected = {source_name, source_name + '.sha256', binary_name, binary_name + '.sha256'}
-    expected |= {'RELEASE_RECEIPT.json', 'RELEASE_RECEIPT.json.sha256'}
+    _, binary_name = asset_names(tag)
+    expected = {binary_name, binary_name + '.sha256'}
     if {path.name for path in paths} != expected:
         raise ValueError('Unexpected release assets')
-    for name in (source_name, binary_name, 'RELEASE_RECEIPT.json'):
-        verify_sidecar(assets / name)
+    verify_sidecar(assets / binary_name)
+    if receipt.get('binary_zip_sha256') != sha(assets / binary_name):
+        raise ValueError('Draft receipt/binary mismatch')
     releases = github.releases()
     existing = next((r for r in releases if r['tag_name'] == tag), None)
     if existing and (not existing['draft'] or not state(existing)
@@ -352,7 +348,9 @@ def publish_draft(github, p, assets):
     summary = ('# Draft candidate\n\nSource: `' + p['source_sha'] + '`\n\n'
                'Source QA, portable tests, native MSVC acceptance, and Production/Golden '
                'passed for this source. Game acceptance is NOT RUN. '
-               'The owner must review and publish this draft.\n\n')
+               'The owner must review and publish this draft.\n\n'
+               'Downloads: `' + binary_name + '` and its `.sha256` checksum. '
+               'GitHub supplies the Source code (zip/tar.gz) archives for this tag.\n\n')
     preparing = marker(p['source_sha'], 'preparing') + '\n\n**Asset preparation is incomplete; do not publish yet.**\n\n'
     if not existing:
         existing = github.api('releases', {'tag_name': tag, 'target_commitish': p['source_sha'],
@@ -401,6 +399,7 @@ def main():
     publishing = sub.add_parser('draft')
     publishing.add_argument('--plan', type=Path, required=True)
     publishing.add_argument('--assets', type=Path, required=True)
+    publishing.add_argument('--receipt', type=Path, required=True)
     args = ap.parse_args()
     if subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT):
         raise ValueError('Release preparation requires a clean, committed checkout')
@@ -434,7 +433,7 @@ def main():
         p = load(args.plan)
         if head() != p['source_sha']:
             raise ValueError('Publishing checkout does not match validated source')
-        result = publish_draft(GitHub(os.environ['GITHUB_REPOSITORY']), p, args.assets)
+        result = publish_draft(GitHub(os.environ['GITHUB_REPOSITORY']), p, args.assets, args.receipt)
         print(json.dumps({'draft_url': result['html_url'], 'draft': result['draft']}))
 
 

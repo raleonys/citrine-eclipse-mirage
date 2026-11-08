@@ -1218,8 +1218,8 @@
       "sha256": "c15622d09abdb428f30bfc964db202ff71b56db2ef103eea179a2b3ce5f9ba95"
     },
     "tests/infrastructure/test_weekly_release.py": {
-      "bytes": 25857,
-      "sha256": "a6352ef8285b01e18340b1dace87d77cbd08c1c19b9977ba3df40e2f459c6810"
+      "bytes": 28653,
+      "sha256": "b0fbe7a28f6610c9240602fc65c2af4c667da21fef597f94de1943c191f7effe"
     },
     "tests/infrastructure/test_wine_runner.py": {
       "bytes": 1640,
