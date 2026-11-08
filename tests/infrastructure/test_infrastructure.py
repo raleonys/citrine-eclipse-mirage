@@ -725,6 +725,40 @@ class PackageTests(unittest.TestCase):
         inventory.write_manifest(self.root)
         self.assertEqual([], inventory.verify_manifest(self.root))
 
+    def test_extractor_rejects_high_expansion_before_crc_and_preserves_cleanup(self):
+        # The source package is manifest-consistent: rejection is the budget,
+        # not a hash, CRC, filename, or ownership mismatch.
+        payload = b'X' * (128 * 1024)
+        (self.root / 'src/compressible.txt').write_bytes(payload)
+        inventory.write_manifest(self.root)
+        packaging.package(self.root, self.zip)
+        with zipfile.ZipFile(self.zip) as archive:
+            member = archive.getinfo('src/compressible.txt')
+            self.assertLess(member.compress_size, member.file_size // 100)
+        destination = self.base / 'expanded'
+        with patch.object(extraction, 'MAX_MEMBER_BYTES', 64 * 1024):
+            # The CRC pass may not decompress the disallowed member first.
+            with patch.object(zipfile.ZipFile, 'testzip', side_effect=AssertionError('early decompression')):
+                with self.assertRaisesRegex(ValueError, 'member exceeds extraction budget'):
+                    extraction.extract(self.zip, destination)
+        self.assertFalse(destination.exists())
+        self.assertFalse(list(self.base.glob('.surge-extract-*')))
+
+    def test_extractor_rejects_cumulative_expansion_before_crc(self):
+        packaging.package(self.root, self.zip)
+        with zipfile.ZipFile(self.zip) as archive:
+            largest = max(info.file_size for info in archive.infolist())
+            total = sum(info.file_size for info in archive.infolist())
+        self.assertGreater(total, largest)
+        destination = self.base / 'expanded'
+        with patch.object(extraction, 'MAX_MEMBER_BYTES', largest), \
+             patch.object(extraction, 'MAX_ARCHIVE_BYTES', total - 1), \
+             patch.object(zipfile.ZipFile, 'testzip', side_effect=AssertionError('early decompression')):
+            with self.assertRaisesRegex(ValueError, 'total extraction budget'):
+                extraction.extract(self.zip, destination)
+        self.assertFalse(destination.exists())
+        self.assertFalse(list(self.base.glob('.surge-extract-*')))
+
     def test_flat_roundtrip_and_determinism(self):
         first = packaging.package(self.root, self.zip)
         second = packaging.package(self.root, self.base / 'second.zip')
