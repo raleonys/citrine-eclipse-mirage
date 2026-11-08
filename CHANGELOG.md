@@ -6,6 +6,10 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Add a live Latest release badge to the README linking to the latest published GitHub release. Keep the version dynamic so future releases require no README edit.
+
+- Strengthen server startup failure tests with exact error values, categories, accepted operation labels and pre-publication stop order. Cover an IO-context run error after readiness without normal destruction; adapt Archive 12 test principles without changing product diagnostics, runtime policy or backend ownership.
+
 - Keep completed release notes ready for publication: omit draft headings and owner-only publishing instructions while retaining source identity, validation results, download guidance and the generated changelog. Preserve the incomplete-upload warning and internal acceptance evidence.
 
 - Pin the retained native-message event retirement boundary before a lower unlock failure, across last/nonlast, inline/heap and accepted/rejected event-cipher cases. Check exact committed queue state, local response bytes and absence of output/document finalization after the unknown unlock outcome. Reference-model tests only; production behavior and ABI are unchanged.
