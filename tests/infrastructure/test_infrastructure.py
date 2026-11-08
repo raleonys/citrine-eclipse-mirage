@@ -954,6 +954,56 @@ class PackageTests(unittest.TestCase):
                 inventory.source_files(self.root)
             path.unlink()
 
+    def test_falcion_preflights_member_sizes_and_names_before_decompression(self):
+        packaging.package(self.root, self.zip)
+        with zipfile.ZipFile(self.zip) as archive:
+            baseline = {name: archive.read(name) for name in archive.namelist()}
+        cases = (
+            ('larger-source', 'src/value.cpp', b'X' * (128 * 1024),
+             'Package member size differs from verified source: src/value.cpp'),
+            ('unknown-source', 'src/foreign.cpp', b'X' * (128 * 1024),
+             'Unexpected package member: src/foreign.cpp'),
+            ('larger-manifest', inventory.MANIFEST,
+             baseline[inventory.MANIFEST] + b' ',
+             'Package/source manifest identity mismatch'),
+        )
+        for case, member, payload, expected_error in cases:
+            with self.subTest(case=case):
+                modified = dict(baseline)
+                modified[member] = payload
+                archive_path = self.base / (case + '.zip')
+                with zipfile.ZipFile(archive_path, 'w') as archive:
+                    for name, data in sorted(modified.items()):
+                        info = zipfile.ZipInfo(name)
+                        info.create_system = 3
+                        info.external_attr = 0o100644 << 16
+                        info.compress_type = zipfile.ZIP_DEFLATED
+                        archive.writestr(info, data)
+                with patch.object(zipfile.ZipFile, 'read',
+                                  side_effect=AssertionError('read before preflight')), \
+                     patch.object(zipfile.ZipFile, 'testzip',
+                                  side_effect=AssertionError('CRC before preflight')):
+                    errors = falcion.check(self.root, archive_path)
+                self.assertIn(expected_error, errors)
+        self.assertEqual([], falcion.check(self.root, self.zip))
+
+    def test_falcion_same_size_modified_source_still_fails_hash_validation(self):
+        packaging.package(self.root, self.zip)
+        with zipfile.ZipFile(self.zip) as archive:
+            modified = {name: archive.read(name) for name in archive.namelist()}
+        original = modified['src/value.cpp']
+        modified['src/value.cpp'] = bytes([original[0] ^ 1]) + original[1:]
+        archive_path = self.base / 'same-size-mutant.zip'
+        with zipfile.ZipFile(archive_path, 'w') as archive:
+            for name, data in sorted(modified.items()):
+                info = zipfile.ZipInfo(name)
+                info.create_system = 3
+                info.external_attr = 0o100644 << 16
+                info.compress_type = zipfile.ZIP_DEFLATED
+                archive.writestr(info, data)
+        errors = falcion.check(self.root, archive_path)
+        self.assertIn('Package differs from verified source: src/value.cpp', errors)
+
     def test_package_tamper_and_private_manifest_are_rejected(self):
         packaging.package(self.root, self.zip)
         with zipfile.ZipFile(self.zip) as archive:
