@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts out of the runtime ZIP, preserve DLL/license contents and native/Golden gates, and leave published releases unchanged.
+
 - Add source-included native Application rollback regressions for controlled first/second worker-launch exceptions, retained provider-thread draining and normal startup. Keep production workers exactly `std::thread` through a private fixture seam; preserve listener cleanup, public options/exports and compiler CRT policy.
 
 - Cover startup command-line decoding failure on a later argument after an earlier argument succeeds; verify exactly one argv allocation release and no partially published language/console flags or environment override.
