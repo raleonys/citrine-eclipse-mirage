@@ -1178,8 +1178,8 @@
       "sha256": "e2b2cad669df9c09b9f730432f06874f9aa8dbf2408eedebb919c717a0f1f508"
     },
     "tests/infrastructure/test_cpp_type_identities.py": {
-      "bytes": 2264,
-      "sha256": "ab9731ff91bd848ef4a61cfdd373d21bd5a815822021d6358bd8bb7b6fac2b93"
+      "bytes": 3533,
+      "sha256": "0aefa8f42198fe575108a456cf7f40e46c1ebe7a2a640e241b4904255f5c081b"
     },
     "tests/infrastructure/test_english_only_audit.py": {
       "bytes": 9119,
