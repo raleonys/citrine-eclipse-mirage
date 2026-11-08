@@ -103,6 +103,14 @@ public:
             char bytes[4096];auto n=socket.read_some(asio::buffer(bytes));input.append(bytes,n);}
     }
     void send(std::string bytes){bytes.push_back('\0');asio::write(socket,asio::buffer(bytes));}
+    std::string encoded_request(std::string_view id,std::string_view command,bool encrypted) {
+        auto bytes="<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>";
+        if(encrypted){
+            require(cipher.encrypt_042610(bytes),"batch request encrypts with the negotiated peer key");
+            messages::hex_encode_03d190(bytes);
+        }
+        return bytes; // send() appends the final NUL after any joined frames.
+    }
     std::string request(std::string_view id,std::string_view command) {
         send("<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>");return frame();
     }
@@ -349,6 +357,67 @@ void stop_blocked_greeting() {
     auto start=std::chrono::steady_clock::now();service.stop();
     require(std::chrono::steady_clock::now()-start<std::chrono::milliseconds(500),"stop cancels a greeting blocked by a non-reading peer");
 }
+void require_no_response_profile(std::string_view bytes,std::string_view id) {
+    xml_reader_bridge::Backend xml;auto parsed=xml.parse_c_string(bytes);
+    require(!parsed.has_error,"first frame after silent commands is valid XML");
+    const auto* root=parsed.document->first_element();
+    const auto* response=root?root->first_element():nullptr;
+    const auto* profile=response?response->first_element():nullptr;
+    require(root&&root->name()=="LSX"&&!root->next_element()&&
+            response&&response->name()=="Response"&&!response->next_element()&&
+            response->attribute("id")==id&&response->attribute("sender")=="EbisuSDK"&&
+            profile&&profile->name()=="GetProfileResponse"&&!profile->next_element()&&
+            profile->attribute("Persona")=="fixture-override"&&profile->attribute("UserIndex")=="0",
+            "silent commands emit no extra response and preserve the same peer's exact follow-up");
+}
+void no_response_continuation(std::uint16_t port) {
+    // The initial DOWN seed has already been delivered. Each case publishes
+    // one new event through the real ShowIGO handler and drains it before exit.
+    for(const int version:{0,2,3})for(const bool batch:{false,true}){
+        const auto id="no-response-"+std::to_string(version)+(batch?"-batch":"-separate");
+        progress(id.c_str());
+        Peer peer(port);
+        require(peer.frame().find("<Challenge ")!=std::string::npos,"silent-command peer receives its real greeting");
+        const auto queued_id=id+"-queued";
+        const auto queued=peer.request(queued_id,"<ShowIGO/>");
+        require(queued=="<LSX>\n    <Response id=\""+queued_id+"\" sender=\"EbisuSDK\">\n        <ErrorSuccess Code=\"0\" Description=\"\"/>\n    </Response>\n</LSX>\n",
+                "plaintext ShowIGO acknowledges one pending DOWN event without delivering it");
+        if(version)peer.negotiate(id+"-handshake",id+"-key",version);
+        const auto first=peer.encoded_request(id+"-silent-1","<QueryChunkStatus/>",version!=0);
+        const auto second=peer.encoded_request(id+"-silent-2","<QueryChunkStatus/>",version!=0);
+        const auto after_id=id+"-after";
+        const auto after=peer.encoded_request(after_id,"<GetProfile index='0'/>",version!=0);
+        if(batch){
+            auto frames=first;frames.push_back('\0');frames+=second;frames.push_back('\0');frames+=after;
+            peer.send(std::move(frames));
+        }else{
+            peer.send(first);peer.send(second);peer.send(after);
+        }
+        // These are separate client writes versus one batched write. TCP may
+        // segment/coalesce either; no kernel receive schedule is asserted.
+        require_no_response_profile(version?peer.encrypted_frame():peer.frame(),after_id);
+        if(version)
+            require(peer.encrypted_frame()==event_queue::initial_down_event,
+                    "silent encrypted commands retain the pending event for the valid response");
+        const auto followup_id=id+"-followup";
+        require_no_response_profile(version?peer.encrypted_request(followup_id,"<GetProfile index='0'/>"):
+            peer.request(followup_id,"<GetProfile index='0'/>"),followup_id);
+        if(!version){
+            // Plaintext responses do not consume events. First negotiation on
+            // this same connection makes its preserved event observable.
+            peer.negotiate(id+"-drain-handshake",id+"-drain-key",2);
+            const auto drain_id=id+"-drain";
+            require_no_response_profile(peer.encrypted_request(drain_id,"<GetProfile index='0'/>"),drain_id);
+            require(peer.encrypted_frame()==event_queue::initial_down_event,
+                    "silent plaintext commands preserve the event until encrypted delivery");
+            const auto final_id=id+"-final";
+            require_no_response_profile(peer.encrypted_request(final_id,"<GetProfile index='0'/>"),final_id);
+        }
+        // The follow-up's first frame also rejects a duplicate/stray event;
+        // no timeout or quiet interval is treated as successful silence.
+        peer.close();
+    }
+}
 }
 int main(int argc,char** argv) try {
     progress("begin event mutex contract");
@@ -416,6 +485,7 @@ int main(int argc,char** argv) try {
         require(peer.request("after-bad-xml","<GetProfile index='0'/>").find("fixture-override")!=std::string::npos,"XML parse failure leaves the session usable");
     }
     encrypted_peer_isolation(state.server_port);
+    no_response_continuation(state.server_port);
     // Stop while an accepted socket still owns a pending read.
     Peer waiting(state.server_port);(void)waiting.frame();app.stop();app.stop();
     require(true,"pending read cancelled and idempotent stop completed");
