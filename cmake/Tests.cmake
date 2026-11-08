@@ -118,6 +118,11 @@ target_link_libraries(network_policy_contracts PRIVATE citrine_eclipse_mirage_co
 add_test(NAME network_policy_contracts COMMAND network_policy_contracts)
 set_tests_properties(network_policy_contracts PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
 # Application tests retained from RE; historical CRT/preloader tests stay outside this project.
+add_executable(atomic_recovery_matrix_contracts tests/unit/file/atomic_recovery_tests.cpp src/core/atomic_files.cpp)
+target_include_directories(atomic_recovery_matrix_contracts PRIVATE include)
+add_test(NAME atomic_recovery_matrix_contracts COMMAND atomic_recovery_matrix_contracts)
+set_tests_properties(atomic_recovery_matrix_contracts PROPERTIES TIMEOUT 30)
+
 add_executable(atomic_persistence_contracts tests/native/atomic_persistence_tests.cpp)
 target_link_libraries(atomic_persistence_contracts PRIVATE citrine_eclipse_mirage_core)
 add_test(NAME atomic_persistence_contracts COMMAND atomic_persistence_contracts)
