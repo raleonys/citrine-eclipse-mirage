@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "preloader_l/net/transport_message_dispatch.hpp"
+#include "citrine_eclipse_mirage/net/transport_message_dispatch.hpp"
 #include "tests/support/socket/frame_read_test_fixture.hpp"
 
 namespace message_test {
-namespace s=preloader_l::socket;namespace b=buffer_test;namespace r=receive_test;
+namespace s=citrine_eclipse_mirage::socket;namespace b=buffer_test;namespace r=receive_test;
 inline unsigned checks=0;
 inline void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
 struct Failure {int phase;};

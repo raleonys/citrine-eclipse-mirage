@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/config/hash_table.hpp"
+#include "citrine_eclipse_mirage/config/hash_table.hpp"
 #include <algorithm>
 #include <bit>
 #include <cmath>
 #include <set>
 #include <stdexcept>
 
-namespace preloader_l::config_hash {
+namespace citrine_eclipse_mirage::config_hash {
 std::uint64_t fnv1a64(std::string_view bytes) noexcept {
     std::uint64_t hash=0xcbf29ce484222325ULL;
     for(unsigned char byte:bytes)hash=(hash^byte)*0x100000001b3ULL;
@@ -99,8 +99,14 @@ const Node* Node::find(std::string_view key) const {
 Node& Node::lookup(std::string_view key) {
     const auto found=children.find(key);
     if(found!=children.end())return found->second;
-    table.insert_unique(key);
-    return children.try_emplace(std::string(key)).first->second;
+    // A missing key may borrow a substring of table.traversal. Rehashing
+    // invalidates that view, so first own the key in its stable map node.
+    // On insertion failure, discard the provisional child before retry.
+    const auto [row,inserted]=children.try_emplace(std::string(key));
+    if(!inserted)return row->second;
+    try {table.insert_unique(row->first);}
+    catch(...) {children.erase(row);throw;}
+    return row->second;
 }
 void Node::validate() const {
     table.validate();
@@ -111,19 +117,25 @@ void Node::validate() const {
 void Node::assign_from(const Node& source) {
     if(this==&source)return;
     validate();source.validate();
-    name=source.name;value=source.value;
+    // Do not consume old positional rows before all recursive work succeeds.
+    // The staging preserves successful list order and child table capacities.
+    std::string next_name(source.name),next_value(source.value);
     std::map<std::string,Node,std::less<>> replacement;
     for(std::size_t i=0;i<source.table.traversal.size();++i) {
         const auto& key=source.table.traversal[i];
         const auto& from=source.children.at(key);
         Node row;
         if(i<table.traversal.size()) {
-            row=std::move(children.at(table.traversal[i]));
+            row=children.at(table.traversal[i]);
             row.assign_from(from);
         }else row=Node::clone(from);
         replacement.emplace(key,std::move(row));
     }
-    table.assign_from(source.table);
+    Table next_table=table;
+    next_table.assign_from(source.table);
+    // Standard-allocator move assignments publish only the completed result.
+    name=std::move(next_name);value=std::move(next_value);
+    table=std::move(next_table);
     children=std::move(replacement);
 }
 Node Node::clone(const Node& source) {
@@ -151,4 +163,4 @@ configuration::Node to_configuration(const Node& source) {
         result.children.emplace(key,to_configuration(source.children.at(key)));
     return result;
 }
-} // namespace preloader_l::config_hash
+} // namespace citrine_eclipse_mirage::config_hash

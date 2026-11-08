@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_environment_constructor.hpp"
+#include "citrine_eclipse_mirage/net/transport_environment_constructor.hpp"
 #include <functional>
 #include <iostream>
 #include <limits>
 #include <memory>
 #include <vector>
-namespace s=preloader_l::socket;
+namespace s=citrine_eclipse_mirage::socket;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* message){++checks;if(!value)throw std::runtime_error(message);}

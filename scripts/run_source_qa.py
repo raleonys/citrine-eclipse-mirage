@@ -12,6 +12,7 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKS = [
+    ('project identity and release resource versions', ['tests/infrastructure/test_project_version.py']),
     ('Wine test process identity and exit propagation', ['tests/infrastructure/test_wine_runner.py']),
     ('source bytes', ['scripts/verify_sources.py']),
     ('four active supplied vendor trees', ['scripts/vendor_sync.py','--root',str(ROOT),'--verify-installed']),

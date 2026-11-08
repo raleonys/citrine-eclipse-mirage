@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/online.hpp"
-#include "preloader_l/runtime/delegating_effects.hpp"
-#include "preloader_l/core/paths.hpp"
+#include "citrine_eclipse_mirage/runtime/online.hpp"
+#include "citrine_eclipse_mirage/runtime/delegating_effects.hpp"
+#include "citrine_eclipse_mirage/core/paths.hpp"
 #include <algorithm>
 #include <array>
 #include <functional>
@@ -33,11 +33,11 @@ void operator delete[](void* p) noexcept {cookie_lifetime::release(p);}
 void operator delete(void* p,std::size_t) noexcept {cookie_lifetime::release(p);}
 void operator delete[](void* p,std::size_t) noexcept {cookie_lifetime::release(p);}
 
-namespace o = preloader_l::online;
-namespace s = preloader_l::status;
-namespace f = preloader_l::file;
-namespace e = preloader_l::encoding;
-namespace l = preloader_l::system_services::libraries;
+namespace o = citrine_eclipse_mirage::online;
+namespace s = citrine_eclipse_mirage::status;
+namespace f = citrine_eclipse_mirage::file;
+namespace e = citrine_eclipse_mirage::encoding;
+namespace l = citrine_eclipse_mirage::system_services::libraries;
 static unsigned checks = 0;
 #define CHECK(x) do { ++checks; if (!(x)) throw std::runtime_error("Check failed at line " + std::to_string(__LINE__) + ": " #x); } while(false)
 struct Injected : std::runtime_error { Injected() : std::runtime_error("synthetic failure") {} };
@@ -78,11 +78,11 @@ struct Mock : o::Effects {
     std::uint32_t suppress_errors_0450a0() override {event("suppress");const auto previous=mode;mode|=1;return previous;}
     void restore_error_mode(std::uint32_t value) override {event("restore");mode=value;}
     o::Path filesystem_widen_006d70(std::string_view value) override {
-        event("widen"); CHECK(value=="preloader_l_online.dll"); CHECK(value.size()==0x16);
+        event("widen"); CHECK(value=="citrine_eclipse_mirage_online.dll"); CHECK(value.size()==33);
         return o::Path(value.begin(),value.end());
     }
-    o::Path parent_path_019820(const o::Path& value) override {event("parent");return preloader_l::path::parent_path_019820(value);}
-    o::Path join_016b00(const o::Path& a,const o::Path& b) override {event("join");return preloader_l::path::join_016b00(a,b);}
+    o::Path parent_path_019820(const o::Path& value) override {event("parent");return citrine_eclipse_mirage::path::parent_path_019820(value);}
+    o::Path join_016b00(const o::Path& a,const o::Path& b) override {event("join");return citrine_eclipse_mirage::path::join_016b00(a,b);}
     o::Module load_copy_0450d0(const o::Path& value) override {event("load");loaded_path=value;return loaded;}
     o::Procedure get_proc_address(o::Module module,std::string_view value) override {
         CHECK(module==loaded);event("resolve:"+std::string(value));
@@ -129,7 +129,7 @@ static void entry_branches() {
         State state;Mock m;m.loaded=0;o::worker_035b60(state.refs(),m);
         compare_calls(m,{"wait","suppress","widen","parent","join","load","restore","finish"});
         CHECK(m.mode==0x20);CHECK(state.module==0);CHECK(state.online==0);
-        CHECK(m.loaded_path==u"C:\\fixture\\preloader_l_online.dll");
+        CHECK(m.loaded_path==u"C:\\fixture\\citrine_eclipse_mirage_online.dll");
     }
     {
         State state;Mock m;m.version_proc=0;o::worker_035b60(state.refs(),m);
@@ -188,6 +188,97 @@ static void live_profile() {
         throws<o::OutOfEvidenceInput>([&]{o::worker_035b60(state.refs(),m);});
         CHECK(state.object==0);CHECK(state.module==41);CHECK(state.online==0);CHECK(!m.called("auth-status"));CHECK(!m.called("finish"));
     }
+}
+static void cache_delimiter_integrity() {
+    // Original unescaped persistence can store four fields from a provider
+    // name containing ';'. The later offline parser accepts exactly three.
+    for(unsigned field=0;field<3;++field)for(const bool cache:{false,true}) {
+        State state;Mock m;
+        state.use_last=cache;
+        m.written="previous-cache";
+        if(field==0)m.persona="person;extra";
+        if(field==1)m.user="user;extra";
+        if(field==2)m.name="name;extra";
+        const std::string unsafe=m.persona+";"+m.user+";"+m.name;
+        CHECK(o::split_profile_fields_03cf00(unsafe).size()==4);
+        o::worker_035b60(state.refs(),m);
+        CHECK(state.online==1&&state.object==m.created&&state.module==m.loaded);
+        CHECK(state.persona==m.persona&&state.user==m.user&&state.username==m.name);
+        CHECK(!m.called("write")&&m.written=="previous-cache");
+        CHECK(m.calls.back()=="finish");
+    }
+    // Valid punctuation and empty fields continue to use the legacy byte
+    // layout and can round-trip through the existing offline split function.
+    {
+        State state;Mock m;
+        state.use_last=1;
+        m.persona="owner:42";m.user="id_123-ABC";m.name="display name@host";
+        o::worker_035b60(state.refs(),m);
+        CHECK(m.called("write"));
+        CHECK(m.written=="owner:42;id_123-ABC;display name@host");
+        CHECK(o::split_profile_fields_03cf00(m.written)==
+              std::vector<std::string>({"owner:42","id_123-ABC","display name@host"}));
+        CHECK(m.calls.back()=="finish");
+    }
+    {
+        State state;Mock m;
+        state.use_last=1;m.persona="";m.user="";m.name="";
+        o::worker_035b60(state.refs(),m);
+        CHECK(m.called("write")&&m.written==";;");
+        CHECK(o::split_profile_fields_03cf00(m.written)==
+              std::vector<std::string>({"","",""}));
+    }
+}
+// Each getter borrows the same address. Later calls and teardown overwrite it;
+// the fixture never mutates a string while the loader is scanning that string.
+struct SharedProfileBuffer : Mock {
+    std::array<char,1024> scratch{};
+    std::array<const char*,3> returned{};
+    unsigned getters=0, destroyed=0, freed=0, invalidated=0;
+    int missing=-1;
+    const char* borrow(o::Object object,const char* label,const std::string& text,int slot) {
+        CHECK(object==created);event(label);CHECK(text.size()<scratch.size());
+        scratch.fill('~');std::copy(text.begin(),text.end(),scratch.begin());
+        scratch[text.size()]=0;returned[slot]=scratch.data();++getters;
+        return missing==slot?nullptr:scratch.data();
+    }
+    const char* username_virtual_10(o::Object object) override {return borrow(object,"name",name,0);}
+    const char* persona_virtual_18(o::Object object) override {return borrow(object,"persona",persona,1);}
+    const char* user_id_virtual_20(o::Object object) override {return borrow(object,"user",user,2);}
+    void invalidate() {scratch.fill('!');scratch.back()=0;++invalidated;}
+    void destroy_virtual_00(o::Object object) override {Mock::destroy_virtual_00(object);++destroyed;invalidate();}
+    bool free_library(o::Module module) override {const auto result=Mock::free_library(module);++freed;invalidate();return result;}
+};
+static void borrowed_profile_copy_ownership() {
+    for(bool large:{false,true})for(bool cache:{false,true})for(int missing:{-1,1,2}) {
+        State state;SharedProfileBuffer m;state.use_last=cache;m.missing=missing;
+        if(large){m.name="name:"+std::string(257,'n');m.persona="persona:"+std::string(389,'p');m.user="user:"+std::string(521,'u');}
+        const std::array<std::string,3> expected{m.name,m.persona,m.user};
+        // This callback happens after the last profile getter, before saving
+        // the profile. Cached output must therefore use the owned copies too.
+        m.inspect=[&](std::string_view event){if(event=="status-cookie")m.invalidate();};
+        if(missing<0)o::worker_035b60(state.refs(),m);
+        else throws<o::OutOfEvidenceInput>([&]{o::worker_035b60(state.refs(),m);});
+        CHECK(m.getters==static_cast<unsigned>(missing<0?3:missing+1));
+        CHECK(m.returned[0]==m.scratch.data()&&m.returned[1]==m.returned[0]);
+        if(missing!=1)CHECK(m.returned[2]==m.returned[0]);
+        CHECK(state.online==1&&state.object==m.created&&state.module==m.loaded);
+        CHECK(state.username==expected[0]);
+        CHECK(state.persona==(missing==1?"old-persona":expected[1]));
+        CHECK(state.user==(missing<0?expected[2]:"old-user"));
+        CHECK(m.called("finish")==bool(missing<0));
+        CHECK(m.called("write")==bool(missing<0&&cache));
+        if(missing<0&&cache)CHECK(m.written==expected[1]+";"+expected[2]+";"+expected[0]);
+        CHECK(m.invalidated==static_cast<unsigned>(missing<0));
+        const std::array<std::string,3> owned{state.username,state.persona,state.user};
+        o::cleanup_0366f0(state.refs(),m);
+        CHECK(m.destroyed==1&&m.freed==1&&state.object==0&&state.module==0);
+        CHECK(state.username==owned[0]&&state.persona==owned[1]&&state.user==owned[2]);
+        CHECK(m.scratch.front()=='!'&&state.username.front()!='!');
+        const auto invalidations=m.invalidated;o::cleanup_0366f0(state.refs(),m);
+        CHECK(m.destroyed==1&&m.freed==1&&m.invalidated==invalidations);
+    }
+    std::cout<<"PASS: borrowed provider profile copies survive shared-buffer reuse, partial failure and cleanup (synthetic effects)\n";
 }
 static void offline_profile() {
     for(auto status:std::array<std::int32_t,4>{1,2,-1,0x7fffffff})
@@ -348,14 +439,14 @@ struct Files : f::Factory {
         CHECK(path==u"C:\\fixture\\profile.synthetic");CHECK(mode==0x20);CHECK(share==0x40);return std::make_unique<Output>(written,output_closed);
     }
 };
-#if !defined(PRELOADER_L_PORTABLE_ONLINE_TESTS)
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ONLINE_TESTS)
 static void composition() {
     for(bool success:{false,true}) {
         State state;Mock remaining;LibraryCalls libraries;Stats stats;Encoding encoding;Errors errors;Files files;
         state.use_last=1;remaining.auth_status=success?0:1;
         o::DelegatingEffects effects(remaining,libraries,stats,encoding,errors,files);
         o::worker_035b60(state.refs(),effects);
-        CHECK(libraries.loaded==L"C:\\fixture\\preloader_l_online.dll");CHECK(libraries.mode==0x40);CHECK(encoding.calls==2);
+        CHECK(libraries.loaded==L"C:\\fixture\\citrine_eclipse_mirage_online.dll");CHECK(libraries.mode==0x40);CHECK(encoding.calls==2);
         CHECK(state.online==static_cast<std::uint8_t>(success));CHECK(state.avatar==state.last_avatar);CHECK(remaining.called("finish"));
         CHECK(!remaining.called("widen"));CHECK(!remaining.called("load"));CHECK(!remaining.called("read"));CHECK(!remaining.called("write"));
         if(success) {
@@ -392,8 +483,8 @@ static void cookie_release_before_status() {
     }
 }
 int main() {
-    try {entry_branches();live_profile();offline_profile();split_cases();status_and_cleanup();exceptions();
-#if !defined(PRELOADER_L_PORTABLE_ONLINE_TESTS)
+    try {entry_branches();live_profile();borrowed_profile_copy_ownership();cache_delimiter_integrity();offline_profile();split_cases();status_and_cleanup();exceptions();
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ONLINE_TESTS)
         composition();
 #endif
         cookie_release_before_status();}

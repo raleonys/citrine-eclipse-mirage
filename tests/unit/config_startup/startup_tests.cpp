@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "../../support/fixture_ascii.hpp"
-#include "preloader_l/config/startup.hpp"
+#include "citrine_eclipse_mirage/config/startup.hpp"
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
@@ -9,14 +9,14 @@
 #include <new>
 #include <stdexcept>
 
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 namespace {
 unsigned checks=0;
 void require(bool ok,const char* label){++checks;if(!ok)throw std::runtime_error(label);}
 template<class E,class F>void rejects(F f,const char* label){bool caught=false;try{f();}catch(const E&){caught=true;}require(caught,label);}
 using Events=std::vector<std::string>;
 configuration::Path wide(std::string_view value){return {value.begin(),value.end()};}
-std::string ascii(const configuration::Path& value){return preloader_l::test_support::fixture_ascii(value);}
+std::string ascii(const configuration::Path& value){return citrine_eclipse_mirage::test_support::fixture_ascii(value);}
 std::size_t position(const Events& events,std::string_view value){const auto found=std::find(events.begin(),events.end(),value);require(found!=events.end(),"expected event present");return static_cast<std::size_t>(found-events.begin());}
 
 struct FileInput final:file::Input {
