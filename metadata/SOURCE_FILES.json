@@ -1902,8 +1902,8 @@
       "sha256": "32e42a177fcba232d3e83544b4e22fadec6f322c1384f6ec4f14be32642866bc"
     },
     "tests/unit/socket/message_dispatch_tests.cpp": {
-      "bytes": 9597,
-      "sha256": "ff4d3992626ea856549b01213c3cc6513aeeca5c828f5fee56e7279f7410aed3"
+      "bytes": 13319,
+      "sha256": "6de79b261fe138a23cab1efda0d9cf7aad9ab5e23a3cba277aee4c0ccdc21290"
     },
     "tests/unit/socket/native_dispatch_integration_tests.cpp": {
       "bytes": 18293,
