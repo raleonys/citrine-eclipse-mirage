@@ -19,7 +19,7 @@ namespace example
 
 }  // namespace example
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    if( argc != 2 ) {
       std::cerr << "Usage: " << argv[ 0 ] << " FILE\n"
@@ -36,7 +36,7 @@ int main( int argc, char** argv )
       const auto& p = e.position_object();
       std::cerr << e.what() << '\n'
                 << in.line_view_at( p ) << '\n'
-                << std::setw( static_cast< int >( p.count ) ) << '^' << std::endl;
+                << std::setw( int( p.count ) ) << '^' << std::endl;
       return 1;
    }
 #else

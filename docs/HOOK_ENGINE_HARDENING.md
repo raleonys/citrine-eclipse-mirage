@@ -13,13 +13,15 @@ existing archive SHA-256 and complete member hashes:
 
 | Archive | Commit recorded in the supplied archive |
 | --- | --- |
-| Asio | `bdf337ddb1a667c274372a602de5857ad3cb3ed0` |
-| PEGTL | `3b075432e94f6f906425350b43d03cd9cebfa4f1` |
+| Asio | `190a8d8daf1cc62909b4e0c72ff491ba264ca98e` |
+| PEGTL | `b60f6110abd37e502d202d13a6c565410c552c33` |
 | pugixml | `f0a3faa76e04f35110257ca8713363dee3c890e8` |
 | MinHook | `8af6b4acae5a9388fd742b56fa79ece89d96f823` |
 
-These identifiers are evidence from SHA-pinned ZIP comments, not independently
-fetched Git-object verification. The lock preserves that distinction. Archive
+These identifiers come from SHA-pinned owner ZIP comments. For the selected
+PEGTL 4.x snapshot, the complete archive member set additionally matches the
+independent upstream Git tree. Other records retain their stated verification
+limits. The lock preserves that distinction. Archive
 installation checks the comment as well as archive/member bytes; offline installed
 tree verification remains possible without shipping the original ZIPs.
 
