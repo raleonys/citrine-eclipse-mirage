@@ -431,6 +431,66 @@ void post_failure() {
     require(service.impl_->stopping.load(),"failed dispatch keeps accepting work");
     service.stop();service.stop();
 }
+void prepared_owner_post_failure() {
+    // Exercise real Client::post_io allocation/ownership, without listener,
+    // worker-pool or peer scheduling. The prepared receipt is controlled.
+    struct Counts {unsigned committed=0,cancelled=0,destroyed=0,executed=0;};
+    struct Receipt final:server::DeliveryReceipt {
+        std::shared_ptr<Counts> counts;
+        explicit Receipt(std::shared_ptr<Counts> value):counts(std::move(value)){}
+        ~Receipt(){++counts->destroyed;}
+        bool finish(bool success)noexcept override {
+            if(success)++counts->committed;else ++counts->cancelled;
+            return true;
+        }
+    };
+    struct Disarm {~Disarm(){fault::next=false;}};
+    Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.ready,{});
+    auto client=std::make_shared<net::AsioService::Impl::Client>(owner,Tcp::socket(owner.io));
+    const std::string payload("reply\0event\0",12);
+    for(bool fail:{false,true,false}) {
+        auto counts=std::make_shared<Counts>();
+        auto response=std::make_shared<server::PreparedResponse>(payload,std::make_unique<Receipt>(counts));
+        const std::weak_ptr<server::PreparedResponse> weak=response;
+        std::function<void()> work=[response=std::move(response),counts,payload] {
+            ++counts->executed;
+            require(response->bytes==payload,"posted owner lost exact counted response bytes");
+            require(response->finish(true),"successful post control cannot settle its receipt");
+        };
+        const auto before=fault::injected.load();
+        bool threw=false,unconsumed=false;
+        {
+            Disarm disarm;
+            fault::last=fault::Route::none;fault::next=fail;
+            try{client->post_io(std::move(work));}catch(const std::bad_alloc&){threw=true;}
+            unconsumed=fault::next;fault::next=false;
+        }
+        work={}; // Do not depend on the moved-from std::function representation.
+        if(fail) {
+            require(threw&&!unconsumed&&fault::injected.load()==before+1,
+                    "prepared post must propagate exactly one injected allocation failure");
+#ifdef FIXTURE_ALIGNED_CRT_PATH
+            require(fault::last==fault::Route::aligned_crt,"prepared post missed aligned CRT allocation");
+#else
+            require(fault::last==fault::Route::scalar_new,"prepared post missed scalar allocation");
+#endif
+            require(weak.expired()&&counts->cancelled==1&&counts->committed==0&&
+                    counts->destroyed==1&&counts->executed==0,
+                    "failed Asio post must release and cancel its prepared owner before returning");
+        } else {
+            require(!threw&&!unconsumed&&fault::injected.load()==before&&!weak.expired()&&
+                    counts->destroyed==0&&counts->executed==0,
+                    "accepted Asio post must retain its prepared owner without inline execution");
+        }
+        owner.io.restart();owner.io.poll();
+        require(weak.expired()&&counts->destroyed==1&&counts->executed==unsigned(!fail)&&
+                counts->committed==unsigned(!fail)&&counts->cancelled==unsigned(fail),
+                "executor drain must neither run a failed post nor repeat delivery settlement");
+        require(!client->closed&&!owner.stopping&&c.factory.errors==0,
+                "direct post boundary must leave ordinary recovery controls usable");
+    }
+    client->close();owner.io.restart();owner.io.poll();
+}
 void stop_without_allocation() {
     Context c;net::AsioService service(c.factory,c.execution,c.port,c.ready);service.start();
     Peer peer(c.port);require(peer.frame()=="hello","stop greeting");
@@ -460,7 +520,7 @@ void drain_retry() {
 int main(int argc,char** argv)try {
     const std::string_view selected=argc==2?argv[1]:"all";
     bool ran=false;
-    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"held-accept-stop",held_successful_accept_retirement},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms},{"throwing-factory-rearm",throwing_handler_factory_rearms},{"greeting-throw",greeting_failure_retires_published_client}})
+    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"held-accept-stop",held_successful_accept_retirement},{"post",post_failure},{"post-owner",prepared_owner_post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms},{"throwing-factory-rearm",throwing_handler_factory_rearms},{"greeting-throw",greeting_failure_retires_published_client}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

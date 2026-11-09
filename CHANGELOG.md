@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Cover prepared response ownership at the actual Asio post-allocation boundary. Require immediate cancellation and owner release after one injected allocation failure, preserve exact binary output in successful controls, and verify executor recovery without changing runtime or native test budgets.
+
 - Test actual cached-avatar cleanup refusal for an owned nonempty matching directory: propagate the filesystem error and path, preserve its child and unrelated files, then remove the newly empty directory on repaired retry. The fixture makes no traversal-order assumption; production cleanup policy is unchanged.
 
 - Test production MessageHandler prepared-response ownership through event reservation, dropped output, explicit commit/cancel and callback failures. Preserve exact binary FIFO events for retry and verify post-reservation unwind without changing runtime policy.
