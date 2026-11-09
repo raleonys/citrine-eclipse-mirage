@@ -1194,8 +1194,8 @@
       "sha256": "5b1cd4d572d8faa6a5a26ba7632885010639323f30df38be0faeb7f33936eeb0"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
-      "bytes": 27969,
-      "sha256": "5164cf46bbd0b91296032ba6053af0a61b458bf4d9d4b603705a005443aaa965"
+      "bytes": 29324,
+      "sha256": "2c5c9c40739363f4c3e262f184b94dc372c23f0db91d406756541b94c8af9ef9"
     },
     "tests/infrastructure/test_project_version.py": {
       "bytes": 4598,
@@ -1622,8 +1622,8 @@
       "sha256": "442a5b27b2023e550c401727cfa5a470f3e1b1458df1a0ab807bd0b01a738ca1"
     },
     "tests/unit/content_handlers/content_handlers_tests.cpp": {
-      "bytes": 28066,
-      "sha256": "49c9328e242ff837a4c73227709c6a09bfb9456c385c73f9b0f1aff68c1807f0"
+      "bytes": 32363,
+      "sha256": "2e25d4eec14f28645bf7ed1c24c40af3f547d903862da915fefcb056adecf8fc"
     },
     "tests/unit/crypto/crypto_tests.cpp": {
       "bytes": 9816,
