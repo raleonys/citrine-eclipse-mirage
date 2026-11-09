@@ -60,6 +60,11 @@ add_executable(net_failure_contracts tests/native/net_failure_tests.cpp)
 target_include_directories(net_failure_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
 target_link_libraries(net_failure_contracts PRIVATE citrine_eclipse_mirage_core)
 add_test(NAME net_failure_contracts COMMAND net_failure_contracts)
+add_executable(asio_thread_launch_contracts tests/native/asio_thread_launch_tests.cpp)
+target_include_directories(asio_thread_launch_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
+target_link_libraries(asio_thread_launch_contracts PRIVATE citrine_eclipse_mirage_core)
+add_test(NAME asio_thread_launch_contracts COMMAND asio_thread_launch_contracts)
+set_tests_properties(asio_thread_launch_contracts PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
 if(MINGW)
   # Exercise the pinned MSVC aligned-CRT memory helper under the cross runner
   # as well as the compiler's ordinary path. No production definitions change.

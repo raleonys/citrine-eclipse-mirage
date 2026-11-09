@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Test Asio startup rollback after controlled first/second handler-worker and IO-runner launch exceptions. Require joined owned threads before failure returns, no listener/readiness publication, idempotent cleanup and a usable fresh two-worker pool. A private fixture type selection leaves production threads as std::thread; this is not an actual OS thread-creation failure claim.
+
 - Test GrantAchievement response-writer failures after successful persistence and event publication. Retain committed existing/new rows, release both locks and distinguish completed retries from further partial-progress increments.
 
 - Preserve the native linker compilation timestamp instead of stamping finalized DLLs with a retained reference-build value. Reject timestamp mutation during finalization; retain every other PE metadata policy.

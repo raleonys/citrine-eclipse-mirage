@@ -630,8 +630,8 @@
       "sha256": "e28536e0f9431c96e72c7e789dd6eeef81c82a5e9699a9f3d862193ebddfde50"
     },
     "src/net/asio_service.cpp": {
-      "bytes": 24863,
-      "sha256": "6f21224c3e0fd5c4ce757ce3d028c6e7e1982b7198ec09454bd635ff7833b8b8"
+      "bytes": 25021,
+      "sha256": "370e4daf1553eec0aa933d8f3779b0c444a5c0e9361850ad27f0e2a4bcd37dd4"
     },
     "src/net/server.cpp": {
       "bytes": 8534,
@@ -1252,6 +1252,10 @@
     "tests/native/application_worker_launch_tests.cpp": {
       "bytes": 11177,
       "sha256": "e4444c76665479eada4ed6366c7386acde0e8d2453b1f67bf7870dad21c35d89"
+    },
+    "tests/native/asio_thread_launch_tests.cpp": {
+      "bytes": 7178,
+      "sha256": "a11e0e840b0363eed504c1c95363c8be4dceee157b6d3190ed378be1db184a8d"
     },
     "tests/native/atomic_persistence_tests.cpp": {
       "bytes": 8548,

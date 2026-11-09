@@ -83,6 +83,11 @@ using OwnedAcceptor=RetainedSocket<asio::ip::tcp::acceptor>;
 SessionPolicy validated(SessionPolicy policy){policy.validate();return policy;}
 }
 struct AsioService::Impl final:ServerBackend {
+#ifdef CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_THREAD
+    using OwnedThread=CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_THREAD;
+#else
+    using OwnedThread=std::thread;
+#endif
     struct Client;
     HandlerFactory& factory;
     execution::Execution& execution;
@@ -97,12 +102,12 @@ struct AsioService::Impl final:ServerBackend {
     OwnedAcceptor acceptor{io,this,&Impl::retain_native};
     std::unique_ptr<OwnedAcceptor> acceptor_v6;
     std::optional<asio::executor_work_guard<asio::io_context::executor_type>> guard;
-    std::thread runner;
+    OwnedThread runner;
     std::promise<void> started;
     std::mutex jobs_mutex;
     std::condition_variable jobs_changed;
     std::deque<std::function<void()>> jobs;
-    std::array<std::thread,handler_policy::workers> workers;
+    std::array<OwnedThread,handler_policy::workers> workers;
     bool jobs_stopping=false;
     std::vector<std::shared_ptr<Client>> clients; // Retained through native/IO retirement; Client only borrows Impl.
     std::size_t active_sessions=0;
@@ -129,7 +134,7 @@ struct AsioService::Impl final:ServerBackend {
         used=true;guard.emplace(asio::make_work_guard(io));
         auto result=started.get_future();
         start_workers();
-        try {runner=std::thread([this] {
+        try {runner=OwnedThread([this] {
             try {server_start_029ea0(*this,port,ready,execution);}
             catch(...) {
                 stopping.store(true,std::memory_order_release);
@@ -154,7 +159,7 @@ struct AsioService::Impl final:ServerBackend {
     }
     void start_workers() {
         try {
-            for(auto& worker:workers)worker=std::thread([this] {
+            for(auto& worker:workers)worker=OwnedThread([this] {
                 for(;;) {
                     std::function<void()> fn;
                     {
