@@ -1357,6 +1357,10 @@
       "bytes": 32981,
       "sha256": "9d32909b2bd4dc4059ef0842f793335a7429a6cf0e4de99028f8c2ae3620a8c5"
     },
+    "tests/native/startup_argv_tests.cpp": {
+      "bytes": 6885,
+      "sha256": "9bb532bea814eb132f4958f49ecf897ff2d0e2bac9554de2293e7331aa703858"
+    },
     "tests/native/startup_publication_tests.cpp": {
       "bytes": 5521,
       "sha256": "4f06351cc8cb85ab8f12b7b3a05ffb2d947567f2d88254643b3981ab64664442"

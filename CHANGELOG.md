@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Test the real Win32 command-line tokenizer, UTF-8 conversion and argv release through the existing startup language/flag filter. Cover quoting, empty values, backslashes, Unicode, executable exclusion and environment precedence without changing process environment, opening a console or replacing the compiler CRT.
+
 - Test actual online profile-copy allocation failures at each getter with caching enabled and disabled. Require the tagged payload fault, exact partial profile and call order, retained object/module ownership, and one-time explicit cleanup; keep existing cookie-lifetime and native composition controls unchanged.
 
 - Fix four configuration test exception expectations so their own assertion failure cannot be swallowed as the expected runtime error. Preserve partial-state checks and reject CSV, registry, directory and initial-load errors that incorrectly return success; production code is unchanged.
