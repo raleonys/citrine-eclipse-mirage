@@ -1018,8 +1018,8 @@
       "sha256": "b42f79f698486fa5254665694a41dbfbf691ff687e6108b7675a0e113c364e68"
     },
     "src/runtime/online.cpp": {
-      "bytes": 5841,
-      "sha256": "5dcfe128aec44071ed4d45042f7d10207123b9072d35d3ae32284b7aed6ad7cc"
+      "bytes": 6363,
+      "sha256": "8640020868cce5d36e482ee086e2140e9c21ff3f62aed0eae1ac05ff97222c33"
     },
     "src/runtime/startup.cpp": {
       "bytes": 4759,
@@ -1714,8 +1714,8 @@
       "sha256": "218997c7ee3f78bcda34f0785ae43ddb02b73ce52534f81171a94a2f301058d4"
     },
     "tests/unit/online/online_tests.cpp": {
-      "bytes": 29487,
-      "sha256": "9463f0deed92ccdb5f383afc6415c1baff0cb10de746f483a7bed0ff620cc7fe"
+      "bytes": 30587,
+      "sha256": "0523aea85289da7995d66382e221c43db86ced890ddacc1df9d205b36df4e850"
     },
     "tests/unit/parser/header_contract.cpp": {
       "bytes": 247,
