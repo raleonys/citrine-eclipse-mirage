@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Restore the XML comparison diagnostic's pinned pre-rename reference: read its historical header path and bind legacy includes/namespaces only in generated build copies. Preserve the exact reference commit, vendor bytes, compatibility filenames and test assertions; add CMake binding regressions without changing the production reader.
+
 - Test extra-library allocation failures after native DLL acquisition and phase-result insertion. Require retained physical module leases, unchanged worker readiness, failed-release retention and exact idempotent cleanup retries; inject only throwing vector-buffer allocations.
 
 - Add an actual native process-to-registry reentry regression: a startup wait releases both recursive callback locks while retaining both binding leases, then restores outer serialization, results and error state before final drain. Existing recursive callback policy is unchanged.
