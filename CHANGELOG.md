@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Verify the direct Registry fabrication allocation failure after disabling the test probe and outside its expected-exception catch. Prevent the failure diagnostic from supplying a caught allocation error; retain exact caller-state and ownership rollback assertions. Production behavior is unchanged.
+
 - Add a real-Windows native file-copy regression for a target held without write/delete sharing, ensuring rejected overwrite preserves the original and a retry succeeds after the owning handle closes.
 
 - Test GrantAchievement response-writer failures after successful persistence and event publication. Retain committed existing/new rows, release both locks and distinguish completed retries from further partial-progress increments.

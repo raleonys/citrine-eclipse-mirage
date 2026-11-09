@@ -120,8 +120,13 @@ void other_failures(){
         }
     }
     {Fixture f;r::Status status=5;f.effects.fail_at=1;
-     try{r::fabricate_010170(f.state(),f.effects,&f.output,status);require(false,"expected direct fabrication insertion failure");}
-     catch(const std::bad_alloc&){allocation::remaining=0;require(status==5,"direct failure preserves original status");f.unchanged();}}
+     allocation::fired=false;bool failed=false;
+     try{r::fabricate_010170(f.state(),f.effects,&f.output,status);}
+     catch(const std::bad_alloc&){failed=true;}
+     // Disable the probe before any diagnostic can allocate its own message.
+     allocation::remaining=0;
+     require(failed&&allocation::fired,"direct fabrication must fail at the injected allocation");
+     require(status==5,"direct failure preserves original status");f.unchanged();}
 }
 }
 int main()try{insertion_failures();other_failures();std::cout<<"PASS: actual registry set insertion failures, ownership rollback and A/W success controls\n";}
