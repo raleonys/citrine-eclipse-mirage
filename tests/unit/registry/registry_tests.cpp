@@ -5,7 +5,7 @@
 #endif
 #include <winsock2.h>
 #include <windows.h>
-#include "preloader_l/platform/registry.hpp"
+#include "citrine_eclipse_mirage/platform/registry.hpp"
 #include <algorithm>
 #include <array>
 #include <cstring>
@@ -13,7 +13,7 @@
 #include <iostream>
 #include <type_traits>
 #include <vector>
-using namespace preloader_l::registry;
+using namespace citrine_eclipse_mirage::registry;
 namespace {
 int checks=0;
 void check(bool ok) { ++checks; if(!ok) throw std::runtime_error("check "+std::to_string(checks)); }
@@ -145,6 +145,67 @@ void query_tests(){
     check(std::find(f.e.events.begin(),f.e.events.end(),"copyA")==f.e.events.end());
     check(f.e.events.back()=="wait");
 }
+void query_output_alias_tests(){
+    // ScalarCell permits shared caller-owned bytes. These controlled originals
+    // write size then type; replacement must observe the resulting live cells.
+    for(bool wide:{false,true})for(bool language:{false,true}){
+        for(std::uint32_t capacity:{0u,50u})for(bool data:{false,true}){
+            Fixture f;if(language)f.language.insert(9);else f.client.insert(9);
+            const auto& value=f.values.at(language?"Language":"ClientPath");
+            const auto need=static_cast<std::uint32_t>((value.size()+1)*(wide?2:1));
+            std::uint32_t shared=capacity;
+            std::array<char16_t,32> buffer;buffer.fill(u'Z');
+            const auto result=wide?query_w_00fb60(f.state(),f.e,{9,language?u"Locale":u"Install",nullptr,&shared,data?buffer.data():nullptr,&shared}):
+                query_a_00fac0(f.state(),f.e,{9,language?"Locale":"Install",nullptr,&shared,data?buffer.data():nullptr,&shared});
+            check(result==(data&&capacity<need?234u:0u));
+            // The replacement size overwrites original type=0. Re-reading type
+            // preserves that nonzero size instead of clobbering it with REG_SZ.
+            check(shared==need);
+            check(f.e.observed_type==&shared&&f.e.observed_size==&shared);
+            check(std::count(f.e.events.begin(),f.e.events.end(),wide?"copyW":"copyA")==
+                (data&&capacity>=need?1:0));
+            if(data&&capacity>=need){
+                if(wide)check(std::u16string(buffer.data())==value);
+                else check(std::string(reinterpret_cast<char*>(buffer.data()))==
+                    (language?"en_US":"C:\\synthetic"));
+            }else check(buffer[0]==u'Z');
+        }
+        for(bool empty:{false,true})for(int aliases:{1,2,3}){
+            Fixture f;if(language)f.language.insert(9);else f.client.insert(9);
+            const std::u16string value=empty?u"":u"ABCD";
+            f.values[language?"Language":"ClientPath"]=value;
+            const std::string narrow=empty?"":"ABCD";
+            const auto need=static_cast<std::uint32_t>((value.size()+1)*(wide?2:1));
+            // 1: type/data, 2: size/data, 3: type/size/data. Wide copies use
+            // aligned char16_t storage; scalar accesses remain memcpy-based.
+            const bool type_alias=(aliases&1)!=0,size_alias=(aliases&2)!=0;
+            std::array<char16_t,32> buffer,expected;
+            std::memset(buffer.data(),0x5a,sizeof buffer);
+            std::memset(expected.data(),0x5a,sizeof expected);
+            std::uint32_t size=50,type=99;
+            const auto size_cell=size_alias?DwordCell::from_raw(buffer.data()):DwordCell(&size);
+            const auto type_cell=type_alias?DwordCell::from_raw(buffer.data()):DwordCell(&type);
+            size_cell.store(50);
+            // Model only the overlapping caller bytes, not the query algorithm:
+            // original type=0 or the replacement byte count precedes the copy.
+            const std::uint32_t prefix=size_alias?need:0;
+            std::memcpy(expected.data(),&prefix,sizeof prefix);
+            if(wide)std::memcpy(expected.data(),value.c_str(),need);
+            else std::memcpy(expected.data(),narrow.c_str(),need);
+            // On Windows x64, an empty copy leaves four zero bytes, so the type fixup is
+            // visible in the shared data (and size, in the three-way case).
+            if(type_alias&&empty){const std::uint32_t reg_sz=1;std::memcpy(expected.data(),&reg_sz,sizeof reg_sz);}
+            const auto result=wide?query_w_00fb60(f.state(),f.e,{9,language?u"Locale":u"Install",nullptr,type_cell,buffer.data(),size_cell}):
+                query_a_00fac0(f.state(),f.e,{9,language?"Locale":"Install",nullptr,type_cell,buffer.data(),size_cell});
+            check(result==0);
+            check(std::memcmp(buffer.data(),expected.data(),sizeof buffer)==0);
+            if(!size_alias)check(size==need);
+            if(!type_alias)check(type==1);
+            check(f.e.observed_type==type_cell.raw()&&f.e.observed_size==size_cell.raw());
+            check(std::count(f.e.events.begin(),f.e.events.end(),wide?"copyW":"copyA")==1);
+        }
+    }
+}
 void close_tests(){
     for(bool fabricated:{false,true})for(Status status:{0u,6u,0xffffffffu}){
         Fixture f;f.client.insert(4);f.language.insert(4);if(fabricated)f.fake.insert(4);f.e.close_status=status;
@@ -235,4 +296,4 @@ void abi_cell_tests(){
     check(native_size==777&&native_type==0);
 }
 }
-int main(){try{match_tests();open_tests();query_tests();close_tests();abi_cell_tests();std::cout<<"registry-source: "<<checks<<" checks passed\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+int main(){try{match_tests();open_tests();query_tests();query_output_alias_tests();close_tests();abi_cell_tests();std::cout<<"registry-source: "<<checks<<" checks passed\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

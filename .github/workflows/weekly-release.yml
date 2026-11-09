@@ -33,6 +33,7 @@ jobs:
     outputs:
       ready: ${{ steps.plan.outputs.ready }}
       source: ${{ steps.plan.outputs.source }}
+      version: ${{ steps.plan.outputs.version }}
     steps:
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
@@ -55,7 +56,7 @@ jobs:
       - name: Run portable tests
         if: steps.plan.outputs.ready == 'true'
         run: |
-          cmake -S . -B build/weekly-portable -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON
+          cmake -S . -B build/weekly-portable -DCITRINE_ECLIPSE_MIRAGE_PORTABLE_CHECKS_ONLY=ON
           cmake --build build/weekly-portable --parallel 2
           ctest --test-dir build/weekly-portable --output-on-failure --output-junit "$GITHUB_WORKSPACE/build/weekly-portable/CTEST_RESULTS.xml"
           test -s "$GITHUB_WORKSPACE/build/weekly-portable/CTEST_RESULTS.xml"
@@ -74,6 +75,8 @@ jobs:
   windows:
     name: Validate Windows ${{ matrix.profile }}
     needs: plan
+    env:
+      CITRINE_ECLIPSE_MIRAGE_VERSION: ${{ needs.plan.outputs.version }}
     if: needs.plan.outputs.ready == 'true'
     runs-on: windows-2022
     timeout-minutes: 60
@@ -130,6 +133,8 @@ jobs:
   draft:
     name: Assemble a draft for owner review
     needs: [plan, windows]
+    env:
+      CITRINE_ECLIPSE_MIRAGE_VERSION: ${{ needs.plan.outputs.version }}
     if: needs.plan.outputs.ready == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 20

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/application.hpp"
+#include "citrine_eclipse_mirage/runtime/application.hpp"
 #include "src/runtime/application_internal.hpp"
-#include "preloader_l/net/asio_service.hpp"
+#include "citrine_eclipse_mirage/net/asio_service.hpp"
 #include <asio.hpp>
 #include <array>
 #include <atomic>
@@ -82,12 +82,12 @@ void reset(unsigned failure,bool hold){
 // The production default remains exactly std::thread. Only this source-included
 // fixture raises a controlled launcher exception before delegating to real
 // std::thread; it does not inject an OS thread-creation failure.
-#define PRELOADER_L_TEST_APPLICATION_WORKER_THREAD ::worker_launch_fixture::Thread
+#define CITRINE_ECLIPSE_MIRAGE_TEST_APPLICATION_WORKER_THREAD ::worker_launch_fixture::Thread
 #include "src/runtime/application.cpp"
-#undef PRELOADER_L_TEST_APPLICATION_WORKER_THREAD
+#undef CITRINE_ECLIPSE_MIRAGE_TEST_APPLICATION_WORKER_THREAD
 
 namespace {
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 namespace fs=std::filesystem;
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

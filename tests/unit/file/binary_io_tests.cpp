@@ -1,14 +1,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/core/binary_io.hpp"
+#include "citrine_eclipse_mirage/core/binary_io.hpp"
 #include <algorithm>
 #include <array>
 #include <filesystem>
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#endif
 #include <iostream>
 #include <stdexcept>
 #include <vector>
 
-namespace io=preloader_l::file;
+namespace io=citrine_eclipse_mirage::file;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -109,7 +118,7 @@ void core() {
     thrown=false;try{(void)io::read_binary_03b3f0(u"fixture",impossible);}catch(const std::length_error&){thrown=true;}
     check(thrown&&impossible.t.calls.back()=="destroy-input","invalid tell size reaches resize exception");
 }
-#if !defined(PRELOADER_L_PORTABLE_FILE_IO_TESTS)
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
 void native(const std::filesystem::path& directory) {
     const auto root=std::filesystem::absolute(directory).lexically_normal();
     check(root.filename()=="file-io-fixtures","dedicated generated-fixture directory required");
@@ -141,12 +150,28 @@ void native(const std::filesystem::path& directory) {
     catch(const std::ios_base::failure&){invalid_position=true;}
     check(invalid_position,"native EOF-state tellg rejects invalid position");
     input->close_03ae70();
+    // Native output opens in truncation mode. A foreign read lease without
+    // FILE_SHARE_WRITE must reject that open without destroying the old data.
+    const std::filesystem::path locked_path(file);
+    const auto held=CreateFileW(locked_path.c_str(),GENERIC_READ,FILE_SHARE_READ,
+                                nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
+    check(held!=INVALID_HANDLE_VALUE,"native locked output fixture handle");
+    const auto before_locked=io::read_binary_03b3f0(file,factory);
+    const bool wrote_while_held=io::write_binary_03c1d0(file,"forbidden",factory);
+    const auto after_locked=io::read_binary_03b3f0(file,factory);
+    const BOOL released=CloseHandle(held);
+    check(released!=FALSE,"native locked output fixture released");
+    check(!wrote_while_held&&after_locked==before_locked,
+          "locked native output open fails without truncating existing bytes");
+    check(io::write_binary_03c1d0(file,"recovered",factory) &&
+          io::read_binary_03b3f0(file,factory)=="recovered",
+          "native binary writer recovers after read-only sharing lease closes");
 }
 #endif
 }
 int main(int argc,char** argv){try{
     core();
-#if defined(PRELOADER_L_PORTABLE_FILE_IO_TESTS)
+#if defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
     (void)argc;(void)argv;
 #else
     if(argc!=2)throw std::invalid_argument("Pass a dedicated file-io-fixtures directory");

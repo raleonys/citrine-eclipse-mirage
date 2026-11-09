@@ -12,7 +12,7 @@ Earlier evidence is retained with its original source snapshots.
 One Application owner manages configuration, Asio service, handler/event/
 achievement storage, provider, companion DLL, and hook lifetimes. Its startup
 worker runs outside loader lock. Production exports are **DllMain@1, SURGE@2,
-DllShutdown@3**; the C++ source API is a separate `preloader.source.dll`
+DllShutdown@3**; the C++ source API is a separate `citrine_eclipse_mirage.source.dll`
 target. There are no readiness/port test exports; tools observe existing
 `EALsxPort` and LSX responses.
 
@@ -32,8 +32,10 @@ were removed from Production linkage, and mixed tests were separated.
 The crypt diagnostic TLS guard remains Debug-only.
 See [cleanup scope](BUILD_CLEANUP.md).
 
-Four owner-supplied vendors remain active: Asio 1.38.2, MinHook 1.3.4,
-PEGTL 4, and pugixml 1.16. Vendor bytes are immutable. The project XML
+Four owner-supplied vendors remain active: Asio 1.39.0, MinHook 1.3.4,
+PEGTL 4 (4.0.2 header on the owner-uploaded 4.x snapshot), and pugixml 1.16.
+Selected archive bytes are immutable; current snapshot identities are in
+[VENDORING.md](VENDORING.md). The project XML
 compatibility layer preserves the previous depth-500 boundary and corrected
 reference decoding, with no TinyXML2 production fallback. See
 [XML_BACKEND_COMPARISON.md](XML_BACKEND_COMPARISON.md). SAFE-FREEZE applies only to the pinned MinHook build copy. Windows I/O

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/online.hpp"
-#include "preloader_l/runtime/delegating_effects.hpp"
-#include "preloader_l/core/paths.hpp"
+#include "citrine_eclipse_mirage/runtime/online.hpp"
+#include "citrine_eclipse_mirage/runtime/delegating_effects.hpp"
+#include "citrine_eclipse_mirage/core/paths.hpp"
 #include <algorithm>
 #include <array>
 #include <functional>
@@ -33,11 +33,11 @@ void operator delete[](void* p) noexcept {cookie_lifetime::release(p);}
 void operator delete(void* p,std::size_t) noexcept {cookie_lifetime::release(p);}
 void operator delete[](void* p,std::size_t) noexcept {cookie_lifetime::release(p);}
 
-namespace o = preloader_l::online;
-namespace s = preloader_l::status;
-namespace f = preloader_l::file;
-namespace e = preloader_l::encoding;
-namespace l = preloader_l::system_services::libraries;
+namespace o = citrine_eclipse_mirage::online;
+namespace s = citrine_eclipse_mirage::status;
+namespace f = citrine_eclipse_mirage::file;
+namespace e = citrine_eclipse_mirage::encoding;
+namespace l = citrine_eclipse_mirage::system_services::libraries;
 static unsigned checks = 0;
 #define CHECK(x) do { ++checks; if (!(x)) throw std::runtime_error("Check failed at line " + std::to_string(__LINE__) + ": " #x); } while(false)
 struct Injected : std::runtime_error { Injected() : std::runtime_error("synthetic failure") {} };
@@ -78,11 +78,11 @@ struct Mock : o::Effects {
     std::uint32_t suppress_errors_0450a0() override {event("suppress");const auto previous=mode;mode|=1;return previous;}
     void restore_error_mode(std::uint32_t value) override {event("restore");mode=value;}
     o::Path filesystem_widen_006d70(std::string_view value) override {
-        event("widen"); CHECK(value=="preloader_l_online.dll"); CHECK(value.size()==0x16);
+        event("widen"); CHECK(value=="citrine_eclipse_mirage_online.dll"); CHECK(value.size()==33);
         return o::Path(value.begin(),value.end());
     }
-    o::Path parent_path_019820(const o::Path& value) override {event("parent");return preloader_l::path::parent_path_019820(value);}
-    o::Path join_016b00(const o::Path& a,const o::Path& b) override {event("join");return preloader_l::path::join_016b00(a,b);}
+    o::Path parent_path_019820(const o::Path& value) override {event("parent");return citrine_eclipse_mirage::path::parent_path_019820(value);}
+    o::Path join_016b00(const o::Path& a,const o::Path& b) override {event("join");return citrine_eclipse_mirage::path::join_016b00(a,b);}
     o::Module load_copy_0450d0(const o::Path& value) override {event("load");loaded_path=value;return loaded;}
     o::Procedure get_proc_address(o::Module module,std::string_view value) override {
         CHECK(module==loaded);event("resolve:"+std::string(value));
@@ -129,7 +129,7 @@ static void entry_branches() {
         State state;Mock m;m.loaded=0;o::worker_035b60(state.refs(),m);
         compare_calls(m,{"wait","suppress","widen","parent","join","load","restore","finish"});
         CHECK(m.mode==0x20);CHECK(state.module==0);CHECK(state.online==0);
-        CHECK(m.loaded_path==u"C:\\fixture\\preloader_l_online.dll");
+        CHECK(m.loaded_path==u"C:\\fixture\\citrine_eclipse_mirage_online.dll");
     }
     {
         State state;Mock m;m.version_proc=0;o::worker_035b60(state.refs(),m);
@@ -439,14 +439,14 @@ struct Files : f::Factory {
         CHECK(path==u"C:\\fixture\\profile.synthetic");CHECK(mode==0x20);CHECK(share==0x40);return std::make_unique<Output>(written,output_closed);
     }
 };
-#if !defined(PRELOADER_L_PORTABLE_ONLINE_TESTS)
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ONLINE_TESTS)
 static void composition() {
     for(bool success:{false,true}) {
         State state;Mock remaining;LibraryCalls libraries;Stats stats;Encoding encoding;Errors errors;Files files;
         state.use_last=1;remaining.auth_status=success?0:1;
         o::DelegatingEffects effects(remaining,libraries,stats,encoding,errors,files);
         o::worker_035b60(state.refs(),effects);
-        CHECK(libraries.loaded==L"C:\\fixture\\preloader_l_online.dll");CHECK(libraries.mode==0x40);CHECK(encoding.calls==2);
+        CHECK(libraries.loaded==L"C:\\fixture\\citrine_eclipse_mirage_online.dll");CHECK(libraries.mode==0x40);CHECK(encoding.calls==2);
         CHECK(state.online==static_cast<std::uint8_t>(success));CHECK(state.avatar==state.last_avatar);CHECK(remaining.called("finish"));
         CHECK(!remaining.called("widen"));CHECK(!remaining.called("load"));CHECK(!remaining.called("read"));CHECK(!remaining.called("write"));
         if(success) {
@@ -484,7 +484,7 @@ static void cookie_release_before_status() {
 }
 int main() {
     try {entry_branches();live_profile();borrowed_profile_copy_ownership();cache_delimiter_integrity();offline_profile();split_cases();status_and_cleanup();exceptions();
-#if !defined(PRELOADER_L_PORTABLE_ONLINE_TESTS)
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ONLINE_TESTS)
         composition();
 #endif
         cookie_release_before_status();}

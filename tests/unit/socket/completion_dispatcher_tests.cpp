@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_completion_dispatcher.hpp"
+#include "citrine_eclipse_mirage/net/transport_completion_dispatcher.hpp"
 #include <bit>
 #include <functional>
 #include <iostream>
 #include <vector>
-namespace s=preloader_l::socket;
+namespace s=citrine_eclipse_mirage::socket;
 namespace {
 unsigned checks=0;void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
 [[noreturn]]void unused(){throw std::logic_error("Unexpected dispatcher dependency");}

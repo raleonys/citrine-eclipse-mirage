@@ -8,6 +8,46 @@ This file distinguishes integrated source changes, imported source history and p
 
 - Fix two Registry startup-wait exception expectations so the assertion helper cannot satisfy its own expected-error check. Preserve original output/no-copy/wait-prefix checks and the real Windows SDK DWORD-cell cases; production Registry behavior is unchanged.
 
+- Verify that duplicate or empty later destinations in an atomic XML/INI batch cannot leave staged files or mutate previous targets, and that a subsequent valid batch succeeds.
+
+- Exercise the real file/license SHA-1 composition at 8192-byte read boundaries and across multiple reads, with independent known answers, changed-tail and prefix-digest rejection, and truncation coverage on a Unicode fixture path.
+
+- Require first-party SPDX markers at the beginning of each source file, allowing only launcher shebang or CMD echo preambles. Test that a lone late marker cannot masquerade as a license header; preserve the existing full-file duplicate marker scan. No shipping runtime or vendor changes.
+- Preserve the old Config2 logical hash table on allocation failures in direct `Table::assign_from` calls: stage bucket regrouping before publishing destination rows/capacity. Add a complete allocation-fault sweep and nonpower growth regressions to the existing source-linked Config2 test; retain power-of-two capacity rounding, successful positional ordering and the native-capacity model. No shipping export, config serialization or vendor policy changes.
+- Refresh the complete owner-supplied Asio tree to 1.39.0 and PEGTL from the uploaded 4.x branch snapshot b60f6110abd37e502d202d13a6c565410c552c33 (header 4.0.2), not a release-tag selection. Retain project C++20/C17 and the existing character-pack VDF grammar API. Pin exact archives, members and portable aliases; preserve upstream bytes, MinHook/pugixml selections and application policies.
+
+- Cover Windows native binary output open rejection under an active read-only sharing lease, proving the file is not truncated and a retry succeeds once the handle is closed.
+
+- Add a real-Windows native file-copy regression for a target held without write/delete sharing, ensuring rejected overwrite preserves the original and a retry succeeds after the owning handle closes.
+
+- Test GrantAchievement response-writer failures after successful persistence and event publication. Retain committed existing/new rows, release both locks and distinguish completed retries from further partial-progress increments.
+
+- Preserve the native linker compilation timestamp instead of stamping finalized DLLs with a retained reference-build value. Reject timestamp mutation during finalization; retain every other PE metadata policy.
+
+- Cover failed deletion of a retained atomic staging file after a batch staging failure: block new batches until cleanup succeeds, then permit a fresh commit without changing production persistence policy.
+
+- Test actual cached-avatar cleanup refusal for an owned nonempty matching directory: propagate the filesystem error and path, preserve its child and unrelated files, then remove the newly empty directory on repaired retry. The fixture makes no traversal-order assumption; production cleanup policy is unchanged.
+
+- Test production MessageHandler prepared-response ownership through event reservation, dropped output, explicit commit/cancel and callback failures. Preserve exact binary FIFO events for retry and verify post-reservation unwind without changing runtime policy.
+
+- Test extra-library allocation failures after native DLL acquisition and phase-result insertion. Require retained physical module leases, unchanged worker readiness, failed-release retention and exact idempotent cleanup retries; inject only throwing vector-buffer allocations.
+
+- Add an actual native process-to-registry reentry regression: a startup wait releases both recursive callback locks while retaining both binding leases, then restores outer serialization, results and error state before final drain. Existing recursive callback policy is unchanged.
+
+- Host all README badge SVGs in the repository under resources/badges, retain automatic latest-release and main-CI status updates through a bounded generated-data branch, place Latest release immediately after License, preserve the original embedded logos and Shields/GitHub badge styling, add Changelog and release-immutability badges, report actual main-matching native CTest passed/total counts and latest-release ZIP checksum availability, and remove the Shields dependency. Reduce opening CI to one basic source-integrity job; move manual Windows output fixtures out of that workflow and gate Actions/C++/Python CodeQL analyses on verified later synchronization. Document the required owner migration of GitHub's separate Default Setup while preserving all eleven merge-required validation contexts.
+
+- Cover fail-closed unload stack observations and safe retry after query, protection, commitment, region-progress and scan-budget refusals. A protected-page probe verifies that an oversized region is rejected before stack reads; production unload policy is unchanged.
+
+- Exercise the actual Environment UTF-8 wrapper and native conversion adapter with controlled query/fill failures, counted NUL data, short-fill length retention and retry. Verify registry flag/key partial state and filesystem-codepage isolation; leave the existing real-API native checks unarmed. Production behavior is unchanged.
+
+- Exercise actual Application RequestLicense over TCP with independent OpenSSL token ciphertext: a malformed file closes only its peer without consuming the normal-file attempt, repair retries that file, invalidation advances to cached data, and invalid-padding decrypted bytes retain the counted token while XML uses its C-string prefix.
+
+- Cover Registry query output cells sharing type, size and data storage across narrow/wide client and language replacements. Preserve the live output ordering, captured capacity, short-buffer result and final type fixup; shipping Registry behavior and Windows SDK tests are unchanged.
+
+- Extend retained socket message dispatch tests with 48 consumed-request scenarios: retain one exact counted response after the core empties or releases initially nonempty input. Verify scheduling-time owner/task/allocation state, exact cleanup and no double-free across inline/heap boundaries, empty output and embedded NUL. Test-only; production Asio behavior and Consumer parity are not claimed.
+
+- Rename active first-party namespaces, include paths, build targets, tools and DLL artifacts to citrine_eclipse_mirage. Retain the CryptQuery compatibility filename and public export ordinals. Replace reference VERSIONINFO branding with Citrine Eclipse Mirage and Copyright 2026 SURGE; derive matching numeric/string file and product versions from the selected release version. Bind weekly build receipts to that version without changing published releases or retained evidence.
+
 - Test the actual Environment ProgramData and LocalAppData adapters with required-size counts, repeated 260-code-unit growth, exact UTF-16 lengths, empty/missing results, retry and configured ProgramData bypass. Production behavior is unchanged.
 
 - Add a live Latest release badge to the README linking to the latest published GitHub release. Keep the version dynamic so future releases require no README edit.
@@ -20,7 +60,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 - Add native callback binding regressions for simultaneous constructor admission and destruction of a closed owner while its replacement remains active. Verify one winning context, callback usability and sole cleanup ownership.
 
-- Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Put exactly preloader_l.dll, its DLL SHA-256 sidecar and the project LICENSE at the ZIP root. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts and all other files out of the runtime ZIP, preserve native/Golden gates, and leave published releases unchanged.
+- Limit future release downloads to the validated binary ZIP and its ZIP SHA-256 sidecar. Put exactly citrine_eclipse_mirage.dll, its DLL SHA-256 sidecar and the project LICENSE at the ZIP root. Use GitHub's automatic tag source archives; retain source validation, receipts and test evidence as Actions artifacts. Keep publication-state receipts and all other files out of the runtime ZIP, preserve native/Golden gates, and leave published releases unchanged.
 
 - Add source-included native Application rollback regressions for controlled first/second worker-launch exceptions, retained provider-thread draining and normal startup. Keep production workers exactly `std::thread` through a private fixture seam; preserve listener cleanup, public options/exports and compiler CRT policy.
 

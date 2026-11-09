@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/application.hpp"
-#include "preloader_l/core/binary_io.hpp"
-#include "preloader_l/hash/hash.hpp"
-#include "preloader_l/xml/reader.hpp"
-#include "preloader_l/core/token_constants.hpp"
-#include "preloader_l/runtime/event_queue.hpp"
-#include "preloader_l/platform/hook_native_callbacks.hpp"
-#include "preloader_l/net/asio_service.hpp"
-#include "preloader_l/net/listener_policy.hpp"
-#include "preloader_l/platform/execution_windows.hpp"
+#include "citrine_eclipse_mirage/runtime/application.hpp"
+#include "citrine_eclipse_mirage/core/binary_io.hpp"
+#include "citrine_eclipse_mirage/hash/hash.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "citrine_eclipse_mirage/core/token_constants.hpp"
+#include "citrine_eclipse_mirage/runtime/event_queue.hpp"
+#include "citrine_eclipse_mirage/platform/hook_native_callbacks.hpp"
+#include "citrine_eclipse_mirage/net/asio_service.hpp"
+#include "citrine_eclipse_mirage/net/listener_policy.hpp"
+#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
 #include "../../src/runtime/application_internal.hpp"
 #include <asio.hpp>
 #include <MinHook.h>
@@ -24,7 +24,7 @@
 #include <cstring>
 #include <algorithm>
 
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 namespace fs=std::filesystem;
 namespace {
 int checks=0;
@@ -143,7 +143,71 @@ public:
         asio::error_code error;socket.shutdown(asio::ip::tcp::socket::shutdown_both,error);
         socket.close(error);require(!error,"explicit encrypted peer close succeeds");
     }
+    bool closes_without_output() {
+        socket.non_blocking(true);
+        const auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(5);
+        while(std::chrono::steady_clock::now()<deadline) {
+            char byte;asio::error_code error;
+            const auto count=socket.read_some(asio::buffer(&byte,1),error);
+            if(count!=0)return false;
+            if(error==asio::error::eof||error==asio::error::connection_reset)return true;
+            if(error!=asio::error::would_block&&error!=asio::error::try_again)throw std::system_error(error);
+            Sleep(1);
+        }
+        return false; // A timeout is not evidence of the required peer close.
+    }
 };
+std::string known_token_file(bool cached) {
+    // Independent OpenSSL AES-128-CBC answers, key 4132722dd082efb0dc6457c57668ca09,
+    // zero IV. Normal plaintext: <GameToken>normal-retry<&</GameToken>, PKCS7.
+    // Cached plaintext has cache\0<& inside the tags, then one zero byte to
+    // reach 32 bytes. It uses -nopad and deliberately fails PKCS7 validation.
+    constexpr unsigned char normal[]{
+        0xdd,0xdf,0xd6,0x4a,0x9b,0xa7,0xd4,0xc6,0x26,0x58,0x50,0x5c,0x2c,0xa5,0x25,0xb4,
+        0x5e,0x13,0x57,0xe3,0x28,0x5a,0xcf,0xcd,0x09,0xd3,0xed,0x4e,0xa0,0x63,0x5a,0x3b,
+        0xea,0x94,0x3a,0xf7,0xbb,0x78,0xc2,0x05,0x17,0x68,0xc5,0x3e,0x5f,0xd6,0x5a,0x43};
+    constexpr unsigned char cached_invalid_padding[]{
+        0xd7,0x72,0xda,0x21,0x36,0x33,0x58,0x06,0x7f,0x96,0xc6,0xee,0x8a,0x18,0xcc,0xbb,
+        0xb7,0xa4,0xee,0xce,0x90,0x36,0x41,0x44,0x3e,0x1a,0xdf,0x4b,0x21,0xa7,0x07,0xf1};
+    std::string bytes(65,'H');
+    if(cached)bytes.append(reinterpret_cast<const char*>(cached_invalid_padding),sizeof(cached_invalid_padding));
+    else bytes.append(reinterpret_cast<const char*>(normal),sizeof(normal));
+    return bytes;
+}
+void license_file_retry(const fs::path& root) {
+    const auto directory=root/"license-retry";fs::create_directories(directory);
+    file::NativeFactory files;
+    // The real license guard hashes this owned artifact; no external DRM file,
+    // ticket, dialog or process-exit branch participates in the fixture.
+    require(file::write_binary_03c1d0((directory/"fixture-drm.bin").u16string(),"abc",files),"owned known-SHA1 license guard artifact");
+    const auto config=R"("Config2" {"Game" {"ContentId" "fixture-license-retry" "DenuvoDllName" "fixture-drm.bin" "DenuvoDllHash" "A9993E364706816ABA3E25717850C26C9CD0D89D"}})";
+    require(file::write_binary_03c1d0((directory/"surge.cfg").u16string(),config,files),"owned license retry configuration");
+    application::Application app({(directory/"host.exe").u16string(),(directory/"data").u16string(),false,(directory/"program-data").u16string()});
+    app.start();
+    const auto port=app.configuration().server_port;
+    const auto base=app.configuration().license_directory;
+    fs::create_directories(fs::path(base).parent_path());
+    require(file::write_binary_03c1d0(base+u".dlf","H",files),"one-byte normal file reaches unsupported CBC domain");
+    require(file::write_binary_03c1d0(base+u"_cached.dlf",known_token_file(true),files),"distinct cached token prepared before failed request");
+    {
+        Peer failed(port);(void)failed.frame();
+        failed.send("<LSX><Request id='malformed-license' recipient='EbisuSDK'><RequestLicense/></Request></LSX>");
+        require(failed.closes_without_output(),"malformed token closes its peer without success XML; timeout is rejected");
+    }
+    require(file::write_binary_03c1d0(base+u".dlf",known_token_file(false),files),"repair normal token after failed request");
+    {
+        Peer retry(port);(void)retry.frame();
+        const auto normal=retry.request("normal-retry","<RequestLicense/>");
+        require(normal.find("<RequestLicenseResponse License=\"normal-retry&lt;&amp;\"/>")!=std::string::npos,
+            "new peer retries normal file instead of consuming cached attempt or remaining blocked");
+        require(retry.request("invalidate-license","<InvalidateLicense/>").find("License Deleted.")!=std::string::npos,"real invalidation clears loaded license");
+        const auto cached=retry.request("cached-after-invalidate","<RequestLicense/>");
+        require(cached.find("<RequestLicenseResponse License=\"cache\"/>")!=std::string::npos,
+            "invalidation preserves attempt count; invalid-padding plaintext is scanned and XML uses C-string prefix");
+    }
+    app.stop();
+    require(app.configuration().denuvo_token==std::string("cache\0<&",8),"stopped Application retains full counted token beyond XML C-string boundary");
+}
 void require_profile(std::string_view bytes,std::string_view id) {
     xml_reader_bridge::Backend xml;auto parsed=xml.parse_c_string(bytes);
     require(!parsed.has_error,"encrypted profile response parses");
@@ -291,6 +355,7 @@ int main(int argc,char** argv) try {
     event_mutex_contract();
     avatar_provider_arguments();
     Directory directory;
+    license_file_retry(directory.path);
     file::NativeFactory files;
     const auto cfg=directory.path/"surge.cfg";
     std::string text=R"("Config2" {"Game" {"ContentId" "fixture-id" "KeyForLicense" "fixture-key"} "User" {"Username" "fixture-user"} "Emulator" {"SDK" "99.88.77.66-main"} "Content" {)";
@@ -399,7 +464,7 @@ int main(int argc,char** argv) try {
     bool rejected=false;try{Peer peer(state.server_port);}catch(const std::system_error&){rejected=true;}
     require(rejected,"stopped listener rejects new connections");
     const auto online_dir=directory.path/"online";fs::create_directories(online_dir);
-    const auto provider_file=online_dir/"preloader_l_online.dll";
+    const auto provider_file=online_dir/"citrine_eclipse_mirage_online.dll";
     fs::copy_file(fs::path(argv[1]),provider_file);
     auto provider_module=LoadLibraryW(provider_file.wstring().c_str());require(provider_module!=nullptr,"real provider DLL loaded");
     auto mode=reinterpret_cast<void(*)(int)>(GetProcAddress(provider_module,"FixtureMode"));
@@ -507,7 +572,7 @@ int main(int argc,char** argv) try {
         "all failed provider startups release the physical DLL image");
     const auto hook_dir=directory.path/"hooks";fs::create_directories(hook_dir);
     fs::copy_file(fs::path(argv[1]),hook_dir/"fixture-extra.dll");
-    fs::copy_file(fs::path(argv[1]),hook_dir/"preloader_l_online.dll");
+    fs::copy_file(fs::path(argv[1]),hook_dir/"citrine_eclipse_mirage_online.dll");
     require(file::write_binary_03c1d0((hook_dir/"surge.cfg").u16string(),R"("Config2" {"Emulator" {"Documents" "fixture-documents" "BlockReruns" "true" "LoadExtraDLLsFromMain" "fixture-extra.dll" "LoadExtraDLLs" "fixture-extra.dll"}})",files),"all conditional hooks config");
     require(MH_Initialize()==MH_OK,"external engine initialized for ownership failure test");
     bool rejected_owner=false;
@@ -519,7 +584,7 @@ int main(int argc,char** argv) try {
     require(MH_Initialize()==MH_ERROR_ALREADY_INITIALIZED,"rollback leaves external engine initialized");
     require(MH_Uninitialize()==MH_OK,"external engine remains releasable by its owner");
     {
-        RegistryProviderProbe probe;probe.load(hook_dir/"preloader_l_online.dll");
+        RegistryProviderProbe probe;probe.load(hook_dir/"citrine_eclipse_mirage_online.dll");
         application::Application hooked({(hook_dir/"host.exe").u16string(),(hook_dir/"data").u16string(),true});hooked.start();
         require(native::is_bound(),"actual native callback owner published");
         require(hooked.configuration().username=="fixture-online","real provider and real hooks share the ready application owner");

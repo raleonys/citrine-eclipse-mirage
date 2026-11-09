@@ -1,15 +1,15 @@
 {
   "schema": "surge.dist-contract.v1",
   "task": "SURGE-WINDOWS-IO-20261029",
-  "owner_intent": "Expected final preloader_l.dll under dist; user inspected unsigned build output because final file was missing",
+  "owner_intent": "Expected final citrine_eclipse_mirage.dll under dist; user inspected unsigned build output because final file was missing",
   "directory": "dist",
-  "runtime_dll_name": "preloader_l.dll",
-  "raw_build_dll": "preloader.unsigned.dll",
-  "runtime_internal_export_module_name": "preloader.unsigned.dll",
+  "runtime_dll_name": "citrine_eclipse_mirage.dll",
+  "raw_build_dll": "citrine_eclipse_mirage.unsigned.dll",
+  "runtime_internal_export_module_name": "citrine_eclipse_mirage.unsigned.dll",
   "export_module_name_policy": "Preserve linked PE bytes; filesystem copy/rename does not rewrite the export directory or three C exports",
   "required_files": [
-    "preloader_l.dll",
-    "preloader_l.dll.sha256",
+    "citrine_eclipse_mirage.dll",
+    "citrine_eclipse_mirage.dll.sha256",
     "DIST_RECEIPT.json"
   ],
   "gate": "ALL_SIX_GOLDEN_STAGES_THEN_FINAL_NAME_RUNTIME_LOAD_START_SOCKET_PROFILE_SHUTDOWN_UNLOAD_PASS",
@@ -33,7 +33,7 @@
   "new_source_package": "surge-windows-io-fix-source.zip",
   "genuine_msvc_gate_bypassed": false,
   "python_bytecode": "All Golden children inherit PYTHONDONTWRITEBYTECODE=1; CORVEXON launches -B children; wrapper removes only generated caches for manifest-owned Python tools",
-  "metadata_profile": "Owner-reference VERSIONINFO and timestamp0xA6FD7C8F; retained linker14.0, Rich absent, checksum recomputed, original compiler DLL preserved",
+  "metadata_profile": "Project VERSIONINFO with selected release version; native compilation timestamp preserved, linker14.0, Rich absent, recomputed checksum and preserved raw compiler DLL",
   "latest_registry_wait_correction": "metadata/evidence/STARTUP_BUILD_FIX_STATUS.json",
   "public_exports": "DllMain@1 SURGE@2 DllShutdown@3 (same Infrastructure ordinals)",
   "final_import_descriptor_order": [

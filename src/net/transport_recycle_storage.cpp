@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_recycle_storage.hpp"
+#include "citrine_eclipse_mirage/net/transport_recycle_storage.hpp"
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 OwnedRecycleMap::OwnedRecycleMap(std::size_t bucket_count)
     :buckets_(bucket_count),map_{buckets_,&active_},metadata_(map_,free_){
     if(!bucket_count)throw UnsupportedInput("Owned map requires at least one bucket");
@@ -43,4 +43,4 @@ void OwnedRecycleMap::append(Socket socket,CancelOperation& operation){
     else node.head=&operation;
     node.tail=&operation;
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

@@ -5,7 +5,7 @@
 #include <string>
 #include <string_view>
 
-namespace preloader_l::xml_reader_bridge::detail {
+namespace citrine_eclipse_mirage::xml_reader_bridge::detail {
 struct Result {
     int code=0;
     std::string diagnostic;

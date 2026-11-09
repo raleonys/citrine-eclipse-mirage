@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/server.hpp"
-#include "preloader_l/net/session_policy.hpp"
-#include "preloader_l/net/session_handler.hpp"
-#include "preloader_l/xml/reader.hpp"
-#include "preloader_l/handlers/misc_handlers.hpp"
+#include "citrine_eclipse_mirage/net/server.hpp"
+#include "citrine_eclipse_mirage/net/session_policy.hpp"
+#include "citrine_eclipse_mirage/net/session_handler.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "citrine_eclipse_mirage/handlers/misc_handlers.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <vector>
 
-namespace srv=preloader_l::server;
-namespace net=preloader_l::net;
+namespace srv=citrine_eclipse_mirage::server;
+namespace net=citrine_eclipse_mirage::net;
 using namespace std::chrono_literals;
 namespace {
 unsigned checks=0;
@@ -93,7 +93,7 @@ void failure_and_buffer_lifetime() {
      require(failed&&f.handler.processed==0,"unterminated full frame is rejected");}
     {Fixture f;f.transport.deliver(std::string("1234567\0",8));f.scheduling.drain();require(f.scheduling.jobs.size()==1,"exact-limit terminated frame is admitted");}
 }
-namespace msg=preloader_l::messages;
+namespace msg=citrine_eclipse_mirage::messages;
 struct IdentityCipher final:msg::Cipher {
     unsigned encryptions=0,decryptions=0;
     void construct_0423d0_in_place()override{}
@@ -122,11 +122,11 @@ struct PendingEvent final:msg::EventQueue {
     std::uint64_t reserve_front_locked()override{require(!reserved&&present,"one live event reservation");reserved=true;return 1;}
     bool finish_reserved(std::uint64_t token,bool success)noexcept override{if(token!=1||!reserved)return false;reserved=false;if(success){present=false;++commits;}return true;}
 };
-struct ProtocolEffects final:msg::Effects,preloader_l::misc_handlers::NoResponse {
+struct ProtocolEffects final:msg::Effects,citrine_eclipse_mirage::misc_handlers::NoResponse {
     unsigned silent=0,valid=0;
     int atoi_05ee08(std::string_view)override{return 0;}
     bool registered_handler(std::uint32_t rva,const msg::XmlNode&,msg::XmlPrinter& printer)override{
-        if(rva==0x030eb0){++silent;preloader_l::misc_handlers::query_chunk_status_030eb0(*this);}
+        if(rva==0x030eb0){++silent;citrine_eclipse_mirage::misc_handlers::query_chunk_status_030eb0(*this);}
         require(rva==0x02f2d0,"follow-up uses registered connected-state command");++valid;
         printer.open("InternetConnectedState");printer.attribute("connected","1");printer.close();return true;
     }
@@ -144,9 +144,9 @@ void no_response_same_session() {
     // a controlled cipher, command effects and in-memory transport. No socket,
     // original DLL, foreign provider or file backend is executed here.
     for(bool encrypted:{false,true})for(bool coalesced:{false,true}) {
-        preloader_l::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;PendingEvent events;ProtocolEffects effects;
+        citrine_eclipse_mirage::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;PendingEvent events;ProtocolEffects effects;
         std::uint8_t encrypted_flag=0,unknown=0,show=0;const std::string version="fixture";
-        preloader_l::session_bridge::MessageHandler handler({encrypted_flag,unknown,show,version,cipher,events},xml,factory,random,effects);
+        citrine_eclipse_mirage::session_bridge::MessageHandler handler({encrypted_flag,unknown,show,version,cipher,events},xml,factory,random,effects);
         Scheduler scheduling;scheduling.frame_limit=scheduling.response_limit=4096;
         Transport transport;transport.max_request=4096;srv::Session session(transport,scheduling,handler);
         session.start_025720();transport.complete(transport.writes.front().bytes.size());transport.sent.clear();encrypted_flag=encrypted;

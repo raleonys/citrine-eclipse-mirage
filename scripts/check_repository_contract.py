@@ -222,7 +222,7 @@ def check(root):
         if not (root / name).is_dir():
             errors.append('Required source directory missing: ' + name)
     # Infrastructure-style module ownership: one module folder, then files.
-    for base in [root / 'src', root / 'include/preloader_l']:
+    for base in [root / 'src', root / 'include/citrine_eclipse_mirage']:
         for path in base.rglob('*'):
             if path.is_file() and len(path.relative_to(base).parts) > 2:
                 errors.append('Nested first-party module directory: ' + path.relative_to(root).as_posix())
@@ -243,7 +243,7 @@ def check(root):
         resource_source = root / profile['source']['member']
         if hashlib.sha256(resource_source.read_bytes()).hexdigest() != profile['source']['member_sha256']:
             errors.append('Infrastructure VERSIONINFO source differs from explicitly adopted bytes')
-        if '#include "preloader_version.rc"' not in (root / 'resources/surge.rc').read_text():
+        if '#include "version.rc"' not in (root / 'resources/surge.rc').read_text():
             errors.append('Adopted VERSIONINFO is not included in the compiled resource')
         mustavex = json.loads((root / 'metadata/MUSTAVEX_GOLDEN_METADATA.json').read_text())
         if mustavex.get('required', {}).get('versioninfo') != profile['required']['versioninfo']:

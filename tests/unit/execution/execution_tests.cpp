@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/execution.hpp"
+#include "citrine_eclipse_mirage/runtime/execution.hpp"
 #include <algorithm>
 #include <atomic>
 #include <bit>
@@ -21,7 +21,7 @@
 #include <windows.h>
 #endif
 
-using namespace preloader_l::execution;
+using namespace citrine_eclipse_mirage::execution;
 namespace {
 int checks = 0;
 void require(bool value, const char* message) {

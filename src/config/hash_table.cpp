@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/config/hash_table.hpp"
+#include "citrine_eclipse_mirage/config/hash_table.hpp"
 #include <algorithm>
 #include <bit>
 #include <cmath>
 #include <set>
 #include <stdexcept>
 
-namespace preloader_l::config_hash {
+namespace citrine_eclipse_mirage::config_hash {
 std::uint64_t fnv1a64(std::string_view bytes) noexcept {
     std::uint64_t hash=0xcbf29ce484222325ULL;
     for(unsigned char byte:bytes)hash=(hash^byte)*0x100000001b3ULL;
@@ -84,9 +84,12 @@ bool Table::insert_unique(std::string_view key) {
 void Table::assign_from(const Table& source) {
     if(this==&source)return;
     source.validate();valid_capacity(bucket_count);
-    const auto capacity=growth_target(bucket_count,source.traversal.size());
-    traversal=source.traversal;
-    rebuild(capacity); // 0162f0 calls017570 even when capacity is unchanged.
+    const auto capacity=rounded_buckets(growth_target(bucket_count,source.traversal.size()));
+    // 0162f0 still rebuilds on the unchanged capacity. Stage the reordered
+    // table before replacing live state so allocation failure leaves it intact.
+    auto reordered=regroup(source.traversal,capacity);
+    traversal=std::move(reordered);
+    bucket_count=capacity;
 }
 Table Table::clone(const Table& source) {
     source.validate();Table result;result.bucket_count=source.bucket_count;
@@ -163,4 +166,4 @@ configuration::Node to_configuration(const Node& source) {
         result.children.emplace(key,to_configuration(source.children.at(key)));
     return result;
 }
-} // namespace preloader_l::config_hash
+} // namespace citrine_eclipse_mirage::config_hash

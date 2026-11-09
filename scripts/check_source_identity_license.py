@@ -3,7 +3,7 @@
 
 Vendor payloads, vendor-derived tests and binary fixtures are deliberately excluded.
 Historical audit documents and strings are not part of executable namespace identity.
-The byte-locked VERSIONINFO source is excluded to preserve exact adopted PE bytes.
+The project VERSIONINFO source follows the same first-party license policy.
 """
 from pathlib import Path
 import re
@@ -13,10 +13,20 @@ OWNED_TOP = ('src', 'include', 'tests', 'tools', 'scripts', 'cmake', '.github')
 EXCLUDED = ('third_party/', 'tests/vendors/', 'tests/fixtures/', 'docs/evidence/', 'metadata/evidence/')
 C_FAMILY = {'.c', '.cc', '.cpp', '.cxx', '.h', '.hpp', '.hxx', '.rc'}
 SCRIPT = {'.py', '.sh', '.bash', '.ps1', '.cmake', '.yml', '.yaml', '.cmd'}
-LEGACY = re.compile(r'\b(?:[A-Za-z_]\w*_recovered|Recovered[A-Z]\w*)\b|\b(?:namespace\s+preloader_l::recovered|recovered::)')
+LEGACY = re.compile(r'\b(?:[A-Za-z_]\w*_recovered|Recovered[A-Z]\w*)\b|\b(?:namespace\s+citrine_eclipse_mirage::recovered|recovered::)')
 IDENTIFIER = re.compile(r'(?mi)^\s*(?:#|//|/\*+|\*|REM|;)\s*SPDX-License-Identifier:\s*([A-Za-z0-9.+-]+)\s*(?:\*/)?\s*$')
 
 RECOVERY_WORDING = re.compile(r'recovered', re.I)
+
+
+def has_initial_spdx_header(data, path):
+    """Require the owned license marker before source, after only a launcher prefix."""
+    lines = data.splitlines()
+    if lines and (lines[0].startswith('#!') or
+                  (path.suffix.lower() == '.cmd' and lines[0].strip().lower() == '@echo off')):
+        lines = lines[1:]
+    return bool(lines and IDENTIFIER.fullmatch(lines[0]) and
+                IDENTIFIER.fullmatch(lines[0]).group(1) == 'GPL-3.0-only')
 
 
 def candidates(root):
@@ -32,7 +42,7 @@ def candidates(root):
                 continue
             if path.suffix.lower() in C_FAMILY | SCRIPT or path.name in ('CMakeLists.txt', 'pre-push'):
                 yield path
-    for name in ('CMakeLists.txt', 'resources/surge.rc', 'exports/preloader_l.def'):
+    for name in ('CMakeLists.txt', 'resources/surge.rc', 'resources/version.rc', 'exports/citrine_eclipse_mirage.def'):
         path = root / name
         if path.is_file() and not path.is_symlink():
             yield path
@@ -53,10 +63,18 @@ def inspect(root=ROOT):
         ids = IDENTIFIER.findall(data)
         if ids != ['GPL-3.0-only']:
             errors.append(f'Expected exactly one GPL-3.0-only SPDX header: {rel} {ids}')
+        elif not has_initial_spdx_header(data, path):
+            errors.append('SPDX header must precede source content: ' + rel)
         if path.suffix.lower() in C_FAMILY and LEGACY.search(data):
             errors.append('Legacy recovery-derived C++ identity: ' + rel)
         if rel.startswith(('src/', 'include/')) and RECOVERY_WORDING.search(data):
             errors.append('Legacy recovery wording in active source: ' + rel)
+        if rel.startswith(('src/', 'include/')):
+            identity = data
+            if rel == 'include/citrine_eclipse_mirage/platform/crypt_query.hpp':
+                identity = identity.replace('target_suffix=u"preloader' + '_l.dll"', 'target_suffix=u"compatibility.dll"')
+            if re.search(r'preloader' + r'_l', identity, re.I):
+                errors.append('Retired project identity outside CryptQuery target: ' + rel)
     return checked, errors
 
 

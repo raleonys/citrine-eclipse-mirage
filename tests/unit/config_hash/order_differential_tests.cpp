@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/config/hash_table.hpp"
-#include "preloader_l/config/order.hpp"
+#include "citrine_eclipse_mirage/config/hash_table.hpp"
+#include "citrine_eclipse_mirage/config/order.hpp"
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
 
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 namespace {
 std::size_t checks=0;
 void require(bool value,const char* message) {++checks;if(!value)throw std::runtime_error(message);}

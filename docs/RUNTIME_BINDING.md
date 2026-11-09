@@ -84,7 +84,7 @@ owner even if allocation to append it to the source
 list fails. Cleanup releases leases once.
 
 A later owner correction imported Brownfield's
-`resources/preloader_version.rc` byte-identically.
+`resources/version.rc` byte-identically.
 Fixed VERSIONINFO numeric fields, four string fields,
 and translation profile 0409/1200 were retained.
 Following the last owner correction, the PNG is

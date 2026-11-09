@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/core/binary_io.hpp"
+#include "citrine_eclipse_mirage/core/binary_io.hpp"
 #include <filesystem>
 #include <fstream>
 #include <limits>
 #include <stdexcept>
 
-namespace preloader_l::file {
+namespace citrine_eclipse_mirage::file {
 namespace {
 std::uint32_t state(std::ios_base::iostate value) {
     return ((value&std::ios::eofbit)?1U:0U)|((value&std::ios::failbit)?2U:0U)|((value&std::ios::badbit)?4U:0U);
@@ -58,4 +58,4 @@ std::unique_ptr<Input> NativeFactory::open_input_039f70(const Path& path,std::ui
 std::unique_ptr<Output> NativeFactory::open_output_03a1a0(const Path& path,std::uint32_t mode,std::uint32_t share) {
     supported(mode,share);return std::make_unique<NativeOutput>(path);
 }
-} // namespace preloader_l::file
+} // namespace citrine_eclipse_mirage::file
