@@ -398,7 +398,7 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
     ~Impl(){try{stop();}catch(...){std::terminate();}}
     [[noreturn]] void throw_no_response_02bcd0_04d228() override{throw detail::NoResponse();}
     void error(std::string_view,std::exception_ptr) noexcept override{try{environment.debug_log("session operation failed");}catch(...){}}
-    struct SessionHandler final:server::Handler,messages::Effects {
+    struct SessionHandler final:server::Handler,messages::Effects,messages::UnknownMessageEffects {
         Impl& app;
         std::uint8_t encrypted=0,unknown=0;
         crypto::Cipher cipher;
@@ -422,7 +422,10 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
             std::lock_guard lock(app.handler_state_mutex);return router.registered_handler(rva,n,out);
         }
         int atoi_05ee08(std::string_view s) override{return app.environment.atoi_05ee08(s);}
-        [[noreturn]] void invalid_message_02bd30_04d228() override{throw std::invalid_argument("RE invalid LSX message");}
+        [[noreturn]] void invalid_message_02bd30_04d228() override{throw messages::UnknownMessageError{};}
+        void unknown_message_07bd70(const messages::UnknownMessageInput& input) override{
+            app.environment.unknown_message_07bd70(input);
+        }
         [[noreturn]] void thread_error_04a648(int c) override{thread_error(c);}
         void log_received(std::string_view input) override{app.environment.debug_log({"message received: ",input});}
         void log_response(std::string_view response) override{app.environment.debug_log({"message response: ",response});}

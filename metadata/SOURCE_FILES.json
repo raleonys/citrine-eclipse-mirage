@@ -398,8 +398,8 @@
       "sha256": "ab22662201c2b02308be6d1638b68c3bbe10f448360cd305bbd50d27ed4b2bde"
     },
     "include/citrine_eclipse_mirage/protocol/messages.hpp": {
-      "bytes": 5443,
-      "sha256": "7fc8be856e826410de007ffdc7b0a3ad9053546c38c0241a68d36b94bd5c5a7b"
+      "bytes": 6530,
+      "sha256": "0bd15171caca58a87a484959afdd45b5155e1421365cb922d95d76a8fee7c7da"
     },
     "include/citrine_eclipse_mirage/router/router.hpp": {
       "bytes": 2206,
@@ -950,8 +950,8 @@
       "sha256": "85f963fbade120ad6b5a31d3f5e78f13cdb2a1e8c6f0f8fd21933b27e5a64eef"
     },
     "src/protocol/messages.cpp": {
-      "bytes": 9569,
-      "sha256": "aad320a86c8c691f2b112e77ddf40ed682c5431eb2c9127594c193b1a922aa1a"
+      "bytes": 10736,
+      "sha256": "dda0871d186751b2588a79720292dfecc80d31ecae11a668b1b58c14f39fb983"
     },
     "src/router/router.cpp": {
       "bytes": 5831,
@@ -974,20 +974,20 @@
       "sha256": "8dc98966b7fafc1fb1b8a83b683fd9173994242e542cfec1298e54850b5ac6bf"
     },
     "src/runtime/application.cpp": {
-      "bytes": 32637,
-      "sha256": "89e712de0949f2e6c200f504daa47740254bb49b59f1d91ce6ca5cbf9579f1a8"
+      "bytes": 32812,
+      "sha256": "7a2be80fd20f60a6e5b279ff8836c4be875040b5f3f32692219cce9265e4348b"
     },
     "src/runtime/application_defaults.cpp": {
       "bytes": 2283,
       "sha256": "75093d8c8f0de28b0b2a69f367ec37fc040e0c542335ddb4343a3e637da78979"
     },
     "src/runtime/application_environment.cpp": {
-      "bytes": 14949,
-      "sha256": "0269024c9210c327c9f9df4f18162a002386f39c6fa2e76b31d7d3dd7a58a3cc"
+      "bytes": 15775,
+      "sha256": "ec1bf4588229ed2bd7e3b76d0c3f59fded12c94ae87c6e42c106d3b2d98d11f6"
     },
     "src/runtime/application_internal.hpp": {
-      "bytes": 7610,
-      "sha256": "93fc3589b93e6310b9e6b1eb31636a933ea5e8e0a528270a75e5bb2d6ff5c2a2"
+      "bytes": 7681,
+      "sha256": "c6e84bf5b2c5bb8f1bc6e98583f8a2169b569b83faf0123f8df4e3ff1e49880a"
     },
     "src/runtime/bootstrap.cpp": {
       "bytes": 4452,
@@ -1278,8 +1278,8 @@
       "sha256": "6a056772129506da3a5151e1f3c224cc3d6d7e38e4a4ae99f2f26714079b77a9"
     },
     "tests/native/environment_dialog_tests.cpp": {
-      "bytes": 14268,
-      "sha256": "f0c74e0ed148f91054ec5b00a9d6d87bd75527d7472e89b6f5809ef404ed803e"
+      "bytes": 16018,
+      "sha256": "2edb5776b6a61c6d513a274fd3764b9b0786f2941018c7a4840265158beb1779"
     },
     "tests/native/environment_license_key_tests.cpp": {
       "bytes": 13208,
@@ -1338,8 +1338,8 @@
       "sha256": "4489e4d8ebddc530fe0831d239f7f3b77dbff61fb40636600f0c9c09d6ec1614"
     },
     "tests/native/session_flow_tests.cpp": {
-      "bytes": 14929,
-      "sha256": "9a80bfe69cf160c51d96101f281850100651fb11d0a8ab7520d75ad682f62fe0"
+      "bytes": 18973,
+      "sha256": "9a69dab8ef9749b1a967b4862633bb7f355c64ca663841d39a4aaf0833937fb1"
     },
     "tests/native/socket_close_semantics_tests.cpp": {
       "bytes": 2598,
@@ -1698,8 +1698,8 @@
       "sha256": "f061792280841d902ad96b3bbfd5d31111996936739181b9fb11ec9e3557f45b"
     },
     "tests/unit/messages/messages_tests.cpp": {
-      "bytes": 23205,
-      "sha256": "ccba8a0f964aac6ae569ef5c31b2b94dbe53fc9e7692939946e7202ce2e6fd9e"
+      "bytes": 29585,
+      "sha256": "f4268406ac7e12dc68a3f205bd2842cac4bd077876d45aaeb275d3cfc0a850a4"
     },
     "tests/unit/misc_handlers/misc_handlers_tests.cpp": {
       "bytes": 9147,

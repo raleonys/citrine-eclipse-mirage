@@ -14,6 +14,7 @@
 #include <fstream>
 #include <system_error>
 #include <limits>
+#include <iostream>
 #include "avatar_data.hpp"
 
 namespace citrine_eclipse_mirage::application::detail {
@@ -100,6 +101,20 @@ configuration::Node Environment::load_document(const Path& p){
 }
 void Environment::log(std::string_view event) {
     log({event});
+}
+void Environment::unknown_message_07bd70(const messages::UnknownMessageInput& input) {
+    struct Dialog final:messages::UnknownMessageDialog {
+        Environment& environment;
+        explicit Dialog(Environment& value):environment(value){}
+        void show(std::string title,std::string body,std::uint32_t flags) override {
+            const auto wide_title=wide(environment.widen_0145d0(title));
+            const auto wide_body=wide(environment.widen_0145d0(body));
+            (void)MessageBoxW(nullptr,wide_body.c_str(),wide_title.c_str(),flags);
+        }
+    } dialog(*this);
+    // This reference diagnostic uses the console stream in both build modes.
+    // It is independent of ShowLSX and the Debug-only surge.log sink.
+    messages::report_unknown_message_07bd70(input,std::cout,dialog);
 }
 void Environment::log(std::initializer_list<std::string_view> parts) {
 #ifndef NDEBUG
