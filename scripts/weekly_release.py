@@ -139,6 +139,12 @@ def junit(path):
     return len(cases)
 
 
+def _successful_exit(value):
+    # JSON false compares equal to 0 in Python, and absent/empty Golden step
+    # outcomes are falsey. Neither is evidence that a process exited with 0.
+    return type(value) is int and value == 0
+
+
 def validate_profile(folder, profile, manifest, source, version=None):
     folder = Path(folder)
     identity = load(folder / 'EVIDENCE_IDENTITY.json')
@@ -151,7 +157,7 @@ def validate_profile(folder, profile, manifest, source, version=None):
     if (receipt.get('mode') != mode or receipt.get('configuration') != 'Release'
             or receipt.get('build_succeeded') is not True
             or receipt.get('validation_result') != 'PASS_SELECTED_PROFILE'
-            or receipt.get('validation_exit_code') != 0
+            or not _successful_exit(receipt.get('validation_exit_code'))
             or receipt.get('source_manifest_sha256') != manifest):
         raise ValueError('A successful exact-source native MSVC profile is required')
     if not receipt.get('compiler', '').lower().endswith('cl.exe'):
@@ -169,10 +175,10 @@ def validate_profile(folder, profile, manifest, source, version=None):
     for report in (dist, golden):
         if (report.get('result') != 'GOLDEN_PASS' or report.get('sha256') != digest
                 or [s['stage'] for s in report.get('steps', [])] != ORDER
-                or any(s['exit_code'] for s in report['steps'])):
+                or any(not _successful_exit(s.get('exit_code')) for s in report['steps'])):
             raise ValueError('All six Golden gates must pass for this exact DLL')
         runtime = report.get('runtime_check', {})
-        if (runtime.get('exit_code') != 0 or runtime.get('sha256_before') != digest
+        if (not _successful_exit(runtime.get('exit_code')) or runtime.get('sha256_before') != digest
                 or runtime.get('sha256_after') != digest):
             raise ValueError('Final-name DLL runtime acceptance is missing')
     if (dist.get('source_manifest_sha256') != manifest
