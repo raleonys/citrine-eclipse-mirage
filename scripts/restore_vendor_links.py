@@ -4,11 +4,13 @@
 import argparse
 from pathlib import Path
 import os
+import tempfile
 from project_files import vendor_symlinks
 
 
 def restore(root):
     root=Path(root).resolve()
+    pending=[]
     for name,target in vendor_symlinks(root).items():
         path=Path(root)/name
         for parent in path.parents:
@@ -19,11 +21,19 @@ def restore(root):
             continue
         if not path.is_file() or path.read_bytes()!=target.encode('utf-8'):
             raise ValueError('Refusing to replace a non-descriptor vendor path: '+name)
-        data=path.read_bytes();path.unlink()
-        try:os.symlink(target,path,target_is_directory=True)
-        except OSError:
-            path.write_bytes(data)
-            raise
+        pending.append((name,path,target))
+    # Reject invalid later aliases before publishing any earlier conversion.
+    for name,path,target in pending:
+        if path.is_symlink() or not path.is_file():
+            raise ValueError('Vendor descriptor changed during restoration: '+name)
+        if path.read_bytes()!=target.encode('utf-8'):
+            raise ValueError('Vendor descriptor changed during restoration: '+name)
+        # Publish each alias independently. A later OS failure leaves completed
+        # links valid and pending descriptors intact for an ordinary retry.
+        with tempfile.TemporaryDirectory(prefix='.vendor-alias-',dir=path.parent) as temporary:
+            staged=Path(temporary)/'link'
+            os.symlink(target,staged,target_is_directory=True)
+            os.replace(staged,path)
 
 
 if __name__=='__main__':

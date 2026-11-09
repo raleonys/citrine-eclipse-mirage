@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Preflight all locked vendor alias descriptors before restoration, then stage each symlink before replacing its descriptor. Preserve descriptors on creation/publication failure and support retry after later OS failures; completed aliases remain converted. Consolidate the complementary fixes from PRs #252 and #254 without changing vendor bytes.
+
 - Test GrantAchievement response-writer failures after successful persistence and event publication. Retain committed existing/new rows, release both locks and distinguish completed retries from further partial-progress increments.
 
 - Preserve the native linker compilation timestamp instead of stamping finalized DLLs with a retained reference-build value. Reject timestamp mutation during finalization; retain every other PE metadata policy.
