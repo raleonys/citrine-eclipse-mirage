@@ -2,7 +2,9 @@
 
 The current machine-readable record is
 [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json);
-current PR validation belongs to the exact source commit in PR #149. The
+its task and validation fields retain earlier Asio/XML migration checkpoints. Current
+validation belongs to the selected head's GitHub Actions results, following
+[the synchronization workflow](GITHUB_WORKFLOW.md). The
 [native-allocation/VALIDATION.json](../metadata/evidence/native-allocation/VALIDATION.json)
 record describes an earlier checkpoint.
 Earlier evidence is retained with its original source snapshots.
@@ -10,7 +12,7 @@ Earlier evidence is retained with its original source snapshots.
 One Application owner manages configuration, Asio service, handler/event/
 achievement storage, provider, companion DLL, and hook lifetimes. Its startup
 worker runs outside loader lock. Production exports are **DllMain@1, SURGE@2,
-DllShutdown@3**; the C++ source API is a separate `preloader.source.dll`
+DllShutdown@3**; the C++ source API is a separate `citrine_eclipse_mirage.source.dll`
 target. There are no readiness/port test exports; tools observe existing
 `EALsxPort` and LSX responses.
 
@@ -78,6 +80,8 @@ event/error/config values through the existing `showLSX` gate; Release
 neither creates `surge.log` nor appends to an existing Debug log.
 
 Local LLVM-MinGW/Wine results are not native Windows/MSVC, Golden, or game
-acceptance. Those checks remain pending for the latest changed source.
+acceptance. Hosted native and Golden results must be checked for the selected
+source head; historical NOT_RUN fields are not evidence that no later native
+execution occurred. Real game acceptance remains owner-run and DLL-specific.
 Donor retirement is unapproved; registry provenance, aggregate memory
 budgets, shutdown liveness, and remaining source/test/tooling reviews are open.

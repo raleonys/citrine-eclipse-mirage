@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/achievement_utc.hpp"
+#include "citrine_eclipse_mirage/runtime/achievement_utc.hpp"
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 #include <vector>
 
-namespace ar=preloader_l::achievement_runtime;
+namespace ar=citrine_eclipse_mirage::achievement_runtime;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -65,6 +66,25 @@ void selected_host_compatibility(){
     require(epoch->year==70 && epoch->month==0 && epoch->day==1 && epoch->hour==0 && epoch->minute==0 && epoch->second==0,"host epoch fixture fields");
     require(formatter.put_time_03d610(*epoch,"%Y-%m-%dT%H:%M:%S")=="1970-01-01T00:00:00","selected host ISO formatting");
     require(formatter.put_time_03d610(*leap,"%Y-%m-%d_%H-%M-%S")=="2000-02-29_12-34-56","selected host filename formatting");
+    // Compare the real adapter against the CRT for valid and rejected time64
+    // values. Fixed UTC inputs avoid wall-clock and local timezone dependence.
+    for(const std::int64_t value:{
+        std::int64_t{-1},std::int64_t{0},std::int64_t{951827696},
+        std::int64_t{253402300799LL},std::int64_t{253402300800LL},
+        std::numeric_limits<std::int64_t>::max()}) {
+        const __time64_t native_seconds=static_cast<__time64_t>(value);
+        std::tm direct_fields{};
+        const auto native_error=::_gmtime64_s(&direct_fields,&native_seconds);
+        const auto actual=clock.gmtime_05fffc(value);
+        require(actual.has_value()==(native_error==0),"native time64 success/error parity");
+        if(native_error==0) {
+            const ar::BrokenDown direct{direct_fields.tm_sec,direct_fields.tm_min,
+                direct_fields.tm_hour,direct_fields.tm_mday,direct_fields.tm_mon,
+                direct_fields.tm_year,direct_fields.tm_wday,direct_fields.tm_yday,
+                direct_fields.tm_isdst};
+            require(equal(*actual,direct),"native time64 copies all nine CRT tm fields");
+        }
+    }
 }
 }
 int main(){try{contracts();selected_host_compatibility();std::cout<<"PASS: "<<checks<<" UTC wrapper checks; fixed providers and explicit host compatibility\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

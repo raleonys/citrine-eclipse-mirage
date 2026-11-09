@@ -17,7 +17,7 @@ required by it. Other application modules were not copied from Bluefield.
 | Selector | Bluefield `crypt_query.cpp`; include/namespace adaptation only; normalized body unchanged |
 | Filename reading | UTF-16 unit reads via `ReadProcessMemory`; pointer-overflow check; no fixed path bound in the original version |
 | Unreadable/invalid UTF-16 | Fall back to the original object; no UD2/heap UTF-8 conversion |
-| Matching | Case-sensitive `preloader_l.dll` suffix; companion `EAAntiCheat.GameServiceLauncher.dll`; Bluefield null/non-file rules |
+| Matching | Case-sensitive `citrine_eclipse_mirage.dll` suffix; companion `EAAntiCheat.GameServiceLauncher.dll`; Bluefield null/non-file rules |
 | Original call | Preserve all SDK arguments/output pointers and the result |
 | LastError / observation | Preserve incoming/outgoing LastError in Bluefield order; thread-local phase observation |
 | Missing trampoline | Bluefield failure log and fail-fast; no fabricated silent return |

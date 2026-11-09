@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/session_handler.hpp"
-#include "preloader_l/xml/reader.hpp"
-#include "preloader_l/runtime/event_queue.hpp"
+#include "citrine_eclipse_mirage/net/session_handler.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "citrine_eclipse_mirage/runtime/event_queue.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-namespace msg=preloader_l::messages;
-namespace bridge=preloader_l::session_bridge;
+namespace msg=citrine_eclipse_mirage::messages;
+namespace bridge=citrine_eclipse_mirage::session_bridge;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -57,7 +57,7 @@ struct Effects final:msg::Effects {
 };
 void contracts(){
     std::uint8_t encrypted=9,unknown=8,show=0;std::string version="one";
-    Cipher cipher;Factory factory;Random random;Events events;Effects effects;preloader_l::xml_reader_bridge::Backend xml;
+    Cipher cipher;Factory factory;Random random;Events events;Effects effects;citrine_eclipse_mirage::xml_reader_bridge::Backend xml;
     bridge::MessageHandler handler({encrypted,unknown,show,version,cipher,events},xml,factory,random,effects);
     require(cipher.resets==0 && encrypted==9 && unknown==8,"bridge construction adds no reset");
     handler.reset_02bc70();require(cipher.resets==1 && encrypted==0 && unknown==0,"reset changes shared flags and actual cipher");
@@ -79,7 +79,7 @@ void contracts(){
     effects.throw_handler=false;encrypted=1;cipher.throw_encrypt=true;threw=false;try{(void)handler.process_message_033d70(wire);}catch(const std::runtime_error&){threw=true;}require(threw,"cipher exception propagates");
 }
 struct ReservedEvents final:msg::EventQueue {
-    mutable preloader_l::event_queue::OwnedStorage storage;
+    mutable citrine_eclipse_mirage::event_queue::OwnedStorage storage;
     const std::string first=std::string("first\0payload",13)+std::string(512,'F'),next=std::string("next\0event",10);
     bool held=false,throw_copy=false;std::int32_t count=1;
     unsigned reservations=0,pops=0,finishes=0,positive=0,negative=0;
@@ -96,10 +96,10 @@ struct ReservedEvents final:msg::EventQueue {
 };
 struct PreparedFixture {
     ReservedEvents events;Cipher cipher;Factory factory;Random random;Effects effects;
-    preloader_l::xml_reader_bridge::Backend xml;std::uint8_t encrypted=1,unknown=0,show=1;std::string version="fixture";
+    citrine_eclipse_mirage::xml_reader_bridge::Backend xml;std::uint8_t encrypted=1,unknown=0,show=1;std::string version="fixture";
     bridge::MessageHandler handler{{encrypted,unknown,show,version,cipher,events},xml,factory,random,effects};
     PreparedFixture(){effects.allow_event=true;}
-    preloader_l::server::PreparedResponse prepare(){cipher.encryptions=0;return handler.prepare_response("00");}
+    citrine_eclipse_mirage::server::PreparedResponse prepare(){cipher.encryptions=0;return handler.prepare_response("00");}
 };
 std::vector<std::string> plaintext_frames(std::string_view wire){
     std::vector<std::string> result;std::size_t at=0;

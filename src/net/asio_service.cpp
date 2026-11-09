@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/asio_service.hpp"
-#include "preloader_l/net/listener_policy.hpp"
-#include "preloader_l/net/handler_policy.hpp"
+#include "citrine_eclipse_mirage/net/asio_service.hpp"
+#include "citrine_eclipse_mirage/net/listener_policy.hpp"
+#include "citrine_eclipse_mirage/net/handler_policy.hpp"
 #include <asio.hpp>
 #include <algorithm>
 #include <condition_variable>
@@ -13,7 +13,7 @@
 #include <utility>
 #include <vector>
 
-namespace preloader_l::net {
+namespace citrine_eclipse_mirage::net {
 namespace {
 using namespace server;
 Error translated(const asio::error_code& e) {

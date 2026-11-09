@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/registry.hpp"
+#include "citrine_eclipse_mirage/platform/registry.hpp"
 #include <array>
 #include <cstdlib>
 #include <iostream>
@@ -23,7 +23,7 @@ void operator delete(void* p,std::size_t) noexcept{std::free(p);}
 void operator delete[](void* p,std::size_t) noexcept{std::free(p);}
 
 namespace {
-namespace r=preloader_l::registry;
+namespace r=citrine_eclipse_mirage::registry;
 void require(bool ok,const char* message){if(!ok)throw std::runtime_error(message);}
 struct LogFailure {unsigned identity=73;};
 enum Event {original,allocate,log,finish,release};
