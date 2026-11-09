@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_queued_write.hpp"
+#include "citrine_eclipse_mirage/net/transport_queued_write.hpp"
 #include <functional>
 #include <iostream>
 #include <memory>
 #include <thread>
 #include <vector>
-namespace s=preloader_l::socket;
+namespace s=citrine_eclipse_mirage::socket;
 namespace {
 unsigned checks=0;void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
 [[noreturn]]void unexpected(){throw std::logic_error("Unexpected queued write dependency");}

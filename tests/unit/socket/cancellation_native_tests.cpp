@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_cancellation_native.hpp"
-#include "preloader_l/net/transport_native.hpp"
+#include "citrine_eclipse_mirage/net/transport_cancellation_native.hpp"
+#include "citrine_eclipse_mirage/net/transport_native.hpp"
 #include <cstring>
 #include <functional>
 #include <iostream>
 #include <vector>
 
-namespace s=preloader_l::socket;
-namespace srv=preloader_l::server;
+namespace s=citrine_eclipse_mirage::socket;
+namespace srv=citrine_eclipse_mirage::server;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

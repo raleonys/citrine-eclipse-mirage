@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/application.hpp"
+#include "citrine_eclipse_mirage/runtime/application.hpp"
 #include <cstddef>
 #include <cstdio>
 #include <cstring>
@@ -54,7 +54,7 @@ void debug_stage(const char* stage, std::size_t fail_at=0) noexcept {
 }
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 void constructor_contract() {
-    const auto s=preloader_l::application::initial_state();
+    const auto s=citrine_eclipse_mirage::application::initial_state();
     require(s.executable_path.empty()&&s.user_directory.empty()&&s.cookie_path.empty()&&
         s.last_profile_path.empty()&&s.last_avatar_path.empty()&&s.avatar.empty()&&s.default_avatar.empty(),
         "constructor owns empty path slots before configuration");
@@ -87,8 +87,8 @@ void constructor_contract() {
         "counted language list preserves original order and spelling");
 }
 void independent_values() {
-    auto first=preloader_l::application::initial_state();
-    const auto second=preloader_l::application::initial_state();
+    auto first=citrine_eclipse_mirage::application::initial_state();
+    const auto second=citrine_eclipse_mirage::application::initial_state();
     first.game_attributes.at("LANGUAGES")[0]='X';first.emulator_attributes.clear();first.username="changed";
     first.extra_dlls.push_back(u"local.dll");first.server_port=3226;
     require(second.username=="SURGE"&&second.game_attributes.at("LANGUAGES").starts_with("ar_SA")&&
@@ -114,7 +114,7 @@ void allocation_unwind() {
         allocation::remaining=fail_at;allocation::armed=true;
 #endif
         try {
-            auto state=preloader_l::application::initial_state();
+            auto state=citrine_eclipse_mirage::application::initial_state();
 #if defined(_MSC_VER) && defined(_DEBUG)
             allocation::remaining=fail_at;allocation::armed=true;
             for(const auto& item:inserts)
@@ -170,7 +170,7 @@ int main(int argc,char** argv) try {
         const bool path = std::strcmp(mode, "path-default") == 0;
         if (!raw && !map && !state && !stateDirect && !narrow && !path) return 2;
         std::fprintf(stderr, "PROBE_NOEXCEPT state=%d map=%d\n",
-                     int(noexcept(preloader_l::configuration::State{})),
+                     int(noexcept(citrine_eclipse_mirage::configuration::State{})),
                      int(noexcept(std::map<std::string, std::string, std::less<>>{})));
         std::fflush(stderr);
         debug_stage(mode);
@@ -190,10 +190,10 @@ int main(int argc,char** argv) try {
                 std::u16string value;
                 (void)value;
             } else if (state) {
-                preloader_l::configuration::State value{};
+                citrine_eclipse_mirage::configuration::State value{};
                 (void)value;
             } else {
-                preloader_l::configuration::State value;
+                citrine_eclipse_mirage::configuration::State value;
                 (void)value;
             }
             allocation::armed = false;

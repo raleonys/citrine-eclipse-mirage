@@ -1,6 +1,6 @@
 {
   "schema": "surge.evidence-retention.v1",
-  "purpose": "Immutable byte-exact historical evidence, not new source QA output",
+  "purpose": "Hash-locked historical evidence; explicit owner-approved privacy redactions retain original and current digest provenance; not new execution evidence",
   "classification": "HISTORICAL_ONLY_NOT_RUNTIME_ACCEPTANCE",
   "original_history_commit": "aba8ee3b21d59da6262a3126df85a2d373de8485",
   "original_root": "docs/evidence/",
@@ -56,17 +56,17 @@
     "optimization/VALIDATION.json": "f25f2f125bfd192e23961374a38085638b44868f475da9097d8147ecd5a81f1d",
     "optimization/XML_BENCHMARKS.json": "883a56c33716e000c2b21d49f7415472e8595fac2528d66845c1f78e5a370872",
     "optimization/XML_CORPUS_PARITY.json": "0353f2a286a05463db34944087965831413912f7860afecee13c5d6c79c2754d",
-    "OWNER_ACCEPTANCE_COMPILE.log": "b45544db043237df57bb6cd15daf5abc1c67d3d6683766f13b8f2b83f56de721",
-    "OWNER_ACCEPTANCE_CRT.log": "0984e1bf653dee4b6614fb08c4592dff6e0c3a8cfaa3713f17ef402a84778387",
-    "OWNER_ACCEPTANCE_DEBUG.log": "115141f1f81ea094e87a7b153a1a79ad01e0b1a97a1420b962a8d9c1a556fc99",
-    "OWNER_ACCEPTANCE_NATIVE.log": "7f3af5e1636e74526c8fabe8f33f78edab633a394aeab1994b15cdb4bcaf2a57",
-    "OWNER_ACCEPTANCE_PRODUCTION.log": "346ad5d7fc8394a67ecdff75295fe3e716e94017d681db6a8ff2a931f7c98d08",
+    "OWNER_ACCEPTANCE_COMPILE.log": "cc9b03fabca6526dd4f7dcb7ad8cc597292bd34e621d9caf5617c25a1a0c42e9",
+    "OWNER_ACCEPTANCE_CRT.log": "6517f1193ae0ba04337dddd622839d6cba4c0cf2545197e7359985aa217cc896",
+    "OWNER_ACCEPTANCE_DEBUG.log": "967770bca21097c2e895bfe4a84dd4f51c9ddf61be8a085d13fd2cab9a12f91f",
+    "OWNER_ACCEPTANCE_NATIVE.log": "844d1da840fa88274a3216f2911002294494b364fe07266d8ddb008a74337907",
+    "OWNER_ACCEPTANCE_PRODUCTION.log": "b26a8217397f6e60226709077869bd1f31e770f287f78a5805d7627ef3ff265d",
     "OWNER_DLL_SIZE_COMPARISON.json": "694d4131b1d197d2789e7980dfe54d9c848c24d8db79a5162fb8b3aa62776b4a",
     "OWNER_FINAL_DLL_INSPECTION.json": "73cb2b0f30c8e024ae5c5b4053aef0065a7ca29f3abc1650a86f2001dbdeea8b",
-    "OWNER_NATIVE_ACCEPTANCE.json": "1bbfa72094b32dd6e1ee147adbbd8fc08445c754e74c69e6be7e157dd2da240a",
+    "OWNER_NATIVE_ACCEPTANCE.json": "4c2ae52370ac86c37d4b34de28a3e88a5a7cc21769ee192051c44d04e480b736",
     "PRODUCT_IDENTITY_FIX.json": "a2cac72acd0501f772212bc4bf788bcae262dc25441c76fbc7084681537c7c7d",
-    "PRODUCTION_IMPORT_FIX.json": "3e5dd278062867e0ac5c677502dc12f25ed84d06e9f792ec186ca55fef0638b0",
-    "PRODUCTION_IMPORT_USER_GOLDEN_INPUT.log": "156dc94e71bd139d7a1d174ee7765fa37027abb6c3c75ea56312157f22add74f",
+    "PRODUCTION_IMPORT_FIX.json": "c018ea6074e9a6673e6355afeb674b9fcf0badf5c343b69e56ba36cba1cf2e30",
+    "PRODUCTION_IMPORT_USER_GOLDEN_INPUT.log": "34aba816aa259b38fe0b8980fe08908d10a16a73922b6a6ea481a9942cbc16b5",
     "PUBLIC_ABI_STATUS.json": "01ad3fdef635f5d2f9871c9b442919f7ecc01f2c68b8a1e49996f08a014f9ce5",
     "RE_COPY_04895C_asm.txt": "4d538132e0841673ee600da34d14e8f102dd76a13a435fa59a9c3426d72efdcf",
     "RE_COPY_04895C_pseudo.txt": "f2ea7e6d206627e7cdf39a76649c77602047d362b07f3f430a06017011c27af0",
@@ -114,8 +114,8 @@
     "SOURCE_REVIEW_MUTATIONS.json": "7f65256d2ceda70b565ec4bad4caf42d76c18c472f98c4ba14a70e2e82896ee3",
     "SOURCE_REVIEW_VALIDATION.json": "e7cc148a9358f34ab5cf3159f0c54498dfb0cbdeaf3f11455cfbcc9b5227220b",
     "SOURCE_TEST_ADOPTIONS.csv": "a1282ed8d740e575a7208effcbd7485a0b08d0bf3a3921ee30d25ac94a4c3b3b",
-    "STARTUP_BUILD_FIX_STATUS.json": "02a9010458f2cabf918fa328c2c237513a3a2416a46040de51c31cd5a19a9816",
-    "STARTUP_BUILD_FIX_USER_NATIVE_INPUT.log": "02ab1157edb38dc1f9c4afbcaa72771d691f4230fdde8ccfb004c66b5bd45dbd",
+    "STARTUP_BUILD_FIX_STATUS.json": "1a21beb0f5b7663d1de7b2308a93d33cbc7ea01c8d09c858e9abca068146c05f",
+    "STARTUP_BUILD_FIX_USER_NATIVE_INPUT.log": "651e12004d8a56c3e2209b13b2d1dfddb009abd11d4dc1ce91737c73154c162e",
     "TEST_ADOPTION_MATRIX.json": "eebaf56ab5eb19dd57978a5b70172ad4f625b60832145e6c5396ec92104f34b1",
     "TOOLING_PROVENANCE.json": "41a1ce83c684c0ac179b22758c640cafca3c8f236ab847cd9a5f69885673e4b8",
     "TRANSLATION_UNIT_USAGE.json": "18ff549522cb4b86416d63e02fc95160511fae5957cd2a188a1ab9f7bd15fd38",
@@ -124,8 +124,77 @@
     "VENDOR_PEGTL_COMPILER_DIAGNOSTIC.log": "94bc7a94e854e4b27039b4035256875c0d891dc958360fd9b852a808d3d8910b",
     "VENDORING_DEVIATIONS.json": "a293fb14e331f1d50e1ead1be2d623a60350e30ee41ef7aa4e07aae23c8b5a3e",
     "VENDORING_STATUS.json": "8def1799a5ad919ce32c4c075b177828a90abe603c431171189bb52b8cd997ff",
-    "weekly-release/VALIDATION.json": "6db92bceb67957f8e779530c46ae7caf49e6ca5f9e23c8dfc3a7340b2417703c",
+    "weekly-release/VALIDATION.json": "dbf918c657a4df9a9fb740c99b8b44eb7d75478357c74031388584417b82f0e5",
     "WINDOWS_IO_FIX.json": "abfe40608c28f6c52e41e992ae2f5d160bf60c35bf060c47f0ac152e5584bd79",
     "WINDOWS_IO_REFERENCE_POLICY_AUDIT.json": "62b5d0fe8b324cc8a8c7ef04bd976fdd4deb5ef616bf45f4037c159c77b26d0f"
+  },
+  "privacy_redactions": {
+    "authorization": "Owner approval in the 2026-11-07 conversation for retained-record cleanup and historical-log review",
+    "applied_date_utc": "2026-11-07",
+    "scope": "Current retained copies only; no accepted Git history, vendor source, binary result, test outcome or release asset rewritten",
+    "files": {
+      "OWNER_ACCEPTANCE_COMPILE.log": {
+        "original_sha256": "b45544db043237df57bb6cd15daf5abc1c67d3d6683766f13b8f2b83f56de721",
+        "redacted_sha256": "cc9b03fabca6526dd4f7dcb7ad8cc597292bd34e621d9caf5617c25a1a0c42e9",
+        "scope": "User-profile path component only; log lines, outcomes and binary digests preserved",
+        "profile_path_replacements": 3
+      },
+      "OWNER_ACCEPTANCE_CRT.log": {
+        "original_sha256": "0984e1bf653dee4b6614fb08c4592dff6e0c3a8cfaa3713f17ef402a84778387",
+        "redacted_sha256": "6517f1193ae0ba04337dddd622839d6cba4c0cf2545197e7359985aa217cc896",
+        "scope": "User-profile path component only; log lines, outcomes and binary digests preserved",
+        "profile_path_replacements": 4
+      },
+      "OWNER_ACCEPTANCE_DEBUG.log": {
+        "original_sha256": "115141f1f81ea094e87a7b153a1a79ad01e0b1a97a1420b962a8d9c1a556fc99",
+        "redacted_sha256": "967770bca21097c2e895bfe4a84dd4f51c9ddf61be8a085d13fd2cab9a12f91f",
+        "scope": "User-profile path component only; log lines, outcomes and binary digests preserved",
+        "profile_path_replacements": 3
+      },
+      "OWNER_ACCEPTANCE_NATIVE.log": {
+        "original_sha256": "7f3af5e1636e74526c8fabe8f33f78edab633a394aeab1994b15cdb4bcaf2a57",
+        "redacted_sha256": "844d1da840fa88274a3216f2911002294494b364fe07266d8ddb008a74337907",
+        "scope": "User-profile path component only; log lines, outcomes and binary digests preserved",
+        "profile_path_replacements": 22
+      },
+      "OWNER_ACCEPTANCE_PRODUCTION.log": {
+        "original_sha256": "346ad5d7fc8394a67ecdff75295fe3e716e94017d681db6a8ff2a931f7c98d08",
+        "redacted_sha256": "b26a8217397f6e60226709077869bd1f31e770f287f78a5805d7627ef3ff265d",
+        "scope": "User-profile path component only; log lines, outcomes and binary digests preserved",
+        "profile_path_replacements": 8
+      },
+      "PRODUCTION_IMPORT_USER_GOLDEN_INPUT.log": {
+        "original_sha256": "156dc94e71bd139d7a1d174ee7765fa37027abb6c3c75ea56312157f22add74f",
+        "redacted_sha256": "34aba816aa259b38fe0b8980fe08908d10a16a73922b6a6ea481a9942cbc16b5",
+        "scope": "User-profile path component only; log lines, outcomes and binary digests preserved",
+        "profile_path_replacements": 2
+      },
+      "STARTUP_BUILD_FIX_USER_NATIVE_INPUT.log": {
+        "original_sha256": "02ab1157edb38dc1f9c4afbcaa72771d691f4230fdde8ccfb004c66b5bd45dbd",
+        "redacted_sha256": "651e12004d8a56c3e2209b13b2d1dfddb009abd11d4dc1ce91737c73154c162e",
+        "scope": "User-profile path component only; log lines, outcomes and binary digests preserved",
+        "profile_path_replacements": 24
+      },
+      "weekly-release/VALIDATION.json": {
+        "original_sha256": "6db92bceb67957f8e779530c46ae7caf49e6ca5f9e23c8dfc3a7340b2417703c",
+        "redacted_sha256": "dbf918c657a4df9a9fb740c99b8b44eb7d75478357c74031388584417b82f0e5",
+        "scope": "Schedule display only; UTC cron instant and all execution/acceptance fields preserved"
+      },
+      "OWNER_NATIVE_ACCEPTANCE.json": {
+        "original_sha256": "1bbfa72094b32dd6e1ee147adbbd8fc08445c754e74c69e6be7e157dd2da240a",
+        "redacted_sha256": "4c2ae52370ac86c37d4b34de28a3e88a5a7cc21769ee192051c44d04e480b736",
+        "scope": "Log identity references updated; original uploaded-log SHA retained; all outcomes and binary digests preserved"
+      },
+      "PRODUCTION_IMPORT_FIX.json": {
+        "original_sha256": "3e5dd278062867e0ac5c677502dc12f25ed84d06e9f792ec186ca55fef0638b0",
+        "redacted_sha256": "c018ea6074e9a6673e6355afeb674b9fcf0badf5c343b69e56ba36cba1cf2e30",
+        "scope": "Log identity references updated; original uploaded-log SHA retained; all outcomes and binary digests preserved"
+      },
+      "STARTUP_BUILD_FIX_STATUS.json": {
+        "original_sha256": "02a9010458f2cabf918fa328c2c237513a3a2416a46040de51c31cd5a19a9816",
+        "redacted_sha256": "1a21beb0f5b7663d1de7b2308a93d33cbc7ea01c8d09c858e9abca068146c05f",
+        "scope": "Log identity references updated; original uploaded-log SHA retained; all outcomes and binary digests preserved"
+      }
+    }
   }
 }

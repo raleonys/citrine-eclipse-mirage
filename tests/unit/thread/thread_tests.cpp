@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/thread_launch.hpp"
+#include "citrine_eclipse_mirage/runtime/thread_launch.hpp"
 #include <algorithm>
 #include <array>
 #include <iostream>
@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-using namespace preloader_l::threads;
+using namespace citrine_eclipse_mirage::threads;
 namespace {
 int checks;
 void require(bool ok, const char* message) { ++checks; if (!ok) throw std::runtime_error(message); }
@@ -146,15 +146,15 @@ struct Bridge;
 Bridge* active;
 void first();void second();void extra(bool);
 struct Bridge final : BootstrapThreadBridge {
-    preloader_l::system_services::Bootstrap bootstrap{*this};
+    citrine_eclipse_mirage::system_services::Bootstrap bootstrap{*this};
     int first_count{},second_count{},true_count{},false_count{},deleted{},thread_cleanup{},between{};
     std::vector<std::unique_ptr<std::byte[]>> payloads;
     explicit Bridge(Effects& e):BootstrapThreadBridge(e) {active=this;}
-    std::uintptr_t bind_application_entry(preloader_l::system_services::ThreadEntry e) override {
-        return e==preloader_l::system_services::ThreadEntry::no_argument_0388a0?11:12;
+    std::uintptr_t bind_application_entry(citrine_eclipse_mirage::system_services::ThreadEntry e) override {
+        return e==citrine_eclipse_mirage::system_services::ThreadEntry::no_argument_0388a0?11:12;
     }
-    int register_exit(preloader_l::system_services::RegisteredCallback) override{return 0;}
-    void install_terminate(preloader_l::system_services::RegisteredCallback) override{}
+    int register_exit(citrine_eclipse_mirage::system_services::RegisteredCallback) override{return 0;}
+    void install_terminate(citrine_eclipse_mirage::system_services::RegisteredCallback) override{}
     void setup_environment_019910() override{}
     void setup_console_038760() override{}
     void* log_insert_006880(void* p,std::uintptr_t) override{return p;}
@@ -162,9 +162,9 @@ struct Bridge final : BootstrapThreadBridge {
     void load_configuration_01c870() override{}
     void* allocate_04b0bc(std::size_t n) override {payloads.push_back(std::make_unique<std::byte[]>(n));return payloads.back().get();}
     void delete_04b0f8(void*,std::size_t) override {++deleted;}
-    preloader_l::system_services::NoArgumentFunction worker(preloader_l::system_services::Worker w) override{return w==preloader_l::system_services::Worker::first_029ea0?first:second;}
-    preloader_l::system_services::BooleanFunction boolean_worker_035850() override{return extra;}
-    bool close_handle(preloader_l::system_services::Handle) override{return true;}
+    citrine_eclipse_mirage::system_services::NoArgumentFunction worker(citrine_eclipse_mirage::system_services::Worker w) override{return w==citrine_eclipse_mirage::system_services::Worker::first_029ea0?first:second;}
+    citrine_eclipse_mirage::system_services::BooleanFunction boolean_worker_035850() override{return extra;}
+    bool close_handle(citrine_eclipse_mirage::system_services::Handle) override{return true;}
     [[noreturn]] void throw_thread_error_04a648(int) override{throw Injected{};}
     void between_workers_00e310() override{++between;}
     void guard_return_017a30() override{}
@@ -186,8 +186,8 @@ struct IntegratedEffects final : Fake {
         require(!security && stack==0 && flags==0,"bootstrap CRT launch arguments");queued.push_back(c);*out=77;return 99;
     }
     std::uint32_t dispatch(std::uintptr_t fn,std::uintptr_t argument) override {
-        if(fn==11)return active->bootstrap.run_no_argument(reinterpret_cast<preloader_l::system_services::NoArgumentPayload*>(argument));
-        require(fn==12,"boolean trampoline token");return active->bootstrap.run_boolean(reinterpret_cast<preloader_l::system_services::BooleanPayload*>(argument));
+        if(fn==11)return active->bootstrap.run_no_argument(reinterpret_cast<citrine_eclipse_mirage::system_services::NoArgumentPayload*>(argument));
+        require(fn==12,"boolean trampoline token");return active->bootstrap.run_boolean(reinterpret_cast<citrine_eclipse_mirage::system_services::BooleanPayload*>(argument));
     }
 };
 void test_bootstrap_integration() {

@@ -31,18 +31,18 @@ jobs:
       - name: Configure native provider fixture
         run: |
           $build = 'build/ci-provider-${{ matrix.configuration }}'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF
           if ($LASTEXITCODE -ne 0) { throw 'Provider lease configure failed' }
       - name: Build source-linked provider and failure fixtures
         run: |
           $build = 'build/ci-provider-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target extra_library_failure_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/provider-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target extra_library_failure_contracts application_runtime_contracts online_contracts hook_transaction_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/provider-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'Provider lease build failed' }
       - name: Exercise real Windows image ownership and retry
         run: |
           $build = 'build/ci-provider-${{ matrix.configuration }}'
           $junit = Join-Path (Resolve-Path $build) 'provider-junit.xml'
-          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^extra_library_failure_contracts$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/provider-ctest.log"
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(extra_library_failure_contracts|application_runtime_contracts|online_contracts|hook_transaction_contracts)$' --repeat until-fail:3 --no-tests=error --verbose --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/provider-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'Native provider lease fixture failed' }
       - name: Preserve native acceptance evidence
         if: always()

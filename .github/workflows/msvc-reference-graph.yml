@@ -73,6 +73,39 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: python3 -B scripts/ci_validation_readiness.py
 
+  codeql:
+    needs: readiness
+    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
+    name: CodeQL (${{ matrix.language }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [actions, c-cpp, python]
+    steps:
+      - name: Preserve exact checkout bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.readiness.outputs.head_sha }}
+          persist-credentials: false
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@33d7b85da1a04171e211befe2c739303b9a4c066 # v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: none
+      - name: Analyze the verified source head
+        uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v4
+        with:
+          category: /language:${{ matrix.language }}
+          ref: ${{ github.event_name == 'pull_request' && format('refs/pull/{0}/head', github.event.pull_request.number) || github.ref }}
+          sha: ${{ needs.readiness.outputs.head_sha }}
+
   source-qa:
     needs: readiness
     if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
@@ -106,7 +139,7 @@ jobs:
       - name: Verify source, vendor and infrastructure contracts
         run: python -B scripts/run_source_qa.py --report build/qa/github-source-qa.json
       - name: Configure portable checks
-        run: cmake -S . -B build/portable -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON
+        run: cmake -S . -B build/portable -DCITRINE_ECLIPSE_MIRAGE_PORTABLE_CHECKS_ONLY=ON
       - name: Build portable checks
         run: cmake --build build/portable --parallel 2
       - name: Run portable checks
@@ -159,6 +192,18 @@ jobs:
       run:
         shell: pwsh
     steps:
+      - name: Mask machine-specific paths in CI console
+        shell: pwsh
+        run: |
+          $paths = @($env:GITHUB_WORKSPACE, (Get-Location).Path, $env:USERPROFILE, $env:TEMP, $env:TMP, $env:RUNNER_TEMP)
+          $paths = @($paths | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | Select-Object -Unique)
+          if ($paths | Where-Object { $_ -match '[\r\n]' }) { throw 'Unsafe path for GitHub log masking.' }
+          foreach ($path in $paths) {
+            foreach ($variant in (@($path, $path.Replace('\', '/')) | Select-Object -Unique)) {
+              $encoded = $variant.Replace('%', '%25')
+              Write-Output "::add-mask::$encoded"
+            }
+          }
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -178,6 +223,13 @@ jobs:
         run: |
           & "./scripts/build_orchestration/${{ matrix.script }}" -BuildDir "build/ci-${{ matrix.profile }}" -Config '${{ matrix.configuration }}'
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Read native CTest totals
+        id: native-counts
+        if: always() && matrix.profile == 'native'
+        run: python -B scripts/repository_badges.py --record-tests build/ci-native/CTEST_RESULTS.xml
+      - name: 'Native tests: ${{ steps.native-counts.outputs.passed }}/${{ steps.native-counts.outputs.total }}'
+        if: always() && matrix.profile == 'native' && steps.native-counts.outcome == 'success'
+        run: Write-Output 'Native CTest totals recorded for the repository badge.'
       - name: Retain Windows validation evidence
         if: always() && needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -202,8 +254,8 @@ jobs:
         with:
           name: golden-candidate
           path: |
-            dist/preloader_l.dll
-            dist/preloader_l.dll.sha256
+            dist/citrine_eclipse_mirage.dll
+            dist/citrine_eclipse_mirage.dll.sha256
             dist/DIST_RECEIPT.json
           if-no-files-found: error
           retention-days: 14
@@ -222,6 +274,18 @@ jobs:
       run:
         shell: pwsh
     steps:
+      - name: Mask machine-specific paths in CI console
+        shell: pwsh
+        run: |
+          $paths = @($env:GITHUB_WORKSPACE, (Get-Location).Path, $env:USERPROFILE, $env:TEMP, $env:TMP, $env:RUNNER_TEMP)
+          $paths = @($paths | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | Select-Object -Unique)
+          if ($paths | Where-Object { $_ -match '[\r\n]' }) { throw 'Unsafe path for GitHub log masking.' }
+          foreach ($path in $paths) {
+            foreach ($variant in (@($path, $path.Replace('\', '/')) | Select-Object -Unique)) {
+              $encoded = $variant.Replace('%', '%25')
+              Write-Output "::add-mask::$encoded"
+            }
+          }
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -234,7 +298,7 @@ jobs:
       - name: Configure genuine MSVC portable checks
         run: |
           $build = 'build/ci-portable-${{ matrix.configuration }}'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DCITRINE_ECLIPSE_MIRAGE_PORTABLE_CHECKS_ONLY=ON
           if ($LASTEXITCODE -ne 0) { throw 'Portable configure failed' }
       - name: Build all MSVC portable targets
         run: |
@@ -274,6 +338,18 @@ jobs:
       matrix:
         configuration: [Debug, Release]
     steps:
+      - name: Mask machine-specific paths in CI console
+        shell: pwsh
+        run: |
+          $paths = @($env:GITHUB_WORKSPACE, (Get-Location).Path, $env:USERPROFILE, $env:TEMP, $env:TMP, $env:RUNNER_TEMP)
+          $paths = @($paths | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | Select-Object -Unique)
+          if ($paths | Where-Object { $_ -match '[\r\n]' }) { throw 'Unsafe path for GitHub log masking.' }
+          foreach ($path in $paths) {
+            foreach ($variant in (@($path, $path.Replace('\', '/')) | Select-Object -Unique)) {
+              $encoded = $variant.Replace('%', '%25')
+              Write-Output "::add-mask::$encoded"
+            }
+          }
       - name: Preserve repository bytes
         run: git config --global core.autocrlf false
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -287,7 +363,7 @@ jobs:
         shell: pwsh
         run: |
           $build = 'build/msvc-reference-${{ matrix.configuration }}'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=ON
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=ON
           if ($LASTEXITCODE -ne 0) { throw 'MSVC reference configure failed' }
           python -B scripts/check_build_partition.py --graph-only --build-dir $build --config '${{ matrix.configuration }}' --report "$build/source-api-graph.json"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC source API target partition failed' }
@@ -295,7 +371,7 @@ jobs:
         shell: pwsh
         run: |
           $build = 'build/msvc-reference-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_reference_objects --parallel 2 2>&1 | Tee-Object -FilePath "$build/reference-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target citrine_eclipse_mirage_reference_objects --parallel 2 2>&1 | Tee-Object -FilePath "$build/reference-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC reference object compilation failed' }
       - name: Build and run socket closing exception contracts
         shell: pwsh
@@ -310,7 +386,7 @@ jobs:
         shell: pwsh
         run: |
           $build = 'build/msvc-reference-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_source_host preloader_l_runtime_host session_flow_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/source-host-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target citrine_eclipse_mirage_source_host citrine_eclipse_mirage_runtime_host session_flow_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/source-host-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC source API host build failed' }
           $junit = Join-Path (Resolve-Path $build) 'source-host-junit.xml'
           ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(dll_source_smoke|session_flow_contracts|dll_public_xml_contracts)$' --output-on-failure --timeout 120 --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/source-host-ctest.log"
@@ -329,13 +405,13 @@ jobs:
             build/msvc-reference-${{ matrix.configuration }}/source-host-ctest.log
             build/msvc-reference-${{ matrix.configuration }}/source-host-junit.xml
             build/msvc-reference-${{ matrix.configuration }}/source-api-graph.json
-            build/msvc-reference-${{ matrix.configuration }}/preloader_l_source_api.vcxproj
-            build/msvc-reference-${{ matrix.configuration }}/preloader_l_source_host.vcxproj
-            build/msvc-reference-${{ matrix.configuration }}/preloader_l_source_minhook.vcxproj
-            build/msvc-reference-${{ matrix.configuration }}/preloader_l_source_pugixml.vcxproj
-            build/msvc-reference-${{ matrix.configuration }}/preloader_l_objects.vcxproj
-            build/msvc-reference-${{ matrix.configuration }}/preloader_l_vdf_objects.vcxproj
-            build/msvc-reference-${{ matrix.configuration }}/preloader_l_reference_objects.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/citrine_eclipse_mirage_source_api.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/citrine_eclipse_mirage_source_host.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/citrine_eclipse_mirage_source_minhook.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/citrine_eclipse_mirage_source_pugixml.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/citrine_eclipse_mirage_objects.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/citrine_eclipse_mirage_vdf_objects.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/citrine_eclipse_mirage_reference_objects.vcxproj
             build/msvc-reference-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
             build/msvc-reference-${{ matrix.configuration }}/CMakeCache.txt
             build/msvc-reference-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml

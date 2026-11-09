@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/crypt_query.hpp"
+#include "citrine_eclipse_mirage/platform/crypt_query.hpp"
 #include <atomic>
 #include <cstdlib>
 #include <cstring>
@@ -22,8 +22,8 @@ void operator delete[](void* p)noexcept{std::free(p);}
 void operator delete(void* p,std::size_t)noexcept{std::free(p);}
 void operator delete[](void* p,std::size_t)noexcept{std::free(p);}
 
-namespace hooks=preloader_l::hooks;
-namespace platform=preloader_l::platform;
+namespace hooks=citrine_eclipse_mirage::hooks;
+namespace platform=citrine_eclipse_mirage::platform;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -104,6 +104,35 @@ void native_reader() {
     require(host.inspect_path(terminated).suffix_matches,"NUL in last readable code unit is accepted");
     auto* truncated=pages+info.dwPageSize-(sizeof(suffix)-2);std::memcpy(truncated,suffix,sizeof(suffix)-2);
     require(!host.inspect_path(truncated).valid,"suffix crossing inaccessible terminator is not a match");
+    // C14-R-C14-001: only the last byte of a UTF-16 unit can be read.
+    // The following page is actually NOACCESS, not a synthetic failing
+    // callback. The native reader must not accept a partial ReadProcessMemory.
+    auto* half_unit=pages+info.dwPageSize-1;
+    *half_unit=std::byte{0x41};
+    char16_t observed_unit=0;
+    SIZE_T copied=0;
+    const auto native_read=ReadProcessMemory(
+        GetCurrentProcess(),half_unit,&observed_unit,sizeof observed_unit,&copied);
+    require(!native_read||copied!=sizeof observed_unit,
+            "cross-page partial UTF16 unit is not a complete native read");
+    const auto half=host.inspect_path(half_unit);
+    require(!half.valid&&!half.suffix_matches&&half.units_examined==0,
+            "native partial-code-unit path cannot select the companion");
+
+    // A readable but non-writable first page must remain acceptable: the
+    // product inspects foreign bytes without mutating the caller's memory.
+    std::memcpy(pages,suffix,sizeof suffix);
+    DWORD first_page_protection=0;
+    require(VirtualProtect(pages,info.dwPageSize,PAGE_READONLY,&first_page_protection)!=FALSE,
+            "protect the native fixture input as read-only");
+    hooks::PathProbe read_only;
+    {AllocationScope scope;read_only=host.inspect_path(pages);
+     require(allocations==0,"read-only protected inspection allocates no heap storage");}
+    require(read_only.valid&&read_only.suffix_matches&&
+            read_only.units_examined==sizeof(suffix)/sizeof(char16_t),
+            "complete read-only UTF16 path remains a selected native input");
+    require(!host.inspect_path(pages+info.dwPageSize).valid,
+            "fully inaccessible native page cannot be treated as a pathname");
     require(VirtualFree(pages,0,MEM_RELEASE)!=FALSE,"release owned native pages");
 }
 }

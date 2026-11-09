@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/achievement_storage.hpp"
-#include "preloader_l/core/paths.hpp"
+#include "citrine_eclipse_mirage/runtime/achievement_storage.hpp"
+#include "citrine_eclipse_mirage/core/paths.hpp"
 #include <bit>
+#include <cerrno>
 #include <cctype>
-#include <cstdio>
+#include <cstdlib>
+#include <limits>
 #include <stdexcept>
 
-namespace preloader_l::achievement_storage {
+namespace citrine_eclipse_mirage::achievement_storage {
 namespace {
 std::optional<std::string_view> attribute(const messages::XmlNode& node,std::string_view key) {
     const auto value=node.attribute(key);
@@ -26,15 +28,37 @@ void require_safe_achievement_leaf(std::string_view value) {
 }
 bool HostCrtNumbers::is_space(unsigned char c) {return std::isspace(c)!=0;}
 std::optional<std::uint32_t> HostCrtNumbers::scan_decimal(std::string_view raw) {
-    const std::string input(raw);int value=0;
-    if(std::sscanf(input.c_str(),"%d",&value)!=1)return std::nullopt;
-    static_assert(sizeof(int)==sizeof(std::uint32_t));
-    return std::bit_cast<std::uint32_t>(value);
+    // sscanf("%d") with an out-of-range integer has undefined behavior.
+    // This host adapter preserves the supported decimal prefix and low32
+    // signed representation, but refuses values outside int32_t's domain.
+    const std::string input(raw);
+    char* end=nullptr;
+    errno=0;
+    const auto number=std::strtoll(input.c_str(),&end,10);
+    if(end==input.c_str()||errno==ERANGE||
+       number<std::numeric_limits<std::int32_t>::min()||
+       number>std::numeric_limits<std::int32_t>::max())return std::nullopt;
+    return std::bit_cast<std::uint32_t>(static_cast<std::int32_t>(number));
 }
 std::optional<std::uint32_t> HostCrtNumbers::scan_hex(std::string_view raw) {
-    const std::string input(raw);unsigned value=0;
-    if(std::sscanf(input.c_str(),"%x",&value)!=1)return std::nullopt;
-    return value;
+    // The old sscanf("%x") likewise cannot safely store a value above
+    // UINT32_MAX. Keep its optional sign, 0x prefix and trailing-suffix
+    // behavior for values in range, including negative modulo-2^32 inputs.
+    const std::string input(raw);
+    const char* begin=input.c_str();
+    while(std::isspace(static_cast<unsigned char>(*begin)))++begin;
+    const bool negative=*begin=='-';
+    if(negative||*begin=='+') {
+        ++begin;
+        if(*begin=='+'||*begin=='-'||std::isspace(static_cast<unsigned char>(*begin)))return std::nullopt;
+    }
+    char* end=nullptr;
+    errno=0;
+    const auto number=std::strtoull(begin,&end,16);
+    if(end==begin||errno==ERANGE||
+       number>std::numeric_limits<std::uint32_t>::max())return std::nullopt;
+    const auto bits=static_cast<std::uint32_t>(number);
+    return negative?std::uint32_t{0}-bits:bits;
 }
 std::uint32_t attribute_003b70(const messages::XmlNode& node,std::string_view key,
                              std::uint32_t fallback,Numbers& numbers) {
@@ -109,4 +133,4 @@ void Storage::update_01eb00(configuration::State& state) {
         if(status.kind!=2)achievement_writer::write_ini_01f9a0(paths_.ini_path,state,effects_,files_);
     }
 }
-} // namespace preloader_l::achievement_storage
+} // namespace citrine_eclipse_mirage::achievement_storage

@@ -17,11 +17,11 @@
 #include <sstream>
 #include <tuple>
 namespace eval {
-namespace msg=preloader_l::messages;
-namespace access=preloader_l::dispatch;
+namespace msg=citrine_eclipse_mirage::messages;
+namespace access=citrine_eclipse_mirage::dispatch;
 struct Profile {
  std::string name;
- preloader_l::xml_tiny_reference::Backend tiny;
+ citrine_eclipse_mirage::xml_tiny_reference::Backend tiny;
  xml_comparison::Backend pugi;
  explicit Profile(std::string name):name(std::move(name)){}
  msg::XmlBackend& backend(){return name=="tiny"?static_cast<msg::XmlBackend&>(tiny):pugi;}
@@ -288,7 +288,7 @@ void storage(const char* output){
   std::pair<std::string,std::string> baseline;
   for(auto& p:ps){
    eval_storage::Fixture f;f.paths.xml_path=u"owned-fixture.xml";f.state.steam_app_id="42";f.effects.status={1,0,2};f.state.achievements["known"]=eval_storage::record("configured");f.files.input[f.paths.xml_path]=input;
-   preloader_l::achievement_storage::Storage s(f.paths,p->backend(),f.numbers,f.effects,f.files);s.update_01eb00(f.state);
+   citrine_eclipse_mirage::achievement_storage::Storage s(f.paths,p->backend(),f.numbers,f.effects,f.files);s.update_01eb00(f.state);
    std::string state;for(auto& [id,a]:f.state.achievements)state+=hex(id)+":"+std::to_string(a.field04)+":"+std::to_string(a.field08)+":"+hex(a.display_name)+":"+hex(a.timestamp)+";";
    require(f.files.output.size()==1,"storage must publish one INI fixture");auto ini=f.files.output.begin()->second;
    if(p->name=="tiny")baseline={state,ini};bool same=baseline==std::make_pair(state,ini);

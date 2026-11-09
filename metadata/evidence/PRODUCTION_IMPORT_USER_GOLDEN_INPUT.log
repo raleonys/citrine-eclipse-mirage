@@ -19,12 +19,12 @@ SURGE: Golden / Release; local build, NOT_RELEASE
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Found Python3: C:/Users/Skysect/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
+-- Found Python3: C:/Users/<USER>/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
 -- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS
 -- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS - Success
 -- Configuring done (35.8s)
 -- Generating done (0.3s)
--- Build files have been written to: C:/Users/Skysect/Desktop/yellowfield-golden-avatar-source/build/golden_msvc
+-- Build files have been written to: C:/Users/<USER>/Desktop/yellowfield-golden-avatar-source/build/golden_msvc
 [2/3] Compile and link
 [  1%] Verify the five owner-supplied vendor trees
 asio: INSTALLED_MEMBER_HASHES_PASS

@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "tools/preloader_l_runtime_host/listener_owners.hpp"
+#include "tools/citrine_eclipse_mirage_runtime_host/listener_owners.hpp"
 #include <cwchar>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
 
-namespace diag=preloader_l::tools::listener_diagnostics;
+namespace diag=citrine_eclipse_mirage::tools::listener_diagnostics;
 namespace {
 enum class Fault { none,load,resolve,resolve_throw,probe,query,query_throw,allocation,
                    growth,growth_forever,oversize,short_table,bad_count,bad_size,

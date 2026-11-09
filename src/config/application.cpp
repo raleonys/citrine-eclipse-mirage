@@ -1,12 +1,32 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/config/application.hpp"
-#include "preloader_l/core/product_identity.hpp"
+#include "citrine_eclipse_mirage/config/application.hpp"
+#include "citrine_eclipse_mirage/core/product_identity.hpp"
+#include <stdexcept>
 
-namespace preloader_l::config_application {
+namespace citrine_eclipse_mirage::config_application {
 namespace {
 using namespace configuration;
 using HashNode=config_hash::Node;
+// Game/ContentId becomes the final Windows license filename stem. Preserve
+// documented ASCII IDs but never reinterpret an untrusted value as a path,
+// device name, alternate stream, or an ambiguous Win32 component.
+bool safe_license_content_id(std::string_view id) {
+    if(id.empty()||id.size()>128||id=="."||id==".."||id.back()=='.')return false;
+    for(unsigned char c:id) {
+        const bool permitted=(c>='0'&&c<='9')||(c>='A'&&c<='Z')||
+            (c>='a'&&c<='z')||c=='-'||c=='_'||c=='.';
+        if(!permitted)return false;
+    }
+    const auto head=id.substr(0,id.find('.'));
+    std::string upper;
+    upper.reserve(head.size());
+    for(char c:head)upper.push_back(c>='a'&&c<='z'?static_cast<char>(c-'a'+'A'):c);
+    if(upper=="CON"||upper=="PRN"||upper=="AUX"||upper=="NUL")return false;
+    if(upper.size()==4&&(upper.starts_with("COM")||upper.starts_with("LPT"))&&
+       upper[3]>='1'&&upper[3]<='9')return false;
+    return true;
+}
 std::string_view text(HashNode& node,std::string_view key) {return node.lookup(key).value;}
 void path_if_nonempty(Path& target,std::string_view value,const Path& executable,Dependencies& deps) {
     if(!value.empty())target=deps.resolve_path_0192d0(value,executable,true);
@@ -43,6 +63,10 @@ void apply_config2(configuration::State& state,config_hash::Node& config,
         assign_if_nonempty(state.game_attributes["INSTALLED_VERSION"],version);
         assign_if_nonempty(state.content_id,text(section,"ContentId"));
     }
+    // Also validate a retained owner-provided ID if this pass omitted ContentId.
+    // An absent ID is still allowed for configurations without a license key.
+    if(!state.content_id.empty()&&!safe_license_content_id(state.content_id))
+        throw std::invalid_argument("Unsafe Config2 ContentId license filename component");
     const auto wide_content=deps.filesystem_widen_010540(state.content_id);
     auto path=deps.join_016b00(deps.program_data_03c920(),u"Electronic Arts");
     path=deps.join_016b00(path,u"EA Services");
@@ -56,7 +80,11 @@ void apply_config2(configuration::State& state,config_hash::Node& config,
     path_if_nonempty(state.denuvo_dll,text(section,"DenuvoDllName"),state.executable_path,deps);
     if(state.denuvo_dll.empty())path_if_nonempty(state.denuvo_dll,"dbdata.dll",state.executable_path,deps);
     const auto license_key=text(section,"KeyForLicense");
-    if(!license_key.empty())deps.apply_license_key_02a830(license_key);
+    if(!license_key.empty()) {
+        if(state.content_id.empty())
+            throw std::invalid_argument("Config2 ContentId required for license write");
+        deps.apply_license_key_02a830(license_key);
+    }
     const auto languages=text(section,"Languages");
     assign_if_nonempty(state.game_attributes["LANGUAGES"],languages);
     apply_registry_path(state,text(section,"LanguageRegistryKey"),deps);
@@ -146,4 +174,4 @@ void load_and_apply(configuration::State& state,bool override_pass,
     deps.log_config_path(path);
     apply_config2(state,selected,override_pass,deps,trace);
 }
-} // namespace preloader_l::config_application
+} // namespace citrine_eclipse_mirage::config_application

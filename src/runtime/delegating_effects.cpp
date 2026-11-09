@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/delegating_effects.hpp"
-#include "preloader_l/core/paths.hpp"
+#include "citrine_eclipse_mirage/runtime/delegating_effects.hpp"
+#include "citrine_eclipse_mirage/core/paths.hpp"
 #include <exception>
 
-namespace preloader_l::online {
+namespace citrine_eclipse_mirage::online {
 std::uint32_t DelegatingEffects::suppress_errors_0450a0() {
     return system_services::libraries::suppress_errors_0450a0(libraries_);
 }
@@ -63,4 +63,4 @@ void DelegatingEffects::dialog_038bc0(std::string_view a, std::string_view b, st
 }
 void DelegatingEffects::wait_steps_036880(std::int32_t count) { remaining_.wait_steps_036880(count); }
 void DelegatingEffects::finish_flag_036820() { remaining_.finish_flag_036820(); }
-} // namespace preloader_l::online
+} // namespace citrine_eclipse_mirage::online
