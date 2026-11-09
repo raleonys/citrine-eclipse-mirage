@@ -1294,8 +1294,8 @@
       "sha256": "197880d6cab9b33146e5ec95f780e664c885c03b64d9c076f97caea10f4409ed"
     },
     "tests/native/file_copy_windows_tests.cpp": {
-      "bytes": 4838,
-      "sha256": "b9c87b9aaeca57e8f0122b4284558f58485c4d65cf8bb35ba459cae558ede82a"
+      "bytes": 11892,
+      "sha256": "cef5e4763f2bba1b59bfb10a8e1358f94a063661b852acf486183d56b9a60e95"
     },
     "tests/native/handler_pool_tests.cpp": {
       "bytes": 6495,
