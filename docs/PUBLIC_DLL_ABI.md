@@ -4,7 +4,7 @@ Under the owner's latest instruction, Production returned to Brownfield's
 three-export/ordinal layout: **DllMain@1, SURGE@2, DllShutdown@3**.
 `DllWaitReady@4` and `DllServerPort@5`, their implementations, and public
 declarations were removed. C++ source APIs remain in the separate
-`preloader.source.dll` development target.
+`citrine_eclipse_mirage.source.dll` development target.
 
 The Windows loader invokes `DllMain` through the CRT entrypoint; tools do
 not call it manually. `SURGE` is a RET-only branded import marker.

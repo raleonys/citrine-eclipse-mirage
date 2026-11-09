@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "preloader_l/xml/pool_clear.hpp"
+#include "citrine_eclipse_mirage/xml/pool_clear.hpp"
 #include "tests/support/socket/pool_append_test_fixture.hpp"
 
 namespace pool_clear_test {
-namespace s=preloader_l::socket;
+namespace s=citrine_eclipse_mirage::socket;
 using pool_append_test::check;using pool_append_test::checks;using pool_append_test::word;using pool_append_test::put;using pool_append_test::Failure;
 using pool_append_test::unsupported;using pool_append_test::failure;using pool_append_test::types;
 using Backing=pool_append_test::Fixture;

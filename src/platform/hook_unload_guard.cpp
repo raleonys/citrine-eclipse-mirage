@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
-#include "preloader_l/platform/hook_unload_guard.hpp"
+#include "citrine_eclipse_mirage/platform/hook_unload_guard.hpp"
 #include <windows.h>
 #include <tlhelp32.h>
 #include <atomic>
 #include <cstdint>
 #include <algorithm>
 #include <cstring>
-namespace preloader_l {
+namespace citrine_eclipse_mirage {
 namespace {
 std::atomic<DWORD> shutdown_caller{0};
 std::atomic_flag scan_active=ATOMIC_FLAG_INIT;

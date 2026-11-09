@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/libraries.hpp"
+#include "citrine_eclipse_mirage/runtime/libraries.hpp"
 #include <algorithm>
 #include <cstdio>
 #include <deque>
@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <tuple>
 
-using namespace preloader_l::system_services::libraries;
+using namespace citrine_eclipse_mirage::system_services::libraries;
 static unsigned checks;
 static void check(bool value) {
     ++checks;
