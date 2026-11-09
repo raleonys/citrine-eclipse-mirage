@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_worker_startup.hpp"
+#include "citrine_eclipse_mirage/net/transport_worker_startup.hpp"
 #include <algorithm>
 #include <bit>
 #include <functional>
 #include <iostream>
 #include <vector>
-namespace s=preloader_l::socket;
-namespace t=preloader_l::threads;
+namespace s=citrine_eclipse_mirage::socket;
+namespace t=citrine_eclipse_mirage::threads;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -60,7 +60,7 @@ std::int32_t Api::close_handle(std::uintptr_t h){f.closed.push_back(h);f.event("
 std::uint32_t Api::wait_one(std::uintptr_t h,std::uint32_t timeout){check(timeout==0xffffffffU,"infinite entry handshake wait");f.waited.push_back(h);f.event("wait");return f.wait_result;}
 std::int32_t Api::set_event(std::uintptr_t h){f.signaled.push_back(h);f.event("signal");return f.api_result;}
 std::uint32_t Api::sleep_ex(std::uint32_t ms,std::int32_t alertable){check(ms==0xffffffffU && alertable==1,"infinite alertable SleepEx once");f.event("sleep");return f.sleep_result;}
-s::Category Errors::system_category_028620(){++f.categories;f.event("category");return {0x9922,preloader_l::server::ErrorCategory::system};}
+s::Category Errors::system_category_028620(){++f.categories;f.event("category");return {0x9922,citrine_eclipse_mirage::server::ErrorCategory::system};}
 [[noreturn]]void Effects::raise_028240(s::Error error,std::uintptr_t context){f.event("raise");throw Raised{error,context};}
 std::uintptr_t Effects::begin_thread_05e8e0(std::uintptr_t security,std::uint32_t stack,std::uintptr_t entry,s::IocpWorkerFunction* argument,std::uint32_t flags,std::uint32_t& id){check(!security && stack==f.stack && entry==0x18002a4a0ULL && argument==f.expected && !flags && !id,"cached uint32 stack, opaque entry, live argument, flags0 and zero local id");auto result=f.thread;f.event("thread");id=0xfedcba98U;return result;}
 void Effects::delete_function_slot_00(s::IocpWorkerFunction& function,std::uint32_t flags){check(&function==f.expected && flags==1,"exact deleting slot target and flag1");++f.deletes;f.event("delete");if(f.heap_delete){delete &function;f.expected=nullptr;}}

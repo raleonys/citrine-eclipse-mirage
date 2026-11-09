@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "application_internal.hpp"
-#include "preloader_l/config/application.hpp"
-#include "preloader_l/core/paths.hpp"
-#include "preloader_l/core/product_identity.hpp"
-#include "preloader_l/platform/file_copy.hpp"
-#include "preloader_l/codec/crypto.hpp"
-#include "preloader_l/core/token_constants.hpp"
+#include "citrine_eclipse_mirage/config/application.hpp"
+#include "citrine_eclipse_mirage/core/paths.hpp"
+#include "citrine_eclipse_mirage/core/product_identity.hpp"
+#include "citrine_eclipse_mirage/platform/file_copy.hpp"
+#include "citrine_eclipse_mirage/codec/crypto.hpp"
+#include "citrine_eclipse_mirage/core/token_constants.hpp"
 #include <algorithm>
 #include <cctype>
 #include <cstdlib>
@@ -16,8 +16,20 @@
 #include <limits>
 #include "avatar_data.hpp"
 
-namespace preloader_l::application::detail {
+namespace citrine_eclipse_mirage::application::detail {
 namespace {
+// Match the existing 65-byte envelope and AES policy while making text
+// fields structurally safe in the XML document before encryption.
+void append_license_xml_text(std::string& output,std::string_view text) {
+    for(char byte:text) {
+        switch(byte) {
+        case '&':output+="&amp;";break;
+        case '<':output+="&lt;";break;
+        case '>':output+="&gt;";break;
+        default:output.push_back(byte);break;
+        }
+    }
+}
 Path environment_path(const wchar_t* name) {
     // RE039bc0 grows a UTF16 buffer in260-code-unit steps and reads the
     // environment. No Shell known-folder allocation or COM allocator is used.
@@ -157,6 +169,7 @@ status::Status Environment::status_01ea20(const Path& p,std::uint32_t flags){ret
 std::int64_t Environment::timestamp_to_epoch_041e10(std::string_view s){return timestamp::timestamp_to_epoch_041e10(s,timestamp_);}
 void Environment::log_profile_name_084f48(std::string_view name){debug_log({"profile requested: ",name});}
 std::string Environment::current_time_041b60(){return achievement_runtime::utc_time_041b60(clock_,formatter_);}
+std::string Environment::ticket_time_041b60(){return achievement_runtime::utc_time_041b60(clock_,formatter_,nullptr,1);}
 std::int32_t Environment::atoi_05ee08(std::string_view s){return std::atoi(std::string(s).c_str());}
 void Environment::unknown_entitlement_field(std::string_view) {
     // This callback is reached while the shared handler state lock is held.
@@ -164,10 +177,22 @@ void Environment::unknown_entitlement_field(std::string_view) {
     // (which may include secrets or line breaks) into diagnostic storage.
     debug_log("QueryEntitlements ignored unknown field");
 }
-bool Environment::online_avatar_virtual_28(const Path& p) {
+bool Environment::online_avatar_virtual_28(const Path&) {
+    throw std::logic_error("Online avatar requires owner and size");
+}
+bool Environment::request_online_avatar(const Path& p,const char* owner,std::int32_t size) {
     if(!provider)throw std::logic_error("Online avatar requested without provider");
-    using Fn=bool(*)(void*,const wchar_t*);auto object=reinterpret_cast<void*>(provider);
-    auto table=*reinterpret_cast<std::uintptr_t**>(object);return reinterpret_cast<Fn>(table[5])(object,wide(p).c_str());
+    // 031aa0..031aad passes size in R9D and owner in R8, alongside RCX/RDX.
+    // Unsigned-character pointer arithmetic explicitly counts bytes; memcpy
+    // reads the foreign object/table without alignment or typed-overlay assumptions.
+    std::uintptr_t table=0,address=0;
+    auto* object=reinterpret_cast<void*>(provider);
+    std::memcpy(&table,object,sizeof(table));
+    if(!table)throw std::logic_error("Provider vtable is unavailable");
+    std::memcpy(&address,reinterpret_cast<const unsigned char*>(table)+5*sizeof(address),sizeof(address));
+    if(!address)throw std::logic_error("Provider method is unavailable");
+    using Fn=std::uint8_t(*)(void*,const wchar_t*,const char*,std::int32_t);
+    return reinterpret_cast<Fn>(address)(object,wide(p).c_str(),owner,size)!=0;
 }
 bool Environment::copy_overwrite_048d20(const Path& from,const Path& to){return file_copy::copy_file_windows_048d20(from,to,2).copied;}
 void Environment::log_saved_size_085530(std::int32_t size){
@@ -199,8 +224,8 @@ void Environment::configure() {
     (void)set_environment_variable("EAGameLocale",state_.game_attributes["INSTALLED_LANGUAGE"]);
 }
 void Environment::apply_license_key_02a830(std::string_view key) {
-    // Independent source projection of supplied FUN_18002a830. Keep its existing
-    // regular file unchanged; original concatenates XML text without escaping.
+    // Preserve original output for ordinary safe values and the existing-file
+    // skip. XML text is escaped before CBC in this product-owned writer.
     auto path=state_.license_directory+filesystem_widen_006d70(".dlf");
     const auto status=status_01ea20(path,3);
     if(status.error&&((static_cast<std::uint32_t>(status.kind)-1U)&0xfffffff7U)!=0)
@@ -210,10 +235,10 @@ void Environment::apply_license_key_02a830(std::string_view key) {
     constexpr std::uint64_t header=0x1020001020630ULL;
     for(unsigned i=0;i<8;++i)document[i]=static_cast<char>(header>>(i*8));
     document+="<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><License xmlns=\"http://ea.com/license\"><CipherKey>";
-    document.append(key);
+    append_license_xml_text(document,key);
     document+="</CipherKey><MachineHash>1</MachineHash><ContentId>";
-    document+=state_.content_id;
-    document+="</ContentId><UserId>";document+=state_.user_id;
+    append_license_xml_text(document,state_.content_id);
+    document+="</ContentId><UserId>";append_license_xml_text(document,state_.user_id);
     document+="</UserId><GrantTime>2024-01-01T00:00:00Z</GrantTime><StartTime>2024-01-01T00:00:00Z</StartTime></License>";
     crypto::Cipher cipher;
     cipher.set_key_and_iv_042760(token::constants::key_084a50,token::constants::iv_084a60);

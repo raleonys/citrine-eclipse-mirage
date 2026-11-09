@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/event_queue.hpp"
+#include "citrine_eclipse_mirage/runtime/event_queue.hpp"
 #include <stdexcept>
 
-namespace preloader_l::event_queue {
+namespace citrine_eclipse_mirage::event_queue {
 std::uint64_t Storage::reserve_front_locked(){throw std::logic_error("Event storage lacks delivery reservations");}
 void Storage::push_persisted_locked(std::string&,const std::function<void()>&) {
     throw std::logic_error("Event storage lacks transactional publication");
@@ -107,4 +107,4 @@ bool OwnedStorage::finish_reserved(std::uint64_t token,bool success) noexcept {
     return delivery_state_.compare_exchange_strong(expected,token|(success?2u:3u),
         std::memory_order_release,std::memory_order_relaxed);
 }
-} // namespace preloader_l::event_queue
+} // namespace citrine_eclipse_mirage::event_queue

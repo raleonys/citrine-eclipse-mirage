@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_native_dispatch.hpp"
+#include "citrine_eclipse_mirage/net/transport_native_dispatch.hpp"
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 std::string_view c_string(std::string_view value){const auto at=value.find('\0');return at==std::string_view::npos?value:value.substr(0,at);}
 void free_name(ReceiveBufferString& value,ReceiveBufferContext& context){
@@ -61,4 +61,4 @@ ReceiveBufferString& dispatch_native_032d00(ReceiveBufferString& output,std::uin
 ReceiveBufferString& MessageDispatchApiAdapter::dispatch_032d00(ReceiveBufferString& output,std::uintptr_t handler,NativeMessageDocument& document){
     return dispatch_native_032d00(output,handler,document,dispatch_);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

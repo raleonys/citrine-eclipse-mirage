@@ -2,14 +2,14 @@
   "schema": "surge.build-partition.v1",
   "owner": "Explicit owner approval of audited runtime/reference/source-API separation without deleting source models",
   "production_targets": [
-    "preloader_l",
-    "preloader_l_core",
-    "preloader_l_objects",
-    "preloader_l_vdf_objects"
+    "citrine_eclipse_mirage",
+    "citrine_eclipse_mirage_core",
+    "citrine_eclipse_mirage_objects",
+    "citrine_eclipse_mirage_vdf_objects"
   ],
   "reference_targets": [
-    "preloader_l_reference_models",
-    "preloader_l_reference_objects"
+    "citrine_eclipse_mirage_reference_models",
+    "citrine_eclipse_mirage_reference_objects"
   ],
   "production_object_sources": [
     "src/core/atomic_files.cpp",
@@ -282,11 +282,13 @@
     "achievement_storage_startup_model_contracts"
   ],
   "production_test_targets": [
+    "crypt_diagnostic_failure_contracts",
     "achievement_runtime_contracts",
     "achievement_storage_contracts",
     "achievement_writer_contracts",
     "application_runtime_contracts",
     "application_shutdown_failure_contracts",
+    "application_worker_launch_contracts",
     "atomic_persistence_contracts",
     "atomic_staging_contracts",
     "calendar_contracts",
@@ -298,11 +300,14 @@
     "configuration_platform_contracts",
     "content_handlers_contracts",
     "crypt_path_probe_contracts",
+    "dll_attach_failure_contracts",
     "crypto_contracts",
     "dispatch_integration",
     "dll_public_c_consumer",
     "encoding_contracts",
     "environment_dialog_contracts",
+    "environment_license_key_contracts",
+    "environment_path_contracts",
     "event_queue_contracts",
     "event_queue_integration_contracts",
     "execution_concurrency_contracts",
@@ -315,11 +320,13 @@
     "handlers_contracts",
     "hash_contracts",
     "hook_freeze_contracts",
+    "hook_real_peer_contracts",
     "hook_transaction_contracts",
     "host_callback_contracts",
     "host_init_contracts",
     "libraries_contracts",
     "license_file_integration",
+    "license_ticket_time_contracts",
     "licensing_contracts",
     "listener_owners_contracts",
     "listener_port_contracts",
@@ -328,9 +335,10 @@
     "net_failure_contracts",
     "network_policy_contracts",
     "parser_contracts",
+    "parser_header_contracts",
     "path_contracts",
-    "preloader_l_crt_host",
-    "preloader_l_runtime_host",
+    "citrine_eclipse_mirage_crt_host",
+    "citrine_eclipse_mirage_runtime_host",
     "production_callback_contracts",
     "production_network_hook_contracts",
     "registry_contracts",
@@ -361,13 +369,14 @@
     "net_failure_msvc_memory_replay_contracts"
   ],
   "source_api_targets": [
-    "preloader_l_source_api",
-    "preloader_l_source_host",
-    "preloader_l_source_minhook",
-    "preloader_l_source_pugixml"
+    "citrine_eclipse_mirage_source_api",
+    "citrine_eclipse_mirage_source_host",
+    "citrine_eclipse_mirage_source_minhook",
+    "citrine_eclipse_mirage_source_pugixml"
   ],
   "vendor_comparison_targets": [
-    "hook_engine_fixture_tests"
+    "hook_engine_fixture_tests",
+    "hook_real_peer_stale_control"
   ],
   "production_exports": [
     "DllMain",
