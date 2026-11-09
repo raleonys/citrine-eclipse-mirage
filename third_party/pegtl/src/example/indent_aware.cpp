@@ -80,7 +80,7 @@ namespace example
    struct grammar : pegtl::until< pegtl::eof, pegtl::must< line > > {};
    // clang-format on
 
-   enum class type : std::uint8_t
+   enum class type
    {
       def,
       if_,
@@ -212,7 +212,7 @@ namespace example
 
 }  // namespace example
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    for( int i = 1; i < argc; ++i ) {
       pegtl::text_file_input< pegtl::scan::lf_crlf > in( argv[ i ] );

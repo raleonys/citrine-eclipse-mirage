@@ -2,12 +2,17 @@
 
 ![Citrine Eclipse Mirage campaign artwork](resources/branding/citrine-eclipse-mirage.png)
 
-[![Windows x64](https://img.shields.io/badge/Windows-x64-0078D4?logo=windows&logoColor=white)](docs/DEVELOPMENT.md)
-[![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)](CMakeLists.txt)
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](docs/DEVELOPMENT.md)
-[![CMake 3.20+](https://img.shields.io/badge/CMake-3.20%2B-064F8C?logo=cmake&logoColor=white)](CMakeLists.txt)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
-[![CI](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml)
+[![Windows x64](resources/badges/windows.svg)](docs/DEVELOPMENT.md)
+[![C++20](resources/badges/cpp.svg)](CMakeLists.txt)
+[![Python 3.9+](resources/badges/python.svg)](docs/DEVELOPMENT.md)
+[![CMake 3.20+](resources/badges/cmake.svg)](CMakeLists.txt)
+[![License: GPL v3](resources/badges/license.svg)](LICENSE)
+[![Latest release](https://raw.githubusercontent.com/raleonys/citrine-eclipse-mirage/badges/resources/badges/latest-release.svg)](https://github.com/raleonys/citrine-eclipse-mirage/releases/latest)
+[![CI](https://raw.githubusercontent.com/raleonys/citrine-eclipse-mirage/badges/resources/badges/ci.svg)](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml)
+[![Tests (native)](https://raw.githubusercontent.com/raleonys/citrine-eclipse-mirage/badges/resources/badges/tests.svg)](docs/REPOSITORY_BADGES_AND_OPENING_CI.md#test-count-and-checksum-badges)
+[![Release integrity](https://raw.githubusercontent.com/raleonys/citrine-eclipse-mirage/badges/resources/badges/release-integrity.svg)](https://github.com/raleonys/citrine-eclipse-mirage/releases/latest)
+[![Checksums](https://raw.githubusercontent.com/raleonys/citrine-eclipse-mirage/badges/resources/badges/checksums.svg)](https://github.com/raleonys/citrine-eclipse-mirage/releases/latest)
+[![Changelog](resources/badges/changelog.svg)](CHANGELOG.md)
 
 A Windows-native C++ utility library focused on compatibility, maintainability, and controlled changes.
 

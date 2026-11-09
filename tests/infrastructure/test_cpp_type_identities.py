@@ -36,11 +36,11 @@ class CppTypeIdentityTests(unittest.TestCase):
 
     def test_duplicate_types_across_socket_headers_are_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
-            folder = Path(tmp) / "include" / "preloader_l" / "net"
+            folder = Path(tmp) / "include" / "citrine_eclipse_mirage" / "net"
             folder.mkdir(parents=True)
             for name in ("a.hpp", "b.hpp"):
                 (folder / name).write_text(
-                    "namespace preloader_l::socket {\nclass ShadowApi {};\n}\n",
+                    "namespace citrine_eclipse_mirage::socket {\nclass ShadowApi {};\n}\n",
                     encoding="utf-8")
             _, errors = checker.inspect(tmp)
             self.assertTrue(any("across socket headers for ShadowApi" in e for e in errors))

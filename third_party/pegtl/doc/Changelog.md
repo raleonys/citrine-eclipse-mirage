@@ -2,32 +2,15 @@
 
 All noteworthy changes since the first public [release](https://github.com/taocpp/PEGTL/releases).
 
-## Version 5.0.0
+## 4.0.2
 
-Not Yet Released
+Released 2026-09-21
 
-* Updated required C++ standard to C++20.
-* Fixed the [floating point](Example-Reference.md#fphpp) example [grammar](Rules-and-Grammars.md) to accept underscores in the `NAN` payload.
-* Added new convenience [rule](Rules-and-Gramamrs.md) [`list_opt`](Rule-Reference.md#list_opt-r-s-).
-* Added new ASCII [rules](Rules-and-Grammrs.md) [`astring`](Rule-Reference.md#astring-p-c-) and [`aistring`](Rule-Reference.md#aistring-p-c-).
-* Added new extra [rule](Rules-and-Grammars.md) [`partial_apply1`](Extra-Reference.md#partial_apply1hpp).
-* Added new *builder* actions. -- TODO: Documentation!
-  * Added new primitives `build_to` and `build_for`.
-  * Added new builder-style `create_to` and `create_for`.
-  * Added new builder-style `const_to` and `const_for`.
-  * Added new builder-style `value_to` and `value_for`.
-  * Added new builder-style `multi_to` and `multi_for`.
-  * Added new builder-style `optional_to` and `optional_for`.
-  * Added new builder-style `repeat_to` and `repeat_for`.
-  * Added new builder-style `variant_to` and `variant_for`.
-  * Added new builder-style `cases`, `cases_to` and `cases_for`.
-  * Added new builder-style `from_chars_to` and `from_chars_for`.
-  * Added new builder-style `unescape_to` and `unescape_for`.
-  * Added and updated examples that demonstrate builder actions.
+* Updated demangle workaround for GCC 16.1 only.
 
 ## Version 4.0.1
 
-Released TBD
+Released 2026-08-01
 
 * Fixed [`rematch`](Rule-Reference.md#rematch-r-s-) not doing the right thing with some inputs.
 
@@ -203,6 +186,12 @@ Released 2026-06-07
 
 The deprecated headers have been moved to `include/tao/pegtl/deprecated/`.
 Please let us know if you (still) need them.
+
+## 3.2.9
+
+Released 2026-09-21
+
+* Updated demangle workaround for GCC 16.1 only.
 
 ## Version 3.2.8
 
