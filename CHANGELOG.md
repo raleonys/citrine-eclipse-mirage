@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Reject temporary SessionPolicy objects when constructing a borrowed SessionDeadlines tracker, preventing a dangling policy reference. Preserve the service-owned lvalue path and live policy reads; add compile-time lifetime checks and a borrowed-policy regression.
+
 - Cover Windows native binary output open rejection under an active read-only sharing lease, proving the file is not truncated and a retry succeeds once the handle is closed.
 
 - Add a real-Windows native file-copy regression for a target held without write/delete sharing, ensuring rejected overwrite preserves the original and a retry succeeds after the owning handle closes.

@@ -118,8 +118,8 @@
       "sha256": "7b3d763c8d84377215acc80cb883f4351baf25b94923cd84aefc729bb6a81275"
     },
     "include/citrine_eclipse_mirage/net/session_policy.hpp": {
-      "bytes": 2471,
-      "sha256": "46256cc781fbf27a40c66c806d4b229c244fbdbee31accb3d853996d02bcd3db"
+      "bytes": 2684,
+      "sha256": "51411bcdcd00c4f2c39d8fbb61e3ab2c67130b1fa739452389812498c708675d"
     },
     "include/citrine_eclipse_mirage/net/session_routing.hpp": {
       "bytes": 657,
@@ -1338,8 +1338,8 @@
       "sha256": "4489e4d8ebddc530fe0831d239f7f3b77dbff61fb40636600f0c9c09d6ec1614"
     },
     "tests/native/session_flow_tests.cpp": {
-      "bytes": 14929,
-      "sha256": "9a80bfe69cf160c51d96101f281850100651fb11d0a8ab7520d75ad682f62fe0"
+      "bytes": 15493,
+      "sha256": "32e859461b0ad14068d1d48887b7a38225475ca331a061aec54f9959858afe18"
     },
     "tests/native/socket_close_semantics_tests.cpp": {
       "bytes": 2598,
