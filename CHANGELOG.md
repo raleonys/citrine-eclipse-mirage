@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Test refusal of ordinary event pops after delivery success or cancellation until locked receipt settlement. Cover last and nonlast binary events, exact retained fronts, cancelled retry, stale callbacks and normal pops after settlement without changing production ownership policy.
+
 - Cover failed deletion of a retained atomic staging file after a batch staging failure: block new batches until cleanup succeeds, then permit a fresh commit without changing production persistence policy.
 
 - Test actual cached-avatar cleanup refusal for an owned nonempty matching directory: propagate the filesystem error and path, preserve its child and unrelated files, then remove the newly empty directory on repaired retry. The fixture makes no traversal-order assumption; production cleanup policy is unchanged.
