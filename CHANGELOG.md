@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Fix the execution concurrency fixture to allocate mock thread identities process-wide across Platform instances, and reject colliding identities before the existing startup-publication and mutex checks. Production Windows thread IDs and runtime behavior remain unchanged.
+
 - Refresh the complete owner-supplied Asio tree to 1.39.0 and PEGTL from the uploaded 4.x branch snapshot b60f6110abd37e502d202d13a6c565410c552c33 (header 4.0.2), not a release-tag selection. Retain project C++20/C17 and the existing character-pack VDF grammar API. Pin exact archives, members and portable aliases; preserve upstream bytes, MinHook/pugixml selections and application policies.
 
 - Cover Windows native binary output open rejection under an active read-only sharing lease, proving the file is not truncated and a retry succeeds once the handle is closed.
