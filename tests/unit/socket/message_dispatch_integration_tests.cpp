@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "tests/support/socket/message_dispatch_test_fixture.hpp"
-#include "preloader_l/xml/reader.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
 #include <deque>
 using namespace message_test;
-namespace t=preloader_l::threads;namespace m=preloader_l::messages;
+namespace t=citrine_eclipse_mirage::threads;namespace m=citrine_eclipse_mirage::messages;
 namespace {
 struct Exit {std::uint32_t code;};
 struct Threads:t::Effects {
@@ -60,7 +60,7 @@ struct Loop {
     Fixture f;Threads threads;ThreadApi thread_api{f,threads};
     s::FrameReadContext frame{f.base.buffer,f.base.base.completion,thread_api,f.base.owners,f.base.categories,f.headers,f.base.terminal,{0x1111},nullptr};
     s::MessageDispatchContext message{frame,f.api,f.owners,f.copies,f.closures};
-    preloader_l::xml_reader_bridge::Backend xml;Cipher cipher;Factory factory;Random random;Events events;Effects effects;
+    citrine_eclipse_mirage::xml_reader_bridge::Backend xml;Cipher cipher;Factory factory;Random random;Events events;Effects effects;
     std::uint8_t encrypted=0,show=0;std::deque<s::MessageWriteTask> queued;std::string decoded_input;unsigned rearms=0;
     Loop(){threads.message=&message;
         f.core_hook=[&](auto member,auto& response,auto& input){

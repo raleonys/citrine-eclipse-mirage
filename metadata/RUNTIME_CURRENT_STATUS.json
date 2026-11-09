@@ -17,9 +17,9 @@
   "compiler_crt": "STANDARD",
   "active_vendor_count": 4,
   "active_vendors": {
-    "asio": "1.38.2; owner snapshot bdf337ddb1a667c274372a602de5857ad3cb3ed0; active asynchronous transport",
+    "asio": "1.39.0; owner snapshot 190a8d8daf1cc62909b4e0c72ff491ba264ca98e; active asynchronous transport",
     "minhook": "1.3.4 owner input; pinned NtGetNextThread SAFE-FREEZE build copy",
-    "pegtl": "4; existing RE Config2/VDF grammar",
+    "pegtl": "4.0.2 header; owner 4.x branch snapshot b60f6110abd37e502d202d13a6c565410c552c33; existing RE Config2/VDF grammar",
     "pugixml": "1.16; owner snapshot f0a3faa76e04f35110257ca8713363dee3c890e8; actual XML/router/persistence backend with project-owned compatibility"
   },
   "vendor_source_changes": false,
@@ -55,7 +55,7 @@
     "release_file_logging": "FORBIDDEN",
     "existing_debug_log_in_release": "PRESERVE_UNCHANGED"
   },
-  "resource_policy": "Owner-reference VERSIONINFO; owner profile and preserved fallback PNG in read-only C++ data, no PNG PE resource",
+  "resource_policy": "Citrine Eclipse Mirage VERSIONINFO with selected release version; avatar and fallback remain read-only C++ data",
   "hook11": "Hook reference selector/protected reader/forwarding and lifetime; static SDK CRYPT32!CryptQueryObject import",
   "historical_runtime_snapshot": "metadata/evidence/RUNTIME_BINDING_STATUS.json",
   "validation_status": "metadata/evidence/asio-update/VALIDATION.json",
@@ -78,7 +78,7 @@
   "previous_validation_status": "metadata/evidence/avatar-update/VALIDATION.json",
   "owner_pre_update_windows_golden": "USER_LOG_PASS",
   "owner_pre_update_game_acceptance": "OWNER_REPORTED_PASS",
-  "updated_native_acceptance": "NOT_RUN_FOR_UPDATED_ASIO",
+  "updated_native_acceptance": "NOT_RUN_FOR_UPDATED_ASIO_AND_PEGTL",
   "config_platform_policy": "metadata/CONFIG_PLATFORM_POLICY.json",
   "historical_validation_statuses": [
     "metadata/evidence/AVATAR_REFRESH.json",
@@ -114,7 +114,9 @@
     "source": "src/runtime/application.cpp",
     "failed_release": "REPORT_CLEANUP_FAILURE_AND_RETAIN_EXACT_MODULE_FOR_RETRY",
     "partial_cleanup": "DESTROY_PROVIDER_OBJECT_ONCE_THEN_RETRY_ONLY_MODULE_RELEASE",
-    "regression": "extra_library_failure_contracts: provider-retry and provider-object",
+    "foreign_destructor_throw": "RETAIN_OBJECT_AND_MODULE_QUARANTINE_OWNER_RETHROW_ORIGINAL_EXCEPTION_NO_REENTRY_OR_UNLOAD",
+    "pre_call_resolution_failure": "RETAIN_OBJECT_AND_MODULE_ALLOW_SLOT_REPAIR_AND_RETRY",
+    "regression": "extra_library_failure_contracts: provider-retry, provider-object, provider-unknown-destruction and provider-resolution-retry",
     "native_msvc_golden": "NOT_RUN_FOR_THIS_CHANGE",
     "game_acceptance": "NOT_RUN_FOR_THIS_CHANGE",
     "donor_retirement": "STILL_BLOCKED"

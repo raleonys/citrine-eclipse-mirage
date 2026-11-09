@@ -13,13 +13,15 @@ existing archive SHA-256 and complete member hashes:
 
 | Archive | Commit recorded in the supplied archive |
 | --- | --- |
-| Asio | `bdf337ddb1a667c274372a602de5857ad3cb3ed0` |
-| PEGTL | `3b075432e94f6f906425350b43d03cd9cebfa4f1` |
+| Asio | `190a8d8daf1cc62909b4e0c72ff491ba264ca98e` |
+| PEGTL | `b60f6110abd37e502d202d13a6c565410c552c33` |
 | pugixml | `f0a3faa76e04f35110257ca8713363dee3c890e8` |
 | MinHook | `8af6b4acae5a9388fd742b56fa79ece89d96f823` |
 
-These identifiers are evidence from SHA-pinned ZIP comments, not independently
-fetched Git-object verification. The lock preserves that distinction. Archive
+These identifiers come from SHA-pinned owner ZIP comments. For the selected
+PEGTL 4.x snapshot, the complete archive member set additionally matches the
+independent upstream Git tree. Other records retain their stated verification
+limits. The lock preserves that distinction. Archive
 installation checks the comment as well as archive/member bytes; offline installed
 tree verification remains possible without shipping the original ZIPs.
 
@@ -37,10 +39,19 @@ helper stored only the first handle. The second could disappear from ownership
 tracking. The helper now uses the existing second emergency slot as well. A new
 test failed on the exact donor output and passes on the corrected copy. No success
 path, enumeration policy or public API is changed by this supplement.
-Adapted patch script SHA-256:
-`cd22a276907f4cd7dcaca6d091ebe4147e79d19c6577e5ac56164a735c614d4f`.
-Patched `hook.c` SHA-256:
+The current transform also selects `ACTION_DISABLE` for a single-hook disable
+(D326-F0006 / PR #19). Current adapted patch script SHA-256:
+`c55ddf218353acf8bf6994ef486771c1f807212c2f39772c298afd19a612cacb`.
+Current patched `hook.c` SHA-256:
+`0b586a3aa53d3d0b08f148784219da111375bc3557d52a195dd040c9125a56d1`.
+These are the active values in `metadata/HOOK_ENGINE_PATCH.json`.
+
+Historical ownership-only script SHA-256
+`cd22a276907f4cd7dcaca6d091ebe4147e79d19c6577e5ac56164a735c614d4f`
+produced `hook.c` SHA-256
 `4d0fc88c91deed5eb97344e4daa9bd69d2fdca15d2fabefd911e08e27ef9fea3`.
+That pre-single-disable-fix output is retained only as the named negative control,
+not as the current shipping engine identity.
 
 At configure time, `prepare_hook_engine.py` verifies the original tree, copies all
 61 MinHook files under the selected project `build/` directory and applies this
@@ -113,10 +124,50 @@ bytes (never called), verifies target-to-trampoline enable relocation, rejects
 disable with an unreadable peer context, then verifies trampoline-to-target
 relocation and original-byte restoration on retry. Native Windows execution is
 separate required evidence; source QA does not establish that result.
-The focused `Windows MinHook single-disable acceptance` PR workflow builds
+The manual `Windows MinHook single-disable acceptance` workflow builds
 `hook_freeze_contracts` and the unchanged `hook_engine_fixture_tests` target
 with genuine MSVC in Debug and Release, and retains the CTest and patched-source
 artifacts. These two tests do not establish full native/Golden or game acceptance.
+
+## Controlled real suspended-peer acceptance
+
+`hook_real_peer_contracts` links the actual verified engine library without
+intercepting thread enumeration, suspension, context, resume or close APIs.
+It creates an owned Windows worker, waits for its startup handshake, externally
+suspends it and saves its real `CONTEXT`. While that external suspension remains,
+the controller places its real `Rip` at known executable-fixture boundaries and
+calls public MinHook operations. The engine must add/release only its own
+suspension and leave the external count at one. Native `GetThreadContext`
+observes each resulting IP; process handle counts reject cursor/thread leaks.
+
+Four owned hook targets cover two NOP prologues, a short hotpatch function and
+an expanded relative CALL. The 13 mapping points include a nonidentity offset
+(original +5 to trampoline +16). Single enable/disable, queued-single,
+queued-all, direct ALL, x64 relay IPs, the hotpatch prelude, enabled and disabled
+RemoveHook and active Uninitialize verify physical IPs and target bytes.
+The fixture restores the worker's original context before resuming it, signals
+and joins it, checks its exit code, closes its handles and restores the initial
+process handle count. Executable fixture bytes are never called. Failed cleanup
+retains unresolved resources until the isolated test child exits.
+
+The same C++ fixture is also linked to a separate build-only historical control.
+`hook_real_peer_control.py` accepts only the exact current hook SHA, reverses the
+single action-selection correction, and requires the exact historical `4d0fc8…`
+SHA before writing under `build/…/test_controls/`. It does not modify the verified
+engine copy or vendor tree. `hook_real_peer_stale_control` succeeds only when
+that unchanged fixture executable exits 42 for the precise stale real-IP
+mismatch **and** confirms complete restoration/join/handle cleanup. A normal
+success, unrelated failure, crash, timeout or incomplete cleanup is rejected;
+CTest `WILL_FAIL` is not used to accept arbitrary errors.
+
+Both new tests retain a 30-second budget and run with the existing injected
+failure and upstream-comparison tests in the manual Debug/Release hook workflow
+and the full Native inventory. Focused Windows/MSVC results, source identity,
+patched/control hashes and retained JUnit/LastTest logs are recorded in the PR.
+Wine execution is a separate evidence class. The controlled, externally held
+worker does not establish every naturally occurring scheduling race, arbitrary
+instruction form, hostile-thread case or Consumer/game behavior. Existing
+injected-failure fixtures retain their independent OS-error/ownership coverage.
 
 The older `hook_engine_fixtures` intentionally compiles the immutable upstream
 source as a comparison baseline. Its stock failure expectations do not describe

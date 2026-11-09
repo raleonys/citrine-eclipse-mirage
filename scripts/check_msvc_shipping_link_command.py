@@ -23,9 +23,9 @@ def _safe_under(root: Path, candidate: Path):
 
 
 def normalized_link_source(build_dir: Path):
-    """Return the target-local source that CMake generated for preloader_l linking."""
+    """Return the target-local source that CMake generated for citrine_eclipse_mirage linking."""
     root = build_dir.resolve()
-    target_dir = root / 'CMakeFiles' / 'preloader_l.dir'
+    target_dir = root / 'CMakeFiles' / 'citrine_eclipse_mirage.dir'
     link_txt = target_dir / 'link.txt'
     if link_txt.is_file():
         return link_txt.resolve(), 'link.txt', []
@@ -41,7 +41,7 @@ def normalized_link_source(build_dir: Path):
             if safe is None:
                 continue
             parts = [x.lower() for x in safe.parts]
-            if 'preloader_l.dir' in parts:
+            if 'citrine_eclipse_mirage.dir' in parts:
                 candidates.append((safe, name))
     unique = []
     seen = set()
@@ -54,11 +54,11 @@ def normalized_link_source(build_dir: Path):
         return p, kind, []
     if not unique:
         return None, None, [
-            f'normalized preloader_l link rule not found under: {root} '
+            f'normalized citrine_eclipse_mirage link rule not found under: {root} '
             '(expected target-local link.txt or build.make)'
         ]
     return None, None, [
-        'ambiguous preloader_l link rule: ' + ', '.join(str(p) for p, _ in unique)
+        'ambiguous citrine_eclipse_mirage link rule: ' + ', '.join(str(p) for p, _ in unique)
     ]
 
 
@@ -235,14 +235,14 @@ def self_test():
 
     with tempfile.TemporaryDirectory() as td:
         root = Path(td)
-        target = root / 'CMakeFiles' / 'preloader_l.dir'
+        target = root / 'CMakeFiles' / 'citrine_eclipse_mirage.dir'
         target.mkdir(parents=True)
 
         # NMake inline response is part of the selected invocation and needs no
         # unrelated target-local response-file scan.
         (target / 'build.make').write_text(
-            'preloader.unsigned.dll:\n\tlink.exe @<<\n'
-            '/DLL /INCREMENTAL:NO /DEBUG:NONE /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO /OUT:preloader.unsigned.dll\n<<\n',
+            'citrine_eclipse_mirage.unsigned.dll:\n\tlink.exe @<<\n'
+            '/DLL /INCREMENTAL:NO /DEBUG:NONE /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO /OUT:citrine_eclipse_mirage.unsigned.dll\n<<\n',
             encoding='utf-8',
         )
         (target / 'stale.rsp').write_text('/INCREMENTAL /DEBUG /LTCG /MANIFEST:EMBED\n', encoding='utf-8')
