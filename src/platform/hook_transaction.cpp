@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/hook_transaction.hpp"
+#include "citrine_eclipse_mirage/platform/hook_transaction.hpp"
 #include <exception>
 #include <stdexcept>
-namespace preloader_l::platform::hook_engine {
+namespace citrine_eclipse_mirage::platform::hook_engine {
 Transaction::~Transaction(){if(owns_)std::terminate();}
 int Transaction::begin(){
     if(state_!=TransactionState::Idle)throw std::logic_error("Hook transaction is single-use");

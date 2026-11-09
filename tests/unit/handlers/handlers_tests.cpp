@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/handlers/handlers.hpp"
+#include "citrine_eclipse_mirage/handlers/handlers.hpp"
+#include "citrine_eclipse_mirage/xml/memory_printer.hpp"
 #include <algorithm>
 #include <cstdio>
 #include <functional>
@@ -8,7 +9,7 @@
 #include <tuple>
 #include <vector>
 
-using namespace preloader_l::handlers;
+using namespace citrine_eclipse_mirage::handlers;
 static unsigned checks;
 static void require(bool v) {++checks;if(!v)throw std::runtime_error("check "+std::to_string(checks));}
 struct Fixture {
@@ -70,6 +71,64 @@ static void config_and_connected() {
         require(result.opened==std::vector<std::string>{"InternetConnectedState"});
         require(result.attributes==std::vector<std::pair<std::string,std::string>>{{"connected",(online||pretend)?"1":"0"}});
         require(f.game.empty() && f.settings.empty());
+    }
+}
+
+// Frozen compatibility output from the retained reconstruction source at
+// e10561b256a5793f857ec4bed4b5a9fb9fcfbadd:src/handlers/handlers.cpp.
+// The same 34 ordered pairs occur at archive11 260dd15e9f46b63038ed00e8fec93d27c837765a.
+// This literal is independent of the production table at test runtime. It pins
+// the advertisement, not the existence of complete external service engines.
+static void config_advertisement_wire() {
+    struct NoInput final : citrine_eclipse_mirage::xml::AttributeReader {
+        const char* attribute(Request,const char*) override {
+            throw std::logic_error("GetConfig must not read request attributes");
+        }
+    } reader;
+    static constexpr char expected[]=R"(<GetConfigResponse>
+    <Service Name="EbisuSDK" Facility="SDK"/>
+    <Service Name="EbisuSDK" Facility="PROFILE"/>
+    <Service Name="XMPP" Facility="PRESENCE"/>
+    <Service Name="XMPP" Facility="FRIENDS"/>
+    <Service Name="Commerce" Facility="COMMERCE"/>
+    <Service Name="EbisuSDK" Facility="RECENTPLAYER"/>
+    <Service Name="EbisuSDK" Facility="IGO"/>
+    <Service Name="EbisuSDK" Facility="MISC"/>
+    <Service Name="EALS" Facility="LOGIN"/>
+    <Service Name="Utility" Facility="UTILITY"/>
+    <Service Name="XMPP" Facility="XMPP"/>
+    <Service Name="XMPP" Facility="CHAT"/>
+    <Service Name="EbisuSDK" Facility="IGO_EVENT"/>
+    <Service Name="EALS" Facility="EALS_EVENTS"/>
+    <Service Name="EbisuSDK" Facility="LOGIN_EVENT"/>
+    <Service Name="XMPP" Facility="INVITE_EVENT"/>
+    <Service Name="EbisuSDK" Facility="PROFILE_EVENT"/>
+    <Service Name="XMPP" Facility="PRESENCE_EVENT"/>
+    <Service Name="XMPP" Facility="FRIENDS_EVENT"/>
+    <Service Name="Commerce" Facility="COMMERCE_EVENT"/>
+    <Service Name="XMPP" Facility="CHAT_EVENT"/>
+    <Service Name="EbisuSDK" Facility="DOWNLOAD_EVENT"/>
+    <Service Name="EbisuSDK" Facility="PERMISSION"/>
+    <Service Name="EbisuSDK" Facility="RESOURCES"/>
+    <Service Name="EbisuSDK" Facility="BLOCKED_USERS"/>
+    <Service Name="EbisuSDK" Facility="BLOCKED_USER_EVENT"/>
+    <Service Name="EbisuSDK" Facility="GET_USERID"/>
+    <Service Name="EbisuSDK" Facility="ONLINE_STATUS_EVENT"/>
+    <Service Name="EbisuSDK" Facility="ACHIEVEMENT"/>
+    <Service Name="EbisuSDK" Facility="ACHIEVEMENT_EVENT"/>
+    <Service Name="EbisuSDK" Facility="BROADCAST_EVENT"/>
+    <Service Name="PI" Facility="PROGRESSIVE_INSTALLATION"/>
+    <Service Name="PI" Facility="PROGRESSIVE_INSTALLATION_EVENT"/>
+    <Service Name="EbisuSDK" Facility="CONTENT"/>
+</GetConfigResponse>
+)";
+    for(int repeat=0;repeat<2;++repeat) {
+        citrine_eclipse_mirage::xml::MemoryPrinter printer;
+        citrine_eclipse_mirage::xml::HandlerWriter writer(printer,reader);
+        require(get_config_02e5f0(writer));
+        require(printer.depth()==0);
+        // Include exactly one trailing protocol terminator in the comparison.
+        require(printer.buffer_including_terminator()==std::string(expected)+std::string(1,'\0'));
     }
 }
 
@@ -136,4 +195,4 @@ static void aggregate_tests() {
     require(threw && partial.game.size()==2 && effects.time_calls==1);
     require(fail.closes==0 && fail.attributes.size()==1);
 }
-int main(){config_and_connected();profile_tests();lookup_tests();aggregate_tests();std::printf("PASS: %u checks; synthetic XML/profile state; no target execution\n",checks);}
+int main(){config_and_connected();config_advertisement_wire();profile_tests();lookup_tests();aggregate_tests();std::printf("PASS: %u checks; synthetic XML/profile state; no target execution\n",checks);}

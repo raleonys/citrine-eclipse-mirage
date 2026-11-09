@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_write_finish.hpp"
+#include "citrine_eclipse_mirage/net/transport_write_finish.hpp"
 #include <algorithm>
 #include <functional>
 #include <iostream>
 #include <limits>
 #include <memory>
 #include <vector>
-namespace s=preloader_l::socket;
+namespace s=citrine_eclipse_mirage::socket;
 namespace {
 unsigned checks=0;void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
 struct Stop{};struct Terminal{};
@@ -87,7 +87,7 @@ void live_logging(){
 template<class F>void unsupported(F action){bool caught=false;try{action();}catch(const s::UnsupportedInput&){caught=true;}check(caught,"invalid bounded projection rejected explicitly");}
 void registries(){
  for(unsigned kind=0;kind<5;++kind){Fixture f;std::array<s::WriteFinishOwnerBinding,2> duplicate{{f.owners[0],f.owners[0]}};if(kind==0)f.context.owners={};if(kind==1)f.owners[0].owner=nullptr;if(kind==2)f.context.owners=duplicate;if(kind==3)f.owner.map_d0={};if(kind==4)f.map[3]=nullptr;unsupported([&]{f.run();});check(f.events.empty(),"invalid owner/map rejected before effects");}
- for(unsigned kind=0;kind<4;++kind){Fixture f;f.error.value=5;std::array<s::WriteFinishCategoryBinding,2> duplicate{{f.cats[0],f.cats[0]}};if(kind==0)f.context.categories={};if(kind==1)f.cats[0].category=nullptr;if(kind==2)f.context.categories=duplicate;if(kind==3)f.cats[0].key.logical=preloader_l::server::ErrorCategory::other;unsupported([&]{f.run();});check(f.events==std::vector<std::string>{"misc"},"category projection validates after misc before log");}
+ for(unsigned kind=0;kind<4;++kind){Fixture f;f.error.value=5;std::array<s::WriteFinishCategoryBinding,2> duplicate{{f.cats[0],f.cats[0]}};if(kind==0)f.context.categories={};if(kind==1)f.cats[0].category=nullptr;if(kind==2)f.context.categories=duplicate;if(kind==3)f.cats[0].key.logical=citrine_eclipse_mirage::server::ErrorCategory::other;unsupported([&]{f.run();});check(f.events==std::vector<std::string>{"misc"},"category projection validates after misc before log");}
  for(bool duplicate:{false,true}){Fixture f;f.item.capacity_18=4095;heap(f.item,0x10000);std::array<s::WriteFinishAllocationHeader,2> d{{f.headers[0],f.headers[0]}};if(duplicate)f.context.allocation_headers=d;else f.context.allocation_headers={};unsupported([&]{f.run();});check(f.events.empty(),"header projection rejects before free");}
 }
 void exceptions(){const auto sequence=std::vector<std::string>{"misc","begin","message","append","widen","put","flush","free"};for(std::size_t i=0;i<sequence.size();++i){Fixture f;f.error.value=5;f.message_capacity=16;f.throw_at=sequence[i];bool caught=false;try{f.run();}catch(const Stop&){caught=true;}check(caught&&f.events==std::vector<std::string>(sequence.begin(),sequence.begin()+i+1),"required logging exception preserves only native normal prefix without invented cleanup");}for(auto effect:{"free","next"}){Fixture f;f.item.capacity_18=16;heap(f.item,0x10000);f.throw_at=effect;bool caught=false;try{f.run();}catch(const Stop&){caught=true;}check(caught,"success required provider exception propagates");check(f.item.capacity_18==(std::string(effect)=="free"?16U:15U),"success mutation sequence stops exactly at throwing callback");}}

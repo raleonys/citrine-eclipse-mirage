@@ -30,6 +30,22 @@ It does not claim full import/byte/edge-case equivalence with the historical
 Anadius CRT. LLVM/Wine tests do not replace actual Windows testing of the
 Microsoft STL implementation.
 
+## Checked license ticket writes (F-C24-001 candidate)
+
+The original `write_binary_03c1d0` remains unchanged because it
+intentionally reflects the recovered RE initial-open-only success rule.
+The opt-in `write_binary_checked` checks the live stream status after
+writing and after close. Production LicenseFiles and LicenseEffects ticket
+adapters select it, so nonthrowing late I/O failures do not trigger a
+false ticket-success dialog. The producer's other legacy file writes
+(avatar, profile, Config2 license-key output) remain unchanged.
+
+This is neither atomic replacement nor a guarantee of fsync durability,
+Windows sharing or later hardware error detection. The caller-selected
+success policy remains an owner review decision. Deterministic stream-state
+regressions and generated-file round trips are separate from real Windows
+disk-full/sharing fault injection, crash durability and Consumer acceptance.
+
 ## Production exports and logging
 
 The Production `.def` now contains the same three C exports as Brownfield:
@@ -65,8 +81,8 @@ values and guards all other bytes. It fails closed if the module set differs.
 The null descriptor is preserved, the checksum recomputed, and CORVEXON
 separately verifies final order.
 
-This order applies only to `dist/preloader_l.dll` after Golden finalization.
-The raw `build/preloader.unsigned.dll` retains linker order. The LLVM
+This order applies only to `dist/citrine_eclipse_mirage.dll` after Golden finalization.
+The raw `build/citrine_eclipse_mirage.unsigned.dll` retains linker order. The LLVM
 development DLL includes dynamic CRT modules and cannot count as shipping
 acceptance; runtime load/LSX/shutdown/unload tests of the same permutation
 helper are separately evidenced.

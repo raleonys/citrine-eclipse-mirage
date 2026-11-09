@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
+name: Windows operator output fixtures
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  operator-output:
+    name: Windows operator output fixtures
+    runs-on: windows-2022
+    timeout-minutes: 5
+    steps:
+      - name: Mask machine-specific paths in CI console
+        shell: pwsh
+        run: |
+          $paths = @($env:GITHUB_WORKSPACE, (Get-Location).Path, $env:USERPROFILE, $env:TEMP, $env:TMP, $env:RUNNER_TEMP)
+          $paths = @($paths | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | Select-Object -Unique)
+          if ($paths | Where-Object { $_ -match '[\r\n]' }) { throw 'Unsafe path for GitHub log masking.' }
+          foreach ($path in $paths) {
+            foreach ($variant in (@($path, $path.Replace('\', '/')) | Select-Object -Unique)) {
+              $encoded = $variant.Replace('%', '%25')
+              Write-Output "::add-mask::$encoded"
+            }
+          }
+      - name: Preserve exact checkout bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - name: Exercise real CMD and PowerShell presentation with fixture build results
+        run: python -B tests/infrastructure/test_infrastructure.py OperatorOutputTests

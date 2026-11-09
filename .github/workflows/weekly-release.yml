@@ -4,7 +4,7 @@ name: Weekly draft release
 
 on:
   schedule:
-    - cron: '30 13 * * 5' # Friday 16:30 Europe/Istanbul (UTC+3).
+    - cron: '30 13 * * 5' # Friday 13:30 UTC.
   workflow_dispatch:
     inputs:
       start_tag:
@@ -33,6 +33,7 @@ jobs:
     outputs:
       ready: ${{ steps.plan.outputs.ready }}
       source: ${{ steps.plan.outputs.source }}
+      version: ${{ steps.plan.outputs.version }}
     steps:
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
@@ -55,14 +56,14 @@ jobs:
       - name: Run portable tests
         if: steps.plan.outputs.ready == 'true'
         run: |
-          cmake -S . -B build/weekly-portable -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON
+          cmake -S . -B build/weekly-portable -DCITRINE_ECLIPSE_MIRAGE_PORTABLE_CHECKS_ONLY=ON
           cmake --build build/weekly-portable --parallel 2
           ctest --test-dir build/weekly-portable --output-on-failure --output-junit "$GITHUB_WORKSPACE/build/weekly-portable/CTEST_RESULTS.xml"
           test -s "$GITHUB_WORKSPACE/build/weekly-portable/CTEST_RESULTS.xml"
-      - name: Package exact source and checksums
+      - name: Package exact source for validation evidence
         if: steps.plan.outputs.ready == 'true'
         run: python -B scripts/weekly_release.py source --plan build/weekly-plan.json --output "$RUNNER_TEMP/weekly-source"
-      - name: Retain source candidate
+      - name: Retain source validation evidence
         if: steps.plan.outputs.ready == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
@@ -74,6 +75,8 @@ jobs:
   windows:
     name: Validate Windows ${{ matrix.profile }}
     needs: plan
+    env:
+      CITRINE_ECLIPSE_MIRAGE_VERSION: ${{ needs.plan.outputs.version }}
     if: needs.plan.outputs.ready == 'true'
     runs-on: windows-2022
     timeout-minutes: 60
@@ -130,6 +133,8 @@ jobs:
   draft:
     name: Assemble a draft for owner review
     needs: [plan, windows]
+    env:
+      CITRINE_ECLIPSE_MIRAGE_VERSION: ${{ needs.plan.outputs.version }}
     if: needs.plan.outputs.ready == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -156,7 +161,16 @@ jobs:
           gh run download "$GITHUB_RUN_ID" --name weekly-windows-production --dir "$RUNNER_TEMP/weekly-payload"
       - name: Validate and package the complete candidate
         run: python -B scripts/weekly_release.py bundle --payload "$RUNNER_TEMP/weekly-payload" --output "$RUNNER_TEMP/weekly-assets"
+      - name: Retain candidate receipt as workflow evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: weekly-release-receipt
+          path: |
+            ${{ runner.temp }}/weekly-payload/RELEASE_RECEIPT.json
+            ${{ runner.temp }}/weekly-payload/RELEASE_RECEIPT.json.sha256
+          if-no-files-found: error
+          retention-days: 14
       - name: Create or finish the draft without publishing
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B scripts/weekly_release.py draft --plan "$RUNNER_TEMP/weekly-payload/plan.json" --assets "$RUNNER_TEMP/weekly-assets"
+        run: python -B scripts/weekly_release.py draft --plan "$RUNNER_TEMP/weekly-payload/plan.json" --assets "$RUNNER_TEMP/weekly-assets" --receipt "$RUNNER_TEMP/weekly-payload/RELEASE_RECEIPT.json"

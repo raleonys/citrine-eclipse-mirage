@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/achievement_runtime.hpp"
-#include "preloader_l/runtime/timestamp.hpp"
-#include "preloader_l/xml/reader.hpp"
+#include "citrine_eclipse_mirage/runtime/achievement_runtime.hpp"
+#include "citrine_eclipse_mirage/runtime/timestamp.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -11,10 +11,10 @@
 #include <stdexcept>
 #include <windows.h>
 
-namespace ar=preloader_l::achievement_runtime;
-namespace content=preloader_l::content_handlers;
-namespace cfg=preloader_l::configuration;
-namespace io=preloader_l::file;
+namespace ar=citrine_eclipse_mirage::achievement_runtime;
+namespace content=citrine_eclipse_mirage::content_handlers;
+namespace cfg=citrine_eclipse_mirage::configuration;
+namespace io=citrine_eclipse_mirage::file;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -45,7 +45,7 @@ struct Clock final:ar::Clock {
     std::int64_t time_05eeb8()override{require(mutex.held,"clock invoked under achievement lock");++calls;return 123;}
     std::optional<ar::BrokenDown> gmtime_05fffc(std::int64_t raw)override{require(raw==123,"clock forwarded to gmtime");if(absent)return std::nullopt;return fields;}
 };
-struct Directories final:preloader_l::achievement_writer::Effects {
+struct Directories final:citrine_eclipse_mirage::achievement_writer::Effects {
     Mutex& mutex;std::vector<std::string>& trace;std::vector<cfg::Path> paths;bool native=true;
     Directories(Mutex& m,std::vector<std::string>& t):mutex(m),trace(t){}
     void create_directories_018e00(const cfg::Path& path)override{require(mutex.held,"INI parent creation under lock");trace.push_back("mkdir");paths.push_back(path);if(native)std::filesystem::create_directories(std::filesystem::path(path));}
@@ -90,7 +90,7 @@ struct Effects final:ar::PersistenceEffects {
     void log_saved_size_085530(std::int32_t)override{unused();}
 };
 struct Fixture {
-    cfg::State state{};preloader_l::achievement_storage::Paths paths;
+    cfg::State state{};citrine_eclipse_mirage::achievement_storage::Paths paths;
     Mutex mutex;Queue events{mutex};Clock clock{mutex};ar::HostFormatter formatter;
     std::vector<std::string> trace;Directories dirs{mutex,trace};Factory files{mutex,trace,paths.xml_path};
     Effects effects{state,paths,clock,formatter,dirs,files};std::uint8_t online=0;std::int32_t saved=0;
@@ -230,10 +230,10 @@ void native_locked_ini_grant_retry(const std::filesystem::path& root){
     for(const auto& entry:std::filesystem::directory_iterator(ini.parent_path())){(void)entry;++ini_entries;}
     require(xml_entries==2&&ini_entries==1,"no staging or backup files remain after a successful retry");
 }
-struct StorageEffects final:preloader_l::timestamp::StorageEffects {
-    explicit StorageEffects(preloader_l::timestamp::Parser& parser):preloader_l::timestamp::StorageEffects(parser){}
+struct StorageEffects final:citrine_eclipse_mirage::timestamp::StorageEffects {
+    explicit StorageEffects(citrine_eclipse_mirage::timestamp::Parser& parser):citrine_eclipse_mirage::timestamp::StorageEffects(parser){}
     cfg::Path filesystem_widen_006d70(std::string_view value)override{return {value.begin(),value.end()};}
-    preloader_l::status::Status status_01ea20(const cfg::Path&,std::uint32_t flags)override{require(flags==3,"roundtrip storage uses flags3");return {2,0,0};}
+    citrine_eclipse_mirage::status::Status status_01ea20(const cfg::Path&,std::uint32_t flags)override{require(flags==3,"roundtrip storage uses flags3");return {2,0,0};}
     [[noreturn]]void filesystem_error_018130(std::string_view,std::uint32_t,const cfg::Path&)override{unused();}
     void create_directories_018e00(const cfg::Path&)override{unused();}
 };
@@ -241,9 +241,9 @@ void roundtrip(const std::filesystem::path& root){
     Fixture f(root/"roundtrip");f.state.achievements.erase("negative");f.state.achievements.erase("skip");(void)f.grant("a");
     cfg::State restored{};restored.user_directory=f.state.user_directory;restored.steam_app_id="42";
     restored.achievements.emplace("a",cfg::Achievement{2,0,0,"old","","100",999});
-    preloader_l::achievement_storage::Paths paths{f.paths.xml_path,{}};preloader_l::xml_reader_bridge::Backend xml;preloader_l::achievement_storage::HostCrtNumbers numbers;
-    preloader_l::timestamp::ClassicIso parser;StorageEffects effects(parser);io::NativeFactory files;
-    preloader_l::achievement_storage::Storage storage(paths,xml,numbers,effects,files);storage.update_01eb00(restored);
+    citrine_eclipse_mirage::achievement_storage::Paths paths{f.paths.xml_path,{}};citrine_eclipse_mirage::xml_reader_bridge::Backend xml;citrine_eclipse_mirage::achievement_storage::HostCrtNumbers numbers;
+    citrine_eclipse_mirage::timestamp::ClassicIso parser;StorageEffects effects(parser);io::NativeFactory files;
+    citrine_eclipse_mirage::achievement_storage::Storage storage(paths,xml,numbers,effects,files);storage.update_01eb00(restored);
     const auto& a=restored.achievements.at("a");require(a.field04==0 && a.field08==1 && a.field70==946684800 && a.timestamp=="2000-01-01T00:00:00" && a.display_name=="A&\"<","runtime write to actual XML reader/storage/parser/calendar roundtrip");
     require(a.field00==2 && a.steam_id=="100","roundtrip import preserves configured total and Steam ID");
 }

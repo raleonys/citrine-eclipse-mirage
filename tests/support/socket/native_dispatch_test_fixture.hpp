@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "preloader_l/net/transport_native_dispatch.hpp"
+#include "citrine_eclipse_mirage/net/transport_native_dispatch.hpp"
 #include "tests/support/socket/cipher_session_test_fixture.hpp"
 
 namespace dispatch_test {
-namespace s=preloader_l::socket;namespace m=preloader_l::messages;
+namespace s=citrine_eclipse_mirage::socket;namespace m=citrine_eclipse_mirage::messages;
 using response_test::check;using response_test::checks;
 struct Bytes:s::ReceiveBufferApi {
     native_message_test::Fixture& native;s::NativeDispatchLocals& locals;std::function<void()> freeing;
@@ -31,7 +31,7 @@ struct Printer:m::XmlPrinter {
 // TLS/RB-tree, string constructor/reserve/append/destructor or exception ABI.
 struct Effects:s::NativeDispatchEffects {
     native_message_test::Fixture& native;s::ReceiveBufferContext& strings;s::NativeDispatchLocals& locals;s::SessionCipher& session;
-    session_cipher_test::Effects effects;s::SessionCipherFactory factory;session_cipher_test::Time time;preloader_l::crypto::Random random{time};
+    session_cipher_test::Effects effects;s::SessionCipherFactory factory;session_cipher_test::Time time;citrine_eclipse_mirage::crypto::Random random{time};
     std::array<s::NativeDispatchEntry,39> entries{};s::NativeDispatchEntry sentinel{},other_end{};s::NativeDispatchEntry* end=&sentinel;
     std::unique_ptr<Printer> printer;std::vector<std::string> trace;std::function<void(std::string)> hook;
     std::string data,override_data;std::optional<std::int32_t> override_size;std::uint64_t reserved=0,appended=0;
