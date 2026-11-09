@@ -321,7 +321,7 @@ with tempfile.TemporaryDirectory() as td:
     cp=subprocess.run([sys.executable,'-B',str(r/'scripts/ursynex_golden_finalizer.py'),str(path)],capture_output=True,text=True)
     assert cp.returncode==0,cp.stdout+cp.stderr
     result=path.read_bytes()
-    assert struct.unpack_from('<I',result,coff2+4)[0]==int(json.loads((r/'metadata/MUSTAVEX_GOLDEN_METADATA.json').read_text())['required']['timestamp'],16)
+    assert struct.unpack_from('<I',result,coff2+4)[0]==struct.unpack_from('<I',original,coff2+4)[0]
     assert tuple(result[opt2+2:opt2+4])==(14,0)
     assert b'Rich' not in result[:pe2]
     assert struct.unpack_from('<I',result,opt2+64)[0]==cor.compute_pe_checksum(result,opt2+64)
@@ -336,6 +336,29 @@ with tempfile.TemporaryDirectory() as td:
     assert any('import module order differs' in x for x in errors),errors
     path.write_bytes(result)
     fin.validate_approved_mutation(original,result,pe2,coff2,opt2,order)
+    # Product policy preserves the linker-created COFF time while retaining
+    # the independently selected linker-version and other Golden policies.
+    product_fin=load('product_timestamp_finalizer',r/'scripts/ursynex_golden_finalizer.py')
+    product_fin.validate_policy_bindings()
+    assert product_fin.TARGET_TIMESTAMP is None
+    assert product_fin.TARGET_LINKER==(14,0)
+    product_fin.validate_approved_mutation(original,result,pe2,coff2,opt2,order)
+    wrong_time=bytearray(result);wrong_time[coff2+4]^=1
+    try:
+        product_fin.validate_approved_mutation(original,wrong_time,pe2,coff2,opt2,order)
+        raise AssertionError('accepted a changed native timestamp under PRESERVE_INPUT')
+    except product_fin.PEError:pass
+    second=bytearray(original)
+    struct.pack_into('<I',second,coff2+4,0x68543210)
+    path.write_bytes(second)
+    cp=subprocess.run([sys.executable,'-B',str(r/'scripts/ursynex_golden_finalizer.py'),str(path)],capture_output=True,text=True)
+    assert cp.returncode==0,cp.stdout+cp.stderr
+    second_result=path.read_bytes()
+    assert second_result[coff2+4:coff2+8]==second[coff2+4:coff2+8]
+    assert tuple(second_result[opt2+2:opt2+4])==(14,0)
+    assert struct.unpack_from('<I',second_result,opt2+64)[0]==cor.compute_pe_checksum(second_result,opt2+64)
+    product_fin.validate_approved_mutation(second,second_result,pe2,coff2,opt2,order)
+    path.write_bytes(result)
     table,records,_=descriptors(original)
     # Only complete descriptors move. Everything outside the table and approved
     # header/checksum spans must remain byte-identical, including thunk/name data.

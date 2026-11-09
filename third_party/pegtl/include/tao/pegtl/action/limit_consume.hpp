@@ -41,7 +41,7 @@ namespace TAO_PEGTL_NAMESPACE
 
          ~limit_guard()
          {
-            m_in.private_set_end( static_cast< const Input::data_t* >( m_end ) );
+            m_in.private_set_end( static_cast< const typename Input::data_t* >( m_end ) );
          }
 
          void operator=( limit_guard&& ) = delete;
@@ -67,7 +67,7 @@ namespace TAO_PEGTL_NAMESPACE
                 typename... States >
       [[nodiscard]] static bool match( ParseInput& in, States&&... st )
       {
-         const internal::limit_guard< Maximum, ParseInput > bg( in );
+         internal::limit_guard< Maximum, ParseInput > bg( in );
          if( TAO_PEGTL_NAMESPACE::match< Rule, A, M, Action, Control >( in, st... ) ) {
             if( in.empty() && ( bg.m_end != in.current() ) ) {
 #if defined( __cpp_exceptions )

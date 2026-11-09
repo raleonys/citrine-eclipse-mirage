@@ -10,16 +10,18 @@ on:
       - 'README.md'
       - 'doc/**'
 
-permissions:
-  contents: read
-
 jobs:
-  macos-llvm:
-    name: LLVM ${{ matrix.llvm }} (${{ matrix.os }}, ${{ matrix.build_type }})
+  xcode:
     strategy:
       fail-fast: false
       matrix:
         include:
+          - llvm: 18
+            build_type: Debug
+            os: macos-15-intel
+          - llvm: 18
+            build_type: Release
+            os: macos-15-intel
           - llvm: 18
             build_type: Debug
             os: macos-15
@@ -40,47 +42,18 @@ jobs:
         brew update
         brew install llvm@${{ matrix.llvm }}
 
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@v4
     - name: Configure CMake
       run: |
-        cmake -S . -B build \
+        cmake -S $GITHUB_WORKSPACE -B build \
           -GNinja \
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
-          -DCMAKE_CXX_COMPILER="$(brew --prefix llvm@${{ matrix.llvm }})/bin/clang++" \
-          -DPEGTL_BUILD_LINT=ON
+          -DCMAKE_CXX_COMPILER=$(brew --prefix llvm@${{ matrix.llvm }})/bin/clang++ \
+          -DCMAKE_LINKER=$(brew --prefix llvm@${{ matrix.llvm }})/bin/ld.lld
 
     - name: Build project
-      run: cmake --build build
+      run: cmake --build build/ --config ${{ matrix.build_type }}
 
     - name: Run tests
-      run: ctest --test-dir build --output-on-failure
-
-  macos-appleclang:
-    name: AppleClang (${{ matrix.os }}, ${{ matrix.build_type }})
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-26]
-        build_type: [Debug, Release]
-    runs-on: ${{ matrix.os }}
-
-    steps:
-    - uses: actions/checkout@v7
-
-    - name: Show Apple toolchain
-      run: |
-        xcode-select -p
-        xcrun clang++ --version
-
-    - name: Configure CMake
-      run: |
-        cmake -S . -B build -GNinja \
-          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
-          -DCMAKE_CXX_COMPILER="$(xcrun --find clang++)" \
-          -DPEGTL_BUILD_LINT=ON
-
-    - name: Build project
-      run: cmake --build build
-
-    - name: Run tests
-      run: ctest --test-dir build --output-on-failure
+      working-directory: build/
+      run: ctest -C ${{ matrix.build_type }} --output-on-failure
