@@ -221,16 +221,6 @@ These rules are in the *inline* namespace `tao::pegtl::ascii`.
 
 For all ASCII rules the template parameters representing characters are of type `char`.
 
-###### `aistring< P, C... >`
-
-* [Similar to](Rules-and-Grammars.md#ascii-string-rules) `(ascii::)astring< P, C... >`, but:
-* For ASCII letters the match is case insensitive.
-* The `std::size_t P` must be between `0` and sizeof `C...`, excluding edges.
-* If the complete string `C...` matches, consumes that complete string.
-* Otherwise, if the first `P` characters of `C...` match, consumes those `P` characters.
-* [Meta data] and [implementation] mapping:
-  - `ascii::aistring< P, C... >::rule_t` is `internal::ascii_aistring< P, C... >`
-
 ###### `alnum`
 
 * Matches and consumes a single ASCII alphabetic or numeric character.
@@ -254,15 +244,6 @@ For all ASCII rules the template parameters representing characters are of type 
 * [Equivalent] to `(ascii::)range< 0, 127 >`.
 * [Meta data] and [implementation] mapping:
   - `(ascii::)any7::rule_t` is `internal::any< internal::peek_seven >`
-
-###### `astring< P, C... >`
-
-* [Like](Rules-and-Grammars.md#ascii-string-rules) `(ascii::)string< C... >` but also matches one prefix of `C...`.
-* The `std::size_t P` must be between `0` and sizeof `C...`, excluding edges.
-* If the complete string `C...` matches, consumes that complete string.
-* Otherwise, if the first `P` characters of `C...` match, consumes those `P` characters.
-* [Meta data] and [implementation] mapping:
-  - `ascii::astring< P, C... >::rule_t` is `internal::ascii_astring< P, C... >`
 
 ###### `bdigit`
 
@@ -1193,24 +1174,6 @@ These rules are in namespace `tao::pegtl`.
   - `list< R, S, P >::rule_t` is `internal::seq< R, internal::star< internal::pad< S, P >, R > >`
   - `list< R, S, P >::subs_t` is `type_list< R, internal::star< internal::pad< S, P >, R > >`
 
-###### `list_opt< R, S >`
-
-* Matches an optional list of `R` separated by `S`.
-* [Equivalent] to `opt< list< R, S > >`.
-* [Equivalent] to `opt< R, star< S, R > >`.
-* [Meta data] and [implementation] mapping:
-  - `list_opt< R, S >::rule_t` is `internal::opt< internal::seq< R, internal::star< S, R > > >`
-  - `list_opt< R, S >::subs_t` is `type_list< internal::seq< R, internal::star< S, R > > >`
-
-###### `list_opt< R, S, P >`
-
-* Matches an optional list of `R` separated by `S` where each `S` can be padded by `P`.
-* [Equivalent] to `opt< list< R, S, P > >`.
-* [Equivalent] to `opt< R, star< pad< S, P >, R > >`.
-* [Meta data] and [implementation] mapping:
-  - `list_opt< R, S, P >::rule_t` is `internal::opt< internal::seq< R, internal::star< internal::pad< S, P >, R > > >`
-  - `list_opt< R, S, P >::subs_t` is `type_list< internal::seq< R, internal::star< internal::pad< S, P >, R > > >`
-
 ###### `list_tail< R, S >`
 
 * Matches a non-empty list of `R` separated by `S` with optional trailing `S`.
@@ -2096,7 +2059,6 @@ Convenience wrappers for enumerated properties that return a value instead of an
 ## Index
 
 * [`action< A, R... >`](#action-a-r-) <sup>[(controlling)](#controlling)</sup>
-* [`aistring< P, C... >`](#aistring-p-c-) <sup>[(ascii)](#ascii)</sup>
 * [`alnum`](#alnum) <sup>[(ascii)](#ascii)</sup>
 * [`alpha`](#alpha) <sup>[(ascii)](#ascii)</sup>
 * [`alphabetic`](#alphabetic) <sup>[(icu rules)](#icu-rules-for-binary-properties)</sup>
@@ -2107,7 +2069,6 @@ Convenience wrappers for enumerated properties that return a value instead of an
 * [`apply< A... >`](#apply-a-) <sup>[(compat)](#compatibility)</sup>
 * [`apply0< A... >`](#apply0-a-) <sup>[(compat)](#compatibility)</sup>
 * [`ascii_hex_digit`](#ascii_hex_digit) <sup>[(icu rules)](#icu-rules-for-binary-properties)</sup>
-* [`astring< P, C... >`](#astring-p-c-) <sup>[(ascii)](#ascii)</sup>
 * [`at< R... >`](#at-r-) <sup>[(combinators)](#combinators)</sup>
 * [`bidi_class< V >`](#bidi_class-v-) <sup>[(icu rules)](#icu-rules-for-enumerated-properties)</sup>
 * [`bidi_control`](#bidi_control) <sup>[(icu rules)](#icu-rules-for-binary-properties)</sup>
@@ -2196,8 +2157,6 @@ Convenience wrappers for enumerated properties that return a value instead of an
 * [`list< R, S, P >`](#list-r-s-p-) <sup>[(convenience)](#convenience)</sup>
 * [`list_must< R, S >`](#list_must-r-s-) <sup>[(exceptional)](#exceptional)</sup>
 * [`list_must< R, S, P >`](#list_must-r-s-p-) <sup>[(exceptional)](#exceptional)</sup>
-* [`list_opt< R, S >`](#list_opt-r-s-) <sup>[(convenience)](#convenience)</sup>
-* [`list_opt< R, S, P >`](#list_opt-r-s-p-) <sup>[(convenience)](#convenience)</sup>
 * [`list_tail< R, S >`](#list_tail-r-s-) <sup>[(convenience)](#convenience)</sup>
 * [`list_tail< R, S, P >`](#list_tail-r-s-p-) <sup>[(convenience)](#convenience)</sup>
 * [`logical_order_exception`](#logical_order_exception) <sup>[(icu rules)](#icu-rules-for-binary-properties)</sup>

@@ -6,7 +6,24 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Preserve the old Config2 logical hash table on allocation failures in direct `Table::assign_from` calls: stage bucket regrouping before publishing destination rows/capacity. Add a complete allocation-fault sweep to the existing source-linked Config2 test while retaining the successful positional ordering and native-capacity model. No shipping export, config serialization or vendor policy changes.
+- Preserve the old Config2 logical hash table on allocation failures in direct `Table::assign_from` calls: stage bucket regrouping before publishing destination rows/capacity. Add a complete allocation-fault sweep and nonpower growth regressions to the existing source-linked Config2 test; retain power-of-two capacity rounding, successful positional ordering and the native-capacity model. No shipping export, config serialization or vendor policy changes.
+- Refresh the complete owner-supplied Asio tree to 1.39.0 and PEGTL from the uploaded 4.x branch snapshot b60f6110abd37e502d202d13a6c565410c552c33 (header 4.0.2), not a release-tag selection. Retain project C++20/C17 and the existing character-pack VDF grammar API. Pin exact archives, members and portable aliases; preserve upstream bytes, MinHook/pugixml selections and application policies.
+
+- Cover Windows native binary output open rejection under an active read-only sharing lease, proving the file is not truncated and a retry succeeds once the handle is closed.
+
+- Add a real-Windows native file-copy regression for a target held without write/delete sharing, ensuring rejected overwrite preserves the original and a retry succeeds after the owning handle closes.
+
+- Test GrantAchievement response-writer failures after successful persistence and event publication. Retain committed existing/new rows, release both locks and distinguish completed retries from further partial-progress increments.
+
+- Preserve the native linker compilation timestamp instead of stamping finalized DLLs with a retained reference-build value. Reject timestamp mutation during finalization; retain every other PE metadata policy.
+
+- Cover failed deletion of a retained atomic staging file after a batch staging failure: block new batches until cleanup succeeds, then permit a fresh commit without changing production persistence policy.
+
+- Test actual cached-avatar cleanup refusal for an owned nonempty matching directory: propagate the filesystem error and path, preserve its child and unrelated files, then remove the newly empty directory on repaired retry. The fixture makes no traversal-order assumption; production cleanup policy is unchanged.
+
+- Test production MessageHandler prepared-response ownership through event reservation, dropped output, explicit commit/cancel and callback failures. Preserve exact binary FIFO events for retry and verify post-reservation unwind without changing runtime policy.
+
+- Test extra-library allocation failures after native DLL acquisition and phase-result insertion. Require retained physical module leases, unchanged worker readiness, failed-release retention and exact idempotent cleanup retries; inject only throwing vector-buffer allocations.
 
 - Add an actual native process-to-registry reentry regression: a startup wait releases both recursive callback locks while retaining both binding leases, then restores outer serialization, results and error state before final drain. Existing recursive callback policy is unchanged.
 

@@ -84,7 +84,7 @@ bool Table::insert_unique(std::string_view key) {
 void Table::assign_from(const Table& source) {
     if(this==&source)return;
     source.validate();valid_capacity(bucket_count);
-    const auto capacity=growth_target(bucket_count,source.traversal.size());
+    const auto capacity=rounded_buckets(growth_target(bucket_count,source.traversal.size()));
     // 0162f0 still rebuilds on the unchanged capacity. Stage the reordered
     // table before replacing live state so allocation failure leaves it intact.
     auto reordered=regroup(source.traversal,capacity);

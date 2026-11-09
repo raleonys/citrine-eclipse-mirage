@@ -221,6 +221,36 @@ config_hash::Node assignment_fixture(const std::string& prefix) {
     root.validate();return root;
 }
 
+void table_assignment_growth_rounding() {
+    using namespace config_hash;
+    for(const auto sample:std::array{std::array<std::uint64_t,3>{8,65,128},
+                                     std::array<std::uint64_t,3>{512,513,1024}}) {
+        Table destination,source;Oracle expected,source_oracle;
+        destination.bucket_count=sample[0];expected.capacity=sample[0];
+        for(unsigned i=0;i<3;++i) {
+            const auto key="old-growth-"+std::to_string(i);
+            destination.insert_unique(key);expected.insert(key);
+        }
+        for(std::uint64_t i=0;i<sample[1];++i) {
+            const auto key="new-growth-"+std::to_string(i);
+            source.insert_unique(key);source_oracle.insert(key);
+        }
+        source.validate();destination.validate();
+        const auto source_order=source.traversal;
+        const auto source_capacity=source.bucket_count;
+        expected.assign(source_oracle);
+        destination.assign_from(source);
+        require(destination.bucket_count==sample[2],
+            "direct Table assignment rounds nonpower growth to a valid capacity");
+        require(destination.bucket_count==expected.capacity&&
+                destination.traversal==expected.order(),
+            "growing direct Table assignment preserves independent bucket-splice ordering");
+        destination.validate();
+        require(source.bucket_count==source_capacity&&source.traversal==source_order,
+            "growing direct Table assignment leaves its source unchanged");
+    }
+}
+
 void table_assignment_failure_rollback() {
     using namespace config_hash;
     Table original,source;
@@ -368,6 +398,6 @@ int main() {
         std::fflush(stderr);std::_Exit(86);
     });
 #endif
-    try {growth_and_oracle();recursive_assignment();table_assignment_failure_rollback();assignment_failure_rollback();lookup_alias_and_failure_rollback();std::cout<<"PASS: "<<checks<<" Config2 growth/copy/positional-reuse checks\n";}
+    try {growth_and_oracle();recursive_assignment();table_assignment_growth_rounding();table_assignment_failure_rollback();assignment_failure_rollback();lookup_alias_and_failure_rollback();std::cout<<"PASS: "<<checks<<" Config2 growth/copy/positional-reuse checks\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }

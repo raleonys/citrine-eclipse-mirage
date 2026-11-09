@@ -12,7 +12,6 @@
 
 #include "apply0_impl.hpp"
 #include "enable_control.hpp"
-#include "ignore_arguments.hpp"
 
 namespace TAO_PEGTL_NAMESPACE::internal
 {
@@ -30,12 +29,13 @@ namespace TAO_PEGTL_NAMESPACE::internal
                 typename... States >
       [[nodiscard]] static bool match( ParseInput& /*unused*/, [[maybe_unused]] States&&... st )
       {
-         TAO_PEGTL_MSVC_IGNORE( st... );
-
          if constexpr( A == apply_mode::enabled ) {
             return ( apply0_impl< Actions >::apply0( st... ) && ... );
          }
          else {
+#if defined( _MSC_VER )
+            ( (void)st, ... );
+#endif
             return true;
          }
       }
