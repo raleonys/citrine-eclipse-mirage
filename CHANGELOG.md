@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Cover binary input exceptions at open, initial state, seek, position, read and close, including a read that copies bytes before throwing. Require the original failure, exact stopped call sequence, single stream destruction and successful retry through the same factory. Preserve compatibility short-read behavior and existing native file checks; production I/O is unchanged.
+
 - Test extra-library allocation failures after native DLL acquisition and phase-result insertion. Require retained physical module leases, unchanged worker readiness, failed-release retention and exact idempotent cleanup retries; inject only throwing vector-buffer allocations.
 
 - Add an actual native process-to-registry reentry regression: a startup wait releases both recursive callback locks while retaining both binding leases, then restores outer serialization, results and error state before final drain. Existing recursive callback policy is unchanged.
