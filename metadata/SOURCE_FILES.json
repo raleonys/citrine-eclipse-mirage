@@ -1282,8 +1282,8 @@
       "sha256": "9f157cd6a260379bec4475d1c133b8e571b0967a81d1185f3189bdfcf6260ea0"
     },
     "tests/native/environment_dialog_tests.cpp": {
-      "bytes": 14268,
-      "sha256": "f0c74e0ed148f91054ec5b00a9d6d87bd75527d7472e89b6f5809ef404ed803e"
+      "bytes": 20279,
+      "sha256": "f0f19fdcb8470ef0336ed8a01197a6c083223f7ced09f2743907a7e2e47ab7b2"
     },
     "tests/native/environment_license_key_tests.cpp": {
       "bytes": 13208,

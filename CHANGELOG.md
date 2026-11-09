@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Add native config-path logging regressions for UTF16-to-UTF8 sizing/fill failures, unchanged queued/existing log bytes and same-owner recovery. Observe all conversion calls to prove Release skips the conversion and output paths; keep the accepted complete-record Debug policy.
+
 - Add source-included native DLL attach failure regressions for event/thread creation errors, exact private event cleanup and saved error restoration after cleanup. Use a real kernel event for the thread-failure path; keep the worker unexecuted and shipping entry behavior unchanged.
 
 - Fix two Registry startup-wait exception expectations so the assertion helper cannot satisfy its own expected-error check. Preserve original output/no-copy/wait-prefix checks and the real Windows SDK DWORD-cell cases; production Registry behavior is unchanged.
