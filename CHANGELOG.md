@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Test actual cached-avatar cleanup refusal for an owned nonempty matching directory: propagate the filesystem error and path, preserve its child and unrelated files, then remove the newly empty directory on repaired retry. The fixture makes no traversal-order assumption; production cleanup policy is unchanged.
+
 - Test production MessageHandler prepared-response ownership through event reservation, dropped output, explicit commit/cancel and callback failures. Preserve exact binary FIFO events for retry and verify post-reservation unwind without changing runtime policy.
 
 - Test extra-library allocation failures after native DLL acquisition and phase-result insertion. Require retained physical module leases, unchanged worker readiness, failed-release retention and exact idempotent cleanup retries; inject only throwing vector-buffer allocations.

@@ -243,6 +243,24 @@ void directory(){
     require(!fs::exists(dir.path/"a_AVATAR_x.png")&&!fs::exists(dir.path/"b_AVATAR_y")&&!fs::exists(dir.path/"empty_AVATAR_dir"),"real streaming cleanup removes matching files and empty directory");
     require(fs::exists(dir.path/"keep.txt")&&fs::exists(dir.path/"lower_avatar_z.png"),"cleanup preserves nonmatches and exact case");
 }
+void directory_nonempty(){
+    Fixture f;Directory dir;
+    const auto matched=dir.path/"owned_AVATAR_directory",child=matched/"child.txt",keep=dir.path/"keep.txt";
+    require(fs::create_directory(matched),"own a nonempty matching directory fixture");
+    require(file::write_binary_03c1d0(child.u16string(),"owned child",f.files)&&
+            file::write_binary_03c1d0(keep.u16string(),"preserved nonmatch",f.files),"seed owned child and unrelated file");
+    bool caught=false;
+    try{configuration::cleanup_cached_avatars(dir.path.u16string(),f.env);}
+    catch(const fs::filesystem_error& error){caught=error.code().value()!=0&&error.path1()==matched;}
+    require(caught,"actual nonempty-directory removal propagates filesystem error and exact path");
+    require(fs::is_directory(matched)&&read(child)=="owned child"&&read(keep)=="preserved nonmatch",
+            "failed cleanup never recursively deletes children or changes unrelated files");
+    require(fs::remove(child),"repair only the owned directory's blocking child");
+    configuration::cleanup_cached_avatars(dir.path.u16string(),f.env);
+    require(!fs::exists(matched)&&read(keep)=="preserved nonmatch",
+            "same Environment retries removal after repair while preserving nonmatches");
+    std::cout<<"PASS: actual Environment nonempty avatar-directory refusal, child preservation and repaired retry\n";
+}
 void directory_failure(){
     Fixture f;Directory dir;
     for(int i=0;i<3;++i)file::write_binary_03c1d0((dir.path/std::to_string(i)).u16string(),"own",f.files);
@@ -301,7 +319,7 @@ int main(int argc,char** argv)try{
     if(group=="all"||group=="paths"){encoding_failure_boundaries();paths();}
     if(group=="all"||group=="avatar")avatar();
     if(group=="all"||group=="license-xml")license_xml_text_escaping();
-    if(group=="all"||group=="directory"){directory();directory_failure();}
+    if(group=="all"||group=="directory"){directory();directory_nonempty();directory_failure();}
     if(group=="all"||group=="thread-errors"){thread_errors();event_initializer_retry();}
     std::cout<<"PASS: "<<checks<<" configuration platform checks\n";return 0;
 }
