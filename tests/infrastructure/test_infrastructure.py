@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import check_falcion_golden_cleaning as falcion
 import check_metadata_ownership as ownership
+import check_dll_exports as public_abi
 import check_human_launcher_contract as launchers
 import project_files as inventory
 import package_source as packaging
@@ -34,6 +35,39 @@ import check_msvc_build_evidence as msvc_evidence
 import run_source_qa as source_qa
 import ci_validation_readiness as ci_readiness
 from golden_policy import load_target, PolicyPending
+
+
+class PublicDefHeaderTests(unittest.TestCase):
+    def test_def_requires_single_ordered_library_and_exports_headers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'metadata').mkdir()
+            (root / 'exports').mkdir()
+            shutil.copyfile(ROOT / 'metadata/PUBLIC_DLL_ABI.json',
+                            root / 'metadata/PUBLIC_DLL_ABI.json')
+            original = (ROOT / 'exports/citrine_eclipse_mirage.def').read_text(encoding='utf-8')
+            destination = root / 'exports/citrine_eclipse_mirage.def'
+            header = 'LIBRARY "citrine_eclipse_mirage.unsigned.dll"'
+            self.assertIn(header, original)
+            self.assertIn('EXPORTS\n', original)
+            variants = {
+                'missing_library': original.replace(header + '\n', ''),
+                'missing_exports': original.replace('EXPORTS\n', ''),
+                'duplicate_library': original.replace(header + '\n', header + '\n' + header + '\n'),
+                'duplicate_exports': original.replace('EXPORTS\n', 'EXPORTS\nEXPORTS\n'),
+                'headers_out_of_order': original.replace(header + '\nEXPORTS\n',
+                                                         'EXPORTS\n' + header + '\n'),
+                'export_before_exports': original.replace('EXPORTS\n',
+                                                           'DllMain @1\nEXPORTS\n'),
+            }
+            destination.write_text(original, encoding='utf-8')
+            self.assertEqual([], public_abi.check_source(root))
+            for label, candidate in variants.items():
+                with self.subTest(case=label):
+                    self.assertNotEqual(candidate, original)
+                    destination.write_text(candidate, encoding='utf-8')
+                    self.assertTrue(public_abi.check_source(root),
+                                    'Malformed application DEF header was accepted: ' + label)
 
 
 class MsvcCompilerReceiptTests(unittest.TestCase):
