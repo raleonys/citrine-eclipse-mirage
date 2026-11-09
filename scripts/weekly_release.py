@@ -343,7 +343,33 @@ def publish_draft(github, p, assets, receipt_path):
         raise ValueError('Refusing to modify a published or unrelated release')
     complete = existing and state(existing)['status'] == 'complete'
     if complete:
-        return existing
+        # A completed marker is not a permanent receipt for mutable remote
+        # assets. Re-read the live draft and verify its exact package pair.
+        latest = github.api(f"releases/{existing['id']}")
+        live_state = state(latest)
+        if (not latest.get('draft') or latest.get('tag_name') != tag
+                or latest.get('target_commitish') != p['source_sha']
+                or not live_state or live_state.get('status') != 'complete'
+                or live_state.get('source_sha') != p['source_sha']):
+            raise ValueError('Completed draft changed before reuse')
+        remote_assets = latest.get('assets')
+        if not isinstance(remote_assets, list) or len(remote_assets) != len(expected):
+            raise ValueError('Completed draft remote asset set mismatch')
+        by_name = {}
+        for asset in remote_assets:
+            if (not isinstance(asset, dict) or not isinstance(asset.get('name'), str)
+                    or asset['name'] in by_name):
+                raise ValueError('Completed draft remote asset set mismatch')
+            by_name[asset['name']] = asset
+        if set(by_name) != expected:
+            raise ValueError('Completed draft remote asset set mismatch')
+        for path in paths:
+            asset = by_name[path.name]
+            if type(asset.get('size')) is not int or asset['size'] != path.stat().st_size:
+                raise ValueError('Completed draft remote asset size mismatch')
+            if asset.get('digest') != 'sha256:' + sha(path):
+                raise ValueError('Completed draft remote asset digest missing or mismatched')
+        return latest
     if not existing:
         refs = github.api('git/matching-refs/tags/' + tag)
         if any(ref['ref'] == 'refs/tags/' + tag for ref in refs):
