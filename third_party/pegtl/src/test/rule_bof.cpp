@@ -3,35 +3,16 @@
 // (See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include "test.hpp"
-#include "verify_ctrl.hpp"
 #include "verify_meta.hpp"
 #include "verify_rule.hpp"
 
-#include <tao/pegtl/stream/inputs.hpp>
-
 namespace TAO_PEGTL_NAMESPACE
 {
-   template< typename Input >
-   void verify_bof_input()
-   {
-      Input in( "a" );
-      TAO_PEGTL_TEST_ASSERT( in.size( 1 ) == 1 );
-      TAO_PEGTL_TEST_ASSERT( parse< bof >( in ) );
-      in.template consume< alpha >( 1 );
-      TAO_PEGTL_TEST_ASSERT( !parse< bof >( in ) );
-   }
-
    void unit_test()
    {
       verify_meta< bof, internal::bof >();
 
-      verify_ctrl_enabled< bof >( __LINE__, __FILE__, "" );
-      verify_ctrl_disabled< internal::bof >( __LINE__, __FILE__, "" );
-
       verify_analyze< bof >( __LINE__, __FILE__, false, false );
-
-      verify_bof_input< view_input<> >();
-      verify_bof_input< array_cstring_input<> >();
 
       verify_rule< bof >( __LINE__, __FILE__, "", result_type::success, 0 );
 

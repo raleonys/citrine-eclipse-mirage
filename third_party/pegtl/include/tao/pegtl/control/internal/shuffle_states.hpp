@@ -131,64 +131,64 @@ namespace TAO_PEGTL_NAMESPACE::internal
       // }
 
       template< typename ParseInput, typename Tuple, std::size_t... Is >
-      static void unwind_impl( const ParseInput& in, const Tuple& t, std::index_sequence< Is... > /*unused*/ )
-         requires internal::has_unwind< Base, void, const ParseInput&, std::tuple_element_t< Shuffle::template value< Is, std::tuple_size_v< Tuple > >, Tuple >... >
+      static auto unwind_impl( const ParseInput& in, const Tuple& t, std::index_sequence< Is... > /*unused*/ )
+         -> std::enable_if_t< internal::has_unwind< Base, void, const ParseInput&, std::tuple_element_t< Shuffle::template value< Is, std::tuple_size_v< Tuple > >, Tuple >... > >
       {
          Base::unwind( in, std::get< Shuffle::template value< Is, std::tuple_size_v< Tuple > > >( t )... );
       }
 
       template< typename ParseInput, typename... States >
-      static void unwind( const ParseInput& in, States&&... st )
-         requires requires { unwind_impl( in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() ); }
+      static auto unwind( const ParseInput& in, States&&... st )
+         -> decltype( unwind_impl( in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() ) )
       {
          unwind_impl( in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() );
       }
 
       // template< typename ParseInput, typename State >
-      // static void unwind( const ParseInput& in, State&& st )
-      //    requires internal::has_unwind< Base, void, const ParseInput&, State >
+      // static auto unwind( const ParseInput& in, State&& st )
+      //    -> std::enable_if_t< internal::has_unwind< Base, void, const ParseInput&, State > >
       // {
       //    Base::unwind( in, st );
       // }
 
       template< template< typename... > class Action, typename RewindPosition, typename ParseInput, typename Tuple, std::size_t... Is >
-      static decltype( auto ) apply_impl( const RewindPosition& begin, const ParseInput& in, const Tuple& t, std::index_sequence< Is... > /*unused*/ ) noexcept( noexcept( Base::template apply< Action >( begin, in, std::get< Shuffle::template value< Is, std::tuple_size_v< Tuple > > >( t )... ) ) )
-         requires requires { Base::template apply< Action >( begin, in, std::get< Shuffle::template value< Is, std::tuple_size_v< Tuple > > >( t )... ); }
+      static auto apply_impl( const RewindPosition& begin, const ParseInput& in, const Tuple& t, std::index_sequence< Is... > /*unused*/ ) noexcept( noexcept( Base::template apply< Action >( begin, in, std::get< Shuffle::template value< Is, std::tuple_size_v< Tuple > > >( t )... ) ) )
+         -> decltype( Base::template apply< Action >( begin, in, std::get< Shuffle::template value< Is, std::tuple_size_v< Tuple > > >( t )... ) )
       {
          return Base::template apply< Action >( begin, in, std::get< Shuffle::template value< Is, std::tuple_size_v< Tuple > > >( t )... );
       }
 
       template< template< typename... > class Action, typename RewindPosition, typename ParseInput, typename... States >
-      static decltype( auto ) apply( const RewindPosition& begin, const ParseInput& in, States&&... st ) noexcept( noexcept( apply_impl< Action >( begin, in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() ) ) )
-         requires requires { apply_impl< Action >( begin, in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() ); }
+      static auto apply( const RewindPosition& begin, const ParseInput& in, States&&... st ) noexcept( noexcept( apply_impl< Action >( begin, in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() ) ) )
+         -> decltype( apply_impl< Action >( begin, in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() ) )
       {
          return apply_impl< Action >( begin, in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() );
       }
 
       // template< template< typename... > class Action, typename RewindPosition, typename ParseInput, typename State >
-      // static decltype( auto ) apply( const RewindPosition& begin, const ParseInput& in, State&& st ) noexcept( noexcept( Base::template apply< Action >( begin, in, st ) ) )
-      //    requires requires { Base::template apply< Action >( begin, in, st ); }
+      // static auto apply( const RewindPosition& begin, const ParseInput& in, State&& st ) noexcept( noexcept( Base::template apply< Action >( begin, in, st ) ) )
+      //    -> decltype( Base::template apply< Action >( begin, in, st ) )
       // {
       //    return Base::template apply< Action >( begin, in, st );
       // }
 
       template< template< typename... > class Action, typename ParseInput, typename Tuple, std::size_t... Is >
-      static decltype( auto ) apply0_impl( const ParseInput& in, const Tuple& t, std::index_sequence< Is... > /*unused*/ ) noexcept( noexcept( Base::template apply0< Action >( in, std::get< Shuffle::template value< Is, std::tuple_size_v< Tuple > > >( t )... ) ) )
-         requires requires { Base::template apply0< Action >( in, std::get< Shuffle::template value< Is, std::tuple_size_v< Tuple > > >( t )... ); }
+      static auto apply0_impl( const ParseInput& in, const Tuple& t, std::index_sequence< Is... > /*unused*/ ) noexcept( noexcept( Base::template apply0< Action >( in, std::get< Shuffle::template value< Is, std::tuple_size_v< Tuple > > >( t )... ) ) )
+         -> decltype( Base::template apply0< Action >( in, std::get< Shuffle::template value< Is, std::tuple_size_v< Tuple > > >( t )... ) )
       {
          return Base::template apply0< Action >( in, std::get< Shuffle::template value< Is, std::tuple_size_v< Tuple > > >( t )... );
       }
 
       template< template< typename... > class Action, typename ParseInput, typename... States >
-      static decltype( auto ) apply0( const ParseInput& in, States&&... st ) noexcept( noexcept( apply0_impl< Action >( in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() ) ) )
-         requires requires { apply0_impl< Action >( in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() ); }
+      static auto apply0( const ParseInput& in, States&&... st ) noexcept( noexcept( apply0_impl< Action >( in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() ) ) )
+         -> decltype( apply0_impl< Action >( in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() ) )
       {
          return apply0_impl< Action >( in, std::tie( st... ), std::make_index_sequence< Shuffle::template count< sizeof...( st ) > >() );
       }
 
       // template< template< typename... > class Action, typename ParseInput, typename State >
-      // static decltype( auto ) apply0( const ParseInput& in, State&& st ) noexcept( noexcept( Base::template apply0< Action >( in, st ) ) )
-      //    requires requires { Base::template apply0< Action >( in, st ); }
+      // static auto apply0( const ParseInput& in, State&& st ) noexcept( noexcept( Base::template apply0< Action >( in, st ) ) )
+      //    -> decltype( Base::template apply0< Action >( in, st ) )
       // {
       //    return Base::template apply0< Action >( in, st );
       // }

@@ -18,10 +18,10 @@ namespace TAO_PEGTL_NAMESPACE::internal
    class action_input
    {
    public:
-      using data_t = ParseInput::data_t;
+      using data_t = typename ParseInput::data_t;
       using input_t = ParseInput;
-      using error_position_t = ParseInput::error_position_t;
-      using rewind_position_t = ParseInput::rewind_position_t;
+      using error_position_t = typename ParseInput::error_position_t;
+      using rewind_position_t = typename ParseInput::rewind_position_t;
 #if defined( __cpp_exceptions )
       using parse_error_t = parse_error< error_position_t >;
 #endif
@@ -85,16 +85,12 @@ namespace TAO_PEGTL_NAMESPACE::internal
       }
 
       [[nodiscard]] decltype( auto ) direct_source() const noexcept
-      requires requires( const ParseInput& in ) {
-         in.direct_source();
-      } {
+      {
          return m_input.direct_source();  // Not all inputs have this.
       }
 
       [[nodiscard]] decltype( auto ) direct_position() const noexcept
-      requires requires( const ParseInput& in ) {
-         in.direct_position();
-      } {
+      {
          return m_input.direct_position();  // Not all inputs have this.
       }
 

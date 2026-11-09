@@ -33,7 +33,7 @@ All inputs documented on this page are defined in `tao/pegtl/inputs.hpp` which i
 All inputs documented on this page implement the common input functions consisting of
 
 * the [input interface](Inputs-and-Parsing.md#input-interface),
-* the applicable [convenience functions](Inputs-and-Parsing.md#input-convenience),
+* the [convenience functions](Inputs-and-Parsing.md#input-convenience),
 * the [stream compatibility](Inputs-and-Parsing.md#stream-compatibility).
 
 #### Namespaces
@@ -52,16 +52,6 @@ This applies when an input is constructed from raw data, an array, or an initial
 
 When `copy_input` or `text_copy_input` is constructed from a container directly, its deduction guides use `internal::container_for_container_t< Container >` instead.
 That helper keeps the supplied container type, except that data referenced by a `std::string_view` is copied into a `std::string`.
-
-#### Spans
-
-The non-owning `base_input`, `view_input` and `text_view_input` classes also accept `std::span< const Data, Extent >`.
-The extent can be fixed or dynamic.
-All elements of the span become input, including a null terminator if one is part of the span.
-The underlying objects must outlive the input; the span object itself need not.
-There are no deduction guides for span arguments, so specify the input template arguments when constructing from a span.
-
-For the `span()` accessor on inputs and action inputs, see [Input Convenience](Inputs-and-Parsing.md#span-views).
 
 #### Text Inputs
 
@@ -154,14 +144,11 @@ struct base_input
    base_input( const Data* begin, const Data* end ) noexcept;
    base_input( const Data* begin, const std::size_t size ) noexcept;
 
-   template< std::size_t Extent >
-   explicit base_input( const std::span< const Data, Extent > data ) noexcept;
-
    explicit base_input( std::vector< Data >& data ) noexcept;
    explicit base_input( const std::vector< Data >& data ) noexcept;
 
    template< std::size_t Size >
-   explicit base_input( const std::array< Data, Size >& a ) noexcept;
+   explicit view_input( const std::array< Data, Size >& a ) noexcept;
 
    // Only available when Data is (compatible with) char:
 
@@ -170,7 +157,7 @@ struct base_input
    explicit base_input( const std::string_view data ) noexcept;
 
    template< std::size_t N >
-   explicit base_input( const char ( &data )[ N ] ) noexcept;
+   explicit view_input( const char ( &data )[ N ] ) noexcept;
 
    // To prevent accidents with temporaries:
 
@@ -245,9 +232,6 @@ When `InputSource` and `ErrorSource` are both `void`.
    view_input( const Data* begin, const Data* end ) noexcept;
    view_input( const Data* begin, const std::size_t size ) noexcept;
 
-   template< std::size_t Extent >
-   explicit view_input( const std::span< const Data, Extent > data ) noexcept;
-
    explicit view_input( std::vector< Data >& data ) noexcept;
    explicit view_input( const std::vector< Data >& data ) noexcept;
 
@@ -302,19 +286,16 @@ The argument `source` is forwarded to construct a data member of type `InputSour
 
 ```c++
    template< typename Source >
-   view_input( Source&& source, const Data* begin, const Data* end );
+   view_input( Source&& source, const Data* begin, const Data* end ) noexcept;
 
    template< typename Source >
-   view_input( Source&& source, const Data* begin, const std::size_t size );
-
-   template< typename Source, std::size_t Extent >
-   explicit view_input( Source&& source, const std::span< const Data, Extent > data );
+   view_input( Source&& source, const Data* begin, const std::size_t size ) noexcept;
 
    template< typename Source >
-   explicit view_input( Source&& source, std::vector< Data >& data );
+   explicit view_input( Source&& source, std::vector< Data >& data ) noexcept;
 
    template< typename Source >
-   explicit view_input( Source&& source, const std::vector< Data >& data );
+   explicit view_input( Source&& source, const std::vector< Data >& data ) noexcept;
 
    // To prevent accidents with temporaries:
 
@@ -333,13 +314,13 @@ The argument `source` is forwarded to construct a data member of type `InputSour
    // Only available when Data is compatible with char:
 
    template< typename Source >
-   explicit view_input( Source&& source, std::string& data );
+   explicit view_input( Source&& source, std::string& data ) noexcept;
 
    template< typename Source >
-   explicit view_input( Source&& source, const std::string& data );
+   explicit view_input( Source&& source, const std::string& data ) noexcept;
 
    template< typename Source >
-   explicit view_input( Source&& source, const std::string_view data );
+   explicit view_input( Source&& source, const std::string_view data ) noexcept;
 ```
 
 #### Deduction Guides
@@ -638,9 +619,6 @@ When `InputSource` and `ErrorSource` are both `void`.
    text_view_input( const Data* begin, const Data* end ) noexcept;
    text_view_input( const Data* begin, const std::size_t size ) noexcept;
 
-   template< std::size_t Extent >
-   explicit text_view_input( const std::span< const Data, Extent > data ) noexcept;
-
    explicit text_view_input( std::vector< Data >& data ) noexcept;
    explicit text_view_input( const std::vector< Data >& data ) noexcept;
 
@@ -693,19 +671,16 @@ The argument `source` is forwarded to construct a data member of type `InputSour
 
 ```c++
    template< typename Source >
-   text_view_input( Source&& source, const Data* begin, const Data* end );
+   text_view_input( Source&& source, const Data* begin, const Data* end ) noexcept;
 
    template< typename Source >
-   text_view_input( Source&& source, const Data* begin, const std::size_t size );
-
-   template< typename Source, std::size_t Extent >
-   explicit text_view_input( Source&& source, const std::span< const Data, Extent > data );
+   text_view_input( Source&& source, const Data* begin, const std::size_t size ) noexcept;
 
    template< typename Source >
-   explicit text_view_input( Source&& source, std::vector< Data >& data );
+   explicit text_view_input( Source&& source, std::vector< Data >& data ) noexcept;
 
    template< typename Source >
-   explicit text_view_input( Source&& source, const std::vector< Data >& data );
+   explicit text_view_input( Source&& source, const std::vector< Data >& data ) noexcept;
 
    template< typename Source >
    text_view_input( Source&& source, std::string&& ) = delete;
@@ -722,13 +697,13 @@ The argument `source` is forwarded to construct a data member of type `InputSour
    // Only available when Data is compatible with char:
 
    template< typename Source >
-   explicit text_view_input( Source&& source, std::string& data );
+   explicit text_view_input( Source&& source, std::string& data ) noexcept;
 
    template< typename Source >
-   explicit text_view_input( Source&& source, const std::string& data );
+   explicit text_view_input( Source&& source, const std::string& data ) noexcept;
 
    template< typename Source >
-   explicit text_view_input( Source&& source, const std::string_view data );
+   explicit text_view_input( Source&& source, const std::string_view data ) noexcept;
 ```
 
 #### Deduction Guides

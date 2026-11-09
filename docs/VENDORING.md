@@ -12,7 +12,7 @@ are not substituted.
 |---|---|---|
 | Asio | 1.39.0; owner snapshot `190a8d8daf1cc62909b4e0c72ff491ba264ca98e` | `third_party/asio` |
 | MinHook | v1.3.4 in README; owner snapshot `8af6b4acae5a9388fd742b56fa79ece89d96f823` | `third_party/minhook` |
-| PEGTL | 4.0.0 in header; newer main snapshot `419ba27d27e80e33bf180932a9e4c483c4b8dd65` | `third_party/pegtl` |
+| PEGTL | 4.0.2 in header; owner 4.x branch snapshot `b60f6110abd37e502d202d13a6c565410c552c33` | `third_party/pegtl` |
 | pugixml | 1.16; owner snapshot `f0a3faa76e04f35110257ca8713363dee3c890e8` | `third_party/pugixml` |
 
 ## Archive identities and recorded upstream snapshots
@@ -26,25 +26,29 @@ commit ID and the per-member hashes used to check the installed tree.
 |---|---|---|
 | Asio | `asio-master.zip` | `5f384a220751aff27e517e559b9257292f00e7a2c31c2e83282d3e522d591ade` |
 | MinHook | `minhook-master.zip` | `9ba14a6d748d65ca9ed83763a96a144d888f50cc5771dd9a798ad50ee35336f5` |
-| PEGTL | `PEGTL-main.zip` | `a7d08187f517fc10f7ca459c13254bed0e63191262102bdab4436dcc3d6cdd11` |
+| PEGTL | `PEGTL-4.x.zip` | `3eb2096ceeb7bbf722775d7cfd98ddf0f3ca008c5e2f44835b11dd014c1400a0` |
 | pugixml | `pugixml-master.zip` | `4cd80a72fde87ce1f23eae4ed048446b2e887fc25437793e525367448be2cf81` |
 
-The Asio input was supplied as `asio-master (1).zip`, and PEGTL as
-`PEGTL-main (1).zip`; the archive directory uses the canonical names in the lock
-without altering ZIP bytes. Both archive SHA-256 values and every extracted
-payload were verified. The PEGTL archive header and its CMake version source
-still declare **4.0.0**, so this snapshot is not labelled a verified 4.0.2 release.
-Its complete newer main snapshot is installed without editing the vendor header.
+The Asio input was supplied as `asio-master (1).zip`, and the selected
+PEGTL input as `PEGTL-4.x.zip`. The archive directory uses the canonical names
+in the lock without altering ZIP bytes. Both archive SHA-256 values and every
+extracted payload were verified. PEGTL is selected from the uploaded **4.x
+branch snapshot**, not a stable release archive or a release tag. Its header
+declares **4.0.2**; that version text does not change the selection authority.
+The earlier uploaded `PEGTL-main (1).zip` remains recorded as an unselected input.
 
-Recorded snapshot IDs come from comments in the SHA-256-pinned supplied ZIPs;
-this is **not independent Git object verification** or a claim that a branch
-head is an immutable upstream release. Original archives remain external to the
-source package. Previous selections remain recorded in SOURCE_INPUTS.json and
+Snapshot IDs are recorded from comments in the SHA-256-pinned supplied ZIPs.
+For the selected PEGTL upload, all 803 member paths, Git blob hashes and
+executable/link modes also match the independent upstream Git tree at the
+recorded commit. Other archive-comment records retain their stated verification
+limits; no moving branch head is claimed to be an immutable upstream release.
+Original archives remain external to the source package. Previous selections
+remain recorded in SOURCE_INPUTS.json and
 Git history; earlier execution evidence is not new-snapshot acceptance.
 
 ## Installed tree verification
 
-All 2,768 file/link entries are verified against
+All 2,690 file/link entries are verified against
 archive-member hash lists. Licenses and Asio's
 logical links `asio/include → ../include`
 and `asio/src → ../src` are preserved.
@@ -131,12 +135,12 @@ for actual Windows/game acceptance.
 
 ## PEGTL/compiler compatibility
 
-The current supplied PEGTL snapshot declares `cxx_std_23` and uses C++23
-library APIs. All project C++ targets and the required public-input probe use
-C++23; C sources retain C17. Three project
-VDF byte-sequence rules use the new string-literal template API for CRLF, line
-comments and block-comment termination. Their byte sequences, action ordering,
-error mapping and grammar policy are unchanged. Vendor headers are unmodified.
+The selected owner-supplied PEGTL 4.x snapshot declares `cxx_std_17`.
+Project C++ targets and the required public-input probe use C++20; C sources
+retain C17. The VDF byte-sequence rules retain their character-pack API for
+CRLF, line comments and block-comment termination. Their byte sequences, action
+ordering, error mapping and grammar policy are unchanged. Vendor headers are
+unmodified. The unselected main snapshot requires C++23 and is not substituted.
 
 The PEGTL public-input probe runs with Linux/GCC. The following compiler
 observations describe the earlier snapshot; fresh results for the selected

@@ -13,7 +13,7 @@
 
 namespace TAO_PEGTL_NAMESPACE::internal
 {
-   template< typename T >
+   template< typename T, typename = void >
    struct get_eol_rule_char
    {
       static constexpr bool value = false;
@@ -26,8 +26,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
    };
 
    template< typename Rule >
-      requires( !std::is_same_v< Rule, typename Rule::rule_t > )
-   struct get_eol_rule_char< Rule >
+   struct get_eol_rule_char< Rule, std::enable_if_t< !std::is_same_v< Rule, typename Rule::rule_t > > >
       : get_eol_rule_char< typename Rule::rule_t >
    {};
 

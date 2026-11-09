@@ -5,6 +5,8 @@
 #ifndef TAO_PEGTL_CONTROL_INTERNAL_MUST_IF_HPP
 #define TAO_PEGTL_CONTROL_INTERNAL_MUST_IF_HPP
 
+#include <type_traits>
+
 #if !defined( __cpp_exceptions )
 #error "Exception support required for tao/pegtl/control/internal/must_if.hpp"
 #else
@@ -13,16 +15,14 @@
 #include "../../parse_error.hpp"
 
 #include "../../internal/has_error_message.hpp"
-#include "../../internal/ignore_arguments.hpp"
 
 namespace TAO_PEGTL_NAMESPACE::internal
 {
-   template< typename Errors, typename Rule >
+   template< typename Errors, typename Rule, typename = void >
    inline constexpr bool raise_on_failure = ( Errors::template message< Rule > != nullptr );
 
    template< typename Errors, typename Rule >
-      requires requires { Errors::template raise_on_failure< Rule >; }
-   inline constexpr bool raise_on_failure< Errors, Rule > = Errors::template raise_on_failure< Rule >;
+   inline constexpr bool raise_on_failure< Errors, Rule, std::void_t< decltype( Errors::template raise_on_failure< Rule > ) > > = Errors::template raise_on_failure< Rule >;
 
    template< typename Errors, bool RequireMessage, template< typename... > class Control, typename Rule >
    struct must_if
@@ -44,8 +44,10 @@ namespace TAO_PEGTL_NAMESPACE::internal
       {
          if constexpr( Errors::template message< Rule > != nullptr ) {
             constexpr const char* p = Errors::template message< Rule >;
-            TAO_PEGTL_MSVC_IGNORE( st... );
             throw_parse_error( p, in );
+#if defined( _MSC_VER )
+            ( (void)st, ... );
+#endif
          }
          else {
             if constexpr( !internal::has_error_message< Rule > ) {
@@ -60,8 +62,11 @@ namespace TAO_PEGTL_NAMESPACE::internal
       {
          if constexpr( Errors::template message< Rule > != nullptr ) {
             constexpr const char* p = Errors::template message< Rule >;
-            TAO_PEGTL_MSVC_IGNORE( in, st... );
             throw_parse_error_with_nested( p, am );
+#if defined( _MSC_VER )
+            (void)in;
+            ( (void)st, ... );
+#endif
          }
          else {
             if constexpr( !internal::has_error_message< Rule > ) {

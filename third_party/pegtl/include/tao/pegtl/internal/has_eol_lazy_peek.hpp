@@ -5,12 +5,20 @@
 #ifndef TAO_PEGTL_INTERNAL_HAS_EOL_LAZY_PEEK_HPP
 #define TAO_PEGTL_INTERNAL_HAS_EOL_LAZY_PEEK_HPP
 
+#include <type_traits>
+
 #include "../config.hpp"
 
 namespace TAO_PEGTL_NAMESPACE::internal
 {
    template< typename T >
-   concept has_eol_lazy_peek = requires { typename T::eol_lazy_peek; };
+   using has_eol_lazy_peek_impl = typename T::eol_lazy_peek;
+
+   template< typename, typename = void >
+   inline constexpr bool has_eol_lazy_peek = false;
+
+   template< typename T >
+   inline constexpr bool has_eol_lazy_peek< T, std::void_t< has_eol_lazy_peek_impl< T > > > = true;
 
 }  // namespace TAO_PEGTL_NAMESPACE::internal
 

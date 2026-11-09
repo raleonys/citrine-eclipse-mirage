@@ -5,10 +5,11 @@
 #ifndef TAO_PEGTL_CONTROL_INTERNAL_STATE_CONTROL_HPP
 #define TAO_PEGTL_CONTROL_INTERNAL_STATE_CONTROL_HPP
 
+#include <type_traits>
+
 #include "../../config.hpp"
 
 #include "../../internal/has_unwind.hpp"
-#include "../../internal/ignore_arguments.hpp"
 
 namespace TAO_PEGTL_NAMESPACE::internal
 {
@@ -21,40 +22,46 @@ namespace TAO_PEGTL_NAMESPACE::internal
       template< typename ParseInput, typename State, typename... States >
       static void start( [[maybe_unused]] const ParseInput& in, [[maybe_unused]] State& state, [[maybe_unused]] States&&... st )
       {
-         TAO_PEGTL_MSVC_IGNORE( st... );
-
          if constexpr( Control< Rule >::enable ) {
             Control< Rule >::start( in, st... );
          }
          if constexpr( State::template enable< Rule > ) {
             state.template start< Rule >( in, st... );
          }
+#if defined( _MSC_VER )
+         ( (void)st,
+           ... );
+#endif
       }
 
       template< typename ParseInput, typename State, typename... States >
       static void success( [[maybe_unused]] const ParseInput& in, [[maybe_unused]] State& state, [[maybe_unused]] States&&... st )
       {
-         TAO_PEGTL_MSVC_IGNORE( st... );
-
          if constexpr( State::template enable< Rule > ) {
             state.template success< Rule >( in, st... );
          }
          if constexpr( Control< Rule >::enable ) {
             Control< Rule >::success( in, st... );
          }
+#if defined( _MSC_VER )
+         ( (void)st,
+           ... );
+#endif
       }
 
       template< typename ParseInput, typename State, typename... States >
       static void failure( [[maybe_unused]] const ParseInput& in, [[maybe_unused]] State& state, [[maybe_unused]] States&&... st )
       {
-         TAO_PEGTL_MSVC_IGNORE( st... );
-
          if constexpr( State::template enable< Rule > ) {
             state.template failure< Rule >( in, st... );
          }
          if constexpr( Control< Rule >::enable ) {
             Control< Rule >::failure( in, st... );
          }
+#if defined( _MSC_VER )
+         ( (void)st,
+           ... );
+#endif
       }
 
       // TODO: static auto guard() ... ?
@@ -78,22 +85,24 @@ namespace TAO_PEGTL_NAMESPACE::internal
       }
 
       template< typename ParseInput, typename State, typename... States >
-      static void unwind( [[maybe_unused]] const ParseInput& in, [[maybe_unused]] State& state, [[maybe_unused]] States&&... st )
-         requires( State::template enable< Rule > || ( Control< Rule >::enable && internal::has_unwind< Control< Rule >, void, const ParseInput&, States... > ))
+      static auto unwind( [[maybe_unused]] const ParseInput& in, [[maybe_unused]] State& state, [[maybe_unused]] States&&... st )
+         -> std::enable_if_t< State::template enable< Rule > || ( Control< Rule >::enable && internal::has_unwind< Control< Rule >, void, const ParseInput&, States... > ) >
       {
-         TAO_PEGTL_MSVC_IGNORE( st... );
-
          if constexpr( State::template enable< Rule > ) {
             state.template unwind< Rule >( in, st... );
          }
          if constexpr( Control< Rule >::enable && internal::has_unwind< Control< Rule >, void, const ParseInput&, States... > ) {
             Control< Rule >::unwind( in, st... );
          }
+#if defined( _MSC_VER )
+         ( (void)st,
+           ... );
+#endif
       }
 
       template< template< typename... > class Action, typename RewindPosition, typename ParseInput, typename State, typename... States >
-      static decltype( auto ) apply( const RewindPosition& begin, const ParseInput& in, [[maybe_unused]] State& state, States&&... st )
-         requires requires { Control< Rule >::template apply< Action >( begin, in, st... ); }
+      static auto apply( const RewindPosition& begin, const ParseInput& in, [[maybe_unused]] State& state, States&&... st )
+         -> decltype( Control< Rule >::template apply< Action >( begin, in, st... ) )
       {
          if constexpr( State::template enable< Rule > ) {
             state.template apply< Rule >( in, st... );
@@ -102,8 +111,8 @@ namespace TAO_PEGTL_NAMESPACE::internal
       }
 
       template< template< typename... > class Action, typename ParseInput, typename State, typename... States >
-      static decltype( auto ) apply0( const ParseInput& in, [[maybe_unused]] State& state, States&&... st )
-         requires requires { Control< Rule >::template apply0< Action >( in, st... ); }
+      static auto apply0( const ParseInput& in, [[maybe_unused]] State& state, States&&... st )
+         -> decltype( Control< Rule >::template apply0< Action >( in, st... ) )
       {
          if constexpr( State::template enable< Rule > ) {
             state.template apply0< Rule >( in, st... );

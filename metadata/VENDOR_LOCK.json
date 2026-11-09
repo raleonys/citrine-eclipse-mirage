@@ -56,26 +56,27 @@
     },
     "pegtl": {
       "active_build_link_proved": false,
-      "archive": "PEGTL-main.zip",
-      "archive_folder": "PEGTL-main/",
-      "bytes": 973410,
+      "archive": "PEGTL-4.x.zip",
+      "archive_folder": "PEGTL-4.x/",
+      "bytes": 815458,
       "intended_active_use": "APPLICATION_CONFIG2_VDF_GRAMMAR",
       "license": "Boost Software License 1.0 (LICENSE_1_0.txt)",
       "license_source_retained": true,
-      "member_count": 881,
+      "member_count": 803,
       "member_manifest": "metadata/vendor_files/pegtl.sha256",
-      "member_manifest_sha256": "42009e2eb2e2776cbe422c3820e6ed3c5644ccebcc0feaab648643de96b77085",
-      "reported_version": "4.0.0 (archive header; newer main snapshot)",
-      "sha256": "a7d08187f517fc10f7ca459c13254bed0e63191262102bdab4436dcc3d6cdd11",
+      "member_manifest_sha256": "e999f80012b42c8aa3bc6ebf6c0d2425ecb3916ee083c503bc4ad2e9fb560f54",
+      "reported_version": "4.0.2 (owner-supplied 4.x branch snapshot header; not a release selection)",
+      "sha256": "3eb2096ceeb7bbf722775d7cfd98ddf0f3ca008c5e2f44835b11dd014c1400a0",
       "source_install_path": "third_party/pegtl",
       "symlinks": {},
-      "upstream_commit": "419ba27d27e80e33bf180932a9e4c483c4b8dd65",
+      "upstream_commit": "b60f6110abd37e502d202d13a6c565410c552c33",
       "installed_member_integrity": "PASS",
       "production_role": "APPLICATION_CONFIG2_VDF_GRAMMAR",
       "cmake_target": "citrine_eclipse_mirage_pegtl",
       "application_owner": "citrine_eclipse_mirage_vdf_objects",
-      "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification",
-      "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC_AND_GOLDEN_FOR_SELECTED_SNAPSHOT"
+      "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT_AND_INDEPENDENT_GIT_TREE_MEMBER_MATCH",
+      "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC_AND_GOLDEN_FOR_SELECTED_SNAPSHOT",
+      "selected_branch": "4.x"
     },
     "pugixml": {
       "active_build_link_proved": false,
@@ -109,7 +110,7 @@
     "metadata/HOOK_ENGINE_PATCH.json"
   ],
   "vendor_defaults_modified": false,
-  "latest_owner_selection": "OWNER_AUTHORIZED_ASIO_1_39_0_AND_PEGTL_MAIN_SNAPSHOTS_2026_11_09",
+  "latest_owner_selection": "OWNER_AUTHORIZED_ASIO_1_39_0_AND_PEGTL_4_X_SNAPSHOTS_2026_11_09",
   "upstream_commit_identifiers_recorded": true,
   "retired_vendor_inputs": {
     "tinyxml2": {

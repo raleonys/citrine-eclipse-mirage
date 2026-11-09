@@ -275,14 +275,6 @@ namespace TAO_PEGTL_NAMESPACE
       from_chars_success( "0r", int( 0 ), 1 );
       from_chars_success( "0s", unsigned( 0 ), 1 );
 
-      {
-         view_input in( "123x" );
-         int state = 42;
-         TAO_PEGTL_TEST_ASSERT( !parse< everything, test_action >( in, state ) );
-         TAO_PEGTL_TEST_ASSERT( state == 42 );
-         TAO_PEGTL_TEST_ASSERT( in.size() == 4 );
-      }
-
       from_chars_success( "0x0", int( 0 ), 2 );
       from_chars_success( "0x0", unsigned( 0 ), 2 );
 
@@ -312,7 +304,7 @@ namespace TAO_PEGTL_NAMESPACE
       from_chars_rule_success< from_xchars_nothrow< int > >( "-f", int( -15 ) );
       from_chars_rule_success< from_xchars_nothrow< int > >( "0xff", int( 0 ), 3 );
 
-      from_xchars_local_failure< int >( "" );
+      from_xchars_local_failure< int >( "");
       from_xchars_local_failure< unsigned >( "" );
       from_xchars_local_failure< int >( "g" );
       from_xchars_local_failure< unsigned >( "g" );

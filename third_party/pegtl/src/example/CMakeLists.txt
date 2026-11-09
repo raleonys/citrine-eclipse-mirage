@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.8...3.19)
+
 set(example_sources
   abnf_record.cpp
   abnf2pegtl.cpp
@@ -5,9 +7,8 @@ set(example_sources
   behavior.cpp
   calculator.cpp
   chomsky_hierarchy.cpp
-  csv_builder.cpp
-  csv_manual.cpp
-  csv_static.cpp
+  csv_1.cpp
+  csv_2.cpp
   dispatch.cpp
   dynamic_match.cpp
   expression.cpp
@@ -15,12 +16,11 @@ set(example_sources
   indent_aware.cpp
   iri_struct.cpp
   json_analyze.cpp
-  json_builder.cpp
-  json_classes.cpp
+  json_ast.cpp
+  json_build.cpp
   json_count.cpp
   json_coverage.cpp
   json_parse.cpp
-  json_parse_tree.cpp
   json_print_debug.cpp
   json_print_names.cpp
   json_record.cpp
@@ -30,7 +30,6 @@ set(example_sources
   lua53_analyze.cpp
   lua53_parse.cpp
   modulus_match.cpp
-  open_metrics.cpp
   parse_tree.cpp
   parse_tree_user_state.cpp
   proto3_analyze.cpp
@@ -62,7 +61,11 @@ foreach(examplesourcefile ${example_sources})
   get_filename_component(exename pegtl-example-${examplesourcefile} NAME_WE)
   add_executable(${exename} ${examplesourcefile})
   target_link_libraries(${exename} PRIVATE taocpp::pegtl)
-  set_target_properties(${exename} PROPERTIES CXX_EXTENSIONS OFF)
+  set_target_properties(${exename} PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+  )
   if(MSVC)
     target_compile_options(${exename} PRIVATE /W4 /WX /utf-8 /bigobj)
   else()

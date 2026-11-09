@@ -5,8 +5,6 @@
 #ifndef TAO_PEGTL_INTERNAL_INPUT_WITH_SOURCE_HPP
 #define TAO_PEGTL_INTERNAL_INPUT_WITH_SOURCE_HPP
 
-#include <concepts>
-#include <type_traits>
 #include <utility>
 
 #include "../config.hpp"
@@ -22,18 +20,17 @@ namespace TAO_PEGTL_NAMESPACE::internal
       : public Input
    {
    public:
-      using data_t = Input::data_t;
+      using data_t = typename Input::data_t;
       using input_source_t = InputSource;
       using error_source_t = ErrorSource;
       using error_position_t = position_with_source< ErrorSource, typename Input::error_position_t >;
-      using offset_position_t = Input::offset_position_t;
-      using rewind_position_t = Input::rewind_position_t;
+      using offset_position_t = typename Input::offset_position_t;
+      using rewind_position_t = typename Input::rewind_position_t;
 #if defined( __cpp_exceptions )
       using parse_error_t = parse_error< error_position_t >;
 #endif
 
       template< typename S, typename... Ts >
-         requires( !std::same_as< input_with_source, std::remove_cvref_t< S > > ) && std::constructible_from< InputSource, S > && std::constructible_from< Input, Ts... >
       explicit input_with_source( S&& s, Ts&&... ts )
          : Input( std::forward< Ts >( ts )... ),
            m_source( std::forward< S >( s ) )

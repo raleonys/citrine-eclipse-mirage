@@ -6,10 +6,8 @@
 #define TAO_PEGTL_STREAM_STREAM_INPUT_BASE_HPP
 
 #include <algorithm>
-#include <concepts>
 #include <cstddef>
 #include <cstring>
-#include <type_traits>
 #include <utility>
 
 #if defined( __cpp_exceptions )
@@ -27,10 +25,9 @@ namespace TAO_PEGTL_NAMESPACE::internal
       : public Buffer
    {
    public:
-      using data_t = Buffer::data_t;
+      using data_t = typename Buffer::data_t;
 
       template< typename... As >
-         requires( ( !std::same_as< stream_input_base, std::remove_cvref_t< As > > ) && ... ) && std::constructible_from< Buffer, As... >
       explicit stream_input_base( As&&... as )
          : Buffer( std::forward< As >( as )... ),
            m_current( this->buffer_start() ),

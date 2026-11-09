@@ -19,7 +19,7 @@
   "active_vendors": {
     "asio": "1.39.0; owner snapshot 190a8d8daf1cc62909b4e0c72ff491ba264ca98e; active asynchronous transport",
     "minhook": "1.3.4 owner input; pinned NtGetNextThread SAFE-FREEZE build copy",
-    "pegtl": "4.0.0 header; owner main snapshot 419ba27d27e80e33bf180932a9e4c483c4b8dd65; existing RE Config2/VDF grammar",
+    "pegtl": "4.0.2 header; owner 4.x branch snapshot b60f6110abd37e502d202d13a6c565410c552c33; existing RE Config2/VDF grammar",
     "pugixml": "1.16; owner snapshot f0a3faa76e04f35110257ca8713363dee3c890e8; actual XML/router/persistence backend with project-owned compatibility"
   },
   "vendor_source_changes": false,

@@ -5,17 +5,12 @@
 #ifndef TAO_PEGTL_INTERNAL_EXTRACT_POSITION_HPP
 #define TAO_PEGTL_INTERNAL_EXTRACT_POSITION_HPP
 
-#include <utility>
-
 #include "../config.hpp"
+
+#include "has_current_position.hpp"
 
 namespace TAO_PEGTL_NAMESPACE::internal
 {
-   template< typename C >
-   concept has_current_position = requires {
-      std::declval< C >().current_position();
-   };
-
    template< typename T >
    [[nodiscard]] decltype( auto ) extract_position( const T& t )
    {

@@ -5,7 +5,6 @@
 #ifndef TAO_PEGTL_INTERNAL_INPUT_DOUBLE_PATH_HPP
 #define TAO_PEGTL_INTERNAL_INPUT_DOUBLE_PATH_HPP
 
-#include <concepts>
 #include <filesystem>
 #include <utility>
 
@@ -18,7 +17,6 @@ namespace TAO_PEGTL_NAMESPACE::internal
       : Input
    {
       template< typename... Ts >
-         requires std::constructible_from< Input, std::filesystem::path, const std::filesystem::path&, Ts... >
       explicit input_double_path( std::filesystem::path&& s, Ts&&... ts )
          : Input( std::move( s ), static_cast< const std::filesystem::path& >( s ), std::forward< Ts >( ts )... )
       {
@@ -26,7 +24,6 @@ namespace TAO_PEGTL_NAMESPACE::internal
       }
 
       template< typename... Ts >
-         requires std::constructible_from< Input, const std::filesystem::path&, const std::filesystem::path&, Ts... >
       explicit input_double_path( const std::filesystem::path& s, Ts&&... ts )
          : Input( s, s, std::forward< Ts >( ts )... )
       {}

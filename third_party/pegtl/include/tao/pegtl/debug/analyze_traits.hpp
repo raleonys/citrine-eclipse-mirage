@@ -17,7 +17,7 @@
 
 namespace TAO_PEGTL_NAMESPACE
 {
-   template< typename... Rules >
+  template< typename... Rules >
    struct analyze_any_traits
    {
       // Consumption-on-success is always true; assumes bounded repetition of conjunction of sub-rules.
@@ -70,16 +70,6 @@ namespace TAO_PEGTL_NAMESPACE
    template< typename Name, typename... Actions >
    struct analyze_traits< Name, internal::apply0< Actions... > >
       : analyze_opt_traits<>
-   {};
-
-   template< typename Name, std::size_t Prefix, char... Cs >
-   struct analyze_traits< Name, internal::ascii_astring< Prefix, Cs... > >
-      : analyze_any_traits<>
-   {};
-
-   template< typename Name, std::size_t Prefix, char... Cs >
-   struct analyze_traits< Name, internal::ascii_aistring< Prefix, Cs... > >
-      : analyze_any_traits<>
    {};
 
    template< typename Name, char... Cs >
@@ -156,8 +146,8 @@ namespace TAO_PEGTL_NAMESPACE
       : analyze_any_traits<>
    {};
 
-   template< typename Name, typename Peek, auto Function >
-   struct analyze_traits< Name, internal::function< Peek, Function > >
+   template< typename Name, typename Peek, typename Func, Func Tion >
+   struct analyze_traits< Name, internal::function< Peek, Func, Tion > >
    {
       static_assert( internal::dependent_false< Name >, "We cannot analyze function!" );
    };
@@ -172,7 +162,7 @@ namespace TAO_PEGTL_NAMESPACE
       : analyze_traits< Name, typename internal::sor< internal::seq< Cond, Then >, Else >::rule_t >
    {};
 
-   template< typename Name, typename Peek, Peek::data_t... Cs >
+   template< typename Name, typename Peek, typename Peek::data_t... Cs >
    struct analyze_traits< Name, internal::ione< Peek, Cs... > >
       : analyze_any_traits<>
    {};
@@ -187,27 +177,27 @@ namespace TAO_PEGTL_NAMESPACE
       : analyze_opt_traits< Rules... >
    {};
 
-   template< typename Name, typename Peek, Peek::data_t... Cs >
+   template< typename Name, typename Peek, typename Peek::data_t... Cs >
    struct analyze_traits< Name, internal::not_ione< Peek, Cs... > >
       : analyze_any_traits<>
    {};
 
-   template< typename Name, typename Peek, Peek::data_t... Cs >
+   template< typename Name, typename Peek, typename Peek::data_t... Cs >
    struct analyze_traits< Name, internal::not_one< Peek, Cs... > >
       : analyze_any_traits<>
    {};
 
-   template< typename Name, typename Peek, Peek::data_t Lo, Peek::data_t Hi >
+   template< typename Name, typename Peek, typename Peek::data_t Lo, typename Peek::data_t Hi >
    struct analyze_traits< Name, internal::not_range< Peek, Lo, Hi > >
       : analyze_any_traits<>
    {};
 
-   template< typename Name, typename Peek, Peek::data_t... Cs >
+   template< typename Name, typename Peek, typename Peek::data_t... Cs >
    struct analyze_traits< Name, internal::not_ranges< Peek, Cs... > >
       : analyze_any_traits<>
    {};
 
-   template< typename Name, typename Peek, Peek::data_t... Cs >
+   template< typename Name, typename Peek, typename Peek::data_t... Cs >
    struct analyze_traits< Name, internal::one< Peek, Cs... > >
       : analyze_any_traits<>
    {};
@@ -227,12 +217,12 @@ namespace TAO_PEGTL_NAMESPACE
       : analyze_traits< Name, typename internal::seq< Rules..., internal::opt< Name > >::rule_t >
    {};
 
-   template< typename Name, typename Peek, Peek::data_t Lo, Peek::data_t Hi >
+   template< typename Name, typename Peek, typename Peek::data_t Lo, typename Peek::data_t Hi >
    struct analyze_traits< Name, internal::range< Peek, Lo, Hi > >
       : analyze_any_traits<>
    {};
 
-   template< typename Name, typename Peek, Peek::data_t... Cs >
+   template< typename Name, typename Peek, typename Peek::data_t... Cs >
    struct analyze_traits< Name, internal::ranges< Peek, Cs... > >
       : analyze_any_traits<>
    {};
@@ -270,11 +260,6 @@ namespace TAO_PEGTL_NAMESPACE
 
    template< typename Name, typename Rule, typename... Rules >
    struct analyze_traits< Name, internal::sor< Rule, Rules... > >
-      : analyze_sor_traits< Rule, Rules... >
-   {};
-
-   template< typename Name, typename Rule, typename... Rules >
-   struct analyze_traits< Name, internal::sor1< Rule, Rules... > >
       : analyze_sor_traits< Rule, Rules... >
    {};
 

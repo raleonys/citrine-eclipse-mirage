@@ -1,7 +1,4 @@
-option(PEGTL_BUILD_ICU_TESTS "Enable ICU test programs" OFF)
-if(PEGTL_BUILD_ICU_TESTS)
-  find_package(ICU REQUIRED COMPONENTS uc)
-endif()
+cmake_minimum_required(VERSION 3.8...3.19)
 
 set(test_sources
   action_add_guard.cpp
@@ -25,8 +22,6 @@ set(test_sources
   action_match_typed_state.cpp
   apply_mode.cpp
   ascii_any.cpp
-  ascii_astring.cpp
-  ascii_aistring.cpp
   ascii_chars.cpp
   ascii_classes.cpp
   ascii_ellipsis.cpp
@@ -46,24 +41,12 @@ set(test_sources
   ascii_ranges.cpp
   ascii_shebang.cpp
   ascii_string.cpp
-  ascii_string_literals.cpp
   ascii_three.cpp
   ascii_two.cpp
   base_empty.cpp
   base_exceptions.cpp
   base_result.cpp
   base_setup.cpp
-  builder_build.cpp
-  builder_cases.cpp
-  builder_const.cpp
-  builder_create.cpp
-  builder_disabled.cpp
-  builder_json.cpp
-  builder_multi.cpp
-  builder_optional.cpp
-  builder_repeat.cpp
-  builder_value.cpp
-  builder_variant.cpp
   control_apply_typed_state.cpp
   control_input_control.cpp
   control_remove_first_state.cpp
@@ -114,25 +97,20 @@ set(test_sources
   example_semver2.cpp
   example_uri.cpp
   extra_charconv.cpp
-  extra_charconv_floating.cpp
-  extra_charconv_to.cpp
   extra_dispatch.cpp
   extra_nested_exceptions.cpp
   extra_parse_tree.cpp
   extra_parse_tree_to_dot.cpp
-  extra_partial_apply1.cpp
   extra_raw_string.cpp
   extra_record.cpp
   extra_type_to_string.cpp
   extra_unescape.cpp
-  extra_unescape_to.cpp
   icu_utf16_base.cpp
   icu_utf32_base.cpp
   icu_utf8_base.cpp
   include.cpp
   input_action_input.cpp
   input_argv_input.cpp
-  input_constructors.cpp
   input_file_input.cpp
   input_mmap_input.cpp
   input_read_input.cpp
@@ -148,18 +126,14 @@ set(test_sources
   internal_ascii_utility.cpp
   internal_base_inputs.cpp
   internal_char_scan_traits.cpp
-  internal_concepts.cpp
   internal_constexpr.cpp
-  internal_constraints.cpp
   internal_copy_input.cpp
   internal_data_and_size.cpp
-  internal_deliver.cpp
   internal_endian.cpp
   internal_extract_position.cpp
   internal_file_input.cpp
   internal_file_mapper.cpp
   internal_get_eol_rule_char.cpp
-  internal_input_with_funcs.cpp
   internal_inputs_lines.cpp
   internal_integer_bswap.cpp
   internal_integer_size.cpp
@@ -181,6 +155,7 @@ set(test_sources
   internal_read_file_stdio.cpp
   internal_read_input.cpp
   internal_rematch_input.cpp
+  internal_resize_uninitialized.cpp
   internal_set_stack_guard.cpp
   internal_stream_to_string.cpp
   internal_text_inputs.cpp
@@ -197,7 +172,6 @@ set(test_sources
   internal_view_input.cpp
   member_general.cpp
   normal_apply_rule.cpp
-  parse.cpp
   parse_error.cpp
   pegtl_string_t.cpp
   rewind_mode.cpp
@@ -223,7 +197,6 @@ set(test_sources
   rule_invert.cpp
   rule_list.cpp
   rule_list_must.cpp
-  rule_list_opt.cpp
   rule_list_tail.cpp
   rule_minus.cpp
   rule_must.cpp
@@ -248,7 +221,6 @@ set(test_sources
   rule_seq.cpp
   rule_source.cpp
   rule_sor.cpp
-  rule_sor1.cpp
   rule_star.cpp
   rule_star_must.cpp
   rule_star_partial.cpp
@@ -259,12 +231,10 @@ set(test_sources
   rule_try_catch_raise_nested.cpp
   rule_try_catch_return_false.cpp
   rule_unordered.cpp
-  rule_unordered_partial.cpp
   rule_until.cpp
   stream_analyze_traits.cpp
   stream_alloc_buffer.cpp
   stream_array_buffer.cpp
-  stream_constructors.cpp
   stream_cstream_input.cpp
   stream_cstring_input.cpp
   stream_discard_input.cpp
@@ -303,7 +273,11 @@ foreach(testsourcefile ${test_sources})
   get_filename_component(exename pegtl-test-${testsourcefile} NAME_WE)
   add_executable(${exename} ${testsourcefile})
   target_link_libraries(${exename} PRIVATE taocpp::pegtl)
-  set_target_properties(${exename} PROPERTIES CXX_EXTENSIONS OFF)
+  set_target_properties(${exename} PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+  )
   if(MSVC)
     target_compile_options(${exename} PRIVATE /W4 /WX /utf-8 /bigobj)
   else()
@@ -325,13 +299,6 @@ foreach(testsourcefile ${test_sources})
     add_test(NAME ${exename} WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} COMMAND ${exename})
   endif()
 endforeach()
-
-if(PEGTL_BUILD_ICU_TESTS)
-  foreach(target IN ITEMS pegtl-test-icu_utf8_base pegtl-test-icu_utf16_base pegtl-test-icu_utf32_base)
-    target_compile_definitions(${target} PRIVATE TAO_PEGTL_TEST_ICU)
-    target_link_libraries(${target} PRIVATE ICU::uc)
-  endforeach()
-endif()
 
 if(glob_test_sources)
   foreach(ignored_source_file ${glob_test_sources})

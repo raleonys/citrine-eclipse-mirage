@@ -5,8 +5,6 @@
 #ifndef TAO_PEGTL_INTERNAL_INPUT_WITH_START_HPP
 #define TAO_PEGTL_INTERNAL_INPUT_WITH_START_HPP
 
-#include <concepts>
-#include <type_traits>
 #include <utility>
 
 #include "../config.hpp"
@@ -23,7 +21,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       : public Input
    {
    public:
-      using data_t = Input::data_t;
+      using data_t = typename Input::data_t;
       using error_position_t = count_position;
       using offset_position_t = count_position;
       using rewind_position_t = pointer_position< data_t >;
@@ -32,7 +30,6 @@ namespace TAO_PEGTL_NAMESPACE::internal
 #endif
 
       template< typename... As >
-         requires( ( !std::same_as< input_with_start, std::remove_cvref_t< As > > ) && ... ) && std::constructible_from< Input, As... >
       explicit input_with_start( As&&... as ) noexcept
          : Input( std::forward< As >( as )... ),
            m_start( this->current() )

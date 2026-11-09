@@ -21,9 +21,9 @@
 #include "../text_position.hpp"
 
 #include "at.hpp"
+#include "text_consume.hpp"
 #include "eof.hpp"
 #include "sor.hpp"
-#include "text_consume.hpp"
 #include "until.hpp"
 
 namespace TAO_PEGTL_NAMESPACE::internal
@@ -33,7 +33,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       : public Input
    {
    public:
-      using data_t = Input::data_t;
+      using data_t = typename Input::data_t;
       using error_position_t = text_position;
       using offset_position_t = text_position;
       using rewind_position_t = text_position;
@@ -66,7 +66,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       }
 
       template< typename Rule >
-      void consume( const std::size_t count )
+      void consume( const std::size_t count ) noexcept
       {
          scan_input< data_t > in( this->current(), count );
          text_consume< Eol, Rule >( m_position, in );
@@ -121,9 +121,8 @@ namespace TAO_PEGTL_NAMESPACE::internal
       }
 
       [[nodiscard]] const data_t* end_of_line_or_file( const error_position_t& pos, const std::size_t max = 135 ) const
-         requires( sizeof( data_t ) == 1 )
       {
-         // Generalising beyond 1 requires the until to use eol_lazy_peek like in lazy_input.
+         static_assert( sizeof( data_t ) == 1 );  // Generalising beyond 1 requires the until to use eol_lazy_peek like in lazy_input.
          using grammar = until< at< sor< eof, eol_rule > > >;
          const data_t* p = previous( pos );  // TODO: Start earlier?
          const std::size_t s = ( std::min )( max, std::size_t( this->end() - p ) );

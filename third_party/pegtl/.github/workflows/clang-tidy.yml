@@ -10,70 +10,25 @@ on:
       - 'README.md'
       - 'doc/**'
 
-permissions:
-  contents: read
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   clang-tidy:
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@v4
 
     - name: Install Dependencies
       run: |
         sudo apt-get -qq update -yq
-        sudo apt-get -qq install -y clang-22 clang-tidy-22 clang-tools-22 libicu-dev --no-install-recommends --no-install-suggests
-
-    - name: Show clang-tidy configuration
-      run: |
-        clang++-22 --version
-        clang-tidy-22 --version
-        clang-tidy-22 --verify-config
-        clang-tidy-22 -dump-config
-
-    - name: Show example clang-tidy config
-      run: clang-tidy-22 --dump-config src/example/hello_world.cpp -- -std=c++23 -Iinclude
-
-    - name: Show lint clang-tidy config
-      run: clang-tidy-22 --dump-config src/lint/rules.cpp -- -std=c++23 -Iinclude
+        sudo apt-get -qq install -y clang-tidy --no-install-recommends --no-install-suggests
 
     - name: Generate Compilation Database
-      run: |
-        cmake -S . -B build \
-          -DCMAKE_CXX_COMPILER=clang++-22 \
-          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-          -DPEGTL_BUILD_TESTS=OFF \
-          -DPEGTL_BUILD_EXAMPLES=ON \
-          -DPEGTL_BUILD_LINT=ON
-        test -s build/compile_commands.json
+      run: cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
-    - name: Run clang-tidy on stand-alone headers
-      id: headers
+    - name: Run clang-tidy on Header Files
       continue-on-error: true
-      run: |
-        find include/tao/ src/example/ -type f -name '*.hpp' \
-          ! -name '*_msvc.hpp' \
-          ! -name '*_win32.hpp' \
-          -print0 |
-          xargs -0 -r -P "$(nproc)" -I '{}' \
-            clang-tidy-22 -quiet -header-filter='\.ipp$' '{}' -- -x c++ -std=c++23 -Iinclude
+      run: find include/ -type f \( -name "*.hpp" -a ! -name "integer_bswap_win32.hpp" -a ! -name "mmap_file_win32.hpp" \) | xargs -P $(nproc) -I {} clang-tidy -quiet -p build {} -- -std=c++17 -Iinclude
 
-    - name: Run clang-tidy on examples
-      id: examples
+    - name: Run clang-tidy on tests and examples files
       continue-on-error: true
-      # The Lua examples take disproportionately long to analyze.
-      run: run-clang-tidy-22 -p build -quiet -j "$(nproc)" -header-filter='^$' '.*/src/example/(?!lua53).*\.cpp$'
-
-    - name: Run clang-tidy on template instantiations
-      id: instantiations
-      continue-on-error: true
-      run: run-clang-tidy-22 -p build -quiet -j "$(nproc)" -header-filter='(^|/)include/tao/' '.*/src/lint/.*\.cpp$'
-
-    - name: Report clang-tidy failure
-      if: steps.headers.outcome == 'failure' || steps.examples.outcome == 'failure' || steps.instantiations.outcome == 'failure'
-      run: exit 1
+      run: find src/ -type f -name "*.cpp" | xargs -P $(nproc) -I {} clang-tidy -quiet -p build {} -- -std=c++17 -Iinclude

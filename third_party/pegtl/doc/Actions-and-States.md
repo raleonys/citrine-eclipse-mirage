@@ -218,8 +218,6 @@ public:
    [[nodiscard]] decltype( auto ) direct_position() const noexcept;
 ```
 
-The `direct_source()` and `direct_position()` accessors are only available when the corresponding const operations exist on the underlying parse input.
-
 The most obvious difference is that an action input has no `consume()` or other function to modify it in any way.
 
 The `begin()`, `end()`, `size()` and `empty()` functions are essentially like on a `std::array` or `std::vector`.
@@ -460,7 +458,7 @@ struct my_action< my_rule >
 };
 ```
 
-For a more complete example of how to build a generic JSON data structure with `change_state` and friends see `src/example/json_classes.cpp`.
+For a more complete example of how to build a generic JSON data structure with `change_state` and friends see `src/example/json_build.cpp`.
 
 
 ## Changing Actions and States

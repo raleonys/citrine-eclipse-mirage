@@ -33,7 +33,7 @@ The crypt diagnostic TLS guard remains Debug-only.
 See [cleanup scope](BUILD_CLEANUP.md).
 
 Four owner-supplied vendors remain active: Asio 1.39.0, MinHook 1.3.4,
-PEGTL 4 (4.0.0 header on the selected newer main snapshot), and pugixml 1.16.
+PEGTL 4 (4.0.2 header on the owner-uploaded 4.x snapshot), and pugixml 1.16.
 Selected archive bytes are immutable; current snapshot identities are in
 [VENDORING.md](VENDORING.md). The project XML
 compatibility layer preserves the previous depth-500 boundary and corrected

@@ -5,7 +5,6 @@
 #ifndef TAO_PEGTL_INTERNAL_ASCII_UTILITY_HPP
 #define TAO_PEGTL_INTERNAL_ASCII_UTILITY_HPP
 
-#include <cassert>
 #include <cstring>
 #include <initializer_list>
 #include <type_traits>
@@ -36,14 +35,13 @@ namespace TAO_PEGTL_NAMESPACE::internal
    template< char C, typename D >
    [[nodiscard]] constexpr bool ascii_char_equal( const D d ) noexcept
    {
-      return d == static_cast< D >( C );
+      return d == static_cast< D >( C );  // TODO: C++20 cmp_equal( d, C ).
    }
 
    template< char... Cs >
    [[nodiscard]] constexpr bool ascii_string_equal( const void* r ) noexcept
    {
       if constexpr( sizeof...( Cs ) > 0 ) {
-         assert( r != nullptr );  // Shut up a clang-analyze false positive.
          const char* t = static_cast< const char* >( r );
          return ( ascii_char_equal< Cs >( *t++ ) && ... );
       }
@@ -53,30 +51,14 @@ namespace TAO_PEGTL_NAMESPACE::internal
       }
    }
 
-   template< char... Cs >
-   [[nodiscard]] static std::size_t ascii_astring_equal( const void* r, const std::size_t size ) noexcept
-   {
-      std::size_t result = 0;
-
-      if constexpr( sizeof...( Cs ) > 0 ) {
-         const char* p = static_cast< const char* >( r );
-         (void)( ( ( result < size ) && ascii_char_equal< Cs >( p[ result ] ) && ( ++result, true ) ) && ... );  // NOLINT(bugprone-inc-dec-in-conditions)
-      }
-      else {
-         (void)r;
-         (void)size;
-      }
-      return result;
-   }
-
    template< char C, typename D >
    [[nodiscard]] constexpr bool ascii_ichar_equal( const D d ) noexcept
    {
       if constexpr( is_ascii_alpha( C ) ) {
-         return ( C | 0x20 ) == ( d | 0x20 );
+         return ( C | 0x20 ) == ( d | 0x20 );  // ...
       }
       else {
-         return d == static_cast< D >( C );
+         return d == static_cast< D >( C );  // TODO: C++20 cmp_equal( d, C ).
       }
    }
 
@@ -91,22 +73,6 @@ namespace TAO_PEGTL_NAMESPACE::internal
          (void)r;
          return true;
       }
-   }
-
-   template< char... Cs >
-   [[nodiscard]] static std::size_t ascii_aistring_equal( const void* r, const std::size_t size ) noexcept
-   {
-      std::size_t result = 0;
-
-      if constexpr( sizeof...( Cs ) > 0 ) {
-         const char* p = static_cast< const char* >( r );
-         (void)( ( ( result < size ) && ascii_ichar_equal< Cs >( p[ result ] ) && ( ++result, true ) ) && ... );  // NOLINT(bugprone-inc-dec-in-conditions)
-      }
-      else {
-         (void)r;
-         (void)size;
-      }
-      return result;
    }
 
 }  // namespace TAO_PEGTL_NAMESPACE::internal

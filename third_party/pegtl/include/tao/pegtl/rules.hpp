@@ -15,7 +15,6 @@
 
 #include "config.hpp"
 
-#include "internal/fixed_string.hpp"
 #include "internal/rules.hpp"
 
 namespace TAO_PEGTL_NAMESPACE
@@ -36,14 +35,12 @@ namespace TAO_PEGTL_NAMESPACE
    struct eolf : internal::eolf {};
    struct everything : internal::everything {};
    struct failure : internal::failure {};
-   template< auto Function, typename Peek = void > struct function : internal::function< Peek, Function > {};
+   template< auto Function, typename Peek = void > struct function : internal::function< Peek, decltype( Function ), Function > {};
    template< typename Rule, typename... Actions > struct if_apply : internal::if_apply< Rule, Actions... > {};
    template< typename Cond, typename Then, typename Else > struct if_then_else : internal::if_then_else< Cond, Then, Else > {};
    template< typename Rule > struct invert : internal::invert_traits< typename Rule::rule_t >::type {};
    template< typename Rule, typename Sep, typename Pad = void > struct list : internal::list< Rule, internal::pad< Sep, Pad > > {};
    template< typename Rule, typename Sep > struct list< Rule, Sep, void > : internal::list< Rule, Sep > {};
-   template< typename Rule, typename Sep, typename Pad = void > struct list_opt : internal::list_opt< Rule, internal::pad< Sep, Pad > > {};
-   template< typename Rule, typename Sep > struct list_opt< Rule, Sep, void > : internal::list_opt< Rule, Sep > {};
    template< typename Rule, typename Sep, typename Pad = void > struct list_tail : internal::list_tail_pad< Rule, Sep, Pad > {};
    template< typename Rule, typename Sep > struct list_tail< Rule, Sep, void > : internal::list_tail< Rule, Sep > {};
    template< typename M, typename S > struct minus : internal::minus< M, S > {};
@@ -65,7 +62,6 @@ namespace TAO_PEGTL_NAMESPACE
    template< typename Sep, typename Pad, typename... Rules > struct separated_pad : internal::separated_pad< type_list<>, Sep, Pad, Rules... > {};
    template< typename... Rules > struct seq : internal::seq< Rules... > {};
    template< typename... Rules > struct sor : internal::sor< Rules... > {};
-   template< typename... Rules > struct sor1 : internal::sor1< Rules... > {};
    template< typename Rule > struct source : internal::source< Rule > {};
    template< typename Rule, typename... Rules > struct star : internal::star< Rule, Rules... > {};
    template< typename Rule, typename... Rules > struct star_partial : internal::star_partial< Rule, Rules... > {};
@@ -85,10 +81,7 @@ namespace TAO_PEGTL_NAMESPACE
    template< typename... Rules > struct must : internal::must< Rules... > {};
    template< typename Cond, typename... Rules > struct opt_must : internal::if_must< true, Cond, Rules... > {};
    template< typename Exception > struct raise : internal::raise< Exception > {};
-   template< internal::fixed_string Text > struct raise_message : internal::raise< raise_message< Text > > {
-      static constexpr auto& error_message = Text.data;
-   };
-   template< char... Cs > struct raise_message_chars : internal::raise< raise_message_chars< Cs... > > {
+   template< char... Cs > struct raise_message : internal::raise< raise_message< Cs... > > {
       static constexpr const char error_message[] = { Cs..., 0 };
    };
    template< typename Cond, typename... Rules > struct star_must : internal::star_must< Cond, Rules... > {};

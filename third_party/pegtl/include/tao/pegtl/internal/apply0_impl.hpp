@@ -5,7 +5,7 @@
 #ifndef TAO_PEGTL_INTERNAL_APPLY0_IMPL_HPP
 #define TAO_PEGTL_INTERNAL_APPLY0_IMPL_HPP
 
-#include <concepts>
+#include <type_traits>
 
 #include "../config.hpp"
 
@@ -15,16 +15,16 @@ namespace TAO_PEGTL_NAMESPACE::internal
    struct apply0_impl
    {
       template< typename... States >
-      [[nodiscard]] static bool apply0( States&&... st ) noexcept( noexcept( Action::apply0( st... ) ) )
-         requires requires { { Action::apply0( st... ) } -> std::same_as< void >; }
+      [[nodiscard]] static auto apply0( States&&... st ) noexcept( noexcept( Action::apply0( st... ) ) )
+         -> std::enable_if_t< std::is_same_v< decltype( Action::apply0( st... ) ), void >, bool >
       {
          Action::apply0( st... );
          return true;
       }
 
       template< typename... States >
-      [[nodiscard]] static bool apply0( States&&... st ) noexcept( noexcept( Action::apply0( st... ) ) )
-         requires requires { { Action::apply0( st... ) } -> std::same_as< bool >; }
+      [[nodiscard]] static auto apply0( States&&... st ) noexcept( noexcept( Action::apply0( st... ) ) )
+         -> std::enable_if_t< std::is_same_v< decltype( Action::apply0( st... ) ), bool >, bool >
       {
          return Action::apply0( st... );
       }

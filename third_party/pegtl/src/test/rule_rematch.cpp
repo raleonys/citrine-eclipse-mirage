@@ -3,7 +3,6 @@
 // (See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include "test.hpp"
-#include "verify_ctrl.hpp"
 #include "verify_meta.hpp"
 #include "verify_rule.hpp"
 
@@ -11,13 +10,6 @@ namespace TAO_PEGTL_NAMESPACE
 {
    void unit_test()
    {
-      verify_ctrl_enabled< rematch< one< 'c' > > >( __LINE__, __FILE__, "c" );
-      verify_ctrl_disabled< internal::rematch< one< 'c' > > >( __LINE__, __FILE__, "c" );
-      verify_ctrl_enabled< rematch< alnum, digit > >( __LINE__, __FILE__, "1" );
-      verify_ctrl_disabled< internal::rematch< alnum, digit > >( __LINE__, __FILE__, "1" );
-      verify_ctrl_enabled< rematch< alnum, digit, success > >( __LINE__, __FILE__, "1" );
-      verify_ctrl_disabled< internal::rematch< alnum, digit, success > >( __LINE__, __FILE__, "1" );
-
       verify_rule< rematch< one< 'c' > > >( __LINE__, __FILE__, "c", result_type::success );
       verify_rule< rematch< one< 'c' > > >( __LINE__, __FILE__, "a", result_type::local_failure );
       verify_rule< rematch< one< 'c' > > >( __LINE__, __FILE__, "b", result_type::local_failure );
@@ -102,21 +94,21 @@ namespace TAO_PEGTL_NAMESPACE
       verify_rule< rematch< plus< alnum >, plus< digit > > >( __LINE__, __FILE__, "a1a", result_type::local_failure, 3 );
       verify_rule< rematch< plus< alnum >, plus< digit > > >( __LINE__, __FILE__, "1a1", result_type::success, 0 );
 
-      verify_rule< rematch< plus< alnum >, seq< string< "foo" >, eof > > >( __LINE__, __FILE__, "foo", result_type::success, 0 );
-      verify_rule< rematch< plus< alnum >, seq< string< "foo" >, eof > > >( __LINE__, __FILE__, "foo%", result_type::success, 1 );
-      verify_rule< rematch< plus< alnum >, seq< string< "foo" >, eof > > >( __LINE__, __FILE__, "foo5", result_type::local_failure, 4 );
+      verify_rule< rematch< plus< alnum >, seq< string< 'f', 'o', 'o' >, eof > > >( __LINE__, __FILE__, "foo", result_type::success, 0 );
+      verify_rule< rematch< plus< alnum >, seq< string< 'f', 'o', 'o' >, eof > > >( __LINE__, __FILE__, "foo%", result_type::success, 1 );
+      verify_rule< rematch< plus< alnum >, seq< string< 'f', 'o', 'o' >, eof > > >( __LINE__, __FILE__, "foo5", result_type::local_failure, 4 );
 
-      verify_rule< rematch< plus< alnum >, success, seq< string< "foo" >, eof > > >( __LINE__, __FILE__, "foo", result_type::success, 0 );
-      verify_rule< rematch< plus< alnum >, success, seq< string< "foo" >, eof > > >( __LINE__, __FILE__, "foo%", result_type::success, 1 );
-      verify_rule< rematch< plus< alnum >, success, seq< string< "foo" >, eof > > >( __LINE__, __FILE__, "foo5", result_type::local_failure, 4 );
+      verify_rule< rematch< plus< alnum >, success, seq< string< 'f', 'o', 'o' >, eof > > >( __LINE__, __FILE__, "foo", result_type::success, 0 );
+      verify_rule< rematch< plus< alnum >, success, seq< string< 'f', 'o', 'o' >, eof > > >( __LINE__, __FILE__, "foo%", result_type::success, 1 );
+      verify_rule< rematch< plus< alnum >, success, seq< string< 'f', 'o', 'o' >, eof > > >( __LINE__, __FILE__, "foo5", result_type::local_failure, 4 );
 
-      verify_rule< rematch< plus< alnum >, seq< string< "foo" >, eof >, success > >( __LINE__, __FILE__, "foo", result_type::success, 0 );
-      verify_rule< rematch< plus< alnum >, seq< string< "foo" >, eof >, success > >( __LINE__, __FILE__, "foo%", result_type::success, 1 );
-      verify_rule< rematch< plus< alnum >, seq< string< "foo" >, eof >, success > >( __LINE__, __FILE__, "foo5", result_type::local_failure, 4 );
+      verify_rule< rematch< plus< alnum >, seq< string< 'f', 'o', 'o' >, eof >, success > >( __LINE__, __FILE__, "foo", result_type::success, 0 );
+      verify_rule< rematch< plus< alnum >, seq< string< 'f', 'o', 'o' >, eof >, success > >( __LINE__, __FILE__, "foo%", result_type::success, 1 );
+      verify_rule< rematch< plus< alnum >, seq< string< 'f', 'o', 'o' >, eof >, success > >( __LINE__, __FILE__, "foo5", result_type::local_failure, 4 );
 
-      verify_rule< rematch< plus< alnum >, seq< string< "foo" >, eof >, string< "foo" > > >( __LINE__, __FILE__, "foo", result_type::success, 0 );
-      verify_rule< rematch< plus< alnum >, seq< string< "foo" >, eof >, string< "foo" > > >( __LINE__, __FILE__, "foo%", result_type::success, 1 );
-      verify_rule< rematch< plus< alnum >, seq< string< "foo" >, eof >, string< "foo" > > >( __LINE__, __FILE__, "foo5", result_type::local_failure, 4 );
+      verify_rule< rematch< plus< alnum >, seq< string< 'f', 'o', 'o' >, eof >, string< 'f', 'o', 'o' > > >( __LINE__, __FILE__, "foo", result_type::success, 0 );
+      verify_rule< rematch< plus< alnum >, seq< string< 'f', 'o', 'o' >, eof >, string< 'f', 'o', 'o' > > >( __LINE__, __FILE__, "foo%", result_type::success, 1 );
+      verify_rule< rematch< plus< alnum >, seq< string< 'f', 'o', 'o' >, eof >, string< 'f', 'o', 'o' > > >( __LINE__, __FILE__, "foo5", result_type::local_failure, 4 );
    }
 
 }  // namespace TAO_PEGTL_NAMESPACE

@@ -6,12 +6,10 @@
 #define TAO_PEGTL_STREAM_OTHER_BUFFER_HPP
 
 #include <cassert>
-#include <concepts>
 #include <cstddef>
 #include <utility>
 
 #include "../config.hpp"
-#include "../system.hpp"
 
 namespace TAO_PEGTL_NAMESPACE::internal
 {
@@ -22,7 +20,6 @@ namespace TAO_PEGTL_NAMESPACE::internal
       using data_t = Data;
 
       template< typename... As >
-         requires std::constructible_from< Reader, As... >
       other_buffer( Data* data, const std::size_t size, const std::size_t chunk, As&&... as )
          : m_data( data ),
            m_size( size ),
@@ -72,7 +69,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       const std::size_t m_size;
       const std::size_t m_chunk;
 
-      TAO_PEGTL_NO_UNIQUE_ADDRESS Reader m_reader;
+      Reader m_reader;
    };
 
 }  // namespace TAO_PEGTL_NAMESPACE::internal

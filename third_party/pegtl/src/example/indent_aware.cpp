@@ -63,9 +63,9 @@ namespace example
 
    struct trailer : pegtl::must< s0, pegtl::opt< hs, pegtl::until< pegtl::at< pegtl::eolf > > >, pegtl::eolf > {};
 
-   struct def_line : pegtl::if_must< pegtl::string< "def" >, s1, name, s0, ba, s0, bz, s0, co, trailer > {};
-   struct if_line : pegtl::if_must< pegtl::string< "if" >, s1, expression, s0, co, trailer > {};
-   struct else_line : pegtl::if_must< pegtl::string< "else" >, s0, co, trailer > {};
+   struct def_line : pegtl::if_must< pegtl::string< 'd', 'e', 'f' >, s1, name, s0, ba, s0, bz, s0, co, trailer > {};
+   struct if_line : pegtl::if_must< pegtl::string< 'i', 'f' >, s1, expression, s0, co, trailer > {};
+   struct else_line : pegtl::if_must< pegtl::string< 'e', 'l', 's', 'e' >, s0, co, trailer > {};
    struct let_line : pegtl::if_must< name, s0, eq, s0, expression, trailer > {};
 
    struct indent : pegtl::star< pegtl::one< ' ' > > {};
@@ -80,7 +80,7 @@ namespace example
    struct grammar : pegtl::until< pegtl::eof, pegtl::must< line > > {};
    // clang-format on
 
-   enum class type : std::uint8_t
+   enum class type
    {
       def,
       if_,
@@ -212,7 +212,7 @@ namespace example
 
 }  // namespace example
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    for( int i = 1; i < argc; ++i ) {
       pegtl::text_file_input< pegtl::scan::lf_crlf > in( argv[ i ] );

@@ -190,19 +190,15 @@ private:
 
 ###### Iterator Reader
 
-The iterator reader stores an input iterator and an end sentinel.
-It takes them by value and moves them into the reader; pass a move-only iterator as an rvalue.
-The range of objects they refer to is not copied.
-The iterator's values must be assignable to `char`.
+The iterator reader takes a range of input iterators.
+It copies the iterators, but not the range of objects they represent.
 
 ```c++
-template< std::input_iterator InputIterator,
-          std::sentinel_for< InputIterator > Sentinel = InputIterator >
-   requires std::indirectly_copyable< InputIterator, char* >
+template< typename InputIterator >
 class iterator_reader
 {
 public:
-   iterator_reader( InputIterator begin, Sentinel end );
+   iterator_reader( const InputIterator& begin, const InputIterator& end );
 };
 ```
 
@@ -213,9 +209,6 @@ The stream input constructors take the arguments of their buffer and their reade
 For example the `alloc_istream_input` has the arguments `const std::size_t buffer_size, const std::size_t chunk_size, std::istream& stream`, the first two for the alloc buffer, the last for the istream reader.
 
 The stream inputs only support streams of `char`, are only implemented as type aliases, and do not come with deduction guides.
-
-The iterator input aliases accept a final `Sentinel` template argument, defaulting to `InputIterator`.
-For example, ranges ending with `std::default_sentinel` use `std::default_sentinel_t` as the sentinel type.
 
 ###### Plain Inputs
 
@@ -240,8 +233,7 @@ using alloc_istream_input = /* unspecified */
 template< typename InputIterator,
           typename Eol = tao_stream_eol,
           typename InputSource = void,
-          typename ErrorSource = InputSource,
-          typename Sentinel = InputIterator >
+          typename ErrorSource = InputSource >
 using alloc_iterator_input = /* unspecified */
 
 template< typename Eol = tao_stream_eol,
@@ -270,8 +262,7 @@ template< typename InputIterator,
           typename InputSource = void,
           typename ErrorSource = InputSource,
           std::size_t BufferSize = default_buffer_size,
-          std::size_t ChunkSize = default_chunk_size,
-          typename Sentinel = InputIterator >
+          std::size_t ChunkSize = default_chunk_size >
 using array_iterator_input = /* unspecified */
 
 template< typename Eol = tao_stream_eol,
@@ -292,8 +283,7 @@ using other_istream_input = /* unspecified */
 template< typename InputIterator,
           typename Eol = tao_stream_eol,
           typename InputSource = void,
-          typename ErrorSource = InputSource,
-          typename Sentinel = InputIterator >
+          typename ErrorSource = InputSource >
 using other_iterator_input = /* unspecified */
 ```
 
@@ -320,8 +310,7 @@ using alloc_istream_auto_input = /* unspecified */
 template< typename InputIterator,
           typename Eol = tao_stream_eol,
           typename InputSource = void,
-          typename ErrorSource = InputSource,
-          typename Sentinel = InputIterator >
+          typename ErrorSource = InputSource >
 using alloc_iterator_auto_input = /* unspecified */
 
 template< typename Eol = tao_stream_eol,
@@ -350,8 +339,7 @@ template< typename InputIterator,
           typename InputSource = void,
           typename ErrorSource = InputSource,
           std::size_t BufferSize = default_buffer_size,
-          std::size_t ChunkSize = default_chunk_size,
-          typename Sentinel = InputIterator >
+          std::size_t ChunkSize = default_chunk_size >
 using array_iterator_auto_input = /* unspecified */
 
 template< typename Eol = tao_stream_eol,
@@ -372,8 +360,7 @@ using other_istream_auto_input = /* unspecified */
 template< typename InputIterator,
           typename Eol = tao_stream_eol,
           typename InputSource = void,
-          typename ErrorSource = InputSource,
-          typename Sentinel = InputIterator >
+          typename ErrorSource = InputSource >
 using other_iterator_auto_input = /* unspecified */
 ```
 
@@ -400,8 +387,7 @@ using alloc_text_istream_input = /* unspecified */
 template< typename InputIterator,
           typename Eol = tao_stream_eol,
           typename InputSource = void,
-          typename ErrorSource = InputSource,
-          typename Sentinel = InputIterator >
+          typename ErrorSource = InputSource >
 using alloc_text_iterator_input = /* unspecified */
 
 template< typename Eol = tao_stream_eol,
@@ -430,8 +416,7 @@ template< typename InputIterator,
           typename InputSource = void,
           typename ErrorSource = InputSource,
           std::size_t BufferSize = default_buffer_size,
-          std::size_t ChunkSize = default_chunk_size,
-          typename Sentinel = InputIterator >
+          std::size_t ChunkSize = default_chunk_size >
 using array_text_iterator_input = /* unspecified */
 
 template< typename Eol = tao_stream_eol,
@@ -452,8 +437,7 @@ using other_text_istream_input = /* unspecified */
 template< typename InputIterator,
           typename Eol = tao_stream_eol,
           typename InputSource = void,
-          typename ErrorSource = InputSource,
-          typename Sentinel = InputIterator >
+          typename ErrorSource = InputSource >
 using other_text_iterator_input = /* unspecified */
 ```
 
@@ -480,8 +464,7 @@ using alloc_text_istream_auto_input = /* unspecified */
 template< typename InputIterator,
           typename Eol = tao_stream_eol,
           typename InputSource = void,
-          typename ErrorSource = InputSource,
-          typename Sentinel = InputIterator >
+          typename ErrorSource = InputSource >
 using alloc_text_iterator_auto_input = /* unspecified */
 
 template< typename Eol = tao_stream_eol,
@@ -510,8 +493,7 @@ template< typename InputIterator,
           typename InputSource = void,
           typename ErrorSource = InputSource,
           std::size_t BufferSize = default_buffer_size,
-          std::size_t ChunkSize = default_chunk_size,
-          typename Sentinel = InputIterator >
+          std::size_t ChunkSize = default_chunk_size >
 using array_text_iterator_auto_input = /* unspecified */
 
 template< typename Eol = tao_stream_eol,
@@ -532,8 +514,7 @@ using other_text_istream_auto_input = /* unspecified */
 template< typename InputIterator,
           typename Eol = tao_stream_eol,
           typename InputSource = void,
-          typename ErrorSource = InputSource,
-          typename Sentinel = InputIterator >
+          typename ErrorSource = InputSource >
 using other_text_iterator_auto_input = /* unspecified */
 ```
 

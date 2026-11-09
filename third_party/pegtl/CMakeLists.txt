@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20...3.22)
+cmake_minimum_required(VERSION 3.8...3.19)
 
 # Read version from version.hpp
 file(READ "${CMAKE_CURRENT_LIST_DIR}/include/tao/pegtl/version.hpp" version_hpp_data)
@@ -47,30 +47,20 @@ target_include_directories(pegtl INTERFACE
   $<INSTALL_INTERFACE:${PEGTL_INSTALL_INCLUDE_DIR}>
 )
 
-# require C++23
-target_compile_features(pegtl INTERFACE cxx_std_23)
+# require C++17
+target_compile_features(pegtl INTERFACE cxx_std_17)
 
 # testing
 option(PEGTL_BUILD_TESTS "Build test programs" ${PEGTL_IS_MAIN_PROJECT})
 if(PEGTL_BUILD_TESTS)
   enable_testing()
   add_subdirectory(src/test)
-  option(PEGTL_BUILD_COMPILE_TESTS "Enable compile accept/reject tests" ON)
-  if(PEGTL_BUILD_COMPILE_TESTS)
-    add_subdirectory(src/compile)
-  endif()
 endif()
 
 # examples
 option(PEGTL_BUILD_EXAMPLES "Build example programs" ${PEGTL_IS_MAIN_PROJECT})
 if(PEGTL_BUILD_EXAMPLES)
   add_subdirectory(src/example)
-endif()
-
-# linting
-option(PEGTL_BUILD_LINT "Build lint programs" OFF)
-if(PEGTL_BUILD_LINT)
-  add_subdirectory(src/lint)
 endif()
 
 # Make package findable by CMake

@@ -45,7 +45,7 @@ namespace example
    struct name : pegtl::plus< pegtl::alpha > {};
    struct value : pegtl::plus< pegtl::digit > {};
    struct equals : pegtl::pad< pegtl::one< '=' >, pegtl::blank > {};
-   struct definition : pegtl::if_must< pegtl::string< "def" >, blanks, name, blank0, semi > {};
+   struct definition : pegtl::if_must< pegtl::string< 'd', 'e', 'f' >, blanks, name, blank0, semi > {};
    struct assignment : pegtl::if_must< name, equals, value, blank0, semi > {};
    struct something : pegtl::sor< pegtl::space, definition, assignment > {};
    struct grammar : pegtl::until< pegtl::eof, pegtl::must< something > > {};
@@ -103,7 +103,7 @@ namespace example
 
 }  // namespace example
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    for( int i = 1; i < argc; ++i ) {
       pegtl::text_file_input< pegtl::scan::lf_crlf > in( argv[ i ] );

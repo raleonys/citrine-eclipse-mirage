@@ -6,13 +6,10 @@
 #define TAO_PEGTL_STREAM_ARRAY_BUFFER_HPP
 
 #include <array>
-#include <concepts>
 #include <cstddef>
-#include <type_traits>
 #include <utility>
 
 #include "../config.hpp"
-#include "../system.hpp"
 
 namespace TAO_PEGTL_NAMESPACE::internal
 {
@@ -26,8 +23,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       static_assert( Chunk < Size );
 
       template< typename... As >
-         requires( ( !std::same_as< array_buffer, std::remove_cvref_t< As > > ) && ... ) && std::constructible_from< Reader, As... >
-      explicit array_buffer( As&&... as )
+      array_buffer( As&&... as )
          : m_reader( std::forward< As >( as )... )
       {}
 
@@ -67,7 +63,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
    protected:
       std::array< Data, Size > m_data;
 
-      TAO_PEGTL_NO_UNIQUE_ADDRESS Reader m_reader;
+      Reader m_reader;
    };
 
 }  // namespace TAO_PEGTL_NAMESPACE::internal
