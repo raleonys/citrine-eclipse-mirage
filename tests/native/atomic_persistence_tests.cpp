@@ -28,7 +28,7 @@ void require(bool value,const char* why){++checks;if(!value)throw std::runtime_e
 template<class F>void rejects(F fn,const char* why){bool failed=false;try{fn();}catch(const std::exception&){failed=true;}require(failed,why);}
 struct Ops final:io::AtomicFileOps {
     std::map<configuration::Path,std::string> files{{u"xml","old-xml"},{u"ini","old-ini"}};
-    unsigned next=0;bool fail_stage=false,fail_ini=false,fail_rollback=false,fail_cleanup=false;
+    unsigned next=0;bool fail_stage=false,fail_ini=false,fail_rollback=false,fail_cleanup=false,fail_staged_cleanup=false;
     configuration::Path stage(const configuration::Path& target,std::string_view bytes)override {
         if(fail_stage&&target==u"ini")throw std::runtime_error("staging write/flush failed");
         const auto suffix=std::to_string(++next);auto path=target+u".stage";path.append(suffix.begin(),suffix.end());files[path]=bytes;return path;
@@ -41,6 +41,7 @@ struct Ops final:io::AtomicFileOps {
     }
     void remove(const configuration::Path& p)override {
         if(fail_cleanup&&p.find(u"backup")!=std::u16string::npos)throw std::runtime_error("cleanup denied");
+        if(fail_staged_cleanup&&p.starts_with(u"xml.stage"))throw std::runtime_error("staged cleanup denied");
         files.erase(p);
     }
 };
@@ -48,6 +49,20 @@ void injected_failures() {
     const std::array<io::FileWrite,2> writes{{{u"xml","new-xml"},{u"ini","new-ini"}}};
     {Ops ops;io::AtomicFiles files(ops);ops.fail_stage=true;rejects([&]{files.replace(writes);},"staging failure is visible");
      require(ops.files.size()==2&&ops.files.at(u"xml")=="old-xml"&&ops.files.at(u"ini")=="old-ini","stage failure preserves both originals and cleans staging");}
+    {Ops ops;io::AtomicFiles files(ops);ops.fail_stage=true;ops.fail_staged_cleanup=true;
+     rejects([&]{files.replace(writes);},"second staging failure propagates");
+     require(!files.recovery_pending()&&ops.files.at(u"xml")=="old-xml"&&ops.files.at(u"ini")=="old-ini",
+             "failed staging retains original destinations without pending committed rollback");
+     const auto pending_count=ops.files.size();
+     rejects([&]{files.replace(writes);},"retained staging cleanup blocks new batch");
+     require(ops.files.size()==pending_count&&ops.files.at(u"xml")=="old-xml",
+             "blocked retry cannot replace originals or create another staged file");
+     ops.fail_stage=false;ops.fail_staged_cleanup=false;files.recover();
+     require(ops.files.size()==2,"successful retry clears exact retained staged artifact");
+     files.replace(writes);
+     require(ops.files.size()==2&&ops.files.at(u"xml")=="new-xml"&&ops.files.at(u"ini")=="new-ini",
+             "fresh batch can commit only after staged ownership release");
+    }
     {Ops ops;io::AtomicFiles files(ops);ops.fail_ini=true;rejects([&]{files.replace(writes);},"second replacement failure is visible");
      require(ops.files.size()==2&&ops.files.at(u"xml")=="old-xml"&&ops.files.at(u"ini")=="old-ini","partial commit rolls back first file");
      require(!files.recovery_pending(),"successful rollback releases recovery ownership");}
