@@ -602,6 +602,35 @@ class IdentityBoundaryTests(unittest.TestCase):
             (self.root/'metadata/SOURCE_FILES.json').write_text(json.dumps({'files':{'src/module.cpp':{'bytes':len(payload),'sha256':inventory.digest(payload)}}}))
             self.assertEqual(accepted,source_verification.verify(self.root)['status']=='PASS')
 
+    def test_source_namespace_scan_ignores_comments_and_literals(self):
+        for folder in ('include', 'tests', 'third_party'):
+            (self.root / folder).mkdir()
+        path = self.root / 'src/module.cpp'
+        manifest = self.root / 'metadata/SOURCE_FILES.json'
+
+        def verify_payload(source):
+            payload = source.encode('utf-8')
+            path.write_bytes(payload)
+            manifest.write_text(json.dumps({'files': {'src/module.cpp': {
+                'bytes': len(payload), 'sha256': inventory.digest(payload)}}}))
+            return source_verification.verify(self.root)
+
+        harmless = (
+            '// namespace other_vendor::comment {}\n'
+            '/* namespace other_vendor::block {}\n'
+            '   namespace other_vendor::more {} */\n'
+            'const char* url = "https://example.invalid/namespace other_vendor::string {}";\n'
+            'const char* raw = R"tag(namespace other_vendor::raw {} // still data)tag";\n'
+            'namespace citrine_eclipse_mirage::accepted {}\n'
+        )
+        result = verify_payload(harmless)
+        self.assertEqual('PASS', result['status'], result['errors'])
+        actual = harmless + 'namespace other_vendor::actual {}\n'
+        result = verify_payload(actual)
+        self.assertEqual('FAIL', result['status'])
+        self.assertTrue(any('Foreign first-party namespace' in error
+                            for error in result['errors']), result['errors'])
+
     def test_source_sizes_are_required_integer_byte_counts(self):
         for folder in ['include','tests','third_party']:(self.root/folder).mkdir()
         # UTF-8 and CRLF distinguish bytes from characters and normalized text.
