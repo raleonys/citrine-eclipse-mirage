@@ -71,7 +71,7 @@ namespace example
       static void apply( const ActionInput& in, json_state& state )
       {
          std::stringstream ss( in.string() );
-         long double v = 0;
+         long double v;
          ss >> v;  // NOTE: not quite correct for JSON but we'll use it for this simple example.
          state.result = std::make_shared< number_json >( v );
       }
@@ -162,7 +162,7 @@ namespace example
 
 }  // namespace example
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    if( argc != 2 ) {
       std::cerr << "usage: " << argv[ 0 ] << " <filename.json>\n";
@@ -180,7 +180,7 @@ int main( int argc, char** argv )
       const auto& p = e.position_object();
       std::cerr << e.what() << '\n'
                 << in.line_view_at( p ) << '\n'
-                << std::setw( static_cast< int >( p.column ) ) << '^' << std::endl;
+                << std::setw( int( p.column ) ) << '^' << std::endl;
       return 1;
    }
 #else
