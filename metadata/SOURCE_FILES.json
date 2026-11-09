@@ -934,8 +934,8 @@
       "sha256": "f04b770c0ebb001fd21ee4f00f84f90f6dfa0163c667a1d0f4ac98fffec727a5"
     },
     "src/platform/registry.cpp": {
-      "bytes": 7432,
-      "sha256": "84e3dfd735854ed837fcdc0eeb58af6c70c7fed5e2066d1c45deac1419258aac"
+      "bytes": 7476,
+      "sha256": "b9a6ff60fa2a1d2c5f472cf1bb425db171d5ce9c7df1db735649c8ecaa8c0d6e"
     },
     "src/platform/startup_windows.cpp": {
       "bytes": 1562,
@@ -1734,8 +1734,8 @@
       "sha256": "50e070937948a43a4e80b0e3588c6cad627d76b8052d26dc0e9353eae6179388"
     },
     "tests/unit/registry/allocation_failure_tests.cpp": {
-      "bytes": 7316,
-      "sha256": "bb4c3bdfd9ae16e690b11b31add57efc8c0117d47080eb0a0d46fdc6370073a1"
+      "bytes": 10315,
+      "sha256": "b8dbf69bf5662456dae6048039e9b047029c6852c6573f78a4962319ad45fd50"
     },
     "tests/unit/registry/native_lifecycle_tests.cpp": {
       "bytes": 21737,

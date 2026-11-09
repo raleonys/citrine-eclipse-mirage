@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Retire the Registry language log conversion before allocating the query replacement, matching the recovered cleanup order. Add narrow/wide allocation-pressure and normal-allocation controls; preserve original-first queries, counted sizes, log order and native terminal error policy.
+
 - Test GrantAchievement response-writer failures after successful persistence and event publication. Retain committed existing/new rows, release both locks and distinguish completed retries from further partial-progress increments.
 
 - Preserve the native linker compilation timestamp instead of stamping finalized DLLs with a retained reference-build value. Reject timestamp mutation during finalization; retain every other PE metadata policy.
