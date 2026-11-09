@@ -194,7 +194,7 @@ void achievement_path_components() {
         "invalid watcher leaf cannot publish partial XML state");
     // Positive watcher controls retained from PR #281: matching a prefix is
     // insufficient to classify an otherwise valid leaf as a device name.
-    for(const char* ok:{"console","com10","lpt","NULLED","legitimate.v1"}) {
+    for(const char* ok:{"console","com10","lpt","NULLED","legitimate.v1","COM0","42\x7f"}) {
         Fixture kept;kept.state.steam_app_id=ok;
         kept.storage.update_01eb00(kept.state);
         require(kept.paths.ini_path==join(join(join(u"USER",u"achievement_watcher"),wide(ok)),u"achievements.ini"),
@@ -241,6 +241,66 @@ void achievement_path_components() {
             valid.effects.status_paths==std::vector<Path>{ini},
         "ordinary identifiers retain exact filename, conversion and status order");
 }
+void converted_watcher_directories() {
+    // Selected file-code-page responses, not a claim of native Win32 execution.
+    // Exercise all documented superscript digits via single-byte and UTF-8
+    // source strings, with no extension and both device-extension spellings.
+    for(const char* prefix:{"COM","lpt"})for(const char16_t digit:{u'\u00b9',u'\u00b2',u'\u00b3'})
+        for(const bool utf8:{false,true})for(const char* suffix:{"",".txt"," .txt"}) {
+            std::string raw(prefix);if(utf8)raw+='\xc2';raw+=static_cast<char>(digit);raw+=suffix;
+            auto decoded=wide(prefix);decoded+=digit;decoded+=wide(suffix);
+            Fixture f;f.state.achievements_set="legitimate";f.state.steam_app_id=raw;
+            f.paths.xml_path=u"kept.xml";f.paths.ini_path=u"kept.ini";
+            f.state.achievements["retained"]=record();
+            f.effects.converted_paths.emplace(raw,decoded);
+            f.files.input[join(u"USER",u"achievement-legitimate.xml")]=
+                R"(<root><record Id="must-not-import" Count="1"/></root>)";
+            rejects<std::invalid_argument>([&]{f.storage.update_01eb00(f.state);},
+                "decoded COM/LPT superscript device must be rejected");
+            require(f.paths.xml_path==u"kept.xml"&&f.paths.ini_path==u"kept.ini"&&
+                    f.files.reads.empty()&&f.files.writes.empty()&&
+                    f.effects.status_paths.empty()&&f.effects.directories.empty()&&f.effects.epochs.empty()&&
+                    !f.state.achievements.contains("must-not-import")&&
+                    f.state.achievements.at("retained").field70==77&&
+                    f.effects.widened==std::vector<std::string>{"achievement-legitimate.xml","achievements.ini",raw},
+                "decoded device preflight preserves conversion order and rejects before IO or publication");
+        }
+    const std::vector<std::pair<std::string,Path>> ordinary{
+        {std::string("COM")+'\xb0',u"COM\u00b0"},
+        {std::string("COM\xc2\xb0"),u"COM\u00b0"},
+        // The same raw B9 byte maps to a box-drawing character in a different
+        // code page. Do not reject it merely because CP1252 would map it to ¹.
+        {std::string("COM")+'\xb9',u"COM\u2563"},
+        {std::string("COM")+'\xb9'+"0",u"COM\u00b90"}
+    };
+    for(const auto& [raw,decoded]:ordinary) {
+        Fixture f;f.state.achievements_set="CON";f.state.steam_app_id=raw;
+        f.effects.converted_paths.emplace(raw,decoded);
+        f.files.input[join(u"USER",u"achievement-CON.xml")]=
+            R"(<root><record Id="preserved" Count="7"/></root>)";
+        f.storage.update_01eb00(f.state);
+        require(f.state.achievements.at("preserved").field04==7&&
+                f.paths.ini_path==join(join(join(u"USER",u"achievement_watcher"),decoded),u"achievements.ini")&&
+                f.effects.widened==std::vector<std::string>{"achievement-CON.xml","achievements.ini",raw,"achievement_watcher"},
+            "ordinary decoded names preserve XML import, exact directory and original conversion sequence");
+    }
+    const std::vector<std::string> conversions{
+        "achievement-legitimate.xml","achievements.ini","42","achievement_watcher"};
+    for(std::size_t index=0;index<conversions.size();++index) {
+        Fixture f;f.state.achievements_set="legitimate";f.state.steam_app_id="42";
+        f.paths.xml_path=u"kept.xml";f.paths.ini_path=u"kept.ini";
+        f.state.achievements["retained"]=record();f.effects.fail_widen=conversions[index];
+        f.files.input[join(u"USER",u"achievement-legitimate.xml")]=
+            R"(<root><record Id="must-not-import" Count="1"/></root>)";
+        rejects<std::runtime_error>([&]{f.storage.update_01eb00(f.state);},"conversion preflight failure propagates");
+        require(f.paths.xml_path==u"kept.xml"&&f.paths.ini_path==u"kept.ini"&&
+                f.files.reads.empty()&&f.files.writes.empty()&&f.effects.status_paths.empty()&&
+                f.effects.epochs.empty()&&!f.state.achievements.contains("must-not-import")&&
+                f.state.achievements.at("retained").field70==77&&
+                f.effects.widened==std::vector<std::string>(conversions.begin(),conversions.begin()+index+1),
+            "every failed conversion stops before file IO, retained-path updates or achievement import");
+    }
+}
 void steam_and_failures() {
     Fixture f;f.state.steam_app_id="42";f.state.achievements["z"]=record();f.state.achievements["a"]=record();f.state.achievements["a"].timestamp="negative";
     f.storage.update_01eb00(f.state);
@@ -274,6 +334,6 @@ void native_fixture(const std::filesystem::path& dir) {
 }
 }
 int main(int argc,char** argv) {
-    try{if(argc!=2)throw std::invalid_argument("requires owned fixture directory");xml_updates();numbers();bounded_numeric_overflow();achievement_path_components();steam_and_failures();native_fixture(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" achievement storage checks; own fixtures only, no original execution\n";}
+    try{if(argc!=2)throw std::invalid_argument("requires owned fixture directory");xml_updates();numbers();bounded_numeric_overflow();achievement_path_components();converted_watcher_directories();steam_and_failures();native_fixture(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" achievement storage checks; own fixtures only, no original execution\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }

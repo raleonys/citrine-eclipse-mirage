@@ -6,7 +6,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Reject Win32-forbidden filename characters in achievement XML/set and watcher app-id components, plus reserved device and normalized-space/dot aliases in bare watcher directories. Validate both components before XML import or persistence, while retaining ordinary and safely prefixed identifiers. Preserve valid watcher lookalikes from PR #281 and verify actual XML import for five safely wrapped set names.
+- Reject Win32-forbidden filename characters in achievement XML/set and watcher app-id components, plus reserved device and normalized-space/dot aliases in bare watcher directories. Validate both components before XML import or persistence, while retaining ordinary and safely prefixed identifiers. Preserve valid watcher lookalikes from PR #281 and verify actual XML import for five safely wrapped set names. Check the converted watcher directory for superscript COM/LPT device digits under the selected filesystem code page. Preflight conversions before XML IO while preserving their established relative order, and reject conversion failures without partial path or achievement publication.
 
 - Cover fail-closed unload stack observations and safe retry after query, protection, commitment, region-progress and scan-budget refusals. A protected-page probe verifies that an oversized region is rejected before stack reads; production unload policy is unchanged.
 
