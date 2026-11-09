@@ -54,5 +54,10 @@ target_link_libraries(portable_configuration_defaults_integration PRIVATE citrin
 portable_check(portable_online src/runtime/online.cpp src/core/paths.cpp tests/unit/online/online_tests.cpp)
 target_compile_definitions(portable_online PRIVATE CITRINE_ECLIPSE_MIRAGE_PORTABLE_ONLINE_TESTS=1)
 portable_check(portable_server src/net/server.cpp src/runtime/execution.cpp tests/unit/server/server_tests.cpp)
+portable_check(portable_session_flow src/net/server.cpp src/runtime/execution.cpp
+  src/net/session_handler.cpp src/protocol/messages.cpp src/handlers/misc_handlers.cpp
+  tests/native/session_flow_tests.cpp)
+target_link_libraries(portable_session_flow PRIVATE portable_xml_reader_backend)
+set_tests_properties(portable_session_flow PROPERTIES TIMEOUT 30)
 portable_check(portable_hook_transaction src/platform/hook_transaction.cpp tests/unit/hooks/transaction_tests.cpp)
 portable_check(portable_registry_rollback src/platform/registry.cpp tests/unit/registry/allocation_failure_tests.cpp)
