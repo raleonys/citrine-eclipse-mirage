@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/control.h"
+#include "citrine_eclipse_mirage/runtime/control.h"
 #include <iostream>
 #include <stdexcept>
 void require(bool value,const char* text){if(!value)throw std::runtime_error(text);}

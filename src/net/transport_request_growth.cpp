@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_request_growth.hpp"
+#include "citrine_eclipse_mirage/net/transport_request_growth.hpp"
 #include <algorithm>
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 void word(std::span<std::uint8_t> bytes,std::uint64_t value){for(unsigned i=0;i<8;++i)bytes[i]=static_cast<std::uint8_t>(value>>(i*8));}
 std::uint64_t word(std::span<const std::uint8_t> bytes){std::uint64_t value=0;for(unsigned i=0;i<8;++i)value|=std::uint64_t{bytes[i]}<<(i*8);return value;}
@@ -53,4 +53,4 @@ ReceiveBufferString& RequestGrowthApi::grow_replace_02b940(ReceiveBufferString& 
     std::uintptr_t source,std::uint64_t insert){
     return grow_replace_request_02b940(value,extra,hint,offset,erase,source,insert,context_);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

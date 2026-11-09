@@ -14,8 +14,8 @@ def check(root, package=None):
     files = source_files(root)
     errors = verify_manifest(root)
     links=vendor_symlinks(root)
-    portable = json.loads((root / MANIFEST).read_text()).get('vendor_alias_storage') == ALIAS_STORAGE
-    contract = json.loads((root / 'metadata/REPOSITORY_CONTRACT.json').read_text())
+    portable = json.loads((root / MANIFEST).read_text(encoding='utf-8')).get('vendor_alias_storage') == ALIAS_STORAGE
+    contract = json.loads((root / 'metadata/REPOSITORY_CONTRACT.json').read_text(encoding='utf-8'))
     for name in contract['required_files']:
         if name not in files:
             errors.append('Required source file missing: ' + name)

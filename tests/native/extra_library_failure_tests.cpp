@@ -5,11 +5,14 @@
 #include <cstdlib>
 #include <iostream>
 #include <new>
+#include <future>
+#include <thread>
 #include <stdexcept>
 
 namespace fault {
 thread_local bool next=false;
-unsigned loads=0,frees=0,fail_frees=0,fail_load=0;
+unsigned loads=0,frees=0,fail_frees=0,fail_load=0,fail_on_free=0;
+void(*on_load)()=nullptr;void(*on_mode)(UINT)=nullptr;
 enum class Boundary {None,AfterLoad,PhaseCommit};
 Boundary boundary=Boundary::None,armed_boundary=Boundary::None;
 std::size_t minimum=0,maximum=0,matched=0;
@@ -51,13 +54,21 @@ void operator delete[](void* p)noexcept{std::free(p);}
 void operator delete(void* p,std::size_t)noexcept{std::free(p);}
 void operator delete[](void* p,std::size_t)noexcept{std::free(p);}
 HMODULE WINAPI TestLoadLibraryW(LPCWSTR path){
-    ++fault::loads;const auto module=::LoadLibraryW(path);
+    ++fault::loads;if(fault::on_load)fault::on_load();
+    const auto module=::LoadLibraryW(path);
     if(module)fault::acquired=module;
     if(module&&fault::boundary==fault::Boundary::AfterLoad&&fault::loads==fault::fail_load)
         fault::arm_buffer();
     return module;
 }
+BOOL WINAPI TestFreeLibrary(HMODULE module){
+    ++fault::frees;
+    if(fault::fail_frees){--fault::fail_frees;SetLastError(ERROR_BUSY);return FALSE;}
+    if(fault::fail_on_free==fault::frees){fault::fail_on_free=0;SetLastError(ERROR_BUSY);return FALSE;}
+    return ::FreeLibrary(module);
+}
 UINT WINAPI TestSetErrorMode(UINT mode){
+    if(fault::on_mode)fault::on_mode(mode);
     const auto previous=::SetErrorMode(mode);
     if(fault::armed_boundary==fault::Boundary::AfterLoad&&fault::minimum){
         // Do not let an unmatched result-vector fault drift into phase commit.
@@ -67,10 +78,9 @@ UINT WINAPI TestSetErrorMode(UINT mode){
         fault::arm_buffer();
     return previous;
 }
-BOOL WINAPI TestFreeLibrary(HMODULE module){++fault::frees;if(fault::fail_frees){--fault::fail_frees;SetLastError(ERROR_BUSY);return FALSE;}return ::FreeLibrary(module);}
+#define SetErrorMode TestSetErrorMode
 #define LoadLibraryW TestLoadLibraryW
 #define FreeLibrary TestFreeLibrary
-#define SetErrorMode TestSetErrorMode
 #include "src/platform/library_system.cpp"
 #include "src/runtime/application.cpp"
 #undef FreeLibrary
@@ -78,7 +88,7 @@ BOOL WINAPI TestFreeLibrary(HMODULE module){++fault::frees;if(fault::fail_frees)
 #undef SetErrorMode
 
 namespace {
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 struct Fixture {
     configuration::State state=application::initial_state();application::Options options;
@@ -91,13 +101,135 @@ struct Fixture {
     execution::Execution execution{mutex,{a,b,c},frequency,platform};
     application::ExtraLibraries extras{env,execution,c};
     application::Provider provider{state,env,files,execution,b};
-    Fixture(){execution::initialize_mutex_04a698(mutex,2);fault::disarm();fault::loads=fault::frees=fault::fail_frees=fault::fail_load=0;fault::matched=0;fault::acquired=nullptr;fault::missed_result_allocation=false;}
+    Fixture(){execution::initialize_mutex_04a698(mutex,2);fault::disarm();fault::loads=fault::frees=fault::fail_frees=fault::fail_load=fault::fail_on_free=0;fault::matched=0;fault::acquired=nullptr;fault::missed_result_allocation=false;}
 };
+struct ModeInterleave {
+    std::promise<void> enter,entered,release,finished;
+    std::future<void> entered_result=entered.get_future(),finished_result=finished.get_future();
+    bool provider_first,provider_finishes_first,fail_extra;
+    DWORD observed=0;
+    static inline ModeInterleave* active=nullptr;
+    static void await(std::future<void>& future) {
+        if(future.wait_for(std::chrono::seconds(5))!=std::future_status::ready)
+            throw std::runtime_error("error-mode interleave timed out");
+        future.get();
+    }
+    void begin_provider(){enter.set_value();await(entered_result);}
+    void end_provider(){release.set_value();await(finished_result);}
+    static void at_load() {
+        auto& self=*active;
+        if(!self.provider_first)self.begin_provider();
+        if(self.provider_finishes_first)self.end_provider();
+        self.observed=GetErrorMode();
+        if(self.fail_extra)throw std::runtime_error("controlled extra load failure");
+    }
+};
+void overlapping_error_modes(const wchar_t* path) {
+    const auto original=GetErrorMode();
+    struct Restore {DWORD mode;~Restore(){fault::on_load=nullptr;ModeInterleave::active=nullptr;SetErrorMode(mode);}} restore{original};
+    for(bool provider_first:{false,true})for(bool provider_finishes_first:{false,true})
+    for(bool fail_extra:{false,true})for(DWORD incoming:{DWORD{SEM_NOOPENFILEERRORBOX},
+            DWORD{SEM_NOOPENFILEERRORBOX|SEM_FAILCRITICALERRORS}}) {
+        Fixture f;f.state.extra_dlls_from_main.push_back(application::detail::utf16(path));f.extras.configure(f.state);
+        ModeInterleave interleave;interleave.provider_first=provider_first;
+        interleave.provider_finishes_first=provider_finishes_first;interleave.fail_extra=fail_extra;
+        SetErrorMode(incoming);const auto expected=GetErrorMode();
+        auto enter=interleave.enter.get_future(),release=interleave.release.get_future();
+        // Synchronize at the adapter boundary BEFORE invoking real LoadLibraryW;
+        // never wait inside a native loader callback or while holding its lock.
+        std::jthread worker([&] {
+            std::optional<std::uint32_t> saved;bool announced=false;std::exception_ptr failure;
+            try {
+                ModeInterleave::await(enter);saved=f.provider.suppress_errors_0450a0();
+                interleave.entered.set_value();announced=true;ModeInterleave::await(release);
+            }catch(...){failure=std::current_exception();}
+            if(saved)f.provider.restore_error_mode(*saved);
+            if(failure) {
+                if(!announced)interleave.entered.set_exception(failure);
+                interleave.finished.set_exception(failure);
+            }else interleave.finished.set_value();
+        });
+        ModeInterleave::active=&interleave;fault::on_load=&ModeInterleave::at_load;
+        if(provider_first)interleave.begin_provider();
+        bool failed=false;std::exception_ptr unexpected;
+        try{f.extras.load(true);}catch(const std::runtime_error& error) {
+            if(std::string_view(error.what())=="controlled extra load failure")failed=true;
+            else unexpected=std::current_exception();
+        }catch(...){unexpected=std::current_exception();}
+        fault::on_load=nullptr;ModeInterleave::active=nullptr;
+        const auto after_extra=GetErrorMode();
+        if(!provider_finishes_first)interleave.end_provider();
+        worker.join();const auto final_mode=GetErrorMode();
+        f.extras.close();
+        if(unexpected)std::rethrow_exception(unexpected);
+        require(failed==fail_extra,"controlled extra load exception outcome changed");
+        require(interleave.observed==(expected|SEM_FAILCRITICALERRORS),
+            "overlapping load lost suppression before its final lease finished");
+        require(after_extra==(provider_finishes_first?expected:expected|SEM_FAILCRITICALERRORS),
+            "extra completion restored process mode while provider still held suppression");
+        require(final_mode==expected,"overlapping loaders left a stale process error mode");
+    }
+    std::cout<<"PASS: overlap-error-mode (16 combinations)\n";
+}
+namespace interval {
+std::uint8_t* ready=nullptr;unsigned changes=0;bool early=true;
+void observe(UINT){++changes;early=early&&ready&&!*ready;}
+}
+void error_mode_finish_interval(const wchar_t*) {
+    Fixture f;f.a=f.b=1;
+    const auto original=GetErrorMode();
+    struct Restore {DWORD mode;~Restore(){fault::on_mode=nullptr;interval::ready=nullptr;SetErrorMode(mode);}} restore{original};
+    SetErrorMode(SEM_NOOPENFILEERRORBOX);const auto expected=GetErrorMode();
+    interval::ready=&f.c;interval::changes=0;interval::early=true;fault::on_mode=&interval::observe;
+    f.extras.load(false);fault::on_mode=nullptr;
+    require(interval::changes==2&&interval::early&&f.c==1&&GetErrorMode()==expected,
+        "suppression must begin/end before worker finish_flag publishes readiness");
+    std::cout<<"PASS: mode-finish-interval\n";
+}
 void acquisition_failure(const wchar_t* path) {
     Fixture f;bool threw=false;fault::next=true;fault::fail_frees=1;
     try{(void)f.extras.load_library(path);}catch(const std::bad_alloc&){threw=true;}
     fault::next=false;fault::fail_frees=0;
     require(threw&&fault::loads==0&&fault::frees==0,"ownership allocation failed after acquiring a native module");f.extras.close();
+}
+void load_error_mode_unwind(const wchar_t* path) {
+    const auto original=GetErrorMode();
+    struct Restore {DWORD mode;~Restore(){SetErrorMode(mode);}} restore{original};
+    for(bool acquired_prefix:{false,true})for(bool main:{true,false})for(DWORD incoming:{DWORD{SEM_NOOPENFILEERRORBOX},
+            DWORD{SEM_NOOPENFILEERRORBOX|SEM_FAILCRITICALERRORS}}) {
+        Fixture f;
+        // An isolated high surrogate fails the actual Win32 UTF-8 conversion
+        // before LoadLibraryW. Both source startup prerequisites are ready.
+        const configuration::Path invalid(1,char16_t{0xd800});
+        auto& paths=main?f.state.extra_dlls_from_main:f.state.extra_dlls;
+        require(GetModuleHandleW(path)==nullptr,"error mode fixture begins without a module lease");
+        if(acquired_prefix)paths.push_back(application::detail::utf16(path));
+        paths.push_back(invalid);
+        f.extras.configure(f.state);f.a=f.b=1;
+        SetErrorMode(incoming);
+        const auto expected=GetErrorMode();
+        bool failed=false;
+        try{f.extras.load(main);}
+        catch(const std::system_error& error) {
+            failed=error.code().value()==ERROR_NO_UNICODE_TRANSLATION;
+        }
+        const auto after=GetErrorMode();
+        require(failed,"extra library load must preserve the conversion failure");
+        require(after==expected,"failed extra library phase changed the host error mode");
+        const unsigned expected_loads=acquired_prefix?1u:0u;
+        require(fault::loads==expected_loads&&fault::frees==0&&f.c==0,
+            "failed conversion must preserve earlier leases without publishing readiness");
+        require((GetModuleHandleW(path)!=nullptr)==acquired_prefix,
+            "an earlier acquired image must remain owned after a later conversion failure");
+        f.extras.close();f.extras.close();
+        require(fault::frees==expected_loads&&GetModuleHandleW(path)==nullptr,
+            "cleanup must release exactly the retained prefix once");
+        Fixture success;success.a=success.b=1;
+        success.extras.load(main);
+        require(GetErrorMode()==expected&&success.c==(main?0:1),
+            "successful empty phase must retain error mode and readiness semantics");
+    }
+    std::cout<<"PASS: load-error-mode\n";
 }
 // Retained 035260 acquires a module before growing its result vector; 035850
 // inserts that result before worker readiness. A11-06 requires ownership to
@@ -162,6 +294,50 @@ void provider_retry(const wchar_t* path) {
     require(f.provider.module==0&&f.provider.online==0&&fault::frees==3,
         "provider cleanup retry did not release exactly the retained lease");
 }
+// A11-06: two different native module cleanup stages fail in sequence. This
+// uses the real source-included ExtraLibraries and Provider cleanup paths;
+// the full Application::stop orchestration is tested separately.
+void extra_provider_stage_retry(const wchar_t* path) {
+    Fixture f;
+    require(::GetModuleHandleW(path)==nullptr,"staged retry fixture DLL already loaded");
+    const auto extra=f.extras.load_library(path);
+    f.provider.module=reinterpret_cast<std::uintptr_t>(TestLoadLibraryW(path));
+    const auto provider_module=f.provider.module;
+    require(extra&&provider_module&&extra==provider_module&&fault::loads==2,
+        "staged retry must acquire two owned native module references");
+    f.provider.online=1;
+    auto cleanup=[&]{f.extras.close();f.provider.close();};
+
+    // Failure in the earlier extra-library stage must not invoke the provider
+    // stage. Both physical image leases remain outstanding.
+    fault::fail_frees=1;
+    bool first_failed=false;
+    try{cleanup();}catch(const std::runtime_error&){first_failed=true;}
+    require(first_failed&&fault::frees==1&&f.provider.module==provider_module&&
+            f.provider.online==1&&
+            ::GetModuleHandleW(path)==reinterpret_cast<HMODULE>(provider_module),
+        "failed extra cleanup must stop before provider retirement and retain both leases");
+
+    // The extra stage now retires once. A distinct failure in the later
+    // provider stage must retain that lease without reviving the extra one.
+    // Skip this attempt's successful extra release; fail its provider release.
+    fault::fail_on_free=fault::frees+2;
+    bool second_failed=false;
+    try{cleanup();}catch(const std::runtime_error&){second_failed=true;}
+    require(second_failed&&fault::frees==3&&fault::fail_on_free==0&&f.provider.module==provider_module&&
+            f.provider.online==1&&
+            ::GetModuleHandleW(path)==reinterpret_cast<HMODULE>(provider_module),
+        "second attempt must retire extra ownership and retain failed provider ownership");
+
+    // The completed extra stage must not double-free on the final retry.
+    cleanup();
+    require(fault::frees==4&&f.provider.module==0&&f.provider.online==0&&
+            ::GetModuleHandleW(path)==nullptr,
+        "final retry must unload only the remaining provider reference");
+    cleanup();
+    require(fault::frees==4,
+        "idempotent staged cleanup must not release either module again");
+}
 // B54 source comparison: distinguish a retained numeric module record from
 // a real executable image lease during failed FreeLibrary cleanup.
 void provider_physical_lease(const wchar_t* path) {
@@ -217,6 +393,74 @@ void provider_object_once(const wchar_t* path) {
     require(f.provider.module==0&&destroyed()==1&&fault::frees==2,
         "provider cleanup destroyed the object or released the module twice");
 }
+struct ForeignDestroyFailure {unsigned marker;const void* origin;};
+struct ForeignObject {
+    std::uintptr_t table;
+    unsigned calls=0,effects=0;
+    bool before_effect=false,poison=false;
+};
+void foreign_destroy(void* raw) {
+    auto& object=*static_cast<ForeignObject*>(raw);++object.calls;
+    if(object.before_effect)throw ForeignDestroyFailure{0x7351,&object};
+    ++object.effects;
+    if(object.poison)object.table=1; // A retry must reject before reading this address.
+    throw ForeignDestroyFailure{0x7351,&object};
+}
+void foreign_destroy_ok(void* raw){++static_cast<ForeignObject*>(raw)->calls;}
+void provider_unknown_destruction(const wchar_t* path) {
+    for(const bool before:{false,true}) {
+        // Quarantined owners, object storage, table and real module leases
+        // stay allocated until process exit. This case runs last in "all".
+        auto& f=*new Fixture;
+        f.provider.module=reinterpret_cast<std::uintptr_t>(TestLoadLibraryW(path));
+        const auto module=f.provider.module;require(module!=0,"quarantine provider module lease");
+        auto& table=*new std::array<std::uintptr_t,7>{};table[0]=reinterpret_cast<std::uintptr_t>(&foreign_destroy);
+        auto& object=*new ForeignObject{reinterpret_cast<std::uintptr_t>(table.data()),0,0,before,!before};
+        f.provider.object=reinterpret_cast<std::uintptr_t>(&object);f.provider.online=1;
+        f.env.provider=f.provider.object;
+        bool original=false;std::exception_ptr first_failure;
+        try{f.provider.close();}catch(const ForeignDestroyFailure& error){original=error.marker==0x7351&&error.origin==&object;}
+        first_failure=f.provider.destruction_failure;
+        require(first_failure!=nullptr,"foreign failure was not retained");
+        require(original&&object.calls==1&&object.effects==(before?0u:1u),
+            "foreign destructor failure was replaced or its effects changed");
+        const auto retained=f.provider.object;
+        auto rejected=[&](auto operation){bool blocked=false;try{operation();}catch(const ForeignDestroyFailure& error){blocked=error.marker==0x7351&&error.origin==&object&&f.provider.destruction_failure==first_failure;}require(blocked,"unknown destruction allowed another foreign operation");};
+        rejected([&]{f.provider.close();});
+        rejected([&]{f.provider.destroy_virtual_00(retained);});
+        rejected([&]{(void)f.provider.status_virtual_08(retained);});
+        rejected([&]{(void)f.provider.username_virtual_10(retained);});
+        rejected([&]{(void)f.provider.persona_virtual_18(retained);});
+        rejected([&]{(void)f.provider.user_id_virtual_20(retained);});
+        rejected([&]{(void)f.provider.checked_method<const char*(*)(void*,const char*)>(retained,6);});
+        rejected([&]{(void)f.provider.free_library(module);});
+        rejected([&]{f.provider.load();});
+        require(object.calls==1&&fault::frees==0&&f.provider.object==retained&&
+                f.provider.module==module&&f.provider.online==1&&f.env.provider==0,
+            "unknown destruction lost retained ownership or repeated destruction/release");
+        require(::GetModuleHandleW(path)==reinterpret_cast<HMODULE>(module),
+            "quarantined provider module was unloaded");
+    }
+}
+void provider_resolution_retry(const wchar_t* path) {
+    Fixture f;f.provider.module=reinterpret_cast<std::uintptr_t>(TestLoadLibraryW(path));
+    require(f.provider.module!=0,"resolution retry module lease");
+    std::array<std::uintptr_t,7> table{};
+    ForeignObject object{0};f.provider.object=reinterpret_cast<std::uintptr_t>(&object);
+    for(unsigned attempt=0;attempt<2;++attempt) {
+        bool rejected=false;try{f.provider.close();}catch(const std::logic_error&){rejected=true;}
+        require(rejected&&object.calls==0&&fault::frees==0,"slot resolution consumed ownership");
+        object.table=reinterpret_cast<std::uintptr_t>(table.data());
+    }
+    table[0]=reinterpret_cast<std::uintptr_t>(&foreign_destroy_ok);
+    fault::fail_frees=1;bool failed=false;
+    try{f.provider.close();}catch(const std::runtime_error&){failed=true;}
+    require(failed&&object.calls==1&&f.provider.object==0&&f.provider.module!=0&&fault::frees==1,
+        "normal destruction did not preserve the failed module-only lease");
+    f.provider.close();f.provider.close();
+    require(object.calls==1&&f.provider.module==0&&fault::frees==2,
+        "pre-call retry or module-only retry repeated successful destruction");
+}
 void provider_empty_slot(const wchar_t*) {
     std::array<std::uintptr_t,7> table{};
     const std::uintptr_t object=reinterpret_cast<std::uintptr_t>(table.data());
@@ -252,11 +496,14 @@ void provider_byte_layout(const wchar_t*) {
 int wmain(int argc,wchar_t** argv)try {
     require(argc==2||argc==3,"expected fixture DLL path and optional case");
     const std::wstring_view selected=argc==3?argv[2]:L"all";bool ran=false;
-    for(auto [name,fn]:{std::pair{L"acquire",acquisition_failure},{L"post-acquisition-allocation",post_acquisition_allocation},
-                      {L"mixed",mixed_release},{L"retry",repeated_failure},
-                      {L"provider-retry",provider_retry},{L"provider-object",provider_object_once},
+    for(auto [name,fn]:{std::pair{L"acquire",acquisition_failure},{L"post-acquisition-allocation",post_acquisition_allocation},{L"mixed",mixed_release},{L"retry",repeated_failure},
+                      {L"provider-retry",provider_retry},{L"extra-provider-stage",extra_provider_stage_retry},
+                      {L"provider-object",provider_object_once},
                       {L"provider-slot",provider_empty_slot},{L"provider-layout",provider_byte_layout},
-                      {L"provider-physical-lease",provider_physical_lease}})
+                      {L"provider-physical-lease",provider_physical_lease},
+                      {L"load-error-mode",load_error_mode_unwind},{L"overlap-error-mode",overlapping_error_modes},{L"mode-finish-interval",error_mode_finish_interval},
+                      {L"provider-resolution-retry",provider_resolution_retry},
+                      {L"provider-unknown-destruction",provider_unknown_destruction}})
         if(selected==L"all"||selected==name){fn(argv[1]);ran=true;}
     require(ran,"unknown case");std::cout<<"PASS: native-module acquisition/retained-release/retry controls\n";return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

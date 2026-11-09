@@ -12,9 +12,34 @@ are not substituted.
 | Vendor | Version stated in archive | Location |
 |---|---|---|
 | Asio | 1.38.2; owner snapshot `bdf337ddb1a667c274372a602de5857ad3cb3ed0` | `third_party/asio` |
-| MinHook | v1.3.4 in README | `third_party/minhook` |
-| PEGTL | 4.0.0 | `third_party/pegtl` |
+| MinHook | v1.3.4 in README; owner snapshot `8af6b4acae5a9388fd742b56fa79ece89d96f823` | `third_party/minhook` |
+| PEGTL | 4.0.0; owner snapshot `3b075432e94f6f906425350b43d03cd9cebfa4f1` | `third_party/pegtl` |
 | pugixml | 1.16; owner snapshot `f0a3faa76e04f35110257ca8713363dee3c890e8` | `third_party/pugixml` |
+
+## Archive identities and recorded upstream snapshots
+
+The snapshot identifiers above and the archive identities below are recorded in
+[`metadata/VENDOR_LOCK.json`](../metadata/VENDOR_LOCK.json). An archive SHA-256
+identifies the exact supplied ZIP bytes; it is distinct from an upstream Git
+commit ID and the per-member hashes used to check the installed tree.
+
+| Vendor | Supplied archive | Archive SHA-256 |
+|---|---|---|
+| Asio | `asio-master.zip` | `d28dbc79b8c98b860ba6c06bd89de76bc352931560f9d169819e46280778975b` |
+| MinHook | `minhook-master.zip` | `9ba14a6d748d65ca9ed83763a96a144d888f50cc5771dd9a798ad50ee35336f5` |
+| PEGTL | `PEGTL-main.zip` | `80ac358a098e83637b2ee367baab1ca569e1475c51b1b8dacece2088f86349ad` |
+| pugixml | `pugixml-master.zip` | `4cd80a72fde87ce1f23eae4ed048446b2e887fc25437793e525367448be2cf81` |
+
+MinHook and PEGTL also have recorded upstream snapshot IDs; their omission from
+the earlier documentation table did not mean that the lock lacked provenance.
+For these two libraries, the recorded IDs come from the comments of the
+SHA-256-pinned owner archives. They are **not independent Git object
+verification**. The lock retains the evidence qualification for each library;
+listing an ID does not upgrade that evidence or authorize a dependency update.
+The original input ZIPs remain external to the source package, and this
+documentation update does not claim a new archive rehash or network comparison.
+
+## Installed tree verification
 
 All 2,753 file/link entries are verified against
 archive-member hash lists. Licenses and Asio's
@@ -44,10 +69,10 @@ vendored sources offline at configure time;
 it does not execute upstream CMake, fetch
 dependencies or use a package manager.
 Project CMake targets are
-`preloader_l_asio`, `preloader_l_minhook`,
-`preloader_l_pegtl`, and
-`preloader_l_pugixml`. The development DLL uses its own shared-CRT
-`preloader_l_source_pugixml` build. No legacy XML vendor target aliases are provided.
+`citrine_eclipse_mirage_asio`, `citrine_eclipse_mirage_minhook`,
+`citrine_eclipse_mirage_pegtl`, and
+`citrine_eclipse_mirage_pugixml`. The development DLL uses its own shared-CRT
+`citrine_eclipse_mirage_source_pugixml` build. No legacy XML vendor target aliases are provided.
 XPath is disabled with the public `PUGIXML_NO_XPATH` definition.
 Build-time member-hash verification also runs.
 On mismatch, the checker reports missing,
@@ -116,7 +141,7 @@ Vendor files were not patched and the
 PEGTL version was not changed.
 
 The default
-`PRELOADER_L_REQUIRE_VENDOR_COMPATIBILITY=ON`
+`CITRINE_ECLIPSE_MIRAGE_REQUIRE_VENDOR_COMPATIBILITY=ON`
 gate stops CMake if the PEGTL public API
 cannot compile, even with
 `BUILD_TESTING=OFF`. The previously
@@ -142,7 +167,7 @@ Results and tool provenance are in
 
 For diagnosing an old/incompatible compiler
 only, a separate build directory may use
-`-DPRELOADER_L_REQUIRE_VENDOR_COMPATIBILITY=OFF`.
+`-DCITRINE_ECLIPSE_MIRAGE_REQUIRE_VENDOR_COMPATIBILITY=OFF`.
 This mode is solely for vendor diagnostics.
 The PEGTL test remains **SKIPPED/UNAVAILABLE**;
 the real VDF parser target still fails

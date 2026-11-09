@@ -1,5 +1,5 @@
 {
-  "schema": "preloader_l.aryra_golden_layout.v1",
+  "schema": "citrine_eclipse_mirage.aryra_golden_layout.v1",
   "policy": "ARYRA Golden Layout",
   "machine": "0x8664",
   "pe_format_magic": "0x020B",

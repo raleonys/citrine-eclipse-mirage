@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_recycle.hpp"
+#include "citrine_eclipse_mirage/net/transport_recycle.hpp"
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 void recycle_0283c0(RecycleMap& state,CancelNode& node,RecycleFailureEffects& failures){
     auto& map=state.map;
     if(map.buckets.empty())throw UnsupportedInput("Recycler requires nonzero initialized bucket count");
@@ -50,4 +50,4 @@ void CancellationRecyclerAdapter::recycle_0283c0(CancelMap& map,CancelNode& node
     }
     throw UnsupportedInput("Cancellation recycler has no metadata for this map");
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

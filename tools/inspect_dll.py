@@ -10,6 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from verify_corvexon_golden_trail import PE, PEError, u16, u32, cstr, compute_pe_checksum
 from pe_resources import resource_leaves
 from verify_mustavex_golden_metadata import validate_resource_leaves, inspect as inspect_metadata
+from project_version import resolve_policy
 
 
 def inspect(path, root, final=False):
@@ -36,12 +37,12 @@ def inspect(path, root, final=False):
     resource_policy_path = root / 'metadata/RESOURCE_METADATA_CONTRACT.json'
     metadata_errors = []
     if resource_policy_path.is_file():
-        resource_policy = json.loads(resource_policy_path.read_text(encoding='utf-8'))
+        resource_policy = resolve_policy(json.loads(resource_policy_path.read_text(encoding='utf-8')), root)
         metadata_errors = validate_resource_leaves(resource_leaves(pe), resource_policy['required'])
     after = hashlib.sha256(path.read_bytes()).hexdigest()
     crypt32_imports = pe.import_names('CRYPT32.DLL')
     crypt32_matches = crypt32_imports == ['CryptQueryObject']
-    metadata_policy=json.loads((root/'metadata/MUSTAVEX_GOLDEN_METADATA.json').read_text(encoding='utf-8'))
+    metadata_policy=resolve_policy(json.loads((root/'metadata/MUSTAVEX_GOLDEN_METADATA.json').read_text(encoding='utf-8')), root)
     header_errors=inspect_metadata(path,metadata_policy)
     export_rva,_=pe.directory(0)
     export_offset=pe.rva2off(export_rva)
