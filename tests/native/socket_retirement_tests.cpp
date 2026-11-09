@@ -561,18 +561,23 @@ void client_publication_rollback(){
         const bool no_retained=owner.deferred_closes.empty();
         const bool blocked=stop_failed(owner);const auto before_repair=fault::closes.load();
         fault::error=0;
-        if(blocked)owner.stop();
+        bool cleaned=!blocked;
+        if(blocked) {
+            const auto cleanup_deadline=std::chrono::steady_clock::now()+2s;
+            do{cleaned=!stop_failed(owner);}
+            while(!cleaned&&std::chrono::steady_clock::now()<cleanup_deadline);
+        }
         else if(close_failure&&raw!=INVALID_SOCKET)::closesocket(raw); // Lost-owner negative-control cleanup only.
         const auto repaired=fault::closes.load();owner.stop();
         require(injected&&raw!=INVALID_SOCKET,"publication seam must fail after a connected Client was constructed");
         require(lifetime&&uncounted,"failed publication destroys the unpublished Client/Handler without claiming a session slot");
         require(pending==!close_failure&&stopping==close_failure,
             "ordinary publication failure rearms accept; retained close failure stops admission");
-        require(close_failure?retained&&blocked:no_retained&&!blocked,
-            "only failed socket close retains the exact unpublished native owner and blocks stop");
+        require(close_failure?retained&&blocked:no_retained,
+            "failed close retains the exact owner and blocks stop; normal close retains no socket");
         require(!close_failure||repaired==before_repair+1,
             "repair closes the same retained socket exactly once");
-        require(owner.deferred_closes.empty()&&owner.clients.empty()&&owner.active_sessions==0&&
+        require(cleaned&&owner.deferred_closes.empty()&&owner.clients.empty()&&owner.active_sessions==0&&
             !owner.accept_pending[0]&&!owner.accept_pending[1]&&fault::closes==repaired,
             "successful cleanup drains unpublished ownership and repeated stop does not close it again");
     }
