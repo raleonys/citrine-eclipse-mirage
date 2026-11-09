@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Cover accepted Client publication failure before session counting, with normal socket close and retained would-block close/retry. Keep the production client list as std::vector through a private fixture seam; verify unpublished Client/Handler destruction, admission behavior and exact native-owner retirement.
+
 - Cover Windows native binary output open rejection under an active read-only sharing lease, proving the file is not truncated and a retry succeeds once the handle is closed.
 
 - Add a real-Windows native file-copy regression for a target held without write/delete sharing, ensuring rejected overwrite preserves the original and a retry succeeds after the owning handle closes.
