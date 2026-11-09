@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Register the unchanged MessageHandler contract fixture in portable checks. Exercise actual prepared event reservations, binary FIFO ownership, cancel/commit and failure unwind through the production message core, XML reader and queue while retaining the native target and its timeout.
+
 - Test production MessageHandler prepared-response ownership through event reservation, dropped output, explicit commit/cancel and callback failures. Preserve exact binary FIFO events for retry and verify post-reservation unwind without changing runtime policy.
 
 - Test extra-library allocation failures after native DLL acquisition and phase-result insertion. Require retained physical module leases, unchanged worker readiness, failed-release retention and exact idempotent cleanup retries; inject only throwing vector-buffer allocations.
