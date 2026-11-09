@@ -1100,9 +1100,11 @@ class SourceQaReportTests(unittest.TestCase):
             'from pathlib import Path\n'
             'Path(__file__).with_name("checks-ran").write_text("ran\\n")\n')
 
-    def run_fixture(self, report):
+    def run_fixture(self, report, checks=None):
+        if checks is None:
+            checks = [('fixture check', ['check.py'])]
         with patch.object(source_qa, 'ROOT', self.root), \
-             patch.object(source_qa, 'CHECKS', [('fixture check', ['check.py'])]), \
+             patch.object(source_qa, 'CHECKS', checks), \
              patch.object(sys, 'argv', ['run_source_qa.py', '--report', str(report)]), \
              contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
             return source_qa.main()
@@ -1173,6 +1175,49 @@ class SourceQaReportTests(unittest.TestCase):
         self.assertEqual('FAIL', data['result'])
         self.assertEqual(7, data['checks'][0]['exit_code'])
         self.assertEqual([report], list(report.parent.iterdir()))
+
+
+    def test_timeout_records_partial_diagnostics_without_claiming_pass(self):
+        report = self.root / 'build/report.json'
+        timeout = subprocess.TimeoutExpired(
+            ['python', 'check.py'], 90,
+            output=b'partial stdout: \xff\n', stderr=b'partial stderr\n')
+        with patch.object(source_qa.subprocess, 'run', side_effect=timeout):
+            self.assertEqual(1, self.run_fixture(report))
+        data = json.loads(report.read_text())
+        self.assertEqual('FAIL', data['result'])
+        self.assertEqual(124, data['checks'][0]['exit_code'])
+        self.assertIn('QA timeout', data['checks'][0]['output'])
+        self.assertIn('partial stdout: \ufffd\n', data['checks'][0]['output'])
+        self.assertIn('partial stderr\n', data['checks'][0]['output'])
+        self.assertFalse(self.marker.exists())
+
+    def test_timeout_keeps_later_results_in_complete_report(self):
+        report = self.root / 'build/report.json'
+        timeout = subprocess.TimeoutExpired(['python', 'check.py'], 90,
+                                             output=b'early diagnostic\n')
+        after = subprocess.CompletedProcess(['python', 'check.py'], 0, 'later success\n', '')
+        checks = [('timed out', ['check.py']), ('after timeout', ['check.py'])]
+        with patch.object(source_qa.subprocess, 'run', side_effect=[timeout, after]):
+            self.assertEqual(1, self.run_fixture(report, checks))
+        data = json.loads(report.read_text())
+        self.assertEqual('FAIL', data['result'])
+        self.assertEqual(['timed out', 'after timeout'], [x['check'] for x in data['checks']])
+        self.assertEqual([124, 0], [x['exit_code'] for x in data['checks']])
+        self.assertIn('early diagnostic', data['checks'][0]['output'])
+        self.assertEqual('later success\n', data['checks'][1]['output'])
+        self.assertFalse(self.marker.exists())
+
+    def test_unavailable_child_is_recorded_as_failed_check(self):
+        report = self.root / 'build/report.json'
+        with patch.object(source_qa.subprocess, 'run',
+                          side_effect=FileNotFoundError('fixture Python executable missing')):
+            self.assertEqual(1, self.run_fixture(report))
+        data = json.loads(report.read_text())
+        self.assertEqual('FAIL', data['result'])
+        self.assertEqual(127, data['checks'][0]['exit_code'])
+        self.assertIn('fixture Python executable missing', data['checks'][0]['output'])
+        self.assertFalse(self.marker.exists())
 
 
 class BranchPushGateTests(unittest.TestCase):
