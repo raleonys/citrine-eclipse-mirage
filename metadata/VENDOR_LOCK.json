@@ -3,34 +3,35 @@
   "external_network_download_forbidden": true,
   "production_active_use_required_for_all": true,
   "production_active_use_verified": false,
-  "revision": "2026-11-03",
+  "revision": "2026-11-09",
   "schema": "surge.vendor-lock.v2",
   "upstream_exact_commit_verified": false,
   "vendor_source_status": "FOUR_ACTIVE_OWNER_ARCHIVES_WITH_PUGIXML_REPLACING_TINYXML2",
   "vendors": {
     "asio": {
-      "active_build_link_proved": true,
+      "active_build_link_proved": false,
       "archive": "asio-master.zip",
       "archive_folder": "asio-master/",
-      "bytes": 4239595,
+      "bytes": 4256615,
       "intended_active_use": "APPLICATION_ASYNCHRONOUS_TRANSPORT",
       "license": "Boost Software License 1.0 (LICENSE_1_0.txt)",
       "license_source_retained": true,
-      "member_count": 1629,
+      "member_count": 1635,
       "member_manifest": "metadata/vendor_files/asio.sha256",
-      "member_manifest_sha256": "8c16577adebe3e19a667aa0e90cba9c99cc70d9fcc3be5255803a59aeecf9abc",
-      "reported_version": "1.38.2",
-      "sha256": "d28dbc79b8c98b860ba6c06bd89de76bc352931560f9d169819e46280778975b",
+      "member_manifest_sha256": "f80abe149bf71d9523fb579f92220f09bb3a64b79743ba0db18eeb603f9cc6e7",
+      "reported_version": "1.39.0",
+      "sha256": "5f384a220751aff27e517e559b9257292f00e7a2c31c2e83282d3e522d591ade",
       "source_install_path": "third_party/asio",
       "symlinks": {
         "asio/include": "../include",
         "asio/src": "../src"
       },
-      "upstream_commit": "bdf337ddb1a667c274372a602de5857ad3cb3ed0",
+      "upstream_commit": "190a8d8daf1cc62909b4e0c72ff491ba264ca98e",
       "installed_member_integrity": "PASS",
       "production_role": "APPLICATION_ASYNCHRONOUS_TRANSPORT",
       "cmake_target": "citrine_eclipse_mirage_asio",
-      "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification"
+      "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification",
+      "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC_AND_GOLDEN_FOR_SELECTED_SNAPSHOT"
     },
     "minhook": {
       "active_build_link_proved": true,
@@ -54,26 +55,27 @@
       "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification"
     },
     "pegtl": {
-      "active_build_link_proved": true,
+      "active_build_link_proved": false,
       "archive": "PEGTL-main.zip",
       "archive_folder": "PEGTL-main/",
-      "bytes": 906094,
+      "bytes": 973410,
       "intended_active_use": "APPLICATION_CONFIG2_VDF_GRAMMAR",
       "license": "Boost Software License 1.0 (LICENSE_1_0.txt)",
       "license_source_retained": true,
-      "member_count": 872,
+      "member_count": 881,
       "member_manifest": "metadata/vendor_files/pegtl.sha256",
-      "member_manifest_sha256": "8485ef813a9f80540d4638a93b041325a87303315b87968cfa39476e612c06e0",
-      "reported_version": "4.0.0",
-      "sha256": "80ac358a098e83637b2ee367baab1ca569e1475c51b1b8dacece2088f86349ad",
+      "member_manifest_sha256": "42009e2eb2e2776cbe422c3820e6ed3c5644ccebcc0feaab648643de96b77085",
+      "reported_version": "4.0.0 (archive header; newer main snapshot)",
+      "sha256": "a7d08187f517fc10f7ca459c13254bed0e63191262102bdab4436dcc3d6cdd11",
       "source_install_path": "third_party/pegtl",
       "symlinks": {},
-      "upstream_commit": "3b075432e94f6f906425350b43d03cd9cebfa4f1",
+      "upstream_commit": "419ba27d27e80e33bf180932a9e4c483c4b8dd65",
       "installed_member_integrity": "PASS",
       "production_role": "APPLICATION_CONFIG2_VDF_GRAMMAR",
       "cmake_target": "citrine_eclipse_mirage_pegtl",
       "application_owner": "citrine_eclipse_mirage_vdf_objects",
-      "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification"
+      "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification",
+      "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC_AND_GOLDEN_FOR_SELECTED_SNAPSHOT"
     },
     "pugixml": {
       "active_build_link_proved": false,
@@ -107,7 +109,7 @@
     "metadata/HOOK_ENGINE_PATCH.json"
   ],
   "vendor_defaults_modified": false,
-  "latest_owner_selection": "PR149_OWNER_AUTHORIZED_PRODUCTION_PUGIXML",
+  "latest_owner_selection": "OWNER_AUTHORIZED_ASIO_1_39_0_AND_PEGTL_MAIN_SNAPSHOTS_2026_11_09",
   "upstream_commit_identifiers_recorded": true,
   "retired_vendor_inputs": {
     "tinyxml2": {

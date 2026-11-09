@@ -1,4 +1,18 @@
-cmake_minimum_required(VERSION 3.8...3.19)
+set(CMAKE_CXX_STANDARD 23)
+include(CheckCXXSourceCompiles)
+include(CMakePushCheckState)
+cmake_push_check_state()
+list(APPEND CMAKE_REQUIRED_INCLUDES "${PROJECT_SOURCE_DIR}/include")
+# Availability can change when reconfiguring with a different deployment target.
+unset(PEGTL_HAS_FLOATING_CHARCONV CACHE)
+check_cxx_source_compiles("
+  #include <tao/pegtl/extra/internal/charconv_features.hpp>
+  #if !defined(TAO_PEGTL_HAS_FLOATING_POINT_FROM_CHARS)
+  #error Floating-point from_chars is unavailable
+  #endif
+  int main() { return 0; }
+" PEGTL_HAS_FLOATING_CHARCONV)
+cmake_pop_check_state()
 
 set(compile_sources
   action_add_guard.cpp
@@ -16,6 +30,11 @@ set(compile_sources
   control_remove_last_states.cpp
   extra_charconv_base_max.cpp
   extra_charconv_base_min.cpp
+  extra_charconv_floating.cpp
+  extra_charconv_floating_format.cpp
+  extra_charconv_floating_state.cpp
+  extra_charconv_floating_to_family.cpp
+  extra_charconv_floating_to_mismatch.cpp
   extra_charconv_integral.cpp
   extra_charconv_to_integer.cpp
   extra_charconv_to_mismatch.cpp
@@ -40,6 +59,7 @@ set(compile_sources
   parse_const_input.cpp
   parse_nested_const_input.cpp
   position_with_source.cpp
+  rule_function_result.cpp
   rule_ione.cpp
   rule_keyword.cpp
   rule_not_ione.cpp
@@ -67,6 +87,10 @@ foreach(source IN LISTS compile_sources)
   endif()
   list(REMOVE_ITEM glob_compile_sources ${source})
 
+  if(source MATCHES "^extra_charconv_floating" AND NOT PEGTL_HAS_FLOATING_CHARCONV)
+    continue()
+  endif()
+
   get_filename_component(name ${source} NAME_WE)
   foreach(mode IN ITEMS accept reject)
     set(target pegtl-compile-${mode}-${name})
@@ -74,8 +98,6 @@ foreach(source IN LISTS compile_sources)
     add_library(${target} OBJECT ${source})
     set_target_properties(${target} PROPERTIES
       EXCLUDE_FROM_ALL ON
-      CXX_STANDARD 20
-      CXX_STANDARD_REQUIRED ON
       CXX_EXTENSIONS OFF
     )
     target_link_libraries(${target} PRIVATE taocpp::pegtl)

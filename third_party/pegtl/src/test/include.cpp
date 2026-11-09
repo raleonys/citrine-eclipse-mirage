@@ -23,7 +23,6 @@
 #include <tao/pegtl/normal.hpp>
 #include <tao/pegtl/nothing.hpp>
 #include <tao/pegtl/parse.hpp>
-#include <tao/pegtl/pegtl_string.hpp>
 #include <tao/pegtl/pointer_position.hpp>
 #include <tao/pegtl/position_with_source.hpp>
 #include <tao/pegtl/read_input.hpp>
@@ -84,7 +83,6 @@
 #include <tao/pegtl/stream/discard.hpp>
 #include <tao/pegtl/stream/discard_input.hpp>
 #include <tao/pegtl/stream/discard_input_on.hpp>
-#include <tao/pegtl/stream/has_direct_reader.hpp>
 #include <tao/pegtl/stream/inputs.hpp>
 #include <tao/pegtl/stream/is_stream.hpp>
 #include <tao/pegtl/stream/istream_reader.hpp>

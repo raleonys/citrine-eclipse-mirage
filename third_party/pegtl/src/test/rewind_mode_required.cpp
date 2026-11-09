@@ -15,6 +15,15 @@
 
 namespace TAO_PEGTL_NAMESPACE
 {
+   struct ref_qualified_discard
+   {
+      int inc_rewind_guards() &&;
+   };
+
+   static_assert( internal::has_auto_discard< ref_qualified_discard > );
+   static_assert( !internal::has_auto_discard< ref_qualified_discard& > );
+   static_assert( !internal::has_auto_discard< view_input<> > );
+
    struct rewind_required_marker
    {
       using rule_t = eol_unknown_tag;
@@ -191,7 +200,7 @@ namespace TAO_PEGTL_NAMESPACE
       }
    };
 
-   using source_inner = seq< string< 'f', 'o', 'o' >, eof >;
+   using source_inner = seq< string< "foo" >, eof >;
 
    [[nodiscard]] std::string u16s( const char16_t u )
    {
@@ -221,8 +230,8 @@ namespace TAO_PEGTL_NAMESPACE
       verify_required_rewind< not_range< 'a', 'z' > >( __LINE__, __FILE__, "m" );
       verify_required_rewind< ranges< 'a', 'f', '0', '3' > >( __LINE__, __FILE__, "x" );
       verify_required_rewind< not_ranges< 'a', 'f', '0', '3' > >( __LINE__, __FILE__, "c" );
-      verify_required_rewind< string< 'a', 'b', 'c' > >( __LINE__, __FILE__, "abx" );
-      verify_required_rewind< istring< 'a', 'b', 'c' > >( __LINE__, __FILE__, "abx" );
+      verify_required_rewind< string< "abc" > >( __LINE__, __FILE__, "abx" );
+      verify_required_rewind< istring< "abc" > >( __LINE__, __FILE__, "abx" );
 
       verify_required_rewind< uint16_be::string< 0x0102, 0x0304 > >( __LINE__, __FILE__, "\x01\x02\x03" );
       verify_required_rewind< utf8::string< 0x20, 0x20ac > >( __LINE__, __FILE__, "\x20\xe2\x82" );
@@ -249,14 +258,14 @@ namespace TAO_PEGTL_NAMESPACE
    {
       verify_required_rewind< at< seq< one< 'a' >, one< 'b' > > > >( __LINE__, __FILE__, "ax" );
       verify_required_rewind< not_at< one< 'a' > > >( __LINE__, __FILE__, "abc" );
-      verify_required_rewind< minus< string< 'a', 'b' >, string< 'a', 'b' > > >( __LINE__, __FILE__, "ab" );
+      verify_required_rewind< minus< string< "ab" >, string< "ab" > > >( __LINE__, __FILE__, "ab" );
 
       verify_required_rewind< seq< one< 'a' >, one< 'b' > > >( __LINE__, __FILE__, "ax" );
       verify_required_rewind< seq< one< 'a' >, any > >( __LINE__, __FILE__, "a" );
       verify_required_rewind< sor< seq< one< 'a' >, one< 'b' > >, seq< one< 'a' >, one< 'c' > > > >( __LINE__, __FILE__, "ad" );
       verify_required_rewind< if_then_else< one< 'a' >, one< 'b' >, one< 'c' > > >( __LINE__, __FILE__, "ax" );
       verify_required_rewind< if_then_else< one< 'a' >, one< 'b' >, seq< one< 'c' >, one< 'd' > > > >( __LINE__, __FILE__, "cx" );
-      verify_required_rewind< if_apply< string< 'a', 'b' >, false_apply > >( __LINE__, __FILE__, "ab" );
+      verify_required_rewind< if_apply< string< "ab" >, false_apply > >( __LINE__, __FILE__, "ab" );
    }
 
    void test_repetition()
@@ -282,7 +291,7 @@ namespace TAO_PEGTL_NAMESPACE
       verify_required_rewind< pad< one< 'a' >, one< ' ' > > >( __LINE__, __FILE__, "  x" );
       verify_required_rewind< separated< one< ',' >, one< 'a' >, one< 'b' > > >( __LINE__, __FILE__, "a,x" );
       verify_required_rewind< separated_pad< one< ',' >, one< ' ' >, one< 'a' >, one< 'b' > > >( __LINE__, __FILE__, "a , x" );
-      verify_required_rewind< rematch< string< 'a', 'b' >, string< 'a', 'c' > > >( __LINE__, __FILE__, "ab" );
+      verify_required_rewind< rematch< string< "ab" >, string< "ac" > > >( __LINE__, __FILE__, "ab" );
       verify_required_string_rewind< nested< source_inner, peek_string > >( __LINE__, __FILE__, { "bar" } );
       verify_required_source_rewind< source< source_inner > >( __LINE__, __FILE__, "bar", "abc" );
    }

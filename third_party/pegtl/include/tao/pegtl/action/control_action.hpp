@@ -15,16 +15,6 @@
 
 namespace TAO_PEGTL_NAMESPACE
 {
-   namespace internal
-   {
-      template< typename, typename Rule, template< typename... > class Action, typename ParseInput, typename... States >
-      inline constexpr bool action_has_unwind = false;
-
-      template< typename Rule, template< typename... > class Action, typename ParseInput, typename... States >
-      inline constexpr bool action_has_unwind< decltype( (void)Action< Rule >::unwind( std::declval< const ParseInput& >(), std::declval< States&& >()... ) ), Rule, Action, ParseInput, States... > = true;
-
-   }  // namespace internal
-
    struct control_action
       : maybe_nothing
    {
@@ -38,12 +28,12 @@ namespace TAO_PEGTL_NAMESPACE
       [[nodiscard]] static bool match( ParseInput& in, States&&... st )
       {
 #if defined( __cpp_exceptions )
-         if constexpr( internal::action_has_unwind< void, Rule, Action, ParseInput, States... > ) {
+         if constexpr( requires { Action< Rule >::unwind( std::declval< const ParseInput& >(), std::declval< States&& >()... ); } ) {
             try {
                return control_action::match_impl< Rule, A, M, Action, Control >( in, st... );
             }
             catch( ... ) {
-               Action< Rule >::unwind( const_cast< const ParseInput& >( in ), st... );
+               Action< Rule >::unwind( std::as_const( in ), st... );
                throw;
             }
          }
@@ -77,12 +67,12 @@ namespace TAO_PEGTL_NAMESPACE
                 typename... States >
       [[nodiscard]] static bool match_impl( ParseInput& in, States&&... st )
       {
-         Action< Rule >::start( const_cast< const ParseInput& >( in ), st... );
+         Action< Rule >::start( std::as_const( in ), st... );
          if( TAO_PEGTL_NAMESPACE::match< Rule, A, M, Action, Control >( in, st... ) ) {
-            Action< Rule >::success( const_cast< const ParseInput& >( in ), st... );
+            Action< Rule >::success( std::as_const( in ), st... );
             return true;
          }
-         Action< Rule >::failure( const_cast< const ParseInput& >( in ), st... );
+         Action< Rule >::failure( std::as_const( in ), st... );
          return false;
       }
    };

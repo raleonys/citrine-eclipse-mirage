@@ -22,12 +22,12 @@ struct bool_target
 using action = pegtl::from_chars_to< &integer_target::value >;
 #else
 // include/tao/pegtl/extra/builders.hpp
-// static_assert( internal::is_proper_integer_v< internal::delivery_result_t< S > > );
+// from_chars_to only accepts supported integer and floating-point types.
 using action = pegtl::from_chars_to< &bool_target::value >;
 #endif
 
 int main()
 {
-   (void)sizeof( action );
+   ( void )sizeof( action );
    return 0;
 }

@@ -19,7 +19,6 @@
 #include "internal/dummy_guard.hpp"
 #include "internal/enable_control.hpp"
 #include "internal/has_error_message.hpp"
-#include "internal/has_match.hpp"
 #include "internal/rewind_guard.hpp"
 
 #if defined( __cpp_exceptions )
@@ -104,8 +103,8 @@ namespace TAO_PEGTL_NAMESPACE
                 typename RewindPosition,
                 typename ParseInput,
                 typename... States >
-      static auto apply( const RewindPosition& begin, const ParseInput& in, States&&... st ) noexcept( noexcept( Action< Rule >::apply( std::declval< const action_input< ParseInput >& >(), st... ) ) )
-         -> decltype( Action< Rule >::apply( std::declval< const action_input< ParseInput >& >(), st... ) )
+      static decltype( auto ) apply( const RewindPosition& begin, const ParseInput& in, States&&... st ) noexcept( noexcept( Action< Rule >::apply( std::declval< const action_input< ParseInput >& >(), st... ) ) )
+         requires requires { Action< Rule >::apply( std::declval< const action_input< ParseInput >& >(), st... ); }
       {
          const action_input< ParseInput > ai( begin, in );
          return Action< Rule >::apply( ai, st... );
@@ -115,8 +114,8 @@ namespace TAO_PEGTL_NAMESPACE
                 typename RewindPosition,
                 typename ParseInput,
                 typename... States >
-      static auto apply( const RewindPosition& begin, const ParseInput& in, States&&... st ) noexcept( noexcept( Action< Rule >::template apply< Rule >( std::declval< const action_input< ParseInput >& >(), st... ) ) )
-         -> decltype( Action< Rule >::template apply< Rule >( std::declval< const action_input< ParseInput >& >(), st... ) )
+      static decltype( auto ) apply( const RewindPosition& begin, const ParseInput& in, States&&... st ) noexcept( noexcept( Action< Rule >::template apply< Rule >( std::declval< const action_input< ParseInput >& >(), st... ) ) )
+         requires requires { Action< Rule >::template apply< Rule >( std::declval< const action_input< ParseInput >& >(), st... ); }
       {
          const action_input< ParseInput > ai( begin, in );
          return Action< Rule >::template apply< Rule >( ai, st... );
@@ -125,8 +124,8 @@ namespace TAO_PEGTL_NAMESPACE
       template< template< typename... > class Action,
                 typename ParseInput,
                 typename... States >
-      static auto apply0( const ParseInput& /*unused*/, States&&... st ) noexcept( noexcept( Action< Rule >::apply0( st... ) ) )
-         -> decltype( Action< Rule >::apply0( st... ) )
+      static decltype( auto ) apply0( const ParseInput& /*unused*/, States&&... st ) noexcept( noexcept( Action< Rule >::apply0( st... ) ) )
+         requires requires { Action< Rule >::apply0( st... ); }
       {
          return Action< Rule >::apply0( st... );
       }
@@ -134,8 +133,8 @@ namespace TAO_PEGTL_NAMESPACE
       template< template< typename... > class Action,
                 typename ParseInput,
                 typename... States >
-      static auto apply0( const ParseInput& /*unused*/, States&&... st ) noexcept( noexcept( Action< Rule >::template apply0< Rule >( st... ) ) )
-         -> decltype( Action< Rule >::template apply0< Rule >( st... ) )
+      static decltype( auto ) apply0( const ParseInput& /*unused*/, States&&... st ) noexcept( noexcept( Action< Rule >::template apply0< Rule >( st... ) ) )
+         requires requires { Action< Rule >::template apply0< Rule >( st... ); }
       {
          return Action< Rule >::template apply0< Rule >( st... );
       }
@@ -148,7 +147,7 @@ namespace TAO_PEGTL_NAMESPACE
                 typename... States >
       [[nodiscard]] static bool match( ParseInput& in, States&&... st )
       {
-         if constexpr( internal::has_match< bool, Rule, A, M, Action, Control, ParseInput, States... > ) {
+         if constexpr( requires { Action< Rule >::template match< Rule, A, M, Action, Control >( std::declval< ParseInput& >(), std::declval< States&& >()... ); } ) {
             return Action< Rule >::template match< Rule, A, M, Action, Control >( in, st... );
          }
          else {

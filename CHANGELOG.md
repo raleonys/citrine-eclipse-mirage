@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Refresh the complete owner-supplied Asio tree to 1.39.0 and PEGTL to main snapshot 419ba27d27e80e33bf180932a9e4c483c4b8dd65 (its header still declares 4.0.0). Pin exact archives, members and portable aliases; adapt PEGTL consumers/probe to its C++23 requirement and three equivalent string-literal grammar rules. Preserve upstream bytes, MinHook/pugixml selections and application policies.
+
 - Add a real-Windows native file-copy regression for a target held without write/delete sharing, ensuring rejected overwrite preserves the original and a retry succeeds after the owning handle closes.
 
 - Test GrantAchievement response-writer failures after successful persistence and event publication. Retain committed existing/new rows, release both locks and distinguish completed retries from further partial-progress increments.

@@ -2,13 +2,9 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#include <tao/pegtl/ascii.hpp>
-#include <tao/pegtl/inputs.hpp>
-#include <tao/pegtl/unicode/utf8.hpp>
+#include <cstddef>
+#include <string>
 
-#include <tao/pegtl/internal/has_eol_char_rule.hpp>
-#include <tao/pegtl/internal/has_eol_rule.hpp>
-#include <tao/pegtl/internal/has_start.hpp>
 #include <tao/pegtl/internal/is_simple_type.hpp>
 
 namespace TAO_PEGTL_NAMESPACE
@@ -40,23 +36,6 @@ namespace TAO_PEGTL_NAMESPACE
    static_assert( !internal::is_simple_type_v< std::string > );
 
    static_assert( internal::is_simple_type_v< bool > );  // TODO?
-
-   static_assert( internal::has_eol_char_rule< ascii::scan::lf > );
-   // static_assert( internal::has_eol_char_rule< ascii::scan::cr_crlf > );
-   static_assert( !internal::has_eol_char_rule< ascii::lf > );
-   static_assert( !internal::has_eol_char_rule< utf8::crlf > );
-
-   static_assert( internal::has_eol_rule< internal::input_with_lines< ascii::any7, internal::view_input< char > > > );
-   static_assert( !internal::has_eol_rule< internal::input_with_lines< void, internal::view_input< char > > > );
-   static_assert( !internal::has_eol_rule< internal::view_input< char > > );
-
-   static_assert( internal::has_start< argv_input<> > );
-   static_assert( internal::has_start< view_input<> > );
-   static_assert( internal::has_start< file_input<> > );
-   static_assert( internal::has_start< read_input<> > );
-   static_assert( internal::has_start< mmap_input<> > );
-
-   static_assert( !internal::has_start< base_input<> > );
 
 }  // namespace TAO_PEGTL_NAMESPACE
 

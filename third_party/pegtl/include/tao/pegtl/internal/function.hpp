@@ -5,6 +5,9 @@
 #ifndef TAO_PEGTL_INTERNAL_FUNCTION_HPP
 #define TAO_PEGTL_INTERNAL_FUNCTION_HPP
 
+#include <functional>
+#include <utility>
+
 #include "../apply_mode.hpp"
 #include "../config.hpp"
 #include "../rewind_mode.hpp"
@@ -14,55 +17,46 @@
 
 namespace TAO_PEGTL_NAMESPACE::internal
 {
-   template< typename Peek, typename Func, Func Tion >
-   struct function;
-
-#if defined( __GNUC__ ) || defined( __clang__ )
-
-   template< bool E, typename Input, bool ( *Tion )( Input& ) noexcept( E ) >
-   struct function< void, bool ( * )( Input& ) noexcept( E ), Tion >
-   {
-      using rule_t = function;
-      using subs_t = empty_list;
-
-      template< typename ParseInput >
-      [[nodiscard]] static bool match( ParseInput& in ) noexcept( E )
-      {
-         return Tion( in );
-      }
+   template< auto Function, typename Arg, typename... States >
+   concept can_invoke_function = requires( Arg&& arg, States&... st ) {
+      std::invoke_r< bool >( Function, std::forward< Arg >( arg ), st... );
    };
 
-   template< bool E, typename Input, typename... States, bool ( *Tion )( Input&, States... ) noexcept( E ) >
-   struct function< void, bool ( * )( Input&, States... ) noexcept( E ), Tion >
+   template< auto Function, typename Arg, typename... States >
+   [[nodiscard]] bool invoke_function( Arg&& arg, States&... st ) noexcept( noexcept( std::invoke_r< bool >( Function, std::forward< Arg >( arg ), st... ) ) )
+      requires can_invoke_function< Function, Arg, States... >
    {
-      using rule_t = function;
-      using subs_t = empty_list;
+      return std::invoke_r< bool >( Function, std::forward< Arg >( arg ), st... );
+   }
 
-      template< apply_mode A,
-                rewind_mode M,
-                template< typename... > class Action,
-                template< typename... > class Control,
-                typename ParseInput >
-      [[nodiscard]] static bool match( ParseInput& in, States... st ) noexcept( E )
-      {
-         return Tion( in, st... );
-      }
-   };
+   template< auto Function, typename Arg, typename... States >
+   [[nodiscard]] bool invoke_function( Arg&& arg, States&... /*unused*/ ) noexcept( noexcept( std::invoke_r< bool >( Function, std::forward< Arg >( arg ) ) ) )
+      requires( !can_invoke_function< Function, Arg, States... > && can_invoke_function< Function, Arg > )
+   {
+      return std::invoke_r< bool >( Function, std::forward< Arg >( arg ) );
+   }
 
-   template< typename Peek, bool E, typename Data, bool ( *Tion )( Data ) noexcept( E ) >
-   struct function< Peek, bool ( * )( Data ) noexcept( E ), Tion >
+   template< typename Peek, auto Function >
+   struct function
    {
       using peek_t = Peek;
-      // using data_t = typename Peek::data_t;
-
       using rule_t = function;
       using subs_t = empty_list;
 
       template< typename ParseInput >
-      [[nodiscard]] static bool match( ParseInput& in )
+      using peek_result_t = decltype( Peek::peek( std::declval< ParseInput& >() ) );
+
+      template< apply_mode,
+                rewind_mode,
+                template< typename... > class Action,
+                template< typename... > class Control,
+                typename ParseInput,
+                typename... States >
+      [[nodiscard]] static bool match( ParseInput& in, States&&... st ) noexcept( noexcept( Peek::peek( in ) ) && noexcept( static_cast< bool >( std::declval< const peek_result_t< ParseInput >& >() ) ) && noexcept( invoke_function< Function >( std::declval< const peek_result_t< ParseInput >& >().data(), st... ) ) && noexcept( in.template consume< function >( std::declval< const peek_result_t< ParseInput >& >().size() ) ) )
+         requires requires { invoke_function< Function >( std::declval< const peek_result_t< ParseInput >& >().data(), st... ); }
       {
          if( const auto t = Peek::peek( in ) ) {
-            if( Tion( t.data() ) ) {
+            if( invoke_function< Function >( t.data(), st... ) ) {
                in.template consume< function >( t.size() );
                return true;
             }
@@ -71,194 +65,27 @@ namespace TAO_PEGTL_NAMESPACE::internal
       }
    };
 
-   template< typename Peek, bool E, typename Data, typename... States, bool ( *Tion )( Data, States... ) noexcept( E ) >
-   struct function< Peek, bool ( * )( Data, States... ) noexcept( E ), Tion >
+   template< auto Function >
+   struct function< void, Function >
    {
-      using peek_t = Peek;
-      // using data_t = typename Peek::data_t;
-
       using rule_t = function;
       using subs_t = empty_list;
 
-      template< apply_mode A,
-                rewind_mode M,
+      template< apply_mode,
+                rewind_mode,
                 template< typename... > class Action,
                 template< typename... > class Control,
-                typename ParseInput >
-      [[nodiscard]] static bool match( ParseInput& in, States... st )
+                typename ParseInput,
+                typename... States >
+      [[nodiscard]] static bool match( ParseInput& in, States&&... st ) noexcept( noexcept( invoke_function< Function >( in, st... ) ) )
+         requires requires { invoke_function< Function >( in, st... ); }
       {
-         if( const auto t = Peek::peek( in ) ) {
-            if( Tion( t.data(), st... ) ) {
-               in.template consume< function >( t.size() );
-               return true;
-            }
-         }
-         return false;
+         return invoke_function< Function >( in, st... );
       }
    };
 
-#else
-
-   template< typename Input, bool ( *Tion )( Input& ) noexcept( true ) >
-   struct function< void, bool ( * )( Input& ) noexcept( true ), Tion >
-   {
-      using rule_t = function;
-      using subs_t = empty_list;
-
-      template< typename ParseInput >
-      [[nodiscard]] static bool match( ParseInput& in ) noexcept( true )
-      {
-         return Tion( in );
-      }
-   };
-
-   template< typename Input, bool ( *Tion )( Input& ) noexcept( false ) >
-   struct function< void, bool ( * )( Input& ) noexcept( false ), Tion >
-   {
-      using rule_t = function;
-      using subs_t = empty_list;
-
-      template< typename ParseInput >
-      [[nodiscard]] static bool match( ParseInput& in ) noexcept( false )
-      {
-         return Tion( in );
-      }
-   };
-
-   template< typename Input, typename... States, bool ( *Tion )( Input&, States... ) noexcept( true ) >
-   struct function< void, bool ( * )( Input&, States... ) noexcept( true ), Tion >
-   {
-      using rule_t = function;
-      using subs_t = empty_list;
-
-      template< apply_mode A,
-                rewind_mode M,
-                template< typename... > class Action,
-                template< typename... > class Control,
-                typename ParseInput >
-      [[nodiscard]] static bool match( ParseInput& in, States... st ) noexcept( true )
-      {
-         return Tion( in, st... );
-      }
-   };
-
-   template< typename Input, typename... States, bool ( *Tion )( Input&, States... ) noexcept( false ) >
-   struct function< void, bool ( * )( Input&, States... ) noexcept( false ), Tion >
-   {
-      using rule_t = function;
-      using subs_t = empty_list;
-
-      template< apply_mode A,
-                rewind_mode M,
-                template< typename... > class Action,
-                template< typename... > class Control,
-                typename ParseInput >
-      [[nodiscard]] static bool match( ParseInput& in, States... st ) noexcept( false )
-      {
-         return Tion( in, st... );
-      }
-   };
-
-   template< typename Peek, typename Data, bool ( *Tion )( Data ) noexcept( true ) >
-   struct function< Peek, bool ( * )( Data ) noexcept( true ), Tion >
-   {
-      using peek_t = Peek;
-      // using data_t = typename Peek::data_t;
-
-      using rule_t = function;
-      using subs_t = empty_list;
-
-      template< typename ParseInput >
-      [[nodiscard]] static bool match( ParseInput& in )
-      {
-         if( const auto t = Peek::peek( in ) ) {
-            if( Tion( t.data() ) ) {
-               in.template consume< function >( t.size() );
-               return true;
-            }
-         }
-         return false;
-      }
-   };
-
-   template< typename Peek, typename Data, bool ( *Tion )( Data ) noexcept( false ) >
-   struct function< Peek, bool ( * )( Data ) noexcept( false ), Tion >
-   {
-      using peek_t = Peek;
-      // using data_t = typename Peek::data_t;
-
-      using rule_t = function;
-      using subs_t = empty_list;
-
-      template< typename ParseInput >
-      [[nodiscard]] static bool match( ParseInput& in )
-      {
-         if( const auto t = Peek::peek( in ) ) {
-            if( Tion( t.data() ) ) {
-               in.template consume< function >( t.size() );
-               return true;
-            }
-         }
-         return false;
-      }
-   };
-
-   template< typename Peek, typename Data, typename... States, bool ( *Tion )( Data, States... ) noexcept( true ) >
-   struct function< Peek, bool ( * )( Data, States... ) noexcept( true ), Tion >
-   {
-      using peek_t = Peek;
-      // using data_t = typename Peek::data_t;
-
-      using rule_t = function;
-      using subs_t = empty_list;
-
-      template< apply_mode A,
-                rewind_mode M,
-                template< typename... > class Action,
-                template< typename... > class Control,
-                typename ParseInput >
-      [[nodiscard]] static bool match( ParseInput& in, States... st )
-      {
-         if( const auto t = Peek::peek( in ) ) {
-            if( Tion( t.data(), st... ) ) {
-               in.template consume< function >( t.size() );
-               return true;
-            }
-         }
-         return false;
-      }
-   };
-
-   template< typename Peek, typename Data, typename... States, bool ( *Tion )( Data, States... ) noexcept( false ) >
-   struct function< Peek, bool ( * )( Data, States... ) noexcept( false ), Tion >
-   {
-      using peek_t = Peek;
-      // using data_t = typename Peek::data_t;
-
-      using rule_t = function;
-      using subs_t = empty_list;
-
-      template< apply_mode A,
-                rewind_mode M,
-                template< typename... > class Action,
-                template< typename... > class Control,
-                typename ParseInput >
-      [[nodiscard]] static bool match( ParseInput& in, States... st )
-      {
-         if( const auto t = Peek::peek( in ) ) {
-            if( Tion( t.data(), st... ) ) {
-               in.template consume< function >( t.size() );
-               return true;
-            }
-         }
-         return false;
-      }
-   };
-
-#endif
-
-   template< typename Peek, typename Func, Func Tion >
-   inline constexpr bool enable_control< function< Peek, Func, Tion > > = false;
+   template< typename Peek, auto Function >
+   inline constexpr bool enable_control< function< Peek, Function > > = false;
 
 }  // namespace TAO_PEGTL_NAMESPACE::internal
 

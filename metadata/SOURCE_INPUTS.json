@@ -5,19 +5,37 @@
   "library_access": false,
   "next_phase_vendor_archives": {
     "PEGTL-main.zip": {
-      "sha256": "80ac358a098e83637b2ee367baab1ca569e1475c51b1b8dacece2088f86349ad",
-      "bytes": 906094,
-      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
-      "path": "/workspace/project-input/3RD PARTY/PEGTL-main.zip",
-      "source_materialization": "INSTALLED_BYTE_EXACT"
+      "sha256": "a7d08187f517fc10f7ca459c13254bed0e63191262102bdab4436dcc3d6cdd11",
+      "bytes": 973410,
+      "production_integration": "Owner-authorized upstream snapshot update; exact-head compatibility/native evidence remains separate",
+      "path": "/workspace/attachments/60f1d60d-1072-41ea-a7b2-cd873d4f7a2f/PEGTL-main (1).zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT",
+      "upstream_commit_from_archive_comment": "419ba27d27e80e33bf180932a9e4c483c4b8dd65",
+      "supplied_filename": "PEGTL-main (1).zip",
+      "previous_selected_input": {
+        "sha256": "80ac358a098e83637b2ee367baab1ca569e1475c51b1b8dacece2088f86349ad",
+        "bytes": 906094,
+        "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+        "path": "/workspace/project-input/3RD PARTY/PEGTL-main.zip",
+        "source_materialization": "INSTALLED_BYTE_EXACT"
+      }
     },
     "asio-master.zip": {
-      "sha256": "d28dbc79b8c98b860ba6c06bd89de76bc352931560f9d169819e46280778975b",
-      "bytes": 4239595,
-      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
-      "path": "/workspace/attachments/62ce09d4-104d-4eab-900c-3f1a385be3ef/asio-master.zip",
+      "sha256": "5f384a220751aff27e517e559b9257292f00e7a2c31c2e83282d3e522d591ade",
+      "bytes": 4256615,
+      "production_integration": "Owner-authorized upstream snapshot update; exact-head compatibility/native evidence remains separate",
+      "path": "/workspace/attachments/90122c9d-61de-45d3-b5cd-bf2ba887f891/asio-master (1).zip",
       "source_materialization": "INSTALLED_BYTE_EXACT",
-      "upstream_commit_from_archive_comment": "bdf337ddb1a667c274372a602de5857ad3cb3ed0"
+      "upstream_commit_from_archive_comment": "190a8d8daf1cc62909b4e0c72ff491ba264ca98e",
+      "supplied_filename": "asio-master (1).zip",
+      "previous_selected_input": {
+        "sha256": "d28dbc79b8c98b860ba6c06bd89de76bc352931560f9d169819e46280778975b",
+        "bytes": 4239595,
+        "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+        "path": "/workspace/attachments/62ce09d4-104d-4eab-900c-3f1a385be3ef/asio-master.zip",
+        "source_materialization": "INSTALLED_BYTE_EXACT",
+        "upstream_commit_from_archive_comment": "bdf337ddb1a667c274372a602de5857ad3cb3ed0"
+      }
     },
     "filesystem-master.zip": {
       "sha256": "5db08830a172ca4d8d2ecf98d6397041a3d0fa4d04584a0bcddb29778b68a251",

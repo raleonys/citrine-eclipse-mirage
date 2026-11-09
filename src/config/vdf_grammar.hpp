@@ -20,14 +20,14 @@ struct Key : Quoted {};
 struct Value : Quoted {};
 struct ObjectName : Quoted {};
 
-struct LineEnding : peg::sor<peg::one<'\n'>,peg::string<'\r','\n'>> {};
+struct LineEnding : peg::sor<peg::one<'\n'>,peg::string<"\r\n">> {};
 // 013460: consume the line ending, or finish successfully at EOF.
-struct LineComment : peg::seq<peg::string<'/','/'>,
+struct LineComment : peg::seq<peg::string<"//">,
     peg::until<peg::sor<LineEnding,peg::eof>>> {};
 // 013ed0: separate opener bytes preserve the consumed '/' on a direct failure.
 // A surrounding required rewind guard restores input, but never action State.
 struct BlockComment : peg::seq<peg::one<'/'>,peg::one<'*'>,
-    peg::until<peg::string<'*','/'>>> {};
+    peg::until<peg::string<"*/">>> {};
 struct Separator : peg::sor<peg::ascii::space,LineComment,BlockComment> {};
 struct Separators : peg::plus<Separator> {};
 

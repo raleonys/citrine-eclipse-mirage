@@ -13,8 +13,8 @@ existing archive SHA-256 and complete member hashes:
 
 | Archive | Commit recorded in the supplied archive |
 | --- | --- |
-| Asio | `bdf337ddb1a667c274372a602de5857ad3cb3ed0` |
-| PEGTL | `3b075432e94f6f906425350b43d03cd9cebfa4f1` |
+| Asio | `190a8d8daf1cc62909b4e0c72ff491ba264ca98e` |
+| PEGTL | `419ba27d27e80e33bf180932a9e4c483c4b8dd65` |
 | pugixml | `f0a3faa76e04f35110257ca8713363dee3c890e8` |
 | MinHook | `8af6b4acae5a9388fd742b56fa79ece89d96f823` |
 

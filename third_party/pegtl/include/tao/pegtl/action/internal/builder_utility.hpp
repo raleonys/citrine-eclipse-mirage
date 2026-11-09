@@ -76,22 +76,20 @@ namespace TAO_PEGTL_NAMESPACE::internal
    };
 
    template< template< typename... > class Traits, typename T, typename... Args >
-   [[nodiscard]] auto make_multi_impl( int /*unused*/, Args&&... args ) -> decltype( Traits< T >::make( std::forward< Args >( args )... ) )
+   [[nodiscard]] decltype( auto ) make_multi_impl( Args&&... args )
    {
-      return Traits< T >::make( std::forward< Args >( args )... );
-   }
-
-   template< template< typename... > class Traits, typename T, typename... Args >
-   [[nodiscard]] T make_multi_impl( long /*unused*/, Args&&... args )  // NOLINT(google-runtime-int)
-
-   {
-      return T( std::forward< Args >( args )... );
+      if constexpr( requires { Traits< T >::make( std::forward< Args >( args )... ); } ) {
+         return Traits< T >::make( std::forward< Args >( args )... );
+      }
+      else {
+         return T( std::forward< Args >( args )... );
+      }
    }
 
    template< template< typename... > class Traits, typename T, typename... Args >
    [[nodiscard]] T make_multi( Args&&... args )
    {
-      return make_multi_impl< Traits, T >( 0, std::forward< Args >( args )... );
+      return make_multi_impl< Traits, T >( std::forward< Args >( args )... );
    }
 
    template< template< typename... > class Traits >
@@ -290,18 +288,8 @@ namespace TAO_PEGTL_NAMESPACE::internal
       using action = internal::create_action< Object, ObjectAction, Output >;
    };
 
-   template< typename T, typename = void >
-   struct is_binding
-      : std::false_type
-   {};
-
    template< typename T >
-   struct is_binding< T, std::void_t< typename T::rules_t > >
-      : std::true_type
-   {};
-
-   template< typename T >
-   using as_binding_t = std::conditional_t< is_binding< T >::value, T, build_for< T, value_producer< value_traits > > >;
+   using as_binding_t = std::conditional_t< requires { typename T::rules_t; }, T, build_for< T, value_producer< value_traits > > >;
 
    inline constexpr std::size_t no_index = static_cast< std::size_t >( -1 );
 
@@ -368,13 +356,14 @@ namespace TAO_PEGTL_NAMESPACE::internal
       template< typename Rule >
       static constexpr std::size_t index = binding_index< Rule, Bindings... >::value;
 
-      template< typename Rule, typename = void >
+      template< typename Rule >
       struct type
          : std::conditional_t< std::is_same_v< Rule, Main >, nothing< Rule >, Action< Rule > >
       {};
 
       template< typename Rule >
-      struct type< Rule, std::enable_if_t< ( index< Rule > != no_index ) > >
+         requires( index< Rule > != no_index )
+      struct type< Rule >
          : capture_action< std::tuple_element_t< index< Rule >, bindings_t >, Builder, index< Rule > >
       {};
    };
@@ -418,7 +407,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
             return TAO_PEGTL_NAMESPACE::match< Rule, A, M, Action, Control >( in, st... );
          }
       }
-#if defined( __GNUC__ ) && !defined( __clang__ )
+#if defined( __GNUC__ ) && !defined( __clang__ ) && ( __GNUC__ == 16 )
 #pragma GCC diagnostic pop
 #endif
    };

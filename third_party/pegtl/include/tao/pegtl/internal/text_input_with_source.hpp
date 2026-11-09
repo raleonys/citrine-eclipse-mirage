@@ -6,6 +6,7 @@
 #define TAO_PEGTL_INTERNAL_TEXT_INPUT_WITH_SOURCE_HPP
 
 #include <algorithm>
+#include <concepts>
 #include <cstddef>
 #include <type_traits>
 #include <utility>
@@ -51,6 +52,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       static_assert( std::is_same_v< InputSource, ErrorSource >, "TODO?" );
 
       template< typename S, typename... Ts >
+         requires( !std::same_as< text_input_with_source, std::remove_cvref_t< S > > ) && std::constructible_from< error_position_t, S > && std::constructible_from< Input, Ts... >
       explicit text_input_with_source( S&& s, Ts&&... ts )
          : Input( std::forward< Ts >( ts )... ),
            m_position( std::forward< S >( s ) )
@@ -135,8 +137,9 @@ namespace TAO_PEGTL_NAMESPACE::internal
       }
 
       [[nodiscard]] const data_t* end_of_line_or_file( const error_position_t& pos, const std::size_t max = 135 ) const
+         requires( sizeof( data_t ) == 1 )
       {
-         static_assert( sizeof( data_t ) == 1 );  // Generalising beyond 1 requires the until to use eol_lazy_peek like in lazy_input.
+         // Generalising beyond 1 requires the until to use eol_lazy_peek like in lazy_input.
          using eolof_grammar = until< at< sor< eof, eol_rule > > >;
          const data_t* p = previous( pos );  // TODO: Start earlier?
          const std::size_t s = ( std::min )( max, std::size_t( this->end() - p ) );
