@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Verify that duplicate or empty later destinations in an atomic XML/INI batch cannot leave staged files or mutate previous targets, and that a subsequent valid batch succeeds.
+
 - Exercise the real file/license SHA-1 composition at 8192-byte read boundaries and across multiple reads, with independent known answers, changed-tail and prefix-digest rejection, and truncation coverage on a Unicode fixture path.
 
 - Require first-party SPDX markers at the beginning of each source file, allowing only launcher shebang or CMD echo preambles. Test that a lone late marker cannot masquerade as a license header; preserve the existing full-file duplicate marker scan. No shipping runtime or vendor changes.

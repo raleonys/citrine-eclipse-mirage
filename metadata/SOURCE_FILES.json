@@ -1254,8 +1254,8 @@
       "sha256": "e4444c76665479eada4ed6366c7386acde0e8d2453b1f67bf7870dad21c35d89"
     },
     "tests/native/atomic_persistence_tests.cpp": {
-      "bytes": 8548,
-      "sha256": "6768f42913acd45a66c07c4306b3307846d7d56ce8898ce6da65bac645ab952d"
+      "bytes": 9488,
+      "sha256": "9b523cd6f24b083a9b85960fd1486c9c3977d1d31dd46b4d1810bbdaf01629b3"
     },
     "tests/native/atomic_staging_tests.cpp": {
       "bytes": 7701,
