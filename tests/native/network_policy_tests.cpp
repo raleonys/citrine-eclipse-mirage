@@ -18,7 +18,7 @@ unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
 template<class F>bool until(F fn,std::chrono::milliseconds timeout=3000ms){auto end=std::chrono::steady_clock::now()+timeout;do{if(fn())return true;Sleep(1);}while(std::chrono::steady_clock::now()<end);return false;}
 struct Factory final:net::HandlerFactory {
-    std::atomic<unsigned> created{0},timeouts{0},requests{0},next_requests{0},limits{0};
+    std::atomic<unsigned> created{0},timeouts{0},requests{0},next_requests{0},limits{0},errors{0};
     std::atomic<bool> large_first_greeting{false};
     struct Handler final:server::Handler {
         Factory& f;unsigned id;
@@ -36,6 +36,7 @@ struct Factory final:net::HandlerFactory {
     };
     std::unique_ptr<server::Handler> create()override{return std::make_unique<Handler>(*this,++created);}
     void error(std::string_view operation,std::exception_ptr error)noexcept override {
+        ++errors;
         if(operation=="session timeout")++timeouts;
         try{if(error)std::rethrow_exception(error);}catch(const std::length_error&){++limits;}catch(...){}
     }
@@ -59,7 +60,7 @@ void policy_construction_validation() {
     const auto construct=[&](const net::SessionPolicy& policy) {
         net::AsioService service(factory,execution,port,ready,policy);
         require(port==0x5a5a&&ready==0x6b,"construction does not publish a listener or readiness");
-        require(factory.created==0&&factory.requests==0&&factory.timeouts==0&&factory.limits==0,
+        require(factory.created==0&&factory.requests==0&&factory.timeouts==0&&factory.limits==0&&factory.errors==0,
                 "construction does not dispatch handlers or report session errors");
     };
     const auto reject=[&](const net::SessionPolicy& policy) {
@@ -67,7 +68,7 @@ void policy_construction_validation() {
         try{construct(policy);}catch(const std::invalid_argument&){refused=true;}
         require(refused,"actual AsioService constructor rejects invalid policy before start");
         require(port==0x5a5a&&ready==0x6b&&factory.created==0&&factory.requests==0&&
-                factory.timeouts==0&&factory.limits==0,"invalid construction preserves caller state and handler counters");
+                factory.timeouts==0&&factory.limits==0&&factory.errors==0,"invalid construction preserves caller state and handler counters");
     };
     struct Resource {std::size_t net::SessionPolicy::*field;std::size_t maximum;};
     const std::array resources{
