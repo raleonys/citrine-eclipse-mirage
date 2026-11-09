@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "../../support/fixture_ascii.hpp"
-#include "preloader_l/config/configuration.hpp"
+#include "citrine_eclipse_mirage/config/configuration.hpp"
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
 #include <string>
 
-using namespace preloader_l::configuration;
+using namespace citrine_eclipse_mirage::configuration;
 namespace {
 int assertions = 0;
 void require(bool condition, const char* label) {
@@ -15,7 +15,7 @@ void require(bool condition, const char* label) {
     if (!condition) throw std::runtime_error(label);
 }
 Path utf16(std::string_view text) { return {text.begin(), text.end()}; }
-std::string ascii(const Path& path) { return preloader_l::test_support::fixture_ascii(path); }
+std::string ascii(const Path& path) { return citrine_eclipse_mirage::test_support::fixture_ascii(path); }
 void fixture_ascii_contract() {
     require(ascii(u"ASCII/fixture")=="ASCII/fixture","ASCII fixture path preserves bytes");
     bool refused=false;

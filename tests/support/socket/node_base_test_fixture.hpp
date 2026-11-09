@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "preloader_l/xml/node_base.hpp"
+#include "citrine_eclipse_mirage/xml/node_base.hpp"
 #include "tests/support/socket/pool_destruct_test_fixture.hpp"
 
 namespace node_base_test {
-namespace s=preloader_l::socket;
+namespace s=citrine_eclipse_mirage::socket;
 using pool_destruct_test::check;using pool_destruct_test::checks;using pool_destruct_test::word;using pool_destruct_test::put;using pool_destruct_test::Failure;
 using pool_destruct_test::unsupported;using pool_destruct_test::failure;
 inline constexpr std::uintptr_t node_table=0x18007fa98ULL;

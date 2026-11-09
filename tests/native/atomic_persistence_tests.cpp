@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/core/binary_io.hpp"
-#include "preloader_l/runtime/event_queue.hpp"
+#include "citrine_eclipse_mirage/core/binary_io.hpp"
+#include "citrine_eclipse_mirage/runtime/event_queue.hpp"
 #include <windows.h>
 #include <array>
 #include <filesystem>
@@ -9,10 +9,19 @@
 #include <iostream>
 #include <map>
 #include <stdexcept>
+#include <type_traits>
 
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 namespace io=file;
 namespace fs=std::filesystem;
+static_assert(!std::is_copy_constructible_v<io::AtomicFiles>,
+    "Atomic recovery ownership must not be copied");
+static_assert(!std::is_copy_assignable_v<io::AtomicFiles>,
+    "Atomic recovery ownership must not be copy-assigned");
+static_assert(!std::is_move_constructible_v<io::AtomicFiles>,
+    "Atomic recovery must retain its stable owner");
+static_assert(!std::is_move_assignable_v<io::AtomicFiles>,
+    "Atomic recovery ownership must not be move-assigned");
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

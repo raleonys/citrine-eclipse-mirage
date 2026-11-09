@@ -24,11 +24,11 @@ COMPILE ONLY: FAIL
 Exit code: 1
 ```
 
-The existing `tools/preloader_l_runtime_host/main.cpp` obtains the published `EALsxPort`, calls `DllShutdown`, then attempts loopback `connect` to that port and expects an error. Other local profiles passed the same check. The evidence is compatible with an intermittent shutdown/listener race or a separate port owner but **does not establish either cause**, a deterministic runtime defect, or causality from PR #23. Raw logs remain owner-supplied attachments and are not committed because they contain local filesystem identity.
+The existing `tools/citrine_eclipse_mirage_runtime_host/main.cpp` obtains the published `EALsxPort`, calls `DllShutdown`, then attempts loopback `connect` to that port and expects an error. Other local profiles passed the same check. The evidence is compatible with an intermittent shutdown/listener race or a separate port owner but **does not establish either cause**, a deterministic runtime defect, or causality from PR #23. Raw logs remain owner-supplied attachments and are not committed because they contain local filesystem identity.
 
 ## Reproducible exact-checkout follow-up
 
-The new `msvc-shutdown-lifecycle.yml` uses Windows Server 2022/MSVC 2022 and builds the actual production DLL with `preloader_l_runtime_host` in both Debug and Release. It executes the unchanged `dll_public_lifecycle` CTest in **five separate processes per configuration**, recording every exit code and a separate JUnit file. One failed attempt fails the job; no time-based grace or bypass masks the failure. Git checkout SHA, build log, CTest output and configure logs are preserved.
+The new `msvc-shutdown-lifecycle.yml` uses Windows Server 2022/MSVC 2022 and builds the actual production DLL with `citrine_eclipse_mirage_runtime_host` in both Debug and Release. It executes the unchanged `dll_public_lifecycle` CTest in **five separate processes per configuration**, recording every exit code and a separate JUnit file. One failed attempt fails the job; no time-based grace or bypass masks the failure. Git checkout SHA, build log, CTest output and configure logs are preserved.
 
 This is **CI detection only**: no production code, ABI, Winsock error contract, service lifecycle policy, vendor tree or Golden finalization is changed.
 

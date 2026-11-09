@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/core/binary_io.hpp"
+#include "citrine_eclipse_mirage/core/binary_io.hpp"
 #include <filesystem>
 #include <fstream>
 #include <limits>
 #include <stdexcept>
 
-namespace preloader_l::file {
+namespace citrine_eclipse_mirage::file {
 namespace {
 std::uint32_t state(std::ios_base::iostate value) {
     return ((value&std::ios::eofbit)?1U:0U)|((value&std::ios::failbit)?2U:0U)|((value&std::ios::badbit)?4U:0U);
@@ -27,7 +27,10 @@ public:
         stream_.seekg(static_cast<std::streamoff>(offset),origin==Seek::end?std::ios::end:std::ios::beg);
     }
     std::uint64_t position_sum_03ba50()override {
-        return static_cast<std::uint64_t>(static_cast<std::streamoff>(stream_.tellg()));
+        const auto position = stream_.tellg();
+        if(position == std::streampos(-1))
+            throw std::ios_base::failure("Native input stream position unavailable");
+        return static_cast<std::uint64_t>(static_cast<std::streamoff>(position));
     }
     std::int32_t peek_043790()override {
         const auto value=stream_.peek();
@@ -55,4 +58,4 @@ std::unique_ptr<Input> NativeFactory::open_input_039f70(const Path& path,std::ui
 std::unique_ptr<Output> NativeFactory::open_output_03a1a0(const Path& path,std::uint32_t mode,std::uint32_t share) {
     supported(mode,share);return std::make_unique<NativeOutput>(path);
 }
-} // namespace preloader_l::file
+} // namespace citrine_eclipse_mirage::file
