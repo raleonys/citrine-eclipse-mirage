@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Fix two Registry startup-wait exception expectations so the assertion helper cannot satisfy its own expected-error check. Preserve original output/no-copy/wait-prefix checks and the real Windows SDK DWORD-cell cases; production Registry behavior is unchanged.
+
 - Verify that duplicate or empty later destinations in an atomic XML/INI batch cannot leave staged files or mutate previous targets, and that a subsequent valid batch succeeds.
 
 - Exercise the real file/license SHA-1 composition at 8192-byte read boundaries and across multiple reads, with independent known answers, changed-tail and prefix-digest rejection, and truncation coverage on a Unicode fixture path.
