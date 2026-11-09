@@ -144,8 +144,8 @@ class CoffEvidenceTests(unittest.TestCase):
             current.parent.mkdir(parents=True)
             current.write_bytes(object_bytes())
             stale.write_bytes(object_bytes())
-            graph = ('TARGET\towned\nTYPE\tOBJECT_LIBRARY\nSOURCES\tsrc/current.cpp\nEND\n'
-                     'TARGET\tshipping\nTYPE\tSHARED_LIBRARY\nSOURCES\t' + str(current) + '\nEND\n')
+            graph = ('TARGET\towned\nTYPE\tOBJECT_LIBRARY\nDEPS\t\nSOURCES\tsrc/current.cpp\nEND\n'
+                     'TARGET\tshipping\nTYPE\tSHARED_LIBRARY\nDEPS\t\nSOURCES\t' + str(current) + '\nEND\n')
             (build / 'partition.Release.targets').write_text(graph)
             self.assertEqual(current_objects(root, build, {'owned', 'shipping'}, 'Release'), [current])
 
