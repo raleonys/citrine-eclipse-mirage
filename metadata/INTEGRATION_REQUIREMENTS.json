@@ -13,7 +13,7 @@
     "documentation": "MANDATORY_CLEAN_ADAPT",
     "golden_tools": "MANDATORY_ADAPT_AND_INTEGRATE",
     "metadata": "MANDATORY_CLEAN_ADAPT",
-    "preloader_l_application_code": "NOT_INHERITED",
+    "citrine_eclipse_mirage_application_code": "NOT_INHERITED",
     "resources": "MANDATORY_ADAPT",
     "root_layout": "MANDATORY_CLEAN_ADAPT",
     "scripts": "MANDATORY_ADAPT",

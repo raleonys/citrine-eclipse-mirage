@@ -67,6 +67,24 @@ PASS: inspect the exact PR commit's execution. These tests call the production
 entries directly without MinHook installation and do not observe a real
 Consumer/game call graph. The design and evidence gaps below remain open.
 
+## Bounded D03 alternative Registry API evidence
+
+The source-linked native [Registry lifecycle fixture](../tests/unit/registry/native_lifecycle_tests.cpp)
+now also exercises direct SDK `RegOpenKeyA/W` and `RegCreateKeyExA/W`
+issuance of real HKEY values, with callback entrypoints handling subsequent
+`RegQueryValueExA/W` and `RegCloseKey`. The tests verify original SDK
+value bytes and `LastError`, unchanged fabricated-key allocation counts, and
+exactly one native close. Created keys and seeded values remain inside an
+isolated volatile HKCU fixture and are cleaned up by the test.
+
+This is **bounded D03 native SDK fixture coverage**, not a complete API or
+Consumer import inventory. The fixture does not install MinHook; an alternate
+public Registry API may internally call a hooked lower-level entrypoint in a
+real host. Neither the tests nor static source reading prove Consumer
+reachability, that an unhooked call bypasses all detours, or authenticated
+native/fabricated provenance. [Issue #109](https://github.com/raleonys/citrine-eclipse-mirage/issues/109)
+retains those unresolved D01–D04/D07 evidence gates.
+
 ## Research-to-source disposition
 
 | Historical Hooks of Pioneering idea | Current-source assessment | Decision |

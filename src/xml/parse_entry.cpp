@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/xml/parse_entry.hpp"
+#include "citrine_eclipse_mirage/xml/parse_entry.hpp"
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -49,4 +49,4 @@ void parse_document_entry_0041b0(std::uintptr_t document,NativeParseEntryContext
     context.lower.parse_virtual(target,document,cursor,0,document+0xa0);
 }
 void ParseEntryEffects::parse_0041b0(std::uintptr_t document){parse_document_entry_0041b0(document,parse_entry_);}
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

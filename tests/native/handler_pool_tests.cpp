@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/asio_service.hpp"
-#include "preloader_l/net/handler_policy.hpp"
-#include "preloader_l/platform/execution_windows.hpp"
+#include "citrine_eclipse_mirage/net/asio_service.hpp"
+#include "citrine_eclipse_mirage/net/handler_policy.hpp"
+#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
 #include <asio.hpp>
 #include <chrono>
 #include <condition_variable>
@@ -12,7 +12,7 @@
 #include <set>
 #include <thread>
 
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 using namespace std::chrono_literals;
 namespace {
 unsigned checks=0;

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "preloader_l/xml/pool_destruct.hpp"
+#include "citrine_eclipse_mirage/xml/pool_destruct.hpp"
 #include "tests/support/socket/pool_clear_test_fixture.hpp"
 
 namespace pool_destruct_test {
-namespace s=preloader_l::socket;
+namespace s=citrine_eclipse_mirage::socket;
 using pool_clear_test::check;using pool_clear_test::checks;using pool_clear_test::word;using pool_clear_test::put;using pool_clear_test::Failure;
 using pool_clear_test::unsupported;using pool_clear_test::failure;using pool_clear_test::types;
 using Backing=pool_clear_test::Backing;using Nodes=pool_clear_test::Nodes;

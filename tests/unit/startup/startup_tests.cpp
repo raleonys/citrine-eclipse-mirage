@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/startup.hpp"
+#include "citrine_eclipse_mirage/runtime/startup.hpp"
 #include <algorithm>
 #include <cstdio>
 #include <deque>
@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <tuple>
 
-using namespace preloader_l::startup;
+using namespace citrine_eclipse_mirage::startup;
 static unsigned checks;
 static void require(bool value) { if (++checks && !value) throw std::runtime_error("check "+std::to_string(checks)); }
 struct Fixture {
@@ -24,7 +24,7 @@ struct FakeInput final : InputPlatform {
     std::vector<std::tuple<int,int,bool>> conversions;
     std::deque<int> replies;
     std::string assigned_name,assigned_value;
-    bool argv_success=true, fail_free=false, fail_conversion=false;
+    bool argv_success=true, fail_free=false, fail_conversion=false, fail_conversion_on_bang=false;
     const char* crt_getenv_05f318(const char* name) override {
         require(std::string(name)=="OriginEmuCmdArgs"); trace.push_back("getenv");
         return environment ? environment->c_str() : nullptr;
@@ -42,7 +42,8 @@ struct FakeInput final : InputPlatform {
     }
     int utf8_no_flags(const wchar_t* input,int count,char* output,int capacity) override {
         trace.push_back("convert"); conversions.emplace_back(count,capacity,output!=nullptr);
-        if(fail_conversion)throw std::runtime_error("injected conversion failure");
+        if(fail_conversion || (fail_conversion_on_bang && count>0 && input && input[0]==L'!'))
+            throw std::runtime_error("injected conversion failure");
         if (!replies.empty()) {
             int result=replies.front(); replies.pop_front(); return result;
         }
@@ -127,6 +128,20 @@ static void input_tests() {
         bool failed=false;try{(void)read_arguments_039720(p);}catch(const std::runtime_error&){failed=true;}
         require(failed&&std::count(p.trace.begin(),p.trace.end(),"free")==1);
         require(p.trace.back()=="free");
+    }
+    {
+        // Failure after one fully converted argv element must still free the
+        // entire CommandLineToArgvW allocation once and publish no partial flags.
+        Fixture f;FakeInput p;
+        p.wide={L"host.exe",L"-showLSX",L"!invalid"};
+        p.fail_conversion_on_bang=true;
+        bool failed=false;
+        try{setup_environment_019910(f.refs(),p);}
+        catch(const std::runtime_error&){failed=true;}
+        require(failed && p.trace==std::vector<std::string>{
+            "getenv","get-command","argv","convert","convert","convert","free"});
+        require(p.assigned_name.empty() && f.lsx==0 && f.show==0 &&
+                f.no==0 && f.language==0 && f.registry==0 && f.attributes.empty());
     }
     for(auto env:std::vector<std::optional<std::string>>{std::nullopt,std::string{}}) {
         Fixture f;FakeInput platform;platform.environment=env;
