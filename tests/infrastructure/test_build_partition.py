@@ -271,6 +271,54 @@ class TargetBoundaryTests(unittest.TestCase):
             self.assertEqual(g['citrine_eclipse_mirage']['dependencies'], [{'id': 'citrine_eclipse_mirage_core'}])
             self.assertEqual(g['citrine_eclipse_mirage']['sources'][1]['path'], 'C:/build path/other.cpp.obj')
 
+    def test_generated_graph_rejects_incomplete_and_overwritten_records(self):
+        # The exact BuildPartition.cmake emitter publishes one complete record
+        # with TYPE/DEPS/SOURCES in order. Malformed evidence must not hide
+        # forbidden dependencies or reclassify an executable as a library.
+        original = (
+            'TARGET\tgate\nTYPE\tEXECUTABLE\nDEPS\treference_model\n'
+            'SOURCES\tsrc/runtime/gate.cpp\nEND\n')
+        malformed = {
+            'duplicate_type': original.replace(
+                'TYPE\tEXECUTABLE\n', 'TYPE\tEXECUTABLE\nTYPE\tSTATIC_LIBRARY\n'),
+            'duplicate_deps': original.replace(
+                'DEPS\treference_model\n', 'DEPS\treference_model\nDEPS\tclean\n'),
+            'duplicate_sources': original.replace(
+                'SOURCES\tsrc/runtime/gate.cpp\n',
+                'SOURCES\tsrc/runtime/gate.cpp\nSOURCES\tsrc/runtime/decoy.cpp\n'),
+            'missing_type': original.replace('TYPE\tEXECUTABLE\n', ''),
+            'missing_deps': original.replace('DEPS\treference_model\n', ''),
+            'missing_sources': original.replace('SOURCES\tsrc/runtime/gate.cpp\n', ''),
+            'out_of_order': original.replace(
+                'DEPS\treference_model\nSOURCES\tsrc/runtime/gate.cpp\n',
+                'SOURCES\tsrc/runtime/gate.cpp\nDEPS\treference_model\n'),
+            'unclosed_prior_target': original.removesuffix('END\n') +
+                original.replace('TARGET\tgate\n', 'TARGET\tsecond\n'),
+            'orphan_end': 'END\n' + original,
+            'stray_type': 'TYPE\tEXECUTABLE\n' + original,
+            'empty_name': original.replace('TARGET\tgate\n', 'TARGET\t\n'),
+            'empty_type': original.replace('TYPE\tEXECUTABLE\n', 'TYPE\t\n'),
+            'missing_end': original.removesuffix('END\n'),
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            record = root / 'partition.Release.targets'
+            for label, contents in malformed.items():
+                with self.subTest(case=label):
+                    record.write_text(contents, encoding='utf-8')
+                    with self.assertRaises(ValueError):
+                        boundary.load_generated_graph(root, 'Release')
+            # Empty dependencies and sources are valid, not missing records.
+            record.write_text(
+                'TARGET\tlibrary\nTYPE\tSTATIC_LIBRARY\nDEPS\t\nSOURCES\t\nEND\n'
+                + original, encoding='utf-8')
+            parsed = boundary.load_generated_graph(root, 'Release')
+            self.assertEqual(set(parsed), {'library', 'gate'})
+            self.assertEqual(parsed['library']['dependencies'], [])
+            self.assertEqual(parsed['library']['sources'], [])
+            self.assertEqual(parsed['gate']['type'], 'EXECUTABLE')
+            self.assertEqual(parsed['gate']['dependencies'], [{'id': 'reference_model'}])
+
     def test_actual_compiler_source_set_is_checked(self):
         g = graph()
         g['citrine_eclipse_mirage_objects']['sources'].append({'path': POLICY['reference_sources'][0]})

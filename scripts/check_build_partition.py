@@ -80,28 +80,39 @@ def load_generated_graph(build, config):
     path = Path(build) / ('partition.' + config + '.targets')
     if not path.is_file():
         raise ValueError('CMake generated target graph is missing: ' + str(path))
-    targets, current = {}, None
+    # BuildPartition.cmake emits one TARGET/TYPE/DEPS/SOURCES/END record at
+    # a time. Incomplete or duplicate fields cannot overwrite executable
+    # classifications or dependencies used by the partition checks.
+    targets, current, stage = {}, None, 0
     for line in path.read_text(encoding='utf-8').splitlines():
         if line.startswith('TARGET\t'):
             name = line.split('\t', 1)[1]
-            if name in targets:
-                raise ValueError('Duplicate generated target: ' + name)
+            if current is not None:
+                raise ValueError('Unterminated generated target: ' + current['name'])
+            if not name or name in targets:
+                raise ValueError('Empty or duplicate generated target: ' + name)
             current = {'name': name, 'id': name, 'sources': [], 'dependencies': []}
-            targets[name] = current
-        elif line.startswith('TYPE\t') and current is not None:
-            current['type'] = line.split('\t', 1)[1]
-        elif line.startswith('DEPS\t') and current is not None:
+            stage = 0
+        elif line.startswith('TYPE\t') and current is not None and stage == 0:
+            kind = line.split('\t', 1)[1]
+            if not kind:
+                raise ValueError('Missing generated target type: ' + current['name'])
+            current['type'] = kind
+            stage = 1
+        elif line.startswith('DEPS\t') and current is not None and stage == 1:
             current['dependencies'] = [{'id': v} for v in line.split('\t', 1)[1].split(';') if v]
-        elif line.startswith('SOURCES\t') and current is not None:
+            stage = 2
+        elif line.startswith('SOURCES\t') and current is not None and stage == 2:
             current['sources'] = [{'path': v} for v in line.split('\t', 1)[1].split(';') if v]
-        elif line == 'END':
-            current = None
-        elif line:
+            stage = 3
+        elif line == 'END' and current is not None and stage == 3:
+            targets[current['name']] = current
+            current, stage = None, 0
+        else:
             raise ValueError('Malformed generated target graph')
     if not targets or current is not None:
         raise ValueError('Empty or incomplete generated target graph')
     return targets
-
 
 def target_closure(targets, root):
     by_id = {v['id']: k for k, v in targets.items()}
