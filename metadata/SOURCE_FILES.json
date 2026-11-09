@@ -1749,6 +1749,10 @@
       "bytes": 26448,
       "sha256": "a64c25025ca5aafd3a47c12c4e394d26d7fe6ea9a2f15fe2a0e8493dcc4f950b"
     },
+    "tests/unit/session/aes_handler_tests.cpp": {
+      "bytes": 8721,
+      "sha256": "367fd98eaab70790623371713f5a5426ea28dfd67acdc7e5069a2f5c8523946c"
+    },
     "tests/unit/session/handler_tests.cpp": {
       "bytes": 12855,
       "sha256": "119ba65bbc1f757a6ea4e5b18dce66b0a87b1a426329549f72d33c3d0e989d3c"

@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Exercise real AES across two prepared MessageHandlers sharing event receipts. Preserve counted binary event bytes when a response is dropped or explicitly cancelled, retry under the other key, block duplicate claims and retain FIFO settlement without changing production policy.
+
 - Add a real-Windows native file-copy regression for a target held without write/delete sharing, ensuring rejected overwrite preserves the original and a retry succeeds after the owning handle closes.
 
 - Test GrantAchievement response-writer failures after successful persistence and event publication. Retain committed existing/new rows, release both locks and distinguish completed retries from further partial-progress increments.
