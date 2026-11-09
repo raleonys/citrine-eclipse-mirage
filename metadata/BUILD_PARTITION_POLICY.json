@@ -300,6 +300,7 @@
     "configuration_platform_contracts",
     "content_handlers_contracts",
     "crypt_path_probe_contracts",
+    "dll_attach_failure_contracts",
     "crypto_contracts",
     "dispatch_integration",
     "dll_public_c_consumer",
