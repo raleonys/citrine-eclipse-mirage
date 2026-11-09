@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Preserve the old Config2 logical hash table on allocation failures in direct `Table::assign_from` calls: stage bucket regrouping before publishing destination rows/capacity. Add a complete allocation-fault sweep to the existing source-linked Config2 test while retaining the successful positional ordering and native-capacity model. No shipping export, config serialization or vendor policy changes.
+
 - Add an actual native process-to-registry reentry regression: a startup wait releases both recursive callback locks while retaining both binding leases, then restores outer serialization, results and error state before final drain. Existing recursive callback policy is unchanged.
 
 - Host all README badge SVGs in the repository under resources/badges, retain automatic latest-release and main-CI status updates through a bounded generated-data branch, place Latest release immediately after License, preserve the original embedded logos and Shields/GitHub badge styling, add Changelog and release-immutability badges, report actual main-matching native CTest passed/total counts and latest-release ZIP checksum availability, and remove the Shields dependency. Reduce opening CI to one basic source-integrity job; move manual Windows output fixtures out of that workflow and gate Actions/C++/Python CodeQL analyses on verified later synchronization. Document the required owner migration of GitHub's separate Default Setup while preserving all eleven merge-required validation contexts.

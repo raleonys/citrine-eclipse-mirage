@@ -220,6 +220,52 @@ config_hash::Node assignment_fixture(const std::string& prefix) {
     }
     root.validate();return root;
 }
+
+void table_assignment_failure_rollback() {
+    using namespace config_hash;
+    Table original,source;
+    for(unsigned i=0;i<24;++i)
+        original.insert_unique("before-"+std::to_string(i)+std::string(80,'B'));
+    for(unsigned i=0;i<15;++i)
+        source.insert_unique("after-"+std::to_string(i)+std::string(80,'A'));
+    original.validate();source.validate();
+    require(original.bucket_count==64&&source.bucket_count==64,
+        "direct Table assignment fixtures use the same grown bucket capacity");
+
+    Table committed=original;
+    allocation_probe::count=0;
+    allocation_probe::proxies=0;
+    allocation_probe::fail_at=static_cast<std::size_t>(-1);
+    allocation_probe::armed=true;
+    committed.assign_from(source);
+    allocation_probe::armed=false;
+    const auto allocations=allocation_probe::count;
+    require(allocations>=40&&allocations<10000,
+        "direct Table assignment reaches meaningful throwing allocation sites");
+    require(committed.traversal!=original.traversal,
+        "successful direct Table assignment replaces the logical source");
+    committed.validate();
+
+    for(std::size_t ordinal=1;ordinal<=allocations;++ordinal) {
+        Table destination=original;
+        allocation_probe::count=0;allocation_probe::fail_at=ordinal;
+        allocation_probe::armed=true;
+        bool failed=false;
+        try{destination.assign_from(source);}
+        catch(const std::bad_alloc&){failed=true;}
+        allocation_probe::armed=false;
+        require(failed,"every counted direct Table allocation is injectable");
+        require(destination.bucket_count==original.bucket_count&&
+                destination.traversal==original.traversal,
+            "failed direct Table assignment preserves old traversal and capacity");
+        destination.validate();
+    }
+    Table retry=original;retry.assign_from(source);
+    require(retry.bucket_count==committed.bucket_count&&
+            retry.traversal==committed.traversal,
+        "direct Table assignment remains retryable after an injected failure");
+}
+
 void assignment_failure_rollback() {
     // Fault every throwing data allocation in a successful run; before this fix a
     // recursive failure could consume one previously live destination row.
@@ -322,6 +368,6 @@ int main() {
         std::fflush(stderr);std::_Exit(86);
     });
 #endif
-    try {growth_and_oracle();recursive_assignment();assignment_failure_rollback();lookup_alias_and_failure_rollback();std::cout<<"PASS: "<<checks<<" Config2 growth/copy/positional-reuse checks\n";}
+    try {growth_and_oracle();recursive_assignment();table_assignment_failure_rollback();assignment_failure_rollback();lookup_alias_and_failure_rollback();std::cout<<"PASS: "<<checks<<" Config2 growth/copy/positional-reuse checks\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }
