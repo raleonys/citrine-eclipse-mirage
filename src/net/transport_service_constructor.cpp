@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_service_constructor.hpp"
+#include "citrine_eclipse_mirage/net/transport_service_constructor.hpp"
 #include <bit>
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 std::uint32_t initialize_gate_027be0(CRITICAL_SECTION& section,ServiceGateApi& api){
     if(api.initialize(section,0x80000000U)!=0)return 0;
     return api.get_last_error();
@@ -31,4 +31,4 @@ ServiceEntry* ConstructorRegistryEffects::create_socket_service_0228e0(ContextId
     if(context.value!=context_.identity.value)throw UnsupportedInput("Service constructor projection is bound to one context identity");
     return construct_service_0228e0(context_,effects_,gate_api_,errors_);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

@@ -3,7 +3,6 @@
 // (See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include <algorithm>
-#include <cstdint>
 #include <exception>
 #include <iomanip>
 #include <iostream>
@@ -450,7 +449,7 @@ namespace TAO_PEGTL_NAMESPACE
             if( it != rules.rend() ) {
                return *it;
             }
-            if( keywords.contains( v ) || ( v.find( "__" ) != std::string::npos ) ) {
+            if( keywords.count( v ) != 0 || v.find( "__" ) != std::string::npos ) {
 #if defined( __cpp_exceptions )
                throw parse_error( '\'' + n->string() + "' is a reserved rulename", n->begin );
 #else
@@ -577,7 +576,7 @@ namespace TAO_PEGTL_NAMESPACE
             map_.try_emplace( demangle< T >(), f );
          }
 
-         [[nodiscard]] std::string operator()( const node_ptr& n ) const
+         std::string operator()( const node_ptr& n ) const
          {
             const auto it = map_.find( n->type );
             if( it != map_.end() ) {
@@ -587,7 +586,7 @@ namespace TAO_PEGTL_NAMESPACE
          }
       };
 
-      [[nodiscard]] stringifier make_stringifier()
+      stringifier make_stringifier()
       {
          stringifier nrv;
          nrv.default_ = []( const node_ptr& n ) -> std::string {
@@ -635,7 +634,7 @@ namespace TAO_PEGTL_NAMESPACE
          nrv.add< grammar::hex_val::value >( []( const node_ptr& n ) { return "0x" + n->string(); } );
          nrv.add< grammar::dec_val::value >( []( const node_ptr& n ) { return n->string(); } );
          nrv.add< grammar::bin_val::value >( []( const node_ptr& n ) {
-            std::uint64_t v = 0;
+            unsigned long long v = 0;
             // TODO: Detect overflow
             for( const char t : n->data ) {
                v <<= 1;
@@ -713,8 +712,8 @@ namespace TAO_PEGTL_NAMESPACE
                }
                return prefix + "rep_max< " + max + ", " + content + " >";
             }
-            std::uint64_t min_val = 0;
-            std::uint64_t max_val = 0;
+            unsigned long long min_val;
+            unsigned long long max_val;
             {
                std::stringstream s;
                s.str( min );
@@ -750,7 +749,7 @@ namespace TAO_PEGTL_NAMESPACE
 
       std::string to_string( const node_ptr& n )
       {
-         static const stringifier s = make_stringifier();
+         static stringifier s = make_stringifier();
          return s( n );
       }
 
@@ -770,7 +769,7 @@ namespace TAO_PEGTL_NAMESPACE
 
 }  // namespace TAO_PEGTL_NAMESPACE
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    using namespace TAO_PEGTL_NAMESPACE;
 
@@ -796,7 +795,7 @@ int main( int argc, char** argv )
       const auto& p = e.position_object();
       std::cerr << e.what() << '\n'
                 << in.line_view_at( p ) << '\n'
-                << std::setw( static_cast< int >( p.column ) ) << '^' << '\n';
+                << std::setw( int( p.column ) ) << '^' << '\n';
    }
 #else
    if( const auto root = parse_tree::parse< abnf::grammar::rulelist, abnf::selector, nothing, abnf::control >( in ) ) {

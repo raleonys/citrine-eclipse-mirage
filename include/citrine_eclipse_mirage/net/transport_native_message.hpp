@@ -1,0 +1,58 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
+#pragma once
+#include "citrine_eclipse_mirage/net/transport_request_growth.hpp"
+#include "citrine_eclipse_mirage/net/transport_response_hex.hpp"
+#include "citrine_eclipse_mirage/net/transport_response_containers.hpp"
+
+namespace citrine_eclipse_mirage::socket {
+// Explicit caller-owned projection of the native automatic document/string
+// locals. Fresh per invocation, nonaliasing and mapped in strings.memory;
+// no shared scratch, reentrancy, MSVC object layout or EH implementation implied.
+struct NativeMessageDocument {int error_6c=0;};
+struct NativeMessageLocals {NativeMessageDocument document;ReceiveBufferString response,temporary;};
+struct NativeMessageEventQueue {
+    std::span<ReceiveBufferString*> map_08;std::uint64_t map_size_10=0,offset_18=0,count_20=0;
+};
+struct NativeMessageMutex {std::int32_t lock_count_4c=0;};
+enum class NativeMessageLog {received,response,event,bad_xml,decryption_failure};
+class NativeMessageApi {
+public:
+    virtual ~NativeMessageApi()=default;
+    virtual void construct_document_001830(NativeMessageDocument&,bool,std::uint32_t)=0;
+    virtual int parse_document_004280(NativeMessageDocument&,std::uintptr_t,std::uint64_t)=0;
+    virtual void destroy_document_001e00(NativeMessageDocument&)=0;
+    virtual bool decrypt_042480(std::uintptr_t handler,ReceiveBufferString&,std::uint32_t)=0;
+    virtual bool encrypt_042610(std::uintptr_t handler,ReceiveBufferString&,std::uint32_t)=0;
+    virtual ReceiveBufferString& dispatch_032d00(ReceiveBufferString&,std::uintptr_t handler,NativeMessageDocument&)=0;
+    // Defined log groups stand for006880/0088e0/007990 operations; no original
+    // stream, callback-intermediate log ABI or native log helpers are modeled.
+    virtual void log(NativeMessageLog,NativeMessageDocument&,ReceiveBufferString&)=0;
+    // Mandatory lower helpers with the exact defined native arguments. They
+    // are not replaced by a claim that010040 is called by native033d70.
+    virtual void grow_nul_012350(ReceiveBufferString&,std::uint64_t extra,std::uint64_t hint,std::uint8_t)=0;
+    virtual void grow_append_007e30(ReceiveBufferString&,std::uint64_t extra,std::uint64_t hint,std::uintptr_t source,std::uint64_t count)=0;
+    virtual NativeMessageEventQueue& event_queue_02c400()=0;
+    virtual NativeMessageMutex& event_mutex_02c620()=0;
+    virtual int lock_04a6ac(NativeMessageMutex&)=0;
+    virtual void unlock_04a6b4(NativeMessageMutex&)=0;
+    [[noreturn]]virtual void thread_error_04a648(int)=0;
+};
+struct NativeMessageBinding {std::uintptr_t handler_f0=0;std::uint8_t* encrypted_c4=nullptr;};
+struct NativeMessageContext {
+    std::span<NativeMessageBinding> handlers;const std::uint8_t& show_lsx_a3ef0;
+    ReceiveBufferContext& strings;RequestMutationContext& mutation;
+    NativeMessageLocals& locals;NativeMessageApi& api;
+};
+ReceiveBufferString& process_native_message_033d70(std::uintptr_t handler_f0,
+    ReceiveBufferString& response,ReceiveBufferString& request,NativeMessageContext&);
+// Selects the typed normal source in028d30 instead of the historical N5
+// deferred-writeback semantic adapter. Lower native providers/ABI/EH stay open.
+class NativeMessageApiAdapter:public ResponseDispatchApiAdapter {
+public:
+    NativeMessageApiAdapter(ResponseDispatchContext& responses,NativeMessageContext& context)
+        :ResponseDispatchApiAdapter(responses),context_(context){}
+    void process_message_033d70(std::uintptr_t,ReceiveBufferString&,ReceiveBufferString&) final;
+private:NativeMessageContext& context_;
+};
+} // namespace citrine_eclipse_mirage::socket

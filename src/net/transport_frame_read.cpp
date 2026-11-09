@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_frame_read.hpp"
+#include "citrine_eclipse_mirage/net/transport_frame_read.hpp"
 #include <algorithm>
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 FrameReadOwner& owner_at(std::uintptr_t identity,FrameReadContext& context){
     FrameReadOwner* found=nullptr;bool matched=false;
@@ -120,4 +120,4 @@ void finish_frame_read_025480(ReceiveHandler& handler,Error& error,std::uint64_t
 void FrameReadApiAdapter::finish_frame_025480(ReceiveHandler& h,Error& e,std::uint64_t n){
     finish_frame_read_025480(h,e,n,context_);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/online.hpp"
-#include "preloader_l/core/product_identity.hpp"
+#include "citrine_eclipse_mirage/runtime/online.hpp"
+#include "citrine_eclipse_mirage/core/product_identity.hpp"
 
-namespace preloader_l::online {
+namespace citrine_eclipse_mirage::online {
 bool exists_035b00(const Path& path, Effects& effects) {
     const auto status = effects.status_01ea20(path, 3);
     const auto kind = static_cast<std::uint32_t>(status.kind);
@@ -100,6 +100,13 @@ void load_online_035bd0(StateRefs state, Effects& effects) {
         exists_035b00(state.last_avatar_0a3a60, effects))
         state.avatar_0a3a90 = state.last_avatar_0a3a60;
     if (!state.use_last_profile_0a3c38) return;
+    // The disk format has exactly two unescaped semicolon separators.
+    // A delimiter inside a provider field would make this profile unreadable
+    // by split_profile_fields_03cf00 on the next offline startup. Keep the
+    // authenticated in-memory identity, but do not overwrite the last cache.
+    if (state.persona_id_0a3bf8.find(';') != std::string::npos ||
+        state.user_id_0a3c18.find(';') != std::string::npos ||
+        state.username_0a3bd8.find(';') != std::string::npos) return;
     // String lengths, rather than C-string scans, control the saved profile.
     std::string saved = state.persona_id_0a3bf8;
     saved += ';';
@@ -126,4 +133,4 @@ void worker_035b60(StateRefs state, Effects& effects) {
     if (!state.online_0a3c3b) cleanup_0366f0(state, effects);
     effects.finish_flag_036820();
 }
-} // namespace preloader_l::online
+} // namespace citrine_eclipse_mirage::online

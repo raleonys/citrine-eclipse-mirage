@@ -2,9 +2,10 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include <type_traits>
+
 #include "test.hpp"
 #include "verify_char.hpp"
-#include "verify_ctrl.hpp"
 #include "verify_meta.hpp"
 #include "verify_rule.hpp"
 
@@ -14,13 +15,6 @@ namespace TAO_PEGTL_NAMESPACE
    {
       verify_meta< one< 'a' >, internal::one< internal::peek_char, 'a' > >();
       verify_meta< one< 'a', 'c', 'z' >, internal::one< internal::peek_char, 'a', 'c', 'z' > >();
-
-      verify_ctrl_enabled< one< 'a' > >( __LINE__, __FILE__, "a" );
-      verify_ctrl_disabled< internal::one< internal::peek_char, 'a' > >( __LINE__, __FILE__, "a" );
-      verify_ctrl_disabled< internal::terminal< internal::one< internal::peek_char, 'a' >, internal::peek_char > >( __LINE__, __FILE__, "a" );
-      verify_ctrl_enabled< one< 'a', 'c', 'z' > >( __LINE__, __FILE__, "c" );
-      verify_ctrl_disabled< internal::one< internal::peek_char, 'a', 'c', 'z' > >( __LINE__, __FILE__, "c" );
-      verify_ctrl_disabled< internal::terminal< internal::one< internal::peek_char, 'a', 'c', 'z' >, internal::peek_char > >( __LINE__, __FILE__, "c" );
 
       verify_analyze< one< 'a' > >( __LINE__, __FILE__, true, false );
       verify_analyze< one< 'a', 'c', 'z' > >( __LINE__, __FILE__, true, false );
@@ -37,13 +31,25 @@ namespace TAO_PEGTL_NAMESPACE
          verify_char< one< 'T' > >( __LINE__, __FILE__, c, c == 'T' );
          verify_char< one< 'a', '#', ' ' > >( __LINE__, __FILE__, c, is_one );
       }
-      for( int i = 128; i < 256; ++i ) {
-         const auto c = char( i );
+      if constexpr( std::is_unsigned_v< char > ) {
+         for( int i = 128; i < 256; ++i ) {
+            const auto c = char( i );
 
-         verify_char< one< 'a' > >( __LINE__, __FILE__, c, false );
-         verify_char< one< 'a', 'c', 'z' > >( __LINE__, __FILE__, c, false );
-         verify_char< one< 'T' > >( __LINE__, __FILE__, c, false );
-         verify_char< one< 'a', '#', ' ' > >( __LINE__, __FILE__, c, false );
+            verify_char< one< 'a' > >( __LINE__, __FILE__, c, false );
+            verify_char< one< 'a', 'c', 'z' > >( __LINE__, __FILE__, c, false );
+            verify_char< one< 'T' > >( __LINE__, __FILE__, c, false );
+            verify_char< one< 'a', '#', ' ' > >( __LINE__, __FILE__, c, false );
+         }
+      }
+      else {  // std::is_signed_v< char >
+         for( int i = -128; i < 0; ++i ) {
+            const auto c = char( i );
+
+            verify_char< one< 'a' > >( __LINE__, __FILE__, c, false );
+            verify_char< one< 'a', 'c', 'z' > >( __LINE__, __FILE__, c, false );
+            verify_char< one< 'T' > >( __LINE__, __FILE__, c, false );
+            verify_char< one< 'a', '#', ' ' > >( __LINE__, __FILE__, c, false );
+         }
       }
    }
 

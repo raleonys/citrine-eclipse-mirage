@@ -24,6 +24,12 @@ struct State {
     bool reenter=false,reentry_rejected=false,in_module=false;
     std::uint64_t register_value=0,instruction=0;
     DWORD image_protection=PAGE_READWRITE;
+    DWORD stack_state=MEM_COMMIT,stack_protection=PAGE_READWRITE;
+    unsigned stack_queries=0,fail_stack_query=0;
+    volatile LONG stack_faults=0;
+    void* stack_override=nullptr;
+    SIZE_T stack_region_size=sizeof(stack);
+    bool nonadvancing_stack_region=false;
 } state;
 HANDLE handle(){return reinterpret_cast<HANDLE>(static_cast<std::uintptr_t>(++state.next));}
 BOOL WINAPI module(DWORD,LPCWSTR,HMODULE* out){*out=reinterpret_cast<HMODULE>(state.image.data());return TRUE;}
@@ -63,10 +69,13 @@ SIZE_T WINAPI query(LPCVOID address,PMEMORY_BASIC_INFORMATION out,SIZE_T){
         out->BaseAddress=state.image.data();out->AllocationBase=state.image.data();
         out->RegionSize=state.image.size();return sizeof(*out);
     }
-    const auto start=reinterpret_cast<std::uintptr_t>(state.stack.data());
-    const auto at=reinterpret_cast<std::uintptr_t>(address),end=start+sizeof(state.stack);
-    *out={};out->State=MEM_COMMIT;out->Protect=PAGE_READWRITE;
-    if(at>=start&&at<end){out->BaseAddress=state.stack.data();out->AllocationBase=state.stack.data();out->RegionSize=sizeof(state.stack);return sizeof(*out);}
+    ++state.stack_queries;
+    if(state.stack_queries==state.fail_stack_query)return 0;
+    void* const storage=state.stack_override?state.stack_override:state.stack.data();
+    const auto start=reinterpret_cast<std::uintptr_t>(storage);
+    const auto at=reinterpret_cast<std::uintptr_t>(address),end=start+state.stack_region_size;
+    *out={};out->State=state.stack_state;out->Protect=state.stack_protection;
+    if(at>=start&&at<end){out->BaseAddress=storage;out->AllocationBase=storage;out->RegionSize=state.nonadvancing_stack_region?0:state.stack_region_size;return sizeof(*out);}
     if(at==end){out->BaseAddress=reinterpret_cast<void*>(end);out->AllocationBase=reinterpret_cast<void*>(end);out->RegionSize=8;return sizeof(*out);}
     return 0;
 }
@@ -103,8 +112,8 @@ SIZE_T WINAPI query(LPCVOID address,PMEMORY_BASIC_INFORMATION out,SIZE_T){
 
 BOOL WINAPI fake::context(HANDLE,LPCONTEXT out){
     if(state.context_fail)return FALSE;
-    if(state.reenter)state.reentry_rejected=!preloader_l::external_threads_outside_module();
-    *out={};out->Rsp=reinterpret_cast<std::uint64_t>(state.stack.data());
+    if(state.reenter)state.reentry_rejected=!citrine_eclipse_mirage::external_threads_outside_module();
+    *out={};out->Rsp=reinterpret_cast<std::uint64_t>(state.stack_override?state.stack_override:state.stack.data());
     out->R11=state.register_value;out->Rip=state.instruction;
     if(state.in_module)out->Rip=reinterpret_cast<std::uint64_t>(state.image.data())+32;
     return TRUE;
@@ -117,9 +126,9 @@ void reset(int foreign=0){
     fake::state=fake::State{};fake::state.depth=fake::state.foreign_depth=foreign;
     auto* dos=reinterpret_cast<IMAGE_DOS_HEADER*>(fake::state.image.data());dos->e_lfanew=128;
     auto* nt=reinterpret_cast<IMAGE_NT_HEADERS64*>(fake::state.image.data()+128);nt->OptionalHeader.SizeOfImage=1024;
-    preloader_l::set_shutdown_caller(0);
+    citrine_eclipse_mirage::set_shutdown_caller(0);
 }
-bool scan(){return preloader_l::external_threads_outside_module();}
+bool scan(){return citrine_eclipse_mirage::external_threads_outside_module();}
 void resume_retry(){
     reset();auto& s=fake::state;s.resume_fail=true;
     require(!scan(),"failed resume rejects unload");
@@ -174,11 +183,11 @@ void volatile_register_guard(){
     require(s.threads.empty()&&s.snapshots.empty(),
         "successful R11 scan has no leaked native owners");
     s.register_value=base+128;
-    preloader_l::set_shutdown_caller(11);
+    citrine_eclipse_mirage::set_shutdown_caller(11);
     const auto prior=s.suspends;
     require(scan()&&s.suspends==prior&&s.depth==0,
         "explicit DLL shutdown caller is excluded without suspending its stack");
-    preloader_l::set_shutdown_caller(0);
+    citrine_eclipse_mirage::set_shutdown_caller(0);
     require(!scan()&&s.suspends==prior+1&&s.resumes==s.suspends,
         "clearing caller exclusion restores conservative R11 protection");
 }
@@ -189,6 +198,66 @@ void scan_behavior(){
     require(!scan()&&s.depth==0,"module return address still defers unload");
     s.stack[2]=0;s.reenter=true;
     require(scan()&&s.reentry_rejected&&s.threads.empty()&&s.snapshots.empty(),"reentrant scan fails closed without acquiring owners");
+}
+// A false external-quiescence proof must retain unload ownership until a
+// complete safe retry. Exercise the concrete stack proof behind that contract.
+void stack_region_refusals(){
+    auto reject_and_retry=[](const char* reason){
+        auto& s=fake::state;const auto foreign=s.foreign_depth;
+        require(!scan(),reason);
+        require(s.depth==foreign&&s.suspends==1&&s.resumes==1&&s.closed_owned==0&&
+                s.threads.empty()&&s.snapshots.empty(),
+                "stack proof refusal releases only its own suspension and handles");
+        s.fail_stack_query=0;s.stack_state=MEM_COMMIT;s.stack_protection=PAGE_READWRITE;
+        s.nonadvancing_stack_region=false;
+        require(scan()&&s.depth==foreign&&s.suspends==2&&s.resumes==2&&
+                s.threads.empty()&&s.snapshots.empty(),
+                "repairing stack observation permits a fresh complete unload proof");
+    };
+    for(unsigned failure:{1u,2u,3u}){
+        reset(2);fake::state.fail_stack_query=failure;
+        reject_and_retry("failed initial, current or next-region query refuses unload");
+    }
+    for(DWORD protection:{DWORD(PAGE_NOACCESS),DWORD(PAGE_READWRITE|PAGE_GUARD)}){
+        reset();fake::state.stack_protection=protection;
+        reject_and_retry("inaccessible or guarded stack region refuses unload");
+    }
+    reset();fake::state.stack_state=MEM_RESERVE;
+    reject_and_retry("uncommitted stack region refuses unload");
+    reset();fake::state.nonadvancing_stack_region=true;
+    reject_and_retry("nonadvancing stack region refuses unload");
+}
+LONG CALLBACK observe_stack_read(PEXCEPTION_POINTERS exception){
+    const auto& record=*exception->ExceptionRecord;
+    if(record.ExceptionCode==EXCEPTION_ACCESS_VIOLATION&&record.NumberParameters>=2){
+        const auto address=record.ExceptionInformation[1];
+        const auto start=reinterpret_cast<ULONG_PTR>(fake::state.stack_override);
+        if(address>=start&&address-start<4096)InterlockedIncrement(&fake::state.stack_faults);
+    }
+    return EXCEPTION_CONTINUE_SEARCH;
+}
+void oversized_stack_region(){
+    reset();auto& s=fake::state;
+    void* page=VirtualAlloc(nullptr,4096,MEM_RESERVE|MEM_COMMIT,PAGE_NOACCESS);
+    require(page!=nullptr,"allocate one protected page as a stack-read tripwire");
+    auto observer=AddVectoredExceptionHandler(1,observe_stack_read);
+    if(!observer){VirtualFree(page,0,MEM_RELEASE);require(false,"install stack-read observer");}
+    s.stack_override=page;s.stack_region_size=64ULL*1024*1024+8;
+    // The query shim claims a readable oversized region. Physical protection
+    // exposes any attempted read, even if the production SEH handler catches it.
+    const bool safe=scan();
+    const auto queries=s.stack_queries;const auto faults=s.stack_faults;
+    s.stack_override=nullptr;s.stack_region_size=sizeof(s.stack);
+    const bool observer_removed=RemoveVectoredExceptionHandler(observer)!=0;
+    const bool page_freed=VirtualFree(page,0,MEM_RELEASE)!=FALSE;
+    require(observer_removed&&page_freed,"release the observer and protected probe page");
+    require(!safe&&queries==2&&faults==0,
+            "over-budget region refuses unload before reading any stack bytes");
+    require(s.depth==0&&s.suspends==1&&s.resumes==1&&s.closed_owned==0&&
+            s.threads.empty()&&s.snapshots.empty(),
+            "budget refusal balances its exact native scan owners");
+    require(scan()&&s.suspends==2&&s.resumes==2&&s.threads.empty()&&s.snapshots.empty(),
+            "bounded stack proof succeeds after oversized observation is repaired");
 }
 void tls_data_marker(){
     reset();auto& s=fake::state;
@@ -226,5 +295,5 @@ void tls_data_marker(){
     require(!scan(),"reversed TLS data range fails closed");
 }
 }
-int main()try{resume_retry();close_retry();other_failures();volatile_register_guard();scan_behavior();tls_data_marker();std::cout<<"PASS: "<<checks<<" actual unload guard failure/retry and stack checks\n";}
+int main()try{resume_retry();close_retry();other_failures();volatile_register_guard();scan_behavior();stack_region_refusals();oversized_stack_region();tls_data_marker();std::cout<<"PASS: "<<checks<<" actual unload guard failure/retry and stack checks\n";}
 catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
