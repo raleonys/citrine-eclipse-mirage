@@ -2,7 +2,7 @@
 
 #include "tests/support/socket/node_string_test_fixture.hpp"
 #include "tests/support/socket/node_constructors_test_fixture.hpp"
-#include "preloader_l/xml/pool_release.hpp"
+#include "citrine_eclipse_mirage/xml/pool_release.hpp"
 using namespace node_constructors_test;
 namespace {
 using Memory=node_parse_test::Memory;

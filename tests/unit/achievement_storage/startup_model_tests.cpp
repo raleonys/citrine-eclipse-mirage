@@ -2,7 +2,7 @@
 
 #include "../../support/fixture_ascii.hpp"
 #include "storage_fixture.hpp"
-#include "preloader_l/config/startup.hpp"
+#include "citrine_eclipse_mirage/config/startup.hpp"
 
 namespace {
 struct Configuration final:achievement_storage::ConfigurationDependencies {
@@ -14,7 +14,7 @@ struct Configuration final:achievement_storage::ConfigurationDependencies {
     Path join_016b00(const Path& a,const Path& b)override{return join(a,b);}
     Path widen_0145d0(std::string_view s)override{return wide(s);}
     Path filesystem_widen_010540(std::string_view s)override{return wide(s);}
-    std::string narrow_path(const Path& p)override{return preloader_l::test_support::fixture_ascii(p);}
+    std::string narrow_path(const Path& p)override{return citrine_eclipse_mirage::test_support::fixture_ascii(p);}
     Path resolve_path_0192d0(std::string_view s,const Path&,bool)override{return wide(s);}
     Path program_data_03c920()override{return u"PROGRAM";}
     Path local_app_data_03c6f0()override{return u"LOCAL";}

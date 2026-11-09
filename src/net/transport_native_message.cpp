@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_native_message.hpp"
+#include "citrine_eclipse_mirage/net/transport_native_message.hpp"
 #include <limits>
 #include <string_view>
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 void reset(ReceiveBufferString& value){value.size_10=0;value.capacity_18=15;value.storage_00[0]=0;}
 void destroy(ReceiveBufferString& value,ReceiveBufferContext& context){
@@ -117,4 +117,4 @@ ReceiveBufferString& process_native_message_033d70(std::uintptr_t identity,Recei
 void NativeMessageApiAdapter::process_message_033d70(std::uintptr_t identity,ReceiveBufferString& output,ReceiveBufferString& request){
     process_native_message_033d70(identity,output,request,context_);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

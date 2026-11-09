@@ -2,13 +2,6 @@
 name: Windows queued shutdown retry acceptance
 
 on:
-  pull_request:
-    paths:
-      - "src/platform/dll_entry.cpp"
-      - "src/platform/hook_unload_guard.cpp"
-      - "tests/support/runtime/application_shutdown_fixture.cpp"
-      - "tests/native/application_shutdown_failure_tests.cpp"
-      - ".github/workflows/msvc-shutdown-retry-queue.yml"
   workflow_dispatch:
 
 permissions:
@@ -38,18 +31,18 @@ jobs:
       - name: Configure native fixture
         run: |
           $build = 'build/ci-queued-shutdown-${{ matrix.configuration }}'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF
           if ($LASTEXITCODE -ne 0) { throw 'Shutdown queue configure failed' }
       - name: Build actual entry and shutdown failure fixtures
         run: |
           $build = 'build/ci-queued-shutdown-${{ matrix.configuration }}'
           cmake --build $build --config '${{ matrix.configuration }}' --target application_shutdown_failure_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/queued-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'Shutdown queue fixture build failed' }
-      - name: Verify two caller requests remain distinct through failed cleanup
+      - name: Verify startup overlap and distinct queued shutdown retries
         run: |
           $build = 'build/ci-queued-shutdown-${{ matrix.configuration }}'
           $junit = Join-Path (Resolve-Path $build) 'queued-junit.xml'
-          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^application_shutdown_failure_contracts$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/queued-ctest.log"
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^application_shutdown_failure_contracts$' --no-tests=error --verbose --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/queued-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'Queued shutdown retry regression failed' }
       - name: Preserve native acceptance evidence
         if: always()

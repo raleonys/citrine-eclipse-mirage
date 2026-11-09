@@ -166,7 +166,7 @@ improvement.
 After a normal Production Build, from the project root:
 
 ```powershell
-python -B scripts/collect_size_evidence.py --build-dir build/golden_msvc --dll dist/preloader_l.dll --output build/qa/native-size-evidence.zip
+python -B scripts/collect_size_evidence.py --build-dir build/golden_msvc --dll dist/citrine_eclipse_mirage.dll --output build/qa/native-size-evidence.zip
 ```
 
 If `dumpbin` is available on PATH within a Visual

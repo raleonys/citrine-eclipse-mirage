@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_cipher_session.hpp"
-#include "preloader_l/codec/crypto_constants.hpp"
+#include "citrine_eclipse_mirage/net/transport_cipher_session.hpp"
+#include "citrine_eclipse_mirage/codec/crypto_constants.hpp"
 #include <algorithm>
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 SessionCipher& construct_session_cipher_0423d0(SessionCipher& value){
     value.native_.mode_00=0;
     value.schedule_.construct_0423d0_in_place(); // existing zero176 schedule source
@@ -58,4 +58,4 @@ bool SessionCipher::transform_local(std::string& value,bool encrypt){
 bool SessionCipher::decrypt_042480(std::string& value){return transform_local(value,false);}
 bool SessionCipher::encrypt_042610(std::string& value){return transform_local(value,true);}
 std::unique_ptr<messages::Cipher> SessionCipherFactory::create_0423d0(){return std::make_unique<SessionCipher>();}
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

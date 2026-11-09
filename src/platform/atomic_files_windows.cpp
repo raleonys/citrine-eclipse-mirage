@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/core/binary_io.hpp"
+#include "citrine_eclipse_mirage/core/binary_io.hpp"
 #include <windows.h>
 #include <algorithm>
 #include <atomic>
@@ -10,7 +10,7 @@
 #include <vector>
 #include <exception>
 
-namespace preloader_l::file {
+namespace citrine_eclipse_mirage::file {
 namespace {
 [[noreturn]] void fail(const char* operation,DWORD error=GetLastError()) {
     throw std::system_error(static_cast<int>(error),std::system_category(),operation);
@@ -42,6 +42,26 @@ class NativeOps final:public AtomicFileOps {
         if(!CloseHandle(entry.file))fail("close atomic staging file");
         entry.file=INVALID_HANDLE_VALUE;
     }
+    void remove_pending(const Path& owned) {
+        const auto path=wide(owned);
+        if(DeleteFileW(path.c_str()))return;
+        auto error=GetLastError();
+        if(error==ERROR_ACCESS_DENIED) {
+            const auto attributes=GetFileAttributesW(path.c_str());
+            if(attributes==INVALID_FILE_ATTRIBUTES)error=GetLastError();
+            else if(attributes&FILE_ATTRIBUTE_READONLY) {
+                // CopyFile can copy readonly onto an owned backup before its
+                // return-path allocation fails. Only cleanup changes this flag.
+                const auto writable=attributes&~FILE_ATTRIBUTE_READONLY;
+                if(!SetFileAttributesW(path.c_str(),writable?writable:FILE_ATTRIBUTE_NORMAL))
+                    fail("clear failed atomic staging readonly attribute");
+                if(DeleteFileW(path.c_str()))return;
+                error=GetLastError();
+            }
+        }
+        if(error!=ERROR_FILE_NOT_FOUND&&error!=ERROR_PATH_NOT_FOUND)
+            fail("remove failed atomic staging file",error);
+    }
     Path release(Pending& entry) {
         Path result=entry.path; // Allocate the return value while still owned.
         pending_.pop_back();return result;
@@ -57,10 +77,7 @@ public:
         for(auto& entry:pending_) {
             try {
                 close(entry);
-                if(entry.owned&&!DeleteFileW(wide(entry.path).c_str())) {
-                    const auto error=GetLastError();
-                    if(error!=ERROR_FILE_NOT_FOUND&&error!=ERROR_PATH_NOT_FOUND)fail("remove failed atomic staging file",error);
-                }
+                if(entry.owned)remove_pending(entry.path);
                 entry.owned=false;
             }catch(...){if(!first)first=std::current_exception();}
         }
@@ -127,4 +144,4 @@ void NativeFactory::replace_atomic(std::span<const FileWrite> writes) {
 void NativeFactory::recover_atomic() {
     std::lock_guard lock(atomic_->mutex);atomic_->files.recover();
 }
-} // namespace preloader_l::file
+} // namespace citrine_eclipse_mirage::file

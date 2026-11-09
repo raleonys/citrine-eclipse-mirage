@@ -1,5 +1,10 @@
 # Brownfield metadata audit
 
+Historical comparison record. The later owner reference replaced the timestamp;
+the project identity decision replaced the VERSIONINFO branding, version fields
+and internal export module name. Current requirements are maintained in
+`metadata/MUSTAVEX_GOLDEN_METADATA.json` and [DEVELOPMENT.md](DEVELOPMENT.md).
+
 The owner's instruction to check all metadata against
 Brownfield, including Compilation Timestamp, was applied.
 The former decision to preserve compiler timestamp,
@@ -25,7 +30,7 @@ image size, and three explicit owner exceptions differ.
 | `subsystem_version` | `[6, 0]` |
 | `linker_version` | `[14, 0]` |
 | `timestamp` | `"0xCD268EB1"` |
-| `export_internal_name` | `"preloader.unsigned.dll"` |
+| `export_internal_name` | `"citrine_eclipse_mirage.unsigned.dll"` |
 | `rich_header` | `"ABSENT"` |
 | `additional_resource_assets` | `[]` |
 | `VERSIONINFO.fixed.dwSignature` | `0xFEEF04BD` |
@@ -67,7 +72,7 @@ Verification compares the raw 32-bit value.
 | Structural validity | Alignment, file extents, no raw/virtual overlaps, and RVA ordering checked |
 | Excluded targets | Other section addresses/sizes, entrypoint RVA, and entire image size are not required to match Brownfield |
 | Identity | Brownfield's declared blocklists for older project names/versions remain the same |
-| Export | Preserve the owner's five C exports; internal module name `preloader.unsigned.dll` |
+| Export | Preserve the owner's five C exports; internal module name `citrine_eclipse_mirage.unsigned.dll` |
 | Import | Owner's six modules, with only `CryptQueryObject` from CRYPT32; no OLE32 |
 | CRT | Verify actual MSVC /MT, /GS cookie, and executable CRT entrypoint |
 | Integrity | Compute PE checksum; reject byte mutations during read-only Golden stages |
@@ -75,7 +80,7 @@ Verification compares the raw 32-bit value.
 ## File under inspection
 
 Do not modify the raw
-`build/.../preloader.unsigned.dll`.
+`build/.../citrine_eclipse_mirage.unsigned.dll`.
 URSYNEX can modify only the four-byte timestamp,
 two-byte linker value, Rich block, and four-byte
 checksum in a separate candidate copy.
@@ -85,14 +90,14 @@ removed to conceal a bad build. Reject finalization
 if any other bytes change.
 
 After all Golden checks and the final-named runtime
-test, write `dist/preloader_l.dll`, its SHA-256,
+test, write `dist/citrine_eclipse_mirage.dll`, its SHA-256,
 and receipt. Renaming the file does not change
 the internal export-module name. Inspection of
 the old raw unsigned file does not show the final
 metadata outcome.
 
 ```powershell
-python -B tools/inspect_dll.py dist/preloader_l.dll --final --report build/final-metadata.json
+python -B tools/inspect_dll.py dist/citrine_eclipse_mirage.dll --final --report build/final-metadata.json
 ```
 
 This read-only check reports MUSTAVEX/header/checksum/

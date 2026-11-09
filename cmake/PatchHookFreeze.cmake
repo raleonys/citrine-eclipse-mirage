@@ -4,7 +4,7 @@ if(NOT DEFINED MINHOOK_HOOK_C OR NOT EXISTS "${MINHOOK_HOOK_C}")
     message(FATAL_ERROR "MINHOOK_HOOK_C missing")
 endif()
 file(READ "${MINHOOK_HOOK_C}" _mh)
-if(_mh MATCHES "PRELOADER_L_MH_SAFE_FREEZE_V1")
+if(_mh MATCHES "CITRINE_ECLIPSE_MIRAGE_MH_SAFE_FREEZE_V1")
     return()
 endif()
 
@@ -126,7 +126,7 @@ static BOOL EnumerateThreads(PFROZEN_THREADS pThreads)]=])
 _replace_between(
 "static BOOL EnumerateThreads(PFROZEN_THREADS pThreads)"
 "//-------------------------------------------------------------------------\nstatic MH_STATUS Freeze"
-[=[/* PRELOADER_L_MH_SAFE_FREEZE_V1
+[=[/* CITRINE_ECLIPSE_MIRAGE_MH_SAFE_FREEZE_V1
  *
  * Stock MinHook enumerates peer threads with CreateToolhelp32Snapshot.
  * In the target process that snapshot path can stall after loader startup.

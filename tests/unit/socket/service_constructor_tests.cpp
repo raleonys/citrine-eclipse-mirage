@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_service_constructor.hpp"
-#include "preloader_l/net/transport_recycle_storage.hpp"
+#include "citrine_eclipse_mirage/net/transport_service_constructor.hpp"
+#include "citrine_eclipse_mirage/net/transport_recycle_storage.hpp"
 #include <bit>
 #include <functional>
 #include <iostream>
 #include <limits>
 #include <vector>
 
-namespace s=preloader_l::socket;
-namespace srv=preloader_l::server;
+namespace s=citrine_eclipse_mirage::socket;
+namespace srv=citrine_eclipse_mirage::server;
 namespace {
 unsigned checks=0;
 void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}

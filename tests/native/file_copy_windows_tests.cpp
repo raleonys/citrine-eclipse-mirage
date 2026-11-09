@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/file_copy.hpp"
+#include "citrine_eclipse_mirage/platform/file_copy.hpp"
 #include <windows.h>
 #include <filesystem>
 #include <fstream>
@@ -10,7 +10,7 @@
 
 namespace {
 namespace fs=std::filesystem;
-namespace copy=preloader_l::file_copy;
+namespace copy=citrine_eclipse_mirage::file_copy;
 void require(bool value,const char* what) {if(!value)throw std::runtime_error(what);}
 struct Directory {
     fs::path path;

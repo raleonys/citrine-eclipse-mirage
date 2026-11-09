@@ -12,12 +12,12 @@ from verify_corvexon_golden_trail import PE, PEError, u16
 def check_source(root):
     root = Path(root)
     policy = json.loads((root / 'metadata/PUBLIC_DLL_ABI.json').read_text())
-    lines = (root / 'exports/preloader_l.def').read_text().splitlines()
+    lines = (root / 'exports/citrine_eclipse_mirage.def').read_text().splitlines()
     expected = {name: record['ordinal'] for name, record in policy['exports'].items()}
     actual = {}
     for line in lines:
         line = line.strip()
-        if not line or line.startswith(';') or line == 'EXPORTS' or line == 'LIBRARY "preloader.unsigned.dll"':
+        if not line or line.startswith(';') or line == 'EXPORTS' or line == 'LIBRARY "citrine_eclipse_mirage.unsigned.dll"':
             continue
         match = re.fullmatch(r'(\w+)\s+@(\d+)', line)
         if not match or match[1] in actual:

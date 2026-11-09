@@ -1,5 +1,10 @@
 # Owner-provided Asio snapshot update
 
+This report records the Asio update checkpoint and its validation at that time.
+The current four active vendors are Asio, MinHook, PEGTL and pugixml;
+[PR #149](https://github.com/raleonys/citrine-eclipse-mirage/pull/149) subsequently
+replaced TinyXML2. See [VENDORING.md](VENDORING.md) for current inputs.
+
 The owner supplied a new asio-master.zip and explicitly requested the update.
 The header still reports 1.38.2 (ASIO_VERSION 103802); this is a source snapshot
 update, not a claim that a new numbered Asio release was supplied.
@@ -33,7 +38,8 @@ and aligned-CRT injection tests and the isolated MSVC-helper replay. Existing
 shutdown/drain, timer, bounded-session, worker FIFO and network failure tests
 exercise the active transport. No application source, protocol/SDK/listener,
 public ABI, metadata resource or avatar policy changes are authorized here.
-MinHook/PEGTL/TinyXML2 archive locks and payloads remain unchanged.
+At this Asio update checkpoint, the MinHook, PEGTL and then-active TinyXML2
+archive locks and payloads were unchanged.
 
 The existing tamper regression now derives its expected member count from the
 lock rather than the previous hard-coded 1607. Its same-count/two-damaged-alias
