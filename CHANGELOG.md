@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Register the unchanged recovered bootstrap and thread-context model fixtures in portable CTest with their existing 60-second budgets. Exercise synthetic context handoff, payload/effect ordering and exit-wait notifications without claiming native CRT or OS-thread execution; retain the native/reference registrations.
+
 - Cover Windows native binary output open rejection under an active read-only sharing lease, proving the file is not truncated and a retry succeeds once the handle is closed.
 
 - Add a real-Windows native file-copy regression for a target held without write/delete sharing, ensuring rejected overwrite preserves the original and a retry succeeds after the owning handle closes.

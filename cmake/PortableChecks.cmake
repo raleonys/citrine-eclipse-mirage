@@ -27,6 +27,12 @@ portable_check(portable_execution src/runtime/execution.cpp tests/unit/execution
 portable_check(portable_execution_concurrency src/runtime/execution.cpp tests/unit/execution/concurrency_tests.cpp)
 target_link_libraries(portable_execution_concurrency PRIVATE Threads::Threads)
 set_tests_properties(portable_execution_concurrency PROPERTIES TIMEOUT 30)
+# Recovered source models with synthetic effects, not native CRT/OS threads.
+portable_check(portable_bootstrap_model src/runtime/bootstrap.cpp
+  tests/unit/bootstrap/bootstrap_tests.cpp)
+portable_check(portable_thread_model src/runtime/thread_launch.cpp src/runtime/bootstrap.cpp
+  tests/unit/thread/thread_tests.cpp)
+set_tests_properties(portable_bootstrap_model portable_thread_model PROPERTIES TIMEOUT 60)
 portable_check(portable_network_hook src/platform/hook_connect.cpp src/runtime/execution.cpp
   tests/unit/network_hook/hook_tests.cpp)
 target_compile_definitions(portable_network_hook PRIVATE CITRINE_ECLIPSE_MIRAGE_PRODUCTION_NETWORK_TESTS=1)
