@@ -1194,16 +1194,16 @@
       "sha256": "5b1cd4d572d8faa6a5a26ba7632885010639323f30df38be0faeb7f33936eeb0"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
-      "bytes": 27969,
-      "sha256": "5164cf46bbd0b91296032ba6053af0a61b458bf4d9d4b603705a005443aaa965"
+      "bytes": 32670,
+      "sha256": "6349e4b5235e08aa752a228bc515214db3c44c76d0fa02ff01820a21e66fd5e7"
     },
     "tests/infrastructure/test_project_version.py": {
       "bytes": 4598,
       "sha256": "f2bf7fd4cba30e38014a855bc84f2237a9d68b7b7cf051de772a0c8fa2a08b7e"
     },
     "tests/infrastructure/test_public_abi.py": {
-      "bytes": 2128,
-      "sha256": "a62a0ff644cc5e9a990d1d7c1b306d4de8423e6c24bfd14b33167c66ff2d7272"
+      "bytes": 3769,
+      "sha256": "f0ae3bdb9495055adde74afb8107dfea3380eccf2d7a70ffba9a0553981ea4d1"
     },
     "tests/infrastructure/test_repository_badges.py": {
       "bytes": 16432,

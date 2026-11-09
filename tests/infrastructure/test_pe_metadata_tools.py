@@ -198,6 +198,7 @@ with tempfile.TemporaryDirectory() as td:
 
 # CORVEXON Golden Trail binary-side ABI self-test.
 cor=load('cor',r/'scripts/verify_corvexon_golden_trail.py')
+public_abi=load('public_abi',r/'scripts/check_dll_exports.py')
 cor_policy=json.loads((fixture_root/'metadata/CORVEXON_GOLDEN_TRAIL.json').read_text())
 
 def build_corvexon_fixture(imports=('CRYPT32.DLL','WS2_32.DLL','KERNEL32.DLL')):
@@ -227,8 +228,11 @@ def build_corvexon_fixture(imports=('CRYPT32.DLL','WS2_32.DLL','KERNEL32.DLL')):
     data[off(0x1200):off(0x1200)+len(module_name)]=module_name
     for i,rva in enumerate((0x1510,0x1520,0x1530)): struct.pack_into('<I',data,off(0x1190)+i*4,rva)
     names=('DllMain','SURGE','DllShutdown'); nrvas=(0x11C0,0x11D0,0x11E0)
-    for i,rva in enumerate(nrvas): struct.pack_into('<I',data,off(0x11A0)+i*4,rva)
-    for i,idx in enumerate((0,1,2)): struct.pack_into('<H',data,off(0x11B0)+i*2,idx)
+    # Name-pointer rows are lexical by name, independently of physical string
+    # storage and EAT ordinal order. Each ordinal moves with its name pointer.
+    for i,idx in enumerate((0,2,1)):
+        struct.pack_into('<I',data,off(0x11A0)+i*4,nrvas[idx])
+        struct.pack_into('<H',data,off(0x11B0)+i*2,idx)
     for name,rva in zip(names,nrvas):
         z=name.encode()+b'\0'; data[off(rva):off(rva)+len(z)]=z
     # import descriptors, names only (sufficient for module-policy inspection)
@@ -253,11 +257,81 @@ with tempfile.TemporaryDirectory() as td:
     assert info['exports']['DllMain'][0]==1 and info['exports']['SURGE'][0]==2 and info['exports']['DllShutdown'][0]==3
     assert info['entrypoint_rva']==0x1500
     assert info['pe_checksum']==cor.compute_pe_checksum(good,opt_off+64)
+    expected_exports={'DllMain':(1,0x1510,False),'DllShutdown':(3,0x1530,False),'SURGE':(2,0x1520,False)}
+    parsed_exports=cor.PE(gp).exports()
+    assert parsed_exports==expected_exports,parsed_exports
+    assert list(parsed_exports)==['DllMain','DllShutdown','SURGE'],parsed_exports
+    names_off=0x400+(0x11A0-0x1000)
+    name_rows=[(struct.unpack_from('<I',good,names_off+i*4)[0],
+                struct.unpack_from('<H',good,ords_off+i*2)[0]) for i in range(3)]
+    assert name_rows==[(0x11C0,0),(0x11E0,2),(0x11D0,1)],name_rows
+    assert public_abi.inspect(gp,r)['result']=='PASS_PUBLIC_C_EXPORT_CONTRACT'
+    assert gp.read_bytes()==good,'valid export-table inspection changed bytes'
+
+    # All five other permutations keep the exact same name-to-ordinal/body
+    # mapping. A set/dict-only export check cannot detect this malformed order.
+    for permutation in ((0,2,1),(1,0,2),(1,2,0),(2,0,1),(2,1,0)):
+        bad=bytearray(good)
+        for i,index in enumerate(permutation):
+            name_rva,ordinal_index=name_rows[index]
+            struct.pack_into('<I',bad,names_off+i*4,name_rva)
+            struct.pack_into('<H',bad,ords_off+i*2,ordinal_index)
+        changed_rows=[(struct.unpack_from('<I',bad,names_off+i*4)[0],
+                       struct.unpack_from('<H',bad,ords_off+i*2)[0]) for i in range(3)]
+        assert sorted(changed_rows)==sorted(name_rows),'paired export mapping changed'
+        struct.pack_into('<I',bad,opt_off+64,cor.compute_pe_checksum(bad,opt_off+64))
+        assert struct.unpack_from('<I',bad,opt_off+64)[0]==cor.compute_pe_checksum(bad,opt_off+64)
+        path=td/('unordered_export_names_'+''.join(map(str,permutation))+'.dll');path.write_bytes(bad)
+        for label,inspect in [('PE.exports',lambda:cor.PE(path).exports()),
+                              ('CORVEXON',lambda:cor.inspect_shipping_abi(path,cor_policy)),
+                              ('public ABI',lambda:public_abi.inspect(path,r))]:
+            try:
+                inspect()
+            except (cor.PEError,public_abi.PEError) as error:
+                assert 'export name pointer table is not in lexical order' in str(error),(label,error)
+            else:
+                raise AssertionError((label,'accepted nonlexical export name rows',permutation))
+            assert path.read_bytes()==bad,(label,'unordered export inspection changed bytes')
+
+    # Distinct sorted names may alias one EAT ordinal and code address. This is
+    # a generic PE parser control, not the application's exact ordinal policy.
+    alias=bytearray(good);struct.pack_into('<H',alias,ords_off+4,0)
+    struct.pack_into('<I',alias,opt_off+64,cor.compute_pe_checksum(alias,opt_off+64))
+    path=td/'sorted_export_alias.dll';path.write_bytes(alias)
+    exports=cor.PE(path).exports()
+    assert list(exports)==['DllMain','DllShutdown','SURGE'],exports
+    assert exports['DllMain']==exports['SURGE']==(1,0x1510,False),exports
+    assert exports['DllShutdown']==(3,0x1530,False),exports
+    assert path.read_bytes()==alias,'generic alias inspection changed bytes'
+
+    # Lexical comparison uses the actual ASCII spelling, including case and
+    # prefixes. A case-folded comparison would accept A,a,AA and reject A,AA,a.
+    case_names=bytearray(good)
+    for name,(name_rva,_) in zip(('A','AA','a'),name_rows):
+        offset=0x400+(name_rva-0x1000);encoded=name.encode('ascii')+b'\0'
+        case_names[offset:offset+len(encoded)]=encoded
+    struct.pack_into('<I',case_names,opt_off+64,cor.compute_pe_checksum(case_names,opt_off+64))
+    path=td/'case_sensitive_export_names.dll';path.write_bytes(case_names)
+    assert cor.PE(path).exports()=={'A':(1,0x1510,False),'AA':(3,0x1530,False),'a':(2,0x1520,False)}
+    assert path.read_bytes()==case_names,'case-sensitive export inspection changed bytes'
+    for i,index in enumerate((0,2,1)):
+        name_rva,ordinal_index=name_rows[index]
+        struct.pack_into('<I',case_names,names_off+i*4,name_rva)
+        struct.pack_into('<H',case_names,ords_off+i*2,ordinal_index)
+    struct.pack_into('<I',case_names,opt_off+64,cor.compute_pe_checksum(case_names,opt_off+64))
+    path.write_bytes(case_names)
+    try:
+        cor.PE(path).exports()
+    except cor.PEError as error:
+        assert 'export name pointer table is not in lexical order' in str(error),error
+    else:
+        raise AssertionError('accepted case-folded export-name ordering')
+    assert path.read_bytes()==case_names,'rejected case-sensitive export inspection changed bytes'
     # F1536-002: downstream final-binary acceptance must reject a stale PE checksum.
     bad=bytearray(good); bad[-1]^=0x01; bp=td/'bad_checksum.dll'; bp.write_bytes(bad)
     errors,_=cor.inspect_shipping_abi(bp,cor_policy); assert any('PE CheckSum=' in x for x in errors), errors
     # Wrong ordinal must fail.
-    bad=bytearray(good); struct.pack_into('<H',bad,ords_off+2,2); bp=td/'bad_ordinal.dll'; bp.write_bytes(bad)
+    bad=bytearray(good); struct.pack_into('<H',bad,ords_off+4,2); bp=td/'bad_ordinal.dll'; bp.write_bytes(bad)
     errors,_=cor.inspect_shipping_abi(bp,cor_policy); assert any('SURGE ordinal=' in x for x in errors)
     # F321-S061-001: an ordinal-only fourth function is not invisible to the exact ABI gate.
     bad=bytearray(good); eo=0x400+(0x1100-0x1000); funcs=0x400+(0x1190-0x1000); struct.pack_into('<I',bad,eo+20,4); struct.pack_into('<I',bad,funcs+12,0x1540); struct.pack_into('<I',bad,opt_off+64,0); struct.pack_into('<I',bad,opt_off+64,cor.compute_pe_checksum(bad,opt_off+64)); bp=td/'bad_ordinal_only.dll'; bp.write_bytes(bad)
