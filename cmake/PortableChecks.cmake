@@ -38,6 +38,15 @@ target_compile_definitions(portable_file_io PRIVATE CITRINE_ECLIPSE_MIRAGE_PORTA
 portable_check(portable_config_order src/config/parser.cpp src/config/order.cpp tests/unit/config_order/order_tests.cpp)
 portable_check(portable_config_hash src/config/parser.cpp src/config/hash_table.cpp tests/unit/config_hash/hash_table_tests.cpp)
 portable_check(portable_config_hash_model_differential src/config/parser.cpp src/config/order.cpp src/config/hash_table.cpp tests/unit/config_hash/order_differential_tests.cpp)
+add_executable(portable_config_application tests/unit/config_application/application_tests.cpp
+  src/config/application.cpp src/config/parser.cpp src/config/hash_table.cpp
+  src/core/binary_io.cpp src/runtime/online.cpp)
+target_include_directories(portable_config_application PRIVATE include)
+target_link_libraries(portable_config_application PRIVATE portable_config citrine_eclipse_mirage_pegtl)
+target_compile_definitions(portable_config_application PRIVATE CITRINE_ECLIPSE_MIRAGE_PORTABLE_CONFIG_APPLICATION_TESTS=1)
+add_test(NAME portable_config_application COMMAND portable_config_application
+  "${CMAKE_CURRENT_BINARY_DIR}/config-application-fixtures")
+set_tests_properties(portable_config_application PROPERTIES TIMEOUT 60)
 portable_check(portable_host_hooks src/platform/hook_setup.cpp src/core/paths.cpp tests/unit/host_init/host_init_tests.cpp)
 foreach(_parser_target portable_parser portable_config_order portable_config_hash portable_config_hash_model_differential)
   target_link_libraries(${_parser_target} PRIVATE citrine_eclipse_mirage_pegtl)
