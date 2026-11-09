@@ -106,6 +106,78 @@ class MsvcCompilerReceiptTests(unittest.TestCase):
         self.cache.write_text(original, encoding='utf-8')
         self.assertIn('Build identity mismatch: cmake_cache_sha256', self.errors())
 
+    def test_literal_compiler_id_survives_generated_cmake_lexical_context(self):
+        declaration = 'set(CMAKE_CXX_COMPILER_ID "MSVC")\n'
+        cases = {
+            'ordinary': declaration,
+            'line_comments': '# set(CMAKE_CXX_COMPILER_ID "Clang")\r\n' + declaration + '# trailing comment\n',
+            'bracket_comments': '#[==[\nset(CMAKE_CXX_COMPILER_ID "Clang")\n]==]\n' + declaration,
+            'quoted_argument': 'set(OTHER "set(CMAKE_CXX_COMPILER_ID \\"Clang\\")")\n' + declaration,
+            'bracket_argument': 'set(OTHER [=[\nset(CMAKE_CXX_COMPILER_ID "Clang")\n]=])\n' + declaration,
+            'nested_arguments': 'message(\n set(CMAKE_CXX_COMPILER_ID "Clang")\n)\n' + declaration,
+            'multiline_command': 'SeT (\n CMAKE_CXX_COMPILER_ID\n "MSVC"\n)\n',
+            'other_control_blocks': declaration + 'foreach(item IN ITEMS one two)\nif(FALSE)\nset(OTHER "ignored")\nendif()\nendforeach()\n',
+            'utf8_bom': '\ufeff' + declaration,
+        }
+        record = self.build / 'CMakeFiles/owned/CMakeCXXCompiler.cmake'
+        for name, text in cases.items():
+            with self.subTest(context=name):
+                record.write_text(text, encoding='utf-8')
+                self.assertEqual([], self.errors())
+
+    def test_compiler_id_rejects_inert_ambiguous_and_nonliteral_evidence(self):
+        declaration = 'set(CMAKE_CXX_COMPILER_ID "MSVC")\n'
+        clang = 'set(CMAKE_CXX_COMPILER_ID "Clang")\n'
+        cases = {
+            'line_comment_only': '# ' + declaration,
+            'line_comment_decoy': '# ' + declaration + clang,
+            'bracket_comment_only': '#[[\n' + declaration + ']]\n',
+            'bracket_comment_decoy': '#[=[\n' + declaration + ']=]\n' + clang,
+            'quoted_argument_only': 'set(OTHER "set(CMAKE_CXX_COMPILER_ID \\"MSVC\\")")\n',
+            'bracket_argument_only': 'set(OTHER [==[\n' + declaration + ']==])\n',
+            'nested_argument_only': 'message(\n' + declaration + ')\n',
+            'duplicate_identical': declaration + declaration,
+            'conflicting_later': declaration + clang,
+            'conflicting_earlier': clang + declaration,
+            'conditional': 'if(FALSE)\n' + declaration + 'endif()\n',
+            'function_body': 'function(deferred)\n' + declaration + 'endfunction()\n',
+            'unset': declaration + 'unset(CMAKE_CXX_COMPILER_ID)\n',
+            'quoted_unset': declaration + 'unset("CMAKE_CXX_COMPILER_ID")\n',
+            'bracket_unset': declaration + 'unset([=[CMAKE_CXX_COMPILER_ID]=])\n',
+            'quoted_assignment': declaration + 'set("CMAKE_CXX_COMPILER_ID" "Clang")\n',
+            'bracket_assignment': declaration + 'set([==[\nCMAKE_CXX_COMPILER_ID]==] "Clang")\n',
+            'computed_value': 'set(CMAKE_CXX_COMPILER_ID "${DECOY}")\n',
+            'wrong_variable_case': 'set(cmake_cxx_compiler_id "MSVC")\n',
+            'different_command': 'notset(CMAKE_CXX_COMPILER_ID "MSVC")\n',
+            'different_variable': 'set(CMAKE_CXX_COMPILER_ID_RUN "MSVC")\n',
+            'unterminated_comment': '#[=[\n' + declaration,
+            'unterminated_quote': declaration + 'set(OTHER "unfinished\n',
+            'unterminated_command': declaration + 'set(OTHER value\n',
+            'mismatched_control': declaration + 'endfunction()\n',
+        }
+        record = self.build / 'CMakeFiles/owned/CMakeCXXCompiler.cmake'
+        for name, text in cases.items():
+            with self.subTest(context=name):
+                record.write_text(text, encoding='utf-8')
+                self.assertIn('Exact build compiler ID is not MSVC', self.errors())
+
+    def test_compiler_id_rejection_preserves_actual_link_validation(self):
+        (self.build / 'BUILD_RECEIPT.json').write_text(json.dumps(self.receipt), encoding='utf-8')
+        target = self.build / 'CMakeFiles/citrine_eclipse_mirage.dir'
+        target.mkdir()
+        link = target / 'link.txt'
+        command = 'link.exe /DLL /DEBUG:NONE /INCREMENTAL:NO /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO a.obj'
+        link.write_text(command + '\n', encoding='utf-8')
+        self.assertEqual([], msvc_evidence.check(self.root, self.build, self.dll))
+        record = self.build / 'CMakeFiles/owned/CMakeCXXCompiler.cmake'
+        record.write_text('# set(CMAKE_CXX_COMPILER_ID "MSVC")\nset(CMAKE_CXX_COMPILER_ID "Clang")\n', encoding='utf-8')
+        self.assertEqual(['Exact build compiler ID is not MSVC'],
+                         msvc_evidence.check(self.root, self.build, self.dll))
+        link.write_text(command + ' /NODEFAULTLIB\n', encoding='utf-8')
+        errors = msvc_evidence.check(self.root, self.build, self.dll)
+        self.assertIn('Exact build compiler ID is not MSVC', errors)
+        self.assertIn('/NODEFAULTLIB is forbidden for normalized CRT shipping', errors)
+
 
 class ValidationReadinessTests(unittest.TestCase):
     head = 'a' * 40
