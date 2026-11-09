@@ -142,10 +142,10 @@ void stale_delivery_receipts(){
     require(!storage.nonempty_relaxed()&&storage.reserve_front_locked()==0,"settled empty queue publishes no phantom event");
 }
 void allocation_precedes_persistence(){
-    for(const bool backlog:{false,true}) {
+    for(const bool retain_seed:{false,true}) {
         eq::OwnedStorage storage;storage.construct_seed_copy("seed");
         std::vector<std::string> expected;expected.reserve(1026);
-        if(backlog)expected.emplace_back("seed");else storage.pop_front_locked();
+        if(retain_seed)expected.emplace_back("seed");else storage.pop_front_locked();
         unsigned persisted=0;
         // Construct the callable and payload before arming the deque probe.
         const std::function<void()> persist=[&]{++persisted;};
@@ -170,11 +170,9 @@ void allocation_precedes_persistence(){
             } else {
                 require(unconsumed&&allocation_fault::injected==injected&&persisted==before+1&&value.empty(),
                         "unfaulted publication persists once and consumes its input");
-                if(backlog)expected.push_back(original);
-                else {
-                    require(storage.copy_front_locked()==original,"successful event retains exact binary bytes");
-                    storage.pop_front_locked();
-                }
+                // Retain successful probes so storage must eventually grow;
+                // an empty deque may otherwise recycle its one spare block.
+                expected.push_back(original);
             }
         }
         require(failed,"bounded queue growth reaches an actual throwing data allocation");
