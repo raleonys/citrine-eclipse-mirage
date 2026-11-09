@@ -3,6 +3,7 @@
 #include "citrine_eclipse_mirage/net/asio_service.hpp"
 #include "citrine_eclipse_mirage/platform/execution_windows.hpp"
 #include <asio.hpp>
+#include <array>
 #include <atomic>
 #include <chrono>
 #include <iostream>
@@ -48,6 +49,47 @@ struct Harness {
     net::AsioService service;
     explicit Harness(net::SessionPolicy policy={}):service(factory,execution,port,a,policy){execution::initialize_mutex_04a698(mutex,2);service.start();}
 };
+void policy_construction_validation() {
+    Factory factory;execution::MutexState mutex{};
+    std::uint8_t ready=0x6b,b=0,c=0;std::uint16_t port=0x5a5a;
+    execution::WindowsPlatform platform{+[](int){throw std::runtime_error("thread error");}};
+    std::int64_t frequency=platform.query_performance_frequency();
+    execution::Execution execution{mutex,{ready,b,c},frequency,platform};
+    execution::initialize_mutex_04a698(mutex,2);
+    const auto construct=[&](const net::SessionPolicy& policy) {
+        net::AsioService service(factory,execution,port,ready,policy);
+        require(port==0x5a5a&&ready==0x6b,"construction does not publish a listener or readiness");
+        require(factory.created==0&&factory.requests==0&&factory.timeouts==0&&factory.limits==0,
+                "construction does not dispatch handlers or report session errors");
+    };
+    const auto reject=[&](const net::SessionPolicy& policy) {
+        bool refused=false;
+        try{construct(policy);}catch(const std::invalid_argument&){refused=true;}
+        require(refused,"actual AsioService constructor rejects invalid policy before start");
+        require(port==0x5a5a&&ready==0x6b&&factory.created==0&&factory.requests==0&&
+                factory.timeouts==0&&factory.limits==0,"invalid construction preserves caller state and handler counters");
+    };
+    struct Resource {std::size_t net::SessionPolicy::*field;std::size_t maximum;};
+    const std::array resources{
+        Resource{&net::SessionPolicy::max_sessions,65535},
+        Resource{&net::SessionPolicy::max_frame_bytes,1024ull*1024*1024},
+        Resource{&net::SessionPolicy::max_response_bytes,1024ull*1024*1024}};
+    for(const auto& resource:resources)for(const auto value:{std::size_t{0},resource.maximum+1}) {
+        net::SessionPolicy policy;policy.*resource.field=value;reject(policy);
+    }
+    for(const auto field:{&net::SessionPolicy::receive_idle,&net::SessionPolicy::receive_frame,
+                          &net::SessionPolicy::send_idle})
+        for(const auto value:{-1ms,0ms,24h+1ms}) {
+            net::SessionPolicy policy;policy.*field=value;reject(policy);
+        }
+    construct(net::SessionPolicy{});
+    for(bool maximum:{false,true}) {
+        net::SessionPolicy policy;
+        for(const auto& resource:resources)policy.*resource.field=maximum?resource.maximum:1;
+        policy.receive_idle=policy.receive_frame=policy.send_idle=maximum?24h:1ms;
+        construct(policy);
+    }
+}
 struct Peer {
     asio::io_context io;asio::ip::tcp::socket socket{io};std::string input;
     explicit Peer(std::uint16_t port,bool small_window=false,bool ipv6=false){socket.open(ipv6?asio::ip::tcp::v6():asio::ip::tcp::v4());if(small_window)socket.set_option(asio::socket_base::receive_buffer_size(1024));const asio::ip::address address=ipv6?asio::ip::address(asio::ip::address_v6::loopback()):asio::ip::address(asio::ip::address_v4::loopback());socket.connect({address,port});socket.non_blocking(true);}
@@ -145,5 +187,5 @@ void send_backpressure_and_stop() {
     require(std::chrono::steady_clock::now()-start<1000ms,"stop cancels armed timers and drains without waiting for idle expiry");
 }
 }
-int main()try{session_cap();same_family_accept_burst();frame_and_response_limits();receive_deadlines();asynchronous_greeting_and_send_timeout();send_backpressure_and_stop();std::cout<<"PASS: "<<checks<<" real-socket admission/limits/deadlines/backpressure/stop checks\n";}
+int main()try{policy_construction_validation();session_cap();same_family_accept_burst();frame_and_response_limits();receive_deadlines();asynchronous_greeting_and_send_timeout();send_backpressure_and_stop();std::cout<<"PASS: "<<checks<<" real-socket admission/limits/deadlines/backpressure/stop checks\n";}
 catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

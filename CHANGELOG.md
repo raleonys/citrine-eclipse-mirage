@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Cover SessionPolicy rejection through the actual AsioService constructor: invalid resource/deadline bounds throw before start while caller publication state and handler counters remain unchanged. Keep default and exact lower/upper valid construction controls, existing real-socket cases and timeout budgets; production validation is unchanged.
+
 - Test extra-library allocation failures after native DLL acquisition and phase-result insertion. Require retained physical module leases, unchanged worker readiness, failed-release retention and exact idempotent cleanup retries; inject only throwing vector-buffer allocations.
 
 - Add an actual native process-to-registry reentry regression: a startup wait releases both recursive callback locks while retaining both binding leases, then restores outer serialization, results and error state before final drain. Existing recursive callback policy is unchanged.

@@ -1330,8 +1330,8 @@
       "sha256": "8cdcc993e87444e9fec5e941df3650084bc9b0d7b9f404a675a29ce542eeaf64"
     },
     "tests/native/network_policy_tests.cpp": {
-      "bytes": 10427,
-      "sha256": "05ad0efa2ca7069d29fa7160f38c3271a4c7ed67ac5079df8dd2f60c9f880450"
+      "bytes": 12944,
+      "sha256": "2aeb180a89f917e32da8b724d66766bc1d7b38407f894464d1111ebb94e55c27"
     },
     "tests/native/public_c_consumer.c": {
       "bytes": 387,
