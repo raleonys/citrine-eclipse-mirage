@@ -1706,8 +1706,8 @@
       "sha256": "3c73b72be0ac831175531f0926d8d473dc5636398247998accc73ca199d5cee2"
     },
     "tests/unit/native/native_tests.cpp": {
-      "bytes": 56206,
-      "sha256": "e97d70030f7d4c5a128ad062e38191d9dfa3899ae630bf86363b8161713e49f1"
+      "bytes": 60240,
+      "sha256": "e9534dcbc9f2318995b76c21c6dc3b3c94dd4445ca2ef8dfe5261889ee4b4bab"
     },
     "tests/unit/network_hook/hook_tests.cpp": {
       "bytes": 14507,
