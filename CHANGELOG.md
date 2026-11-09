@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Test that the checked ticket writer retains an observed write failure even when a controlled output adapter clears its status during close. Verify counted bytes, complete status/close/destruction order and a successful later output through the same factory; production and native stream policy are unchanged.
+
 - Test GrantAchievement response-writer failures after successful persistence and event publication. Retain committed existing/new rows, release both locks and distinguish completed retries from further partial-progress increments.
 
 - Preserve the native linker compilation timestamp instead of stamping finalized DLLs with a retained reference-build value. Reject timestamp mutation during finalization; retain every other PE metadata policy.
