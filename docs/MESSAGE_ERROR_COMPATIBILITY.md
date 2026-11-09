@@ -81,7 +81,10 @@ in #264. Neither existing PR is modified or merged here.
 
 Message-core and ordered-Session regressions exercise controlled effects,
 ciphers and memory transport. The Environment fixture intercepts MessageBoxW;
-it retains the original nonmodal entitlement and Debug/Release logging checks.
+it retains the original nonmodal entitlement and Debug/Release logging checks. A test-only
+10-second watchdog fails its own fixture process if an unexpected real modal
+prevents return; it never acknowledges a production dialog or converts failure
+to PASS, and the existing 60-second CTest budget is unchanged.
 Host/sanitizer results do not establish native Windows/MSVC, real modal UI,
 production DLL/Golden or original/Consumer equivalence. Required later native
 validation remains separate from initial PR source integrity.

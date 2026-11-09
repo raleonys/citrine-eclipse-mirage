@@ -8,6 +8,18 @@ This file distinguishes integrated source changes, imported source history and p
 
 - Restore owner-selected UnknownMessage continuation for all invalid dispatch forms: emit the counted console diagnostic and error MessageBox before continuing the same session without response framing or event consumption. Preserve generic error propagation, NoResponse behavior and nonmodal redacted entitlement diagnostics; add scoped core, Session and intercepted native diagnostic regressions.
 
+- Bound the intercepted UnknownMessage dialog regression with a test-only watchdog: fail its own process if unexpected modal UI blocks, while preserving actual production dialog behavior, accepted config-path conversion tests and existing CTest budgets.
+
+- Test the real Win32 command-line tokenizer, UTF-8 conversion and argv release through the existing startup language/flag filter. Cover quoting, empty values, backslashes, Unicode, executable exclusion and environment precedence without changing process environment, opening a console or replacing the compiler CRT.
+
+- Test actual online profile-copy allocation failures at each getter with caching enabled and disabled. Require the tagged payload fault, exact partial profile and call order, retained object/module ownership, and one-time explicit cleanup; keep existing cookie-lifetime and native composition controls unchanged.
+
+- Fix four configuration test exception expectations so their own assertion failure cannot be swallowed as the expected runtime error. Preserve partial-state checks and reject CSV, registry, directory and initial-load errors that incorrectly return success; production code is unchanged.
+
+- Add native config-path logging regressions for UTF16-to-UTF8 sizing/fill failures, unchanged queued/existing log bytes and same-owner recovery. Observe all conversion calls to prove Release skips the conversion and output paths; keep the accepted complete-record Debug policy.
+
+- Add source-included native DLL attach failure regressions for event/thread creation errors, exact private event cleanup and saved error restoration after cleanup. Use a real kernel event for the thread-failure path; keep the worker unexecuted and shipping entry behavior unchanged.
+
 - Fix two Registry startup-wait exception expectations so the assertion helper cannot satisfy its own expected-error check. Preserve original output/no-copy/wait-prefix checks and the real Windows SDK DWORD-cell cases; production Registry behavior is unchanged.
 
 - Verify that duplicate or empty later destinations in an atomic XML/INI batch cannot leave staged files or mutate previous targets, and that a subsequent valid batch succeeds.

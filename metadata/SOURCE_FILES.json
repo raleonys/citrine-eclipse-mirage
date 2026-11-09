@@ -1277,9 +1277,13 @@
       "bytes": 8925,
       "sha256": "6a056772129506da3a5151e1f3c224cc3d6d7e38e4a4ae99f2f26714079b77a9"
     },
+    "tests/native/dll_attach_failure_tests.cpp": {
+      "bytes": 3996,
+      "sha256": "9f157cd6a260379bec4475d1c133b8e571b0967a81d1185f3189bdfcf6260ea0"
+    },
     "tests/native/environment_dialog_tests.cpp": {
-      "bytes": 16018,
-      "sha256": "2edb5776b6a61c6d513a274fd3764b9b0786f2941018c7a4840265158beb1779"
+      "bytes": 23195,
+      "sha256": "3c4254927ec1a931c9f6820ab23f2b6137964aa1beb6af5105a19eaf8b54b42b"
     },
     "tests/native/environment_license_key_tests.cpp": {
       "bytes": 13208,
@@ -1352,6 +1356,10 @@
     "tests/native/socket_retirement_tests.cpp": {
       "bytes": 32981,
       "sha256": "9d32909b2bd4dc4059ef0842f793335a7429a6cf0e4de99028f8c2ae3620a8c5"
+    },
+    "tests/native/startup_argv_tests.cpp": {
+      "bytes": 6885,
+      "sha256": "9bb532bea814eb132f4958f49ecf897ff2d0e2bac9554de2293e7331aa703858"
     },
     "tests/native/startup_publication_tests.cpp": {
       "bytes": 5521,
@@ -1586,8 +1594,8 @@
       "sha256": "713962b9555dedeb1b5d8883d62dd690e68fe6886d6380ad1014fdacc95323b0"
     },
     "tests/unit/config/configuration_tests.cpp": {
-      "bytes": 27702,
-      "sha256": "522bac107f3529293b241954eaa3cc1e7019c49c5381017c54330dda92bfcdb7"
+      "bytes": 27831,
+      "sha256": "25caa988d4d1e7997128a2a9f95a0c3ae7e241ab8ac0e32eb7f4b481703ab5c9"
     },
     "tests/unit/config_application/application_tests.cpp": {
       "bytes": 35828,
@@ -1714,8 +1722,8 @@
       "sha256": "218997c7ee3f78bcda34f0785ae43ddb02b73ce52534f81171a94a2f301058d4"
     },
     "tests/unit/online/online_tests.cpp": {
-      "bytes": 29487,
-      "sha256": "9463f0deed92ccdb5f383afc6415c1baff0cb10de746f483a7bed0ff620cc7fe"
+      "bytes": 33392,
+      "sha256": "c45d8ee8136f6f27251067461b30c97879c977504552c0aac81d9f733f57a1cc"
     },
     "tests/unit/parser/header_contract.cpp": {
       "bytes": 247,
