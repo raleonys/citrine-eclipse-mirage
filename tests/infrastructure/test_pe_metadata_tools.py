@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-only
 from pathlib import Path
-import importlib.util, json, struct, tempfile, sys
+import copy, importlib.util, json, struct, tempfile, sys
 sys.dont_write_bytecode = True
 r=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(r/'scripts'))
@@ -35,6 +35,17 @@ good_vi={'key':'VS_VERSION_INFO','value':None,'value_bytes':fixed_bytes,'childre
     {'key':'VarFileInfo','value':None,'value_bytes':b'','children':[{'key':'Translation','value':None,'value_bytes':translation,'children':[]}]}
 ]}
 assert not mus.validate_versioninfo_root(good_vi,mustavex['required'])
+# Identical and shadowed duplicate StringFileInfo entries were previously
+# collapsed into a dict, so both malformed resources looked like good_vi.
+for variant in ('identical','conflicting'):
+    duplicate_vi=copy.deepcopy(good_vi)
+    entries=duplicate_vi['children'][0]['children'][0]['children']
+    repeated=copy.deepcopy(entries[0])
+    if variant=='conflicting':
+        repeated['value']='UNEXPECTED_DUPLICATE_VALUE'
+    entries.insert(0,repeated)
+    errors=mus.validate_versioninfo_root(duplicate_vi,mustavex['required'])
+    assert errors==[f"Duplicate VERSIONINFO StringFileInfo key: {repeated['key']}"], (variant,errors)
 bad_vi=json.loads(json.dumps(good_vi,default=lambda x: None)) if False else None
 wrong_table={'key':'VS_VERSION_INFO','value':None,'value_bytes':fixed_bytes,'children':[
     {'key':'StringFileInfo','value':None,'value_bytes':b'','children':[{'key':'000004b0','value':None,'value_bytes':b'','children':strings}]},
