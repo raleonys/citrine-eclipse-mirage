@@ -132,8 +132,8 @@ for actual Windows/game acceptance.
 ## PEGTL/compiler compatibility
 
 The current supplied PEGTL snapshot declares `cxx_std_23` and uses C++23
-library APIs. The project PEGTL target and its required public-input probe
-therefore use C++23; the general project default remains C++20. Three project
+library APIs. All project C++ targets and the required public-input probe use
+C++23; C sources retain C17. Three project
 VDF byte-sequence rules use the new string-literal template API for CRLF, line
 comments and block-comment termination. Their byte sequences, action ordering,
 error mapping and grammar policy are unchanged. Vendor headers are unmodified.

@@ -40,14 +40,11 @@ option(CITRINE_ECLIPSE_MIRAGE_REQUIRE_VENDOR_COMPATIBILITY
   "Reject toolchains that cannot compile the required PEGTL public API" ON)
 include(CheckCXXSourceCompiles)
 set(_saved_required_includes "${CMAKE_REQUIRED_INCLUDES}")
-set(_saved_required_cxx_standard "${CMAKE_CXX_STANDARD}")
 set(CMAKE_REQUIRED_INCLUDES "${PROJECT_SOURCE_DIR}/third_party/pegtl/include")
-# Match the selected upstream target's C++23 requirement in the public API probe.
-set(CMAKE_CXX_STANDARD 23)
+# The public API probe inherits the project's required C++23 standard.
 check_cxx_source_compiles("#include <tao/pegtl.hpp>\nint main() { tao::pegtl::view_input in(\"x\"); return tao::pegtl::parse<tao::pegtl::ascii::alpha>(in) ? 0 : 1; }"
   CITRINE_ECLIPSE_MIRAGE_PEGTL_PUBLIC_INPUT_WORKS)
 set(CMAKE_REQUIRED_INCLUDES "${_saved_required_includes}")
-set(CMAKE_CXX_STANDARD "${_saved_required_cxx_standard}")
 if(NOT CITRINE_ECLIPSE_MIRAGE_PEGTL_PUBLIC_INPUT_WORKS)
   if(CITRINE_ECLIPSE_MIRAGE_REQUIRE_VENDOR_COMPATIBILITY)
     message(FATAL_ERROR

@@ -1,7 +1,11 @@
 # Local development and operator commands
 
 Windows requires Visual Studio C++ x64 tools/SDK, CMake >= 3.20, and Python
-3.9 or later. Production and static-test builds use the compiler's standard CRT:
+3.9 or later. All project C++ targets require C++23, including Production,
+reference objects, the development DLL/hosts and tests. C sources remain C17.
+Use a compiler and standard library supporting the selected vendor APIs;
+reconfigure existing build directories after this standard migration.
+Production and static-test builds use the compiler's standard CRT:
 MSVC Release `/MT` and Debug `/MTd`. The separate C++ development DLL and its
 host use `/MD` and `/MDd`, with their own matching vendor builds, because STL
 objects cross that module boundary. Linux portable or Wine results do not
