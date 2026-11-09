@@ -3,7 +3,8 @@
 param(
     [Parameter(Mandatory=$true)][ValidateSet('Compile','Debug','Native','Crt','Golden')][string]$Mode,
     [string]$BuildDir = '',
-    [ValidateSet('Release','RelWithDebInfo','Debug')][string]$Config = 'Release'
+    [ValidateSet('Release','RelWithDebInfo','Debug')][string]$Config = 'Release',
+    [switch]$LauncherOwnsSummary
 )
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'build_common.ps1')
@@ -32,6 +33,8 @@ try {
     $env:VSLANG = '1033'
     $env:PYTHONDONTWRITEBYTECODE = '1'
     $PythonExe = Resolve-BoundExecutable 'python.exe'
+    $ProjectVersion = & $PythonExe -B (Join-Path $Root 'scripts/project_version.py')
+    if ($LASTEXITCODE -ne 0) { Fail-Build 'Invalid project resource version.' 120 }
     $ClExe = Resolve-BoundExecutable 'cl.exe'
     $LinkExe = Resolve-BoundExecutable 'link.exe'
     $NMakeExe = Resolve-BoundExecutable 'nmake.exe'
@@ -55,20 +58,21 @@ try {
     Write-Host "SURGE: $ProfileLabel / $Config"
     Write-Host "MSVC diagnostic locale requested: English (VSLANG=1033)"
     Write-Host '[1/3] Configure'
-    Invoke-ExternalChecked $CMakeExe @('-S',$Root,'-B',$Out,'-G','NMake Makefiles',"-DCMAKE_BUILD_TYPE=$Config","-DBUILD_TESTING=$Testing","-DPRELOADER_L_BUILD_SOURCE_API_DLL=$Testing","-DPRELOADER_L_GOLDEN_LINK_PROFILE=$GoldenLink") 'CMake configure' 105
+    Invoke-ExternalChecked $CMakeExe @('-S',$Root,'-B',$Out,'-G','NMake Makefiles',"-DCMAKE_BUILD_TYPE=$Config","-DBUILD_TESTING=$Testing","-DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=$Testing","-DCITRINE_ECLIPSE_MIRAGE_GOLDEN_LINK_PROFILE=$GoldenLink") 'CMake configure' 105
     Write-Host '[2/3] Compile and link'
     $BuildArgs = @('--build',$Out)
     if ($Mode -eq 'Crt') {
-        $BuildArgs += @('--target','preloader_l_crt_host','preloader_l_source_host','preloader_l_runtime_host','dll_public_c_consumer')
+        $BuildArgs += @('--target','citrine_eclipse_mirage_crt_host','citrine_eclipse_mirage_source_host','citrine_eclipse_mirage_runtime_host','dll_public_c_consumer')
     }
     Invoke-ExternalChecked $CMakeExe $BuildArgs 'MSVC build' 106
-    $Dll = Join-Path $Out 'preloader.unsigned.dll'
+    $Dll = Join-Path $Out 'citrine_eclipse_mirage.unsigned.dll'
     if (-not (Test-Path -LiteralPath $Dll -PathType Leaf)) { Fail-Build 'DLL missing after link.' 108 }
     # Verify even on incremental builds that bypass the link POST_BUILD hook.
     Invoke-ExternalChecked $PythonExe @('-B',(Join-Path $Root 'scripts/import_descriptor_order.py'),'--root',$Root,'--dll',$Dll,'--verify') 'Unsigned DLL import descriptor order' 118
     $BeforeHash = (Get-FileHash -LiteralPath $Dll -Algorithm SHA256).Hash.ToLowerInvariant()
-    $Receipt = @{schema='surge.build-receipt.v1'; build_succeeded=$true; mode=$Mode; configuration=$Config; dll_sha256=$BeforeHash; compiler=$ClExe; compiler_sha256=(Get-FileHash -LiteralPath $ClExe -Algorithm SHA256).Hash.ToLowerInvariant(); cmake_cache_sha256=(Get-FileHash -LiteralPath (Join-Path $Out 'CMakeCache.txt') -Algorithm SHA256).Hash.ToLowerInvariant(); source_manifest_sha256=(Get-FileHash -LiteralPath (Join-Path $Root 'metadata/ACTIVE_SOURCE_MANIFEST.json') -Algorithm SHA256).Hash.ToLowerInvariant(); real_game_acceptance='NOT_RUN'}
+    $Receipt = @{schema='surge.build-receipt.v1'; build_succeeded=$true; mode=$Mode; configuration=$Config; dll_sha256=$BeforeHash; compiler=([System.IO.Path]::GetFileName($ClExe)); compiler_sha256=(Get-FileHash -LiteralPath $ClExe -Algorithm SHA256).Hash.ToLowerInvariant(); cmake_cache_sha256=(Get-FileHash -LiteralPath (Join-Path $Out 'CMakeCache.txt') -Algorithm SHA256).Hash.ToLowerInvariant(); source_manifest_sha256=(Get-FileHash -LiteralPath (Join-Path $Root 'metadata/ACTIVE_SOURCE_MANIFEST.json') -Algorithm SHA256).Hash.ToLowerInvariant(); real_game_acceptance='NOT_RUN'}
     $Receipt['validation_result'] = 'NOT_COMPLETED'
+    $Receipt['project_version'] = $ProjectVersion
     $Receipt | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $Out 'BUILD_RECEIPT.json') -Encoding UTF8
     Write-Host '[3/3] Validate selected profile'
     $GoldenBlocked = $false
@@ -92,34 +96,29 @@ try {
         }
         else {
             $GoldenReport = Get-Content -LiteralPath (Join-Path $Out 'golden/GOLDEN_REPORT.json') -Raw | ConvertFrom-Json
-            $ReportedDll = [System.IO.Path]::GetFullPath((Join-Path $Root 'dist\preloader_l.dll'))
+            $ReportedDll = [System.IO.Path]::GetFullPath((Join-Path $Root 'dist\citrine_eclipse_mirage.dll'))
             if ($GoldenReport.result -ne 'GOLDEN_PASS' -or [System.IO.Path]::GetFullPath($GoldenReport.dist_artifact) -ne $ReportedDll -or -not (Test-Path -LiteralPath $ReportedDll -PathType Leaf)) {
                 Fail-Build 'Golden completed without the required dist artifact.' 116
             }
             $ReportedHash = (Get-FileHash -LiteralPath $ReportedDll -Algorithm SHA256).Hash.ToLowerInvariant()
             if ($ReportedHash -ne $GoldenReport.sha256) { Fail-Build 'Dist hash differs from the validated Golden DLL.' 117 }
-            $Receipt['dist_artifact'] = $ReportedDll
+            $Receipt['dist_artifact'] = [System.IO.Path]::GetFileName($ReportedDll)
             $Receipt['dist_sha256'] = $ReportedHash
-            $Receipt['dist_sha256_file'] = $GoldenReport.dist_sha256_file
-            $Receipt['dist_receipt'] = $GoldenReport.dist_receipt
+            $Receipt['dist_sha256_file'] = [System.IO.Path]::GetFileName($GoldenReport.dist_sha256_file)
+            $Receipt['dist_receipt'] = [System.IO.Path]::GetFileName($GoldenReport.dist_receipt)
         }
     } else {
-        Invoke-ExternalChecked (Join-Path $Out 'preloader_l_runtime_host.exe') @($Dll) 'Application public API and real load/socket/shutdown/unload cycles' 111
+        Invoke-ExternalChecked (Join-Path $Out 'citrine_eclipse_mirage_runtime_host.exe') @($Dll) 'Application public API and real load/socket/shutdown/unload cycles' 111
     }
     if ((Get-FileHash -LiteralPath $Dll -Algorithm SHA256).Hash.ToLowerInvariant() -ne $BeforeHash) { Fail-Build 'Validation changed the build DLL.' 112 }
     $Receipt['validation_result'] = if ($GoldenBlocked) { 'BLOCKED_TARGET_SEMANTICS' } else { 'PASS_SELECTED_PROFILE' }
     $Receipt['validation_exit_code'] = if ($GoldenBlocked) { 3 } else { 0 }
     $Receipt | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $Out 'BUILD_RECEIPT.json') -Encoding UTF8
     if ($GoldenBlocked) {
-        Write-Host 'Golden: BLOCKED - product PE targets are incomplete; compilation and resource/export checks completed.' -ForegroundColor Yellow
-        Write-Host "DLL: $Dll"
-        Write-Host "SHA256: $BeforeHash"
-        Write-Host 'Exit code 3. See golden/GOLDEN_REPORT.json. This is not Golden acceptance.'
+        Write-SelectedProfileResult -ProfileLabel $ProfileLabel -Dll $Dll -Sha256 $BeforeHash -GoldenBlocked -LauncherOwnsSummary:$LauncherOwnsSummary
         exit 3
     }
-    Write-Host "$ProfileLabel`: PASS"
-    Write-Host "DLL: $ReportedDll"
-    Write-Host "SHA256: $ReportedHash"
+    Write-SelectedProfileResult -ProfileLabel $ProfileLabel -Dll $ReportedDll -Sha256 $ReportedHash -LauncherOwnsSummary:$LauncherOwnsSummary
 } finally {
     try {
         if ($null -ne $Lock) { $Lock.Dispose() }

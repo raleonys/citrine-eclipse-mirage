@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/registry.hpp"
+#include "citrine_eclipse_mirage/platform/registry.hpp"
 #include <limits>
 
-namespace preloader_l::registry {
+namespace citrine_eclipse_mirage::registry {
 std::string resolve_narrow_008980(const Values& v, ValueEffects& e, std::string_view k) {
     const auto it = v.find(k);
     return it == v.end() ? std::string{} : e.filesystem_narrow(it->second);

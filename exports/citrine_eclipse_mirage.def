@@ -1,0 +1,6 @@
+; SPDX-License-Identifier: GPL-3.0-only
+LIBRARY "citrine_eclipse_mirage.unsigned.dll"
+EXPORTS
+    DllMain                 @1
+    SURGE                   @2
+    DllShutdown             @3
