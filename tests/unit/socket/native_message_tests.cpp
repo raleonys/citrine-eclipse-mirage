@@ -39,6 +39,44 @@ void events(){
     for(int code:{5,6}){Fixture f;f.core.encrypted=1;f.seed(core_test::hex(core_test::request_xml));f.event("event");if(code==5)f.api.lock_result=1;else f.api.mutex.lock_count_4c=INT32_MAX;try{f.run();throw std::runtime_error("expected thread terminal");}catch(const Failure& e){check(e.code==code&&!f.api.unlocks&&!f.api.destroys&&f.api.queue.count_20==1,"lock failure or max-count terminal preserves no invented unlock/pop/document cleanup");if(code==6)check(f.api.mutex.lock_count_4c==INT32_MAX-1,"max mutex count decremented before terminal6");}}
     {Fixture f;f.core.encrypted=1;f.seed(core_test::hex(core_test::request_xml));f.event("first");f.event("second",1);f.api.encrypt=[&](auto& value){if(&value==&f.locals.temporary){f.api.queue.offset_18=1;return false;}return true;};f.run();check(f.api.text(f.events[0])=="first"&&!f.events[1].size_10&&f.api.queue.count_20==1&&f.api.queue.offset_18==2,"event removal reloads live queue slot after cipher callback rather than cached copied source");}
 }
+void event_pop_before_unlock_failure(){
+    // Archive12 commits the selected front before the lower unlock effect.
+    // An unknown unlock outcome must not defer or repeat that retirement.
+    for(bool last:{false,true})for(bool large:{false,true})for(bool accepted:{false,true}){
+        Fixture f;f.core.encrypted=1;f.seed(core_test::hex(core_test::request_xml));
+        const auto payload=large?std::string(5000,'E'):std::string("event\0tail",10);
+        f.event(payload,1);f.api.queue.offset_18=1;
+        if(!last)f.event("survivor",2);
+        f.api.encrypt=[&](auto& value){return &value==&f.locals.response||accepted;};
+        unsigned observations=0;
+        f.api.hook=[&](const std::string& name){
+            if(name!="unlock")return;
+            ++observations;
+            check(f.api.queue.count_20==unsigned(!last)&&f.api.queue.offset_18==(last?0u:2u),
+                "count and last/nonlast head retirement commit before unlock");
+            check(!f.events[1].size_10&&f.events[1].capacity_18==15&&!f.events[1].storage_00[0],
+                "selected inline/heap event is reset before unlock");
+            if(!last)check(f.api.text(f.events[2])=="survivor","next event remains byte-identical before unlock");
+            check(f.core.containers.f.m.response.live_blocks()==1,
+                "only the retained local response allocation remains before unlock");
+            check(f.output().empty()&&!f.api.destroys&&f.api.document,
+                "output publication and document destruction have not occurred at unlock");
+            auto expected=framed(response("alpha"),true);
+            if(accepted)expected+=framed(payload,true);
+            check(f.api.text(f.locals.response)==expected,"local response retains exact framed prefix before unlock");
+            throw Failure{83};
+        };
+        bool caught=false;
+        try{f.run();}catch(const Failure& error){caught=error.code==83;}
+        check(caught&&observations==1&&f.api.locks==1&&f.api.unlocks==1,
+            "exact unlock exception escapes after one lock/unlock attempt");
+        check(f.api.queue.count_20==unsigned(!last)&&f.api.queue.offset_18==(last?0u:2u)&&
+            !f.events[1].size_10&&f.core.containers.f.m.response.live_blocks()==1,
+            "unknown unlock outcome preserves committed event retirement without rollback or replay");
+        check(!f.api.destroys&&f.api.document&&f.output().empty()&&f.api.trace.back()=="unlock",
+            "unknown unlock outcome performs no invented post-unlock cleanup or output transfer");
+    }
+}
 void failures(){
     {Fixture f;f.core.encrypted=1;f.seed(core_test::hex(core_test::request_xml));f.api.decrypt=[](auto&){throw Failure{77};return false;};rejects<Failure>([&]{f.run();});check(f.input()==core_test::request_xml&&!f.api.parses&&!f.api.destroys,"decrypt exception retains actual decoded input; no deferred-writeback gap or invented cleanup");}
     {Fixture f;f.core.encrypted=1;f.seed(core_test::hex(core_test::request_xml));f.api.decrypt=[](auto&){return false;};f.run();check(f.input()==core_test::request_xml&&f.output().empty()&&f.api.destroys==1&&f.core.effects.logs.size()==1,"decrypt false logs decoded bytes and returns exact empty result");}
@@ -53,5 +91,5 @@ void failures(){
     {Fixture f;f.seed(core_test::request_xml);f.api.hook=[](std::string name){if(name=="destroy-document")throw Failure{82};};rejects<Failure>([&]{f.run();});check(f.output()==framed(response("alpha"),false)&&!f.locals.response.size_10&&f.locals.response.capacity_18==15,"document destructor exception occurs after output move and local reset");}
 }
 }
-int main(){try{normal();retries();events();failures();std::cout<<"PASS: "<<checks<<" socket native message checks; typed033d70 request/cipher/parser retries, output codec/move, live event front and normal failure prefixes; lower providers/ABI/EH remain open\n";}catch(const std::exception& e){std::cerr<<"FAIL after "<<checks<<" checks: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}
+int main(){try{normal();retries();events();event_pop_before_unlock_failure();failures();std::cout<<"PASS: "<<checks<<" socket native message checks; typed033d70 request/cipher/parser retries, output codec/move, live event front and normal failure prefixes; lower providers/ABI/EH remain open\n";}catch(const std::exception& e){std::cerr<<"FAIL after "<<checks<<" checks: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}
 

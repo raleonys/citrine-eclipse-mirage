@@ -20,7 +20,7 @@ if not exist "%TARGET%" (
 
 echo Running: build_debug.ps1
 echo.
-powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%TARGET%" %*
+powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%TARGET%" -LauncherOwnsSummary %*
 set "RC=%ERRORLEVEL%"
 
 :completed

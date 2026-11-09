@@ -21,7 +21,7 @@ ary_policy=json.loads((fixture_root/'metadata/ARYRA_GOLDEN_LAYOUT.json').read_te
 mustavex=json.loads((fixture_root/'metadata/MUSTAVEX_GOLDEN_METADATA.json').read_text())
 assert ary_policy['sections_in_order']==['.text','.rdata','.data','.pdata','.rsrc','.reloc']
 assert mustavex['required']['timestamp']=='0xCD268EB1'
-assert mustavex['required']['export_internal_name']=='preloader.unsigned.dll'
+assert mustavex['required']['export_internal_name']=='citrine_eclipse_mirage.unsigned.dll'
 fin.validate_policy_bindings()
 assert fin.FINALIZER_POLICY['integrity_finalization']['pe_checksum']=='RECOMPUTE_AFTER_APPROVED_MUTATIONS'
 
@@ -222,8 +222,9 @@ def build_corvexon_fixture(imports=('CRYPT32.DLL','WS2_32.DLL','KERNEL32.DLL')):
     lo=off(0x1600); struct.pack_into('<I',data,lo,0x100); struct.pack_into('<Q',data,lo+88,0x180000000+0x1700)
     # export directory
     eo=off(0x1100)
-    struct.pack_into('<IIHHIIIIIII',data,eo,0,0,0,0,0x1180,1,3,3,0x1190,0x11A0,0x11B0)
-    data[off(0x1180):off(0x1180)+23]=b'preloader.unsigned.dll\0'
+    struct.pack_into('<IIHHIIIIIII',data,eo,0,0,0,0,0x1200,1,3,3,0x1190,0x11A0,0x11B0)
+    module_name=b'citrine_eclipse_mirage.unsigned.dll\0'
+    data[off(0x1200):off(0x1200)+len(module_name)]=module_name
     for i,rva in enumerate((0x1510,0x1520,0x1530)): struct.pack_into('<I',data,off(0x1190)+i*4,rva)
     names=('DllMain','SURGE','DllShutdown'); nrvas=(0x11C0,0x11D0,0x11E0)
     for i,rva in enumerate(nrvas): struct.pack_into('<I',data,off(0x11A0)+i*4,rva)
@@ -306,7 +307,7 @@ assert fixture_import_policy['required_modules']==['CRYPT32.DLL','WS2_32.DLL','K
 assert [module for module in fixture_import_policy['allowed_modules'] if module in canonical]==canonical
 source_link=(r/'CMakeLists.txt').read_text()
 assert '  crypt32 ws2_32 kernel32 user32 shell32)' in source_link
-assert 'target_link_libraries(preloader_l_asio INTERFACE ws2_32 mswsock)' in (r/'cmake/VendoredDependencies.cmake').read_text()
+assert 'target_link_libraries(citrine_eclipse_mirage_asio INTERFACE ws2_32 mswsock)' in (r/'cmake/VendoredDependencies.cmake').read_text()
 assert 'const wchar_t* modules[]={L"crypt32.dll",L"ws2_32.dll",L"kernel32.dll",L"shell32.dll",L"KernelBase.dll",L"advapi32.dll"};' in (r/'tests/native/application_runtime_tests.cpp').read_text()
 
 with tempfile.TemporaryDirectory() as td:
@@ -320,7 +321,7 @@ with tempfile.TemporaryDirectory() as td:
     cp=subprocess.run([sys.executable,'-B',str(r/'scripts/ursynex_golden_finalizer.py'),str(path)],capture_output=True,text=True)
     assert cp.returncode==0,cp.stdout+cp.stderr
     result=path.read_bytes()
-    assert struct.unpack_from('<I',result,coff2+4)[0]==int(json.loads((r/'metadata/MUSTAVEX_GOLDEN_METADATA.json').read_text())['required']['timestamp'],16)
+    assert struct.unpack_from('<I',result,coff2+4)[0]==struct.unpack_from('<I',original,coff2+4)[0]
     assert tuple(result[opt2+2:opt2+4])==(14,0)
     assert b'Rich' not in result[:pe2]
     assert struct.unpack_from('<I',result,opt2+64)[0]==cor.compute_pe_checksum(result,opt2+64)
@@ -335,6 +336,29 @@ with tempfile.TemporaryDirectory() as td:
     assert any('import module order differs' in x for x in errors),errors
     path.write_bytes(result)
     fin.validate_approved_mutation(original,result,pe2,coff2,opt2,order)
+    # Product policy preserves the linker-created COFF time while retaining
+    # the independently selected linker-version and other Golden policies.
+    product_fin=load('product_timestamp_finalizer',r/'scripts/ursynex_golden_finalizer.py')
+    product_fin.validate_policy_bindings()
+    assert product_fin.TARGET_TIMESTAMP is None
+    assert product_fin.TARGET_LINKER==(14,0)
+    product_fin.validate_approved_mutation(original,result,pe2,coff2,opt2,order)
+    wrong_time=bytearray(result);wrong_time[coff2+4]^=1
+    try:
+        product_fin.validate_approved_mutation(original,wrong_time,pe2,coff2,opt2,order)
+        raise AssertionError('accepted a changed native timestamp under PRESERVE_INPUT')
+    except product_fin.PEError:pass
+    second=bytearray(original)
+    struct.pack_into('<I',second,coff2+4,0x68543210)
+    path.write_bytes(second)
+    cp=subprocess.run([sys.executable,'-B',str(r/'scripts/ursynex_golden_finalizer.py'),str(path)],capture_output=True,text=True)
+    assert cp.returncode==0,cp.stdout+cp.stderr
+    second_result=path.read_bytes()
+    assert second_result[coff2+4:coff2+8]==second[coff2+4:coff2+8]
+    assert tuple(second_result[opt2+2:opt2+4])==(14,0)
+    assert struct.unpack_from('<I',second_result,opt2+64)[0]==cor.compute_pe_checksum(second_result,opt2+64)
+    product_fin.validate_approved_mutation(second,second_result,pe2,coff2,opt2,order)
+    path.write_bytes(result)
     table,records,_=descriptors(original)
     # Only complete descriptors move. Everything outside the table and approved
     # header/checksum spans must remain byte-identical, including thunk/name data.
@@ -354,7 +378,7 @@ with tempfile.TemporaryDirectory() as td:
         assert cp.returncode!=0 and path.read_bytes()==bad,(label,cp.stdout,cp.stderr)
     # Every MSVC application profile must yield a canonical unsigned DLL,
     # BEFORE URSYNEX. The normalizer is fail-closed and idempotent.
-    raw_path = Path(td) / 'preloader.unsigned.dll'
+    raw_path = Path(td) / 'citrine_eclipse_mirage.unsigned.dll'
     raw, _, _ = build_corvexon_fixture(tuple(reversed(order)))
     raw_path.write_bytes(raw)
     call = [sys.executable, '-B', str(r / 'scripts/import_descriptor_order.py'),

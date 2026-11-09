@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/timestamp.hpp"
-#include "preloader_l/xml/reader.hpp"
+#include "citrine_eclipse_mirage/runtime/timestamp.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
@@ -10,7 +10,7 @@
 #include <sstream>
 #include <stdexcept>
 
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 namespace {
 unsigned checks=0;
 void require(bool ok,const char* label){++checks;if(!ok)throw std::runtime_error(label);}
@@ -68,6 +68,22 @@ bool same_fields(const calendar::BrokenDown& a,const calendar::BrokenDown& b){
     return a.second==b.second && a.minute==b.minute && a.hour==b.hour &&
            a.day==b.day && a.month==b.month && a.year==b.year &&
            a.weekday==b.weekday && a.yearday==b.yearday && a.daylight==b.daylight;
+}
+void selected_host_suffix_bytes() {
+    timestamp::HostGetTime host;
+    for(unsigned suffix=0;suffix<256;++suffix){
+        const auto raw=std::string("2000-01-01T00:00:00")+static_cast<char>(suffix);
+        calendar::BrokenDown fields{};
+        require(host.extract_03d310(raw,timestamp::format,fields)==0,
+                "selected host completed format leaves every suffix byte unconsumed without EOF/failure");
+        require(fields.second==0 && fields.minute==0 && fields.hour==0 &&
+                fields.day==1 && fields.month==0 && fields.year==100,
+                "selected host suffix byte does not alter the six parsed calendar fields");
+        require(timestamp::timestamp_to_epoch_041e10(raw,host)==946684800,
+                "selected host retains epoch for every suffix byte including NUL and high-bit bytes");
+    }
+    // HostGetTime is a selected-library compatibility backend. This does not
+    // extend ClassicIso's explicit ASCII domain or prove original MSVC parity.
 }
 void classic_native_branch() {
     timestamp::ClassicIso parser;
@@ -139,22 +155,24 @@ struct StorageEffects final:timestamp::StorageEffects {
     [[noreturn]]void filesystem_error_018130(std::string_view,std::uint32_t,const configuration::Path&)override{throw std::runtime_error("unexpected filesystem error");}
     void create_directories_018e00(const configuration::Path& path)override{created.push_back(path);}
 };
-void storage_native_fixture(const std::filesystem::path& directory) {
+void storage_native_fixture(const std::filesystem::path& directory,timestamp::Parser& parser,std::string_view suffix) {
     std::filesystem::create_directories(directory);
     const auto xml=directory/"achievement-timestamp-fixture.xml";
     {
         std::ofstream out(xml,std::ios::binary|std::ios::trunc);
-        out<<R"(<root><entry Id="d" Count="4" Grant="invalid"/><entry Id="b" Count="2" Grant="2000-01-01T00:00:00"/><entry Id="a" Count="1" Grant="1970-01-01T00:00:00"/><entry Id="c" Count="3" Grant="1969-12-31T23:59:59"/></root>)";
+        out<<R"(<root><entry Id="d" Count="4" Grant="invalid"/><entry Id="b" Count="2" Grant="2000-01-01T00:00:00)"<<suffix<<R"("/><entry Id="a" Count="1" Grant="1970-01-01T00:00:00"/><entry Id="c" Count="3" Grant="1969-12-31T23:59:59"/></root>)";
         require(static_cast<bool>(out),"own timestamp XML fixture written");
     }
     const auto ini_directory=directory/"achievement_watcher"/"42";
     std::filesystem::create_directories(ini_directory);
     configuration::State state{};state.user_directory=directory.u16string();state.achievements_set="timestamp-fixture";state.steam_app_id="42";
     achievement_storage::Paths paths;xml_reader_bridge::Backend reader;achievement_storage::HostCrtNumbers numbers;
-    timestamp::ClassicIso parser;StorageEffects effects(parser);file::NativeFactory files;
+    StorageEffects effects(parser);file::NativeFactory files;
     achievement_storage::Storage storage(paths,reader,numbers,effects,files);storage.update_01eb00(state);
     require(state.achievements.size()==4,"actual XML/storage imports four timestamp records");
     require(state.achievements.at("a").field70==0 && state.achievements.at("b").field70==946684800,"actual epoch helper reaches achievement field70");
+    require(state.achievements.at("b").timestamp==std::string("2000-01-01T00:00:00")+std::string(suffix),
+            "actual XML import retains Grant bytes while the parser converts the completed ISO prefix");
     require(state.achievements.at("c").field70==0xffffffffffffffffULL && state.achievements.at("d").field70==0,"negative epoch low64 and failed parse zero stored");
     require(state.achievements.at("a").steam_id.empty(),"new XML IDs keep original empty Steam ID");
     require(effects.status_paths.size()==1 && effects.created.size()==1,"status and actual writer reached after conversions");
@@ -167,6 +185,10 @@ void storage_native_fixture(const std::filesystem::path& directory) {
 }
 }
 int main(int argc,char** argv) {
-    try{if(argc!=2)throw std::invalid_argument("requires owned fixture directory");wrapper_contract();selected_host_backend();classic_native_branch();storage_native_fixture(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" timestamp checks; classic ASCII native branch plus explicit host compatibility; own fixtures only\n";}
+    try{if(argc!=2)throw std::invalid_argument("requires owned fixture directory");wrapper_contract();selected_host_backend();selected_host_suffix_bytes();classic_native_branch();
+        const auto directory=std::filesystem::path(argv[1]);
+        timestamp::ClassicIso classic;storage_native_fixture(directory,classic,"");
+        timestamp::HostGetTime host;storage_native_fixture(directory/"host-utf8-suffix",host,"\xc3\xa9");
+        std::cout<<"PASS: "<<checks<<" timestamp checks; classic ASCII native branch plus explicit host compatibility; own fixtures only\n";}
     catch(const std::exception& error){std::cerr<<"FAIL: "<<error.what()<<'\n';return 1;}
 }

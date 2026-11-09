@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include <asio.hpp>
-#include "preloader_l/net/server.hpp"
-#include "preloader_l/net/session_policy.hpp"
-#include "preloader_l/platform/execution_windows.hpp"
+#include "citrine_eclipse_mirage/net/server.hpp"
+#include "citrine_eclipse_mirage/net/session_policy.hpp"
+#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
 #include <memory>
 #include <new>
 #define private public
-#include "preloader_l/net/asio_service.hpp"
+#include "citrine_eclipse_mirage/net/asio_service.hpp"
 #undef private
 #include <iostream>
 #include <stdexcept>
@@ -32,7 +32,7 @@ public:
 #include "src/net/asio_service.cpp"
 #undef steady_timer
 namespace {
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 using Tcp=asio::ip::tcp;
 using namespace std::chrono_literals;
 void require(bool value,const char* text){if(!value)throw std::runtime_error(text);}
