@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Exercise status, parent-directory and throwing-write failures through both Config2 consumers into the actual Environment license writer. Preserve the completed Game prefix, reject later settings and collection updates, and retry once after repair using the pre-User identity and exact known license bytes. Production configuration and writer behavior are unchanged.
+
 - Keep public DLL ABI report generation read-only for the inspected DLL: reject direct, hardlink and symlink input aliases before inspection. Publish reports through temporary sibling files and atomic replacement so failed output retains the previous report and unrelated hardlinks are not truncated.
 
 - Cover live encrypted ChallengeResponse rekeying: decrypt requests with the previous key, encrypt the exact response and queued event with the new key, and preserve follow-up requests plus an independently keyed Application peer. Test-only; production behavior is unchanged.
