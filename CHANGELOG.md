@@ -6,7 +6,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Reject XML 1.0-forbidden C0 bytes in KeyForLicense, ContentId and UserId before writing encrypted license data; preserve TAB/LF/CR, existing-file skip and escaped markup, with production-backed native regression coverage.
+- Reject XML 1.0-forbidden C0 bytes in KeyForLicense, ContentId and UserId before writing encrypted license data; preserve TAB/LF/CR, existing-file skip and escaped markup, with production-backed native regression coverage. Align the existing counted-field fixture with this policy, retain its full AES known answer, and cover all 29 forbidden C0 bytes in each field before output effects and after existing-file skip.
 
 - Fix optional vendor-alias restoration failure atomicity: stage a locked symlink before replacing its exact portable descriptor, never unlink source bytes first, and cover link-creation and publication failure cleanup. Normalize fixture path identity when checking publication destinations and cover aliased source roots. Vendor inputs, production DLL, ABI and build policy are unchanged.
 
