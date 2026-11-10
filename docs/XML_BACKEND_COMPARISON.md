@@ -1,7 +1,7 @@
 # Pugixml compatibility diagnostic
 
-PR #149 now selects pugixml for the production XML reader and development DLL.
-The owner requested completing the migration in this open PR before merging.
+Merged PR #149 selects pugixml for the production XML reader and development
+DLL. The owner requested completing that migration before merging.
 The compatibility diagnostic compiles the actual production reader sources;
 there is no separate candidate implementation to drift from shipping code.
 The public reader interface, DLL ABI, standard CRT and three other vendor pins
@@ -10,7 +10,7 @@ production migration commit; earlier test-only passes do not establish them.
 
 ## Inputs and independent link graphs
 
-The control is unmerged PR #108 commit
+The control is the unmerged, now-closed PR #108 commit
 `a34a0536f0980b38d77d029f11fa3720dcaedc6e`, checked out separately with no tracked
 source modifications. Its actual reader, immutable 12,087-input corpus and
 original test assertions remain the reference. The baseline includes #108's

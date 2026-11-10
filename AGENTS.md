@@ -46,6 +46,11 @@ those images without application manifests; source changes still require the
 normal inventories, local QA and tracked pre-push hook. Never use this data
 branch or its automation to write main, application code or release assets.
 
+Use `docs/INDEX.md` to distinguish current guides from historical checkpoints.
+When code, workflow or contract changes, update its current documentation in
+the same PR; keep dated results tied to their original source and do not copy
+an old pending/PASS status into current guidance.
+
 Read `docs/DEVELOPMENT.md` for build commands, `docs/GITHUB_WORKFLOW.md` for PR rules, `docs/VALIDATION.md` for evidence semantics, and `docs/WEEKLY_RELEASE.md` for the current weekly draft flow. Read relevant subsystem docs and exact metadata before touching affected behavior.
 
 When current guidance conflicts with source contracts, report the discrepancy and reconcile only the smallest justified change. Never weaken or skip a test simply to obtain a green PR.

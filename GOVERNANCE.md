@@ -87,7 +87,14 @@ An owner-approved privacy redaction records both original and replacement SHA-25
 
 ## Migration record
 
-Remaining work includes metadata rationalization, verifying first PR-triggered Windows/Golden acceptance on the exact commit, and evaluating additional required check contexts. A configured CI job is not a PASS before actual execution.
+The initial PR-triggered Windows/Golden migration has executed; it is no longer
+a universal outstanding task. For example, the exact
+[PR #352 head](https://github.com/raleonys/citrine-eclipse-mirage/actions/runs/42889357574)
+passed all eleven required contexts, Native Debug/Release and Production/Golden.
+That receipt validates its identified head, not later changes or game execution.
+Metadata rationalization and donor-retirement research remain separately scoped;
+[the documentation index](docs/INDEX.md) distinguishes current guides from
+historical checkpoints. A configured job is not a PASS before actual execution.
 
 ## Retained technical boundaries
 

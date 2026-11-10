@@ -1496,6 +1496,88 @@ class GitFixtureIsolationTests(unittest.TestCase):
             self.assertNotIn('skipped', result.stderr)
 
 
+class DocumentationContractTests(unittest.TestCase):
+    @staticmethod
+    def catalog():
+        text = (ROOT / 'docs/INDEX.md').read_text(encoding='utf-8')
+        rows = re.findall(r'^\| \[[^\]]+\]\(([^)]+)\) \| (Current|Checkpoint|Mixed|Review) \|', text, re.M)
+        return [(str((ROOT / 'docs' / name).resolve().relative_to(ROOT)), role)
+                for name, role in rows]
+
+    def test_catalog_covers_all_first_party_markdown_and_companion_csvs(self):
+        manifest = json.loads((ROOT / 'metadata/ACTIVE_SOURCE_MANIFEST.json').read_text())
+        expected = {name for name in manifest['files']
+                    if name.endswith('.md') and not name.startswith(
+                        ('third_party/', 'metadata/evidence/', 'docs/evidence/'))}
+        expected |= {name for name in manifest['files']
+                     if name.startswith('docs/') and name.endswith('.csv')}
+        rows = self.catalog()
+        self.assertEqual(len(rows), len({name for name, _ in rows}), 'Duplicate catalog path')
+        self.assertEqual(expected, {name for name, _ in rows})
+        for name, role in rows:
+            with self.subTest(document=name):
+                self.assertTrue((ROOT / name).is_file())
+                if role == 'Checkpoint' and name.endswith('.md'):
+                    self.assertIn('historical', (ROOT / name).read_text(encoding='utf-8')[:1200].lower())
+
+    def test_document_file_links_resolve_without_network_or_git_checkout(self):
+        # Checkpoint links must remain navigable too; no external-link request
+        # or rewriting of retained evidence is needed for this file-level check.
+        from urllib.parse import unquote, urlsplit
+        for name, _ in self.catalog():
+            if not name.endswith('.md'):
+                continue
+            path = ROOT / name
+            text = path.read_text(encoding='utf-8')
+            for destination in re.findall(r'\]\(([^)\n]+)\)', text):
+                target = urlsplit(destination.strip('<>'))
+                if target.scheme or target.netloc or not target.path:
+                    continue
+                with self.subTest(document=name, target=destination):
+                    self.assertTrue((path.parent / unquote(target.path)).is_file())
+
+    def test_current_documented_facts_match_live_contracts(self):
+        text = (ROOT / 'docs/INDEX.md').read_text(encoding='utf-8')
+        facts = dict(re.findall(r'^\| ([^|]+?) \| `([^`]+)` \|', text, re.M))
+        partition = json.loads((ROOT / 'metadata/BUILD_PARTITION_POLICY.json').read_text())
+        production = sum(len(partition[key]) for key in
+                         ('production_object_sources', 'vdf_sources', 'dll_entry_sources'))
+        reference = len(partition['reference_sources'])
+        self.assertEqual(str(production), facts['Production C++ TUs'])
+        self.assertEqual(str(reference), facts['Reference C++ TUs'])
+        summary = json.loads((ROOT / 'metadata/RUNTIME_CURRENT_STATUS.json').read_text())
+        self.assertEqual(production, summary['production_first_party_tus'])
+        self.assertEqual(reference, summary['retained_reference_tus'])
+        abi = json.loads((ROOT / 'metadata/PUBLIC_DLL_ABI.json').read_text())['exports']
+        ordered = sorted(abi, key=lambda name: abi[name]['ordinal'])
+        self.assertEqual(', '.join(name + '@' + str(abi[name]['ordinal']) for name in ordered),
+                         facts['Production C exports'])
+        header = (ROOT / 'include/citrine_eclipse_mirage/platform/crypt_query.hpp').read_text()
+        suffix = re.search(r'target_suffix\s*=\s*u"([^"]+)"', header)[1]
+        self.assertEqual(suffix, facts['CryptQuery compatibility suffix'])
+        resource = json.loads((ROOT / 'metadata/RESOURCE_METADATA_CONTRACT.json').read_text())
+        self.assertEqual(str(len(resource['required']['additional_resource_assets'])),
+                         facts['Additional PE resource assets'])
+        avatar = json.loads((ROOT / 'metadata/AVATAR_DATA_CONTRACT.json').read_text())
+        self.assertEqual('READ_ONLY_CPP_DATA_NOT_PE_RESOURCE', avatar['storage'])
+
+    def test_current_operator_fixture_command_selects_its_real_manual_workflow(self):
+        text = (ROOT / 'docs/DEVELOPMENT.md').read_text(encoding='utf-8')
+        commands = re.findall(r'^gh workflow run (.+)$', text, re.M)
+        self.assertEqual(['operator-output.yml --ref <branch>'], commands)
+        workflow_name = commands[0].split()[0]
+        workflow = (ROOT / '.github/workflows' / workflow_name).read_text()
+        trigger = workflow.split('\non:\n', 1)[1].split('\npermissions:', 1)[0]
+        self.assertIn('  workflow_dispatch:', trigger)
+        self.assertNotIn('pull_request:', trigger)
+        self.assertNotIn('push:', trigger)
+        self.assertIn('OperatorOutputTests', workflow)
+        self.assertNotIn('operator_output', (ROOT / '.github/workflows/ci.yml').read_text())
+        facts = dict(re.findall(r'^\| ([^|]+?) \| `([^`]+)` \|',
+                                (ROOT / 'docs/INDEX.md').read_text(), re.M))
+        self.assertEqual(workflow_name, facts['Manual operator fixture workflow'])
+
+
 class GovernanceTests(unittest.TestCase):
     def test_resource_assets_require_exact_hash_without_dropping_versioninfo(self):
         import hashlib

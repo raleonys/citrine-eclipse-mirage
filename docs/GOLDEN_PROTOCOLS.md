@@ -74,7 +74,8 @@ creates a `.zip.sha256` beside each archive.
 
 Candidate hashes must remain unchanged during
 all read-only stages. URSYNEX may change only
-permitted linker, full Rich-header block and checksum fields; the native
+permitted linker, full Rich-header block and checksum fields, plus the
+explicit import-descriptor permutation described below; the native
 compilation timestamp must remain byte-exact; any other byte
 mutation must stop the pipeline. The original
 build DLL's unchanged bytes are also checked
@@ -95,8 +96,11 @@ bytes. Only then are these files written:
 - `dist/citrine_eclipse_mirage.dll.sha256`
 - `dist/DIST_RECEIPT.json`
 
-The runtime name thus matches the Bluefield
-hook-11 filter. The raw link output remains
+The distribution name is the current project identity. Hook 11 deliberately
+retains the independent `preloader_l.dll` compatibility suffix in
+`include/citrine_eclipse_mirage/platform/crypt_query.hpp`; neither renaming the
+shipping DLL nor running its host test proves selection of that suffix.
+The raw link output remains
 `citrine_eclipse_mirage.unsigned.dll`; copying does not
 change the export-directory internal name
 or the three C exports. The earlier
@@ -135,9 +139,9 @@ to reject unexpected caches or additional
 source files. See
 [Production correction](PRODUCTION_IMPORT_FIX.md).
 
-The full field matrix and correction of the
-former preserve-compiler decision are in
-[metadata audit](REFERENCE_METADATA_AUDIT.md).
+The [metadata audit](REFERENCE_METADATA_AUDIT.md) preserves the historical
+field matrix and former fixed-timestamp decision. Current timestamp and
+VERSIONINFO rules are the product targets and owning policies above.
 
 The owner requires the same import descriptor order in every MSVC
 application DLL profile, including `citrine_eclipse_mirage.unsigned.dll`. The shared
