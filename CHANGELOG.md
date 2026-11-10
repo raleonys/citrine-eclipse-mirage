@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Reject incomplete or duplicated Source QA check inventories before weekly candidate validation and packaging. Require each current runner group exactly once with an integer zero exit code; preserve complete reordered reports and cover rejection before downstream validation, assets or release receipts are created.
+
 - Fail early on unexpected or symlinked weekly runtime bundle inputs before creating an output directory, retaining clean retries for those validation failures. Add invalid-member and symlink-input regressions; leave the runtime ZIP contents and release policy unchanged.
 
 - Upgrade every checkout, Python setup and artifact upload workflow step to SHA-pinned Node.js 24 releases (checkout 7.0.1, setup-python 7.1.0 and upload-artifact 7.0.2). Preserve triggers, synchronization gates, permissions, Python versions and artifact settings while removing the deprecated Node.js 20 action runtime.
