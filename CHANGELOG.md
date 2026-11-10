@@ -6,10 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Preflight all locked vendor alias descriptors before optionally restoring any symlinks, so a later malformed alias cannot leave an earlier alias converted. Add positive two-alias and invalid-later-alias regressions; runtime and vendor bytes remain unchanged.
+- Add actual Application/TCP NoResponse continuation tests for plaintext, fixed AES and derived AES with separate client writes and batched NUL-framed requests. Require the first correlated profile response, continued use of the same connection and preservation of a ShowIGO event until encrypted delivery, using the existing native fixture and timeouts.
 
 ### Integrated 2026-11-10
 
+- [PR #254](https://github.com/raleonys/citrine-eclipse-mirage/pull/254): Preflight all locked vendor alias descriptors before optionally restoring any symlinks, so a later malformed alias cannot leave an earlier alias converted. Add positive two-alias and invalid-later-alias regressions; runtime and vendor bytes remain unchanged.
 - [PR #255](https://github.com/raleonys/citrine-eclipse-mirage/pull/255): Extend the installed-hook native Application fixture with ANSI Registry open/query/close and mixed A/W handle use, size-only and undersized-buffer behavior, native-codepage client path equality, and unmatched-value refusal. This uses real callback routes under the existing live fixture, not a donor CRT or a simulated Registry owner; original Consumer and Windows acceptance are still separate evidence.
 - [PR #255](https://github.com/raleonys/citrine-eclipse-mirage/pull/255): Reconcile 84 accepted changelog notes with their merged PRs and verified UTC integration dates. Reserve This PR for the current proposal and document migration of accepted notes during synchronization.
 - [PR #257](https://github.com/raleonys/citrine-eclipse-mirage/pull/257): Reject incomplete or duplicated Source QA check inventories before weekly candidate validation and packaging. Require each current runner group exactly once with an integer zero exit code; preserve complete reordered reports and cover rejection before downstream validation, assets or release receipts are created.
