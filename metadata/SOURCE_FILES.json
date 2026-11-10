@@ -1161,9 +1161,13 @@
       "bytes": 2192,
       "sha256": "ff8dadab50028201077b165b2b725a4466845291a8361efd2d302449795b2d07"
     },
+    "tests/infrastructure/hook_cleanup_control.py": {
+      "bytes": 5051,
+      "sha256": "ab900d631814218fd93c7c5d53b0512e929c030fc753e0192ca702b20e2e3d4f"
+    },
     "tests/infrastructure/hook_real_peer_control.py": {
-      "bytes": 3580,
-      "sha256": "5692fa6bdd9162c4b88d973ea20b155583757057391df9259817e66a8809767b"
+      "bytes": 3576,
+      "sha256": "ba37779910cc2fd47ddd8a429fd201d15c9d587cbafdec357facc3b6e695fb90"
     },
     "tests/infrastructure/test_build_partition.py": {
       "bytes": 24116,
@@ -1186,8 +1190,8 @@
       "sha256": "5dc42178808bad041df976fceeb31a664c52668988c9f299f2184fdb45c8972e"
     },
     "tests/infrastructure/test_hook_disable_action.py": {
-      "bytes": 4307,
-      "sha256": "3108408fd67b132ec5fb7b604fca748ffc3979b2411dbfcda75e2ed892699771"
+      "bytes": 5807,
+      "sha256": "7f5107def7a8ed4fd9f609e2a558d435e5968083195cc5971a1d60bc3bd52ded"
     },
     "tests/infrastructure/test_infrastructure.py": {
       "bytes": 144658,
@@ -1226,8 +1230,8 @@
       "sha256": "f7070b8f72d5c2881c146b3e875a2df498d5ab8f93cf4073aea9e578b62ebfbc"
     },
     "tests/infrastructure/test_vendor_contract.py": {
-      "bytes": 24410,
-      "sha256": "3a2ff642ffe7b2e6b633c069a95315c23c416286a3f5d59da9c4db45c9f60d76"
+      "bytes": 27280,
+      "sha256": "5e53d151bb8f1f4d4252ce12c1c8c0bac520e27248a1f2c26a4bea0ad13eff2d"
     },
     "tests/infrastructure/test_weekly_release.py": {
       "bytes": 37324,
@@ -1310,12 +1314,20 @@
       "sha256": "b44b7a448065fb462cdd2e822e6f4b0cd802a84d7f0fca62e1d6fa1d6b983d45"
     },
     "tests/native/hook_freeze_tests.c": {
-      "bytes": 12026,
-      "sha256": "4c1e9407eb5c4aa35ece6fdbff4db3892bfd840bf9cfe33a053da2708061eebc"
+      "bytes": 21020,
+      "sha256": "eed767c8efd1a22fe14a8c5374c88692d92a01fcd9d77760d9347f1cd5f1fe22"
+    },
+    "tests/native/hook_live_calls_tests.c": {
+      "bytes": 5771,
+      "sha256": "0576c3756e014adbda2d7892a500b8168fd38c1be4276c7928198eda14f3b048"
     },
     "tests/native/hook_real_peer_tests.cpp": {
       "bytes": 14749,
       "sha256": "b3fdf6f0b75b9890c3c38719a7d70d6a18212b8aadda6db2fc442541ec21b14f"
+    },
+    "tests/native/hook_thread_churn_tests.c": {
+      "bytes": 8094,
+      "sha256": "15fb1ea5484a3fe8eb960e4dec50ec331a71699862fc7c365864b7b1577e9164"
     },
     "tests/native/license_ticket_time_tests.cpp": {
       "bytes": 3727,
@@ -11567,7 +11579,7 @@
       "bytes": 5465,
       "sha256": "082eff38c952bdf4a56684bd41aacea76b2068f63b59f02f8985e7800cdc78a7"
     },
-    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": {
+    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": {
       "bytes": 154,
       "sha256": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c"
     },
@@ -12763,7 +12775,7 @@
       "bytes": 3304,
       "sha256": "49b7b0c9dfbaf3c8333e1d18117204d47f5f7ead7ac8b3fce60c30e835bb1bed"
     },
-    "third_party/pugixml/tests/data/тест.xml": {
+    "third_party/pugixml/tests/data/\u0442\u0435\u0441\u0442.xml": {
       "bytes": 7,
       "sha256": "fc2cdda67a4e845899692e57d0e54e12d10dbd2e3f7ef65f50c340426c4ff0d8"
     },

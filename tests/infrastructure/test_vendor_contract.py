@@ -21,10 +21,60 @@ import extract_source
 import restore_vendor_links
 import prepare_hook_engine
 import hook_real_peer_control as peer_control
+import hook_cleanup_control as cleanup_control
 
 
 class VendorTests(unittest.TestCase):
-    def test_real_peer_counterfactual_requires_exact_current_and_historical_sources(self):
+    def test_cleanup_controls_remove_only_one_guard_from_exact_verified_source(self):
+        cmake = shutil.which('cmake')
+        if not cmake:
+            self.skipTest('CMake needed for the actual verified engine copy')
+        parent = ROOT / 'build/qa'
+        parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=parent, prefix='cleanup-control-') as tmp:
+            stage = Path(tmp) / 'engine'
+            prepare_hook_engine.prepare(ROOT, stage, cmake)
+            source = stage / 'src/hook.c'
+            current = source.read_bytes()
+            self.assertEqual(current.count(cleanup_control.GUARD), 5)
+            for mode, (_, expected, _) in cleanup_control.CONTROLS.items():
+                with self.subTest(mode=mode):
+                    mutant = cleanup_control.controlled_source(current, mode)
+                    self.assertEqual(hashlib.sha256(mutant).hexdigest(), expected)
+                    self.assertEqual(mutant.count(cleanup_control.GUARD), 4)
+                    self.assertEqual(current, source.read_bytes())
+                    for bad in (current + b'X', mutant):
+                        with self.assertRaises(ValueError):
+                            cleanup_control.controlled_source(bad, mode)
+                    output = Path(tmp) / mode / 'src/hook.c'
+                    cleanup_control.prepare(source, output, mode)
+                    self.assertEqual(output.read_bytes(), mutant)
+            with self.assertRaises(ValueError):
+                cleanup_control.controlled_source(current, 'unknown')
+            self.assertEqual(current, source.read_bytes())
+
+    def test_cleanup_control_oracles_reject_arbitrary_failures(self):
+        for mode, (_, _, failure) in cleanup_control.CONTROLS.items():
+            with self.subTest(mode=mode):
+                cleanup_control.require_failure(mode, 1, '', failure + '\n')
+                for code, stdout, stderr in (
+                        (0, '', failure), (42, '', failure), (124, '', failure),
+                        (1, '', 'unrelated error'), (1, '', 'FAIL: unrelated assertion'),
+                        (1, '', failure + '\nFAIL: cleanup'),
+                        (1, '', failure + '\n' + failure)):
+                    with self.assertRaises(RuntimeError):
+                        cleanup_control.require_failure(mode, code, stdout, stderr)
+
+    def test_cleanup_control_paths_cannot_publish_outside_owned_build(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / 'hook.c'
+            source.write_bytes(b'untrusted source')
+            output = Path(tmp) / 'output.c'
+            with self.assertRaisesRegex(ValueError, 'owned build'):
+                cleanup_control.prepare(source, output, 'apply')
+            self.assertFalse(output.exists())
+
+    def test_real_peer_counterfactual_requires_exact_current_and_stale_sources(self):
         cmake = shutil.which('cmake')
         if not cmake:
             self.skipTest('CMake needed for the actual verified engine copy')
