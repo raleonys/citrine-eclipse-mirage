@@ -1,5 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
+add_executable(dll_attach_failure_contracts tests/native/dll_attach_failure_tests.cpp)
+target_include_directories(dll_attach_failure_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
+target_link_libraries(dll_attach_failure_contracts PRIVATE citrine_eclipse_mirage_core)
+add_test(NAME dll_attach_failure_contracts COMMAND dll_attach_failure_contracts)
+set_tests_properties(dll_attach_failure_contracts PROPERTIES TIMEOUT 30)
+
 add_executable(application_worker_launch_contracts tests/native/application_worker_launch_tests.cpp resources/surge.rc)
 target_include_directories(application_worker_launch_contracts PRIVATE "${PROJECT_SOURCE_DIR}" resources)
 target_link_libraries(application_worker_launch_contracts PRIVATE citrine_eclipse_mirage_core advapi32)
@@ -273,6 +279,10 @@ target_link_libraries(startup_contracts PRIVATE citrine_eclipse_mirage_core)
 target_include_directories(startup_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
 add_test(NAME startup_contracts COMMAND startup_contracts )
 set_tests_properties(startup_contracts PROPERTIES TIMEOUT 60)
+add_executable(startup_native_argv_contracts tests/native/startup_argv_tests.cpp)
+target_link_libraries(startup_native_argv_contracts PRIVATE citrine_eclipse_mirage_core)
+add_test(NAME startup_native_argv_contracts COMMAND startup_native_argv_contracts)
+set_tests_properties(startup_native_argv_contracts PROPERTIES TIMEOUT 60)
 add_executable(parser_contracts tests/unit/parser/parser_tests.cpp)
 target_link_libraries(parser_contracts PRIVATE citrine_eclipse_mirage_core)
 target_include_directories(parser_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
