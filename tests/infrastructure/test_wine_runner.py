@@ -3,6 +3,7 @@
 """Check real exit propagation and inherited-output lifetime independently of Wine."""
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -24,6 +25,21 @@ class WineRunner(unittest.TestCase):
         result = subprocess.run([sys.executable, '-B', str(RUNNER), sys.executable, '-c', parent], capture_output=True, timeout=10)
         self.assertEqual(result.returncode, 0)
         self.assertIn(b'parent done', result.stdout)
+
+    def test_nonfinite_timeout_is_rejected_before_child_execution(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sentinel = Path(tmp) / 'child-ran.txt'
+            command = [sys.executable, '-c',
+                       'import pathlib,sys;pathlib.Path(sys.argv[1]).write_text("ran")',
+                       str(sentinel)]
+            for value in ('nan', 'inf', '-inf'):
+                with self.subTest(timeout=value):
+                    result = subprocess.run(
+                        [sys.executable, '-B', str(RUNNER), '--timeout=' + value, *command],
+                        capture_output=True, timeout=8)
+                    self.assertEqual(2, result.returncode)
+                    self.assertIn(b'positive timeout', result.stderr)
+                    self.assertFalse(sentinel.exists())
 
     def test_hung_program_is_failure(self):
         result = subprocess.run([sys.executable, '-B', str(RUNNER), '--timeout', '0.1', sys.executable,
