@@ -1170,8 +1170,8 @@
       "sha256": "ba37779910cc2fd47ddd8a429fd201d15c9d587cbafdec357facc3b6e695fb90"
     },
     "tests/infrastructure/test_build_partition.py": {
-      "bytes": 24116,
-      "sha256": "babf3c33f1b65ae3e703e8c74a40dc26fa8228c74c232b71a1dedffef014d2e8"
+      "bytes": 24267,
+      "sha256": "ea2709c3005f73dfbe039dbfa1b8dfc8066fc21e334eb0dc0cef5744c7a14555"
     },
     "tests/infrastructure/test_build_path_reparse.ps1": {
       "bytes": 17701,
@@ -1202,8 +1202,8 @@
       "sha256": "d6f9cfd36544aca08fb1d350283d70d9a3798981ec22333f269324df83cca558"
     },
     "tests/infrastructure/test_project_version.py": {
-      "bytes": 8211,
-      "sha256": "48d43a4c43f3ade0534e229170e2592013729362a90d76112ee420175073c558"
+      "bytes": 14142,
+      "sha256": "1acfd2766459e2e3af634f15e299eabdc59f225d268c58008ffa7cce091e8660"
     },
     "tests/infrastructure/test_public_abi.py": {
       "bytes": 2128,

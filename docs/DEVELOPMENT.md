@@ -23,13 +23,18 @@ this rename; external C++ consumers and provider deployments must migrate too.
 Public C exports and ordinals remain unchanged.
 
 `resources/version.rc` uses a generated `project_version.h`. The default semantic
-version is recorded in `metadata/BRANDING_AND_IDENTITY.json`. Set
-`CITRINE_ECLIPSE_MIRAGE_VERSION=3.2.7` for the entire configure/build/validation
+version is recorded in `metadata/BRANDING_AND_IDENTITY.json` and follows the
+latest published stable release after its version-update PR is merged. Local
+builds and downloaded source archives read this committed value offline;
+they do not query GitHub or infer a version from locally available Git tags.
+Set `CITRINE_ECLIPSE_MIRAGE_VERSION=3.2.8` for the entire configure/build/validation
 session to select another release version. Numeric FILEVERSION and PRODUCTVERSION
-are `3,2,7,0`; FileVersion and ProductVersion strings are `3.2.7`. The revision
+are then `3,2,8,0`; FileVersion and ProductVersion strings are `3.2.8`. The revision
 component is always zero. Reconfigure after changing the environment value.
 Build receipts and Golden checks use the same selection and reject stale values.
 Weekly Windows jobs receive the version from the approved planned release tag.
+See [weekly release version upkeep](WEEKLY_RELEASE.md#local-build-version-upkeep)
+for the automatic follow-up PR and its owner review requirement.
 
 The CryptQuery compatibility target retains its historical filename, independently
 of the new product DLL name. Retained evidence and vendor sources remain exact
