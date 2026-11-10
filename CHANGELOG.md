@@ -8,6 +8,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 - Correct the offline local-build default version to the published 3.2.7 ERINTHAR release. Prepare owner-reviewed version-update PRs after future stable publications, preserving explicit candidate overrides and consistent resource/Golden/receipt versions. Validate release eligibility, bounded source updates, retry/no-downgrade behavior and source manifests; retain C++20, vendor pins and all other PE metadata.
 - Preserve accepted single-snapshot VERSIONINFO and generated-header alias protection while synchronizing the updater and its tests. Use the accepted SHA-pinned Node.js 24 actions in the new release-default workflow; keep its stable-publication/manual triggers and owner-review policy unchanged.
+- Reuse one CMake compiler-detection cache for the build-partition fixture's Debug and Release configurations. Retain every CRT/link-ownership assertion and the existing 30-second test deadline while avoiding duplicate native compiler probes.
 
 ### Integrated 2026-11-10
 
