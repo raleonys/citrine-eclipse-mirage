@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Fail early on unexpected or symlinked weekly runtime bundle inputs before creating an output directory, retaining clean retries for those validation failures. Add invalid-member and symlink-input regressions; leave the runtime ZIP contents and release policy unchanged.
+
 - Upgrade every checkout, Python setup and artifact upload workflow step to SHA-pinned Node.js 24 releases (checkout 7.0.1, setup-python 7.1.0 and upload-artifact 7.0.2). Preserve triggers, synchronization gates, permissions, Python versions and artifact settings while removing the deprecated Node.js 20 action runtime.
 
 - Use one validated project-version snapshot for both numeric and text VERSIONINFO fields; add a deterministic mutation regression proving that FileVersion and ProductVersion cannot diverge within one policy expansion. Retain the current DLL ABI, release version rules, branding and Golden policy.

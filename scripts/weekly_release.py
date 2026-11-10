@@ -242,20 +242,26 @@ def bundle(root, payload, output):
     errors = check(root, source)
     if errors:
         raise ValueError('Source package mismatch: ' + '; '.join(errors))
-    output.mkdir(parents=True)
     receipt = {'schema': 'surge.draft-release-receipt.v1', 'publication_status': 'DRAFT',
                'tag': p['tag'], 'source_sha': p['source_sha'], 'source_manifest_sha256': manifest,
                'source_qa_groups': len(qa['checks']), 'portable_tests': portable_tests,
                'native_tests': native['tests'], 'dll_sha256': golden['dll_sha256'],
                'source_zip_sha256': sha(source), 'game_acceptance': 'NOT_RUN',
                'publication': False}
-    binary = output / binary_name
     dist_files = {path.name: path for path in (payload / 'production/dist').iterdir() if path.is_file()}
     if set(dist_files) != {'citrine_eclipse_mirage.dll', 'citrine_eclipse_mirage.dll.sha256', 'DIST_RECEIPT.json'}:
         raise ValueError('Unexpected runtime payload')
     files = {'citrine_eclipse_mirage.dll': dist_files['citrine_eclipse_mirage.dll'],
              'citrine_eclipse_mirage.dll.sha256': dist_files['citrine_eclipse_mirage.dll.sha256'],
              'LICENSE': root / 'LICENSE'}
+    # Refuse malformed or aliased inputs before claiming the fresh output path.
+    for path in files.values():
+        if path.is_symlink():
+            raise ValueError('Candidate payload cannot contain symlinks')
+        if not path.is_file():
+            raise ValueError('Candidate payload input is missing or nonregular')
+    output.mkdir(parents=True)
+    binary = output / binary_name
     with zipfile.ZipFile(binary, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
         for name, path in sorted(files.items()):
             if path.is_symlink():
