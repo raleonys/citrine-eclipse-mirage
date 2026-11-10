@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Cover live encrypted ChallengeResponse rekeying: decrypt requests with the previous key, encrypt the exact response and queued event with the new key, and preserve follow-up requests plus an independently keyed Application peer. Test-only; production behavior is unchanged.
+
 - Cover inclusive QueryImage avatar-cache component limits: owners of 127/128/129 characters and widths of 7/8/9 digits. Preserve accepted provider calls, exact request/cache names and own/foreign fallback plus saved-avatar state; production policy is unchanged.
 
 - Bound Golden VERSIONINFO key, value and child parsing to each declared node length. Reject malformed binary resources instead of accepting metadata read beyond a node or silently ignoring an invalid child; add byte-level PE regressions that preserve valid DWORD alignment and empty values.
