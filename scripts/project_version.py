@@ -32,17 +32,23 @@ def resolve_policy(policy, root=ROOT):
     if policy.get('version_source') != 'metadata/BRANDING_AND_IDENTITY.json':
         return policy
     policy = copy.deepcopy(policy)
-    major, minor, patch, revision = components(selected_version(root))
+    selected = selected_version(root)
+    major, minor, patch, revision = components(selected)
     info = policy['required']['versioninfo']
     for kind in ('File', 'Product'):
         info['fixed']['dw' + kind + 'VersionMS'] = f'0x{(major << 16) | minor:08X}'
         info['fixed']['dw' + kind + 'VersionLS'] = f'0x{(patch << 16) | revision:08X}'
-        info['strings'][kind + 'Version'] = selected_version(root)
+        info['strings'][kind + 'Version'] = selected
     return policy
 
 
 def write_header(path, version):
     values = ','.join(map(str, components(version)))
+    path = Path(path)
+    if path.is_symlink() or any(parent.is_symlink() for parent in path.parents):
+        raise ValueError('Generated version header path cannot traverse symlinks')
+    if path.exists() and (not path.is_file() or path.stat().st_nlink != 1):
+        raise ValueError('Generated version header must be an exclusive regular file')
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text('// SPDX-License-Identifier: GPL-3.0-only\n'
                     '// Generated from the selected project version; do not edit.\n'

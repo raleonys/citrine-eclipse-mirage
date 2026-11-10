@@ -4,6 +4,7 @@
 import argparse
 from pathlib import Path
 import os
+import tempfile
 from project_files import vendor_symlinks
 
 
@@ -19,11 +20,12 @@ def restore(root):
             continue
         if not path.is_file() or path.read_bytes()!=target.encode('utf-8'):
             raise ValueError('Refusing to replace a non-descriptor vendor path: '+name)
-        data=path.read_bytes();path.unlink()
-        try:os.symlink(target,path,target_is_directory=True)
-        except OSError:
-            path.write_bytes(data)
-            raise
+        # Stage off-path, then publish atomically: never unlink a verified
+        # portable descriptor before link creation and replacement succeed.
+        with tempfile.TemporaryDirectory(prefix='.vendor-alias-',dir=path.parent) as temporary:
+            staged=Path(temporary)/'link'
+            os.symlink(target,staged,target_is_directory=True)
+            os.replace(staged,path)
 
 
 if __name__=='__main__':

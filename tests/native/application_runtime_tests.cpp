@@ -106,10 +106,12 @@ public:
     std::string request(std::string_view id,std::string_view command) {
         send("<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>");return frame();
     }
-    void encrypted_send(std::string_view id,std::string_view command) {
-        auto bytes="<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>";
+    void encrypted_raw_send(std::string bytes) {
         require(cipher.encrypt_042610(bytes),"client encrypt");
         messages::hex_encode_03d190(bytes);send(bytes);
+    }
+    void encrypted_send(std::string_view id,std::string_view command) {
+        encrypted_raw_send("<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>");
     }
     std::string encrypted_request(std::string_view id,std::string_view command) {
         encrypted_send(id,command);return encrypted_frame();
@@ -139,11 +141,30 @@ public:
         }else cipher.set_fixed_key_084c98();
     }
     bool same_cipher(const Peer& other)const{return cipher.round_keys()==other.cipher.round_keys();}
+    void rekey(std::string_view id,std::string_view key,int version) {
+        std::string expected(key);crypto::Cipher fixed;fixed.set_fixed_key_084c98();
+        require(fixed.encrypt_042610(expected),"independent live rekey challenge encryption");
+        messages::hex_encode_03d190(expected);
+        crypto::Cipher next;
+        if(version>2){crypto::WindowsTimeSource time;crypto::Random random{time};next.set_key_042780(random.key_from_response_034c30(expected));}
+        else next.set_fixed_key_084c98();
+        require(next.round_keys()!=cipher.round_keys(),"live rekey selects genuinely different keys");
+        encrypted_send(id,"<ChallengeResponse key='"+std::string(key)+"' version='"+std::to_string(version)+"'/>");
+        cipher=next; // Decode this reply with the new key, after sending with the old one.
+        const auto reply=encrypted_frame();xml_reader_bridge::Backend xml;auto parsed=xml.parse_c_string(reply);
+        require(!parsed.has_error,"live encrypted rekey response parses");
+        const auto* root=parsed.document->first_element();const auto* response=root?root->first_element():nullptr;
+        const auto* accepted=response?response->first_element():nullptr;
+        require(root&&root->name()=="LSX"&&response&&response->name()=="Response"&&response->attribute("id")==id&&
+                accepted&&accepted->name()=="ChallengeAccepted"&&accepted->attribute("response")==expected,
+                "live rekey returns its exact challenge and request id under the new key");
+    }
     void close() {
         asio::error_code error;socket.shutdown(asio::ip::tcp::socket::shutdown_both,error);
         socket.close(error);require(!error,"explicit encrypted peer close succeeds");
     }
     bool closes_without_output() {
+        if(!input.empty())return false; // Previously buffered output also violates silence.
         socket.non_blocking(true);
         const auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(5);
         while(std::chrono::steady_clock::now()<deadline) {
@@ -236,6 +257,16 @@ void encrypted_peer_isolation(std::uint16_t port) {
             require_profile(derived.encrypted_frame(),second);
             require_profile(fixed.encrypted_frame(),first);
         }
+        for(int stage:{0,1,2}){
+            const int version=stage==1?2:3;
+            const auto id="rotate-"+std::to_string(stage);
+            derived.rekey(id,stage==0?"live-rekey-first":stage==1?"live-rekey-fixed":"live-rekey-second",version);
+            require(derived.same_cipher(fixed)==(version==2),"live derived/fixed transitions preserve the sibling's negotiated key");
+            derived.encrypted_send("after-"+id,"<GetProfile index='0'/>");
+            fixed.encrypted_send("sibling-"+id,"<GetProfile index='0'/>");
+            require_profile(fixed.encrypted_frame(),"sibling-"+id);
+            require_profile(derived.encrypted_frame(),"after-"+id);
+        }
         Peer& retired=close_fixed?fixed:derived;
         Peer& survivor=close_fixed?derived:fixed;
         retired.close();
@@ -249,6 +280,39 @@ void encrypted_peer_isolation(std::uint16_t port) {
         survivor.encrypted_send("survivor-after-admission","<GetProfile index='0'/>");
         require_profile(replacement.encrypted_frame(),"replacement-profile");
         require_profile(survivor.encrypted_frame(),"survivor-after-admission");
+    }
+}
+// Pin current product containment, not donor same-session continuation or UI.
+// These well-formed XML documents reach dispatch rejection, unlike parse or
+// decrypt failures which the earlier round trips deliberately recover from.
+void invalid_lsx_peer_isolation(std::uint16_t port) {
+    constexpr std::string_view rejected[]{
+        "<OtherRoot><Request id='wrong-root' recipient='EbisuSDK'><GetProfile index='0'/></Request></OtherRoot>",
+        "<LSX><Request id='missing-recipient'><GetProfile index='0'/></Request></LSX>",
+        "<LSX><Request id='unknown-command' recipient='EbisuSDK'><FixtureUnregisteredCommand/></Request></LSX>"};
+    Peer survivor(port);(void)survivor.frame();
+    survivor.negotiate("survivor-handshake","fixture-invalid-survivor",3);
+    require_profile(survivor.encrypted_request("survivor-before-rejection","<GetProfile index='0'/>"),"survivor-before-rejection");
+    unsigned sequence=0;
+    for(const bool encrypted:{false,true})for(const auto request:rejected) {
+        // Prove each input belongs to the dispatch domain, not invalid XML.
+        xml_reader_bridge::Backend xml;const auto parsed=xml.parse_c_string(request);
+        require(!parsed.has_error,"invalid LSX fixture is syntactically valid XML");
+        Peer failed(port);
+        require(failed.frame().find("<Challenge ")!=std::string::npos,"rejected peer first receives its real greeting");
+        if(encrypted)failed.negotiate("invalid-handshake","fixture-invalid-peer",3);
+        const auto pending="survivor-during-"+std::to_string(sequence);
+        survivor.encrypted_send(pending,"<GetProfile index='0'/>");
+        if(encrypted)failed.encrypted_raw_send(std::string(request));
+        else failed.send(std::string(request));
+        require(failed.closes_without_output(),"dispatch rejection closes only its peer without response; timeout is not success");
+        require_profile(survivor.encrypted_frame(),pending);
+        const auto after="survivor-after-"+std::to_string(sequence);
+        require_profile(survivor.encrypted_request(after,"<GetProfile index='0'/>"),after);
+        Peer replacement(port);
+        require(replacement.frame().find("<Challenge ")!=std::string::npos,"listener still admits a peer after dispatch rejection");
+        const auto admitted="admitted-after-"+std::to_string(sequence++);
+        require_profile(replacement.request(admitted,"<GetProfile index='0'/>"),admitted);
     }
 }
 struct GreetingFixture final:net::HandlerFactory {
@@ -416,6 +480,7 @@ int main(int argc,char** argv) try {
         require(peer.request("after-bad-xml","<GetProfile index='0'/>").find("fixture-override")!=std::string::npos,"XML parse failure leaves the session usable");
     }
     encrypted_peer_isolation(state.server_port);
+    invalid_lsx_peer_isolation(state.server_port);
     // Stop while an accepted socket still owns a pending read.
     Peer waiting(state.server_port);(void)waiting.frame();app.stop();app.stop();
     require(true,"pending read cancelled and idempotent stop completed");

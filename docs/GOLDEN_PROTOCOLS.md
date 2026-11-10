@@ -33,9 +33,9 @@ fixed fixture identities under
 
 | Profile | Current rule |
 |---|---|
-| URSYNEX | Apply the selected timestamp 0xA6FD7C8F, linker 14.0 and no-Rich-header profile to the copy, then recompute checksum. Permute complete import descriptors into the fixed DLL order; preserve names/thunks/IAT data. |
+| URSYNEX | Preserve the native link output compilation timestamp; apply linker 14.0 and the no-Rich-header profile to the copy, then recompute checksum. Permute complete import descriptors into the fixed DLL order; preserve names/thunks/IAT data. |
 | ARYRA | MSVC six sections, or seven with the static UCRT `.fptable`: verify ordering, alignment, file bounds and non-overlap. `.fptable` must have virtual 0x100, raw 0x200, index 4, characteristics 0xC0000040 and all-zero data. Other section RVAs/sizes are not fixed. |
-| MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem 6.0, linker 14.0, timestamp 0xA6FD7C8F, no Rich header. Citrine Eclipse Mirage VERSIONINFO, Copyright 2026 SURGE, and matching selected numeric/string file and product versions. No PNG/RCDATA/manifest or COFF symbol/debug/certificate. Internal export name `citrine_eclipse_mirage.unsigned.dll`. |
+| MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem 6.0, linker 14.0, native compilation timestamp preserved, no Rich header. Citrine Eclipse Mirage VERSIONINFO, Copyright 2026 SURGE, and matching selected numeric/string file and product versions. No PNG/RCDATA/manifest or COFF symbol/debug/certificate. Internal export name `citrine_eclipse_mirage.unsigned.dll`. |
 | CORVEXON | Exactly three C exports/ordinals. The CRT entrypoint is separate from exported DllMain and lies in executable `.text`. No static imports outside CRYPT32/WS2_32/KERNEL32/USER32/SHELL32/MSWSOCK; MSWSOCK only AcceptEx/GetAcceptExSockaddrs, CRYPT32 only CryptQueryObject. `/MT`, writable image-backed `/GS` cookie and valid checksum. |
 
 OLE32 originated in the earlier COM known-folder adapter
@@ -74,8 +74,8 @@ creates a `.zip.sha256` beside each archive.
 
 Candidate hashes must remain unchanged during
 all read-only stages. URSYNEX may change only
-permitted timestamp, linker, full Rich-header
-block and checksum fields; any other byte
+permitted linker, full Rich-header block and checksum fields; the native
+compilation timestamp must remain byte-exact; any other byte
 mutation must stop the pipeline. The original
 build DLL's unchanged bytes are also checked
 at the end. Fixture and malformed-input
