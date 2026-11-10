@@ -1,8 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 name: Full validation after main synchronization
+run-name: ${{ github.event_name == 'push' && 'CodeQL default branch analysis' || 'Full validation after main synchronization' }}
 
 on:
+  push:
+    branches: [main]
   pull_request:
     types: [synchronize, labeled]
   workflow_dispatch:
@@ -50,7 +53,7 @@ jobs:
         run: python3 -B scripts/ci_validation_readiness.py --record-sync
 
   readiness:
-    if: github.event_name != 'workflow_dispatch' || inputs.operation == 'diagnostic'
+    if: github.event_name != 'push' && (github.event_name != 'workflow_dispatch' || inputs.operation == 'diagnostic')
     name: Check main synchronization
     runs-on: ubuntu-24.04
     timeout-minutes: 5
@@ -75,7 +78,8 @@ jobs:
 
   codeql:
     needs: readiness
-    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
+    # Main pushes skip readiness; the status function admits only CodeQL there.
+    if: ${{ !cancelled() && ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true')) }}
     name: CodeQL (${{ matrix.language }})
     runs-on: ubuntu-24.04
     timeout-minutes: 60
@@ -92,7 +96,7 @@ jobs:
         run: git config --global core.autocrlf false
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ needs.readiness.outputs.head_sha }}
+          ref: ${{ github.event_name == 'push' && github.sha || needs.readiness.outputs.head_sha }}
           persist-credentials: false
       - name: Initialize CodeQL
         uses: github/codeql-action/init@33d7b85da1a04171e211befe2c739303b9a4c066 # v4
@@ -104,7 +108,7 @@ jobs:
         with:
           category: /language:${{ matrix.language }}
           ref: ${{ github.event_name == 'pull_request' && format('refs/pull/{0}/head', github.event.pull_request.number) || github.ref }}
-          sha: ${{ needs.readiness.outputs.head_sha }}
+          sha: ${{ github.event_name == 'push' && github.sha || needs.readiness.outputs.head_sha }}
 
   source-qa:
     needs: readiness
