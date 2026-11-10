@@ -8,19 +8,19 @@
 #include "../config.hpp"
 
 #include "enable_control.hpp"
-#include "ione_not_ione.hpp"
 #include "match_mode.hpp"
+#include "ione_not_ione.hpp"
 #include "terminal.hpp"
 
 namespace TAO_PEGTL_NAMESPACE::internal
 {
-   template< typename Peek, Peek::data_t... Cs >
+   template< typename Peek, typename Peek::data_t... Cs >
    struct ione
       : terminal< ione< Peek, Cs... >, Peek >,
         ione_not_ione< match_mode::normal, Peek, Cs... >
    {};
 
-   template< typename Peek, Peek::data_t... Cs >
+   template< typename Peek, typename Peek::data_t... Cs >
    inline constexpr bool enable_control< ione< Peek, Cs... > > = false;
 
 }  // namespace TAO_PEGTL_NAMESPACE::internal

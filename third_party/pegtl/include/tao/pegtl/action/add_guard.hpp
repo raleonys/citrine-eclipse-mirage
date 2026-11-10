@@ -15,12 +15,11 @@
 
 #include "../internal/dependent_false.hpp"
 #include "../internal/has_success.hpp"
-#include "../internal/ignore_arguments.hpp"
 
 namespace TAO_PEGTL_NAMESPACE
 {
    template< typename AddGuard >
-   struct add_guard
+   struct [[nodiscard]] add_guard
       : maybe_nothing
    {
       template< typename Rule,
@@ -32,8 +31,6 @@ namespace TAO_PEGTL_NAMESPACE
                 typename... States >
       [[nodiscard]] static bool match( ParseInput& in, States&&... st )
       {
-         TAO_PEGTL_MSVC_IGNORE( in, st... );
-
          if constexpr( std::is_default_constructible_v< AddGuard > ) {
             AddGuard g;
             if( TAO_PEGTL_NAMESPACE::match< Rule, A, M, Action, Control >( in, st... ) ) {
@@ -55,7 +52,7 @@ namespace TAO_PEGTL_NAMESPACE
             return false;
          }
          else {
-            static_assert( internal::dependent_false< AddGuard >, "Unable to instantiate new guard!" );
+            static_assert( internal::dependent_false< AddGuard >, "Unable to instantiate guard!" );
          }
       }
 
@@ -63,8 +60,6 @@ namespace TAO_PEGTL_NAMESPACE
                 typename... States >
       static void success( const ParseInput& in, AddGuard& g, States&&... st )
       {
-         TAO_PEGTL_MSVC_IGNORE( in, st... );
-
          if constexpr( internal::has_success< AddGuard, void, const ParseInput&, States... > ) {
             g.success( in, st... );
          }
