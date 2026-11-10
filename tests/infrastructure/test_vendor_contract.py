@@ -290,7 +290,18 @@ class LinkPackagingTests(unittest.TestCase):
         self.assertEqual([], project_files.verify_manifest(self.root))
 
     def test_restore_publication_failure_preserves_descriptor_and_cleans_stage(self):
+        self._check_restore_publication_failure()
+
+    def test_restore_publication_failure_preserves_aliased_root(self):
+        self.root = self.root / '..' / self.root.name
+        self.link = self.root / 'third_party/asio/asio/include'
+        self.assertNotEqual(self.link, self.link.resolve())
+        self._check_restore_publication_failure()
+
+    def _check_restore_publication_failure(self):
         original = self.link.read_bytes()
+        # restore() resolves its source root, including Windows temp aliases.
+        destination_path = self.link.resolve()
 
         def stage_without_windows_symlink_privilege(target, staged, target_is_directory=False):
             self.assertEqual('../include', target)
@@ -299,8 +310,8 @@ class LinkPackagingTests(unittest.TestCase):
             Path(staged).write_bytes(target.encode('utf-8'))
 
         def fail_publish(staged, destination):
-            self.assertEqual(self.link, Path(destination))
-            self.assertNotEqual(self.link, Path(staged))
+            self.assertEqual(destination_path, Path(destination))
+            self.assertNotEqual(destination_path, Path(staged))
             self.assertEqual(original, self.link.read_bytes())
             self.assertEqual(original, Path(staged).read_bytes())
             raise OSError('injected link publication failure')
