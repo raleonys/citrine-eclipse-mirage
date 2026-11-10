@@ -50,6 +50,8 @@ Build, debug, and focused testing remain available developer tools; separate pub
 
 Maintain a source-linked `CHANGELOG.md` alongside relevant PRs. A PR-only CI coverage check requires a changed changelog file; an exceptional omission requires the owner-reviewed `changelog-exempt` label and a written PR rationale. Report merged PR development separately from source-revision imports and actual published release tags. Do not invent historical R-series labels, dates or release claims: unresolved archive provenance must remain explicitly incomplete until artifact and checksum verification.
 
+Reserve `### This PR` for the current unmerged proposal. When creating or synchronizing a PR, reconcile notes already present on fetched `main` into the corresponding `### Integrated YYYY-MM-DD` sections, with links to the merged PRs. Verify each integration against the merge commit reachable from `main` and use the UTC date of GitHub `merged_at`; preserve the change details and existing historical entries. Do not carry accepted notes forward as if they belonged to the current PR, invent integration dates, or describe integration as a published release.
+
 ## Weekly stable releases
 
 - There is one regular GitHub Release flow: a weekly stable-release draft built from the accepted `main` commit.
