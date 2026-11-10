@@ -42,7 +42,7 @@ namespace example
    template< unsigned N, typename... S >
    struct tuple_help< N, std::tuple< S... > >
    {
-      using tuple_t = tuple_help< N - 1, std::tuple< std::string, S... > >::tuple_t;
+      using tuple_t = typename tuple_help< N - 1, std::tuple< std::string, S... > >::tuple_t;
    };
 
    template< typename... S >
@@ -59,7 +59,7 @@ namespace example
       template< typename... S >
       static void init( std::tuple< S... >& t, std::vector< std::string >& v )
       {
-         std::get< I >( t ) = std::move( v.at( I ) );
+         std::get< I >( t ) = std::move( v[ I ] );
          tuple_init< I - 1 >::init( t, v );
       }
    };
@@ -70,7 +70,7 @@ namespace example
       template< typename... S >
       static void init( std::tuple< S... >& t, std::vector< std::string >& v )
       {
-         std::get< 0 >( t ) = std::move( v.at( 0 ) );
+         std::get< 0 >( t ) = std::move( v[ 0 ] );
       }
    };
 
@@ -79,7 +79,7 @@ namespace example
    template< unsigned N >
    struct result_data
    {
-      using tuple_t = tuple_help< N, std::tuple<> >::tuple_t;
+      using tuple_t = typename tuple_help< N, std::tuple<> >::tuple_t;
 
       std::vector< std::string > temp;
       std::vector< tuple_t > result;
@@ -109,7 +109,7 @@ namespace example
    template< unsigned N >
    struct action< line< N > >
    {
-      using tuple_t = tuple_help< N, std::tuple<> >::tuple_t;
+      using tuple_t = typename tuple_help< N, std::tuple<> >::tuple_t;
 
       template< typename ActionInput >
       static void apply( const ActionInput& in, result_data< N >& data )
@@ -172,7 +172,7 @@ namespace example
 
 }  // namespace example
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    for( int i = 1; i < argc; ++i ) {
       pegtl::text_file_input< pegtl::lazy::lf_crlf > in( argv[ i ] );
