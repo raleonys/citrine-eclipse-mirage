@@ -24,7 +24,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       : public stream_input_base< Buffer >
    {
    public:
-      using data_t = Buffer::data_t;
+      using data_t = typename Buffer::data_t;
       using error_position_t = text_position;
       using offset_position_t = text_position;
       using rewind_position_t = text_position;
@@ -50,7 +50,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       }
 
       template< typename Rule >
-      void consume( const std::size_t count )
+      void consume( const std::size_t count ) noexcept
       {
          // assert( count <= buffer_used_size() );
          scan_input< data_t > in( this->current(), count );
