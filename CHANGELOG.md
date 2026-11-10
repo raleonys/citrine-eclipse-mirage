@@ -6,12 +6,12 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Extend the installed-hook native Application fixture with ANSI Registry open/query/close and mixed A/W handle use, size-only and undersized-buffer behavior, native-codepage client path equality, and unmatched-value refusal. This uses real callback routes under the existing live fixture, not a donor CRT or a simulated Registry owner; original Consumer and Windows acceptance are still separate evidence.
-
-- Reconcile 84 accepted changelog notes with their merged PRs and verified UTC integration dates. Reserve This PR for the current proposal and document migration of accepted notes during synchronization.
+- Preflight all locked vendor alias descriptors before optionally restoring any symlinks, so a later malformed alias cannot leave an earlier alias converted. Add positive two-alias and invalid-later-alias regressions; runtime and vendor bytes remain unchanged.
 
 ### Integrated 2026-11-10
 
+- [PR #255](https://github.com/raleonys/citrine-eclipse-mirage/pull/255): Extend the installed-hook native Application fixture with ANSI Registry open/query/close and mixed A/W handle use, size-only and undersized-buffer behavior, native-codepage client path equality, and unmatched-value refusal. This uses real callback routes under the existing live fixture, not a donor CRT or a simulated Registry owner; original Consumer and Windows acceptance are still separate evidence.
+- [PR #255](https://github.com/raleonys/citrine-eclipse-mirage/pull/255): Reconcile 84 accepted changelog notes with their merged PRs and verified UTC integration dates. Reserve This PR for the current proposal and document migration of accepted notes during synchronization.
 - [PR #257](https://github.com/raleonys/citrine-eclipse-mirage/pull/257): Reject incomplete or duplicated Source QA check inventories before weekly candidate validation and packaging. Require each current runner group exactly once with an integer zero exit code; preserve complete reordered reports and cover rejection before downstream validation, assets or release receipts are created.
 - [PR #260](https://github.com/raleonys/citrine-eclipse-mirage/pull/260): Fail early on unexpected or symlinked weekly runtime bundle inputs before creating an output directory, retaining clean retries for those validation failures. Add invalid-member and symlink-input regressions; leave the runtime ZIP contents and release policy unchanged.
 - [PR #351](https://github.com/raleonys/citrine-eclipse-mirage/pull/351): Upgrade every checkout, Python setup and artifact upload workflow step to SHA-pinned Node.js 24 releases (checkout 7.0.1, setup-python 7.1.0 and upload-artifact 7.0.2). Preserve triggers, synchronization gates, permissions, Python versions and artifact settings while removing the deprecated Node.js 20 action runtime.
