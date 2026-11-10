@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Fix optional vendor-alias restoration failure atomicity: stage a locked symlink before replacing its exact portable descriptor, never unlink source bytes first, and cover link-creation and publication failure cleanup. Normalize fixture path identity when checking publication destinations and cover aliased source roots. Vendor inputs, production DLL, ABI and build policy are unchanged.
+
 - Test the real Win32 command-line tokenizer, UTF-8 conversion and argv release through the existing startup language/flag filter. Cover quoting, empty values, backslashes, Unicode, executable exclusion and environment precedence without changing process environment, opening a console or replacing the compiler CRT.
 
 - Test actual online profile-copy allocation failures at each getter with caching enabled and disabled. Require the tagged payload fault, exact partial profile and call order, retained object/module ownership, and one-time explicit cleanup; keep existing cookie-lifetime and native composition controls unchanged.
