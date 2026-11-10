@@ -1222,8 +1222,8 @@
       "sha256": "dd0591291789d9423903ced0c3c0ee6f01483479cb7193cd5ccdb300dce961eb"
     },
     "tests/infrastructure/test_size_evidence.py": {
-      "bytes": 8606,
-      "sha256": "fddbdae37f140fdcfffb835edf4cb0fe74f889971a91aa35b411c0080e01b3c0"
+      "bytes": 13381,
+      "sha256": "840052c0eb163a40bb514c9ac47d4cb7fcba64ce1e9c2fd2dc16dc7a85c4b59a"
     },
     "tests/infrastructure/test_source_identity_license.py": {
       "bytes": 6969,
