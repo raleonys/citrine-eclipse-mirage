@@ -32,10 +32,16 @@ namespace TAO_PEGTL_NAMESPACE
          using type = nothing< Rule >;
       };
 
-      template< typename Rule, typename Clause >
-      struct tuple_to_action< Rule, std::tuple< Clause > >
+      template< typename Rule, template< typename, typename... > class Clause, typename Action, typename... Rules >
+      struct tuple_to_action< Rule, std::tuple< Clause< Action, Rules... > > >
       {
-         using type = Clause::template action< Rule >;
+         using type = Action;
+      };
+
+      template< typename Rule, template< template< typename... > class, typename... > class Clause, template< typename... > class Action, typename... Rules >
+      struct tuple_to_action< Rule, std::tuple< Clause< Action, Rules... > > >
+      {
+         using type = Action< Rule >;
       };
 
       template< typename Rule, typename... Clauses >
@@ -51,7 +57,7 @@ namespace TAO_PEGTL_NAMESPACE
       using clauses_to_tuple_t = decltype( std::tuple_cat( std::declval< internal::clause_to_tuple_t< Rule, Clauses > >()... ) );
 
       template< typename Rule, typename... Clauses >
-      using clauses_to_action_t = tuple_to_action< Rule, clauses_to_tuple_t< Rule, Clauses... > >::type;
+      using clauses_to_action_t = typename tuple_to_action< Rule, clauses_to_tuple_t< Rule, Clauses... > >::type;
 
    }  // namespace internal
 
@@ -60,9 +66,6 @@ namespace TAO_PEGTL_NAMESPACE
    {
       template< typename Rule >
       static constexpr bool enable = ( std::is_same_v< Rule, Rules > || ... );
-
-      template< typename >
-      using action = Action;
    };
 
    template< template< typename... > class Action, typename... Rules >
@@ -70,9 +73,6 @@ namespace TAO_PEGTL_NAMESPACE
    {
       template< typename Rule >
       static constexpr bool enable = ( std::is_same_v< Rule, Rules > || ... );
-
-      template< typename Rule >
-      using action = Action< Rule >;
    };
 
    template< typename Action, typename... Clauses >
@@ -80,9 +80,6 @@ namespace TAO_PEGTL_NAMESPACE
    {
       template< typename Rule >
       static constexpr bool enable = ( ( !Clauses::template enable< Rule > ) && ... );
-
-      template< typename >
-      using action = Action;
    };
 
    template< typename Action, typename... Clauses >
@@ -95,9 +92,6 @@ namespace TAO_PEGTL_NAMESPACE
    {
       template< typename Rule >
       static constexpr bool enable = ( ( !Clauses::template enable< Rule > ) && ... );
-
-      template< typename Rule >
-      using action = Action< Rule >;
    };
 
    template< template< typename... > class Action, typename... Clauses >

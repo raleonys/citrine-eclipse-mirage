@@ -1573,6 +1573,67 @@ class GovernanceTests(unittest.TestCase):
                 avatar_data.generate(root,output)
             self.assertEqual(before,output.read_bytes())
 
+    def make_avatar_fixture(self, root):
+        import hashlib
+        (root / 'metadata').mkdir(parents=True)
+        assets = {}
+        for name in ('profile', 'fallback'):
+            payload = b'\x89PNG\r\n\x1a\n' + name.encode('ascii') + b' fixture'
+            path = root / 'resources' / (name + '.png')
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(payload)
+            assets[name] = {'source': 'resources/' + name + '.png',
+                            'sha256': hashlib.sha256(payload).hexdigest()}
+        (root / 'metadata/AVATAR_DATA_CONTRACT.json').write_text(
+            json.dumps({'assets': assets}), encoding='utf-8')
+
+    def test_avatar_generator_rejects_shared_output_hardlink(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'source'
+            self.make_avatar_fixture(root)
+            victim = Path(tmp) / 'owned.txt'
+            victim.write_text('original bytes')
+            output = root / 'generated/avatar_data.hpp'
+            output.parent.mkdir()
+            os.link(victim, output)
+            with self.assertRaisesRegex(ValueError, 'unshared regular'):
+                avatar_data.generate(root, output)
+            self.assertEqual('original bytes', victim.read_text())
+            output.unlink()
+            avatar_data.generate(root, output)
+            expected = output.read_bytes()
+            avatar_data.generate(root, output)
+            self.assertEqual(expected, output.read_bytes())
+
+    def test_avatar_generator_rejects_symlinked_output_and_parent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'source'
+            self.make_avatar_fixture(root)
+            victim = Path(tmp) / 'owned.txt'
+            victim.write_text('original bytes')
+            output = root / 'generated/avatar_data.hpp'
+            output.parent.mkdir()
+            try:
+                output.symlink_to(victim)
+            except (OSError, NotImplementedError) as error:
+                self.skipTest('Symlink privileges unavailable: ' + str(error))
+            with self.assertRaisesRegex(ValueError, 'symlink or junction'):
+                avatar_data.generate(root, output)
+            self.assertEqual('original bytes', victim.read_text())
+            output.unlink()
+            output.parent.rmdir()
+            outside = Path(tmp) / 'external'
+            outside.mkdir()
+            output.parent.symlink_to(outside, target_is_directory=True)
+            with self.assertRaisesRegex(ValueError, 'symlink or junction'):
+                avatar_data.generate(root, output)
+            self.assertFalse((outside / output.name).exists())
+            # A nested missing directory must not be created via an ancestor link.
+            nested = output.parent / 'nested' / output.name
+            with self.assertRaisesRegex(ValueError, 'symlink or junction'):
+                avatar_data.generate(root, nested)
+            self.assertFalse((outside / 'nested').exists())
+
     def test_fixture_is_never_a_product_target(self):
         with self.assertRaises(PolicyPending):
             load_target(ROOT / 'tests/support/golden', 'URSYNEX_GOLDEN_FINALIZER.json')

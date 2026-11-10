@@ -8,6 +8,60 @@ This file distinguishes integrated source changes, imported source history and p
 
 - Keep public DLL ABI report generation read-only for the inspected DLL: reject direct, hardlink and symlink input aliases before inspection. Publish reports through temporary sibling files and atomic replacement so failed output retains the previous report and unrelated hardlinks are not truncated.
 
+- Cover live encrypted ChallengeResponse rekeying: decrypt requests with the previous key, encrypt the exact response and queued event with the new key, and preserve follow-up requests plus an independently keyed Application peer. Test-only; production behavior is unchanged.
+
+- Cover inclusive QueryImage avatar-cache component limits: owners of 127/128/129 characters and widths of 7/8/9 digits. Preserve accepted provider calls, exact request/cache names and own/foreign fallback plus saved-avatar state; production policy is unchanged.
+
+- Bound Golden VERSIONINFO key, value and child parsing to each declared node length. Reject malformed binary resources instead of accepting metadata read beyond a node or silently ignoring an invalid child; add byte-level PE regressions that preserve valid DWORD alignment and empty values.
+
+- Reject non-finite Wine test-runner timeout values (NaN and infinities) before starting a process, preserving a bounded test deadline. Add CLI negative tests for these inputs and preserve the existing exit/output/hung-program behavior; shipping DLL and Windows native behavior are unchanged.
+
+- Reject symlinked generated version-header outputs, linked ancestor directories, hardlinked files and nonregular output targets before writing project_version.h. Add output-alias regression tests while preserving normal version-header text and update behavior; shipping DLL, ABI and version selection remain unchanged.
+
+- Guard the avatar C++ header generator against symlink/junction output paths and multiply linked output files before any directory creation or write. Add hardlink, symlink, directory-alias and ordinary idempotent output regression cases; runtime C++, public ABI, vendor assets and the current build profile remain unchanged.
+
+- Reject XML 1.0-forbidden C0 bytes in KeyForLicense, ContentId and UserId before writing encrypted license data; preserve TAB/LF/CR, existing-file skip and escaped markup, with production-backed native regression coverage. Align the existing counted-field fixture with this policy, retain its full AES known answer, and cover all 29 forbidden C0 bytes in each field before output effects and after existing-file skip.
+
+- Fix optional vendor-alias restoration failure atomicity: stage a locked symlink before replacing its exact portable descriptor, never unlink source bytes first, and cover link-creation and publication failure cleanup. Normalize fixture path identity when checking publication destinations and cover aliased source roots. Vendor inputs, production DLL, ABI and build policy are unchanged.
+
+- Test the real Win32 command-line tokenizer, UTF-8 conversion and argv release through the existing startup language/flag filter. Cover quoting, empty values, backslashes, Unicode, executable exclusion and environment precedence without changing process environment, opening a console or replacing the compiler CRT.
+
+- Test actual online profile-copy allocation failures at each getter with caching enabled and disabled. Require the tagged payload fault, exact partial profile and call order, retained object/module ownership, and one-time explicit cleanup; keep existing cookie-lifetime and native composition controls unchanged.
+
+- Fix four configuration test exception expectations so their own assertion failure cannot be swallowed as the expected runtime error. Preserve partial-state checks and reject CSV, registry, directory and initial-load errors that incorrectly return success; production code is unchanged.
+
+- Add native config-path logging regressions for UTF16-to-UTF8 sizing/fill failures, unchanged queued/existing log bytes and same-owner recovery. Observe all conversion calls to prove Release skips the conversion and output paths; keep the accepted complete-record Debug policy.
+
+- Add source-included native DLL attach failure regressions for event/thread creation errors, exact private event cleanup and saved error restoration after cleanup. Use a real kernel event for the thread-failure path; keep the worker unexecuted and shipping entry behavior unchanged.
+
+- Fix two Registry startup-wait exception expectations so the assertion helper cannot satisfy its own expected-error check. Preserve original output/no-copy/wait-prefix checks and the real Windows SDK DWORD-cell cases; production Registry behavior is unchanged.
+
+- Verify that duplicate or empty later destinations in an atomic XML/INI batch cannot leave staged files or mutate previous targets, and that a subsequent valid batch succeeds.
+
+- Exercise the real file/license SHA-1 composition at 8192-byte read boundaries and across multiple reads, with independent known answers, changed-tail and prefix-digest rejection, and truncation coverage on a Unicode fixture path.
+
+- Require first-party SPDX markers at the beginning of each source file, allowing only launcher shebang or CMD echo preambles. Test that a lone late marker cannot masquerade as a license header; preserve the existing full-file duplicate marker scan. No shipping runtime or vendor changes.
+- Preserve the old Config2 logical hash table on allocation failures in direct `Table::assign_from` calls: stage bucket regrouping before publishing destination rows/capacity. Add a complete allocation-fault sweep and nonpower growth regressions to the existing source-linked Config2 test; retain power-of-two capacity rounding, successful positional ordering and the native-capacity model. No shipping export, config serialization or vendor policy changes.
+- Refresh the complete owner-supplied Asio tree to 1.39.0 and PEGTL from the uploaded 4.x branch snapshot b60f6110abd37e502d202d13a6c565410c552c33 (header 4.0.2), not a release-tag selection. Retain project C++20/C17 and the existing character-pack VDF grammar API. Pin exact archives, members and portable aliases; preserve upstream bytes, MinHook/pugixml selections and application policies.
+
+- Cover Windows native binary output open rejection under an active read-only sharing lease, proving the file is not truncated and a retry succeeds once the handle is closed.
+
+- Add a real-Windows native file-copy regression for a target held without write/delete sharing, ensuring rejected overwrite preserves the original and a retry succeeds after the owning handle closes.
+
+- Test GrantAchievement response-writer failures after successful persistence and event publication. Retain committed existing/new rows, release both locks and distinguish completed retries from further partial-progress increments.
+
+- Preserve the native linker compilation timestamp instead of stamping finalized DLLs with a retained reference-build value. Reject timestamp mutation during finalization; retain every other PE metadata policy.
+
+- Cover failed deletion of a retained atomic staging file after a batch staging failure: block new batches until cleanup succeeds, then permit a fresh commit without changing production persistence policy.
+
+- Test actual cached-avatar cleanup refusal for an owned nonempty matching directory: propagate the filesystem error and path, preserve its child and unrelated files, then remove the newly empty directory on repaired retry. The fixture makes no traversal-order assumption; production cleanup policy is unchanged.
+
+- Test production MessageHandler prepared-response ownership through event reservation, dropped output, explicit commit/cancel and callback failures. Preserve exact binary FIFO events for retry and verify post-reservation unwind without changing runtime policy.
+
+- Test extra-library allocation failures after native DLL acquisition and phase-result insertion. Require retained physical module leases, unchanged worker readiness, failed-release retention and exact idempotent cleanup retries; inject only throwing vector-buffer allocations.
+
+- Add an actual native process-to-registry reentry regression: a startup wait releases both recursive callback locks while retaining both binding leases, then restores outer serialization, results and error state before final drain. Existing recursive callback policy is unchanged.
+
 - Host all README badge SVGs in the repository under resources/badges, retain automatic latest-release and main-CI status updates through a bounded generated-data branch, place Latest release immediately after License, preserve the original embedded logos and Shields/GitHub badge styling, add Changelog and release-immutability badges, report actual main-matching native CTest passed/total counts and latest-release ZIP checksum availability, and remove the Shields dependency. Reduce opening CI to one basic source-integrity job; move manual Windows output fixtures out of that workflow and gate Actions/C++/Python CodeQL analyses on verified later synchronization. Document the required owner migration of GitHub's separate Default Setup while preserving all eleven merge-required validation contexts.
 
 - Cover fail-closed unload stack observations and safe retry after query, protection, commitment, region-progress and scan-budget refusals. A protected-page probe verifies that an oversized region is rejected before stack reads; production unload policy is unchanged.

@@ -20,30 +20,38 @@ def require_optional_span(b,opt,optsz,rel,size,what):
     return opt+rel
 def align4(x): return (x+3)&~3
 
-def read_wstr(data,pos):
+def read_wstr(data,pos,end):
     chars=[]
-    while pos+2<=len(data):
+    while pos+2<=end:
         c=struct.unpack_from('<H',data,pos)[0]; pos+=2
-        if c==0: break
+        if c==0: return ''.join(chars),pos
         chars.append(chr(c))
-    return ''.join(chars),pos
+    raise PEError('VERSIONINFO key is not terminated within its node')
 
 def parse_ver_node(data,off=0,end=None):
     if end is None: end=len(data)
-    if off+6>end: return None,off
+    if off<0 or end>len(data) or off+6>end:
+        raise PEError('VERSIONINFO header exceeds its parent bounds')
     wlen,wvallen,wtype=struct.unpack_from('<HHH',data,off)
-    if not wlen or off+wlen>end: return None,off
-    key,pos=read_wstr(data,off+6); pos=align4(pos)
+    if wlen<6:
+        raise PEError('VERSIONINFO node is smaller than its header')
+    if wlen>end-off:
+        raise PEError('VERSIONINFO node length exceeds its parent bounds')
+    node_end=off+wlen
+    key,pos=read_wstr(data,off+6,node_end); pos=align4(pos)
     nbytes=wvallen*2 if wtype==1 else wvallen
+    if nbytes and (pos>node_end or nbytes>node_end-pos):
+        raise PEError('VERSIONINFO value exceeds its node bounds')
     vb=data[pos:pos+nbytes] if wvallen else b''
     value=vb.decode('utf-16le','replace').rstrip('\x00') if wvallen and wtype==1 else None
+    # Subsequent nodes are DWORD-aligned; that padding need not belong to
+    # the final child or an empty node's declared length.
     pos=align4(pos+nbytes)
     children=[]
-    while pos<off+wlen:
-        child,nxt=parse_ver_node(data,pos,off+wlen)
-        if not child or nxt<=pos: break
+    while pos<node_end:
+        child,nxt=parse_ver_node(data,pos,node_end)
         children.append(child); pos=align4(nxt)
-    return {'key':key,'value':value,'value_bytes':vb,'children':children},off+wlen
+    return {'key':key,'value':value,'value_bytes':vb,'children':children},node_end
 
 def hx(v): return int(v,16) if isinstance(v,str) else int(v)
 
@@ -59,7 +67,12 @@ def validate_resource_leaves(leaves, req):
         errors.append(f'resource allowlist mismatch: {paths}')
     for path,data,_cp in leaves:
         if path==version_path:
-            root,_=parse_ver_node(data)
+            try:
+                root,_=parse_ver_node(data)
+            except PEError as error:
+                # Preserve this validator's error-list contract for malformed
+                # resources while retaining the parser's boundary diagnostic.
+                errors.append(str(error)); root=None
             errors.extend(validate_versioninfo_root(root,req))
         else:
             spec=next((x for x in assets if x['path']==path),None)
