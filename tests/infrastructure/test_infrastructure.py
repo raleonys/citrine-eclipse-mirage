@@ -2,12 +2,15 @@
 
 """Tamper, failure-propagation and source/package identity regressions."""
 from pathlib import Path
+import ast
 import contextlib
+import hashlib
 import io
 import json
 import os
 import re
 import shutil
+import struct
 import subprocess
 import sys
 import tempfile
@@ -33,7 +36,158 @@ import verify_sources as source_verification
 import check_msvc_build_evidence as msvc_evidence
 import run_source_qa as source_qa
 import ci_validation_readiness as ci_readiness
+import check_dll_exports as dll_exports
 from golden_policy import load_target, PolicyPending
+
+
+class PublicAbiReportTests(unittest.TestCase):
+    script = ROOT / 'scripts/check_dll_exports.py'
+
+    def fixture(self, directory):
+        # Synthetic PE32+ export tables, never loaded or executed. This tests
+        # the host checker/CLI, not native linking, Golden or Consumer behavior.
+        data = bytearray(0x800)
+        data[:2] = b'MZ'
+        struct.pack_into('<I', data, 0x3c, 0x80)
+        data[0x80:0x84] = b'PE\0\0'
+        coff, opt = 0x84, 0x98
+        struct.pack_into('<HH', data, coff, 0x8664, 2)
+        struct.pack_into('<H', data, coff + 16, 0xf0)
+        struct.pack_into('<H', data, opt, 0x20b)
+        struct.pack_into('<II', data, opt + 32, 0x1000, 0x200)
+        struct.pack_into('<II', data, opt + 56, 0x3000, 0x200)
+        struct.pack_into('<I', data, opt + 108, 16)
+        struct.pack_into('<II', data, opt + 112, 0x2000, 0x200)
+        for i, (name, va, raw, flags) in enumerate((
+                (b'.text', 0x1000, 0x200, 0x60000020),
+                (b'.edata', 0x2000, 0x400, 0x40000040))):
+            offset = opt + 0xf0 + i * 40
+            data[offset:offset + 8] = name.ljust(8, b'\0')
+            struct.pack_into('<IIII', data, offset + 8, 0x200, va, 0x200, raw)
+            struct.pack_into('<I', data, offset + 36, flags)
+        struct.pack_into('<IIIIII', data, 0x410, 1, 3, 3, 0x2040, 0x2050, 0x2060)
+        for i in range(3):
+            struct.pack_into('<I', data, 0x440 + i * 4, 0x1010 + i * 16)
+        for i, (name, ordinal_index) in enumerate((
+                (b'DllMain', 0), (b'DllShutdown', 2), (b'SURGE', 1))):
+            struct.pack_into('<I', data, 0x450 + i * 4, 0x2080 + i * 20)
+            struct.pack_into('<H', data, 0x460 + i * 2, ordinal_index)
+            start = 0x480 + i * 20
+            data[start:start + len(name) + 1] = name + b'\0'
+        dll = directory / 'application.dll'
+        dll.write_bytes(data)
+        self.assertEqual('PASS_PUBLIC_C_EXPORT_CONTRACT', dll_exports.inspect(dll, ROOT)['result'])
+        return dll, bytes(data)
+
+    def run_check(self, dll, report):
+        return subprocess.run([sys.executable, '-B', str(self.script), str(dll),
+                               '--report', str(report)], capture_output=True,
+                              text=True, timeout=15)
+
+    def assert_refused(self, dll, report, original):
+        result = self.run_check(dll, report)
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertNotIn('PASS_PUBLIC_C_EXPORT_CONTRACT', result.stdout)
+        self.assertEqual(original, dll.read_bytes())
+
+    def test_distinct_report_preserves_input_and_exact_inspection(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            dll, original = self.fixture(directory)
+            report = directory / 'nested' / 'ABI.json'
+            result = self.run_check(dll, report)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            value = json.loads(report.read_text(encoding='utf-8'))
+            self.assertEqual(json.loads(result.stdout), value)
+            self.assertEqual(hashlib.sha256(original).hexdigest(), value['dll_sha256'])
+            self.assertEqual('NOT_RUN', value['native_consumer_acceptance'])
+            self.assertEqual(original, dll.read_bytes())
+
+    def test_invalid_abi_still_writes_a_failure_report_read_only(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            dll, original = self.fixture(directory)
+            invalid = bytearray(original)
+            struct.pack_into('<I', invalid, 0x410, 10)
+            dll.write_bytes(invalid)
+            report = directory / 'ABI.json'
+            result = self.run_check(dll, report)
+            self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+            self.assertEqual('FAIL', json.loads(report.read_text(encoding='utf-8'))['result'])
+            self.assertEqual(invalid, dll.read_bytes())
+
+    def test_report_cannot_replace_input_name(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            dll, original = self.fixture(Path(temporary))
+            self.assert_refused(dll, dll, original)
+
+    def test_report_cannot_truncate_an_input_hardlink(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            dll, original = self.fixture(directory)
+            report = directory / 'ABI.json'
+            os.link(dll, report)
+            self.assert_refused(dll, report, original)
+            self.assertEqual(original, report.read_bytes())
+            self.assertTrue(report.samefile(dll))
+
+    def test_report_cannot_follow_an_input_symlink(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            dll, original = self.fixture(directory)
+            report = directory / 'ABI.json'
+            try:
+                report.symlink_to(dll.name)
+            except (OSError, NotImplementedError):
+                self.skipTest('Host does not permit fixture symlinks')
+            self.assert_refused(dll, report, original)
+            self.assertTrue(report.is_symlink())
+
+    def test_report_cannot_replace_input_through_a_directory_alias(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            actual = directory / 'actual'
+            actual.mkdir()
+            dll, original = self.fixture(actual)
+            alias = directory / 'alias'
+            try:
+                alias.symlink_to(actual, target_is_directory=True)
+            except (OSError, NotImplementedError):
+                self.skipTest('Host does not permit fixture directory symlinks')
+            self.assert_refused(dll, alias / dll.name, original)
+            self.assertTrue(alias.is_symlink())
+
+    def test_replacing_a_report_does_not_truncate_its_other_hardlink(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            dll, original = self.fixture(directory)
+            unrelated = directory / 'unrelated.txt'
+            unrelated.write_bytes(b'retained unrelated bytes')
+            report = directory / 'ABI.json'
+            os.link(unrelated, report)
+            result = self.run_check(dll, report)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertEqual('PASS_PUBLIC_C_EXPORT_CONTRACT', json.loads(report.read_text(encoding='utf-8'))['result'])
+            self.assertEqual(b'retained unrelated bytes', unrelated.read_bytes())
+            self.assertFalse(report.samefile(unrelated))
+            self.assertEqual(original, dll.read_bytes())
+
+    def test_report_failures_preserve_old_output_and_remove_temporary(self):
+        for operation in ('serialize', 'replace'):
+            with self.subTest(operation=operation), tempfile.TemporaryDirectory() as temporary:
+                directory = Path(temporary)
+                dll, original = self.fixture(directory)
+                report = directory / 'ABI.json'
+                report.write_bytes(b'previous report')
+                before = set(directory.iterdir())
+                target = dll_exports.json if operation == 'serialize' else dll_exports.os
+                name = 'dump' if operation == 'serialize' else 'replace'
+                with patch.object(target, name, side_effect=OSError('controlled report failure')):
+                    with self.assertRaises(OSError):
+                        dll_exports._write_report(report, {'result': 'controlled'})
+                self.assertEqual(b'previous report', report.read_bytes())
+                self.assertEqual(original, dll.read_bytes())
+                self.assertEqual(before, set(directory.iterdir()))
 
 
 class MsvcCompilerReceiptTests(unittest.TestCase):
@@ -505,18 +659,18 @@ class ValidationReadinessTests(unittest.TestCase):
         trigger = workflow.split('\npermissions:', 1)[0]
         self.assertIn('types: [synchronize, labeled]', trigger)
         self.assertIn("github.event.label.name != 'run-full-validation' && 'unrequested-label'", workflow)
-        self.assertNotIn('  push:', trigger)
+        self.assertIn('  push:\n    branches: [main]\n', trigger)
         self.assertNotIn('pull_request_target', workflow)
         blocks = dict(re.findall(r'^  ([a-z-]+):\n(.*?)(?=^  [a-z-]+:|\Z)',
                                  workflow.split('\njobs:\n', 1)[1], re.M | re.S))
         required = {'source-qa', 'windows', 'windows-portable', 'reference-graph', 'codeql'}
         self.assertEqual(required | {'readiness', 'sync-request'}, set(blocks))
-        self.assertIn("if: github.event_name != 'workflow_dispatch' || inputs.operation == 'diagnostic'", blocks['readiness'])
+        self.assertIn("if: github.event_name != 'push' && (github.event_name != 'workflow_dispatch' || inputs.operation == 'diagnostic')", blocks['readiness'])
         self.assertIn("if: github.event_name == 'workflow_dispatch' && inputs.operation == 'synchronize-pr'", blocks['sync-request'])
         self.assertIn('scripts/ci_validation_readiness.py --record-sync', blocks['sync-request'])
         self.assertIn("inputs.operation == 'synchronize-pr' && 'sync-request'", workflow)
         self.assertIn("name: 'PR sync #${{ inputs.pr_number }}: ${{ inputs.sync_base }} / ${{ github.sha }}'", blocks['sync-request'])
-        for name in required:
+        for name in required - {'codeql'}:
             block = blocks[name]
             self.assertIn("\n    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}", block)
             self.assertIn('needs: readiness', block)
@@ -542,8 +696,98 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertIn('runs-on: ubuntu-24.04', blocks['codeql'])
         self.assertIn('language: [actions, c-cpp, python]', blocks['codeql'])
         self.assertIn('security-events: write', blocks['codeql'])
-        self.assertIn('sha: ${{ needs.readiness.outputs.head_sha }}', blocks['codeql'])
+        selected_sha = "${{ github.event_name == 'push' && github.sha || needs.readiness.outputs.head_sha }}"
+        self.assertIn('ref: ' + selected_sha, blocks['codeql'])
+        self.assertIn('sha: ' + selected_sha, blocks['codeql'])
+        self.assertIn('needs: readiness', blocks['codeql'])
+        self.assertIn('build-mode: none', blocks['codeql'])
+        self.assertNotIn('always()', blocks['codeql'])
         self.assertIn('refs/pull/{0}/head', blocks['codeql'])
+
+    @staticmethod
+    def workflow_expression(expression, context):
+        """Evaluate only the boolean/selection subset used by the actual job gates.
+
+        No Python eval or GitHub API is used. Unknown syntax fails the regression
+        instead of silently modelling an unsupported workflow expression.
+        """
+        expression = expression.removeprefix('${{').removesuffix('}}').strip()
+        expression = re.sub(r'!(?!=)', ' not ', expression).replace('&&', ' and ').replace('||', ' or ')
+
+        def visit(node):
+            if isinstance(node, ast.Constant):
+                return node.value
+            if isinstance(node, ast.Name):
+                return context[node.id]
+            if isinstance(node, ast.Attribute):
+                return visit(node.value)[node.attr]
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == 'cancelled':
+                assert not node.args and not node.keywords
+                return context['cancelled']
+            if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.Not):
+                return not visit(node.operand)
+            if isinstance(node, ast.BoolOp):
+                result = visit(node.values[0])
+                for value in node.values[1:]:
+                    if isinstance(node.op, ast.And) and not result:
+                        return result
+                    if isinstance(node.op, ast.Or) and result:
+                        return result
+                    result = visit(value)
+                return result
+            if isinstance(node, ast.Compare) and len(node.ops) == 1:
+                left, right = visit(node.left), visit(node.comparators[0])
+                if isinstance(node.ops[0], ast.Eq):
+                    return left == right
+                if isinstance(node.ops[0], ast.NotEq):
+                    return left != right
+            raise AssertionError('Unsupported workflow expression: ' + ast.dump(node))
+
+        return visit(ast.parse(expression.strip(), mode='eval').body)
+
+    def test_main_push_runs_only_codeql_even_when_readiness_is_skipped(self):
+        workflow = (ROOT / '.github/workflows/msvc-reference-graph.yml').read_text()
+        blocks = dict(re.findall(r'^  ([a-z-]+):\n(.*?)(?=^  [a-z-]+:|\Z)',
+                                 workflow.split('\njobs:\n', 1)[1], re.M | re.S))
+        gates = {name: re.search(r'^    if: (.+)$', block, re.M)[1]
+                 for name, block in blocks.items()}
+        # All jobs have explicit gates; other jobs must retain the default
+        # success() dependency behavior. CodeQL needs a status function to run
+        # despite skipped readiness on main, without running after cancellation.
+        self.assertIn('!cancelled()', gates['codeql'])
+        builds = {'source-qa', 'windows', 'windows-portable', 'reference-graph'}
+        scenarios = [
+            ('push', 'refs/heads/main', '', 'skipped', '', False, {'codeql'}),
+            ('push', 'refs/heads/feature', '', 'skipped', '', False, set()),
+            ('push', 'refs/heads/main', '', 'skipped', '', True, set()),
+            ('pull_request', 'refs/pull/1/merge', '', 'success', 'true', False, builds | {'codeql'}),
+            ('pull_request', 'refs/pull/1/merge', '', 'success', 'false', False, set()),
+            ('pull_request', 'refs/pull/1/merge', '', 'failure', 'true', False, set()),
+            ('pull_request', 'refs/pull/1/merge', '', 'cancelled', 'true', True, set()),
+            ('workflow_dispatch', 'refs/heads/feature', 'diagnostic', 'success', 'true', False, builds | {'codeql'}),
+            ('workflow_dispatch', 'refs/heads/feature', 'synchronize-pr', 'skipped', '', False, set()),
+        ]
+        for event, ref, operation, result, run_tests, cancelled, expected in scenarios:
+            with self.subTest(event=event, ref=ref, operation=operation, result=result, run_tests=run_tests, cancelled=cancelled):
+                context = {'github': {'event_name': event, 'ref': ref, 'sha': 'a'*40},
+                           'inputs': {'operation': operation}, 'cancelled': cancelled,
+                           'needs': {'readiness': {'result': result, 'outputs': {
+                               'run_tests': run_tests, 'head_sha': 'b'*40}}}}
+                runnable = {name for name in builds | {'codeql'}
+                            if self.workflow_expression(gates[name], context)
+                            and (name == 'codeql' or (result == 'success' and not cancelled))}
+                self.assertEqual(expected, runnable)
+                readiness = self.workflow_expression(gates['readiness'], context)
+                self.assertEqual(event != 'push' and operation != 'synchronize-pr', readiness)
+                prepare = self.workflow_expression(gates['sync-request'], context)
+                self.assertEqual(event == 'workflow_dispatch' and operation == 'synchronize-pr', prepare)
+                selection = re.search(r'^          sha: (.+)$', blocks['codeql'], re.M)[1]
+                self.assertEqual(('a' if event == 'push' else 'b')*40,
+                                 self.workflow_expression(selection, context))
+        trigger = workflow.split('\npermissions:', 1)[0]
+        self.assertNotIn('opened', trigger)
+        self.assertIn("github.event.pull_request.head.ref || github.ref_name", workflow)
+        self.assertIn('cancel-in-progress: true', workflow)
 
     def test_opening_ci_is_integrity_only_and_diagnostics_are_manual(self):
         fast = (ROOT / '.github/workflows/ci.yml').read_text()
@@ -1419,6 +1663,67 @@ class GovernanceTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 avatar_data.generate(root,output)
             self.assertEqual(before,output.read_bytes())
+
+    def make_avatar_fixture(self, root):
+        import hashlib
+        (root / 'metadata').mkdir(parents=True)
+        assets = {}
+        for name in ('profile', 'fallback'):
+            payload = b'\x89PNG\r\n\x1a\n' + name.encode('ascii') + b' fixture'
+            path = root / 'resources' / (name + '.png')
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(payload)
+            assets[name] = {'source': 'resources/' + name + '.png',
+                            'sha256': hashlib.sha256(payload).hexdigest()}
+        (root / 'metadata/AVATAR_DATA_CONTRACT.json').write_text(
+            json.dumps({'assets': assets}), encoding='utf-8')
+
+    def test_avatar_generator_rejects_shared_output_hardlink(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'source'
+            self.make_avatar_fixture(root)
+            victim = Path(tmp) / 'owned.txt'
+            victim.write_text('original bytes')
+            output = root / 'generated/avatar_data.hpp'
+            output.parent.mkdir()
+            os.link(victim, output)
+            with self.assertRaisesRegex(ValueError, 'unshared regular'):
+                avatar_data.generate(root, output)
+            self.assertEqual('original bytes', victim.read_text())
+            output.unlink()
+            avatar_data.generate(root, output)
+            expected = output.read_bytes()
+            avatar_data.generate(root, output)
+            self.assertEqual(expected, output.read_bytes())
+
+    def test_avatar_generator_rejects_symlinked_output_and_parent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'source'
+            self.make_avatar_fixture(root)
+            victim = Path(tmp) / 'owned.txt'
+            victim.write_text('original bytes')
+            output = root / 'generated/avatar_data.hpp'
+            output.parent.mkdir()
+            try:
+                output.symlink_to(victim)
+            except (OSError, NotImplementedError) as error:
+                self.skipTest('Symlink privileges unavailable: ' + str(error))
+            with self.assertRaisesRegex(ValueError, 'symlink or junction'):
+                avatar_data.generate(root, output)
+            self.assertEqual('original bytes', victim.read_text())
+            output.unlink()
+            output.parent.rmdir()
+            outside = Path(tmp) / 'external'
+            outside.mkdir()
+            output.parent.symlink_to(outside, target_is_directory=True)
+            with self.assertRaisesRegex(ValueError, 'symlink or junction'):
+                avatar_data.generate(root, output)
+            self.assertFalse((outside / output.name).exists())
+            # A nested missing directory must not be created via an ancestor link.
+            nested = output.parent / 'nested' / output.name
+            with self.assertRaisesRegex(ValueError, 'symlink or junction'):
+                avatar_data.generate(root, nested)
+            self.assertFalse((outside / 'nested').exists())
 
     def test_fixture_is_never_a_product_target(self):
         with self.assertRaises(PolicyPending):

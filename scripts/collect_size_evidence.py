@@ -10,11 +10,13 @@ import csv
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import shutil
 import struct
 import subprocess
 import sys
+import tempfile
 import zipfile
 import xml.etree.ElementTree as ET
 
@@ -180,12 +182,55 @@ def current_objects(root, build, allowed, config):
     return sorted(objects)
 
 
+
+def publish_evidence(output, payload):
+    """Publish an owned ZIP and checksum without opening predictable or linked paths."""
+    output = Path(output)
+    sidecar = Path(str(output) + '.sha256')
+    legacy = (output.with_suffix(output.suffix + '.partial'),
+              Path(str(sidecar) + '.partial'))
+    for path in (output, sidecar, *legacy):
+        if path.is_symlink() or path.exists():
+            raise ValueError('Existing or unsafe size-evidence output: ' + str(path))
+    output.parent.mkdir(parents=True, exist_ok=True)
+    fd, name = tempfile.mkstemp(prefix='.' + output.name + '.',
+                                suffix='.partial', dir=output.parent)
+    stage = Path(name)
+    checksum_stage = None
+    try:
+        with os.fdopen(fd, 'w+b') as stream:
+            with zipfile.ZipFile(stream, 'w', zipfile.ZIP_DEFLATED) as archive:
+                for name, data in sorted(payload.items()):
+                    archive.writestr(name, data)
+        digest = sha(stage.read_bytes())
+        checksum_fd, checksum_name = tempfile.mkstemp(
+            prefix='.' + sidecar.name + '.', suffix='.partial', dir=output.parent)
+        checksum_stage = Path(checksum_name)
+        with os.fdopen(checksum_fd, 'w', encoding='utf-8') as stream:
+            stream.write(digest + '  ' + output.name + '\n')
+        os.replace(stage, output)
+        try:
+            os.replace(checksum_stage, sidecar)
+        except OSError:
+            output.unlink(missing_ok=True)
+            raise
+        return digest
+    finally:
+        stage.unlink(missing_ok=True)
+        if checksum_stage is not None:
+            checksum_stage.unlink(missing_ok=True)
+
+
 def collect(root, build, config, dll, output, with_symbols=False):
-    root, build, output = root.resolve(), build.resolve(), output.resolve()
+    root, build = root.resolve(), build.resolve()
+    output = Path(os.path.abspath(output))
+    if output.is_symlink():
+        raise ValueError('Evidence output cannot be a symlink')
+    output = output.parent.resolve() / output.name
     if root / 'build' not in output.parents:
         raise ValueError('Write evidence inside the selected project build/ directory')
-    if output.exists():
-        raise ValueError('Evidence output exists; choose a new path to preserve it')
+    if output.is_symlink() or output.exists():
+        raise ValueError('Evidence output exists or is linked; choose a new path')
     errors = verify_manifest(root)
     if errors:
         raise ValueError('Source manifest differs: ' + '; '.join(map(str, errors[:5])))
@@ -284,17 +329,7 @@ def collect(root, build, config, dll, output, with_symbols=False):
                          'This tool does not execute Windows/game acceptance or change linker settings.']}
     payload['analysis/report.json'] = (json.dumps(report, indent=2) + '\n').encode()
     payload['SHA256SUMS'] = ''.join(sha(data) + '  ' + name + '\n' for name, data in sorted(payload.items())).encode()
-    output.parent.mkdir(parents=True, exist_ok=True)
-    partial = output.with_suffix(output.suffix + '.partial')
-    try:
-        with zipfile.ZipFile(partial, 'w', zipfile.ZIP_DEFLATED) as archive:
-            for name, data in sorted(payload.items()):
-                archive.writestr(name, data)
-        partial.replace(output)
-    finally:
-        partial.unlink(missing_ok=True)
-    digest = sha(output.read_bytes())
-    Path(str(output) + '.sha256').write_text(digest + '  ' + output.name + '\n', encoding='utf-8')
+    digest = publish_evidence(output, payload)
     return {'result': report['result'], 'objects': len(objects), 'unsupported_objects': len(failures),
             'path': str(output), 'bytes': output.stat().st_size, 'sha256': digest}
 
