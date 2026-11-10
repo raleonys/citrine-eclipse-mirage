@@ -1,7 +1,10 @@
 # Local development and operator commands
 
 Windows requires Visual Studio C++ x64 tools/SDK, CMake >= 3.20, and Python
-3.9 or later. Production and static-test builds use the compiler's standard CRT:
+3.9 or later. Project C++ targets use C++20; C sources remain C17.
+The selected owner-supplied PEGTL 4.x snapshot supports this standard.
+Reconfigure existing build directories after changing dependency snapshots.
+Production and static-test builds use the compiler's standard CRT:
 MSVC Release `/MT` and Debug `/MTd`. The separate C++ development DLL and its
 host use `/MD` and `/MDd`, with their own matching vendor builds, because STL
 objects cross that module boundary. Linux portable or Wine results do not

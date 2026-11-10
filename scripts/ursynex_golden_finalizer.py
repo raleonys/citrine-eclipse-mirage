@@ -202,7 +202,9 @@ def compute_pe_checksum(data, checksum_offset):
 
 def validate_approved_mutation(original,final,pe,coff,opt,import_order=None):
     if len(original)!=len(final):raise PEError('metadata finalization changed file length')
-    allowed=set(range(coff+4,coff+8))|set(range(opt+2,opt+4))|set(range(opt+64,opt+68))
+    allowed=set(range(opt+2,opt+4))|set(range(opt+64,opt+68))
+    if TARGET_TIMESTAMP is not None:
+        allowed.update(range(coff+4,coff+8))
     rich_expected=bytearray(original)
     strip_rich_in_place(rich_expected,pe)
     if import_order:

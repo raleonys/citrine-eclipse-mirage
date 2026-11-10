@@ -19,7 +19,7 @@ int main()
 
 namespace pegtl = TAO_PEGTL_NAMESPACE;
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    using input_t = pegtl::text_file_input< pegtl::scan::lf_crlf >;
    for( int i = 1; i < argc; ++i ) {
@@ -31,7 +31,7 @@ int main( int argc, char** argv )
          const auto& p = e.position_object();
          std::cerr << e.what() << '\n'
                    << in.line_view_at( p ) << '\n'
-                   << std::setw( static_cast< int >( p.column ) ) << '^' << '\n';
+                   << std::setw( int( p.column ) ) << '^' << '\n';
       }
    }
    return 0;
