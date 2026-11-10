@@ -4,6 +4,7 @@
 #include "citrine_eclipse_mirage/config/application.hpp"
 #include "citrine_eclipse_mirage/core/token_constants.hpp"
 #include <algorithm>
+#include <array>
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -106,12 +107,37 @@ void complete_bytes_and_counted_values(){
         "normal key emission queries status before one output lifetime");
     require(f.state.content_id=="fixture-id"&&f.state.user_id=="OLD-USER","key emission preserves borrowed state");
     f.calls.calls.clear();f.calls.bytes.clear();
-    f.state.content_id=std::string("id\0<&",5);f.state.user_id=std::string("u\0<&",4);
-    const std::string key("K\0<&",4);f.environment.apply_license_key_02a830(key);
+    f.state.content_id=std::string("id\t<&",5);f.state.user_id=std::string("u\n<&",4);
+    // Legal XML whitespace remains counted; the view excludes the NUL and
+    // trailing caller storage rather than scanning beyond its four bytes.
+    const std::string key="K\r<&\0ignored"s;
+    f.environment.apply_license_key_02a830(std::string_view(key.data(),4));
     const std::string expected=
-        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><License xmlns=\"http://ea.com/license\"><CipherKey>K\0&lt;&amp;</CipherKey><MachineHash>1</MachineHash><ContentId>id\0&lt;&amp;</ContentId><UserId>u\0&lt;&amp;</UserId><GrantTime>2024-01-01T00:00:00Z</GrantTime><StartTime>2024-01-01T00:00:00Z</StartTime></License>"s;
-    require(plaintext(f.calls.bytes)==expected,"counted NUL bytes are retained and markup follows accepted XML escaping policy");
-    require(key==std::string("K\0<&",4),"consumed key view does not modify caller bytes");
+        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><License xmlns=\"http://ea.com/license\"><CipherKey>K\r&lt;&amp;</CipherKey><MachineHash>1</MachineHash><ContentId>id\t&lt;&amp;</ContentId><UserId>u\n&lt;&amp;</UserId><GrantTime>2024-01-01T00:00:00Z</GrantTime><StartTime>2024-01-01T00:00:00Z</StartTime></License>"s;
+    require(plaintext(f.calls.bytes)==expected,"counted legal XML whitespace and markup retain exact bytes without consuming trailing storage");
+    require(key=="K\r<&\0ignored"s,"consumed key view does not modify caller bytes");
+}
+void forbidden_controls_and_existing_skip(){
+    constexpr std::array<unsigned,29> forbidden{0,1,2,3,4,5,6,7,8,11,12,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+    for(const bool existing:{false,true})for(const auto byte:forbidden)for(unsigned field=0;field<3;++field){
+        Fixture f;f.calls.error=existing?0:2;
+        const std::string invalid{'a',static_cast<char>(byte),'b'};
+        std::string key="fixture-key";
+        if(field==0)key=invalid;
+        else if(field==1)f.state.content_id=invalid;
+        else f.state.user_id=invalid;
+        const auto content=f.state.content_id,user=f.state.user_id,original_key=key;
+        f.calls.bytes="previous-output";
+        bool rejected=false;
+        try{f.environment.apply_license_key_02a830(key);}
+        catch(const std::invalid_argument&){rejected=true;}
+        require(rejected==!existing,"every forbidden C0 field rejects a new license; existing-file skip precedes validation");
+        require(f.calls.calls==std::vector<std::string>{"status"}&&f.calls.destructions==0&&f.calls.bytes=="previous-output",
+            "forbidden text and existing-file skip cannot open, write, close or destroy an output stream");
+        require(!fs::exists(fs::path(f.calls.path).parent_path()),"control-byte rejection and skip cannot create the missing parent");
+        require(f.state.content_id==content&&f.state.user_id==user&&key==original_key,
+            "control-byte rejection and skip preserve all borrowed field bytes");
+    }
 }
 void existing_and_status_failures(){
     for(const auto error:{0U,2U,3U,53U,123U,5U}){
@@ -263,7 +289,7 @@ std::unique_ptr<Output> NativeFactory::open_output_03a1a0(const Path& path,std::
 }
 }
 int main()try{
-    key_fixture::complete_bytes_and_counted_values();key_fixture::existing_and_status_failures();
+    key_fixture::complete_bytes_and_counted_values();key_fixture::forbidden_controls_and_existing_skip();key_fixture::existing_and_status_failures();
     key_fixture::directory_and_write_failures();key_fixture::configuration_live_callpoint();
     key_fixture::configuration_failure_prefix_and_retry();
     std::cout<<"PASS: "<<key_fixture::checks<<" actual Environment license-key contracts with controlled status/file boundaries\n";
