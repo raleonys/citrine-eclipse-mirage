@@ -509,7 +509,7 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertNotIn('pull_request_target', workflow)
         blocks = dict(re.findall(r'^  ([a-z-]+):\n(.*?)(?=^  [a-z-]+:|\Z)',
                                  workflow.split('\njobs:\n', 1)[1], re.M | re.S))
-        required = {'source-qa', 'windows', 'windows-portable', 'reference-graph'}
+        required = {'source-qa', 'windows', 'windows-portable', 'reference-graph', 'codeql'}
         self.assertEqual(required | {'readiness', 'sync-request'}, set(blocks))
         self.assertIn("if: github.event_name != 'workflow_dispatch' || inputs.operation == 'diagnostic'", blocks['readiness'])
         self.assertIn("if: github.event_name == 'workflow_dispatch' && inputs.operation == 'synchronize-pr'", blocks['sync-request'])
@@ -523,7 +523,7 @@ class ValidationReadinessTests(unittest.TestCase):
             self.assertNotIn('Require verified main synchronization', block)
             self.assertNotIn('if: ${{ always() }}', block)
             self.assertIn('ref: ${{ needs.readiness.outputs.head_sha }}', block)
-            if name != 'source-qa':
+            if name not in {'source-qa', 'codeql'}:
                 self.assertIn('runs-on: windows-2022', block)
                 self.assertNotIn('ubuntu-24.04', block)
                 self.assertIn('    strategy:\n', block)
@@ -539,6 +539,11 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertIn('name: Windows ${{ matrix.profile }}', blocks['windows'])
         self.assertIn('name: Windows portable ${{ matrix.configuration }}', blocks['windows-portable'])
         self.assertIn('name: Windows x64 reference objects ${{ matrix.configuration }}', blocks['reference-graph'])
+        self.assertIn('runs-on: ubuntu-24.04', blocks['codeql'])
+        self.assertIn('language: [actions, c-cpp, python]', blocks['codeql'])
+        self.assertIn('security-events: write', blocks['codeql'])
+        self.assertIn('sha: ${{ needs.readiness.outputs.head_sha }}', blocks['codeql'])
+        self.assertIn('refs/pull/{0}/head', blocks['codeql'])
 
     def test_opening_ci_is_integrity_only_and_diagnostics_are_manual(self):
         fast = (ROOT / '.github/workflows/ci.yml').read_text()
@@ -546,8 +551,13 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertIn('scripts/check_manifest.py', fast)
         self.assertNotIn('run_source_qa.py', fast)
         self.assertNotIn('cmake --', fast)
+        jobs = re.findall(r'^  ([a-z-]+):\n', fast.split('\njobs:\n', 1)[1], re.M)
+        self.assertEqual(['source-integrity'], jobs)
+        self.assertNotIn('setup-python', fast)
+        self.assertNotIn('codeql-action', fast)
+        self.assertNotIn('strategy:', fast)
         for path in (ROOT / '.github/workflows').glob('*.yml'):
-            if path.name in ('ci.yml', 'msvc-reference-graph.yml', 'weekly-release.yml'):
+            if path.name in ('ci.yml', 'msvc-reference-graph.yml', 'weekly-release.yml', 'repository-badges.yml'):
                 continue
             trigger = path.read_text().split('\non:\n', 1)[1].split('\npermissions:', 1)[0]
             self.assertIn('  workflow_dispatch:', trigger, path.name)
@@ -1409,6 +1419,67 @@ class GovernanceTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 avatar_data.generate(root,output)
             self.assertEqual(before,output.read_bytes())
+
+    def make_avatar_fixture(self, root):
+        import hashlib
+        (root / 'metadata').mkdir(parents=True)
+        assets = {}
+        for name in ('profile', 'fallback'):
+            payload = b'\x89PNG\r\n\x1a\n' + name.encode('ascii') + b' fixture'
+            path = root / 'resources' / (name + '.png')
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(payload)
+            assets[name] = {'source': 'resources/' + name + '.png',
+                            'sha256': hashlib.sha256(payload).hexdigest()}
+        (root / 'metadata/AVATAR_DATA_CONTRACT.json').write_text(
+            json.dumps({'assets': assets}), encoding='utf-8')
+
+    def test_avatar_generator_rejects_shared_output_hardlink(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'source'
+            self.make_avatar_fixture(root)
+            victim = Path(tmp) / 'owned.txt'
+            victim.write_text('original bytes')
+            output = root / 'generated/avatar_data.hpp'
+            output.parent.mkdir()
+            os.link(victim, output)
+            with self.assertRaisesRegex(ValueError, 'unshared regular'):
+                avatar_data.generate(root, output)
+            self.assertEqual('original bytes', victim.read_text())
+            output.unlink()
+            avatar_data.generate(root, output)
+            expected = output.read_bytes()
+            avatar_data.generate(root, output)
+            self.assertEqual(expected, output.read_bytes())
+
+    def test_avatar_generator_rejects_symlinked_output_and_parent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / 'source'
+            self.make_avatar_fixture(root)
+            victim = Path(tmp) / 'owned.txt'
+            victim.write_text('original bytes')
+            output = root / 'generated/avatar_data.hpp'
+            output.parent.mkdir()
+            try:
+                output.symlink_to(victim)
+            except (OSError, NotImplementedError) as error:
+                self.skipTest('Symlink privileges unavailable: ' + str(error))
+            with self.assertRaisesRegex(ValueError, 'symlink or junction'):
+                avatar_data.generate(root, output)
+            self.assertEqual('original bytes', victim.read_text())
+            output.unlink()
+            output.parent.rmdir()
+            outside = Path(tmp) / 'external'
+            outside.mkdir()
+            output.parent.symlink_to(outside, target_is_directory=True)
+            with self.assertRaisesRegex(ValueError, 'symlink or junction'):
+                avatar_data.generate(root, output)
+            self.assertFalse((outside / output.name).exists())
+            # A nested missing directory must not be created via an ancestor link.
+            nested = output.parent / 'nested' / output.name
+            with self.assertRaisesRegex(ValueError, 'symlink or junction'):
+                avatar_data.generate(root, nested)
+            self.assertFalse((outside / 'nested').exists())
 
     def test_fixture_is_never_a_product_target(self):
         with self.assertRaises(PolicyPending):
