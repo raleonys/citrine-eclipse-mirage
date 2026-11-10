@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Exercise actual Application dispatch rejection over TCP for well-formed invalid LSX in plaintext and negotiated encryption. Require silent closure of only the rejected peer, continued replies on a live encrypted peer, and fresh listener admission. Preserve current product policy; donor same-session continuation and modal diagnostics remain unresolved compatibility decisions.
+
 - Exercise status, parent-directory and throwing-write failures through both Config2 consumers into the actual Environment license writer. Preserve the completed Game prefix, reject later settings and collection updates, and retry once after repair using the pre-User identity and exact known license bytes. Production configuration and writer behavior are unchanged.
 
 - Keep public DLL ABI report generation read-only for the inspected DLL: reject direct, hardlink and symlink input aliases before inspection. Publish reports through temporary sibling files and atomic replacement so failed output retains the previous report and unrelated hardlinks are not truncated.
