@@ -6,6 +6,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
+- Reject symlinked generated version-header outputs, linked ancestor directories, hardlinked files and nonregular output targets before writing project_version.h. Add output-alias regression tests while preserving normal version-header text and update behavior; shipping DLL, ABI and version selection remain unchanged.
+
 - Guard the avatar C++ header generator against symlink/junction output paths and multiply linked output files before any directory creation or write. Add hardlink, symlink, directory-alias and ordinary idempotent output regression cases; runtime C++, public ABI, vendor assets and the current build profile remain unchanged.
 
 - Reject XML 1.0-forbidden C0 bytes in KeyForLicense, ContentId and UserId before writing encrypted license data; preserve TAB/LF/CR, existing-file skip and escaped markup, with production-backed native regression coverage. Align the existing counted-field fixture with this policy, retain its full AES known answer, and cover all 29 forbidden C0 bytes in each field before output effects and after existing-file skip.
