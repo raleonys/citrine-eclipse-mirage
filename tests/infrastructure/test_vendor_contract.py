@@ -270,6 +270,62 @@ class LinkPackagingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'non-descriptor'):restore_vendor_links.restore(self.root)
         self.assertEqual(b'actual user file',self.link.read_bytes())
 
+
+    def test_restore_link_creation_failure_never_removes_descriptor(self):
+        original = self.link.read_bytes()
+
+        def fail_create(target, staged, target_is_directory=False):
+            self.assertEqual('../include', target)
+            self.assertTrue(target_is_directory)
+            self.assertNotEqual(self.link, Path(staged))
+            self.assertEqual(original, self.link.read_bytes())
+            raise OSError('injected link creation failure')
+
+        with patch.object(restore_vendor_links.os, 'symlink', side_effect=fail_create):
+            with self.assertRaisesRegex(OSError, 'injected link creation failure'):
+                restore_vendor_links.restore(self.root)
+        self.assertFalse(self.link.is_symlink())
+        self.assertEqual(original, self.link.read_bytes())
+        self.assertEqual([], list(self.link.parent.glob('.vendor-alias-*')))
+        self.assertEqual([], project_files.verify_manifest(self.root))
+
+    def test_restore_publication_failure_preserves_descriptor_and_cleans_stage(self):
+        self._check_restore_publication_failure()
+
+    def test_restore_publication_failure_preserves_aliased_root(self):
+        self.root = self.root / '..' / self.root.name
+        self.link = self.root / 'third_party/asio/asio/include'
+        self.assertNotEqual(self.link, self.link.resolve())
+        self._check_restore_publication_failure()
+
+    def _check_restore_publication_failure(self):
+        original = self.link.read_bytes()
+        # restore() resolves its source root, including Windows temp aliases.
+        destination_path = self.link.resolve()
+
+        def stage_without_windows_symlink_privilege(target, staged, target_is_directory=False):
+            self.assertEqual('../include', target)
+            self.assertTrue(target_is_directory)
+            self.assertEqual(original, self.link.read_bytes())
+            Path(staged).write_bytes(target.encode('utf-8'))
+
+        def fail_publish(staged, destination):
+            self.assertEqual(destination_path, Path(destination))
+            self.assertNotEqual(destination_path, Path(staged))
+            self.assertEqual(original, self.link.read_bytes())
+            self.assertEqual(original, Path(staged).read_bytes())
+            raise OSError('injected link publication failure')
+
+        with patch.object(restore_vendor_links.os, 'symlink',
+                          side_effect=stage_without_windows_symlink_privilege):
+            with patch.object(restore_vendor_links.os, 'replace', side_effect=fail_publish):
+                with self.assertRaisesRegex(OSError, 'injected link publication failure'):
+                    restore_vendor_links.restore(self.root)
+        self.assertFalse(self.link.is_symlink())
+        self.assertEqual(original, self.link.read_bytes())
+        self.assertEqual([], list(self.link.parent.glob('.vendor-alias-*')))
+        self.assertEqual([], project_files.verify_manifest(self.root))
+
     def test_standard_zip_extraction_needs_no_link_support(self):
         package_source.package(self.root,self.archive)
         destination=self.base/'standard-unzip'

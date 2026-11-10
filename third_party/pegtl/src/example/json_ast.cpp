@@ -6,9 +6,9 @@
 #include <iostream>
 
 #include <tao/pegtl.hpp>
-#include <tao/pegtl/example/json.hpp>
 #include <tao/pegtl/extra/parse_tree.hpp>
 #include <tao/pegtl/extra/parse_tree_to_dot.hpp>
+#include <tao/pegtl/example/json.hpp>
 
 #include "json_errors.hpp"
 
@@ -35,7 +35,7 @@ namespace example
 
 }  // namespace example
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    if( argc != 2 ) {
       std::cerr << "Usage: " << argv[ 0 ] << " JSON\n"
@@ -54,7 +54,7 @@ int main( int argc, char** argv )
       const auto& p = e.position_object();
       std::cerr << e.what() << std::endl
                 << in.line_view_at( p ) << std::endl
-                << std::setw( static_cast< int >( p.count ) ) << '^' << std::endl;
+                << std::setw( int( p.count ) ) << '^' << std::endl;
       return 1;
    }
 #else

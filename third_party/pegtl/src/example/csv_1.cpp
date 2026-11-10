@@ -40,7 +40,7 @@ namespace example
 
    // Data structure to store the result of a parsing run:
 
-   using result_data = std::vector< std::vector< std::uint64_t > >;
+   using result_data = std::vector< std::vector< unsigned long > >;
 
    // Action and control classes to fill in the above data structure:
 
@@ -56,7 +56,7 @@ namespace example
       {
          assert( !data.empty() );
          std::stringstream ss( in.string() );
-         std::uint64_t v = 0;
+         unsigned long v;
          ss >> v;
          data.back().push_back( v );
       }
@@ -87,7 +87,7 @@ namespace example
 
 }  // namespace example
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    for( int i = 1; i < argc; ++i ) {
       pegtl::text_file_input< pegtl::lazy::lf_crlf > in( argv[ i ] );
@@ -100,7 +100,7 @@ int main( int argc, char** argv )
          assert( !line.empty() );  // The grammar doesn't allow empty lines.
          std::cout << line.front();
          for( std::size_t j = 1; j < line.size(); ++j ) {
-            std::cout << ", " << line.at( j );
+            std::cout << ", " << line[ j ];
          }
          std::cout << std::endl;
       }
