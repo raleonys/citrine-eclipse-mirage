@@ -1366,8 +1366,8 @@
       "sha256": "4f06351cc8cb85ab8f12b7b3a05ffb2d947567f2d88254643b3981ab64664442"
     },
     "tests/native/timer_failure_tests.cpp": {
-      "bytes": 5355,
-      "sha256": "02c15b4f652c908da29dce2f9f0974c61315e6401107df6fe2c2965696efc1ac"
+      "bytes": 6439,
+      "sha256": "7db56b539c9a2d48e937b8b7d58d91414a4fcab180e3e5d9446f1655edc05194"
     },
     "tests/native/unload_guard_tests.cpp": {
       "bytes": 17166,
