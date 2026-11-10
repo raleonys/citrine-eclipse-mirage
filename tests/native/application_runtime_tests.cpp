@@ -141,6 +141,24 @@ public:
         }else cipher.set_fixed_key_084c98();
     }
     bool same_cipher(const Peer& other)const{return cipher.round_keys()==other.cipher.round_keys();}
+    void rekey(std::string_view id,std::string_view key,int version) {
+        std::string expected(key);crypto::Cipher fixed;fixed.set_fixed_key_084c98();
+        require(fixed.encrypt_042610(expected),"independent live rekey challenge encryption");
+        messages::hex_encode_03d190(expected);
+        crypto::Cipher next;
+        if(version>2){crypto::WindowsTimeSource time;crypto::Random random{time};next.set_key_042780(random.key_from_response_034c30(expected));}
+        else next.set_fixed_key_084c98();
+        require(next.round_keys()!=cipher.round_keys(),"live rekey selects genuinely different keys");
+        encrypted_send(id,"<ChallengeResponse key='"+std::string(key)+"' version='"+std::to_string(version)+"'/>");
+        cipher=next; // Decode this reply with the new key, after sending with the old one.
+        const auto reply=encrypted_frame();xml_reader_bridge::Backend xml;auto parsed=xml.parse_c_string(reply);
+        require(!parsed.has_error,"live encrypted rekey response parses");
+        const auto* root=parsed.document->first_element();const auto* response=root?root->first_element():nullptr;
+        const auto* accepted=response?response->first_element():nullptr;
+        require(root&&root->name()=="LSX"&&response&&response->name()=="Response"&&response->attribute("id")==id&&
+                accepted&&accepted->name()=="ChallengeAccepted"&&accepted->attribute("response")==expected,
+                "live rekey returns its exact challenge and request id under the new key");
+    }
     void close() {
         asio::error_code error;socket.shutdown(asio::ip::tcp::socket::shutdown_both,error);
         socket.close(error);require(!error,"explicit encrypted peer close succeeds");
@@ -238,6 +256,16 @@ void encrypted_peer_isolation(std::uint16_t port) {
             derived.encrypted_send(second,"<GetProfile index='0'/>");
             require_profile(derived.encrypted_frame(),second);
             require_profile(fixed.encrypted_frame(),first);
+        }
+        for(int stage:{0,1,2}){
+            const int version=stage==1?2:3;
+            const auto id="rotate-"+std::to_string(stage);
+            derived.rekey(id,stage==0?"live-rekey-first":stage==1?"live-rekey-fixed":"live-rekey-second",version);
+            require(derived.same_cipher(fixed)==(version==2),"live derived/fixed transitions preserve the sibling's negotiated key");
+            derived.encrypted_send("after-"+id,"<GetProfile index='0'/>");
+            fixed.encrypted_send("sibling-"+id,"<GetProfile index='0'/>");
+            require_profile(fixed.encrypted_frame(),"sibling-"+id);
+            require_profile(derived.encrypted_frame(),"after-"+id);
         }
         Peer& retired=close_fixed?fixed:derived;
         Peer& survivor=close_fixed?derived:fixed;
