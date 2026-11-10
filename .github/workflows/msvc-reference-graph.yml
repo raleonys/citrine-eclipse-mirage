@@ -73,6 +73,39 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: python3 -B scripts/ci_validation_readiness.py
 
+  codeql:
+    needs: readiness
+    if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
+    name: CodeQL (${{ matrix.language }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [actions, c-cpp, python]
+    steps:
+      - name: Preserve exact checkout bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.readiness.outputs.head_sha }}
+          persist-credentials: false
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@33d7b85da1a04171e211befe2c739303b9a4c066 # v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: none
+      - name: Analyze the verified source head
+        uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v4
+        with:
+          category: /language:${{ matrix.language }}
+          ref: ${{ github.event_name == 'pull_request' && format('refs/pull/{0}/head', github.event.pull_request.number) || github.ref }}
+          sha: ${{ needs.readiness.outputs.head_sha }}
+
   source-qa:
     needs: readiness
     if: ${{ needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true' }}
@@ -190,6 +223,13 @@ jobs:
         run: |
           & "./scripts/build_orchestration/${{ matrix.script }}" -BuildDir "build/ci-${{ matrix.profile }}" -Config '${{ matrix.configuration }}'
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Read native CTest totals
+        id: native-counts
+        if: always() && matrix.profile == 'native'
+        run: python -B scripts/repository_badges.py --record-tests build/ci-native/CTEST_RESULTS.xml
+      - name: 'Native tests: ${{ steps.native-counts.outputs.passed }}/${{ steps.native-counts.outputs.total }}'
+        if: always() && matrix.profile == 'native' && steps.native-counts.outcome == 'success'
+        run: Write-Output 'Native CTest totals recorded for the repository badge.'
       - name: Retain Windows validation evidence
         if: always() && needs.readiness.result == 'success' && needs.readiness.outputs.run_tests == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
