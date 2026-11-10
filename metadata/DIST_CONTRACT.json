@@ -33,7 +33,7 @@
   "new_source_package": "surge-windows-io-fix-source.zip",
   "genuine_msvc_gate_bypassed": false,
   "python_bytecode": "All Golden children inherit PYTHONDONTWRITEBYTECODE=1; CORVEXON launches -B children; wrapper removes only generated caches for manifest-owned Python tools",
-  "metadata_profile": "Project VERSIONINFO with selected release version; retained timestamp0xA6FD7C8F, linker14.0, Rich absent, recomputed checksum and preserved raw compiler DLL",
+  "metadata_profile": "Project VERSIONINFO with selected release version; native compilation timestamp preserved, linker14.0, Rich absent, recomputed checksum and preserved raw compiler DLL",
   "latest_registry_wait_correction": "metadata/evidence/STARTUP_BUILD_FIX_STATUS.json",
   "public_exports": "DllMain@1 SURGE@2 DllShutdown@3 (same Infrastructure ordinals)",
   "final_import_descriptor_order": [
