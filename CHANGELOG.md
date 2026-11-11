@@ -6,10 +6,14 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Reject symlink and hard-link DLL inputs before mutating the unsigned import-descriptor order. Atomic replacement of an alias could otherwise report normalized bytes for one pathname while leaving the underlying build DLL or another hard link unchanged. Preserve read-only verification and regular-file normalization, and cover both alias forms with synthetic PE negative tests.
+- Reconcile all first-party Markdown guides and companion CSV roles against accepted source, workflows and contracts. Add a complete documentation index; label historical checkpoints without rewriting retained evidence, archive identities or old execution outcomes. Correct stale avatar/RCDATA, CryptQuery compatibility suffix, unsigned import order, operator dispatch, export and TU-count descriptions, and distinguish implemented test scenarios from remaining donor/provenance work.
+- Correct the active runtime summary from 60 to 62 Production TUs, matching the partition policy; retain 78 reference TUs and all historical acceptance fields. Add host regressions for complete document inventory, relative file links, live contract values and the actual manual operator workflow. Preserve runtime/vendor bytes, README, build/CI scheduling, public ABI and release policy.
+- Reconcile the guides with accepted CodeQL main-push analysis, offline version upkeep, pinned XML reference bindings and unsigned DLL alias refusal while preserving every historical result and the existing synchronization gate.
+- Normalize catalog paths to the source manifest's forward-slash format on Windows as well as Linux; retain complete inventory equality and duplicate, existence and checkpoint checks.
 
 ### Integrated 2026-11-11
 
+- [PR #310](https://github.com/raleonys/citrine-eclipse-mirage/pull/310): Reject symlink and hard-link DLL inputs before mutating the unsigned import-descriptor order. Atomic replacement of an alias could otherwise report normalized bytes for one pathname while leaving the underlying build DLL or another hard link unchanged. Preserve read-only verification and regular-file normalization, and cover both alias forms with synthetic PE negative tests.
 - [PR #328](https://github.com/raleonys/citrine-eclipse-mirage/pull/328): Restore the XML comparison diagnostic's pinned pre-rename reference: read its historical header path and bind legacy includes/namespaces only in generated build copies. Preserve the exact reference commit, vendor bytes, compatibility filenames and test assertions; add CMake binding regressions without changing the production reader.
 
 ### Integrated 2026-11-10

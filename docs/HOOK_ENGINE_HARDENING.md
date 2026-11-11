@@ -243,8 +243,24 @@ the hardened production engine; the new patched-source tests cover that engine.
 
 Existing real-hook application, callback, public ABI, runtime and Debug/Release
 logging checks remain separate from these injected-failure tests. Fresh run results
-are recorded in the delivery evidence document after execution.
+belong to exact-head workflow artifacts and PR descriptions; older delivery
+records remain evidence for their own snapshots.
 
 The separate application unload scanner now retains failed resume/close owners
 as well; see [UNLOAD_RECOVERY.md](UNLOAD_RECOVERY.md). This is an application
 correction and does not change the pinned MinHook patch or original vendor bytes.
+
+## Upstream port and limits
+
+The separate [upstream MinHook proposal #179](https://github.com/TsudaKageyu/minhook/pull/179)
+uses owner-fork candidate `9c4753f771b437898025bd75912f2ac1f063cd07`.
+That candidate offers an optional strict mode; this project's verified build
+copy already selects SAFE-FREEZE and does not import the optional default-OFF
+switch. PR #352 backported the five additional cleanup barriers and tests.
+Upstream review or benchmark results are not acceptance of this project's DLL.
+
+Stable thread handles do not eliminate threads being born during enumeration,
+and sequential multi-hook patching is not an atomic all-hook transaction.
+Trampoline callers and DLL unload still require the application's lease/drain
+and external-thread contracts. Controlled tests and comparative timings do not
+establish superiority over every hook engine or safety for arbitrary host stacks.

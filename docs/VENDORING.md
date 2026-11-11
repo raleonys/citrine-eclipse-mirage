@@ -219,7 +219,7 @@ than merging into an earlier damaged
 extraction. Optional verified extraction:
 
 ```sh
-python -B scripts/extract_source.py ../yellowfield-windows-vendor-source.zip ../yellowfield-clean
+python -B scripts/extract_source.py ../citrine-eclipse-mirage-source.zip ../citrine-eclipse-mirage-clean
 ```
 
 The extractor verifies CRC, hash, member
@@ -243,8 +243,9 @@ Current runtime integration:
 [RUNTIME_BINDING.md](RUNTIME_BINDING.md).
 Earlier vendor/parser test counts here
 are historical snapshot evidence; newer
-Application tests are in
-[RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json).
+Application bindings are in
+[RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json). New
+test execution belongs to the exact selected head's workflow results.
 
 Owner authorization to remove Gulrak
 and restore Windows I/O:

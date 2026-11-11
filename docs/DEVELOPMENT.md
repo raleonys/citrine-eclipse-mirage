@@ -2,6 +2,8 @@
 
 Windows requires Visual Studio C++ x64 tools/SDK, CMake >= 3.20, and Python
 3.9 or later. Project C++ targets use C++20; C sources remain C17.
+The optional version-3 `CMakePresets.json` requires CMake 3.21 or later;
+ordinary `cmake -S ... -B ...` builds retain the 3.20 minimum.
 The selected owner-supplied PEGTL 4.x snapshot supports this standard.
 Reconfigure existing build directories after changing dependency snapshots.
 Production and static-test builds use the compiler's standard CRT:
@@ -136,11 +138,11 @@ acceptance. Run them on Windows with:
 python -B tests/infrastructure/test_infrastructure.py OperatorOutputTests
 ```
 
-To request just these Windows fixtures remotely, manually dispatch the existing
-Source integrity workflow on the selected branch:
+To request just these Windows fixtures remotely, manually dispatch their
+dedicated workflow on the selected branch:
 
 ```sh
-gh workflow run ci.yml --ref <branch> -f operator_output=true
+gh workflow run operator-output.yml --ref <branch>
 ```
 
 This optional job does not run on PR creation or ordinary pushes and does not
