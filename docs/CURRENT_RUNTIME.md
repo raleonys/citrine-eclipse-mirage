@@ -59,6 +59,12 @@ remain retryable on failure. Greeting is asynchronous; session/frame/output
 limits and receive/frame/send deadlines remain enforced. Achievement XML/INI
 writes use an atomic batch with rollback and retry ownership; no claim of
 power-loss atomicity across multiple files is made.
+The concrete Windows batch backend first recovers retained work, then rejects
+empty/embedded-NUL destinations, comparison lengths beyond the Win32 domain,
+and case-fold-equivalent destination strings before staging. Comparison uses
+locale-independent `CompareStringOrdinal`; comparison failure also rejects the
+batch. This conservative admission can refuse distinct case-sensitive names;
+it does not resolve every hardlink, reparse, relative/absolute or 8.3 alias.
 
 Nonempty Config2 `AchievementsSet` and `SteamAppId` identifiers are checked for
 Win32-forbidden punctuation, path separators and C0 controls before achievement
