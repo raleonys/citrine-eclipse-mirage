@@ -14,6 +14,7 @@ import statistics
 import subprocess
 import sys
 import tempfile
+import uuid
 
 ROOT = Path(__file__).resolve().parents[3]
 WORKERS = (1, 2, 4, 8, 0)  # 0 identifies the dynamic per-message control.
@@ -447,6 +448,7 @@ def run(build, output, repeats=5, quick=False, suite='all'):
     (output / 'samples').mkdir()
     data_rows = []
     receipt = {'schema': 'citrine.runtime-load.v3', 'result': 'RUNNING',
+               'run_id': uuid.uuid4().hex,
                'evidence_class': 'WINDOWS_NATIVE_COMPONENT_BENCHMARK',
                'source': inputs, 'system': platform.system(), 'logical_cpus': os.cpu_count(),
                'binaries': {f'{kind}_{n}': digest(p) for (kind, n), p in binaries.items()},
@@ -482,7 +484,8 @@ def run(build, output, repeats=5, quick=False, suite='all'):
                     params = parameters(workload, clients, pipeline, workers, quick)
                     kind = binary_kind(workload)
                     row = execute(binaries[kind, workers], params, output)
-                    row.update(repeat=repeat, order=position)
+                    row.update(repeat=repeat, order=position, run_id=receipt['run_id'],
+                               binary_sha256=receipt['binaries'][f'{kind}_{workers}'])
                     sample = output / 'samples' / f'{len(data_rows):04d}.json'
                     sample.write_text(json.dumps(row, separators=(',', ':'), allow_nan=False) + '\n')
                     data_rows.append(row)

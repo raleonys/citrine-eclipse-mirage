@@ -1852,6 +1852,7 @@ class RuntimeEvidenceTests(unittest.TestCase):
                       generated_application_sha256=hashes['application.cpp'])
         files = {'binaries/generated/inputs.json': json.dumps(inputs).encode()}
         data = dict(schema='citrine.runtime-load.v3', result='PASS_CORRECTNESS_WITH_MEASUREMENTS',
+                    run_id='1' * 32,
                     evidence_class='WINDOWS_NATIVE_COMPONENT_BENCHMARK', source=inputs, system='Windows',
                     logical_cpus=4, binaries={}, builds={}, repeats=1, suite='all', workloads=list(tool.WORKLOADS),
                     quick=True, performance_thresholds=False, statistical_comparison='SMOKE_ONLY',
@@ -1874,6 +1875,7 @@ class RuntimeEvidenceTests(unittest.TestCase):
                     params = tool.parameters(w, clients, 1, n, True)
                     total = clients * 8
                     row = {**RuntimeBenchmarkTests.row(n, w), **params, 'repeat': 0, 'order': order,
+                           'run_id': data['run_id'], 'binary_sha256': data['binaries'][f'{tool.binary_kind(w)}_{n}'],
                            'completed': total, 'created_message_threads': total if n == 0 else 0,
                            'rtt_ns': [2000] * total, 'queue_ns': [10] * total, 'handler_ns': [100] * total}
                     if w in tool.APPLICATION_WORKLOADS:
@@ -1938,7 +1940,7 @@ class RuntimeEvidenceTests(unittest.TestCase):
         self.assertIsNone(result['throughput_ratio_95pct_bootstrap'])
 
     def test_tampered_or_missing_evidence_cannot_inherit_a_pass(self):
-        mutations = ('raw_hash', 'binary', 'build_source', 'summary', 'csv', 'missing_row', 'duplicate_sample', 'control', 'source', 'recipe')
+        mutations = ('raw_hash', 'binary', 'build_source', 'summary', 'csv', 'missing_row', 'duplicate_sample', 'control', 'source', 'recipe', 'run_identity', 'sample_binary')
         for mutation in mutations:
             with self.subTest(mutation=mutation):
                 audit, identity, data, files = self.fixture()
@@ -1953,11 +1955,14 @@ class RuntimeEvidenceTests(unittest.TestCase):
                 elif mutation == 'duplicate_sample': data['rows'][1] = data['rows'][0]
                 elif mutation == 'control': data['persistence_corruption_control'] = 'EXPECTED_FAILURE'
                 elif mutation == 'source': identity = {**identity, 'commit': 'f' * 40}
-                elif mutation == 'recipe':
+                elif mutation in ('recipe', 'run_identity', 'sample_binary'):
                     row = audit.benchmark.load_json(files['results/samples/0000.json'])
-                    row['payload_bytes'] = 1000
+                    if mutation == 'recipe': row['payload_bytes'] = 1000
+                    elif mutation == 'run_identity': row['run_id'] = '2' * 32
+                    else: row['binary_sha256'] = 'f' * 64
                     raw = json.dumps(row).encode(); files['results/samples/0000.json'] = raw
-                    data['rows'][0].update(payload_bytes=1000, samples_sha256=hashlib.sha256(raw).hexdigest())
+                    data['rows'][0] = {**{k: v for k, v in row.items() if k not in audit.benchmark.SAMPLE_FIELDS},
+                                      'samples_file': 'samples/0000.json', 'samples_sha256': hashlib.sha256(raw).hexdigest()}
                 files['results/results.json'] = json.dumps(data).encode()
                 with self.assertRaises(ValueError): self.check(audit, identity, files)
 

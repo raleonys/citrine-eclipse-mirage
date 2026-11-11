@@ -1134,8 +1134,8 @@
       "sha256": "e336989051fc46fa4eed2107930bbafe7b4fbd1ef9774ae04c367b94d5dfad7c"
     },
     "tests/diagnostics/runtime_load/audit.py": {
-      "bytes": 9972,
-      "sha256": "31e5c1b2ff1bd38959a114a991441f9e2182944536ca7573c62c501809b30794"
+      "bytes": 10443,
+      "sha256": "c09263f7d69875797aa8488e10685228366bf4a78a4a08ca1ffc12d444358d1a"
     },
     "tests/diagnostics/runtime_load/load.cpp": {
       "bytes": 12765,
@@ -1150,8 +1150,8 @@
       "sha256": "a0f3d2f75b930111c533a608f552bbd1fcbaa05a2073e1a9dc7543311dc9b981"
     },
     "tests/diagnostics/runtime_load/run.py": {
-      "bytes": 30784,
-      "sha256": "e37e5a35b86931c34438f582f6930dac5412ef95ca2ed4913a881561cedb9044"
+      "bytes": 30952,
+      "sha256": "a9f2fe0f3baca94002274b545da262f7a7b7b7e2f540f94b2b95e0f2441a5cb3"
     },
     "tests/diagnostics/windows_paths/probe.py": {
       "bytes": 5404,
@@ -1234,8 +1234,8 @@
       "sha256": "7f5107def7a8ed4fd9f609e2a558d435e5968083195cc5971a1d60bc3bd52ded"
     },
     "tests/infrastructure/test_infrastructure.py": {
-      "bytes": 183314,
-      "sha256": "741ecfbdd31eb537afd35c7a86c53b8073f5c4edacc60033063de6b26af1cd03"
+      "bytes": 183828,
+      "sha256": "34ee1defabf747e656cc3afa0ff11b6e8d38c1f9bdecab21ff38c4fae7b5050a"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
       "bytes": 43762,

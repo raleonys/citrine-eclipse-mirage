@@ -232,7 +232,9 @@ The auditor verifies source/vendor/generated-copy identities, all selected
 executable bytes and link receipts, required corruption controls, canonical
 workload recipes and complete candidate/case/round coverage. It verifies each
 raw sample hash and its agreement with the compact receipt, then recomputes
-every summary field, paired interval and CSV cell. Each Application sample must
+every summary field, paired interval and CSV cell. A random per-run identity
+and executable hash on each raw row reject accidentally spliced runs/binaries;
+this identifier contains no machine identity. Each Application sample must
 record exactly one handler-lock acquisition; equal totals cannot hide a missing
 observation in one request and a duplicate in another. Duplicate JSON keys,
 nonfinite numbers, missing rows, stale binaries, changed summaries and unsafe

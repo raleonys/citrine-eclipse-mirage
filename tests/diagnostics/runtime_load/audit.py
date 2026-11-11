@@ -75,6 +75,8 @@ def audit(evidence):
     data = b.load_json(evidence.read('results/results.json'))
     if data.get('schema') != 'citrine.runtime-load.v3' or data.get('result') != 'PASS_CORRECTNESS_WITH_MEASUREMENTS':
         raise ValueError('Only complete v3 correctness receipts can pass this audit')
+    if not isinstance(data.get('run_id'), str) or not re.fullmatch('[0-9a-f]{32}', data['run_id']):
+        raise ValueError('Missing per-run measurement identity')
     if data.get('evidence_class') != 'WINDOWS_NATIVE_COMPONENT_BENCHMARK' or data.get('system') != 'Windows' or data.get('performance_thresholds') is not False:
         raise ValueError('Wrong declared evidence class or timing gate')
     b.integer(data.get('logical_cpus'), 'logical_cpus', 1)
@@ -127,6 +129,9 @@ def audit(evidence):
         row = b.load_json(raw)
         if {k: v for k, v in compact.items() if k not in ('samples_file', 'samples_sha256')} != {k: v for k, v in row.items() if k not in b.SAMPLE_FIELDS}:
             raise ValueError('Raw sample and compact receipt disagree')
+        binary_name = f"{b.binary_kind(row['workload'])}_{row['workers']}"
+        if row.get('run_id') != data['run_id'] or row.get('binary_sha256') != data['binaries'].get(binary_name):
+            raise ValueError('Raw sample belongs to another run or executable')
         params = b.parameters(row['workload'], row['clients'], row['pipeline'], row['workers'], quick)
         b.validate(row, params)
         rows.append(row)
@@ -143,6 +148,7 @@ def audit(evidence):
         raise ValueError('CSV summary differs from recomputed JSON metrics')
     return {'schema': 'citrine.runtime-benchmark-audit.v1', 'result': 'PASS_INTEGRITY_NOT_EXECUTION_ATTESTATION',
             'source_commit': inputs['commit'], 'source_manifest_sha256': inputs['manifest_sha256'],
+            'run_id': data['run_id'],
             'binary_count': len(names), 'measurements': len(rows),
             'verified_request_replies': sum(r['completed'] for r in rows), 'summary_cells': len(summary),
             'quick': quick, 'rounds_under_100ms': sum(r['elapsed_ns'] < 100000000 for r in rows),
