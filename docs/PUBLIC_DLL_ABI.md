@@ -38,6 +38,13 @@ Windows/native and game acceptance against the selected commit and DLL using
 
 The complete contract is in `metadata/PUBLIC_DLL_ABI.json`.
 
+The public ABI and CORVEXON function gates require each nonzero, nonforwarded
+export entry byte to have exactly one executable section owner, backed by
+raw file data outside the headers and before EOF. Valid executable section
+names need not be `.text`, and functions may share an address. This structural
+check does not validate instructions, an entire function body or native calls.
+The generic PE export reader still permits data exports for other callers.
+
 The source-level status type is `DllShutdownStatus`. Its constants are
 `DLL_SHUTDOWN_OK`, `DLL_SHUTDOWN_CONCURRENT`,
 `DLL_SHUTDOWN_TIMEOUT`, `DLL_SHUTDOWN_WAIT_FAILED`, and
