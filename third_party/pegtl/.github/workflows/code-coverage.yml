@@ -10,23 +10,25 @@ on:
       - 'README.md'
       - 'doc/**'
 
-permissions:
-  contents: read
-
 jobs:
   code-coverage:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@v4
 
-    - run: cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Debug -DPEGTL_BUILD_EXAMPLES=OFF -DCMAKE_CXX_FLAGS="-coverage"
+    - run: cmake -E make_directory build
 
-    - run: cmake --build build
+    - working-directory: build/
+      run: cmake $GITHUB_WORKSPACE -DPEGTL_BUILD_EXAMPLES=OFF -DCMAKE_CXX_FLAGS="-coverage"
 
-    - run: ctest --test-dir build --output-on-failure
+    - working-directory: build/
+      run: cmake --build .
+
+    - working-directory: build/
+      run: ctest --output-on-failure
 
     - name: Upload coverage reports to Codecov with GitHub Action
-      uses: codecov/codecov-action@v7.1.1
+      uses: codecov/codecov-action@v4.2.0
       with:
         token: ${{ secrets.CODECOV_TOKEN }}

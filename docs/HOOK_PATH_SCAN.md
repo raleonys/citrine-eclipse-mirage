@@ -10,7 +10,8 @@ NUL: a valid path can therefore contain at most 32767 non-NUL units. A terminato
 at the final permitted unit is accepted; a terminator just beyond it is not read.
 No CFG, provider or environment override is introduced.
 
-Only a 15-unit circular suffix buffer is retained. Native inspection and selection
+Only a 15-unit circular suffix buffer for the `preloader_l.dll` compatibility
+suffix is retained. This suffix is independent of the current shipping DLL name. Native inspection and selection
 perform no C++ heap allocation, no whole-path copy and no UTF-8 conversion. The
 original CryptQueryObject API and unrelated hook infrastructure may allocate;
 this is not a claim that the entire API invocation is allocation-free. The callback

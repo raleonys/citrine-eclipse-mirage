@@ -10,28 +10,18 @@ on:
       - 'README.md'
       - 'doc/**'
 
-permissions:
-  contents: read
-
 jobs:
   clang-format:
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
 
-      - name: Install clang-format
-        run: |
-          sudo apt-get -qq update -yq
-          sudo apt-get -qq install -y clang-format-22 --no-install-recommends --no-install-suggests
+      - run: |
+          clang-format --version
+          clang-format --dump-config
 
-      - name: Show clang-format configuration
-        run: |
-          clang-format-22 --version
-          clang-format-22 -style=file -dump-config
-
-      - name: Run clang-format
-        run: |
-          git ls-files -z -- '*.hpp' '*.cpp' '*.ipp' |
-            xargs -0 -r clang-format-22 -style=file -i
-          git diff --exit-code
+      - uses: DoozyX/clang-format-lint-action@v0.20
+        with:
+          extensions: 'hpp,cpp'
+          clangFormatVersion: 20
