@@ -57,7 +57,10 @@ Merge records, configured tests and skipped jobs do not substitute for
 executed native or Golden evidence. Owner game acceptance remains separate.
 
 Opt-in [runtime load measurements](RUNTIME_BENCHMARKS.md) use the real TCP service
-and selected production components with diagnostic-only worker candidates.
+and selected production components with diagnostic-only worker candidates,
+plus the actual hook-disabled Application/router over plaintext and negotiated
+encrypted LSX. Application measurements require complete response validation,
+actual handler-state lock observations and final XML/INI checks for persistence.
 Correctness failures reject a sample; timings are observations, not merge gates
 or original-DLL/Consumer acceptance. The manual performance workflow selects
 this suite explicitly and leaves ordinary PR scheduling unchanged.

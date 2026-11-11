@@ -88,7 +88,7 @@ jobs:
 
   runtime-load:
     if: inputs.suite == 'runtime-load'
-    name: Native runtime load measurements
+    name: Native component and Application load measurements
     runs-on: windows-2022
     timeout-minutes: 25
     defaults:
@@ -115,7 +115,7 @@ jobs:
         run: |
           ctest --test-dir build/runtime-load/binaries -C Release --output-on-failure --no-tests=error
           if ($LASTEXITCODE -ne 0) { throw 'Runtime scheduler control contracts failed' }
-          python -B tests/diagnostics/runtime_load/run.py --build-dir build/runtime-load/binaries --output build/runtime-load/results --repeats 5
+          python -B tests/diagnostics/runtime_load/run.py --build-dir build/runtime-load/binaries --output build/runtime-load/results --repeats 5 --suite all
           if ($LASTEXITCODE -ne 0) { throw 'Runtime load correctness/measurement failed' }
       - name: Preserve measurements and failure diagnostics
         if: always()

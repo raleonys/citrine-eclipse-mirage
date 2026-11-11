@@ -1608,6 +1608,10 @@ class RuntimeBenchmarkTests(unittest.TestCase):
                    created_message_threads=0 if workers else 2,
                    observed_worker_threads=min(workers or 2, 2), peak_active_handlers=1,
                    rtt_ns=[2000, 3000], queue_ns=[10, 20], handler_ns=[100, 200])
+        if workload.startswith('app_'):
+            row.update(payload_bytes=0, application_routed=True, verified_responses=2,
+                       handler_lock_calls=2, lock_wait_ns=[10, 20], lock_hold_ns=[30, 40],
+                       persistence_verified=workload == 'app_achievement_encrypted')
         row.update(changes)
         return row
 
@@ -1628,6 +1632,41 @@ class RuntimeBenchmarkTests(unittest.TestCase):
                               (original + tool.MARKER, 2), ('#include "probe.hpp"\n' + original, 2)]:
             with self.subTest(workers=count), self.assertRaises(ValueError):
                 tool.generated_service(source, count)
+
+    def test_application_copy_preserves_dispatch_and_lock_ownership(self):
+        tool = self.diagnostic()
+        original = (ROOT / 'src/runtime/application.cpp').read_text()
+        generated = tool.generated_application(original)
+        restored = generated.removeprefix('#include "application_probe.hpp"\n')
+        for before, after in tool.APPLICATION_INSERTIONS:
+            restored = restored.replace(after, before)
+        self.assertEqual(original, restored)
+        for bad in (original.replace(tool.APPLICATION_INSERTIONS[0][0], ''),
+                    original + tool.APPLICATION_INSERTIONS[1][0], generated):
+            with self.assertRaises(ValueError):
+                tool.generated_application(bad)
+
+    def test_generated_application_identity_is_bound_to_the_source_and_disk_copy(self):
+        tool = self.diagnostic()
+        with tempfile.TemporaryDirectory() as directory:
+            build = Path(directory)
+            (build / 'generated').mkdir()
+            source = (ROOT / 'src/net/asio_service.cpp').read_text()
+            hashes = {}
+            for workers in tool.WORKERS:
+                path = build / 'generated' / f'asio_{workers}.cpp'
+                path.write_bytes(tool.generated_service(source, workers).encode())
+                hashes[str(workers)] = tool.digest(path)
+            path = build / 'generated/application.cpp'
+            path.write_bytes(tool.generated_application((ROOT / 'src/runtime/application.cpp').read_text()).encode())
+            inputs = dict(generated_service_sha256=hashes, generated_application_sha256=tool.digest(path))
+            tool.verify_generated(build, inputs)
+            path.write_bytes(path.read_bytes() + b'\n// unreviewed copy\n')
+            with self.assertRaises(ValueError):
+                tool.verify_generated(build, inputs)
+            inputs['generated_application_sha256'] = tool.digest(path)
+            with self.assertRaises(ValueError):
+                tool.verify_generated(build, inputs)
 
     def test_generated_set_rejects_aliases_before_any_output_changes(self):
         tool = self.diagnostic()
@@ -1667,7 +1706,7 @@ class RuntimeBenchmarkTests(unittest.TestCase):
         rows = [self.row(n, w, repeat=0, order=i)
                 for w in tool.WORKLOADS for i, n in enumerate(tool.WORKERS)]
         summary = tool.summarize(rows, 1, (1,), (1,))
-        self.assertEqual(20, len(summary))
+        self.assertEqual(40, len(summary))
         for row in summary:
             self.assertEqual(max(1, row['workers']) / 2, row['throughput_ratio_to_2_workers'])
             self.assertIsNone(row['throughput_ratio_95pct_bootstrap'])
@@ -1675,6 +1714,23 @@ class RuntimeBenchmarkTests(unittest.TestCase):
                     [{**row, 'order': 0} for row in rows]):
             with self.assertRaises(ValueError):
                 tool.summarize(bad, 1, (1,), (1,))
+        components = [r for r in rows if r['workload'] in tool.COMPONENT_WORKLOADS]
+        with self.assertRaises(ValueError):
+            tool.summarize(components, 1, (1,), (1,))
+        self.assertEqual(20, len(tool.summarize(components, 1, (1,), (1,), tool.COMPONENT_WORKLOADS)))
+
+    def test_application_measurements_require_responses_lock_samples_and_persistence(self):
+        tool = self.diagnostic()
+        good = self.row(workload='app_achievement_encrypted')
+        expected = {key: good[key] for key in
+                    ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes', 'workload')}
+        self.assertIs(good, tool.validate(good, expected))
+        for change in (dict(application_routed=False), dict(verified_responses=1),
+                       dict(handler_lock_calls=True), dict(lock_wait_ns=[1]),
+                       dict(lock_hold_ns=[-1, 1]), dict(lock_hold_ns=[100, 200]),
+                       dict(persistence_verified=False)):
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                tool.validate({**good, **change}, expected)
 
     def test_percentiles_and_paired_intervals_have_known_answers(self):
         tool = self.diagnostic()
@@ -1696,6 +1752,23 @@ class RuntimeBenchmarkTests(unittest.TestCase):
             good = subprocess.CompletedProcess([], 0, json.dumps(row), '')
             with patch.object(tool.subprocess, 'run', return_value=good), self.assertRaises(ValueError):
                 tool.execute(Path('not-executed'), expected, directory, fault=True)
+
+    def test_application_controls_require_the_specific_response_or_persistence_failure(self):
+        tool = self.diagnostic()
+        row = self.row(workload='app_achievement_encrypted')
+        expected = {key: row[key] for key in
+                    ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes', 'workload')}
+        with tempfile.TemporaryDirectory() as directory:
+            for fault, reason in ((True, 'application response validation failed'),
+                                  ('corrupt-persistence', 'Application persistence validation failed')):
+                bad = subprocess.CompletedProcess([], 1, '', reason)
+                with patch.object(tool.subprocess, 'run', return_value=bad) as child:
+                    tool.execute(Path('not-executed'), expected, directory, fault=fault)
+                    self.assertEqual('corrupt-response' if fault is True else fault,
+                                     child.call_args.kwargs['env']['RUNTIME_BENCHMARK_FAULT'])
+                with patch.object(tool.subprocess, 'run', return_value=subprocess.CompletedProcess([], 1, '', 'unrelated startup failure')):
+                    with self.assertRaises(ValueError):
+                        tool.execute(Path('not-executed'), expected, directory, fault=fault)
 
     def test_failure_retains_partial_measurements_without_success_receipt(self):
         tool = self.diagnostic()
@@ -1721,10 +1794,11 @@ class RuntimeBenchmarkTests(unittest.TestCase):
             output = root / 'build/results'
             with patch.object(tool, 'ROOT', root), patch.object(tool, 'verify_source'), \
                  patch.object(tool, 'identity', return_value={}), \
+                 patch.object(tool, 'verify_generated'), \
                  patch.object(tool.platform, 'system', return_value='Windows'), \
                  patch.object(tool, 'execute', side_effect=execute):
                 with self.assertRaisesRegex(ValueError, 'injected child failure'):
-                    tool.run(build, output, quick=True)
+                    tool.run(build, output, quick=True, suite='component')
             receipt = json.loads((output / 'results.json').read_text())
             self.assertEqual('FAIL', receipt['result'])
             self.assertEqual(1, len(receipt['rows']))

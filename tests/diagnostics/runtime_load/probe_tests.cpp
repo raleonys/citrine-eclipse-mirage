@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-#include "probe.hpp"
+#include "application_probe.hpp"
 #include <atomic>
 #include <future>
 #include <iostream>
@@ -33,6 +33,25 @@ void failed_job_lifetime(){
     const auto released_before_stop_return=stopped.get();
     require(held&&released_before_stop_return==1&&retired==1&&errors==1,"stop must drain failed job and release its capture exactly once");
 }
+void application_observation(){
+    using namespace citrine_eclipse_mirage::benchmark;
+    {ApplicationRequest ignored;ApplicationLock lock(Clock::now());}
+    require(application_record==nullptr,"disabled observation must not retain a TLS record");
+    ApplicationMeasurements measured(64);application_measurements=&measured;
+    PerMessageJobs jobs;std::mutex state;
+    for(unsigned i=0;i<64;++i)jobs.submit([&]{
+        ApplicationRequest request;
+        const auto waiting=Clock::now();std::lock_guard lock(state);ApplicationLock timing(waiting);
+    },[&](std::exception_ptr)noexcept{++measured.errors;});
+    jobs.stop();application_measurements=nullptr;
+    require(measured.used==64&&measured.active==0&&measured.errors==0,"Application observations must drain and count every request");
+    for(const auto& record:measured.records)require(record.lock_calls==1&&record.lock_wait+record.lock_hold<=record.handler&&record.thread!=std::thread::id{},"lock samples must belong to their measured handler");
+    ApplicationMeasurements failed(1);application_measurements=&failed;
+    try{ApplicationRequest request;throw std::runtime_error("controlled Application failure");}catch(const std::runtime_error&){}
+    {ApplicationRequest overflow;}
+    application_measurements=nullptr;
+    require(failed.used==2&&failed.errors==2&&failed.active==0&&application_record==nullptr,"exceptions and sample overflow must invalidate measurements without retaining TLS ownership");
 }
-int main()try{ordinary_jobs();failed_job_lifetime();std::cout<<"PASS: per-message control completion, exception, capture lifetime and idempotent stop checks\n";}
+}
+int main()try{ordinary_jobs();failed_job_lifetime();application_observation();std::cout<<"PASS: scheduler ownership/drain and Application measurement contracts\n";}
 catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

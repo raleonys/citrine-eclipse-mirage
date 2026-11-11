@@ -16,7 +16,24 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[3]
 WORKERS = (1, 2, 4, 8, 0)  # 0 identifies the dynamic per-message control.
-WORKLOADS = ('echo', 'xml', 'xml_locked', 'atomic_pair')
+COMPONENT_WORKLOADS = ('echo', 'xml', 'xml_locked', 'atomic_pair')
+APPLICATION_WORKLOADS = ('app_profile', 'app_profile_encrypted',
+                         'app_mixed_encrypted', 'app_achievement_encrypted')
+WORKLOADS = COMPONENT_WORKLOADS + APPLICATION_WORKLOADS
+SAMPLE_FIELDS = ('rtt_ns', 'queue_ns', 'handler_ns', 'lock_wait_ns', 'lock_hold_ns')
+APPLICATION_INSERTIONS = (
+    ('server::PreparedResponse prepare_response(std::string_view s) override{return handler.prepare_response(s);}',
+     '''server::PreparedResponse prepare_response(std::string_view s) override{
+            benchmark::ApplicationRequest measured;
+            auto response=handler.prepare_response(s);
+            benchmark::application_fault(response.bytes);
+            return response;
+        }'''),
+    ('std::lock_guard lock(app.handler_state_mutex);return router.registered_handler(rva,n,out);',
+     '''const auto waiting=benchmark::Clock::now();
+            std::lock_guard lock(app.handler_state_mutex);
+            benchmark::ApplicationLock measured_lock(waiting);
+            return router.registered_handler(rva,n,out);'''))
 MARKER = 'std::array<std::thread,handler_policy::workers> workers;'
 PUSH = 'jobs.push_back(std::move(fn));'
 CONTROL_INSERTIONS = (
@@ -51,6 +68,16 @@ def generated_service(source, workers):
     return generated
 
 
+def generated_application(source):
+    if '#include "application_probe.hpp"' in source:
+        raise ValueError('Application is already instrumented')
+    for original, replacement in APPLICATION_INSERTIONS:
+        if source.count(original) != 1:
+            raise ValueError('Application dispatch/lock boundary changed')
+        source = source.replace(original, replacement)
+    return '#include "application_probe.hpp"\n' + source
+
+
 def verify_source():
     sys.path.insert(0, str(ROOT / 'scripts'))
     from project_files import verify_manifest
@@ -78,7 +105,8 @@ def identity():
     return {'commit': git.stdout.strip() if git.returncode == 0 else None,
             'manifest_sha256': digest(ROOT / 'metadata/ACTIVE_SOURCE_MANIFEST.json'),
             'vendor_lock_sha256': digest(ROOT / 'metadata/VENDOR_LOCK.json'),
-            'asio_source_sha256': digest(ROOT / 'src/net/asio_service.cpp')}
+            'asio_source_sha256': digest(ROOT / 'src/net/asio_service.cpp'),
+            'application_source_sha256': digest(ROOT / 'src/runtime/application.cpp')}
 
 
 def write_generated(payloads):
@@ -118,12 +146,27 @@ def prepare(output):
         payload = generated_service(source, workers).encode('utf-8')
         payloads[path] = payload
         hashes[str(workers)] = hashlib.sha256(payload).hexdigest()
-    receipt = {'schema': 'citrine.runtime-benchmark-inputs.v1', **identity(),
+    app_payload = generated_application((ROOT / 'src/runtime/application.cpp').read_text()).encode('utf-8')
+    payloads[output / 'application.cpp'] = app_payload
+    receipt = {'schema': 'citrine.runtime-benchmark-inputs.v2', **identity(),
                'generated_service_sha256': hashes,
+               'generated_application_sha256': hashlib.sha256(app_payload).hexdigest(),
                'instrumentation': 'common queue-clock wrapper/control branches; separate per-message scheduler',
                'production_worker_policy': 2, 'production_queue_limit': 128}
     payloads[output / 'inputs.json'] = (json.dumps(receipt, indent=2) + '\n').encode('utf-8')
     write_generated(payloads)
+
+
+def verify_generated(build, inputs):
+    source = (ROOT / 'src/net/asio_service.cpp').read_text()
+    expected = {f'asio_{n}.cpp': hashlib.sha256(generated_service(source, n).encode()).hexdigest()
+                for n in WORKERS}
+    app = generated_application((ROOT / 'src/runtime/application.cpp').read_text()).encode()
+    expected['application.cpp'] = hashlib.sha256(app).hexdigest()
+    recorded = {f'asio_{n}.cpp': inputs.get('generated_service_sha256', {}).get(str(n)) for n in WORKERS}
+    recorded['application.cpp'] = inputs.get('generated_application_sha256')
+    if recorded != expected or any(digest(build / 'generated' / name) != value for name, value in expected.items()):
+        raise ValueError('Generated Application/Asio copy identity differs from reviewed source')
 
 
 def integer(value, name, minimum=0):
@@ -144,7 +187,8 @@ def validate(row, expected):
     elapsed = integer(row.get('elapsed_ns'), 'elapsed_ns', 1)
     for name in ('cpu_ns', 'cpu_cycles', 'startup_ns', 'shutdown_ns', 'peak_working_set_bytes', 'private_bytes'):
         integer(row.get(name), name, 0 if name == 'cpu_ns' else 1)
-    for name in ('rtt_ns', 'queue_ns', 'handler_ns'):
+    application = expected['workload'] in APPLICATION_WORKLOADS
+    for name in SAMPLE_FIELDS if application else SAMPLE_FIELDS[:3]:
         values = row.get(name)
         if not isinstance(values, list) or len(values) != total:
             raise ValueError('Incomplete per-request measurement: ' + name)
@@ -152,6 +196,16 @@ def validate(row, expected):
             integer(value, name)
             if value > elapsed:
                 raise ValueError('Sample exceeds measured interval: ' + name)
+    if application:
+        if row.get('application_routed') is not True or integer(row.get('verified_responses'), 'verified_responses') != total:
+            raise ValueError('Missing verified Application responses')
+        if integer(row.get('handler_lock_calls'), 'handler_lock_calls') != total:
+            raise ValueError('Application handler lock observations are incomplete')
+        for wait, hold, handler in zip(row['lock_wait_ns'], row['lock_hold_ns'], row['handler_ns']):
+            if wait + hold > handler:
+                raise ValueError('Application lock intervals exceed handler duration')
+        if expected['workload'] == 'app_achievement_encrypted' and row.get('persistence_verified') is not True:
+            raise ValueError('Application persistence was not verified')
     observed = integer(row.get('observed_worker_threads'), 'observed_worker_threads', 1)
     peak = integer(row.get('peak_active_handlers'), 'peak_active_handlers', 1)
     bound = expected['workers'] or total
@@ -179,13 +233,13 @@ def ratio_interval(values, seed):
     return [percentile(estimates, .025), percentile(estimates, .975)]
 
 
-def summarize(rows, repeats, clients, pipelines):
+def summarize(rows, repeats, clients, pipelines, workloads=WORKLOADS):
     grouped = {}
     for row in rows:
         params = {field: row.get(field) for field in
                   ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes', 'workload')}
         for field in ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes'):
-            integer(params[field], field, 0 if field == 'workers' else 1)
+            integer(params[field], field, 0 if field in ('workers', 'payload_bytes') else 1)
         validate(row, params)
         if integer(row.get('order'), 'order') >= len(WORKERS):
             raise ValueError('Invalid candidate execution order')
@@ -195,10 +249,10 @@ def summarize(rows, repeats, clients, pipelines):
         if repeat >= repeats or repeat in rounds:
             raise ValueError('Duplicate or unexpected benchmark round')
         rounds[repeat] = row
-    expected = {(w, c, p, n) for w in WORKLOADS for c in clients for p in pipelines for n in WORKERS}
+    expected = {(w, c, p, n) for w in workloads for c in clients for p in pipelines for n in WORKERS}
     if set(grouped) != expected or any(set(r) != set(range(repeats)) for r in grouped.values()):
         raise ValueError('Incomplete workload/candidate/repeat matrix')
-    for workload in WORKLOADS:
+    for workload in workloads:
         for count in clients:
             for pipeline in pipelines:
                 for repeat in range(repeats):
@@ -227,6 +281,8 @@ def summarize(rows, repeats, clients, pipelines):
                        'median_round_p99_us': statistics.median(percentile(r['rtt_ns'], .99) / 1000 for r in values),
                        'median_round_queue_p95_us': statistics.median(percentile(r['queue_ns'], .95) / 1000 for r in values),
                        'median_round_handler_p95_us': statistics.median(percentile(r['handler_ns'], .95) / 1000 for r in values),
+                       'median_round_lock_wait_p95_us': statistics.median(percentile(r['lock_wait_ns'], .95) / 1000 for r in values) if workload in APPLICATION_WORKLOADS else None,
+                       'median_round_lock_hold_p95_us': statistics.median(percentile(r['lock_hold_ns'], .95) / 1000 for r in values) if workload in APPLICATION_WORKLOADS else None,
                        'median_cpu_ns_per_request': statistics.median(r['cpu_ns'] / r['completed'] for r in values),
                        'median_cpu_cycles_per_request': statistics.median(r['cpu_cycles'] / r['completed'] for r in values),
                        'median_peak_working_set_bytes': statistics.median(r['peak_working_set_bytes'] for r in values),
@@ -251,10 +307,13 @@ def execute(binary, params, output, fault=False):
         env = dict(os.environ)
         env.pop('RUNTIME_BENCHMARK_FAULT', None)
         if fault:
-            env['RUNTIME_BENCHMARK_FAULT'] = 'corrupt-response'
+            env['RUNTIME_BENCHMARK_FAULT'] = 'corrupt-response' if fault is True else fault
         cp = subprocess.run(command, capture_output=True, text=True, timeout=60, env=env)
         if fault:
-            if cp.returncode == 0 or 'loss, corruption or response reordering' not in cp.stderr:
+            failure = ('Application persistence validation failed' if fault == 'corrupt-persistence' else
+                       'application response validation failed' if params['workload'] in APPLICATION_WORKLOADS
+                       else 'loss, corruption or response reordering')
+            if cp.returncode == 0 or failure not in cp.stderr:
                 raise ValueError('Deliberately corrupt response did not fail correctness checking')
             return
         if cp.returncode:
@@ -262,7 +321,7 @@ def execute(binary, params, output, fault=False):
         return validate(json.loads(cp.stdout), params)
 
 
-def run(build, output, repeats=5, quick=False):
+def run(build, output, repeats=5, quick=False, suite='all'):
     if platform.system() != 'Windows':
         raise ValueError('Measure on native Windows; a cross build or Wine run is not this evidence class')
     if type(repeats) is not int or not 5 <= repeats <= 20:
@@ -274,51 +333,64 @@ def run(build, output, repeats=5, quick=False):
     inputs = json.loads((build / 'generated/inputs.json').read_text())
     if any(inputs.get(key) != value for key, value in identity().items()):
         raise ValueError('Build input identity differs from current source')
-    binaries = {n: build / 'Release' / f'runtime_load_{n}.exe' for n in WORKERS}
+    verify_generated(build, inputs)
+    workloads = {'all': WORKLOADS, 'component': COMPONENT_WORKLOADS,
+                 'application': APPLICATION_WORKLOADS}[suite]
+    kinds = {('application_load' if w in APPLICATION_WORKLOADS else 'runtime_load') for w in workloads}
+    binaries = {(kind, n): build / 'Release' / f'{kind}_{n}.exe' for kind in kinds for n in WORKERS}
     if not all(p.is_file() for p in binaries.values()):
-        raise ValueError('Build all five Release native benchmark binaries first')
+        raise ValueError('Build all selected Release native benchmark binaries first')
     output.mkdir(parents=True)
     (output / 'samples').mkdir()
     data_rows = []
-    receipt = {'schema': 'citrine.runtime-load.v1', 'result': 'RUNNING',
+    receipt = {'schema': 'citrine.runtime-load.v2', 'result': 'RUNNING',
                'evidence_class': 'WINDOWS_NATIVE_COMPONENT_BENCHMARK',
                'source': inputs, 'system': platform.system(), 'logical_cpus': os.cpu_count(),
-               'binaries': {str(n): digest(p) for n, p in binaries.items()},
+               'binaries': {f'{kind}_{n}': digest(p) for (kind, n), p in binaries.items()},
+               'suite': suite, 'workloads': list(workloads),
                'quick': quick, 'rows': [], 'performance_thresholds': False}
     def save():
         (output / 'results.json').write_text(json.dumps(receipt, indent=2, allow_nan=False) + '\n')
     save()
     try:
-        control = {'workers': 2, 'clients': 2, 'requests_per_client': 1,
-                   'pipeline': 1, 'payload_bytes': 128, 'workload': 'echo'}
-        execute(binaries[2], control, output, fault=True)
+        for kind in sorted(kinds):
+            control = {'workers': 2, 'clients': 2, 'requests_per_client': 1,
+                       'pipeline': 1, 'payload_bytes': 0 if kind == 'application_load' else 1024,
+                       'workload': 'app_profile' if kind == 'application_load' else 'echo'}
+            execute(binaries[kind, 2], control, output, fault=True)
         receipt['response_corruption_control'] = 'EXPECTED_FAILURE'
+        if 'application_load' in kinds:
+            control = {'workers': 2, 'clients': 2, 'requests_per_client': 1,
+                       'pipeline': 1, 'payload_bytes': 0, 'workload': 'app_achievement_encrypted'}
+            execute(binaries['application_load', 2], control, output, fault='corrupt-persistence')
+            receipt['persistence_corruption_control'] = 'EXPECTED_FAILURE'
         counts, pipelines = ((1, 8), (1,)) if quick else ((1, 8, 32), (1, 8))
         rounds = 1 if quick else repeats
         rng = random.Random(48731)
         for repeat in range(rounds):
-            cases = [(w, c, p) for w in WORKLOADS for c in counts for p in pipelines]
+            cases = [(w, c, p) for w in workloads for c in counts for p in pipelines]
             rng.shuffle(cases)
             for workload, clients, pipeline in cases:
                 order = list(WORKERS)
                 rng.shuffle(order)
                 for position, workers in enumerate(order):
                     params = {'workers': workers, 'clients': clients,
-                              'requests_per_client': 8 if quick else (16 if workload == 'atomic_pair' else 256),
-                              'pipeline': pipeline, 'payload_bytes': 1024, 'workload': workload}
-                    row = execute(binaries[workers], params, output)
+                              'requests_per_client': 8 if quick else (16 if workload in ('atomic_pair', 'app_achievement_encrypted') else 256),
+                              'pipeline': pipeline, 'payload_bytes': 0 if workload in APPLICATION_WORKLOADS else 1024, 'workload': workload}
+                    kind = 'application_load' if workload in APPLICATION_WORKLOADS else 'runtime_load'
+                    row = execute(binaries[kind, workers], params, output)
                     row.update(repeat=repeat, order=position)
                     sample = output / 'samples' / f'{len(data_rows):04d}.json'
                     sample.write_text(json.dumps(row, separators=(',', ':'), allow_nan=False) + '\n')
                     data_rows.append(row)
                     compact = {key: value for key, value in row.items()
-                               if key not in ('rtt_ns', 'queue_ns', 'handler_ns')}
+                               if key not in SAMPLE_FIELDS}
                     compact.update(samples_file=sample.relative_to(output).as_posix(),
                                    samples_sha256=digest(sample))
                     receipt['rows'].append(compact)
                     save()
                     print(f"{len(receipt['rows'])}: {workload} clients={clients} pipeline={pipeline} workers={workers}", flush=True)
-        receipt['summary'] = summarize(data_rows, rounds, counts, pipelines)
+        receipt['summary'] = summarize(data_rows, rounds, counts, pipelines, workloads)
         receipt['result'] = 'PASS_CORRECTNESS_WITH_MEASUREMENTS'
         receipt['statistical_comparison'] = 'SMOKE_ONLY' if quick else 'PAIRED_ROUNDS_HOST_SPECIFIC'
         fields = list(receipt['summary'][0])
@@ -341,10 +413,11 @@ if __name__ == '__main__':
     ap.add_argument('--output', type=Path)
     ap.add_argument('--repeats', type=int, default=5)
     ap.add_argument('--quick', action='store_true')
+    ap.add_argument('--suite', choices=('all', 'component', 'application'), default='all')
     args = ap.parse_args()
     if args.prepare and not args.build_dir and not args.output:
         prepare(args.prepare)
     elif args.build_dir and args.output and not args.prepare:
-        run(args.build_dir, args.output, args.repeats, args.quick)
+        run(args.build_dir, args.output, args.repeats, args.quick, args.suite)
     else:
         ap.error('Select --prepare or both --build-dir and --output')

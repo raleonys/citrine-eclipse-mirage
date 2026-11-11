@@ -38,6 +38,12 @@ fixed fixture identities under
 | MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem 6.0, linker 14.0, native compilation timestamp preserved, no Rich header. Citrine Eclipse Mirage VERSIONINFO, Copyright 2026 SURGE, and matching selected numeric/string file and product versions. No PNG/RCDATA/manifest or COFF symbol/debug/certificate. Internal export name `citrine_eclipse_mirage.unsigned.dll`. |
 | CORVEXON | Exactly three C exports/ordinals. The CRT entrypoint is separate from exported DllMain and lies in executable `.text`. No static imports outside CRYPT32/WS2_32/KERNEL32/USER32/SHELL32/MSWSOCK; MSWSOCK only AcceptEx/GetAcceptExSockaddrs, CRYPT32 only CryptQueryObject. `/MT`, writable image-backed `/GS` cookie and valid checksum. |
 
+CORVEXON maps section RVAs to file bytes only within `SizeOfRawData`.
+A section with zero raw size cannot supply file bytes, regardless of its raw
+pointer or virtual size. Virtual-only sections may remain in the image, but
+their RVAs cannot supply bytes to file-based checks. Ordinary raw-backed
+section mappings and header-RVA mappings retain their existing behavior.
+
 OLE32 originated in the earlier COM known-folder adapter
 and was removed by restoring RE environment-variable
 lookup. The final owner correction uses
