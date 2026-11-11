@@ -6,10 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Recognize equivalent dash-prefixed LINK options in the shipping MSVC audit. Preserve existing CRT, entry, debug, incremental, LTCG, manifest and reproducibility restrictions; reject mixed-prefix conflicts and cover direct/response-file commands through build-receipt checking. Compiler and linker execution are unchanged.
+- Validate the generated MSVC compiler ID as one unconditional literal CMake assignment. Ignore comments and opaque arguments, reject contradictory, duplicate, conditional or malformed evidence, and retain independent compiler/cache/source/hash and shipping-link checks. No generated build commands or shipping compiler settings change.
 
 ### Integrated 2026-11-11
 
+- [PR #292](https://github.com/raleonys/citrine-eclipse-mirage/pull/292): Recognize equivalent dash-prefixed LINK options in the shipping MSVC audit. Preserve existing CRT, entry, debug, incremental, LTCG, manifest and reproducibility restrictions; reject mixed-prefix conflicts and cover direct/response-file commands through build-receipt checking. Compiler and linker execution are unchanged.
 - [PR #287](https://github.com/raleonys/citrine-eclipse-mirage/pull/287): Reject redirected direct MSVC linker rules and aliased fallback sources when collecting target-local link command evidence. Preserve regular CMake-generated `link.txt`/`build.make` selection and add bounded negative symlink regressions; shipping DLL/linker behavior is unchanged.
 - [PR #278](https://github.com/raleonys/citrine-eclipse-mirage/pull/278): Reject Windows-reserved device names, noncanonical trailing space/dot components, forbidden punctuation and control characters in vendor ZIP member manifests and archive entries. Reuse the active source package path validator before vendor materialization, add portable negative regressions, and preserve vendor pins and runtime behavior.
 - [PR #291](https://github.com/raleonys/citrine-eclipse-mirage/pull/291): Reject Windows case-fold-equivalent atomic batch destinations and embedded-NUL names before creating staging files, while retaining recovery-before-admission semantics. Add real native staging regressions showing that alias rejection preserves existing bytes, creates no artifacts, and permits an ordinary subsequent replacement; no new ABI or donor behavior is imported.

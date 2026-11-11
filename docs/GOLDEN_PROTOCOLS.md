@@ -35,6 +35,13 @@ its private text copy. It rejects forbidden options even beside allowed
 duplicates or in referenced response files. Generated commands and linker
 execution are unchanged; this does not implement general shell parsing.
 
+The build-evidence checker reads generated CMake command boundaries and
+requires one unconditional direct literal `CMAKE_CXX_COMPILER_ID "MSVC"`
+assignment. Comments and opaque arguments cannot supply that assignment;
+duplicate, conflicting, conditional, unset or malformed records are rejected.
+This static reader neither executes CMake nor authenticates arbitrary programs.
+Compiler/cache/hash and shipping-link checks remain independent.
+
 ## Current product targets
 
 Following the owner's instruction to complete missing
