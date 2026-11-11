@@ -13018,10 +13018,6 @@
     "third_party/pugixml/tests/writer_string.hpp": {
       "bytes": 997,
       "sha256": "1f61e5da0d3e19d5b35d8a746db6907c8dc82ec15e23e1ea3e6d531996d3466e"
-    },
-    "scripts/audit_translation_units.py": {
-      "bytes": 10497,
-      "sha256": "6dbb8489d6119aa0a24842eef1a4c13105963de174eaf39bb5ee7fcb00edfa6f"
     }
   }
 }
