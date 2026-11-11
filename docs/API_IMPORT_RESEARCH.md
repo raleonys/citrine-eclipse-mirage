@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [RE_COPY_RECOVERY.md](RE_COPY_RECOVERY.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 > This research examined a source snapshot before the full copy
 > helper was integrated. Current implementation:
 > [RE copy recovery](RE_COPY_RECOVERY.md).

@@ -1,19 +1,18 @@
 # Owner-supplied vendor archives
 
 The source consists of four active ZIP archives supplied
-by the owner. For Asio, the later uploaded archive
-replaced the former input; the owner subsequently selected the supplied
-pugixml archive to replace TinyXML2 in PR #149. MinHook and PEGTL
-archives are unchanged. Gulrak was removed by the
+by the owner. The owner refreshed Asio and PEGTL from the supplied upstream snapshots on
+2026-11-09; pugixml replaced TinyXML2 in PR #149. MinHook and pugixml
+archive selections are unchanged by this refresh. Gulrak was removed by the
 owner's later instruction. Brownfield vendor copies
 or other versions downloaded from the internet
 are not substituted.
 
 | Vendor | Version stated in archive | Location |
 |---|---|---|
-| Asio | 1.38.2; owner snapshot `bdf337ddb1a667c274372a602de5857ad3cb3ed0` | `third_party/asio` |
+| Asio | 1.39.0; owner snapshot `190a8d8daf1cc62909b4e0c72ff491ba264ca98e` | `third_party/asio` |
 | MinHook | v1.3.4 in README; owner snapshot `8af6b4acae5a9388fd742b56fa79ece89d96f823` | `third_party/minhook` |
-| PEGTL | 4.0.0; owner snapshot `3b075432e94f6f906425350b43d03cd9cebfa4f1` | `third_party/pegtl` |
+| PEGTL | 4.0.2 in header; owner 4.x branch snapshot `b60f6110abd37e502d202d13a6c565410c552c33` | `third_party/pegtl` |
 | pugixml | 1.16; owner snapshot `f0a3faa76e04f35110257ca8713363dee3c890e8` | `third_party/pugixml` |
 
 ## Archive identities and recorded upstream snapshots
@@ -25,23 +24,31 @@ commit ID and the per-member hashes used to check the installed tree.
 
 | Vendor | Supplied archive | Archive SHA-256 |
 |---|---|---|
-| Asio | `asio-master.zip` | `d28dbc79b8c98b860ba6c06bd89de76bc352931560f9d169819e46280778975b` |
+| Asio | `asio-master.zip` | `5f384a220751aff27e517e559b9257292f00e7a2c31c2e83282d3e522d591ade` |
 | MinHook | `minhook-master.zip` | `9ba14a6d748d65ca9ed83763a96a144d888f50cc5771dd9a798ad50ee35336f5` |
-| PEGTL | `PEGTL-main.zip` | `80ac358a098e83637b2ee367baab1ca569e1475c51b1b8dacece2088f86349ad` |
+| PEGTL | `PEGTL-4.x.zip` | `3eb2096ceeb7bbf722775d7cfd98ddf0f3ca008c5e2f44835b11dd014c1400a0` |
 | pugixml | `pugixml-master.zip` | `4cd80a72fde87ce1f23eae4ed048446b2e887fc25437793e525367448be2cf81` |
 
-MinHook and PEGTL also have recorded upstream snapshot IDs; their omission from
-the earlier documentation table did not mean that the lock lacked provenance.
-For these two libraries, the recorded IDs come from the comments of the
-SHA-256-pinned owner archives. They are **not independent Git object
-verification**. The lock retains the evidence qualification for each library;
-listing an ID does not upgrade that evidence or authorize a dependency update.
-The original input ZIPs remain external to the source package, and this
-documentation update does not claim a new archive rehash or network comparison.
+The Asio input was supplied as `asio-master (1).zip`, and the selected
+PEGTL input as `PEGTL-4.x.zip`. The archive directory uses the canonical names
+in the lock without altering ZIP bytes. Both archive SHA-256 values and every
+extracted payload were verified. PEGTL is selected from the uploaded **4.x
+branch snapshot**, not a stable release archive or a release tag. Its header
+declares **4.0.2**; that version text does not change the selection authority.
+The earlier uploaded `PEGTL-main (1).zip` remains recorded as an unselected input.
+
+Snapshot IDs are recorded from comments in the SHA-256-pinned supplied ZIPs.
+For the selected PEGTL upload, all 803 member paths, Git blob hashes and
+executable/link modes also match the independent upstream Git tree at the
+recorded commit. Other archive-comment records retain their stated verification
+limits; no moving branch head is claimed to be an immutable upstream release.
+Original archives remain external to the source package. Previous selections
+remain recorded in SOURCE_INPUTS.json and
+Git history; earlier execution evidence is not new-snapshot acceptance.
 
 ## Installed tree verification
 
-All 2,753 file/link entries are verified against
+All 2,690 file/link entries are verified against
 archive-member hash lists. Licenses and Asio's
 logical links `asio/include → ../include`
 and `asio/src → ../src` are preserved.
@@ -50,9 +57,8 @@ entries are regular files containing the exact
 original link-target text bytes; symlink
 permissions are not required. Compilation
 uses the actual `third_party/asio/include`
-directory. Headers/sources, licenses,
-original ZIPs and vendor member hashes
-remain unchanged. Archive-byte equality
+directory. The selected upstream payloads, licenses and link-target bytes are
+installed exactly; member hashes pin the refreshed source selection. Archive-byte equality
 is not an additional claim of a verified
 upstream Git commit. Source packages contain
 the complete extracted vendor trees, not
@@ -129,8 +135,16 @@ for actual Windows/game acceptance.
 
 ## PEGTL/compiler compatibility
 
-The PEGTL 4 public-input probe runs with
-Linux/GCC. The same public headers also
+The selected owner-supplied PEGTL 4.x snapshot declares `cxx_std_17`.
+Project C++ targets and the required public-input probe use C++20; C sources
+retain C17. The VDF byte-sequence rules retain their character-pack API for
+CRLF, line comments and block-comment termination. Their byte sequences, action
+ordering, error mapping and grammar policy are unchanged. Vendor headers are
+unmodified. The unselected main snapshot requires C++23 and is not substituted.
+
+The PEGTL public-input probe runs with Linux/GCC. The following compiler
+observations describe the earlier snapshot; fresh results for the selected
+head belong to its PR validation. The earlier public headers also
 compile with LLVM-MinGW **20251118,
 Clang/libc++ 21.1.6, UCRT x64**.
 LLVM-MinGW 20261006 / Clang 23's libc++
@@ -161,8 +175,8 @@ Compiler downloads are not vendor-source
 inputs and are not bundled in the product
 ZIP. The verified tool archive SHA-256:
 `53a0c22caa46b501e1c089e1c31b24a7c0e0d5a86f8ad12b131aafd4cee01ef4`.
-The actual vendor pins remain unchanged.
-Results and tool provenance are in
+These toolchain results describe the earlier vendor selection; current pins
+are in VENDOR_LOCK.json. Historical results and tool provenance are in
 [VENDORING_STATUS.json](../metadata/evidence/VENDORING_STATUS.json).
 
 For diagnosing an old/incompatible compiler
@@ -205,7 +219,7 @@ than merging into an earlier damaged
 extraction. Optional verified extraction:
 
 ```sh
-python -B scripts/extract_source.py ../yellowfield-windows-vendor-source.zip ../yellowfield-clean
+python -B scripts/extract_source.py ../citrine-eclipse-mirage-source.zip ../citrine-eclipse-mirage-clean
 ```
 
 The extractor verifies CRC, hash, member
@@ -229,8 +243,9 @@ Current runtime integration:
 [RUNTIME_BINDING.md](RUNTIME_BINDING.md).
 Earlier vendor/parser test counts here
 are historical snapshot evidence; newer
-Application tests are in
-[RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json).
+Application bindings are in
+[RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json). New
+test execution belongs to the exact selected head's workflow results.
 
 Owner authorization to remove Gulrak
 and restore Windows I/O:
@@ -243,5 +258,5 @@ Current commit evidence and hash-pinned
 SAFE-FREEZE exception applied only to
 a build copy:
 [HOOK_ENGINE_HARDENING.md](HOOK_ENGINE_HARDENING.md).
-The three retained vendor pins are unchanged; pugixml is pinned separately
-to its exact owner archive.
+The MinHook SAFE-FREEZE source pin and pugixml selection are unchanged by
+the current Asio/PEGTL refresh.
