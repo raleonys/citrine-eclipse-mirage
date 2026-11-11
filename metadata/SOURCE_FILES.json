@@ -1206,8 +1206,8 @@
       "sha256": "f2f9cdd7eec09ee9d1f34718a1e0e7e748a49ab4a424f5f94367f93b31666209"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
-      "bytes": 43762,
-      "sha256": "160d727d9d8dc773abebbb55aeafeec24fe3333880223625f0bc7936ed130679"
+      "bytes": 44401,
+      "sha256": "cc9515f1b3cc92f577608f560a2e556d440f04c98636e60d70ada174f0db56cd"
     },
     "tests/infrastructure/test_project_version.py": {
       "bytes": 14142,

@@ -57,6 +57,11 @@ fixed fixture identities under
 | MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem 6.0, linker 14.0, native compilation timestamp preserved, no Rich header. Citrine Eclipse Mirage VERSIONINFO, Copyright 2026 SURGE, and matching selected numeric/string file and product versions. No PNG/RCDATA/manifest or COFF symbol/debug/certificate. Internal export name `citrine_eclipse_mirage.unsigned.dll`. |
 | CORVEXON | Exactly three C exports/ordinals. The CRT entrypoint is separate from exported DllMain and lies in executable `.text`. No static imports outside CRYPT32/WS2_32/KERNEL32/USER32/SHELL32/MSWSOCK; MSWSOCK only AcceptEx/GetAcceptExSockaddrs, CRYPT32 only CryptQueryObject. `/MT`, writable image-backed `/GS` cookie and valid checksum. |
 
+MUSTAVEX rejects duplicate `StringFileInfo` string keys, including identical
+values and conflicting values shadowed by later entries. Each key must occur
+once before the exact approved strings are compared; valid single-entry
+strings, translations and VERSIONINFO node-bound checks retain their policy.
+
 CORVEXON maps section RVAs to file bytes only within `SizeOfRawData`.
 A section with zero raw size cannot supply file bytes, regardless of its raw
 pointer or virtual size. Virtual-only sections may remain in the image, but
