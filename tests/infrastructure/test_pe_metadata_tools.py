@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-only
 from pathlib import Path
-import importlib.util, json, struct, tempfile, sys
+import importlib.util, json, os, struct, tempfile, sys
 sys.dont_write_bytecode = True
 r=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(r/'scripts'))
@@ -41,6 +41,116 @@ wrong_table={'key':'VS_VERSION_INFO','value':None,'value_bytes':fixed_bytes,'chi
     {'key':'VarFileInfo','value':None,'value_bytes':b'','children':[{'key':'Translation','value':None,'value_bytes':translation,'children':[]}]}
 ]}
 assert any(x.startswith('StringTable=') for x in mus.validate_versioninfo_root(wrong_table,mustavex['required']))
+
+# Encode real counted VERSIONINFO bytes; decoded dictionaries cannot exercise
+# node bounds. Alignment belongs before a value/child, never after the last one.
+def version_block(key,value=b'',kind=1,children=()):
+    block=bytearray(6)+(key+'\0').encode('utf-16le')
+    if value:
+        block.extend(b'\0'*(-len(block)%4)); block.extend(value)
+    for child in children:
+        block.extend(b'\0'*(-len(block)%4)); block.extend(child)
+    struct.pack_into('<HHH',block,0,len(block),len(value)//2 if kind==1 else len(value),kind)
+    return block
+
+def version_payload(required):
+    info=required['versioninfo']
+    fixed=struct.pack('<13I',*(int(v,16) if isinstance(v,str) else int(v) for v in info['fixed'].values()))
+    strings=[version_block(k,(v+'\0').encode('utf-16le')) for k,v in info['strings'].items()]
+    translation=struct.pack('<HH',int(info['translation_language'],16),info['translation_codepage'])
+    return version_block('VS_VERSION_INFO',fixed,0,[
+        version_block('StringFileInfo',children=[version_block(info['string_table'],children=strings)]),
+        version_block('VarFileInfo',children=[version_block('Translation',translation,0)])])
+
+def mustavex_version_fixture(payload,required):
+    # One file-backed section contains an export internal name and the actual
+    # VERSIONINFO resource tree. This is a metadata fixture, not a shipping DLL.
+    pe=0x100; coff=pe+4; opt=coff+20; sec=opt+0xF0
+    binary=bytearray(0x2400); binary[:2]=b'MZ'
+    struct.pack_into('<I',binary,0x3c,pe); binary[pe:pe+4]=b'PE\0\0'
+    struct.pack_into('<HHI',binary,coff,0x8664,1,int(required['timestamp'],16))
+    struct.pack_into('<H',binary,coff+16,0xF0)
+    struct.pack_into('<H',binary,opt,0x20B); binary[opt+2:opt+4]=bytes(required['linker_version'])
+    struct.pack_into('<II',binary,opt+32,0x1000,0x200)
+    struct.pack_into('<HH',binary,opt+40,*required['os_version'])
+    struct.pack_into('<HH',binary,opt+48,*required['subsystem_version'])
+    struct.pack_into('<H',binary,opt+68,required['subsystem'])
+    struct.pack_into('<I',binary,opt+108,16)
+    binary[sec:sec+8]=b'.rdata\0\0'
+    struct.pack_into('<IIII',binary,sec+8,0x2000,0x1000,0x2000,0x400)
+    struct.pack_into('<I',binary,sec+36,0x40000040)
+    dd=opt+112; struct.pack_into('<II',binary,dd,0x1100,40)
+    struct.pack_into('<I',binary,0x500+12,0x1140)
+    name=(required['export_internal_name']+'\0').encode('ascii')
+    binary[0x540:0x540+len(name)]=name
+    struct.pack_into('<II',binary,dd+16,0x1800,0x100+len(payload))
+    base=0xC00
+    for rel,ident,child in ((0,16,24),(24,1,48)):
+        struct.pack_into('<HH',binary,base+rel+12,0,1)
+        struct.pack_into('<II',binary,base+rel+16,ident,0x80000000|child)
+    language=int(required['versioninfo']['translation_language'],16)
+    struct.pack_into('<HH',binary,base+60,0,1)
+    struct.pack_into('<II',binary,base+64,language,72)
+    struct.pack_into('<IIII',binary,base+72,0x1900,len(payload),1200,0)
+    binary[0xD00:0xD00+len(payload)]=payload
+    return binary
+
+def rejects_version_node(payload,label):
+    try:
+        mus.parse_ver_node(payload)
+    except mus.PEError:
+        return
+    raise AssertionError('accepted malformed VERSIONINFO node: '+label)
+
+# Counted text uses UTF-16 words; binary uses bytes. A complete leaf or its
+# parent may end before the next DWORD boundary, including a value-less leaf.
+for key,value,kind in [('A',b'',1),('Binary',b'\x01\x02\x03',0),('A','XY\0'.encode('utf-16le'),1)]:
+    leaf=version_block(key,value,kind)
+    parsed,stop=mus.parse_ver_node(leaf)
+    assert stop==len(leaf) and parsed['key']==key and parsed['value_bytes']==value
+    assert parsed['value']==('XY' if kind==1 and value else None)
+    parent=version_block('Parent',children=[leaf])
+    parsed,stop=mus.parse_ver_node(parent)
+    assert stop==len(parent) and parsed['children'][0]['value_bytes']==value
+    if kind==0: assert len(leaf)%4!=0 and len(parent)%4!=0
+    siblings=version_block('Parent',children=[leaf,version_block('Next',b'\x04\x05\x06',0)])
+    parsed,stop=mus.parse_ver_node(siblings)
+    assert stop==len(siblings) and [c['value_bytes'] for c in parsed['children']]==[value,b'\x04\x05\x06']
+
+with tempfile.TemporaryDirectory() as td:
+    payload=version_payload(mustavex['required'])
+    path=Path(td)/'version_bounds.dll'
+    path.write_bytes(mustavex_version_fixture(payload,mustavex['required']))
+    assert not mus.inspect(path,mustavex), 'complete binary VERSIONINFO fixture must pass'
+    last_key=list(mustavex['required']['versioninfo']['strings'])[-1]
+    last=payload.index((last_key+'\0').encode('utf-16le'))-6
+    last_size=struct.unpack_from('<H',payload,last)[0]
+    translation=payload.index('Translation\0'.encode('utf-16le'))-6
+    table=payload.index((mustavex['required']['versioninfo']['string_table']+'\0').encode('utf-16le'))-6
+    cases=[]
+    for label,offset,value in [('key-outside-node',last,6),
+                               ('value-outside-node',last,last_size-2),
+                               ('binary-value-overrun',translation+2,5),
+                               ('text-word-overrun',last+2,0xFFFF),
+                               ('short-header',last,5),
+                               ('zero-length-child',last,0),
+                               ('child-outside-parent',table,struct.unpack_from('<H',payload,table)[0]-2)]:
+        bad=bytearray(payload); struct.pack_into('<H',bad,offset,value); cases.append((label,bad))
+    # All required fields precede these tails: silently abandoning an invalid
+    # child must not turn a partial parse into a metadata PASS.
+    for label,tail in [('malformed-tail',b'\0'*6),('truncated-tail',b'\x08\0')]:
+        bad=bytearray(payload); bad.extend(b'\0'*(-len(bad)%4)); bad.extend(tail)
+        struct.pack_into('<H',bad,0,len(bad)); cases.append((label,bad))
+    for label,bad in cases:
+        path.write_bytes(mustavex_version_fixture(bad,mustavex['required']))
+        errors=mus.inspect(path,mustavex)
+        assert 'invalid VERSIONINFO root' in errors, 'MUSTAVEX did not reject malformed VERSIONINFO '+label+': '+repr(errors)
+
+rejects_version_node(b'\0'*5,'truncated root header')
+bad=version_block('A'); struct.pack_into('<H',bad,0,len(bad)+1)
+rejects_version_node(bad,'root outside payload')
+bad=version_block('A'); bad[-2:]=b'B\0'
+rejects_version_node(bad,'missing key terminator')
 
 # Minimal PE32+ fixture: sufficient for finalizer core + ARYRA structural gate.
 pe=0x100; coff=pe+4; opt=pe+24; optsz=0xF0; sec=opt+optsz
@@ -340,7 +450,7 @@ with tempfile.TemporaryDirectory() as td:
     cp=subprocess.run([sys.executable,'-B',str(r/'scripts/ursynex_golden_finalizer.py'),str(path)],capture_output=True,text=True)
     assert cp.returncode==0,cp.stdout+cp.stderr
     result=path.read_bytes()
-    assert struct.unpack_from('<I',result,coff2+4)[0]==int(json.loads((r/'metadata/MUSTAVEX_GOLDEN_METADATA.json').read_text())['required']['timestamp'],16)
+    assert struct.unpack_from('<I',result,coff2+4)[0]==struct.unpack_from('<I',original,coff2+4)[0]
     assert tuple(result[opt2+2:opt2+4])==(14,0)
     assert b'Rich' not in result[:pe2]
     assert struct.unpack_from('<I',result,opt2+64)[0]==cor.compute_pe_checksum(result,opt2+64)
@@ -355,6 +465,29 @@ with tempfile.TemporaryDirectory() as td:
     assert any('import module order differs' in x for x in errors),errors
     path.write_bytes(result)
     fin.validate_approved_mutation(original,result,pe2,coff2,opt2,order)
+    # Product policy preserves the linker-created COFF time while retaining
+    # the independently selected linker-version and other Golden policies.
+    product_fin=load('product_timestamp_finalizer',r/'scripts/ursynex_golden_finalizer.py')
+    product_fin.validate_policy_bindings()
+    assert product_fin.TARGET_TIMESTAMP is None
+    assert product_fin.TARGET_LINKER==(14,0)
+    product_fin.validate_approved_mutation(original,result,pe2,coff2,opt2,order)
+    wrong_time=bytearray(result);wrong_time[coff2+4]^=1
+    try:
+        product_fin.validate_approved_mutation(original,wrong_time,pe2,coff2,opt2,order)
+        raise AssertionError('accepted a changed native timestamp under PRESERVE_INPUT')
+    except product_fin.PEError:pass
+    second=bytearray(original)
+    struct.pack_into('<I',second,coff2+4,0x68543210)
+    path.write_bytes(second)
+    cp=subprocess.run([sys.executable,'-B',str(r/'scripts/ursynex_golden_finalizer.py'),str(path)],capture_output=True,text=True)
+    assert cp.returncode==0,cp.stdout+cp.stderr
+    second_result=path.read_bytes()
+    assert second_result[coff2+4:coff2+8]==second[coff2+4:coff2+8]
+    assert tuple(second_result[opt2+2:opt2+4])==(14,0)
+    assert struct.unpack_from('<I',second_result,opt2+64)[0]==cor.compute_pe_checksum(second_result,opt2+64)
+    product_fin.validate_approved_mutation(second,second_result,pe2,coff2,opt2,order)
+    path.write_bytes(result)
     table,records,_=descriptors(original)
     # Only complete descriptors move. Everything outside the table and approved
     # header/checksum spans must remain byte-identical, including thunk/name data.
@@ -382,6 +515,32 @@ with tempfile.TemporaryDirectory() as td:
     unnormalized = raw_path.read_bytes()
     cp = subprocess.run(call + ['--verify'], capture_output=True, text=True)
     assert cp.returncode != 0 and raw_path.read_bytes() == unnormalized, (cp.stdout, cp.stderr)
+    # Replacing a linked pathname would detach the selected name while the
+    # underlying unsigned build DLL stays in the old import order. Reject it.
+    hardlink = Path(td) / 'unsigned-hardlink.dll'
+    os.link(raw_path, hardlink)
+    try:
+        assert raw_path.stat().st_nlink > 1
+        cp = subprocess.run(call[:-1] + [str(hardlink)], capture_output=True, text=True)
+        assert cp.returncode != 0 and 'hard-linked' in cp.stdout, (cp.stdout, cp.stderr)
+        assert raw_path.read_bytes() == unnormalized
+        assert hardlink.read_bytes() == unnormalized
+    finally:
+        hardlink.unlink()
+    # Windows symlink creation may require developer mode/privilege.
+    symlink = Path(td) / 'unsigned-symlink.dll'
+    try:
+        symlink.symlink_to(raw_path)
+    except (OSError, NotImplementedError):
+        pass
+    else:
+        try:
+            cp = subprocess.run(call[:-1] + [str(symlink)], capture_output=True, text=True)
+            assert cp.returncode != 0 and 'symlinked' in cp.stdout, (cp.stdout, cp.stderr)
+            assert symlink.is_symlink()
+            assert raw_path.read_bytes() == unnormalized
+        finally:
+            symlink.unlink()
     cp = subprocess.run(call, capture_output=True, text=True)
     assert cp.returncode == 0, (cp.stdout, cp.stderr)
     normalized = raw_path.read_bytes()
