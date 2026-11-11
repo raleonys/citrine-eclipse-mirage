@@ -21,6 +21,13 @@ accessible after extraction. See [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md)
 for the Golden pipeline, [DEVELOPMENT.md](DEVELOPMENT.md) for operator commands,
 and [VALIDATION.md](VALIDATION.md) for acceptance boundaries.
 
+The [verified source extractor](../scripts/extract_source.py) requires a fresh
+destination. It rejects ancestor symlinks and, when the host Python provides
+`Path.is_junction()`, ancestor junctions before creating parent directories or
+staging extraction. Ordinary fresh paths retain ZIP integrity,
+membership, type and source-hash validation. This ancestor precheck does not
+provide race-free isolation against concurrent parent retargeting.
+
 # Current file layout
 
 The main source/header trees follow Brownfield's one-level module layout:
