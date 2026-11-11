@@ -7,7 +7,6 @@
 
 #include <cstddef>
 #include <cstring>
-#include <utility>
 
 #include "../config.hpp"
 #if defined( __cpp_exceptions )
@@ -26,7 +25,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
          : input_with_start< view_input< char > >( argv[ argn ], std::strlen( argv[ argn ] ) )
       {}
 
-      using error_position_t = input_with_start< view_input< char > >::error_position_t;
+      using error_position_t = typename input_with_start< view_input< char > >::error_position_t;
 #if defined( __cpp_exceptions )
       using parse_error_t = parse_error< error_position_t >;
 #endif
@@ -36,13 +35,13 @@ namespace TAO_PEGTL_NAMESPACE::internal
       [[nodiscard]] const char* begin_of_line( const error_position_t& pos, const std::size_t max = line_size_limit ) const noexcept
       {
          const data_t* p = previous( pos );
-         return std::cmp_greater( p - this->start(), max ) ? ( p - max ) : this->start();
+         return ( std::size_t( p - this->start() ) > max ) ? ( p - max ) : this->start();
       }
 
       [[nodiscard]] const char* end_of_line_or_file( const error_position_t& pos, const std::size_t max = line_size_limit ) const noexcept
       {
          const data_t* p = previous( pos );
-         return std::cmp_greater( this->end() - p, max ) ? ( p + max ) : this->end();
+         return ( std::size_t( this->end() - p ) > max ) ? ( p + max ) : this->end();
       }
    };
 
