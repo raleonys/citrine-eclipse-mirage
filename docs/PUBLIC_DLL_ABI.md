@@ -31,8 +31,10 @@ The original Anadius `CDX@1` / `RUNE@2` / `anadius@3` markers target the
 same RET body; these unwanted names are not restored. Automatic compatibility
 with the original consumer import `anadius64!anadius` is not claimed.
 The earlier 548-byte ABI assertion was withdrawn because supporting source
-evidence was absent. The owner verified actual game startup for the parent
-package; Windows retesting is still required for the current I/O/ABI package.
+evidence was absent. Earlier owner game-startup reports and the I/O/ABI
+correction's pending Windows rerun belong to their own checkpoints. Assess
+Windows/native and game acceptance against the selected commit and DLL using
+[VALIDATION.md](VALIDATION.md), rather than inheriting those old statuses.
 
 The complete contract is in `metadata/PUBLIC_DLL_ABI.json`.
 
