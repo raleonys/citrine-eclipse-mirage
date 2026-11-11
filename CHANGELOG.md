@@ -6,10 +6,12 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Reject symlink/junction destination ancestors in source ZIP extraction before staging or directory creation; retain extraction into a fresh ordinary directory. Add direct and nested alias regression cases without changing application DLL, vendor payloads or public ABI. Consolidate the accepted #261 changelog history into one linked entry while retaining its original and follow-up details.
+- Reject redirected, escaping and noncanonical CMake source/object paths in the COFF translation-unit audit, preventing forged or aliased objects from being assigned to the wrong target. Keep valid relative and absolute in-checkout Ninja objects supported and add independent path traversal/symlink regressions. No application, native ABI, linker policy or vendor changes.
+- Canonicalize the positive object-path fixture's temporary root so alternate Windows TEMP spellings do not fail exact-path assertions. Add selected-root alias controls requiring the canonical owned object and its bytes; preserve source/object redirection refusal and every audit guard.
 
 ### Integrated 2026-11-11
 
+- [PR #269](https://github.com/raleonys/citrine-eclipse-mirage/pull/269): Reject symlink/junction destination ancestors in source ZIP extraction before staging or directory creation; retain extraction into a fresh ordinary directory. Add direct and nested alias regression cases without changing application DLL, vendor payloads or public ABI. Consolidate the accepted #261 changelog history into one linked entry while retaining its original and follow-up details.
 - [PR #268](https://github.com/raleonys/citrine-eclipse-mirage/pull/268): Reject PE RVAs targeting sections with no raw file bytes in the CORVEXON Golden verifier, including both zero and nonzero raw-pointer fixtures. Retain ordinary file-backed section and header mappings; do not change shipping PE or runtime behavior.
 - [PR #262](https://github.com/raleonys/citrine-eclipse-mirage/pull/262): Fail closed when the GitHub release asset API omits a SHA-256 digest or returns null instead of trusting remote size alone. Extend existing draft publishing regression fixtures to require complete digests before marking a weekly candidate prepared; shipping DLL, ABI and vendor payloads remain unchanged.
 - [PR #282](https://github.com/raleonys/citrine-eclipse-mirage/pull/282): Fail closed on malformed native CTest/JUnit badge evidence: require actual test suites, direct testcase ownership and declared suite test counts before presenting passed/total metrics. Add orphaned/wrapped/nested aggregate negative fixtures and valid multi-suite coverage. Badge publishing and production DLL behavior are unchanged.
