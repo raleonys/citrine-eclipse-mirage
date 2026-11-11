@@ -255,6 +255,22 @@ class VendorTests(unittest.TestCase):
             self.assertIn('changed=2',detail)
             for rel in links:self.assertIn('changed: '+rel,detail)
 
+    def test_vendor_archive_rejects_windows_unsafe_member_names(self):
+        # Validate archive entries and manifest entries through one path policy.
+        unsafe = (
+            'CON', 'aux.txt', 'dir/NUL.bin', 'dir/COM1', 'dir/COM\u00b9.txt',
+            'LPT\u00b2.log', 'CONIN$', 'CONOUT$', 'dir/trailing.',
+            'dir/trailing ', 'dir/<bad>.hpp', 'dir/pipe|name.hpp',
+            'dir/control\x7f.hpp', 'dir/line\nbreak.hpp',
+            'dir/component?flag.hpp', 'dir/with*star.hpp', 'dir/stream:ads',
+        )
+        for name in unsafe:
+            with self.subTest(member=name), self.assertRaises(ValueError):
+                vendor_sync.safe_rel(name)
+        for name in ('include/MinHook.h', 'src/COM10.hpp', 'src/conveyor.hpp'):
+            with self.subTest(member=name):
+                self.assertEqual(name, vendor_sync.safe_rel(name).as_posix())
+
     def test_member_and_link_escape_rejected(self):
         for name in ['../escape','/absolute','C:/drive','a/../b','a\\b','a//b']:
             with self.subTest(name=name),self.assertRaises(ValueError):vendor_sync.safe_rel(name)
