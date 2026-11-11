@@ -6,10 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Reject duplicate JSON object keys in the owner-approved LUTRAVEX weekly naming registry, including repeated schema and approved-version entries, before validating release version/codename bindings. The existing valid registry and published-release behavior remain unchanged.
+- Revalidate the live GitHub asset set, exact sizes, and required SHA-256 digests before reusing a completed weekly draft. Reject missing, duplicated, renamed, modified, or unpublished assets without mutating the draft; retain healthy idempotent retries and add remote-state regression coverage. Document the completed-draft retry checks in the current weekly release guide.
 
 ### Integrated 2026-11-11
 
+- [PR #303](https://github.com/raleonys/citrine-eclipse-mirage/pull/303): Reject duplicate JSON object keys in the owner-approved LUTRAVEX weekly naming registry, including repeated schema and approved-version entries, before validating release version/codename bindings. The existing valid registry and published-release behavior remain unchanged.
 - [PR #272](https://github.com/raleonys/citrine-eclipse-mirage/pull/272): Bound source ZIP decompression before CRC verification and whole-member reads, with independent per-member and cumulative byte budgets. Test highly compressible valid source packages, fail-closed rejection before decompression, and temporary extraction cleanup; shipping DLL and vendor code remain unchanged.
 - [PR #271](https://github.com/raleonys/citrine-eclipse-mirage/pull/271): Fix the Visual Studio compiler-object evidence reader to skip inactive configuration-specific `ItemGroup` and `ClCompile` entries. Add regression tests for both boundaries so Release evidence cannot be silently mapped to Debug object files; shipping build/runtime behavior is unchanged.
 - [PR #304](https://github.com/raleonys/citrine-eclipse-mirage/pull/304): Reject duplicate StringFileInfo string keys in the MUSTAVEX Golden VERSIONINFO validator instead of silently collapsing them into a dictionary. Add isolated identical-value and conflicting-value regressions; preserve the exact resource policy, shipping DLL bytes and ABI.

@@ -668,6 +668,51 @@ class DraftTests(unittest.TestCase):
         self.publish()
         self.assertEqual(writes, len(self.github.writes))
 
+    def test_completed_draft_rejects_modified_remote_assets_without_writes(self):
+        for mutation in ('missing', 'extra', 'duplicate', 'wrong_name',
+                         'wrong_size', 'missing_digest', 'changed_digest'):
+            self.github = FakeGitHub()
+            self.publish()
+            writes = len(self.github.writes)
+            assets = self.github.items[-1]['assets']
+            if mutation == 'missing':
+                assets.pop()
+            elif mutation == 'extra':
+                assets.append({'name': 'unexpected.txt', 'size': 1,
+                               'digest': 'sha256:' + '0' * 64})
+            elif mutation == 'duplicate':
+                assets[1] = deepcopy(assets[0])
+            elif mutation == 'wrong_name':
+                assets[0]['name'] = 'unexpected.txt'
+            elif mutation == 'wrong_size':
+                assets[0]['size'] += 1
+            elif mutation == 'missing_digest':
+                assets[0].pop('digest')
+            else:
+                assets[0]['digest'] = 'sha256:' + '0' * 64
+            with self.subTest(mutation=mutation), self.assertRaisesRegex(
+                    ValueError, 'Completed draft remote asset'):
+                self.publish()
+            self.assertEqual(writes, len(self.github.writes))
+
+    def test_completed_draft_rechecks_live_assets_not_stale_list(self):
+        self.publish()
+        old_listing = self.github.releases()
+        writes = len(self.github.writes)
+        self.github.items[-1]['assets'][0]['digest'] = 'sha256:' + '0' * 64
+        with patch.object(self.github, 'releases', return_value=old_listing):
+            with self.assertRaisesRegex(ValueError, 'Completed draft remote asset digest'):
+                self.publish()
+        self.assertEqual(writes, len(self.github.writes))
+
+    def test_completed_draft_rejects_concurrent_publication(self):
+        self.publish()
+        writes = len(self.github.writes)
+        self.github.publish_before_upload = True
+        with self.assertRaisesRegex(ValueError, 'Completed draft changed before reuse'):
+            self.publish()
+        self.assertEqual(writes, len(self.github.writes))
+
     def test_existing_git_tag_cannot_be_retargeted(self):
         self.github.ref_reserved = True
         with self.assertRaisesRegex(ValueError, 'Git tag'):

@@ -24,6 +24,13 @@ GitHub supplies the automatic **Source code (zip)** and **Source code (tar.gz)**
 
 The workflow still verifies the exact source package, Source QA, portable CTest, native MSVC and all six Production/Golden gates before preparing a draft. Source validation and Windows evidence stay in their Actions artifacts. The separate `weekly-release-receipt` artifact retains `RELEASE_RECEIPT.json` and its checksum for 14 days, alongside the existing evidence retention period. This internal receipt binds the source, DLL and final binary ZIP hashes; the uploader requires a matching receipt outside the public asset directory and rejects extra local or remote assets.
 
+Reusing a completed draft re-fetches that release by ID and checks its current
+draft state, tag, source identity and completion marker. Both remote assets
+must have the exact names, sizes and GitHub-reported SHA-256 digests of the
+local pair, with no duplicates or extras. Missing digests or changed assets
+reject the retry without uploading, modifying or publishing the draft. An
+intact completed draft is returned unchanged.
+
 `DRAFT` in an internal preparation receipt describes the workflow's draft step. Publishing a release does not rewrite uploaded ZIP bytes, so publication-state receipts must not be embedded in downloadable packages. The owner reviews and manually publishes the draft after separate game acceptance.
 
 Before marking a draft complete, each remote asset must have the expected size
