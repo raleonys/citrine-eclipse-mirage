@@ -1773,7 +1773,9 @@ class RuntimeBenchmarkTests(unittest.TestCase):
     def test_failure_retains_partial_measurements_without_success_receipt(self):
         tool = self.diagnostic()
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            # Match run.py's resolved ROOT/output identity, including Windows
+            # temporary directories exposed through an 8.3 path or junction.
+            root = Path(directory).resolve()
             build = root / 'build/binaries'
             (build / 'generated').mkdir(parents=True)
             (build / 'Release').mkdir()
