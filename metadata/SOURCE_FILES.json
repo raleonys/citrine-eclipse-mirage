@@ -1218,8 +1218,8 @@
       "sha256": "f0ae3bdb9495055adde74afb8107dfea3380eccf2d7a70ffba9a0553981ea4d1"
     },
     "tests/infrastructure/test_repository_badges.py": {
-      "bytes": 16432,
-      "sha256": "6c3ec7436c160ff3da3f3e6e793ba0ece89a9dc769a8a52b8e82d595f994e8dd"
+      "bytes": 18107,
+      "sha256": "f0bfc2e903e27f12c0175515c121d88bcd5e371b0eb23ebf143ee7e21b9a10ae"
     },
     "tests/infrastructure/test_requirements.py": {
       "bytes": 4776,

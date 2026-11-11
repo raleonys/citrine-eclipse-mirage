@@ -78,6 +78,11 @@ native job reads its actual JUnit report and records the numeric counts in a
 completed step name. This adds no job, compilation or test execution. Failures,
 errors and skipped cases are excluded from passed and remain in total.
 
+Optional `failures`, `errors` and `skipped` summaries on suites or aggregates
+must contain unsigned ASCII decimal counts matching the corresponding testcase
+outcomes. Contradictory or malformed declared totals reject the report before
+test-count recording; omitted outcome summaries remain allowed.
+
 The publisher reads GitHub job metadata, not logs or downloaded PR artifacts.
 It considers only this repository's full-validation PR runs whose tested Git
 tree exactly equals current main. A merge commit may have a different SHA but
