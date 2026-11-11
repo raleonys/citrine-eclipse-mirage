@@ -1,10 +1,13 @@
-# Concrete application integration
+> **Historical checkpoint.** Use [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
 
-Current interface work item: `YF-PUBLIC-ABI-20261028`. Runtime,
+# Historical application integration checkpoint
+
+Checkpoint interface work item: `YF-PUBLIC-ABI-20261028`. Runtime,
 configuration, resource, and layout changes are retained. Historical
 comparisons are distinct from the current implementation.
 
-| Area | Previous state | Current integration | Validation and limitation |
+| Area | Previous state | Integration at checkpoint | Validation and limitation |
 |---|---|---|---|
 | Configuration collections | Incorrectly generalized as lacking a complete path. | Application uses the existing full `config_hash` / `config_application` path. | 25 content, entitlement and achievement totals; actual main -> override |
 | Asio | Vendor and I/O fixture existed; no actual application owner. | Actual RE ServerBackend/Session adapter, socket/completion/job lifetimes and drain. | Real loopback greeting/profile/content/encrypted/event/stop |
@@ -21,6 +24,9 @@ comparisons are distinct from the current implementation.
 | Application C export interface | Thousands of C++ source exports mixed into application DLL. | Three Brownfield C names/ordinals: DllMain@1, SURGE@2, DllShutdown@3; management exports removed; SURGE RE RET-only marker; DllShutdown performs real cleanup; source APIs in separate DLL. | Actual PE export check, seven negative mutations, C17 import consumer, three load/socket/shutdown/unload cycles; Wine evidence |
 
 Current interface: [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
+The companion CSV predates removal of the two management exports; its
+five-export row is an earlier historical state, not the current public ABI.
+
 Raw results: [PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json).
 Earlier runtime evidence:
 [RUNTIME_BINDING_STATUS.json](../metadata/evidence/RUNTIME_BINDING_STATUS.json).

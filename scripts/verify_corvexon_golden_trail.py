@@ -96,9 +96,13 @@ class PE:
         self.export_counts=(nf,nn)
         self.export_function_rvas=[u32(self.b,funcs+i*4) for i in range(nf)]
         self.export_named_indices=[]
-        out={}
+        # PE name lookup uses lexical binary search, not RVA or ordinal order.
+        out={}; previous_name=None
         for i in range(nn):
             name=cstr(self.b,self.rva2off(u32(self.b,names+i*4)))
+            if previous_name is not None and name<previous_name:
+                raise PEError(f'export name pointer table is not in lexical order at index {i}: previous={previous_name!r}, current={name!r}')
+            previous_name=name
             idx=u16(self.b,ords+i*2)
             if idx>=nf: raise PEError(f'export ordinal index outside function table: {name}')
             self.export_named_indices.append(idx)
