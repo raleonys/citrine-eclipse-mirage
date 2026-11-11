@@ -415,8 +415,10 @@ add_library(citrine_eclipse_mirage_pegtl INTERFACE)
             cmake += f'file(GENERATE OUTPUT "${{CMAKE_BINARY_DIR}}/crt.txt" CONTENT "{content}")\n'
             cmake += 'file(GENERATE OUTPUT "${CMAKE_BINARY_DIR}/dev-links.txt" CONTENT "$<TARGET_PROPERTY:citrine_eclipse_mirage_source_api,LINK_LIBRARIES>")\n'
             (source / 'CMakeLists.txt').write_text(cmake)
+            # Reuse compiler detection while still configuring and checking
+            # both configurations, including the Debug-to-Release transition.
+            build = Path(tmp) / 'build'
             for config, suffix in [('Debug', 'Debug'), ('Release', '')]:
-                build = Path(tmp) / config
                 cp = subprocess.run(['cmake', '-S', str(source), '-B', str(build),
                                      '-DCMAKE_BUILD_TYPE=' + config,
                                      '-DCMAKE_CONFIGURATION_TYPES=' + config], capture_output=True, text=True)

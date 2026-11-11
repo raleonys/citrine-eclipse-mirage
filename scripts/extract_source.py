@@ -16,6 +16,9 @@ def extract(archive_path, destination):
     destination=Path(destination).absolute()
     if destination.exists() or destination.is_symlink():
         raise ValueError('Extraction destination already exists; refusing overwrite')
+    if any(parent.is_symlink() or getattr(parent, 'is_junction', lambda: False)()
+           for parent in destination.parents):
+        raise ValueError('Extraction destination cannot traverse a symlink or junction')
     destination.parent.mkdir(parents=True,exist_ok=True)
     temp=Path(tempfile.mkdtemp(prefix='.surge-extract-',dir=destination.parent))
     try:

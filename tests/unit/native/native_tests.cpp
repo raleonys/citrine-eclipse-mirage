@@ -67,6 +67,7 @@ struct Seen {
     std::atomic<int> open_a{},open_w{},query_a{},query_w{},close{},process_a{},process_w{},folder_a{},folder_w{},connect{};
     std::mutex mutex;std::condition_variable cv;bool block{},entered{},release{};bool throw_process{};
     std::function<void(SOCKET)> connect_wait;
+    std::function<void()> process_reentry;
     std::array<std::uintptr_t,11> crypt{};
     std::wstring crypt_object;
     DWORD crypt_incoming{};BOOL crypt_result=7;int crypt_calls{};
@@ -102,6 +103,7 @@ LSTATUS WINAPI replacement_close(HKEY k){seen.key=k;SetLastError(0x4a31);return 
 template<class Char,class Start>BOOL process(const Char* a,Char* b,LPSECURITY_ATTRIBUTES p,LPSECURITY_ATTRIBUTES t,BOOL h,DWORD f,LPVOID e,const Char* c,Start* s,LPPROCESS_INFORMATION i){
     seen.process={reinterpret_cast<std::uintptr_t>(a),reinterpret_cast<std::uintptr_t>(b),reinterpret_cast<std::uintptr_t>(p),reinterpret_cast<std::uintptr_t>(t),static_cast<std::uintptr_t>(static_cast<unsigned>(h)),f,reinterpret_cast<std::uintptr_t>(e),reinterpret_cast<std::uintptr_t>(c),reinterpret_cast<std::uintptr_t>(s),reinterpret_cast<std::uintptr_t>(i)};
     if(seen.throw_process)throw std::runtime_error("synthetic original exception");
+    if(seen.process_reentry)seen.process_reentry();
     {std::unique_lock lock(seen.mutex);if(seen.block){seen.entered=true;seen.cv.notify_all();seen.cv.wait(lock,[]{return seen.release;});}}
     if(i)i->dwProcessId=0xfedcba98;SetLastError(325);return 7;
 }
@@ -244,6 +246,68 @@ void test_registry_startup_wait_allows_peer_callbacks(){
     require(progressed,"startup registry wait blocked peer callback needed to finish startup");
     require(queried==0&&opened==-5&&query_error==323,"paused registry callback preserves original results and LastError");
     require(active_calls()==0,"paused registry callback keeps and then releases its binding lease");
+}
+void test_reentrant_registry_startup_pause(){
+    Fixture f;f.clients.insert(0x4568);
+    std::mutex mutex;std::condition_variable cv;
+    bool waiting=false,release_wait=false,resumed=false,release_outer=false,peer_done=false;
+    bool wait_released=false,outer_released=false,original_reached=false;
+    std::size_t paused_calls=0;
+    LSTATUS queried=-1,opened=0;BOOL processed=0;
+    DWORD query_error=0,process_error=0,peer_error=0,process_incoming=0;
+    DWORD type=0,size=64;BYTE bytes[64]{};
+    f.effects.registry_wait=[&]{
+        std::unique_lock lock(mutex);paused_calls=active_calls();waiting=true;cv.notify_all();
+        wait_released=cv.wait_for(lock,std::chrono::seconds(10),[&]{return release_wait;});
+        SetLastError(998);
+    };
+    // The unmatched process application reaches its SDK original without a
+    // startup wait. Reenter the actual registry shim from that original while
+    // the outer process Guard and binding lease are still live.
+    seen.process_reentry=[&]{
+        original_reached=true;process_incoming=GetLastError();
+        queried=reg_query_a_entry(reinterpret_cast<HKEY>(0x4568),"ClientPath",nullptr,&type,bytes,&size);
+        query_error=GetLastError();
+        std::unique_lock lock(mutex);resumed=true;cv.notify_all();
+        outer_released=cv.wait_for(lock,std::chrono::seconds(10),[&]{return release_outer;});
+    };
+    std::thread process_thread([&]{SetLastError(764);
+        processed=process_a_entry("other",nullptr,nullptr,nullptr,0,0,nullptr,nullptr,nullptr,nullptr);
+        process_error=GetLastError();
+    });
+    bool reached;
+    {std::unique_lock lock(mutex);reached=cv.wait_for(lock,std::chrono::seconds(5),[&]{return waiting;});}
+    std::thread startup_peer([&]{SetLastError(765);HKEY key{};
+        opened=reg_open_a_entry(HKEY_CURRENT_USER,"unmatched",0,0,&key);peer_error=GetLastError();
+        std::lock_guard lock(mutex);peer_done=true;cv.notify_all();
+    });
+    bool progressed;
+    {std::unique_lock lock(mutex);progressed=cv.wait_for(lock,std::chrono::seconds(5),[&]{return peer_done;});}
+    const auto during_pause=active_calls();
+    bool busy=false;
+    try{f.binding.close();}catch(const Life& error){busy=error.fault==LifecycleFault::Busy;}
+    {std::lock_guard lock(mutex);release_wait=true;cv.notify_all();}
+    bool returned;
+    {std::unique_lock lock(mutex);returned=cv.wait_for(lock,std::chrono::seconds(5),[&]{return resumed;});}
+    const auto after_query=active_calls();
+    const bool unlocked=f.context.registry_gate.try_lock();
+    if(unlocked)f.context.registry_gate.unlock();
+    {std::lock_guard lock(mutex);release_outer=true;cv.notify_all();}
+    process_thread.join();startup_peer.join();seen.process_reentry={};
+    require(reached&&original_reached&&paused_calls==2,
+            "actual process and nested registry entries each retain a native callback lease");
+    require(progressed&&during_pause==2&&busy&&is_bound(),
+            "startup pause releases both recursive acquisitions without releasing either binding lease");
+    require(returned&&wait_released&&outer_released&&after_query==1&&!unlocked,
+            "registry return restores outer callback serialization and releases only its own lease");
+    require(process_incoming==764&&processed==7&&process_error==325&&
+            queried==0&&query_error==323&&opened==-5&&peer_error==321,
+            "reentrant native entries retain SDK results and each thread's error state");
+    require(type==1&&size==std::strlen("C:\\game.exe")+1&&
+            std::strcmp(reinterpret_cast<const char*>(bytes),"C:\\game.exe")==0&&f.effects.waits==1,
+            "nested query uses the actual tracked ClientPath startup branch");
+    require(active_calls()==0,"all recursive and peer callback leases drain after return");
+    f.binding.close();require(!is_bound(),"normal binding close succeeds after recursive callback drain");
 }
 void test_resolver_and_registry(){
     Fixture f;Resolver resolver;
@@ -730,6 +794,7 @@ int main(int argc,char** argv){try{
     test_actual_host_install_binding();
 #endif
     test_registry_startup_wait_allows_peer_callbacks();
+    test_reentrant_registry_startup_pause();
     test_read_only_connect_address();
     test_unreadable_connect_address();
     test_readable_connect_passthrough_error_state();
