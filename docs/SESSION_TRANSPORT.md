@@ -5,6 +5,13 @@ full-delivery request ordering, event delivery reservations, asynchronous greeti
 socket deadlines, and connection/frame/output limits. These are scoped adaptations
 to the existing source architecture, not wholesale donor application imports.
 
+`SessionDeadlines` borrows its policy: a const or mutable lvalue must outlive
+the tracker. Temporary policies are rejected at construction, including const
+rvalues. The tracker continues to read the borrowed policy when starting new
+deadlines; it does not snapshot durations. The shipping Asio Client already
+uses its service owner's long-lived const policy. This lifetime guard changes
+no layout, timeout values, timer generation/retirement or production exports.
+
 ## Active defaults
 
 | Policy | Application default |
