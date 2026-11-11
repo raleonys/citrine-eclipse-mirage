@@ -17,6 +17,13 @@ The CRT probe checks the compiler CRT's heap, exception unwinding,
 container/thread, and TLS-destructor behavior. It does not guarantee custom
 CRT equivalence or a cross-DLL C++ ABI.
 
+Source QA retains partial stdout/stderr from a timed-out child in its
+failure output and optional JSON report, decoding byte streams as UTF-8
+with replacement. A timeout records exit code 124; a child startup error
+records 127 and its diagnostic. Remaining checks still run, and either
+failure keeps the overall result `FAIL`. The per-check deadline remains
+90 seconds; use `--report build/qa/SOURCE_QA.json` to retain the report.
+
 The PE checks adapted from Brownfield reject malformed optional headers, raw
 extents/overlap, resource recursion/fanout, ordinal-only exports, prohibited
 CRT imports, checksum errors, and SecurityCookie defects. Additional tests
