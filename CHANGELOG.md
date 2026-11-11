@@ -6,10 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Bound source ZIP decompression before CRC verification and whole-member reads, with independent per-member and cumulative byte budgets. Test highly compressible valid source packages, fail-closed rejection before decompression, and temporary extraction cleanup; shipping DLL and vendor code remain unchanged.
+- Reject duplicate JSON object keys in the owner-approved LUTRAVEX weekly naming registry, including repeated schema and approved-version entries, before validating release version/codename bindings. The existing valid registry and published-release behavior remain unchanged.
 
 ### Integrated 2026-11-11
 
+- [PR #272](https://github.com/raleonys/citrine-eclipse-mirage/pull/272): Bound source ZIP decompression before CRC verification and whole-member reads, with independent per-member and cumulative byte budgets. Test highly compressible valid source packages, fail-closed rejection before decompression, and temporary extraction cleanup; shipping DLL and vendor code remain unchanged.
 - [PR #271](https://github.com/raleonys/citrine-eclipse-mirage/pull/271): Fix the Visual Studio compiler-object evidence reader to skip inactive configuration-specific `ItemGroup` and `ClCompile` entries. Add regression tests for both boundaries so Release evidence cannot be silently mapped to Debug object files; shipping build/runtime behavior is unchanged.
 - [PR #304](https://github.com/raleonys/citrine-eclipse-mirage/pull/304): Reject duplicate StringFileInfo string keys in the MUSTAVEX Golden VERSIONINFO validator instead of silently collapsing them into a dictionary. Add isolated identical-value and conflicting-value regressions; preserve the exact resource policy, shipping DLL bytes and ABI.
 - [PR #306](https://github.com/raleonys/citrine-eclipse-mirage/pull/306): Validate the generated MSVC compiler ID as one unconditional literal CMake assignment. Ignore comments and opaque arguments, reject contradictory, duplicate, conditional or malformed evidence, and retain independent compiler/cache/source/hash and shipping-link checks. No generated build commands or shipping compiler settings change.

@@ -15,6 +15,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import weekly_release as release
+import weekly_naming as naming
 from run_source_qa import CHECKS
 
 SOURCE = 'a' * 40
@@ -131,6 +132,23 @@ class PlannerTests(unittest.TestCase):
         self.assertEqual(('Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip',
                           'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'),
                          release.asset_names('3.2.6-TALVOR'))
+
+    def test_duplicate_registry_json_keys_are_rejected(self):
+        source = naming.FILE.read_text(encoding='utf-8')
+        cases = (
+            ('"schema": "cem.weekly.naming.v1",',
+             '"schema": "spoofed",\n  "schema": "cem.weekly.naming.v1",'),
+            ('"3.2.6": "TALVOR",',
+             '"3.2.6": "UNAPPROVED",\n    "3.2.6": "TALVOR",'),
+        )
+        for marker, injected in cases:
+            with self.subTest(marker=marker), tempfile.TemporaryDirectory() as folder:
+                self.assertIn(marker, source)
+                temporary_policy = Path(folder) / 'weekly-naming.json'
+                temporary_policy.write_text(source.replace(marker, injected, 1), encoding='utf-8')
+                with patch.object(naming, 'FILE', temporary_policy):
+                    with self.assertRaisesRegex(ValueError, 'Duplicate JSON object key'):
+                        release.load_registry()
 
     def test_historical_root_reuse_rejected(self):
         p = deepcopy(release.load_registry())
