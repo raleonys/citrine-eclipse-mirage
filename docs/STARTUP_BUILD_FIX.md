@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [DEVELOPMENT.md](DEVELOPMENT.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # Startup lock and build entrypoints
 
 The owner reported that the game did not start at all with

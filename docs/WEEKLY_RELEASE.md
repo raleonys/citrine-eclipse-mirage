@@ -23,6 +23,37 @@ The workflow still verifies the exact source package, Source QA, portable CTest,
 
 Completed release notes contain the source identity, validated build summary, download guidance and generated changelog. They contain no draft heading or instruction to publish the draft, so the same text remains suitable after owner publication. The incomplete-asset warning exists only during preparation and is removed once both uploads verify. Internal game-acceptance status remains in workflow evidence; the notes do not claim game acceptance.
 
-This policy applies to future candidates. Published `3.2.6-TALVOR` assets and earlier historical artifacts are retained unchanged; historical Brownfield `citrine_eclipse_mirage_...FINAL_RELEASE.zip` artifacts use their separate former grammar.
+This policy applies to future candidates. Published `3.2.6-TALVOR` assets and earlier historical artifacts are retained unchanged; historical Brownfield `preloader_l_...FINAL_RELEASE.zip` artifacts use their separate former grammar.
 
 Source QA, portable CTest, Windows Native MSVC, Production/Golden six gates and finalized DLL acceptance must complete on one source SHA before marking a draft complete. The plan supplies its semantic version to both Windows builds through `CITRINE_ECLIPSE_MIRAGE_VERSION`; matching build receipts are required before bundling. `citrine_eclipse_mirage.dll` carries Citrine Eclipse Mirage VERSIONINFO with identical numeric file/product versions (x,y,z,0) and string versions (x.y.z). Public C exports, CRT, SDK protocol and runtime behavior are unchanged. Only the owner publishes the draft after separate game acceptance.
+
+## Local build version upkeep
+
+The committed `default_project_version` and its release-tag provenance in
+`metadata/BRANDING_AND_IDENTITY.json` identify the default for local and offline
+source-archive builds. Explicit `CITRINE_ECLIPSE_MIRAGE_VERSION` values still
+override it for release candidates and the corresponding Golden checks/receipts.
+
+After a stable release is published, **Refresh local release version** reads
+GitHub's latest published stable release and prepares a small ordinary PR.
+Only the version fields in the branding metadata, an unreleased changelog entry
+and the active-source manifest change. Drafts, prereleases, superseded release
+events, invalid codename/version bindings and older versions cannot advance or
+roll back the default. Repeated events reuse an open PR; a conflicting existing
+branch is left for review rather than force-updated. The workflow can also be
+run manually from the default branch to retry upkeep.
+
+The workflow uses the tracked pre-push Source QA gate. It never writes main,
+approves or merges a PR, publishes a release, or changes uploaded assets.
+The owner merges the update after the required later-synchronization checks;
+local builds use the new default after pulling that merge. Until then they
+continue to use the committed previous default, and a draft release alone does
+not alter it. No network access or Git metadata is required during local builds.
+
+Repository Actions settings must allow GitHub Actions to create pull requests
+for this workflow's `GITHUB_TOKEN` to open the proposal. The workflow requests
+`contents: write` and `pull-requests: write`; it does not use approval APIs.
+GitHub may suppress initial workflow events for a PR created with that token.
+The later owner-requested synchronization must therefore establish the exact-head
+required checks before merge. This workflow does not enable or relax repository
+settings, bypass protection, or request full validation on initial creation.
