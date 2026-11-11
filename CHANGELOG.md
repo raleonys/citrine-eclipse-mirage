@@ -6,9 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Retire the Registry language log conversion before allocating the query replacement, matching the recovered cleanup order. Add narrow/wide allocation-pressure and normal-allocation controls; preserve original-first queries, counted sizes, log order and native terminal error policy.
+- Reject initialized PE section data that overlaps the DOS/PE headers or section table in the read-only ARYRA layout check. Retain both existing section profiles, zero-raw uninitialized sections and the policy against pinning exact RVA/size/offset parity; add six/seven-section overlap and immutability regressions.
 
 ### Integrated 2026-11-11
+
+- [PR #337](https://github.com/raleonys/citrine-eclipse-mirage/pull/337): Retire the Registry language log conversion before allocating the query replacement, matching the recovered cleanup order. Add narrow/wide allocation-pressure and normal-allocation controls; preserve original-first queries, counted sizes, log order and native terminal error policy.
 
 - [PR #347](https://github.com/raleonys/citrine-eclipse-mirage/pull/347): Fix the execution concurrency fixture to allocate mock thread identities process-wide across Platform instances, and reject colliding identities before the existing startup-publication and mutex checks. Production Windows thread IDs and runtime behavior remain unchanged.
 

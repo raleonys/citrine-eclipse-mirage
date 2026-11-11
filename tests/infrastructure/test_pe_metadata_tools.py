@@ -204,6 +204,19 @@ with tempfile.TemporaryDirectory() as td:
     bad=bytearray(p.read_bytes()); struct.pack_into('<I',bad,sec+20,len(bad)+0x100); Path(td,'bad_raw_eof.dll').write_bytes(bad)
     errors,_=ary.inspect(Path(td,'bad_raw_eof.dll'),ary_policy)
     assert any('raw extent' in x and 'exceeds file size' in x for x in errors), errors
+    # Aligned, disjoint section extents must still exclude the header bytes.
+    # These offsets passed all earlier alignment/EOF/section-overlap checks.
+    for pointer in (0,0x200):
+        bad=bytearray(p.read_bytes()); struct.pack_into('<I',bad,sec+20,pointer)
+        path=Path(td,'bad_raw_header_'+str(pointer)+'.dll'); path.write_bytes(bad)
+        errors,_=ary.inspect(path,ary_policy)
+        assert len(errors)==1 and 'inside PE header structures' in errors[0], errors
+        assert path.read_bytes()==bad, 'layout rejection must not rewrite its input'
+    # An uninitialized section has no file extent to overlap the headers.
+    bss=bytearray(p.read_bytes()); struct.pack_into('<II',bss,sec+2*40+16,0,0)
+    path=Path(td,'aryra_uninitialized_data.dll'); path.write_bytes(bss)
+    errors,_=ary.inspect(path,ary_policy); assert not errors, errors
+    assert path.read_bytes()==bss, 'uninitialized section control remains read-only'
     # F1537-001: overlapping loaded virtual section extents must fail closed.
     bad=bytearray(p.read_bytes()); first_va=struct.unpack_from('<I',bad,sec+12)[0]; struct.pack_into('<I',bad,sec+40+12,first_va); Path(td,'bad_virtual_overlap.dll').write_bytes(bad)
     errors,_=ary.inspect(Path(td,'bad_virtual_overlap.dll'),ary_policy)
@@ -234,6 +247,12 @@ with tempfile.TemporaryDirectory() as td:
     errors,names=ary.inspect(sp,ary_policy)
     assert not errors,(errors,names)
     assert names==fp_spec['sections_in_order']
+    for pointer in (0,0x200):
+        bad=bytearray(seven); struct.pack_into('<I',bad,sec+20,pointer)
+        path=Path(td,'bad_static7_raw_header_'+str(pointer)+'.dll'); path.write_bytes(bad)
+        failures,_=ary.inspect(path,ary_policy)
+        assert len(failures)==1 and 'inside PE header structures' in failures[0], failures
+        assert path.read_bytes()==bad, 'static-CRT layout rejection must remain read-only'
     fp_header=sec+4*40; fp_raw=0x400+4*0x200
     def reject_fptable(label,mutate,expected):
         bad=bytearray(seven); mutate(bad)
