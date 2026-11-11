@@ -26,6 +26,37 @@ class SourceIdentityTests(unittest.TestCase):
             path.write_text('// SPDX-License-Identifier: MIT\nint main() { return 0; }\n')
             self.assertTrue(checker.inspect(tmp)[1])
 
+    def test_late_only_spdx_marker_cannot_satisfy_header_contract(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'src' / 'late.cpp'
+            path.parent.mkdir(parents=True)
+            for source in (
+                'int answer = 42;\n// SPDX-License-Identifier: GPL-3.0-only\n',
+                '// preceding ordinary comment\n// SPDX-License-Identifier: GPL-3.0-only\n',
+            ):
+                with self.subTest(prefix=source.splitlines()[0]):
+                    path.write_text(source, encoding='utf-8')
+                    count, errors = checker.inspect(tmp)
+                    self.assertEqual(count, 1)
+                    self.assertTrue(any('SPDX header must precede source content'
+                                        in error for error in errors), errors)
+            path.write_text('// SPDX-License-Identifier: GPL-3.0-only\nint answer = 42;\n',
+                            encoding='utf-8')
+            self.assertEqual((1, []), checker.inspect(tmp))
+
+    def test_launcher_preamble_can_precede_spdx_header(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for name, source in (
+                ('scripts/runner.py', '#!/usr/bin/env python3\n# SPDX-License-Identifier: GPL-3.0-only\nprint(1)\n'),
+                ('scripts/runner.cmd', '@echo off\nREM SPDX-License-Identifier: GPL-3.0-only\necho ok\n'),
+            ):
+                with self.subTest(name=name):
+                    path = root / name
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_text(source, encoding='utf-8')
+                    self.assertEqual([], checker.inspect(root)[1])
+
     def test_late_duplicate_spdx_marker_is_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / 'src/late.cpp'

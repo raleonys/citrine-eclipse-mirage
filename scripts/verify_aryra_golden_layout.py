@@ -50,6 +50,7 @@ def inspect(dll, policy):
     elif section_alignment >= 0x1000 and section_alignment < file_alignment:
         errors.append(f'SectionAlignment=0x{section_alignment:X} < FileAlignment=0x{file_alignment:X}')
     sec_off=opt+optsz; names=[]; virtual_extents=[]; raw_extents=[]; section_rows=[]
+    header_end=sec_off+nsec*40
     fptable_seen=[]
     for i in range(nsec):
         o=sec_off+i*40
@@ -64,6 +65,10 @@ def inspect(dll, policy):
         if section_alignment and va % section_alignment:
             errors.append(f'{name or "<unnamed>"} VirtualAddress 0x{va:X} is not SectionAlignment 0x{section_alignment:X} aligned')
         if rs:
+            # Initialized section data cannot alias the DOS/PE headers or
+            # any row of the section table, even at an aligned file offset.
+            if rp < header_end:
+                errors.append(f'{name or "<unnamed>"} raw extent starts at 0x{rp:X} inside PE header structures ending at 0x{header_end:X}')
             if file_alignment and rp % file_alignment:
                 errors.append(f'{name or "<unnamed>"} PointerToRawData 0x{rp:X} is not FileAlignment 0x{file_alignment:X} aligned')
             if file_alignment and rs % file_alignment:
