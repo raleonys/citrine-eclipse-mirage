@@ -243,6 +243,60 @@ class BadgeTests(unittest.TestCase):
                 with self.subTest(data=data), self.assertRaises(ValueError):
                     badges.test_counts(path)
 
+    def test_native_badge_rejects_unowned_or_misnested_junit_cases(self):
+        invalid = (
+            '<testsuites><testcase name="orphan"/></testsuites>',
+            '<testsuite><testcase name="missing-count"/></testsuite>',
+            '<testsuite tests="1"><wrapper><testcase/></wrapper></testsuite>',
+            '<testsuite tests="1"><testsuites><testcase/></testsuites></testsuite>',
+            '<testsuites><wrapper><testsuite tests="1"><testcase/></testsuite></wrapper></testsuites>',
+        )
+        valid = (
+            ('<testsuite tests="1"><testcase name="ok"/></testsuite>', (1, 1)),
+            ('<testsuites tests="2"><testsuite tests="1"><testcase name="ok"/></testsuite>'
+             '<testsuite tests="1"><testcase name="failed"><failure/></testcase></testsuite>'
+             '</testsuites>', (1, 2)),
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'report.xml'
+            for data in invalid:
+                with self.subTest(invalid=data):
+                    path.write_text(data, encoding='utf-8')
+                    with self.assertRaises(ValueError):
+                        badges.test_counts(path)
+            for data, expected in valid:
+                with self.subTest(valid=data):
+                    path.write_text(data, encoding='utf-8')
+                    self.assertEqual(expected, badges.test_counts(path))
+
+    def test_native_report_rejects_inconsistent_declared_outcome_totals(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'report.xml'
+            valid = (
+                ('<testsuite tests="3" failures="1" errors="1" skipped="1">'
+                 '<testcase><failure/></testcase><testcase><error/></testcase>'
+                 '<testcase><skipped/></testcase></testsuite>', (0, 3)),
+                ('<testsuites tests="2" failures="1"><testsuite tests="2" failures="1">'
+                 '<testcase/><testcase><failure/></testcase></testsuite></testsuites>', (1, 2)),
+                ('<testsuite tests="1"><testcase/></testsuite>', (1, 1)),
+            )
+            for source, expected in valid:
+                path.write_text(source, encoding='utf-8')
+                with self.subTest(valid=source):
+                    self.assertEqual(expected, badges.test_counts(path))
+            invalid = (
+                '<testsuite tests="2" failures="1"><testcase/><testcase/></testsuite>',
+                '<testsuite tests="1" errors="1"><testcase/></testsuite>',
+                '<testsuite tests="1" skipped="1"><testcase/></testsuite>',
+                '<testsuite tests="1" failures="NaN"><testcase/></testsuite>',
+                '<testsuites tests="2" failures="0"><testsuite tests="2" failures="1">'
+                '<testcase/><testcase><failure/></testcase></testsuite></testsuites>',
+            )
+            for source in invalid:
+                path.write_text(source, encoding='utf-8')
+                with self.subTest(invalid=source), self.assertRaises(ValueError):
+                    badges.test_counts(path)
+
     def test_native_badge_requires_the_same_git_tree_as_main_and_does_not_hide_failure(self):
         api = API()
         api.full_runs = [dict(id=12, event='pull_request', head_sha='1'*40,

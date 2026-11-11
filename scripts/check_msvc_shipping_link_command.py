@@ -22,22 +22,32 @@ def _safe_under(root: Path, candidate: Path):
         return None
 
 
+def _owned_link_source(root: Path, candidate: Path):
+    """Accept unredirected CMake link evidence inside the selected build."""
+    safe = _safe_under(root, candidate)
+    # A direct rule must not redirect through a symlink or junction, even if
+    # it resolves to another file inside the selected build directory.
+    if safe is None or safe != candidate.absolute():
+        return None
+    return safe
+
+
 def normalized_link_source(build_dir: Path):
     """Return the target-local source that CMake generated for citrine_eclipse_mirage linking."""
     root = build_dir.resolve()
     target_dir = root / 'CMakeFiles' / 'citrine_eclipse_mirage.dir'
-    link_txt = target_dir / 'link.txt'
-    if link_txt.is_file():
-        return link_txt.resolve(), 'link.txt', []
-
-    build_make = target_dir / 'build.make'
-    if build_make.is_file():
-        return build_make.resolve(), 'build.make', []
+    for name in ('link.txt', 'build.make'):
+        direct = target_dir / name
+        if direct.is_file() or direct.is_symlink():
+            owned = _owned_link_source(root, direct)
+            if owned is None or not owned.is_file():
+                return None, None, ['redirected or nonregular target-local link rule: ' + str(direct)]
+            return owned, name, []
 
     candidates = []
     for name in ('link.txt', 'build.make'):
         for p in root.rglob(name):
-            safe = _safe_under(root, p)
+            safe = _owned_link_source(root, p)
             if safe is None:
                 continue
             parts = [x.lower() for x in safe.parts]
@@ -246,6 +256,7 @@ def self_test():
             text = good.replace('link.exe ', 'link.exe -' + option + ' ', 1) if before else good + ' -' + option
             cases.append(('dash_' + option + ('_before' if before else '_after'), text, False))
     failed = []
+    symlink_cases = 0
     for name, text, expected in cases:
         actual = not audit(text)
         if actual != expected:
@@ -287,9 +298,40 @@ def self_test():
         if not errors:
             failed.append('missing_referenced_rsp_fails_closed')
 
+        # An unaliased target-local link.txt remains an authoritative source.
+        clean_rule = 'link.exe /DLL /INCREMENTAL:NO /DEBUG:NONE /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO a.obj\n'
+        direct = target / 'link.txt'
+        direct.write_text(clean_rule, encoding='utf-8')
+        text, kind, errors = collect_text(root)
+        if errors or kind != 'link.txt' or audit(text or ''):
+            failed.append('unredirected_direct_link_rule')
+        direct.unlink()
+
+        # The old fast path returned link_txt.resolve() without checking its
+        # ownership: a symlink could substitute a passing, unrelated link rule.
+        # Windows agents without symlink creation privileges skip these cases.
+        with tempfile.TemporaryDirectory() as external:
+            for label, other in (
+                    ('external', Path(external) / 'passing-link.txt'),
+                    ('internal', root / 'stale-passing-link.txt')):
+                other.write_text(clean_rule, encoding='utf-8')
+                try:
+                    direct.symlink_to(other)
+                except (OSError, NotImplementedError):
+                    continue
+                try:
+                    symlink_cases += 1
+                    _, _, errors = collect_text(root)
+                    if not errors:
+                        failed.append('redirected_' + label + '_link_rule')
+                finally:
+                    direct.unlink()
+
     if failed:
         return fail(['self-test mismatch: ' + ', '.join(failed)])
-    total = len(cases) + 4
+    total = len(cases) + 5 + symlink_cases
+    if symlink_cases < 2:
+        print(f'MSVC_SHIPPING_LINK_POLICY_SELF_TEST: symlink cases unavailable ({2 - symlink_cases} skipped)')
     print(f'MSVC_SHIPPING_LINK_POLICY_SELF_TEST: PASS ({total}/{total})')
     return 0
 

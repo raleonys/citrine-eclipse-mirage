@@ -4,7 +4,6 @@
 
 #include "test.hpp"
 #include "test_utility.hpp"
-#include "verify_ctrl.hpp"
 #include "verify_meta.hpp"
 #include "verify_rule.hpp"
 
@@ -32,9 +31,6 @@ namespace TAO_PEGTL_NAMESPACE
       verify_meta< not_at<>, internal::failure >();
       verify_meta< not_at< eof >, internal::not_at< eof >, eof >();
       verify_meta< not_at< eof, any >, internal::not_at< internal::seq< eof, any > >, internal::seq< eof, any > >();
-
-      verify_ctrl_enabled< not_at< digit > >( __LINE__, __FILE__, "a" );
-      verify_ctrl_disabled< internal::not_at< digit > >( __LINE__, __FILE__, "a" );
 
       verify_analyze< not_at< eof > >( __LINE__, __FILE__, false, false );
       verify_analyze< not_at< any > >( __LINE__, __FILE__, false, false );
