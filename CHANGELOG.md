@@ -6,9 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Reject initialized PE section data that overlaps the DOS/PE headers or section table in the read-only ARYRA layout check. Retain both existing section profiles, zero-raw uninitialized sections and the policy against pinning exact RVA/size/offset parity; add six/seven-section overlap and immutability regressions.
+- Reject export name-pointer tables whose decoded names are out of lexical order so dictionary/set ABI checks cannot hide the malformed table order. Preserve name/ordinal associations, shared export targets and nonmonotonic string addresses; correct the synthetic Golden fixture and cover every nonlexical permutation in both host gates and the linked-DLL mutation test.
 
 ### Integrated 2026-11-11
+
+- [PR #319](https://github.com/raleonys/citrine-eclipse-mirage/pull/319): Reject initialized PE section data that overlaps the DOS/PE headers or section table in the read-only ARYRA layout check. Retain both existing section profiles, zero-raw uninitialized sections and the policy against pinning exact RVA/size/offset parity; add six/seven-section overlap and immutability regressions.
 
 - [PR #337](https://github.com/raleonys/citrine-eclipse-mirage/pull/337): Retire the Registry language log conversion before allocating the query replacement, matching the recovered cleanup order. Add narrow/wide allocation-pressure and normal-allocation controls; preserve original-first queries, counted sizes, log order and native terminal error policy.
 
