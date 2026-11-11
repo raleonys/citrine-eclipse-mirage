@@ -55,9 +55,15 @@ struct Files final:file::Factory {
 struct Effects final:achievement_storage::Effects {
     std::vector<std::string> widened,epochs,events;
     std::vector<Path> directories,status_paths;
+    std::map<std::string,Path> converted_paths;
     status::Status status{2,0,0};
-    std::string fail_epoch;
-    Path filesystem_widen_006d70(std::string_view value)override{widened.emplace_back(value);return wide(value);}
+    std::string fail_epoch,fail_widen;
+    Path filesystem_widen_006d70(std::string_view value)override{
+        widened.emplace_back(value);
+        if(!fail_widen.empty()&&value==fail_widen)throw std::runtime_error("synthetic conversion failure");
+        const auto found=converted_paths.find(std::string(value));
+        return found==converted_paths.end()?wide(value):found->second;
+    }
     std::int64_t timestamp_to_epoch_041e10(std::string_view value)override{
         epochs.emplace_back(value);events.emplace_back("epoch");if(value==fail_epoch)throw std::runtime_error("synthetic epoch failure");return value=="negative"?-1:11;
     }

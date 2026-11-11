@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
+name: Update repository badges
+
+on:
+  workflow_run:
+    workflows: [Source integrity]
+    types: [completed]
+    branches: [main]
+  release:
+    types: [published, edited, deleted]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repository-badges
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: >-
+      (github.event_name == 'workflow_run' && github.event.workflow_run.event == 'push' &&
+       github.event.workflow_run.head_branch == github.event.repository.default_branch) ||
+      (github.event_name == 'release' && github.event.release.draft == false) ||
+      (github.event_name == 'workflow_dispatch' &&
+       github.ref == format('refs/heads/{0}', github.event.repository.default_branch))
+    name: Publish eleven SVG badges
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - name: Render current release and completed main CI status
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 -B scripts/repository_badges.py --repository "$GH_REPO" --publish

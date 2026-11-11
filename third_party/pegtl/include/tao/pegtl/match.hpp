@@ -41,7 +41,7 @@ namespace TAO_PEGTL_NAMESPACE
          return internal::match_no_control< Rule, A, M, Action, Control >( in, st... );
       }
       else {
-         using rewind_position_t = ParseInput::rewind_position_t;
+         using rewind_position_t = typename ParseInput::rewind_position_t;
 
          constexpr bool enable_action = ( A == apply_mode::enabled );
 
@@ -62,10 +62,10 @@ namespace TAO_PEGTL_NAMESPACE
          static_assert( !( has_apply && is_nothing ), "Unexpected apply() detected in action!" );
          static_assert( !( has_apply0 && is_nothing ), "Unexpected apply0() detected in action!" );
 
-         if constexpr( enable_action && !has_apply && std::is_base_of_v< require_apply, Action< Rule > > ) {
+         if constexpr( !has_apply && std::is_base_of_v< require_apply, Action< Rule > > ) {
             internal::missing_apply< Control< Rule >, Action >( in, st... );
          }
-         if constexpr( enable_action && !has_apply0 && std::is_base_of_v< require_apply0, Action< Rule > > ) {
+         if constexpr( !has_apply0 && std::is_base_of_v< require_apply0, Action< Rule > > ) {
             internal::missing_apply0< Control< Rule >, Action >( in, st... );
          }
          constexpr bool validate_nothing = std::is_base_of_v< maybe_nothing, Action< void > >;
