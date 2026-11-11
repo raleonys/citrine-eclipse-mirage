@@ -9,8 +9,8 @@ import subprocess
 import sys
 import tempfile
 
-CURRENT_SHA256 = '9e7c83c6b944d098f59f53f4b2005dc7ee7c948cf9c64909a442d79de2c68439'
-STALE_SHA256 = 'e2be93e8f22ea3acf0d258d1044877d5a1e21c6768ae247a64db004a7afa0ea4'
+CURRENT_SHA256 = 'c915c65764c72d30e022a60696d916542a31de2964d57cbf032e81740383194e'
+STALE_SHA256 = '021f5d42c3687eaaa2229a4a7ae893315ab50993dbb742e8256e43567f697337'
 ANCHOR = b'Freeze(&threads, pos, enable ? ACTION_ENABLE : ACTION_DISABLE)'
 STALE = b'Freeze(&threads, pos, ACTION_ENABLE)'
 MISMATCH = 'SINGLE_DISABLE_IP_MISMATCH: real IP retained the trampoline/relay address'
@@ -22,7 +22,7 @@ def stale_source(source):
         raise ValueError('Real-peer control requires the exact current verified hook source')
     result = source.replace(ANCHOR, STALE, 1)
     if hashlib.sha256(result).hexdigest() != STALE_SHA256:
-        raise ValueError('Real-peer control does not match the historical stale-action source')
+        raise ValueError('Real-peer control does not match the pinned stale-action source')
     return result
 
 

@@ -113,10 +113,15 @@ must authorize the exact PR/head/main before the full-validation label is added.
 The existing eleven required status names and strict current-main merge
 protection remain unchanged. Missing full checks still prevent merging.
 
-CodeQL for Actions, C/C++ and Python now sits behind that same readiness gate.
-It analyzes the verified source head and uploads to that head's PR reference.
-The default query suite and C/C++ build-mode none are retained. Ineligible
-events skip the job before its language matrix expands.
+For PRs and manual diagnostics, CodeQL for Actions, C/C++ and Python sits
+behind that same readiness gate. It analyzes the verified source head and
+uploads to that head's PR reference. Accepted-main pushes also run these three
+analyses, using the exact pushed SHA and `refs/heads/main` so Security alerts
+have a default-branch baseline. On that event readiness, Source QA and all
+Windows/Golden/reference jobs skip before runner allocation; initial PR and
+feature-branch pushes do not gain automatic analysis. Cancellation prevents
+new analysis jobs, and main scans cannot cancel PR validation. The default
+query suite and C/C++ build-mode none are retained.
 
 ## Required GitHub Default Setup migration
 
@@ -132,8 +137,10 @@ and choose **Disable CodeQL** from its menu to disable Default Setup. Then use
 the existing advanced workflow `.github/workflows/msvc-reference-graph.yml`.
 This disables the default scheduler, not uploads from the advanced workflow.
 Do not create a second generated
-CodeQL workflow with an opened/push/scheduled trigger. The analyzed languages
-remain Actions, C/C++ and Python; only their scheduling changes.
+CodeQL workflow with an opening, feature-branch push or scheduled trigger;
+the existing advanced workflow owns the bounded main-push analysis. The
+analyzed languages remain Actions, C/C++ and Python; only their scheduling
+changes.
 
 The connected write account cannot read or change the Default Setup setting:
 its code-scanning configuration endpoint returns HTTP 403, Resource not
@@ -147,6 +154,8 @@ GitHub documents this migration in
 
 Once the migration is complete, verify a newly opened PR has only Source
 integrity, then use a later authorized synchronization to verify all eleven
-existing validation jobs plus the three gated CodeQL languages. A skipped,
-cancelled or old run is not a new PASS. Keep initial-PR validation deferred
+existing validation jobs plus the three gated CodeQL languages. After the
+owner merges the main-push change, verify that the resulting main run has
+only the three CodeQL analyses executing and uploads to `refs/heads/main`.
+A skipped, cancelled or old run is not a new PASS. Keep initial-PR validation deferred
 while this PR is reviewed; do not add a validation label merely to open it.
