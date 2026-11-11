@@ -176,6 +176,9 @@ def collect_text(build_dir: Path):
 
 
 def audit(command_text: str):
+    # LINK accepts '-' and '/' as equivalent option specifiers. Normalize
+    # token-start dashes in this audit copy, never the generated link command.
+    command_text = re.sub(r'(?<!\S)-(?=[A-Za-z])', '/', command_text)
     errors = []
     debug_opts = re.findall(r'(?i)(?:^|\s)(/DEBUG(?::[^\s"<>]+)?)(?=\s|$|[<>])', command_text)
     if not any(x.upper() == '/DEBUG:NONE' for x in debug_opts):
@@ -237,6 +240,21 @@ def self_test():
         ('nodefaultlib', 'link.exe /DLL /NODEFAULTLIB /INCREMENTAL:NO /DEBUG:NONE /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO a.obj', False),
         ('custom_entry', 'link.exe /DLL /ENTRY:DllMain /INCREMENTAL:NO /DEBUG:NONE /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO a.obj', False),
     ]
+    good = cases[0][1]
+    cases.extend([
+        ('dash_option_specifiers', good.replace('/', '-'), True),
+        ('mixed_option_specifiers', good.replace('/DEBUG:', '-debug:').replace('/MANIFEST:', '-manifest:'), True),
+        ('embedded_dash_paths_are_not_switches', good + r' /OUT:build\-NODEFAULTLIB.dll other-INCREMENTAL.obj', True),
+    ])
+    # A valid canonical switch cannot hide a conflicting dash spelling,
+    # regardless of argument order. Preserve the existing reject-any-conflict
+    # policy instead of relying on LINK's last-option-wins behavior.
+    for option in ('debug:FULL', 'DEBUG', 'incremental', 'INCREMENTAL:YES',
+                   'ltcg', 'LTCG:INCREMENTAL', 'manifest', 'MANIFEST:EMBED',
+                   'nodefaultlib', 'NODEFAULTLIB:libcmt', 'ENTRY:UserEntry', 'Brepro'):
+        for before in (False, True):
+            text = good.replace('link.exe ', 'link.exe -' + option + ' ', 1) if before else good + ' -' + option
+            cases.append(('dash_' + option + ('_before' if before else '_after'), text, False))
     failed = []
     symlink_cases = 0
     for name, text, expected in cases:

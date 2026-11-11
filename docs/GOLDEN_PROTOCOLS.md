@@ -30,6 +30,11 @@ even when they resolve inside that root. Only response files referenced by
 the selected invocation contribute linker-policy evidence. Portable fixtures
 check this path policy; actual MSVC/Golden acceptance requires native output.
 
+The option auditor treats token-start `-` and `/` prefixes equivalently in
+its private text copy. It rejects forbidden options even beside allowed
+duplicates or in referenced response files. Generated commands and linker
+execution are unchanged; this does not implement general shell parsing.
+
 ## Current product targets
 
 Following the owner's instruction to complete missing
