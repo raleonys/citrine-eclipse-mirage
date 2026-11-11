@@ -23,6 +23,13 @@ the pipeline writes the hash-named build candidate
 and the dist bundle described below. It does not
 publish to a Library or official release pointer.
 
+The MSVC link-command collector accepts only unredirected, target-local
+CMake `link.txt` or `build.make` files beneath the selected build root. A
+redirected direct rule fails explicitly; fallback discovery excludes aliases,
+even when they resolve inside that root. Only response files referenced by
+the selected invocation contribute linker-policy evidence. Portable fixtures
+check this path policy; actual MSVC/Golden acceptance requires native output.
+
 ## Current product targets
 
 Following the owner's instruction to complete missing
@@ -33,10 +40,16 @@ fixed fixture identities under
 
 | Profile | Current rule |
 |---|---|
-| URSYNEX | Apply the selected timestamp 0xA6FD7C8F, linker 14.0 and no-Rich-header profile to the copy, then recompute checksum. Permute complete import descriptors into the fixed DLL order; preserve names/thunks/IAT data. |
+| URSYNEX | Preserve the native link output compilation timestamp; apply linker 14.0 and the no-Rich-header profile to the copy, then recompute checksum. Permute complete import descriptors into the fixed DLL order; preserve names/thunks/IAT data. |
 | ARYRA | MSVC six sections, or seven with the static UCRT `.fptable`: verify ordering, alignment, file bounds and non-overlap. `.fptable` must have virtual 0x100, raw 0x200, index 4, characteristics 0xC0000040 and all-zero data. Other section RVAs/sizes are not fixed. |
-| MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem 6.0, linker 14.0, timestamp 0xA6FD7C8F, no Rich header. Citrine Eclipse Mirage VERSIONINFO, Copyright 2026 SURGE, and matching selected numeric/string file and product versions. No PNG/RCDATA/manifest or COFF symbol/debug/certificate. Internal export name `citrine_eclipse_mirage.unsigned.dll`. |
+| MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem 6.0, linker 14.0, native compilation timestamp preserved, no Rich header. Citrine Eclipse Mirage VERSIONINFO, Copyright 2026 SURGE, and matching selected numeric/string file and product versions. No PNG/RCDATA/manifest or COFF symbol/debug/certificate. Internal export name `citrine_eclipse_mirage.unsigned.dll`. |
 | CORVEXON | Exactly three C exports/ordinals. The CRT entrypoint is separate from exported DllMain and lies in executable `.text`. No static imports outside CRYPT32/WS2_32/KERNEL32/USER32/SHELL32/MSWSOCK; MSWSOCK only AcceptEx/GetAcceptExSockaddrs, CRYPT32 only CryptQueryObject. `/MT`, writable image-backed `/GS` cookie and valid checksum. |
+
+CORVEXON maps section RVAs to file bytes only within `SizeOfRawData`.
+A section with zero raw size cannot supply file bytes, regardless of its raw
+pointer or virtual size. Virtual-only sections may remain in the image, but
+their RVAs cannot supply bytes to file-based checks. Ordinary raw-backed
+section mappings and header-RVA mappings retain their existing behavior.
 
 OLE32 originated in the earlier COM known-folder adapter
 and was removed by restoring RE environment-variable
@@ -74,8 +87,9 @@ creates a `.zip.sha256` beside each archive.
 
 Candidate hashes must remain unchanged during
 all read-only stages. URSYNEX may change only
-permitted timestamp, linker, full Rich-header
-block and checksum fields; any other byte
+permitted linker, full Rich-header block and checksum fields, plus the
+explicit import-descriptor permutation described below; the native
+compilation timestamp must remain byte-exact; any other byte
 mutation must stop the pipeline. The original
 build DLL's unchanged bytes are also checked
 at the end. Fixture and malformed-input
@@ -95,8 +109,11 @@ bytes. Only then are these files written:
 - `dist/citrine_eclipse_mirage.dll.sha256`
 - `dist/DIST_RECEIPT.json`
 
-The runtime name thus matches the Bluefield
-hook-11 filter. The raw link output remains
+The distribution name is the current project identity. Hook 11 deliberately
+retains the independent `preloader_l.dll` compatibility suffix in
+`include/citrine_eclipse_mirage/platform/crypt_query.hpp`; neither renaming the
+shipping DLL nor running its host test proves selection of that suffix.
+The raw link output remains
 `citrine_eclipse_mirage.unsigned.dll`; copying does not
 change the export-directory internal name
 or the three C exports. The earlier
@@ -135,9 +152,9 @@ to reject unexpected caches or additional
 source files. See
 [Production correction](PRODUCTION_IMPORT_FIX.md).
 
-The full field matrix and correction of the
-former preserve-compiler decision are in
-[metadata audit](REFERENCE_METADATA_AUDIT.md).
+The [metadata audit](REFERENCE_METADATA_AUDIT.md) preserves the historical
+field matrix and former fixed-timestamp decision. Current timestamp and
+VERSIONINFO rules are the product targets and owning policies above.
 
 The owner requires the same import descriptor order in every MSVC
 application DLL profile, including `citrine_eclipse_mirage.unsigned.dll`. The shared
@@ -147,6 +164,12 @@ inspection; `build_profile.ps1` independently verifies the resulting
 unsigned DLL on both clean and incremental builds. It uses the exact same
 six-module order as URSYNEX/CORVEXON/DIST, changes no other bytes, and
 fails without replacing the file if the import module set is unexpected.
+
+Mutating unsigned normalization rejects leaf symlinks and DLL files with a
+link count other than one before reading or staging output. Read-only
+`--verify` retains its existing behavior. This prevents a replacement from
+certifying one pathname while an aliased build DLL remains unchanged; it is not
+parent-directory reparse protection or a same-credential race guarantee.
 
 This is explicitly **post-link normalization of the unsigned artifact**, not
 a claim that MSVC LINK.exe itself emitted the descriptor records in this

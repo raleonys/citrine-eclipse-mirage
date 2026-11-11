@@ -101,8 +101,10 @@ Historical binding results are in
 
 Current runtime binding:
 [RUNTIME_BINDING.md](RUNTIME_BINDING.md). Earlier vendor/parser counts
-here are historical snapshot evidence; new application tests are
-tracked in [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json).
+here are historical snapshot evidence.
+[RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json) describes
+application bindings and retained checkpoints; new test execution belongs to
+the selected head's workflow results.
 
 ## Integrated C25-F001 depth exhaustion policy
 

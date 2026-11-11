@@ -7,15 +7,18 @@
 #include <condition_variable>
 #include <exception>
 #include <functional>
+#include <future>
 #include <iostream>
+#include <latch>
 #include <mutex>
 #include <thread>
+#include <utility>
 #include <vector>
 
 using namespace citrine_eclipse_mirage::execution;
 struct OS final:Platform {
     std::mutex gate;
-    std::atomic<unsigned> next{1};
+    inline static std::atomic<unsigned> next{1};
     std::barrier<>* cold_callers=nullptr;
     std::atomic<unsigned> frequencies{0};
     // Set only by the startup-payload regression. Ordinary clock tests keep
@@ -37,6 +40,34 @@ struct OS final:Platform {
     void sleep_milliseconds(std::uint32_t)override{if(sleep_hook)sleep_hook();}
     [[noreturn]]void raise_thread_error_04a648(int)override{throw std::runtime_error("unexpected thread error");}
 };
+void platform_thread_identities() {
+    // Native thread identity is process-wide, not local to a Platform object.
+    // Hold both threads alive while each queries two distinct OS instances.
+    using Ids=std::pair<std::uint32_t,std::uint32_t>;
+    std::promise<Ids> values[2];
+    auto first_value=values[0].get_future(),second_value=values[1].get_future();
+    std::latch release{1};
+    const auto observe=[&](unsigned index) {
+        try {
+            OS first,second;
+            values[index].set_value({first.current_thread_id(),second.current_thread_id()});
+        }catch(...){values[index].set_exception(std::current_exception());}
+        release.wait();
+    };
+    std::thread first([&]{observe(0);});
+    std::thread second;
+    try{second=std::thread([&]{observe(1);});}
+    catch(...){release.count_down();first.join();throw;}
+    const bool ready=first_value.wait_for(std::chrono::seconds(2))==std::future_status::ready&&
+        second_value.wait_for(std::chrono::seconds(2))==std::future_status::ready;
+    // Release/join before any assertion or future.get can throw.
+    release.count_down();first.join();second.join();
+    if(!ready)throw std::runtime_error("mock thread identities were not published");
+    const auto a=first_value.get(),b=second_value.get();
+    if(a.first!=a.second||b.first!=b.second||a.first==b.first||
+       a.first==0||b.first==0||a.first==0xffffffff||b.first==0xffffffff)
+        throw std::runtime_error("mock thread identities must be stable and unique across Platform instances");
+}
 void cold_frequency_cache() {
     OS os;MutexState mutex{};initialize_mutex_04a698(mutex,2);
     std::uint8_t first=0,second=0,third=0;std::int64_t cache=0;
@@ -143,7 +174,7 @@ void startup_flag_payload_publication() {
     }
 }
 int main()try {
-    cold_frequency_cache();startup_flag_payload_publication();
+    platform_thread_identities();cold_frequency_cache();startup_flag_payload_publication();
     for(auto type:{1u,2u,0x102u}) {
         OS os;MutexState mutex{};initialize_mutex_04a698(mutex,type);
         unsigned value=0;std::vector<std::thread> threads;
@@ -160,5 +191,5 @@ int main()try {
         for(auto& worker:threads)worker.join();
         if(value!=40000||mutex.count_4c||mutex.owner_48!=0xffffffff)throw std::runtime_error("mutex ownership/count mismatch");
     }
-    std::cout<<"PASS: cold frequency publication and 120000 contended critical sections\n";
+    std::cout<<"PASS: mock thread identities, cold frequency publication and 120000 contended critical sections\n";
 }catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
