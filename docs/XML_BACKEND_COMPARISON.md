@@ -29,9 +29,14 @@ patched. XPath is disabled for production and diagnostic pugixml targets.
 
 The standalone `tests/diagnostics/xml_backend/CMakeLists.txt` compiles exactly
 `src/xml/reader.cpp`, `reader_policy.cpp` and `reader_values.cpp` from this checkout.
-The reference uses the pinned control's first-party reader with a namespace-only
-binding change to avoid an ODR collision. Both preserve the checked value-decoder
-logic from PR #108. The candidate does not link the reference reader or TinyXML2. CMake File API traversal verifies this for
+The reference reads the pinned control's historical
+`include/preloader_l/xml/reader.hpp`. The
+[build-copy binding helper](../tests/diagnostics/xml_backend/reference_bindings.cmake)
+adapts legacy includes/namespaces in generated files, then places the oracle in
+its separate namespace to avoid an ODR collision. The pinned checkout is not
+renamed or edited; a missing historical header fails rather than adopting a
+current-name decoy. Both readers preserve the checked value-decoder logic from
+PR #108. The candidate does not link the reference reader or TinyXML2. CMake File API traversal verifies this for
 every candidate-only executable/configuration and requires a real pugixml
 dependency; `candidate-linkage.json` records the evaluated transitive graph.
 The reference is linked only into separate control and differential targets.

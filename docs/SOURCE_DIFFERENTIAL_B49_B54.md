@@ -37,7 +37,7 @@ established by this documentation-only cross-check.
 
 ## Current source coverage at accepted main
 
-Reviewed integration baseline: `44967de499bf3d00ccb6d3ac76302a267aedee2a`.
+Reviewed integration baseline: `b6d3cfc48b1cbd0cca560d7f6f8931d7951be21c`.
 The dated tables below remain checkpoint comparisons. Their future-work lists
 must not be used without the later accepted additions:
 

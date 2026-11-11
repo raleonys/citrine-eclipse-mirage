@@ -1122,8 +1122,8 @@
       "sha256": "ce49cebfeb830e95cb2b7492399a950ce3beda6e16750f032f81cb5846b63007"
     },
     "tests/diagnostics/xml_backend/CMakeLists.txt": {
-      "bytes": 8719,
-      "sha256": "7b90b09c734e15b5689baa27b2bc0ae60a00a062dc7df4afbd3a922991dd8f64"
+      "bytes": 9028,
+      "sha256": "ea562c71aed0d48fe30955b5bd876d0e3503aa825950864fd1a7a496886647fa"
     },
     "tests/diagnostics/xml_backend/allocation.cpp": {
       "bytes": 7207,
@@ -1140,6 +1140,10 @@
     "tests/diagnostics/xml_backend/performance.py": {
       "bytes": 7463,
       "sha256": "76e3855034b9bf42573dd94f9eb947bc0ed22ab8bd399e6036f835c09031a76e"
+    },
+    "tests/diagnostics/xml_backend/reference_bindings.cmake": {
+      "bytes": 986,
+      "sha256": "5c83447904303b3db352230669dc2b7ff1e57ec9dc32b0780f7df768515a794b"
     },
     "tests/diagnostics/xml_backend/run.py": {
       "bytes": 20328,
@@ -1170,8 +1174,8 @@
       "sha256": "ba37779910cc2fd47ddd8a429fd201d15c9d587cbafdec357facc3b6e695fb90"
     },
     "tests/infrastructure/test_build_partition.py": {
-      "bytes": 24116,
-      "sha256": "babf3c33f1b65ae3e703e8c74a40dc26fa8228c74c232b71a1dedffef014d2e8"
+      "bytes": 24267,
+      "sha256": "ea2709c3005f73dfbe039dbfa1b8dfc8066fc21e334eb0dc0cef5744c7a14555"
     },
     "tests/infrastructure/test_build_path_reparse.ps1": {
       "bytes": 17701,
@@ -1194,16 +1198,16 @@
       "sha256": "7f5107def7a8ed4fd9f609e2a558d435e5968083195cc5971a1d60bc3bd52ded"
     },
     "tests/infrastructure/test_infrastructure.py": {
-      "bytes": 149798,
-      "sha256": "f801bd97eecf050e5e39b68bfdbb38335c86d27b4f144caf4be41f710ed97c07"
+      "bytes": 155610,
+      "sha256": "aedf878292c35ee1a611c2ba03e444922c26ebcc163028698a89ec9c57e2122b"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
-      "bytes": 35669,
-      "sha256": "d6f9cfd36544aca08fb1d350283d70d9a3798981ec22333f269324df83cca558"
+      "bytes": 36852,
+      "sha256": "db27d5e8e4ce9fa27208e8ebcaea28d6ea034de0045859ae286297ca0a0201dd"
     },
     "tests/infrastructure/test_project_version.py": {
-      "bytes": 8211,
-      "sha256": "48d43a4c43f3ade0534e229170e2592013729362a90d76112ee420175073c558"
+      "bytes": 14142,
+      "sha256": "1acfd2766459e2e3af634f15e299eabdc59f225d268c58008ffa7cce091e8660"
     },
     "tests/infrastructure/test_public_abi.py": {
       "bytes": 2128,
@@ -1242,8 +1246,8 @@
       "sha256": "5502b4a8ce4a27649538ea0830bf6e5e904f449addfced6cd69a28d532230f0b"
     },
     "tests/infrastructure/test_xml_performance.py": {
-      "bytes": 6379,
-      "sha256": "dd0e73c17f4ae7102ab6675fcd4484bbb46ed41be7203b0c524318399b862bc6"
+      "bytes": 9987,
+      "sha256": "839ab702b74c6a4c7cc7f298eb3d9f86964ee1c40339c6be8195853be84a2223"
     },
     "tests/native/application_runtime_tests.cpp": {
       "bytes": 57884,

@@ -1,7 +1,7 @@
 # Documentation index and authority
 
 This catalog reviews the first-party Markdown documents and companion CSVs
-against accepted `main@44967de499bf3d00ccb6d3ac76302a267aedee2a` and the changes
+against accepted `main@b6d3cfc48b1cbd0cca560d7f6f8931d7951be21c` and the changes
 proposed here. It covers the root guides, PR template, tools guide and every
 `docs/*.md` / `docs/*.csv` file. Vendor documentation and retained
 `metadata/evidence/` material keep their original bytes and evidence limits.
@@ -46,7 +46,9 @@ The current vendors, archive hashes and compiler compatibility boundary are in
 and normalizes the selected import descriptor order; earlier fixed-timestamp
 and raw-linker-order descriptions are historical. Ordinary PR opening runs
 source integrity; full validation uses the accepted synchronization policy.
-A proposed workflow change is not active until owner integration.
+Accepted-main pushes separately run only the three CodeQL analyses in that
+workflow, as integrated in PR #353; no Windows/Golden build is added to that
+event. A proposed workflow change is not active until owner integration.
 
 `metadata/RUNTIME_CURRENT_STATUS.json` combines current binding fields with
 historical validation checkpoints. Its corrected 62/78 source counters agree

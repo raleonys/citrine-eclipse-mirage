@@ -152,6 +152,12 @@ unsigned DLL on both clean and incremental builds. It uses the exact same
 six-module order as URSYNEX/CORVEXON/DIST, changes no other bytes, and
 fails without replacing the file if the import module set is unexpected.
 
+Mutating unsigned normalization rejects leaf symlinks and DLL files with a
+link count other than one before reading or staging output. Read-only
+`--verify` retains its existing behavior. This prevents a replacement from
+certifying one pathname while an aliased build DLL remains unchanged; it is not
+parent-directory reparse protection or a same-credential race guarantee.
+
 This is explicitly **post-link normalization of the unsigned artifact**, not
 a claim that MSVC LINK.exe itself emitted the descriptor records in this
 order. The final Golden step remains independent, idempotent for already

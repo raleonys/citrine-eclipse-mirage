@@ -1,7 +1,7 @@
 # Current outstanding work
 
 This list is reconciled against accepted
-`main@44967de499bf3d00ccb6d3ac76302a267aedee2a`.
+`main@b6d3cfc48b1cbd0cca560d7f6f8931d7951be21c`.
 Current build/CI policy is in [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md), and
 runtime contracts are described in [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md).
 The dated evidence below records earlier source and DLL checkpoints; former
