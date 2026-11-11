@@ -6,9 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Fix the execution concurrency fixture to allocate mock thread identities process-wide across Platform instances, and reject colliding identities before the existing startup-publication and mutex checks. Production Windows thread IDs and runtime behavior remain unchanged.
+- Retire the Registry language log conversion before allocating the query replacement, matching the recovered cleanup order. Add narrow/wide allocation-pressure and normal-allocation controls; preserve original-first queries, counted sizes, log order and native terminal error policy.
 
 ### Integrated 2026-11-11
+
+- [PR #347](https://github.com/raleonys/citrine-eclipse-mirage/pull/347): Fix the execution concurrency fixture to allocate mock thread identities process-wide across Platform instances, and reject colliding identities before the existing startup-publication and mutex checks. Production Windows thread IDs and runtime behavior remain unchanged.
 
 - [PR #354](https://github.com/raleonys/citrine-eclipse-mirage/pull/354): Reconcile all first-party Markdown guides and companion CSV roles against accepted source, workflows and contracts. Add a complete documentation index; label historical checkpoints without rewriting retained evidence, archive identities or old execution outcomes. Correct stale avatar/RCDATA, CryptQuery compatibility suffix, unsigned import order, operator dispatch, export and TU-count descriptions, and distinguish implemented test scenarios from remaining donor/provenance work.
 - [PR #354](https://github.com/raleonys/citrine-eclipse-mirage/pull/354): Correct the active runtime summary from 60 to 62 Production TUs, matching the partition policy; retain 78 reference TUs and all historical acceptance fields. Add host regressions for complete document inventory, relative file links, live contract values and the actual manual operator workflow. Preserve runtime/vendor bytes, README, build/CI scheduling, public ABI and release policy.
