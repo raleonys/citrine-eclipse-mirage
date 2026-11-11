@@ -32,7 +32,7 @@ endif()
 
 add_library(citrine_eclipse_mirage_pegtl INTERFACE)
 target_include_directories(citrine_eclipse_mirage_pegtl INTERFACE "${PROJECT_SOURCE_DIR}/third_party/pegtl/include")
-target_compile_features(citrine_eclipse_mirage_pegtl INTERFACE cxx_std_20)
+target_compile_features(citrine_eclipse_mirage_pegtl INTERFACE cxx_std_17)
 
 # Check the real public API even for BUILD_TESTING=OFF. A dependency target's
 # existence is not evidence that its headers compile with the selected STL.
@@ -41,6 +41,7 @@ option(CITRINE_ECLIPSE_MIRAGE_REQUIRE_VENDOR_COMPATIBILITY
 include(CheckCXXSourceCompiles)
 set(_saved_required_includes "${CMAKE_REQUIRED_INCLUDES}")
 set(CMAKE_REQUIRED_INCLUDES "${PROJECT_SOURCE_DIR}/third_party/pegtl/include")
+# The selected 4.x snapshot supports C++17; the probe uses project C++20.
 check_cxx_source_compiles("#include <tao/pegtl.hpp>\nint main() { tao::pegtl::view_input in(\"x\"); return tao::pegtl::parse<tao::pegtl::ascii::alpha>(in) ? 0 : 1; }"
   CITRINE_ECLIPSE_MIRAGE_PEGTL_PUBLIC_INPUT_WORKS)
 set(CMAKE_REQUIRED_INCLUDES "${_saved_required_includes}")

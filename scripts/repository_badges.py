@@ -163,12 +163,21 @@ def test_counts(path):
         raise ValueError('Native testcase is not directly owned by a suite')
     for suite in root.iter():
         if suite.tag in {'testsuite', 'testsuites'}:
+            suite_cases = list(suite.iter('testcase'))
             count = suite.get('tests')
             if suite.tag == 'testsuite' and count is None:
                 raise ValueError('Native test suite must declare its test count')
             if count is not None:
-                if not re.fullmatch(r'[0-9]+', count) or int(count) != len(list(suite.iter('testcase'))):
+                if not re.fullmatch(r'[0-9]+', count) or int(count) != len(suite_cases):
                     raise ValueError('Native test count does not match testcases')
+            # Optional JUnit summary totals must not contradict case outcomes.
+            # A malformed declared failure count must never render a green badge.
+            for field, tag in (('failures', 'failure'), ('errors', 'error'), ('skipped', 'skipped')):
+                declared = suite.get(field)
+                if declared is not None:
+                    observed = sum(case.find(tag) is not None for case in suite_cases)
+                    if not re.fullmatch(r'[0-9]+', declared) or int(declared) != observed:
+                        raise ValueError('Native test ' + field + ' count does not match testcases')
     passed = sum(not any(case.find(tag) is not None for tag in ('failure', 'error', 'skipped')) for case in cases)
     return passed, len(cases)
 
