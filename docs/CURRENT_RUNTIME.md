@@ -26,8 +26,10 @@ PASS cannot be inferred from the earlier results.
 The application is RE-based. Bluefield supplies selected hook 11/lifetime
 dependencies; Brownfield supplies infrastructure/metadata and approved
 resilience approaches. Entire application runtimes are not imported.
-The standard compiler CRT is used. The Production/reference split remains
-62/78 CPP files; reference sources were not deleted. Four model compositions
+The standard compiler CRT is used. The current partition is **62 Production / 78 reference CPP files**: 60
+production object sources, one VDF source and one DLL entry source, as declared
+in [BUILD_PARTITION_POLICY.json](../metadata/BUILD_PARTITION_POLICY.json).
+Reference sources were not deleted. Four model compositions
 were removed from Production linkage, and mixed tests were separated.
 The crypt diagnostic TLS guard remains Debug-only.
 See [cleanup scope](BUILD_CLEANUP.md).
