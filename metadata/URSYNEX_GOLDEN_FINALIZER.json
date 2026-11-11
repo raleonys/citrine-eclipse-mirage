@@ -3,7 +3,7 @@
   "policy": "URSYNEX Golden Finalizer",
   "activation": "READY_TARGET",
   "fixture_only": false,
-  "authority": "Owner reference DLL metadata plus existing final-copy mutation and import descriptor ordering policy",
+  "authority": "Owner reference DLL metadata plus existing final-copy mutation and import descriptor ordering policy; current owner instruction preserves the native compilation timestamp",
   "native_acceptance": "REQUIRES_ACTUAL_MSVC_GOLDEN_RUN",
   "implementation": "scripts/ursynex_golden_finalizer.py",
   "infrastructure_policy_values_inherited": false,
@@ -13,7 +13,7 @@
       14,
       0
     ],
-    "timestamp": "0xA6FD7C8F",
+    "timestamp": "PRESERVE_INPUT",
     "rich_header": "ABSENT"
   },
   "policy_bindings": {
@@ -34,7 +34,7 @@
   "output": "same file after bounded mutation",
   "approved_mutations": [
     "#10 LinkerVersion 14.0",
-    "#11 TimeDateStamp 0xA6FD7C8F",
+    "#11 TimeDateStamp preserved from native link output",
     "#36 Rich Header absent",
     "PE OptionalHeader.CheckSum recomputed after approved mutations",
     "Owner-selected standard import descriptor permutation only; preserve thunk/name/IAT records and directory locations"
