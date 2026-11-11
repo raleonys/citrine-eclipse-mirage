@@ -25,6 +25,11 @@ def main():
     funcs = pe.rva2off(u32(pe.b, eo+28))
     names = pe.rva2off(u32(pe.b, eo+32))
     ords = pe.rva2off(u32(pe.b, eo+36))
+    surge_ordinal, surge_rva, _ = pe.exports()['SURGE']
+    surge_slot = funcs + 4*(surge_ordinal-u32(pe.b, eo+16))
+    owner_index = next(index for index, (_, va, span, _, _, _) in enumerate(pe.sections)
+                       if va <= surge_rva < va+span)
+    owner_flags = pe.opt+pe.optsz+owner_index*40+36
     mutations = {
         'wrong_ordinal_base': (eo+16, struct.pack('<I', 10)),
         'missing_function_body': (funcs, struct.pack('<I', 0)),
@@ -33,7 +38,10 @@ def main():
         'alias_ordinal_replaces_function': (ords, struct.pack('<H', 1)),
         # Keep lexical order so the exact-name check owns this failure.
         'unexpected_name': (pe.rva2off(u32(pe.b, names)), b'CllMain\0'),
-        'wrong_machine': (pe.coff, struct.pack('<H', 0x14c))
+        'wrong_machine': (pe.coff, struct.pack('<H', 0x14c)),
+        'function_body_in_headers': (surge_slot, struct.pack('<I', 0x40)),
+        'unmapped_function_body': (surge_slot, struct.pack('<I', 0xffffffff)),
+        'non_executable_function_body': (owner_flags, struct.pack('<I', u32(pe.b, owner_flags) & ~0x20000000))
     }
     with tempfile.TemporaryDirectory() as folder:
         for name, (offset, replacement) in mutations.items():
@@ -75,7 +83,7 @@ def main():
             order_mutations += 1
         assert order_mutations == 5
     assert hashlib.sha256(original.read_bytes()).hexdigest() == digest
-    print('PASS: actual DLL baseline, 7 export/machine and 5 paired name-order mutations; all checks read-only')
+    print(f'PASS: actual DLL baseline, {len(mutations)} export/machine and 5 paired name-order mutations; all checks read-only')
 
 
 if __name__ == '__main__':

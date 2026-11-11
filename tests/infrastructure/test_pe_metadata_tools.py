@@ -485,6 +485,75 @@ with tempfile.TemporaryDirectory() as td:
     else:
         raise AssertionError('accepted case-folded export-name ordering')
     assert path.read_bytes()==case_names,'rejected case-sensitive export inspection changed bytes'
+    # An export name and ordinal do not prove that its EAT address names code.
+    # Keep import, CRT entrypoint and /GS evidence valid while changing only the
+    # export target or its separate section; refresh checksums for every case.
+    funcs_off=0x400+(0x1190-0x1000)
+    extra_header=opt_off+0xF0+40
+    extra=bytearray(good)
+    struct.pack_into('<H',extra,0x100+4+2,2)
+    extra[extra_header:extra_header+8]=b'.code2\0\0'
+    struct.pack_into('<IIII',extra,extra_header+8,0x200,0x3000,0x200,len(good))
+    struct.pack_into('<I',extra,extra_header+36,0x60000020)  # CODE | EXECUTE | READ
+    struct.pack_into('<I',extra,opt_off+56,0x4000)
+    struct.pack_into('<I',extra,funcs_off+4,0x3000)
+    extra.extend(b'\xC3'+b'\0'*0x1FE+b'\xC3')
+
+    def export_target_case(label,data,reason=None,name='SURGE'):
+        data=bytearray(data)
+        struct.pack_into('<I',data,opt_off+64,cor.compute_pe_checksum(data,opt_off+64))
+        path=td/('export_target_'+label+'.dll'); path.write_bytes(data)
+        before=path.read_bytes()
+        exports=cor.PE(path).exports()
+        golden_errors,_=cor.inspect_shipping_abi(path,cor_policy)
+        public_report=public_abi.inspect(path,r)
+        if reason is None:
+            assert not golden_errors,(label,golden_errors)
+            assert public_report['result']=='PASS_PUBLIC_C_EXPORT_CONTRACT',(label,public_report)
+        else:
+            prefix=f'{name} export RVA 0x{exports[name][1]:X} '
+            for gate,errors in [('CORVEXON',golden_errors),('public ABI',public_report['errors'])]:
+                assert errors and all(e.startswith(prefix) for e in errors),(label,gate,errors)
+                assert any(reason in e for e in errors),(label,gate,reason,errors)
+            assert public_report['result']=='FAIL',(label,public_report)
+        assert path.read_bytes()==before,(label,'export validation modified the DLL')
+        return exports
+
+    export_target_case('executable_different_section',extra)
+    last=bytearray(extra); struct.pack_into('<I',last,funcs_off+4,0x31FF)
+    export_target_case('last_file_backed_byte',last)
+    aliases=bytearray(extra)
+    for index in range(3): struct.pack_into('<I',aliases,funcs_off+index*4,0x3000)
+    export_target_case('shared_code_address',aliases)
+    for index,name in enumerate(('DllMain','SURGE','DllShutdown')):
+        for label,target,reason in [('header',0x40,'PE headers'),
+                                    ('unmapped',0x7FFFFFFF,'unmapped target')]:
+            bad=bytearray(good); struct.pack_into('<I',bad,funcs_off+index*4,target)
+            export_target_case(label+'_'+name,bad,reason,name)
+    for label,field,value,target,reason in [
+        ('non_executable',36,0x40000040,0x3000,'non-executable section'),
+        ('virtual_tail',8,0x300,0x3200,'virtual-only bytes'),
+        ('zero_raw_size',16,0,0x3000,'virtual-only bytes'),
+        ('zero_raw_pointer',20,0,0x3000,'raw storage overlapping PE headers'),
+        ('raw_pointer_in_headers',20,0x40,0x3000,'raw storage overlapping PE headers'),
+        ('exact_eof',20,len(extra),0x3000,'beyond EOF'),
+        ('beyond_eof',20,len(extra)+0x200,0x3000,'beyond EOF'),
+        ('section_claims_header',12,0x40,0x40,'PE headers'),
+    ]:
+        bad=bytearray(extra)
+        struct.pack_into('<I',bad,extra_header+field,value)
+        struct.pack_into('<I',bad,funcs_off+4,target)
+        if label=='virtual_tail': bad.extend(b'\0'*0x100)  # Physical bytes do not extend SizeOfRawData.
+        exports=export_target_case(label,bad,reason)
+        if label=='non_executable':
+            # Other callers legitimately inspect data exports. Only application
+            # function gates impose executable storage; PE.exports stays generic.
+            assert exports['SURGE']==(2,0x3000,False),exports
+    overlap=bytearray(extra)
+    struct.pack_into('<H',overlap,0x100+4+2,3)
+    overlap[extra_header+40:extra_header+80]=overlap[extra_header:extra_header+40]
+    overlap[extra_header+40:extra_header+48]=b'.alias\0\0'
+    export_target_case('overlapping_owners',overlap,'ambiguous section ownership')
     # F1536-002: downstream final-binary acceptance must reject a stale PE checksum.
     bad=bytearray(good); bad[-1]^=0x01; bp=td/'bad_checksum.dll'; bp.write_bytes(bad)
     errors,_=cor.inspect_shipping_abi(bp,cor_policy); assert any('PE CheckSum=' in x for x in errors), errors

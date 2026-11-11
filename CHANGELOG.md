@@ -6,10 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Reject temporary SessionPolicy objects when constructing a borrowed SessionDeadlines tracker, preventing a dangling policy reference. Preserve the service-owned lvalue path and live policy reads; add compile-time lifetime checks and a borrowed-policy regression.
+- Validate the three public function export entry addresses against file-backed executable PE section bytes in both public ABI and Golden checks. Reject unmapped, header, non-executable, virtual-only, ambiguous and out-of-file targets; retain valid executable section names, shared code addresses and general data-export parsing.
 
 ### Integrated 2026-11-11
 
+- [PR #342](https://github.com/raleonys/citrine-eclipse-mirage/pull/342): Reject temporary SessionPolicy objects when constructing a borrowed SessionDeadlines tracker, preventing a dangling policy reference. Preserve the service-owned lvalue path and live policy reads; add compile-time lifetime checks and a borrowed-policy regression.
 - [PR #300](https://github.com/raleonys/citrine-eclipse-mirage/pull/300): Reject malformed cached offline profiles before invoking the unrestricted semicolon splitter, avoiding allocation of thousands of discarded fields. Preserve exact three-field cache bytes, empty fields, embedded NUL, avatar fallback and the public split helper; add an allocation-budget regression through the real offline worker.
 - [PR #295](https://github.com/raleonys/citrine-eclipse-mirage/pull/295): Reject commented-out and string-literal C++ interface/adapter definitions in the bounded source identity check; keep real class detection, self-inheritance checks and source line attribution, with new negative regressions.
 - [PR #311](https://github.com/raleonys/citrine-eclipse-mirage/pull/311): Preflight pinned vendor ZIP member paths, types, and per-member/cumulative expanded sizes before CRC verification or payload reads. Reject oversized and nonempty directory entries without decompression; add portable single-member and aggregate budget regression tripwires. Declare regular-file types in the budget fixtures so both refusal paths are reached. Preserve exact vendor pins, content hashing, and shipping behavior.
