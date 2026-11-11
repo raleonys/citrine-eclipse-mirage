@@ -1,11 +1,15 @@
+> **Historical checkpoint.** Use [BUILD_PARTITION.md](BUILD_PARTITION.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # Production linkage and diagnostic cleanup
 
 The owner requested that the confirmed dead-code audit decisions
 be implemented together with the TLS diagnostic correction.
 Four source files were moved out of Production linkage into
 the retained reference/source-API group without deletion.
-The current partition is **60 Production and 78 reference
-CPP files, 138 total**. Public headers, four vendors, source
+At that cleanup checkpoint the partition was **60 Production and 78 reference
+CPP files, 138 total**. The current partition is maintained in
+[BUILD_PARTITION.md](BUILD_PARTITION.md) and its machine policy. Public headers, four vendors, source
 API signatures, three Production exports, and Golden
 compiler/linker policy remain unchanged.
 
@@ -23,7 +27,8 @@ The earlier `config/startup.cpp` was renamed to
 `startup.obj` name in the MSVC MAP with the Production
 `runtime/startup.cpp`. Its body was byte-identical;
 headers and C++ symbol names were unchanged.
-No source body was deleted; all 138 CPP files remain.
+No source body was deleted by that cleanup; all 138 checkpoint CPP files
+were retained. Subsequent additions are outside this historical count.
 
 The former model's 1,440 `config_hash` comparisons
 were moved to a separate reference test, as was the
@@ -56,7 +61,7 @@ differences under the same toolchain are reported
 separately in final validation. Cross-build
 differences are not presented as native MSVC gains.
 
-The active machine contract is
+The checkpoint's reviewed decisions are in
 [BUILD_CLEANUP_REVIEW.json](../metadata/BUILD_CLEANUP_REVIEW.json);
 validation is in
 [VALIDATION.json](../metadata/evidence/build-cleanup/VALIDATION.json).

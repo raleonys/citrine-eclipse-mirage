@@ -17,6 +17,8 @@ import re
 import tempfile
 import zipfile
 
+from project_files import safe_member
+
 VENDORS = ('asio','minhook','pegtl','pugixml')
 MAX_ARCHIVE_BYTES = 100 * 1024 * 1024
 MAX_MEMBER_BYTES = 32 * 1024 * 1024
@@ -31,12 +33,16 @@ def hash_file(p):
 
 
 def safe_rel(path):
-    if not isinstance(path, str) or not path or '\\' in path or ':' in path or '\x00' in path:
+    """Reject vendor members that cannot be represented safely on Windows.
+
+    Archive inspection and manifest validation share the source ZIP policy.
+    """
+    if not isinstance(path, str):
         raise ValueError('unsafe member name')
-    p=pathlib.PurePosixPath(path)
-    if p.is_absolute() or any(x in ('..','.','') for x in p.parts) or p.as_posix()!=path.strip('/'):
-        raise ValueError('unsafe member path')
-    return p
+    try:
+        return pathlib.PurePosixPath(safe_member(path))
+    except ValueError as error:
+        raise ValueError('unsafe member path') from error
 
 
 def validate_symlink(rel, target):
