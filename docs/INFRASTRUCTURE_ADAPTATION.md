@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # Brownfield infrastructure adaptation
 
 Source: the owner-supplied HF20 full-source candidate ZIP.
@@ -18,6 +21,7 @@ these hosts is not evidence of completed native/game acceptance.
 
 Old application route/state/Asio tests and historical release/Library/G0
 records were not migrated. The rationale and inspected files are recorded
-in the current transfer/adaptation records. The SURGE artwork is preserved
-from the owner's original input; third-party Brownfield product metadata
-was not added to the resource file.
+in the current transfer/adaptation records. The historical initial artwork and resource decision is superseded by the
+owner's later [avatar](AVATAR_UPDATE.md) and project VERSIONINFO decisions in
+[DEVELOPMENT.md](DEVELOPMENT.md). Current resources do not use Brownfield
+product branding; selected structural PE requirements remain enforced.
