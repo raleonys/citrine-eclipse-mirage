@@ -88,6 +88,10 @@ Instrumentation has overhead, especially for echo. Original source/vendor bytes
 and the shipping build graph remain unchanged. Generated-copy hashes,
 source-manifest identity and executable hashes are retained.
 
+Generation preflights the complete output set and rejects linked/nonregular
+destinations before writing. Copies are staged exclusively and replaced, so a
+borrowed hardlinked inode cannot be truncated through a generated filename.
+
 ## Results and interpretation
 
 The artifact contains `results.json`, `summary.csv`, raw per-request samples,

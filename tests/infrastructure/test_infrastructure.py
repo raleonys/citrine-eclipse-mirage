@@ -1629,6 +1629,25 @@ class RuntimeBenchmarkTests(unittest.TestCase):
             with self.subTest(workers=count), self.assertRaises(ValueError):
                 tool.generated_service(source, count)
 
+    def test_generated_set_rejects_aliases_before_any_output_changes(self):
+        tool = self.diagnostic()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source, first, last = root / 'source.cpp', root / 'asio_1.cpp', root / 'asio_2.cpp'
+            source.write_bytes(b'protected source')
+            first.write_bytes(b'old first copy')
+            os.link(source, last)
+            with self.assertRaises(ValueError):
+                tool.write_generated({first: b'new first copy', last: b'new second copy'})
+            self.assertEqual(b'protected source', source.read_bytes())
+            self.assertEqual(b'old first copy', first.read_bytes())
+            self.assertFalse(list(root.glob('*.partial')))
+            last.unlink()
+            tool.write_generated({first: b'new first copy', last: b'new second copy'})
+            self.assertEqual(b'new first copy', first.read_bytes())
+            self.assertEqual(b'new second copy', last.read_bytes())
+            self.assertEqual(b'protected source', source.read_bytes())
+
     def test_bad_or_incomplete_measurements_cannot_pass(self):
         tool = self.diagnostic()
         good = self.row()

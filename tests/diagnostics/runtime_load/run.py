@@ -81,6 +81,30 @@ def identity():
             'asio_source_sha256': digest(ROOT / 'src/net/asio_service.cpp')}
 
 
+def write_generated(payloads):
+    # Preflight the complete generated set before changing any destination.
+    # Exclusive staging/replacement never truncates a borrowed source inode.
+    for path in payloads:
+        if path.is_symlink() or (path.exists() and
+                (not path.is_file() or path.stat().st_nlink != 1)):
+            raise ValueError('Unsafe generated benchmark output')
+    staged = []
+    try:
+        for path, payload in payloads.items():
+            with tempfile.NamedTemporaryFile(dir=path.parent, prefix='.' + path.name,
+                                             suffix='.partial', delete=False) as output:
+                temporary = Path(output.name)
+                staged.append((temporary, path))
+                output.write(payload)
+                output.flush()
+                os.fsync(output.fileno())
+        for temporary, path in staged:
+            os.replace(temporary, path)
+    finally:
+        for temporary, _ in staged:
+            temporary.unlink(missing_ok=True)
+
+
 def prepare(output):
     verify_source()
     output = Path(output)
@@ -88,16 +112,18 @@ def prepare(output):
         raise ValueError('Generated benchmark copies must stay under project build/')
     output.mkdir(parents=True, exist_ok=True)
     source = (ROOT / 'src/net/asio_service.cpp').read_text()
-    hashes = {}
+    hashes, payloads = {}, {}
     for workers in WORKERS:
         path = output / f'asio_{workers}.cpp'
-        path.write_text(generated_service(source, workers), encoding='utf-8', newline='\n')
-        hashes[str(workers)] = digest(path)
+        payload = generated_service(source, workers).encode('utf-8')
+        payloads[path] = payload
+        hashes[str(workers)] = hashlib.sha256(payload).hexdigest()
     receipt = {'schema': 'citrine.runtime-benchmark-inputs.v1', **identity(),
                'generated_service_sha256': hashes,
                'instrumentation': 'common queue-clock wrapper/control branches; separate per-message scheduler',
                'production_worker_policy': 2, 'production_queue_limit': 128}
-    (output / 'inputs.json').write_text(json.dumps(receipt, indent=2) + '\n')
+    payloads[output / 'inputs.json'] = (json.dumps(receipt, indent=2) + '\n').encode('utf-8')
+    write_generated(payloads)
 
 
 def integer(value, name, minimum=0):
