@@ -3,11 +3,70 @@
 """Reject misleading, incomplete or semantically unequal performance receipts."""
 import copy
 from pathlib import Path
+import shutil
+import subprocess
 import sys
+import tempfile
 import unittest
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'diagnostics/xml_backend'))
 from performance import CASES, PROFILES, summarize, compile_receipt
+
+
+class ReferenceBindings(unittest.TestCase):
+    def run_binding(self, directory, statement):
+        root = Path(directory)
+        helper = Path(__file__).resolve().parents[1] / 'diagnostics/xml_backend/reference_bindings.cmake'
+        script = root / 'bind.cmake'
+        output = root / 'bound.txt'
+        script.write_text(
+            f'include("{helper.as_posix()}")\n'
+            f'set(reference "{root.as_posix()}")\n' + statement + '\n'
+            f'file(WRITE "{output.as_posix()}" "${{bound}}")\n', encoding='utf-8')
+        cmake = shutil.which('cmake')
+        self.assertIsNotNone(cmake, 'CMake is required for XML reference binding regressions')
+        result = subprocess.run([cmake, '-P', str(script)], capture_output=True, text=True, timeout=15)
+        return result, output
+
+    def test_reads_historical_header_even_when_current_identity_decoy_exists(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            legacy = root / 'include/preloader_l/xml/reader.hpp'
+            decoy = root / 'include/citrine_eclipse_mirage/xml/reader.hpp'
+            legacy.parent.mkdir(parents=True)
+            decoy.parent.mkdir(parents=True)
+            legacy.write_text('#include "preloader_l/router/router.hpp"\n'
+                              'namespace preloader_l::xml_reader_bridge {}\n', encoding='utf-8')
+            decoy.write_text('#error wrong reference header\n', encoding='utf-8')
+            before = legacy.read_bytes(), decoy.read_bytes()
+            result, output = self.run_binding(directory, 'xml_read_reference_header("${reference}" bound)')
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertEqual('#include "citrine_eclipse_mirage/router/router.hpp"\n'
+                             'namespace citrine_eclipse_mirage::xml_reader_bridge {}\n', output.read_text())
+            self.assertEqual(before, (legacy.read_bytes(), decoy.read_bytes()))
+
+    def test_binds_fixture_aliases_without_renaming_compatibility_filename(self):
+        with tempfile.TemporaryDirectory() as directory:
+            statement = ('set(bound [=[#include "preloader_l/xml/reader.hpp"\n'
+                         'namespace reader=preloader_l::xml_reader_bridge;\n'
+                         'using namespace preloader_l;\n'
+                         'const char* filename="preloader_l.dll";\n]=])\n'
+                         'xml_bind_legacy_reference(bound)')
+            result, output = self.run_binding(directory, statement)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertEqual('#include "citrine_eclipse_mirage/xml/reader.hpp"\n'
+                             'namespace reader=citrine_eclipse_mirage::xml_reader_bridge;\n'
+                             'using namespace citrine_eclipse_mirage;\n'
+                             'const char* filename="preloader_l.dll";\n', output.read_text())
+
+    def test_missing_historical_header_does_not_adopt_current_identity_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            decoy = Path(directory) / 'include/citrine_eclipse_mirage/xml/reader.hpp'
+            decoy.parent.mkdir(parents=True)
+            decoy.write_text('// not the pinned historical header\n', encoding='utf-8')
+            result, _ = self.run_binding(directory, 'xml_read_reference_header("${reference}" bound)')
+            self.assertNotEqual(0, result.returncode)
+            self.assertIn('preloader_l/xml/reader.hpp', result.stderr)
 
 
 def fixture(ratios=(.5,)*10):
