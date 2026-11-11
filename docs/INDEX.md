@@ -116,6 +116,7 @@ Issue #109's Registry provenance and original-donor retirement remain open.
 | [RE_COPY_RECOVERY.md](RE_COPY_RECOVERY.md) | Current | [../src/platform/file_copy.cpp](../src/platform/file_copy.cpp) |
 | [RE_INPUT_REVIEW.md](RE_INPUT_REVIEW.md) | Checkpoint | [REMAINING_WORK.md](REMAINING_WORK.md) |
 | [ROOT_LAYOUT_AND_BUILD_OWNERSHIP.md](ROOT_LAYOUT_AND_BUILD_OWNERSHIP.md) | Current | [../CMakeLists.txt](../CMakeLists.txt) |
+| [RUNTIME_BENCHMARKS.md](RUNTIME_BENCHMARKS.md) | Current | [../tests/diagnostics/runtime_load/run.py](../tests/diagnostics/runtime_load/run.py) |
 | [RUNTIME_BINDING.md](RUNTIME_BINDING.md) | Checkpoint | [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md) |
 | [RUNTIME_CONNECTIONS.csv](RUNTIME_CONNECTIONS.csv) | Checkpoint | [RUNTIME_CONNECTIONS.md](RUNTIME_CONNECTIONS.md) |
 | [RUNTIME_CONNECTIONS.md](RUNTIME_CONNECTIONS.md) | Checkpoint | [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md) |

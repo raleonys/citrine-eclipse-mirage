@@ -1587,6 +1587,125 @@ class GitFixtureIsolationTests(unittest.TestCase):
             self.assertNotIn('skipped', result.stderr)
 
 
+class RuntimeBenchmarkTests(unittest.TestCase):
+    @staticmethod
+    def diagnostic():
+        import importlib.util
+        path = ROOT / 'tests/diagnostics/runtime_load/run.py'
+        spec = importlib.util.spec_from_file_location('runtime_load_diagnostic', path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    @staticmethod
+    def row(workers=2, workload='echo', **changes):
+        row = dict(workers=workers, clients=1, requests_per_client=2, pipeline=1,
+                   payload_bytes=1024, workload=workload, completed=2, errors=0,
+                   elapsed_ns=100000 // workers, cpu_ns=10000, cpu_cycles=1000,
+                   startup_ns=1000, shutdown_ns=1000,
+                   peak_working_set_bytes=4096, private_bytes=2048,
+                   observed_worker_threads=min(workers, 2), peak_active_handlers=1,
+                   rtt_ns=[2000, 3000], queue_ns=[10, 20], handler_ns=[100, 200])
+        row.update(changes)
+        return row
+
+    def test_generated_candidates_retain_every_other_production_byte(self):
+        tool = self.diagnostic()
+        original = (ROOT / 'src/net/asio_service.cpp').read_text()
+        for workers in tool.WORKERS:
+            generated = tool.generated_service(original, workers)
+            restored = generated.removeprefix('#include "probe.hpp"\n').replace(
+                'jobs.push_back(citrine_eclipse_mirage::benchmark::timed_job(std::move(fn)));', tool.PUSH)
+            if workers != 2:
+                restored = restored.replace('std::array<std::thread,' + str(workers) + '> workers;', tool.MARKER)
+            self.assertEqual(original, restored)
+        for source, count in [(original, 3), (original.replace(tool.PUSH, ''), 2),
+                              (original + tool.MARKER, 2), ('#include "probe.hpp"\n' + original, 2)]:
+            with self.subTest(workers=count), self.assertRaises(ValueError):
+                tool.generated_service(source, count)
+
+    def test_bad_or_incomplete_measurements_cannot_pass(self):
+        tool = self.diagnostic()
+        good = self.row()
+        fields = ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes', 'workload')
+        expected = {key: good[key] for key in fields}
+        self.assertIs(good, tool.validate(good, expected))
+        for change in [dict(errors=1), dict(errors=False), dict(completed=1),
+                       dict(rtt_ns=[1]), dict(queue_ns=[float('nan'), 1]),
+                       dict(handler_ns=[-1, 0]), dict(elapsed_ns=0), dict(workers=4),
+                       dict(observed_worker_threads=3), dict(peak_active_handlers=2),
+                       dict(rtt_ns=[1, 1000000])]:
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                tool.validate({**good, **change}, expected)
+
+    def test_matrix_requires_every_candidate_round_and_unique_execution_order(self):
+        tool = self.diagnostic()
+        rows = [self.row(n, w, repeat=0, order=i)
+                for w in tool.WORKLOADS for i, n in enumerate(tool.WORKERS)]
+        summary = tool.summarize(rows, 1, (1,), (1,))
+        self.assertEqual(16, len(summary))
+        for row in summary:
+            self.assertEqual(row['workers'] / 2, row['throughput_ratio_to_2_workers'])
+            self.assertIsNone(row['throughput_ratio_95pct_bootstrap'])
+        for bad in (rows[:-1], rows + [rows[0]],
+                    [{**row, 'order': 0} for row in rows]):
+            with self.assertRaises(ValueError):
+                tool.summarize(bad, 1, (1,), (1,))
+
+    def test_percentiles_and_paired_intervals_have_known_answers(self):
+        tool = self.diagnostic()
+        self.assertEqual(95, tool.percentile(list(range(1, 101)), .95))
+        self.assertEqual([2.0, 2.0], tool.ratio_interval([2.0] * 5, 1))
+        for bad in ([], [float('nan')], [float('inf')], [-1], [0]):
+            with self.assertRaises(ValueError):
+                tool.ratio_interval(bad, 1)
+
+    def test_failed_child_and_ineffective_corruption_control_are_rejected(self):
+        tool = self.diagnostic()
+        row = self.row()
+        expected = {key: row[key] for key in
+                    ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes', 'workload')}
+        with tempfile.TemporaryDirectory() as directory:
+            bad = subprocess.CompletedProcess([], 1, '', 'fixture failure')
+            with patch.object(tool.subprocess, 'run', return_value=bad), self.assertRaises(ValueError):
+                tool.execute(Path('not-executed'), expected, directory)
+            good = subprocess.CompletedProcess([], 0, json.dumps(row), '')
+            with patch.object(tool.subprocess, 'run', return_value=good), self.assertRaises(ValueError):
+                tool.execute(Path('not-executed'), expected, directory, fault=True)
+
+    def test_failure_retains_partial_measurements_without_success_receipt(self):
+        tool = self.diagnostic()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            build = root / 'build/binaries'
+            (build / 'generated').mkdir(parents=True)
+            (build / 'Release').mkdir()
+            (build / 'generated/inputs.json').write_text('{}')
+            for n in tool.WORKERS:
+                (build / 'Release' / ('runtime_load_' + str(n) + '.exe')).write_bytes(b'not executed')
+            calls = []
+            def execute(binary, params, output, fault=False):
+                if fault:
+                    return
+                calls.append(params)
+                if len(calls) > 1:
+                    raise ValueError('injected child failure')
+                count = params['clients'] * params['requests_per_client']
+                return {**self.row(), **params, 'completed': count,
+                        'rtt_ns': [2000] * count, 'queue_ns': [10] * count, 'handler_ns': [100] * count}
+            output = root / 'build/results'
+            with patch.object(tool, 'ROOT', root), patch.object(tool, 'verify_source'), \
+                 patch.object(tool, 'identity', return_value={}), \
+                 patch.object(tool.platform, 'system', return_value='Windows'), \
+                 patch.object(tool, 'execute', side_effect=execute):
+                with self.assertRaisesRegex(ValueError, 'injected child failure'):
+                    tool.run(build, output, quick=True)
+            receipt = json.loads((output / 'results.json').read_text())
+            self.assertEqual('FAIL', receipt['result'])
+            self.assertEqual(1, len(receipt['rows']))
+            self.assertNotIn('summary', receipt)
+
+
 class DocumentationContractTests(unittest.TestCase):
     @staticmethod
     def catalog():

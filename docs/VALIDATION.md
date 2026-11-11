@@ -55,3 +55,9 @@ gate requires all eleven source/portable/Windows/reference contexts. See
 [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md) for scheduling and exact-head checks.
 Merge records, configured tests and skipped jobs do not substitute for
 executed native or Golden evidence. Owner game acceptance remains separate.
+
+Opt-in [runtime load measurements](RUNTIME_BENCHMARKS.md) use the real TCP service
+and selected production components with diagnostic-only worker candidates.
+Correctness failures reject a sample; timings are observations, not merge gates
+or original-DLL/Consumer acceptance. The manual performance workflow selects
+this suite explicitly and leaves ordinary PR scheduling unchanged.

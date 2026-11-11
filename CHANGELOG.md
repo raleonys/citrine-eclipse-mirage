@@ -6,9 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Reject export name-pointer tables whose decoded names are out of lexical order so dictionary/set ABI checks cannot hide the malformed table order. Preserve name/ordinal associations, shared export targets and nonmonotonic string addresses; correct the synthetic Golden fixture and cover every nonlexical permutation in both host gates and the linked-DLL mutation test.
+- Add opt-in native runtime load measurements for real TCP framing/handler queues, production XML and atomic persistence. Compare diagnostic-only 1/2/4/8 worker copies with repeated concurrent and pipelined workloads, raw latency/CPU/memory receipts, paired summaries and failure controls. Preserve production defaults and ordinary PR validation scheduling; retain the existing XML benchmark as the manual workflow default.
 
 ### Integrated 2026-11-11
+
+- [PR #318](https://github.com/raleonys/citrine-eclipse-mirage/pull/318): Reject export name-pointer tables whose decoded names are out of lexical order so dictionary/set ABI checks cannot hide the malformed table order. Preserve name/ordinal associations, shared export targets and nonmonotonic string addresses; correct the synthetic Golden fixture and cover every nonlexical permutation in both host gates and the linked-DLL mutation test.
 
 - [PR #319](https://github.com/raleonys/citrine-eclipse-mirage/pull/319): Reject initialized PE section data that overlaps the DOS/PE headers or section table in the read-only ARYRA layout check. Retain both existing section profiles, zero-raw uninitialized sections and the policy against pinning exact RVA/size/offset parity; add six/seven-section overlap and immutability regressions.
 
