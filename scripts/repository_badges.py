@@ -152,11 +152,23 @@ def test_counts(path):
     cases = list(root.iter('testcase'))
     if not 0 < len(cases) <= 100000:
         raise ValueError('Native test report must contain testcases')
+    parents = {child: parent for parent in root.iter() for child in parent}
+    suites = list(root.iter('testsuite'))
+    if not suites or any(node is not root and node.tag == 'testsuites' for node in root.iter()):
+        raise ValueError('Native test report has invalid suite structure')
+    if any(suite is not root and parents.get(suite) is not root and
+           parents.get(suite) not in suites for suite in suites):
+        raise ValueError('Native test suite has an invalid parent')
+    if any(parents.get(case) not in suites for case in cases):
+        raise ValueError('Native testcase is not directly owned by a suite')
     for suite in root.iter():
         if suite.tag in {'testsuite', 'testsuites'}:
             suite_cases = list(suite.iter('testcase'))
-            if suite.get('tests') is not None:
-                if not re.fullmatch(r'[0-9]+', suite.get('tests')) or int(suite.get('tests')) != len(suite_cases):
+            count = suite.get('tests')
+            if suite.tag == 'testsuite' and count is None:
+                raise ValueError('Native test suite must declare its test count')
+            if count is not None:
+                if not re.fullmatch(r'[0-9]+', count) or int(count) != len(suite_cases):
                     raise ValueError('Native test count does not match testcases')
             # Optional JUnit summary totals must not contradict case outcomes.
             # A malformed declared failure count must never render a green badge.
