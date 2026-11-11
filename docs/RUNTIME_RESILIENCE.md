@@ -2,6 +2,8 @@
 > asynchronous greeting, event delivery reservations, deadlines and byte/session
 > budgets now follow [SESSION_TRANSPORT.md](SESSION_TRANSPORT.md). Its current
 > contract supersedes the earlier unchanged-dequeue/output-budget statements below.
+> Current IPv4/IPv6 listeners are in [AUTOMATIC_LISTENER.md](AUTOMATIC_LISTENER.md);
+> the earlier connect-only change below did not itself add that listener.
 
 # Runtime resilience
 
@@ -27,7 +29,9 @@ contract are preserved. No IPv6 listener is added by this change.
 `PersistenceEffects::persist_achievement` serializes XML and INI before entering a
 single checked native batch. Startup creation of achievements.ini and the explicit
 achievement XML/INI writers also use checked replacement. Other recovered binary
-IO paths (profile, ticket, avatar and configuration) retain their existing behavior.
+IO paths (profile, avatar and configuration) retain their existing behavior.
+License-ticket adapters now use checked write/close status as documented in
+[WINDOWS_IO_FIX.md](WINDOWS_IO_FIX.md); they are not atomic replacement writes.
 
 Each destination is staged under an exclusively created same-directory name.
 Write counts, FlushFileBuffers and close are checked before replacement. Existing

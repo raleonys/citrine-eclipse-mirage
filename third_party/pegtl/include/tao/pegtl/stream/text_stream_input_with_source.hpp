@@ -28,7 +28,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       : public stream_input_base< Buffer >
    {
    public:
-      using data_t = Buffer::data_t;
+      using data_t = typename Buffer::data_t;
       using input_source_t = InputSource;
       using error_source_t = ErrorSource;
       using error_position_t = position_with_source< ErrorSource, text_position >;
@@ -43,7 +43,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       static_assert( std::is_same_v< InputSource, ErrorSource >, "TODO?" );
 
       template< typename S, typename... Ts >
-      explicit text_stream_input_with_source( S&& s, Ts&&... ts )
+      text_stream_input_with_source( S&& s, Ts&&... ts )
          : stream_input_base< Buffer >( std::forward< Ts >( ts )... ),
            m_position( std::forward< S >( s ) )
       {}
@@ -62,7 +62,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       }
 
       template< typename Rule >
-      void consume( const std::size_t count )
+      void consume( const std::size_t count ) noexcept
       {
          // assert( count <= buffer_used_size() );
          scan_input< data_t > in( this->current(), count );
