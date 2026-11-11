@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-only
 from pathlib import Path
-import importlib.util, json, struct, tempfile, sys
+import importlib.util, json, os, struct, tempfile, sys
 sys.dont_write_bytecode = True
 r=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(r/'scripts'))
@@ -496,6 +496,32 @@ with tempfile.TemporaryDirectory() as td:
     unnormalized = raw_path.read_bytes()
     cp = subprocess.run(call + ['--verify'], capture_output=True, text=True)
     assert cp.returncode != 0 and raw_path.read_bytes() == unnormalized, (cp.stdout, cp.stderr)
+    # Replacing a linked pathname would detach the selected name while the
+    # underlying unsigned build DLL stays in the old import order. Reject it.
+    hardlink = Path(td) / 'unsigned-hardlink.dll'
+    os.link(raw_path, hardlink)
+    try:
+        assert raw_path.stat().st_nlink > 1
+        cp = subprocess.run(call[:-1] + [str(hardlink)], capture_output=True, text=True)
+        assert cp.returncode != 0 and 'hard-linked' in cp.stdout, (cp.stdout, cp.stderr)
+        assert raw_path.read_bytes() == unnormalized
+        assert hardlink.read_bytes() == unnormalized
+    finally:
+        hardlink.unlink()
+    # Windows symlink creation may require developer mode/privilege.
+    symlink = Path(td) / 'unsigned-symlink.dll'
+    try:
+        symlink.symlink_to(raw_path)
+    except (OSError, NotImplementedError):
+        pass
+    else:
+        try:
+            cp = subprocess.run(call[:-1] + [str(symlink)], capture_output=True, text=True)
+            assert cp.returncode != 0 and 'symlinked' in cp.stdout, (cp.stdout, cp.stderr)
+            assert symlink.is_symlink()
+            assert raw_path.read_bytes() == unnormalized
+        finally:
+            symlink.unlink()
     cp = subprocess.run(call, capture_output=True, text=True)
     assert cp.returncode == 0, (cp.stdout, cp.stderr)
     normalized = raw_path.read_bytes()

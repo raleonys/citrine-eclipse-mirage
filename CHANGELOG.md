@@ -6,7 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Restore the XML comparison diagnostic's pinned pre-rename reference: read its historical header path and bind legacy includes/namespaces only in generated build copies. Preserve the exact reference commit, vendor bytes, compatibility filenames and test assertions; add CMake binding regressions without changing the production reader.
+- Reject symlink and hard-link DLL inputs before mutating the unsigned import-descriptor order. Atomic replacement of an alias could otherwise report normalized bytes for one pathname while leaving the underlying build DLL or another hard link unchanged. Preserve read-only verification and regular-file normalization, and cover both alias forms with synthetic PE negative tests.
+
+### Integrated 2026-11-11
+
+- [PR #328](https://github.com/raleonys/citrine-eclipse-mirage/pull/328): Restore the XML comparison diagnostic's pinned pre-rename reference: read its historical header path and bind legacy includes/namespaces only in generated build copies. Preserve the exact reference commit, vendor bytes, compatibility filenames and test assertions; add CMake binding regressions without changing the production reader.
 
 ### Integrated 2026-11-10
 
