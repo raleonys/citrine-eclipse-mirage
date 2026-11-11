@@ -48,6 +48,13 @@ Git history; earlier execution evidence is not new-snapshot acceptance.
 
 ## Installed tree verification
 
+Vendor member manifests and ZIP entries share the source-package path policy:
+[`vendor_sync.safe_rel()`](../scripts/vendor_sync.py) delegates to
+[`project_files.safe_member()`](../scripts/project_files.py) before staging or
+materialization. It rejects Windows device names, trailing spaces/dots, forbidden
+punctuation and controls while retaining ordinary pinned paths. Link targets
+remain subject to the separate archive-locked alias checks.
+
 All 2,690 file/link entries are verified against
 archive-member hash lists. Licenses and Asio's
 logical links `asio/include → ../include`

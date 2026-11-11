@@ -78,7 +78,7 @@ class PE:
         for _n,va,span,rp,rs,_chars in self.sections:
             if va<=rva<va+span:
                 delta=rva-va
-                if delta>=rs and rs!=0: raise PEError(f'RVA 0x{rva:X} maps into virtual-only bytes')
+                if delta>=rs: raise PEError(f'RVA 0x{rva:X} maps into virtual-only bytes')
                 o=rp+delta
                 if o>=len(self.b): raise PEError(f'RVA 0x{rva:X} maps beyond EOF')
                 return o

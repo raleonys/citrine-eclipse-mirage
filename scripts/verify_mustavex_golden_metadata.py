@@ -97,7 +97,12 @@ def validate_versioninfo_root(root, req):
     def recur(n,parents=()):
         k=n.get('key')
         if parents and parents[-1]=='StringFileInfo': string_tables.append(k)
-        if len(parents)>=2 and parents[-2]=='StringFileInfo': strings[k]=n.get('value')
+        if len(parents)>=2 and parents[-2]=='StringFileInfo':
+            # A dict comparison must not silently collapse ambiguous resource
+            # records, even when duplicate values happen to be identical.
+            if k in strings:
+                errors.append(f'Duplicate VERSIONINFO StringFileInfo key: {k}')
+            strings[k]=n.get('value')
         if k=='Translation':
             z=n.get('value_bytes',b'')
             for i in range(0,len(z)-3,4): translations.append(struct.unpack_from('<HH',z,i))

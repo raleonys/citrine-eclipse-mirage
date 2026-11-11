@@ -6,6 +6,11 @@ On Fridays at **13:30 UTC**, the GitHub workflow prepares a **draft**, not a pub
 
 Retire old `<series>-RNN` tags. Start with `3.2.6-TALVOR`, then `3.2.7-ERINTHAR`, `3.2.8-FORMADRIL`, `3.2.9-CETRION`, `3.3.0-VESPERKAI`. The 34 owner-approved (2026-10-31) assignments through `3.5.9-COLOZHEM` are pinned in `metadata/WEEKLY_NAMING_POLICY.json` from the project Library master. A reserved codename is not a published release.
 
+The registry loader rejects duplicate JSON object keys at every nesting
+level before validating naming authority or version/codename bindings. A
+repeated schema or approved-version entry fails even if its last value is
+valid; malformed policy cannot silently select a last-wins binding.
+
 Minor and patch may be 0..9 only. On patch 9, increment minor and reset patch: `3.2.9 → 3.3.0`; on minor 9 and patch 9, increment major: `3.9.9 → 4.0.0`. Reject `3.2.10`, `3.10.0`, duplicate roots and unapproved future assignments. First candidate bootstraps automatically; optional manual `start_tag` must match the exact next approved version. An unchanged completed source creates no new release; incomplete drafts retry on the same source SHA. Tags and published/unrelated releases are never overwritten.
 
 ## New external files
@@ -27,6 +32,12 @@ reject the retry without uploading, modifying or publishing the draft. An
 intact completed draft is returned unchanged.
 
 `DRAFT` in an internal preparation receipt describes the workflow's draft step. Publishing a release does not rewrite uploaded ZIP bytes, so publication-state receipts must not be embedded in downloadable packages. The owner reviews and manually publishes the draft after separate game acceptance.
+
+Before marking a draft complete, each remote asset must have the expected size
+and an API `digest` exactly matching its locally calculated `sha256:<hex>`.
+Missing, null, empty or mismatched digests leave the candidate in `preparing`;
+retry preparation when GitHub supplies the matching digest instead of accepting
+size alone.
 
 Completed release notes contain the source identity, validated build summary, download guidance and generated changelog. They contain no draft heading or instruction to publish the draft, so the same text remains suitable after owner publication. The incomplete-asset warning exists only during preparation and is removed once both uploads verify. Internal game-acceptance status remains in workflow evidence; the notes do not claim game acceptance.
 

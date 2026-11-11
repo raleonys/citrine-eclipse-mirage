@@ -78,6 +78,17 @@ native job reads its actual JUnit report and records the numeric counts in a
 completed step name. This adds no job, compilation or test execution. Failures,
 errors and skipped cases are excluded from passed and remain in total.
 
+Reports must contain actual test suites, with testcases directly owned by a
+suite. Suites must be direct children of the root or another suite; nested
+aggregate containers and unrelated wrappers cannot supply testcase ownership.
+Every suite must declare a decimal `tests` count matching its descendant cases.
+The root aggregate's `tests` count is optional but must match when present.
+
+Optional `failures`, `errors` and `skipped` summaries on suites or aggregates
+must contain unsigned ASCII decimal counts matching the corresponding testcase
+outcomes. Contradictory or malformed declared totals reject the report before
+test-count recording; omitted outcome summaries remain allowed.
+
 The publisher reads GitHub job metadata, not logs or downloaded PR artifacts.
 It considers only this repository's full-validation PR runs whose tested Git
 tree exactly equals current main. A merge commit may have a different SHA but

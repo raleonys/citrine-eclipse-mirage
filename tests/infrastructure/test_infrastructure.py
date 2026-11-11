@@ -260,6 +260,112 @@ class MsvcCompilerReceiptTests(unittest.TestCase):
         self.cache.write_text(original, encoding='utf-8')
         self.assertIn('Build identity mismatch: cmake_cache_sha256', self.errors())
 
+    def test_literal_compiler_id_survives_generated_cmake_lexical_context(self):
+        declaration = 'set(CMAKE_CXX_COMPILER_ID "MSVC")\n'
+        cases = {
+            'ordinary': declaration,
+            'line_comments': '# set(CMAKE_CXX_COMPILER_ID "Clang")\r\n' + declaration + '# trailing comment\n',
+            'bracket_comments': '#[==[\nset(CMAKE_CXX_COMPILER_ID "Clang")\n]==]\n' + declaration,
+            'quoted_argument': 'set(OTHER "set(CMAKE_CXX_COMPILER_ID \\"Clang\\")")\n' + declaration,
+            'bracket_argument': 'set(OTHER [=[\nset(CMAKE_CXX_COMPILER_ID "Clang")\n]=])\n' + declaration,
+            'nested_arguments': 'message(\n set(CMAKE_CXX_COMPILER_ID "Clang")\n)\n' + declaration,
+            'multiline_command': 'SeT (\n CMAKE_CXX_COMPILER_ID\n "MSVC"\n)\n',
+            'other_control_blocks': declaration + 'foreach(item IN ITEMS one two)\nif(FALSE)\nset(OTHER "ignored")\nendif()\nendforeach()\n',
+            'utf8_bom': '\ufeff' + declaration,
+        }
+        record = self.build / 'CMakeFiles/owned/CMakeCXXCompiler.cmake'
+        for name, text in cases.items():
+            with self.subTest(context=name):
+                record.write_text(text, encoding='utf-8')
+                self.assertEqual([], self.errors())
+
+    def test_compiler_id_rejects_inert_ambiguous_and_nonliteral_evidence(self):
+        declaration = 'set(CMAKE_CXX_COMPILER_ID "MSVC")\n'
+        clang = 'set(CMAKE_CXX_COMPILER_ID "Clang")\n'
+        cases = {
+            'line_comment_only': '# ' + declaration,
+            'line_comment_decoy': '# ' + declaration + clang,
+            'bracket_comment_only': '#[[\n' + declaration + ']]\n',
+            'bracket_comment_decoy': '#[=[\n' + declaration + ']=]\n' + clang,
+            'quoted_argument_only': 'set(OTHER "set(CMAKE_CXX_COMPILER_ID \\"MSVC\\")")\n',
+            'bracket_argument_only': 'set(OTHER [==[\n' + declaration + ']==])\n',
+            'nested_argument_only': 'message(\n' + declaration + ')\n',
+            'duplicate_identical': declaration + declaration,
+            'conflicting_later': declaration + clang,
+            'conflicting_earlier': clang + declaration,
+            'conditional': 'if(FALSE)\n' + declaration + 'endif()\n',
+            'function_body': 'function(deferred)\n' + declaration + 'endfunction()\n',
+            'unset': declaration + 'unset(CMAKE_CXX_COMPILER_ID)\n',
+            'quoted_unset': declaration + 'unset("CMAKE_CXX_COMPILER_ID")\n',
+            'bracket_unset': declaration + 'unset([=[CMAKE_CXX_COMPILER_ID]=])\n',
+            'quoted_assignment': declaration + 'set("CMAKE_CXX_COMPILER_ID" "Clang")\n',
+            'bracket_assignment': declaration + 'set([==[\nCMAKE_CXX_COMPILER_ID]==] "Clang")\n',
+            'computed_value': 'set(CMAKE_CXX_COMPILER_ID "${DECOY}")\n',
+            'wrong_variable_case': 'set(cmake_cxx_compiler_id "MSVC")\n',
+            'different_command': 'notset(CMAKE_CXX_COMPILER_ID "MSVC")\n',
+            'different_variable': 'set(CMAKE_CXX_COMPILER_ID_RUN "MSVC")\n',
+            'unterminated_comment': '#[=[\n' + declaration,
+            'unterminated_quote': declaration + 'set(OTHER "unfinished\n',
+            'unterminated_command': declaration + 'set(OTHER value\n',
+            'mismatched_control': declaration + 'endfunction()\n',
+        }
+        record = self.build / 'CMakeFiles/owned/CMakeCXXCompiler.cmake'
+        for name, text in cases.items():
+            with self.subTest(context=name):
+                record.write_text(text, encoding='utf-8')
+                self.assertIn('Exact build compiler ID is not MSVC', self.errors())
+
+    def test_compiler_id_rejection_preserves_actual_link_validation(self):
+        (self.build / 'BUILD_RECEIPT.json').write_text(json.dumps(self.receipt), encoding='utf-8')
+        target = self.build / 'CMakeFiles/citrine_eclipse_mirage.dir'
+        target.mkdir()
+        link = target / 'link.txt'
+        command = 'link.exe /DLL /DEBUG:NONE /INCREMENTAL:NO /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO a.obj'
+        link.write_text(command + '\n', encoding='utf-8')
+        self.assertEqual([], msvc_evidence.check(self.root, self.build, self.dll))
+        record = self.build / 'CMakeFiles/owned/CMakeCXXCompiler.cmake'
+        record.write_text('# set(CMAKE_CXX_COMPILER_ID "MSVC")\nset(CMAKE_CXX_COMPILER_ID "Clang")\n', encoding='utf-8')
+        self.assertEqual(['Exact build compiler ID is not MSVC'],
+                         msvc_evidence.check(self.root, self.build, self.dll))
+        link.write_text(command + ' /NODEFAULTLIB\n', encoding='utf-8')
+        errors = msvc_evidence.check(self.root, self.build, self.dll)
+        self.assertIn('Exact build compiler ID is not MSVC', errors)
+        self.assertIn('/NODEFAULTLIB is forbidden for normalized CRT shipping', errors)
+
+    def test_actual_receipt_link_audit_rejects_dash_option_conflicts(self):
+        # Real receipt/cache/compiler binding and link-text collection, with
+        # owned byte fixtures only: no MSVC executable or DLL is run here.
+        (self.build / 'BUILD_RECEIPT.json').write_text(json.dumps(self.receipt), encoding='utf-8')
+        target = self.build / 'CMakeFiles/citrine_eclipse_mirage.dir'
+        target.mkdir()
+        source = target / 'link.txt'
+        response = self.build / 'shipping.rsp'
+        flags = '/DLL /DEBUG:NONE /INCREMENTAL:NO /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO a.obj'
+        forbidden = (
+            ('-DEBUG:FULL', 'forbidden debug'),
+            ('-INCREMENTAL:YES', 'forbidden incremental'),
+            ('-LTCG', 'forbidden LTCG'),
+            ('-MANIFEST:EMBED', 'forbidden manifest'),
+            ('-NODEFAULTLIB', '/NODEFAULTLIB is forbidden'),
+            ('-ENTRY:UserEntry', 'custom /ENTRY is forbidden'),
+            ('-Brepro', '/Brepro is forbidden'),
+        )
+        for use_response in (False, True):
+            def command(text):
+                source.write_text('link.exe @shipping.rsp\n' if use_response else 'link.exe ' + text + '\n', encoding='utf-8')
+                if use_response:
+                    response.write_text(text + '\n', encoding='utf-8')
+            command(flags)
+            self.assertEqual([], msvc_evidence.check(self.root, self.build, self.dll))
+            command(flags.replace('/', '-'))
+            with self.subTest(response_file=use_response, recognized_dash_options=True):
+                self.assertEqual([], msvc_evidence.check(self.root, self.build, self.dll))
+            for option, diagnostic in forbidden:
+                with self.subTest(response_file=use_response, option=option):
+                    command(flags + ' ' + option)
+                    errors = msvc_evidence.check(self.root, self.build, self.dll)
+                    self.assertTrue(any(diagnostic in error for error in errors), errors)
+
 
 class ValidationReadinessTests(unittest.TestCase):
     head = 'a' * 40
@@ -969,6 +1075,40 @@ class PackageTests(unittest.TestCase):
         inventory.write_manifest(self.root)
         self.assertEqual([], inventory.verify_manifest(self.root))
 
+    def test_extractor_rejects_high_expansion_before_crc_and_preserves_cleanup(self):
+        # The source package is manifest-consistent: rejection is the budget,
+        # not a hash, CRC, filename, or ownership mismatch.
+        payload = b'X' * (128 * 1024)
+        (self.root / 'src/compressible.txt').write_bytes(payload)
+        inventory.write_manifest(self.root)
+        packaging.package(self.root, self.zip)
+        with zipfile.ZipFile(self.zip) as archive:
+            member = archive.getinfo('src/compressible.txt')
+            self.assertLess(member.compress_size, member.file_size // 100)
+        destination = self.base / 'expanded'
+        with patch.object(extraction, 'MAX_MEMBER_BYTES', 64 * 1024):
+            # The CRC pass may not decompress the disallowed member first.
+            with patch.object(zipfile.ZipFile, 'testzip', side_effect=AssertionError('early decompression')):
+                with self.assertRaisesRegex(ValueError, 'member exceeds extraction budget'):
+                    extraction.extract(self.zip, destination)
+        self.assertFalse(destination.exists())
+        self.assertFalse(list(self.base.glob('.surge-extract-*')))
+
+    def test_extractor_rejects_cumulative_expansion_before_crc(self):
+        packaging.package(self.root, self.zip)
+        with zipfile.ZipFile(self.zip) as archive:
+            largest = max(info.file_size for info in archive.infolist())
+            total = sum(info.file_size for info in archive.infolist())
+        self.assertGreater(total, largest)
+        destination = self.base / 'expanded'
+        with patch.object(extraction, 'MAX_MEMBER_BYTES', largest), \
+             patch.object(extraction, 'MAX_ARCHIVE_BYTES', total - 1), \
+             patch.object(zipfile.ZipFile, 'testzip', side_effect=AssertionError('early decompression')):
+            with self.assertRaisesRegex(ValueError, 'total extraction budget'):
+                extraction.extract(self.zip, destination)
+        self.assertFalse(destination.exists())
+        self.assertFalse(list(self.base.glob('.surge-extract-*')))
+
     def test_flat_roundtrip_and_determinism(self):
         first = packaging.package(self.root, self.zip)
         second = packaging.package(self.root, self.base / 'second.zip')
@@ -1284,6 +1424,26 @@ class PackageTests(unittest.TestCase):
     def test_no_product_zip_inside_source(self):
         with self.assertRaises(ValueError):
             packaging.package(self.root, self.root / 'bundle.zip')
+
+    def test_extraction_rejects_symlinked_parent_before_staging(self):
+        packaging.package(self.root, self.zip)
+        external = self.base / 'external-extraction'
+        external.mkdir()
+        alias = self.base / 'linked-extraction-parent'
+        try:
+            alias.symlink_to(external, target_is_directory=True)
+        except (OSError, NotImplementedError):
+            self.skipTest('Directory symlinks unavailable on this host')
+        for destination in (alias / 'extracted', alias / 'new-parent' / 'extracted'):
+            with self.subTest(destination=destination):
+                with self.assertRaisesRegex(ValueError, 'symlink or junction'):
+                    extraction.extract(self.zip, destination)
+                self.assertFalse(destination.exists())
+                self.assertEqual([], list(external.iterdir()))
+        ordinary = self.base / 'ordinary-extract' / 'extracted'
+        receipt = extraction.extract(self.zip, ordinary)
+        self.assertEqual('PASS', receipt['result'])
+        self.assertEqual([], inventory.verify_manifest(ordinary))
 
     def test_output_directory_alias_to_source_root_is_rejected_before_staging(self):
         alias = self.base / 'source-root-alias'

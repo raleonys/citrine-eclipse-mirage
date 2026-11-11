@@ -48,6 +48,13 @@ Production/reference target partitioning and per-file use checks:
 is [BUILD_PARTITION.json](../metadata/evidence/BUILD_PARTITION.json);
 earlier reports retain their original historical results.
 
+The native size collector (`scripts/collect_size_evidence.py`) resolves
+Visual Studio object paths for the selected configuration only. Inactive
+`ItemGroup` ancestors and `ClCompile` conditions cannot substitute Debug
+objects into Release evidence. Existing `IntDir`/`ObjectFileName` resolution
+and unknown-macro refusal remain in effect. Portable mapping fixtures do not
+establish comparable same-build native DLL/MAP/OBJ measurements.
+
 Current hosted acceptance belongs to the selected commit's GitHub Actions
 jobs and artifacts, not a repository-wide PASS/NOT_RUN flag in an older
 snapshot. PR creation checks lightweight integrity; the later full-validation

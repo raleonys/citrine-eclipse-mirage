@@ -425,8 +425,8 @@ def publish_draft(github, p, assets, receipt_path):
         asset = remote[path.name]
         if asset['size'] != path.stat().st_size:
             raise ValueError('Remote asset size mismatch')
-        if asset.get('digest') and asset['digest'] != 'sha256:' + sha(path):
-            raise ValueError('Remote asset hash mismatch')
+        if asset.get('digest') != 'sha256:' + sha(path):
+            raise ValueError('Remote asset hash missing or mismatched')
     result = github.update(release_id, marker(p['source_sha'], 'complete') + '\n\n' + summary + notes['body'])
     if not result['draft']:
         raise ValueError('Candidate was published concurrently; manual review is required')

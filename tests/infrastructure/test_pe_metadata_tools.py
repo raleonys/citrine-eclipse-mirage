@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-only
 from pathlib import Path
-import importlib.util, json, os, struct, tempfile, sys
+import copy, importlib.util, json, os, struct, tempfile, sys
 sys.dont_write_bytecode = True
 r=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(r/'scripts'))
@@ -35,6 +35,17 @@ good_vi={'key':'VS_VERSION_INFO','value':None,'value_bytes':fixed_bytes,'childre
     {'key':'VarFileInfo','value':None,'value_bytes':b'','children':[{'key':'Translation','value':None,'value_bytes':translation,'children':[]}]}
 ]}
 assert not mus.validate_versioninfo_root(good_vi,mustavex['required'])
+# Identical and shadowed duplicate StringFileInfo entries were previously
+# collapsed into a dict, so both malformed resources looked like good_vi.
+for variant in ('identical','conflicting'):
+    duplicate_vi=copy.deepcopy(good_vi)
+    entries=duplicate_vi['children'][0]['children'][0]['children']
+    repeated=copy.deepcopy(entries[0])
+    if variant=='conflicting':
+        repeated['value']='UNEXPECTED_DUPLICATE_VALUE'
+    entries.insert(0,repeated)
+    errors=mus.validate_versioninfo_root(duplicate_vi,mustavex['required'])
+    assert errors==[f"Duplicate VERSIONINFO StringFileInfo key: {repeated['key']}"], (variant,errors)
 bad_vi=json.loads(json.dumps(good_vi,default=lambda x: None)) if False else None
 wrong_table={'key':'VS_VERSION_INFO','value':None,'value_bytes':fixed_bytes,'children':[
     {'key':'StringFileInfo','value':None,'value_bytes':b'','children':[{'key':'000004b0','value':None,'value_bytes':b'','children':strings}]},
@@ -381,6 +392,24 @@ with tempfile.TemporaryDirectory() as td:
         cor.PE(bp); raise AssertionError('CORVEXON accepted data directories outside declared optional header')
     except cor.PEError as e:
         assert 'declared optional header' in str(e), e
+    # CORVEXON must not treat zero-raw PE sections as file-backed storage:
+    # a virtual-only RVA cannot alias the DOS header or unrelated file data.
+    section_header=opt_off+0xF0
+    for raw_pointer in (0,0x400):
+        bad=bytearray(good)
+        struct.pack_into('<II',bad,section_header+16,0,raw_pointer)
+        zero_raw=td/('cor_zero_raw_'+str(raw_pointer)+'.dll')
+        zero_raw.write_bytes(bad)
+        zero_pe=cor.PE(zero_raw)
+        for offset in (0,0x100):
+            try:
+                zero_pe.rva2off(0x1000+offset)
+            except cor.PEError as error:
+                assert 'virtual-only' in str(error),error
+            else:
+                raise AssertionError('CORVEXON mapped zero-raw virtual section into file bytes')
+    assert cor.PE(gp).rva2off(0x1050)==0x450
+    assert cor.PE(gp).rva2off(0x100)==0x100
     errors,info=cor.inspect_shipping_abi(gp,cor_policy)
     assert not errors, errors
     assert info['exports']['DllMain'][0]==1 and info['exports']['SURGE'][0]==2 and info['exports']['DllShutdown'][0]==3

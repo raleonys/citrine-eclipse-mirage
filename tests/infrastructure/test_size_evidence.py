@@ -169,6 +169,46 @@ class CoffEvidenceTests(unittest.TestCase):
             self.assertEqual(vs_object_paths(project, 'Release', {source}),
                              {source: build / 'shipping.dir/Release/explicit.obj'})
 
+    def test_vs_object_mapping_ignores_other_configuration_itemgroups(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            build = root / 'build'
+            build.mkdir()
+            source = root / 'src/entry.cpp'
+            debug_only = root / 'src/debug_only.cpp'
+            project = build / 'shipping.vcxproj'
+            project.write_text('''<Project>
+<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+<IntDir>shipping.dir/Release/</IntDir></PropertyGroup>
+<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+<ClCompile Include="../src/entry.cpp"><ObjectFileName>$(IntDir)release.obj</ObjectFileName></ClCompile>
+</ItemGroup>
+<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+<ClCompile Include="../src/entry.cpp"><ObjectFileName>$(IntDir)debug.obj</ObjectFileName></ClCompile>
+<ClCompile Include="../src/debug_only.cpp"><ObjectFileName>$(IntDir)debug_only.obj</ObjectFileName></ClCompile>
+</ItemGroup></Project>''')
+            self.assertEqual(vs_object_paths(project, 'Release', {source, debug_only}),
+                             {source: build / 'shipping.dir/Release/release.obj'})
+
+    def test_vs_object_mapping_ignores_conditioned_compile_items(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            build = root / 'build'
+            build.mkdir()
+            source = root / 'src/entry.cpp'
+            project = build / 'shipping.vcxproj'
+            project.write_text('''<Project>
+<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+<IntDir>shipping.dir/Release/</IntDir></PropertyGroup>
+<ItemGroup>
+<ClCompile Include="../src/entry.cpp" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+<ObjectFileName>$(IntDir)selected.obj</ObjectFileName></ClCompile>
+<ClCompile Include="../src/entry.cpp" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+<ObjectFileName>$(IntDir)wrong.obj</ObjectFileName></ClCompile>
+</ItemGroup></Project>''')
+            self.assertEqual(vs_object_paths(project, 'Release', {source}),
+                             {source: build / 'shipping.dir/Release/selected.obj'})
+
     def test_unknown_vs_path_macros_are_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             project = Path(directory) / 'shipping.vcxproj'

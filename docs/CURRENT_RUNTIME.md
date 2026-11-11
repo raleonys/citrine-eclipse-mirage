@@ -59,6 +59,26 @@ remain retryable on failure. Greeting is asynchronous; session/frame/output
 limits and receive/frame/send deadlines remain enforced. Achievement XML/INI
 writes use an atomic batch with rollback and retry ownership; no claim of
 power-loss atomicity across multiple files is made.
+The concrete Windows batch backend first recovers retained work, then rejects
+empty/embedded-NUL destinations, comparison lengths beyond the Win32 domain,
+and case-fold-equivalent destination strings before staging. Comparison uses
+locale-independent `CompareStringOrdinal`; comparison failure also rejects the
+batch. This conservative admission can refuse distinct case-sensitive names;
+it does not resolve every hardlink, reparse, relative/absolute or 8.3 alias.
+
+Nonempty Config2 `AchievementsSet` and `SteamAppId` identifiers are checked for
+Win32-forbidden punctuation, path separators and C0 controls before achievement
+file I/O or retained-path updates. The bare `SteamAppId` watcher directory also
+rejects reserved device names (including `CONIN$`/`CONOUT$` and their device
+extension forms), leading/trailing spaces and trailing dots. Its
+filesystem-codepage-converted UTF-16 name is checked again, including COM/LPT
+superscript device digits. Both checks share the same allocation-free lexical
+classifier; narrow high bytes are not treated as Unicode digits before conversion.
+Ordinary lookalikes (`CONIN`, `CONIN$_`, `COM10`, COM plus U+2074) and valid U+202E
+names remain allowed. Safely wrapped XML names such as `achievement-CON.xml`
+remain accepted. Path conversions complete in XML filename, INI filename, app ID,
+watcher-directory order before XML import, so conversion failures cannot leave a
+partial import. These lexical checks do not provide reparse-point isolation.
 
 For native socket closure, a documented would-block result is retried using
 the exact handle. Other close failures have uncertain-quarantine semantics:
@@ -89,3 +109,9 @@ source head; historical NOT_RUN fields are not evidence that no later native
 execution occurred. Real game acceptance remains owner-run and DLL-specific.
 Donor retirement is unapproved; registry provenance, aggregate memory
 budgets, shutdown liveness, and remaining source/test/tooling reviews are open.
+
+For native directory-leaf review observations, the existing manual Environment
+diagnostic accepts `operation=path-probe`. It runs the owned-directory
+`tests/diagnostics/windows_paths/probe.py` without the Environment build matrix.
+The default operation remains the existing Debug/Release Environment tests.
+Observed names are evidence, not a new Unicode rejection policy.

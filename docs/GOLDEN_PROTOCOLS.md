@@ -23,6 +23,25 @@ the pipeline writes the hash-named build candidate
 and the dist bundle described below. It does not
 publish to a Library or official release pointer.
 
+The MSVC link-command collector accepts only unredirected, target-local
+CMake `link.txt` or `build.make` files beneath the selected build root. A
+redirected direct rule fails explicitly; fallback discovery excludes aliases,
+even when they resolve inside that root. Only response files referenced by
+the selected invocation contribute linker-policy evidence. Portable fixtures
+check this path policy; actual MSVC/Golden acceptance requires native output.
+
+The option auditor treats token-start `-` and `/` prefixes equivalently in
+its private text copy. It rejects forbidden options even beside allowed
+duplicates or in referenced response files. Generated commands and linker
+execution are unchanged; this does not implement general shell parsing.
+
+The build-evidence checker reads generated CMake command boundaries and
+requires one unconditional direct literal `CMAKE_CXX_COMPILER_ID "MSVC"`
+assignment. Comments and opaque arguments cannot supply that assignment;
+duplicate, conflicting, conditional, unset or malformed records are rejected.
+This static reader neither executes CMake nor authenticates arbitrary programs.
+Compiler/cache/hash and shipping-link checks remain independent.
+
 ## Current product targets
 
 Following the owner's instruction to complete missing
@@ -37,6 +56,17 @@ fixed fixture identities under
 | ARYRA | MSVC six sections, or seven with the static UCRT `.fptable`: verify ordering, alignment, file bounds and non-overlap. `.fptable` must have virtual 0x100, raw 0x200, index 4, characteristics 0xC0000040 and all-zero data. Other section RVAs/sizes are not fixed. |
 | MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem 6.0, linker 14.0, native compilation timestamp preserved, no Rich header. Citrine Eclipse Mirage VERSIONINFO, Copyright 2026 SURGE, and matching selected numeric/string file and product versions. No PNG/RCDATA/manifest or COFF symbol/debug/certificate. Internal export name `citrine_eclipse_mirage.unsigned.dll`. |
 | CORVEXON | Exactly three C exports/ordinals. The CRT entrypoint is separate from exported DllMain and lies in executable `.text`. No static imports outside CRYPT32/WS2_32/KERNEL32/USER32/SHELL32/MSWSOCK; MSWSOCK only AcceptEx/GetAcceptExSockaddrs, CRYPT32 only CryptQueryObject. `/MT`, writable image-backed `/GS` cookie and valid checksum. |
+
+MUSTAVEX rejects duplicate `StringFileInfo` string keys, including identical
+values and conflicting values shadowed by later entries. Each key must occur
+once before the exact approved strings are compared; valid single-entry
+strings, translations and VERSIONINFO node-bound checks retain their policy.
+
+CORVEXON maps section RVAs to file bytes only within `SizeOfRawData`.
+A section with zero raw size cannot supply file bytes, regardless of its raw
+pointer or virtual size. Virtual-only sections may remain in the image, but
+their RVAs cannot supply bytes to file-based checks. Ordinary raw-backed
+section mappings and header-RVA mappings retain their existing behavior.
 
 OLE32 originated in the earlier COM known-folder adapter
 and was removed by restoring RE environment-variable

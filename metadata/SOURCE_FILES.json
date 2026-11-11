@@ -854,8 +854,8 @@
       "sha256": "9a520f999a72fc42dc2ee27a7fc9d4ac1122c06c07eb1af6773068d4f0778724"
     },
     "src/platform/atomic_files_windows.cpp": {
-      "bytes": 6618,
-      "sha256": "826b03c7329328d4a0f08519568c3b4d871d5eca2a57c37a51d9f25fa66bfded"
+      "bytes": 8167,
+      "sha256": "ea79686658c7922db68886203dc4083fd0248178248b7bc424a17d49a49381c0"
     },
     "src/platform/crypt_query.cpp": {
       "bytes": 2009,
@@ -962,8 +962,8 @@
       "sha256": "b53d484ae91abc34f35ebaaf8e3df780939e16319b0ab84bded024757e6cc7c1"
     },
     "src/runtime/achievement_storage.cpp": {
-      "bytes": 7082,
-      "sha256": "50d4c029ab9709eeb8eafdafbafb747de594500d8c80f6567577cf2122d0dd8a"
+      "bytes": 10440,
+      "sha256": "82409fa58fc88a9e82d678f11179088c3108e56c7d7211699355887d96871235"
     },
     "src/runtime/achievement_utc.cpp": {
       "bytes": 1711,
@@ -1121,6 +1121,10 @@
       "bytes": 3029,
       "sha256": "ce49cebfeb830e95cb2b7492399a950ce3beda6e16750f032f81cb5846b63007"
     },
+    "tests/diagnostics/windows_paths/probe.py": {
+      "bytes": 5404,
+      "sha256": "6e27e95607879d98c6d0476edebf369c37d89e621e378934f23b9b1f918afbde"
+    },
     "tests/diagnostics/xml_backend/CMakeLists.txt": {
       "bytes": 9028,
       "sha256": "ea562c71aed0d48fe30955b5bd876d0e3503aa825950864fd1a7a496886647fa"
@@ -1174,8 +1178,8 @@
       "sha256": "ba37779910cc2fd47ddd8a429fd201d15c9d587cbafdec357facc3b6e695fb90"
     },
     "tests/infrastructure/test_build_partition.py": {
-      "bytes": 24267,
-      "sha256": "ea2709c3005f73dfbe039dbfa1b8dfc8066fc21e334eb0dc0cef5744c7a14555"
+      "bytes": 29135,
+      "sha256": "64a42da4a6dc3c543320d2add5b032da90d1c4b408a860071ad54fd9abef53b5"
     },
     "tests/infrastructure/test_build_path_reparse.ps1": {
       "bytes": 17701,
@@ -1198,12 +1202,12 @@
       "sha256": "7f5107def7a8ed4fd9f609e2a558d435e5968083195cc5971a1d60bc3bd52ded"
     },
     "tests/infrastructure/test_infrastructure.py": {
-      "bytes": 155616,
-      "sha256": "534d70fb4862baa4edd4200ebdef8c92326148c5916f0a89ff86a90e5d1b3c67"
+      "bytes": 165590,
+      "sha256": "3d6a37a1ba67ba35d39a6f425792d97bd8361f1c5a5759f71d436efacfb64df5"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
-      "bytes": 42919,
-      "sha256": "22c375436a9c328ae27f52890bc8bb0df757a9db74c83731e54eed3004f9afa1"
+      "bytes": 44401,
+      "sha256": "cc9515f1b3cc92f577608f560a2e556d440f04c98636e60d70ada174f0db56cd"
     },
     "tests/infrastructure/test_project_version.py": {
       "bytes": 14142,
@@ -1214,8 +1218,8 @@
       "sha256": "f0ae3bdb9495055adde74afb8107dfea3380eccf2d7a70ffba9a0553981ea4d1"
     },
     "tests/infrastructure/test_repository_badges.py": {
-      "bytes": 16432,
-      "sha256": "6c3ec7436c160ff3da3f3e6e793ba0ece89a9dc769a8a52b8e82d595f994e8dd"
+      "bytes": 19513,
+      "sha256": "c758ca28a5c435b83d69a30143ec83cbea1aab9430c2041dacc4faa30491d6bb"
     },
     "tests/infrastructure/test_requirements.py": {
       "bytes": 4776,
@@ -1226,20 +1230,20 @@
       "sha256": "dd0591291789d9423903ced0c3c0ee6f01483479cb7193cd5ccdb300dce961eb"
     },
     "tests/infrastructure/test_size_evidence.py": {
-      "bytes": 13381,
-      "sha256": "840052c0eb163a40bb514c9ac47d4cb7fcba64ce1e9c2fd2dc16dc7a85c4b59a"
+      "bytes": 15632,
+      "sha256": "35fd99162c842052d279a85640c19275b2b4e5dc38240bc1c9224890bfd21572"
     },
     "tests/infrastructure/test_source_identity_license.py": {
       "bytes": 6969,
       "sha256": "f7070b8f72d5c2881c146b3e875a2df498d5ab8f93cf4073aea9e578b62ebfbc"
     },
     "tests/infrastructure/test_vendor_contract.py": {
-      "bytes": 27280,
-      "sha256": "5e53d151bb8f1f4d4252ce12c1c8c0bac520e27248a1f2c26a4bea0ad13eff2d"
+      "bytes": 28157,
+      "sha256": "5ce2798f07ff8ffc32c84461c5b12e0e6946165efd64e553906016a8d41401e7"
     },
     "tests/infrastructure/test_weekly_release.py": {
-      "bytes": 39492,
-      "sha256": "9f78c742a2e8b2b8ed276ab214e23782260fd2bd23dcbf80cc080fbf97b2e5d1"
+      "bytes": 40784,
+      "sha256": "ff1d623ba83f7957b4421a24d12ace663881663f339e0e7bd58f8ed1b06a7d3a"
     },
     "tests/infrastructure/test_wine_runner.py": {
       "bytes": 2482,
@@ -1266,8 +1270,8 @@
       "sha256": "9b523cd6f24b083a9b85960fd1486c9c3977d1d31dd46b4d1810bbdaf01629b3"
     },
     "tests/native/atomic_staging_tests.cpp": {
-      "bytes": 7701,
-      "sha256": "28eb25a61b95c94bd1abc6f854d9e1e5835318ebed209ba06e7155095819dcae"
+      "bytes": 9872,
+      "sha256": "f14c9db0e881cde05b8813efb5ba39b2ee0dd2edfdea4edc3be2db9f26c0eacf"
     },
     "tests/native/cleanup_retry_tests.cpp": {
       "bytes": 1789,
@@ -1590,12 +1594,12 @@
       "sha256": "c26da71f81b5f844d7339e1ef17cdabdf32c4f03abaeadd983dee9594a23cbbf"
     },
     "tests/unit/achievement_storage/storage_fixture.hpp": {
-      "bytes": 4189,
-      "sha256": "c50fc5d95e86b2ff48ece54ee3149d25295d6f99b13b76097e73eb1616a976c6"
+      "bytes": 4489,
+      "sha256": "3d64d4f0c8e816769cf5b6ee80800b340c542ed4badf9f067d57e65e0c928878"
     },
     "tests/unit/achievement_storage/storage_tests.cpp": {
-      "bytes": 18298,
-      "sha256": "eb7842f9f8eb4fdfefd985436f34587a9da69f65bfa32532ee3a5e15e0eab836"
+      "bytes": 29979,
+      "sha256": "42aef77f78c2bfdd8118b9f0bd26c28b939b34d145d1eec49f9f7ed27518a85e"
     },
     "tests/unit/achievement_writer/writer_tests.cpp": {
       "bytes": 9575,
