@@ -1,9 +1,9 @@
 # Source cleanup and measured optimizations
 
 This document records historical measurements from the first
-optimization pass. The reviewed 60/78 Production/reference split
-and subsequent narrow cleanup/TLS work are documented in
-[BUILD_CLEANUP.md](BUILD_CLEANUP.md). Earlier test counts,
+optimization pass. The subsequent narrow cleanup/TLS checkpoint is recorded in
+[BUILD_CLEANUP.md](BUILD_CLEANUP.md); the current Production/reference partition
+is maintained in [BUILD_PARTITION.md](BUILD_PARTITION.md). Earlier test counts,
 translation-unit totals, and export counts below are not
 the current totals.
 
@@ -153,8 +153,8 @@ actual load/start/profile/stop/unload cycles.
 The same LLVM Release output shrank from 1,081,856
 to 1,077,760 bytes, a reduction of 4 KiB.
 
-Current build/test results, actual before/after DLL
-section sizes, and pending native tasks are in
+Checkpoint build/test results, actual before/after DLL
+section sizes, and then-pending native tasks are in
 [VALIDATION.json](../metadata/evidence/optimization/VALIDATION.json).
 The reduction in the LLVM output must not be
 extrapolated from the owner's previous MSVC DLL;
@@ -187,8 +187,8 @@ excluded if they do not belong to the current
 graph. Fourteen infrastructure tests check these
 limits, Visual Studio object-path resolution,
 malformed COFF, and overwrite prevention.
-The actual LLVM Production graph successfully
-read 145 current OBJs.
+The LLVM Production graph at that measurement checkpoint successfully
+read 145 OBJs; this is not the current object inventory.
 
 The total OBJ bytes are not their final-DLL
 contribution: the linker may discard or merge
