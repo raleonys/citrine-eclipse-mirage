@@ -23,6 +23,13 @@ the pipeline writes the hash-named build candidate
 and the dist bundle described below. It does not
 publish to a Library or official release pointer.
 
+The MSVC link-command collector accepts only unredirected, target-local
+CMake `link.txt` or `build.make` files beneath the selected build root. A
+redirected direct rule fails explicitly; fallback discovery excludes aliases,
+even when they resolve inside that root. Only response files referenced by
+the selected invocation contribute linker-policy evidence. Portable fixtures
+check this path policy; actual MSVC/Golden acceptance requires native output.
+
 ## Current product targets
 
 Following the owner's instruction to complete missing
