@@ -6,10 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Fail closed when the GitHub release asset API omits a SHA-256 digest or returns null instead of trusting remote size alone. Extend existing draft publishing regression fixtures to require complete digests before marking a weekly candidate prepared; shipping DLL, ABI and vendor payloads remain unchanged.
+- Reject PE RVAs targeting sections with no raw file bytes in the CORVEXON Golden verifier, including both zero and nonzero raw-pointer fixtures. Retain ordinary file-backed section and header mappings; do not change shipping PE or runtime behavior.
 
 ### Integrated 2026-11-11
 
+- [PR #262](https://github.com/raleonys/citrine-eclipse-mirage/pull/262): Fail closed when the GitHub release asset API omits a SHA-256 digest or returns null instead of trusting remote size alone. Extend existing draft publishing regression fixtures to require complete digests before marking a weekly candidate prepared; shipping DLL, ABI and vendor payloads remain unchanged.
 - [PR #282](https://github.com/raleonys/citrine-eclipse-mirage/pull/282): Fail closed on malformed native CTest/JUnit badge evidence: require actual test suites, direct testcase ownership and declared suite test counts before presenting passed/total metrics. Add orphaned/wrapped/nested aggregate negative fixtures and valid multi-suite coverage. Badge publishing and production DLL behavior are unchanged.
 - [PR #284](https://github.com/raleonys/citrine-eclipse-mirage/pull/284): Fail closed when native JUnit summaries declare failure, error or skipped totals inconsistent with testcase outcomes; preserve existing valid outcome counting and add focused badge regressions.
 - [PR #261](https://github.com/raleonys/citrine-eclipse-mirage/pull/261): Close the native-confirmed `CONIN$`/`CONOUT$` watcher-directory gap, including case and extension aliases, before XML import or state publication. Share an allocation-free device classifier across narrow and converted UTF-16 checks while preserving code-page-dependent digits, safely prefixed XML set names and legal Unicode. Add console-alias refusal and native filesystem positive controls, plus an opt-in Win32 observation diagnostic; keep the default Environment diagnostic and existing CI scheduling unchanged.
