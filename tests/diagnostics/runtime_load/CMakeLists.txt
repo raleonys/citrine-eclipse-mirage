@@ -12,6 +12,10 @@ if(MSVC)
 endif()
 get_filename_component(RUNTIME_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../.." ABSOLUTE)
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
+enable_testing()
+add_executable(runtime_scheduler_contracts probe_tests.cpp)
+add_test(NAME runtime_scheduler_contracts COMMAND runtime_scheduler_contracts)
+set_tests_properties(runtime_scheduler_contracts PROPERTIES TIMEOUT 30)
 execute_process(COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/run.py"
   --prepare "${CMAKE_CURRENT_BINARY_DIR}/generated"
   RESULT_VARIABLE prepared)
@@ -38,7 +42,7 @@ target_compile_definitions(runtime_benchmark_parts PUBLIC
   ASIO_STANDALONE ASIO_HAS_THREADS=1 _WIN32_WINNT=0x0601 WINVER=0x0601
   NOMINMAX WIN32_LEAN_AND_MEAN PUGIXML_NO_XPATH)
 target_link_libraries(runtime_benchmark_parts PUBLIC ws2_32 mswsock psapi)
-foreach(workers IN ITEMS 1 2 4 8)
+foreach(workers IN ITEMS 1 2 4 8 0)
   add_executable(runtime_load_${workers} load.cpp "${CMAKE_CURRENT_BINARY_DIR}/generated/asio_${workers}.cpp")
   target_compile_definitions(runtime_load_${workers} PRIVATE RUNTIME_BENCHMARK_WORKERS=${workers})
   target_link_libraries(runtime_load_${workers} PRIVATE runtime_benchmark_parts)

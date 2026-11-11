@@ -15,10 +15,20 @@ import sys
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[3]
-WORKERS = (1, 2, 4, 8)
+WORKERS = (1, 2, 4, 8, 0)  # 0 identifies the dynamic per-message control.
 WORKLOADS = ('echo', 'xml', 'xml_locked', 'atomic_pair')
 MARKER = 'std::array<std::thread,handler_policy::workers> workers;'
 PUSH = 'jobs.push_back(std::move(fn));'
+CONTROL_INSERTIONS = (
+    ('    void start_workers() {', '\n        if constexpr(RUNTIME_BENCHMARK_WORKERS==0)return;'),
+    ('    void stop_workers() {', '\n        if constexpr(RUNTIME_BENCHMARK_WORKERS==0){message_jobs.stop();return;}'),
+    ('    void job(std::function<void()> fn) {', '''
+        if constexpr(RUNTIME_BENCHMARK_WORKERS==0){
+            if(stopping)return;
+            message_jobs.submit(citrine_eclipse_mirage::benchmark::timed_job(std::move(fn)),
+                [this](std::exception_ptr e)noexcept{factory.error("handler",e);});
+            return;
+        }'''))
 
 
 def digest(path):
@@ -30,9 +40,15 @@ def generated_service(source, workers):
         raise ValueError('Unexpected candidate count or production queue/worker declaration')
     if '#include "probe.hpp"' in source:
         raise ValueError('Source is already instrumented')
-    count = MARKER if workers == 2 else MARKER.replace('handler_policy::workers', str(workers))
-    return ('#include "probe.hpp"\n' + source.replace(MARKER, count)
+    count = MARKER if workers in (0, 2) else MARKER.replace('handler_policy::workers', str(workers))
+    generated = ('#include "probe.hpp"\n' + source.replace(MARKER, count)
             .replace(PUSH, 'jobs.push_back(citrine_eclipse_mirage::benchmark::timed_job(std::move(fn)));'))
+    generated = generated.replace(count, count + '\n    citrine_eclipse_mirage::benchmark::PerMessageJobs message_jobs;')
+    for needle, insertion in CONTROL_INSERTIONS:
+        if generated.count(needle) != 1:
+            raise ValueError('Production scheduling method changed')
+        generated = generated.replace(needle, needle + insertion)
+    return generated
 
 
 def verify_source():
@@ -79,7 +95,7 @@ def prepare(output):
         hashes[str(workers)] = digest(path)
     receipt = {'schema': 'citrine.runtime-benchmark-inputs.v1', **identity(),
                'generated_service_sha256': hashes,
-               'instrumentation': 'one queue-clock/function wrapper in every candidate',
+               'instrumentation': 'common queue-clock wrapper/control branches; separate per-message scheduler',
                'production_worker_policy': 2, 'production_queue_limit': 128}
     (output / 'inputs.json').write_text(json.dumps(receipt, indent=2) + '\n')
 
@@ -112,8 +128,14 @@ def validate(row, expected):
                 raise ValueError('Sample exceeds measured interval: ' + name)
     observed = integer(row.get('observed_worker_threads'), 'observed_worker_threads', 1)
     peak = integer(row.get('peak_active_handlers'), 'peak_active_handlers', 1)
-    if not (observed <= min(expected['workers'], total) and peak <= min(observed, expected['clients'])):
+    bound = expected['workers'] or total
+    if not (observed <= min(bound, total) and peak <= min(observed, expected['clients'])):
         raise ValueError('Worker/active-handler bound violated')
+    created = integer(row.get('created_message_threads'), 'created_message_threads')
+    if created != (0 if expected['workers'] else total):
+        raise ValueError('Wrong per-message thread creation count')
+    if row.get('profile') != ('thread-per-message' if expected['workers'] == 0 else 'pool-' + str(expected['workers'])):
+        raise ValueError('Wrong scheduling profile')
     return row
 
 
@@ -137,7 +159,7 @@ def summarize(rows, repeats, clients, pipelines):
         params = {field: row.get(field) for field in
                   ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes', 'workload')}
         for field in ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes'):
-            integer(params[field], field, 1)
+            integer(params[field], field, 0 if field == 'workers' else 1)
         validate(row, params)
         if integer(row.get('order'), 'order') >= len(WORKERS):
             raise ValueError('Invalid candidate execution order')
@@ -154,7 +176,7 @@ def summarize(rows, repeats, clients, pipelines):
         for count in clients:
             for pipeline in pipelines:
                 for repeat in range(repeats):
-                    if {grouped[workload, count, pipeline, n][repeat]['order'] for n in WORKERS} != set(range(4)):
+                    if {grouped[workload, count, pipeline, n][repeat]['order'] for n in WORKERS} != set(range(len(WORKERS))):
                         raise ValueError('Duplicate candidate execution order')
     result = []
     for key, rounds in sorted(grouped.items()):
@@ -170,6 +192,7 @@ def summarize(rows, repeats, clients, pipelines):
             latency_ratios.append(percentile(row['rtt_ns'], .99) / max(1, percentile(baseline['rtt_ns'], .99)))
         values = list(rounds.values())
         result.append({'workload': workload, 'clients': count, 'pipeline': pipeline,
+                       'profile': 'thread-per-message' if workers == 0 else 'pool-' + str(workers),
                        'workers': workers, 'rounds': repeats,
                        'samples_per_round': values[0]['completed'],
                        'median_requests_per_second': statistics.median(r['completed'] * 1e9 / r['elapsed_ns'] for r in values),
@@ -182,6 +205,8 @@ def summarize(rows, repeats, clients, pipelines):
                        'median_cpu_cycles_per_request': statistics.median(r['cpu_cycles'] / r['completed'] for r in values),
                        'median_peak_working_set_bytes': statistics.median(r['peak_working_set_bytes'] for r in values),
                        'median_private_bytes': statistics.median(r['private_bytes'] for r in values),
+                       'median_observed_worker_threads': statistics.median(r['observed_worker_threads'] for r in values),
+                       'median_created_message_threads': statistics.median(r['created_message_threads'] for r in values),
                        'median_shutdown_us': statistics.median(r['shutdown_ns'] / 1000 for r in values),
                        'median_startup_us': statistics.median(r['startup_ns'] / 1000 for r in values),
                        'rounds_under_100ms': sum(r['elapsed_ns'] < 100000000 for r in values),
@@ -225,7 +250,7 @@ def run(build, output, repeats=5, quick=False):
         raise ValueError('Build input identity differs from current source')
     binaries = {n: build / 'Release' / f'runtime_load_{n}.exe' for n in WORKERS}
     if not all(p.is_file() for p in binaries.values()):
-        raise ValueError('Build all four Release native benchmark binaries first')
+        raise ValueError('Build all five Release native benchmark binaries first')
     output.mkdir(parents=True)
     (output / 'samples').mkdir()
     data_rows = []

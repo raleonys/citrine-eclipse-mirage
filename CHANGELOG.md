@@ -6,7 +6,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Add opt-in native runtime load measurements for real TCP framing/handler queues, production XML and atomic persistence. Compare diagnostic-only 1/2/4/8 worker copies with repeated concurrent and pipelined workloads, raw latency/CPU/memory receipts, paired summaries and failure controls. Preserve production defaults and ordinary PR validation scheduling; retain the existing XML benchmark as the manual workflow default.
+- Add opt-in native runtime load measurements for real TCP framing/handler queues, production XML and atomic persistence. Compare diagnostic-only 1/2/4/8 worker copies and a drained per-message-thread control with repeated concurrent and pipelined workloads, raw latency/CPU/memory receipts, paired summaries and failure controls. Preserve production defaults and ordinary PR validation scheduling; retain the existing XML benchmark as the manual workflow default.
 
 ### Integrated 2026-11-11
 

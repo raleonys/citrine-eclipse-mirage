@@ -139,11 +139,12 @@ void run(unsigned clients,unsigned requests,unsigned pipeline,unsigned bytes,con
             }catch(...){failures[i]=std::current_exception();}
         });
     arrived.wait();
+    const auto before_created=benchmark::created_message_threads.load();
     factory.measuring=true;const auto before_cpu=cpu(),before_cycles=cycles();const auto begin=Clock::now();join.release();
     for(auto& t:threads)t.join();const auto elapsed=ns(Clock::now()-begin);const auto used_cycles=cycles()-before_cycles;const auto cpu_ticks=cpu()-before_cpu;factory.measuring=false;
     for(auto& failure:failures)if(failure)std::rethrow_exception(failure);
     require(factory.errors==0&&factory.used==clients*requests,"handler error or missing measured request");
-    require(factory.active==0&&factory.peak<=RUNTIME_BENCHMARK_WORKERS,"worker bound/drain violated");
+    require(factory.active==0&&factory.peak<=(RUNTIME_BENCHMARK_WORKERS?RUNTIME_BENCHMARK_WORKERS:clients),"worker bound/drain violated");
     PROCESS_MEMORY_COUNTERS_EX memory{};memory.cb=sizeof(memory);require(GetProcessMemoryInfo(GetCurrentProcess(),reinterpret_cast<PROCESS_MEMORY_COUNTERS*>(&memory),sizeof(memory))!=0,"process memory");
     if(workload=="atomic_pair")for(unsigned i=0;i<clients;++i)for(auto extension:{".xml",".ini"}){
         std::ifstream stream(scratch/(std::to_string(i)+extension),std::ios::binary);std::string actual{std::istreambuf_iterator<char>(stream),{}};
@@ -154,8 +155,11 @@ void run(unsigned clients,unsigned requests,unsigned pipeline,unsigned bytes,con
     std::vector<std::uint64_t> rtt,queue,work;std::set<DWORD> worker_ids;
     for(auto& v:timings)rtt.insert(rtt.end(),v.begin(),v.end());
     for(auto& v:factory.records){queue.push_back(v.queue);work.push_back(v.service);worker_ids.insert(v.thread);}
-    require(worker_ids.size()<=RUNTIME_BENCHMARK_WORKERS&&!worker_ids.contains(0),"invalid worker observation");
-    std::cout<<"{\"workers\":"<<RUNTIME_BENCHMARK_WORKERS<<",\"clients\":"<<clients<<",\"requests_per_client\":"<<requests<<",\"pipeline\":"<<pipeline
+    require(worker_ids.size()<=(RUNTIME_BENCHMARK_WORKERS?RUNTIME_BENCHMARK_WORKERS:clients*requests)&&!worker_ids.contains(0),"invalid worker observation");
+    const auto created=benchmark::created_message_threads.load()-before_created;
+    require(created==(RUNTIME_BENCHMARK_WORKERS?0u:clients*requests),"per-message thread count mismatch");
+    const auto profile=RUNTIME_BENCHMARK_WORKERS?("pool-"+std::to_string(RUNTIME_BENCHMARK_WORKERS)):std::string("thread-per-message");
+    std::cout<<"{\"profile\":\""<<profile<<"\",\"created_message_threads\":"<<created<<",\"workers\":"<<RUNTIME_BENCHMARK_WORKERS<<",\"clients\":"<<clients<<",\"requests_per_client\":"<<requests<<",\"pipeline\":"<<pipeline
       <<",\"payload_bytes\":"<<bytes<<",\"workload\":\""<<workload<<"\",\"completed\":"<<rtt.size()<<",\"errors\":0,\"elapsed_ns\":"<<elapsed
       <<",\"cpu_ns\":"<<cpu_ticks*100<<",\"cpu_cycles\":"<<used_cycles<<",\"startup_ns\":"<<startup<<",\"shutdown_ns\":"<<stop<<",\"peak_working_set_bytes\":"<<memory.PeakWorkingSetSize<<",\"private_bytes\":"<<memory.PrivateUsage
       <<",\"peak_active_handlers\":"<<factory.peak<<",\"observed_worker_threads\":"<<worker_ids.size();

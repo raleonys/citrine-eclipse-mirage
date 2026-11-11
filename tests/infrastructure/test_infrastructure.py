@@ -1601,10 +1601,12 @@ class RuntimeBenchmarkTests(unittest.TestCase):
     def row(workers=2, workload='echo', **changes):
         row = dict(workers=workers, clients=1, requests_per_client=2, pipeline=1,
                    payload_bytes=1024, workload=workload, completed=2, errors=0,
-                   elapsed_ns=100000 // workers, cpu_ns=10000, cpu_cycles=1000,
+                   elapsed_ns=100000 // max(1, workers), cpu_ns=10000, cpu_cycles=1000,
                    startup_ns=1000, shutdown_ns=1000,
                    peak_working_set_bytes=4096, private_bytes=2048,
-                   observed_worker_threads=min(workers, 2), peak_active_handlers=1,
+                   profile='pool-' + str(workers) if workers else 'thread-per-message',
+                   created_message_threads=0 if workers else 2,
+                   observed_worker_threads=min(workers or 2, 2), peak_active_handlers=1,
                    rtt_ns=[2000, 3000], queue_ns=[10, 20], handler_ns=[100, 200])
         row.update(changes)
         return row
@@ -1616,7 +1618,10 @@ class RuntimeBenchmarkTests(unittest.TestCase):
             generated = tool.generated_service(original, workers)
             restored = generated.removeprefix('#include "probe.hpp"\n').replace(
                 'jobs.push_back(citrine_eclipse_mirage::benchmark::timed_job(std::move(fn)));', tool.PUSH)
-            if workers != 2:
+            restored = restored.replace('\n    citrine_eclipse_mirage::benchmark::PerMessageJobs message_jobs;', '')
+            for needle, insertion in tool.CONTROL_INSERTIONS:
+                restored = restored.replace(needle + insertion, needle)
+            if workers not in (0, 2):
                 restored = restored.replace('std::array<std::thread,' + str(workers) + '> workers;', tool.MARKER)
             self.assertEqual(original, restored)
         for source, count in [(original, 3), (original.replace(tool.PUSH, ''), 2),
@@ -1643,9 +1648,9 @@ class RuntimeBenchmarkTests(unittest.TestCase):
         rows = [self.row(n, w, repeat=0, order=i)
                 for w in tool.WORKLOADS for i, n in enumerate(tool.WORKERS)]
         summary = tool.summarize(rows, 1, (1,), (1,))
-        self.assertEqual(16, len(summary))
+        self.assertEqual(20, len(summary))
         for row in summary:
-            self.assertEqual(row['workers'] / 2, row['throughput_ratio_to_2_workers'])
+            self.assertEqual(max(1, row['workers']) / 2, row['throughput_ratio_to_2_workers'])
             self.assertIsNone(row['throughput_ratio_95pct_bootstrap'])
         for bad in (rows[:-1], rows + [rows[0]],
                     [{**row, 'order': 0} for row in rows]):
@@ -1691,7 +1696,8 @@ class RuntimeBenchmarkTests(unittest.TestCase):
                 if len(calls) > 1:
                     raise ValueError('injected child failure')
                 count = params['clients'] * params['requests_per_client']
-                return {**self.row(), **params, 'completed': count,
+                return {**self.row(params['workers']), **params, 'completed': count,
+                        'created_message_threads': count if not params['workers'] else 0,
                         'rtt_ns': [2000] * count, 'queue_ns': [10] * count, 'handler_ns': [100] * count}
             output = root / 'build/results'
             with patch.object(tool, 'ROOT', root), patch.object(tool, 'verify_source'), \

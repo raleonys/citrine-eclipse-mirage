@@ -10,7 +10,7 @@ workers, a 128-job queue and the existing session/deadline policy.
 | Area | Existing evidence | Measurement or next decision |
 | --- | --- | --- |
 | XML parser, reference decoding, allocations and storage compatibility | [XML backend comparison](XML_BACKEND_COMPARISON.md) already has paired timing/allocation measurements | Retain that suite; the new TCP workloads measure scheduling around the current parser |
-| Worker pool and per-session FIFO | Native `handler_pool_contracts` tests bounded workers, overload, order, failure isolation and shutdown | Compare 1/2/4/8 workers with 1/8/32 simultaneous connections |
+| Worker pool and per-session FIFO | Native `handler_pool_contracts` tests bounded workers, overload, order, failure isolation and shutdown | Compare 1/2/4/8 workers and a per-message-thread control with 1/8/32 simultaneous connections |
 | Shared handler state | Application serializes registered handlers, while parsing/cipher work occurs outside its lock | Use a deliberately serialized sensitivity control; profile actual Application lock duration before changing lock ownership |
 | Atomic achievement persistence | Existing source/native rollback and retry tests | Measure real two-file replacement of existing files, including staging, backup and flush costs |
 | Connection framing and output | Existing partial-send, receive, timer and event-receipt correctness tests | Compare closed-loop requests with bursts of eight; investigate framing/allocation/Nagle effects if measured delays dominate |
@@ -66,7 +66,7 @@ are accepted. A deliberately corrupt response must fail as a negative control.
 | `atomic_pair` | XML work plus two actual native atomic file replacements | Shared NativeFactory and per-connection destinations, existing files warmed first; not full GrantAchievement routing |
 
 Full runs contain 5 rounds x 4 workloads x 3 connection counts x 2 pipeline
-sizes x 4 worker candidates = **480 measured child processes**, plus one
+sizes x 5 scheduling candidates = **600 measured child processes**, plus one
 response-corruption control. Each connection sends 256 measured requests,
 or 16 for the flush-heavy atomic workload. Pipeline 1 is closed loop; pipeline
 8 sends a batch and records each reply's elapsed time from that batch send.
@@ -74,11 +74,19 @@ Burst latency therefore includes time behind earlier requests in that batch.
 Cases and candidate order are shuffled with a fixed seed each round. Each
 candidate sees identical inputs and sample counts for its paired case.
 
-Generated Asio copies change only the worker-array count and the same queue
-clock/function wrapper in **every** candidate, including the two-worker
-baseline. That instrumentation has overhead, especially for echo. Original
-source/vendor bytes and the shipping build graph are unchanged. Generated
-copy hashes, source-manifest identity and executable hashes are retained.
+Generated Asio copies insert the same queue clock/function wrapper and
+compile-time control branches in every candidate. Pool profiles change only
+the worker-array count. The `thread-per-message` profile creates a fresh thread
+for each message, releases its handle immediately, and retains in-flight
+function/Client ownership until an explicit drain completes. It preserves the
+same FIFO, TCP, XML and storage paths, isolating scheduling cost. Scheduler
+contracts check completion, exceptions, capture lifetime and idempotent stop.
+It is a controlled alternative, not original Anadius DLL execution or a claim
+that every donor failure path is identical. The JSON `workers=0` sentinel
+identifies that dynamic control; use the explicit `profile` field in comparisons.
+Instrumentation has overhead, especially for echo. Original source/vendor bytes
+and the shipping build graph remain unchanged. Generated-copy hashes,
+source-manifest identity and executable hashes are retained.
 
 ## Results and interpretation
 
@@ -92,6 +100,9 @@ without adding machine names, owner paths or regional timezone information.
 - Queue p95: enqueue wrapper to worker entry, including uniform instrumentation.
 - Handler p95: handler entry through response preparation; separate from send.
 - Throughput: completed requests divided by the common measured interval.
+- Message-thread creations and observed thread identities: exact creation
+  count for the control versus zero per-message creations for pool profiles.
+  Windows can recycle thread IDs, so unique observed IDs are not creation counts.
 - CPU time/cycles: **whole child process**, including clients, server and helper
   threads. GetProcessTimes can quantize short runs to zero; cycles are also
   retained, not converted to wall time or compared across different CPUs.
