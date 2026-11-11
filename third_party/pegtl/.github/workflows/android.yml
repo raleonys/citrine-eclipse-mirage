@@ -10,9 +10,6 @@ on:
       - 'README.md'
       - 'doc/**'
 
-permissions:
-  contents: read
-
 jobs:
   android:
     strategy:
@@ -32,11 +29,11 @@ jobs:
           sudo apt -qq update
           sudo apt -qq install -y ninja-build --no-install-recommends --no-install-suggests
 
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
 
       - name: Configure CMake
         run: |
-          cmake -S . -B build \
+          cmake -S $GITHUB_WORKSPACE -B build \
           -GNinja \
           -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake \
           -DANDROID_ABI=${{ matrix.abi }} \
@@ -44,4 +41,4 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
 
       - name: Build project
-        run: cmake --build build
+        run: cmake --build build/
