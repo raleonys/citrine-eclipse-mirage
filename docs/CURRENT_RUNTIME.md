@@ -26,14 +26,18 @@ PASS cannot be inferred from the earlier results.
 The application is RE-based. Bluefield supplies selected hook 11/lifetime
 dependencies; Brownfield supplies infrastructure/metadata and approved
 resilience approaches. Entire application runtimes are not imported.
-The standard compiler CRT is used. The Production/reference split remains
-62/78 CPP files; reference sources were not deleted. Four model compositions
+The standard compiler CRT is used. The current partition is **62 Production / 78 reference CPP files**: 60
+production object sources, one VDF source and one DLL entry source, as declared
+in [BUILD_PARTITION_POLICY.json](../metadata/BUILD_PARTITION_POLICY.json).
+Reference sources were not deleted. Four model compositions
 were removed from Production linkage, and mixed tests were separated.
 The crypt diagnostic TLS guard remains Debug-only.
 See [cleanup scope](BUILD_CLEANUP.md).
 
-Four owner-supplied vendors remain active: Asio 1.38.2, MinHook 1.3.4,
-PEGTL 4, and pugixml 1.16. Vendor bytes are immutable. The project XML
+Four owner-supplied vendors remain active: Asio 1.39.0, MinHook 1.3.4,
+PEGTL 4 (4.0.2 header on the owner-uploaded 4.x snapshot), and pugixml 1.16.
+Selected archive bytes are immutable; current snapshot identities are in
+[VENDORING.md](VENDORING.md). The project XML
 compatibility layer preserves the previous depth-500 boundary and corrected
 reference decoding, with no TinyXML2 production fallback. See
 [XML_BACKEND_COMPARISON.md](XML_BACKEND_COMPARISON.md). SAFE-FREEZE applies only to the pinned MinHook build copy. Windows I/O
@@ -55,6 +59,16 @@ remain retryable on failure. Greeting is asynchronous; session/frame/output
 limits and receive/frame/send deadlines remain enforced. Achievement XML/INI
 writes use an atomic batch with rollback and retry ownership; no claim of
 power-loss atomicity across multiple files is made.
+
+Nonempty Config2 `AchievementsSet` and `SteamAppId` identifiers are checked for
+Win32-forbidden punctuation, path separators and C0 controls before achievement
+file I/O or retained-path updates. The bare `SteamAppId` watcher directory also
+rejects reserved device names, leading/trailing spaces and trailing dots. Its
+filesystem-codepage-converted UTF-16 name is checked again, including COM/LPT
+superscript device digits. Safely wrapped XML names such as `achievement-CON.xml`
+remain accepted. Path conversions complete in XML filename, INI filename, app ID,
+watcher-directory order before XML import, so conversion failures cannot leave a
+partial import. These lexical checks do not provide reparse-point isolation.
 
 For native socket closure, a documented would-block result is retried using
 the exact handle. Other close failures have uncertain-quarantine semantics:

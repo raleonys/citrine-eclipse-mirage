@@ -22,7 +22,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
    template< template< char... > class String, char32_t C >
    struct utf32_to_utf8_char< String, C, std::enable_if_t< has_utf8_length_1( C ) > >
    {
-      using type = String< static_cast< char >( C ) >;
+      using type = String< char( C ) >;
    };
 
    template< template< char... > class String, char32_t C >
@@ -57,7 +57,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
    template< template< char... > class String, char32_t C >
    struct utf32_to_utf8_list< String, C >
    {
-      using type = utf32_to_utf8_char< String, C >::type;
+      using type = typename utf32_to_utf8_char< String, C >::type;
    };
 
    template< template< char... > class String >
@@ -67,7 +67,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
    };
 
    template< char32_t... Cs >
-   using utf32_to_utf8_t = utf32_to_utf8_list< ascii_string, Cs... >::type;
+   using utf32_to_utf8_t = typename utf32_to_utf8_list< ascii_string, Cs... >::type;
 
 }  // namespace TAO_PEGTL_NAMESPACE::internal
 

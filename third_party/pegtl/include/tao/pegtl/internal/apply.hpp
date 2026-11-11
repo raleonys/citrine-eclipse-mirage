@@ -13,7 +13,6 @@
 
 #include "apply_impl.hpp"
 #include "enable_control.hpp"
-#include "ignore_arguments.hpp"
 
 namespace TAO_PEGTL_NAMESPACE::internal
 {
@@ -31,13 +30,14 @@ namespace TAO_PEGTL_NAMESPACE::internal
                 typename... States >
       [[nodiscard]] static bool match( [[maybe_unused]] ParseInput& in, [[maybe_unused]] States&&... st )
       {
-         TAO_PEGTL_MSVC_IGNORE( st... );
-
          if constexpr( ( A == apply_mode::enabled ) && ( sizeof...( Actions ) > 0 ) ) {
             const TAO_PEGTL_NAMESPACE::action_input< ParseInput > i2( in.rewind_position(), in );  // No data -- range is from begin to begin.
             return ( apply_impl< Actions >::apply( i2, st... ) && ... );
          }
          else {
+#if defined( _MSC_VER )
+            ( (void)st, ... );
+#endif
             return true;
          }
       }
