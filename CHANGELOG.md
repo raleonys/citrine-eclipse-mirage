@@ -7,6 +7,7 @@ This file distinguishes integrated source changes, imported source history and p
 ### This PR
 
 - Reject redirected, escaping and noncanonical CMake source/object paths in the COFF translation-unit audit, preventing forged or aliased objects from being assigned to the wrong target. Keep valid relative and absolute in-checkout Ninja objects supported and add independent path traversal/symlink regressions. No application, native ABI, linker policy or vendor changes.
+- Canonicalize the positive object-path fixture's temporary root so alternate Windows TEMP spellings do not fail exact-path assertions. Add selected-root alias controls requiring the canonical owned object and its bytes; preserve source/object redirection refusal and every audit guard.
 
 ### Integrated 2026-11-11
 

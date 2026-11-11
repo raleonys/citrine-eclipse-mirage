@@ -122,7 +122,10 @@ class MapBoundaryTests(unittest.TestCase):
 class TranslationUnitObjectPathTests(unittest.TestCase):
     def test_canonical_relative_and_absolute_ninja_objects(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root, build = Path(tmp) / 'checkout', Path(tmp) / 'build'
+            # Windows TEMP can use an alternate spelling of the physical path.
+            # This positive fixture supplies canonical sources and expectations.
+            owned = Path(tmp).resolve()
+            root, build = owned / 'checkout', owned / 'build'
             source = root / 'src/runtime/sample.cpp'
             source.parent.mkdir(parents=True)
             source.write_text('int sample;', encoding='utf-8')
@@ -133,6 +136,30 @@ class TranslationUnitObjectPathTests(unittest.TestCase):
                             'src/runtime/sample.cpp'), obj)
             self.assertEqual(unit_audit.object_path(root, build, 'sample',
                             str(source)), obj)
+
+    def test_selected_root_aliases_return_the_canonical_owned_object(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            owned = Path(tmp).resolve()
+            physical = owned / 'physical'
+            root, build = physical / 'checkout', physical / 'build'
+            source = root / 'src/runtime/sample.cpp'
+            source.parent.mkdir(parents=True)
+            source.write_text('int sample;', encoding='utf-8')
+            obj = build / 'CMakeFiles/sample.dir/src/runtime/sample.cpp.obj'
+            obj.parent.mkdir(parents=True)
+            obj.write_bytes(b'owned-object')
+            logical = owned / 'logical'
+            try:
+                logical.symlink_to(physical, target_is_directory=True)
+            except (OSError, NotImplementedError):
+                self.skipTest('Directory symlink creation is unavailable')
+            for name in ('src/runtime/sample.cpp', str(source)):
+                with self.subTest(source=name):
+                    actual = unit_audit.object_path(logical / 'checkout',
+                                                   logical / 'build', 'sample', name)
+                    # Require the canonical path itself, not just the same file.
+                    self.assertEqual(actual, obj)
+                    self.assertEqual(actual.read_bytes(), b'owned-object')
 
     def test_parent_traversal_cannot_select_an_unrelated_object(self):
         with tempfile.TemporaryDirectory() as tmp:
