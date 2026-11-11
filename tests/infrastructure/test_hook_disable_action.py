@@ -18,9 +18,37 @@ ROOT = Path(__file__).resolve().parents[2]
 POLICY = ROOT / 'metadata/HOOK_ENGINE_PATCH.json'
 PATCH = ROOT / 'cmake/PatchHookFreeze.cmake'
 DONOR = ROOT / 'third_party/minhook/src/hook.c'
+PUBLIC_ENTRIES = (
+    b'MH_STATUS WINAPI MH_CreateHook(LPVOID pTarget, LPVOID pDetour, LPVOID *ppOriginal)',
+    b'MH_STATUS WINAPI MH_RemoveHook(LPVOID pTarget)',
+    b'static MH_STATUS EnableHook(LPVOID pTarget, BOOL enable)',
+    b'static MH_STATUS QueueHook(LPVOID pTarget, BOOL queueEnable)',
+    b'MH_STATUS WINAPI MH_ApplyQueued(VOID)',
+)
 
 
 class SingleHookDisableIP(unittest.TestCase):
+    def test_missing_or_duplicate_public_cleanup_entry_fails_without_writing(self):
+        source = DONOR.read_bytes()
+        for signature in PUBLIC_ENTRIES:
+            with self.subTest(signature=signature):
+                self.assertEqual(source.count(signature), 1)
+                self.assert_rejected_anchor(source.replace(signature, signature.replace(b'(', b'_missing(', 1), 1))
+                self.assert_rejected_anchor(source + b'\n/* ' + signature + b' */\n')
+
+    def test_missing_or_duplicate_public_cleanup_lock_fails_without_writing(self):
+        source = DONOR.read_bytes()
+        lock = b'    EnterSpinLock();'
+        for signature in PUBLIC_ENTRIES:
+            start = source.index(signature)
+            end = source.index(b'\n}', start)
+            body = source[start:end]
+            self.assertEqual(body.count(lock), 1)
+            with self.subTest(signature=signature):
+                for changed in (body.replace(lock, b'    EnterSpinLock( );', 1),
+                                body.replace(lock, lock + b'\n' + lock, 1)):
+                    self.assert_rejected_anchor(source[:start] + changed + source[end:])
+
     def assert_rejected_anchor(self, source):
         executable = shutil.which('cmake')
         self.assertIsNotNone(executable, 'CMake is required for the source QA gate')

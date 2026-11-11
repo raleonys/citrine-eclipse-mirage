@@ -21,12 +21,16 @@ namespace {
 // Match the existing 65-byte envelope and AES policy while making text
 // fields structurally safe in the XML document before encryption.
 void append_license_xml_text(std::string& output,std::string_view text) {
-    for(char byte:text) {
+    for(unsigned char byte:text) {
+        // XML 1.0 permits TAB, LF and CR, but not the other C0 controls.
+        // Reject invalid counted bytes before any encrypted file is written.
+        if(byte<0x20 && byte!='\t' && byte!='\n' && byte!='\r')
+            throw std::invalid_argument("License XML text contains a forbidden control byte");
         switch(byte) {
         case '&':output+="&amp;";break;
         case '<':output+="&lt;";break;
         case '>':output+="&gt;";break;
-        default:output.push_back(byte);break;
+        default:output.push_back(static_cast<char>(byte));break;
         }
     }
 }
