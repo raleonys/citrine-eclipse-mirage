@@ -65,7 +65,8 @@ metadata modification are outside the supported isolation guarantee. Ordinary
 toolchain temporary-file behavior is separate from redirected build-output paths.
 Runtime DLL code, public ABI, vendors and publication/promotion policy are unchanged.
 
-Issue #16 acceptance must be evaluated against this stated boundary. Keep it
-open until the owner reviews the exact-commit Windows test/real build results,
-source-manifest and artifact checksums. A green portable run alone does not close
-D326-F0005. The PR description records actual CI results and remaining limits.
+Issue #16 is closed with this accepted boundary. That disposition does not
+expand protection to administrator or hostile same-credential interference,
+generated descendants or a general filesystem sandbox. Future changes still
+need exact-commit Windows test/build results and source/artifact identities;
+a portable PASS alone does not establish native sharing or reparse behavior.

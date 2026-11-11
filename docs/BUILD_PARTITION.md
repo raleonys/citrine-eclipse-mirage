@@ -32,8 +32,8 @@ objects or archives. Non-MSVC development builds retain their existing graph.
 
 Production must never depend on a reference target or the source API DLL. With
 `BUILD_TESTING=OFF` and `CITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF`, reference targets
-are not configured. The owner-selected pugixml archive replaces TinyXML2; the other three vendor
-pins are unchanged. `xml/reader.cpp`, `xml/reader_policy.cpp`,
+are not configured. The owner-selected pugixml archive replaces TinyXML2; all current vendor
+pins are maintained in [VENDORING.md](VENDORING.md). `xml/reader.cpp`, `xml/reader_policy.cpp`,
 `xml/reader_values.cpp` and `xml/memory_printer.cpp` are production inputs.
 Production and test targets link `citrine_eclipse_mirage_pugixml`; the MSVC development
 DLL links `citrine_eclipse_mirage_source_pugixml`. No legacy XML vendor target aliases
@@ -138,7 +138,9 @@ python -B scripts/audit_translation_units.py --build-dir <build-directory> --con
 
 The audit currently supports CMake's Ninja object layout and LLVM inspection
 tools; it fails for unsupported layouts rather than silently omitting files.
-Source QA includes 18 boundary regressions, separately from native tests.
+Source QA runs the current boundary regressions in
+`tests/infrastructure/test_build_partition.py`, separately from native tests.
+The earlier fixed test count is not a current inventory.
 
 Five exhaustive reference fixtures have a 600-second test-process budget only
 for single-configuration Debug cross-builds under Wine (the process runner has

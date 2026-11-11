@@ -79,6 +79,14 @@ def normalize_application(path, expected, verify=False):
     import tempfile
     from pathlib import Path
     path = Path(path)
+    if not verify:
+        # os.replace publishes a new inode. Replacing a hard link would
+        # silently detach this name and leave other DLL aliases stale;
+        # replacing a symlink would replace the link, not normalize its target.
+        if path.is_symlink():
+            raise ValueError('Refusing to normalize a symlinked unsigned DLL')
+        if path.stat().st_nlink != 1:
+            raise ValueError('Refusing to normalize a hard-linked unsigned DLL')
     original = path.read_bytes()
     data = bytearray(original)
     result = reorder(data, expected)
