@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [VENDORING.md](VENDORING.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # Asio Windows target definitions
 
 The Production log contained the messages

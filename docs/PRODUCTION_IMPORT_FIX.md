@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 > Historical snapshot: the subsequent hook 11/lifecycle and metadata
 > corrections are documented in
 > [Bluefield alignment](HOOK_ALIGNMENT.md) and
@@ -57,8 +60,9 @@ runtime cycles with the finalized `citrine_eclipse_mirage.dll`
 copy, it now writes the DLL, SHA-256, and receipt.
 The runtime host uses the supplied file's actual
 basename during unload checks instead of hard-coding
-the unsigned name. The filter remains
-`citrine_eclipse_mirage.dll`.
+the unsigned name. The hook's compatibility filter remains `preloader_l.dll`; the current
+shipping name is independently `citrine_eclipse_mirage.dll`. This corrects a
+later documentation rename; it does not change the historical hook policy.
 See [Golden and dist flow](GOLDEN_PROTOCOLS.md) and
 [distribution contract](../metadata/DIST_CONTRACT.json).
 
