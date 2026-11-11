@@ -138,6 +138,11 @@ python -B scripts/audit_translation_units.py --build-dir <build-directory> --con
 
 The audit currently supports CMake's Ninja object layout and LLVM inspection
 tools; it fails for unsupported layouts rather than silently omitting files.
+Object lookup resolves the selected checkout/build roots, rejects source
+parent traversal and absolute sources outside that checkout, and refuses
+redirected source/object paths or invalid target directory components. This
+prevents attributing an unrelated COFF object to the selected translation unit;
+it does not prove runtime reachability or Consumer coverage.
 Source QA runs the current boundary regressions in
 `tests/infrastructure/test_build_partition.py`, separately from native tests.
 The earlier fixed test count is not a current inventory.
