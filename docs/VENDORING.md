@@ -46,6 +46,14 @@ Original archives remain external to the source package. Previous selections
 remain recorded in SOURCE_INPUTS.json and
 Git history; earlier execution evidence is not new-snapshot acceptance.
 
+Before CRC verification or payload reads, the pinned vendor ZIP inspector
+preflights every member's root/path, case-fold identity, supported type and
+header-reported uncompressed size. Existing limits remain 32 MiB per member
+and 100 MiB in total; nonempty directory entries are rejected. Exact archive
+SHA-256/size and commit-comment binding precede this scan; CRC, per-member
+hashes and locked symlink targets are still verified after it. These byte
+budgets do not establish complete resource isolation for arbitrary ZIP input.
+
 ## Installed tree verification
 
 Vendor member manifests and ZIP entries share the source-package path policy:

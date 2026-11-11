@@ -6,10 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Retain partial stdout/stderr when a Source QA subprocess times out, and record failed child startup as a failed check instead of aborting the entire evidence report. Exercise deadline diagnostics, subsequent check continuation and missing subprocess regression cases; native/game acceptance remains separate.
+- Preflight pinned vendor ZIP member paths, types, and per-member/cumulative expanded sizes before CRC verification or payload reads. Reject oversized and nonempty directory entries without decompression; add portable single-member and aggregate budget regression tripwires. Declare regular-file types in the budget fixtures so both refusal paths are reached. Preserve exact vendor pins, content hashing, and shipping behavior.
 
 ### Integrated 2026-11-11
 
+- [PR #309](https://github.com/raleonys/citrine-eclipse-mirage/pull/309): Retain partial stdout/stderr when a Source QA subprocess times out, and record failed child startup as a failed check instead of aborting the entire evidence report. Exercise deadline diagnostics, subsequent check continuation and missing subprocess regression cases; native/game acceptance remains separate.
 - [PR #317](https://github.com/raleonys/citrine-eclipse-mirage/pull/317): Revalidate the live GitHub asset set, exact sizes, and required SHA-256 digests before reusing a completed weekly draft. Reject missing, duplicated, renamed, modified, or unpublished assets without mutating the draft; retain healthy idempotent retries and add remote-state regression coverage. Document the completed-draft retry checks in the current weekly release guide.
 - [PR #303](https://github.com/raleonys/citrine-eclipse-mirage/pull/303): Reject duplicate JSON object keys in the owner-approved LUTRAVEX weekly naming registry, including repeated schema and approved-version entries, before validating release version/codename bindings. The existing valid registry and published-release behavior remain unchanged.
 - [PR #272](https://github.com/raleonys/citrine-eclipse-mirage/pull/272): Bound source ZIP decompression before CRC verification and whole-member reads, with independent per-member and cumulative byte budgets. Test highly compressible valid source packages, fail-closed rejection before decompression, and temporary extraction cleanup; shipping DLL and vendor code remain unchanged.

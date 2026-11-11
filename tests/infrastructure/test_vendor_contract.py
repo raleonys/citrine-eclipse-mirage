@@ -120,6 +120,36 @@ class VendorTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'archive commit comment mismatch'):
                 vendor_sync.inspect_archive(ROOT,'minhook',record,path)
 
+    def test_vendor_archive_budgets_precede_crc_and_member_reads(self):
+        # A valid pinned archive digest does not bypass ZIP expansion budgets.
+        record=vendor_sync.load_lock(ROOT)['vendors']['minhook'].copy()
+        with tempfile.TemporaryDirectory() as tmp:
+            parent=Path(tmp)
+            archive=parent/Path(record['archive']).name
+            cases=(
+                ('single', (16, 128), 64, 256, 'too large member'),
+                ('cumulative', (48, 48), 64, 80, 'excessive expanded size'),
+            )
+            for label, sizes, member_limit, total_limit, diagnostic in cases:
+                with self.subTest(case=label):
+                    with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as out:
+                        out.comment=record['upstream_commit'].encode('ascii')
+                        for index, size in enumerate(sizes):
+                            info=zipfile.ZipInfo(record['archive_folder']+f'src/fixture_{index}.hpp')
+                            info.external_attr=(stat.S_IFREG|0o644)<<16
+                            info.compress_type=zipfile.ZIP_DEFLATED
+                            out.writestr(info,b'X'*size)
+                    record.update(sha256=vendor_sync.hash_file(archive),
+                                  bytes=archive.stat().st_size)
+                    with patch.object(vendor_sync, 'MAX_MEMBER_BYTES', member_limit):
+                        with patch.object(vendor_sync, 'MAX_ARCHIVE_BYTES', total_limit):
+                            with patch.object(zipfile.ZipFile, 'testzip',
+                                              side_effect=AssertionError('CRC before budget')):
+                                with patch.object(zipfile.ZipFile, 'read',
+                                                  side_effect=AssertionError('read before budget')):
+                                    with self.assertRaisesRegex(ValueError, diagnostic):
+                                        vendor_sync.inspect_archive(ROOT, 'minhook', record, parent)
+
     def test_build_copy_patch_is_hash_pinned_and_original_tree_unchanged(self):
         cmake=shutil.which('cmake')
         if not cmake:self.skipTest('CMake needed to execute the real patch script')
