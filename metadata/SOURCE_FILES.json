@@ -1121,6 +1121,10 @@
       "bytes": 3029,
       "sha256": "ce49cebfeb830e95cb2b7492399a950ce3beda6e16750f032f81cb5846b63007"
     },
+    "tests/diagnostics/windows_paths/probe.py": {
+      "bytes": 2405,
+      "sha256": "9fbf4ec2eb428e59d5bd527fd1040274db6003ad0bab56c2f988849950b17be0"
+    },
     "tests/diagnostics/xml_backend/CMakeLists.txt": {
       "bytes": 9028,
       "sha256": "ea562c71aed0d48fe30955b5bd876d0e3503aa825950864fd1a7a496886647fa"

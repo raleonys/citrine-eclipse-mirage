@@ -3,12 +3,19 @@ name: Windows Environment diagnostics acceptance
 
 on:
   workflow_dispatch:
+    inputs:
+      operation:
+        description: Select the native diagnostic
+        type: choice
+        options: [environment, path-probe]
+        default: environment
 
 permissions:
   contents: read
 
 jobs:
   environment-diagnostics:
+    if: inputs.operation != 'path-probe'
     name: Windows x64 Environment diagnostics ${{ matrix.configuration }}
     runs-on: windows-2022
     timeout-minutes: 30
@@ -57,4 +64,29 @@ jobs:
             build/ci-environment-${{ matrix.configuration }}/CMakeCache.txt
             build/ci-environment-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
           if-no-files-found: warn
+          retention-days: 14
+
+  path-probe:
+    if: inputs.operation == 'path-probe'
+    name: Native Win32 directory-leaf observation
+    runs-on: windows-2022
+    timeout-minutes: 5
+    steps:
+      - name: Preserve exact source bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Observe actual Win32 leaf behavior in owned directories
+        run: python -B tests/diagnostics/windows_paths/probe.py
+      - name: Retain native observations
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: win32-leaf-observations
+          path: build/win32-leaf-observations.json
+          if-no-files-found: error
           retention-days: 14

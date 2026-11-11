@@ -99,3 +99,9 @@ source head; historical NOT_RUN fields are not evidence that no later native
 execution occurred. Real game acceptance remains owner-run and DLL-specific.
 Donor retirement is unapproved; registry provenance, aggregate memory
 budgets, shutdown liveness, and remaining source/test/tooling reviews are open.
+
+For native directory-leaf review observations, the existing manual Environment
+diagnostic accepts `operation=path-probe`. It runs the owned-directory
+`tests/diagnostics/windows_paths/probe.py` without the Environment build matrix.
+The default operation remains the existing Debug/Release Environment tests.
+Observed names are evidence, not a new Unicode rejection policy.
