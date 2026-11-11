@@ -1285,6 +1285,26 @@ class PackageTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             packaging.package(self.root, self.root / 'bundle.zip')
 
+    def test_extraction_rejects_symlinked_parent_before_staging(self):
+        packaging.package(self.root, self.zip)
+        external = self.base / 'external-extraction'
+        external.mkdir()
+        alias = self.base / 'linked-extraction-parent'
+        try:
+            alias.symlink_to(external, target_is_directory=True)
+        except (OSError, NotImplementedError):
+            self.skipTest('Directory symlinks unavailable on this host')
+        for destination in (alias / 'extracted', alias / 'new-parent' / 'extracted'):
+            with self.subTest(destination=destination):
+                with self.assertRaisesRegex(ValueError, 'symlink or junction'):
+                    extraction.extract(self.zip, destination)
+                self.assertFalse(destination.exists())
+                self.assertEqual([], list(external.iterdir()))
+        ordinary = self.base / 'ordinary-extract' / 'extracted'
+        receipt = extraction.extract(self.zip, ordinary)
+        self.assertEqual('PASS', receipt['result'])
+        self.assertEqual([], inventory.verify_manifest(ordinary))
+
     def test_output_directory_alias_to_source_root_is_rejected_before_staging(self):
         alias = self.base / 'source-root-alias'
         try:
