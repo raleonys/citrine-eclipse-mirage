@@ -9,6 +9,7 @@
 #include <limits>
 #include <stdexcept>
 #include <string>
+#include <type_traits>
 
 namespace citrine_eclipse_mirage::achievement_storage {
 namespace {
@@ -16,6 +17,33 @@ std::optional<std::string_view> attribute(const messages::XmlNode& node,std::str
     const auto value=node.attribute(key);
     if(!value)return std::nullopt;
     return value->substr(0,value->find('\0')); // Original attributes are C strings.
+}
+// Share only lexical device classification. Narrow high bytes are never
+// interpreted as Unicode digits before the filesystem code-page conversion.
+template<class Char>
+bool ascii_device_token(std::basic_string_view<Char> value,std::string_view token) noexcept {
+    if(value.size()!=token.size())return false;
+    for(std::size_t i=0;i<value.size();++i) {
+        auto c=value[i];
+        if(c>=static_cast<Char>('a')&&c<=static_cast<Char>('z'))
+            c=static_cast<Char>(c-static_cast<Char>('a')+static_cast<Char>('A'));
+        if(c!=static_cast<Char>(token[i]))return false;
+    }
+    return true;
+}
+template<class Char>
+bool reserved_watcher_device(std::basic_string_view<Char> value) noexcept {
+    auto stem=value.substr(0,value.find(static_cast<Char>('.')));
+    while(!stem.empty()&&stem.back()==static_cast<Char>(' '))stem.remove_suffix(1);
+    for(const auto token:{"CON","PRN","AUX","NUL","CONIN$","CONOUT$"})
+        if(ascii_device_token(stem,token))return true;
+    if(stem.size()!=4||(!ascii_device_token(stem.substr(0,3),"COM")&&
+                         !ascii_device_token(stem.substr(0,3),"LPT")))return false;
+    const auto digit=stem[3];
+    if(digit>=static_cast<Char>('1')&&digit<=static_cast<Char>('9'))return true;
+    if constexpr(std::is_same_v<Char,char16_t>)
+        return digit==u'\u00b9'||digit==u'\u00b2'||digit==u'\u00b3';
+    return false;
 }
 // These Config2 strings become filename/directory components, not paths.
 // Reject lexical escapes and alternate-stream syntax before any filesystem or
@@ -32,14 +60,7 @@ void require_safe_achievement_leaf(std::string_view value,bool watcher_directory
     // has no prefix/suffix to disambiguate Win32 device names.
     if(value.front()==' '||value.back()==' '||value.back()=='.')
         throw std::invalid_argument("Achievement watcher directory has an ambiguous Win32 name");
-    auto stem=value.substr(0,value.find('.'));
-    while(!stem.empty()&&stem.back()==' ')stem.remove_suffix(1);
-    std::string upper;upper.reserve(stem.size());
-    for(const char byte:stem)
-        upper.push_back(byte>='a'&&byte<='z'?static_cast<char>(byte-'a'+'A'):byte);
-    if(upper=="CON"||upper=="PRN"||upper=="AUX"||upper=="NUL"||
-       (upper.size()==4&&(upper.starts_with("COM")||upper.starts_with("LPT"))&&
-        upper[3]>='1'&&upper[3]<='9'))
+    if(reserved_watcher_device(value))
         throw std::invalid_argument("Achievement watcher directory uses a reserved Win32 device name");
 }
 // The same narrow bytes can denote a device digit or an ordinary character
@@ -51,19 +72,8 @@ void require_safe_watcher_directory(std::u16string_view value) {
         throw std::invalid_argument("Achievement watcher directory has an invalid Win32 name");
     for(const char16_t c:value)if(c<0x20)
         throw std::invalid_argument("Achievement watcher directory contains an invalid Windows filename character");
-    auto stem=value.substr(0,value.find(u'.'));
-    while(!stem.empty()&&stem.back()==u' ')stem.remove_suffix(1);
-    if(stem.size()!=3&&stem.size()!=4)return;
-    std::u16string upper;upper.reserve(stem.size());
-    for(const char16_t c:stem)
-        upper.push_back(c>=u'a'&&c<=u'z'?static_cast<char16_t>(c-u'a'+u'A'):c);
-    if(upper==u"CON"||upper==u"PRN"||upper==u"AUX"||upper==u"NUL")
+    if(reserved_watcher_device(value))
         throw std::invalid_argument("Achievement watcher directory uses a reserved Win32 device name");
-    if(upper.size()==4&&(upper.starts_with(u"COM")||upper.starts_with(u"LPT"))) {
-        const auto digit=upper[3];
-        if((digit>=u'1'&&digit<=u'9')||digit==u'\u00b9'||digit==u'\u00b2'||digit==u'\u00b3')
-            throw std::invalid_argument("Achievement watcher directory uses a reserved Win32 device name");
-    }
 }
 }
 bool HostCrtNumbers::is_space(unsigned char c) {return std::isspace(c)!=0;}

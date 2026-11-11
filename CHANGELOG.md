@@ -6,7 +6,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Add an opt-in native Win32 directory-leaf observation for the review questions about console aliases, extensions and valid Unicode. Keep the default Environment diagnostic unchanged; verify behavior before changing the achievement-name policy.
+- Close the native-confirmed `CONIN$`/`CONOUT$` watcher-directory gap, including case and extension aliases, before XML import or state publication. Share an allocation-free device classifier across narrow and converted UTF-16 checks while preserving code-page-dependent digits, safely prefixed XML set names and legal Unicode. Add console-alias refusal and native filesystem positive controls, plus an opt-in Win32 observation diagnostic; keep the default Environment diagnostic and existing CI scheduling unchanged.
 - Reject Win32-forbidden filename characters in achievement XML/set and watcher app-id components, plus reserved device and normalized-space/dot aliases in bare watcher directories. Validate both components before XML import or persistence, while retaining ordinary and safely prefixed identifiers. Preserve valid watcher lookalikes from PR #281 and verify actual XML import for five safely wrapped set names. Check the converted watcher directory for superscript COM/LPT device digits under the selected filesystem code page. Preflight conversions before XML IO while preserving their established relative order, and reject conversion failures without partial path or achievement publication.
 
 ### Integrated 2026-11-11

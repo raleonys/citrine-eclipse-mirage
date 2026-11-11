@@ -962,8 +962,8 @@
       "sha256": "b53d484ae91abc34f35ebaaf8e3df780939e16319b0ab84bded024757e6cc7c1"
     },
     "src/runtime/achievement_storage.cpp": {
-      "bytes": 10126,
-      "sha256": "7648b8b55ea77160c6dfcf1e6431947ef585eff4dcf3f4f0f6ce2a6c4c173f6b"
+      "bytes": 10440,
+      "sha256": "82409fa58fc88a9e82d678f11179088c3108e56c7d7211699355887d96871235"
     },
     "src/runtime/achievement_utc.cpp": {
       "bytes": 1711,
@@ -1122,8 +1122,8 @@
       "sha256": "ce49cebfeb830e95cb2b7492399a950ce3beda6e16750f032f81cb5846b63007"
     },
     "tests/diagnostics/windows_paths/probe.py": {
-      "bytes": 5346,
-      "sha256": "0c2045297b0e10175132032555ef8804c6506fed08b95f76a84c2c02f328d982"
+      "bytes": 5404,
+      "sha256": "6e27e95607879d98c6d0476edebf369c37d89e621e378934f23b9b1f918afbde"
     },
     "tests/diagnostics/xml_backend/CMakeLists.txt": {
       "bytes": 9028,
@@ -1598,8 +1598,8 @@
       "sha256": "3d64d4f0c8e816769cf5b6ee80800b340c542ed4badf9f067d57e65e0c928878"
     },
     "tests/unit/achievement_storage/storage_tests.cpp": {
-      "bytes": 26022,
-      "sha256": "4eda1a0bc63bea58dc94896cd85a1d08256a78f54899922a4c95b89a328d47a0"
+      "bytes": 29979,
+      "sha256": "42aef77f78c2bfdd8118b9f0bd26c28b939b34d145d1eec49f9f7ed27518a85e"
     },
     "tests/unit/achievement_writer/writer_tests.cpp": {
       "bytes": 9575,

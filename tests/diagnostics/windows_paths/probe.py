@@ -12,7 +12,8 @@ import time
 NAMES = ('ordinary', 'COM10', 'CON', 'con.txt', 'COM1',
          'CONIN$', 'conin$', 'CONIN$.txt', 'CONIN$ .txt',
          'CONOUT$', 'conout$', 'CONOUT$.txt', 'CONOUT$ .txt',
-         'xCONIN$', 'CONIN$_', 'COM\u00b9', 'COM\u00b2', 'COM\u00b3',
+         'xCONIN$', 'CONIN$_', 'CONIN', 'CONOUT',
+         'CON\u0131N$', 'CON\u0130N$', 'COM\u00b9', 'COM\u00b2', 'COM\u00b3',
          'COM\u2074', 'safe\u202ename')
 
 

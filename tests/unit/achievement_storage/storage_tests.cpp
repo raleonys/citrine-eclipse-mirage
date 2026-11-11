@@ -169,7 +169,9 @@ void achievement_path_components() {
     // achievement XML filename, it must not alias a device or normalized leaf.
     for(const auto& value:std::vector<std::string>{
             "CON","con.txt","PRN","AUX","NUL","COM1","com9.foo",
-            "LPT1","lpt9","42 "," 42","42.","CON .txt"}) {
+            "LPT1","lpt9","42 "," 42","42.","CON .txt",
+            "CONIN$","conin$","CONIN$.txt","CONIN$ .txt",
+            "CONOUT$","conout$","CONOUT$.txt","CONOUT$ .txt"}) {
         Fixture f;
         f.paths.xml_path=u"kept.xml";f.paths.ini_path=u"kept.ini";
         f.state.steam_app_id=value;f.state.achievements["retained"]=record();
@@ -194,7 +196,8 @@ void achievement_path_components() {
         "invalid watcher leaf cannot publish partial XML state");
     // Positive watcher controls retained from PR #281: matching a prefix is
     // insufficient to classify an otherwise valid leaf as a device name.
-    for(const char* ok:{"console","com10","lpt","NULLED","legitimate.v1","COM0","42\x7f"}) {
+    for(const char* ok:{"console","com10","lpt","NULLED","legitimate.v1","COM0","42\x7f",
+                        "CONIN","CONOUT","xCONIN$","CONIN$_","CONOUT$_"}) {
         Fixture kept;kept.state.steam_app_id=ok;
         kept.storage.update_01eb00(kept.state);
         require(kept.paths.ini_path==join(join(join(u"USER",u"achievement_watcher"),wide(ok)),u"achievements.ini"),
@@ -203,7 +206,7 @@ void achievement_path_components() {
     // Set IDs are embedded in a filename, not used as raw directory names.
     // Verify actual XML import so a directory-only restriction cannot be
     // accidentally extended to these safe prefixed/suffixed filenames.
-    for(const char* set:{"CON","CON.txt","COM1","42.","42 "}) {
+    for(const char* set:{"CON","CON.txt","COM1","42.","42 ","CONIN$","CONOUT$","CONIN$.txt"}) {
         Fixture prefixed_device;
         prefixed_device.state.achievements_set=set;
         const auto prefixed_xml=join(u"USER",wide(std::string("achievement-")+set+".xml"));
@@ -265,13 +268,34 @@ void converted_watcher_directories() {
                     f.effects.widened==std::vector<std::string>{"achievement-legitimate.xml","achievements.ini",raw},
                 "decoded device preflight preserves conversion order and rejects before IO or publication");
         }
+    // The native Win32 observation shows console aliases remain device names
+    // with extensions and spaces before an extension, not ordinary directories.
+    for(const char* prefix:{"CONIN$","CONOUT$"})for(const char* suffix:{"",".txt"," .txt"}) {
+        const auto decoded=wide(std::string(prefix)+suffix);
+        Fixture f;f.state.achievements_set="legitimate";f.state.steam_app_id="converted-console";
+        f.paths.xml_path=u"kept.xml";f.paths.ini_path=u"kept.ini";
+        f.state.achievements["retained"]=record();
+        f.effects.converted_paths.emplace(f.state.steam_app_id,decoded);
+        f.files.input[join(u"USER",u"achievement-legitimate.xml")]=
+            R"(<root><record Id="must-not-import" Count="1"/></root>)";
+        rejects<std::invalid_argument>([&]{f.storage.update_01eb00(f.state);},"decoded console alias rejected before XML import");
+        require(f.paths.xml_path==u"kept.xml"&&f.paths.ini_path==u"kept.ini"&&
+                f.files.reads.empty()&&f.files.writes.empty()&&f.effects.status_paths.empty()&&
+                f.effects.directories.empty()&&f.effects.epochs.empty()&&
+                !f.state.achievements.contains("must-not-import")&&
+                f.state.achievements.at("retained").field70==77&&
+                f.effects.widened==std::vector<std::string>{"achievement-legitimate.xml","achievements.ini","converted-console"},
+                "decoded console refusal preserves conversion order and every retained side effect");
+    }
     const std::vector<std::pair<std::string,Path>> ordinary{
         {std::string("COM")+'\xb0',u"COM\u00b0"},
         {std::string("COM\xc2\xb0"),u"COM\u00b0"},
         // The same raw B9 byte maps to a box-drawing character in a different
         // code page. Do not reject it merely because CP1252 would map it to ¹.
         {std::string("COM")+'\xb9',u"COM\u2563"},
-        {std::string("COM")+'\xb9'+"0",u"COM\u00b90"}
+        {std::string("COM")+'\xb9'+"0",u"COM\u00b90"},
+        {std::string("COM\xe2\x81\xb4"),u"COM\u2074"},
+        {std::string("safe\xe2\x80\xaename"),u"safe\u202ename"}
     };
     for(const auto& [raw,decoded]:ordinary) {
         Fixture f;f.state.achievements_set="CON";f.state.steam_app_id=raw;
@@ -331,6 +355,35 @@ void native_fixture(const std::filesystem::path& dir) {
     require(f.state.achievements.at("native").field04==4 && f.state.achievements.at("native").display_name=="own-file","actual own XML file parsed and applied");
     std::ifstream in(parent/"achievements.ini",std::ios::binary);const std::string bytes{std::istreambuf_iterator<char>(in),std::istreambuf_iterator<char>()};
     require(bytes=="[]\r\nAchieved=4\r\nUnlockTime=11\r\n\r\n","actual own INI file bytes through read/storage/writer sources");
+    // Actual filesystem controls for permitted names; the Effects conversion
+    // is selected explicitly so this is independent of the machine ANSI page.
+    const std::vector<std::pair<std::string,Path>> permitted{
+        {"CONIN",u"CONIN"},{"CONOUT",u"CONOUT"},{"xCONIN$",u"xCONIN$"},
+        {"CONIN$_",u"CONIN$_"},{"CONOUT$_",u"CONOUT$_"},
+        {"COM\xe2\x81\xb4",u"COM\u2074"},
+        {"safe\xe2\x80\xaename",u"safe\u202ename"}};
+    for(std::size_t i=0;i<permitted.size();++i) {
+        const auto& [raw,decoded]=permitted[i];
+        const auto owned=dir/("positive-"+std::to_string(i));
+        const auto directory=owned/"achievement_watcher"/std::filesystem::path(decoded);
+        std::filesystem::create_directories(directory);
+        require(std::filesystem::is_directory(directory),"permitted leaf is an actual owned directory");
+        Fixture positive;positive.state.user_directory=owned.u16string();
+        positive.state.achievements_set="CONIN$";positive.state.steam_app_id=raw;
+        positive.effects.converted_paths.emplace(raw,decoded);positive.effects.status={1,0,2};
+        {std::ofstream out(owned/"achievement-CONIN$.xml",std::ios::binary|std::ios::trunc);
+         out<<R"(<root><entry Id="native" Count="4"/></root>)";
+         require(static_cast<bool>(out),"safely prefixed console XML fixture written");}
+        achievement_storage::Storage actual(positive.paths,positive.xml,positive.numbers,positive.effects,files);
+        actual.update_01eb00(positive.state);
+        require(positive.state.achievements.at("native").field04==4&&
+                positive.paths.ini_path==(directory/"achievements.ini").u16string(),
+                "permitted leaf and wrapped console set preserve native storage import and path");
+        std::ifstream result(directory/"achievements.ini",std::ios::binary);
+        const std::string written{std::istreambuf_iterator<char>(result),std::istreambuf_iterator<char>()};
+        require(written=="[]\r\nAchieved=4\r\nUnlockTime=11\r\n\r\n",
+                "permitted leaf retains exact INI bytes through native filesystem writes");
+    }
 }
 }
 int main(int argc,char** argv) {
