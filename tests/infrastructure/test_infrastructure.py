@@ -1592,7 +1592,7 @@ class DocumentationContractTests(unittest.TestCase):
     def catalog():
         text = (ROOT / 'docs/INDEX.md').read_text(encoding='utf-8')
         rows = re.findall(r'^\| \[[^\]]+\]\(([^)]+)\) \| (Current|Checkpoint|Mixed|Review) \|', text, re.M)
-        return [(str((ROOT / 'docs' / name).resolve().relative_to(ROOT)), role)
+        return [((ROOT / 'docs' / name).resolve().relative_to(ROOT).as_posix(), role)
                 for name, role in rows]
 
     def test_catalog_covers_all_first_party_markdown_and_companion_csvs(self):
