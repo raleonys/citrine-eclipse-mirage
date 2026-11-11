@@ -24,6 +24,14 @@ records 127 and its diagnostic. Remaining checks still run, and either
 failure keeps the overall result `FAIL`. The per-check deadline remains
 90 seconds; use `--report build/qa/SOURCE_QA.json` to retain the report.
 
+The bounded C++ type-identity check masks comments, quoted literals and
+raw strings before scanning socket interface/adapter definitions and their
+namespace marker. It preserves source offsets and line attribution while
+retaining duplicate-definition and direct self-inheritance diagnostics. A
+comment-only inventory cannot satisfy the twelve interface/adapter pairs.
+This lexical check is not a C++ parser or preprocessor; the actual Windows
+reference-object compilation remains separate authoritative evidence.
+
 The PE checks adapted from Brownfield reject malformed optional headers, raw
 extents/overlap, resource recursion/fanout, ordinal-only exports, prohibited
 CRT imports, checksum errors, and SecurityCookie defects. Additional tests
