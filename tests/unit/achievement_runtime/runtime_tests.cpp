@@ -169,9 +169,6 @@ void failures_and_empty_paths(const std::filesystem::path& root){
     }
     {Fixture f(root/"empty-paths");f.paths.xml_path.clear();f.paths.ini_path.clear();(void)f.grant("a");require(f.trace.empty() && f.clock.calls==1,"empty persistence paths skip both files without skipping grant");}
 }
-// A11-09: actual native XML/INI atomic retry at the achievement grant boundary.
-// The lower atomic file test already holds INI while replacing two files. This
-// test proves the live grant's map/lock rollback and its exact second attempt.
 void invalid_ini_section_has_no_filesystem_effects(const std::filesystem::path& root){
     const auto directory=root/"invalid-ini-preflight";
     std::error_code cleanup_error;
@@ -208,6 +205,9 @@ void invalid_ini_section_has_no_filesystem_effects(const std::filesystem::path& 
         "retry advances one partial grant without a duplicate completion event");
 }
 
+// A11-09: actual native XML/INI atomic retry at the achievement grant boundary.
+// The lower atomic file test already holds INI while replacing two files. This
+// test proves the live grant's map/lock rollback and its exact second attempt.
 void native_locked_ini_grant_retry(const std::filesystem::path& root){
     const auto directory=root/"locked-ini-grant";
     std::error_code cleanup_error;

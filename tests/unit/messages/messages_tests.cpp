@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "citrine_eclipse_mirage/protocol/messages.hpp"
+#include "citrine_eclipse_mirage/codec/crypto.hpp"
 #include "citrine_eclipse_mirage/xml/reader.hpp"
 #include <algorithm>
 #include <cstdio>
@@ -361,6 +362,52 @@ static void process_invalid_dispatch_boundaries(){
         }
     }
 }
+static void encrypted_rekey_boundary(){
+    namespace crypto=citrine_eclipse_mirage::crypto;
+    struct NoClock final:crypto::TimeSource {
+        std::int64_t unix_seconds_05eeb8()override{throw std::runtime_error("rekey must not query time");}
+    } time;
+    crypto::Cipher server,client;server.set_fixed_key_084c98();client.set_fixed_key_084c98();
+    crypto::CryptoFactory factory;crypto::Random random{time};
+    citrine_eclipse_mirage::xml_reader_bridge::Backend xml;
+    Queue queue;FakeEffects effects;std::uint8_t encrypted=1,show=0;
+    auto decode=[&](std::string wire,crypto::Cipher& cipher){
+        std::vector<std::string> frames;std::size_t begin=0;
+        while(begin<wire.size()){
+            const auto end=wire.find('\0',begin);check(end!=std::string::npos);
+            auto frame=wire.substr(begin,end-begin);hex_decode_03ce30(frame);
+            check(cipher.decrypt_042480(frame));frames.push_back(std::move(frame));begin=end+1;
+        }
+        return frames;
+    };
+    auto exchange=[&](std::string command){
+        check(client.encrypt_042610(command));hex_encode_03d190(command);
+        return process_message_033d70({encrypted,show,server,queue},command,xml,factory,random,effects);
+    };
+    for(const int stage:{0,1,2}){
+        const int version=stage==2?2:3;
+        const auto id="live-rekey-"+std::to_string(stage);
+        const auto key=stage==0?"live-rekey-first":stage==1?"live-rekey-second":"live-rekey-fixed";
+        std::string answer(key);crypto::Cipher fixed;fixed.set_fixed_key_084c98();
+        check(fixed.encrypt_042610(answer));hex_encode_03d190(answer);
+        crypto::Cipher next;if(version>2)next.set_key_042780(random.key_from_response_034c30(answer));else next.set_fixed_key_084c98();
+        check(next.round_keys()!=client.round_keys()); // Different text alone is not a key oracle.
+        queue.values={"event-after-"+id};
+        const auto wire=exchange("<LSX><Request id='"+id+"' recipient='EALS'><ChallengeResponse key='"+key+"' version='"+std::to_string(version)+"'/></Request></LSX>");
+        client=next; // Request used the old key; its response/event use the new key.
+        const auto frames=decode(wire,client);check(frames.size()==2);
+        auto parsed=xml.parse_c_string(frames[0]);check(!parsed.has_error);
+        const auto* root=parsed.document->first_element();check(root&&root->name()=="LSX");
+        const auto* response=root->first_element();
+        check(response&&response->name()=="Response"&&response->attribute("id")==id);
+        const auto* accepted=response->first_element();
+        check(accepted&&accepted->name()=="ChallengeAccepted"&&accepted->attribute("response")==answer);
+        check(frames[1]=="event-after-"+id&&queue.values.empty()&&encrypted==1);
+        const auto followup=decode(exchange("<LSX><Request id='after-"+id+"' recipient='EALS'><GetConfig/></Request></LSX>"),client);
+        check(followup.size()==1&&followup[0].find("id=\"after-"+id+"\"")!=std::string::npos);
+        check(server.round_keys()==client.round_keys()&&effects.invalids==0);
+    }
+}
 static void no_response_continuation_boundary(){
     for(const bool encrypted:{false,true}) {
         Fixture f;f.encrypted=encrypted;f.show=1;f.queue.values={"retained-event"};
@@ -387,4 +434,4 @@ static void no_response_continuation_boundary(){
     check(propagated && f.queue.trace.empty() && f.queue.values.size()==1);
 }
 
-int main(){codec_tests();reset_tests();dispatch_tests();multi_command_request_contract_tests();challenge_tests();process_tests();process_invalid_dispatch_boundaries();no_response_continuation_boundary();std::printf("PASS: %u checks; real and synthetic XML; controlled crypto/queue; no sockets or target execution\n",checks);}
+int main(){codec_tests();reset_tests();dispatch_tests();multi_command_request_contract_tests();challenge_tests();process_tests();process_invalid_dispatch_boundaries();encrypted_rekey_boundary();no_response_continuation_boundary();std::printf("PASS: %u checks; real and synthetic XML; actual AES rekey and controlled crypto/queue; no sockets or target execution\n",checks);}
