@@ -24,6 +24,14 @@ execute_process(COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/
 if(NOT prepared EQUAL 0)
   message(FATAL_ERROR "Benchmark source identity/preparation failed")
 endif()
+function(record_runtime_candidate target kind workers)
+  add_custom_command(TARGET ${target} POST_BUILD
+    COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/run.py"
+      --record-build "$<TARGET_FILE:${target}>" --build-dir "${CMAKE_CURRENT_BINARY_DIR}"
+      --kind "${kind}" --workers "${workers}" --configuration "$<CONFIG>"
+      --compiler-id "${CMAKE_CXX_COMPILER_ID}" --compiler-version "${CMAKE_CXX_COMPILER_VERSION}"
+    COMMENT "Bind the successfully linked benchmark to its source and compiler identity" VERBATIM)
+endfunction()
 add_library(runtime_benchmark_parts STATIC
   "${RUNTIME_ROOT}/src/net/server.cpp"
   "${RUNTIME_ROOT}/src/runtime/execution.cpp"
@@ -50,6 +58,7 @@ foreach(workers IN ITEMS 1 2 4 8 0)
   target_link_libraries(runtime_load_${workers} PRIVATE runtime_benchmark_parts)
   set_target_properties(runtime_load_${workers} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>")
+  record_runtime_candidate(runtime_load_${workers} runtime_load ${workers})
 endforeach()
 
 # Reuse the accepted explicit source list and pinned dependency build recipes.
@@ -92,6 +101,7 @@ foreach(workers IN ITEMS 1 2 4 8 0)
   target_link_libraries(application_load_${workers} PRIVATE runtime_application_parts)
   set_target_properties(application_load_${workers} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>")
+  record_runtime_candidate(application_load_${workers} application_load ${workers})
 endforeach()
 add_test(NAME runtime_application_response_contracts COMMAND application_load_2 --verify-controls)
 set_tests_properties(runtime_application_response_contracts PROPERTIES TIMEOUT 30)

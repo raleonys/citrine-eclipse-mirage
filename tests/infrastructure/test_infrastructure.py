@@ -4,6 +4,7 @@
 from pathlib import Path
 import ast
 import contextlib
+import csv
 import hashlib
 import io
 import json
@@ -1630,7 +1631,7 @@ class RuntimeBenchmarkTests(unittest.TestCase):
                    rtt_ns=[2000, 3000], queue_ns=[10, 20], handler_ns=[100, 200])
         if workload.startswith('app_'):
             row.update(payload_bytes=0, application_routed=True, verified_responses=2,
-                       handler_lock_calls=2, lock_wait_ns=[10, 20], lock_hold_ns=[30, 40],
+                       handler_lock_calls=2, lock_wait_ns=[10, 20], lock_hold_ns=[30, 40], lock_calls=[1, 1],
                        persistence_verified=workload == 'app_achievement_encrypted')
         row.update(changes)
         return row
@@ -1747,6 +1748,7 @@ class RuntimeBenchmarkTests(unittest.TestCase):
         self.assertIs(good, tool.validate(good, expected))
         for change in (dict(application_routed=False), dict(verified_responses=1),
                        dict(handler_lock_calls=True), dict(lock_wait_ns=[1]),
+                       dict(lock_calls=[0, 2]), dict(lock_calls=[True, 1]),
                        dict(lock_hold_ns=[-1, 1]), dict(lock_hold_ns=[100, 200]),
                        dict(persistence_verified=False)):
             with self.subTest(change=change), self.assertRaises(ValueError):
@@ -1780,7 +1782,8 @@ class RuntimeBenchmarkTests(unittest.TestCase):
                     ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes', 'workload')}
         with tempfile.TemporaryDirectory() as directory:
             for fault, reason in ((True, 'application response validation failed'),
-                                  ('corrupt-persistence', 'Application persistence validation failed')):
+                                  ('corrupt-persistence', 'Application persistence validation failed'),
+                                  ('corrupt-ini', 'Application persistence validation failed')):
                 bad = subprocess.CompletedProcess([], 1, '', reason)
                 with patch.object(tool.subprocess, 'run', return_value=bad) as child:
                     tool.execute(Path('not-executed'), expected, directory, fault=fault)
@@ -1817,6 +1820,7 @@ class RuntimeBenchmarkTests(unittest.TestCase):
             with patch.object(tool, 'ROOT', root), patch.object(tool, 'verify_source'), \
                  patch.object(tool, 'identity', return_value={}), \
                  patch.object(tool, 'verify_generated'), \
+                 patch.object(tool, 'verified_builds', return_value={}), \
                  patch.object(tool.platform, 'system', return_value='Windows'), \
                  patch.object(tool, 'execute', side_effect=execute):
                 with self.assertRaisesRegex(ValueError, 'injected child failure'):
@@ -1825,6 +1829,199 @@ class RuntimeBenchmarkTests(unittest.TestCase):
             self.assertEqual('FAIL', receipt['result'])
             self.assertEqual(1, len(receipt['rows']))
             self.assertNotIn('summary', receipt)
+
+
+class RuntimeEvidenceTests(unittest.TestCase):
+    @staticmethod
+    def auditor():
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('runtime_evidence_audit', ROOT / 'tests/diagnostics/runtime_load/audit.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    def fixture(self):
+        audit = self.auditor()
+        tool = audit.benchmark
+        identity = dict(commit='a' * 40, manifest_sha256='b' * 64, vendor_lock_sha256='c' * 64,
+                        asio_source_sha256='d' * 64, application_source_sha256='e' * 64)
+        hashes = tool.generated_hashes()
+        inputs = dict(schema='citrine.runtime-benchmark-inputs.v2', **identity,
+                      production_worker_policy=2, production_queue_limit=128,
+                      generated_service_sha256={str(n): hashes[f'asio_{n}.cpp'] for n in tool.WORKERS},
+                      generated_application_sha256=hashes['application.cpp'])
+        files = {'binaries/generated/inputs.json': json.dumps(inputs).encode()}
+        data = dict(schema='citrine.runtime-load.v3', result='PASS_CORRECTNESS_WITH_MEASUREMENTS',
+                    evidence_class='WINDOWS_NATIVE_COMPONENT_BENCHMARK', source=inputs, system='Windows',
+                    logical_cpus=4, binaries={}, builds={}, repeats=1, suite='all', workloads=list(tool.WORKLOADS),
+                    quick=True, performance_thresholds=False, statistical_comparison='SMOKE_ONLY',
+                    response_corruption_control='EXPECTED_FAILURE', persistence_corruption_control='EXPECTED_FAILURE_XML_AND_INI', rows=[])
+        for kind in ('runtime_load', 'application_load'):
+            for n in tool.WORKERS:
+                name = f'{kind}_{n}'
+                raw = ('synthetic non-executable ' + name).encode()
+                sha = hashlib.sha256(raw).hexdigest()
+                build = dict(schema='citrine.runtime-benchmark-build.v1', source=inputs,
+                             binary=name + '.exe', sha256=sha, kind=kind, workers=n,
+                             configuration='Release', compiler_id='MSVC', compiler_version='19.44', cxx_standard=20)
+                files[f'binaries/Release/{name}.exe'] = raw
+                files[f'binaries/Release/{name}.exe.build.json'] = json.dumps(build).encode()
+                data['binaries'][name], data['builds'][name] = sha, build
+        rows = []
+        for w in tool.WORKLOADS:
+            for clients in (1, 8):
+                for order, n in enumerate(tool.WORKERS):
+                    params = tool.parameters(w, clients, 1, n, True)
+                    total = clients * 8
+                    row = {**RuntimeBenchmarkTests.row(n, w), **params, 'repeat': 0, 'order': order,
+                           'completed': total, 'created_message_threads': total if n == 0 else 0,
+                           'rtt_ns': [2000] * total, 'queue_ns': [10] * total, 'handler_ns': [100] * total}
+                    if w in tool.APPLICATION_WORKLOADS:
+                        row.update(verified_responses=total, handler_lock_calls=total, lock_calls=[1] * total,
+                                   lock_wait_ns=[10] * total, lock_hold_ns=[20] * total)
+                    path = f'samples/{len(rows):04d}.json'
+                    raw = json.dumps(row).encode()
+                    files['results/' + path] = raw
+                    data['rows'].append({**{k: v for k, v in row.items() if k not in tool.SAMPLE_FIELDS},
+                                         'samples_file': path, 'samples_sha256': hashlib.sha256(raw).hexdigest()})
+                    rows.append(row)
+        data['summary'] = tool.summarize(rows, 1, (1, 8), (1,))
+        output = io.StringIO()
+        writer = csv.DictWriter(output, fieldnames=list(data['summary'][0])); writer.writeheader(); writer.writerows(data['summary'])
+        files['results/summary.csv'] = output.getvalue().encode()
+        files['results/results.json'] = json.dumps(data).encode()
+        return audit, identity, data, files
+
+    def check(self, audit, identity, files):
+        class Evidence:
+            def read(self, name):
+                return files[name]
+        with patch.object(audit.benchmark, 'identity', return_value=identity):
+            return audit.audit(Evidence())
+
+    def test_complete_artifact_recomputes_json_csv_and_links_binaries(self):
+        audit, identity, data, files = self.fixture()
+        result = self.check(audit, identity, files)
+        self.assertEqual('PASS_INTEGRITY_NOT_EXECUTION_ATTESTATION', result['result'])
+        self.assertEqual((10, 80, 80), (result['binary_count'], result['measurements'], result['summary_cells']))
+        self.assertTrue(result['quick'])
+
+    def test_same_complete_evidence_is_auditable_from_a_directory_or_zip(self):
+        audit, identity, data, files = self.fixture()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name, raw in files.items():
+                path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(raw)
+            archive = root / 'evidence.zip'
+            with zipfile.ZipFile(archive, 'w') as zipped:
+                for name, raw in files.items(): zipped.writestr(name, raw)
+            with patch.object(audit.benchmark, 'identity', return_value=identity):
+                direct = audit.audit(audit.DirectoryEvidence(root / 'results', root / 'binaries'))
+                zipped = audit.ZipEvidence(archive)
+                try: self.assertEqual(direct, audit.audit(zipped))
+                finally: zipped.zip.close()
+
+    def test_paired_ratios_and_round_percentiles_have_independent_known_answers(self):
+        tool = RuntimeBenchmarkTests.diagnostic()
+        base, candidate = (10000, 1000000, 1000000), (100000, 100000, 10000000)
+        latencies = ([1000, 2000], [10000, 20000], [100000, 200000])
+        rows = [RuntimeBenchmarkTests.row(n, 'echo', repeat=r, order=i,
+                                        elapsed_ns=(candidate if n == 4 else base)[r], rtt_ns=latencies[r])
+                for r in range(3) for i, n in enumerate(tool.WORKERS)]
+        result = next(r for r in tool.summarize(rows, 3, (1,), (1,), ('echo',)) if r['workers'] == 4)
+        # Median paired ratios is median(0.1, 10, 0.1), not the quotient
+        # of median rates (20,000 / 2,000 == 10 in these scaled inputs).
+        self.assertEqual(.1, result['throughput_ratio_to_2_workers'])
+        self.assertEqual(20, result['median_round_p99_us'])
+        self.assertEqual(2, result['p99_rank_per_round'])
+        self.assertEqual(1, result['samples_at_or_above_p99_rank'])
+        self.assertIsNone(result['throughput_ratio_95pct_bootstrap'])
+
+    def test_tampered_or_missing_evidence_cannot_inherit_a_pass(self):
+        mutations = ('raw_hash', 'binary', 'build_source', 'summary', 'csv', 'missing_row', 'duplicate_sample', 'control', 'source', 'recipe')
+        for mutation in mutations:
+            with self.subTest(mutation=mutation):
+                audit, identity, data, files = self.fixture()
+                if mutation == 'raw_hash': files['results/samples/0000.json'] += b' '
+                elif mutation == 'binary': files['binaries/Release/runtime_load_2.exe'] += b'changed binary'
+                elif mutation == 'build_source':
+                    build = audit.benchmark.load_json(files['binaries/Release/runtime_load_2.exe.build.json'])
+                    build['configuration'] = 'Debug'; files['binaries/Release/runtime_load_2.exe.build.json'] = json.dumps(build).encode()
+                elif mutation == 'summary': data['summary'][0]['median_requests_per_second'] += 1
+                elif mutation == 'csv': files['results/summary.csv'] += files['results/summary.csv'].splitlines(keepends=True)[1]
+                elif mutation == 'missing_row': data['rows'].pop()
+                elif mutation == 'duplicate_sample': data['rows'][1] = data['rows'][0]
+                elif mutation == 'control': data['persistence_corruption_control'] = 'EXPECTED_FAILURE'
+                elif mutation == 'source': identity = {**identity, 'commit': 'f' * 40}
+                elif mutation == 'recipe':
+                    row = audit.benchmark.load_json(files['results/samples/0000.json'])
+                    row['payload_bytes'] = 1000
+                    raw = json.dumps(row).encode(); files['results/samples/0000.json'] = raw
+                    data['rows'][0].update(payload_bytes=1000, samples_sha256=hashlib.sha256(raw).hexdigest())
+                files['results/results.json'] = json.dumps(data).encode()
+                with self.assertRaises(ValueError): self.check(audit, identity, files)
+
+    def test_strict_json_refuses_duplicate_keys_and_nonfinite_values(self):
+        tool = RuntimeBenchmarkTests.diagnostic()
+        for raw in ('{"result": "FAIL", "result": "PASS"}', '{"a":{"x":1,"x":2}}', '[NaN]', '[Infinity]'):
+            with self.subTest(raw=raw), self.assertRaises(ValueError): tool.load_json(raw)
+
+    def test_zip_and_directory_paths_cannot_redirect_evidence(self):
+        audit = self.auditor()
+        for path in ('../escape', '/absolute', 'a/../b', 'C:/file', 'a\\file', 'a//file'):
+            with self.subTest(path=path), self.assertRaises(ValueError): audit.member(path)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for extra in ('../escape', 'RESULTS/results.json'):
+                archive = root / 'bad.zip'
+                with zipfile.ZipFile(archive, 'w') as z:
+                    z.writestr('results/results.json', '{}'); z.writestr(extra, '{}')
+                with self.assertRaises(ValueError): audit.ZipEvidence(archive)
+            archive = root / 'link.zip'
+            with zipfile.ZipFile(archive, 'w') as z:
+                z.writestr('results/results.json', '{}')
+                entry = zipfile.ZipInfo('results/link'); entry.create_system = 3; entry.external_attr = 0o120777 << 16
+                z.writestr(entry, '../outside')
+            with self.assertRaises(ValueError): audit.ZipEvidence(archive)
+
+    def test_stale_or_replaced_binary_does_not_match_link_receipt(self):
+        audit, identity, data, files = self.fixture()
+        tool = audit.benchmark
+        with tempfile.TemporaryDirectory() as directory:
+            build = Path(directory)
+            (build / 'Release').mkdir()
+            name = 'runtime_load_2'
+            binary = build / 'Release' / (name + '.exe')
+            binary.write_bytes(files[f'binaries/Release/{name}.exe'])
+            Path(str(binary) + '.build.json').write_bytes(files[f'binaries/Release/{name}.exe.build.json'])
+            tool.verified_builds({('runtime_load', 2): binary}, data['source'])
+            binary.write_bytes(b'stale candidate from another build')
+            with self.assertRaises(ValueError): tool.verified_builds({('runtime_load', 2): binary}, data['source'])
+            with self.assertRaises(ValueError): tool.validate_build(data['builds'][name], name, data['binaries'][name], {**data['source'], 'commit': 'f' * 40})
+
+    def test_source_archive_does_not_claim_parent_git_identity(self):
+        tool = RuntimeBenchmarkTests.diagnostic()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / 'parent/archive'
+            (root.parent / '.git').mkdir(parents=True)
+            for name in ('metadata/ACTIVE_SOURCE_MANIFEST.json', 'metadata/VENDOR_LOCK.json',
+                         'src/net/asio_service.cpp', 'src/runtime/application.cpp'):
+                path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(b'fixture')
+            with patch.object(tool, 'ROOT', root), patch.object(tool.subprocess, 'run', side_effect=AssertionError('Archive must not query parent Git')):
+                self.assertIsNone(tool.identity()['commit'])
+
+    def test_inherited_git_selectors_cannot_replace_the_benchmark_commit(self):
+        tool = RuntimeBenchmarkTests.diagnostic()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            for name in ('metadata/ACTIVE_SOURCE_MANIFEST.json', 'metadata/VENDOR_LOCK.json',
+                         'src/net/asio_service.cpp', 'src/runtime/application.cpp'):
+                path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(b'fixture')
+            for args in (['init', '-q'], ['add', '.'], ['-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '-qm', 'fixture']):
+                subprocess.run(['git', '-C', str(root), *args], capture_output=True, check=True)
+            expected = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
+            with patch.object(tool, 'ROOT', root), patch.dict(os.environ, {'GIT_DIR': str(root / 'absent-git'), 'GIT_WORK_TREE': str(root / 'absent-tree')}):
+                self.assertEqual(expected, tool.identity()['commit'])
 
 
 class DocumentationContractTests(unittest.TestCase):

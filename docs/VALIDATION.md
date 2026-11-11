@@ -64,3 +64,9 @@ actual handler-state lock observations and final XML/INI checks for persistence.
 Correctness failures reject a sample; timings are observations, not merge gates
 or original-DLL/Consumer acceptance. The manual performance workflow selects
 this suite explicitly and leaves ordinary PR scheduling unchanged.
+
+Runtime evidence also requires a post-link source/executable receipt and the
+committed offline binary/raw-sample/JSON/CSV auditor. Its consistency PASS is
+not execution attestation; native claims require the identified successful
+Windows run and artifact digest. See the benchmark guide's question/evidence
+matrix for interpretation, instrumentation and coverage boundaries.

@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import platform
 import random
+import re
 import statistics
 import subprocess
 import sys
@@ -20,7 +21,7 @@ COMPONENT_WORKLOADS = ('echo', 'xml', 'xml_locked', 'atomic_pair')
 APPLICATION_WORKLOADS = ('app_profile', 'app_profile_encrypted',
                          'app_mixed_encrypted', 'app_achievement_encrypted')
 WORKLOADS = COMPONENT_WORKLOADS + APPLICATION_WORKLOADS
-SAMPLE_FIELDS = ('rtt_ns', 'queue_ns', 'handler_ns', 'lock_wait_ns', 'lock_hold_ns')
+SAMPLE_FIELDS = ('rtt_ns', 'queue_ns', 'handler_ns', 'lock_wait_ns', 'lock_hold_ns', 'lock_calls')
 APPLICATION_INSERTIONS = (
     ('server::PreparedResponse prepare_response(std::string_view s) override{return handler.prepare_response(s);}',
      '''server::PreparedResponse prepare_response(std::string_view s) override{
@@ -50,6 +51,37 @@ CONTROL_INSERTIONS = (
 
 def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def load_json(data):
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError('Duplicate JSON key: ' + key)
+            result[key] = value
+        return result
+    def invalid(value):
+        raise ValueError('Nonfinite JSON value: ' + value)
+    return json.loads(data, object_pairs_hook=unique, parse_constant=invalid)
+
+
+def workloads_for(suite):
+    return {'all': WORKLOADS, 'component': COMPONENT_WORKLOADS,
+            'application': APPLICATION_WORKLOADS}[suite]
+
+
+def parameters(workload, clients, pipeline, workers, quick=False):
+    if workload not in WORKLOADS or workers not in WORKERS:
+        raise ValueError('Unknown workload or scheduling candidate')
+    return {'workers': workers, 'clients': clients,
+            'requests_per_client': 8 if quick else (16 if workload in ('atomic_pair', 'app_achievement_encrypted') else 256),
+            'pipeline': pipeline, 'payload_bytes': 0 if workload in APPLICATION_WORKLOADS else 1024,
+            'workload': workload}
+
+
+def binary_kind(workload):
+    return 'application_load' if workload in APPLICATION_WORKLOADS else 'runtime_load'
 
 
 def generated_service(source, workers):
@@ -95,14 +127,28 @@ def verify_source():
 
 
 def identity():
-    git = subprocess.run(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'],
-                         capture_output=True, text=True, timeout=10)
-    if git.returncode == 0:
+    commit = None
+    # An unpacked source archive must not adopt a parent checkout's HEAD.
+    # Ignore inherited repository selectors for these local, read-only commands.
+    if (ROOT / '.git').exists():
+        env = dict(os.environ)
+        for key in ('GIT_DIR', 'GIT_COMMON_DIR', 'GIT_WORK_TREE', 'GIT_INDEX_FILE',
+                    'GIT_OBJECT_DIRECTORY', 'GIT_ALTERNATE_OBJECT_DIRECTORIES', 'GIT_CEILING_DIRECTORIES'):
+            env.pop(key, None)
+        top = subprocess.run(['git', '-C', str(ROOT), 'rev-parse', '--show-toplevel'],
+                             capture_output=True, text=True, check=True, timeout=10, env=env)
+        if Path(top.stdout.strip()).resolve() != ROOT.resolve():
+            raise ValueError('Git identity belongs to another source root')
+        git = subprocess.run(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'],
+                             capture_output=True, text=True, check=True, timeout=10, env=env)
+        commit = git.stdout.strip()
+        if not re.fullmatch('[0-9a-f]{40}', commit):
+            raise ValueError('Invalid Git source commit')
         status = subprocess.run(['git', '-C', str(ROOT), 'status', '--porcelain'],
-                                capture_output=True, text=True, check=True, timeout=10)
+                                capture_output=True, text=True, check=True, timeout=10, env=env)
         if status.stdout.strip():
             raise ValueError('Commit reviewed benchmark inputs before measuring')
-    return {'commit': git.stdout.strip() if git.returncode == 0 else None,
+    return {'commit': commit,
             'manifest_sha256': digest(ROOT / 'metadata/ACTIVE_SOURCE_MANIFEST.json'),
             'vendor_lock_sha256': digest(ROOT / 'metadata/VENDOR_LOCK.json'),
             'asio_source_sha256': digest(ROOT / 'src/net/asio_service.cpp'),
@@ -157,16 +203,67 @@ def prepare(output):
     write_generated(payloads)
 
 
-def verify_generated(build, inputs):
+def generated_hashes():
     source = (ROOT / 'src/net/asio_service.cpp').read_text()
     expected = {f'asio_{n}.cpp': hashlib.sha256(generated_service(source, n).encode()).hexdigest()
                 for n in WORKERS}
     app = generated_application((ROOT / 'src/runtime/application.cpp').read_text()).encode()
     expected['application.cpp'] = hashlib.sha256(app).hexdigest()
+    return expected
+
+
+def verify_generated(build, inputs):
+    expected = generated_hashes()
     recorded = {f'asio_{n}.cpp': inputs.get('generated_service_sha256', {}).get(str(n)) for n in WORKERS}
     recorded['application.cpp'] = inputs.get('generated_application_sha256')
     if recorded != expected or any(digest(build / 'generated' / name) != value for name, value in expected.items()):
         raise ValueError('Generated Application/Asio copy identity differs from reviewed source')
+
+
+def record_build(build, binary, kind, workers, configuration, compiler_id, compiler_version):
+    build, binary = Path(build).resolve(), Path(binary).resolve()
+    if kind not in ('runtime_load', 'application_load') or workers not in WORKERS:
+        raise ValueError('Unknown linked candidate')
+    if configuration not in ('Release', 'Debug', 'RelWithDebInfo', 'MinSizeRel'):
+        raise ValueError('Unknown build configuration')
+    if not build.is_relative_to(ROOT / 'build') or binary.parent != build / configuration:
+        raise ValueError('Linked candidate must stay in its owned configuration directory')
+    if compiler_id not in ('MSVC', 'Clang', 'GNU') or not re.fullmatch(r'[0-9][0-9A-Za-z.+_-]{0,60}', compiler_version):
+        raise ValueError('Invalid compiler identity')
+    if binary.name != f'{kind}_{workers}.exe' or not binary.is_file() or binary.stat().st_nlink != 1:
+        raise ValueError('Unexpected or aliased linked candidate')
+    inputs = load_json((build / 'generated/inputs.json').read_bytes())
+    if any(inputs.get(key) != value for key, value in identity().items()):
+        raise ValueError('Reconfigure after source identity changes before linking')
+    verify_generated(build, inputs)
+    receipt = {'schema': 'citrine.runtime-benchmark-build.v1', 'source': inputs,
+               'binary': binary.name, 'sha256': digest(binary), 'kind': kind, 'workers': workers,
+               'configuration': configuration, 'compiler_id': compiler_id,
+               'compiler_version': compiler_version, 'cxx_standard': 20}
+    write_generated({Path(str(binary) + '.build.json'): (json.dumps(receipt, indent=2) + '\n').encode()})
+
+
+def validate_build(receipt, name, sha256, inputs):
+    match = re.fullmatch(r'(runtime_load|application_load)_([01248])', name)
+    if not match or receipt.get('schema') != 'citrine.runtime-benchmark-build.v1':
+        raise ValueError('Missing linked-build receipt or unknown candidate')
+    expected = {'source': inputs, 'binary': name + '.exe', 'sha256': sha256,
+                'kind': match[1], 'workers': int(match[2]), 'configuration': 'Release', 'cxx_standard': 20}
+    if any(receipt.get(key) != value or type(receipt.get(key)) is not type(value) for key, value in expected.items()):
+        raise ValueError('Linked binary/source/configuration identity differs: ' + name)
+    if receipt.get('compiler_id') not in ('MSVC', 'Clang', 'GNU') or not re.fullmatch(r'[0-9][0-9A-Za-z.+_-]{0,60}', receipt.get('compiler_version', '')):
+        raise ValueError('Invalid linked compiler identity')
+    return receipt
+
+
+def verified_builds(binaries, inputs):
+    result = {}
+    for (kind, workers), binary in binaries.items():
+        if binary.is_symlink() or not binary.is_file() or binary.stat().st_nlink != 1:
+            raise ValueError('Build the selected regular Release binaries first')
+        name = f'{kind}_{workers}'
+        result[name] = validate_build(load_json(Path(str(binary) + '.build.json').read_bytes()), name, digest(binary), inputs)
+    return result
 
 
 def integer(value, name, minimum=0):
@@ -188,7 +285,7 @@ def validate(row, expected):
     for name in ('cpu_ns', 'cpu_cycles', 'startup_ns', 'shutdown_ns', 'peak_working_set_bytes', 'private_bytes'):
         integer(row.get(name), name, 0 if name == 'cpu_ns' else 1)
     application = expected['workload'] in APPLICATION_WORKLOADS
-    for name in SAMPLE_FIELDS if application else SAMPLE_FIELDS[:3]:
+    for name in SAMPLE_FIELDS[:5] if application else SAMPLE_FIELDS[:3]:
         values = row.get(name)
         if not isinstance(values, list) or len(values) != total:
             raise ValueError('Incomplete per-request measurement: ' + name)
@@ -197,6 +294,8 @@ def validate(row, expected):
             if value > elapsed:
                 raise ValueError('Sample exceeds measured interval: ' + name)
     if application:
+        if row.get('lock_calls') != [1] * total or any(type(n) is not int for n in row['lock_calls']):
+            raise ValueError('Every Application request must observe exactly one handler lock')
         if row.get('application_routed') is not True or integer(row.get('verified_responses'), 'verified_responses') != total:
             raise ValueError('Missing verified Application responses')
         if integer(row.get('handler_lock_calls'), 'handler_lock_calls') != total:
@@ -275,6 +374,10 @@ def summarize(rows, repeats, clients, pipelines, workloads=WORKLOADS):
                        'profile': 'thread-per-message' if workers == 0 else 'pool-' + str(workers),
                        'workers': workers, 'rounds': repeats,
                        'samples_per_round': values[0]['completed'],
+                       'p99_rank_per_round': math.ceil(values[0]['completed'] * .99),
+                       'samples_at_or_above_p99_rank': values[0]['completed'] - math.ceil(values[0]['completed'] * .99) + 1,
+                       'median_round_duration_ms': statistics.median(r['elapsed_ns'] / 1e6 for r in values),
+                       'rounds_with_zero_cpu_ticks': sum(r['cpu_ns'] == 0 for r in values),
                        'median_requests_per_second': statistics.median(r['completed'] * 1e9 / r['elapsed_ns'] for r in values),
                        'median_round_p50_us': statistics.median(percentile(r['rtt_ns'], .50) / 1000 for r in values),
                        'median_round_p95_us': statistics.median(percentile(r['rtt_ns'], .95) / 1000 for r in values),
@@ -310,7 +413,7 @@ def execute(binary, params, output, fault=False):
             env['RUNTIME_BENCHMARK_FAULT'] = 'corrupt-response' if fault is True else fault
         cp = subprocess.run(command, capture_output=True, text=True, timeout=60, env=env)
         if fault:
-            failure = ('Application persistence validation failed' if fault == 'corrupt-persistence' else
+            failure = ('Application persistence validation failed' if fault in ('corrupt-persistence', 'corrupt-ini') else
                        'application response validation failed' if params['workload'] in APPLICATION_WORKLOADS
                        else 'loss, corruption or response reordering')
             if cp.returncode == 0 or failure not in cp.stderr:
@@ -318,7 +421,7 @@ def execute(binary, params, output, fault=False):
             return
         if cp.returncode:
             raise ValueError('Native benchmark child failed: ' + cp.stderr[-2000:])
-        return validate(json.loads(cp.stdout), params)
+        return validate(load_json(cp.stdout), params)
 
 
 def run(build, output, repeats=5, quick=False, suite='all'):
@@ -330,23 +433,24 @@ def run(build, output, repeats=5, quick=False, suite='all'):
     build, output = Path(build).resolve(), Path(output).resolve()
     if not output.is_relative_to(ROOT / 'build') or output.exists():
         raise ValueError('Use a new output directory under project build/')
-    inputs = json.loads((build / 'generated/inputs.json').read_text())
+    inputs = load_json((build / 'generated/inputs.json').read_bytes())
     if any(inputs.get(key) != value for key, value in identity().items()):
         raise ValueError('Build input identity differs from current source')
     verify_generated(build, inputs)
-    workloads = {'all': WORKLOADS, 'component': COMPONENT_WORKLOADS,
-                 'application': APPLICATION_WORKLOADS}[suite]
-    kinds = {('application_load' if w in APPLICATION_WORKLOADS else 'runtime_load') for w in workloads}
+    workloads = workloads_for(suite)
+    kinds = {binary_kind(w) for w in workloads}
     binaries = {(kind, n): build / 'Release' / f'{kind}_{n}.exe' for kind in kinds for n in WORKERS}
     if not all(p.is_file() for p in binaries.values()):
         raise ValueError('Build all selected Release native benchmark binaries first')
+    builds = verified_builds(binaries, inputs)
     output.mkdir(parents=True)
     (output / 'samples').mkdir()
     data_rows = []
-    receipt = {'schema': 'citrine.runtime-load.v2', 'result': 'RUNNING',
+    receipt = {'schema': 'citrine.runtime-load.v3', 'result': 'RUNNING',
                'evidence_class': 'WINDOWS_NATIVE_COMPONENT_BENCHMARK',
                'source': inputs, 'system': platform.system(), 'logical_cpus': os.cpu_count(),
                'binaries': {f'{kind}_{n}': digest(p) for (kind, n), p in binaries.items()},
+               'builds': builds, 'repeats': 1 if quick else repeats,
                'suite': suite, 'workloads': list(workloads),
                'quick': quick, 'rows': [], 'performance_thresholds': False}
     def save():
@@ -362,8 +466,9 @@ def run(build, output, repeats=5, quick=False, suite='all'):
         if 'application_load' in kinds:
             control = {'workers': 2, 'clients': 2, 'requests_per_client': 1,
                        'pipeline': 1, 'payload_bytes': 0, 'workload': 'app_achievement_encrypted'}
-            execute(binaries['application_load', 2], control, output, fault='corrupt-persistence')
-            receipt['persistence_corruption_control'] = 'EXPECTED_FAILURE'
+            for fault in ('corrupt-persistence', 'corrupt-ini'):
+                execute(binaries['application_load', 2], control, output, fault=fault)
+            receipt['persistence_corruption_control'] = 'EXPECTED_FAILURE_XML_AND_INI'
         counts, pipelines = ((1, 8), (1,)) if quick else ((1, 8, 32), (1, 8))
         rounds = 1 if quick else repeats
         rng = random.Random(48731)
@@ -374,10 +479,8 @@ def run(build, output, repeats=5, quick=False, suite='all'):
                 order = list(WORKERS)
                 rng.shuffle(order)
                 for position, workers in enumerate(order):
-                    params = {'workers': workers, 'clients': clients,
-                              'requests_per_client': 8 if quick else (16 if workload in ('atomic_pair', 'app_achievement_encrypted') else 256),
-                              'pipeline': pipeline, 'payload_bytes': 0 if workload in APPLICATION_WORKLOADS else 1024, 'workload': workload}
-                    kind = 'application_load' if workload in APPLICATION_WORKLOADS else 'runtime_load'
+                    params = parameters(workload, clients, pipeline, workers, quick)
+                    kind = binary_kind(workload)
                     row = execute(binaries[kind, workers], params, output)
                     row.update(repeat=repeat, order=position)
                     sample = output / 'samples' / f'{len(data_rows):04d}.json'
@@ -414,8 +517,17 @@ if __name__ == '__main__':
     ap.add_argument('--repeats', type=int, default=5)
     ap.add_argument('--quick', action='store_true')
     ap.add_argument('--suite', choices=('all', 'component', 'application'), default='all')
+    ap.add_argument('--record-build', type=Path)
+    ap.add_argument('--kind', choices=('runtime_load', 'application_load'))
+    ap.add_argument('--workers', type=int)
+    ap.add_argument('--configuration')
+    ap.add_argument('--compiler-id')
+    ap.add_argument('--compiler-version')
     args = ap.parse_args()
-    if args.prepare and not args.build_dir and not args.output:
+    if args.record_build and args.build_dir and not args.output and not args.prepare:
+        record_build(args.build_dir, args.record_build, args.kind, args.workers,
+                     args.configuration, args.compiler_id, args.compiler_version)
+    elif args.prepare and not args.build_dir and not args.output:
         prepare(args.prepare)
     elif args.build_dir and args.output and not args.prepare:
         run(args.build_dir, args.output, args.repeats, args.quick, args.suite)

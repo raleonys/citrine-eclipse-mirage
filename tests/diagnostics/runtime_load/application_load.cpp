@@ -243,19 +243,25 @@ void run(unsigned clients,unsigned requests,unsigned pipeline,unsigned bytes,con
         if(fault&&std::string_view(fault)=="corrupt-persistence"){
             std::ofstream damaged(scratch/"data/achievement-load-set.xml",std::ios::binary);damaged<<"<Achievements/>";
         }
+        if(fault&&std::string_view(fault)=="corrupt-ini"){
+            std::ofstream damaged(scratch/"data/achievement_watcher/12345/achievements.ini",std::ios::binary);damaged<<"[stale]\r\nCurProgress=0\r\n";
+        }
         try{verify_persistence(scratch,app.configuration(),clients,4+requests);}
         catch(const std::exception&){throw std::runtime_error("Application persistence validation failed");}
     }
-    std::vector<std::uint64_t> rtt,queue,handler,wait,hold;std::set<std::thread::id> ids;unsigned lock_calls=0;
+    std::vector<std::uint64_t> rtt,queue,handler,wait,hold,calls;std::set<std::thread::id> ids;unsigned lock_calls=0;
     for(const auto& timing:timings)rtt.insert(rtt.end(),timing.begin(),timing.end());
-    for(const auto& record:measured.records){queue.push_back(record.queue);handler.push_back(record.handler);wait.push_back(record.lock_wait);hold.push_back(record.lock_hold);ids.insert(record.thread);lock_calls+=record.lock_calls;}
+    for(const auto& record:measured.records){
+        require(record.lock_calls==1,"each Application request must observe exactly one handler lock");
+        queue.push_back(record.queue);handler.push_back(record.handler);wait.push_back(record.lock_wait);hold.push_back(record.lock_hold);calls.push_back(record.lock_calls);ids.insert(record.thread);lock_calls+=record.lock_calls;
+    }
     require(lock_calls==clients*requests,"missing actual handler lock observations");
     std::cout<<"{\"profile\":\""<<(RUNTIME_BENCHMARK_WORKERS?"pool-"+std::to_string(RUNTIME_BENCHMARK_WORKERS):"thread-per-message")
         <<"\",\"created_message_threads\":"<<created<<",\"workers\":"<<RUNTIME_BENCHMARK_WORKERS<<",\"clients\":"<<clients<<",\"requests_per_client\":"<<requests<<",\"pipeline\":"<<pipeline
         <<",\"payload_bytes\":"<<bytes<<",\"workload\":\""<<workload<<"\",\"completed\":"<<rtt.size()<<",\"verified_responses\":"<<rtt.size()<<",\"errors\":0,\"application_routed\":true,\"persistence_verified\":"<<(grant?"true":"false")
         <<",\"handler_lock_calls\":"<<lock_calls<<",\"elapsed_ns\":"<<elapsed<<",\"cpu_ns\":"<<used_cpu<<",\"cpu_cycles\":"<<used_cycles<<",\"startup_ns\":"<<startup<<",\"shutdown_ns\":"<<shutdown
         <<",\"peak_working_set_bytes\":"<<memory.PeakWorkingSetSize<<",\"private_bytes\":"<<memory.PrivateUsage<<",\"peak_active_handlers\":"<<measured.peak<<",\"observed_worker_threads\":"<<ids.size();
-    values("rtt_ns",rtt);values("queue_ns",queue);values("handler_ns",handler);values("lock_wait_ns",wait);values("lock_hold_ns",hold);std::cout<<"}\n";
+    values("rtt_ns",rtt);values("queue_ns",queue);values("handler_ns",handler);values("lock_wait_ns",wait);values("lock_hold_ns",hold);values("lock_calls",calls);std::cout<<"}\n";
 }
 }
 int main(int argc,char** argv)try{

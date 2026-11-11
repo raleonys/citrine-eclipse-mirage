@@ -1122,16 +1122,20 @@
       "sha256": "ce49cebfeb830e95cb2b7492399a950ce3beda6e16750f032f81cb5846b63007"
     },
     "tests/diagnostics/runtime_load/CMakeLists.txt": {
-      "bytes": 5527,
-      "sha256": "f7a1f4207fe28b8edb2b2472e4b5b9babca2960f474d65302443e7a77bd622cd"
+      "bytes": 6242,
+      "sha256": "d532e68f1018964501fa2f7b97efee3542f9003b695b0eff3ca8faf9407fac86"
     },
     "tests/diagnostics/runtime_load/application_load.cpp": {
-      "bytes": 19963,
-      "sha256": "b6c4b482a53414b12ed602fd59515c41c4082b0df7ab7f696bfab78c5860afdf"
+      "bytes": 20369,
+      "sha256": "9140454394a6ae0cf476f80e3a02fb0ae9eced059faf058a28013bdcfb4cc98b"
     },
     "tests/diagnostics/runtime_load/application_probe.hpp": {
       "bytes": 2863,
       "sha256": "e336989051fc46fa4eed2107930bbafe7b4fbd1ef9774ae04c367b94d5dfad7c"
+    },
+    "tests/diagnostics/runtime_load/audit.py": {
+      "bytes": 9972,
+      "sha256": "31e5c1b2ff1bd38959a114a991441f9e2182944536ca7573c62c501809b30794"
     },
     "tests/diagnostics/runtime_load/load.cpp": {
       "bytes": 12765,
@@ -1146,8 +1150,8 @@
       "sha256": "a0f3d2f75b930111c533a608f552bbd1fcbaa05a2073e1a9dc7543311dc9b981"
     },
     "tests/diagnostics/runtime_load/run.py": {
-      "bytes": 24687,
-      "sha256": "6c407689bdf3f7a26498ce7cc4d39b665054870d294f6a17bc16e5321c85b659"
+      "bytes": 30784,
+      "sha256": "e37e5a35b86931c34438f582f6930dac5412ef95ca2ed4913a881561cedb9044"
     },
     "tests/diagnostics/windows_paths/probe.py": {
       "bytes": 5404,
@@ -1230,8 +1234,8 @@
       "sha256": "7f5107def7a8ed4fd9f609e2a558d435e5968083195cc5971a1d60bc3bd52ded"
     },
     "tests/infrastructure/test_infrastructure.py": {
-      "bytes": 169976,
-      "sha256": "bb387cab85906b81cbd4594e6425beb69f73f7b001a067efa922813373d1bc86"
+      "bytes": 183314,
+      "sha256": "741ecfbdd31eb537afd35c7a86c53b8073f5c4edacc60033063de6b26af1cd03"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
       "bytes": 43762,

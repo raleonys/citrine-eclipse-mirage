@@ -6,7 +6,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Add opt-in native runtime load measurements for real TCP framing/handler queues, production XML and atomic persistence, plus hook-disabled Application routing with plaintext/encrypted profile, mixed command and durable achievement workloads. Compare diagnostic-only 1/2/4/8 worker copies and a drained per-message-thread control with paired rounds, actual handler-state lock wait/hold samples, complete response/persistence validation and corruption controls. Preserve production defaults and ordinary PR validation scheduling; retain the existing XML benchmark as the manual workflow default.
+- Add opt-in native runtime load measurements for real TCP framing/handler queues, production XML and atomic persistence, plus hook-disabled Application routing with plaintext/encrypted profile, mixed command and durable achievement workloads. Compare diagnostic-only 1/2/4/8 worker copies and a drained per-message-thread control with paired rounds, actual per-request handler-state lock observations and complete response/persistence controls. Bind linked executables to source/compiler receipts and add reproducible offline binary/raw-sample/JSON/CSV evidence auditing, strict workload recipes, XML/INI corruption controls and explicit statistical/proof boundaries. Preserve production defaults and ordinary PR validation scheduling; retain the existing XML benchmark as the manual workflow default.
 
 ### Integrated 2026-11-11
 

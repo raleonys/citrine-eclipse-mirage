@@ -17,7 +17,7 @@ two handler workers, a 128-job queue and the existing session/deadline policy.
 | Shared handler state | Application serializes registered handlers, while parsing/cipher work occurs outside its lock | Measure actual handler-state lock wait/hold separately from queueing and complete handler duration; retain the deliberately serialized component control |
 | Atomic achievement persistence | Existing source/native rollback and retry tests | Measure both component two-file replacement and real GrantAchievement routing; check every progress response and final XML/INI against the stopped Application state |
 | Connection framing and output | Existing partial-send, receive, timer and event-receipt correctness tests | Compare closed-loop requests with bursts of eight; investigate framing/allocation/Nagle effects if measured delays dominate |
-| Provider/bootstrap and hooks | Existing startup, rollback, quiescence and SAFE-FREEZE diagnostics | Network service start/stop is measured here; provider and full DLL startup require a separate fixture |
+| Provider/bootstrap and hooks | Existing startup, rollback, quiescence and SAFE-FREEZE diagnostics | Measure hook-disabled offline Application startup; live provider, hooks and full DLL startup remain separate fixtures |
 
 These are investigation candidates, not findings that a production optimization
 is already safe. More workers cannot remove serialized persistence or shared
@@ -69,8 +69,9 @@ The fixture's eight content IDs/values are checked independently; expected
 response order follows their loaded immutable configuration order. Extra,
 missing, corrupt or out-of-order responses fail. Timestamp syntax is checked
 for grant responses; persisted dates/progress are checked against stopped state.
-Deliberately corrupt component/Application responses and an Application XML
-file modified after shutdown must fail as three mandatory negative controls.
+Deliberately corrupt component/Application responses and Application XML and
+INI files modified separately after shutdown must fail as four mandatory
+negative controls.
 
 | Workload | Measured work | Boundary |
 | --- | --- | --- |
@@ -84,8 +85,8 @@ file modified after shutdown must fail as three mandatory negative controls.
 | `app_achievement_encrypted` | Real GrantAchievement with progress increment 1 on a peer-owned achievement | Shared Application locks, XML/INI serialization and native atomic replacement on every request; final acknowledged progress verified in both files |
 
 Full `all` runs contain 5 rounds x 8 workloads x 3 connection counts x 2 pipeline
-sizes x 5 scheduling candidates = **1,200 measured child processes**, plus three
-negative controls. Each selected four-workload suite has 600 measurements.
+sizes x 5 scheduling candidates = **1,200 measured child processes**, plus four
+negative controls for `all`. Each selected four-workload suite has 600 measurements.
 Each connection sends 256 measured requests, or 16 for `atomic_pair` and
 `app_achievement_encrypted`. Pipeline 1 is closed loop; pipeline
 8 sends a batch and records each reply's elapsed time from that batch send.
@@ -136,7 +137,8 @@ borrowed hardlinked inode cannot be truncated through a generated filename.
 ## Results and interpretation
 
 The artifact contains `results.json`, `summary.csv`, raw per-request samples,
-input/source pins and CMake compiler settings. Partial samples are preserved
+the ten selected executables, their post-link build receipts, input/source pins,
+an offline audit report and CMake compiler settings. Partial samples are preserved
 with a FAIL receipt if a child or measurement check fails. No timing result
 alone is a pass/fail threshold. Results retain source identity and CPU count,
 without adding machine names, owner paths or regional timezone information.
@@ -178,10 +180,10 @@ later replies in the batch can include time spent validating earlier replies.
 These client costs and common probe overhead are part of this diagnostic.
 Do not subtract independent p95 values to estimate missing processing stages.
 
-The extended receipt schemas are `citrine.runtime-benchmark-inputs.v2` and
-`citrine.runtime-load.v2`. Older component-only artifacts remain evidence for
-their original source head and four workloads; they do not validate Application
-coverage or provide a cross-head paired comparison.
+The current receipt schemas are `citrine.runtime-benchmark-inputs.v2`,
+`citrine.runtime-benchmark-build.v1` and `citrine.runtime-load.v3`. Earlier
+artifacts retain their original source head/schema and coverage. The strict
+v3 auditor does not silently upgrade older results or borrow their PASS.
 
 This suite does not prove donor equivalence, real Consumer/game performance,
 production command frequencies, provider/hook contention, adversarial saturation,
@@ -191,3 +193,88 @@ and encrypted LSX costs are measured for the declared fixtures only. Existing co
 cover different failure contracts and remain required. Extend measured cases
 when actual traces identify those workloads; do not replace missing coverage
 with a universal performance claim.
+
+## Reproduce and audit the proof
+
+Successful linking invokes `run.py --record-build` from the standalone CMake
+target's POST_BUILD command. Each sidecar binds the exact executable SHA-256,
+candidate kind/worker count, Release/Debug configuration, compiler ID/version,
+C++20 and prepared source/generated-copy identities. Measurement requires the
+selected Release sidecars, source identities and actual executable bytes to
+match before any child runs. Reconfiguring source inputs while retaining an
+older executable cannot give that executable a new source identity. Builds
+and archives require their own receipts; none are inferred from file dates.
+
+`identity()` accepts a Git commit only from a Git marker at the selected source
+root, verifies the Git top level and rejects a dirty checkout. Inherited Git
+repository selectors cannot redirect these local queries. A source archive
+nested beneath another checkout records a null commit and its own manifest
+identity rather than adopting its parent's HEAD.
+
+After native measurement, the workflow runs the committed offline auditor:
+
+```sh
+python -B tests/diagnostics/runtime_load/audit.py \
+  --results build/runtime-load/results --build-dir build/runtime-load/binaries
+```
+
+Download the complete `native-runtime-load-evidence` artifact and check out its
+identified source commit. Anyone with that checkout and Python can repeat the
+audit without Windows, network access or running the executable:
+
+```sh
+python -B tests/diagnostics/runtime_load/audit.py \
+  --artifact /path/to/native-runtime-load-evidence.zip \
+  --artifact-sha256 <digest-from-the-GitHub-artifact-metadata>
+```
+
+The auditor verifies source/vendor/generated-copy identities, all selected
+executable bytes and link receipts, required corruption controls, canonical
+workload recipes and complete candidate/case/round coverage. It verifies each
+raw sample hash and its agreement with the compact receipt, then recomputes
+every summary field, paired interval and CSV cell. Each Application sample must
+record exactly one handler-lock acquisition; equal totals cannot hide a missing
+observation in one request and a duplicate in another. Duplicate JSON keys,
+nonfinite numbers, missing rows, stale binaries, changed summaries and unsafe
+ZIP/member paths are rejected. ZIPs are read without extraction, with bounded
+member count and decoded size. The ordinary five-round matrix has 1,200
+children, 3,214,400 measured request/replies and 240 summary cells; the quick
+matrix has one round and is explicitly smoke-only.
+
+`PASS_INTEGRITY_NOT_EXECUTION_ATTESTATION` means internal/source consistency.
+It is deliberately distinct from native execution. Verify the GitHub run's
+head SHA, successful native build/CTest/measurement/audit steps and independently
+supplied artifact digest before citing native results. Local hashes and
+self-reported JSON cannot authenticate a malicious builder, prove compiler
+reproducibility or establish that invented samples were executed. A fresh clean
+CI build supplies execution provenance; no signing or release permission is
+introduced here. Source archives with null Git commits must be identified by
+their exact source-manifest digest, not an inferred repository commit.
+
+## Questions, answers and decision criteria
+
+| Question | Answer and evidence | Decision boundary |
+| --- | --- | --- |
+| Does merging this PR make the DLL faster? | No production tuning is included. `git diff main -- src include third_party CMakeLists.txt` must be empty; the standalone targets and source manifests make this reviewable. | Merge value is a repeatable way to reject bad tuning and investigate costs. It has value only if maintained and used for later decisions. |
+| Is this a real runtime path? | Application cases construct the actual hook-disabled Application, negotiate actual LSX and execute Session/MessageHandler/router and native persistence. The component and Application source lists are explicit in the diagnostic CMake file. | No DLL entry, installed hooks, online provider or game is exercised by this benchmark. |
+| Is the comparison fair? | Within one case/round the five candidates use identical fixture commands, connections, pipeline and request counts; the full matrix and unique candidate order are audited. Cases/candidates are shuffled with seed 48731. | Comparisons across workloads, heads or machines are not paired evidence. Client/probe costs remain in the process. |
+| Is thread-per-message the old donor implementation? | It is a controlled source alternative with FIFO and explicit in-flight ownership/drain. Exact creations are counted independently of reusable thread IDs. | It proves this scheduling comparison, not donor timing or failure equivalence. |
+| Can an old EXE or changed report pass? | Linked build receipts and the offline binary/raw/CSV/JSON audit reject stale or inconsistent evidence. Infrastructure mutations exercise these refusals. | Trust in the CI execution itself remains separate from consistency hashes. |
+| Could fast responses conceal wrong routing or missing writes? | Complete response trees/IDs/order and every acknowledged grant progress are checked. Final XML and INI must equal stopped state. Four distinct corruption controls must fail. | This does not prove power-loss atomicity, physical media guarantees or every rollback path. |
+| Does every request really measure the lock? | Raw per-request `lock_calls` must be 1, total calls must equal requests, and wait+hold must fit the same record's handler duration. | RTT arrays have independent client ordering; do not add/subtract unrelated percentiles to invent stage costs. |
+| Is the Application parsing under that mutex? | The generated copy times the existing registered-handler lock only; XML/cipher work stays in its original per-session location. A reversible-generation regression checks retained statements/lock ownership. | The deliberately locked XML component control cannot prove that production's lock should be removed. |
+| Do more workers always help? | Compare all connection/pipeline cells and both throughput and tail latency. A paired interval spanning one supplies no clear directional evidence for that cell. | Shorter queues alone do not establish better complete responses. Preserve the existing two-worker default until separately reviewed target evidence justifies change. |
+| Are p99 and CPU values strong evidence in every cell? | `samples_per_round`, `p99_rank_per_round`, `samples_at_or_above_p99_rank`, duration, short-round and zero-CPU-tick counts expose their limits. With 16 samples, nearest-rank p99 is the maximum observation. | A low-count maximum or quantized zero is not a reliable population-tail or CPU ranking. Five rounds do not capture between-host variance. |
+| Is the instrumentation overhead zero? | It adds clocks, wrappers and counters uniformly. Costs are declared; no uninstrumented calibration is present. | Ratios describe these measured copies. They are not an absolute production-throughput estimate or a proof that tiny differences exceed probe effects. |
+| Are deadlock, overload and active shutdown proven? | Quiet benchmark retirement is checked here. Native [handler-pool contracts](../tests/native/handler_pool_tests.cpp) separately exercise bounded admission, overload, FIFO, cancellation, active-worker drain and queue discard; their current-head native result is required independently. | Neither a quiet drain nor a finite set of tested schedules is an all-schedule deadlock proof. Hook SAFE-FREEZE remains its own diagnostic. |
+| Does this prove real game/FPS performance or a safe library migration? | Those workloads and hooks are outside this fixture. Existing Native/Golden gates check different contracts. | Obtain identified game/Consumer traces and target-hardware measurements before making such claims. This PR does not change vendors, ABI, CRT or language standard. |
+| What are the costs and extra dependencies? | Python standard library plus the already pinned C++ dependencies; no new vendor/service dependency. Full native measurement and audit are opt-in/manual; normal PR tests run the inexpensive infrastructure regressions. | Maintain the small source transformations when their anchors change; manual runs consume runner time and artifacts expire after the configured 14 days. |
+
+For a proposed optimization, retain a current-head correctness/Native/Golden
+baseline, define the actual target workload and hardware, then run the same
+paired case matrix for both implementations with source/build receipts. Compare
+throughput, p99, CPU, memory, errors and shutdown separately; preserve durability,
+FIFO, rollback and callback ownership. Require a repeatable improvement relevant
+to the target, including independent runs/hosts where needed. A neutral result
+can justify retaining the current design. A fixture result cannot close the
+game, provider, hook or all-schedule proof boundaries above.
