@@ -28,6 +28,12 @@ staging extraction. Ordinary fresh paths retain ZIP integrity,
 membership, type and source-hash validation. This ancestor precheck does not
 provide race-free isolation against concurrent parent retargeting.
 
+The verified extractor checks ZIP header-reported uncompressed sizes before
+CRC decompression or whole-member reads: at most 64 MiB per member and
+256 MiB across all members. Budget rejection removes temporary extraction
+files and leaves the destination absent. These byte limits do not establish
+complete CPU/memory isolation for arbitrary ZIP input.
+
 # Current file layout
 
 The main source/header trees follow Brownfield's one-level module layout:
