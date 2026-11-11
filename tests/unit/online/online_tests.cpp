@@ -13,6 +13,17 @@
 #include <cstdlib>
 #include <new>
 
+namespace offline_cache_allocation {
+thread_local bool counting=false;
+thread_local std::size_t bytes=0;
+struct Scope {
+    Scope(){bytes=0;counting=true;}
+    ~Scope(){counting=false;}
+    Scope(const Scope&)=delete;
+    Scope& operator=(const Scope&)=delete;
+};
+}
+
 namespace profile_copy_allocation {
 struct Failure final : std::bad_alloc {};
 struct Observation {
@@ -57,7 +68,7 @@ void release(void* pointer) noexcept {
     std::free(pointer);
 }
 }
-void* operator new(std::size_t size){profile_copy_allocation::observe(size);if(auto* p=std::malloc(size?size:1))return p;throw std::bad_alloc();}
+void* operator new(std::size_t size){profile_copy_allocation::observe(size);if(offline_cache_allocation::counting)offline_cache_allocation::bytes+=size;if(auto* p=std::malloc(size?size:1))return p;throw std::bad_alloc();}
 void* operator new[](std::size_t size){return ::operator new(size);}
 void operator delete(void* p) noexcept {cookie_lifetime::release(p);}
 void operator delete[](void* p) noexcept {cookie_lifetime::release(p);}
@@ -381,6 +392,22 @@ static void offline_profile() {
         CHECK(auth!=m.calls.end());CHECK(*(auth+1)=="log:starting offline");CHECK(*(auth+2)=="flush");
     }
 }
+static void malformed_cache_allocation_budget() {
+    State state;Mock m;state.use_last=1;m.auth_status=1;
+    m.statuses[state.cookie]={2,0,0};
+    m.read_value=std::string(50000,';');
+    {
+        offline_cache_allocation::Scope measured;
+        o::worker_035b60(state.refs(),m);
+    }
+    // Fifty thousand empty split fields previously allocated a multi-megabyte
+    // vector before the offline loader rejected its field count.
+    CHECK(offline_cache_allocation::bytes<512u*1024u);
+    CHECK(!state.online&&state.module==0&&state.object==0);
+    CHECK(state.persona=="old-persona"&&state.user=="old-user"&&state.username=="old-name");
+    CHECK(m.called("read")&&!m.called("write")&&m.calls.back()=="finish");
+}
+
 static void split_cases() {
     CHECK(o::split_profile_fields_03cf00("")==std::vector<std::string>{""});
     CHECK((o::split_profile_fields_03cf00(";;")==std::vector<std::string>{"","",""}));
@@ -554,7 +581,7 @@ static void cookie_release_before_status() {
     }
 }
 int main() {
-    try {entry_branches();live_profile();profile_copy_allocation_failures();borrowed_profile_copy_ownership();cache_delimiter_integrity();offline_profile();split_cases();status_and_cleanup();exceptions();
+    try {entry_branches();live_profile();profile_copy_allocation_failures();borrowed_profile_copy_ownership();cache_delimiter_integrity();offline_profile();malformed_cache_allocation_budget();split_cases();status_and_cleanup();exceptions();
 #if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ONLINE_TESTS)
         composition();
 #endif

@@ -44,6 +44,15 @@ reference decoding, with no TinyXML2 production fallback. See
 uses standard filesystem/fstream and approved atomic persistence adapters.
 Gulrak is not an active dependency.
 
+The cached offline identity format is exactly `persona;user;username`.
+The offline loader checks for exactly two semicolons before invoking the
+shared unrestricted splitter, avoiding a discarded vector proportional to
+malformed field counts. Valid three-field bytes, empty fields and embedded
+NUL behavior remain unchanged. Malformed caches retain prior identity cells;
+authentication logging, avatar fallback and cleanup keep their existing order.
+The worker fixture measures a 50,000-delimiter cache against a 512 KiB
+temporary-allocation budget; it does not bound the initial file read itself.
+
 Configuration is optional: `surge.cfg` beside the EXE, followed by
 `surge_override.cfg`. SDK identity `10.6.2.31` and wire version
 `10,6,2,31` are fixed. Former ServerPort/SDK CFG keys do not apply.
