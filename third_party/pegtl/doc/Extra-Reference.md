@@ -22,24 +22,6 @@ The deprecated headers contain functionality from previous versions that was not
 
 The extras can be found in [`include/tao/pegtl/extra/`](../include/tao/pegtl/extra).
 
-###### [`builders.hpp`](../include/tao/pegtl/extra/builders.hpp)
-
-Provides builders that combine the builder actions with the integer conversion from [`charconv.hpp`](#charconvhpp) and the string unescaping from [`unescape.hpp`](#unescapehpp).
-
-```c++
-template< auto S > struct from_chars_to;
-template< typename Rule > using from_chars_for = ...;
-
-template< auto S, template< typename... > class Unescape = unescape > using unescape_to = ...;
-template< typename Rule, template< typename... > class Unescape = unescape > using unescape_for = ...;
-```
-
-The `from_chars` builders can only be used with the integer types and rules from [`charconv.hpp`](#charconvhpp).
-They preserve the optimized flow in which the rule parses and converts the matched input in one step.
-
-The `unescape` builders create a `std::string` and use the supplied `Unescape` action while matching the selected rule.
-The default is [`unescape`](#unescapehpp) but any compatible custom action can be supplied when the grammar uses different escape rules.
-
 ###### [`charconv.hpp`](../include/tao/pegtl/extra/charconv.hpp)
 
 Provides string-to-integer conversion based on [`std::from_chars()`](https://en.cppreference.com/w/cpp/utility/from_chars.html) from the standard [`<charconv>`](https://en.cppreference.com/w/cpp/header/charconv.html) header.
@@ -177,27 +159,6 @@ The [parse tree has its own dedicated page](Parse-Tree.md).
 
 Defines `enum class overflow_mode` with values `local_failure` and `global_failure`.
 This enum is used by [`charconv.hpp`](#charconvhpp) to choose whether integer conversion overflow causes a local failure or a global failure.
-
-###### [`partial_apply1.hpp`](../include/tao/pegtl/extra/partial_apply1.hpp)
-
-An experimental rule that calls actions in an unusual way.
-
-* Based on [`partial< R... >`](Rule-Reference.md#partial-r-) but with major differences:
-* First, `R` must contain at least *two* rules.
-* Second, only succeeds when (at least) the first sub-rule succeeds, i.e.
-* the "partial" matching behavior only starts at the second rule.
-* Equivalent to `seq< R1, partial< R2, ... > >` when `R` is `R1`, `R2`, ...
-* Third, the `R...` are matched with [actions](Actions-and-States.md) disabled, however:
-* Fourth, on success exactly one action is applied
-  - for the last rule in `R...` that matched, and
-  - with an action input spanning from the start of `partial_apply1` to the current input position.
-* Fifth, if actions are enabled for `partial_apply1` **and**
-  - `Action< T >` is not exactly `tao::pegtl::nothing< T >` **then**
-  - `Action< T >` must implement `apply()` or `apply0()` for all `T` in `R...`
-  - (assuming that `Action` is the current action in the parsing run).
-* Meta data and implementation mapping:
-  - `partial_apply1< R... >::rule_t` is `internal::partial_apply1< R... >`
-  - `partial_apply1< R... >::subs_t` is `type_list< R... >`
 
 ###### [`raw_string.hpp`](../include/tao/pegtl/extra/raw_string.hpp)
 
@@ -372,7 +333,6 @@ An older version of [`include/tao/pegtl/extra/unescape.hpp`](#unescapehpp).
 ## Index
 
 * [`alphabet.hpp`](#alphabethpp) <sup>[(deprecated)](#deprecated)</sup>
-* [`builders.hpp`](#buildershpp) <sup>[(extra)](#extras)</sup>
 * [`charconv.hpp`](#charconvhpp) <sup>[(extra)](#extras)</sup>
 * [`dispatch.hpp`](#dispatchhpp) <sup>[(extra)](#extras)</sup>
 * [`if_then.hpp`](#if_thenhpp) <sup>[(deprecated)](#deprecated)</sup>
@@ -381,7 +341,6 @@ An older version of [`include/tao/pegtl/extra/unescape.hpp`](#unescapehpp).
 * [`overflow_mode.hpp`](#overflow_modehpp) <sup>[(extra)](#extras)</sup>
 * [`parse_tree.hpp`](#parse_treehpp) <sup>[(extra)](#extras)</sup>
 * [`parse_tree_to_dot.hpp`](#parse_tree_to_dothpp) <sup>[(extra)](#extras)</sup>
-* [`partial_apply1.hpp`](#partial_apply1hpp) <sup>[(extra)](#extras)</sup>
 * [`raw_string.hpp`](#raw_stringhpp) <sup>[(extra)](#extras)</sup>
 * [`record.hpp`](#recordhpp) <sup>[(extra)](#extras)</sup>
 * [`rep_one_min_max.hpp`](#rep_one_min_maxhpp) <sup>[(deprecated)](#deprecated)</sup>

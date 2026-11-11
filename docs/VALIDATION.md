@@ -27,14 +27,16 @@ command arguments/exit codes, and premature Golden termination.
 Historical VDF implementation/compiler results are in
 [VDF_PARSER_STATUS.json](../metadata/evidence/VDF_PARSER_STATUS.json);
 the adaptation scope is recorded in
-[BROWNFIELD_TRANSFER_MATRIX_V2.json](../metadata/INFRASTRUCTURE_TRANSFER_MATRIX.json).
+[INFRASTRUCTURE_TRANSFER_MATRIX.json](../metadata/INFRASTRUCTURE_TRANSFER_MATRIX.json).
 Raw results of earlier infrastructure/source tests are retained; they do not
 establish the same claims as the current reports.
 
 Current runtime integration:
 [RUNTIME_BINDING.md](RUNTIME_BINDING.md). The earlier vendor/parser test
-counts here are historical snapshot evidence. New application tests are
-recorded in [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json).
+counts here are historical snapshot evidence.
+[RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json) describes
+active bindings and retains older validation checkpoints; it is not an
+execution ledger for new tests. Use the selected head's workflow results.
 
 Current application C interface and separation of source DLL variants:
 [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
@@ -45,6 +47,13 @@ Production/reference target partitioning and per-file use checks:
 [BUILD_PARTITION.md](BUILD_PARTITION.md). Historical comparative verification
 is [BUILD_PARTITION.json](../metadata/evidence/BUILD_PARTITION.json);
 earlier reports retain their original historical results.
+
+The native size collector (`scripts/collect_size_evidence.py`) resolves
+Visual Studio object paths for the selected configuration only. Inactive
+`ItemGroup` ancestors and `ClCompile` conditions cannot substitute Debug
+objects into Release evidence. Existing `IntDir`/`ObjectFileName` resolution
+and unknown-macro refusal remain in effect. Portable mapping fixtures do not
+establish comparable same-build native DLL/MAP/OBJ measurements.
 
 Current hosted acceptance belongs to the selected commit's GitHub Actions
 jobs and artifacts, not a repository-wide PASS/NOT_RUN flag in an older

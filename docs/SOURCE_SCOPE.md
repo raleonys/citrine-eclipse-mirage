@@ -16,9 +16,10 @@ not build inputs to the current product.
   registry, file, time, hash, and native platform adapters.
 - Separate preloader Core/Once/process-enumeration/mutex and version-wrapper
   projects are not imported. Only the explicitly requested `CryptQueryObject`
-  behavior is isolated behind an independent platform interface. The host
-  now requires four allocation/trap operations instead of importing the
-  entire old preloader Host/HookEngine dependency graph.
+  behavior and approved protected-reader/lifetime dependencies are integrated
+  behind the current platform interfaces. The bounded scanner supersedes the
+  initial allocation/trap interface; the entire old preloader Host/HookEngine
+  dependency graph is not imported. See [HOOK_PATH_SCAN.md](HOOK_PATH_SCAN.md).
 - Original custom CRT/VCRT recovery packages and the historical B2-B6
   composition experiments dependent on them are not part of the product
   target. They are not automatically linked in place of the standard CRT.
