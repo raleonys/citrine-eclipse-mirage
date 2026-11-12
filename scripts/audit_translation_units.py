@@ -33,12 +33,26 @@ def symbols(nm, path):
 
 
 def object_path(root, build, target, source):
+    """Resolve one CMake-owned object without aliasing source or target paths."""
+    root, build = Path(root).resolve(), Path(build).resolve()
+    if not target or target in {'.', '..'} or '/' in target or '\\' in target:
+        raise ValueError('Noncanonical CMake object target: ' + target)
     source_path = Path(source)
+    if '..' in source_path.parts:
+        raise ValueError('Noncanonical source path: ' + str(source))
     if source_path.is_absolute():
-        source = source_path.relative_to(root).as_posix()
-    result = build / ('CMakeFiles/' + target + '.dir/' + source + '.obj')
-    if not result.is_file():
-        raise ValueError('Built object missing or unsupported object layout: ' + str(result))
+        try:
+            source_path = source_path.relative_to(root)
+        except ValueError as error:
+            raise ValueError('Object source outside checkout: ' + str(source)) from error
+    if (not source_path.parts or source_path.is_absolute() or
+            (root / source_path).resolve() != root / source_path):
+        raise ValueError('Source path redirects or escapes checkout: ' + str(source))
+    result = build / 'CMakeFiles' / (target + '.dir') / (source_path.as_posix() + '.obj')
+    # A symlinked object could make an unrelated file appear to be a TU from
+    # this target. Refuse the report instead of attributing its symbols.
+    if not result.is_file() or result.resolve() != result:
+        raise ValueError('Built object missing, redirected or unsupported layout: ' + str(result))
     return result
 
 

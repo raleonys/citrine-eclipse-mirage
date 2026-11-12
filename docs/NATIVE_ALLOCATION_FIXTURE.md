@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [VALIDATION.md](VALIDATION.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # Native fault injection: Asio allocation path
 
 In the Windows/MSVC logs supplied by the owner, Compile Only,

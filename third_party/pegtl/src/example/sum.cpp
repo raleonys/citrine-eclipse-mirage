@@ -2,21 +2,13 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined( __cpp_exceptions )
-#include <iostream>
-int main()
-{
-   std::cerr << "Exception support required, example unavailable." << std::endl;
-   return 1;
-}
-#else
-
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include <tao/pegtl.hpp>
-#include <tao/pegtl/action/builders.hpp>
 #include <tao/pegtl/example/fp.hpp>
 
 namespace pegtl = TAO_PEGTL_NAMESPACE;
@@ -35,11 +27,6 @@ namespace example
       : pegtl::seq< double_list, pegtl::eof >
    {};
 
-   void add( double& sum, const double value )
-   {
-      sum += value;
-   }
-
    template< typename Rule >
    struct action
       : pegtl::nothing< Rule >
@@ -47,8 +34,17 @@ namespace example
 
    template<>
    struct action< pegtl::fp::value >
-      : pegtl::value_to< &add >
-   {};
+   {
+      template< typename ActionInput >
+      static void apply( const ActionInput& in, double& sum )
+      {
+         // assume all values will fit into a C++ double
+         std::stringstream ss( in.string() );
+         double v;
+         ss >> v;
+         sum += v;
+      }
+   };
 
 }  // namespace example
 
@@ -61,7 +57,7 @@ int main()
    std::string str;
 
    while( !std::getline( std::cin, str ).fail() ) {
-      if( str.empty() || ( str.at( 0 ) == 'q' ) || ( str.at( 0 ) == 'Q' ) ) {
+      if( str.empty() || str[ 0 ] == 'q' || str[ 0 ] == 'Q' ) {
          break;
       }
       double d = 0.0;
@@ -74,5 +70,3 @@ int main()
       }
    }
 }
-
-#endif

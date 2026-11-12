@@ -48,8 +48,10 @@ void PersistenceEffects::persist_achievement(const configuration::Path& path,std
     if(!path.empty())writes.push_back({path,xml});
     std::string ini;
     if(!paths_.ini_path.empty()) {
-        directories_.create_directories_018e00(path::parent_path_019820(paths_.ini_path));
+        // Validate and prepare the complete watcher INI before creating its
+        // parent directory. A rejected section name must have no disk effects.
         ini=achievement_writer::serialize_ini(state_);
+        directories_.create_directories_018e00(path::parent_path_019820(paths_.ini_path));
         writes.push_back({paths_.ini_path,ini});
     }
     if(!writes.empty())files_.replace_atomic(writes);

@@ -109,7 +109,13 @@ struct AsioService::Impl final:ServerBackend {
     std::deque<std::function<void()>> jobs;
     std::array<OwnedThread,handler_policy::workers> workers;
     bool jobs_stopping=false;
-    std::vector<std::shared_ptr<Client>> clients; // Retained through native/IO retirement; Client only borrows Impl.
+    // The production list remains std::vector; source fixtures can fail publication.
+#if defined(CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_CLIENT_LIST)
+    CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_CLIENT_LIST<std::shared_ptr<Client>> clients;
+#else
+    std::vector<std::shared_ptr<Client>> clients;
+#endif
+    // Retained through native/IO retirement; Client only borrows Impl.
     std::size_t active_sessions=0;
     std::array<bool,2> accept_pending{};
     bool start_signalled=false;
