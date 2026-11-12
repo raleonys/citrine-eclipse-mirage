@@ -136,6 +136,10 @@ application maps and the producer event queue are not given new capacity policie
 cancellation buffer lifetime, zero progress, exact/oversize frames and monotonic
 policy boundaries. Event integration tests use the actual message core and owned
 queue to prove reservation exclusion, retry and encryption-failure retention.
+`network_policy_contracts` also calls the public AsioService constructor with
+invalid resource/deadline policies and valid default/lower/upper bounds before
+starting a listener. The controls require unchanged caller port/readiness
+values and zero handler/error callbacks.
 `network_policy_contracts` uses real sockets for admission/re-admission, limits,
 receive/frame/send expiry, stale timer cancellation, slow-greeting isolation,
 backpressure and stop with armed timers. The earlier pool, atomic persistence,
