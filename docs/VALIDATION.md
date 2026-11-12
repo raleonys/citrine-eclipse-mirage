@@ -141,3 +141,16 @@ input, BOM, path/log and failure checks remain active. Only the Windows
 NativeFactory generated-file tail is excluded in this portable target; the
 ordinary `config_application_contracts` target retains it. Portable results do
 not establish native filesystem, original-DLL or Consumer execution.
+
+## Config2 lookup allocation rollback
+
+The Config2 hash fixture measures a successful borrowed-key lookup, then faults
+each observed throwing data allocation in a fresh eight-child owner. Failure
+must remove the provisional child and orphan traversal key while retaining
+existing child/nested-child addresses and recursive payloads. An independent
+list-splice oracle checks traversal before and after published 8-to-64 rehash;
+a late failure may retain the larger valid table. Retry uses an owned key,
+never the potentially invalidated borrowed view. Allocation counts are measured,
+not fixed across libraries. Checked MSVC iterator-proxy bookkeeping remains
+enabled and explicitly unfaulted, as in the existing assignment campaigns.
+The same fixture remains registered in portable and native hash tests.
