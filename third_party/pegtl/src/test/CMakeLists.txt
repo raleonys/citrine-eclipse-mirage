@@ -1,10 +1,5 @@
 cmake_minimum_required(VERSION 3.8...3.19)
 
-option(PEGTL_BUILD_ICU_TESTS "Enable ICU test programs" OFF)
-if(PEGTL_BUILD_ICU_TESTS)
-  find_package(ICU REQUIRED COMPONENTS uc)
-endif()
-
 set(test_sources
   action_add_guard.cpp
   action_add_state.cpp
@@ -27,8 +22,6 @@ set(test_sources
   action_match_typed_state.cpp
   apply_mode.cpp
   ascii_any.cpp
-  ascii_astring.cpp
-  ascii_aistring.cpp
   ascii_chars.cpp
   ascii_classes.cpp
   ascii_ellipsis.cpp
@@ -54,17 +47,6 @@ set(test_sources
   base_exceptions.cpp
   base_result.cpp
   base_setup.cpp
-  builder_build.cpp
-  builder_cases.cpp
-  builder_const.cpp
-  builder_create.cpp
-  builder_disabled.cpp
-  builder_json.cpp
-  builder_multi.cpp
-  builder_optional.cpp
-  builder_repeat.cpp
-  builder_value.cpp
-  builder_variant.cpp
   control_apply_typed_state.cpp
   control_input_control.cpp
   control_remove_first_state.cpp
@@ -115,17 +97,14 @@ set(test_sources
   example_semver2.cpp
   example_uri.cpp
   extra_charconv.cpp
-  extra_charconv_to.cpp
   extra_dispatch.cpp
   extra_nested_exceptions.cpp
   extra_parse_tree.cpp
   extra_parse_tree_to_dot.cpp
-  extra_partial_apply1.cpp
   extra_raw_string.cpp
   extra_record.cpp
   extra_type_to_string.cpp
   extra_unescape.cpp
-  extra_unescape_to.cpp
   icu_utf16_base.cpp
   icu_utf32_base.cpp
   icu_utf8_base.cpp
@@ -218,7 +197,6 @@ set(test_sources
   rule_invert.cpp
   rule_list.cpp
   rule_list_must.cpp
-  rule_list_opt.cpp
   rule_list_tail.cpp
   rule_minus.cpp
   rule_must.cpp
@@ -243,7 +221,6 @@ set(test_sources
   rule_seq.cpp
   rule_source.cpp
   rule_sor.cpp
-  rule_sor1.cpp
   rule_star.cpp
   rule_star_must.cpp
   rule_star_partial.cpp
@@ -254,7 +231,6 @@ set(test_sources
   rule_try_catch_raise_nested.cpp
   rule_try_catch_return_false.cpp
   rule_unordered.cpp
-  rule_unordered_partial.cpp
   rule_until.cpp
   stream_analyze_traits.cpp
   stream_alloc_buffer.cpp
@@ -323,13 +299,6 @@ foreach(testsourcefile ${test_sources})
     add_test(NAME ${exename} WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} COMMAND ${exename})
   endif()
 endforeach()
-
-if(PEGTL_BUILD_ICU_TESTS)
-  foreach(target IN ITEMS pegtl-test-icu_utf8_base pegtl-test-icu_utf16_base pegtl-test-icu_utf32_base)
-    target_compile_definitions(${target} PRIVATE TAO_PEGTL_TEST_ICU)
-    target_link_libraries(${target} PRIVATE ICU::uc)
-  endforeach()
-endif()
 
 if(glob_test_sources)
   foreach(ignored_source_file ${glob_test_sources})
