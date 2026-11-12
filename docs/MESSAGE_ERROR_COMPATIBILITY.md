@@ -71,13 +71,22 @@ UnknownMessage funclet at `07bd70` and continuation at `0345da`. They support th
 ordering above, not execution of the original DLL, original EH/object/private
 CRT ABI, game acceptance or every foreign exception provenance.
 
-Research PR #178 describes the previous difference. Open test proposals #258
-and #264 pin the former policy or a deliberately rejecting test Effects
-implementation; they do not implement this compatibility path. The Application
-peer-close expectations in #258 need policy-aware adaptation before combining
-that proposal with this change. A custom Effects implementation that throws
-`std::invalid_argument` still propagates, preserving the generic error boundary
-in #264. Neither existing PR is modified or merged here.
+Research PR #178 describes the previous difference. The Application peer-close
+regression from #258 is adapted here to the selected continuation policy, while
+its unrelated real-AES, peer-isolation and ordinary failure checks remain. The
+actual Application/TCP fixture intercepts only the SDK dialog call in its compiled
+Environment body. For all three invalid forms in plaintext/encrypted and
+isolated/coalesced frames, it holds the diagnostic, verifies no peer output and a
+responsive independent peer, then releases the diagnostic and requires the exact
+successor response on the same connection. The intercepted call checks title,
+body, owner and flags and returns IDCANCEL to exercise the ignored SDK result.
+Its bounded waits fail on missing diagnostic/return; no real modal is opened.
+Production SDK calls and timeout defaults are unchanged.
+
+A custom Effects implementation that throws ordinary `std::invalid_argument`
+still propagates, preserving the generic error boundary in #264. Accepted
+real-AES rekey tests and NoResponse/delivery assertions are retained alongside
+the UnknownMessage additions in the combined message fixture.
 
 Message-core and ordered-Session regressions exercise controlled effects,
 ciphers and memory transport. The Environment fixture intercepts MessageBoxW;

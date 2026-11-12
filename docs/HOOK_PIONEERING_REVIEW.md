@@ -6,7 +6,7 @@ claim, native acceptance record, or permission to alter the production hook
 topology. Reviewed against accepted `main@bb640ee0acb37a847a49bcb93a5ac0cd9b503a13`,
 including the merged [allocation rollback fix in PR #98](https://github.com/raleonys/citrine-eclipse-mirage/pull/98).
 
-## Current authoritative implementation
+## Source model and later accepted coverage
 
 - [Registry routes](../src/platform/registry.cpp) retain three raw
   `std::set<Handle>` collections: client, language and fabricated. An opened
@@ -66,6 +66,12 @@ the full native suite also includes it. Configuring these jobs is not a native
 PASS: inspect the exact PR commit's execution. These tests call the production
 entries directly without MinHook installation and do not observe a real
 Consumer/game call graph. The design and evidence gaps below remain open.
+
+Accepted #224/#255 also exercise the installed Application hooks through W and
+A SDK routes and a controlled provider reentry. Those additions are described in
+[the Registry crosswalk](RE_A11_09_REGISTRY_HKEY_BOUNDARY.md); the direct-core
+fixture below is not the only accepted Registry test. Neither fixture supplies
+trusted provenance for every alternate issuer or the real Consumer.
 
 ## Bounded D03 alternative Registry API evidence
 

@@ -7,6 +7,7 @@
 #include "citrine_eclipse_mirage/handlers/misc_handlers.hpp"
 #include <iostream>
 #include <stdexcept>
+#include <type_traits>
 #include <vector>
 
 namespace srv=citrine_eclipse_mirage::server;
@@ -213,6 +214,10 @@ void unknown_message_same_session(){
 }
 
 void deadline_policy() {
+    static_assert(std::is_constructible_v<net::SessionDeadlines,net::SessionPolicy&>);
+    static_assert(std::is_constructible_v<net::SessionDeadlines,const net::SessionPolicy&>);
+    static_assert(!std::is_constructible_v<net::SessionDeadlines,net::SessionPolicy&&>);
+    static_assert(!std::is_constructible_v<net::SessionDeadlines,const net::SessionPolicy&&>);
     net::SessionPolicy policy;policy.receive_idle=300ms;policy.receive_frame=100ms;policy.send_idle=50ms;
     net::SessionDeadlines d(policy);const net::SessionDeadlines::Time start{};
     d.begin_receive(start,false);require(!d.expired(start+299ms)&&d.expired(start+300ms),"receive idle boundary is monotonic and exact");
@@ -222,6 +227,9 @@ void deadline_policy() {
     require(d.expired(start+50ms),"retry and zero-byte write do not reset send idle");
     d.send_progress(start+40ms,1);require(!d.expired(start+60ms)&&d.expired(start+90ms),"positive write progress extends send idle");
     d.clear();require(!d.next(),"stop clears every deadline");
+    policy.send_idle=75ms;d.begin_send(start);
+    require(!d.expired(start+74ms)&&d.expired(start+75ms),
+            "lvalue policy remains borrowed rather than snapshotted");
 }
 }
 int main()try{delivery_and_order();failure_and_buffer_lifetime();no_response_same_session();unknown_message_same_session();deadline_policy();std::cout<<"PASS: "<<checks<<" delivery/FIFO/buffer ownership/deadline checks\n";}

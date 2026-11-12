@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [VALIDATION.md](VALIDATION.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # Windows acceptance and DLL size
 
 The owner-provided Compile, Production, Debug, Static CRT, and Native logs
