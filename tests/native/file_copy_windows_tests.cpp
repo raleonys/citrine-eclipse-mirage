@@ -6,12 +6,46 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <cstring>
 #include <stdexcept>
+
+namespace metadata_probe {
+struct State {
+    bool armed=false,valid=true,known_cells=false;
+    DWORD modern_error=0,legacy_error=0;
+    unsigned modern=0,legacy=0;
+} state;
+BOOL WINAPI extended(HANDLE handle,FILE_INFO_BY_HANDLE_CLASS kind,LPVOID output,DWORD size){
+    if(!state.armed)return ::GetFileInformationByHandleEx(handle,kind,output,size);
+    ++state.modern;
+    state.valid=state.valid&&handle&&handle!=INVALID_HANDLE_VALUE&&output&&
+        kind==static_cast<FILE_INFO_BY_HANDLE_CLASS>(0x12)&&size==24;
+    SetLastError(state.modern_error);return FALSE;
+}
+BOOL WINAPI legacy(HANDLE handle,LPBY_HANDLE_FILE_INFORMATION output){
+    if(!state.armed)return ::GetFileInformationByHandle(handle,output);
+    ++state.legacy;state.valid=state.valid&&handle&&handle!=INVALID_HANDLE_VALUE&&output;
+    if(state.legacy_error){SetLastError(state.legacy_error);return FALSE;}
+    if(state.known_cells){
+        *output={};output->dwVolumeSerialNumber=0xf0e1d2c3;
+        output->nFileIndexHigh=0x12345678;output->nFileIndexLow=0x9abcdef0;return TRUE;
+    }
+    return ::GetFileInformationByHandle(handle,output);
+}
+}
+// Source-include the actual Windows adapter. Only these two metadata boundaries
+// are intercepted; unarmed calls and ordinary file operations use real Win32.
+#define GetFileInformationByHandleEx metadata_probe::extended
+#define GetFileInformationByHandle metadata_probe::legacy
+#include "../../src/platform/file_copy_windows.cpp"
+#undef GetFileInformationByHandle
+#undef GetFileInformationByHandleEx
 
 namespace {
 namespace fs=std::filesystem;
 namespace copy=citrine_eclipse_mirage::file_copy;
-void require(bool value,const char* what) {if(!value)throw std::runtime_error(what);}
+unsigned checks=0;
+void require(bool value,const char* what) {++checks;if(!value)throw std::runtime_error(what);}
 struct Directory {
     fs::path path;
     Directory() {
@@ -39,6 +73,88 @@ void set_time(const fs::path& p,std::uint64_t value) {
 copy::Result run(const fs::path& a,const fs::path& b,std::uint32_t options) {
     return copy::copy_file_windows_048d20(a.u16string(),b.u16string(),options);
 }
+struct MetadataFault {
+    explicit MetadataFault(DWORD modern,DWORD legacy=0,bool known=false){
+        require(!metadata_probe::state.armed,"metadata probes do not overlap");
+        metadata_probe::state={};metadata_probe::state.armed=true;
+        metadata_probe::state.modern_error=modern;metadata_probe::state.legacy_error=legacy;
+        metadata_probe::state.known_cells=known;
+    }
+    ~MetadataFault(){metadata_probe::state.armed=false;}
+};
+struct MetadataHandle {
+    copy::NativeSystemCalls system;copy::Handle value;
+    explicit MetadataHandle(const fs::path& path):value(system.open_attributes(path.u16string(),FILE_SHARE_READ).handle){
+        require(value!=copy::invalid_handle,"borrow an actual metadata handle");
+    }
+    ~MetadataHandle(){if(value!=copy::invalid_handle)system.close(value);}
+    HANDLE native()const{return reinterpret_cast<HANDLE>(value);}
+};
+copy::Identity legacy_oracle(HANDLE handle){
+    BY_HANDLE_FILE_INFORMATION raw{};
+    require(::GetFileInformationByHandle(handle,&raw)!=FALSE,"independent real legacy metadata query");
+    copy::Identity result;result.volume=raw.dwVolumeSerialNumber;
+    // Windows x64 stores each DWORD little-endian. Snapshot the two distinct
+    // fields independently; do not derive this answer from the tested adapter.
+    std::memcpy(result.file_id.data(),&raw.nFileIndexHigh,4);
+    std::memcpy(result.file_id.data()+4,&raw.nFileIndexLow,4);
+    return result;
+}
+void native_identity_fallback(){
+    Directory directory;
+    const auto source=directory.path/"fallback-source.bin",target=directory.path/"fallback-target.bin";
+    const auto link=directory.path/"fallback-hard-link.bin";
+    write(source,std::string("source\0bytes",12));write(target,"retained-target");
+    require(CreateHardLinkW(link.c_str(),source.c_str(),nullptr)!=FALSE,"own the fallback hard-link fixture");
+    MetadataHandle original(source),alias(link);
+    const auto expected=legacy_oracle(original.native());
+    require(legacy_oracle(alias.native())==expected,"raw legacy oracle recognizes the physical hard link");
+    for(const DWORD unsupported:{DWORD{50},DWORD{87}}){
+        {
+            MetadataFault fault(unsupported);
+            copy::Identity actual;actual.volume=~std::uint64_t{0};actual.file_id.fill(0xa5);
+            copy::Identity linked;
+            require(copy::file_identity_04895c(original.value,actual,original.system)==0&&actual==expected,
+                "forced FileIdInfo fallback reproduces exact real legacy bytes including zero extension");
+            require(copy::file_identity_04895c(alias.value,linked,alias.system)==0&&linked==actual,
+                "legacy fallback retains physical hard-link identity");
+            require(metadata_probe::state.valid&&metadata_probe::state.modern==2&&metadata_probe::state.legacy==2,
+                "two valid FileIdInfo class18/24-byte requests reach two real legacy calls");
+        }
+        {
+            MetadataFault fault(unsupported,0,true);
+            copy::Identity actual;actual.volume=~std::uint64_t{0};actual.file_id.fill(0xa5);
+            const copy::Identity cells{0xf0e1d2c3,{0x78,0x56,0x34,0x12,0xf0,0xde,0xbc,0x9a,0,0,0,0,0,0,0,0}};
+            require(copy::file_identity_04895c(original.value,actual,original.system)==0&&actual==cells,
+                "native SDK legacy fields retain DWORD width, high/low order and all eight zero tail bytes");
+            require(metadata_probe::state.valid&&metadata_probe::state.modern==1&&metadata_probe::state.legacy==1,
+                "known-cell mapping still crosses exactly one typed native fallback boundary");
+        }
+        for(const DWORD denied:{DWORD{ERROR_ACCESS_DENIED},DWORD{ERROR_SHARING_VIOLATION}}){
+            MetadataFault fault(unsupported,denied);copy::Identity actual;
+            require(copy::file_identity_04895c(original.value,actual,original.system)==denied,
+                "native fallback error is propagated instead of fabricating identity success");
+            require(metadata_probe::state.valid&&metadata_probe::state.modern==1&&metadata_probe::state.legacy==1,
+                "failed legacy call is not retried or replaced by another metadata route");
+        }
+        {
+            MetadataFault fault(unsupported);const auto result=run(source,target,1);
+            require(!result.copied&&result.error==0&&read(source)==std::string("source\0bytes",12)&&read(target)=="retained-target",
+                "complete skip-existing copy uses fallback identities without overwriting either owned file");
+            require(metadata_probe::state.valid&&metadata_probe::state.modern==2&&metadata_probe::state.legacy==2,
+                "complete copy helper sends both physical handles through the native fallback");
+        }
+        require(legacy_oracle(original.native())==expected,"identity helpers leave the caller's borrowed handle usable");
+    }
+    for(const DWORD denied:{DWORD{ERROR_INVALID_FUNCTION},DWORD{ERROR_ACCESS_DENIED},DWORD{ERROR_CALL_NOT_IMPLEMENTED}}){
+        MetadataFault fault(denied);copy::Identity actual;
+        require(copy::file_identity_04895c(original.value,actual,original.system)==denied,
+            "other modern metadata errors remain unchanged");
+        require(metadata_probe::state.valid&&metadata_probe::state.modern==1&&metadata_probe::state.legacy==0,
+            "errors outside 50/87 cannot invoke the legacy fallback");
+    }
+}
+
 }
 int main() {
     try {
@@ -87,6 +203,7 @@ int main() {
         const auto closed=system.close(opened.handle);
         require(id_error==0&&legacy_error==0&&time_error==0&&closed,"native metadata helpers failed");
         require(static_cast<std::uint32_t>(id.volume)==legacy.volume&&timestamp==static_cast<std::int64_t>(epoch2020),"native identity/time data differ");
-        std::cout<<"file copy Windows integration: PASS (Unicode/binary, modes, hard links, metadata)\n";return 0;
+        native_identity_fallback();
+        std::cout<<"file copy Windows integration: PASS ("<<checks<<" checks; Unicode/binary, modes, hard links, native identity fallback)\n";return 0;
     }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
 }

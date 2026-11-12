@@ -204,3 +204,14 @@ dispatch and settlement refusal without copying fixture cases. Both
 registrations retain a 30-second budget. Scheduling, transport, cipher and
 effects are controlled; this does not establish real sockets, AES or Windows
 acceptance.
+
+## Native file identity fallback
+
+`file_copy_windows_integration` source-includes the Windows copy adapter and
+intercepts only its two metadata calls. Controlled FileIdInfo errors 50/87 must
+reach the real legacy API on owned handles; other errors must not fall back.
+Independent Win32 snapshots and known SDK cells check volume width, high/low
+DWORD order and eight zero tail bytes in a prefilled identity. Legacy errors,
+hard-link identity, skip-existing content preservation and unarmed real Win32
+copy/metadata cases remain covered. Controlled faults, cross-compilation and
+Wine are distinct from fresh native MSVC execution.
