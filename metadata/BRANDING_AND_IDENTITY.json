@@ -21,7 +21,8 @@
   "product_name_definitions": "include/citrine_eclipse_mirage/core/product_identity.hpp",
   "identity_status_record": "metadata/evidence/PRODUCT_IDENTITY_FIX.json",
   "remaining_legacy_names": "CryptQuery compatibility filename and its regression fixtures; byte-exact historical evidence and archive provenance",
-  "default_project_version": "3.2.6",
+  "default_project_version": "3.2.7",
+  "default_project_version_release_tag": "3.2.7-ERINTHAR",
   "version_environment": "CITRINE_ECLIPSE_MIRAGE_VERSION",
   "version_revision": 0
 }

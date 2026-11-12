@@ -21,7 +21,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
    {
       using Input::Input;
 
-      using data_t = Input::data_t;
+      using data_t = typename Input::data_t;
 
       [[nodiscard]] const data_t& peek( const std::size_t offset = 0 ) const noexcept
       {
@@ -82,7 +82,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
          static_assert( sizeof( data_t ) == 1 );
          const char* const b = static_cast< const char* >( this->begin_of_line( pos ) );
          const char* const e = static_cast< const char* >( this->end_of_line_or_file( pos ) );
-         return { b, static_cast< std::size_t >( e - b ) };
+         return { b, std::size_t( e - b ) };
       }
 
       // TODO: Implement string(), string_view(), line_view_at() with std::u32string, std::u16string_view...?

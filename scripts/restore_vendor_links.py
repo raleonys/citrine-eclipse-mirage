@@ -22,14 +22,14 @@ def restore(root):
         if not path.is_file() or path.read_bytes()!=target.encode('utf-8'):
             raise ValueError('Refusing to replace a non-descriptor vendor path: '+name)
         pending.append((name,path,target))
-    # Reject invalid later aliases before publishing any earlier conversion.
+    # Validate the complete locked descriptor set before changing any alias.
     for name,path,target in pending:
         if path.is_symlink() or not path.is_file():
             raise ValueError('Vendor descriptor changed during restoration: '+name)
         if path.read_bytes()!=target.encode('utf-8'):
             raise ValueError('Vendor descriptor changed during restoration: '+name)
-        # Publish each alias independently. A later OS failure leaves completed
-        # links valid and pending descriptors intact for an ordinary retry.
+        # Stage off-path, then publish atomically: never unlink a verified
+        # portable descriptor before link creation and replacement succeed.
         with tempfile.TemporaryDirectory(prefix='.vendor-alias-',dir=path.parent) as temporary:
             staged=Path(temporary)/'link'
             os.symlink(target,staged,target_is_directory=True)
