@@ -3,7 +3,6 @@
 // (See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include <cassert>
-#include <cstdint>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -52,7 +51,7 @@ namespace pegtl = TAO_PEGTL_NAMESPACE;
 
 namespace example
 {
-   enum class my_type : std::uint8_t
+   enum class my_type
    {
       alpha,
       beta,

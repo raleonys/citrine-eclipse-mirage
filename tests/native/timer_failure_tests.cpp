@@ -98,8 +98,28 @@ void callback_rearm_failure(){
     fault::next=fault::Operation::wait;h.wait_closed();
     require(fault::injected==prior+1,"timer callback reschedule fault reached");
 }
+void send_initiation_failure(fault::Operation operation){
+    Harness h;
+    // A completed frame leaves no receive deadline. A subsequent ordered
+    // response must install its own send deadline through Client::async_send.
+    // Exercise the real Session output queue on the live IO executor, rather
+    // than calling the timer or the socket adapter in isolation.
+    h.client->frame_received();
+    require(!h.client->armed_deadline,"completed frame retires the receive deadline");
+    const auto prior=fault::injected;
+    fault::next=operation;
+    const auto client=h.client;
+    client->post_io([client]{client->session.do_write_028270("reply");});
+    h.wait_closed();
+    require(fault::injected==prior+1&&h.c.factory.errors==1,
+        "send timer initiation failure is contained by the IO callback");
+    require(client->pending_writes==0&&client->session.queued_messages()==0,
+        "failed send timer leaves no posted socket write or queued response");
+}
 }
 int main()try{
     receive_failure(fault::Operation::wait);receive_failure(fault::Operation::cancel);callback_rearm_failure();
-    std::cout<<"PASS: three timer exception paths close real sessions; internal cache hypothesis does not bypass caller containment\n";
+    send_initiation_failure(fault::Operation::wait);
+    send_initiation_failure(fault::Operation::cancel);
+    std::cout<<"PASS: five receive/send timer exception paths close real sessions; callback containment and socket ownership retained\n";
 }catch(const std::exception& e){fault::next=fault::Operation::none;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
