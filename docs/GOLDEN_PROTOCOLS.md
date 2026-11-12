@@ -13,6 +13,11 @@ The actual tools selected and adapted from Brownfield:
 | CORVEXON | `verify_corvexon_golden_trail.py`; export/ordinal/import/CRT-cookie/checksum checks, read-only |
 | FALCION | `check_falcion_golden_cleaning.py`; flat source package, matching source manifest, CRC/byte/hash and file-set checks |
 
+FALCION checks every source ZIP member header against the checked-out source
+file set and exact byte sizes before reading payloads or running CRC
+decompression. Header failures reject the archive before any earlier valid
+member is read. Same-size content changes still fail the post-read hash check.
+
 `run_golden_pipeline.py` runs these stages in that
 order and stops at the first failure. Only a separate
 temporary candidate copy is mutated: the original

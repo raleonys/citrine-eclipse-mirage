@@ -24,28 +24,41 @@ def check(root, package=None):
         errors.append('Product root directory set differs from REPOSITORY_CONTRACT')
     if package is None:
         return errors
+    # The source tree is verified before ZIP inspection. Its exact byte sizes
+    # bound any member we are willing to decompress from an external archive.
+    expected = dict(files)
+    expected[MANIFEST] = (root / MANIFEST).read_bytes()
     with zipfile.ZipFile(package) as archive:
-        seen, folded, package_files = set(), set(), {}
-        for info in archive.infolist():
+        infos = archive.infolist()
+        seen, folded, preflight_errors = set(), set(), []
+        for info in infos:
             name = safe_member(info.filename)
             if name in seen or name.casefold() in folded:
-                errors.append('Duplicate/case-fold package member: ' + name)
+                preflight_errors.append('Duplicate/case-fold package member: ' + name)
             seen.add(name)
             folded.add(name.casefold())
             if info.is_dir():
-                errors.append('Directory entry outside flat source contract: ' + name)
+                preflight_errors.append('Directory entry outside flat source contract: ' + name)
                 continue
-            is_link=stat.S_ISLNK(info.external_attr >> 16)
+            is_link = stat.S_ISLNK(info.external_attr >> 16)
             if is_link != (name in links and not portable):
-                errors.append('Package source/link type mismatch: '+name)
+                preflight_errors.append('Package source/link type mismatch: ' + name)
             mode = info.external_attr >> 16
             if portable and mode and not stat.S_ISREG(mode):
-                errors.append('Portable source package requires regular files: '+name)
-            package_files[name] = archive.read(info)
+                preflight_errors.append('Portable source package requires regular files: ' + name)
+            if name not in expected:
+                preflight_errors.append('Unexpected package member: ' + name)
+            elif info.file_size != len(expected[name]):
+                preflight_errors.append('Package member size differs from verified source: ' + name)
+                if name == MANIFEST:
+                    preflight_errors.append('Package/source manifest identity mismatch')
+        if preflight_errors:
+            # Do not decompress even the earlier valid members when a later
+            # entry is foreign or larger than its manifest-verified source.
+            return errors + preflight_errors
+        package_files = {info.filename: archive.read(info) for info in infos}
         if archive.testzip():
             errors.append('ZIP CRC failure')
-    expected = dict(files)
-    expected[MANIFEST] = (root / MANIFEST).read_bytes()
     if set(package_files) != set(expected):
         errors.append('Flat package/source file-set mismatch')
     for name in package_files.keys() & expected.keys():
