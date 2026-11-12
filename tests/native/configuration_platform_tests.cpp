@@ -1,16 +1,71 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "../../src/runtime/application_internal.hpp"
-#include "preloader_l/config/application.hpp"
-#include "preloader_l/core/paths.hpp"
+#include "citrine_eclipse_mirage/config/application.hpp"
+#include "citrine_eclipse_mirage/core/paths.hpp"
+#include "citrine_eclipse_mirage/codec/crypto.hpp"
+#include "citrine_eclipse_mirage/core/token_constants.hpp"
+#include <map>
 #include <algorithm>
 #include <array>
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <locale.h>
 #include <thread>
 
-using namespace preloader_l;
+namespace controlled_encoding {
+enum class Mode { complete, short_fill, query_error, fill_error };
+bool armed=false;
+Mode mode=Mode::complete;
+unsigned calls=0;
+const std::string bytes("\xc3\xa9\0Z",4);
+const auto real_convert=&::MultiByteToWideChar;
+const auto real_codepage=&___lc_codepage_func;
+const auto real_ansi=&::AreFileApisANSI;
+void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
+struct Scope {
+    explicit Scope(Mode selected){mode=selected;calls=0;armed=true;}
+    ~Scope(){armed=false;}
+};
+unsigned int codepage(){
+    require(!armed,"UTF8 Environment route must not query the filesystem locale");
+    return real_codepage();
+}
+BOOL WINAPI ansi(){
+    require(!armed,"UTF8 Environment route must not query file API encoding");
+    return real_ansi();
+}
+int WINAPI convert(UINT cp,DWORD flags,LPCCH input,int size,LPWSTR output,int capacity){
+    if(!armed)return real_convert(cp,flags,input,size,output,capacity);
+    require(cp==65001&&flags==8,"Environment uses strict UTF8 for both conversion passes");
+    require(input&&size==4&&std::string_view(input,4)==bytes,"conversion retains counted embedded NUL input");
+    ++calls;require(calls<=2,"Environment query/fill conversion makes bounded progress");
+    if(calls==1){
+        require(!output&&capacity==0,"first conversion pass queries required UTF16 length");
+        if(mode==Mode::query_error){SetLastError(ERROR_NO_UNICODE_TRANSLATION);return 0;}
+        SetLastError(ERROR_ACCESS_DENIED);return 3;
+    }
+    require(output&&capacity==3,"fill receives exactly the queried UTF16 capacity");
+    require(output[0]==0&&output[1]==0&&output[2]==0,"fill owns fresh initialized storage");
+    if(mode==Mode::fill_error){output[0]=L'?';SetLastError(ERROR_INVALID_DATA);return 0;}
+    output[0]=L'\u00e9';
+    // Short fill is a controlled response, not a claim about usual Win32 output.
+    if(mode==Mode::short_fill){SetLastError(ERROR_ACCESS_DENIED);return 1;}
+    output[1]=0;output[2]=L'Z';SetLastError(ERROR_ACCESS_DENIED);return 3;
+}
+}
+
+#define MultiByteToWideChar controlled_encoding::convert
+#define ___lc_codepage_func controlled_encoding::codepage
+#define AreFileApisANSI controlled_encoding::ansi
+#include "../../src/platform/encoding_windows.cpp"
+#undef AreFileApisANSI
+#undef ___lc_codepage_func
+#undef MultiByteToWideChar
+#include "../../src/runtime/application_environment.cpp"
+
+using namespace citrine_eclipse_mirage;
 namespace fs=std::filesystem;
 namespace {
 unsigned checks=0;
@@ -33,6 +88,44 @@ struct Fixture {
     achievement_runtime::HostFormatter formatter;
     application::detail::Environment env{state,options,files,xml,paths,clock,formatter};
 };
+void encoding_failure_boundaries(){
+    using controlled_encoding::Scope;using controlled_encoding::Mode;
+    using controlled_encoding::calls;using controlled_encoding::bytes;
+    Fixture f;
+    {
+        Scope probe(Mode::complete);
+        require(f.env.widen_0145d0({}).empty()&&calls==0,"empty UTF8 path skips native conversion");
+        require(f.env.resolve_path_0192d0(bytes,u"C:\\game\\host.exe",false)==configuration::Path(u"\u00e9\0Z",3)&&calls==2,
+            "actual resolver retains exact counted UTF16 and ignores stale success error");
+    }
+    {
+        Scope probe(Mode::short_fill);
+        require(f.env.widen_0145d0(bytes)==configuration::Path(u"\u00e9\0\0",3)&&calls==2,
+            "controlled short fill retains the first-pass length and initialized suffix");
+    }
+    for(const auto selected:{Mode::query_error,Mode::fill_error}){
+        f.state.registry_spoof=0;f.state.language_registry_key=u"retained-key";
+        {
+            Scope probe(selected);bool caught=false;
+            try{configuration::apply_registry_path(f.state,bytes,f.env);}
+            catch(const std::system_error& error){
+                caught=error.code().category()==std::system_category()&&
+                    error.code().value()==(selected==Mode::query_error?ERROR_NO_UNICODE_TRANSLATION:ERROR_INVALID_DATA);
+            }
+            require(caught&&calls==(selected==Mode::query_error?1u:2u),"query/fill failures report their own native error and stop");
+            require(f.state.registry_spoof==1&&f.state.language_registry_key==u"retained-key",
+                "actual registry path failure retains the old key after publishing its flag");
+        }
+        {
+            Scope retry(Mode::complete);
+            configuration::apply_registry_path(f.state,bytes,f.env);
+            require(calls==2&&f.state.language_registry_key==configuration::Path(u"\u00e9\0Z",3),
+                "conversion retry starts with fresh storage and publishes only complete counted output");
+        }
+    }
+    require(!controlled_encoding::armed,"controlled responses are disarmed before real filesystem/path checks");
+    std::cout<<"PASS: actual Environment UTF8 query/fill failures, counted results, registry partial state and retry\n";
+}
 std::string read(const fs::path& path){std::ifstream f(path,std::ios::binary);return {std::istreambuf_iterator<char>(f),{}};}
 void paths(){
     Fixture f;const configuration::Path exe=u"C:\\game\\host.exe";
@@ -86,6 +179,103 @@ void avatar(){
     f.options.executable_path=(dir.path/"host.exe").u16string();f.options.data_root=data.u16string();
     f.env.configure();require(f.state.default_avatar==(data/"default.png").u16string(),"runtime configure continues past initial avatar open failure");
 }
+void license_xml_text_escaping() {
+    // Use the actual product Environment, filesystem, AES and XML reader.
+    // Markup in local Config2 text must remain text, never inject new nodes.
+    Directory dir;Fixture f;
+    f.state.license_directory=(dir.path/"markup-license").u16string();
+    f.state.content_id="game&<item>";
+    f.state.user_id="user<&>\"'";
+    const std::string key="secret&<Injected/>\"'";
+    const auto path=dir.path/"markup-license.dlf";
+    f.env.apply_license_key_02a830(key);
+    auto encrypted=read(path);
+    require(encrypted.size()>65&&(encrypted.size()-65)%16==0,
+        "license has the same 65-byte AES envelope");
+    crypto::Cipher cipher;
+    cipher.set_key_and_iv_042760(token::constants::key_084a50,token::constants::iv_084a60);
+    require(cipher.decrypt_with_offset(encrypted,65),
+        "real license file decrypts with product key and IV");
+    const auto xml=encrypted.substr(65);
+    require(xml.find("<CipherKey>secret&amp;&lt;Injected/&gt;\"'</CipherKey>")!=std::string::npos,
+        "CipherKey escapes markup and entities before encryption");
+    require(xml.find("<ContentId>game&amp;&lt;item&gt;</ContentId>")!=std::string::npos,
+        "ContentId cannot add markup or unresolved entities");
+    require(xml.find("<UserId>user&lt;&amp;&gt;\"'</UserId>")!=std::string::npos,
+        "UserId is escaped while ordinary quotes remain unchanged");
+    auto parsed=f.xml.parse_c_string(xml);
+    require(parsed.document!=nullptr&&!parsed.has_error,
+        "actual XML backend accepts decrypted license");
+    const auto* root=parsed.document->first_element();
+    require(root&&root->name()=="License","license keeps its single XML root");
+    std::map<std::string,std::string> fields;
+    for(auto* child=root->first_element();child;child=child->next_element()) {
+        const char* value=f.xml.text_003860(*child);
+        require(value!=nullptr,"all license elements keep text values");
+        const auto [it,inserted]=fields.emplace(std::string(child->name()),value);
+        (void)it;require(inserted,"no injected or repeated XML elements");
+    }
+    require(fields.size()==6&&fields.at("CipherKey")==key&&
+            fields.at("ContentId")==f.state.content_id&&
+            fields.at("UserId")==f.state.user_id&&fields.at("MachineHash")=="1",
+        "six children round-trip all raw local identifiers exactly");
+    const auto preserved=read(path);
+    f.env.apply_license_key_02a830("different");
+    require(read(path)==preserved,"existing license is never overwritten");
+
+    f.state.license_directory=(dir.path/"plain-license").u16string();
+    f.state.content_id="42";f.state.user_id="user123";
+    f.env.apply_license_key_02a830("plain-KEY");
+    auto ordinary=read(dir.path/"plain-license.dlf");
+    cipher.set_key_and_iv_042760(token::constants::key_084a50,token::constants::iv_084a60);
+    require(cipher.decrypt_with_offset(ordinary,65),"normal file decrypts identically");
+    require(ordinary.substr(65).find(
+            "<CipherKey>plain-KEY</CipherKey><MachineHash>1</MachineHash>"
+            "<ContentId>42</ContentId><UserId>user123</UserId>")!=std::string::npos,
+        "ordinary values preserve the old XML byte format and field order");
+}
+void license_xml_control_bytes() {
+    // Exercise actual Environment, status, AES writer and pugixml reader on
+    // owned paths. Invalid XML text must not create a partially usable DLF.
+    Directory dir;Fixture f;
+    for(const unsigned byte:{0u,1u,8u,11u,12u,14u,31u}) {
+        for(unsigned field=0;field<3;++field) {
+            const auto stem="invalid-"+std::to_string(byte)+"-"+std::to_string(field);
+            f.state.license_directory=(dir.path/stem).u16string();
+            f.state.content_id="game";f.state.user_id="user";
+            std::string key="key",invalid="a";
+            invalid.push_back(static_cast<char>(byte));invalid.push_back('b');
+            if(field==0)key=invalid;
+            else if(field==1)f.state.content_id=invalid;
+            else f.state.user_id=invalid;
+            rejects<std::invalid_argument>([&]{f.env.apply_license_key_02a830(key);},
+                                           "forbidden XML control rejected in every text field");
+            require(!fs::exists(dir.path/(stem+".dlf")),
+                    "rejected control byte cannot publish encrypted license");
+        }
+    }
+    f.state.license_directory=(dir.path/"valid-whitespace").u16string();
+    f.state.content_id="game\tid";f.state.user_id="user\nid";
+    f.env.apply_license_key_02a830("key\rname");
+    const auto path=dir.path/"valid-whitespace.dlf";
+    auto encrypted=read(path);
+    crypto::Cipher cipher;
+    cipher.set_key_and_iv_042760(token::constants::key_084a50,token::constants::iv_084a60);
+    require(cipher.decrypt_with_offset(encrypted,65),
+            "legal XML whitespace license decrypts using production cipher");
+    const auto xml=encrypted.substr(65);
+    require(xml.find("<CipherKey>key\rname</CipherKey>")!=std::string::npos &&
+            xml.find("<ContentId>game\tid</ContentId>")!=std::string::npos &&
+            xml.find("<UserId>user\nid</UserId>")!=std::string::npos,
+            "TAB, LF and CR remain byte-exact in legal XML text");
+    const auto parsed=f.xml.parse_c_string(xml);
+    require(parsed.document!=nullptr&&!parsed.has_error,
+            "real XML reader accepts legal whitespace content");
+    const auto original=read(path);
+    f.env.apply_license_key_02a830(std::string(1,'\0'));
+    require(read(path)==original,
+            "existing license skips invalid replacement without touching its bytes");
+}
 void directory(){
     Fixture f;Directory dir;
     for(const auto* name:{"a_AVATAR_x.png","b_AVATAR_y","lower_avatar_z.png","keep.txt"})
@@ -94,6 +284,24 @@ void directory(){
     configuration::cleanup_cached_avatars(dir.path.u16string(),f.env);
     require(!fs::exists(dir.path/"a_AVATAR_x.png")&&!fs::exists(dir.path/"b_AVATAR_y")&&!fs::exists(dir.path/"empty_AVATAR_dir"),"real streaming cleanup removes matching files and empty directory");
     require(fs::exists(dir.path/"keep.txt")&&fs::exists(dir.path/"lower_avatar_z.png"),"cleanup preserves nonmatches and exact case");
+}
+void directory_nonempty(){
+    Fixture f;Directory dir;
+    const auto matched=dir.path/"owned_AVATAR_directory",child=matched/"child.txt",keep=dir.path/"keep.txt";
+    require(fs::create_directory(matched),"own a nonempty matching directory fixture");
+    require(file::write_binary_03c1d0(child.u16string(),"owned child",f.files)&&
+            file::write_binary_03c1d0(keep.u16string(),"preserved nonmatch",f.files),"seed owned child and unrelated file");
+    bool caught=false;
+    try{configuration::cleanup_cached_avatars(dir.path.u16string(),f.env);}
+    catch(const fs::filesystem_error& error){caught=error.code().value()!=0&&error.path1()==matched;}
+    require(caught,"actual nonempty-directory removal propagates filesystem error and exact path");
+    require(fs::is_directory(matched)&&read(child)=="owned child"&&read(keep)=="preserved nonmatch",
+            "failed cleanup never recursively deletes children or changes unrelated files");
+    require(fs::remove(child),"repair only the owned directory's blocking child");
+    configuration::cleanup_cached_avatars(dir.path.u16string(),f.env);
+    require(!fs::exists(matched)&&read(keep)=="preserved nonmatch",
+            "same Environment retries removal after repair while preserving nonmatches");
+    std::cout<<"PASS: actual Environment nonempty avatar-directory refusal, child preservation and repaired retry\n";
 }
 void directory_failure(){
     Fixture f;Directory dir;
@@ -149,10 +357,11 @@ void event_initializer_retry(){
 }
 int main(int argc,char** argv)try{
     const std::string_view group=argc>1?argv[1]:"all";
-    require(group=="all"||group=="paths"||group=="avatar"||group=="directory"||group=="thread-errors","known test group");
-    if(group=="all"||group=="paths")paths();
+    require(group=="all"||group=="paths"||group=="avatar"||group=="directory"||group=="thread-errors"||group=="license-xml","known test group");
+    if(group=="all"||group=="paths"){encoding_failure_boundaries();paths();}
     if(group=="all"||group=="avatar")avatar();
-    if(group=="all"||group=="directory"){directory();directory_failure();}
+    if(group=="all"||group=="license-xml"){license_xml_text_escaping();license_xml_control_bytes();}
+    if(group=="all"||group=="directory"){directory();directory_nonempty();directory_failure();}
     if(group=="all"||group=="thread-errors"){thread_errors();event_initializer_retry();}
     std::cout<<"PASS: "<<checks<<" configuration platform checks\n";return 0;
 }

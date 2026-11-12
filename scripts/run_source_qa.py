@@ -12,6 +12,8 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKS = [
+    ('repository badge safety and initial PR workload', ['tests/infrastructure/test_repository_badges.py']),
+    ('project identity and release resource versions', ['tests/infrastructure/test_project_version.py']),
     ('Wine test process identity and exit propagation', ['tests/infrastructure/test_wine_runner.py']),
     ('source bytes', ['scripts/verify_sources.py']),
     ('four active supplied vendor trees', ['scripts/vendor_sync.py','--root',str(ROOT),'--verify-installed']),
@@ -72,6 +74,13 @@ def _write_report(path, report):
             temporary.unlink(missing_ok=True)
 
 
+def _partial_output(value):
+    """TimeoutExpired may carry bytes despite subprocess.run(text=True)."""
+    if value is None:
+        return ''
+    return value.decode('utf-8', errors='replace') if isinstance(value, bytes) else value
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--report', type=Path)
@@ -87,8 +96,14 @@ def main():
             cp = subprocess.run([sys.executable, '-B', str(ROOT / command[0]), *command[1:]],
                                 cwd=ROOT, capture_output=True, text=True, timeout=90)
             result = {'check': name, 'exit_code': cp.returncode, 'output': cp.stdout + cp.stderr}
-        except subprocess.TimeoutExpired:
-            result = {'check': name, 'exit_code': 124, 'output': 'QA timeout'}
+        except subprocess.TimeoutExpired as error:
+            # Preserve the check's output up to the deadline for diagnosis.
+            output = _partial_output(error.stdout) + _partial_output(error.stderr)
+            result = {'check': name, 'exit_code': 124, 'output': 'QA timeout\n' + output}
+        except OSError as error:
+            # One unavailable child must not discard the other check results.
+            result = {'check': name, 'exit_code': 127,
+                      'output': 'QA check could not start: ' + str(error)}
         result['seconds'] = round(time.monotonic() - start, 3)
         results.append(result)
         print(f'[{index}/{len(CHECKS)}] {name}: ' + ('PASS' if result['exit_code'] == 0 else 'FAIL'), flush=True)

@@ -2,6 +2,31 @@
 
 # Host-Python infrastructure tests run on Linux as well as native Windows.
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
+add_test(NAME infrastructure_repository_badges COMMAND "${Python3_EXECUTABLE}" -B
+  "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_repository_badges.py")
+set_tests_properties(infrastructure_repository_badges PROPERTIES TIMEOUT 30)
+add_test(NAME infrastructure_project_version COMMAND "${Python3_EXECUTABLE}" -B
+  "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_project_version.py")
+set_tests_properties(infrastructure_project_version PROPERTIES TIMEOUT 30)
+
+# Compile a real parser consumer without vendor usage requirements. Reject an
+# accidental PEGTL include even on hosts with a system-wide PEGTL installation.
+set(_parser_header_guard "${CMAKE_CURRENT_BINARY_DIR}/generated/parser-header-contract")
+# Enumerate header names only, never application translation units or vendor code.
+file(GLOB_RECURSE _parser_vendor_headers CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE
+  RELATIVE "${PROJECT_SOURCE_DIR}/third_party/pegtl/include"
+  "${PROJECT_SOURCE_DIR}/third_party/pegtl/include/tao/*")
+foreach(_header IN LISTS _parser_vendor_headers)
+  get_filename_component(_directory "${_parser_header_guard}/${_header}" DIRECTORY)
+  file(MAKE_DIRECTORY "${_directory}")
+  file(WRITE "${_parser_header_guard}/${_header}"
+    "#error PEGTL implementation headers must not enter the public parser interface\n")
+endforeach()
+add_library(parser_header_contracts OBJECT
+  "${PROJECT_SOURCE_DIR}/tests/unit/parser/header_contract.cpp")
+target_include_directories(parser_header_contracts PRIVATE
+  "${_parser_header_guard}" "${PROJECT_SOURCE_DIR}/include")
+
 add_test(NAME infrastructure_golden_pe COMMAND "${Python3_EXECUTABLE}" -B
   "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_pe_metadata_tools.py")
 add_test(NAME infrastructure_named_imports COMMAND "${Python3_EXECUTABLE}" -B
