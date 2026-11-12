@@ -8,7 +8,7 @@ GitHub itself cannot have an outage.
 
 ## Badge ownership and updates
 
-`scripts/repository_badges.py` publishes twelve badges using the Python standard
+`scripts/repository_badges.py` publishes thirteen badges using the Python standard
 library. The six static SVGs are downloaded snapshots of the original Shields
 responses, including the embedded C++, Python and CMake logos. The Windows and
 license responses retain their original styling. Changelog uses the same style.
@@ -29,12 +29,12 @@ was retrieved from this repository's original `ci.yml/badge.svg?branch=main`
 endpoint. These cached assets are retained rather than represented as newly
 drawn project logos.
 
-The live CI, Latest release, Release integrity, Tests, Checksums and CodeQL images are read from the same repository's
+The live CI, Latest release, Release integrity, Tests, Checksums, QA and CodeQL images are read from the same repository's
 long-lived `badges` branch, at `resources/badges/ci.svg` and
 `resources/badges/latest-release.svg`, plus `resources/badges/release-integrity.svg`,
-`resources/badges/tests.svg`, `resources/badges/checksums.svg` and `resources/badges/codeql.svg`.
-All twelve generated SVGs live there, and
-only those twelve paths are permitted. That branch is generated image data, not
+`resources/badges/tests.svg`, `resources/badges/checksums.svg`, `resources/badges/qa.svg` and `resources/badges/codeql.svg`.
+All thirteen generated SVGs live there, and
+only those thirteen paths are permitted. That branch is generated image data, not
 an application/source branch or a PR head. Keep it after ordinary PR cleanup.
 
 The small Update repository badges workflow runs after a completed main-push
@@ -62,7 +62,7 @@ fast-forward reference updates and refuse an unexpected existing branch tree.
 The publisher never writes main, application sources, tags or release assets.
 The generated-only branch is maintained through the GitHub Git-data API;
 application source inventories and pre-push QA apply to the source PR, not to
-this twelve-image data tree. Initialize or refresh it from reviewed source with:
+this thirteen-image data tree. Initialize or refresh it from reviewed source with:
 
 ```sh
 python -B scripts/repository_badges.py --publish
@@ -107,13 +107,14 @@ with nonzero sizes. Otherwise it reports missing, unknown or no release. It
 checks availability, not a fresh cryptographic verification of the download.
 Both badges use the existing small main/release publisher; neither runs a
 workflow when a PR opens. The bounded data publisher permits a one-time
-upgrade from exactly the original nine or previous eleven SVG paths to twelve;
+upgrade from exactly the original nine, previous eleven or CodeQL twelve SVG paths to thirteen;
 missing or extra files outside those recognized layouts remain an error.
 
 ## README rows and CodeQL status
 
 The first README row ends with Changelog and groups the seven blue information
-badges. An explicit line break starts the five status badges below it. The normal
+badges. An explicit line break starts the six status badges below it: Tests (native), Checksums, Release
+integrity, Source integrity, QA and CodeQL, in that order. The normal
 success state is green; pending, failed and unavailable results keep their honest
 status colors. On narrow screens each group can wrap naturally without forcing
 horizontal scrolling.
@@ -126,6 +127,29 @@ another repository cannot produce green. Pending is yellow, failure is red and
 unavailable/cancelled is gray. The source seed is unavailable; the generated branch
 publishes the live result after owner integration. This image adds no PR analysis,
 CodeQL runner, runtime dependency or new security permission.
+
+## QA status
+
+The compact QA badge reports the actual **Source QA and portable tests** job:
+complete source-regression checks and Linux portable CTest. It is separate from
+the lightweight Source integrity hash gate, Windows/native totals and CodeQL.
+A Windows job failure does not replace this job's own result.
+
+Only this repository's full-validation PR runs with a tested Git tree exactly
+equal to current accepted main are eligible. The merge SHA may differ, but an
+ancestor/different tree, fork or standalone diagnostic cannot supply green.
+The newest matching run's latest attempt must contain exactly one completed,
+successful QA job. Missing, duplicate, skipped, unrequested or truncated job
+evidence is unavailable; newer pending/failed evidence cannot fall back to an
+older green result. The run scan is bounded to thirty entries.
+
+Passing is green, failing red, running yellow and cancelled/unavailable gray.
+Unavailable uses the short n/a value. Updates use the existing completed-main,
+release and manual publisher events; no PR build or publisher runner is added.
+The source seed is unavailable. New generated paths appear after the publisher
+runs from owner-integrated source; the source branch's live URL can be absent
+before that first publication. Preview the source SVG for layout separately.
+The closed migration accepts only the exact recognized 9/11/12/13-image trees.
 
 ## One basic check when a PR opens
 

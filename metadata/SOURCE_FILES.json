@@ -630,8 +630,8 @@
       "sha256": "e28536e0f9431c96e72c7e789dd6eeef81c82a5e9699a9f3d862193ebddfde50"
     },
     "src/net/asio_service.cpp": {
-      "bytes": 25107,
-      "sha256": "4d15f462ee44f185068c70b4d4171c202554f85be3070acfdddaf6969e58a9c2"
+      "bytes": 25265,
+      "sha256": "5b4f8de8607a3978c53caf0926e11a0385644fb8944846b85fc664d9db12c070"
     },
     "src/net/server.cpp": {
       "bytes": 8534,
@@ -1218,8 +1218,8 @@
       "sha256": "65b8f585f4b45da95a6d678b7b8947acb91a1d39552d44f607a4f45dc4be1b59"
     },
     "tests/infrastructure/test_repository_badges.py": {
-      "bytes": 23653,
-      "sha256": "e4ee39607b8bf1c0dc8fea858e0c89469e324d97c95ec8e1001792c80a680c3a"
+      "bytes": 28818,
+      "sha256": "a6e92ae4fc3c6e0401b214667e75b28166142d97b61696239a451cdd2caecb18"
     },
     "tests/infrastructure/test_requirements.py": {
       "bytes": 4776,
@@ -1264,6 +1264,10 @@
     "tests/native/application_worker_launch_tests.cpp": {
       "bytes": 11177,
       "sha256": "e4444c76665479eada4ed6366c7386acde0e8d2453b1f67bf7870dad21c35d89"
+    },
+    "tests/native/asio_thread_launch_tests.cpp": {
+      "bytes": 7178,
+      "sha256": "a11e0e840b0363eed504c1c95363c8be4dceee157b6d3190ed378be1db184a8d"
     },
     "tests/native/atomic_persistence_tests.cpp": {
       "bytes": 9488,

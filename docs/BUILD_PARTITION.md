@@ -125,6 +125,12 @@ fixtures with only the production core; reference-only adapter cases stay in the
 original mixed targets. This prevents reference libraries from masking a missing
 runtime binding in these tests.
 
+`asio_thread_launch_contracts` is also a production-core test target. Its private
+launcher selection exercises actual Asio worker rollback without linking any
+reference models or the development DLL. Register new executable tests in the
+partition policy as well as CTest; the generated Windows target graph rejects
+unclassified targets before native tests can run.
+
 ## Reproduce
 
 Use the existing native acceptance launcher or the documented compatible cross

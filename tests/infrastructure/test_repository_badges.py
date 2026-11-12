@@ -127,7 +127,7 @@ class BadgeTests(unittest.TestCase):
         self.assertTrue(result['changed'])
         writes = api.writes()
         self.assertEqual(3, len(writes))
-        self.assertEqual(12, len(rendered))
+        self.assertEqual(13, len(rendered))
         self.assertEqual({badges.DIRECTORY+'/'+name for name in badges.NAMES},
                          {entry['path'] for entry in writes[0][2]['tree']})
         self.assertEqual([], writes[1][2]['parents'])
@@ -194,7 +194,7 @@ class BadgeTests(unittest.TestCase):
     def test_readme_badges_are_repository_owned_and_source_seeds_are_valid(self):
         text = (ROOT / 'README.md').read_text()
         images = re.findall(r'\[!\[[^\]]+\]\(([^)]+)\)\]', text)
-        self.assertEqual(12, len(images))
+        self.assertEqual(13, len(images))
         for path in images:
             self.assertTrue(path.startswith(('resources/badges/',
                 'https://raw.githubusercontent.com/raleonys/citrine-eclipse-mirage/badges/resources/badges/')), path)
@@ -339,14 +339,15 @@ class BadgeTests(unittest.TestCase):
                 self.assertFalse(badges.checksum_available(bad))
         self.assertIsNone(badges.checksum_available(None))
 
-    def test_only_exact_previous_nine_and_eleven_file_trees_can_upgrade(self):
+    def test_only_exact_previous_nine_eleven_and_twelve_file_trees_can_upgrade(self):
         rendered = badges.images(None, None)
-        for names in (badges.LEGACY_NAMES, badges.PREVIOUS_NAMES):
+        for names in (badges.LEGACY_NAMES, badges.PREVIOUS_NAMES, badges.CODEQL_NAMES):
             with self.subTest(count=len(names)):
                 tree = tree_for({name: value for name, value in rendered.items() if name in names})
                 api = API(existing=True, tree=tree)
                 self.assertTrue(badges.publish(api, REPOSITORY, rendered)['changed'])
-                tree['tree'].pop()
+                tree['tree'] = [entry for entry in tree['tree']
+                                if entry['path'] != badges.DIRECTORY+'/windows.svg']
                 api = API(existing=True, tree=tree)
                 with self.assertRaises(ValueError):
                     badges.publish(api, REPOSITORY, rendered)
@@ -358,7 +359,87 @@ class BadgeTests(unittest.TestCase):
         paths = lambda part: re.findall(r'resources/badges/([a-z-]+\.svg)', part)
         self.assertEqual(['windows.svg', 'cpp.svg', 'python.svg', 'cmake.svg', 'license.svg',
                           'latest-release.svg', 'changelog.svg'], paths(upper))
-        self.assertEqual(['ci.svg', 'tests.svg', 'release-integrity.svg', 'checksums.svg', 'codeql.svg'], paths(lower))
+        self.assertEqual(['tests.svg', 'checksums.svg', 'release-integrity.svg', 'ci.svg', 'qa.svg', 'codeql.svg'], paths(lower))
+
+    @staticmethod
+    def qa_api():
+        api = API()
+        api.full_runs = [{'id': 70, 'event': 'pull_request', 'head_sha': 'b'*40,
+                          'head_repository': {'full_name': REPOSITORY},
+                          'status': 'completed', 'conclusion': 'success'}]
+        api.trees['b'*40] = 'f'*40
+        api.jobs[70] = [{'name': 'Source QA and portable tests',
+                         'status': 'completed', 'conclusion': 'success'}]
+        return api
+
+    def test_qa_uses_actual_job_and_exact_main_tree_including_merge_sha_difference(self):
+        api = self.qa_api()
+        # Tested b... and accepted e... are different commits with the same tree.
+        self.assertIn('QA: passing', badges.live_images(api, REPOSITORY)['qa.svg'])
+        self.assertEqual([], api.writes())
+        self.assertTrue(any('/runs/70/jobs?filter=latest&per_page=100' in path
+                            for _, path, _ in api.calls))
+        api.full_runs[0]['conclusion'] = 'failure'
+        api.jobs[70].append({'name': 'Windows native', 'status': 'completed', 'conclusion': 'failure'})
+        # QA describes its own source/portable job, independently of Windows jobs.
+        self.assertIn('QA: passing', badges.live_images(api, REPOSITORY)['qa.svg'])
+
+    def test_qa_different_tree_repository_event_and_invalid_identity_cannot_be_green(self):
+        for field, value in [('head_sha', 'd'*40), ('head_sha', None),
+                             ('event', 'workflow_dispatch'),
+                             ('head_repository', {'full_name': 'other/project'}),
+                             ('head_repository', None), ('id', True), ('id', 0), ('id', '70')]:
+            with self.subTest(field=field, value=value):
+                api = self.qa_api();api.full_runs[0][field] = value
+                self.assertIn('QA: n/a', badges.live_images(api, REPOSITORY)['qa.svg'])
+
+    def test_qa_newer_matching_pending_failed_or_skipped_attempt_never_reuses_old_green(self):
+        for status, conclusion, expected in [('in_progress', None, 'running'),
+                                             ('completed', 'failure', 'failing'),
+                                             ('completed', 'timed_out', 'failing'),
+                                             ('completed', 'cancelled', 'cancelled'),
+                                             ('completed', 'skipped', 'n/a')]:
+            with self.subTest(status=status, conclusion=conclusion):
+                api = self.qa_api();new = copy.deepcopy(api.full_runs[0]);new['id'] = 71
+                api.full_runs.insert(0, new)
+                api.jobs[71] = [{'name': 'Source QA and portable tests',
+                                  'status': status, 'conclusion': conclusion}]
+                svg = badges.live_images(api, REPOSITORY)['qa.svg']
+                self.assertIn('QA: '+expected, svg)
+                self.assertNotIn('#4c1', svg)
+        api = self.qa_api();new = copy.deepcopy(api.full_runs[0]);new['id'] = 71
+        api.full_runs.insert(0, new);api.jobs[71] = []
+        self.assertIn('QA: n/a', badges.live_images(api, REPOSITORY)['qa.svg'])
+        new['status'] = 'in_progress'
+        self.assertIn('QA: running', badges.live_images(api, REPOSITORY)['qa.svg'])
+
+    def test_qa_missing_duplicate_skipped_and_unrequested_jobs_cannot_be_green(self):
+        for problem in ('missing', 'duplicate', 'skipped', 'unrequested'):
+            with self.subTest(problem=problem):
+                api = self.qa_api()
+                if problem == 'missing':api.jobs[70] = []
+                elif problem == 'duplicate':api.jobs[70].append(copy.deepcopy(api.jobs[70][0]))
+                elif problem == 'skipped':api.jobs[70][0]['conclusion'] = 'skipped'
+                else:api.jobs[70][0]['name'] = 'Source QA not requested'
+                self.assertIn('QA: n/a', badges.live_images(api, REPOSITORY)['qa.svg'])
+
+    def test_qa_incomplete_job_listing_does_not_hide_duplicate_or_missing_jobs(self):
+        class Truncated(API):
+            def request(self, method, path, payload=None, missing_ok=False):
+                result = super().request(method, path, payload, missing_ok)
+                if '/jobs?filter=latest' in path:result['total_count'] = len(result['jobs'])+1
+                return result
+        original = self.qa_api();api = Truncated()
+        api.full_runs, api.trees, api.jobs = original.full_runs, original.trees, original.jobs
+        self.assertIn('QA: n/a', badges.live_images(api, REPOSITORY)['qa.svg'])
+
+    def test_qa_status_is_compact_and_invalid_states_are_rejected(self):
+        for status in (None, 'success', 'pending', 'cancelled', 'failure'):
+            source = badges.images(None, None, qa=status)['qa.svg']
+            self.assertLess(int(ET.fromstring(source).attrib['width']), 100)
+            if status != 'success':self.assertNotIn('#4c1', source)
+        for status in ('invented-success', True, []):
+            with self.assertRaises(ValueError):badges.images(None, None, qa=status)
 
     @staticmethod
     def codeql_api():

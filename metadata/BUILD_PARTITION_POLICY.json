@@ -289,6 +289,7 @@
     "application_runtime_contracts",
     "application_shutdown_failure_contracts",
     "application_worker_launch_contracts",
+    "asio_thread_launch_contracts",
     "atomic_persistence_contracts",
     "atomic_recovery_matrix_contracts",
     "atomic_staging_contracts",

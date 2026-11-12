@@ -39,7 +39,7 @@ the reviewed advanced workflow to avoid duplicate scheduling. Strict current-mai
 integration and required merge checks are preserved.
 
 README badges are repository-owned SVGs under `resources/badges/`. A bounded
-publisher updates only twelve SVGs on the long-lived generated `badges` branch
+publisher updates only thirteen SVGs on the long-lived generated `badges` branch
 after completed main integrity runs or nondraft release changes. This data
 branch is retained independently of temporary source PR heads; its generated
 image updates do not rewrite main, source inventories or release artifacts.

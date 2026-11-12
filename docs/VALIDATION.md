@@ -181,3 +181,15 @@ fault runs exercise five existing timer boundaries; they are not seven distinct
 new fault capabilities. Timer exceptions, Handler and receipt are controlled;
 Windows IOCP/MSVC, worker-pool scheduling and actual event storage remain
 separate evidence from a POSIX projection or cross-build.
+
+## Asio owned-thread launch rollback
+
+`asio_thread_launch_contracts` selects a private launcher that throws before
+the first/second handler worker or IO runner constructs its std::thread. Earlier
+workers are real threads. Pre-cleanup snapshots must show they already returned
+and were joined before the selected exception escapes, with no listener,
+readiness or Handler publication. Explicit stop remains idempotent. A separate
+fresh two-worker owner executes 32 jobs; failed owners are never restarted.
+Ordinary builds keep OwnedThread exactly std::thread. This controlled constructor
+fault and any POSIX projection are separate from an actual OS launch failure
+and native Windows thread/socket execution.

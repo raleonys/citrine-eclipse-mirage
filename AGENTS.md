@@ -40,7 +40,7 @@ This document is the operational entrypoint for agents and contributors. [GOVERN
 ## Navigation and change discipline
 
 README SVGs belong under `resources/badges/`. The long-lived `badges` branch
-contains only the twelve generated SVGs in that same folder and is not a source
+contains only the thirteen generated SVGs in that same folder and is not a source
 PR branch to retire after merge. Its bounded Git-data publisher may update
 those images without application manifests; source changes still require the
 normal inventories, local QA and tracked pre-push hook. Never use this data

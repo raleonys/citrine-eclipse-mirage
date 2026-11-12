@@ -26,7 +26,7 @@ jobs:
       (github.event_name == 'release' && github.event.release.draft == false) ||
       (github.event_name == 'workflow_dispatch' &&
        github.ref == format('refs/heads/{0}', github.event.repository.default_branch))
-    name: Publish twelve SVG badges
+    name: Publish thirteen SVG badges
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     permissions:
