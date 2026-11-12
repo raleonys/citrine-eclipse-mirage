@@ -19,6 +19,16 @@ IDENTIFIER = re.compile(r'(?mi)^\s*(?:#|//|/\*+|\*|REM|;)\s*SPDX-License-Identif
 RECOVERY_WORDING = re.compile(r'recovered', re.I)
 
 
+def has_initial_spdx_header(data, path):
+    """Require the owned license marker before source, after only a launcher prefix."""
+    lines = data.splitlines()
+    if lines and (lines[0].startswith('#!') or
+                  (path.suffix.lower() == '.cmd' and lines[0].strip().lower() == '@echo off')):
+        lines = lines[1:]
+    return bool(lines and IDENTIFIER.fullmatch(lines[0]) and
+                IDENTIFIER.fullmatch(lines[0]).group(1) == 'GPL-3.0-only')
+
+
 def candidates(root):
     for prefix in OWNED_TOP:
         base = root / prefix
@@ -53,6 +63,8 @@ def inspect(root=ROOT):
         ids = IDENTIFIER.findall(data)
         if ids != ['GPL-3.0-only']:
             errors.append(f'Expected exactly one GPL-3.0-only SPDX header: {rel} {ids}')
+        elif not has_initial_spdx_header(data, path):
+            errors.append('SPDX header must precede source content: ' + rel)
         if path.suffix.lower() in C_FAMILY and LEGACY.search(data):
             errors.append('Legacy recovery-derived C++ identity: ' + rel)
         if rel.startswith(('src/', 'include/')) and RECOVERY_WORDING.search(data):

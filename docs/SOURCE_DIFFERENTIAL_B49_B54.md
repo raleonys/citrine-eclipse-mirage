@@ -11,8 +11,8 @@ A separately indexed eight-part Archive 11, preserved on
 [`research/reconstruction-package`](https://github.com/raleonys/citrine-eclipse-mirage/tree/research/reconstruction-package),
 records a **different** combined ZIP SHA-256:
 `db394434e38c7edad33607a846ffdc36b04a1e5978d2fbe3d74da24bda5179da`.
-Its [provenance](https://github.com/raleonys/citrine-eclipse-mirage/blob/research/reconstruction-package/docs/RE_ARCHIVE11_PROVENANCE.json)
-and [import registry](https://github.com/raleonys/citrine-eclipse-mirage/blob/research/reconstruction-package/docs/RE_PACKAGE_IMPORT.json)
+Its [provenance](https://github.com/raleonys/citrine-eclipse-mirage/blob/e10561b256a5793f857ec4bed4b5a9fb9fcfbadd/docs/RE_ARCHIVE11_PROVENANCE.json)
+and [import registry](https://github.com/raleonys/citrine-eclipse-mirage/blob/e10561b256a5793f857ec4bed4b5a9fb9fcfbadd/docs/RE_PACKAGE_IMPORT.json)
 record a 209,091,682-byte merged ZIP, 4,266 regular files and
 758,168,656 expanded bytes. Both SHA values are recorded for an identically
 named input, but they cannot designate identical byte streams.
@@ -34,6 +34,27 @@ adoption, shipping defect, code patch, native acceptance or Consumer parity is
 established by this documentation-only cross-check.
 
 **Original review date:** 2026-11-01. **Original evidence quality:** static source comparison. The donor's 356 groups and 19 terminal scenarios are its own recorded results; they were **not rerun** in this GitHub worktree. Windows/MSVC, native game, and original donor runtime parity were **not run** for this differential.
+
+## Current source coverage at accepted main
+
+Reviewed integration baseline: `b6d3cfc48b1cbd0cca560d7f6f8931d7951be21c`.
+The dated tables below remain checkpoint comparisons. Their future-work lists
+must not be used without the later accepted additions:
+
+| Earlier gap | Coverage already in accepted source | Remaining boundary |
+| --- | --- | --- |
+| D49/D50 delayed receive, send and accept | #107, #114 and #130 retain real completion/buffer owners across repeated incomplete stops. | Controlled dispatch delay does not prove all kernel-pending, duplicate or generation/ABA schedules. |
+| D51 shutdown during startup | `application_shutdown_failure_contracts` pauses the actual provider/ready publication phases, tests normal and throwing startup, and retains the owner through queued shutdown/retry. | Arbitrary foreign work and every partial-construction path are not certified. |
+| D54 active provider and borrowed profile | #101/#111 hold a real foreign auth getter during Application stop and join the shutdown worker before unload scanning; #122 covers null factory/getter startup teardown. The existing online tests retain shared-scratch copy coverage. | Stable storage during each getter/copy interval and arbitrary external provider quiescence remain separate ABI obligations. |
+| Receive-to-send timer transition | #265 extends the actual Asio timer-fault fixture into response preparation/send transitions. | A finite injected schedule is not every partial OS failure or a shutdown liveness guarantee. |
+
+These are source-registered, bounded scenarios. Exact-head native execution
+belongs to workflow receipts; this documentation pass does not rerun them.
+Registry handle provenance, aggregate budgets and original donor equivalence
+remain open; [REMAINING_WORK.md](REMAINING_WORK.md) owns the current summary.
+The separately retained Archive 11 provenance links below are commit-pinned;
+the moving research branch contains a later Archive 12 refresh and is not an
+interchangeable source identity.
 
 ## Accepted-main update — 2026-11-05
 
