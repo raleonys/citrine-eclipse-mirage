@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Fault each observed eligible DOWN-seed storage allocation through the existing queue getter. Require selected bad_alloc propagation, an opted-in abort/reset before cleanup registration/footer, no partially engaged or published queue, one successful same-owner retry with the exact 68-byte seed and no reseed on a hot empty getter. Preserve production initialization, the existing integration fixture and native test budget.
+- Disarm the Registry allocation fault probe before asserting direct fabrication failure. Record only the operation's bad_alloc, then require the injected operation fault outside the catch scope so diagnostic allocation cannot turn an incorrectly returning helper into a false PASS. Preserve caller status/output and exact ownership rollback checks without changing production Registry behavior.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-12
 
+- [PR #348](https://github.com/raleonys/citrine-eclipse-mirage/pull/348): Fault each observed eligible DOWN-seed storage allocation through the existing queue getter. Require selected bad_alloc propagation, an opted-in abort/reset before cleanup registration/footer, no partially engaged or published queue, one successful same-owner retry with the exact 68-byte seed and no reseed on a hot empty getter. Preserve production initialization, the existing integration fixture and native test budget.
 - [PR #346](https://github.com/raleonys/citrine-eclipse-mirage/pull/346): Add event-queue allocation-failure regressions requiring deque storage to be reserved before the persistence callback. Cover initially empty and seed-retained queues, unchanged binary input and publication state on failure, exact prior FIFO contents, a single repaired retry and no phantom/duplicate event. Preserve existing producer ordering, delivery/completion coverage and production sources.
 - [PR #360](https://github.com/raleonys/citrine-eclipse-mirage/pull/360): Run Actions, C/C++ and Python CodeQL only on accepted-main pushes, using the exact pushed SHA and main reference. Keep PR synchronization/manual validation on the existing eleven required source/Windows/reference checks without CodeQL runners. Separate the current PR notes from integrated development history while preserving accepted dates, links and release distinctions.
 - [PR #343](https://github.com/raleonys/citrine-eclipse-mirage/pull/343): Register the unchanged retained bootstrap and CRT-thread context model fixtures in portable CTest. Exercise model ordering, context/handle ownership and cleanup through controlled effects under the existing 60-second test budgets; preserve native/reference registrations, production linkage and the standard compiler CRT. Portable model results do not establish native thread or private CRT execution.

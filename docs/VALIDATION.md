@@ -97,3 +97,12 @@ gate requires all eleven source/portable/Windows/reference contexts. See
 [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md) for scheduling and exact-head checks.
 Merge records, configured tests and skipped jobs do not substitute for
 executed native or Golden evidence. Owner game acceptance remains separate.
+
+## Registry allocation-failure assertions
+
+The `portable_registry_rollback` direct-fabrication assertion disarms its allocation
+probe before constructing any diagnostic. It records the operation's bad_alloc
+and requires an observed injected fault, then checks caller status/output and
+exact ownership rollback. A diagnostic allocation cannot satisfy the operation's
+expected failure. This controlled-effects fixture is separate from native Registry
+hook/SDK and Consumer execution.

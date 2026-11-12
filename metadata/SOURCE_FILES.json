@@ -1766,8 +1766,8 @@
       "sha256": "50e070937948a43a4e80b0e3588c6cad627d76b8052d26dc0e9353eae6179388"
     },
     "tests/unit/registry/allocation_failure_tests.cpp": {
-      "bytes": 10315,
-      "sha256": "b8dbf69bf5662456dae6048039e9b047029c6852c6573f78a4962319ad45fd50"
+      "bytes": 10501,
+      "sha256": "bba58cf2d6ecba11ccb5d2e499518cfd92eeba0557c671f5c3fc79660a1a632b"
     },
     "tests/unit/registry/native_lifecycle_tests.cpp": {
       "bytes": 21737,
