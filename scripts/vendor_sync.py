@@ -17,7 +17,9 @@ import re
 import tempfile
 import zipfile
 
-VENDORS = ('asio','minhook','pegtl','tinyxml2')
+from project_files import safe_member
+
+VENDORS = ('asio','minhook','pegtl','pugixml')
 MAX_ARCHIVE_BYTES = 100 * 1024 * 1024
 MAX_MEMBER_BYTES = 32 * 1024 * 1024
 
@@ -31,12 +33,16 @@ def hash_file(p):
 
 
 def safe_rel(path):
-    if not isinstance(path, str) or not path or '\\' in path or ':' in path or '\x00' in path:
+    """Reject vendor members that cannot be represented safely on Windows.
+
+    Archive inspection and manifest validation share the source ZIP policy.
+    """
+    if not isinstance(path, str):
         raise ValueError('unsafe member name')
-    p=pathlib.PurePosixPath(path)
-    if p.is_absolute() or any(x in ('..','.','') for x in p.parts) or p.as_posix()!=path.strip('/'):
-        raise ValueError('unsafe member path')
-    return p
+    try:
+        return pathlib.PurePosixPath(safe_member(path))
+    except ValueError as error:
+        raise ValueError('unsafe member path') from error
 
 
 def validate_symlink(rel, target):
@@ -91,27 +97,40 @@ def inspect_archive(root, name, record, archive_dir=None):
     expected=expected_files(root,record)
     raw_symlinks={}
     actual={}
-    seenfold=set();total=0
     with zipfile.ZipFile(archive) as z:
         if z.comment.decode('ascii')!=record['upstream_commit']:
             raise ValueError(name+': archive commit comment mismatch')
-        if z.testzip():raise ValueError(name+': archive CRC error')
+        # Reject unsafe or oversized ZIP entries before testzip() decompresses
+        # the entire archive. Keep the limits on uncompressed bytes.
+        entries=[]
+        seenfold=set();total=0
         for info in z.infolist():
             if info.filename=='/' or not info.filename.startswith(record['archive_folder']):
                 raise ValueError(name+': incorrect archive root')
             rel=info.filename[len(record['archive_folder']):]
-            if not rel:continue
+            if not rel:
+                if info.file_size:
+                    raise ValueError(name+': nonempty archive root directory')
+                continue
             rel=rel.rstrip('/')
             safe_rel(rel)
             key=rel.casefold()
             if key in seenfold:raise ValueError(name+': Windows-case duplicate member')
             seenfold.add(key)
-            if info.is_dir():continue
             if info.file_size>MAX_MEMBER_BYTES:raise ValueError(name+': too large member')
             total+=info.file_size
             if total>MAX_ARCHIVE_BYTES:raise ValueError(name+': excessive expanded size')
+            if info.is_dir():
+                if info.file_size:
+                    raise ValueError(name+': nonempty directory member')
+                continue
             mode=info.external_attr >> 16
-            if not(stat.S_ISREG(mode) or stat.S_ISLNK(mode) or mode==0):raise ValueError(name+': unsupported file type')
+            if not(stat.S_ISREG(mode) or stat.S_ISLNK(mode) or mode==0):
+                raise ValueError(name+': unsupported file type')
+            entries.append((rel,info,mode))
+        # CRC and payload reads can only begin after all entries pass preflight.
+        if z.testzip():raise ValueError(name+': archive CRC error')
+        for rel,info,mode in entries:
             payload=z.read(info)
             actual[rel]=hashlib.sha256(payload).hexdigest()
             if stat.S_ISLNK(mode):
