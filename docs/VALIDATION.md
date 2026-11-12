@@ -129,3 +129,15 @@ response owner and propagate bad_alloc without executing its callback. No
 listener or worker is started, and explicit callback settlement is not socket
 delivery. The native fixture retains its Windows allocator/IOCP coverage; a
 POSIX projection or cross-build cannot establish that native execution.
+
+## Raw Config2 selection-copy order
+
+`portable_config_application` runs the existing configuration application fixture
+through the actual raw-byte parser, selected subtree copy and section application.
+The literal Content IDs a/i and b/j collide at eight buckets but differ at 64,
+so exact resulting order detects an omitted selection copy even when scalar
+values and counts agree. The override must retain that same order. Memory-backed
+input, BOM, path/log and failure checks remain active. Only the Windows
+NativeFactory generated-file tail is excluded in this portable target; the
+ordinary `config_application_contracts` target retains it. Portable results do
+not establish native filesystem, original-DLL or Consumer execution.
