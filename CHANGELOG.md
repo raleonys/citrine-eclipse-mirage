@@ -6,9 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Restore owner-selected UnknownMessage continuation for invalid dispatch forms: emit the counted console diagnostic and error dialog before continuing the same session without response framing or event consumption. Preserve ordinary error propagation, NoResponse, real-AES rekey and nonmodal redacted entitlement diagnostics. Adapt the existing Application/TCP regression to verify blocked-diagnostic ordering, independent-peer progress and same-peer continuation through a test-only intercepted SDK dialog, with bounded failure waits and unchanged production timeout/UI policy.
+- Continue accepted PR #198 with pinned A12 Registry source and static lifetime evidence, recognize accepted #337 and existing native fixture coverage, preserve failure-atomic fabrication and open HKEY provenance gates, and distinguish the source edit from the older linked DLL.
 
 ### Integrated 2026-11-12
+
+- [PR #350](https://github.com/raleonys/citrine-eclipse-mirage/pull/350): Restore owner-selected UnknownMessage continuation for invalid dispatch forms: emit the counted console diagnostic and error dialog before continuing the same session without response framing or event consumption. Preserve ordinary error propagation, NoResponse, real-AES rekey and nonmodal redacted entitlement diagnostics. Adapt the existing Application/TCP regression to verify blocked-diagnostic ordering, independent-peer progress and same-peer continuation through a test-only intercepted SDK dialog, with bounded failure waits and unchanged production timeout/UI policy.
 
 - [PR #330](https://github.com/raleonys/citrine-eclipse-mirage/pull/330): Register the existing bounded CryptQuery path scanner and controlled-reader assertions in portable CMake checks, covering ring-buffer suffixes, UTF-16, scan limits, read counts, heap allocation and integer address boundaries. Keep SDK includes in the Windows host adapter and native fixture, retain the complete protected-memory native tests and identify portable results as controlled reads.
 - [PR #327](https://github.com/raleonys/citrine-eclipse-mirage/pull/327): Extend native network-policy coverage to require invalid resource and deadline policies to be rejected by the public AsioService constructor before start. Preserve caller port/readiness values and zero handler/error callbacks; cover defaults and exact lower/upper valid bounds while retaining the existing live-socket policy suite.
