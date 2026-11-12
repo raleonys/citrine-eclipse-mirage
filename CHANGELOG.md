@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Exercise Config2 lookup failures at every counted data allocation during borrowed-key growth. Verify provisional-child cleanup, retained child identity and values, consistent traversal before or after completed rehash, and successful retry with an owned key.
+- Cover response handoff refusal after actual ordered Session/message preparation. Require event reservation cancellation, no output or buffered-successor admission, and exact event retry on a separate Session with acknowledgement only after full delivery. Production scheduling and transport policy are unchanged.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-12
 
+- [PR #288](https://github.com/raleonys/citrine-eclipse-mirage/pull/288): Exercise Config2 lookup failures at every counted data allocation during borrowed-key growth. Verify provisional-child cleanup, retained child identity and values, consistent traversal before or after completed rehash, and successful retry with an owned key.
 - [PR #323](https://github.com/raleonys/citrine-eclipse-mirage/pull/323): Strengthen active raw CFG loading coverage with colliding Content IDs: verify exact collection order through selection and section copying, then preserve it through the override pass. Register the configuration application suite as a portable CMake test using its memory-backed files; keep the Windows generated-file tail in the native target. Production parsing and copy behavior are unchanged.
 - [PR #331](https://github.com/raleonys/citrine-eclipse-mirage/pull/331): Cover prepared response ownership at the actual Asio post-allocation boundary. Require immediate cancellation and owner release after one injected allocation failure, preserve exact binary output in successful controls, and verify executor recovery without changing runtime or native test budgets. Explicitly type the existing case dispatcher function pointer so the full fixture also compiles with libc++.
 - [PR #344](https://github.com/raleonys/citrine-eclipse-mirage/pull/344): Cover accepted Client publication failure before session counting, with normal socket close and retained would-block close/retry. Keep the production client list as std::vector through a private fixture seam; verify unpublished Client/Handler destruction, admission behavior and exact native-owner retirement.

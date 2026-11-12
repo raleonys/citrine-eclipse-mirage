@@ -154,3 +154,16 @@ never the potentially invalidated borrowed view. Allocation counts are measured,
 not fixed across libraries. Checked MSVC iterator-proxy bookkeeping remains
 enabled and explicitly unfaulted, as in the existing assignment campaigns.
 The same fixture remains registered in portable and native hash tests.
+
+## Prepared-response dispatch refusal
+
+The ordered Session composition fixture refuses response dispatch before the
+controlled IO queue accepts ownership, across plaintext/controlled-encrypted
+and isolated/coalesced requests. The original exception must propagate without
+output, receive rearm or buffered-successor admission. Encrypted preparation
+must cancel its event reservation once; a separate Session sharing the queue
+retries the exact event, retaining it through partial output and acknowledging
+it only after full delivery. Actual Session, bridge, message core, XML reader
+and EventDelivery participate; cipher, queue, scheduler and transport effects
+are controlled. This complements actual Asio post-allocation coverage and does
+not establish socket, worker-pool, OS allocation or Consumer execution.
