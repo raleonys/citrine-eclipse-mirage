@@ -167,3 +167,17 @@ it only after full delivery. Actual Session, bridge, message core, XML reader
 and EventDelivery participate; cipher, queue, scheduler and transport effects
 are controlled. This complements actual Asio post-allocation coverage and does
 not establish socket, worker-pool, OS allocation or Consumer execution.
+
+## Prepared-response send timer faults
+
+`timer_failure_contracts` retains #265's direct-send controls and the three
+receive/callback fault runs. Additional prepared-response runs receive a complete
+request over loopback TCP, drive its owned handler job on the controller, and
+arm timer cancel/wait exceptions before IO dispatch starts the response. They
+require silent peer closure, one completion-boundary diagnostic, exact receipt
+cancellation/destruction and drained socket/timer/output ownership. An unarmed
+control requires exact counted bytes, one commit and receive rearm. The seven
+fault runs exercise five existing timer boundaries; they are not seven distinct
+new fault capabilities. Timer exceptions, Handler and receipt are controlled;
+Windows IOCP/MSVC, worker-pool scheduling and actual event storage remain
+separate evidence from a POSIX projection or cross-build.
