@@ -215,3 +215,15 @@ DWORD order and eight zero tail bytes in a prefilled identity. Legacy errors,
 hard-link identity, skip-existing content preservation and unarmed real Win32
 copy/metadata cases remain covered. Controlled faults, cross-compilation and
 Wine are distinct from fresh native MSVC execution.
+
+## Profile cache failures and explicit cleanup
+
+The shared online unit fixture injects offline avatar-query/profile-read and
+authenticated avatar-query/profile-write exceptions. It checks completed state
+prefixes, restored error mode, retained owner identities and no readiness or
+implicit cleanup. Explicit cleanup retires each identity once. A fresh worker
+invocation follows owner cleanup and an explicit online-byte reset, then checks
+replacement identities, cache state and readiness ordering. These cases run in
+both existing portable and full unit configurations. Providers and I/O are
+controlled; throwing before the write marker does not prove disk atomicity,
+real DLL ownership, thread publication or an automatic restart protocol.

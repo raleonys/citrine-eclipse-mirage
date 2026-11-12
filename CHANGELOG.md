@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Exercise FileIdInfo errors 50/87 through the actual Windows copy adapter into real legacy handle metadata. Verify typed API arguments, exact volume/index mapping, hard-link identity, native fallback error propagation and skip-existing byte preservation; keep all existing unarmed Windows copy cases and shipping code unchanged.
+- Cover online/offline avatar-query and profile-cache read/write exceptions in the actual source worker. Verify unchanged completed-state prefixes, no premature readiness or implicit cleanup, exact object/module retirement, and a fresh load after explicit owner cleanup/reset. Preserve existing cache format, failure behavior and synthetic evidence boundaries.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-12
 
+- [PR #301](https://github.com/raleonys/citrine-eclipse-mirage/pull/301): Exercise FileIdInfo errors 50/87 through the actual Windows copy adapter into real legacy handle metadata. Verify typed API arguments, exact volume/index mapping, hard-link identity, native fallback error propagation and skip-existing byte preservation; keep all existing unarmed Windows copy cases and shipping code unchanged.
 - [PR #325](https://github.com/raleonys/citrine-eclipse-mirage/pull/325): Register the existing ordered Session delivery/FIFO/buffer/deadline suite in portable CMake checks, including same-connection NoResponse continuation through the actual message/XML bridge. Reuse the current native fixture unchanged, including accepted invalid-dispatch and settlement-refusal coverage, and retain its native registration and 30-second budget; socket, cipher and Windows acceptance remain separate.
 - [PR #336](https://github.com/raleonys/citrine-eclipse-mirage/pull/336): Test Asio startup rollback after controlled first/second handler-worker and IO-runner launch exceptions. Require joined owned threads before failure returns, no listener/readiness publication, idempotent cleanup and a usable fresh two-worker pool. Classify the fixture as a production-core test in the Windows target-partition policy. A private fixture type selection leaves production threads as std::thread; this is not an actual OS thread-creation failure claim. Reorder README status badges as Tests (native), Checksums, Release integrity, Source integrity, QA and CodeQL. Add a compact repository-owned QA result from the actual source/portable job for an exact current-main tree; retain strict evidence freshness and closed 9/11/12-to-13 image migration without adding PR analysis or publisher runners.
 - [PR #270](https://github.com/raleonys/citrine-eclipse-mirage/pull/270): Exercise timer cancellation and wait-submission failures while the actual Asio adapter starts a prepared response over loopback TCP. Require silent peer retirement, one delivery cancellation/destruction, drained IO ownership and an unarmed successful-send control. Preserve shipping transport, timer policy and existing test budgets. Retain accepted direct-send cases from PR #265; the added prepared-response cases strengthen ownership coverage at the same timer boundaries.
