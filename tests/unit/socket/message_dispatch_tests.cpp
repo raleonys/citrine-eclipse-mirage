@@ -13,6 +13,41 @@ void normal(){
     }
     for(auto cap:{15ULL,16ULL,4095ULL}){Fixture f;f.seed(f.request,"",cap);f.context.owners={};f.context.copies={};f.base.projection.control_08=nullptr;f.dispatch();check(f.api.empty==1&&!f.api.processes&&!f.copy_calls&&!f.api.schedules&&f.request.value.capacity_18==15,"empty request only delegates00aa50; no owner/weak/executor dependency");}
 }
+void consumed_request_response(){
+    // Admission uses the original request, even when033d70 consumes it before
+    // the prepared response reaches the executor/scheduler tail.
+    for(auto request_cap:{15ULL,16ULL,4094ULL,4095ULL})for(auto response_cap:{15ULL,16ULL,4095ULL})
+    for(auto bytes:{std::string{},std::string("a\0b",3)})for(bool release_input:{false,true}){
+        Fixture f;f.seed(f.request,"request",request_cap);f.seed(f.response,bytes,response_cap);
+        auto allocation=[&](const auto& value){
+            auto address=s::receive_buffer_address(value);auto size=value.capacity_18+1;
+            if(size>=4096){for(const auto& header:f.headers)if(header.address==address-8){address=header.allocation_base;break;}size+=39;}
+            return std::pair<std::uintptr_t,std::uint64_t>{address,size};
+        };
+        const auto input_allocation=allocation(f.request.value),response_allocation=allocation(f.response.value);
+        const auto response_storage=f.response.value.storage_00;
+        f.core_hook=[&](auto,auto& out,auto& in){
+            check(&in==&f.request.value&&f.text(in)=="request"&&!out.size_10&&out.capacity_18==15,"core receives original nonempty input and fresh empty response");
+            out=f.response.value;
+            if(release_input)f.free_string(in);else{in.size_10=0;f.request.memory.view(s::receive_buffer_address(in),1)[0]=0;}
+        };
+        f.hook=[&](auto event){if(event=="schedule"){
+            check(!f.request.value.size_10&&f.request.value.capacity_18==(release_input?15:request_cap)&&!f.api.empty,"consumed input must not reenter the empty-admission path");
+            check(!f.api.response->size_10&&f.api.response->capacity_18==15&&f.api.response->storage_00[0]==0,"local response is moved/reset before scheduling");
+            check(f.api.task->response_08.size_10==bytes.size()&&f.api.task->response_08.capacity_18==response_cap&&f.api.task->response_08.storage_00==response_storage,"scheduler owns exact counted response storage, including empty heap strings");
+            check(f.base.owner.strong_08==2&&f.request.live_blocks()==static_cast<unsigned>(!release_input&&request_cap>15)&&f.response.live_blocks()==static_cast<unsigned>(response_cap>15)&&f.frees.size()==static_cast<unsigned>(release_input&&request_cap>15),"response and retained input remain live until scheduled with one temporary strong owner");
+        }};
+        f.dispatch();
+        check(f.api.processes==1&&f.api.schedules==1&&!f.api.empty&&f.copy_calls==2&&f.scheduled==bytes,"core-consumed request still schedules one exact response, including embedded NUL or empty output");
+        check(!f.request.value.size_10&&f.request.value.capacity_18==15&&f.request.value.storage_00[0]==0&&f.base.owner.strong_08==1&&!f.base.owner.disposes,"consumed request ends reset and temporary control ownership balances");
+        std::vector<std::string> expected_trace;std::vector<std::pair<std::uintptr_t,std::uint64_t>> expected_frees;
+        if(release_input&&request_cap>15){expected_trace.push_back("free-string");expected_frees.push_back(input_allocation);}
+        for(auto event:{"process","copy1","copy2","schedule","destroy-b","destroy-b"})expected_trace.push_back(event);
+        if(response_cap>15){expected_trace.push_back("free-string");expected_frees.push_back(response_allocation);}
+        if(!release_input&&request_cap>15){expected_trace.push_back("free-string");expected_frees.push_back(input_allocation);}
+        check(f.trace==expected_trace&&f.frees==expected_frees&&!f.request.live_blocks()&&!f.response.live_blocks(),"only live response/input allocations are freed once with exact sized-delete addresses and order");
+    }
+}
 void lifetimes(){
     Fixture f;f.copy_hook=[&](auto& to,auto& from,unsigned n){if(n==1){from.executor_28=&f.other_executor;to.schedule_20=0x999;}else{check(from.executor_28==&f.other_executor,"owner executor reloaded AFTER first copy");from.executor_28=&f.executor;to.operations_10=&f.c;}};
     f.hook=[&](auto event){if(event=="schedule"){check(f.api.second->executor_28==&f.executor&&f.api.second->schedule_20==0x999,"second executor copied AFTER second callback and live schedule retained");f.api.second->operations_10=&f.a;}if(event=="destroy-a")f.api.first->operations_10=&f.c;};f.dispatch();
@@ -56,4 +91,4 @@ void trampoline(){
     for(unsigned mode=0;mode<4;++mode){Fixture f;f.memory.closure=std::make_unique<s::FrameMessageClosure>();const auto ptr=reinterpret_cast<std::uintptr_t>(f.memory.closure.get());f.closures[0]={ptr,f.memory.closure.get()};if(mode==0)f.context.closures={};if(mode==1)f.closures[1]=f.closures[0];if(mode==2)f.closures[0].closure=nullptr;rejects<s::UnsupportedInput>([&]{s::route_message_thread_entry(mode==3?0x123:0x180021770ULL,ptr,f.context);});check(!f.api.processes&&!f.api.cleanups&&f.frees.empty(),"opaque router rejects missing/duplicate/wrong entry without dereferencing image VAs");}
 }
 }
-int main(){try{normal();lifetimes();acquisition_and_failures();header_bounds();trampoline();std::cout<<"PASS: "<<checks<<" socket message dispatch core checks; actual021770/028d30 normal bodies, two executor copies, live delete target, precise string/control/closure ownership and bounded call-prefix tests\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}
+int main(){try{normal();consumed_request_response();lifetimes();acquisition_and_failures();header_bounds();trampoline();std::cout<<"PASS: "<<checks<<" socket message dispatch core checks; actual021770/028d30 normal bodies, two executor copies, live delete target, precise string/control/closure ownership and bounded call-prefix tests\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL: unexpected terminal\n";return 1;}}

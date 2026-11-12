@@ -1,4 +1,15 @@
+> **Historical checkpoint.** Use [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # Brownfield metadata audit
+
+Historical comparison record. Later owner reference adoption replaced the
+fixed timestamp, and the current policy preserves the native compilation
+timestamp (`PRESERVE_INPUT`). Project identity replaced the VERSIONINFO branding,
+version fields and internal export module name; Production now has three exports.
+The old field table and finalizer scope below are not current build instructions.
+Current requirements are maintained in
+`metadata/MUSTAVEX_GOLDEN_METADATA.json` and [DEVELOPMENT.md](DEVELOPMENT.md).
 
 The owner's instruction to check all metadata against
 Brownfield, including Compilation Timestamp, was applied.
@@ -54,6 +65,11 @@ not the wall-clock time of the build. A PE viewer may
 display it as a date using the viewer's local time zone.
 Verification compares the raw 32-bit value.
 
+The historical internal module name is restored from the pre-identity-change
+source at `51307c8b524db9c33797ae01883df37e3c660ce1`. Current checkout paths and
+the inspection example below use the renamed project for navigation; they are
+not the original archive filenames or current acceptance of the old field table.
+
 ## Other checks
 
 | Group | Rule |
@@ -67,7 +83,7 @@ Verification compares the raw 32-bit value.
 | Structural validity | Alignment, file extents, no raw/virtual overlaps, and RVA ordering checked |
 | Excluded targets | Other section addresses/sizes, entrypoint RVA, and entire image size are not required to match Brownfield |
 | Identity | Brownfield's declared blocklists for older project names/versions remain the same |
-| Export | Preserve the owner's five C exports; internal module name `preloader.unsigned.dll` |
+| Export | Preserve the owner's five C exports at this checkpoint; internal module name `preloader.unsigned.dll` |
 | Import | Owner's six modules, with only `CryptQueryObject` from CRYPT32; no OLE32 |
 | CRT | Verify actual MSVC /MT, /GS cookie, and executable CRT entrypoint |
 | Integrity | Compute PE checksum; reject byte mutations during read-only Golden stages |
@@ -75,7 +91,7 @@ Verification compares the raw 32-bit value.
 ## File under inspection
 
 Do not modify the raw
-`build/.../preloader.unsigned.dll`.
+`build/.../citrine_eclipse_mirage.unsigned.dll`.
 URSYNEX can modify only the four-byte timestamp,
 two-byte linker value, Rich block, and four-byte
 checksum in a separate candidate copy.
@@ -85,14 +101,14 @@ removed to conceal a bad build. Reject finalization
 if any other bytes change.
 
 After all Golden checks and the final-named runtime
-test, write `dist/preloader_l.dll`, its SHA-256,
+test, write `dist/citrine_eclipse_mirage.dll`, its SHA-256,
 and receipt. Renaming the file does not change
 the internal export-module name. Inspection of
 the old raw unsigned file does not show the final
 metadata outcome.
 
 ```powershell
-python -B tools/inspect_dll.py dist/preloader_l.dll --final --report build/final-metadata.json
+python -B tools/inspect_dll.py dist/citrine_eclipse_mirage.dll --final --report build/final-metadata.json
 ```
 
 This read-only check reports MUSTAVEX/header/checksum/

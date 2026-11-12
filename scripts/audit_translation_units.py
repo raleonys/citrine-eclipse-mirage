@@ -25,7 +25,7 @@ def symbols(nm, path):
     defined, undefined = set(), set()
     for line in run(nm, '--extern-only', '--format=posix', path).splitlines():
         cells = line.split()
-        if len(cells) < 2 or 'preloader_l' not in cells[0]:
+        if len(cells) < 2 or 'citrine_eclipse_mirage' not in cells[0]:
             continue
         name = cells[0].removeprefix('__imp_')
         (undefined if cells[1] == 'U' else defined).add(name)
@@ -33,12 +33,26 @@ def symbols(nm, path):
 
 
 def object_path(root, build, target, source):
+    """Resolve one CMake-owned object without aliasing source or target paths."""
+    root, build = Path(root).resolve(), Path(build).resolve()
+    if not target or target in {'.', '..'} or '/' in target or '\\' in target:
+        raise ValueError('Noncanonical CMake object target: ' + target)
     source_path = Path(source)
+    if '..' in source_path.parts:
+        raise ValueError('Noncanonical source path: ' + str(source))
     if source_path.is_absolute():
-        source = source_path.relative_to(root).as_posix()
-    result = build / ('CMakeFiles/' + target + '.dir/' + source + '.obj')
-    if not result.is_file():
-        raise ValueError('Built object missing or unsupported object layout: ' + str(result))
+        try:
+            source_path = source_path.relative_to(root)
+        except ValueError as error:
+            raise ValueError('Object source outside checkout: ' + str(source)) from error
+    if (not source_path.parts or source_path.is_absolute() or
+            (root / source_path).resolve() != root / source_path):
+        raise ValueError('Source path redirects or escapes checkout: ' + str(source))
+    result = build / 'CMakeFiles' / (target + '.dir') / (source_path.as_posix() + '.obj')
+    # A symlinked object could make an unrelated file appear to be a TU from
+    # this target. Refuse the report instead of attributing its symbols.
+    if not result.is_file() or result.resolve() != result:
+        raise ValueError('Built object missing, redirected or unsupported layout: ' + str(result))
     return result
 
 
@@ -56,9 +70,9 @@ def build_report(root, build, config, nm, objdump, readobj):
     production = policy['production_object_sources'] + policy['vdf_sources'] + policy['dll_entry_sources']
     records = {}
     for source in production + policy['reference_sources']:
-        target = ('preloader_l_reference_objects' if source in ref else
-                  'preloader_l_vdf_objects' if source in policy['vdf_sources'] else
-                  'preloader_l' if source in policy['dll_entry_sources'] else 'preloader_l_objects')
+        target = ('citrine_eclipse_mirage_reference_objects' if source in ref else
+                  'citrine_eclipse_mirage_vdf_objects' if source in policy['vdf_sources'] else
+                  'citrine_eclipse_mirage' if source in policy['dll_entry_sources'] else 'citrine_eclipse_mirage_objects')
         path = object_path(root, build, target, source)
         defined, undefined = symbols(nm, path)
         sections = run(objdump, '-h', path)
@@ -90,7 +104,7 @@ def build_report(root, build, config, nm, objdump, readobj):
                 refs.update(undefined & ref_providers.keys())
         test_refs[name] = refs
     exports = set()
-    source_api = build / 'preloader.source.dll'
+    source_api = build / 'citrine_eclipse_mirage.source.dll'
     if source_api.is_file():
         exports = set(re.findall(r'^\s+Name: (.*)$', run(readobj, '--coff-exports', source_api), re.M))
     adjacency = {}
@@ -127,7 +141,7 @@ def build_report(root, build, config, nm, objdump, readobj):
         for index, line in enumerate((root / name).read_text(encoding='utf-8').splitlines(), 1):
             if re.search(r'GetProcAddress|CreateThread|std::thread|rebuilt_address|GetModuleHandleEx', line):
                 bindings.append({'source': name, 'line': index, 'text': line.strip()})
-    return {'schema': 'surge.translation-unit-usage.v1', 'classification': 'NOT_RELEASE',
+    return {'schema': 'surge.translation-unit-usage.v1',
             'analysis': 'EXTERNAL_COFF_SYMBOL_REFERENCES_PLUS_TARGET_AND_BINDING_REVIEW; NOT_EXHAUSTIVE_DYNAMIC_PROOF',
             'production_tu_count': len(production), 'reference_tu_count': len(ref),
             'reference_only_symbol_count': len(ref_providers),

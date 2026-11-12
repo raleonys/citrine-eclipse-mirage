@@ -3,9 +3,79 @@
 **Classification:** source audit / current disposition and retained historical comparison / no production patch / no release.
 **Original comparison base (historical):** Citrine Eclipse Mirage `main` commit `d9c860d17769738fd6f03a58a7f3c4b9f875b067`.
 **Donor:** user-supplied `dll-reverse-engineering(11).zip`, ZIP SHA-256 `4b98177c7f7d827994e209fe75a918d9c54f25194c4adf19d9d419bdf061f0fe`.
+## Archive 11 donor identity mismatch — provenance review open
+
+The historical B49-B54 donor entry above labels `dll-reverse-engineering(11).zip`
+with SHA-256 `4b98177c7f7d827994e209fe75a918d9c54f25194c4adf19d9d419bdf061f0fe`.
+A separately indexed eight-part Archive 11, preserved on
+[`research/reconstruction-package`](https://github.com/raleonys/citrine-eclipse-mirage/tree/research/reconstruction-package),
+records a **different** combined ZIP SHA-256:
+`db394434e38c7edad33607a846ffdc36b04a1e5978d2fbe3d74da24bda5179da`.
+Its [provenance](https://github.com/raleonys/citrine-eclipse-mirage/blob/e10561b256a5793f857ec4bed4b5a9fb9fcfbadd/docs/RE_ARCHIVE11_PROVENANCE.json)
+and [import registry](https://github.com/raleonys/citrine-eclipse-mirage/blob/e10561b256a5793f857ec4bed4b5a9fb9fcfbadd/docs/RE_PACKAGE_IMPORT.json)
+record a 209,091,682-byte merged ZIP, 4,266 regular files and
+758,168,656 expanded bytes. Both SHA values are recorded for an identically
+named input, but they cannot designate identical byte streams.
+
+**Disposition: PROVENANCE_OPEN; no silent hash correction.** The earlier
+`4b98177c...` remains an attributable historical claim, **not** a freshly
+verified digest. Current evidence does not show whether that claim represents
+a distinct revision, another delivery or a transcription mistake. Do not infer
+donor-file equivalence from the filename, recorded test totals or module names.
+The `db394434...` source inventory is independently indexed research material,
+not proof that the original B49-B54 comparison used precisely those bytes.
+
+To close the discrepancy, recover the exact original B49-B54 comparison
+archive or its independently verified manifest, and compare the actual donor
+paths, byte lengths and SHA-256 values to the indexed eight-part payload.
+Record whether each cited B49-B54 assertion applies to the verified archive,
+a distinct input or an unverified historical claim. No donor implementation
+adoption, shipping defect, code patch, native acceptance or Consumer parity is
+established by this documentation-only cross-check.
+
 **Original review date:** 2026-11-01. **Original evidence quality:** static source comparison. The donor's 356 groups and 19 terminal scenarios are its own recorded results; they were **not rerun** in this GitHub worktree. Windows/MSVC, native game, and original donor runtime parity were **not run** for this differential.
 
-## Current reconciliation — 2026-11-02
+## Current source coverage at accepted main
+
+Reviewed integration baseline: `b6d3cfc48b1cbd0cca560d7f6f8931d7951be21c`.
+The dated tables below remain checkpoint comparisons. Their future-work lists
+must not be used without the later accepted additions:
+
+| Earlier gap | Coverage already in accepted source | Remaining boundary |
+| --- | --- | --- |
+| D49/D50 delayed receive, send and accept | #107, #114 and #130 retain real completion/buffer owners across repeated incomplete stops. | Controlled dispatch delay does not prove all kernel-pending, duplicate or generation/ABA schedules. |
+| D51 shutdown during startup | `application_shutdown_failure_contracts` pauses the actual provider/ready publication phases, tests normal and throwing startup, and retains the owner through queued shutdown/retry. | Arbitrary foreign work and every partial-construction path are not certified. |
+| D54 active provider and borrowed profile | #101/#111 hold a real foreign auth getter during Application stop and join the shutdown worker before unload scanning; #122 covers null factory/getter startup teardown. The existing online tests retain shared-scratch copy coverage. | Stable storage during each getter/copy interval and arbitrary external provider quiescence remain separate ABI obligations. |
+| Receive-to-send timer transition | #265 extends the actual Asio timer-fault fixture into response preparation/send transitions. | A finite injected schedule is not every partial OS failure or a shutdown liveness guarantee. |
+
+These are source-registered, bounded scenarios. Exact-head native execution
+belongs to workflow receipts; this documentation pass does not rerun them.
+Registry handle provenance, aggregate budgets and original donor equivalence
+remain open; [REMAINING_WORK.md](REMAINING_WORK.md) owns the current summary.
+The separately retained Archive 11 provenance links below are commit-pinned;
+the moving research branch contains a later Archive 12 refresh and is not an
+interchangeable source identity.
+
+## Accepted-main update — 2026-11-05
+
+At `main@9793d8f4`, the owner has integrated the following source-linked
+native regressions. The 2026-11-02 reconciliation below remains a dated
+checkpoint; its open packet-delay cases are superseded only as specified here.
+
+| Integrated change | Coverage now in source | Remaining boundary |
+|---|---|---|
+| [PR #107](https://github.com/raleonys/citrine-eclipse-mirage/pull/107) | Actual cancelled and successful WSARecv packets are held after kernel dequeue through repeated bounded stops; read allocation/client ownership persists until one release. | Controlled dispatch delay is not arbitrary kernel-pending duration or submission-generation/ABA proof. |
+| [PR #114](https://github.com/raleonys/citrine-eclipse-mirage/pull/114) | A real successful WSASend packet and callback-owned output lease survive two incomplete stops before exact delivery and retirement. | This closes the specified delayed-send fixture gap, not all send schedules or foreign Consumer equivalence. |
+| [PR #130](https://github.com/raleonys/citrine-eclipse-mirage/pull/130) | One real successful accept packet remains held across two incomplete stops; release clears pending ownership without constructing a post-stop handler or rearming. | Single-owner association does not prove exact pre-submit AcceptEx generation identity, duplicate packets or arbitrary NOT_FOUND races. |
+
+These additions address the bounded receive/send/accept delivery schedules
+previously listed as missing. Foreign provider lifetime, donor-specific parity
+and original-input retirement remain independent questions. Test registration
+is not execution evidence: inspect the exact selected head's full-validation
+results under [the current synchronization policy](GITHUB_WORKFLOW.md).
+The focused lifecycle workflow is manual; PR creation does not schedule it.
+
+## Reconciliation checkpoint — 2026-11-02
 
 **Reviewed integration baseline:** `e1f1d09208d3fdbeabeef1f5891d8f4748179883`, after the owner merged PR #91. The 2026-11-01 comparison below used an older baseline. Its open findings are historical inputs, not a statement that all of those scenarios remain untested today.
 
@@ -35,15 +105,38 @@ The dispositions below apply to the stated scenarios. A covered case is not gene
 - Reference close contract: [closing implementation](../src/net/transport_closing.cpp), [closing tests](../tests/unit/socket/closing_tests.cpp), [service registry integration](../tests/unit/socket/service_registry_integration_tests.cpp).
 - Startup and configuration: [publication test](../tests/native/startup_publication_tests.cpp), [shutdown failure test](../tests/native/application_shutdown_failure_tests.cpp), [pipeline tests](../tests/unit/config_pipeline/pipeline_tests.cpp), [application tests](../tests/unit/config_application/application_tests.cpp), [startup tests](../tests/unit/config_startup/startup_tests.cpp), [platform tests](../tests/native/configuration_platform_tests.cpp).
 
+### Borrowed profile scratch-buffer regression: D54-B sequential ownership
+
+`borrowed_profile_copy_ownership()` in the existing online model tests supplies
+all three provider profile getters from the same fixed scratch-buffer address.
+Each subsequent getter overwrites the previous bytes. A filesystem-status
+callback overwrites the final borrowed result before optional profile saving;
+provider destruction and module release overwrite the storage again.
+
+The fixture checks distinct owned username/persona/user values and exact cached
+profile output, with both short and heap-sized strings. A null second or third
+getter preserves the existing partial-update/exception behavior, and explicit
+cleanup leaves already-copied values intact without duplicate object/module
+release on repeated cleanup. It runs in the existing `portable_online` and
+Windows `online_contracts` targets without production or build-policy changes.
+
+This fixture invokes the actual loader through synthetic Effects. The borrowed
+storage remains stable during each getter-to-copy interval; reuse occurs only
+at later calls. It does **not** establish a provider ABI guarantee that storage
+is stable, make concurrently invalidated C strings safe, prove physical DLL
+retirement, or close the concurrent foreign-lifetime portion of D54-B. The
+active-call shutdown schedule in PR #101 remains separate work. Platform results
+must be read from exact-head CI, not inferred from this source description.
+
 ### Executed baseline evidence and its limits
 
 [PR #91's source/Windows workflow, run 41437017683](https://github.com/raleonys/citrine-eclipse-mirage/actions/runs/41437017683), tested head `0d5a1f5e47280a2820f773c070454c58c0c76909`. Its source tree is identical to the accepted merge baseline above. Both Windows/MSVC Native configurations passed **210/210 tests with no skips**. Their artifact digests, raw source-manifest hash, successful build receipts and JUnit inventories were checked; the previous 209 test names remain and only `listener_owners_contracts` was added.
 
 The JUnit output and complete LastTest logs identify the actual executed tests; a declaration in CMake alone is not a PASS. That evidence includes the startup publication, socket retirement, net failure, online/module, reference closing and configuration/registry tests discussed above. The reference workflow separately runs the closing and ordered-session fixtures on Windows Debug/Release. [Repeated shutdown run 41437017662](https://github.com/raleonys/citrine-eclipse-mirage/actions/runs/41437017662) passed five independent actual DLL lifecycle attempts per configuration, as well as guard/diagnostic and dual-family cancellation tests.
 
-Those receipts are evidence for the **named baseline**, not a fresh acceptance claim for this documentation PR or a foreign Consumer. Current PR execution is tracked in [PR #82](https://github.com/raleonys/citrine-eclipse-mirage/pull/82). The CI now runs full native Debug/Release and Production/Golden on every PR; it does not need the duplicate startup-only workflow proposed in closed PR #92.
+Those receipts are evidence for the **named baseline**, not a fresh acceptance claim for this documentation PR or a foreign Consumer. Execution for that documentation checkpoint is tracked in [PR #82](https://github.com/raleonys/citrine-eclipse-mirage/pull/82). The then-active per-PR scheduling was superseded by #212/#225: current full validation follows main integration or a later verified synchronization request. The duplicate startup-only workflow proposed in closed PR #92 remains unnecessary.
 
-### Bounded remaining work
+### Remaining work identified at the 2026-11-02 checkpoint
 
 1. **D50-C / remaining D50-A socket lifetime proof:** hold delivery/reap of a real socket completion across the first drain budget, record pending operation and borrowed-buffer ownership, then require successful explicit retry without duplicate close or rearm. Existing timer and close-failure controls are baseline coverage, not substitutes for this schedule.
 2. **D54-A/B foreign provider proof:** block an actual fixture getter/callback while teardown is requested; verify local worker/session drains and physical image ownership. Separate the provider ABI's string/destructor responsibilities from module-reference ownership. Add a production correction only for a reproduced reachable violation.
@@ -51,6 +144,73 @@ Those receipts are evidence for the **named baseline**, not a fresh acceptance c
 4. **D50-B parity decision:** retain the tested reference behavior while independent original evidence is absent. The exception-gate repair is complete for its tested scenarios; it does not settle whether original close-return semantics should ever change.
 
 For an actual bug correction, reproduce source-bound RED behavior before the minimal GREEN change. For additional coverage of already-correct behavior, meaningful new tests and a controlled negative check may be sufficient; do not fabricate a baseline production failure to justify a test-only contribution. Existing assertions, cleanup ownership, timeout budgets, vendor pins and public ABI remain unchanged. This ledger does **not** retire the original reference inputs or certify full native equivalence.
+
+### Public shutdown during real startup: native fixture
+
+The A11-04 scenario reference is the separately indexed reconstruction package
+at commit `e10561b256a5793f857ec4bed4b5a9fb9fcfbadd`, delivery ZIP SHA-256
+`db394434e38c7edad33607a846ffdc36b04a1e5978d2fbe3d74da24bda5179da`.
+Its [admission integration scenario](https://github.com/raleonys/citrine-eclipse-mirage/blob/e10561b256a5793f857ec4bed4b5a9fb9fcfbadd/reference-package/snapshot/anadius-application-admission-source/admission_integration_tests.cpp)
+informs this test; its source graph and supplied PASS records are not imported.
+
+The `application_shutdown_failure_contracts` host now also issues public
+`DllShutdown` calls before the source-included Application has returned from
+startup. The test DLL observes two real readiness-publication boundaries:
+the provider worker's completion and the entry worker's final ready phase.
+Each is exercised with normal return and an injected startup exception.
+
+While the selected phase is held, zero-wait and bounded-wait calls must return
+`DLL_SHUTDOWN_TIMEOUT`, retain the single Application and callback binding, and
+leave engine cleanup untouched. Recorded thread identities distinguish the
+provider worker from the entry worker; abort-cleanup flag publication cannot
+impersonate the startup barrier. After release, the real entry worker must
+terminate from the already queued requests without a third public shutdown
+call. The host then verifies single-owner destruction, drained callback leases,
+exact engine retirement and idempotent completed shutdown. The exception cases
+also distinguish the entry worker's implicit cleanup request.
+
+This adapts the A11-04/D51-A test scenario to the accepted serialized worker
+instead of importing the donor's RuntimeOwner, custom CRT or foreign admission
+API. Instrumentation and extra exports exist only in the test DLL. Engine
+patching and unload scans retain this fixture's existing controlled boundaries;
+this is not a real-MinHook or foreign-callback quiescence proof. Production
+source, its three exports, timeout budgets and current behavior are unchanged.
+
+The existing focused queued-shutdown workflow runs all old and new scenarios on
+Windows MSVC Debug/Release and retains verbose per-case output. Merely adding
+these cases is not a native PASS; exact-head execution belongs in the PR's CI
+record. The earlier D51-A row describes the named historical baseline above;
+these cases address its paused-startup scheduling gap without closing the
+remaining foreign callback, service-construction or original-donor parity work.
+
+### Delayed native receive completion delivery: D50-A/C fixture
+
+`socket_retirement_contracts` now adds `late-receive-cancel` and
+`late-receive-success` to the existing source-included production Asio tests.
+Each starts an actual kernel-pending `WSARecv` on its own loopback TCP pair,
+records the exact submitted `OVERLAPPED` and observes the containing receive
+allocation. The test gates an actual `GetQueuedCompletionStatus` result for that
+operation before Asio consumes it; the packet's port, key, status and byte count
+are preserved. One case obtains a real cancellation result, and the other
+obtains the peer's successful one-byte receive before closing.
+
+Two successive calls to the unchanged `Impl::stop()` must report incomplete
+cleanup while that packet is held. The client, pending-read count, session
+capacity and observed buffer allocation stay owned; completed native close is
+not repeated and no business callback runs. Finite IOCP waits are honored so
+the test actually holds delivery beyond the first 100 ms drain interval. After
+release, another stop delivers the original packet exactly once, frees the
+buffer/client and completes without a stale business callback. A final stop
+checks idempotence.
+
+This schedules delayed **dispatch after physical kernel dequeue**. It does not
+claim that kernel I/O itself remains incomplete after cancellation, exercise
+delayed WSASend storage, or establish submission-generation/ABA equivalence.
+The fixture uses the actual Client and stop bodies with a single controlling
+IO dispatcher; no service runner is active in this controlled schedule. No
+vendor source, production implementation or drain/test timeout is changed.
+The existing Windows lifecycle workflow retains verbose Debug/Release output;
+actual exact-head execution is recorded separately in the PR's CI results.
 
 ## Original comparison — historical baseline
 

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/execution_windows.hpp"
+#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <exception>
 
-namespace preloader_l::execution {
+namespace citrine_eclipse_mirage::execution {
 std::uint32_t WindowsPlatform::current_thread_id() { return GetCurrentThreadId(); }
 void WindowsPlatform::acquire_srw_exclusive(std::uintptr_t& lock) {
     static_assert(sizeof(SRWLOCK) == sizeof(lock));

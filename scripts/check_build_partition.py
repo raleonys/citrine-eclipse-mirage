@@ -20,9 +20,9 @@ def declared_sources(root, variable):
 
 def source_errors(root, policy):
     root = Path(root)
-    runtime = declared_sources(root, 'PRELOADER_L_APPLICATION_SOURCES') + ['src/platform/crypt_query_host.cpp']
-    vdf = declared_sources(root, 'PRELOADER_L_VDF_SOURCES')
-    reference = declared_sources(root, 'PRELOADER_L_REFERENCE_SOURCES')
+    runtime = declared_sources(root, 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES') + ['src/platform/crypt_query_host.cpp']
+    vdf = declared_sources(root, 'CITRINE_ECLIPSE_MIRAGE_VDF_SOURCES')
+    reference = declared_sources(root, 'CITRINE_ECLIPSE_MIRAGE_REFERENCE_SOURCES')
     errors = []
     for name, actual in [('production_object_sources', runtime), ('vdf_sources', vdf), ('reference_sources', reference)]:
         expected = policy[name]
@@ -67,6 +67,9 @@ def map_errors(text, policy):
     for name in policy['reference_targets']:
         if name.lower() in lower:
             errors.append('Reference target/archive present in production map: ' + name)
+    for stem in policy.get('forbidden_production_object_stems', []):
+        if object_pattern(stem).search(text):
+            errors.append('Retired vendor object present in production map: ' + stem)
     for stem in ['dll_entry', 'crypt_query_host']:
         if stem not in present:
             errors.append('Production object evidence missing: ' + stem)
@@ -138,39 +141,42 @@ def codemodel_errors(targets, policy):
         for dependency in closure:
             for source in targets[dependency].get('sources', []):
                 path = source['path'].replace('\\', '/')
+                for prefix in policy.get('forbidden_production_source_prefixes', []):
+                    if path.lower().startswith(prefix.lower()) or '/' + prefix.lower() in path.lower():
+                        errors.append('Retired vendor source in production closure: ' + name + ' -> ' + path)
                 for reference in policy['reference_sources']:
                     if (path == reference or path.endswith('/' + reference) or
                             object_pattern(Path(reference).stem).search(path)):
                         errors.append('Reference source/object in production closure: ' + name + ' -> ' + path)
-    for name, key in [('preloader_l_objects', 'production_object_sources'), ('preloader_l_vdf_objects', 'vdf_sources'), ('preloader_l', 'dll_entry_sources'), ('preloader_l_reference_objects', 'reference_sources')]:
+    for name, key in [('citrine_eclipse_mirage_objects', 'production_object_sources'), ('citrine_eclipse_mirage_vdf_objects', 'vdf_sources'), ('citrine_eclipse_mirage', 'dll_entry_sources'), ('citrine_eclipse_mirage_reference_objects', 'reference_sources')]:
         if name not in targets:
             continue
         actual = {s['path'].replace('\\', '/') for s in targets[name].get('sources', [])
                   if s['path'].lower().endswith('.cpp') and not s.get('isGenerated')}
         if actual != set(policy[key]):
             errors.append('Generated target source set differs: ' + name)
-    if 'preloader_l_source_api' in targets:
+    if 'citrine_eclipse_mirage_source_api' in targets:
         # MSVC compiles a separate shared-CRT development graph. It must retain
         # every application, parser, reference and entry source without linking
         # the shipping static-CRT objects as a shortcut.
         expected = set().union(*(policy[key] for key in
                                ('production_object_sources', 'vdf_sources', 'reference_sources', 'dll_entry_sources')))
-        actual = {s['path'].replace('\\', '/') for s in targets['preloader_l_source_api'].get('sources', [])
+        actual = {s['path'].replace('\\', '/') for s in targets['citrine_eclipse_mirage_source_api'].get('sources', [])
                   if s['path'].lower().endswith('.cpp') and not s.get('isGenerated')}
-        closure = target_closure(targets, 'preloader_l_source_api')
+        closure = target_closure(targets, 'citrine_eclipse_mirage_source_api')
         separate = bool(actual - set(policy['dll_entry_sources']))
         if separate:
             if actual != expected:
                 errors.append('Source API lost the retained reference object payload or complete development source set')
             static_targets = set(policy['production_targets'] + policy['reference_targets'] +
-                                 ['preloader_l_minhook', 'preloader_l_tinyxml2'])
+                                 ['citrine_eclipse_mirage_minhook', 'citrine_eclipse_mirage_pugixml'])
             overlap = closure & static_targets
             if overlap:
                 errors.append('Separate source API graph reuses shipping static-CRT targets: ' + ', '.join(sorted(overlap)))
-        elif 'preloader_l_reference_objects' not in closure:
+        elif 'citrine_eclipse_mirage_reference_objects' not in closure:
             errors.append('Source API lost the retained reference object payload')
     for name in policy['reference_test_targets']:
-        if name in targets and 'preloader_l_reference_models' not in target_closure(targets, name):
+        if name in targets and 'citrine_eclipse_mirage_reference_models' not in target_closure(targets, name):
             errors.append('Reference test lost its model library: ' + name)
     return errors
 
@@ -209,7 +215,7 @@ def main():
                 errors.append('Linked production binary missing')
     except (OSError, ValueError, KeyError, TypeError) as error:
         errors.append(str(error))
-    result = {'schema': 'surge.build-partition-check.v1', 'classification': 'NOT_RELEASE',
+    result = {'schema': 'surge.build-partition-check.v1',
               'result': 'FAIL' if errors else 'PASS_SOURCE_PARTITION' if args.source_only else 'PASS_TARGET_GRAPH' if args.graph_only else 'PASS_PRODUCTION_BOUNDARY',
               'map_format': format_name, 'errors': errors,
               'native_msvc_and_game_acceptance': 'SEPARATE_REQUIRED_EVIDENCE'}

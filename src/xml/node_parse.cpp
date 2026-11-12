@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/xml/node_parse.hpp"
+#include "citrine_eclipse_mirage/xml/node_parse.hpp"
 #include <bit>
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width=8){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -154,4 +154,4 @@ std::uintptr_t NodeParseEffects::parse_child_virtual(std::uintptr_t target,std::
     const auto scratch=acquire_parse_scratch(node,cursor,closing_pair,line_counter);
     return parse_node_004970(node,cursor,closing_pair,line_counter,scratch,parse_);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket
