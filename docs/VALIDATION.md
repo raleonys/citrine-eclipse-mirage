@@ -37,6 +37,13 @@ contents, pointer/wrapper identity, successful retry and isolation from later
 parses. Allocation sites are discovered dynamically; MSVC checked iterators
 remain enabled and excluded proxy-sized requests are reported separately.
 
+The ordinary XML reader suite also injects one failed pugixml allocation at
+a time during normal parsing and compatibility DOM construction. Long decoded
+attribute/text payloads, attribute order and a following child must remain
+complete on controls and retries. Failed parses preserve a separate earlier
+document and its borrowed views; vendor live blocks return to their baseline
+and the original allocation callbacks are restored after document destruction.
+
 The bounded C++ type-identity check masks comments, quoted literals and
 raw strings before scanning socket interface/adapter definitions and their
 namespace marker. It preserves source offsets and line attribution while
