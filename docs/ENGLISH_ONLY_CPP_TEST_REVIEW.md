@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [ENGLISH_ONLY_AUDIT.md](ENGLISH_ONLY_AUDIT.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # First-party C++ and test language review (PR53)
 
 ## Original review and synchronized inventory

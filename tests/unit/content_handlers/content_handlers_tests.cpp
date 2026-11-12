@@ -363,6 +363,37 @@ static void image_tests() {
                 (owner=="user-test"?"synthetic-avatar.png":"synthetic-default.png"));
         }
     }
+    // Inclusive cache-component maxima: do not silently drop valid provider
+    // requests while rejecting the first over-limit value.
+    for(const auto length:{127u,128u,129u})for(bool own:{false,true}){
+        const auto owner=std::string(length,'u');
+        for(const auto& width:std::vector<std::string>{"0000208","00000208","000000208"}){
+            Fixture limits;limits.online=1;limits.saved_size=-1;
+            limits.user_id=own?owner:"different-owner";
+            CompleteAvatar effects;effects.avatar_success=true;effects.copy_success=true;effects.atoi_value=208;
+            MockXml response;
+            require(query_image_0314f0(image(width,owner),response,limits.refs(),effects));
+            const bool accepted=length<=128&&width.size()<=8;
+            const auto output=response.named("Image");require(output.size()==1);
+            require(output[0].get("ImageId")=="avatar:"+owner&&output[0].get("Width")==width);
+            require(effects.online_paths.size()==static_cast<unsigned>(accepted));
+            require(effects.paths_widened.size()==static_cast<unsigned>(accepted));
+            require(effects.atoi_inputs.size()==static_cast<unsigned>(accepted));
+            if(accepted){
+                const auto filename="_AVATAR_"+owner+"_"+width;
+                require(effects.paths_widened[0]==filename&&effects.atoi_inputs[0]==width);
+                require(effects.owner==owner&&effects.size==1);
+                require(effects.online_paths[0]==u"synthetic-user\\"+Path(filename.begin(),filename.end()));
+                require(output[0].get("ResourcePath")=="synthetic-user\\"+filename);
+            }else require(output[0].get("ResourcePath")==
+                (own?"synthetic-avatar.png":"synthetic-default.png"));
+            const bool saved=accepted&&own;
+            require(effects.copies.size()==static_cast<unsigned>(saved));
+            require(effects.saved_logs==(saved?std::vector<int>{1}:std::vector<int>{}));
+            require(limits.saved_size==(saved?1:-1));
+            if(saved)require(effects.copies[0]==std::pair<Path,Path>{effects.online_paths[0],u"synthetic-last.png"});
+        }
+    }
     Fixture f;
     for(const auto& absent:{"Width","Height","ImageId"}) {
         auto q=image();std::erase_if(q.attributes,[&](const auto& a){return a.first==absent;});MockXml x;

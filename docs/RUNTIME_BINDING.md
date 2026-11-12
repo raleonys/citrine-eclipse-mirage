@@ -1,11 +1,5 @@
-> Current bindings and F01–F04 corrections:
-> [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md).
-> The body below is a historical record of the earlier task;
-> its former export/resource descriptions are not the current contract.
-
-> This is a historical record of the binding task. Later owner
-> corrections for Windows I/O and vendor selection are in
-> [WINDOWS_IO_FIX.md](WINDOWS_IO_FIX.md).
+> **Historical checkpoint.** Use [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
 
 # Application integration — YF-RUNTIME-BIND-20261028
 
