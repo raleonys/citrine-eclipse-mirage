@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Cover accepted Client publication failure before session counting, with normal socket close and retained would-block close/retry. Keep the production client list as std::vector through a private fixture seam; verify unpublished Client/Handler destruction, admission behavior and exact native-owner retirement.
+- Cover prepared response ownership at the actual Asio post-allocation boundary. Require immediate cancellation and owner release after one injected allocation failure, preserve exact binary output in successful controls, and verify executor recovery without changing runtime or native test budgets. Explicitly type the existing case dispatcher function pointer so the full fixture also compiles with libc++.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-12
 
+- [PR #344](https://github.com/raleonys/citrine-eclipse-mirage/pull/344): Cover accepted Client publication failure before session counting, with normal socket close and retained would-block close/retry. Keep the production client list as std::vector through a private fixture seam; verify unpublished Client/Handler destruction, admission behavior and exact native-owner retirement.
 - [PR #361](https://github.com/raleonys/citrine-eclipse-mirage/pull/361): Group README badges into a blue information row ending with Changelog and a separate status row. Add a repository-owned CodeQL badge that becomes green only for the current accepted main commit after all three language analyses pass, refresh it after completed main scans and preserve pending/failure colors. Expand the bounded image publisher from eleven to twelve SVGs without adding PR analysis or changing application code.
 - [PR #341](https://github.com/raleonys/citrine-eclipse-mirage/pull/341): Disarm the Registry allocation fault probe before asserting direct fabrication failure. Record only the operation's bad_alloc, then require the injected operation fault outside the catch scope so diagnostic allocation cannot turn an incorrectly returning helper into a false PASS. Preserve caller status/output and exact ownership rollback checks without changing production Registry behavior.
 - [PR #348](https://github.com/raleonys/citrine-eclipse-mirage/pull/348): Fault each observed eligible DOWN-seed storage allocation through the existing queue getter. Require selected bad_alloc propagation, an opted-in abort/reset before cleanup registration/footer, no partially engaged or published queue, one successful same-owner retry with the exact 68-byte seed and no reseed on a hot empty getter. Preserve production initialization, the existing integration fixture and native test budget.

@@ -118,3 +118,14 @@ normal-close admission rearm, and exact retained native ownership when close
 would block. Repair must drain cancellation and close the retained socket once.
 The complete fixture remains a Windows socket/IOCP test; a POSIX projection,
 cross-build or syntax check does not establish native Windows execution.
+
+## Prepared-response Asio post ownership
+
+The `post-owner` case in `net_failure_contracts` uses an unopened actual Client
+and polls its executor on the controller. Accepted submission, one failed
+allocation and a successful retry must preserve counted response bytes and
+settle each controlled receipt once. Failed initiation must release the final
+response owner and propagate bad_alloc without executing its callback. No
+listener or worker is started, and explicit callback settlement is not socket
+delivery. The native fixture retains its Windows allocator/IOCP coverage; a
+POSIX projection or cross-build cannot establish that native execution.
