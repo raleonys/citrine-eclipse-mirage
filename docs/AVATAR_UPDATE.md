@@ -16,8 +16,8 @@ configured User/Avatar selection skips the profile write.
 
 The separate original 3,882-byte `resources/branding/default-avatar.png`
 fallback, its C++ embedding and the default-avatar write are unchanged.
-The reference VERSIONINFO, Windows resource script, DLL exports, runtime C++
-source and vendor inputs are unchanged. This change updates only the profile
+The existing project VERSIONINFO policy, Windows resource script, DLL exports,
+runtime C++ source and vendor inputs are unchanged by this avatar update. This change updates only the profile
 image, its current metadata/hash pins and the documentation.
 
 The prior avatar validation files under

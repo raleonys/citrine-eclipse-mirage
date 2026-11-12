@@ -23,30 +23,6 @@ namespace TAO_PEGTL_NAMESPACE
    using empty_list = type_list<>;
 
    template< typename... >
-   struct type_list_head;
-
-   template< typename Head >
-   struct type_list_head< Head >
-   {
-      using type = Head;
-   };
-
-   template< typename Head, typename... Tail >
-   struct type_list_head< type_list< Head, Tail... > >
-   {
-      using type = Head;
-   };
-
-   template< typename Head, typename... Tail >
-   struct type_list_head< Head, Tail... >
-   {
-      using type = Head;
-   };
-
-   template< typename... Ts >
-   using type_list_head_t = type_list_head< Ts... >::type;
-
-   template< typename... >
    struct type_list_append;
 
    template< typename... Ts, typename... As >
@@ -56,7 +32,7 @@ namespace TAO_PEGTL_NAMESPACE
    };
 
    template< typename... Ts >
-   using type_list_append_t = type_list_append< Ts... >::type;
+   using type_list_append_t = typename type_list_append< Ts... >::type;
 
    template< typename... >
    struct type_list_concat;
@@ -79,7 +55,7 @@ namespace TAO_PEGTL_NAMESPACE
    {};
 
    template< typename... Ts >
-   using type_list_concat_t = type_list_concat< Ts... >::type;
+   using type_list_concat_t = typename type_list_concat< Ts... >::type;
 
    template< typename T, typename... Ts >
    struct type_list_contains
@@ -126,27 +102,6 @@ namespace TAO_PEGTL_NAMESPACE
 
    template< typename T >
    inline constexpr bool is_type_list_v = is_type_list< T >::value;
-
-   template< typename... >
-   struct types_are_unique;
-
-   template<>
-   struct types_are_unique<>
-      : std::true_type
-   {};
-
-   template< typename... Ts >
-   struct types_are_unique< type_list< Ts... > >
-      : types_are_unique< Ts... >
-   {};
-
-   template< typename T, typename... Ts >
-   struct types_are_unique< T, Ts... >
-      : std::bool_constant< ( !std::is_same_v< T, Ts > && ... ) && types_are_unique< Ts... >::value >
-   {};
-
-   template< typename... Ts >
-   inline constexpr bool types_are_unique_v = types_are_unique< Ts... >::value;
 
 }  // namespace TAO_PEGTL_NAMESPACE
 
