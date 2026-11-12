@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Add event-queue allocation-failure regressions requiring deque storage to be reserved before the persistence callback. Cover initially empty and seed-retained queues, unchanged binary input and publication state on failure, exact prior FIFO contents, a single repaired retry and no phantom/duplicate event. Preserve existing producer ordering, delivery/completion coverage and production sources.
+- Fault each observed eligible DOWN-seed storage allocation through the existing queue getter. Require selected bad_alloc propagation, an opted-in abort/reset before cleanup registration/footer, no partially engaged or published queue, one successful same-owner retry with the exact 68-byte seed and no reseed on a hot empty getter. Preserve production initialization, the existing integration fixture and native test budget.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-12
 
+- [PR #346](https://github.com/raleonys/citrine-eclipse-mirage/pull/346): Add event-queue allocation-failure regressions requiring deque storage to be reserved before the persistence callback. Cover initially empty and seed-retained queues, unchanged binary input and publication state on failure, exact prior FIFO contents, a single repaired retry and no phantom/duplicate event. Preserve existing producer ordering, delivery/completion coverage and production sources.
 - [PR #360](https://github.com/raleonys/citrine-eclipse-mirage/pull/360): Run Actions, C/C++ and Python CodeQL only on accepted-main pushes, using the exact pushed SHA and main reference. Keep PR synchronization/manual validation on the existing eleven required source/Windows/reference checks without CodeQL runners. Separate the current PR notes from integrated development history while preserving accepted dates, links and release distinctions.
 - [PR #343](https://github.com/raleonys/citrine-eclipse-mirage/pull/343): Register the unchanged retained bootstrap and CRT-thread context model fixtures in portable CTest. Exercise model ordering, context/handle ownership and cleanup through controlled effects under the existing 60-second test budgets; preserve native/reference registrations, production linkage and the standard compiler CRT. Portable model results do not establish native thread or private CRT execution.
 - [PR #280](https://github.com/raleonys/citrine-eclipse-mirage/pull/280): Add a 64-case AtomicFiles rollback/recovery matrix covering independently present or absent destinations and independently failing restorations after a partial group commit. Verify reverse-order recovery continues after errors, preserves the first exception and exact bytes/backup ownership, blocks new staging until repair and permits an idempotent retry followed by a fresh successful group. Register the same controlled component fixture in portable and Windows CTest with explicit build-partition classification and unchanged production persistence code.
