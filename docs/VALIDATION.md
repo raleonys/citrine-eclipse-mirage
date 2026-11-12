@@ -30,6 +30,13 @@ file symlinks and nonregular destinations are rejected. JSON is published by
 private temporary file and atomic replacement, preserving unrelated output
 hardlinks and the previous report on serialization or replacement failure.
 
+The XML reader allocation contract retains earlier decoded attribute/text
+views while injecting recoverable C++ allocation failures into later lazy
+lookups and ordered-attribute extraction on the same document. It checks full
+contents, pointer/wrapper identity, successful retry and isolation from later
+parses. Allocation sites are discovered dynamically; MSVC checked iterators
+remain enabled and excluded proxy-sized requests are reported separately.
+
 The bounded C++ type-identity check masks comments, quoted literals and
 raw strings before scanning socket interface/adapter definitions and their
 namespace marker. It preserves source offsets and line attribution while

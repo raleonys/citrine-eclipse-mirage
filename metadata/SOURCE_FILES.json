@@ -1394,8 +1394,8 @@
       "sha256": "8a8e1dd155a64bd3094b0828ffee4742419c65a3fbbcf77cfd5b634154106d1f"
     },
     "tests/performance/xml_reader_probe.cpp": {
-      "bytes": 6323,
-      "sha256": "5e136dd24480b4de03bddc7d87d139b5cf74c0758828e848a52720cebd89760c"
+      "bytes": 11798,
+      "sha256": "dd38d02dd8a1dbd1613d3c74890a814154fbf32ef22147e95192c33bd238c2ae"
     },
     "tests/support/fixture_ascii.hpp": {
       "bytes": 651,
