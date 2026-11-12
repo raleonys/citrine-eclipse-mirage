@@ -193,3 +193,14 @@ fresh two-worker owner executes 32 jobs; failed owners are never restarted.
 Ordinary builds keep OwnedThread exactly std::thread. This controlled constructor
 fault and any POSIX projection are separate from an actual OS launch failure
 and native Windows thread/socket execution.
+
+## Portable ordered Session flow
+
+`portable_session_flow` compiles the same `tests/native/session_flow_tests.cpp`
+as the native Windows `session_flow_contracts` target, with the actual Session,
+message/XML bridge and pinned XML backend. Portable checks therefore cover
+ordered delivery, receipt/buffer lifetime, silent-command continuation, invalid
+dispatch and settlement refusal without copying fixture cases. Both
+registrations retain a 30-second budget. Scheduling, transport, cipher and
+effects are controlled; this does not establish real sockets, AES or Windows
+acceptance.
