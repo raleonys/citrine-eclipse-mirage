@@ -16,7 +16,7 @@ int main()
 #include <tao/pegtl/debug/print.hpp>
 #include <tao/pegtl/example/uri.hpp>
 
-int main()
+int main()  // NOLINT(bugprone-exception-escape)
 {
    TAO_PEGTL_NAMESPACE::print_debug< TAO_PEGTL_NAMESPACE::uri::URI >( std::cout );
    return 0;
