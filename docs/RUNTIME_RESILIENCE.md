@@ -61,6 +61,15 @@ producer allocation ordering; the controlled callback performs no disk IO or
 GrantAchievement, and host allocation results do not establish the MSVC checked-STL
 route or general operating-system memory exhaustion.
 
+The `event_queue_integration_contracts` seed regression measures eligible
+container/string allocations during a successful getter, then faults each observed
+site in a fresh `OwnedStorage` owner. A controlled Initialization provider opts into
+abort/reset; failure must leave no engaged partial storage, cleanup registration
+or completed guard. The same getter then retries the exact DOWN seed once, and a
+hot empty queue is not reseeded. The probe allows smaller checked-STL bookkeeping
+allocations and does not model native CRT guard/atexit locking, every allocator
+failure or restart of single-use Application startup.
+
 Individual replacements are atomic. XML/INI together are a process-local rollback
 transaction, not a power-loss atomic filesystem transaction. Concurrent external
 writers and automatic recovery after process termination are not supported. Files
