@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [VENDORING.md](VENDORING.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # Owner-provided Asio snapshot update
 
 This report records the Asio update checkpoint and its validation at that time.
@@ -6,7 +9,7 @@ The current four active vendors are Asio, MinHook, PEGTL and pugixml;
 replaced TinyXML2. See [VENDORING.md](VENDORING.md) for current inputs.
 
 The owner supplied a new asio-master.zip and explicitly requested the update.
-The header still reports 1.38.2 (ASIO_VERSION 103802); this is a source snapshot
+At that checkpoint the header reports 1.38.2 (ASIO_VERSION 103802); this is a source snapshot
 update, not a claim that a new numbered Asio release was supplied.
 
 | Pin | Previous | New |
@@ -53,8 +56,10 @@ manifest refreshes record this specifically authorized replacement only.
 [validation](../metadata/evidence/asio-update/VALIDATION.json) distinguish exact vendor bytes,
 builds and real Windows/MSVC CI. Game acceptance is separate.
 
-The owner merged the prerequisite CI/review setup PR. This dependency update
-now targets main in its own PR; it is not merged automatically.
+The prerequisite CI/review setup and this dependency update were subsequently
+integrated. The selected snapshot is now newer: [VENDORING.md](VENDORING.md)
+owns current Asio 1.39.0 pins. The table and execution results here remain
+evidence for the earlier 1.38.2 update only.
 
 Local LLVM-MinGW Release build and all 206 tests pass under Wine. The 12
 selected Debug runtime/transport tests also pass. Source QA passes all 17

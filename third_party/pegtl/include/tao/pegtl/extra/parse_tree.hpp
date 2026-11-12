@@ -29,7 +29,6 @@
 
 #include "../internal/enable_control.hpp"
 #include "../internal/has_unwind.hpp"
-#include "../internal/ignore_arguments.hpp"
 
 namespace TAO_PEGTL_NAMESPACE::parse_tree
 {
@@ -46,7 +45,7 @@ namespace TAO_PEGTL_NAMESPACE::parse_tree
       Position begin;
       Position end;
 
-      basic_node() noexcept = default;  // NOLINT(bugprone-crtp-constructor-accessibility)
+      basic_node() noexcept = default;
 
       basic_node( basic_node&& ) = delete;
       basic_node( const basic_node& ) = delete;
@@ -177,7 +176,7 @@ namespace TAO_PEGTL_NAMESPACE::parse_tree
       inline constexpr bool is_leaf< 0, type_list< Rules... >, Selector > = ( sizeof...( Rules ) == 0 );
 
       template< unsigned Level, typename Rule, template< typename... > class Selector >
-      inline constexpr bool is_unselected_branch = ( !is_selected_node< Rule, Selector > && is_leaf< Level, typename Rule::subs_t, Selector > );  // NOLINT(readability-redundant-typename)
+      inline constexpr bool is_unselected_branch = ( !is_selected_node< Rule, Selector > && is_leaf< Level, typename Rule::subs_t, Selector > );
 
       template< unsigned Level, typename... Rules, template< typename... > class Selector >
       inline constexpr bool is_leaf< Level, type_list< Rules... >, Selector > = ( is_unselected_branch< Level - 1, Rules, Selector > && ... );
@@ -291,7 +290,10 @@ namespace TAO_PEGTL_NAMESPACE::parse_tree
             if constexpr( control_has_unwind< Control< Rule >, const ParseInput&, States... > ) {
                Control< Rule >::unwind( in, st... );
             }
-            TAO_PEGTL_MSVC_IGNORE( st... );
+#if defined( _MSC_VER )
+            ( (void)st,
+              ... );
+#endif
          }
       };
 
@@ -304,7 +306,7 @@ namespace TAO_PEGTL_NAMESPACE::parse_tree
       template< typename T >
       struct selector< std::tuple< T > >
       {
-         using type = T::type;
+         using type = typename T::type;
       };
 
       template< typename... Ts >
@@ -315,7 +317,7 @@ namespace TAO_PEGTL_NAMESPACE::parse_tree
       };
 
       template< typename T >
-      using selector_t = selector< T >::type;
+      using selector_t = typename selector< T >::type;
 
       template< typename Rule, typename Collection >
       using select_tuple = std::conditional_t< Collection::template enable< Rule >, std::tuple< Collection >, std::tuple<> >;
@@ -326,7 +328,7 @@ namespace TAO_PEGTL_NAMESPACE::parse_tree
    using selector = internal::selector_t< decltype( std::tuple_cat( std::declval< internal::select_tuple< Rule, Collections > >()... ) ) >;
 
    template< typename Base >
-   struct apply  // NOLINT(bugprone-crtp-constructor-accessibility)
+   struct apply
       : std::true_type
    {
       template< typename... Rules >

@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-only
 """Owner-approved weekly names, version arithmetic, and LUTRAVEX root safety."""
-import json
 import re
 from pathlib import Path
+
+from project_files import load_unique_json
 FILE = Path(__file__).resolve().parents[1] / 'metadata/WEEKLY_NAMING_POLICY.json'
 FIRST = '3.2.6'
 V = re.compile(r'([1-9][0-9]*)\.([0-9])\.([0-9])\Z')
@@ -37,7 +38,7 @@ def asset_names(tag):
 
 
 def load_registry():
-    return json.loads(FILE.read_text(encoding='utf-8'))
+    return load_unique_json(FILE)
 
 
 def validate_registry(data):

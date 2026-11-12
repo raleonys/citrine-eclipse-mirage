@@ -17,12 +17,10 @@ int main()
 #include <cstring>
 #include <iomanip>
 #include <iostream>
-#include <string>
-#include <string_view>
+#include <stdexcept>
 #include <vector>
 
 #include <tao/pegtl.hpp>
-#include <tao/pegtl/action/builders.hpp>
 
 namespace TAO_PEGTL_NAMESPACE::expression
 {
@@ -73,7 +71,7 @@ namespace TAO_PEGTL_NAMESPACE::expression
          {
             if( right_binding_power > 0 ) {
                assert( std::min( left_binding_power, right_binding_power ) & 1 );
-               assert( ( ( 2 * std::min( left_binding_power, right_binding_power ) ) + 1 ) == ( left_binding_power + right_binding_power ) );
+               assert( 2 * std::min( left_binding_power, right_binding_power ) + 1 == left_binding_power + right_binding_power );
             }
             assert( left_binding_power > 0 );
          }
@@ -241,8 +239,10 @@ namespace TAO_PEGTL_NAMESPACE::expression
       {
          template< apply_mode A,
                    rewind_mode M,
-                   template< typename... > class Action,
-                   template< typename... > class Control,
+                   template< typename... >
+                   class Action,
+                   template< typename... >
+                   class Control,
                    typename ParseInput,
                    typename Result,
                    typename Config >
@@ -257,8 +257,10 @@ namespace TAO_PEGTL_NAMESPACE::expression
       {
          template< apply_mode A,
                    rewind_mode M,
-                   template< typename... > class Action,
-                   template< typename... > class Control,
+                   template< typename... >
+                   class Action,
+                   template< typename... >
+                   class Control,
                    typename ParseInput,
                    typename Result,
                    typename Config >
@@ -280,8 +282,10 @@ namespace TAO_PEGTL_NAMESPACE::expression
       {
          template< apply_mode A,
                    rewind_mode M,
-                   template< typename... > class Action,
-                   template< typename... > class Control,
+                   template< typename... >
+                   class Action,
+                   template< typename... >
+                   class Control,
                    typename ParseInput,
                    typename Result,
                    typename Config >
@@ -351,8 +355,10 @@ namespace TAO_PEGTL_NAMESPACE::expression
 
       template< apply_mode A,
                 rewind_mode M,
-                template< typename... > class Action,
-                template< typename... > class Control,
+                template< typename... >
+                class Action,
+                template< typename... >
+                class Control,
                 typename ParseInput,
                 typename Result >
       [[nodiscard]] static bool match( ParseInput& in, Result& res )
@@ -363,8 +369,10 @@ namespace TAO_PEGTL_NAMESPACE::expression
 
       template< apply_mode A,
                 rewind_mode M,
-                template< typename... > class Action,
-                template< typename... > class Control,
+                template< typename... >
+                class Action,
+                template< typename... >
+                class Control,
                 typename ParseInput,
                 typename Result,
                 typename Config >
@@ -426,12 +434,12 @@ namespace application
       {
          assert( string_stack.size() > args );
 
-         std::string tmp = *( string_stack.end() - static_cast< int >( args ) - 1 ) + std::string( op ) + " ";
+         std::string tmp = *( string_stack.end() - int( args ) - 1 ) + std::string( op ) + " ";
          for( std::size_t i = 0; i < args; ++i ) {
             if( i > 0 ) {
                tmp += ", ";
             }
-            tmp += *( string_stack.end() - static_cast< int >( args ) + static_cast< int >( i ) );
+            tmp += *( string_stack.end() - int( args ) + int( i ) );
          }
          tmp += " " + std::string( o2 );
          string_stack.resize( string_stack.size() - args );
@@ -466,13 +474,23 @@ namespace application
 
    template<>
    struct action< literal >
-      : pegtl::value_to< &result::number >
-   {};
+   {
+      template< typename Input, typename... States >
+      static void apply( const Input& in, result& res, States&&... /*unused*/ )
+      {
+         res.number( std::stoll( in.string() ) );
+      }
+   };
 
    template<>
    struct action< pegtl::identifier >
-      : pegtl::value_to< &result::identifier >
-   {};
+   {
+      template< typename Input, typename... States >
+      static void apply( const Input& in, result& res, States&&... /*unused*/ )
+      {
+         res.identifier( in.string() );
+      }
+   };
 
 }  // namespace application
 
@@ -495,7 +513,7 @@ int main( int argc, char** argv )
          const auto& p = e.position_object();
          std::cerr << e.what() << '\n'
                    << argv[ i ] << '\n'
-                   << std::setw( static_cast< int >( p.count ) ) << '^' << '\n';
+                   << std::setw( int( p.count ) ) << '^' << '\n';
       }
    }
    return 0;

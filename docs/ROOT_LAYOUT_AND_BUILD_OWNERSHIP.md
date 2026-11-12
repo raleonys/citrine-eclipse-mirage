@@ -12,7 +12,7 @@
 | `tests/infrastructure/`, `tests/support/golden/` | Adapted infrastructure tests and explicitly synthetic policies |
 | `resources/branding/` | Repository campaign logo plus separate SURGE/profile and fallback avatars; avatar bytes are read-only C++ data, not PNG PE resources |
 | `third_party/` | Four immutable owner-supplied vendor trees: Asio, MinHook, PEGTL and pugixml; retired archive provenance is retained separately |
-| `docs/`, `metadata/` | Current technical documents and machine-readable records; root `GOVERNANCE.md` and `AGENTS.md` own policy and agent workflow |
+| `docs/`, `metadata/` | Current guides, explicitly historical checkpoints and machine-readable records; see `docs/INDEX.md`; root `GOVERNANCE.md` and `AGENTS.md` own policy and agent workflow |
 | `build/`, `dist/` | Transient local outputs; excluded from source ZIP packages |
 
 The complete Brownfield application tree and research archives are not imported
@@ -20,6 +20,19 @@ into this root. Source packages use a flat root: `CMakeLists.txt` is directly
 accessible after extraction. See [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md)
 for the Golden pipeline, [DEVELOPMENT.md](DEVELOPMENT.md) for operator commands,
 and [VALIDATION.md](VALIDATION.md) for acceptance boundaries.
+
+The [verified source extractor](../scripts/extract_source.py) requires a fresh
+destination. It rejects ancestor symlinks and, when the host Python provides
+`Path.is_junction()`, ancestor junctions before creating parent directories or
+staging extraction. Ordinary fresh paths retain ZIP integrity,
+membership, type and source-hash validation. This ancestor precheck does not
+provide race-free isolation against concurrent parent retargeting.
+
+The verified extractor checks ZIP header-reported uncompressed sizes before
+CRC decompression or whole-member reads: at most 64 MiB per member and
+256 MiB across all members. Budget rejection removes temporary extraction
+files and leaves the destination absent. These byte limits do not establish
+complete CPU/memory isolation for arbitrary ZIP input.
 
 # Current file layout
 

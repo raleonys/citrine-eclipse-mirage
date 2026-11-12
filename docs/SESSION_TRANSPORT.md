@@ -5,6 +5,13 @@ full-delivery request ordering, event delivery reservations, asynchronous greeti
 socket deadlines, and connection/frame/output limits. These are scoped adaptations
 to the existing source architecture, not wholesale donor application imports.
 
+`SessionDeadlines` borrows its policy: a const or mutable lvalue must outlive
+the tracker. Temporary policies are rejected at construction, including const
+rvalues. The tracker continues to read the borrowed policy when starting new
+deadlines; it does not snapshot durations. The shipping Asio Client already
+uses its service owner's long-lived const policy. This lifetime guard changes
+no layout, timeout values, timer generation/retirement or production exports.
+
 ## Active defaults
 
 | Policy | Application default |
@@ -71,6 +78,14 @@ session. Preparing or initiating a write does not pop it. Full combined delivery
 atomically marks the reservation committed. Partial writes, socket errors,
 encryption failure, oversize output, cancellation and dropped prepared responses
 release it for a later request instead of consuming it.
+
+The `session_aes_event_contracts` fixture composes the actual AES cipher,
+MessageHandler, message core, XML backend and owned event storage with two
+distinct preselected keys. Dropped-response and explicit-cancellation cases
+verify exact binary plaintext handoff, per-recipient decryption, FIFO order,
+request correlation and one-time receipt completion. Controlled locks/effects
+and preselected keys keep this separate from socket, worker and negotiation
+acceptance.
 
 Commit/retry completion is a lock-free atomic state transition. Physical unlink of
 a committed front happens during the next locked queue access. This prevents an IO
