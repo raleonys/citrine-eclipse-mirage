@@ -2,6 +2,8 @@
 
 Windows requires Visual Studio C++ x64 tools/SDK, CMake >= 3.20, and Python
 3.9 or later. Project C++ targets use C++20; C sources remain C17.
+The optional version-3 `CMakePresets.json` requires CMake 3.21 or later;
+ordinary `cmake -S ... -B ...` builds retain the 3.20 minimum.
 The selected owner-supplied PEGTL 4.x snapshot supports this standard.
 Reconfigure existing build directories after changing dependency snapshots.
 Production and static-test builds use the compiler's standard CRT:
@@ -23,13 +25,18 @@ this rename; external C++ consumers and provider deployments must migrate too.
 Public C exports and ordinals remain unchanged.
 
 `resources/version.rc` uses a generated `project_version.h`. The default semantic
-version is recorded in `metadata/BRANDING_AND_IDENTITY.json`. Set
-`CITRINE_ECLIPSE_MIRAGE_VERSION=3.2.7` for the entire configure/build/validation
+version is recorded in `metadata/BRANDING_AND_IDENTITY.json` and follows the
+latest published stable release after its version-update PR is merged. Local
+builds and downloaded source archives read this committed value offline;
+they do not query GitHub or infer a version from locally available Git tags.
+Set `CITRINE_ECLIPSE_MIRAGE_VERSION=3.2.8` for the entire configure/build/validation
 session to select another release version. Numeric FILEVERSION and PRODUCTVERSION
-are `3,2,7,0`; FileVersion and ProductVersion strings are `3.2.7`. The revision
+are then `3,2,8,0`; FileVersion and ProductVersion strings are `3.2.8`. The revision
 component is always zero. Reconfigure after changing the environment value.
 Build receipts and Golden checks use the same selection and reject stale values.
 Weekly Windows jobs receive the version from the approved planned release tag.
+See [weekly release version upkeep](WEEKLY_RELEASE.md#local-build-version-upkeep)
+for the automatic follow-up PR and its owner review requirement.
 
 The CryptQuery compatibility target retains its historical filename, independently
 of the new product DLL name. Retained evidence and vendor sources remain exact
@@ -52,6 +59,9 @@ switch so that its closing panel prints the selected profile verdict once.
 Direct PowerShell/CI calls retain the default result line. DLL paths, hashes,
 failure diagnostics and Golden blocked-report guidance remain visible in
 both routes; exit codes and validation steps are unchanged.
+Source QA compares the complete final nonempty line with `exit /b %RC%`
+for CMD and `exit $LASTEXITCODE` for PowerShell. Commented or display-only
+exit text fails this bounded source check; it is not a shell interpreter.
 The sole profile executor is `build_profile.ps1`; `build_common.ps1` is the
 shared helper. Each profile uses its own build directory, lock, toolchain
 hash record, and build receipt. MSVC environment variables are restored
@@ -131,11 +141,11 @@ acceptance. Run them on Windows with:
 python -B tests/infrastructure/test_infrastructure.py OperatorOutputTests
 ```
 
-To request just these Windows fixtures remotely, manually dispatch the existing
-Source integrity workflow on the selected branch:
+To request just these Windows fixtures remotely, manually dispatch their
+dedicated workflow on the selected branch:
 
 ```sh
-gh workflow run ci.yml --ref <branch> -f operator_output=true
+gh workflow run operator-output.yml --ref <branch>
 ```
 
 This optional job does not run on PR creation or ordinary pushes and does not
