@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/bootstrap.hpp"
+#include "citrine_eclipse_mirage/runtime/bootstrap.hpp"
 #include <array>
 #include <iostream>
 #include <new>
@@ -9,7 +9,7 @@
 #include <vector>
 #include <algorithm>
 
-using namespace preloader_l::system_services;
+using namespace citrine_eclipse_mirage::system_services;
 namespace {
 int checks = 0;
 void require(bool ok, const char* message) {

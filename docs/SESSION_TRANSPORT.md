@@ -5,6 +5,13 @@ full-delivery request ordering, event delivery reservations, asynchronous greeti
 socket deadlines, and connection/frame/output limits. These are scoped adaptations
 to the existing source architecture, not wholesale donor application imports.
 
+`SessionDeadlines` borrows its policy: a const or mutable lvalue must outlive
+the tracker. Temporary policies are rejected at construction, including const
+rvalues. The tracker continues to read the borrowed policy when starting new
+deadlines; it does not snapshot durations. The shipping Asio Client already
+uses its service owner's long-lived const policy. This lifetime guard changes
+no layout, timeout values, timer generation/retirement or production exports.
+
 ## Active defaults
 
 | Policy | Application default |
@@ -42,6 +49,27 @@ the worker to the IO executor and through every partial-write callback. Cancella
 resolves the receipt but retains the buffer until the outstanding operation's
 completion object is destroyed. A closed session never resumes buffered input.
 
+## Commands with no response
+
+The owner selected reference-compatible continuation for a recognized command
+that raises `messages::NoResponseRequiredError`, including QueryChunkStatus and
+an already blocked RequestLicense. The message core consumes only this typed
+terminal and returns an empty result before response logging, encryption,
+terminating NUL or event selection. Application's internal NoResponse name is
+an alias of that shared type.
+
+An ordered Session completes the empty result without a socket send, then
+admits the next buffered frame or rearms receive on the same connection. Cipher
+state and queued events remain intact; ordinary idle/frame deadlines still apply.
+No empty LSX Response or lone NUL is sent. Invalid requests, handler failures,
+allocation failures and other exceptions retain their existing error paths; this
+is not a catch-all continuation policy. Exit/dialog licensing behavior is unchanged.
+
+Tests cover consecutive silent commands followed by a valid request, separately
+received and coalesced frames, plaintext/encrypted modes, retained events and the
+full-delivery boundary. Memory transport and controlled cipher evidence remain
+separate from native Windows socket, actual AES and Consumer evidence.
+
 ## Event reservation and retry
 
 The real native MessageHandler reserves the front plaintext event under the event
@@ -50,6 +78,14 @@ session. Preparing or initiating a write does not pop it. Full combined delivery
 atomically marks the reservation committed. Partial writes, socket errors,
 encryption failure, oversize output, cancellation and dropped prepared responses
 release it for a later request instead of consuming it.
+
+The `session_aes_event_contracts` fixture composes the actual AES cipher,
+MessageHandler, message core, XML backend and owned event storage with two
+distinct preselected keys. Dropped-response and explicit-cancellation cases
+verify exact binary plaintext handoff, per-recipient decryption, FIFO order,
+request correlation and one-time receipt completion. Controlled locks/effects
+and preselected keys keep this separate from socket, worker and negotiation
+acceptance.
 
 Commit/retry completion is a lock-free atomic state transition. Physical unlink of
 a committed front happens during the next locked queue access. This prevents an IO
@@ -100,6 +136,10 @@ application maps and the producer event queue are not given new capacity policie
 cancellation buffer lifetime, zero progress, exact/oversize frames and monotonic
 policy boundaries. Event integration tests use the actual message core and owned
 queue to prove reservation exclusion, retry and encryption-failure retention.
+`network_policy_contracts` also calls the public AsioService constructor with
+invalid resource/deadline policies and valid default/lower/upper bounds before
+starting a listener. The controls require unchanged caller port/readiness
+values and zero handler/error callbacks.
 `network_policy_contracts` uses real sockets for admission/re-admission, limits,
 receive/frame/send expiry, stale timer cancellation, slow-greeting isolation,
 backpressure and stop with armed timers. The earlier pool, atomic persistence,

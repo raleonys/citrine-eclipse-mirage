@@ -34,9 +34,6 @@ namespace TAO_PEGTL_NAMESPACE::internal
    using list = seq< Rule, star< Sep, Rule > >;
 
    template< typename Rule, typename Sep >
-   using list_opt = opt< Rule, star< Sep, Rule > >;
-
-   template< typename Rule, typename Sep >
    using list_tail = seq< Rule, star_partial< Sep, Rule > >;
 
    template< typename Rule, typename Sep, typename Pad >
@@ -51,7 +48,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
    template< std::size_t Min, typename Rule, typename... Rules >
    using rep_min = seq< rep< Min, Rule, Rules... >, star< Rule, Rules... > >;
 
-   template< typename Peek, Peek::data_t... Cs >
+   template< typename Peek, typename Peek::data_t... Cs >
    using seq_one = seq< one< Peek, Cs >... >;
 
 }  // namespace TAO_PEGTL_NAMESPACE::internal

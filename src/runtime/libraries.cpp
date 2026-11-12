@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/libraries.hpp"
+#include "citrine_eclipse_mirage/runtime/libraries.hpp"
 #include <climits>
 
-namespace preloader_l::system_services::libraries {
+namespace citrine_eclipse_mirage::system_services::libraries {
 Conversion convert_wide_048b30(SystemCalls& os, std::uint32_t codepage,
     const wchar_t* input, int count, char* output, int capacity) {
     int converted;
@@ -25,11 +25,13 @@ Conversion convert_wide_048b30(SystemCalls& os, std::uint32_t codepage,
     return {converted, error};
 }
 
-std::uint32_t suppress_errors_0450a0(SystemCalls& os) {
-    const auto previous = os.get_error_mode();
-    os.set_error_mode(previous | 1u);
+std::uint32_t SystemCalls::begin_error_suppression() {
+    const auto previous = get_error_mode();
+    set_error_mode(previous | 1u);
     return previous;
 }
+void SystemCalls::end_error_suppression(std::uint32_t previous) {set_error_mode(previous);}
+std::uint32_t suppress_errors_0450a0(SystemCalls& os) {return os.begin_error_suppression();}
 
 Module load_copy_0450d0(SystemCalls& os, const std::wstring& path) {
     const std::wstring copy(path); // 00a140 copies, rather than canonicalizes path
@@ -71,7 +73,7 @@ std::vector<Module> load_list_035260(SystemCalls& os, Effects& effects,
     }
     // Intentionally normal-path restoration, not RAII. The observed body has no
     // mode-restoration call on its throwing conversion/allocator paths.
-    os.set_error_mode(previous_mode);
+    os.end_error_suppression(previous_mode);
     return loaded;
 }
 
@@ -93,4 +95,4 @@ void unload_035ab0(SystemCalls& os, const State& state) {
         if (entries[i] != 0) os.free_library(entries[i]);
     }
 }
-} // namespace preloader_l::system_services::libraries
+} // namespace citrine_eclipse_mirage::system_services::libraries

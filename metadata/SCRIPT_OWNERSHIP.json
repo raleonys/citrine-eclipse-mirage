@@ -3,7 +3,8 @@
   "files": {
     "scripts/audit_translation_units.py": {
       "owner": "SURGE translation-unit audit",
-      "purpose": "Generate reproducible COFF symbol, test and development-API usage matrix without deleting source"
+      "purpose": "Generate reproducible COFF symbol, test and development-API usage matrix without deleting source",
+      "role": "PYTHON_TOOL_OR_MODULE"
     },
     "scripts/build_orchestration/build_common.ps1": {
       "owner": "SURGE build/vendor/QA infrastructure",
@@ -40,6 +41,11 @@
       "purpose": "build native acceptance",
       "role": "AUTOMATION"
     },
+    "scripts/build_orchestration/build_path_pinning.ps1": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "Pin Windows build components and reject reparse swaps",
+      "role": "AUTOMATION"
+    },
     "scripts/build_orchestration/build_production.cmd": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "build production",
@@ -48,11 +54,6 @@
     "scripts/build_orchestration/build_production.ps1": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "build production",
-      "role": "AUTOMATION"
-    },
-    "scripts/build_orchestration/build_path_pinning.ps1": {
-      "owner": "SURGE build/vendor/QA infrastructure",
-      "purpose": "Pin Windows build components and reject reparse swaps",
       "role": "AUTOMATION"
     },
     "scripts/build_orchestration/build_profile.ps1": {
@@ -72,7 +73,8 @@
     },
     "scripts/check_build_partition.py": {
       "owner": "SURGE target ownership",
-      "purpose": "Fail closed on reference code or source API contamination of production targets/maps"
+      "purpose": "Fail closed on reference code or source API contamination of production targets/maps",
+      "role": "PYTHON_TOOL_OR_MODULE"
     },
     "scripts/check_cpp_type_identities.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
@@ -134,8 +136,13 @@
       "purpose": "Fail-closed SPDX and legacy C++ naming audit",
       "role": "AUTOMATION"
     },
+    "scripts/ci_validation_readiness.py": {
+      "owner": "Citrine Eclipse Mirage CI scheduling",
+      "purpose": "Verify current PR/manual heads and newly integrated main ancestry before full validation",
+      "role": "AUTOMATION"
+    },
     "scripts/clear_tool_python_cache.py": {
-      "owner": "SURGE local build hygiene",
+      "owner": "SURGE build hygiene",
       "purpose": "Remove only known generated Python caches for manifest-owned first-party tools; never refresh source manifests",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
@@ -184,6 +191,16 @@
       "purpose": "project files",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
+    "scripts/project_version.py": {
+      "owner": "Citrine Eclipse Mirage identity",
+      "purpose": "Select resource/Golden/receipt versions and prepare bounded stable-release default updates for owner-reviewed PRs",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/repository_badges.py": {
+      "owner": "Citrine Eclipse Mirage repository presentation",
+      "purpose": "Render SVG badges and update only the generated nine-image branch",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
     "scripts/restore_vendor_links.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "restore vendor links",
@@ -202,7 +219,8 @@
     "scripts/run_wine_test.py": {
       "owner": "SURGE local validation",
       "purpose": "Preserve actual Wine program exit and output without inheriting unrelated service pipe lifetimes",
-      "origin": "New SURGE implementation; regression-tested with ordinary subprocesses"
+      "origin": "New SURGE implementation; regression-tested with ordinary subprocesses",
+      "role": "PYTHON_TOOL_OR_MODULE"
     },
     "scripts/ursynex_golden_finalizer.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
@@ -239,6 +257,11 @@
       "purpose": "verify sources",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
+    "scripts/weekly_naming.py": {
+      "owner": "Citrine Eclipse Mirage weekly release governance",
+      "role": "PYTHON_TOOL_OR_MODULE",
+      "purpose": "Fail-closed prospective semver/codename registry, global root collision, and external ZIP identity validation"
+    },
     "scripts/weekly_release.py": {
       "owner": "SURGE draft release automation",
       "purpose": "Exact-source candidate planning, native evidence binding, packaging and draft-only upload",
@@ -248,11 +271,6 @@
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "inspect dll",
       "role": "PYTHON_TOOL_OR_MODULE"
-    },
-    "scripts/weekly_naming.py": {
-      "owner": "Citrine Eclipse Mirage weekly release governance",
-      "role": "PYTHON_TOOL_OR_MODULE",
-      "purpose": "Fail-closed prospective semver/codename registry, global root collision, and external ZIP identity validation"
     }
   }
 }

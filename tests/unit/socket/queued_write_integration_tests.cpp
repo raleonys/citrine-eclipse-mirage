@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_io_completion_dispatch.hpp"
-#include "preloader_l/net/transport_composed_write_native.hpp"
-#include "preloader_l/net/transport_queued_write.hpp"
-#include "preloader_l/net/transport_completion_dispatcher_native.hpp"
-#include "preloader_l/net/transport_worker_run_native.hpp"
+#include "citrine_eclipse_mirage/net/transport_io_completion_dispatch.hpp"
+#include "citrine_eclipse_mirage/net/transport_composed_write_native.hpp"
+#include "citrine_eclipse_mirage/net/transport_queued_write.hpp"
+#include "citrine_eclipse_mirage/net/transport_completion_dispatcher_native.hpp"
+#include "citrine_eclipse_mirage/net/transport_worker_run_native.hpp"
 #include <algorithm>
 #include <functional>
 #include <iostream>
 #include <memory>
 #include <vector>
-namespace s=preloader_l::socket;
+namespace s=citrine_eclipse_mirage::socket;
 namespace {
 unsigned checks=0;void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
 [[noreturn]]void unexpected(){throw std::logic_error("Unexpected IO integration dependency");}

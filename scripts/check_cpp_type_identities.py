@@ -20,14 +20,70 @@ INTERFACES = (
 )
 
 
+def code_only(text):
+    """Blank comments and literals while preserving offsets and line breaks.
+
+    This is a bounded lexical prefilter, not a C++ parser or preprocessor.
+    """
+    output = list(text)
+
+    def hide(start, stop):
+        for at in range(start, stop):
+            if text[at] not in '\r\n':
+                output[at] = ' '
+
+    i, n = 0, len(text)
+    while i < n:
+        if text.startswith('//', i):
+            end = text.find('\n', i)
+            end = n if end < 0 else end
+            hide(i, end)
+            i = end
+            continue
+        if text.startswith('/*', i):
+            end = text.find('*/', i + 2)
+            end = n if end < 0 else end + 2
+            hide(i, end)
+            i = end
+            continue
+        if text.startswith('R"', i):
+            start = text.find('(', i + 2, min(n, i + 19))
+            if start >= 0:
+                delimiter = text[i + 2:start]
+                if not any(c.isspace() or c in '\\()' for c in delimiter):
+                    terminator = ')' + delimiter + '"'
+                    end = text.find(terminator, start + 1)
+                    if end >= 0:
+                        end += len(terminator)
+                        hide(i, end)
+                        i = end
+                        continue
+        if text[i] in ('"', "'"):
+            quote = text[i]
+            start = i
+            i += 1
+            while i < n:
+                if text[i] == '\\':
+                    i += 2
+                elif text[i] == quote:
+                    i += 1
+                    break
+                else:
+                    i += 1
+            hide(start, min(i, n))
+            continue
+        i += 1
+    return ''.join(output)
+
+
 def inspect_text(text, filename="<fixture>"):
     """Inspect individual header definitions, not forward declarations."""
     seen = {}
     definitions = []
     errors = []
-    for match in DECL.finditer(text):
+    for match in DECL.finditer(code_only(text)):
         name, suffix = match.group(1), match.group(2)
-        line = text.count("\n", 0, match.start()) + 1
+        line = text.count("\n", 0, match.start(1)) + 1
         if name in seen:
             errors.append(f"{filename}:{line}: duplicate class/struct definition {name} (first at {seen[name]})")
         else:
@@ -40,7 +96,7 @@ def inspect_text(text, filename="<fixture>"):
 
 
 def inspect(root=ROOT):
-    headers = sorted((Path(root) / "include" / "preloader_l").rglob("*.hpp"))
+    headers = sorted((Path(root) / "include" / "citrine_eclipse_mirage").rglob("*.hpp"))
     counts = defaultdict(list)
     all_definitions = defaultdict(list)
     errors = []
@@ -49,7 +105,7 @@ def inspect(root=ROOT):
             errors.append(f"Symlinked active header is not accepted: {path}")
             continue
         data = path.read_text(encoding="utf-8")
-        if "namespace preloader_l::socket" not in data:
+        if "namespace citrine_eclipse_mirage::socket" not in code_only(data):
             continue
         definitions, problems = inspect_text(data, path.relative_to(root).as_posix())
         errors.extend(problems)

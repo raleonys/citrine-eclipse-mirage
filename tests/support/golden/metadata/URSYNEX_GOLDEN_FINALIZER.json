@@ -1,10 +1,10 @@
 {
-  "schema": "preloader_l.ursynex_golden_finalizer.v1",
+  "schema": "citrine_eclipse_mirage.ursynex_golden_finalizer.v1",
   "policy": "URSYNEX Golden Finalizer",
   "lineage": "2.9.3 URSYNEX provenance-preserving derived policy",
   "mode": "BOUNDED_MUTATING_POST_LINK_FINALIZER",
   "purpose": "Apply only approved post-link PE metadata mutations before all read-only Golden validators.",
-  "input": "MSVC-linked preloader.unsigned.dll",
+  "input": "MSVC-linked citrine_eclipse_mirage.unsigned.dll",
   "output": "same file after bounded mutation",
   "approved_mutations": [
     "#10 LinkerVersion 14.0",

@@ -9,8 +9,8 @@
   "owner_correction": "11th CryptQueryObject hook must preserve a real static CRYPT32 import as Brownfield/Bluefield did; final preloader_l.dll expected under dist",
   "new_native_user_log": {
     "file_id": "file_000000005748820ab5351fa4830dfbdd",
-    "bytes": 26282,
-    "sha256": "156dc94e71bd139d7a1d174ee7765fa37027abb6c3c75ea56312157f22add74f",
+    "bytes": 26280,
+    "sha256": "34aba816aa259b38fe0b8980fe08908d10a16a73922b6a6ea481a9942cbc16b5",
     "evidence_class": "USER_NATIVE_MSVC_LOG_OF_PARENT_SOURCE_NOT_LOCAL_RUN",
     "compiler": "MSVC19.51.36260.0",
     "result": "GOLDEN_FIRST_FIVE_PASS_FALCION_FAIL_GENERATED_PYTHON_CACHE",
@@ -28,7 +28,10 @@
     "avatar_and_VERSIONINFO": "PASS_NATIVE_LOG",
     "OLE32_import": "ABSENT_NATIVE_LOG",
     "CRYPT32_import": "ABSENT_IN_PARENT_FIXED_IN_THIS_SOURCE",
-    "report": "metadata/PRODUCTION_IMPORT_USER_GOLDEN_INPUT.log"
+    "report": "metadata/PRODUCTION_IMPORT_USER_GOLDEN_INPUT.log",
+    "original_evidence_sha256": "156dc94e71bd139d7a1d174ee7765fa37027abb6c3c75ea56312157f22add74f",
+    "evidence_copy": "OWNER_APPROVED_PRIVACY_REDACTION; execution result is historical and unchanged",
+    "original_evidence_bytes": 26282
   },
   "bytecode_root_cause": "Parent -B was not inherited by three CORVEXON child interpreters; child imports compiled golden_policy.py in the source tree",
   "bytecode_fix": [
