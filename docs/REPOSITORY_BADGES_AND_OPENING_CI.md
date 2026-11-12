@@ -8,7 +8,7 @@ GitHub itself cannot have an outage.
 
 ## Badge ownership and updates
 
-`scripts/repository_badges.py` publishes eleven badges using the Python standard
+`scripts/repository_badges.py` publishes twelve badges using the Python standard
 library. The six static SVGs are downloaded snapshots of the original Shields
 responses, including the embedded C++, Python and CMake logos. The Windows and
 license responses retain their original styling. Changelog uses the same style.
@@ -29,16 +29,18 @@ was retrieved from this repository's original `ci.yml/badge.svg?branch=main`
 endpoint. These cached assets are retained rather than represented as newly
 drawn project logos.
 
-The live CI, Latest release, Release integrity, Tests and Checksums images are read from the same repository's
+The live CI, Latest release, Release integrity, Tests, Checksums and CodeQL images are read from the same repository's
 long-lived `badges` branch, at `resources/badges/ci.svg` and
 `resources/badges/latest-release.svg`, plus `resources/badges/release-integrity.svg`,
-`resources/badges/tests.svg` and `resources/badges/checksums.svg`.
-All eleven generated SVGs live there, and
-only those eleven paths are permitted. That branch is generated image data, not
+`resources/badges/tests.svg`, `resources/badges/checksums.svg` and `resources/badges/codeql.svg`.
+All twelve generated SVGs live there, and
+only those twelve paths are permitted. That branch is generated image data, not
 an application/source branch or a PR head. Keep it after ordinary PR cleanup.
 
 The small Update repository badges workflow runs after a completed main-push
-Source integrity run, or a published/edited/deleted nondraft release. Manual
+Source integrity or Full validation after main synchronization run, or a
+published/edited/deleted nondraft release. The latter main-push event refreshes
+the CodeQL result after all analyses finish. Manual
 refresh is allowed from the default branch. Initial PRs and feature-branch
 pushes do not allocate a badge-update job. The workflow always checks out the
 trusted default branch; it never runs code or downloads artifacts from the
@@ -60,7 +62,7 @@ fast-forward reference updates and refuse an unexpected existing branch tree.
 The publisher never writes main, application sources, tags or release assets.
 The generated-only branch is maintained through the GitHub Git-data API;
 application source inventories and pre-push QA apply to the source PR, not to
-this eleven-image data tree. Initialize or refresh it from reviewed source with:
+this twelve-image data tree. Initialize or refresh it from reviewed source with:
 
 ```sh
 python -B scripts/repository_badges.py --publish
@@ -105,8 +107,25 @@ with nonzero sizes. Otherwise it reports missing, unknown or no release. It
 checks availability, not a fresh cryptographic verification of the download.
 Both badges use the existing small main/release publisher; neither runs a
 workflow when a PR opens. The bounded data publisher permits a one-time
-upgrade from exactly the original nine SVG paths to exactly eleven; missing
-or extra files outside those two recognized layouts remain an error.
+upgrade from exactly the original nine or previous eleven SVG paths to twelve;
+missing or extra files outside those recognized layouts remain an error.
+
+## README rows and CodeQL status
+
+The first README row ends with Changelog and groups the seven blue information
+badges. An explicit line break starts the five status badges below it. The normal
+success state is green; pending, failed and unavailable results keep their honest
+status colors. On narrow screens each group can wrap naturally without forcing
+horizontal scrolling.
+
+CodeQL is green only when the current accepted main SHA has a completed successful
+main-push run and all three actual language jobs (Actions, C/C++ and Python) passed.
+An eligible newer pending/failed run cannot fall back to an older green result.
+Missing, duplicate or skipped analyses, a different commit, a feature branch or
+another repository cannot produce green. Pending is yellow, failure is red and
+unavailable/cancelled is gray. The source seed is unavailable; the generated branch
+publishes the live result after owner integration. This image adds no PR analysis,
+CodeQL runner, runtime dependency or new security permission.
 
 ## One basic check when a PR opens
 

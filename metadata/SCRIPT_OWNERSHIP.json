@@ -198,7 +198,7 @@
     },
     "scripts/repository_badges.py": {
       "owner": "Citrine Eclipse Mirage repository presentation",
-      "purpose": "Render SVG badges and update only the generated nine-image branch",
+      "purpose": "Render twelve SVG badges and update only the generated badge branch",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
     "scripts/restore_vendor_links.py": {

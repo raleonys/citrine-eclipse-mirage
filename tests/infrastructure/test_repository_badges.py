@@ -27,6 +27,7 @@ class API:
         self.release = {'tag_name': '3.2.7-ERINTHAR', 'draft': False, 'prerelease': False, 'immutable': True}
         self.runs = [{'head_branch': 'main', 'event': 'push', 'status': 'completed', 'conclusion': 'success'}]
         self.full_runs = []
+        self.codeql_runs = []
         self.jobs = {}
         self.trees = {}
 
@@ -40,7 +41,7 @@ class API:
             if path.endswith('/commits/main'):
                 return {'sha': 'e'*40, 'commit': {'tree': {'sha': 'f'*40}}}
             if '/actions/workflows/msvc-reference-graph.yml/' in path:
-                return {'workflow_runs': self.full_runs}
+                return {'workflow_runs': self.codeql_runs if 'event=push' in path else self.full_runs}
             if '/actions/workflows/ci.yml/' in path:
                 return {'workflow_runs': self.runs}
             if '/actions/runs/' in path and '/jobs?' in path:
@@ -120,12 +121,13 @@ class BadgeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             badges.images('3.2.7-ERINTHAR', 'success', 'true')
 
-    def test_initial_publish_writes_only_eleven_svg_paths_to_badges_ref(self):
+    def test_initial_publish_writes_only_twelve_svg_paths_to_badges_ref(self):
         api = API();rendered = badges.images('3.2.7-ERINTHAR', 'success')
         result = badges.publish(api, REPOSITORY, rendered)
         self.assertTrue(result['changed'])
         writes = api.writes()
         self.assertEqual(3, len(writes))
+        self.assertEqual(12, len(rendered))
         self.assertEqual({badges.DIRECTORY+'/'+name for name in badges.NAMES},
                          {entry['path'] for entry in writes[0][2]['tree']})
         self.assertEqual([], writes[1][2]['parents'])
@@ -181,6 +183,7 @@ class BadgeTests(unittest.TestCase):
         self.assertNotIn('pull_request', trigger)
         self.assertNotIn('  push:', trigger)
         self.assertIn('branches: [main]', trigger)
+        self.assertIn('workflows: [Source integrity, Full validation after main synchronization]', trigger)
         self.assertIn("github.event.workflow_run.event == 'push'", text)
         self.assertIn('ref: ${{ github.event.repository.default_branch }}', text)
         self.assertNotIn('github.event.workflow_run.head_sha', text)
@@ -191,7 +194,7 @@ class BadgeTests(unittest.TestCase):
     def test_readme_badges_are_repository_owned_and_source_seeds_are_valid(self):
         text = (ROOT / 'README.md').read_text()
         images = re.findall(r'\[!\[[^\]]+\]\(([^)]+)\)\]', text)
-        self.assertEqual(11, len(images))
+        self.assertEqual(12, len(images))
         for path in images:
             self.assertTrue(path.startswith(('resources/badges/',
                 'https://raw.githubusercontent.com/raleonys/citrine-eclipse-mirage/badges/resources/badges/')), path)
@@ -336,16 +339,75 @@ class BadgeTests(unittest.TestCase):
                 self.assertFalse(badges.checksum_available(bad))
         self.assertIsNone(badges.checksum_available(None))
 
-    def test_only_the_exact_legacy_nine_file_tree_can_upgrade_to_eleven(self):
+    def test_only_exact_previous_nine_and_eleven_file_trees_can_upgrade(self):
         rendered = badges.images(None, None)
-        tree = tree_for({name: value for name, value in rendered.items() if name in badges.LEGACY_NAMES})
-        api = API(existing=True, tree=tree)
-        self.assertTrue(badges.publish(api, REPOSITORY, rendered)['changed'])
-        tree['tree'].pop()
-        api = API(existing=True, tree=tree)
-        with self.assertRaises(ValueError):
-            badges.publish(api, REPOSITORY, rendered)
+        for names in (badges.LEGACY_NAMES, badges.PREVIOUS_NAMES):
+            with self.subTest(count=len(names)):
+                tree = tree_for({name: value for name, value in rendered.items() if name in names})
+                api = API(existing=True, tree=tree)
+                self.assertTrue(badges.publish(api, REPOSITORY, rendered)['changed'])
+                tree['tree'].pop()
+                api = API(existing=True, tree=tree)
+                with self.assertRaises(ValueError):
+                    badges.publish(api, REPOSITORY, rendered)
+                self.assertEqual([], api.writes())
+
+    def test_readme_groups_blue_badges_before_status_badges(self):
+        text = (ROOT / 'README.md').read_text()
+        upper, lower = text.split('<br>', 1)
+        paths = lambda part: re.findall(r'resources/badges/([a-z-]+\.svg)', part)
+        self.assertEqual(['windows.svg', 'cpp.svg', 'python.svg', 'cmake.svg', 'license.svg',
+                          'latest-release.svg', 'changelog.svg'], paths(upper))
+        self.assertEqual(['ci.svg', 'tests.svg', 'release-integrity.svg', 'checksums.svg', 'codeql.svg'], paths(lower))
+
+    @staticmethod
+    def codeql_api():
+        api = API()
+        api.codeql_runs = [dict(id=90, event='push', head_branch='main', head_sha='e'*40,
+                                head_repository={'full_name': REPOSITORY},
+                                status='completed', conclusion='success')]
+        api.jobs[90] = [dict(name='CodeQL ('+language+')', status='completed', conclusion='success')
+                        for language in ('actions', 'c-cpp', 'python')]
+        return api
+
+    def test_codeql_green_requires_current_main_and_all_three_actual_analyses(self):
+        api = self.codeql_api()
+        self.assertIn('CodeQL: passing', badges.live_images(api, REPOSITORY)['codeql.svg'])
         self.assertEqual([], api.writes())
+        for field, value in [('head_sha', 'd'*40), ('event', 'pull_request'),
+                             ('head_branch', 'feature'), ('head_repository', {'full_name': 'other/project'}),
+                             ('head_repository', None), ('id', '90'), ('id', -1)]:
+            with self.subTest(field=field, value=value):
+                api = self.codeql_api();api.codeql_runs[0][field] = value
+                self.assertIn('CodeQL: not available', badges.live_images(api, REPOSITORY)['codeql.svg'])
+        for problem in ('missing', 'duplicate', 'skipped', 'pending', 'failed'):
+            with self.subTest(problem=problem):
+                api = self.codeql_api()
+                if problem == 'missing':api.jobs[90].pop()
+                elif problem == 'duplicate':api.jobs[90][2] = copy.deepcopy(api.jobs[90][0])
+                elif problem == 'skipped':api.jobs[90][1]['conclusion'] = 'skipped'
+                elif problem == 'pending':api.jobs[90][1].update(status='in_progress', conclusion=None)
+                else:api.jobs[90][1]['conclusion'] = 'failure'
+                self.assertIn('CodeQL: not available', badges.live_images(api, REPOSITORY)['codeql.svg'])
+
+    def test_codeql_does_not_reuse_an_older_green_run_for_a_newer_pending_or_failed_run(self):
+        for status, conclusion, expected in [('in_progress', None, 'running'),
+                                              ('completed', 'failure', 'failing'),
+                                              ('completed', 'cancelled', 'cancelled'),
+                                              ('completed', 'skipped', 'not available')]:
+            with self.subTest(status=status, conclusion=conclusion):
+                api = self.codeql_api();old = copy.deepcopy(api.codeql_runs[0])
+                api.codeql_runs[0].update(id=91, status=status, conclusion=conclusion)
+                api.codeql_runs.append(old)
+                source = badges.live_images(api, REPOSITORY)['codeql.svg']
+                self.assertIn('CodeQL: '+expected, source)
+                self.assertNotIn('#4c1', source)
+
+    def test_codeql_pending_unknown_and_invalid_statuses_are_not_green(self):
+        for status in (None, 'pending', 'cancelled', 'failure'):
+            self.assertNotIn('#4c1', badges.images(None, None, codeql=status)['codeql.svg'])
+        for status in ('invented-success', True, []):
+            with self.assertRaises(ValueError):badges.images(None, None, codeql=status)
 
 
 if __name__ == '__main__':
