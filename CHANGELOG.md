@@ -4,7 +4,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Cover response handoff refusal after actual ordered Session/message preparation. Require event reservation cancellation, no output or buffered-successor admission, and exact event retry on a separate Session with acknowledgement only after full delivery. Production scheduling and transport policy are unchanged.
+- Select the owner-requested A12 XML depth-100 profile in first-party policy without modifying pugixml: preserve 98/99 paired-element, self-closed-leaf and diagnostic precedence boundaries, reject excess depth before DOM allocation, and retain the immutable depth-500 control/corpus with two explicit corpus and five named boundary deltas. Keep all other comparison failures strict and time only equivalent accepted depth-80 work.
+- Consolidate confirmed A12 differences, deliberate product policies, selected matches and unresolved equivalence/coverage gates; distinguish proposed depth alignment from accepted main and source/static evidence from native/original/Consumer acceptance. Update current XML guidance while preserving historical comparisons.
 
 ## Integrated development history
 
@@ -12,6 +13,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-12
 
+- [PR #273](https://github.com/raleonys/citrine-eclipse-mirage/pull/273): Cover response handoff refusal after actual ordered Session/message preparation. Require event reservation cancellation, no output or buffered-successor admission, and exact event retry on a separate Session with acknowledgement only after full delivery. Production scheduling and transport policy are unchanged.
 - [PR #288](https://github.com/raleonys/citrine-eclipse-mirage/pull/288): Exercise Config2 lookup failures at every counted data allocation during borrowed-key growth. Verify provisional-child cleanup, retained child identity and values, consistent traversal before or after completed rehash, and successful retry with an owned key.
 - [PR #323](https://github.com/raleonys/citrine-eclipse-mirage/pull/323): Strengthen active raw CFG loading coverage with colliding Content IDs: verify exact collection order through selection and section copying, then preserve it through the override pass. Register the configuration application suite as a portable CMake test using its memory-backed files; keep the Windows generated-file tail in the native target. Production parsing and copy behavior are unchanged.
 - [PR #331](https://github.com/raleonys/citrine-eclipse-mirage/pull/331): Cover prepared response ownership at the actual Asio post-allocation boundary. Require immediate cancellation and owner release after one injected allocation failure, preserve exact binary output in successful controls, and verify executor recovery without changing runtime or native test budgets. Explicitly type the existing case dispatcher function pointer so the full fixture also compiles with libc++.
