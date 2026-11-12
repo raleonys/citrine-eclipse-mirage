@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [SOCKET_RETIREMENT.md](SOCKET_RETIREMENT.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # Hook shutdown, timer containment and socket-close review
 
 **Donor retirement remains BLOCKED.** This follow-up review

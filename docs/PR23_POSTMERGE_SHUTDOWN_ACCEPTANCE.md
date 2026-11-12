@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # PR #23 post-merge listener shutdown acceptance
 
 **Status: test plan; execution evidence remains separately required.** The follow-up baseline is merged PR #23: `f121ecf99d275376fdc045e93a5873066c30fd11`, incorporated into `main` by merge commit `d9c860d17769738fd6f03a58a7f3c4b9f875b067` on 2026-11-01.
@@ -37,4 +40,7 @@ This is **CI detection only**: no production code, ABI, Winsock error contract, 
 - Prove or disprove recurrence on the exact GitHub checkout with full Debug/Release evidence. If reproduced, independently identify listener ownership, port reuse and close/accept ordering before proposing a production fix.
 - Keep complete Native/Production/Golden and named Consumer/game acceptance as separate gates. The owner logs do not automatically satisfy them for this PR.
 - Preserve PR #23 as merged. Do not rewrite or close historical findings without evidence.
-- Keep this PR **DRAFT** and do not merge, publish or promote without owner review of exact-head Windows results and any unresolved failures.
+- The former Draft instruction belonged to this historical test plan and is
+  superseded by current governance. Ordinary follow-up PRs are ready for review;
+  only explicitly owner-authorized research may remain Draft. Owner review of
+  exact-head results and unresolved failures is still required.

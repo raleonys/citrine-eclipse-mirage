@@ -7,6 +7,7 @@ Wine program's exit/timeout remains authoritative; a printed PASS is never used
 to decide success. This helper does not change native Windows execution.
 """
 import argparse
+import math
 import subprocess
 import sys
 import tempfile
@@ -41,7 +42,7 @@ if __name__ == '__main__':
     parser.add_argument('--timeout', type=float, default=180)
     parser.add_argument('command', nargs=argparse.REMAINDER)
     args = parser.parse_args()
-    if not args.command or args.timeout <= 0:
+    if not args.command or not math.isfinite(args.timeout) or args.timeout <= 0:
         parser.error('Provide a positive timeout and wine64 plus the test program')
     try:
         raise SystemExit(run(args.command, args.timeout))
