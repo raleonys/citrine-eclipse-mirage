@@ -41,6 +41,17 @@ are provided.
 The evaluated production graph rejects `third_party/tinyxml2/` sources.
 The external TinyXML2 control exists only in the standalone comparison.
 
+## Portable model checks
+
+`portable_bootstrap_model` and `portable_thread_model` compile the retained
+bootstrap/thread source models with their unchanged controlled-effects fixtures.
+Both portable CTest targets keep the existing native fixtures' 60-second budgets;
+`bootstrap_contracts` and `crt_thread_contracts` remain in the Windows/reference
+graph. Portable coverage checks model ordering, context/handle ownership and
+cleanup contracts without a Windows SDK or actual OS threads, module/FLS lifetime
+or private CRT execution. Production source lists and linkage remain unchanged;
+Application continues to use its owned standard-library workers and compiler CRT.
+
 ## Evidence and limits
 
 The matrices and measurements below describe the historical first partition of
