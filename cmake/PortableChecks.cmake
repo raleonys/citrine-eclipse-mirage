@@ -59,3 +59,6 @@ target_compile_definitions(portable_online PRIVATE CITRINE_ECLIPSE_MIRAGE_PORTAB
 portable_check(portable_server src/net/server.cpp src/runtime/execution.cpp tests/unit/server/server_tests.cpp)
 portable_check(portable_hook_transaction src/platform/hook_transaction.cpp tests/unit/hooks/transaction_tests.cpp)
 portable_check(portable_registry_rollback src/platform/registry.cpp tests/unit/registry/allocation_failure_tests.cpp)
+
+portable_check(portable_atomic_recovery src/core/atomic_files.cpp tests/unit/file/atomic_recovery_tests.cpp)
+set_tests_properties(portable_atomic_recovery PROPERTIES TIMEOUT 30)
