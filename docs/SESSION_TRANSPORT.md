@@ -79,6 +79,14 @@ atomically marks the reservation committed. Partial writes, socket errors,
 encryption failure, oversize output, cancellation and dropped prepared responses
 release it for a later request instead of consuming it.
 
+The `session_aes_event_contracts` fixture composes the actual AES cipher,
+MessageHandler, message core, XML backend and owned event storage with two
+distinct preselected keys. Dropped-response and explicit-cancellation cases
+verify exact binary plaintext handoff, per-recipient decryption, FIFO order,
+request correlation and one-time receipt completion. Controlled locks/effects
+and preselected keys keep this separate from socket, worker and negotiation
+acceptance.
+
 Commit/retry completion is a lock-free atomic state transition. Physical unlink of
 a committed front happens during the next locked queue access. This prevents an IO
 completion from waiting behind achievement disk persistence holding the event mutex.

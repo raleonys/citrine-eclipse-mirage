@@ -348,6 +348,7 @@
     "registry_allocation_failure_contracts",
     "server_contracts",
     "session_flow_contracts",
+    "session_aes_event_contracts",
     "session_handler_contracts",
     "socket_close_semantics_contracts",
     "socket_dll_retirement_contracts",
