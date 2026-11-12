@@ -6,10 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Protect read-only DLL inspection inputs from JSON report destinations that resolve or hardlink to the inspected DLL. Reject report symlinks and nonregular destinations; publish through a private temporary file and atomic replace, preserving unrelated hardlinks and prior report bytes on serialization or replacement failure. Add nonexecuted synthetic report-safety regressions.
+- Require explicit integer-zero process exit codes in weekly Native/Golden build receipts, every Golden stage and both final runtime reports. Reject missing, unknown, noninteger or nonzero outcomes before bundling candidate assets or release receipts; retain the valid integer-zero packaging path and add actual bundler failure/no-output regressions.
 
 ### Integrated 2026-11-12
 
+- [PR #307](https://github.com/raleonys/citrine-eclipse-mirage/pull/307): Protect read-only DLL inspection inputs from JSON report destinations that resolve or hardlink to the inspected DLL. Reject report symlinks and nonregular destinations; publish through a private temporary file and atomic replace, preserving unrelated hardlinks and prior report bytes on serialization or replacement failure. Add nonexecuted synthetic report-safety regressions.
 - [PR #289](https://github.com/raleonys/citrine-eclipse-mirage/pull/289): Preflight all FALCION source ZIP member names, types and exact uncompressed sizes against checked source bytes before payload reads or CRC decompression. Reject unknown, oversized and altered-manifest members before any earlier valid entry is read; retain same-size content hash checks and add decompression tripwire regressions.
 - [PR #294](https://github.com/raleonys/citrine-eclipse-mirage/pull/294): Fail closed when registered CMD and PowerShell operator launchers end in commented or display-only exit-status text. Validate the complete final command line rather than suffix matching, with launcher mutation regressions for REM/echo and PowerShell comment/Write-Host cases. Production DLL and operator build scripts remain unchanged.
 - [PR #298](https://github.com/raleonys/citrine-eclipse-mirage/pull/298): Reject non-power-of-two PE32+ SectionAlignment values in the read-only ARYRA Golden layout verifier, including otherwise aligned section tables. Add synthetic negative/positive fixtures for 0x1800 (reject) and 0x2000 (accept), preserving the current non-exact section RVA policy and production DLL bytes.
