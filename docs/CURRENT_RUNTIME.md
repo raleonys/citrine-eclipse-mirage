@@ -68,6 +68,13 @@ remain retryable on failure. Greeting is asynchronous; session/frame/output
 limits and receive/frame/send deadlines remain enforced. Achievement XML/INI
 writes use an atomic batch with rollback and retry ownership; no claim of
 power-loss atomicity across multiple files is made.
+
+The grant persistence path validates and serializes the complete watcher INI
+before creating its parent directory. Unsafe section names in any achievement
+therefore reject the grant before directory creation or atomic writes; the
+grant restores its state and releases its lock without publishing an event.
+A corrected input can retry the same live state.
+
 The concrete Windows batch backend first recovers retained work, then rejects
 empty/embedded-NUL destinations, comparison lengths beyond the Win32 domain,
 and case-fold-equivalent destination strings before staging. Comparison uses
