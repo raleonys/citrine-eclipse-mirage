@@ -1,0 +1,80 @@
+# SPDX-License-Identifier: GPL-3.0-only
+name: Isolated XML backend comparison
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  comparison:
+    name: XML compatibility ${{ matrix.os }} ${{ matrix.configuration }} sanitizers=${{ matrix.sanitizers }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            configuration: Release
+            sanitizers: false
+          - os: ubuntu-24.04
+            configuration: Release
+            sanitizers: true
+          - os: windows-2022
+            configuration: Release
+            sanitizers: false
+          - os: windows-2022
+            configuration: Debug
+            sanitizers: false
+    steps:
+      - name: Preserve pinned input bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check out the reviewed PR 108 control without changing this PR
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: a34a0536f0980b38d77d029f11fa3720dcaedc6e
+          path: build/xml-reference
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Compare checked reference decoding, protocol, storage and allocations
+        shell: bash
+        run: |
+          options=()
+          if [ '${{ matrix.sanitizers }}' = 'true' ]; then options+=(--sanitizers); fi
+          python -B tests/diagnostics/xml_backend/run.py \
+            --reference-root build/xml-reference \
+            --pugixml-root third_party/pugixml \
+            --output build/xml-backend-comparison --configuration '${{ matrix.configuration }}' "${options[@]}"
+      - name: Publish measured performance observations
+        if: always()
+        shell: bash
+        run: |
+          if [ -f build/xml-backend-comparison/performance.txt ]; then
+            {
+              echo '### XML performance measurements'
+              echo 'Host-specific paired measurements; latency ratio below 1 means lower measured latency.'
+              cat build/xml-backend-comparison/performance.txt
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Retain differential results, input pins, compiler settings and failures
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: xml-comparison-${{ matrix.os }}-${{ matrix.configuration }}-sanitizers-${{ matrix.sanitizers }}
+          path: |
+            build/xml-backend-comparison/*.log
+            build/xml-backend-comparison/*.json
+            build/xml-backend-comparison/*.tsv
+            build/xml-backend-comparison/*.csv
+            build/xml-backend-comparison/*.txt
+            build/xml-backend-comparison/binaries/CMakeCache.txt
+            build/xml-backend-comparison/binaries/CMakeFiles/CMakeConfigureLog.yaml
+          if-no-files-found: warn
+          retention-days: 14

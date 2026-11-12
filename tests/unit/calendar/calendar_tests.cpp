@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/calendar.hpp"
+#include "citrine_eclipse_mirage/runtime/calendar.hpp"
 #include <array>
 #include <bit>
 #include <chrono>
@@ -8,8 +8,8 @@
 #include <limits>
 #include <stdexcept>
 
-using preloader_l::calendar::BrokenDown;
-using preloader_l::calendar::epoch_041ff0;
+using citrine_eclipse_mirage::calendar::BrokenDown;
+using citrine_eclipse_mirage::calendar::epoch_041ff0;
 namespace {
 unsigned checks=0;
 void require(bool ok,const char* why){++checks;if(!ok)throw std::runtime_error(why);}

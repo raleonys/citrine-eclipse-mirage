@@ -1,9 +1,20 @@
+> **Historical checkpoint.** Use [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 Later owner-provided Windows/Golden/native and game acceptance,
 including DLL size measurements, is recorded in
 [the current acceptance record](DLL_SIZE_AND_NATIVE_ACCEPTANCE.md).
 All test and pending-work statements below are historical as of this audit.
 
 # Whole-source and adapter audit
+
+The XML findings below describe the earlier TinyXML2 audit checkpoint.
+The current application and development DLL use pugixml behind first-party
+compatibility code; the success/error and depth contracts are tested against
+that reader. See [VENDORING.md](VENDORING.md) and
+[XML_BACKEND_COMPARISON.md](XML_BACKEND_COMPARISON.md). The earlier measurements
+and ruled-out suspicions below are historical evidence, not a description of
+the current vendor implementation.
 
 The earlier review focused on the delta of a new RE package;
 five corrections were not evidence of an entire codebase audit.

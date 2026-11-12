@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/xml/document_error.hpp"
+#include "citrine_eclipse_mirage/xml/document_error.hpp"
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -61,4 +61,4 @@ void DocumentErrorEffects::set_error_005820(std::uintptr_t document,
     std::int32_t error_id,std::uint32_t line,std::uintptr_t detail_format){
     set_document_error_005820(document,error_id,line,detail_format,arguments_,error_);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

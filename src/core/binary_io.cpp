@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/core/binary_io.hpp"
+#include "citrine_eclipse_mirage/core/binary_io.hpp"
 #include <stdexcept>
 
-namespace preloader_l::file {
+namespace citrine_eclipse_mirage::file {
 void Factory::replace_atomic(std::span<const FileWrite>) {
     throw std::logic_error("File factory does not implement atomic achievement persistence");
 }
@@ -30,4 +30,15 @@ bool write_binary_03c1d0(const Path& path,std::string_view value,Factory& factor
     // validation. A stream with exceptions enabled can still throw above.
     return true;
 }
-} // namespace preloader_l::file
+bool write_binary_checked(const Path& path,std::string_view value,Factory& factory) {
+    auto stream=factory.open_output_03a1a0(path,0x20,0x40);
+    if(!stream)throw std::invalid_argument("Output factory returned null (integration contract)");
+    if(stream->initial_state()!=0)return false;
+    stream->write_03be80(value);
+    const bool write_failed=stream->initial_state()!=0;
+    // Buffered output can signal failure only during close.
+    stream->close_03ae70();
+    const bool close_failed=stream->initial_state()!=0;
+    return !write_failed && !close_failed;
+}
+} // namespace citrine_eclipse_mirage::file

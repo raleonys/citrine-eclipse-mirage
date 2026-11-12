@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/file_copy.hpp"
+#include "citrine_eclipse_mirage/platform/file_copy.hpp"
 #include <windows.h>
 #include <filesystem>
 #include <fstream>
@@ -10,7 +10,7 @@
 
 namespace {
 namespace fs=std::filesystem;
-namespace copy=preloader_l::file_copy;
+namespace copy=citrine_eclipse_mirage::file_copy;
 void require(bool value,const char* what) {if(!value)throw std::runtime_error(what);}
 struct Directory {
     fs::path path;
@@ -50,6 +50,21 @@ int main() {
         write(source,"new-source");r=run(source,target,1);
         require(!r.copied&&r.error==0&&read(target)==original,"skip-existing changed destination");
         r=run(source,target,2);require(r.copied&&r.error==0&&read(target)=="new-source","overwrite failed");
+        // A live reader that denies write/delete sharing must prevent overwrite
+        // without mutating the existing target; release it before retrying.
+        const auto locked=CreateFileW(target.c_str(),GENERIC_READ,FILE_SHARE_READ,nullptr,
+                                      OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
+        require(locked!=INVALID_HANDLE_VALUE,"locked target fixture open failed");
+        write(source,"retry-after-lock");
+        r=run(source,target,2);
+        const auto lock_error=r.error;
+        const auto released=CloseHandle(locked);
+        require(released!=FALSE,"locked target fixture close failed");
+        require(!r.copied&&lock_error==ERROR_SHARING_VIOLATION &&
+                read(target)=="new-source","locked target must reject overwrite without mutation");
+        r=run(source,target,2);
+        require(r.copied&&r.error==0&&read(target)=="retry-after-lock",
+                "released target must permit retry of the same copy route");
         r=run(source,source,1);require(!r.copied&&r.error==ERROR_SHARING_VIOLATION,"same-file copy must fail");
         const auto link=directory.path/"hard-link.bin";
         require(CreateHardLinkW(link.c_str(),source.c_str(),nullptr)!=FALSE,"hard-link fixture failed");

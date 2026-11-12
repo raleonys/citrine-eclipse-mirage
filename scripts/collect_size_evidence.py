@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
-"""Collect read-only DLL/MAP/COFF evidence from an existing local build.
+"""Collect read-only DLL/MAP/COFF evidence from an existing build.
 
 Object section sizes are pre-link contributions, never final function sizes.
 No build, binary execution, finalization, publication or source repair is performed.
@@ -10,11 +10,13 @@ import csv
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import shutil
 import struct
 import subprocess
 import sys
+import tempfile
 import zipfile
 import xml.etree.ElementTree as ET
 
@@ -52,6 +54,10 @@ def coff_sections(data):
         raise ValueError('Unsupported object machine')
     if not count or count > (len(data) - offset) // 40:
         raise ValueError('Truncated or empty COFF section table')
+    if symbol_count and not symbols:
+        raise ValueError('COFF symbol count has no symbol table pointer')
+    if symbols and symbols < offset + count * 40:
+        raise ValueError('COFF symbol/string table overlaps headers')
     strings = symbols + symbol_count * symbol_size
     string_end = 0
     if symbols:
@@ -112,8 +118,16 @@ def vs_object_paths(project, config, sources):
         raise ValueError('VS IntDir is absent for ' + target)
     intdir = expand(intdirs[-1])
     result = {}
+    # A VS project can contain the same source under configuration-specific
+    # ItemGroups or ClCompile entries. Ignore inactive ancestors as well.
+    parents = {child: parent for parent in tree.iter() for child in parent}
     for item in tree.iter():
         if item.tag.rsplit('}', 1)[-1] != 'ClCompile' or not item.get('Include'):
+            continue
+        node = item
+        while node is not None and applies(node.get('Condition')):
+            node = parents.get(node)
+        if node is not None:
             continue
         source = (project.parent / expand(item.get('Include'))).resolve()
         if source not in sources:
@@ -176,12 +190,55 @@ def current_objects(root, build, allowed, config):
     return sorted(objects)
 
 
+
+def publish_evidence(output, payload):
+    """Publish an owned ZIP and checksum without opening predictable or linked paths."""
+    output = Path(output)
+    sidecar = Path(str(output) + '.sha256')
+    legacy = (output.with_suffix(output.suffix + '.partial'),
+              Path(str(sidecar) + '.partial'))
+    for path in (output, sidecar, *legacy):
+        if path.is_symlink() or path.exists():
+            raise ValueError('Existing or unsafe size-evidence output: ' + str(path))
+    output.parent.mkdir(parents=True, exist_ok=True)
+    fd, name = tempfile.mkstemp(prefix='.' + output.name + '.',
+                                suffix='.partial', dir=output.parent)
+    stage = Path(name)
+    checksum_stage = None
+    try:
+        with os.fdopen(fd, 'w+b') as stream:
+            with zipfile.ZipFile(stream, 'w', zipfile.ZIP_DEFLATED) as archive:
+                for name, data in sorted(payload.items()):
+                    archive.writestr(name, data)
+        digest = sha(stage.read_bytes())
+        checksum_fd, checksum_name = tempfile.mkstemp(
+            prefix='.' + sidecar.name + '.', suffix='.partial', dir=output.parent)
+        checksum_stage = Path(checksum_name)
+        with os.fdopen(checksum_fd, 'w', encoding='utf-8') as stream:
+            stream.write(digest + '  ' + output.name + '\n')
+        os.replace(stage, output)
+        try:
+            os.replace(checksum_stage, sidecar)
+        except OSError:
+            output.unlink(missing_ok=True)
+            raise
+        return digest
+    finally:
+        stage.unlink(missing_ok=True)
+        if checksum_stage is not None:
+            checksum_stage.unlink(missing_ok=True)
+
+
 def collect(root, build, config, dll, output, with_symbols=False):
-    root, build, output = root.resolve(), build.resolve(), output.resolve()
+    root, build = root.resolve(), build.resolve()
+    output = Path(os.path.abspath(output))
+    if output.is_symlink():
+        raise ValueError('Evidence output cannot be a symlink')
+    output = output.parent.resolve() / output.name
     if root / 'build' not in output.parents:
         raise ValueError('Write evidence inside the selected project build/ directory')
-    if output.exists():
-        raise ValueError('Evidence output exists; choose a new path to preserve it')
+    if output.is_symlink() or output.exists():
+        raise ValueError('Evidence output exists or is linked; choose a new path')
     errors = verify_manifest(root)
     if errors:
         raise ValueError('Source manifest differs: ' + '; '.join(map(str, errors[:5])))
@@ -197,8 +254,8 @@ def collect(root, build, config, dll, output, with_symbols=False):
     for name in ['ACTIVE_SOURCE_MANIFEST.json', 'BUILD_PARTITION_POLICY.json', 'PUBLIC_DLL_ABI.json']:
         records[name] = add('contracts/' + name, root / 'metadata' / name)
     if dll is None:
-        candidate = root / 'dist/preloader_l.dll'
-        dll = candidate if candidate.is_file() else build / 'preloader.unsigned.dll'
+        candidate = root / 'dist/citrine_eclipse_mirage.dll'
+        dll = candidate if candidate.is_file() else build / 'citrine_eclipse_mirage.unsigned.dll'
     dll = dll.resolve()
     pe = PE(dll)
     dll_record = add('binary/' + dll.name, dll)
@@ -207,7 +264,7 @@ def collect(root, build, config, dll, output, with_symbols=False):
         virtual_size = u32(pe.b, pe.opt + pe.optsz + index * 40 + 8)
         section_rows.append({'name': name, 'virtual_bytes': virtual_size, 'raw_bytes': size,
                              'rva': va, 'sha256_raw': sha(pe.b[raw:raw + size])})
-    maps = sorted(build.rglob('preloader.production.' + config + '.map'))
+    maps = sorted(build.rglob('citrine_eclipse_mirage.production.' + config + '.map'))
     if len(maps) != 1:
         raise ValueError('Expected exactly one matching production MAP; build the selected configuration first')
     map_record = add('link/' + maps[0].name, maps[0])
@@ -215,16 +272,16 @@ def collect(root, build, config, dll, output, with_symbols=False):
         p = build / name
         if p.is_file():
             records[name] = add('link/' + name, p)
-    receipt = root / 'dist/LOCAL_DIST_RECEIPT.json'
+    receipt = root / 'dist/DIST_RECEIPT.json'
     if receipt.is_file():
-        records['dist_receipt'] = add('link/LOCAL_DIST_RECEIPT.json', receipt)
+        records['dist_receipt'] = add('link/DIST_RECEIPT.json', receipt)
     compilation = build / 'compile_commands.json'
     if compilation.is_file():
         commands = json.loads(compilation.read_text(encoding='utf-8'))
         selected = [x for x in commands if Path(x['file']).resolve().is_relative_to(root / 'src')]
         payload['commands/compile_commands.json'] = (json.dumps(selected, indent=2) + '\n').encode()
     targets = set(policy['production_targets'] + policy['reference_targets'] + policy['source_api_targets'])
-    targets.update(['preloader_l_minhook', 'preloader_l_tinyxml2'])
+    targets.update(['citrine_eclipse_mirage_minhook', 'citrine_eclipse_mirage_pugixml'])
     objects, failures = [], []
     dumpbin = shutil.which('dumpbin') if with_symbols else None
     if with_symbols and not dumpbin:
@@ -271,7 +328,6 @@ def collect(root, build, config, dll, output, with_symbols=False):
         writer.writerow([row.get(k, '') for k in ['object', 'target', 'file_bytes', 'code_raw_bytes', 'rdata_raw_bytes', 'comdat_sections', 'sha256', 'unsupported']])
     payload['analysis/object_sections.csv'] = csv_out.getvalue().encode()
     report = {'schema': 'surge.size-evidence.v1', 'result': 'PARTIAL_UNSUPPORTED_OBJECTS' if failures else 'COLLECTED',
-              'classification': 'READ_ONLY_LOCAL_EVIDENCE_NOT_SHIPPING_ACCEPTANCE',
               'configuration': config, 'binary': dll_record, 'binary_sections': section_rows,
               'exports': pe.exports(), 'production_map': map_record, 'contracts_and_reports': records,
               'objects': objects, 'unsupported_objects': failures,
@@ -281,17 +337,7 @@ def collect(root, build, config, dll, output, with_symbols=False):
                          'This tool does not execute Windows/game acceptance or change linker settings.']}
     payload['analysis/report.json'] = (json.dumps(report, indent=2) + '\n').encode()
     payload['SHA256SUMS'] = ''.join(sha(data) + '  ' + name + '\n' for name, data in sorted(payload.items())).encode()
-    output.parent.mkdir(parents=True, exist_ok=True)
-    partial = output.with_suffix(output.suffix + '.partial')
-    try:
-        with zipfile.ZipFile(partial, 'w', zipfile.ZIP_DEFLATED) as archive:
-            for name, data in sorted(payload.items()):
-                archive.writestr(name, data)
-        partial.replace(output)
-    finally:
-        partial.unlink(missing_ok=True)
-    digest = sha(output.read_bytes())
-    Path(str(output) + '.sha256').write_text(digest + '  ' + output.name + '\n', encoding='utf-8')
+    digest = publish_evidence(output, payload)
     return {'result': report['result'], 'objects': len(objects), 'unsupported_objects': len(failures),
             'path': str(output), 'bytes': output.stat().st_size, 'sha256': digest}
 

@@ -10,12 +10,11 @@
 #include <map>
 #include <memory>
 #include <string>
-#include <utility>
 #include <vector>
 
 namespace example
 {
-   enum class json_type : std::uint8_t
+   enum class json_type
    {
       array,
       boolean,
@@ -165,7 +164,7 @@ namespace example
                   r += h[ c & 0x0f ];
                   continue;
                }
-               r += static_cast< char >( c );  // Assume valid UTF-8.
+               r += c;  // Assume valid UTF-8.
                break;
          }
       }
@@ -176,9 +175,9 @@ namespace example
    struct string_json final
       : public json_base
    {
-      explicit string_json( std::string in_data ) noexcept
+      explicit string_json( const std::string& in_data )
          : json_base( json_type::string ),
-           data( std::move( in_data ) )
+           data( in_data )
       {}
 
       std::string data;

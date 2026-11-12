@@ -16,7 +16,7 @@ namespace example
 
 }  // namespace example
 
-int main()
+int main()  // NOLINT(bugprone-exception-escape)
 {
    if( pegtl::analyze< example::grammar >() != 0 ) {
       std::cerr << "cycles without progress detected!" << std::endl;

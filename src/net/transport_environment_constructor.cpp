@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_environment_constructor.hpp"
+#include "citrine_eclipse_mirage/net/transport_environment_constructor.hpp"
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 IoHandlerVtable& operations(IoHandlerEnvironment& value){
     if(!value.operations_10)throw UnsupportedInput("Environment constructor has no live operations projection");
@@ -77,4 +77,4 @@ void ConstructedWriteEffects::construct_environment_023dd0(
     if(!found)throw UnsupportedInput("Environment source identity has no live projection");
     construct_io_environment_023dd0(destination,*found,write_context().environment.sentinels,constructor_);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket
