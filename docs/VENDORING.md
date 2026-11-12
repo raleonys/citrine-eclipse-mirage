@@ -254,6 +254,13 @@ remains optional for converting the
 correct text back into real links;
 it is not a build prerequisite.
 
+Restoration validates the complete locked alias set before publishing any
+conversion. Each link is created in owned temporary staging and atomically
+replaces its descriptor after creation succeeds. If a later conversion fails,
+earlier valid links remain published and pending descriptors retain their
+exact bytes. An ordinary retry processes only the remaining descriptors;
+source-manifest identity is preserved across this partial state.
+
 Current runtime integration:
 [RUNTIME_BINDING.md](RUNTIME_BINDING.md).
 Earlier vendor/parser test counts here

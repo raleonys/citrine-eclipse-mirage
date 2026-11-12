@@ -454,6 +454,46 @@ class LinkPackagingTests(unittest.TestCase):
         self.assertEqual([], list(self.link.parent.glob('.vendor-alias-*')))
         self.assertEqual([], project_files.verify_manifest(self.root))
 
+    def test_restore_later_creation_failure_retains_descriptors_for_retry(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        lock=json.loads(lock_path.read_text(encoding='utf-8'))
+        lock['vendors']['asio']['symlinks']['asio/src']='../src'
+        lock_path.write_text(json.dumps(lock),encoding='utf-8')
+        (self.root/'third_party/asio/src').mkdir()
+        later=self.root/'third_party/asio/asio/src'
+        later.write_bytes(b'../src')
+        project_files.write_manifest(self.root)
+        create_link=restore_vendor_links.os.symlink
+
+        def fail_later(target, staged, target_is_directory=False):
+            if target=='../src':
+                self.assertEqual(b'../src',later.read_bytes())
+                raise OSError('injected later link failure')
+            return create_link(target,staged,target_is_directory=target_is_directory)
+
+        with patch.object(restore_vendor_links.os,'symlink',side_effect=fail_later):
+            try:
+                restore_vendor_links.restore(self.root)
+            except (OSError,NotImplementedError) as error:
+                if str(error)!='injected later link failure':
+                    if self.link.is_symlink():
+                        raise
+                    self.skipTest('Optional symlink restoration requires OS privilege')
+            else:
+                self.fail('later link failure was not observed')
+        self.assertTrue(self.link.is_symlink())
+        self.assertEqual('../include',self.link.readlink().as_posix())
+        self.assertFalse(later.is_symlink())
+        self.assertEqual(b'../src',later.read_bytes())
+        self.assertEqual([],list(self.link.parent.glob('.vendor-alias-*')))
+        self.assertEqual([],project_files.verify_manifest(self.root))
+        with patch.object(restore_vendor_links.os,'symlink',wraps=create_link) as retry:
+            restore_vendor_links.restore(self.root)
+            self.assertEqual(1,retry.call_count)
+        self.assertTrue(later.is_symlink())
+        self.assertEqual('../src',later.readlink().as_posix())
+        self.assertEqual([],project_files.verify_manifest(self.root))
+
     def test_standard_zip_extraction_needs_no_link_support(self):
         package_source.package(self.root,self.archive)
         destination=self.base/'standard-unzip'
