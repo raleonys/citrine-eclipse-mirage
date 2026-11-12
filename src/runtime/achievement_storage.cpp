@@ -8,6 +8,8 @@
 #include <cstdlib>
 #include <limits>
 #include <stdexcept>
+#include <string>
+#include <type_traits>
 
 namespace citrine_eclipse_mirage::achievement_storage {
 namespace {
@@ -16,14 +18,62 @@ std::optional<std::string_view> attribute(const messages::XmlNode& node,std::str
     if(!value)return std::nullopt;
     return value->substr(0,value->find('\0')); // Original attributes are C strings.
 }
+// Share only lexical device classification. Narrow high bytes are never
+// interpreted as Unicode digits before the filesystem code-page conversion.
+template<class Char>
+bool ascii_device_token(std::basic_string_view<Char> value,std::string_view token) noexcept {
+    if(value.size()!=token.size())return false;
+    for(std::size_t i=0;i<value.size();++i) {
+        auto c=value[i];
+        if(c>=static_cast<Char>('a')&&c<=static_cast<Char>('z'))
+            c=static_cast<Char>(c-static_cast<Char>('a')+static_cast<Char>('A'));
+        if(c!=static_cast<Char>(token[i]))return false;
+    }
+    return true;
+}
+template<class Char>
+bool reserved_watcher_device(std::basic_string_view<Char> value) noexcept {
+    auto stem=value.substr(0,value.find(static_cast<Char>('.')));
+    while(!stem.empty()&&stem.back()==static_cast<Char>(' '))stem.remove_suffix(1);
+    for(const auto token:{"CON","PRN","AUX","NUL","CONIN$","CONOUT$"})
+        if(ascii_device_token(stem,token))return true;
+    if(stem.size()!=4||(!ascii_device_token(stem.substr(0,3),"COM")&&
+                         !ascii_device_token(stem.substr(0,3),"LPT")))return false;
+    const auto digit=stem[3];
+    if(digit>=static_cast<Char>('1')&&digit<=static_cast<Char>('9'))return true;
+    if constexpr(std::is_same_v<Char,char16_t>)
+        return digit==u'\u00b9'||digit==u'\u00b2'||digit==u'\u00b3';
+    return false;
+}
 // These Config2 strings become filename/directory components, not paths.
 // Reject lexical escapes and alternate-stream syntax before any filesystem or
 // achievement-state side effect. This is not a symlink/reparse-point guarantee.
-void require_safe_achievement_leaf(std::string_view value) {
+void require_safe_achievement_leaf(std::string_view value,bool watcher_directory) {
     if(value=="." || value==".." ||
-       value.find_first_of("/\\:")!=std::string_view::npos ||
-       value.find('\0')!=std::string_view::npos)
-        throw std::invalid_argument("Achievement identifier is not one path component");
+       value.find_first_of("/\\:<>\"|?*")!=std::string_view::npos)
+        throw std::invalid_argument("Achievement identifier is not one Windows path component");
+    for(const unsigned char byte:value)
+        if(byte<0x20)
+            throw std::invalid_argument("Achievement identifier contains an invalid Windows filename byte");
+    if(!watcher_directory||value.empty())return;
+    // SteamAppId is a bare directory leaf; unlike the achievement XML file it
+    // has no prefix/suffix to disambiguate Win32 device names.
+    if(value.front()==' '||value.back()==' '||value.back()=='.')
+        throw std::invalid_argument("Achievement watcher directory has an ambiguous Win32 name");
+    if(reserved_watcher_device(value))
+        throw std::invalid_argument("Achievement watcher directory uses a reserved Win32 device name");
+}
+// The same narrow bytes can denote a device digit or an ordinary character
+// under different filesystem code pages. Judge the converted directory too.
+void require_safe_watcher_directory(std::u16string_view value) {
+    if(value.empty()||value==u"."||value==u".."||
+       value.find_first_of(u"/\\:<>\"|?*")!=std::u16string_view::npos||
+       value.front()==u' '||value.back()==u' '||value.back()==u'.')
+        throw std::invalid_argument("Achievement watcher directory has an invalid Win32 name");
+    for(const char16_t c:value)if(c<0x20)
+        throw std::invalid_argument("Achievement watcher directory contains an invalid Windows filename character");
+    if(reserved_watcher_device(value))
+        throw std::invalid_argument("Achievement watcher directory uses a reserved Win32 device name");
 }
 }
 bool HostCrtNumbers::is_space(unsigned char c) {return std::isspace(c)!=0;}
@@ -87,13 +137,24 @@ configuration::Path append(configuration::Path base,const configuration::Path& c
 void Storage::update_01eb00(configuration::State& state) {
     // Validate both input components up front: rejecting either must not read
     // an XML file, update a retained path, or write a watcher INI elsewhere.
-    if(!state.achievements_set.empty())require_safe_achievement_leaf(state.achievements_set);
-    if(!state.steam_app_id.empty())require_safe_achievement_leaf(state.steam_app_id);
+    if(!state.achievements_set.empty())require_safe_achievement_leaf(state.achievements_set,false);
+    if(!state.steam_app_id.empty())require_safe_achievement_leaf(state.steam_app_id,true);
+    // Preflight conversions before file IO/publication. Keep the established
+    // relative conversion order: XML filename, INI filename, app id, watcher.
+    // This deliberately rejects conversion errors and decoded device aliases
+    // before importing XML, rather than leaving partially updated state.
+    configuration::Path xml_component,ini_filename,app_directory,watcher_directory;
     if(!state.achievements_set.empty()) {
         const auto filename="achievement-"+state.achievements_set+".xml";
-        const auto component=effects_.filesystem_widen_006d70(filename);
-        paths_.xml_path=append(state.user_directory,component);
+        xml_component=effects_.filesystem_widen_006d70(filename);
     }
+    if(!state.steam_app_id.empty()) {
+        ini_filename=effects_.filesystem_widen_006d70("achievements.ini");
+        app_directory=effects_.filesystem_widen_006d70(state.steam_app_id);
+        require_safe_watcher_directory(app_directory);
+        watcher_directory=effects_.filesystem_widen_006d70("achievement_watcher");
+    }
+    if(!state.achievements_set.empty())paths_.xml_path=append(state.user_directory,xml_component);
     // Empty set preserves a previously supplied XML path; it does not disable it.
     if(!paths_.xml_path.empty()) {
         const auto bytes=file::read_binary_03b3f0(paths_.xml_path,files_);
@@ -116,13 +177,9 @@ void Storage::update_01eb00(configuration::State& state) {
         }
     }
     if(!state.steam_app_id.empty()) {
-        // Preserve the observed conversion order: filename, app id, directory.
-        const auto filename=effects_.filesystem_widen_006d70("achievements.ini");
-        const auto app=effects_.filesystem_widen_006d70(state.steam_app_id);
-        const auto watcher=effects_.filesystem_widen_006d70("achievement_watcher");
-        auto path=append(state.user_directory,watcher);
-        path=append(std::move(path),app);
-        paths_.ini_path=append(std::move(path),filename);
+        auto path=append(state.user_directory,watcher_directory);
+        path=append(std::move(path),app_directory);
+        paths_.ini_path=append(std::move(path),ini_filename);
         for(auto& [id,achievement]:state.achievements) {
             (void)id;
             achievement.field70=static_cast<std::uint64_t>(effects_.timestamp_to_epoch_041e10(achievement.timestamp));
