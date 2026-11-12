@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 > Historical snapshot: subsequent corrections for hook 11/lifecycle and
 > metadata are in
 > [Bluefield alignment](HOOK_ALIGNMENT.md) and

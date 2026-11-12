@@ -41,8 +41,6 @@ namespace TAO_PEGTL_NAMESPACE
    template< typename Rule > struct invert : internal::invert_traits< typename Rule::rule_t >::type {};
    template< typename Rule, typename Sep, typename Pad = void > struct list : internal::list< Rule, internal::pad< Sep, Pad > > {};
    template< typename Rule, typename Sep > struct list< Rule, Sep, void > : internal::list< Rule, Sep > {};
-   template< typename Rule, typename Sep, typename Pad = void > struct list_opt : internal::list_opt< Rule, internal::pad< Sep, Pad > > {};
-   template< typename Rule, typename Sep > struct list_opt< Rule, Sep, void > : internal::list_opt< Rule, Sep > {};
    template< typename Rule, typename Sep, typename Pad = void > struct list_tail : internal::list_tail_pad< Rule, Sep, Pad > {};
    template< typename Rule, typename Sep > struct list_tail< Rule, Sep, void > : internal::list_tail< Rule, Sep > {};
    template< typename M, typename S > struct minus : internal::minus< M, S > {};
@@ -64,7 +62,6 @@ namespace TAO_PEGTL_NAMESPACE
    template< typename Sep, typename Pad, typename... Rules > struct separated_pad : internal::separated_pad< type_list<>, Sep, Pad, Rules... > {};
    template< typename... Rules > struct seq : internal::seq< Rules... > {};
    template< typename... Rules > struct sor : internal::sor< Rules... > {};
-   template< typename... Rules > struct sor1 : internal::sor1< Rules... > {};
    template< typename Rule > struct source : internal::source< Rule > {};
    template< typename Rule, typename... Rules > struct star : internal::star< Rule, Rules... > {};
    template< typename Rule, typename... Rules > struct star_partial : internal::star_partial< Rule, Rules... > {};

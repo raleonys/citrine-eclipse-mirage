@@ -41,7 +41,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
    {
       // Assumes input is a non-empty sequence of digits; returns false on overflow.
 
-      for( const char c : input ) {
+      for( char c : input ) {
          if( !accumulate_digit< Integer, Maximum >( result, c ) ) {
             return false;
          }
@@ -68,7 +68,7 @@ namespace TAO_PEGTL_NAMESPACE::internal
       constexpr Unsigned maximum = static_cast< Unsigned >( ( std::numeric_limits< Signed >::max )() ) + 1;
       Unsigned temporary = 0;
       if( accumulate_digits< Unsigned, maximum >( temporary, input ) ) {
-         result = ( temporary == maximum ) ? ( std::numeric_limits< Signed >::min )() : -static_cast< Signed >( temporary );
+         result = static_cast< Signed >( ~temporary ) + 1;
          return true;
       }
       return false;
@@ -89,10 +89,10 @@ namespace TAO_PEGTL_NAMESPACE::internal
       // Assumes result == 0 and that input is an optional sign followed by a non-empty sequence of digits; returns false on overflow.
 
       static_assert( std::is_signed_v< Signed > );
-      if( input.at( 0 ) == '-' ) {
+      if( input[ 0 ] == '-' ) {
          return convert_negative< Signed >( result, std::string_view( input.data() + 1, input.size() - 1 ) );
       }
-      const auto offset = static_cast< unsigned >( input.at( 0 ) == '+' );
+      const auto offset = static_cast< unsigned >( input[ 0 ] == '+' );
       return convert_positive< Signed >( result, std::string_view( input.data() + offset, input.size() - offset ) );
    }
 

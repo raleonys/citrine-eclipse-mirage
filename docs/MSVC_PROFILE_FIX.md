@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [DEVELOPMENT.md](DEVELOPMENT.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # MSVC profile log corrections
 
 Five owner-supplied logs show that the previous vendor validation blocker was
