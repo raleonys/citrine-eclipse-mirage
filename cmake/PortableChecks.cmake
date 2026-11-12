@@ -37,6 +37,9 @@ portable_check(portable_network_hook src/platform/hook_connect.cpp src/runtime/e
   tests/unit/network_hook/hook_tests.cpp)
 target_compile_definitions(portable_network_hook PRIVATE CITRINE_ECLIPSE_MIRAGE_PRODUCTION_NETWORK_TESTS=1)
 target_link_libraries(portable_network_hook PRIVATE Threads::Threads)
+portable_check(portable_crypt_path_probe src/platform/crypt_query.cpp tests/native/crypt_path_probe_tests.cpp)
+target_compile_definitions(portable_crypt_path_probe PRIVATE CITRINE_ECLIPSE_MIRAGE_PORTABLE_CRYPT_PATH_TESTS=1)
+set_tests_properties(portable_crypt_path_probe PROPERTIES TIMEOUT 30)
 portable_check(portable_parser src/config/parser.cpp tests/unit/parser/parser_tests.cpp)
 portable_check(portable_hash src/hash/hash.cpp tests/unit/hash/hash_tests.cpp)
 portable_check(portable_file_io src/core/binary_io.cpp tests/unit/file/binary_io_tests.cpp)
@@ -62,3 +65,6 @@ target_compile_definitions(portable_online PRIVATE CITRINE_ECLIPSE_MIRAGE_PORTAB
 portable_check(portable_server src/net/server.cpp src/runtime/execution.cpp tests/unit/server/server_tests.cpp)
 portable_check(portable_hook_transaction src/platform/hook_transaction.cpp tests/unit/hooks/transaction_tests.cpp)
 portable_check(portable_registry_rollback src/platform/registry.cpp tests/unit/registry/allocation_failure_tests.cpp)
+
+portable_check(portable_atomic_recovery src/core/atomic_files.cpp tests/unit/file/atomic_recovery_tests.cpp)
+set_tests_properties(portable_atomic_recovery PROPERTIES TIMEOUT 30)

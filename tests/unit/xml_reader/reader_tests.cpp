@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "citrine_eclipse_mirage/xml/reader.hpp"
+#include <pugixml.hpp>
 #include <iostream>
+#include <new>
 #include <stdexcept>
 
 namespace reader=citrine_eclipse_mirage::xml_reader_bridge;
@@ -12,6 +14,39 @@ void check(bool value,const char* reason){++checks;if(!value)throw std::runtime_
 const msg::XmlNode& root(const msg::ParseResult& parsed) {
     check(!parsed.has_error&&parsed.returned_code==0,"parse success");
     const auto* node=parsed.document->first_element();check(node!=nullptr,"root present");return *node;
+}
+namespace vendor_allocations {
+pugi::allocation_function previous_allocate=nullptr;
+pugi::deallocation_function previous_release=nullptr;
+bool armed=false,injected=false;
+std::size_t calls=0,fail_at=0,outstanding=0;
+void* allocate(std::size_t size) {
+    // One failed request only: later allocations must remain possible so a
+    // subsequent checked setter cannot hide an earlier ignored false return.
+    if(armed&&++calls==fail_at){injected=true;return nullptr;}
+    auto* result=previous_allocate(size);
+    if(result)++outstanding;
+    return result;
+}
+void release(void* pointer) {
+    if(pointer)--outstanding;
+    previous_release(pointer);
+}
+struct Hooks {
+    Hooks() {
+        previous_allocate=pugi::get_memory_allocation_function();
+        previous_release=pugi::get_memory_deallocation_function();
+        pugi::set_memory_management_functions(allocate,release);
+    }
+    ~Hooks() {
+        armed=false;
+        pugi::set_memory_management_functions(previous_allocate,previous_release);
+    }
+    Hooks(const Hooks&)=delete;
+    Hooks& operator=(const Hooks&)=delete;
+};
+void begin(std::size_t ordinal=0){calls=0;fail_at=ordinal;injected=false;armed=true;}
+void end(){armed=false;}
 }
 void reading_and_ownership() {
     reader::Backend backend;
@@ -185,7 +220,89 @@ void decoded_value_ownership() {
     for(unsigned i=0;i<20;++i)(void)backend.parse_c_string("<Other a='&amp;'/>");
     check(*value=="value&owned"&&std::string_view(text)=="text&owned","decoded values remain owned by their original document");
 }
+void vendor_allocation_failure_recovery() {
+    const auto original_allocate=pugi::get_memory_allocation_function();
+    const auto original_release=pugi::get_memory_deallocation_function();
+    {
+        // Install the vendor callback pair before creating any live document,
+        // and destroy all documents before restoring it. C++ STL allocations
+        // remain untouched, including MSVC checked-iterator bookkeeping.
+        vendor_allocations::Hooks hooks;
+        {
+            reader::Backend backend;
+            auto retained=backend.parse_c_string("<Keep a='saved&amp;owned'>text&amp;owned</Keep>");
+            const auto* kept=&root(retained);
+            const auto retained_attribute=kept->attribute("a");
+            const auto* retained_text=backend.text_003860(*kept);
+            check(retained_attribute=="saved&owned"&&retained_text&&
+                  std::string_view(retained_text)=="text&owned","retained decoded values exist before faults");
+            const auto retained_allocations=vendor_allocations::outstanding;
+            const std::string attribute_prefix="prefix"+std::string(65536,'q');
+            const std::string text_prefix="text-prefix"+std::string(65536,'t');
+            const std::string expected_attribute=attribute_prefix+"&tail";
+            const std::string expected_text=text_prefix+"<tail";
+            const auto verify=[&](const msg::ParseResult& parsed) {
+                const auto& node=root(parsed);
+                check(node.name()=="R"&&!node.next_element(),"allocation fixture has exactly one root");
+                check(backend.attributes_in_order(node)==std::vector<std::pair<std::string,std::string>>{
+                    {"first","preserved"},{"value",expected_attribute},{"last","tail"}},
+                    "successful parse retains complete long attribute and neighboring attributes in order");
+                check(node.attribute("value")==expected_attribute,"long attribute lookup retains exact decoded bytes");
+                const auto* text=backend.text_003860(node);
+                check(text&&std::string_view(text)==expected_text,"successful parse retains complete long text");
+                const auto* child=node.first_element();
+                check(child&&child->name()=="Child"&&child->attribute("marker")=="intact"&&
+                      !child->first_element()&&!child->next_element(),"successful parse retains the following child");
+            };
+            for(bool legacy:{false,true}) {
+                // Space after '<' is an accepted compatibility spelling that
+                // constructs the DOM directly; ordinary input uses load_buffer.
+                const std::string input=std::string(legacy?"< R":"<R")+
+                    " first='preserved' value='"+attribute_prefix+"&amp;tail' last='tail'>"+
+                    text_prefix+"&lt;tail<Child marker='intact'/></R>";
+                std::size_t allocations=0;
+                {
+                    vendor_allocations::begin();
+                    auto baseline=backend.parse_c_string(input);
+                    vendor_allocations::end();
+                    allocations=vendor_allocations::calls;
+                    verify(baseline);
+                }
+                check(allocations>=2&&allocations<100,"bounded vendor allocation campaign covers real storage");
+                check(vendor_allocations::outstanding==retained_allocations,"successful parse releases vendor storage");
+                for(std::size_t ordinal=1;ordinal<=allocations;++ordinal) {
+                    bool failed=false;
+                    vendor_allocations::begin(ordinal);
+                    try{(void)backend.parse_c_string(input);}
+                    catch(const std::bad_alloc&){failed=true;}
+                    vendor_allocations::end();
+                    check(vendor_allocations::injected&&failed,
+                          "vendor allocation failure must propagate bad_alloc, never syntax error or partial success");
+                    check(vendor_allocations::outstanding==retained_allocations,
+                          "failed parse releases its partial document without releasing the retained document");
+                    check(retained.document->first_element()==kept&&kept->name()=="Keep"&&
+                          kept->attribute("a")==retained_attribute&&
+                          kept->attribute("a")->data()==retained_attribute->data()&&
+                          *retained_attribute=="saved&owned"&&
+                          backend.text_003860(*kept)==retained_text&&std::string_view(retained_text)=="text&owned",
+                          "failed later parse preserves retained wrapper and decoded value identities");
+                    {
+                        auto retry=backend.parse_c_string(input);
+                        verify(retry);
+                    }
+                    check(vendor_allocations::outstanding==retained_allocations,
+                          "same-backend retry releases all temporary vendor storage");
+                }
+                std::cout<<"XML "<<(legacy?"compatibility construction":"ordinary parser")<<": "
+                         <<allocations<<" injected vendor allocation sites\n";
+            }
+        }
+        check(vendor_allocations::outstanding==0,"all XML documents release their vendor allocations before hook restoration");
+    }
+    check(pugi::get_memory_allocation_function()==original_allocate&&
+          pugi::get_memory_deallocation_function()==original_release,"vendor allocator callbacks are restored");
 }
-int main(){try{reading_and_ownership();errors_and_depth();numeric_character_reference_bounds();bounded_input_and_wrapper_rehash();reference_values_and_contexts();decoded_value_ownership();
+}
+int main(){try{reading_and_ownership();errors_and_depth();numeric_character_reference_bounds();bounded_input_and_wrapper_rehash();reference_values_and_contexts();decoded_value_ownership();vendor_allocation_failure_recovery();
     std::cout<<"PASS: "<<checks<<" actual XML reader checks; selected upstream compatibility source, original target not executed\n";
     return 0;}catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}}
