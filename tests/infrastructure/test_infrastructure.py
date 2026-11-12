@@ -802,13 +802,14 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertIn('runs-on: ubuntu-24.04', blocks['codeql'])
         self.assertIn('language: [actions, c-cpp, python]', blocks['codeql'])
         self.assertIn('security-events: write', blocks['codeql'])
-        selected_sha = "${{ github.event_name == 'push' && github.sha || needs.readiness.outputs.head_sha }}"
+        selected_sha = "${{ github.sha }}"
         self.assertIn('ref: ' + selected_sha, blocks['codeql'])
         self.assertIn('sha: ' + selected_sha, blocks['codeql'])
-        self.assertIn('needs: readiness', blocks['codeql'])
+        self.assertNotIn('needs:', blocks['codeql'])
         self.assertIn('build-mode: none', blocks['codeql'])
         self.assertNotIn('always()', blocks['codeql'])
-        self.assertIn('refs/pull/{0}/head', blocks['codeql'])
+        self.assertIn('ref: refs/heads/main', blocks['codeql'])
+        self.assertNotIn('refs/pull/', blocks['codeql'])
 
     @staticmethod
     def workflow_expression(expression, context):
@@ -857,20 +858,21 @@ class ValidationReadinessTests(unittest.TestCase):
                                  workflow.split('\njobs:\n', 1)[1], re.M | re.S))
         gates = {name: re.search(r'^    if: (.+)$', block, re.M)[1]
                  for name, block in blocks.items()}
-        # All jobs have explicit gates; other jobs must retain the default
-        # success() dependency behavior. CodeQL needs a status function to run
-        # despite skipped readiness on main, without running after cancellation.
+        # Exercise the actual job expressions for main, ready/unready PRs,
+        # manual diagnostics, preparation and cancellation. Only accepted-main
+        # pushes allocate CodeQL; all eleven existing merge contexts stay gated.
         self.assertIn('!cancelled()', gates['codeql'])
         builds = {'source-qa', 'windows', 'windows-portable', 'reference-graph'}
         scenarios = [
             ('push', 'refs/heads/main', '', 'skipped', '', False, {'codeql'}),
             ('push', 'refs/heads/feature', '', 'skipped', '', False, set()),
             ('push', 'refs/heads/main', '', 'skipped', '', True, set()),
-            ('pull_request', 'refs/pull/1/merge', '', 'success', 'true', False, builds | {'codeql'}),
+            ('pull_request', 'refs/pull/1/merge', '', 'success', 'true', False, builds),
             ('pull_request', 'refs/pull/1/merge', '', 'success', 'false', False, set()),
             ('pull_request', 'refs/pull/1/merge', '', 'failure', 'true', False, set()),
             ('pull_request', 'refs/pull/1/merge', '', 'cancelled', 'true', True, set()),
-            ('workflow_dispatch', 'refs/heads/feature', 'diagnostic', 'success', 'true', False, builds | {'codeql'}),
+            ('workflow_dispatch', 'refs/heads/feature', 'diagnostic', 'success', 'true', False, builds),
+            ('workflow_dispatch', 'refs/heads/main', 'diagnostic', 'success', 'true', False, builds),
             ('workflow_dispatch', 'refs/heads/feature', 'synchronize-pr', 'skipped', '', False, set()),
         ]
         for event, ref, operation, result, run_tests, cancelled, expected in scenarios:
@@ -888,7 +890,7 @@ class ValidationReadinessTests(unittest.TestCase):
                 prepare = self.workflow_expression(gates['sync-request'], context)
                 self.assertEqual(event == 'workflow_dispatch' and operation == 'synchronize-pr', prepare)
                 selection = re.search(r'^          sha: (.+)$', blocks['codeql'], re.M)[1]
-                self.assertEqual(('a' if event == 'push' else 'b')*40,
+                self.assertEqual('a'*40,
                                  self.workflow_expression(selection, context))
         trigger = workflow.split('\npermissions:', 1)[0]
         self.assertNotIn('opened', trigger)

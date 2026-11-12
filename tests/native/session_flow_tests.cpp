@@ -29,12 +29,13 @@ struct Handler final:srv::Handler {
     std::string process_message_033d70(std::string_view)override{return response;}
     srv::PreparedResponse prepare_response(std::string_view)override{++processed;return {response,std::make_unique<Receipt>(stats)};}
 };
+struct DispatchRefused {};
 struct Scheduler final:srv::Scheduling {
-    std::deque<std::function<void()>> io,jobs;bool failed=false;
+    std::deque<std::function<void()>> io,jobs;bool failed=false,refuse_dispatch=false;unsigned dispatches=0;
     std::size_t frame_limit=8,response_limit=16;
     void post_io(std::function<void()> fn)override{io.push_back(std::move(fn));}
     void launch_detached(std::function<void()> fn)override{jobs.push_back(std::move(fn));}
-    void dispatch_write(std::function<void()> fn)override{post_io(std::move(fn));}
+    void dispatch_write(std::function<void()> fn)override{++dispatches;if(refuse_dispatch)throw DispatchRefused{};post_io(std::move(fn));}
     bool ordered_handlers()const override{return true;}
     bool async_greeting()const override{return true;}
     std::size_t max_frame_bytes()const override{return frame_limit;}
@@ -111,7 +112,7 @@ struct Random final:msg::Random {
     msg::Key key_from_response_034c30(std::string_view)override{return {};}
 };
 struct PendingEvent final:msg::EventQueue {
-    bool present=true,reserved=false;unsigned inspections=0,commits=0;
+    bool present=true,reserved=false;unsigned inspections=0,commits=0,cancellations=0;
     std::int32_t count=1;
     bool nonempty_relaxed()const override{return present;}
     int lock_04a6ac()override{++inspections;return 0;}
@@ -121,7 +122,7 @@ struct PendingEvent final:msg::EventQueue {
     void pop_front_locked()override{throw std::logic_error("ordered session must use a receipt");}
     void unlock_04a6b4()override{}
     std::uint64_t reserve_front_locked()override{require(!reserved&&present,"one live event reservation");reserved=true;return 1;}
-    bool finish_reserved(std::uint64_t token,bool success)noexcept override{if(token!=1||!reserved)return false;reserved=false;if(success){present=false;++commits;}return true;}
+    bool finish_reserved(std::uint64_t token,bool success)noexcept override{if(token!=1||!reserved)return false;reserved=false;if(success){present=false;++commits;}else ++cancellations;return true;}
 };
 struct ProtocolEffects final:msg::Effects,citrine_eclipse_mirage::misc_handlers::NoResponse,msg::UnknownMessageEffects {
     unsigned silent=0,valid=0,invalid=0,diagnostics=0;bool reference_invalid=false;std::string unknown_request;
@@ -241,6 +242,63 @@ void invalid_dispatch_stops_ordered_admission() {
     }
 }
 
+void response_dispatch_refusal() {
+    // A worker has finished preparation, but the IO executor refuses ownership.
+    // Exercise real Session/bridge/core receipt unwind with a controlled
+    // pre-enqueue exception. Native post allocation and peer close are not run.
+    for(bool encrypted:{false,true})for(bool coalesced:{false,true}) {
+        PendingEvent events;
+        const auto request=[](std::string_view id,bool encoded){
+            std::string value="<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'><GetInternetConnectedState/></Request></LSX>";
+            if(encoded)msg::hex_encode_03d190(value);value.push_back('\0');return value;
+        };
+        {
+            citrine_eclipse_mirage::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;ProtocolEffects effects;
+            std::uint8_t mode=0,unknown=0,show=0;const std::string version="fixture";
+            citrine_eclipse_mirage::session_bridge::MessageHandler handler({mode,unknown,show,version,cipher,events},xml,factory,random,effects);
+            Scheduler scheduling;scheduling.frame_limit=scheduling.response_limit=4096;
+            Transport transport;transport.max_request=4096;srv::Session session(transport,scheduling,handler);
+            session.start_025720();transport.complete(transport.writes.front().bytes.size());transport.sent.clear();mode=encrypted;
+            const auto greeting_sends=transport.sends;
+            const auto first=request("first",encrypted),next=request("blocked",encrypted);
+            transport.deliver(coalesced?first+next:first);scheduling.drain();
+            require(scheduling.jobs.size()==1,"dispatch refusal starts with one ordered worker");
+            scheduling.refuse_dispatch=true;
+            bool refused=false;try{scheduling.job();}catch(const DispatchRefused&){refused=true;}
+            require(refused&&scheduling.dispatches==1&&effects.valid==1,"prepared response reaches the selected pre-enqueue refusal exactly once");
+            require(events.present&&!events.reserved&&events.commits==0&&events.cancellations==(encrypted?1u:0u),
+                    "refused response handoff releases its reservation without acknowledging the event");
+            require(events.inspections==(encrypted?1u:0u)&&cipher.encryptions==(encrypted?2u:0u),
+                    "encrypted response and event preparation occur before the refusal; plaintext does not select an event");
+            require(transport.sends==greeting_sends&&transport.writes.empty()&&transport.sent.empty(),"dispatch refusal exposes no response buffer to transport");
+            require(!transport.read&&scheduling.io.empty()&&scheduling.jobs.empty()&&session.queued_messages()==0&&
+                    session.buffered_input()==(coalesced?next:std::string{}),"dispatch refusal neither rearms receive nor executes the buffered successor");
+            session.cancel_output();
+            require(events.cancellations==(encrypted?1u:0u)&&events.commits==0,"later output cancellation cannot settle the refused owner again");
+        }
+        // The failed peer does not resume. A separate Session sharing the queue
+        // retries the released event and acknowledges it only after full output.
+        citrine_eclipse_mirage::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;ProtocolEffects effects;
+        std::uint8_t mode=0,unknown=0,show=0;const std::string version="fixture";
+        citrine_eclipse_mirage::session_bridge::MessageHandler handler({mode,unknown,show,version,cipher,events},xml,factory,random,effects);
+        Scheduler scheduling;scheduling.frame_limit=scheduling.response_limit=4096;
+        Transport transport;transport.max_request=4096;srv::Session retry(transport,scheduling,handler);
+        retry.start_025720();transport.complete(transport.writes.front().bytes.size());transport.sent.clear();mode=1;
+        transport.deliver(request("retry",true));scheduling.drain();scheduling.job();
+        require(events.present&&events.reserved&&events.commits==0&&transport.writes.size()==1,"another Session reserves the same event before delivery without consuming it");
+        require(transport.writes.front().bytes.size()>1,"retry contains response and event bytes");
+        transport.complete(1);
+        require(events.present&&events.reserved&&events.commits==0&&!transport.read,"partial retry output cannot acknowledge the event or resume input");
+        while(!transport.writes.empty())transport.complete(transport.writes.front().bytes.size());
+        std::string expected="<LSX>\n    <Response id=\"retry\" sender=\"EbisuSDK\">\n        <InternetConnectedState connected=\"1\"/>\n    </Response>\n</LSX>\n";
+        msg::hex_encode_03d190(expected);expected.push_back('\0');
+        std::string event="queued-event";msg::hex_encode_03d190(event);expected+=event;expected.push_back('\0');
+        require(transport.sent==expected,"retry emits one exact response and the retained event in order");
+        require(!events.present&&!events.reserved&&events.commits==1&&events.cancellations==(encrypted?1u:0u),"full retry delivery acknowledges exactly once after the earlier refusal");
+        require(transport.read&&retry.buffered_input().empty()&&retry.queued_messages()==0&&!scheduling.failed,"successful retry Session rearms ordinary input");
+    }
+}
+
 void deadline_policy() {
     static_assert(std::is_constructible_v<net::SessionDeadlines,net::SessionPolicy&>);
     static_assert(std::is_constructible_v<net::SessionDeadlines,const net::SessionPolicy&>);
@@ -260,5 +318,5 @@ void deadline_policy() {
             "lvalue policy remains borrowed rather than snapshotted");
 }
 }
-int main()try{delivery_and_order();failure_and_buffer_lifetime();no_response_same_session();unknown_message_same_session();invalid_dispatch_stops_ordered_admission();deadline_policy();std::cout<<"PASS: "<<checks<<" delivery/FIFO/buffer ownership/deadline checks\n";}
+int main()try{delivery_and_order();failure_and_buffer_lifetime();no_response_same_session();unknown_message_same_session();invalid_dispatch_stops_ordered_admission();response_dispatch_refusal();deadline_policy();std::cout<<"PASS: "<<checks<<" delivery/FIFO/buffer ownership/deadline checks\n";}
 catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

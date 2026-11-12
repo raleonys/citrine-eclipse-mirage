@@ -97,3 +97,73 @@ gate requires all eleven source/portable/Windows/reference contexts. See
 [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md) for scheduling and exact-head checks.
 Merge records, configured tests and skipped jobs do not substitute for
 executed native or Golden evidence. Owner game acceptance remains separate.
+
+## Registry allocation-failure assertions
+
+The `portable_registry_rollback` direct-fabrication assertion disarms its allocation
+probe before constructing any diagnostic. It records the operation's bad_alloc
+and requires an observed injected fault, then checks caller status/output and
+exact ownership rollback. A diagnostic allocation cannot satisfy the operation's
+expected failure. This controlled-effects fixture is separate from native Registry
+hook/SDK and Consumer execution.
+
+## Accepted-client publication rollback
+
+`socket_retirement_contracts` includes a controlled failure after an accepted
+Client is constructed but before its client-list insertion. The private source
+fixture selects a throwing list; ordinary builds retain std::vector. This is
+a tagged pre-insertion failure, not evidence of real allocator exhaustion. The
+fixture requires unpublished Client/Handler destruction without a session slot,
+normal-close admission rearm, and exact retained native ownership when close
+would block. Repair must drain cancellation and close the retained socket once.
+The complete fixture remains a Windows socket/IOCP test; a POSIX projection,
+cross-build or syntax check does not establish native Windows execution.
+
+## Prepared-response Asio post ownership
+
+The `post-owner` case in `net_failure_contracts` uses an unopened actual Client
+and polls its executor on the controller. Accepted submission, one failed
+allocation and a successful retry must preserve counted response bytes and
+settle each controlled receipt once. Failed initiation must release the final
+response owner and propagate bad_alloc without executing its callback. No
+listener or worker is started, and explicit callback settlement is not socket
+delivery. The native fixture retains its Windows allocator/IOCP coverage; a
+POSIX projection or cross-build cannot establish that native execution.
+
+## Raw Config2 selection-copy order
+
+`portable_config_application` runs the existing configuration application fixture
+through the actual raw-byte parser, selected subtree copy and section application.
+The literal Content IDs a/i and b/j collide at eight buckets but differ at 64,
+so exact resulting order detects an omitted selection copy even when scalar
+values and counts agree. The override must retain that same order. Memory-backed
+input, BOM, path/log and failure checks remain active. Only the Windows
+NativeFactory generated-file tail is excluded in this portable target; the
+ordinary `config_application_contracts` target retains it. Portable results do
+not establish native filesystem, original-DLL or Consumer execution.
+
+## Config2 lookup allocation rollback
+
+The Config2 hash fixture measures a successful borrowed-key lookup, then faults
+each observed throwing data allocation in a fresh eight-child owner. Failure
+must remove the provisional child and orphan traversal key while retaining
+existing child/nested-child addresses and recursive payloads. An independent
+list-splice oracle checks traversal before and after published 8-to-64 rehash;
+a late failure may retain the larger valid table. Retry uses an owned key,
+never the potentially invalidated borrowed view. Allocation counts are measured,
+not fixed across libraries. Checked MSVC iterator-proxy bookkeeping remains
+enabled and explicitly unfaulted, as in the existing assignment campaigns.
+The same fixture remains registered in portable and native hash tests.
+
+## Prepared-response dispatch refusal
+
+The ordered Session composition fixture refuses response dispatch before the
+controlled IO queue accepts ownership, across plaintext/controlled-encrypted
+and isolated/coalesced requests. The original exception must propagate without
+output, receive rearm or buffered-successor admission. Encrypted preparation
+must cancel its event reservation once; a separate Session sharing the queue
+retries the exact event, retaining it through partial output and acknowledging
+it only after full delivery. Actual Session, bridge, message core, XML reader
+and EventDelivery participate; cipher, queue, scheduler and transport effects
+are controlled. This complements actual Asio post-allocation coverage and does
+not establish socket, worker-pool, OS allocation or Consumer execution.

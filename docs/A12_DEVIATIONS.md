@@ -15,6 +15,12 @@ belongs to this proposal until owner integration; that main still accepts 498
 paired levels and rejects 499. This proposal accepts 98 and rejects 99 at the
 entered-child-list boundary, matching the selected A12 source profile.
 
+Integration baseline for this synchronization: `main@d91c54c99afd12ef65868f7996bd589f148ae35c`.
+It includes accepted #280 rollback-matrix coverage and later regressions through
+#273. The 85-row A12 crosswalk and source probes retain the review snapshot
+identified above; fresh XML validation belongs to the synchronized PR head
+recorded in its description.
+
 A12 authority: retained `research/reconstruction-package@56eab8795fa65325e4fa6fe31a645eb55cc58469`;
 nine-part archive SHA-256
 `539fc80596bfa058afdfe74b01cee95c1c1b807be3e983127510e4dc170acb6d`.
@@ -44,7 +50,7 @@ A12 code or silently reversing accepted product policies.
 | D02 | XML depth | Depth-100 profile: 98 paired levels succeed, 99 fails with error 18; a self-closed level-99 leaf remains allowed. | Main uses the historical depth-500 profile (498/499). **This proposal aligns the selected depth contract to A12**, with preserved error priority, explicit old-control deltas and no vendor modification. |
 | D03 | Numeric/entity value decoding | Selected TinyXML2 compatibility value path is not the corrected #108 product decoder. | Checked Unicode bounds and literal preservation of malformed/unknown references remain deliberate safety/correctness differences. The 20 old corpus value corrections are retained. Depth agreement does not remove these differences or prove all malformed-input parity. |
 | D04 | Asynchronous event delivery | Pure source message path eagerly dequeues an event even when encryption fails. | Pure source path retains its selected behavior; prepared asynchronous responses instead reserve/settle delivery, retain on failure and unlock exception-safely. Keep accepted #143/#173/#248/#340; do not copy eager dequeue into the asynchronous owner. |
-| D05 | Achievement multi-file persistence | Separate plain XML/INI writes; supplied writer ignores its boolean write result. | Product uses a native atomic batch with explicit failure/rollback/recovery ownership. Keep accepted safety semantics; #280 owns additional rollback-matrix work. A plain donor write is not a substitute for the product transaction. |
+| D05 | Achievement multi-file persistence | Separate plain XML/INI writes; supplied writer ignores its boolean write result. | Product uses a native atomic batch with explicit failure/rollback/recovery ownership. Keep accepted safety semantics; accepted #280 adds rollback-matrix coverage. A plain donor write is not a substitute for the product transaction. |
 | D06 | Achievement path components | Selected source constructs paths without the complete accepted product Windows component policy. | Product rejects unsafe XML/watcher path components and reserved native names (#179/#261), including documented Windows scope/alias exceptions. Keep safety policy; do not claim all paths are now source-equivalent. |
 | D07 | Achievement INI sections | Source serializer emits selected map keys directly. | Product rejects watcher section injection (#188). Names containing structural delimiters can have different outcomes. Keep the accepted safe serialization boundary. |
 | D08 | Achievement numeric input | A12 storage requires Numbers effects; that source alone does not define every native overflow outcome. | Product provides checked 32-bit decimal/hex adapters (#205). This concrete guard/model difference is recorded; exact A12 native invalid-value behavior and private CRT conversion ABI remain unproved. |
@@ -58,7 +64,6 @@ A12 code or silently reversing accepted product policies.
 | D16 | Public DLL exports | Selected reconstruction image has CDX@1/RUNE@2/anadius@3 aliases at one RET leaf. | Product exports exactly DllMain@1/SURGE@2/DllShutdown@3. Both table and function purpose differ; the donor leaf does not prove functional return/init behavior. Keep the product ABI. |
 | D17 | Private CRT source applicability | Archive includes private PTD/FLS/heap/onexit/error-cell reconstructions and their layout/Effects assumptions. | Product keeps standard compiler CRT and separate static/shared CRT link graphs. These modules are not adopted. This does **not** assert that the current A12 linked DLL uses a private CRT; its entry uses compiler CRT. |
 | D18 | Authentication owner model | Optional immutable AuthenticationCode/OwnedAuthEffects binding adds owned auth state/copy capabilities. | Product retains a caller-owned fallback and immediately copies borrowed provider data (#186). This is a source/owner-model difference; it does not itself establish different normal auth bytes or a current bug. |
-
 | D19 | License-file XML text | A12 KeyForLicense appends counted key/ContentId/UserId bytes without XML escaping. | Product-owned writer escapes XML text before CBC (#223). Ordinary safe text retains its selected format, while metacharacter-containing input can yield different bytes. Keep the accepted injection/correctness fix; do not confuse this with the checked ticket writer. |
 
 ### Directly reproduced D03 value examples
@@ -128,10 +133,11 @@ Golden, original DLL and real Consumer/game acceptance are not claimed locally.
 Historical/native receipts in older PRs are not promoted to fresh runs here.
 
 Continue detailed source work in existing #119/#132/#136/#139/#140/#141/#178/#191,
-the separate retained ledger #236, loader #356 and Registry #357. Existing
-#280/#312/#322/#324/#334/#341/#346/#348 own their distinct proposed coverage;
-#355 owns performance evidence rather than automatic production tuning. The
-all-PR inventory is #358. These open scopes are not completion or retirement of
+the separate retained ledger #236, loader #356 and Registry #357. Separate
+coverage work is recorded in #312/#322/#324/#334; accepted #280/#341/#346/#348
+provide their scoped regression evidence. #355 owns performance evidence rather
+than automatic production tuning. The all-PR inventory is #358. These scopes
+are not completion or retirement of
 A12, other field archives, a module or the original-source reconstruction.
 
 This is the consolidated list of differences and proof gaps identified in the
