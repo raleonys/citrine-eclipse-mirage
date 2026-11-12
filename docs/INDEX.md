@@ -100,6 +100,7 @@ Issue #109's Registry provenance and original-donor retirement remain open.
 | [IDENTIFIER_POLICY.md](IDENTIFIER_POLICY.md) | Current | [../scripts/check_repository_contract.py](../scripts/check_repository_contract.py) |
 | [INDEX.md](INDEX.md) | Current | [../GOVERNANCE.md](../GOVERNANCE.md) |
 | [INFRASTRUCTURE_ADAPTATION.md](INFRASTRUCTURE_ADAPTATION.md) | Checkpoint | [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) |
+| [MESSAGE_ERROR_COMPATIBILITY.md](MESSAGE_ERROR_COMPATIBILITY.md) | Current | [../src/protocol/messages.cpp](../src/protocol/messages.cpp) |
 | [MSVC_NATIVE_LOOKUP_FIX.md](MSVC_NATIVE_LOOKUP_FIX.md) | Checkpoint | [DEVELOPMENT.md](DEVELOPMENT.md) |
 | [MSVC_PROFILE_FIX.md](MSVC_PROFILE_FIX.md) | Checkpoint | [DEVELOPMENT.md](DEVELOPMENT.md) |
 | [NATIVE_ALLOCATION_FIXTURE.md](NATIVE_ALLOCATION_FIXTURE.md) | Mixed | [../tests/native/net_failure_tests.cpp](../tests/native/net_failure_tests.cpp) |

@@ -11,6 +11,12 @@
 #include <set>
 #include <thread>
 #include <vector>
+#include <sstream>
+#include <functional>
+#include <condition_variable>
+#include <chrono>
+#include <cstdlib>
+#include <cstdio>
 namespace config_path_conversion {
 struct Observation {
     const citrine_eclipse_mirage::configuration::Path& path;
@@ -62,9 +68,9 @@ int WINAPI reverse_convert(UINT page,DWORD flags,LPCCH input,int count,LPWSTR ou
 #undef MultiByteToWideChar
 #undef WideCharToMultiByte
 namespace dialog {
-std::wstring body,title;unsigned calls=0;
+std::wstring body,title;unsigned calls=0;UINT expected_flags=MB_OK;std::function<void()> before_show;
 int WINAPI show(HWND,LPCWSTR text,LPCWSTR caption,UINT flags){
-    if(flags!=MB_OK)std::terminate();body=text;title=caption;++calls;return IDOK;
+    if(flags!=expected_flags)std::terminate();if(before_show)before_show();body=text;title=caption;++calls;return IDOK;
 }
 }
 namespace environment_path_fixture {
@@ -329,6 +335,52 @@ void unknown_entitlement_is_nonmodal_and_redacted(citrine_eclipse_mirage::applic
 }
 }
 
+// Fail this test process, rather than leave an unexpected real modal pending.
+// Production dialog behavior and the existing CTest budget are unchanged.
+class UnknownMessageModalWatchdog final {
+    std::mutex mutex_;
+    std::condition_variable changed_;
+    bool finished_=false;
+    std::thread worker_;
+public:
+    explicit UnknownMessageModalWatchdog(std::chrono::milliseconds budget)
+        :worker_([this,budget]{
+            std::unique_lock lock(mutex_);
+            if(!changed_.wait_for(lock,budget,[this]{return finished_;})){
+                std::fputs("FAIL: UnknownMessage test did not return from intercepted dialog\n",stderr);
+                std::_Exit(3);
+            }
+        }){}
+    ~UnknownMessageModalWatchdog(){
+        {std::lock_guard lock(mutex_);finished_=true;}
+        changed_.notify_one();worker_.join();
+    }
+    UnknownMessageModalWatchdog(const UnknownMessageModalWatchdog&)=delete;
+    UnknownMessageModalWatchdog& operator=(const UnknownMessageModalWatchdog&)=delete;
+};
+
+void actual_unknown_message_diagnostic(citrine_eclipse_mirage::application::detail::Environment& env){
+    UnknownMessageModalWatchdog watchdog(std::chrono::seconds(10));
+    using namespace citrine_eclipse_mirage;
+    struct Input final:messages::UnknownMessageInput{
+        std::string bytes=std::string("request-\xc3\xa9\0tail",15);
+        std::string_view view()const override{return bytes;}
+    } input;
+    std::ostringstream output;auto* previous=std::cout.rdbuf(output.rdbuf());
+    struct Restore{std::streambuf* previous;~Restore(){std::cout.rdbuf(previous);dialog::expected_flags=MB_OK;dialog::before_show={};}} restore{previous};
+    dialog::expected_flags=0x10;const auto before=dialog::calls;const auto original=input.bytes;
+    dialog::before_show=[&]{
+        if(output.str()!=std::string("[UNKNOWN MESSAGE]\n")+original+"\n")throw std::runtime_error("UnknownMessage counted console diagnostic must precede UI in Debug and Release");
+        input.bytes.assign(5000,'x'); // The SDK receives the already owned UTF16 copy.
+    };
+    env.unknown_message_07bd70(input);
+    if(dialog::calls!=before+1||dialog::title!=L"UNKNOWN MESSAGE"||dialog::body!=L"request-\u00e9")
+        throw std::runtime_error("UnknownMessage must preserve exact title, error flags, UTF8 conversion and SDK first-NUL display");
+    struct DialogFailure{};dialog::before_show=[]{throw DialogFailure{};};bool caught=false;
+    try{env.unknown_message_07bd70(input);}catch(const DialogFailure&){caught=true;}
+    if(!caught||dialog::calls!=before+1)throw std::runtime_error("UnknownMessage dialog failure must propagate without completion");
+}
+
 int main()try{
     using namespace citrine_eclipse_mirage;
     configuration::State state{};application::Options options;
@@ -350,4 +402,5 @@ int main()try{
     application::detail::Environment unknown_env{unknown_state,options,files,xml,paths,clock,formatter};
     logging_fixture::unknown_entitlement_is_nonmodal_and_redacted(unknown_env,unknown_state);
     std::cout<<"PASS: actual Environment unknown field diagnostics are nonmodal and redacted\n";
+    actual_unknown_message_diagnostic(env);
 }catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

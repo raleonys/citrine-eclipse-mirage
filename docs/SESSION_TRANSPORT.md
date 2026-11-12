@@ -61,9 +61,11 @@ an alias of that shared type.
 An ordered Session completes the empty result without a socket send, then
 admits the next buffered frame or rearms receive on the same connection. Cipher
 state and queued events remain intact; ordinary idle/frame deadlines still apply.
-No empty LSX Response or lone NUL is sent. Invalid requests, handler failures,
-allocation failures and other exceptions retain their existing error paths; this
-is not a catch-all continuation policy. Exit/dialog licensing behavior is unchanged.
+No empty LSX Response or lone NUL is sent. UnknownMessage dispatch rejection has
+its own selected [console/dialog continuation](MESSAGE_ERROR_COMPATIBILITY.md):
+only normal diagnostic return permits same-session progress. Ordinary handler,
+allocation, IO and diagnostic failures retain their error paths. NoResponse does
+not add a catch-all continuation policy or change licensing dialogs.
 
 Tests cover consecutive silent commands followed by a valid request, separately
 received and coalesced frames, plaintext/encrypted modes, retained events and the

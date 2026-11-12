@@ -10,6 +10,7 @@
 #include <functional>
 #include <limits>
 #include <map>
+#include <sstream>
 #include <stdexcept>
 #include <vector>
 using namespace citrine_eclipse_mirage::messages;
@@ -101,7 +102,7 @@ struct FakeRandom final:Random {
     Key challenge_bytes_034cf0()override{++challenges;Key k{};for(unsigned i=0;i<16;++i)k[i]=static_cast<std::uint8_t>(i);return k;}
     Key key_from_response_034c30(std::string_view response)override{++derivations;received=response;Key k{};k.fill(42);return k;}
 };
-struct FakeEffects final:Effects {
+struct FakeEffects:Effects {
     unsigned invalids=0,atoi_calls=0;
     bool handler_result=true,no_response=false,unexpected_failure=false;
     std::vector<std::uint32_t> handlers;
@@ -434,4 +435,86 @@ static void no_response_continuation_boundary(){
     check(propagated && f.queue.trace.empty() && f.queue.values.size()==1);
 }
 
-int main(){codec_tests();reset_tests();dispatch_tests();multi_command_request_contract_tests();challenge_tests();process_tests();process_invalid_dispatch_boundaries();encrypted_rekey_boundary();no_response_continuation_boundary();std::printf("PASS: %u checks; real and synthetic XML; actual AES rekey and controlled crypto/queue; no sockets or target execution\n",checks);}
+
+struct UnknownEffects final:FakeEffects,UnknownMessageEffects {
+    unsigned diagnostics=0;std::string observed;bool diagnostic_failure=false;
+    [[noreturn]]void invalid_message_02bd30_04d228()override{++invalids;throw UnknownMessageError{};}
+    void unknown_message_07bd70(const UnknownMessageInput& input)override{
+        ++diagnostics;observed=input.view();if(diagnostic_failure)throw UnknownMessageError{};
+    }
+};
+static void unknown_message_boundaries(){
+    for(bool encrypted:{false,true})for(bool show:{false,true})for(unsigned invalid=0;invalid<11;++invalid){
+        Fixture f;UnknownEffects effects;f.encrypted=encrypted;f.show=show;f.queue.values={"retained-event"};
+        f.xml.configure=[invalid](Document& d){switch(invalid){
+            case 0:d.has_root=false;break;case 1:d.root.label="OtherRoot";break;
+            case 2:d.root.first=nullptr;break;case 3:d.request.label="request";break;
+            case 4:d.request.next=&d.command;break;case 5:d.request.attributes.erase("id");break;
+            case 6:d.request.attributes.erase("recipient");break;case 7:d.request.first=nullptr;break;
+            case 8:d.command.label="Unregistered";break;
+            case 10:d.command.label="ChallengeResponse";break; // Missing challenge key.
+        }};
+        effects.handler_result=invalid!=9;
+        const std::string original("request\0counted-tail",20);
+        std::string input=encrypted?"41":original;
+        if(encrypted)f.cipher.trace->decrypt_outputs={original};
+        EventDelivery receipt;auto state=f.state();state.delivery=&receipt;
+        const auto output=process_message_033d70(state,input,f.xml,f.factory,f.random,effects);
+        check(output.empty()&&effects.invalids==1&&effects.diagnostics==1&&effects.observed==original);
+        check(f.encrypted==encrypted&&f.cipher.trace->encrypted.empty()&&f.queue.trace.empty()&&!receipt.pending());
+        check(f.queue.values==std::deque<std::string>{"retained-event"});
+        check(effects.logs==(show?std::vector<std::string>{"received:"+original}:std::vector<std::string>{}));
+        f.xml.configure={};effects.handler_result=true;std::string next=encrypted?"41":"next";
+        if(encrypted)f.cipher.trace->decrypt_outputs={"next"};
+        check(process_message_033d70(f.state(),next,f.xml,f.factory,f.random,effects)==
+              (encrypted?std::string("43\0" "43\0",6):std::string("R\0",2)));
+        check(effects.diagnostics==1&&f.queue.values.size()==(encrypted?0u:1u));
+    }
+    {Fixture f;UnknownEffects effects;effects.diagnostic_failure=true;f.xml.configure=[](Document& d){d.has_root=false;};
+     std::string input="bad";bool caught=false;
+     try{(void)process_message_033d70(f.state(),input,f.xml,f.factory,f.random,effects);}catch(const UnknownMessageError&){caught=true;}
+     check(caught&&effects.diagnostics==1&&f.queue.trace.empty());}
+    {struct MissingReporter final:FakeEffects{[[noreturn]]void invalid_message_02bd30_04d228()override{throw UnknownMessageError{};}} effects;
+     Fixture f;f.xml.configure=[](Document& d){d.has_root=false;};std::string input="bad";bool caught=false;
+     try{(void)process_message_033d70(f.state(),input,f.xml,f.factory,f.random,effects);}catch(const UnknownMessageError&){caught=true;}
+     check(caught&&f.queue.trace.empty());}
+    {Fixture f;UnknownEffects effects;effects.unexpected_failure=true;std::string input="ordinary failure";bool caught=false;
+     try{(void)process_message_033d70(f.state(),input,f.xml,f.factory,f.random,effects);}catch(const std::runtime_error&){caught=true;}
+     check(caught&&effects.diagnostics==0&&f.queue.trace.empty());}
+    {struct OrdinaryInvalid final:FakeEffects,UnknownMessageEffects{
+         unsigned diagnostics=0;
+         bool registered_handler(std::uint32_t,const XmlNode&,XmlPrinter&)override{throw std::invalid_argument("ordinary handler error");}
+         void unknown_message_07bd70(const UnknownMessageInput&)override{++diagnostics;}
+     } effects;Fixture f;std::string input="ordinary invalid argument";bool caught=false;
+     try{(void)process_message_033d70(f.state(),input,f.xml,f.factory,f.random,effects);}catch(const std::invalid_argument&){caught=true;}
+     check(caught&&effects.diagnostics==0&&f.queue.trace.empty());}
+    {struct BeforeDispatch final:FakeEffects,UnknownMessageEffects{
+         unsigned diagnostics=0;void log_received(std::string_view)override{throw UnknownMessageError{};}
+         void unknown_message_07bd70(const UnknownMessageInput&)override{++diagnostics;}
+     } effects;Fixture f;f.show=1;std::string input="outside dispatch";bool caught=false;
+     try{(void)process_message_033d70(f.state(),input,f.xml,f.factory,f.random,effects);}catch(const UnknownMessageError&){caught=true;}
+     check(caught&&effects.diagnostics==0&&effects.handlers.empty());}
+}
+static void unknown_message_diagnostic_order(){
+    struct Input final:UnknownMessageInput{std::string text="before";std::string_view view()const override{return text;}} input;
+    struct Buffer final:std::stringbuf{
+        Input& input;unsigned flushes=0;explicit Buffer(Input& i):input(i){}
+        int sync()override{++flushes;if(flushes==1)input.text=std::string("logged\0tail",11);else if(flushes==2)input.text=std::string(5000,'x');return 0;}
+    } buffer(input);std::ostream stream(&buffer);
+    struct Dialog final:UnknownMessageDialog{
+        Input& input;Buffer& buffer;unsigned calls=0;
+        Dialog(Input& i,Buffer& b):input(i),buffer(b){}
+        void show(std::string title,std::string body,std::uint32_t flags)override{
+            ++calls;check(buffer.flushes==2&&title=="UNKNOWN MESSAGE"&&flags==0x10);
+            check(buffer.str()==std::string("[UNKNOWN MESSAGE]\nlogged\0tail\n",30));
+            input.text="changed in dialog";check(body==std::string(5000,'x'));
+        }
+    } dialog(input,buffer);
+    report_unknown_message_07bd70(input,stream,dialog);check(dialog.calls==1);
+    struct FailingBuffer final:std::stringbuf{int sync()override{throw ConstructionFailure{};}} failure;
+    std::ostream failed(&failure);failed.exceptions(std::ios::badbit);bool caught=false;
+    try{report_unknown_message_07bd70(input,failed,dialog);}catch(...){caught=true;}
+    check(caught&&dialog.calls==1); // A failed diagnostic cannot fall through to UI/continuation.
+}
+
+int main(){codec_tests();reset_tests();dispatch_tests();multi_command_request_contract_tests();challenge_tests();process_tests();process_invalid_dispatch_boundaries();encrypted_rekey_boundary();no_response_continuation_boundary();unknown_message_boundaries();unknown_message_diagnostic_order();std::printf("PASS: %u checks; real and synthetic XML; actual AES rekey and controlled crypto/queue; no sockets or target execution\n",checks);}
