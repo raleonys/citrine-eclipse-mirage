@@ -30,7 +30,7 @@ It does not claim full import/byte/edge-case equivalence with the historical
 Anadius CRT. LLVM/Wine tests do not replace actual Windows testing of the
 Microsoft STL implementation.
 
-## Checked license ticket writes (F-C24-001 candidate)
+## Integrated checked license ticket writes (F-C24-001)
 
 The original `write_binary_03c1d0` remains unchanged because it
 intentionally reflects the recovered RE initial-open-only success rule.
@@ -67,8 +67,8 @@ does not prove that Production wrote it. An integration regression checks
 this distinction in both build configurations.
 
 The owner confirmed game startup with the earlier startup-build-fix package.
-Actual Windows/MSVC and game reruns remain required for the new I/O/build
-configuration. Current results are in
+Actual Windows/MSVC and game reruns were still required for the I/O/build
+correction at that checkpoint. Its historical results are in
 `metadata/evidence/WINDOWS_IO_FIX.json`.
 
 ## Required import DLL order
@@ -81,8 +81,12 @@ values and guards all other bytes. It fails closed if the module set differs.
 The null descriptor is preserved, the checksum recomputed, and CORVEXON
 separately verifies final order.
 
-This order applies only to `dist/citrine_eclipse_mirage.dll` after Golden finalization.
-The raw `build/citrine_eclipse_mirage.unsigned.dll` retains linker order. The LLVM
+The current order applies to both `dist/citrine_eclipse_mirage.dll` after
+Golden finalization and the normalized unsigned MSVC application artifact.
+The raw link initially has linker order; current MSVC application builds
+then normalize the unsigned artifact's import descriptors before inspection.
+See [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) for that later rule.
+The unsigned DLL remains separate from the Golden-finalized copy. The LLVM
 development DLL includes dynamic CRT modules and cannot count as shipping
 acceptance; runtime load/LSX/shutdown/unload tests of the same permutation
 helper are separately evidenced.

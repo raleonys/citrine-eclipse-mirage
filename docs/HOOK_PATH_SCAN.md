@@ -10,7 +10,8 @@ NUL: a valid path can therefore contain at most 32767 non-NUL units. A terminato
 at the final permitted unit is accepted; a terminator just beyond it is not read.
 No CFG, provider or environment override is introduced.
 
-Only a 15-unit circular suffix buffer is retained. Native inspection and selection
+Only a 15-unit circular suffix buffer for the `preloader_l.dll` compatibility
+suffix is retained. This suffix is independent of the current shipping DLL name. Native inspection and selection
 perform no C++ heap allocation, no whole-path copy and no UTF-8 conversion. The
 original CryptQueryObject API and unrelated hook infrastructure may allocate;
 this is not a claim that the entire API invocation is allocation-free. The callback
@@ -43,6 +44,16 @@ Windows read. A test-only global C++ allocation observer counts requests during
 inspection; input strings and fixture storage are prepared outside that scope.
 The native callback suite separately checks forwarding, output pointers, LastError
 and active-call lifetime. Current evidence: metadata/evidence/HOOK_PATH_SCAN.json.
+
+The `portable_crypt_path_probe` CMake check compiles the unchanged scanner and
+the existing controlled-reader fixture without a Windows SDK. It covers the ring
+buffer, UTF-16, scan/read bounds, allocation observer and integer address guards
+under the same 30-second test budget. Its target-local definition excludes only
+the native reader and reports that exclusion in its output. Default Windows
+`crypt_path_probe_contracts` retains the full protected-memory reader, including
+partial code units and read-only pages; portable success does not establish those
+native results. The selector interface uses standard C++ types, while the Windows
+host adapter and native fixture own their SDK includes.
 
 This adoption resolves the bounded-scan advantage identified in the hook11 source
 comparison. That comparison identified no further required hook11 transfer; it is

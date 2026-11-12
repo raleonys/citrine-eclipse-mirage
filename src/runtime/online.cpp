@@ -82,11 +82,19 @@ void load_online_035bd0(StateRefs state, Effects& effects) {
         if (exists_035b00(state.last_avatar_0a3a60, effects))
             state.avatar_0a3a90 = state.last_avatar_0a3a60;
         const auto profile = effects.read_binary_03b3f0(state.last_profile_0a3a40);
-        const auto fields = split_profile_fields_03cf00(profile);
-        if (fields.size() == 3) {
-            state.persona_id_0a3bf8 = fields[0];
-            state.user_id_0a3c18 = fields[1];
-            state.username_0a3bd8 = fields[2];
+        // The shared split helper intentionally accepts unlimited fields, but
+        // this offline cache accepts exactly three. Reject the wrong delimiter
+        // count before allocating a vector proportional to the file contents.
+        const auto first = profile.find(';');
+        const auto second = first == std::string::npos ? first : profile.find(';', first + 1);
+        if (second != std::string::npos &&
+            profile.find(';', second + 1) == std::string::npos) {
+            const auto fields = split_profile_fields_03cf00(profile);
+            if (fields.size() == 3) {
+                state.persona_id_0a3bf8 = fields[0];
+                state.user_id_0a3c18 = fields[1];
+                state.username_0a3bd8 = fields[2];
+            }
         }
         return;
     }

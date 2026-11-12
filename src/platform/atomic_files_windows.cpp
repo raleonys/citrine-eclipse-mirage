@@ -4,9 +4,11 @@
 #include <windows.h>
 #include <algorithm>
 #include <atomic>
+#include <climits>
 #include <filesystem>
 #include <mutex>
 #include <system_error>
+#include <stdexcept>
 #include <vector>
 #include <exception>
 
@@ -16,6 +18,27 @@ namespace {
     throw std::system_error(static_cast<int>(error),std::system_category(),operation);
 }
 std::wstring wide(const Path& path){return {path.begin(),path.end()};}
+// Windows paths may name one file with different casing. The generic
+// AtomicFiles ledger compares literal Path bytes; reject unambiguous aliases
+// before staging two independent rollback entries for the same destination.
+// This is not a claim to resolve every hardlink, reparse or 8.3 alias.
+void validate_windows_batch_targets(std::span<const FileWrite> writes) {
+    for(std::size_t i=0;i<writes.size();++i) {
+        const auto& target=writes[i].path;
+        if(target.empty())throw std::invalid_argument("Empty atomic destination");
+        if(target.find(u'\0')!=Path::npos)
+            throw std::invalid_argument("Atomic destination contains an embedded NUL");
+        if(target.size()>INT_MAX)throw std::length_error("Atomic destination exceeds Windows comparison length");
+        const auto current=wide(target);
+        for(std::size_t j=0;j<i;++j) {
+            const auto earlier=wide(writes[j].path);
+            const auto result=CompareStringOrdinal(earlier.c_str(),static_cast<int>(earlier.size()),
+                current.c_str(),static_cast<int>(current.size()),TRUE);
+            if(result==0)fail("compare Windows atomic destinations");
+            if(result==CSTR_EQUAL)throw std::invalid_argument("Duplicate Windows atomic destination");
+        }
+    }
+}
 Path sibling(const Path& target) {
     static std::atomic<unsigned long long> next{0};
     const auto suffix=".surge-"+std::to_string(GetCurrentProcessId())+"-"+std::to_string(++next)+".tmp";
@@ -139,7 +162,12 @@ struct NativeFactory::AtomicOwner {
 NativeFactory::NativeFactory():atomic_(std::make_unique<AtomicOwner>()){}
 NativeFactory::~NativeFactory()=default;
 void NativeFactory::replace_atomic(std::span<const FileWrite> writes) {
-    std::lock_guard lock(atomic_->mutex);atomic_->files.replace(writes);
+    std::lock_guard lock(atomic_->mutex);
+    // Preserve the original recovery-before-new-batch ordering, including
+    // when the requested batch has invalid or aliased Windows names.
+    atomic_->files.recover();
+    validate_windows_batch_targets(writes);
+    atomic_->files.replace(writes);
 }
 void NativeFactory::recover_atomic() {
     std::lock_guard lock(atomic_->mutex);atomic_->files.recover();

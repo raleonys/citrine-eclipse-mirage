@@ -72,7 +72,7 @@
   "session_transport_policy": "metadata/SESSION_TRANSPORT_POLICY.json",
   "hook_path_scan_policy": "metadata/HOOK_PATH_SCAN_POLICY.json",
   "build_partition_policy": "metadata/BUILD_PARTITION_POLICY.json",
-  "production_first_party_tus": 60,
+  "production_first_party_tus": 62,
   "retained_reference_tus": 78,
   "retained_reference_sources_deleted": false,
   "previous_validation_status": "metadata/evidence/avatar-update/VALIDATION.json",

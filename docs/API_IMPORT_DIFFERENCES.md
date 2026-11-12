@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [RE_COPY_RECOVERY.md](RE_COPY_RECOVERY.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 > Current copy helper: [RE_COPY_RECOVERY.md](RE_COPY_RECOVERY.md).
 > Detailed library/linker investigation:
 > [API_IMPORT_RESEARCH.md](API_IMPORT_RESEARCH.md).
@@ -5,7 +8,7 @@
 # Assessment of the latest import comparison
 
 Input: eleven API differences supplied by the owner for Anadius and the
-current MSVC DLL. No new native DLL or linker MAP file was provided.
+MSVC DLL examined at that comparison checkpoint. No new native DLL or linker MAP file was provided.
 The source-level evidence below is distinct from definitive identification
 of callers at binary level. An import's presence does not prove its call
 executes during normal startup, nor does its absence alone prove that a
@@ -36,7 +39,7 @@ call path and error conditions.
 
 Evidence paths: `src/platform/crypt_query_host.cpp`;
 `src/runtime/application.cpp`; `src/platform/status_windows.cpp`;
-`third_party/asio/asio/include/asio/detail/win_mutex.hpp` and
+`third_party/asio/include/asio/detail/win_mutex.hpp` and
 `impl/win_iocp_io_context.ipp`. Original RE and Bluefield donor files remain
 preserved inputs outside the product tree. The MSVC STL thread reference at
 `build/qa/MSVC_STL_cthread_reference.cpp` is diagnostic evidence, not a
