@@ -106,3 +106,15 @@ and requires an observed injected fault, then checks caller status/output and
 exact ownership rollback. A diagnostic allocation cannot satisfy the operation's
 expected failure. This controlled-effects fixture is separate from native Registry
 hook/SDK and Consumer execution.
+
+## Accepted-client publication rollback
+
+`socket_retirement_contracts` includes a controlled failure after an accepted
+Client is constructed but before its client-list insertion. The private source
+fixture selects a throwing list; ordinary builds retain std::vector. This is
+a tagged pre-insertion failure, not evidence of real allocator exhaustion. The
+fixture requires unpublished Client/Handler destruction without a session slot,
+normal-close admission rearm, and exact retained native ownership when close
+would block. Repair must drain cancellation and close the retained socket once.
+The complete fixture remains a Windows socket/IOCP test; a POSIX projection,
+cross-build or syntax check does not establish native Windows execution.
