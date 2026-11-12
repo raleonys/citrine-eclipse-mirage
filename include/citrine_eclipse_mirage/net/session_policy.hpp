@@ -28,7 +28,10 @@ class SessionDeadlines final {
 public:
     using Clock=std::chrono::steady_clock;
     using Time=Clock::time_point;
+    // The borrowed policy must outlive this tracker, as the service owner does.
+    // Reject temporaries whose lifetime ends before the first deadline update.
     explicit SessionDeadlines(const SessionPolicy& policy):policy_(policy){}
+    SessionDeadlines(const SessionPolicy&&)=delete;
     void begin_receive(Time now,bool buffered) {
         if(receive_)return;
         receive_=now+policy_.receive_idle;

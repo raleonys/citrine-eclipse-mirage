@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-only
-name: Windows MinHook single-disable acceptance
+name: Windows MinHook safety acceptance
 
 on:
   workflow_dispatch:
@@ -22,10 +22,10 @@ jobs:
     steps:
       - name: Preserve repository bytes
         run: git config --global core.autocrlf false
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
       - name: Configure focused native hook acceptance
@@ -33,29 +33,51 @@ jobs:
           $build = 'build/ci-hook-${{ matrix.configuration }}'
           cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF
           if ($LASTEXITCODE -ne 0) { throw 'MSVC hook configure failed' }
+      - name: Verify actual generated test target ownership
+        run: |
+          $build = 'build/ci-hook-${{ matrix.configuration }}'
+          python -B scripts/check_build_partition.py --build-dir $build --config '${{ matrix.configuration }}' --graph-only --report "$build/hook-partition.json"
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC hook target ownership failed' }
       - name: Build actual patched engine and upstream comparison tests
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target hook_freeze_contracts hook_engine_fixture_tests hook_real_peer_contracts hook_real_peer_stale_control --parallel 2 2>&1 | Tee-Object -FilePath "$build/hook-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target hook_freeze_contracts hook_engine_fixture_tests hook_real_peer_contracts hook_real_peer_stale_control hook_live_calls_contracts hook_thread_churn_contracts hook_cleanup_create_control hook_cleanup_remove_control hook_cleanup_enable_control hook_cleanup_queue_control hook_cleanup_apply_control --parallel 2 2>&1 | Tee-Object -FilePath "$build/hook-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC hook build failed' }
+      - name: Bind focused test binaries to their source commit
+        run: |
+          $build = 'build/ci-hook-${{ matrix.configuration }}'
+          $targets = @('hook_freeze_contracts','hook_engine_fixture_tests','hook_real_peer_contracts',
+            'hook_real_peer_stale_control','hook_live_calls_contracts','hook_cleanup_create_control',
+            'hook_cleanup_remove_control','hook_cleanup_enable_control','hook_cleanup_queue_control',
+            'hook_cleanup_apply_control','hook_thread_churn_contracts')
+          $binaries = foreach ($target in $targets) {
+            $path = Join-Path $build '${{ matrix.configuration }}' "$target.exe"
+            @{ target = $target; sha256 = (Get-FileHash -Algorithm SHA256 $path).Hash.ToLowerInvariant() }
+          }
+          @{ commit = '${{ github.sha }}'; configuration = '${{ matrix.configuration }}'; binaries = @($binaries) } |
+            ConvertTo-Json -Depth 4 | Set-Content -Encoding utf8 "$build/hook-binary-identities.json"
       - name: Run native hook regressions
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
           $junit = Join-Path (Resolve-Path $build) 'hook-junit.xml'
-          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(hook_freeze_contracts|hook_engine_fixtures|hook_real_peer_contracts|hook_real_peer_stale_control)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/hook-ctest.log"
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(hook_freeze_contracts|hook_engine_fixtures|hook_real_peer_contracts|hook_real_peer_stale_control|hook_live_calls_contracts|hook_thread_churn_contracts|hook_cleanup_(create|remove|enable|queue|apply)_control)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/hook-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC hook regression failed' }
       - name: Preserve native hook evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: msvc-hook-${{ matrix.configuration }}-evidence
           path: |
             build/ci-hook-${{ matrix.configuration }}/hook-build.log
             build/ci-hook-${{ matrix.configuration }}/hook-ctest.log
             build/ci-hook-${{ matrix.configuration }}/hook-junit.xml
+            build/ci-hook-${{ matrix.configuration }}/hook-binary-identities.json
+            build/ci-hook-${{ matrix.configuration }}/hook-partition.json
             build/ci-hook-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
             build/ci-hook-${{ matrix.configuration }}/vendor_build/minhook/src/hook.c
             build/ci-hook-${{ matrix.configuration }}/test_controls/minhook/src/hook.c
+            build/ci-hook-${{ matrix.configuration }}/test_controls/hook_cleanup/
+            build/ci-hook-${{ matrix.configuration }}/${{ matrix.configuration }}/hook*.exe
             build/ci-hook-${{ matrix.configuration }}/CMakeCache.txt
             build/ci-hook-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
             metadata/HOOK_ENGINE_PATCH.json
