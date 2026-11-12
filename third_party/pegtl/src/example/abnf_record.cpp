@@ -14,14 +14,14 @@ int main()
 #include <iostream>
 
 #include <tao/pegtl.hpp>
-#include <tao/pegtl/example/abnf_abnf.hpp>
 #include <tao/pegtl/extra/record.hpp>
+#include <tao/pegtl/example/abnf_abnf.hpp>
 
 #include "abnf_errors.hpp"
 
 namespace pegtl = TAO_PEGTL_NAMESPACE;
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    if( argc != 2 ) {
       std::cerr << "Usage: " << argv[ 0 ] << " ABNF\n"
@@ -47,7 +47,7 @@ int main( int argc, char** argv )
       const auto& p = e.position_object();
       std::cerr << e.what() << '\n'
                 << in.line_view_at( p ) << '\n'
-                << std::setw( static_cast< int >( p.count ) ) << '^' << std::endl;
+                << std::setw( int( p.count ) ) << '^' << std::endl;
       return 1;
    }
    return 0;

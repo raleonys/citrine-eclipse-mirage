@@ -11,7 +11,7 @@ def generate(root, output):
     root, output = Path(root), Path(output)
     contract = json.loads((root/'metadata/AVATAR_DATA_CONTRACT.json').read_text(encoding='utf-8'))
     text = ['#pragma once', '// Generated from pinned PNG inputs; not a PE resource.',
-            'namespace preloader_l::application::detail::avatar_data {']
+            'namespace citrine_eclipse_mirage::application::detail::avatar_data {']
     for symbol in ('profile', 'fallback'):
         spec = contract['assets'][symbol]
         path = root/spec['source']
@@ -26,7 +26,14 @@ def generate(root, output):
         text.append('};')
     text.append('}')
     result='\n'.join(text)+'\n'
+    # Reject aliases before mkdir: even directory creation may escape through one.
+    components = (output, *output.parents)
+    if any(p.is_symlink() or getattr(p, 'is_junction', lambda: False)()
+           for p in components):
+        raise ValueError('Avatar output cannot traverse a symlink or junction')
     output.parent.mkdir(parents=True,exist_ok=True)
+    if output.exists() and (not output.is_file() or output.stat().st_nlink != 1):
+        raise ValueError('Avatar output must be an unshared regular file')
     if not output.exists() or output.read_text(encoding='utf-8')!=result:
         output.write_text(result,encoding='utf-8')
 

@@ -86,17 +86,16 @@ it does not rewrite, re-encode or publish source files.
 ## Confirmed content and protected follow-ups
 
 The immediate preceding translation batches completed the
-first-party `docs/*.md` prose pass. The remaining identified
-foreign-language prose in `tools/README.md` is included in
-PR #48. Active top-level metadata and scripts received a
+first-party `docs/*.md` prose pass. The then-identified
+foreign-language prose in `tools/README.md` was handled in PR #48. Active top-level metadata and scripts received a
 character-level screening; that screening alone did not
 establish the meaning of every field or code string.
 
-The root `README.md` still includes a pre-transfer GitHub
-Actions link and historical public-facing naming. That is
-a **separate public-identity/README decision**, not an automatic
-translation or authorization to rename C++ targets, ABI exports,
-resources or release artifacts.
+The old root README link and branding follow-up was subsequently addressed
+by owner-approved repository/identity changes. The current README uses
+repository-owned badges and the current project name. This historical
+translation audit grants no authority to rename C++ targets, ABI exports,
+resources or release artifacts; README edits still need owner approval.
 
 At the time of this historical audit, root governance consolidation was deferred. The current policy now resides in root `GOVERNANCE.md` and `AGENTS.md`; the historical `governance/CURRENT_SCOPE.md` is retired by the governance migration. Directory counts above represent the original scan.
 

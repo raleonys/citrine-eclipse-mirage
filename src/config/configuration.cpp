@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/config/configuration.hpp"
-#include "preloader_l/core/product_identity.hpp"
+#include "citrine_eclipse_mirage/config/configuration.hpp"
+#include "citrine_eclipse_mirage/core/product_identity.hpp"
 #include <algorithm>
 #include <limits>
 #include <stdexcept>
 
-namespace preloader_l::configuration {
+namespace citrine_eclipse_mirage::configuration {
 const Node& Node::child(std::string_view key) const {
     static const Node absent{};
     const auto found = children.find(key);
@@ -275,4 +275,4 @@ void cleanup_cached_avatars(const Path& path,Dependencies& deps) {
             effects.remove_04948c(entry);
     }});
 }
-} // namespace preloader_l::configuration
+} // namespace citrine_eclipse_mirage::configuration

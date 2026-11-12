@@ -25,9 +25,9 @@ int WSAAPI FixtureCloseSocket(SOCKET socket){
 #define closesocket FixtureCloseSocket
 #include "src/net/asio_service.cpp"
 #undef closesocket
-#include "preloader_l/runtime/application.hpp"
+#include "citrine_eclipse_mirage/runtime/application.hpp"
 #include <filesystem>
-namespace preloader_l::application {
+namespace citrine_eclipse_mirage::application {
 class FixtureApplication {
     struct Directory {
         static std::filesystem::path location(){
