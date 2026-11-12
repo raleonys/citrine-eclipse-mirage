@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Cover prepared response ownership at the actual Asio post-allocation boundary. Require immediate cancellation and owner release after one injected allocation failure, preserve exact binary output in successful controls, and verify executor recovery without changing runtime or native test budgets.
+- Cover prepared response ownership at the actual Asio post-allocation boundary. Require immediate cancellation and owner release after one injected allocation failure, preserve exact binary output in successful controls, and verify executor recovery without changing runtime or native test budgets. Explicitly type the existing case dispatcher function pointer so the full fixture also compiles with libc++.
 
 ## Integrated development history
 

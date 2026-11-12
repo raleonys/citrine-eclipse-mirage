@@ -520,7 +520,7 @@ void drain_retry() {
 int main(int argc,char** argv)try {
     const std::string_view selected=argc==2?argv[1]:"all";
     bool ran=false;
-    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"held-accept-stop",held_successful_accept_retirement},{"post",post_failure},{"post-owner",prepared_owner_post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms},{"throwing-factory-rearm",throwing_handler_factory_rearms},{"greeting-throw",greeting_failure_retires_published_client}})
+    for(auto [name,fn]:{std::pair<const char*,void(*)()>{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"held-accept-stop",held_successful_accept_retirement},{"post",post_failure},{"post-owner",prepared_owner_post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms},{"throwing-factory-rearm",throwing_handler_factory_rearms},{"greeting-throw",greeting_failure_retires_published_client}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
