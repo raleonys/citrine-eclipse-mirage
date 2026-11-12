@@ -493,4 +493,55 @@ string(REPLACE
     "status = Freeze(&threads, pos, enable ? ACTION_ENABLE : ACTION_DISABLE);"
     _mh "${_mh}")
 
+# A public operation can otherwise bypass Freeze entirely: empty queued apply,
+# disabled removal, hook creation, queue mutation, and already-set enable state.
+# Keep the same physical cleanup owner until every release has succeeded.
+function(_guard_public_mutation signature)
+    string(FIND "${_mh}" "${signature}" _start)
+    if(_start LESS 0)
+        message(FATAL_ERROR "MinHook cleanup entry anchor must occur exactly once: ${signature}")
+    endif()
+    string(LENGTH "${signature}" _signature_length)
+    math(EXPR _after_signature "${_start}+${_signature_length}")
+    string(SUBSTRING "${_mh}" ${_after_signature} -1 _tail)
+    string(FIND "${_tail}" "${signature}" _duplicate)
+    if(NOT _duplicate LESS 0)
+        message(FATAL_ERROR "MinHook cleanup entry anchor must occur exactly once: ${signature}")
+    endif()
+    string(FIND "${_tail}" "\n}" _body_end)
+    if(_body_end LESS 0)
+        message(FATAL_ERROR "MinHook cleanup entry has no function boundary: ${signature}")
+    endif()
+    string(SUBSTRING "${_tail}" 0 ${_body_end} _body)
+    set(_lock "    EnterSpinLock();")
+    string(FIND "${_body}" "${_lock}" _lock_start)
+    if(_lock_start LESS 0)
+        message(FATAL_ERROR "MinHook cleanup lock anchor must occur exactly once: ${signature}")
+    endif()
+    string(LENGTH "${_lock}" _lock_length)
+    math(EXPR _after_lock "${_lock_start}+${_lock_length}")
+    string(SUBSTRING "${_body}" ${_after_lock} -1 _after_lock_body)
+    string(FIND "${_after_lock_body}" "${_lock}" _duplicate_lock)
+    if(NOT _duplicate_lock LESS 0)
+        message(FATAL_ERROR "MinHook cleanup lock anchor must occur exactly once: ${signature}")
+    endif()
+    math(EXPR _insert "${_after_signature}+${_after_lock}")
+    string(SUBSTRING "${_mh}" 0 ${_insert} _prefix)
+    string(SUBSTRING "${_mh}" ${_insert} -1 _suffix)
+    set(_guard [=[
+
+    if (g_hHeap != NULL && !RetryRetainedThreadOwnership())
+    {
+        LeaveSpinLock();
+        return MH_ERROR_MEMORY_PROTECT;
+    }]=])
+    set(_mh "${_prefix}\n${_guard}${_suffix}" PARENT_SCOPE)
+endfunction()
+
+_guard_public_mutation("MH_STATUS WINAPI MH_CreateHook(LPVOID pTarget, LPVOID pDetour, LPVOID *ppOriginal)")
+_guard_public_mutation("MH_STATUS WINAPI MH_RemoveHook(LPVOID pTarget)")
+_guard_public_mutation("static MH_STATUS EnableHook(LPVOID pTarget, BOOL enable)")
+_guard_public_mutation("static MH_STATUS QueueHook(LPVOID pTarget, BOOL queueEnable)")
+_guard_public_mutation("MH_STATUS WINAPI MH_ApplyQueued(VOID)")
+
 file(WRITE "${MINHOOK_HOOK_C}" "${_mh}")
