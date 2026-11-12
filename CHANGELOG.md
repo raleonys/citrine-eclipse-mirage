@@ -8,6 +8,10 @@ This file distinguishes integrated source changes, imported source history and p
 
 - Reject non-power-of-two PE32+ SectionAlignment values in the read-only ARYRA Golden layout verifier, including otherwise aligned section tables. Add synthetic negative/positive fixtures for 0x1800 (reject) and 0x2000 (accept), preserving the current non-exact section RVA policy and production DLL bytes.
 
+### Integrated 2026-11-12
+
+- [PR #296](https://github.com/raleonys/citrine-eclipse-mirage/pull/296): Validate and serialize the achievement watcher INI before creating its parent during the native XML/INI batch. Invalid section names now leave directories, persistence outputs, achievement grants and events untouched; add a real grant failure/retry regression without changing valid output bytes or public ABI.
+
 ### Integrated 2026-11-11
 
 - [PR #299](https://github.com/raleonys/citrine-eclipse-mirage/pull/299): Validate the three public function export entry addresses against file-backed executable PE section bytes in both public ABI and Golden checks. Reject unmapped, header, non-executable, virtual-only, ambiguous and out-of-file targets; retain valid executable section names, shared code addresses and general data-export parsing.
