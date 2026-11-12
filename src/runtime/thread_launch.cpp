@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/thread_launch.hpp"
+#include "citrine_eclipse_mirage/runtime/thread_launch.hpp"
 #include <limits>
 
-namespace preloader_l::threads {
+namespace citrine_eclipse_mirage::threads {
 Context* make_context_05e87c(std::uintptr_t entry, std::uintptr_t argument, Effects& e) {
     auto* context = e.calloc_context_066848();
     e.free_0668c0(nullptr); // Present even on failed allocation, 05e89e..05e8a3.

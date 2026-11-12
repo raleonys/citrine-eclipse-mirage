@@ -9,13 +9,13 @@ recorded in [BUILD_CLEANUP.md](BUILD_CLEANUP.md).
 
 | Target | Inputs and purpose |
 | --- | --- |
-| `preloader_l_objects`, `preloader_l_vdf_objects` | Production application, native callbacks and parser |
-| `preloader_l_core` | Production-only static library for integration tests |
-| `preloader_l` | Production objects, entry point, resources and three fixed exports |
-| `preloader_l_reference_objects` | 52 transport models, 16 XML models and ten reference adapters/compositions |
-| `preloader_l_reference_models` | Retained models; may depend on the production core |
-| `preloader_l_source_api` | Both source sets, preserving the development C++ API |
-| `preloader_l_source_minhook`, `preloader_l_source_pugixml` | MSVC shared-CRT vendor builds used only by the C++ development DLL |
+| `citrine_eclipse_mirage_objects`, `citrine_eclipse_mirage_vdf_objects` | Production application, native callbacks and parser |
+| `citrine_eclipse_mirage_core` | Production-only static library for integration tests |
+| `citrine_eclipse_mirage` | Production objects, entry point, resources and three fixed exports |
+| `citrine_eclipse_mirage_reference_objects` | 52 transport models, 16 XML models and ten reference adapters/compositions |
+| `citrine_eclipse_mirage_reference_models` | Retained models; may depend on the production core |
+| `citrine_eclipse_mirage_source_api` | Both source sets, preserving the development C++ API |
+| `citrine_eclipse_mirage_source_minhook`, `citrine_eclipse_mirage_source_pugixml` | MSVC shared-CRT vendor builds used only by the C++ development DLL |
 
 MSVC compiles the complete development DLL source set separately with `/MD`
 (Release) or `/MDd` (Debug); its C++ host and vendor libraries use the same CRT.
@@ -24,18 +24,19 @@ and catches parser exceptions, so separate static CRT instances are unsafe at
 this boundary. The Debug timeout was observed immediately before destruction of
 the invalid-input parser state, after all functional checks completed and before
 shutdown. This identifies a destructor boundary, not a captured native stack.
-The shared-CRT correction still requires fresh native Debug/Release execution.
+The diagnosis above describes the correction's original checkpoint; current
+native Debug/Release acceptance belongs to the selected head's CI results.
 Production and static reference/test targets retain `/MT` or `/MTd` and their
 existing objects. The MSVC development DLL must not link those static-CRT
 objects or archives. Non-MSVC development builds retain their existing graph.
 
 Production must never depend on a reference target or the source API DLL. With
-`BUILD_TESTING=OFF` and `PRELOADER_L_BUILD_SOURCE_API_DLL=OFF`, reference targets
-are not configured. The owner-selected pugixml archive replaces TinyXML2; the other three vendor
-pins are unchanged. `xml/reader.cpp`, `xml/reader_policy.cpp`,
+`BUILD_TESTING=OFF` and `CITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF`, reference targets
+are not configured. The owner-selected pugixml archive replaces TinyXML2; all current vendor
+pins are maintained in [VENDORING.md](VENDORING.md). `xml/reader.cpp`, `xml/reader_policy.cpp`,
 `xml/reader_values.cpp` and `xml/memory_printer.cpp` are production inputs.
-Production and test targets link `preloader_l_pugixml`; the MSVC development
-DLL links `preloader_l_source_pugixml`. No legacy XML vendor target aliases
+Production and test targets link `citrine_eclipse_mirage_pugixml`; the MSVC development
+DLL links `citrine_eclipse_mirage_source_pugixml`. No legacy XML vendor target aliases
 are provided.
 The evaluated production graph rejects `third_party/tinyxml2/` sources.
 The external TinyXML2 control exists only in the standalone comparison.
@@ -43,8 +44,8 @@ The external TinyXML2 control exists only in the standalone comparison.
 ## Evidence and limits
 
 The matrices and measurements below describe the historical first partition of
-74 sources. The current additional four-source review, split test coverage and
-fresh results are in [build-cleanup/VALIDATION.json](../metadata/evidence/build-cleanup/VALIDATION.json).
+74 sources. The later four-source review, split test coverage and its checkpoint
+results are in [build-cleanup/VALIDATION.json](../metadata/evidence/build-cleanup/VALIDATION.json).
 The historical 898-symbol count and development export count are not current
 totals and are not used as current acceptance gates.
 
@@ -103,7 +104,8 @@ first clean configure. The build produces a production linker map and checks:
 
 The check runs after linking and as an incremental `ALL` target. Unsupported or
 empty maps fail. Both LLVM-MinGW and MSVC map syntax have negative fixtures;
-actual MSVC linker execution is still pending. Raw compiler DLLs and maps stay
+actual MSVC linker acceptance is recorded by the selected head's Windows
+jobs rather than these historical fixtures. Raw compiler DLLs and maps stay
 in the build directory; no dist promotion or publication is performed here.
 
 The original callback mixed tests remain intact. Additional `production_callback_contracts`
@@ -125,7 +127,7 @@ ctest --test-dir <build-directory> -C Release -L production --output-on-failure
 ```
 
 Repeat for Debug. A separate clean production-only configuration must set both
-`BUILD_TESTING=OFF` and `PRELOADER_L_BUILD_SOURCE_API_DLL=OFF`. Do not reuse a
+`BUILD_TESTING=OFF` and `CITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF`. Do not reuse a
 testing build as the sole proof that production can build independently.
 
 To regenerate the symbol matrix from a built Ninja cross-build:
@@ -136,7 +138,14 @@ python -B scripts/audit_translation_units.py --build-dir <build-directory> --con
 
 The audit currently supports CMake's Ninja object layout and LLVM inspection
 tools; it fails for unsupported layouts rather than silently omitting files.
-Source QA includes 18 boundary regressions, separately from native tests.
+Object lookup resolves the selected checkout/build roots, rejects source
+parent traversal and absolute sources outside that checkout, and refuses
+redirected source/object paths or invalid target directory components. This
+prevents attributing an unrelated COFF object to the selected translation unit;
+it does not prove runtime reachability or Consumer coverage.
+Source QA runs the current boundary regressions in
+`tests/infrastructure/test_build_partition.py`, separately from native tests.
+The earlier fixed test count is not a current inventory.
 
 Five exhaustive reference fixtures have a 600-second test-process budget only
 for single-configuration Debug cross-builds under Wine (the process runner has

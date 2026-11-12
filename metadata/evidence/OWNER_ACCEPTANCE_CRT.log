@@ -19,12 +19,12 @@ SURGE: STATIC CRT ACCEPTANCE / Release
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Found Python3: C:/Users/Skysect/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
+-- Found Python3: C:/Users/<USER>/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
 -- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS
 -- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS - Success
 -- Configuring done (29.7s)
 -- Generating done (5.0s)
--- Build files have been written to: C:/Users/Skysect/Desktop/preloader_l_3.2.6_TALVOR_R17_source/build/crt_msvc
+-- Build files have been written to: C:/Users/<USER>/Desktop/preloader_l_3.2.6_TALVOR_R17_source/build/crt_msvc
 [2/3] Compile and link
 Building CXX object CMakeFiles/preloader_l_crt_host.dir/tools/preloader_l_crt_host/main.cpp.obj
 main.cpp
@@ -545,7 +545,7 @@ public_c_consumer.c
   "golden_shipping_acceptance": "NOT_RUN",
   "game_acceptance": "NOT_RUN"
 }
-Test project C:/Users/Skysect/Desktop/preloader_l_3.2.6_TALVOR_R17_source/build/crt_msvc
+Test project C:/Users/<USER>/Desktop/preloader_l_3.2.6_TALVOR_R17_source/build/crt_msvc
     Start  17: crt_runtime_smoke
 1/6 Test  #17: crt_runtime_smoke ................   Passed    0.08 sec
     Start 188: dll_source_smoke
@@ -568,7 +568,7 @@ source-api        =   0.48 sec*proc (1 test)
 
 Total Test time (real) =   8.63 sec
 STATIC CRT ACCEPTANCE: PASS
-DLL: C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\build\crt_msvc\preloader.unsigned.dll
+DLL: C:\Users\<USER>\Desktop\preloader_l_3.2.6_TALVOR_R17_source\build\crt_msvc\preloader.unsigned.dll
 SHA256: 6973dd5e85c1b9aee0c2e91a99b2f0ec1e55547b22550a493467363a028d698a
 
 ============================================================

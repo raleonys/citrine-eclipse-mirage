@@ -3,11 +3,11 @@
   "input_commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
   "input_hook_sha256": "3060d3c42f03a2f11324cbee95d853071757ed0fe4b1bc9eb5f0d8fc9e346a37",
   "patch_script": "cmake/PatchHookFreeze.cmake",
-  "patch_script_sha256": "c55ddf218353acf8bf6994ef486771c1f807212c2f39772c298afd19a612cacb",
-  "output_hook_sha256": "0b586a3aa53d3d0b08f148784219da111375bc3557d52a195dd040c9125a56d1",
+  "patch_script_sha256": "b99c83d085ba2af558c2c0536c1cb6e2ce5245c7ca369ce3f6f8bd310f8372cb",
+  "output_hook_sha256": "c915c65764c72d30e022a60696d916542a31de2964d57cbf032e81740383194e",
   "vendor_tree_modified": false,
-  "scope": "NtGetNextThread freeze, retained thread/heap ownership, and correct single-hook disable IP relocation; build copy only",
+  "scope": "NtGetNextThread freeze, retained thread/heap ownership, correct single-hook disable IP relocation, and retained-cleanup barriers before public mutations; build copy only",
   "provenance_document": "docs/HOOK_ENGINE_HARDENING.md",
   "donor_patch_script_sha256": "0c6a6f72d558b2114a02fccec6e25e0d360714a9ac9bf9a6a4f18e42af928fe2",
-  "supplement": "Retain emergency handles on cleanup failures; single MH_DisableHook maps suspended trampoline IPs back to target before unpatching"
+  "supplement": "Retain both emergency handles; restore single-disable IPs; reject public mutations until retained resume/close/heap cleanup succeeds"
 }

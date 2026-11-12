@@ -41,6 +41,11 @@
       "purpose": "build native acceptance",
       "role": "AUTOMATION"
     },
+    "scripts/build_orchestration/build_path_pinning.ps1": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "Pin Windows build components and reject reparse swaps",
+      "role": "AUTOMATION"
+    },
     "scripts/build_orchestration/build_production.cmd": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "build production",
@@ -49,11 +54,6 @@
     "scripts/build_orchestration/build_production.ps1": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "build production",
-      "role": "AUTOMATION"
-    },
-    "scripts/build_orchestration/build_path_pinning.ps1": {
-      "owner": "SURGE build/vendor/QA infrastructure",
-      "purpose": "Pin Windows build components and reject reparse swaps",
       "role": "AUTOMATION"
     },
     "scripts/build_orchestration/build_profile.ps1": {
@@ -136,6 +136,11 @@
       "purpose": "Fail-closed SPDX and legacy C++ naming audit",
       "role": "AUTOMATION"
     },
+    "scripts/ci_validation_readiness.py": {
+      "owner": "Citrine Eclipse Mirage CI scheduling",
+      "purpose": "Verify current PR/manual heads and newly integrated main ancestry before full validation",
+      "role": "AUTOMATION"
+    },
     "scripts/clear_tool_python_cache.py": {
       "owner": "SURGE build hygiene",
       "purpose": "Remove only known generated Python caches for manifest-owned first-party tools; never refresh source manifests",
@@ -184,6 +189,16 @@
     "scripts/project_files.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "project files",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/project_version.py": {
+      "owner": "Citrine Eclipse Mirage identity",
+      "purpose": "Select resource/Golden/receipt versions and prepare bounded stable-release default updates for owner-reviewed PRs",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/repository_badges.py": {
+      "owner": "Citrine Eclipse Mirage repository presentation",
+      "purpose": "Render SVG badges and update only the generated nine-image branch",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
     "scripts/restore_vendor_links.py": {
@@ -242,6 +257,11 @@
       "purpose": "verify sources",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
+    "scripts/weekly_naming.py": {
+      "owner": "Citrine Eclipse Mirage weekly release governance",
+      "role": "PYTHON_TOOL_OR_MODULE",
+      "purpose": "Fail-closed prospective semver/codename registry, global root collision, and external ZIP identity validation"
+    },
     "scripts/weekly_release.py": {
       "owner": "SURGE draft release automation",
       "purpose": "Exact-source candidate planning, native evidence binding, packaging and draft-only upload",
@@ -251,11 +271,6 @@
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "inspect dll",
       "role": "PYTHON_TOOL_OR_MODULE"
-    },
-    "scripts/weekly_naming.py": {
-      "owner": "Citrine Eclipse Mirage weekly release governance",
-      "role": "PYTHON_TOOL_OR_MODULE",
-      "purpose": "Fail-closed prospective semver/codename registry, global root collision, and external ZIP identity validation"
     }
   }
 }

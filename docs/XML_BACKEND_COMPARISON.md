@@ -1,7 +1,7 @@
 # Pugixml compatibility diagnostic
 
-PR #149 now selects pugixml for the production XML reader and development DLL.
-The owner requested completing the migration in this open PR before merging.
+Merged PR #149 selects pugixml for the production XML reader and development
+DLL. The owner requested completing that migration before merging.
 The compatibility diagnostic compiles the actual production reader sources;
 there is no separate candidate implementation to drift from shipping code.
 The public reader interface, DLL ABI, standard CRT and three other vendor pins
@@ -10,7 +10,7 @@ production migration commit; earlier test-only passes do not establish them.
 
 ## Inputs and independent link graphs
 
-The control is unmerged PR #108 commit
+The control is the unmerged, now-closed PR #108 commit
 `a34a0536f0980b38d77d029f11fa3720dcaedc6e`, checked out separately with no tracked
 source modifications. Its actual reader, immutable 12,087-input corpus and
 original test assertions remain the reference. The baseline includes #108's
@@ -29,9 +29,14 @@ patched. XPath is disabled for production and diagnostic pugixml targets.
 
 The standalone `tests/diagnostics/xml_backend/CMakeLists.txt` compiles exactly
 `src/xml/reader.cpp`, `reader_policy.cpp` and `reader_values.cpp` from this checkout.
-The reference uses the pinned control's first-party reader with a namespace-only
-binding change to avoid an ODR collision. Both preserve the checked value-decoder
-logic from PR #108. The candidate does not link the reference reader or TinyXML2. CMake File API traversal verifies this for
+The reference reads the pinned control's historical
+`include/preloader_l/xml/reader.hpp`. The
+[build-copy binding helper](../tests/diagnostics/xml_backend/reference_bindings.cmake)
+adapts legacy includes/namespaces in generated files, then places the oracle in
+its separate namespace to avoid an ODR collision. The pinned checkout is not
+renamed or edited; a missing historical header fails rather than adopting a
+current-name decoy. Both readers preserve the checked value-decoder logic from
+PR #108. The candidate does not link the reference reader or TinyXML2. CMake File API traversal verifies this for
 every candidate-only executable/configuration and requires a real pugixml
 dependency; `candidate-linkage.json` records the evaluated transitive graph.
 The reference is linked only into separate control and differential targets.
@@ -141,7 +146,7 @@ through three load/start/shutdown/unload cycles.
 
 The identical input fixtures are also checked against both source readers before
 benchmarking. Native Debug/Release run the actual-DLL test automatically. Golden
-runs the same XML contracts on the finalized `preloader_l.dll`, preserving its
+runs the same XML contracts on the finalized `citrine_eclipse_mirage.dll`, preserving its
 before/after hash checks and all existing stages. No production logging, export
 or parser code is added. These are automated application protocol contracts;
 they do not assert execution of an unavailable real game/provider.

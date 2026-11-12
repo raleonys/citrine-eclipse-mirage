@@ -34,6 +34,12 @@ def check_build_wording(root):
     return errors
 
 
+def terminal_line(content):
+    """Inspect the entire final command, not a trailing token in a comment."""
+    lines = content.rstrip().splitlines()
+    return lines[-1].strip().casefold() if lines else ''
+
+
 def check(root):
     root = Path(root)
     entries = json.loads((root / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').read_text())['entrypoints']
@@ -49,16 +55,19 @@ def check(root):
             errors.append('Missing entrypoint: ' + entry['launcher'])
             continue
         text = path.read_text(encoding='ascii')
-        tokens = ['%~dp0' + target.name, '%*', 'set "RC=%ERRORLEVEL%"',
+        tokens = ['%~dp0' + target.name, '-LauncherOwnsSummary %*', 'set "RC=%ERRORLEVEL%"',
                   'exit /b %RC%', 'Exit code: %RC%', 'ForegroundColor Green', 'ForegroundColor Red',
                   'pause >nul', 'SURGE - %LABEL%']
         for token in tokens:
             if token not in text:
                 errors.append('Missing launcher behavior ' + token + ': ' + entry['launcher'])
-        if not text.rstrip().endswith('exit /b %RC%'):
+        if terminal_line(text) != 'exit /b %rc%':
             errors.append('Launcher masks child exit: ' + entry['launcher'])
         automation = target.read_text()
-        if not automation.rstrip().endswith('exit $LASTEXITCODE'):
+        if ('[switch]$LauncherOwnsSummary' not in automation or
+                '-LauncherOwnsSummary:$LauncherOwnsSummary' not in automation):
+            errors.append('Automation drops launcher summary ownership: ' + entry['automation'])
+        if terminal_line(automation) != 'exit $lastexitcode':
             errors.append('Automation masks child exit: ' + entry['automation'])
         if ('-Mode "' + entry['mode'] + '"') not in automation:
             errors.append('Automation selects wrong build profile: ' + entry['automation'])
