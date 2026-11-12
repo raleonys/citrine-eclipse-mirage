@@ -124,7 +124,7 @@ struct PendingEvent final:msg::EventQueue {
     bool finish_reserved(std::uint64_t token,bool success)noexcept override{if(token!=1||!reserved)return false;reserved=false;if(success){present=false;++commits;}return true;}
 };
 struct ProtocolEffects final:msg::Effects,citrine_eclipse_mirage::misc_handlers::NoResponse,msg::UnknownMessageEffects {
-    unsigned silent=0,valid=0,diagnostics=0;bool reference_invalid=false;std::string unknown_request;
+    unsigned silent=0,valid=0,invalid=0,diagnostics=0;bool reference_invalid=false;std::string unknown_request;
     int atoi_05ee08(std::string_view)override{return 0;}
     bool registered_handler(std::uint32_t rva,const msg::XmlNode&,msg::XmlPrinter& printer)override{
         if(rva==0x030eb0){++silent;citrine_eclipse_mirage::misc_handlers::query_chunk_status_030eb0(*this);}
@@ -132,7 +132,7 @@ struct ProtocolEffects final:msg::Effects,citrine_eclipse_mirage::misc_handlers:
         printer.open("InternetConnectedState");printer.attribute("connected","1");printer.close();return true;
     }
     [[noreturn]]void throw_no_response_02bcd0_04d228()override{throw msg::NoResponseRequiredError{};}
-    [[noreturn]]void invalid_message_02bd30_04d228()override{if(reference_invalid)throw msg::UnknownMessageError{};throw std::invalid_argument("invalid session fixture request");}
+    [[noreturn]]void invalid_message_02bd30_04d228()override{++invalid;if(reference_invalid)throw msg::UnknownMessageError{};throw std::invalid_argument("invalid session fixture request");}
     void unknown_message_07bd70(const msg::UnknownMessageInput& input)override{++diagnostics;unknown_request=input.view();}
     [[noreturn]]void thread_error_04a648(int)override{throw std::logic_error("unexpected event lock failure");}
     void log_received(std::string_view)override{}
@@ -213,6 +213,34 @@ void unknown_message_same_session(){
     }
 }
 
+void invalid_dispatch_stops_ordered_admission() {
+    // This custom Effects deliberately throws ordinary invalid_argument. It is
+    // distinct from Application's selected UnknownMessage diagnostic/continuation.
+    // Observe the Session/bridge/core boundary, without native sockets/workers.
+    for(bool encrypted:{false,true})for(bool coalesced:{false,true}) {
+        citrine_eclipse_mirage::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;PendingEvent events;ProtocolEffects effects;
+        std::uint8_t mode=0,unknown=0,show=0;const std::string version="fixture";
+        citrine_eclipse_mirage::session_bridge::MessageHandler handler({mode,unknown,show,version,cipher,events},xml,factory,random,effects);
+        Scheduler scheduling;scheduling.frame_limit=scheduling.response_limit=4096;
+        Transport transport;transport.max_request=4096;srv::Session session(transport,scheduling,handler);
+        session.start_025720();transport.complete(transport.writes.front().bytes.size());transport.sent.clear();mode=encrypted;
+        const auto greeting_sends=transport.sends;
+        const auto frame=[&](std::string_view command){
+            std::string value="<LSX><Request id='invalid' recipient='EbisuSDK'><"+std::string(command)+"/></Request></LSX>";
+            if(encrypted)msg::hex_encode_03d190(value);value.push_back('\0');return value;
+        };
+        const auto invalid=frame("UnregisteredFixtureCommand"),valid=frame("GetInternetConnectedState");
+        transport.deliver(coalesced?invalid+valid:invalid);scheduling.drain();
+        require(scheduling.jobs.size()==1,"invalid dispatch has one actual ordered worker job");
+        bool rejected=false;try{scheduling.job();}catch(const std::invalid_argument&){rejected=true;}
+        require(rejected&&effects.invalid==1&&effects.valid==0&&effects.silent==0&&effects.diagnostics==0,"custom invalid_argument propagates without NoResponse or UnknownMessage diagnostics");
+        require(transport.sends==greeting_sends&&transport.writes.empty()&&transport.sent.empty(),"invalid dispatch publishes no response or empty socket send");
+        require(!transport.read&&scheduling.io.empty()&&scheduling.jobs.empty(),"invalid dispatch cannot rearm receive or admit a buffered successor");
+        require(session.buffered_input()==(coalesced?valid:std::string{})&&session.queued_messages()==0,"buffered successor remains unprocessed after dispatch failure");
+        require(events.present&&!events.reserved&&!events.inspections&&!events.commits&&!cipher.encryptions,"invalid dispatch cannot reserve or consume another session's queued event");
+    }
+}
+
 void deadline_policy() {
     static_assert(std::is_constructible_v<net::SessionDeadlines,net::SessionPolicy&>);
     static_assert(std::is_constructible_v<net::SessionDeadlines,const net::SessionPolicy&>);
@@ -232,5 +260,5 @@ void deadline_policy() {
             "lvalue policy remains borrowed rather than snapshotted");
 }
 }
-int main()try{delivery_and_order();failure_and_buffer_lifetime();no_response_same_session();unknown_message_same_session();deadline_policy();std::cout<<"PASS: "<<checks<<" delivery/FIFO/buffer ownership/deadline checks\n";}
+int main()try{delivery_and_order();failure_and_buffer_lifetime();no_response_same_session();unknown_message_same_session();invalid_dispatch_stops_ordered_admission();deadline_policy();std::cout<<"PASS: "<<checks<<" delivery/FIFO/buffer ownership/deadline checks\n";}
 catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

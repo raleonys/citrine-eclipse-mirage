@@ -84,9 +84,13 @@ Its bounded waits fail on missing diagnostic/return; no real modal is opened.
 Production SDK calls and timeout defaults are unchanged.
 
 A custom Effects implementation that throws ordinary `std::invalid_argument`
-still propagates, preserving the generic error boundary in #264. Accepted
-real-AES rekey tests and NoResponse/delivery assertions are retained alongside
-the UnknownMessage additions in the combined message fixture.
+still propagates. The #264 ordered-Session regression covers that separate
+failure policy across plaintext/controlled-encrypted and isolated/coalesced
+frames: no diagnostic, output, event reservation, receive rearm or successor
+admission is allowed. It does not impose rejection on Application's typed
+UnknownMessage path, whose same-session continuation assertions remain active.
+Accepted real-AES rekey tests and NoResponse/delivery assertions are retained
+alongside the UnknownMessage additions in the combined message fixture.
 
 Message-core and ordered-Session regressions exercise controlled effects,
 ciphers and memory transport. The Environment fixture intercepts MessageBoxW;
