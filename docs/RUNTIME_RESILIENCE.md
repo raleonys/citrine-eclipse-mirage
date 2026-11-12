@@ -52,6 +52,15 @@ The existing initial DOWN seed remains an independent initialization event. This
 change does not add socket-delivery acknowledgement or change later event dequeue
 behavior; those are separate policies.
 
+The `event_queue_contracts` fixture faults actual deque growth in initially empty
+and seed-retained `OwnedStorage` queues. A thread-local allocation probe requires
+failure before a counter-only persistence callback, unchanged input/publication,
+exact prior FIFO bytes and one successful unarmed retry. Successful probes remain
+queued so storage must grow instead of recycling an empty spare block. This checks
+producer allocation ordering; the controlled callback performs no disk IO or
+GrantAchievement, and host allocation results do not establish the MSVC checked-STL
+route or general operating-system memory exhaustion.
+
 Individual replacements are atomic. XML/INI together are a process-local rollback
 transaction, not a power-loss atomic filesystem transaction. Concurrent external
 writers and automatic recovery after process termination are not supported. Files
