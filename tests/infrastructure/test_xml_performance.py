@@ -11,6 +11,28 @@ import unittest
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'diagnostics/xml_backend'))
 from performance import CASES, PROFILES, summarize, compile_receipt
+from run import validate_corpus_policy
+
+
+class DepthPolicyReceipt(unittest.TestCase):
+    def row(self):
+        return dict(profile='pugi_checked', cases='12087', acceptance_diff='2',
+                    success_DOM_diff='0', failed_DOM_diff='0', error_code_diff='2',
+                    diagnostic_diff='2', exact_equal='12085', policy_rejections='0',
+                    declared_depth_deltas='2', unexpected_differences='0')
+
+    def test_exact_declared_depth_differences_remain_visible(self):
+        validate_corpus_policy(self.row())
+
+    def test_hidden_extra_missing_or_reclassified_differences_fail(self):
+        for field, value in [('acceptance_diff', '0'), ('acceptance_diff', '3'),
+                             ('failed_DOM_diff', '1'), ('success_DOM_diff', '1'),
+                             ('diagnostic_diff', '3'), ('declared_depth_deltas', '1'),
+                             ('unexpected_differences', '1'), ('exact_equal', '12087'),
+                             ('cases', '12086')]:
+            row = self.row(); row[field] = value
+            with self.subTest(field=field, value=value), self.assertRaises(ValueError):
+                validate_corpus_policy(row)
 
 
 class ReferenceBindings(unittest.TestCase):

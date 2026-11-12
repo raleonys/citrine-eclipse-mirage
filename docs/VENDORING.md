@@ -117,8 +117,12 @@ Pugixml is compiled directly from the complete, unmodified 191-file owner
 archive. Its MIT license and member hashes are included. Project grammar,
 checked reference decoding, diagnostic text and depth handling live in
 `src/xml/reader_policy.cpp` and `reader_values.cpp`, behind the unchanged reader
-interface. The legacy depth contract remains: 498 nested elements succeed and
-499 fail with error 18. This is a project policy, not a pugixml vendor patch.
+interface. The owner-requested A12 depth-100 profile accepts 98 paired nested
+elements and rejects the 99th entered child list with error 18. A self-closed
+leaf at level 99 remains valid; malformed-attribute and EOF error priority are
+preserved. This replaces the previous depth-500 profile (498/499 boundary). It
+is first-party policy, not a pugixml requirement or vendor patch. See
+[A12_DEVIATIONS.md](A12_DEVIATIONS.md) for rationale and remaining differences.
 
 The previous TinyXML2 lock/member list remains historical provenance in
 `retired_vendor_inputs`; its active tree and build input are removed. Git

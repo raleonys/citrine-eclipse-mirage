@@ -1110,8 +1110,8 @@
       "sha256": "65a948782f75b57ca4f66e7e1267ac90e013a8951f7080e894251ea92993c7e4"
     },
     "src/xml/reader_policy.cpp": {
-      "bytes": 11251,
-      "sha256": "b8a3df07021304850332977b1343b6eca6577f81d87941f722dc2c6d939ab753"
+      "bytes": 11527,
+      "sha256": "49c6eb01d8ccf21290ae6ed4d17a7a5a7a7575ef83c9d115cc23331c3f643e4b"
     },
     "src/xml/reader_policy.hpp": {
       "bytes": 618,
@@ -1138,8 +1138,8 @@
       "sha256": "208f664c42c0402c4bead79dead5a1a163836ed53fd56f0a7b6438a882031a53"
     },
     "tests/diagnostics/xml_backend/benchmark_cases.hpp": {
-      "bytes": 2216,
-      "sha256": "db71c07675248ae5138ac44ed063a3cfef92e7587e8a034f460d9fd2af83f884"
+      "bytes": 2367,
+      "sha256": "a5faffa6016249f7190a57ab95cc656ebb656bbe8ee7b2a3f7b4e477275c4fbe"
     },
     "tests/diagnostics/xml_backend/performance.py": {
       "bytes": 7463,
@@ -1150,12 +1150,12 @@
       "sha256": "5c83447904303b3db352230669dc2b7ff1e57ec9dc32b0780f7df768515a794b"
     },
     "tests/diagnostics/xml_backend/run.py": {
-      "bytes": 20328,
-      "sha256": "6917255f14afeeb57e919c60204b73c2ac0f7916ae120e817d9392ea6ca6d358"
+      "bytes": 21277,
+      "sha256": "1da34ea432ca787077e6660213d8f2612f6095e06fea0619a4afed7dc69acf3d"
     },
     "tests/diagnostics/xml_backend/suite.cpp": {
-      "bytes": 30606,
-      "sha256": "518c45f2a318bed66074f924939e150be27b71f8cb83991d2e6d9e1d207e80d6"
+      "bytes": 33221,
+      "sha256": "f9e97b184ae9c75741416e55f32947d0bf47c9f1dd5993fd2372680bcc814188"
     },
     "tests/fixtures/xml_reader/optimization-baseline.txt": {
       "bytes": 1477836,
@@ -1250,8 +1250,8 @@
       "sha256": "5502b4a8ce4a27649538ea0830bf6e5e904f449addfced6cd69a28d532230f0b"
     },
     "tests/infrastructure/test_xml_performance.py": {
-      "bytes": 9987,
-      "sha256": "839ab702b74c6a4c7cc7f298eb3d9f86964ee1c40339c6be8195853be84a2223"
+      "bytes": 11172,
+      "sha256": "76b5dcc1696d3a06daaf4ebc2668b5f3e2fe9446f39bfb759011e05ac730b8b1"
     },
     "tests/native/application_runtime_tests.cpp": {
       "bytes": 60780,
@@ -2242,12 +2242,12 @@
       "sha256": "fa34e80f636fb5e5600ba647c8089925b7dfb72ebd263b5aa4307ae29b7c780e"
     },
     "tests/unit/xml_reader/corpus_tests.cpp": {
-      "bytes": 6420,
-      "sha256": "fcce321bf673908b9824e103523082841b5051f5f1ba96c00c10093a5a3b5734"
+      "bytes": 7232,
+      "sha256": "5f74f273e8aa989f79a9f771f3ff99b91048f5598e9bb6d7b5cf7844a498693a"
     },
     "tests/unit/xml_reader/reader_tests.cpp": {
-      "bytes": 19729,
-      "sha256": "16e42b9a1236f5e16a9fbc69f9e02a9f5245982bb4221662078a609b3dfb70dd"
+      "bytes": 21252,
+      "sha256": "47cab3635f0f70a065dcf42a9687899f0242aabbf264147997a6b34fc8e9b01c"
     },
     "tests/vendors/vendor_api_smoke.cpp": {
       "bytes": 1989,

@@ -114,6 +114,7 @@ Issue #109's Registry provenance and original-donor retirement remain open.
 | [REMAINING_WORK.md](REMAINING_WORK.md) | Review | [SOURCE_DIFFERENTIAL_B49_B54.md](SOURCE_DIFFERENTIAL_B49_B54.md) |
 | [REPOSITORY_BADGES_AND_OPENING_CI.md](REPOSITORY_BADGES_AND_OPENING_CI.md) | Current | [../.github/workflows/repository-badges.yml](../.github/workflows/repository-badges.yml) |
 | [RE_A11_09_REGISTRY_HKEY_BOUNDARY.md](RE_A11_09_REGISTRY_HKEY_BOUNDARY.md) | Review | [../src/platform/registry.cpp](../src/platform/registry.cpp) |
+| [A12_DEVIATIONS.md](A12_DEVIATIONS.md) | Review | [XML_BACKEND_COMPARISON.md](XML_BACKEND_COMPARISON.md) |
 | [RE_COPY_RECOVERY.md](RE_COPY_RECOVERY.md) | Current | [../src/platform/file_copy.cpp](../src/platform/file_copy.cpp) |
 | [RE_INPUT_REVIEW.md](RE_INPUT_REVIEW.md) | Checkpoint | [REMAINING_WORK.md](REMAINING_WORK.md) |
 | [ROOT_LAYOUT_AND_BUILD_OWNERSHIP.md](ROOT_LAYOUT_AND_BUILD_OWNERSHIP.md) | Current | [../CMakeLists.txt](../CMakeLists.txt) |
