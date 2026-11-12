@@ -191,7 +191,7 @@ add_dependencies(citrine_eclipse_mirage_runtime_host citrine_eclipse_mirage)
 
 if(BUILD_TESTING)
   add_executable(application_runtime_contracts tests/native/application_runtime_tests.cpp resources/surge.rc)
-  target_include_directories(application_runtime_contracts PRIVATE resources)
+  target_include_directories(application_runtime_contracts PRIVATE resources "${CMAKE_CURRENT_BINARY_DIR}/generated")
   target_link_libraries(application_runtime_contracts PRIVATE citrine_eclipse_mirage_core advapi32)
   add_library(online_provider_fixture SHARED tests/support/runtime/online_fixture.cpp)
   target_link_libraries(online_provider_fixture PRIVATE advapi32)
