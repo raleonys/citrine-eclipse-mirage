@@ -3,7 +3,7 @@
 **PARTIAL_SOURCE_COMPARISON / ARCHIVE12_RECHECKED / NO_NEW_PRODUCT_DEFECT_CONFIRMED**
 
 This updates the existing PR #178 research workstream against the current
-Archive 12 delivery and accepted `main@1405c01750317454e8c289a7ebad77391089cdd9`.
+Archive 12 delivery and accepted `main@eea758600fe0801ec91c31f85de563afff1d75a7`.
 It replaces that proposal's Archive 11-only crosswalk. It does not close the
 Archive 12 reconstruction project or claim complete A11-09/module equivalence.
 The original PR commit remains a historical checkpoint; its observations are
@@ -45,11 +45,11 @@ hashes describe the accepted main snapshot, not the proposed documentation bytes
 
 | Product counterpart | SHA-256 at reviewed main |
 | --- | --- |
-| [src/protocol/messages.cpp](../src/protocol/messages.cpp) | `aad320a86c8c691f2b112e77ddf40ed682c5431eb2c9127594c193b1a922aa1a` |
+| [src/protocol/messages.cpp](../src/protocol/messages.cpp) | `dda0871d186751b2588a79720292dfecc80d31ecae11a668b1b58c14f39fb983` |
 | [src/xml/reader.cpp](../src/xml/reader.cpp) | `65a948782f75b57ca4f66e7e1267ac90e013a8951f7080e894251ea92993c7e4` |
 | [src/xml/reader_policy.cpp](../src/xml/reader_policy.cpp) | `b8a3df07021304850332977b1343b6eca6577f81d87941f722dc2c6d939ab753` |
 | [src/xml/reader_values.cpp](../src/xml/reader_values.cpp) | `ce49cebfeb830e95cb2b7492399a950ce3beda6e16750f032f81cb5846b63007` |
-| [tests/unit/messages/messages_tests.cpp](../tests/unit/messages/messages_tests.cpp) | `d2d18aea3193c4d081ab1e82cbf831aa4b3d1cc0ffa5463fbc5f53d258451b26` |
+| [tests/unit/messages/messages_tests.cpp](../tests/unit/messages/messages_tests.cpp) | `151eae79a45c3d6f24e880a43d8de668ea9eb96360458c9540a81e139bc28228` |
 | [tests/unit/xml_reader/reader_tests.cpp](../tests/unit/xml_reader/reader_tests.cpp) | `16e42b9a1236f5e16a9fbc69f9e02a9f5245982bb4221662078a609b3dfb70dd` |
 
 ## Current behavior and dispositions
@@ -64,7 +64,7 @@ names and selected paths are not whole-file semantic or original-DLL ABI proof.
 | Hex and challenge response | Both treat invalid nibbles as zero, discard an odd final nibble, ignore the fixed-cipher encryption bool in the challenge path, and use the same version-dependent key selection. | `ALREADY_IMPLEMENTED`; existing codec/reset/challenge fixture paths. This does not validate arbitrary external crypto/provider behavior. |
 | Parse/retry/framing | Both pass input through its first NUL, distinguish error state from return code, preserve error8 encrypted detection and one-time error7 version erasure/retry, and frame successful plain/encrypted output with NUL. | `ALREADY_IMPLEMENTED` for selected paths; A12's added static binary analysis supports the narrow numeric-status mapping below. |
 | NoResponse terminal | A12 catches its selected `NoResponseRequiredError` before response logging/encryption/framing/event selection. Current product also catches its shared typed terminal and returns an empty result at that boundary. | `ALREADY_IMPLEMENTED`; the old PR's statement that the product dispatches without this catch is superseded by merged #234. Existing messages continuation tests and #266's actual Application/TCP cases own acceptance. They are not absent tasks to recreate. |
-| Unknown/rejected request | A12 catches `UnknownMessageError`, requires the optional `UnknownMessageEffects` diagnostic interface and otherwise rethrows; a diagnostic exception also propagates. Product's invalid-message effect throws `std::invalid_argument`; its ordinary Asio failure owner closes the rejected peer. | `INTENTIONAL_DIFFERENCE` in current accepted behavior, with original-host equivalence still open. Do not add modal diagnostics or same-session continuation without a separately chosen policy and sensitive native session reproducer. Open #350 is a separate proposal, not accepted product policy. |
+| Unknown/rejected request | A12 catches its dedicated UnknownMessage marker only with an optional diagnostic effect. Accepted #350 now gives the product a dedicated marker and optional counted console/converted native-dialog diagnostic; normal diagnostic completion returns an empty response and permits the next request on that session. Missing reporters, ordinary handler failures and diagnostic/conversion/allocation errors still propagate. | `IMPLEMENTED_SELECTED_COMPATIBILITY`; this was owner-selected policy and merged as `eea75860`, not a new defect discovered by this audit. Actual Application/TCP, encrypted/plain and isolated/coalesced successor tests belong to accepted #350. Original private exception ABI, real UI and arbitrary foreign-host equivalence remain unproved. |
 | Event ownership | A12 eagerly removes one event even when event encryption fails. Product retains that behavior only in its pure source path; its prepared-response path reserves the event and settles delivery after completion, with retry retention and exception-safe unlock. | `INTENTIONAL_DIFFERENCE`; preserve accepted receipts. Existing event queue/MessageHandler cases and merged #143/#173/#248/#340 cover distinct boundaries. A12 eager dequeue is not a fix for the product's asynchronous path. |
 | Reader ownership and values | A12 uses owning TinyXML2 documents with stable wrappers, ordered attributes, nullable GetText, C-string truncation and detailed ErrorStr. Product uses document-owned pugixml wrappers plus first-party policy/value code. | `IMPLEMENTED_WITH_DIFFERENCES`; inspect ownership, nullable/empty text, comments/CDATA and normalization separately. Existing reader/value/corpus tests are bounded evidence; no complete malformed-input equivalence is claimed. |
 | Vendor and depth | A12 carries TinyXML2 11 compatibility source with a modified depth100 header (98 nested elements accepted; 99 rejected). Product deliberately uses immutable pugixml 1.16 with its depth500 compatibility policy (498 accepted; 499 rejected). | `INTENTIONAL_DIFFERENCE`; preserve owner-approved #149. Neither A12's vendor bytes nor its lower depth limit are adopted. Its embedded original-parser release identity is not proved by the selected upstream compatibility version. |
@@ -107,15 +107,16 @@ Pinned [audit report](https://github.com/raleonys/citrine-eclipse-mirage/blob/56
 original audit's `compile=false` and `tests_run=false` are preserved as facts;
 no supplied historical PASS is promoted to fresh execution here.
 
-## Fresh validation and open work
+## Validation provenance and open work
 
 - A12 identity checks: import/inventory linkage, all 45 selected file size/hash
   records, all 12 declared successful analysis-reply hashes and ordered 39-entry
   product/source registration comparison pass.
-- Current product's real CMake Release `portable_xml_reader` and
+- At prior research head `f705c79663af3479f06e3ffcc17c89d50e8d061b`, real CMake Release `portable_xml_reader` and
   `portable_xml_reader_corpus`: **2/2 PASS**, 5,120 reader checks and 12,087 frozen
   corpus rows, including 20 reviewed malformed-value corrections. These run
-  current pugixml/product code. The corpus is the product's separately pinned
+  the product code at that prior head. The selected XML source and reader/corpus
+  test bytes are unchanged at this synchronization; this is not a fresh rerun. The corpus is the product's separately pinned
   diagnostic baseline, not fresh execution against the A12 donor DLL or its
   modified depth100 library.
 - Complete source QA and exact-head hosted checks are reported with this PR's
@@ -128,7 +129,8 @@ Continue this same research workstream with A12 as its source authority:
 1. Retain a per-boundary A12-to-current-product mapping. Mark a previously fixed
    test/behavior as implemented rather than dropping the record or recreating it.
 2. Keep unknown-message native host behavior, optional diagnostic ownership and
-   original exception ABI distinct from the accepted fail-closed product policy.
+   original exception ABI distinct from the selected continuation now accepted in #350;
+   preserve ordinary-error propagation and explicit asynchronous receipt ownership.
 3. Extend selected malformed-input, allocation, lifetime and full session evidence
    where a concrete uncovered scenario is found. Any confirmed production defect
    receives its own focused code/test proposal; this report does not authorize a
