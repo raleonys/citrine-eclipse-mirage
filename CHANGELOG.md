@@ -8,6 +8,8 @@ This file distinguishes integrated source changes, imported source history and p
 
 - Follow closed PR #126 with a fresh pinned Archive 12 loader/link comparison: verify the supplied DLL/receipt identity and PE export leaf, preserve runtime/quiescence evidence limits and the product worker/CRT/public-ABI policies, and keep reconstruction research open.
 
+- Reconcile the earlier A12 static no-rebuild stage with the later linked-image receipt by verifying actual current/previous source-snapshot bytes, the current Registry source row and common build-record identity; retain independent binary/runtime validation limits.
+
 ### Integrated 2026-11-12
 
 - [PR #350](https://github.com/raleonys/citrine-eclipse-mirage/pull/350): Restore owner-selected UnknownMessage continuation for invalid dispatch forms: emit the counted console diagnostic and error dialog before continuing the same session without response framing or event consumption. Preserve ordinary error propagation, NoResponse, real-AES rekey and nonmodal redacted entitlement diagnostics. Adapt the existing Application/TCP regression to verify blocked-diagnostic ordering, independent-peer progress and same-peer continuation through a test-only intercepted SDK dialog, with bounded failure waits and unchanged production timeout/UI policy.

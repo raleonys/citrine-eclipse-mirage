@@ -13,7 +13,7 @@ Product comparison: `main@eea758600fe0801ec91c31f85de563afff1d75a7`.
 The nine-part Archive 12 ZIP identity is
 `539fc80596bfa058afdfe74b01cee95c1c1b807be3e983127510e4dc170acb6d`;
 the [A12 inventory](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/docs/RE_PACKAGE_FILES.json) records 6,514 files.
-The six selected inputs were exported from that exact commit and their lengths
+The nine selected inputs were exported from that exact commit and their lengths
 and SHA-256 verified against the inventory. The DLL identity was independently
 matched to the supplied link receipt. Original ZIP parts were not reassembled.
 No supplied script or executable was run; no DLL was loaded. The PE inspection
@@ -27,6 +27,9 @@ used the repository's existing read-only PE parser on the selected bytes.
 | [dll-link-gate-source/export_leaf.S](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/reference-package/snapshot/dll-link-gate-source/export_leaf.S) | 411 | `f9f864181cc17d774e6be441d7321bcac6c8472793a4f377795c1eb0617e7a08` |
 | [dll-link-gate-source/current-full-link.json](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/reference-package/snapshot/dll-link-gate-source/current-full-link.json) | 5013 | `0cb6b7f6a5333510d2d99eb988c79ea7e4ce636cde9a4a1a7fff411f6bf126d5` |
 | [dll-link-gate-source/build-current-full/anadius64.reconstruction.dll](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/reference-package/snapshot/dll-link-gate-source/build-current-full/anadius64.reconstruction.dll) | 4872192 | `4a507e834c179bfe55ef2df87a60d3e423531aec506dcab3796a89f94d8e9381` |
+| [source-workspace/history/rebuild-20261105T182000Z/source-snapshot.json](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/reference-package/snapshot/source-workspace/history/rebuild-20261105T182000Z/source-snapshot.json) | 166493 | `b7362cf518727f6fc997bfc1377bc4d83e2751903ead78cf376251cb0bf87e6d` |
+| [source-workspace/source-snapshot.json](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/reference-package/snapshot/source-workspace/source-snapshot.json) | 176323 | `9199f873c0285d6614d033675d844e1e691c73ca686d3bef365b38923f077a90` |
+| [source-workspace/build-record.json](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/reference-package/snapshot/source-workspace/build-record.json) | 1065180 | `359927eea05c1d1f6dddc99be05a4a4f0df393ff82ac4bc9e5e2355a15ad7252` |
 
 ## What A12 now establishes
 
@@ -37,6 +40,20 @@ It explicitly says `LINKED_NOT_EXECUTED`, `LINKED_NOT_RUNTIME_VALIDATED`,
 `dll_loaded_or_executed: false` and `runtime_or_loader_equivalence_established: false`.
 This review checks receipt/source/binary identity, not a fresh linker execution
 or independent replay of every input archive/object/toolchain hash.
+
+The earlier Registry static stage (4 November) reports no rebuild at that
+stage. The later 5 November link receipt must be checked separately: its
+`source_snapshot_sha256` matches the actual current source-snapshot bytes,
+whose Registry entry matches current A12 `registry.cpp` SHA-256
+`be3a6151a754397231909e4fea9f2ade1e5e3512c3a48fabcb67f12da3701176`.
+The prior retained snapshot has the older `757e2ffb...` Registry hash. The current
+snapshot and link receipt also name the actual common build-record hash
+`359927eea05c1d1f6dddc99be05a4a4f0df393ff82ac4bc9e5e2355a15ad7252`.
+Those record/byte links were verified locally. Thus the earlier no-rebuild stage
+is superseded by the later supplied build records for this selected source; it
+is not evidence that the current DLL omits the Registry correction. This remains
+record/source identity validation, not an independent relink, verification of
+every object/archive/toolchain input, DLL execution or runtime equivalence.
 
 Static PE inspection confirms AMD64 machine `0x8664` and three named exports:
 `CDX@1`, `RUNE@2`, `anadius@3`, all nonforwarded at RVA `0x51b0`.
