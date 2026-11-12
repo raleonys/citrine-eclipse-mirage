@@ -45,6 +45,16 @@ inspection; input strings and fixture storage are prepared outside that scope.
 The native callback suite separately checks forwarding, output pointers, LastError
 and active-call lifetime. Current evidence: metadata/evidence/HOOK_PATH_SCAN.json.
 
+The `portable_crypt_path_probe` CMake check compiles the unchanged scanner and
+the existing controlled-reader fixture without a Windows SDK. It covers the ring
+buffer, UTF-16, scan/read bounds, allocation observer and integer address guards
+under the same 30-second test budget. Its target-local definition excludes only
+the native reader and reports that exclusion in its output. Default Windows
+`crypt_path_probe_contracts` retains the full protected-memory reader, including
+partial code units and read-only pages; portable success does not establish those
+native results. The selector interface uses standard C++ types, while the Windows
+host adapter and native fixture own their SDK includes.
+
 This adoption resolves the bounded-scan advantage identified in the hook11 source
 comparison. That comparison identified no further required hook11 transfer; it is
 not an exhaustive assertion that the whole application has no remaining issue.

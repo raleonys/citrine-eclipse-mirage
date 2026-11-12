@@ -338,8 +338,8 @@
       "sha256": "e08ddbb62b93347b69683b2ac92b57ca3a0c83adff54f111c3677d514a52a460"
     },
     "include/citrine_eclipse_mirage/platform/crypt_query.hpp": {
-      "bytes": 1339,
-      "sha256": "134f0b34b737f0dec93d59e2fa56cc64c9bf182ee0531d0fb701054d066746b9"
+      "bytes": 1382,
+      "sha256": "04d71bf1ae933a68982cc52da6c107eb0a96853d625ce231c9c197b615429d8d"
     },
     "include/citrine_eclipse_mirage/platform/execution_windows.hpp": {
       "bytes": 907,
@@ -862,8 +862,8 @@
       "sha256": "00595931a18dd4929015f3d1f56739180ecfe6c32b69131593e97622888fd621"
     },
     "src/platform/crypt_query_host.cpp": {
-      "bytes": 544,
-      "sha256": "911a4e291a5feb8298aff26938ca1ce065d7698ef28ea19b85c2a19b205d1fe0"
+      "bytes": 628,
+      "sha256": "ade310d0109d175eebc971f28422fe9c84c87293fc31802e691b0c859f980425"
     },
     "src/platform/dll_entry.cpp": {
       "bytes": 5030,
@@ -1286,8 +1286,8 @@
       "sha256": "4a23c38fdf8bc3bf537f5f88ae353af38f221cd3e44f0a22744604aea302685f"
     },
     "tests/native/crypt_path_probe_tests.cpp": {
-      "bytes": 8925,
-      "sha256": "6a056772129506da3a5151e1f3c224cc3d6d7e38e4a4ae99f2f26714079b77a9"
+      "bytes": 9287,
+      "sha256": "837a363ca8b5b6d0919c7333bc435848e0ff18564e16d924daf8b7cb249b8ee7"
     },
     "tests/native/dll_attach_failure_tests.cpp": {
       "bytes": 3996,
