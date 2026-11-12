@@ -16,8 +16,9 @@ BRANCH = 'badges'
 DIRECTORY = 'resources/badges'
 ROOT = Path(__file__).resolve().parents[1]
 STATIC = frozenset({'windows.svg', 'cpp.svg', 'python.svg', 'cmake.svg', 'license.svg', 'changelog.svg'})
-NAMES = STATIC | {'ci.svg', 'latest-release.svg', 'release-integrity.svg', 'tests.svg', 'checksums.svg'}
-LEGACY_NAMES = NAMES - {'tests.svg', 'checksums.svg'}
+PREVIOUS_NAMES = STATIC | {'ci.svg', 'latest-release.svg', 'release-integrity.svg', 'tests.svg', 'checksums.svg'}
+LEGACY_NAMES = PREVIOUS_NAMES - {'tests.svg', 'checksums.svg'}
+NAMES = PREVIOUS_NAMES | {'codeql.svg'}
 CONCLUSIONS = {
     'success': ('passing', '#4c1'),
     'failure': ('failing', '#e05d44'),
@@ -110,7 +111,7 @@ def render_ci(conclusion):
     return ET.tostring(root, encoding='unicode') + '\n'
 
 
-def images(tag, conclusion, immutable=None, tests=None, checksum=None):
+def images(tag, conclusion, immutable=None, tests=None, checksum=None, codeql=None):
     if tag is not None:
         require_tag(tag)
     if conclusion is not None and conclusion not in CONCLUSIONS:
@@ -139,6 +140,12 @@ def images(tag, conclusion, immutable=None, tests=None, checksum=None):
         ('SHA-256', '#4c1') if checksum is True else
         ('missing', '#e05d44') if checksum is False else ('unknown', '#9f9f9f'))
     result['checksums.svg'] = render('Checksums', *checksum_state)
+    states = {None: ('not available', '#9f9f9f'),
+              'success': ('passing', '#4c1'), 'failure': ('failing', '#e05d44'),
+              'pending': ('running', '#dfb317'), 'cancelled': ('cancelled', '#9f9f9f')}
+    if codeql is not None and (not isinstance(codeql, str) or codeql not in states):
+        raise ValueError('Invalid CodeQL status')
+    result['codeql.svg'] = render('CodeQL', *states[codeql])
     return result
 
 
@@ -152,10 +159,32 @@ def test_counts(path):
     cases = list(root.iter('testcase'))
     if not 0 < len(cases) <= 100000:
         raise ValueError('Native test report must contain testcases')
+    parents = {child: parent for parent in root.iter() for child in parent}
+    suites = list(root.iter('testsuite'))
+    if not suites or any(node is not root and node.tag == 'testsuites' for node in root.iter()):
+        raise ValueError('Native test report has invalid suite structure')
+    if any(suite is not root and parents.get(suite) is not root and
+           parents.get(suite) not in suites for suite in suites):
+        raise ValueError('Native test suite has an invalid parent')
+    if any(parents.get(case) not in suites for case in cases):
+        raise ValueError('Native testcase is not directly owned by a suite')
     for suite in root.iter():
-        if suite.tag in {'testsuite', 'testsuites'} and suite.get('tests') is not None:
-            if not re.fullmatch(r'[0-9]+', suite.get('tests')) or int(suite.get('tests')) != len(list(suite.iter('testcase'))):
-                raise ValueError('Native test count does not match testcases')
+        if suite.tag in {'testsuite', 'testsuites'}:
+            suite_cases = list(suite.iter('testcase'))
+            count = suite.get('tests')
+            if suite.tag == 'testsuite' and count is None:
+                raise ValueError('Native test suite must declare its test count')
+            if count is not None:
+                if not re.fullmatch(r'[0-9]+', count) or int(count) != len(suite_cases):
+                    raise ValueError('Native test count does not match testcases')
+            # Optional JUnit summary totals must not contradict case outcomes.
+            # A malformed declared failure count must never render a green badge.
+            for field, tag in (('failures', 'failure'), ('errors', 'error'), ('skipped', 'skipped')):
+                declared = suite.get(field)
+                if declared is not None:
+                    observed = sum(case.find(tag) is not None for case in suite_cases)
+                    if not re.fullmatch(r'[0-9]+', declared) or int(declared) != observed:
+                        raise ValueError('Native test ' + field + ' count does not match testcases')
     passed = sum(not any(case.find(tag) is not None for tag in ('failure', 'error', 'skipped')) for case in cases)
     return passed, len(cases)
 
@@ -191,6 +220,39 @@ def native_result(api, base, default, repository):
                 if match and step['conclusion'] == 'success':
                     return int(match[1]), int(match[2]), job['conclusion']
             return None
+    return None
+
+
+def codeql_result(api, base, default, repository):
+    # Only the current accepted commit and all three actual analyses can be green.
+    main = api.request('GET', base + '/commits/' + default)
+    sha = main['sha']
+    if not re.fullmatch(r'[0-9a-f]{40}', sha):
+        raise ValueError('Invalid default-branch commit')
+    runs = api.request('GET', base + '/actions/workflows/msvc-reference-graph.yml/runs?event=push&branch='
+                       + default + '&per_page=30')['workflow_runs']
+    for run in runs:
+        owner = run.get('head_repository')
+        if (run.get('event') != 'push' or run.get('head_branch') != default
+                or run.get('head_sha') != sha or type(run.get('id')) is not int
+                or run['id'] <= 0 or not isinstance(owner, dict)
+                or owner.get('full_name') != repository):
+            continue
+        if run.get('status') != 'completed':
+            return 'pending' if run.get('status') in {'queued', 'in_progress', 'waiting', 'pending', 'requested'} else None
+        conclusion = run.get('conclusion')
+        if conclusion != 'success':
+            return ('failure' if conclusion in {'failure', 'timed_out', 'action_required'}
+                    else 'cancelled' if conclusion == 'cancelled' else None)
+        jobs = api.request('GET', base + '/actions/runs/' + str(run['id'])
+                           + '/jobs?filter=latest&per_page=100')['jobs']
+        expected = {'CodeQL (actions)', 'CodeQL (c-cpp)', 'CodeQL (python)'}
+        analyses = [job for job in jobs if job.get('name') in expected]
+        if (len(analyses) == 3 and {job['name'] for job in analyses} == expected
+                and all(job.get('status') == 'completed' and job.get('conclusion') == 'success'
+                        for job in analyses)):
+            return 'success'
+        return None
     return None
 
 
@@ -244,7 +306,8 @@ def live_images(api, repository):
         raise ValueError('CI badge requires a completed default-branch push run')
     return images(release['tag_name'] if release else None, runs[0]['conclusion'] if runs else None,
                   release.get('immutable') if release else None,
-                  native_result(api, base, default, repository), checksum_available(release))
+                  native_result(api, base, default, repository), checksum_available(release),
+                  codeql_result(api, base, default, repository))
 
 
 def blob_sha(content):
@@ -254,7 +317,7 @@ def blob_sha(content):
 
 def publish(api, repository, rendered):
     if set(rendered) != NAMES:
-        raise ValueError('Only the eleven badge SVGs may be published')
+        raise ValueError('Only the twelve badge SVGs may be published')
     base = repository_path(repository)
     expected = {DIRECTORY + '/' + name: blob_sha(value) for name, value in rendered.items()}
     ref = api.request('GET', base + '/git/ref/heads/' + BRANCH, missing_ok=True)
@@ -267,7 +330,8 @@ def publish(api, repository, rendered):
         tree = api.request('GET', base + '/git/trees/' + commit['tree']['sha'] + '?recursive=1')
         actual = {entry['path']: entry['sha'] for entry in tree['tree'] if entry['type'] == 'blob'}
         legacy = {DIRECTORY + '/' + name for name in LEGACY_NAMES}
-        if (tree.get('truncated') or set(actual) not in (set(expected), legacy)
+        previous = {DIRECTORY + '/' + name for name in PREVIOUS_NAMES}
+        if (tree.get('truncated') or set(actual) not in (set(expected), previous, legacy)
                 or any(entry['type'] not in {'tree', 'blob'} or
                        (entry['type'] == 'blob' and entry['mode'] != '100644') or
                        (entry['type'] == 'tree' and entry['path'] not in {'resources', DIRECTORY})

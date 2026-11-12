@@ -2,9 +2,19 @@
 
 #include "citrine_eclipse_mirage/protocol/messages.hpp"
 #include <limits>
+#include <ostream>
 #include <stdexcept>
 
 namespace citrine_eclipse_mirage::messages {
+void report_unknown_message_07bd70(const UnknownMessageInput& input,std::ostream& stream,
+                                  UnknownMessageDialog& dialog) {
+    stream<<"[UNKNOWN MESSAGE]"<<std::endl;
+    {const auto request=input.view();
+     stream<<request;}
+    stream<<std::endl;
+    // The second flush can change/reallocate the original request object.
+    dialog.show("UNKNOWN MESSAGE",std::string(input.view()),0x10);
+}
 std::uint64_t EventQueue::reserve_front_locked(){throw std::logic_error("Event queue lacks delivery reservations");}
 bool EventDelivery::finish(bool success) noexcept {
     if(!token_)return true;
@@ -139,6 +149,19 @@ std::string process_message_033d70(State state,std::string& input,XmlBackend& xm
                 // NUL framing or event selection. An ordered Session completes
                 // this empty result without socket output and admits the next frame.
                 return {};
+            }
+            catch(const UnknownMessageError&){
+                auto* diagnostic=dynamic_cast<UnknownMessageEffects*>(&effects);
+                if(!diagnostic)throw;
+                struct Input final:UnknownMessageInput {
+                    std::string& original;
+                    explicit Input(std::string& value):original(value){}
+                    std::string_view view() const override{return original;}
+                } request(input);
+                // Diagnostic failures propagate. Only its normal return permits
+                // same-session continuation, without framing/cipher/event work.
+                diagnostic->unknown_message_07bd70(request);
+                return response;
             }
             if(state.show_lsx_0a3ef0)effects.log_response(response);
             if(!state.encrypted_0c4) {

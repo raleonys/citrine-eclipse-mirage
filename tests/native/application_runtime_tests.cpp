@@ -2,6 +2,7 @@
 
 #include "citrine_eclipse_mirage/runtime/application.hpp"
 #include "citrine_eclipse_mirage/core/binary_io.hpp"
+#include "citrine_eclipse_mirage/codec/encoding.hpp"
 #include "citrine_eclipse_mirage/hash/hash.hpp"
 #include "citrine_eclipse_mirage/xml/reader.hpp"
 #include "citrine_eclipse_mirage/core/token_constants.hpp"
@@ -23,6 +24,52 @@
 #include <iterator>
 #include <cstring>
 #include <algorithm>
+
+#include <condition_variable>
+#include <mutex>
+
+// Compile the actual Environment body with only its SDK dialog call intercepted.
+// Keep real conversion, Application dispatch, worker ownership and TCP unchanged.
+namespace unknown_message_dialog {
+std::mutex mutex;
+std::condition_variable changed;
+std::wstring expected_body;
+bool armed=false,entered=false,released=false;
+unsigned calls=0;
+struct Probe {
+    explicit Probe(std::string_view request) {
+        std::lock_guard lock(mutex);
+        if(armed)throw std::logic_error("overlapping UnknownMessage observations");
+        expected_body.assign(request.begin(),request.end());
+        entered=released=false;armed=true;
+    }
+    ~Probe(){release();}
+    bool wait() {
+        std::unique_lock lock(mutex);
+        return changed.wait_for(lock,std::chrono::seconds(5),[]{return entered;});
+    }
+    void release() {
+        {std::lock_guard lock(mutex);released=true;}
+        changed.notify_all();
+    }
+    Probe(const Probe&)=delete;
+    Probe& operator=(const Probe&)=delete;
+};
+int WINAPI show(HWND owner,LPCWSTR body,LPCWSTR title,UINT flags) {
+    std::unique_lock lock(mutex);
+    if(!armed||entered||owner||!body||!title||flags!=MB_ICONERROR||
+       std::wstring_view(title)!=L"UNKNOWN MESSAGE"||std::wstring_view(body)!=expected_body)
+        throw std::runtime_error("unexpected UnknownMessage SDK dialog operands");
+    ++calls;entered=true;changed.notify_all();
+    if(!changed.wait_for(lock,std::chrono::seconds(5),[]{return released;}))
+        throw std::runtime_error("test did not release the intercepted UnknownMessage dialog");
+    armed=false;
+    return IDCANCEL; // The selected diagnostic ignores the SDK result.
+}
+}
+#define MessageBoxW ::unknown_message_dialog::show
+#include "../../src/runtime/application_environment.cpp"
+#undef MessageBoxW
 
 using namespace citrine_eclipse_mirage;
 namespace fs=std::filesystem;
@@ -103,13 +150,24 @@ public:
             char bytes[4096];auto n=socket.read_some(asio::buffer(bytes));input.append(bytes,n);}
     }
     void send(std::string bytes){bytes.push_back('\0');asio::write(socket,asio::buffer(bytes));}
+    std::string encoded_request(std::string_view id,std::string_view command,bool encrypted) {
+        auto bytes="<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>";
+        if(encrypted){
+            require(cipher.encrypt_042610(bytes),"batch request encrypts with the negotiated peer key");
+            messages::hex_encode_03d190(bytes);
+        }
+        return bytes; // send() appends the final NUL after any joined frames.
+    }
     std::string request(std::string_view id,std::string_view command) {
         send("<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>");return frame();
     }
-    void encrypted_send(std::string_view id,std::string_view command) {
-        auto bytes="<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>";
+    std::string encrypted_raw_frame(std::string bytes) {
         require(cipher.encrypt_042610(bytes),"client encrypt");
-        messages::hex_encode_03d190(bytes);send(bytes);
+        messages::hex_encode_03d190(bytes);return bytes;
+    }
+    void encrypted_raw_send(std::string bytes) {send(encrypted_raw_frame(std::move(bytes)));}
+    void encrypted_send(std::string_view id,std::string_view command) {
+        encrypted_raw_send("<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>");
     }
     std::string encrypted_request(std::string_view id,std::string_view command) {
         encrypted_send(id,command);return encrypted_frame();
@@ -138,12 +196,37 @@ public:
             cipher.set_key_042780(random.key_from_response_034c30(*value));
         }else cipher.set_fixed_key_084c98();
     }
+    bool no_output_pending() {
+        asio::error_code error;
+        const auto available=socket.available(error);
+        require(!error,"pending-output inspection keeps the peer open");
+        return available==0&&input.empty();
+    }
     bool same_cipher(const Peer& other)const{return cipher.round_keys()==other.cipher.round_keys();}
+    void rekey(std::string_view id,std::string_view key,int version) {
+        std::string expected(key);crypto::Cipher fixed;fixed.set_fixed_key_084c98();
+        require(fixed.encrypt_042610(expected),"independent live rekey challenge encryption");
+        messages::hex_encode_03d190(expected);
+        crypto::Cipher next;
+        if(version>2){crypto::WindowsTimeSource time;crypto::Random random{time};next.set_key_042780(random.key_from_response_034c30(expected));}
+        else next.set_fixed_key_084c98();
+        require(next.round_keys()!=cipher.round_keys(),"live rekey selects genuinely different keys");
+        encrypted_send(id,"<ChallengeResponse key='"+std::string(key)+"' version='"+std::to_string(version)+"'/>");
+        cipher=next; // Decode this reply with the new key, after sending with the old one.
+        const auto reply=encrypted_frame();xml_reader_bridge::Backend xml;auto parsed=xml.parse_c_string(reply);
+        require(!parsed.has_error,"live encrypted rekey response parses");
+        const auto* root=parsed.document->first_element();const auto* response=root?root->first_element():nullptr;
+        const auto* accepted=response?response->first_element():nullptr;
+        require(root&&root->name()=="LSX"&&response&&response->name()=="Response"&&response->attribute("id")==id&&
+                accepted&&accepted->name()=="ChallengeAccepted"&&accepted->attribute("response")==expected,
+                "live rekey returns its exact challenge and request id under the new key");
+    }
     void close() {
         asio::error_code error;socket.shutdown(asio::ip::tcp::socket::shutdown_both,error);
         socket.close(error);require(!error,"explicit encrypted peer close succeeds");
     }
     bool closes_without_output() {
+        if(!input.empty())return false; // Previously buffered output also violates silence.
         socket.non_blocking(true);
         const auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(5);
         while(std::chrono::steady_clock::now()<deadline) {
@@ -236,6 +319,16 @@ void encrypted_peer_isolation(std::uint16_t port) {
             require_profile(derived.encrypted_frame(),second);
             require_profile(fixed.encrypted_frame(),first);
         }
+        for(int stage:{0,1,2}){
+            const int version=stage==1?2:3;
+            const auto id="rotate-"+std::to_string(stage);
+            derived.rekey(id,stage==0?"live-rekey-first":stage==1?"live-rekey-fixed":"live-rekey-second",version);
+            require(derived.same_cipher(fixed)==(version==2),"live derived/fixed transitions preserve the sibling's negotiated key");
+            derived.encrypted_send("after-"+id,"<GetProfile index='0'/>");
+            fixed.encrypted_send("sibling-"+id,"<GetProfile index='0'/>");
+            require_profile(fixed.encrypted_frame(),"sibling-"+id);
+            require_profile(derived.encrypted_frame(),"after-"+id);
+        }
         Peer& retired=close_fixed?fixed:derived;
         Peer& survivor=close_fixed?derived:fixed;
         retired.close();
@@ -250,6 +343,51 @@ void encrypted_peer_isolation(std::uint16_t port) {
         require_profile(replacement.encrypted_frame(),"replacement-profile");
         require_profile(survivor.encrypted_frame(),"survivor-after-admission");
     }
+}
+// Well-formed invalid dispatches now diagnose and continue on the same peer.
+// Hold the intercepted SDK boundary to prove that its normal return is required.
+void unknown_lsx_continuation(std::uint16_t port) {
+    constexpr std::string_view rejected[]{
+        "<OtherRoot><Request id='wrong-root' recipient='EbisuSDK'><GetProfile index='0'/></Request></OtherRoot>",
+        "<LSX><Request id='missing-recipient'><GetProfile index='0'/></Request></LSX>",
+        "<LSX><Request id='unknown-command' recipient='EbisuSDK'><FixtureUnregisteredCommand/></Request></LSX>"};
+    Peer survivor(port);(void)survivor.frame();
+    survivor.negotiate("survivor-handshake","fixture-invalid-survivor",3);
+    require_profile(survivor.encrypted_request("survivor-before-diagnostic","<GetProfile index='0'/>"),"survivor-before-diagnostic");
+    unsigned sequence=0;
+    for(const bool encrypted:{false,true})for(const bool coalesced:{false,true})for(const auto request:rejected) {
+        xml_reader_bridge::Backend xml;const auto parsed=xml.parse_c_string(request);
+        require(!parsed.has_error,"invalid LSX fixture is syntactically valid XML");
+        Peer observed(port);
+        require(observed.frame().find("<Challenge ")!=std::string::npos,"diagnosed peer first receives its real greeting");
+        if(encrypted)observed.negotiate("invalid-handshake","fixture-invalid-peer",3);
+        unknown_message_dialog::Probe diagnostic(request);
+        const auto next="same-peer-after-"+std::to_string(sequence);
+        std::string bytes(request);
+        if(encrypted)bytes=observed.encrypted_raw_frame(std::move(bytes));
+        if(coalesced){
+            bytes.push_back('\0');
+            bytes+=observed.encoded_request(next,"<GetProfile index='0'/>",encrypted);
+        }
+        observed.send(std::move(bytes));
+        require(diagnostic.wait(),"actual Application reaches intercepted UnknownMessage dialog");
+        const auto pending="survivor-during-"+std::to_string(sequence);
+        require_profile(survivor.encrypted_request(pending,"<GetProfile index='0'/>"),pending);
+        require(observed.no_output_pending(),"blocked diagnostic sends no reply and holds this peer's queued successor");
+        diagnostic.release();
+        if(!coalesced){
+            if(encrypted)observed.encrypted_send(next,"<GetProfile index='0'/>");
+            else observed.send(observed.encoded_request(next,"<GetProfile index='0'/>",false));
+        }
+        require_profile(encrypted?observed.encrypted_frame():observed.frame(),next);
+        const auto after="survivor-after-"+std::to_string(sequence++);
+        require_profile(survivor.encrypted_request(after,"<GetProfile index='0'/>"),after);
+        Peer replacement(port);
+        require(replacement.frame().find("<Challenge ")!=std::string::npos,"listener still admits a peer after UnknownMessage continuation");
+        const auto admitted="admitted-after-"+std::to_string(sequence);
+        require_profile(replacement.request(admitted,"<GetProfile index='0'/>"),admitted);
+    }
+    require(unknown_message_dialog::calls==12,"each invalid form and frame/cipher mode invokes exactly one diagnostic");
 }
 struct GreetingFixture final:net::HandlerFactory {
     std::promise<void> entered;
@@ -349,6 +487,67 @@ void stop_blocked_greeting() {
     auto start=std::chrono::steady_clock::now();service.stop();
     require(std::chrono::steady_clock::now()-start<std::chrono::milliseconds(500),"stop cancels a greeting blocked by a non-reading peer");
 }
+void require_no_response_profile(std::string_view bytes,std::string_view id) {
+    xml_reader_bridge::Backend xml;auto parsed=xml.parse_c_string(bytes);
+    require(!parsed.has_error,"first frame after silent commands is valid XML");
+    const auto* root=parsed.document->first_element();
+    const auto* response=root?root->first_element():nullptr;
+    const auto* profile=response?response->first_element():nullptr;
+    require(root&&root->name()=="LSX"&&!root->next_element()&&
+            response&&response->name()=="Response"&&!response->next_element()&&
+            response->attribute("id")==id&&response->attribute("sender")=="EbisuSDK"&&
+            profile&&profile->name()=="GetProfileResponse"&&!profile->next_element()&&
+            profile->attribute("Persona")=="fixture-override"&&profile->attribute("UserIndex")=="0",
+            "silent commands emit no extra response and preserve the same peer's exact follow-up");
+}
+void no_response_continuation(std::uint16_t port) {
+    // The initial DOWN seed has already been delivered. Each case publishes
+    // one new event through the real ShowIGO handler and drains it before exit.
+    for(const int version:{0,2,3})for(const bool batch:{false,true}){
+        const auto id="no-response-"+std::to_string(version)+(batch?"-batch":"-separate");
+        progress(id.c_str());
+        Peer peer(port);
+        require(peer.frame().find("<Challenge ")!=std::string::npos,"silent-command peer receives its real greeting");
+        const auto queued_id=id+"-queued";
+        const auto queued=peer.request(queued_id,"<ShowIGO/>");
+        require(queued=="<LSX>\n    <Response id=\""+queued_id+"\" sender=\"EbisuSDK\">\n        <ErrorSuccess Code=\"0\" Description=\"\"/>\n    </Response>\n</LSX>\n",
+                "plaintext ShowIGO acknowledges one pending DOWN event without delivering it");
+        if(version)peer.negotiate(id+"-handshake",id+"-key",version);
+        const auto first=peer.encoded_request(id+"-silent-1","<QueryChunkStatus/>",version!=0);
+        const auto second=peer.encoded_request(id+"-silent-2","<QueryChunkStatus/>",version!=0);
+        const auto after_id=id+"-after";
+        const auto after=peer.encoded_request(after_id,"<GetProfile index='0'/>",version!=0);
+        if(batch){
+            auto frames=first;frames.push_back('\0');frames+=second;frames.push_back('\0');frames+=after;
+            peer.send(std::move(frames));
+        }else{
+            peer.send(first);peer.send(second);peer.send(after);
+        }
+        // These are separate client writes versus one batched write. TCP may
+        // segment/coalesce either; no kernel receive schedule is asserted.
+        require_no_response_profile(version?peer.encrypted_frame():peer.frame(),after_id);
+        if(version)
+            require(peer.encrypted_frame()==event_queue::initial_down_event,
+                    "silent encrypted commands retain the pending event for the valid response");
+        const auto followup_id=id+"-followup";
+        require_no_response_profile(version?peer.encrypted_request(followup_id,"<GetProfile index='0'/>"):
+            peer.request(followup_id,"<GetProfile index='0'/>"),followup_id);
+        if(!version){
+            // Plaintext responses do not consume events. First negotiation on
+            // this same connection makes its preserved event observable.
+            peer.negotiate(id+"-drain-handshake",id+"-drain-key",2);
+            const auto drain_id=id+"-drain";
+            require_no_response_profile(peer.encrypted_request(drain_id,"<GetProfile index='0'/>"),drain_id);
+            require(peer.encrypted_frame()==event_queue::initial_down_event,
+                    "silent plaintext commands preserve the event until encrypted delivery");
+            const auto final_id=id+"-final";
+            require_no_response_profile(peer.encrypted_request(final_id,"<GetProfile index='0'/>"),final_id);
+        }
+        // The follow-up's first frame also rejects a duplicate/stray event;
+        // no timeout or quiet interval is treated as successful silence.
+        peer.close();
+    }
+}
 }
 int main(int argc,char** argv) try {
     progress("begin event mutex contract");
@@ -416,6 +615,8 @@ int main(int argc,char** argv) try {
         require(peer.request("after-bad-xml","<GetProfile index='0'/>").find("fixture-override")!=std::string::npos,"XML parse failure leaves the session usable");
     }
     encrypted_peer_isolation(state.server_port);
+    unknown_lsx_continuation(state.server_port);
+    no_response_continuation(state.server_port);
     // Stop while an accepted socket still owns a pending read.
     Peer waiting(state.server_port);(void)waiting.frame();app.stop();app.stop();
     require(true,"pending read cancelled and idempotent stop completed");
@@ -608,6 +809,42 @@ int main(int argc,char** argv) try {
         wchar_t client[4096]{};DWORD size=sizeof(client),type=0;
         require(RegQueryValueExW(key,L"ClientPath",nullptr,&type,reinterpret_cast<BYTE*>(client),&size)==ERROR_SUCCESS&&std::wstring(client)==exe,"real registry query reaches source values and original trampolines");
         require(RegCloseKey(key)==ERROR_SUCCESS,"real registry close releases tracked handle");
+        // Archive 12 / A11-09 D03: the installed product hooks must also
+        // route ANSI Registry calls, not merely the already-covered W chain.
+        // Use the same real Application state and exact fake-key cleanup owner.
+        HKEY ansi_key=nullptr;
+        require(RegOpenKeyExA(HKEY_CURRENT_USER,"SOFTWARE\\Wow6432Node\\Origin",0,KEY_READ,&ansi_key)==ERROR_SUCCESS&&ansi_key,
+            "installed ANSI Registry open returns the tracked client key");
+        DWORD ansi_type=0,ansi_required=0;
+        require(RegQueryValueExA(ansi_key,"ClientPath",nullptr,&ansi_type,nullptr,&ansi_required)==ERROR_SUCCESS&&
+                ansi_type==REG_SZ&&ansi_required>1,
+            "installed ANSI Registry size-only query publishes complete NUL byte count");
+        BYTE too_small=0x5a;DWORD small_capacity=1,small_type=0;
+        require(RegQueryValueExA(ansi_key,"ClientPath",nullptr,&small_type,&too_small,&small_capacity)==ERROR_MORE_DATA&&
+                small_type==REG_SZ&&small_capacity==ansi_required,
+            "installed ANSI Registry query reports required size for a short buffer");
+        std::string ansi_value(ansi_required,'\0');
+        DWORD ansi_capacity=ansi_required;ansi_type=0;
+        require(RegQueryValueExA(ansi_key,"ClientPath",nullptr,&ansi_type,
+                reinterpret_cast<BYTE*>(ansi_value.data()),&ansi_capacity)==ERROR_SUCCESS&&
+                ansi_type==REG_SZ&&ansi_capacity==ansi_required&&ansi_value.back()=='\0',
+            "installed ANSI Registry query produces exact counted terminated bytes");
+        encoding::NativeCalls conversion;
+        encoding::PortableErrors conversion_errors;
+        const auto expected_ansi=encoding::narrow_006e60(hooked.configuration().executable_path,
+            encoding::filesystem_codepage_048ac0(conversion),conversion,conversion_errors);
+        require(ansi_value==expected_ansi+std::string(1,'\0'),
+            "installed ANSI Registry overlay matches the configured native filesystem-codepage path");
+        wchar_t mixed_client[4096]{};DWORD mixed_bytes=sizeof(mixed_client),mixed_type=0;
+        require(RegQueryValueExW(ansi_key,L"ClientPath",nullptr,&mixed_type,
+                reinterpret_cast<BYTE*>(mixed_client),&mixed_bytes)==ERROR_SUCCESS&&
+                mixed_type==REG_SZ&&std::wstring(mixed_client)==exe,
+            "ANSI-opened Registry handle reaches the installed wide query callback");
+        DWORD unknown_capacity=0;
+        require(RegQueryValueExA(ansi_key,"NotClientPath",nullptr,nullptr,nullptr,&unknown_capacity)==ERROR_FILE_NOT_FOUND,
+            "unmatched ANSI Registry value does not fabricate a replacement");
+        require(RegCloseKey(ansi_key)==ERROR_SUCCESS,
+            "installed Registry close releases the ANSI-opened fabricated key");
         // Earlier provider tests disable hooks; the hook case previously had no
         // online DLL. Exercise the complete socket/handler/provider/SDK path.
         probe.enable(1);

@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [REMAINING_WORK.md](REMAINING_WORK.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # Donor retirement and validated failure paths
 
 This report records the recovery/comparison checkpoint before the XML vendor
