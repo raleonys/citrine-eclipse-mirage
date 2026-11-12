@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Test Asio startup rollback after controlled first/second handler-worker and IO-runner launch exceptions. Require joined owned threads before failure returns, no listener/readiness publication, idempotent cleanup and a usable fresh two-worker pool. A private fixture type selection leaves production threads as std::thread; this is not an actual OS thread-creation failure claim.
+- Test Asio startup rollback after controlled first/second handler-worker and IO-runner launch exceptions. Require joined owned threads before failure returns, no listener/readiness publication, idempotent cleanup and a usable fresh two-worker pool. Classify the fixture as a production-core test in the Windows target-partition policy. A private fixture type selection leaves production threads as std::thread; this is not an actual OS thread-creation failure claim.
 - Reorder README status badges as Tests (native), Checksums, Release integrity, Source integrity, QA and CodeQL. Add a compact repository-owned QA result from the actual source/portable job for an exact current-main tree; retain strict evidence freshness and closed 9/11/12-to-13 image migration without adding PR analysis or publisher runners.
 
 ## Integrated development history
