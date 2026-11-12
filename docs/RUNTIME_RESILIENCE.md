@@ -2,6 +2,8 @@
 > asynchronous greeting, event delivery reservations, deadlines and byte/session
 > budgets now follow [SESSION_TRANSPORT.md](SESSION_TRANSPORT.md). Its current
 > contract supersedes the earlier unchanged-dequeue/output-budget statements below.
+> Current IPv4/IPv6 listeners are in [AUTOMATIC_LISTENER.md](AUTOMATIC_LISTENER.md);
+> the earlier connect-only change below did not itself add that listener.
 
 # Runtime resilience
 
@@ -27,7 +29,9 @@ contract are preserved. No IPv6 listener is added by this change.
 `PersistenceEffects::persist_achievement` serializes XML and INI before entering a
 single checked native batch. Startup creation of achievements.ini and the explicit
 achievement XML/INI writers also use checked replacement. Other recovered binary
-IO paths (profile, ticket, avatar and configuration) retain their existing behavior.
+IO paths (profile, avatar and configuration) retain their existing behavior.
+License-ticket adapters now use checked write/close status as documented in
+[WINDOWS_IO_FIX.md](WINDOWS_IO_FIX.md); they are not atomic replacement writes.
 
 Each destination is staged under an exclusively created same-directory name.
 Write counts, FlushFileBuffers and close are checked before replacement. Existing
@@ -80,7 +84,17 @@ retains the original launch boundary for RE fixtures and explicit source users.
 
 Native callback tests exercise read-only Windows memory and both address families.
 Atomic persistence tests inject staging, replacement, rollback and cleanup failures,
-plus a real destination handle denying replacement. Real-socket worker tests cover
+plus a real destination handle denying replacement. The same controlled
+`AtomicFiles` recovery matrix runs as `portable_atomic_recovery` and Windows
+`atomic_recovery_matrix_contracts`, each with a 30-second budget. Its 64 combinations
+vary original presence and independent rollback failures for three changed
+destinations before a fourth replacement fails. Assertions cover exact binary/empty
+bytes and backups, reverse-order recovery after errors, first-error preservation,
+remaining-owner retries, refusal to stage until recovery, idempotent cleanup and
+a subsequent successful group. Its in-memory filesystem does not establish native
+filesystem semantics or power-loss atomicity.
+
+Real-socket worker tests cover
 pipelined order, exception isolation, queue saturation, live IO under occupied
 workers, and cancellation/drain on stop. LLVM-MinGW/Wine evidence is separate from
 MSVC Golden and the owner's game acceptance. See the current evidence report.

@@ -169,6 +169,42 @@ void failures_and_empty_paths(const std::filesystem::path& root){
     }
     {Fixture f(root/"empty-paths");f.paths.xml_path.clear();f.paths.ini_path.clear();(void)f.grant("a");require(f.trace.empty() && f.clock.calls==1,"empty persistence paths skip both files without skipping grant");}
 }
+void invalid_ini_section_has_no_filesystem_effects(const std::filesystem::path& root){
+    const auto directory=root/"invalid-ini-preflight";
+    std::error_code cleanup_error;
+    std::filesystem::remove_all(directory,cleanup_error);
+    require(!cleanup_error,"remove only the owned invalid-INI fixture directory");
+    Fixture f(directory);
+    const auto watcher=std::filesystem::path(f.paths.ini_path).parent_path();
+    require(!std::filesystem::exists(watcher),"invalid-INI fixture starts without watcher directory");
+    // A different record's unsafe section ID must reject this grant before
+    // mkdir, even though the grant itself targets a valid achievement.
+    f.state.achievements.at("negative").steam_id="bad]\r\n[forged";
+    rejects<std::invalid_argument>([&]{(void)f.grant("a");},
+        "real grant rejects another record's unsafe watcher INI section");
+    require(f.trace.empty()&&f.dirs.paths.empty()&&f.files.writes.empty(),
+        "invalid INI preflight prevents directory creation and atomic writes");
+    require(!std::filesystem::exists(watcher)&&
+            !std::filesystem::exists(std::filesystem::path(f.paths.xml_path)),
+        "invalid section creates neither watcher directory nor XML file");
+    const auto& restored=f.state.achievements.at("a");
+    require(restored.field04==0&&restored.field08==0&&restored.field70==0&&
+            restored.timestamp=="0000-00-00T00:00:00"&&
+            !f.mutex.held&&f.mutex.locks==f.mutex.unlocks&&f.events.entries.empty(),
+        "failed preflight restores grant state, releases lock and publishes no event");
+
+    // Repair the invalid input and retry the same live grant/fixture.
+    f.state.achievements.at("negative").steam_id="200";
+    (void)f.grant("a");
+    require(f.trace==std::vector<std::string>{"mkdir","atomic"}&&
+            f.files.writes.size()==2&&std::filesystem::exists(watcher),
+        "repaired grant creates its watcher directory and commits one XML/INI batch");
+    require(f.state.achievements.at("a").field08==1&&
+            f.state.achievements.at("a").field04==0&&
+            !f.mutex.held&&f.events.entries.empty(),
+        "retry advances one partial grant without a duplicate completion event");
+}
+
 // A11-09: actual native XML/INI atomic retry at the achievement grant boundary.
 // The lower atomic file test already holds INI while replacing two files. This
 // test proves the live grant's map/lock rollback and its exact second attempt.
@@ -248,4 +284,4 @@ void roundtrip(const std::filesystem::path& root){
     require(a.field00==2 && a.steam_id=="100","roundtrip import preserves configured total and Steam ID");
 }
 }
-int main(int argc,char** argv){try{if(argc!=2)throw std::invalid_argument("owned fixture directory required");const std::filesystem::path root(argv[1]);bridge_and_partial(root);completion_and_edges(root);failures_and_empty_paths(root);native_locked_ini_grant_retry(root);roundtrip(root);std::cout<<"PASS: "<<checks<<" achievement runtime integration checks; own fixtures and controlled clock/locks/events only\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+int main(int argc,char** argv){try{if(argc!=2)throw std::invalid_argument("owned fixture directory required");const std::filesystem::path root(argv[1]);bridge_and_partial(root);completion_and_edges(root);failures_and_empty_paths(root);invalid_ini_section_has_no_filesystem_effects(root);native_locked_ini_grant_retry(root);roundtrip(root);std::cout<<"PASS: "<<checks<<" achievement runtime integration checks; own fixtures and controlled clock/locks/events only\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
