@@ -2256,14 +2256,22 @@ class RuntimeEvidenceTests(unittest.TestCase):
 
     def test_inherited_git_selectors_cannot_replace_the_benchmark_commit(self):
         tool = RuntimeBenchmarkTests.diagnostic()
+        environment = os.environ.copy()
+        local_names = subprocess.run(['git', 'rev-parse', '--local-env-vars'],
+                                     cwd=ROOT, capture_output=True, text=True,
+                                     check=True, timeout=30).stdout.splitlines()
+        for name in local_names:
+            environment.pop(name, None)
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve()
             for name in ('metadata/ACTIVE_SOURCE_MANIFEST.json', 'metadata/VENDOR_LOCK.json',
                          'src/net/asio_service.cpp', 'src/runtime/application.cpp'):
                 path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(b'fixture')
             for args in (['init', '-q'], ['add', '.'], ['-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '-qm', 'fixture']):
-                subprocess.run(['git', '-C', str(root), *args], capture_output=True, check=True)
-            expected = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
+                subprocess.run(['git', '-C', str(root), *args], capture_output=True, check=True,
+                               env=environment, timeout=30)
+            expected = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'],
+                                               text=True, env=environment, timeout=30).strip()
             with patch.object(tool, 'ROOT', root), patch.dict(os.environ, {'GIT_DIR': str(root / 'absent-git'), 'GIT_WORK_TREE': str(root / 'absent-tree')}):
                 self.assertEqual(expected, tool.identity()['commit'])
 

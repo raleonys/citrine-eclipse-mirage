@@ -215,6 +215,9 @@ root, verifies the Git top level and rejects a dirty checkout. Inherited Git
 repository selectors cannot redirect these local queries. A source archive
 nested beneath another checkout records a null commit and its own manifest
 identity rather than adopting its parent's HEAD.
+The disposable Git fixture also clears repository-local Git environment before
+creating its temporary repository, so pre-push cannot redirect fixture setup
+into the source checkout.
 
 After native measurement, the workflow runs the committed offline auditor:
 
