@@ -15,6 +15,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import weekly_release as release
+import weekly_naming as naming
 from run_source_qa import CHECKS
 
 SOURCE = 'a' * 40
@@ -132,6 +133,23 @@ class PlannerTests(unittest.TestCase):
                           'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'),
                          release.asset_names('3.2.6-TALVOR'))
 
+    def test_duplicate_registry_json_keys_are_rejected(self):
+        source = naming.FILE.read_text(encoding='utf-8')
+        cases = (
+            ('"schema": "cem.weekly.naming.v1",',
+             '"schema": "spoofed",\n  "schema": "cem.weekly.naming.v1",'),
+            ('"3.2.6": "TALVOR",',
+             '"3.2.6": "UNAPPROVED",\n    "3.2.6": "TALVOR",'),
+        )
+        for marker, injected in cases:
+            with self.subTest(marker=marker), tempfile.TemporaryDirectory() as folder:
+                self.assertIn(marker, source)
+                temporary_policy = Path(folder) / 'weekly-naming.json'
+                temporary_policy.write_text(source.replace(marker, injected, 1), encoding='utf-8')
+                with patch.object(naming, 'FILE', temporary_policy):
+                    with self.assertRaisesRegex(ValueError, 'Duplicate JSON object key'):
+                        release.load_registry()
+
     def test_historical_root_reuse_rejected(self):
         p = deepcopy(release.load_registry())
         p['approved_codenames']['3.2.6'] = 'SQUALERIS'
@@ -222,6 +240,8 @@ class SourceQaTests(unittest.TestCase):
 
 
 class PayloadTests(unittest.TestCase):
+    invalid_exit_codes = (None, False, True, 0.0, '', '0', [], {}, 1, -1)
+
     def setUp(self):
         version_selection = patch.dict('os.environ', {'CITRINE_ECLIPSE_MIRAGE_VERSION': '3.2.6'})
         version_selection.start()
@@ -451,6 +471,83 @@ class PayloadTests(unittest.TestCase):
             with self.subTest(change=change), self.assertRaises(ValueError):
                 self.validate('native')
 
+    def test_build_receipts_require_integer_zero_exit_codes(self):
+        for profile in ('native', 'production'):
+            path = self.payload / profile / 'BUILD_RECEIPT.json'
+            original = release.load(path)
+            for value in self.invalid_exit_codes:
+                release.write(path, {**original, 'validation_exit_code': value})
+                with self.subTest(profile=profile, value=value), self.assertRaises(ValueError):
+                    self.validate(profile)
+            release.write(path, original)
+            self.validate(profile)
+
+    def test_every_golden_stage_requires_integer_zero_in_both_reports(self):
+        for relative in ('production/GOLDEN_REPORT.json', 'production/dist/DIST_RECEIPT.json'):
+            path = self.payload / relative
+            original = release.load(path)
+            for index in range(len(release.ORDER)):
+                for value in self.invalid_exit_codes:
+                    report = deepcopy(original)
+                    report['steps'][index]['exit_code'] = value
+                    release.write(path, report)
+                    with self.subTest(report=relative, stage=index, value=value), self.assertRaises(ValueError):
+                        self.validate('production')
+                report = deepcopy(original)
+                del report['steps'][index]['exit_code']
+                release.write(path, report)
+                with self.subTest(report=relative, stage=index, missing=True), self.assertRaises(ValueError):
+                    self.validate('production')
+            release.write(path, original)
+        self.validate('production')
+
+    def test_golden_runtime_checks_require_integer_zero_in_both_reports(self):
+        for relative in ('production/GOLDEN_REPORT.json', 'production/dist/DIST_RECEIPT.json'):
+            path = self.payload / relative
+            original = release.load(path)
+            for value in self.invalid_exit_codes:
+                report = deepcopy(original)
+                report['runtime_check']['exit_code'] = value
+                release.write(path, report)
+                with self.subTest(report=relative, value=value), self.assertRaises(ValueError):
+                    self.validate('production')
+            release.write(path, original)
+        self.validate('production')
+
+    def test_invalid_exit_evidence_cannot_create_assets_or_release_receipts(self):
+        release.package(ROOT, self.payload / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip')
+        locations = (
+            ('native/BUILD_RECEIPT.json', 'build'),
+            ('production/BUILD_RECEIPT.json', 'build'),
+            ('production/GOLDEN_REPORT.json', 'stage'),
+            ('production/dist/DIST_RECEIPT.json', 'stage'),
+            ('production/GOLDEN_REPORT.json', 'runtime'),
+            ('production/dist/DIST_RECEIPT.json', 'runtime'))
+        for index, (relative, kind) in enumerate(locations):
+            path = self.payload / relative
+            original = release.load(path)
+            report = deepcopy(original)
+            if kind == 'build':
+                report['validation_exit_code'] = False
+            elif kind == 'stage':
+                report['steps'][-1]['exit_code'] = None
+            else:
+                report['runtime_check']['exit_code'] = False
+            release.write(path, report)
+            output = self.base / ('invalid-exit-' + str(index))
+            with self.subTest(report=relative, kind=kind):
+                with patch.object(release, 'head', return_value=SOURCE), self.assertRaises(ValueError):
+                    release.bundle(ROOT, self.payload, output)
+                self.assertFalse(output.exists())
+                self.assertFalse((self.payload / 'RELEASE_RECEIPT.json').exists())
+                self.assertFalse((self.payload / 'RELEASE_RECEIPT.json.sha256').exists())
+            release.write(path, original)
+        # Restoring valid integer-zero reports must still produce the normal
+        # three-file binary ZIP and archive checksum via the actual bundler.
+        with patch.object(release, 'head', return_value=SOURCE):
+            receipt = release.bundle(ROOT, self.payload, self.base / 'valid-exit-control')
+        self.assertEqual(1, receipt['native_tests'])
+
     def test_changed_dll_is_rejected_even_if_it_has_a_new_sidecar(self):
         dll = self.payload / 'production/dist/citrine_eclipse_mirage.dll'
         dll.write_bytes(b'changed DLL')
@@ -648,6 +745,51 @@ class DraftTests(unittest.TestCase):
         self.publish()
         writes = len(self.github.writes)
         self.publish()
+        self.assertEqual(writes, len(self.github.writes))
+
+    def test_completed_draft_rejects_modified_remote_assets_without_writes(self):
+        for mutation in ('missing', 'extra', 'duplicate', 'wrong_name',
+                         'wrong_size', 'missing_digest', 'changed_digest'):
+            self.github = FakeGitHub()
+            self.publish()
+            writes = len(self.github.writes)
+            assets = self.github.items[-1]['assets']
+            if mutation == 'missing':
+                assets.pop()
+            elif mutation == 'extra':
+                assets.append({'name': 'unexpected.txt', 'size': 1,
+                               'digest': 'sha256:' + '0' * 64})
+            elif mutation == 'duplicate':
+                assets[1] = deepcopy(assets[0])
+            elif mutation == 'wrong_name':
+                assets[0]['name'] = 'unexpected.txt'
+            elif mutation == 'wrong_size':
+                assets[0]['size'] += 1
+            elif mutation == 'missing_digest':
+                assets[0].pop('digest')
+            else:
+                assets[0]['digest'] = 'sha256:' + '0' * 64
+            with self.subTest(mutation=mutation), self.assertRaisesRegex(
+                    ValueError, 'Completed draft remote asset'):
+                self.publish()
+            self.assertEqual(writes, len(self.github.writes))
+
+    def test_completed_draft_rechecks_live_assets_not_stale_list(self):
+        self.publish()
+        old_listing = self.github.releases()
+        writes = len(self.github.writes)
+        self.github.items[-1]['assets'][0]['digest'] = 'sha256:' + '0' * 64
+        with patch.object(self.github, 'releases', return_value=old_listing):
+            with self.assertRaisesRegex(ValueError, 'Completed draft remote asset digest'):
+                self.publish()
+        self.assertEqual(writes, len(self.github.writes))
+
+    def test_completed_draft_rejects_concurrent_publication(self):
+        self.publish()
+        writes = len(self.github.writes)
+        self.github.publish_before_upload = True
+        with self.assertRaisesRegex(ValueError, 'Completed draft changed before reuse'):
+            self.publish()
         self.assertEqual(writes, len(self.github.writes))
 
     def test_existing_git_tag_cannot_be_retargeted(self):

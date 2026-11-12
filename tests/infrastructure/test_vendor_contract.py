@@ -120,6 +120,36 @@ class VendorTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'archive commit comment mismatch'):
                 vendor_sync.inspect_archive(ROOT,'minhook',record,path)
 
+    def test_vendor_archive_budgets_precede_crc_and_member_reads(self):
+        # A valid pinned archive digest does not bypass ZIP expansion budgets.
+        record=vendor_sync.load_lock(ROOT)['vendors']['minhook'].copy()
+        with tempfile.TemporaryDirectory() as tmp:
+            parent=Path(tmp)
+            archive=parent/Path(record['archive']).name
+            cases=(
+                ('single', (16, 128), 64, 256, 'too large member'),
+                ('cumulative', (48, 48), 64, 80, 'excessive expanded size'),
+            )
+            for label, sizes, member_limit, total_limit, diagnostic in cases:
+                with self.subTest(case=label):
+                    with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as out:
+                        out.comment=record['upstream_commit'].encode('ascii')
+                        for index, size in enumerate(sizes):
+                            info=zipfile.ZipInfo(record['archive_folder']+f'src/fixture_{index}.hpp')
+                            info.external_attr=(stat.S_IFREG|0o644)<<16
+                            info.compress_type=zipfile.ZIP_DEFLATED
+                            out.writestr(info,b'X'*size)
+                    record.update(sha256=vendor_sync.hash_file(archive),
+                                  bytes=archive.stat().st_size)
+                    with patch.object(vendor_sync, 'MAX_MEMBER_BYTES', member_limit):
+                        with patch.object(vendor_sync, 'MAX_ARCHIVE_BYTES', total_limit):
+                            with patch.object(zipfile.ZipFile, 'testzip',
+                                              side_effect=AssertionError('CRC before budget')):
+                                with patch.object(zipfile.ZipFile, 'read',
+                                                  side_effect=AssertionError('read before budget')):
+                                    with self.assertRaisesRegex(ValueError, diagnostic):
+                                        vendor_sync.inspect_archive(ROOT, 'minhook', record, parent)
+
     def test_build_copy_patch_is_hash_pinned_and_original_tree_unchanged(self):
         cmake=shutil.which('cmake')
         if not cmake:self.skipTest('CMake needed to execute the real patch script')
@@ -423,6 +453,46 @@ class LinkPackagingTests(unittest.TestCase):
         self.assertEqual(original, self.link.read_bytes())
         self.assertEqual([], list(self.link.parent.glob('.vendor-alias-*')))
         self.assertEqual([], project_files.verify_manifest(self.root))
+
+    def test_restore_later_creation_failure_retains_descriptors_for_retry(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        lock=json.loads(lock_path.read_text(encoding='utf-8'))
+        lock['vendors']['asio']['symlinks']['asio/src']='../src'
+        lock_path.write_text(json.dumps(lock),encoding='utf-8')
+        (self.root/'third_party/asio/src').mkdir()
+        later=self.root/'third_party/asio/asio/src'
+        later.write_bytes(b'../src')
+        project_files.write_manifest(self.root)
+        create_link=restore_vendor_links.os.symlink
+
+        def fail_later(target, staged, target_is_directory=False):
+            if target=='../src':
+                self.assertEqual(b'../src',later.read_bytes())
+                raise OSError('injected later link failure')
+            return create_link(target,staged,target_is_directory=target_is_directory)
+
+        with patch.object(restore_vendor_links.os,'symlink',side_effect=fail_later):
+            try:
+                restore_vendor_links.restore(self.root)
+            except (OSError,NotImplementedError) as error:
+                if str(error)!='injected later link failure':
+                    if self.link.is_symlink():
+                        raise
+                    self.skipTest('Optional symlink restoration requires OS privilege')
+            else:
+                self.fail('later link failure was not observed')
+        self.assertTrue(self.link.is_symlink())
+        self.assertEqual('../include',self.link.readlink().as_posix())
+        self.assertFalse(later.is_symlink())
+        self.assertEqual(b'../src',later.read_bytes())
+        self.assertEqual([],list(self.link.parent.glob('.vendor-alias-*')))
+        self.assertEqual([],project_files.verify_manifest(self.root))
+        with patch.object(restore_vendor_links.os,'symlink',wraps=create_link) as retry:
+            restore_vendor_links.restore(self.root)
+            self.assertEqual(1,retry.call_count)
+        self.assertTrue(later.is_symlink())
+        self.assertEqual('../src',later.readlink().as_posix())
+        self.assertEqual([],project_files.verify_manifest(self.root))
 
     def test_standard_zip_extraction_needs_no_link_support(self):
         package_source.package(self.root,self.archive)

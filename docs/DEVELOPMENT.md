@@ -59,6 +59,9 @@ switch so that its closing panel prints the selected profile verdict once.
 Direct PowerShell/CI calls retain the default result line. DLL paths, hashes,
 failure diagnostics and Golden blocked-report guidance remain visible in
 both routes; exit codes and validation steps are unchanged.
+Source QA compares the complete final nonempty line with `exit /b %RC%`
+for CMD and `exit $LASTEXITCODE` for PowerShell. Commented or display-only
+exit text fails this bounded source check; it is not a shell interpreter.
 The sole profile executor is `build_profile.ps1`; `build_common.ps1` is the
 shared helper. Each profile uses its own build directory, lock, toolchain
 hash record, and build receipt. MSVC environment variables are restored

@@ -36,7 +36,12 @@ APPLICATION_INSERTIONS = (
             std::lock_guard lock(app.handler_state_mutex);
             benchmark::ApplicationLock measured_lock(waiting);
             return router.registered_handler(rva,n,out);'''))
-MARKER = 'std::array<std::thread,handler_policy::workers> workers;'
+THREAD_ALIAS = '''#ifdef CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_THREAD
+    using OwnedThread=CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_THREAD;
+#else
+    using OwnedThread=std::thread;
+#endif'''
+MARKER = 'std::array<OwnedThread,handler_policy::workers> workers;'
 PUSH = 'jobs.push_back(std::move(fn));'
 CONTROL_INSERTIONS = (
     ('    void start_workers() {', '\n        if constexpr(RUNTIME_BENCHMARK_WORKERS==0)return;'),
@@ -86,7 +91,8 @@ def binary_kind(workload):
 
 
 def generated_service(source, workers):
-    if workers not in WORKERS or source.count(MARKER) != 1 or source.count(PUSH) != 1:
+    if (workers not in WORKERS or source.count(THREAD_ALIAS) != 1
+            or source.count(MARKER) != 1 or source.count(PUSH) != 1):
         raise ValueError('Unexpected candidate count or production queue/worker declaration')
     if '#include "probe.hpp"' in source:
         raise ValueError('Source is already instrumented')

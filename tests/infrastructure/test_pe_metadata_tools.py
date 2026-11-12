@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-only
 from pathlib import Path
-import importlib.util, json, os, struct, tempfile, sys
+import copy, importlib.util, json, os, struct, tempfile, sys
+from unittest.mock import patch
 sys.dont_write_bytecode = True
 r=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(r/'scripts'))
@@ -17,6 +18,76 @@ fin.ROOT=fixture_root
 fin.load_target=lambda root,name: json.loads((fixture_root/'metadata'/name).read_text())
 ary=load('ary',r/'scripts/verify_aryra_golden_layout.py')
 mus=load('mus',r/'scripts/verify_mustavex_golden_metadata.py')
+# Synthetic nonexecuted bytes test report-publication alias and rollback safety.
+inspector = load('inspect_dll_tool', r / 'tools/inspect_dll.py')
+with tempfile.TemporaryDirectory() as tmp:
+    directory = Path(tmp)
+    dll = directory / 'input.dll'
+    original = b'owned read-only DLL fixture'
+    dll.write_bytes(original)
+
+    def reject_report(path):
+        try:
+            inspector._report_destination(dll, path)
+            raise AssertionError('Unsafe inspection report path was accepted')
+        except ValueError:
+            pass
+        assert dll.read_bytes() == original
+
+    reject_report(dll)
+    reject_report(directory)
+    try:
+        linked = directory / 'hardlink.json'
+        os.link(dll, linked)
+    except (OSError, NotImplementedError):
+        print('INSPECTION_REPORT_HARDLINK_FIXTURE: UNAVAILABLE')
+    else:
+        reject_report(linked)
+    try:
+        linked = directory / 'symlink.json'
+        linked.symlink_to(dll)
+    except (OSError, NotImplementedError):
+        print('INSPECTION_REPORT_SYMLINK_FIXTURE: UNAVAILABLE')
+    else:
+        reject_report(linked)
+    try:
+        parent = directory / 'redirect'
+        parent.symlink_to(directory, target_is_directory=True)
+    except (OSError, NotImplementedError):
+        print('INSPECTION_REPORT_PARENT_SYMLINK_FIXTURE: UNAVAILABLE')
+    else:
+        reject_report(parent / dll.name)
+
+    report = inspector._report_destination(dll, directory / 'report.json')
+    inspector._write_report(report, {'result': 'PASS'})
+    assert json.loads(report.read_text(encoding='utf-8')) == {'result': 'PASS'}
+    assert dll.read_bytes() == original
+
+    previous = directory / 'previous.json'
+    previous.write_text('retained old report', encoding='utf-8')
+    report.unlink()
+    try:
+        os.link(previous, report)
+    except (OSError, NotImplementedError):
+        print('INSPECTION_REPORT_SHARED_OUTPUT_FIXTURE: UNAVAILABLE')
+    else:
+        inspector._write_report(report, {'result': 'NEW'})
+        assert previous.read_text(encoding='utf-8') == 'retained old report'
+        assert json.loads(report.read_text(encoding='utf-8')) == {'result': 'NEW'}
+
+    report.write_text('valid old report', encoding='utf-8')
+    for module, method, fault in ((inspector.json, 'dump', ValueError('serialize failed')),
+                                  (inspector.os, 'replace', OSError('replace failed'))):
+        with patch.object(module, method, side_effect=fault):
+            try:
+                inspector._write_report(report, {'result': 'REPLACED'})
+                raise AssertionError('Failed report publication unexpectedly succeeded')
+            except type(fault):
+                pass
+        assert report.read_text(encoding='utf-8') == 'valid old report'
+        assert not list(directory.glob('.report.json.*.tmp'))
+        assert dll.read_bytes() == original
+
 ary_policy=json.loads((fixture_root/'metadata/ARYRA_GOLDEN_LAYOUT.json').read_text())
 mustavex=json.loads((fixture_root/'metadata/MUSTAVEX_GOLDEN_METADATA.json').read_text())
 assert ary_policy['sections_in_order']==['.text','.rdata','.data','.pdata','.rsrc','.reloc']
@@ -35,6 +106,17 @@ good_vi={'key':'VS_VERSION_INFO','value':None,'value_bytes':fixed_bytes,'childre
     {'key':'VarFileInfo','value':None,'value_bytes':b'','children':[{'key':'Translation','value':None,'value_bytes':translation,'children':[]}]}
 ]}
 assert not mus.validate_versioninfo_root(good_vi,mustavex['required'])
+# Identical and shadowed duplicate StringFileInfo entries were previously
+# collapsed into a dict, so both malformed resources looked like good_vi.
+for variant in ('identical','conflicting'):
+    duplicate_vi=copy.deepcopy(good_vi)
+    entries=duplicate_vi['children'][0]['children'][0]['children']
+    repeated=copy.deepcopy(entries[0])
+    if variant=='conflicting':
+        repeated['value']='UNEXPECTED_DUPLICATE_VALUE'
+    entries.insert(0,repeated)
+    errors=mus.validate_versioninfo_root(duplicate_vi,mustavex['required'])
+    assert errors==[f"Duplicate VERSIONINFO StringFileInfo key: {repeated['key']}"], (variant,errors)
 bad_vi=json.loads(json.dumps(good_vi,default=lambda x: None)) if False else None
 wrong_table={'key':'VS_VERSION_INFO','value':None,'value_bytes':fixed_bytes,'children':[
     {'key':'StringFileInfo','value':None,'value_bytes':b'','children':[{'key':'000004b0','value':None,'value_bytes':b'','children':strings}]},
@@ -189,6 +271,20 @@ with tempfile.TemporaryDirectory() as td:
     assert (b[opt2+2],b[opt2+3])==(14,0)
     errors,names=ary.inspect(p,ary_policy)
     assert not errors and names==ary_policy['sections_in_order']
+    # A geometrically aligned PE can still declare an invalid non-power-of-two
+    # SectionAlignment. Keep valid alternate power-of-two alignments accepted.
+    for alignment, allowed in ((0x1800, False), (0x2000, True)):
+        bad=bytearray(p.read_bytes())
+        struct.pack_into('<I',bad,opt+32,alignment)
+        for index in range(len(ary_policy['sections_in_order'])):
+            struct.pack_into('<I',bad,sec+index*40+12,alignment*(index+1))
+        sample=Path(td,f'aryra_section_alignment_{alignment:x}.dll')
+        sample.write_bytes(bad)
+        errors,names=ary.inspect(sample,ary_policy)
+        if allowed:
+            assert not errors and names==ary_policy['sections_in_order'], errors
+        else:
+            assert errors==[f'SectionAlignment=0x{alignment:X} is not a power of two'], errors
     # Audit3 F323-S0106-001: file bytes beyond SizeOfOptionalHeader do not authorize reads.
     short=bytearray(p.read_bytes()); struct.pack_into('<H',short,coff2+16,0x20); shortp=Path(td,'bad_declared_optional_header.dll'); shortp.write_bytes(short)
     for label,fn in [('URSYNEX',lambda: fin.parse_core(bytearray(shortp.read_bytes()))),('ARYRA',lambda: ary.inspect(shortp,ary_policy)),('MUSTAVEX',lambda: mus.inspect(shortp,mustavex))]:
@@ -474,6 +570,75 @@ with tempfile.TemporaryDirectory() as td:
     else:
         raise AssertionError('accepted case-folded export-name ordering')
     assert path.read_bytes()==case_names,'rejected case-sensitive export inspection changed bytes'
+    # An export name and ordinal do not prove that its EAT address names code.
+    # Keep import, CRT entrypoint and /GS evidence valid while changing only the
+    # export target or its separate section; refresh checksums for every case.
+    funcs_off=0x400+(0x1190-0x1000)
+    extra_header=opt_off+0xF0+40
+    extra=bytearray(good)
+    struct.pack_into('<H',extra,0x100+4+2,2)
+    extra[extra_header:extra_header+8]=b'.code2\0\0'
+    struct.pack_into('<IIII',extra,extra_header+8,0x200,0x3000,0x200,len(good))
+    struct.pack_into('<I',extra,extra_header+36,0x60000020)  # CODE | EXECUTE | READ
+    struct.pack_into('<I',extra,opt_off+56,0x4000)
+    struct.pack_into('<I',extra,funcs_off+4,0x3000)
+    extra.extend(b'\xC3'+b'\0'*0x1FE+b'\xC3')
+
+    def export_target_case(label,data,reason=None,name='SURGE'):
+        data=bytearray(data)
+        struct.pack_into('<I',data,opt_off+64,cor.compute_pe_checksum(data,opt_off+64))
+        path=td/('export_target_'+label+'.dll'); path.write_bytes(data)
+        before=path.read_bytes()
+        exports=cor.PE(path).exports()
+        golden_errors,_=cor.inspect_shipping_abi(path,cor_policy)
+        public_report=public_abi.inspect(path,r)
+        if reason is None:
+            assert not golden_errors,(label,golden_errors)
+            assert public_report['result']=='PASS_PUBLIC_C_EXPORT_CONTRACT',(label,public_report)
+        else:
+            prefix=f'{name} export RVA 0x{exports[name][1]:X} '
+            for gate,errors in [('CORVEXON',golden_errors),('public ABI',public_report['errors'])]:
+                assert errors and all(e.startswith(prefix) for e in errors),(label,gate,errors)
+                assert any(reason in e for e in errors),(label,gate,reason,errors)
+            assert public_report['result']=='FAIL',(label,public_report)
+        assert path.read_bytes()==before,(label,'export validation modified the DLL')
+        return exports
+
+    export_target_case('executable_different_section',extra)
+    last=bytearray(extra); struct.pack_into('<I',last,funcs_off+4,0x31FF)
+    export_target_case('last_file_backed_byte',last)
+    aliases=bytearray(extra)
+    for index in range(3): struct.pack_into('<I',aliases,funcs_off+index*4,0x3000)
+    export_target_case('shared_code_address',aliases)
+    for index,name in enumerate(('DllMain','SURGE','DllShutdown')):
+        for label,target,reason in [('header',0x40,'PE headers'),
+                                    ('unmapped',0x7FFFFFFF,'unmapped target')]:
+            bad=bytearray(good); struct.pack_into('<I',bad,funcs_off+index*4,target)
+            export_target_case(label+'_'+name,bad,reason,name)
+    for label,field,value,target,reason in [
+        ('non_executable',36,0x40000040,0x3000,'non-executable section'),
+        ('virtual_tail',8,0x300,0x3200,'virtual-only bytes'),
+        ('zero_raw_size',16,0,0x3000,'virtual-only bytes'),
+        ('zero_raw_pointer',20,0,0x3000,'raw storage overlapping PE headers'),
+        ('raw_pointer_in_headers',20,0x40,0x3000,'raw storage overlapping PE headers'),
+        ('exact_eof',20,len(extra),0x3000,'beyond EOF'),
+        ('beyond_eof',20,len(extra)+0x200,0x3000,'beyond EOF'),
+        ('section_claims_header',12,0x40,0x40,'PE headers'),
+    ]:
+        bad=bytearray(extra)
+        struct.pack_into('<I',bad,extra_header+field,value)
+        struct.pack_into('<I',bad,funcs_off+4,target)
+        if label=='virtual_tail': bad.extend(b'\0'*0x100)  # Physical bytes do not extend SizeOfRawData.
+        exports=export_target_case(label,bad,reason)
+        if label=='non_executable':
+            # Other callers legitimately inspect data exports. Only application
+            # function gates impose executable storage; PE.exports stays generic.
+            assert exports['SURGE']==(2,0x3000,False),exports
+    overlap=bytearray(extra)
+    struct.pack_into('<H',overlap,0x100+4+2,3)
+    overlap[extra_header+40:extra_header+80]=overlap[extra_header:extra_header+40]
+    overlap[extra_header+40:extra_header+48]=b'.alias\0\0'
+    export_target_case('overlapping_owners',overlap,'ambiguous section ownership')
     # F1536-002: downstream final-binary acceptance must reject a stale PE checksum.
     bad=bytearray(good); bad[-1]^=0x01; bp=td/'bad_checksum.dll'; bp.write_bytes(bad)
     errors,_=cor.inspect_shipping_abi(bp,cor_policy); assert any('PE CheckSum=' in x for x in errors), errors

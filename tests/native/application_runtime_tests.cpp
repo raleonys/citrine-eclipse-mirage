@@ -25,6 +25,52 @@
 #include <cstring>
 #include <algorithm>
 
+#include <condition_variable>
+#include <mutex>
+
+// Compile the actual Environment body with only its SDK dialog call intercepted.
+// Keep real conversion, Application dispatch, worker ownership and TCP unchanged.
+namespace unknown_message_dialog {
+std::mutex mutex;
+std::condition_variable changed;
+std::wstring expected_body;
+bool armed=false,entered=false,released=false;
+unsigned calls=0;
+struct Probe {
+    explicit Probe(std::string_view request) {
+        std::lock_guard lock(mutex);
+        if(armed)throw std::logic_error("overlapping UnknownMessage observations");
+        expected_body.assign(request.begin(),request.end());
+        entered=released=false;armed=true;
+    }
+    ~Probe(){release();}
+    bool wait() {
+        std::unique_lock lock(mutex);
+        return changed.wait_for(lock,std::chrono::seconds(5),[]{return entered;});
+    }
+    void release() {
+        {std::lock_guard lock(mutex);released=true;}
+        changed.notify_all();
+    }
+    Probe(const Probe&)=delete;
+    Probe& operator=(const Probe&)=delete;
+};
+int WINAPI show(HWND owner,LPCWSTR body,LPCWSTR title,UINT flags) {
+    std::unique_lock lock(mutex);
+    if(!armed||entered||owner||!body||!title||flags!=MB_ICONERROR||
+       std::wstring_view(title)!=L"UNKNOWN MESSAGE"||std::wstring_view(body)!=expected_body)
+        throw std::runtime_error("unexpected UnknownMessage SDK dialog operands");
+    ++calls;entered=true;changed.notify_all();
+    if(!changed.wait_for(lock,std::chrono::seconds(5),[]{return released;}))
+        throw std::runtime_error("test did not release the intercepted UnknownMessage dialog");
+    armed=false;
+    return IDCANCEL; // The selected diagnostic ignores the SDK result.
+}
+}
+#define MessageBoxW ::unknown_message_dialog::show
+#include "../../src/runtime/application_environment.cpp"
+#undef MessageBoxW
+
 using namespace citrine_eclipse_mirage;
 namespace fs=std::filesystem;
 namespace {
@@ -115,10 +161,11 @@ public:
     std::string request(std::string_view id,std::string_view command) {
         send("<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>");return frame();
     }
-    void encrypted_raw_send(std::string bytes) {
+    std::string encrypted_raw_frame(std::string bytes) {
         require(cipher.encrypt_042610(bytes),"client encrypt");
-        messages::hex_encode_03d190(bytes);send(bytes);
+        messages::hex_encode_03d190(bytes);return bytes;
     }
+    void encrypted_raw_send(std::string bytes) {send(encrypted_raw_frame(std::move(bytes)));}
     void encrypted_send(std::string_view id,std::string_view command) {
         encrypted_raw_send("<LSX><Request id='"+std::string(id)+"' recipient='EbisuSDK'>"+std::string(command)+"</Request></LSX>");
     }
@@ -148,6 +195,12 @@ public:
             crypto::WindowsTimeSource time;crypto::Random random{time};
             cipher.set_key_042780(random.key_from_response_034c30(*value));
         }else cipher.set_fixed_key_084c98();
+    }
+    bool no_output_pending() {
+        asio::error_code error;
+        const auto available=socket.available(error);
+        require(!error,"pending-output inspection keeps the peer open");
+        return available==0&&input.empty();
     }
     bool same_cipher(const Peer& other)const{return cipher.round_keys()==other.cipher.round_keys();}
     void rekey(std::string_view id,std::string_view key,int version) {
@@ -291,38 +344,50 @@ void encrypted_peer_isolation(std::uint16_t port) {
         require_profile(survivor.encrypted_frame(),"survivor-after-admission");
     }
 }
-// Pin current product containment, not donor same-session continuation or UI.
-// These well-formed XML documents reach dispatch rejection, unlike parse or
-// decrypt failures which the earlier round trips deliberately recover from.
-void invalid_lsx_peer_isolation(std::uint16_t port) {
+// Well-formed invalid dispatches now diagnose and continue on the same peer.
+// Hold the intercepted SDK boundary to prove that its normal return is required.
+void unknown_lsx_continuation(std::uint16_t port) {
     constexpr std::string_view rejected[]{
         "<OtherRoot><Request id='wrong-root' recipient='EbisuSDK'><GetProfile index='0'/></Request></OtherRoot>",
         "<LSX><Request id='missing-recipient'><GetProfile index='0'/></Request></LSX>",
         "<LSX><Request id='unknown-command' recipient='EbisuSDK'><FixtureUnregisteredCommand/></Request></LSX>"};
     Peer survivor(port);(void)survivor.frame();
     survivor.negotiate("survivor-handshake","fixture-invalid-survivor",3);
-    require_profile(survivor.encrypted_request("survivor-before-rejection","<GetProfile index='0'/>"),"survivor-before-rejection");
+    require_profile(survivor.encrypted_request("survivor-before-diagnostic","<GetProfile index='0'/>"),"survivor-before-diagnostic");
     unsigned sequence=0;
-    for(const bool encrypted:{false,true})for(const auto request:rejected) {
-        // Prove each input belongs to the dispatch domain, not invalid XML.
+    for(const bool encrypted:{false,true})for(const bool coalesced:{false,true})for(const auto request:rejected) {
         xml_reader_bridge::Backend xml;const auto parsed=xml.parse_c_string(request);
         require(!parsed.has_error,"invalid LSX fixture is syntactically valid XML");
-        Peer failed(port);
-        require(failed.frame().find("<Challenge ")!=std::string::npos,"rejected peer first receives its real greeting");
-        if(encrypted)failed.negotiate("invalid-handshake","fixture-invalid-peer",3);
+        Peer observed(port);
+        require(observed.frame().find("<Challenge ")!=std::string::npos,"diagnosed peer first receives its real greeting");
+        if(encrypted)observed.negotiate("invalid-handshake","fixture-invalid-peer",3);
+        unknown_message_dialog::Probe diagnostic(request);
+        const auto next="same-peer-after-"+std::to_string(sequence);
+        std::string bytes(request);
+        if(encrypted)bytes=observed.encrypted_raw_frame(std::move(bytes));
+        if(coalesced){
+            bytes.push_back('\0');
+            bytes+=observed.encoded_request(next,"<GetProfile index='0'/>",encrypted);
+        }
+        observed.send(std::move(bytes));
+        require(diagnostic.wait(),"actual Application reaches intercepted UnknownMessage dialog");
         const auto pending="survivor-during-"+std::to_string(sequence);
-        survivor.encrypted_send(pending,"<GetProfile index='0'/>");
-        if(encrypted)failed.encrypted_raw_send(std::string(request));
-        else failed.send(std::string(request));
-        require(failed.closes_without_output(),"dispatch rejection closes only its peer without response; timeout is not success");
-        require_profile(survivor.encrypted_frame(),pending);
-        const auto after="survivor-after-"+std::to_string(sequence);
+        require_profile(survivor.encrypted_request(pending,"<GetProfile index='0'/>"),pending);
+        require(observed.no_output_pending(),"blocked diagnostic sends no reply and holds this peer's queued successor");
+        diagnostic.release();
+        if(!coalesced){
+            if(encrypted)observed.encrypted_send(next,"<GetProfile index='0'/>");
+            else observed.send(observed.encoded_request(next,"<GetProfile index='0'/>",false));
+        }
+        require_profile(encrypted?observed.encrypted_frame():observed.frame(),next);
+        const auto after="survivor-after-"+std::to_string(sequence++);
         require_profile(survivor.encrypted_request(after,"<GetProfile index='0'/>"),after);
         Peer replacement(port);
-        require(replacement.frame().find("<Challenge ")!=std::string::npos,"listener still admits a peer after dispatch rejection");
-        const auto admitted="admitted-after-"+std::to_string(sequence++);
+        require(replacement.frame().find("<Challenge ")!=std::string::npos,"listener still admits a peer after UnknownMessage continuation");
+        const auto admitted="admitted-after-"+std::to_string(sequence);
         require_profile(replacement.request(admitted,"<GetProfile index='0'/>"),admitted);
     }
+    require(unknown_message_dialog::calls==12,"each invalid form and frame/cipher mode invokes exactly one diagnostic");
 }
 struct GreetingFixture final:net::HandlerFactory {
     std::promise<void> entered;
@@ -550,7 +615,7 @@ int main(int argc,char** argv) try {
         require(peer.request("after-bad-xml","<GetProfile index='0'/>").find("fixture-override")!=std::string::npos,"XML parse failure leaves the session usable");
     }
     encrypted_peer_isolation(state.server_port);
-    invalid_lsx_peer_isolation(state.server_port);
+    unknown_lsx_continuation(state.server_port);
     no_response_continuation(state.server_port);
     // Stop while an accepted socket still owns a pending read.
     Peer waiting(state.server_port);(void)waiting.frame();app.stop();app.stop();

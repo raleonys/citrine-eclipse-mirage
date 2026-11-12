@@ -13,6 +13,17 @@
 #include <cstdlib>
 #include <new>
 
+namespace offline_cache_allocation {
+thread_local bool counting=false;
+thread_local std::size_t bytes=0;
+struct Scope {
+    Scope(){bytes=0;counting=true;}
+    ~Scope(){counting=false;}
+    Scope(const Scope&)=delete;
+    Scope& operator=(const Scope&)=delete;
+};
+}
+
 namespace profile_copy_allocation {
 struct Failure final : std::bad_alloc {};
 struct Observation {
@@ -57,7 +68,7 @@ void release(void* pointer) noexcept {
     std::free(pointer);
 }
 }
-void* operator new(std::size_t size){profile_copy_allocation::observe(size);if(auto* p=std::malloc(size?size:1))return p;throw std::bad_alloc();}
+void* operator new(std::size_t size){profile_copy_allocation::observe(size);if(offline_cache_allocation::counting)offline_cache_allocation::bytes+=size;if(auto* p=std::malloc(size?size:1))return p;throw std::bad_alloc();}
 void* operator new[](std::size_t size){return ::operator new(size);}
 void operator delete(void* p) noexcept {cookie_lifetime::release(p);}
 void operator delete[](void* p) noexcept {cookie_lifetime::release(p);}
@@ -381,6 +392,22 @@ static void offline_profile() {
         CHECK(auth!=m.calls.end());CHECK(*(auth+1)=="log:starting offline");CHECK(*(auth+2)=="flush");
     }
 }
+static void malformed_cache_allocation_budget() {
+    State state;Mock m;state.use_last=1;m.auth_status=1;
+    m.statuses[state.cookie]={2,0,0};
+    m.read_value=std::string(50000,';');
+    {
+        offline_cache_allocation::Scope measured;
+        o::worker_035b60(state.refs(),m);
+    }
+    // Fifty thousand empty split fields previously allocated a multi-megabyte
+    // vector before the offline loader rejected its field count.
+    CHECK(offline_cache_allocation::bytes<512u*1024u);
+    CHECK(!state.online&&state.module==0&&state.object==0);
+    CHECK(state.persona=="old-persona"&&state.user=="old-user"&&state.username=="old-name");
+    CHECK(m.called("read")&&!m.called("write")&&m.calls.back()=="finish");
+}
+
 static void split_cases() {
     CHECK(o::split_profile_fields_03cf00("")==std::vector<std::string>{""});
     CHECK((o::split_profile_fields_03cf00(";;")==std::vector<std::string>{"","",""}));
@@ -420,6 +447,59 @@ static void status_and_cleanup() {
     {
         State state;Mock m;state.object=88;state.module=99;m.fail="free";
         throws<Injected>([&]{o::cleanup_0366f0(state.refs(),m);});CHECK(state.object==0);CHECK(state.module==99);
+    }
+}
+struct CacheFailureEffects final:Mock {
+    std::vector<o::Object> destroyed;
+    std::vector<o::Module> freed;
+    void destroy_virtual_00(o::Object value)override{Mock::destroy_virtual_00(value);destroyed.push_back(value);}
+    bool free_library(o::Module value)override{const auto result=Mock::free_library(value);freed.push_back(value);return result;}
+};
+static void cache_failure_ownership_and_retry() {
+    for(const auto [authenticated,point]:{std::pair{false,"status-avatar"},std::pair{false,"read"},
+                                         std::pair{true,"status-avatar"},std::pair{true,"write"}}) {
+        State state;CacheFailureEffects m;state.use_last=1;
+        m.auth_status=authenticated?0:1;m.free_result=true;
+        m.statuses[state.cookie]={2,0,0};m.statuses[state.last_avatar]={2,0,0};
+        m.written="previous-cache";m.fail=point;
+        const auto old_object=m.created,old_module=m.loaded;
+        throws<Injected>([&]{o::worker_035b60(state.refs(),m);});
+        CHECK(m.calls.back()==point&&!m.called("finish"));
+        CHECK(state.online==authenticated&&state.object==old_object&&state.module==old_module&&m.mode==0x20);
+        CHECK(m.destroyed.empty()&&m.freed.empty());
+        CHECK(state.username==(authenticated?m.name:"old-name"));
+        CHECK(state.persona==(authenticated?m.persona:"old-persona"));
+        CHECK(state.user==(authenticated?m.user:"old-user"));
+        const bool avatar_applied=std::string_view(point)=="read"||std::string_view(point)=="write";
+        CHECK(state.avatar==(avatar_applied?state.last_avatar:u"old-avatar"));
+        CHECK(m.written=="previous-cache"); // This controlled effect throws before writing.
+        o::cleanup_0366f0(state.refs(),m);
+        CHECK(state.object==0&&state.module==0);
+        CHECK(m.destroyed==std::vector<o::Object>{old_object}&&m.freed==std::vector<o::Module>{old_module});
+        o::cleanup_0366f0(state.refs(),m);
+        CHECK(m.destroyed.size()==1&&m.freed.size()==1&&!m.called("finish"));
+        // The owning Provider clears its online byte after cleanup. The source
+        // cleanup helper deliberately leaves that byte unchanged; do not treat
+        // worker reentry with still-live tokens as a supported retry protocol.
+        state.online=0;m.fail.clear();m.calls.clear();
+        m.created=old_object+1;m.loaded=old_module+1;
+        m.name="retry-name";m.persona="retry-persona";m.user="retry-user";
+        m.read_value="retry-persona;retry-user;retry-name";
+        m.inspect=[&](std::string_view event){if(event=="finish"){
+            CHECK(state.username=="retry-name"&&state.persona=="retry-persona"&&state.user=="retry-user");
+            CHECK(state.avatar==state.last_avatar&&state.online==authenticated);
+            CHECK(state.object==(authenticated?m.created:0)&&state.module==(authenticated?m.loaded:0));
+            CHECK(m.called("read")==!authenticated&&m.called("write")==authenticated);
+            CHECK(m.destroyed.size()==(authenticated?1u:2u)&&m.freed.size()==(authenticated?1u:2u));
+            if(authenticated)CHECK(m.written=="retry-persona;retry-user;retry-name");
+        }};
+        o::worker_035b60(state.refs(),m);
+        CHECK(m.calls.back()=="finish"&&std::count(m.calls.begin(),m.calls.end(),"finish")==1);
+        CHECK(m.called("name")==authenticated);
+        o::cleanup_0366f0(state.refs(),m);o::cleanup_0366f0(state.refs(),m);
+        CHECK((m.destroyed==std::vector<o::Object>{old_object,m.created}));
+        CHECK((m.freed==std::vector<o::Module>{old_module,m.loaded}));
+        CHECK(state.object==0&&state.module==0);
     }
 }
 static void exceptions() {
@@ -554,7 +634,7 @@ static void cookie_release_before_status() {
     }
 }
 int main() {
-    try {entry_branches();live_profile();profile_copy_allocation_failures();borrowed_profile_copy_ownership();cache_delimiter_integrity();offline_profile();split_cases();status_and_cleanup();exceptions();
+    try {entry_branches();live_profile();profile_copy_allocation_failures();borrowed_profile_copy_ownership();cache_delimiter_integrity();offline_profile();malformed_cache_allocation_budget();split_cases();status_and_cleanup();exceptions();cache_failure_ownership_and_retry();
 #if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ONLINE_TESTS)
         composition();
 #endif

@@ -121,6 +121,11 @@ identifies that dynamic control; use the explicit `profile` field in comparisons
 Instrumentation has overhead, especially for echo. Original source/vendor bytes
 and the shipping build graph remain unchanged. Generated-copy hashes,
 source-manifest identity and executable hashes are retained.
+Generation recognizes the current private OwnedThread selector and requires
+its ordinary std::thread alias unchanged. Missing, duplicated or changed alias
+and worker/queue anchors fail generation. The selector remains in every copy;
+only the diagnostic worker count and declared instrumentation/control insertions
+change. Reversing these insertions restores the complete current source.
 The generated Application copy adds only prepare-response observation, actual
 handler-state lock timing and the response corruption control. It retains lock
 ownership and statement order; parsing and cipher work stay outside that lock.

@@ -38,11 +38,21 @@ Four owner-supplied vendors remain active: Asio 1.39.0, MinHook 1.3.4,
 PEGTL 4 (4.0.2 header on the owner-uploaded 4.x snapshot), and pugixml 1.16.
 Selected archive bytes are immutable; current snapshot identities are in
 [VENDORING.md](VENDORING.md). The project XML
-compatibility layer preserves the previous depth-500 boundary and corrected
+compatibility layer uses the A12 depth-100 profile (98 paired levels accepted,
+99 rejected) and corrected
 reference decoding, with no TinyXML2 production fallback. See
 [XML_BACKEND_COMPARISON.md](XML_BACKEND_COMPARISON.md). SAFE-FREEZE applies only to the pinned MinHook build copy. Windows I/O
 uses standard filesystem/fstream and approved atomic persistence adapters.
 Gulrak is not an active dependency.
+
+The cached offline identity format is exactly `persona;user;username`.
+The offline loader checks for exactly two semicolons before invoking the
+shared unrestricted splitter, avoiding a discarded vector proportional to
+malformed field counts. Valid three-field bytes, empty fields and embedded
+NUL behavior remain unchanged. Malformed caches retain prior identity cells;
+authentication logging, avatar fallback and cleanup keep their existing order.
+The worker fixture measures a 50,000-delimiter cache against a 512 KiB
+temporary-allocation budget; it does not bound the initial file read itself.
 
 Configuration is optional: `surge.cfg` beside the EXE, followed by
 `surge_override.cfg`. SDK identity `10.6.2.31` and wire version
@@ -59,6 +69,13 @@ remain retryable on failure. Greeting is asynchronous; session/frame/output
 limits and receive/frame/send deadlines remain enforced. Achievement XML/INI
 writes use an atomic batch with rollback and retry ownership; no claim of
 power-loss atomicity across multiple files is made.
+
+The grant persistence path validates and serializes the complete watcher INI
+before creating its parent directory. Unsafe section names in any achievement
+therefore reject the grant before directory creation or atomic writes; the
+grant restores its state and releases its lock without publishing an event.
+A corrected input can retry the same live state.
+
 The concrete Windows batch backend first recovers retained work, then rejects
 empty/embedded-NUL destinations, comparison lengths beyond the Win32 domain,
 and case-fold-equivalent destination strings before staging. Comparison uses

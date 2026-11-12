@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 import re
 import tempfile
-from verify_corvexon_golden_trail import PE, PEError, u16
+from verify_corvexon_golden_trail import PE, PEError, u16, validate_application_export_targets
 
 
 def check_source(root):
@@ -47,6 +47,7 @@ def inspect(path, root):
         ordinal, rva, forwarded = actual[name]
         if ordinal != expected[name]['ordinal'] or not rva or forwarded:
             errors.append('Wrong ordinal, missing body or forwarded export: ' + name)
+    errors.extend(validate_application_export_targets(pe, actual, expected))
     if hashlib.sha256(path.read_bytes()).hexdigest() != before:
         errors.append('Read-only export validation changed the DLL')
     return {'schema': 'surge.public-abi-check.v1',

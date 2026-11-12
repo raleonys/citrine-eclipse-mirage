@@ -6,6 +6,11 @@ On Fridays at **13:30 UTC**, the GitHub workflow prepares a **draft**, not a pub
 
 Retire old `<series>-RNN` tags. Start with `3.2.6-TALVOR`, then `3.2.7-ERINTHAR`, `3.2.8-FORMADRIL`, `3.2.9-CETRION`, `3.3.0-VESPERKAI`. The 34 owner-approved (2026-10-31) assignments through `3.5.9-COLOZHEM` are pinned in `metadata/WEEKLY_NAMING_POLICY.json` from the project Library master. A reserved codename is not a published release.
 
+The registry loader rejects duplicate JSON object keys at every nesting
+level before validating naming authority or version/codename bindings. A
+repeated schema or approved-version entry fails even if its last value is
+valid; malformed policy cannot silently select a last-wins binding.
+
 Minor and patch may be 0..9 only. On patch 9, increment minor and reset patch: `3.2.9 → 3.3.0`; on minor 9 and patch 9, increment major: `3.9.9 → 4.0.0`. Reject `3.2.10`, `3.10.0`, duplicate roots and unapproved future assignments. First candidate bootstraps automatically; optional manual `start_tag` must match the exact next approved version. An unchanged completed source creates no new release; incomplete drafts retry on the same source SHA. Tags and published/unrelated releases are never overwritten.
 
 ## New external files
@@ -18,6 +23,19 @@ Each new release uploads exactly two files. For example, tag `3.2.7-ERINTHAR` ha
 GitHub supplies the automatic **Source code (zip)** and **Source code (tar.gz)** links for the release tag. Do not upload an additional source ZIP, source checksum, receipt or test log. The binary ZIP has no other files or directories: receipts, publication status, test evidence and separate vendor license files stay outside it. Third-party license files remain intact in the repository's source archives.
 
 The workflow still verifies the exact source package, Source QA, portable CTest, native MSVC and all six Production/Golden gates before preparing a draft. Source validation and Windows evidence stay in their Actions artifacts. The separate `weekly-release-receipt` artifact retains `RELEASE_RECEIPT.json` and its checksum for 14 days, alongside the existing evidence retention period. This internal receipt binds the source, DLL and final binary ZIP hashes; the uploader requires a matching receipt outside the public asset directory and rejects extra local or remote assets.
+
+Native/Golden build validation, every stage in both Golden reports, and both
+final runtime checks require an explicit JSON integer `0` exit code. Missing,
+null, boolean, floating-point, string, container and nonzero outcomes reject
+the evidence before candidate assets or release receipts are created. Valid
+integer-zero evidence retains the normal packaging path.
+
+Reusing a completed draft re-fetches that release by ID and checks its current
+draft state, tag, source identity and completion marker. Both remote assets
+must have the exact names, sizes and GitHub-reported SHA-256 digests of the
+local pair, with no duplicates or extras. Missing digests or changed assets
+reject the retry without uploading, modifying or publishing the draft. An
+intact completed draft is returned unchanged.
 
 `DRAFT` in an internal preparation receipt describes the workflow's draft step. Publishing a release does not rewrite uploaded ZIP bytes, so publication-state receipts must not be embedded in downloadable packages. The owner reviews and manually publishes the draft after separate game acceptance.
 

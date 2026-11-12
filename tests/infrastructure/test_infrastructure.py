@@ -261,6 +261,112 @@ class MsvcCompilerReceiptTests(unittest.TestCase):
         self.cache.write_text(original, encoding='utf-8')
         self.assertIn('Build identity mismatch: cmake_cache_sha256', self.errors())
 
+    def test_literal_compiler_id_survives_generated_cmake_lexical_context(self):
+        declaration = 'set(CMAKE_CXX_COMPILER_ID "MSVC")\n'
+        cases = {
+            'ordinary': declaration,
+            'line_comments': '# set(CMAKE_CXX_COMPILER_ID "Clang")\r\n' + declaration + '# trailing comment\n',
+            'bracket_comments': '#[==[\nset(CMAKE_CXX_COMPILER_ID "Clang")\n]==]\n' + declaration,
+            'quoted_argument': 'set(OTHER "set(CMAKE_CXX_COMPILER_ID \\"Clang\\")")\n' + declaration,
+            'bracket_argument': 'set(OTHER [=[\nset(CMAKE_CXX_COMPILER_ID "Clang")\n]=])\n' + declaration,
+            'nested_arguments': 'message(\n set(CMAKE_CXX_COMPILER_ID "Clang")\n)\n' + declaration,
+            'multiline_command': 'SeT (\n CMAKE_CXX_COMPILER_ID\n "MSVC"\n)\n',
+            'other_control_blocks': declaration + 'foreach(item IN ITEMS one two)\nif(FALSE)\nset(OTHER "ignored")\nendif()\nendforeach()\n',
+            'utf8_bom': '\ufeff' + declaration,
+        }
+        record = self.build / 'CMakeFiles/owned/CMakeCXXCompiler.cmake'
+        for name, text in cases.items():
+            with self.subTest(context=name):
+                record.write_text(text, encoding='utf-8')
+                self.assertEqual([], self.errors())
+
+    def test_compiler_id_rejects_inert_ambiguous_and_nonliteral_evidence(self):
+        declaration = 'set(CMAKE_CXX_COMPILER_ID "MSVC")\n'
+        clang = 'set(CMAKE_CXX_COMPILER_ID "Clang")\n'
+        cases = {
+            'line_comment_only': '# ' + declaration,
+            'line_comment_decoy': '# ' + declaration + clang,
+            'bracket_comment_only': '#[[\n' + declaration + ']]\n',
+            'bracket_comment_decoy': '#[=[\n' + declaration + ']=]\n' + clang,
+            'quoted_argument_only': 'set(OTHER "set(CMAKE_CXX_COMPILER_ID \\"MSVC\\")")\n',
+            'bracket_argument_only': 'set(OTHER [==[\n' + declaration + ']==])\n',
+            'nested_argument_only': 'message(\n' + declaration + ')\n',
+            'duplicate_identical': declaration + declaration,
+            'conflicting_later': declaration + clang,
+            'conflicting_earlier': clang + declaration,
+            'conditional': 'if(FALSE)\n' + declaration + 'endif()\n',
+            'function_body': 'function(deferred)\n' + declaration + 'endfunction()\n',
+            'unset': declaration + 'unset(CMAKE_CXX_COMPILER_ID)\n',
+            'quoted_unset': declaration + 'unset("CMAKE_CXX_COMPILER_ID")\n',
+            'bracket_unset': declaration + 'unset([=[CMAKE_CXX_COMPILER_ID]=])\n',
+            'quoted_assignment': declaration + 'set("CMAKE_CXX_COMPILER_ID" "Clang")\n',
+            'bracket_assignment': declaration + 'set([==[\nCMAKE_CXX_COMPILER_ID]==] "Clang")\n',
+            'computed_value': 'set(CMAKE_CXX_COMPILER_ID "${DECOY}")\n',
+            'wrong_variable_case': 'set(cmake_cxx_compiler_id "MSVC")\n',
+            'different_command': 'notset(CMAKE_CXX_COMPILER_ID "MSVC")\n',
+            'different_variable': 'set(CMAKE_CXX_COMPILER_ID_RUN "MSVC")\n',
+            'unterminated_comment': '#[=[\n' + declaration,
+            'unterminated_quote': declaration + 'set(OTHER "unfinished\n',
+            'unterminated_command': declaration + 'set(OTHER value\n',
+            'mismatched_control': declaration + 'endfunction()\n',
+        }
+        record = self.build / 'CMakeFiles/owned/CMakeCXXCompiler.cmake'
+        for name, text in cases.items():
+            with self.subTest(context=name):
+                record.write_text(text, encoding='utf-8')
+                self.assertIn('Exact build compiler ID is not MSVC', self.errors())
+
+    def test_compiler_id_rejection_preserves_actual_link_validation(self):
+        (self.build / 'BUILD_RECEIPT.json').write_text(json.dumps(self.receipt), encoding='utf-8')
+        target = self.build / 'CMakeFiles/citrine_eclipse_mirage.dir'
+        target.mkdir()
+        link = target / 'link.txt'
+        command = 'link.exe /DLL /DEBUG:NONE /INCREMENTAL:NO /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO a.obj'
+        link.write_text(command + '\n', encoding='utf-8')
+        self.assertEqual([], msvc_evidence.check(self.root, self.build, self.dll))
+        record = self.build / 'CMakeFiles/owned/CMakeCXXCompiler.cmake'
+        record.write_text('# set(CMAKE_CXX_COMPILER_ID "MSVC")\nset(CMAKE_CXX_COMPILER_ID "Clang")\n', encoding='utf-8')
+        self.assertEqual(['Exact build compiler ID is not MSVC'],
+                         msvc_evidence.check(self.root, self.build, self.dll))
+        link.write_text(command + ' /NODEFAULTLIB\n', encoding='utf-8')
+        errors = msvc_evidence.check(self.root, self.build, self.dll)
+        self.assertIn('Exact build compiler ID is not MSVC', errors)
+        self.assertIn('/NODEFAULTLIB is forbidden for normalized CRT shipping', errors)
+
+    def test_actual_receipt_link_audit_rejects_dash_option_conflicts(self):
+        # Real receipt/cache/compiler binding and link-text collection, with
+        # owned byte fixtures only: no MSVC executable or DLL is run here.
+        (self.build / 'BUILD_RECEIPT.json').write_text(json.dumps(self.receipt), encoding='utf-8')
+        target = self.build / 'CMakeFiles/citrine_eclipse_mirage.dir'
+        target.mkdir()
+        source = target / 'link.txt'
+        response = self.build / 'shipping.rsp'
+        flags = '/DLL /DEBUG:NONE /INCREMENTAL:NO /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO a.obj'
+        forbidden = (
+            ('-DEBUG:FULL', 'forbidden debug'),
+            ('-INCREMENTAL:YES', 'forbidden incremental'),
+            ('-LTCG', 'forbidden LTCG'),
+            ('-MANIFEST:EMBED', 'forbidden manifest'),
+            ('-NODEFAULTLIB', '/NODEFAULTLIB is forbidden'),
+            ('-ENTRY:UserEntry', 'custom /ENTRY is forbidden'),
+            ('-Brepro', '/Brepro is forbidden'),
+        )
+        for use_response in (False, True):
+            def command(text):
+                source.write_text('link.exe @shipping.rsp\n' if use_response else 'link.exe ' + text + '\n', encoding='utf-8')
+                if use_response:
+                    response.write_text(text + '\n', encoding='utf-8')
+            command(flags)
+            self.assertEqual([], msvc_evidence.check(self.root, self.build, self.dll))
+            command(flags.replace('/', '-'))
+            with self.subTest(response_file=use_response, recognized_dash_options=True):
+                self.assertEqual([], msvc_evidence.check(self.root, self.build, self.dll))
+            for option, diagnostic in forbidden:
+                with self.subTest(response_file=use_response, option=option):
+                    command(flags + ' ' + option)
+                    errors = msvc_evidence.check(self.root, self.build, self.dll)
+                    self.assertTrue(any(diagnostic in error for error in errors), errors)
+
 
 class ValidationReadinessTests(unittest.TestCase):
     head = 'a' * 40
@@ -697,13 +803,14 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertIn('runs-on: ubuntu-24.04', blocks['codeql'])
         self.assertIn('language: [actions, c-cpp, python]', blocks['codeql'])
         self.assertIn('security-events: write', blocks['codeql'])
-        selected_sha = "${{ github.event_name == 'push' && github.sha || needs.readiness.outputs.head_sha }}"
+        selected_sha = "${{ github.sha }}"
         self.assertIn('ref: ' + selected_sha, blocks['codeql'])
         self.assertIn('sha: ' + selected_sha, blocks['codeql'])
-        self.assertIn('needs: readiness', blocks['codeql'])
+        self.assertNotIn('needs:', blocks['codeql'])
         self.assertIn('build-mode: none', blocks['codeql'])
         self.assertNotIn('always()', blocks['codeql'])
-        self.assertIn('refs/pull/{0}/head', blocks['codeql'])
+        self.assertIn('ref: refs/heads/main', blocks['codeql'])
+        self.assertNotIn('refs/pull/', blocks['codeql'])
 
     @staticmethod
     def workflow_expression(expression, context):
@@ -752,20 +859,21 @@ class ValidationReadinessTests(unittest.TestCase):
                                  workflow.split('\njobs:\n', 1)[1], re.M | re.S))
         gates = {name: re.search(r'^    if: (.+)$', block, re.M)[1]
                  for name, block in blocks.items()}
-        # All jobs have explicit gates; other jobs must retain the default
-        # success() dependency behavior. CodeQL needs a status function to run
-        # despite skipped readiness on main, without running after cancellation.
+        # Exercise the actual job expressions for main, ready/unready PRs,
+        # manual diagnostics, preparation and cancellation. Only accepted-main
+        # pushes allocate CodeQL; all eleven existing merge contexts stay gated.
         self.assertIn('!cancelled()', gates['codeql'])
         builds = {'source-qa', 'windows', 'windows-portable', 'reference-graph'}
         scenarios = [
             ('push', 'refs/heads/main', '', 'skipped', '', False, {'codeql'}),
             ('push', 'refs/heads/feature', '', 'skipped', '', False, set()),
             ('push', 'refs/heads/main', '', 'skipped', '', True, set()),
-            ('pull_request', 'refs/pull/1/merge', '', 'success', 'true', False, builds | {'codeql'}),
+            ('pull_request', 'refs/pull/1/merge', '', 'success', 'true', False, builds),
             ('pull_request', 'refs/pull/1/merge', '', 'success', 'false', False, set()),
             ('pull_request', 'refs/pull/1/merge', '', 'failure', 'true', False, set()),
             ('pull_request', 'refs/pull/1/merge', '', 'cancelled', 'true', True, set()),
-            ('workflow_dispatch', 'refs/heads/feature', 'diagnostic', 'success', 'true', False, builds | {'codeql'}),
+            ('workflow_dispatch', 'refs/heads/feature', 'diagnostic', 'success', 'true', False, builds),
+            ('workflow_dispatch', 'refs/heads/main', 'diagnostic', 'success', 'true', False, builds),
             ('workflow_dispatch', 'refs/heads/feature', 'synchronize-pr', 'skipped', '', False, set()),
         ]
         for event, ref, operation, result, run_tests, cancelled, expected in scenarios:
@@ -783,7 +891,7 @@ class ValidationReadinessTests(unittest.TestCase):
                 prepare = self.workflow_expression(gates['sync-request'], context)
                 self.assertEqual(event == 'workflow_dispatch' and operation == 'synchronize-pr', prepare)
                 selection = re.search(r'^          sha: (.+)$', blocks['codeql'], re.M)[1]
-                self.assertEqual(('a' if event == 'push' else 'b')*40,
+                self.assertEqual('a'*40,
                                  self.workflow_expression(selection, context))
         trigger = workflow.split('\npermissions:', 1)[0]
         self.assertNotIn('opened', trigger)
@@ -969,6 +1077,40 @@ class PackageTests(unittest.TestCase):
                         'the previous manifest must still reject changed source bytes')
         inventory.write_manifest(self.root)
         self.assertEqual([], inventory.verify_manifest(self.root))
+
+    def test_extractor_rejects_high_expansion_before_crc_and_preserves_cleanup(self):
+        # The source package is manifest-consistent: rejection is the budget,
+        # not a hash, CRC, filename, or ownership mismatch.
+        payload = b'X' * (128 * 1024)
+        (self.root / 'src/compressible.txt').write_bytes(payload)
+        inventory.write_manifest(self.root)
+        packaging.package(self.root, self.zip)
+        with zipfile.ZipFile(self.zip) as archive:
+            member = archive.getinfo('src/compressible.txt')
+            self.assertLess(member.compress_size, member.file_size // 100)
+        destination = self.base / 'expanded'
+        with patch.object(extraction, 'MAX_MEMBER_BYTES', 64 * 1024):
+            # The CRC pass may not decompress the disallowed member first.
+            with patch.object(zipfile.ZipFile, 'testzip', side_effect=AssertionError('early decompression')):
+                with self.assertRaisesRegex(ValueError, 'member exceeds extraction budget'):
+                    extraction.extract(self.zip, destination)
+        self.assertFalse(destination.exists())
+        self.assertFalse(list(self.base.glob('.surge-extract-*')))
+
+    def test_extractor_rejects_cumulative_expansion_before_crc(self):
+        packaging.package(self.root, self.zip)
+        with zipfile.ZipFile(self.zip) as archive:
+            largest = max(info.file_size for info in archive.infolist())
+            total = sum(info.file_size for info in archive.infolist())
+        self.assertGreater(total, largest)
+        destination = self.base / 'expanded'
+        with patch.object(extraction, 'MAX_MEMBER_BYTES', largest), \
+             patch.object(extraction, 'MAX_ARCHIVE_BYTES', total - 1), \
+             patch.object(zipfile.ZipFile, 'testzip', side_effect=AssertionError('early decompression')):
+            with self.assertRaisesRegex(ValueError, 'total extraction budget'):
+                extraction.extract(self.zip, destination)
+        self.assertFalse(destination.exists())
+        self.assertFalse(list(self.base.glob('.surge-extract-*')))
 
     def test_flat_roundtrip_and_determinism(self):
         first = packaging.package(self.root, self.zip)
@@ -1199,6 +1341,56 @@ class PackageTests(unittest.TestCase):
                 inventory.source_files(self.root)
             path.unlink()
 
+    def test_falcion_preflights_member_sizes_and_names_before_decompression(self):
+        packaging.package(self.root, self.zip)
+        with zipfile.ZipFile(self.zip) as archive:
+            baseline = {name: archive.read(name) for name in archive.namelist()}
+        cases = (
+            ('larger-source', 'src/value.cpp', b'X' * (128 * 1024),
+             'Package member size differs from verified source: src/value.cpp'),
+            ('unknown-source', 'src/foreign.cpp', b'X' * (128 * 1024),
+             'Unexpected package member: src/foreign.cpp'),
+            ('larger-manifest', inventory.MANIFEST,
+             baseline[inventory.MANIFEST] + b' ',
+             'Package/source manifest identity mismatch'),
+        )
+        for case, member, payload, expected_error in cases:
+            with self.subTest(case=case):
+                modified = dict(baseline)
+                modified[member] = payload
+                archive_path = self.base / (case + '.zip')
+                with zipfile.ZipFile(archive_path, 'w') as archive:
+                    for name, data in sorted(modified.items()):
+                        info = zipfile.ZipInfo(name)
+                        info.create_system = 3
+                        info.external_attr = 0o100644 << 16
+                        info.compress_type = zipfile.ZIP_DEFLATED
+                        archive.writestr(info, data)
+                with patch.object(zipfile.ZipFile, 'read',
+                                  side_effect=AssertionError('read before preflight')), \
+                     patch.object(zipfile.ZipFile, 'testzip',
+                                  side_effect=AssertionError('CRC before preflight')):
+                    errors = falcion.check(self.root, archive_path)
+                self.assertIn(expected_error, errors)
+        self.assertEqual([], falcion.check(self.root, self.zip))
+
+    def test_falcion_same_size_modified_source_still_fails_hash_validation(self):
+        packaging.package(self.root, self.zip)
+        with zipfile.ZipFile(self.zip) as archive:
+            modified = {name: archive.read(name) for name in archive.namelist()}
+        original = modified['src/value.cpp']
+        modified['src/value.cpp'] = bytes([original[0] ^ 1]) + original[1:]
+        archive_path = self.base / 'same-size-mutant.zip'
+        with zipfile.ZipFile(archive_path, 'w') as archive:
+            for name, data in sorted(modified.items()):
+                info = zipfile.ZipInfo(name)
+                info.create_system = 3
+                info.external_attr = 0o100644 << 16
+                info.compress_type = zipfile.ZIP_DEFLATED
+                archive.writestr(info, data)
+        errors = falcion.check(self.root, archive_path)
+        self.assertIn('Package differs from verified source: src/value.cpp', errors)
+
     def test_package_tamper_and_private_manifest_are_rejected(self):
         packaging.package(self.root, self.zip)
         with zipfile.ZipFile(self.zip) as archive:
@@ -1365,9 +1557,11 @@ class SourceQaReportTests(unittest.TestCase):
             'from pathlib import Path\n'
             'Path(__file__).with_name("checks-ran").write_text("ran\\n")\n')
 
-    def run_fixture(self, report):
+    def run_fixture(self, report, checks=None):
+        if checks is None:
+            checks = [('fixture check', ['check.py'])]
         with patch.object(source_qa, 'ROOT', self.root), \
-             patch.object(source_qa, 'CHECKS', [('fixture check', ['check.py'])]), \
+             patch.object(source_qa, 'CHECKS', checks), \
              patch.object(sys, 'argv', ['run_source_qa.py', '--report', str(report)]), \
              contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
             return source_qa.main()
@@ -1438,6 +1632,49 @@ class SourceQaReportTests(unittest.TestCase):
         self.assertEqual('FAIL', data['result'])
         self.assertEqual(7, data['checks'][0]['exit_code'])
         self.assertEqual([report], list(report.parent.iterdir()))
+
+
+    def test_timeout_records_partial_diagnostics_without_claiming_pass(self):
+        report = self.root / 'build/report.json'
+        timeout = subprocess.TimeoutExpired(
+            ['python', 'check.py'], 90,
+            output=b'partial stdout: \xff\n', stderr=b'partial stderr\n')
+        with patch.object(source_qa.subprocess, 'run', side_effect=timeout):
+            self.assertEqual(1, self.run_fixture(report))
+        data = json.loads(report.read_text())
+        self.assertEqual('FAIL', data['result'])
+        self.assertEqual(124, data['checks'][0]['exit_code'])
+        self.assertIn('QA timeout', data['checks'][0]['output'])
+        self.assertIn('partial stdout: \ufffd\n', data['checks'][0]['output'])
+        self.assertIn('partial stderr\n', data['checks'][0]['output'])
+        self.assertFalse(self.marker.exists())
+
+    def test_timeout_keeps_later_results_in_complete_report(self):
+        report = self.root / 'build/report.json'
+        timeout = subprocess.TimeoutExpired(['python', 'check.py'], 90,
+                                             output=b'early diagnostic\n')
+        after = subprocess.CompletedProcess(['python', 'check.py'], 0, 'later success\n', '')
+        checks = [('timed out', ['check.py']), ('after timeout', ['check.py'])]
+        with patch.object(source_qa.subprocess, 'run', side_effect=[timeout, after]):
+            self.assertEqual(1, self.run_fixture(report, checks))
+        data = json.loads(report.read_text())
+        self.assertEqual('FAIL', data['result'])
+        self.assertEqual(['timed out', 'after timeout'], [x['check'] for x in data['checks']])
+        self.assertEqual([124, 0], [x['exit_code'] for x in data['checks']])
+        self.assertIn('early diagnostic', data['checks'][0]['output'])
+        self.assertEqual('later success\n', data['checks'][1]['output'])
+        self.assertFalse(self.marker.exists())
+
+    def test_unavailable_child_is_recorded_as_failed_check(self):
+        report = self.root / 'build/report.json'
+        with patch.object(source_qa.subprocess, 'run',
+                          side_effect=FileNotFoundError('fixture Python executable missing')):
+            self.assertEqual(1, self.run_fixture(report))
+        data = json.loads(report.read_text())
+        self.assertEqual('FAIL', data['result'])
+        self.assertEqual(127, data['checks'][0]['exit_code'])
+        self.assertIn('fixture Python executable missing', data['checks'][0]['output'])
+        self.assertFalse(self.marker.exists())
 
 
 class BranchPushGateTests(unittest.TestCase):
@@ -1647,10 +1884,12 @@ class RuntimeBenchmarkTests(unittest.TestCase):
             for needle, insertion in tool.CONTROL_INSERTIONS:
                 restored = restored.replace(needle + insertion, needle)
             if workers not in (0, 2):
-                restored = restored.replace('std::array<std::thread,' + str(workers) + '> workers;', tool.MARKER)
+                restored = restored.replace(tool.MARKER.replace('handler_policy::workers', str(workers)), tool.MARKER)
             self.assertEqual(original, restored)
         for source, count in [(original, 3), (original.replace(tool.PUSH, ''), 2),
-                              (original + tool.MARKER, 2), ('#include "probe.hpp"\n' + original, 2)]:
+                              (original + tool.MARKER, 2), ('#include "probe.hpp"\n' + original, 2),
+                              (original.replace(tool.THREAD_ALIAS, ''), 2),
+                              (original.replace('OwnedThread=std::thread;', 'OwnedThread=std::jthread;'), 2)]:
             with self.subTest(workers=count), self.assertRaises(ValueError):
                 tool.generated_service(source, count)
 
@@ -2359,8 +2598,21 @@ class GovernanceTests(unittest.TestCase):
                 path.write_text(original.replace(token, 'REMOVED'))
                 self.assertTrue(launchers.check(root), token)
             path.write_text(original)
+            # The old suffix check accepted comments and echo as executable exit.
+            for fake in ('REM exit /b %RC%', 'echo exit /b %RC%'):
+                with self.subTest(fake_cmd=fake):
+                    path.write_text(original.replace('exit /b %RC%', fake))
+                    self.assertTrue(any('Launcher masks child exit' in e for e in
+                                        launchers.check(root)))
+            path.write_text(original)
             automation=root/entry['automation']
-            automation.write_text(automation.read_text().replace('exit $LASTEXITCODE','exit 0'))
+            original_automation = automation.read_text()
+            for fake in ('# exit $LASTEXITCODE', 'Write-Host exit $LASTEXITCODE'):
+                with self.subTest(fake_ps=fake):
+                    automation.write_text(original_automation.replace('exit $LASTEXITCODE', fake))
+                    self.assertTrue(any('Automation masks child exit' in e for e in
+                                        launchers.check(root)))
+            automation.write_text(original_automation.replace('exit $LASTEXITCODE','exit 0'))
             self.assertTrue(any('masks child exit' in e for e in launchers.check(root)))
 
     def test_launcher_summary_ownership_must_reach_the_profile(self):

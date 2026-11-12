@@ -100,6 +100,7 @@ Issue #109's Registry provenance and original-donor retirement remain open.
 | [IDENTIFIER_POLICY.md](IDENTIFIER_POLICY.md) | Current | [../scripts/check_repository_contract.py](../scripts/check_repository_contract.py) |
 | [INDEX.md](INDEX.md) | Current | [../GOVERNANCE.md](../GOVERNANCE.md) |
 | [INFRASTRUCTURE_ADAPTATION.md](INFRASTRUCTURE_ADAPTATION.md) | Checkpoint | [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) |
+| [MESSAGE_ERROR_COMPATIBILITY.md](MESSAGE_ERROR_COMPATIBILITY.md) | Current | [../src/protocol/messages.cpp](../src/protocol/messages.cpp) |
 | [MSVC_NATIVE_LOOKUP_FIX.md](MSVC_NATIVE_LOOKUP_FIX.md) | Checkpoint | [DEVELOPMENT.md](DEVELOPMENT.md) |
 | [MSVC_PROFILE_FIX.md](MSVC_PROFILE_FIX.md) | Checkpoint | [DEVELOPMENT.md](DEVELOPMENT.md) |
 | [NATIVE_ALLOCATION_FIXTURE.md](NATIVE_ALLOCATION_FIXTURE.md) | Mixed | [../tests/native/net_failure_tests.cpp](../tests/native/net_failure_tests.cpp) |
@@ -113,6 +114,7 @@ Issue #109's Registry provenance and original-donor retirement remain open.
 | [REMAINING_WORK.md](REMAINING_WORK.md) | Review | [SOURCE_DIFFERENTIAL_B49_B54.md](SOURCE_DIFFERENTIAL_B49_B54.md) |
 | [REPOSITORY_BADGES_AND_OPENING_CI.md](REPOSITORY_BADGES_AND_OPENING_CI.md) | Current | [../.github/workflows/repository-badges.yml](../.github/workflows/repository-badges.yml) |
 | [RE_A11_09_REGISTRY_HKEY_BOUNDARY.md](RE_A11_09_REGISTRY_HKEY_BOUNDARY.md) | Review | [../src/platform/registry.cpp](../src/platform/registry.cpp) |
+| [A12_DEVIATIONS.md](A12_DEVIATIONS.md) | Review | [XML_BACKEND_COMPARISON.md](XML_BACKEND_COMPARISON.md) |
 | [RE_COPY_RECOVERY.md](RE_COPY_RECOVERY.md) | Current | [../src/platform/file_copy.cpp](../src/platform/file_copy.cpp) |
 | [RE_INPUT_REVIEW.md](RE_INPUT_REVIEW.md) | Checkpoint | [REMAINING_WORK.md](REMAINING_WORK.md) |
 | [ROOT_LAYOUT_AND_BUILD_OWNERSHIP.md](ROOT_LAYOUT_AND_BUILD_OWNERSHIP.md) | Current | [../CMakeLists.txt](../CMakeLists.txt) |
