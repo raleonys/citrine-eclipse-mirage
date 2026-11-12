@@ -6,16 +6,18 @@ This is a **single C++ donor-source crosswalk**, not completion of Archive 11's 
 
 The donor and file-ledger links are pinned to retained Archive 11 commit `e10561b256a5793f857ec4bed4b5a9fb9fcfbadd`. The moving `research/reconstruction-package` head now contains an Archive 12 refresh; its Registry source differs from this Archive 11 hash and is not substituted into this comparison.
 
-## Current source identities
+## Source identities at the reviewed baseline
 
-| Product source | SHA-256 (accepted main) | Role |
+| Product source | SHA-256 (reviewed baseline) | Role |
 | --- | --- | --- |
 | [`src/platform/registry.cpp`](../src/platform/registry.cpp) | `5b5fbdf646f1c8a2169078c97696e74f5e43fc9c80640201bc49581add4c1f48` | Value comparisons, original-first open/query, fabricate/close state |
 | [`include/citrine_eclipse_mirage/platform/registry.hpp`](../include/citrine_eclipse_mirage/platform/registry.hpp) | `c66f67c0ef14edeb606b817ff074b76846d636478ac2b54964206ec4ad3e8c98` | `Handle` and per-callback scalar cells; current numeric handle sets |
 | [`src/platform/hook_native_callbacks.cpp`](../src/platform/hook_native_callbacks.cpp) | `7b0df0c9e00497cc0fb5fe17574f0fd9576718684d19f8a2a1c4f1bee43dd1ee` | Real `HKEY` / `PHKEY` native entry adapters, without origin tickets |
 | [`src/platform/hook_original_effects.cpp`](../src/platform/hook_original_effects.cpp) | `33b5c342470b1b1cc39a610f5770480ead8191f5911eeb32fbf22ab0c4b2a66d` | Exact typed original Win32 API calls; no invented return or handle namespace |
 
-These SHA-256 records identify inspected text bytes, not binary identity, hook execution, real HKEY authentication or an accepted implementation patch.
+The table hashes belong to `f0f82c81523beaa6b809f5e3b455452d40059d0a`; local
+links navigate current paths, not byte-identical current sources. These records
+identify inspected text bytes, not binary identity, hook execution, real HKEY authentication or an accepted implementation patch.
 
 ## Observed contracts
 
@@ -42,7 +44,7 @@ Accepted [#224](https://github.com/raleonys/citrine-eclipse-mirage/pull/224) als
 | --- | --- | --- |
 | D01 origin/capability | Raw HKEY-to-Handle boundary and source identities reviewed | Trusted origin/owner/generation transport or a rigorously bounded alternative; root/parent observations do not establish authorization |
 | D02 ambiguity | Accepted native/fabricated lifecycles and bounded completed-close numeric reuse | Distinguish synthetic same-number counterexamples from an actual OS alias; preserve original-call identity, LastError and ownership through relevant transitions |
-| D03 API coverage | #113 direct SDK A/W issuance/core callbacks; #224 installed-hook W open/query/close and provider reentry in the controlled application fixture | Remaining alternate A/W API chains, observed callback ingress, dynamic resolution and applicable Consumer coverage |
+| D03 API coverage | #113 direct SDK A/W issuance/core callbacks; #224 installed-hook W/provider reentry; accepted #255 also adds installed A/W and mixed-handle cases in that application fixture | Remaining alternate A/W API chains, observed callback ingress, dynamic resolution and applicable Consumer coverage |
 | D04/D07 retirement | #98 failure-atomic fabrication and #99 lifecycle coverage retained | Proven origin/coverage followed by a reviewed ownership/retirement design, concurrent schedules and applicable native acceptance |
 
 All four research gates remain open. Neither passing CI nor this source comparison confirms a shipping collision or closes Issue #109.
@@ -51,7 +53,16 @@ All four research gates remain open. Neither passing CI nor this source comparis
 
 The next distinct evidence for #109 must be an observed native Consumer or equivalent actual-hook trace identifying the HKEY **issuer API, exact callback arrival, handle reuse epoch, all close/query consumers and LastError** through alternate API chains. Separate direct-SDK fixture results from actual hooked execution. If no trusted origin survives across those boundaries, keep the provenance-aware R13 ledger **integration-blocked**; do not guess from pointer ranges or numeric membership. Any later production-fix PR requires a scoped policy decision, a failing current-product test, exact-head MSVC Debug/Release and applicable Native/Golden acceptance.
 
-The next test PR should extend the existing installed-hook native application coverage with the missing A/W and alternate-API scenarios. Reuse its real application/hook setup and retain the #224 W/provider controls; keep direct-core fixture results separately identified. Cover controlled root/parent paths, original success/failure, alternate issuance/query/close chains, lifecycle cleanup and LastError with positive and negative controls. Run genuine MSVC Debug and Release and retain machine-readable callback observations. Hook-installation failure or absent expected callback evidence must fail the fixture. A known test host establishes only its exercised paths; it cannot stand in for the real Consumer.
+The formerly proposed installed-hook A/W extension was integrated in
+[PR #255](https://github.com/raleonys/citrine-eclipse-mirage/pull/255).
+`tests/native/application_runtime_tests.cpp` retains the W/provider controls
+and now exercises ANSI open/query/close, mixed A/W handle use, size-only and
+undersized buffers, native-codepage client paths and unrelated-value refusal.
+These are controlled fixture paths, not a complete alternate-API or Consumer
+trace. Do not recreate them as a missing-test PR. The next distinct evidence is
+an actually observed alternate issuer-to-callback chain with the identities and
+retirement observations above. Keep physical hook installation and direct-core
+fixture evidence separately identified.
 
 If Consumer observation is then needed, implement opt-in diagnostics compiled only into Debug, with a machine-readable file receipt so the game need not print output. Record source/build identity, observed issuer/callback sequence, handle generations as observations, operation status and LastError, and make dropped/incomplete records explicit. Preserve original calls and LastError; diagnostics must not supply invented provenance or change routing. Verify compile-time exclusion from Production/Release. This instrumentation is proposed follow-up work, not included or executed here.
 
