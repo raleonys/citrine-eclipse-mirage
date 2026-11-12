@@ -2122,8 +2122,21 @@ class GovernanceTests(unittest.TestCase):
                 path.write_text(original.replace(token, 'REMOVED'))
                 self.assertTrue(launchers.check(root), token)
             path.write_text(original)
+            # The old suffix check accepted comments and echo as executable exit.
+            for fake in ('REM exit /b %RC%', 'echo exit /b %RC%'):
+                with self.subTest(fake_cmd=fake):
+                    path.write_text(original.replace('exit /b %RC%', fake))
+                    self.assertTrue(any('Launcher masks child exit' in e for e in
+                                        launchers.check(root)))
+            path.write_text(original)
             automation=root/entry['automation']
-            automation.write_text(automation.read_text().replace('exit $LASTEXITCODE','exit 0'))
+            original_automation = automation.read_text()
+            for fake in ('# exit $LASTEXITCODE', 'Write-Host exit $LASTEXITCODE'):
+                with self.subTest(fake_ps=fake):
+                    automation.write_text(original_automation.replace('exit $LASTEXITCODE', fake))
+                    self.assertTrue(any('Automation masks child exit' in e for e in
+                                        launchers.check(root)))
+            automation.write_text(original_automation.replace('exit $LASTEXITCODE','exit 0'))
             self.assertTrue(any('masks child exit' in e for e in launchers.check(root)))
 
     def test_launcher_summary_ownership_must_reach_the_profile(self):

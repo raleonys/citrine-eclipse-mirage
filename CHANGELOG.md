@@ -6,10 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Reject non-power-of-two PE32+ SectionAlignment values in the read-only ARYRA Golden layout verifier, including otherwise aligned section tables. Add synthetic negative/positive fixtures for 0x1800 (reject) and 0x2000 (accept), preserving the current non-exact section RVA policy and production DLL bytes.
+- Fail closed when registered CMD and PowerShell operator launchers end in commented or display-only exit-status text. Validate the complete final command line rather than suffix matching, with launcher mutation regressions for REM/echo and PowerShell comment/Write-Host cases. Production DLL and operator build scripts remain unchanged.
 
 ### Integrated 2026-11-12
 
+- [PR #298](https://github.com/raleonys/citrine-eclipse-mirage/pull/298): Reject non-power-of-two PE32+ SectionAlignment values in the read-only ARYRA Golden layout verifier, including otherwise aligned section tables. Add synthetic negative/positive fixtures for 0x1800 (reject) and 0x2000 (accept), preserving the current non-exact section RVA policy and production DLL bytes.
 - [PR #296](https://github.com/raleonys/citrine-eclipse-mirage/pull/296): Validate and serialize the achievement watcher INI before creating its parent during the native XML/INI batch. Invalid section names now leave directories, persistence outputs, achievement grants and events untouched; add a real grant failure/retry regression without changing valid output bytes or public ABI.
 
 ### Integrated 2026-11-11
