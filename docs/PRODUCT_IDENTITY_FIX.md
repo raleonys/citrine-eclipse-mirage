@@ -1,8 +1,11 @@
+> **Historical checkpoint.** Use [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # SURGE product name consistency
 
 Owner instruction (translated): "These must be corrected consistently."
 
-`include/preloader_l/core/product_identity.hpp` defines configuration,
+`include/citrine_eclipse_mirage/core/product_identity.hpp` defines configuration,
 override, data-directory, avatar, and online-DLL names. Configuration projections
 and the concrete runtime use the same names. The configuration search location
 remains the EXE directory, with base -> override precedence, and the default
@@ -11,7 +14,7 @@ no automatic fallback to old filenames or file migration is added.
 
 The earlier two-component data root in the lower configuration projection is
 aligned with the existing runtime SURGE root. The online module requests
-`preloader_l_online.dll` directly; the application adapter no longer has a
+`citrine_eclipse_mirage_online.dll` directly; the application adapter no longer has a
 special case that translates the former name to the new one.
 
 Four configuration error messages identify `surge.cfg`. The shutdown source

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_message_dispatch.hpp"
+#include "citrine_eclipse_mirage/net/transport_message_dispatch.hpp"
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 void reset(ReceiveBufferString& value){value.size_10=0;value.capacity_18=15;value.storage_00[0]=0;}
 void destroy(ReceiveBufferString& value,MessageDispatchContext& context){
@@ -122,4 +122,4 @@ std::uintptr_t MessageThreadApi::begin_frame_thread_05e8e0(std::uintptr_t securi
     return threads::begin_thread_05e8e0(reinterpret_cast<void*>(security),stack,entry,
         reinterpret_cast<std::uintptr_t>(closure),flags,&id,threads_);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

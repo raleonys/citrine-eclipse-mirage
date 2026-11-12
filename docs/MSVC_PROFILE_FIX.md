@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [DEVELOPMENT.md](DEVELOPMENT.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # MSVC profile log corrections
 
 Five owner-supplied logs show that the previous vendor validation blocker was
@@ -20,7 +23,7 @@ unchanged. The Source API development DLL receives the same manifest link rule;
 EXE manifests are unaffected. The metadata checker is not relaxed to allow the
 extra manifest.
 
-`LOCAL_BUILD_RECEIPT.json` now records build success separately from validation
+`BUILD_RECEIPT.json` now records build success separately from validation
 of the selected profile. If Golden targets are missing, validation reports
 `BLOCKED` and exit code 3; a compilation PASS is not treated as a Golden PASS.
 

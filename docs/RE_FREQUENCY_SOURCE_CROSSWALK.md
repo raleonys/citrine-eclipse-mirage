@@ -1,46 +1,50 @@
-# RPK-0001: original cold-frequency serialization versus product cache ownership
+# Archive 12: QPC and publication crosswalk
 
-**Disposition: SOURCE_DIFFERENCE_CONFIRMED / SHIPPING_STARTUP_CASE_DISTINGUISHED / DONOR_PARITY_AND_GENERIC_CALLERS_OPEN**
+**PARTIAL_A12_SOURCE_REVIEW / NO_NEW_PRODUCT_DEFECT_CONFIRMED / RESEARCH_REMAINS_OPEN**
 
-This is the first bounded follow-up to the retained
-[Reverse Engineering finding RPK-0001](https://github.com/raleonys/citrine-eclipse-mirage/blob/research/reconstruction-package/docs/RE_PACKAGE_FINDINGS.json)
-and its [source comparison](https://github.com/raleonys/citrine-eclipse-mirage/blob/research/reconstruction-package/docs/RE_PACKAGE_COMPARISONS.md).
-It maps the current accepted source graph, not a donor-native execution or an
-authorization to adopt the donor's private source gate. Archive 11 combined
-SHA-256 as pinned by the retained project:
-`db394434e38c7edad33607a846ffdc36b04a1e5978d2fbe3d74da24bda5179da`.
-The independent historical B49–B54 donor identity issue is tracked in
-[PR #115](https://github.com/raleonys/citrine-eclipse-mirage/pull/115).
+This refreshes existing PR #136, preserving its original research history.
+A12 source authority is retained `research/reconstruction-package@56eab8795fa65325e4fa6fe31a645eb55cc58469`;
+product baseline is `main@1405c01750317454e8c289a7ebad77391089cdd9`. The eight-part A11 input is a historical
+checkpoint, not the current source authority. A12's nine-part combined ZIP
+SHA-256 is `539fc80596bfa058afdfe74b01cee95c1c1b807be3e983127510e4dc170acb6d`.
 
-## Execution-model crosswalk
+The [A12 registry](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/docs/RE_PACKAGE_IMPORT.json) and
+[file inventory](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/docs/RE_PACKAGE_FILES.json) identify 6,514 reference
+files. The selected rows below were re-read from that commit and checked for
+exact byte lengths/SHA-256 against the inventory. Original split ZIPs were not
+locally reassembled. No supplied script, DLL or executable was run. Source and
+record claims below are bounded; unchanged hashes do not establish full semantic
+review, original ABI parity or native test acceptance.
 
-| Question | Retained donor reconstruction | Current Citrine Eclipse Mirage |
-| --- | --- | --- |
-| Cold frequency ownership | [`anadius-execution-source/execution.cpp`](https://github.com/raleonys/citrine-eclipse-mirage/blob/research/reconstruction-package/reference-package/snapshot/anadius-execution-source/execution.cpp) holds a private recursive `SourceGuard` across cold frequency initialization and counter sampling. The donor header expressly limits direct-helper access, reentrance and multiple wrappers sharing state. | [`src/runtime/execution.cpp`](../src/runtime/execution.cpp) uses `std::atomic_ref<int64_t>` and compare-exchange for the caller-owned cache. Two concurrent callers may **both** invoke the platform frequency getter before either publishes; only one cached value is selected. No donor-style serialized counter-read gate is present. |
-| Assertion actually exercised | The retained [publication test](https://github.com/raleonys/citrine-eclipse-mirage/blob/research/reconstruction-package/reference-package/snapshot/anadius-startup-publication-source/publication_tests.cpp) asserts eight threads × 100 counter samples, one frequency query and 800 counter queries in its own guarded host model. This is a **supplied test assertion**, not independently rerun donor binary evidence. | [`tests/unit/execution/concurrency_tests.cpp`](../tests/unit/execution/concurrency_tests.cpp) deliberately synchronizes two frequency callbacks before publication and requires **two** queries, two correct samples, one selected 10 MHz cache value and no third query. It tests thread-safe cache publication, **not** the donor's one-query serialization. |
-| Production application | The donor source model does not by itself establish the shipped product's startup schedule or other Consumer callers. | [`src/runtime/application.cpp`](../src/runtime/application.cpp) constructs `Execution` with a caller-owned zero cache, then explicitly queries `platform.query_performance_frequency()` and requires the result to be positive **inside `Application::Impl` construction**. Provider and extra workers are created later in `start()`. This specific startup owner therefore enters worker scheduling with an **already initialized frequency cache**, not the synthetic two-cold-caller schedule. |
-| Platform boundary | The donor's `PreserveError` and source gate constrain its wrapper-specific error/callback order; they are not native source equivalence for the product. | [`src/platform/execution_windows.cpp`](../src/platform/execution_windows.cpp) calls Win32 `QueryPerformanceFrequency` and `QueryPerformanceCounter` and returns their numeric values; comments say the recovered adapter ignores the BOOL result. The production application explicitly rejects nonpositive initial frequency. This does not prove that every nonproduction or externally constructed `Execution` wrapper validates its supplied state. |
-| Timers and waiters | The donor serializes its own source-owner access. Its 800-sample count is not a native Windows timing oracle. | [`tests/unit/execution/execution_tests.cpp`](../tests/unit/execution/execution_tests.cpp) checks conversion, signed arithmetic, polling, and cached/supplied nonzero frequency. [`tests/unit/execution/concurrency_tests.cpp`](../tests/unit/execution/concurrency_tests.cpp) separately tests cold publication; the proposed [A11-02 PR #128](https://github.com/raleonys/citrine-eclipse-mirage/pull/128) covers readiness payload visibility, not another clock lock. |
+| Selected A12 input | SHA-256 |
+| --- | --- |
+| [anadius-execution-source/execution.cpp](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/reference-package/snapshot/anadius-execution-source/execution.cpp) | `c9a30ba892a526b9b00068d7e8d15927a60e2ecf7eda8d23a02bbfa2576f6884` |
+| [anadius-execution-source/execution.hpp](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/reference-package/snapshot/anadius-execution-source/execution.hpp) | `eb6c3dd0fd279ee9aecafef33c60ba184ab424b3e003143b5271f91ce818ab55` |
+| [anadius-startup-publication-source/publication.cpp](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/reference-package/snapshot/anadius-startup-publication-source/publication.cpp) | `7b7a50a8b28541b5b3461439c6918a7055acd8af054344c212e7cb5650bace82` |
+| [anadius-startup-publication-source/publication_tests.cpp](https://github.com/raleonys/citrine-eclipse-mirage/blob/56eab8795fa65325e4fa6fe31a645eb55cc58469/reference-package/snapshot/anadius-startup-publication-source/publication_tests.cpp) | `7af4e858d48fc91b64989dde02db2fa4cc67de25995cf4c9681e435c78dccd4b` |
 
-## Risk and evidence classification
+| Current product counterpart | SHA-256 at reviewed main |
+| --- | --- |
+| [src/runtime/execution.cpp](../src/runtime/execution.cpp) | `317dc0c460013ddf621cabc3f9b06d88c6db24fa3728f3be1463cb70d8d02b27` |
+| [include/citrine_eclipse_mirage/runtime/execution.hpp](../include/citrine_eclipse_mirage/runtime/execution.hpp) | `0271621e3c5fa9325bd59a7eaf158df56ab53296ffe9d6a7db08551c1c013df8` |
+| [src/runtime/application.cpp](../src/runtime/application.cpp) | `89e712de0949f2e6c200f504daa47740254bb49b59f1d91ce6ca5cbf9579f1a8` |
+| [src/platform/execution_windows.cpp](../src/platform/execution_windows.cpp) | `0bae86f6b949aec256b34fe45172fdac0a98e21d66c506d562567096c0099a99` |
+| [tests/unit/execution/concurrency_tests.cpp](../tests/unit/execution/concurrency_tests.cpp) | `3e03a9e0aa226c819b18eed7f5dafe510debcdde0e9eb1343c7d6019d656f8f9` |
 
-1. **Product application cold-cache collision:** not demonstrated by the source startup sequence above, because the production Application initializes the cache before its internal worker threads. This is a **scope distinction**, not proof that no other test or caller can instantiate a cold `Execution`.
-2. **Generic wrapper with two concurrent cold callers:** the current contract explicitly allows two frequency queries while preserving one atomic published value. Treat this as `INTENTIONAL_CURRENT_TEST_CONTRACT`, not a confirmed race or automatic donor parity failure.
-3. **Original donor equivalence:** remains `EVIDENCE_BLOCKED`. The private `SourceGuard`, observer and callbacks represent a different ownership topology and have not been shown to be required by any active product Consumer.
-4. **Error and exceptional getters:** the product Windows adapter mirrors the recovered behavior of ignoring raw BOOL results, but the production Application rejects nonpositive values. No complete source-to-Win32 failure/error preservation or foreign callback matrix was executed here.
-5. **Future decision:** require an explicit product requirement for exactly-once clock query, or a reproducible native/sample failure, **before** adding a lock or changing the atomic-cache code. Reconcile all active consumers of `Execution` and validate external caller ownership; do not infer that a donor-local 800-call PASS should be transplanted directly into the product.
+## Rechecked A12 changes
 
-## Practical next acceptance
+A12 Execution uses short-lived lock-free `atomic_ref<uint32_t>` owner projections before/after the actual SRW owner operations while retaining the recovered raw layout. It also has a recursive SourceGuard around the clock/cache and flag operations. Optional Publication/ReadyStage observers and a bound-port payload distinguish source milestones from controller activation. The publication implementation rejects foreign issuer/reuse and only publishes a readable port snapshot with the real Server milestone. These are source-owner/observer contracts, not new required product exports.
 
-For a future bounded test, first audit the remaining `Execution` construction
-sites and verify whether any product-linked instance can **actually** race at
-frequency-cache zero with mutable platform results or concurrent counter reads.
-Use a deterministic platform mock for a failing/invalid frequency case only
-with a stated policy oracle. Run a native Windows/MSVC test for any product
-lifetime/exception claim, preserve the deliberate two-query cold-cache
-regression, and require an assertion-sensitive negative control before a
-production fix. No new cache lock, frequency call count policy, ABI export,
-private CRT, vendor code or Consumer behavior is authorized by this review.
+The A12 supplied publication fixture still checks eight callers times one hundred samples and one frequency query under that guarded host owner. The current product instead deliberately permits two frequency getters racing at a cold caller-owned cache, publishing one value atomically. Its existing concurrency fixture asserts this two-query contract. Production Application initializes a positive QPC frequency before launching provider/extra workers, so that particular owner does not enter its startup workers with a cold cache.
 
-**No tests were added or run in this PR.** It is source-linked research evidence
-only; portable/native/Golden/game PASS is not inferred.
+## Findings and nonduplication
+
+This remains a source-contract distinction, not proof of a shipping startup race. Preserve accepted #128 publication/payload tests, #243 native SRW handoff work and #347 process-wide fixture thread identities. Do not replace the product's deliberate cold-cache assertion with the donor's single-query assertion. The native Windows API adapter/error handling and externally constructed owners have separate assumptions; this limited review does not prove every error or foreign callback path.
+
+Open #236 already owns the retained research ledger's A12 RPK-0001 recheck. This PR is the product-specific owner/call-site comparison, not a duplicate ledger rewrite. A future production change needs a concrete active-caller requirement or failing native reproducer for the current product, plus lifetime/error evidence. RPK-0001 and complete original-source equivalence remain open.
+
+## Validation boundary and continuation
+
+The selected A12 inventory checks and current product source/test crosswalk were performed for this update. Complete local Source QA and tracked clean-tree pre-push results belong to the updated PR head and are reported in its description. No fresh native Windows/MSVC, Production/Golden, original DLL or Consumer/game execution is claimed locally. Historical donor tests and merged PR receipts are not fresh execution here.
+
+Continue unresolved source/owner questions through the retained reconstruction project and a scoped reproducer where applicable. This review does not close the entire archive/module or authorize source retirement, a runtime policy change, private CRT adoption or public ABI changes. Product/test/vendor bytes, retained reference snapshots and build/CI policy remain unchanged.

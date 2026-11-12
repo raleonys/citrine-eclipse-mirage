@@ -5,10 +5,10 @@
   "target_modes": {
     "shipping": "/MT (MultiThreaded)",
     "debug": "/MTd (MultiThreadedDebug)",
-    "llvm_mingw": "toolchain UCRT, development only",
-    "source_api_development": "/MD (MultiThreadedDLL) Release and /MDd (MultiThreadedDebugDLL) Debug, including the C++ host and development-only vendor copies"
+    "llvm_mingw": "toolchain UCRT for LLVM-MinGW builds",
+    "source_api_development": "/MD (MultiThreadedDLL) Release and /MDd (MultiThreadedDebugDLL) Debug, including the C++ host and separately compiled vendor copies"
   },
   "msvc_execution": "NOT_RUN",
-  "probe": "tools/preloader_l_crt_host/main.cpp",
+  "probe": "tools/citrine_eclipse_mirage_crt_host/main.cpp",
   "scope": "Infrastructure profile, not original/private CRT parity"
 }

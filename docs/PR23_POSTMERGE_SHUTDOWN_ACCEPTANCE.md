@@ -1,6 +1,9 @@
+> **Historical checkpoint.** Use [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # PR #23 post-merge listener shutdown acceptance
 
-**Status: DRAFT / TEST_ONLY / NOT_RELEASE.** The follow-up baseline is merged PR #23: `f121ecf99d275376fdc045e93a5873066c30fd11`, incorporated into `main` by merge commit `d9c860d17769738fd6f03a58a7f3c4b9f875b067` on 2026-11-01.
+**Status: test plan; execution evidence remains separately required.** The follow-up baseline is merged PR #23: `f121ecf99d275376fdc045e93a5873066c30fd11`, incorporated into `main` by merge commit `d9c860d17769738fd6f03a58a7f3c4b9f875b067` on 2026-11-01.
 
 ## Observed local Windows evidence (not source-commit-pinned)
 
@@ -24,11 +27,11 @@ COMPILE ONLY: FAIL
 Exit code: 1
 ```
 
-The existing `tools/preloader_l_runtime_host/main.cpp` obtains the published `EALsxPort`, calls `DllShutdown`, then attempts loopback `connect` to that port and expects an error. Other local profiles passed the same check. The evidence is compatible with an intermittent shutdown/listener race or a separate port owner but **does not establish either cause**, a deterministic runtime defect, or causality from PR #23. Raw logs remain owner-supplied attachments and are not committed because they contain local filesystem identity.
+The existing `tools/citrine_eclipse_mirage_runtime_host/main.cpp` obtains the published `EALsxPort`, calls `DllShutdown`, then attempts loopback `connect` to that port and expects an error. Other local profiles passed the same check. The evidence is compatible with an intermittent shutdown/listener race or a separate port owner but **does not establish either cause**, a deterministic runtime defect, or causality from PR #23. Raw logs remain owner-supplied attachments and are not committed because they contain local filesystem identity.
 
 ## Reproducible exact-checkout follow-up
 
-The new `msvc-shutdown-lifecycle.yml` uses Windows Server 2022/MSVC 2022 and builds the actual production DLL with `preloader_l_runtime_host` in both Debug and Release. It executes the unchanged `dll_public_lifecycle` CTest in **five separate processes per configuration**, recording every exit code and a separate JUnit file. One failed attempt fails the job; no time-based grace or bypass masks the failure. Git checkout SHA, build log, CTest output and configure logs are preserved.
+The new `msvc-shutdown-lifecycle.yml` uses Windows Server 2022/MSVC 2022 and builds the actual production DLL with `citrine_eclipse_mirage_runtime_host` in both Debug and Release. It executes the unchanged `dll_public_lifecycle` CTest in **five separate processes per configuration**, recording every exit code and a separate JUnit file. One failed attempt fails the job; no time-based grace or bypass masks the failure. Git checkout SHA, build log, CTest output and configure logs are preserved.
 
 This is **CI detection only**: no production code, ABI, Winsock error contract, service lifecycle policy, vendor tree or Golden finalization is changed.
 
@@ -37,4 +40,7 @@ This is **CI detection only**: no production code, ABI, Winsock error contract, 
 - Prove or disprove recurrence on the exact GitHub checkout with full Debug/Release evidence. If reproduced, independently identify listener ownership, port reuse and close/accept ordering before proposing a production fix.
 - Keep complete Native/Production/Golden and named Consumer/game acceptance as separate gates. The owner logs do not automatically satisfy them for this PR.
 - Preserve PR #23 as merged. Do not rewrite or close historical findings without evidence.
-- Keep this PR **DRAFT** and do not merge, publish or promote without owner review of exact-head Windows results and any unresolved failures.
+- The former Draft instruction belonged to this historical test plan and is
+  superseded by current governance. Ordinary follow-up PRs are ready for review;
+  only explicitly owner-authorized research may remain Draft. Owner review of
+  exact-head results and unresolved failures is still required.
