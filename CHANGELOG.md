@@ -6,10 +6,11 @@ This file distinguishes integrated source changes, imported source history and p
 
 ### This PR
 
-- Preflight all FALCION source ZIP member names, types and exact uncompressed sizes against checked source bytes before payload reads or CRC decompression. Reject unknown, oversized and altered-manifest members before any earlier valid entry is read; retain same-size content hash checks and add decompression tripwire regressions.
+- Protect read-only DLL inspection inputs from JSON report destinations that resolve or hardlink to the inspected DLL. Reject report symlinks and nonregular destinations; publish through a private temporary file and atomic replace, preserving unrelated hardlinks and prior report bytes on serialization or replacement failure. Add nonexecuted synthetic report-safety regressions.
 
 ### Integrated 2026-11-12
 
+- [PR #289](https://github.com/raleonys/citrine-eclipse-mirage/pull/289): Preflight all FALCION source ZIP member names, types and exact uncompressed sizes against checked source bytes before payload reads or CRC decompression. Reject unknown, oversized and altered-manifest members before any earlier valid entry is read; retain same-size content hash checks and add decompression tripwire regressions.
 - [PR #294](https://github.com/raleonys/citrine-eclipse-mirage/pull/294): Fail closed when registered CMD and PowerShell operator launchers end in commented or display-only exit-status text. Validate the complete final command line rather than suffix matching, with launcher mutation regressions for REM/echo and PowerShell comment/Write-Host cases. Production DLL and operator build scripts remain unchanged.
 - [PR #298](https://github.com/raleonys/citrine-eclipse-mirage/pull/298): Reject non-power-of-two PE32+ SectionAlignment values in the read-only ARYRA Golden layout verifier, including otherwise aligned section tables. Add synthetic negative/positive fixtures for 0x1800 (reject) and 0x2000 (accept), preserving the current non-exact section RVA policy and production DLL bytes.
 - [PR #296](https://github.com/raleonys/citrine-eclipse-mirage/pull/296): Validate and serialize the achievement watcher INI before creating its parent during the native XML/INI batch. Invalid section names now leave directories, persistence outputs, achievement grants and events untouched; add a real grant failure/retry regression without changing valid output bytes or public ABI.

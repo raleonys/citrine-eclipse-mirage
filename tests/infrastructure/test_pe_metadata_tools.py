@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 from pathlib import Path
 import copy, importlib.util, json, os, struct, tempfile, sys
+from unittest.mock import patch
 sys.dont_write_bytecode = True
 r=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(r/'scripts'))
@@ -17,6 +18,76 @@ fin.ROOT=fixture_root
 fin.load_target=lambda root,name: json.loads((fixture_root/'metadata'/name).read_text())
 ary=load('ary',r/'scripts/verify_aryra_golden_layout.py')
 mus=load('mus',r/'scripts/verify_mustavex_golden_metadata.py')
+# Synthetic nonexecuted bytes test report-publication alias and rollback safety.
+inspector = load('inspect_dll_tool', r / 'tools/inspect_dll.py')
+with tempfile.TemporaryDirectory() as tmp:
+    directory = Path(tmp)
+    dll = directory / 'input.dll'
+    original = b'owned read-only DLL fixture'
+    dll.write_bytes(original)
+
+    def reject_report(path):
+        try:
+            inspector._report_destination(dll, path)
+            raise AssertionError('Unsafe inspection report path was accepted')
+        except ValueError:
+            pass
+        assert dll.read_bytes() == original
+
+    reject_report(dll)
+    reject_report(directory)
+    try:
+        linked = directory / 'hardlink.json'
+        os.link(dll, linked)
+    except (OSError, NotImplementedError):
+        print('INSPECTION_REPORT_HARDLINK_FIXTURE: UNAVAILABLE')
+    else:
+        reject_report(linked)
+    try:
+        linked = directory / 'symlink.json'
+        linked.symlink_to(dll)
+    except (OSError, NotImplementedError):
+        print('INSPECTION_REPORT_SYMLINK_FIXTURE: UNAVAILABLE')
+    else:
+        reject_report(linked)
+    try:
+        parent = directory / 'redirect'
+        parent.symlink_to(directory, target_is_directory=True)
+    except (OSError, NotImplementedError):
+        print('INSPECTION_REPORT_PARENT_SYMLINK_FIXTURE: UNAVAILABLE')
+    else:
+        reject_report(parent / dll.name)
+
+    report = inspector._report_destination(dll, directory / 'report.json')
+    inspector._write_report(report, {'result': 'PASS'})
+    assert json.loads(report.read_text(encoding='utf-8')) == {'result': 'PASS'}
+    assert dll.read_bytes() == original
+
+    previous = directory / 'previous.json'
+    previous.write_text('retained old report', encoding='utf-8')
+    report.unlink()
+    try:
+        os.link(previous, report)
+    except (OSError, NotImplementedError):
+        print('INSPECTION_REPORT_SHARED_OUTPUT_FIXTURE: UNAVAILABLE')
+    else:
+        inspector._write_report(report, {'result': 'NEW'})
+        assert previous.read_text(encoding='utf-8') == 'retained old report'
+        assert json.loads(report.read_text(encoding='utf-8')) == {'result': 'NEW'}
+
+    report.write_text('valid old report', encoding='utf-8')
+    for module, method, fault in ((inspector.json, 'dump', ValueError('serialize failed')),
+                                  (inspector.os, 'replace', OSError('replace failed'))):
+        with patch.object(module, method, side_effect=fault):
+            try:
+                inspector._write_report(report, {'result': 'REPLACED'})
+                raise AssertionError('Failed report publication unexpectedly succeeded')
+            except type(fault):
+                pass
+        assert report.read_text(encoding='utf-8') == 'valid old report'
+        assert not list(directory.glob('.report.json.*.tmp'))
+        assert dll.read_bytes() == original
+
 ary_policy=json.loads((fixture_root/'metadata/ARYRA_GOLDEN_LAYOUT.json').read_text())
 mustavex=json.loads((fixture_root/'metadata/MUSTAVEX_GOLDEN_METADATA.json').read_text())
 assert ary_policy['sections_in_order']==['.text','.rdata','.data','.pdata','.rsrc','.reloc']

@@ -24,6 +24,12 @@ records 127 and its diagnostic. Remaining checks still run, and either
 failure keeps the overall result `FAIL`. The per-check deadline remains
 90 seconds; use `--report build/qa/SOURCE_QA.json` to retain the report.
 
+`tools/inspect_dll.py --report` rejects destinations resolving or hardlinking
+to the input DLL, including input aliases through parent directories. Report
+file symlinks and nonregular destinations are rejected. JSON is published by
+private temporary file and atomic replacement, preserving unrelated output
+hardlinks and the previous report on serialization or replacement failure.
+
 The bounded C++ type-identity check masks comments, quoted literals and
 raw strings before scanning socket interface/adapter definitions and their
 namespace marker. It preserves source offsets and line attribution while
