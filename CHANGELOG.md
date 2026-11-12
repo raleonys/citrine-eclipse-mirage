@@ -2,14 +2,17 @@
 
 This file distinguishes integrated source changes, imported source history and published releases. A GitHub merge does not create an R-numbered release or release tag. Validation belongs to its exact source commit and evidence class.
 
-## Unreleased — GitHub development
+## This PR
 
-### This PR
+- Run Actions, C/C++ and Python CodeQL only on accepted-main pushes, using the exact pushed SHA and main reference. Keep PR synchronization/manual validation on the existing eleven required source/Windows/reference checks without CodeQL runners. Separate the current PR notes from integrated development history while preserving accepted dates, links and release distinctions.
 
-- Add a 64-case AtomicFiles rollback/recovery matrix covering independently present or absent destinations and independently failing restorations after a partial group commit. Verify reverse-order recovery continues after errors, preserves the first exception and exact bytes/backup ownership, blocks new staging until repair and permits an idempotent retry followed by a fresh successful group. Register the same controlled component fixture in portable and Windows CTest with explicit build-partition classification and unchanged production persistence code.
+## Integrated development history
+
+These entries record accepted source changes; integration does not imply a published release.
 
 ### Integrated 2026-11-12
 
+- [PR #280](https://github.com/raleonys/citrine-eclipse-mirage/pull/280): Add a 64-case AtomicFiles rollback/recovery matrix covering independently present or absent destinations and independently failing restorations after a partial group commit. Verify reverse-order recovery continues after errors, preserves the first exception and exact bytes/backup ownership, blocks new staging until repair and permits an idempotent retry followed by a fresh successful group. Register the same controlled component fixture in portable and Windows CTest with explicit build-partition classification and unchanged production persistence code.
 - [PR #264](https://github.com/raleonys/citrine-eclipse-mirage/pull/264): Add ordered Session/MessageHandler/XML regressions for a custom Effects implementation that rejects a parsed unknown command with ordinary invalid_argument. Require propagation without diagnostic, response, event reservation, receive rearm or buffered-successor admission in plaintext/controlled-encrypted and isolated/coalesced modes. Preserve Application's separately selected UnknownMessage continuation and all existing delivery, NoResponse and borrowed-deadline coverage; production behavior is unchanged.
 - [PR #350](https://github.com/raleonys/citrine-eclipse-mirage/pull/350): Restore owner-selected UnknownMessage continuation for invalid dispatch forms: emit the counted console diagnostic and error dialog before continuing the same session without response framing or event consumption. Preserve ordinary error propagation, NoResponse, real-AES rekey and nonmodal redacted entitlement diagnostics. Adapt the existing Application/TCP regression to verify blocked-diagnostic ordering, independent-peer progress and same-peer continuation through a test-only intercepted SDK dialog, with bounded failure waits and unchanged production timeout/UI policy.
 - [PR #330](https://github.com/raleonys/citrine-eclipse-mirage/pull/330): Register the existing bounded CryptQuery path scanner and controlled-reader assertions in portable CMake checks, covering ring-buffer suffixes, UTF-16, scan limits, read counts, heap allocation and integer address boundaries. Keep SDK includes in the Windows host adapter and native fixture, retain the complete protected-memory native tests and identify portable results as controlled reads.
