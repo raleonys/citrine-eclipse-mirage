@@ -264,3 +264,15 @@ repaired independent Output from the same factory must succeed. This interface
 stimulus does not assert that native fstream clears failed-write status, recover
 a physical handle, or exercise disk I/O. The recovered initial-state-only writer
 and the unarmed native cases remain unchanged.
+
+## Portable prepared MessageHandler contracts
+
+`portable_session_handler` reuses the unchanged native MessageHandler fixture
+with the actual bridge, message core, OwnedStorage event queue and pinned XML
+reader/printer backend. It continuously checks binary FIFO/reservation state,
+receipt cancellation/commit, exception unwind and boolean encryption failures.
+It complements the accepted ordered Session-flow registration; overlapping
+failure detection does not replace this focused bridge matrix. Both native and
+portable handler targets retain a 60-second budget. Cipher, effects and mutex
+adapters are controlled; these tests do not establish native sockets, AES or
+physical persistence.
