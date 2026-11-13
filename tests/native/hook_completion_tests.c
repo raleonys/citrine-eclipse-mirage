@@ -11,6 +11,7 @@
 static BOOL fail_restore, fail_write_protect, fail_flush, fail_free, fail_destroy;
 static BOOL two_peers,fail_second_context,fail_stack_read,short_stack_read;
 static unsigned fail_write_call,write_calls;
+static unsigned fail_free_after,free_calls;
 static unsigned checks, enumerations, resumes;
 static DWORD64 peer_ip, peer_register;
 static DWORD64 peer_stack[4];
@@ -72,7 +73,9 @@ static BOOL WINAPI flush(HANDLE process,LPCVOID p,SIZE_T n) {
     if(fail_flush){SetLastError(ERROR_ACCESS_DENIED);return FALSE;}return FlushInstructionCache(process,p,n);
 }
 static BOOL WINAPI release(LPVOID p,SIZE_T n,DWORD mode) {
-    if(fail_free){SetLastError(ERROR_ACCESS_DENIED);return FALSE;}return VirtualFree(p,n,mode);
+    ++free_calls;
+    if(fail_free || (fail_free_after && free_calls>fail_free_after)){SetLastError(ERROR_ACCESS_DENIED);return FALSE;}
+    return VirtualFree(p,n,mode);
 }
 static BOOL WINAPI destroy(HANDLE h) {
     if(fail_destroy){SetLastError(ERROR_ACCESS_DENIED);return FALSE;}return HeapDestroy(h);
@@ -103,6 +106,7 @@ static void setup(void) {
     fail_restore=fail_write_protect=fail_flush=fail_free=fail_destroy=FALSE;
     two_peers=fail_second_context=fail_stack_read=short_stack_read=FALSE;
     fail_write_call=write_calls=0;
+    fail_free_after=free_calls=0;
     peer_ip=peer_register=0;memset(peer_stack,0,sizeof peer_stack);
     require(MH_Initialize()==MH_OK,"initialize completion fixture");
     target=(unsigned char*)VirtualAlloc(NULL,8192,MEM_COMMIT|MEM_RESERVE,PAGE_EXECUTE_READWRITE);
@@ -207,6 +211,16 @@ static void patch_above_pages(void) {
     require(VirtualQuery(target+4096,&region,sizeof region) && region.Protect==PAGE_EXECUTE_READWRITE,"hotpatch preserves second-page protection");
     require(MH_DisableHook(target+4097)==MH_OK && target[4092]==0x90 && target[4097]==0xc3,"disable restores hotpatch bytes");finish();
 }
+static void partial_block_retirement(void) {
+    HANDLE owner;unsigned i;setup();
+    for(i=0;i<70;++i)create_at(i*32);
+    owner=g_hHeap;fail_free_after=1;
+    require(MH_Uninitialize()==MH_ERROR_MEMORY_PROTECT && free_calls==2,"second block-release failure follows one successful release");
+    require(g_hHeap==owner && g_pMemoryBlocks!=NULL && g_pMemoryBlocks->pNext==NULL,"partial retirement keeps the sole remaining block and heap");
+    require(MH_QueueEnableHook(target)==MH_ERROR_MEMORY_PROTECT,"partial retirement prohibits reusing stale hook entries");
+    require(MH_Uninitialize()==MH_ERROR_MEMORY_PROTECT && free_calls==3,"retry touches only the remaining block");
+    fail_free_after=0;finish();
+}
 int main(int argc,char** argv) {
     const char* mode=argc>1?argv[1]:"all";
     if(!strcmp(mode,"all")||!strcmp(mode,"restore"))completion_retry(FALSE);
@@ -216,7 +230,7 @@ int main(int argc,char** argv) {
     if(!strcmp(mode,"all")||!strcmp(mode,"heap"))release_retry(TRUE);
     if(!strcmp(mode,"all")||!strcmp(mode,"pages"))page_protections();
     if(!strcmp(mode,"all")||!strcmp(mode,"unpublished"))unpublished_failure();
-    if(!strcmp(mode,"all")){partial_batch();partial_preparation();stack_failures();patch_above_pages();}
+    if(!strcmp(mode,"all")){partial_batch();partial_preparation();stack_failures();patch_above_pages();partial_block_retirement();}
     require(checks!=0,"known completion test mode required");
     printf("PASS: %u completion, control-flow, retirement and page checks (projected peers)\n",checks);
     return 0;

@@ -346,6 +346,9 @@ BOOL IsBufferAddress(ULONG_PTR address)
             else
             {
                 PMEMORY_SLOT slot = (PMEMORY_SLOT)pBuffer;
+#ifdef _DEBUG
+                memset(slot, 0, sizeof(MEMORY_SLOT));
+#endif
                 slot->pNext = block->pFree;
                 block->pFree = slot;
                 --block->usedCount;

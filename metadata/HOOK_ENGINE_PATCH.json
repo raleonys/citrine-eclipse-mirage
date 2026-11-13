@@ -11,11 +11,11 @@
   "donor_patch_script_sha256": "0c6a6f72d558b2114a02fccec6e25e0d360714a9ac9bf9a6a4f18e42af928fe2",
   "supplement": "Preserve original vendor inputs; verify every modified build-copy member and all patch modules; retain incomplete completion and retirement owners for retry",
   "patch_modules": {
-    "cmake/PatchHookCompletion.cmake": "f550a661dc50875ec623fee7282b3c7e46e7e5f1f428966ee09cad32a5dbf964"
+    "cmake/PatchHookCompletion.cmake": "a756bb23ab66efaa89ec318ddb78c793682f5b33379e8f820cce3c02174e7618"
   },
   "output_files": {
     "src/hook.c": "34390dda120e912d642d46874e21fdadf786db7f6e183e4621c782a0c034f28a",
-    "src/buffer.c": "0d61ed17fde6616dc07a7489ca017c0e274d3fb85bce609e689dd042a0ebb117",
+    "src/buffer.c": "b8d2390438ab44b157831f850a61ad4513de87c3f76bf0d53d46d9e169789c88",
     "src/buffer.h": "24c832a90430f69e80435323c4af0569033dc778669c5bf7dc1ef1c217561fd5"
   }
 }
