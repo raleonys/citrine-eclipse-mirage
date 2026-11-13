@@ -22,11 +22,13 @@ import extract_source
 import restore_vendor_links
 import prepare_hook_engine
 import hook_real_peer_control as peer_control
+import hook_cleanup_control as cleanup_control
 
 
 class VendorTests(unittest.TestCase):
     def test_pegtl_toolchain_status_requires_single_active_cache_record(self):
-        probe = 'CITRINE_ECLIPSE_MIRAGE_PEGTL_PUBLIC_INPUT_WORKS:INTERNAL='
+        key = 'CITRINE_ECLIPSE_MIRAGE_PEGTL_PUBLIC_INPUT_WORKS'
+        probe = key + ':INTERNAL='
         fixtures = (
             ('valid', probe + '1\n', 0),
             ('unavailable_empty', probe + '\n', 77),
@@ -38,6 +40,15 @@ class VendorTests(unittest.TestCase):
             ('missing', 'OTHER:INTERNAL=1\n', 1),
             ('bare_comment', '// ' + probe + '1\n', 1),
             ('malformed', probe + 'TRUE\n', 1),
+            ('wrong_type', key + ':BOOL=1\n', 1),
+            ('mixed_type_duplicate', probe + '1\n' + key + ':BOOL=0\n', 1),
+            ('identical_duplicate', probe + '1\n' + probe + '1\n', 1),
+            ('duplicate_unavailable', probe + '\n' + probe + '0\n', 1),
+            ('untyped', key + '=1\n', 1),
+            ('mixed_untyped_duplicate', probe + '1\n' + key + '=0\n', 1),
+            ('mixed_malformed_record', probe + '1\n' + key + ':INTERNAL\n', 1),
+            ('valid_crlf', probe + '1\r\n', 0),
+            ('hash_commented_success', '# ' + probe + '1\n' + probe + '0\n', 77),
         )
         with tempfile.TemporaryDirectory() as tmp:
             cache = Path(tmp) / 'CMakeCache.txt'
@@ -46,7 +57,7 @@ class VendorTests(unittest.TestCase):
                     cache.write_text(content, encoding='utf-8')
                     completed = subprocess.run(
                         [sys.executable, '-B', str(ROOT / 'scripts/vendor_toolchain_status.py'),
-                         str(cache)], capture_output=True, text=True)
+                         str(cache)], capture_output=True, text=True, timeout=30)
                     self.assertEqual(expected, completed.returncode,
                                      completed.stdout + completed.stderr)
                     self.assertIn(
@@ -54,7 +65,56 @@ class VendorTests(unittest.TestCase):
                         'UNAVAILABLE' if expected == 77 else 'INVALID',
                         completed.stdout)
 
-    def test_real_peer_counterfactual_requires_exact_current_and_historical_sources(self):
+    def test_cleanup_controls_remove_only_one_guard_from_exact_verified_source(self):
+        cmake = shutil.which('cmake')
+        if not cmake:
+            self.skipTest('CMake needed for the actual verified engine copy')
+        parent = ROOT / 'build/qa'
+        parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=parent, prefix='cleanup-control-') as tmp:
+            stage = Path(tmp) / 'engine'
+            prepare_hook_engine.prepare(ROOT, stage, cmake)
+            source = stage / 'src/hook.c'
+            current = source.read_bytes()
+            self.assertEqual(current.count(cleanup_control.GUARD), 5)
+            for mode, (_, expected, _) in cleanup_control.CONTROLS.items():
+                with self.subTest(mode=mode):
+                    mutant = cleanup_control.controlled_source(current, mode)
+                    self.assertEqual(hashlib.sha256(mutant).hexdigest(), expected)
+                    self.assertEqual(mutant.count(cleanup_control.GUARD), 4)
+                    self.assertEqual(current, source.read_bytes())
+                    for bad in (current + b'X', mutant):
+                        with self.assertRaises(ValueError):
+                            cleanup_control.controlled_source(bad, mode)
+                    output = Path(tmp) / mode / 'src/hook.c'
+                    cleanup_control.prepare(source, output, mode)
+                    self.assertEqual(output.read_bytes(), mutant)
+            with self.assertRaises(ValueError):
+                cleanup_control.controlled_source(current, 'unknown')
+            self.assertEqual(current, source.read_bytes())
+
+    def test_cleanup_control_oracles_reject_arbitrary_failures(self):
+        for mode, (_, _, failure) in cleanup_control.CONTROLS.items():
+            with self.subTest(mode=mode):
+                cleanup_control.require_failure(mode, 1, '', failure + '\n')
+                for code, stdout, stderr in (
+                        (0, '', failure), (42, '', failure), (124, '', failure),
+                        (1, '', 'unrelated error'), (1, '', 'FAIL: unrelated assertion'),
+                        (1, '', failure + '\nFAIL: cleanup'),
+                        (1, '', failure + '\n' + failure)):
+                    with self.assertRaises(RuntimeError):
+                        cleanup_control.require_failure(mode, code, stdout, stderr)
+
+    def test_cleanup_control_paths_cannot_publish_outside_owned_build(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / 'hook.c'
+            source.write_bytes(b'untrusted source')
+            output = Path(tmp) / 'output.c'
+            with self.assertRaisesRegex(ValueError, 'owned build'):
+                cleanup_control.prepare(source, output, 'apply')
+            self.assertFalse(output.exists())
+
+    def test_real_peer_counterfactual_requires_exact_current_and_stale_sources(self):
         cmake = shutil.which('cmake')
         if not cmake:
             self.skipTest('CMake needed for the actual verified engine copy')
@@ -99,6 +159,36 @@ class VendorTests(unittest.TestCase):
             record['upstream_commit']='0'*40
             with self.assertRaisesRegex(ValueError,'archive commit comment mismatch'):
                 vendor_sync.inspect_archive(ROOT,'minhook',record,path)
+
+    def test_vendor_archive_budgets_precede_crc_and_member_reads(self):
+        # A valid pinned archive digest does not bypass ZIP expansion budgets.
+        record=vendor_sync.load_lock(ROOT)['vendors']['minhook'].copy()
+        with tempfile.TemporaryDirectory() as tmp:
+            parent=Path(tmp)
+            archive=parent/Path(record['archive']).name
+            cases=(
+                ('single', (16, 128), 64, 256, 'too large member'),
+                ('cumulative', (48, 48), 64, 80, 'excessive expanded size'),
+            )
+            for label, sizes, member_limit, total_limit, diagnostic in cases:
+                with self.subTest(case=label):
+                    with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as out:
+                        out.comment=record['upstream_commit'].encode('ascii')
+                        for index, size in enumerate(sizes):
+                            info=zipfile.ZipInfo(record['archive_folder']+f'src/fixture_{index}.hpp')
+                            info.external_attr=(stat.S_IFREG|0o644)<<16
+                            info.compress_type=zipfile.ZIP_DEFLATED
+                            out.writestr(info,b'X'*size)
+                    record.update(sha256=vendor_sync.hash_file(archive),
+                                  bytes=archive.stat().st_size)
+                    with patch.object(vendor_sync, 'MAX_MEMBER_BYTES', member_limit):
+                        with patch.object(vendor_sync, 'MAX_ARCHIVE_BYTES', total_limit):
+                            with patch.object(zipfile.ZipFile, 'testzip',
+                                              side_effect=AssertionError('CRC before budget')):
+                                with patch.object(zipfile.ZipFile, 'read',
+                                                  side_effect=AssertionError('read before budget')):
+                                    with self.assertRaisesRegex(ValueError, diagnostic):
+                                        vendor_sync.inspect_archive(ROOT, 'minhook', record, parent)
 
     def test_build_copy_patch_is_hash_pinned_and_original_tree_unchanged(self):
         cmake=shutil.which('cmake')
@@ -235,6 +325,22 @@ class VendorTests(unittest.TestCase):
             self.assertIn('changed=2',detail)
             for rel in links:self.assertIn('changed: '+rel,detail)
 
+    def test_vendor_archive_rejects_windows_unsafe_member_names(self):
+        # Validate archive entries and manifest entries through one path policy.
+        unsafe = (
+            'CON', 'aux.txt', 'dir/NUL.bin', 'dir/COM1', 'dir/COM\u00b9.txt',
+            'LPT\u00b2.log', 'CONIN$', 'CONOUT$', 'dir/trailing.',
+            'dir/trailing ', 'dir/<bad>.hpp', 'dir/pipe|name.hpp',
+            'dir/control\x7f.hpp', 'dir/line\nbreak.hpp',
+            'dir/component?flag.hpp', 'dir/with*star.hpp', 'dir/stream:ads',
+        )
+        for name in unsafe:
+            with self.subTest(member=name), self.assertRaises(ValueError):
+                vendor_sync.safe_rel(name)
+        for name in ('include/MinHook.h', 'src/COM10.hpp', 'src/conveyor.hpp'):
+            with self.subTest(member=name):
+                self.assertEqual(name, vendor_sync.safe_rel(name).as_posix())
+
     def test_member_and_link_escape_rejected(self):
         for name in ['../escape','/absolute','C:/drive','a/../b','a\\b','a//b']:
             with self.subTest(name=name),self.assertRaises(ValueError):vendor_sync.safe_rel(name)
@@ -299,6 +405,134 @@ class LinkPackagingTests(unittest.TestCase):
         self.link.unlink();self.link.write_bytes(b'actual user file')
         with self.assertRaisesRegex(ValueError,'non-descriptor'):restore_vendor_links.restore(self.root)
         self.assertEqual(b'actual user file',self.link.read_bytes())
+
+
+    def test_restore_preflights_all_aliases_before_mutating_first(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        lock=json.loads(lock_path.read_text(encoding='utf-8'))
+        lock['vendors']['asio']['symlinks']['asio/src']='../src'
+        lock_path.write_text(json.dumps(lock),encoding='utf-8')
+        later=self.root/'third_party/asio/asio/src'
+        later.write_bytes(b'altered later descriptor')
+        with patch.object(restore_vendor_links.os,'symlink',
+                          side_effect=AssertionError('mutated alias before complete validation')) as create:
+            with self.assertRaisesRegex(ValueError,'non-descriptor'):
+                restore_vendor_links.restore(self.root)
+            create.assert_not_called()
+        self.assertFalse(self.link.is_symlink())
+        self.assertEqual(b'../include',self.link.read_bytes())
+        self.assertEqual(b'altered later descriptor',later.read_bytes())
+
+    def test_restore_two_valid_locked_aliases(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        lock=json.loads(lock_path.read_text(encoding='utf-8'))
+        lock['vendors']['asio']['symlinks']['asio/src']='../src'
+        lock_path.write_text(json.dumps(lock),encoding='utf-8')
+        later=self.root/'third_party/asio/asio/src'
+        later.write_bytes(b'../src')
+        try:
+            restore_vendor_links.restore(self.root)
+        except (OSError,NotImplementedError):
+            self.skipTest('Optional symlink restoration requires OS privilege')
+        self.assertTrue(self.link.is_symlink())
+        self.assertTrue(later.is_symlink())
+        self.assertEqual('../include',self.link.readlink().as_posix())
+        self.assertEqual('../src',later.readlink().as_posix())
+
+    def test_restore_link_creation_failure_never_removes_descriptor(self):
+        original = self.link.read_bytes()
+
+        def fail_create(target, staged, target_is_directory=False):
+            self.assertEqual('../include', target)
+            self.assertTrue(target_is_directory)
+            self.assertNotEqual(self.link, Path(staged))
+            self.assertEqual(original, self.link.read_bytes())
+            raise OSError('injected link creation failure')
+
+        with patch.object(restore_vendor_links.os, 'symlink', side_effect=fail_create):
+            with self.assertRaisesRegex(OSError, 'injected link creation failure'):
+                restore_vendor_links.restore(self.root)
+        self.assertFalse(self.link.is_symlink())
+        self.assertEqual(original, self.link.read_bytes())
+        self.assertEqual([], list(self.link.parent.glob('.vendor-alias-*')))
+        self.assertEqual([], project_files.verify_manifest(self.root))
+
+    def test_restore_publication_failure_preserves_descriptor_and_cleans_stage(self):
+        self._check_restore_publication_failure()
+
+    def test_restore_publication_failure_preserves_aliased_root(self):
+        self.root = self.root / '..' / self.root.name
+        self.link = self.root / 'third_party/asio/asio/include'
+        self.assertNotEqual(self.link, self.link.resolve())
+        self._check_restore_publication_failure()
+
+    def _check_restore_publication_failure(self):
+        original = self.link.read_bytes()
+        # restore() resolves its source root, including Windows temp aliases.
+        destination_path = self.link.resolve()
+
+        def stage_without_windows_symlink_privilege(target, staged, target_is_directory=False):
+            self.assertEqual('../include', target)
+            self.assertTrue(target_is_directory)
+            self.assertEqual(original, self.link.read_bytes())
+            Path(staged).write_bytes(target.encode('utf-8'))
+
+        def fail_publish(staged, destination):
+            self.assertEqual(destination_path, Path(destination))
+            self.assertNotEqual(destination_path, Path(staged))
+            self.assertEqual(original, self.link.read_bytes())
+            self.assertEqual(original, Path(staged).read_bytes())
+            raise OSError('injected link publication failure')
+
+        with patch.object(restore_vendor_links.os, 'symlink',
+                          side_effect=stage_without_windows_symlink_privilege):
+            with patch.object(restore_vendor_links.os, 'replace', side_effect=fail_publish):
+                with self.assertRaisesRegex(OSError, 'injected link publication failure'):
+                    restore_vendor_links.restore(self.root)
+        self.assertFalse(self.link.is_symlink())
+        self.assertEqual(original, self.link.read_bytes())
+        self.assertEqual([], list(self.link.parent.glob('.vendor-alias-*')))
+        self.assertEqual([], project_files.verify_manifest(self.root))
+
+    def test_restore_later_creation_failure_retains_descriptors_for_retry(self):
+        lock_path=self.root/'metadata/VENDOR_LOCK.json'
+        lock=json.loads(lock_path.read_text(encoding='utf-8'))
+        lock['vendors']['asio']['symlinks']['asio/src']='../src'
+        lock_path.write_text(json.dumps(lock),encoding='utf-8')
+        (self.root/'third_party/asio/src').mkdir()
+        later=self.root/'third_party/asio/asio/src'
+        later.write_bytes(b'../src')
+        project_files.write_manifest(self.root)
+        create_link=restore_vendor_links.os.symlink
+
+        def fail_later(target, staged, target_is_directory=False):
+            if target=='../src':
+                self.assertEqual(b'../src',later.read_bytes())
+                raise OSError('injected later link failure')
+            return create_link(target,staged,target_is_directory=target_is_directory)
+
+        with patch.object(restore_vendor_links.os,'symlink',side_effect=fail_later):
+            try:
+                restore_vendor_links.restore(self.root)
+            except (OSError,NotImplementedError) as error:
+                if str(error)!='injected later link failure':
+                    if self.link.is_symlink():
+                        raise
+                    self.skipTest('Optional symlink restoration requires OS privilege')
+            else:
+                self.fail('later link failure was not observed')
+        self.assertTrue(self.link.is_symlink())
+        self.assertEqual('../include',self.link.readlink().as_posix())
+        self.assertFalse(later.is_symlink())
+        self.assertEqual(b'../src',later.read_bytes())
+        self.assertEqual([],list(self.link.parent.glob('.vendor-alias-*')))
+        self.assertEqual([],project_files.verify_manifest(self.root))
+        with patch.object(restore_vendor_links.os,'symlink',wraps=create_link) as retry:
+            restore_vendor_links.restore(self.root)
+            self.assertEqual(1,retry.call_count)
+        self.assertTrue(later.is_symlink())
+        self.assertEqual('../src',later.readlink().as_posix())
+        self.assertEqual([],project_files.verify_manifest(self.root))
 
     def test_standard_zip_extraction_needs_no_link_support(self):
         package_source.package(self.root,self.archive)
