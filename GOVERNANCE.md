@@ -27,6 +27,23 @@ A manual synchronization preparation verifies the live open PR, selected branch 
 
 A skipped check is not a PASS. CI infrastructure failures may be rerun or repaired without being classified as product defects. Source changes are checked against exact source and dependency identities; no test evidence is automatically inherited from a different commit.
 
+The opening workflow contains one basic Source integrity job. Actions, C/C++
+and Python CodeQL analyses run only on accepted-main pushes, bound to the exact
+pushed SHA and main reference. PR synchronization, validation labels and manual
+diagnostics do not schedule CodeQL. Source QA and all eleven required
+source/Windows/reference status contexts keep their existing synchronization
+gates; main pushes skip those jobs. Security findings from the retained analysis
+are reported after integration. GitHub's separate Default Setup is managed
+outside repository YAML and can independently schedule scans if enabled; use
+the reviewed advanced workflow to avoid duplicate scheduling. Strict current-main
+integration and required merge checks are preserved.
+
+README badges are repository-owned SVGs under `resources/badges/`. A bounded
+publisher updates only thirteen SVGs on the long-lived generated `badges` branch
+after completed main integrity runs or nondraft release changes. This data
+branch is retained independently of temporary source PR heads; its generated
+image updates do not rewrite main, source inventories or release artifacts.
+
 The full validation workflow accepts PR `synchronize` events, explicit `run-full-validation` PR label requests and standalone manual dispatch. Use the PR label request for merge validation: a standalone successful dispatch does not establish that GitHub has associated all required checks with the PR. It verifies the live head and current default-branch ancestry before scheduling Source QA, Linux portable, Windows MSVC Native Release/Debug, Production/Golden, CRT, Debug, Compile Only, Windows portable Debug/Release and the reference graph. Ordinary PR creation and accepted-main pushes do not start these builds. Specialized diagnostics are manual; weekly stable-release validation is unchanged.
 
 GitHub calls any PR head push `synchronize`; this event alone does not prove integration. Automatic full validation requires that current `main` was absent from the previous head and is present in the new head. Ordinary edits on an already synchronized branch wait for an explicit PR label request. Retaining the label does not automatically validate later ordinary head edits. Ineligible full jobs are skipped at job level, before matrix expansion or runner allocation; waiting is not reported as a product-test failure. Skipped placeholders are not native acceptance: the required expanded Windows status contexts remain absent until the actual matrices run, so merge protection still waits for real results. Readiness API errors remain errors of the readiness job. The active ruleset still requires all eleven source/portable/Windows/reference contexts and strict current-main integration. No branch-protection relaxation is part of this scheduling change.
@@ -36,6 +53,8 @@ Build, debug, and focused testing remain available developer tools; separate pub
 ## Changelog maintenance
 
 Maintain a source-linked `CHANGELOG.md` alongside relevant PRs. A PR-only CI coverage check requires a changed changelog file; an exceptional omission requires the owner-reviewed `changelog-exempt` label and a written PR rationale. Report merged PR development separately from source-revision imports and actual published release tags. Do not invent historical R-series labels, dates or release claims: unresolved archive provenance must remain explicitly incomplete until artifact and checksum verification.
+
+Reserve the independent `## This PR` section for the current unmerged proposal. Place accepted source changes under `## Integrated development history`, with dated `### Integrated YYYY-MM-DD` subsections. When creating or synchronizing a PR, reconcile notes already present on fetched `main` into those dated subsections, with links to the merged PRs. Verify each integration against the merge commit reachable from `main` and use the UTC date of GitHub `merged_at`; preserve the change details and existing historical entries. Do not carry accepted notes forward as if they belonged to the current PR, invent integration dates, or describe integration as a published release.
 
 ## Weekly stable releases
 
@@ -72,7 +91,14 @@ An owner-approved privacy redaction records both original and replacement SHA-25
 
 ## Migration record
 
-Remaining work includes metadata rationalization, verifying first PR-triggered Windows/Golden acceptance on the exact commit, and evaluating additional required check contexts. A configured CI job is not a PASS before actual execution.
+The initial PR-triggered Windows/Golden migration has executed; it is no longer
+a universal outstanding task. For example, the exact
+[PR #352 head](https://github.com/raleonys/citrine-eclipse-mirage/actions/runs/42889357574)
+passed all eleven required contexts, Native Debug/Release and Production/Golden.
+That receipt validates its identified head, not later changes or game execution.
+Metadata rationalization and donor-retirement research remain separately scoped;
+[the documentation index](docs/INDEX.md) distinguishes current guides from
+historical checkpoints. A configured job is not a PASS before actual execution.
 
 ## Retained technical boundaries
 

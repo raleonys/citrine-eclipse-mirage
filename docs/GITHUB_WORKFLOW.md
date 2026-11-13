@@ -205,6 +205,21 @@ PR creation and updates, accepted-main pushes and manual dispatch. It checks
 source sizes/hashes, the whole-source manifest and exact vendor inputs, without
 compiling or running the full regression suite.
 
+The opening workflow has exactly one job and uses the runner's existing Python;
+manual Windows output fixtures live in `operator-output.yml`. CodeQL's Actions,
+C/C++ and Python analyses run only for accepted-main pushes, with the displayed
+run name **CodeQL default branch analysis**. PR events, validation labels and
+manual diagnostics do not allocate CodeQL runners. The eleven required merge
+checks retain their synchronization/readiness gates.
+They check out and upload the exact pushed main commit to `refs/heads/main`,
+providing the default-branch baseline for Security alerts. Readiness, Source QA
+and every Windows/Golden/reference job are skipped on that event. Main scans
+share a main-only concurrency group; they do not cancel PR validation. The
+owner manages GitHub's separate CodeQL Default Setup outside repository YAML;
+if enabled, it can independently schedule PR scans. Use the advanced workflow
+for the main-only policy. See [repository badges and opening CI](REPOSITORY_BADGES_AND_OPENING_CI.md)
+for that required setting migration and the generated badge branch.
+
 The [full validation workflow](../.github/workflows/msvc-reference-graph.yml)
 retains its existing file path so it can be dispatched before this policy PR
 is merged. Its displayed name is **Full validation after main synchronization**.

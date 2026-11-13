@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <iosfwd>
 
 namespace citrine_eclipse_mirage::messages {
 // A recognized command deliberately emits no response. Only this typed
@@ -16,6 +17,29 @@ namespace citrine_eclipse_mirage::messages {
 struct NoResponseRequiredError : std::runtime_error {
     NoResponseRequiredError():std::runtime_error("RE no-response"){}
 };
+// Selected source control marker, not the original compiler's EH/object ABI.
+// Ordinary handler, parser, diagnostic and allocation failures are not this type.
+struct UnknownMessageError final {};
+class UnknownMessageInput {
+public:
+    virtual ~UnknownMessageInput()=default;
+    virtual std::string_view view() const=0;
+};
+// Optional secondary capability: existing Effects implementations retain their
+// rejection policy unless they explicitly provide the reference diagnostic.
+class UnknownMessageEffects {
+public:
+    virtual ~UnknownMessageEffects()=default;
+    virtual void unknown_message_07bd70(const UnknownMessageInput&)=0;
+};
+class UnknownMessageDialog {
+public:
+    virtual ~UnknownMessageDialog()=default;
+    virtual void show(std::string title,std::string body,std::uint32_t flags)=0;
+};
+// Counted stream output, then an owned dialog copy. Resample the original input
+// after each flush; a callback must not leave a borrowed view across the flush.
+void report_unknown_message_07bd70(const UnknownMessageInput&,std::ostream&,UnknownMessageDialog&);
 using Key = std::array<std::uint8_t,16>;
 struct Registration { std::string_view name; std::uint32_t rva; };
 std::span<const Registration> registrations_032d00();

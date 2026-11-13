@@ -1,7 +1,7 @@
 # Pugixml compatibility diagnostic
 
-PR #149 now selects pugixml for the production XML reader and development DLL.
-The owner requested completing the migration in this open PR before merging.
+Merged PR #149 selects pugixml for the production XML reader and development
+DLL. The owner requested completing that migration before merging.
 The compatibility diagnostic compiles the actual production reader sources;
 there is no separate candidate implementation to drift from shipping code.
 The public reader interface, DLL ABI, standard CRT and three other vendor pins
@@ -10,7 +10,7 @@ production migration commit; earlier test-only passes do not establish them.
 
 ## Inputs and independent link graphs
 
-The control is unmerged PR #108 commit
+The control is the unmerged, now-closed PR #108 commit
 `a34a0536f0980b38d77d029f11fa3720dcaedc6e`, checked out separately with no tracked
 source modifications. Its actual reader, immutable 12,087-input corpus and
 original test assertions remain the reference. The baseline includes #108's
@@ -29,9 +29,14 @@ patched. XPath is disabled for production and diagnostic pugixml targets.
 
 The standalone `tests/diagnostics/xml_backend/CMakeLists.txt` compiles exactly
 `src/xml/reader.cpp`, `reader_policy.cpp` and `reader_values.cpp` from this checkout.
-The reference uses the pinned control's first-party reader with a namespace-only
-binding change to avoid an ODR collision. Both preserve the checked value-decoder
-logic from PR #108. The candidate does not link the reference reader or TinyXML2. CMake File API traversal verifies this for
+The reference reads the pinned control's historical
+`include/preloader_l/xml/reader.hpp`. The
+[build-copy binding helper](../tests/diagnostics/xml_backend/reference_bindings.cmake)
+adapts legacy includes/namespaces in generated files, then places the oracle in
+its separate namespace to avoid an ODR collision. The pinned checkout is not
+renamed or edited; a missing historical header fails rather than adopting a
+current-name decoy. Both readers preserve the checked value-decoder logic from
+PR #108. The candidate does not link the reference reader or TinyXML2. CMake File API traversal verifies this for
 every candidate-only executable/configuration and requires a real pugixml
 dependency; `candidate-linkage.json` records the evaluated transitive graph.
 The reference is linked only into separate control and differential targets.
@@ -40,7 +45,7 @@ The reference is linked only into separate control and differential targets.
 
 `src/xml/reader_policy.cpp` owns the project's syntax and error decisions. It uses an
 iterative scanner with a small inline stack, limits entered child lists to the
-reference depth boundary, and detects malformed text, attributes, duplicate
+owner-selected A12 depth-100 boundary, and detects malformed text, attributes, duplicate
 attributes, mismatched elements, declarations, comments, CDATA and unknown
 nodes. It preserves the first-NUL and borrowed-view boundaries, byte-based name
 rules, leading-whitespace/BOM handling, error priority, LF-based diagnostic
@@ -66,10 +71,46 @@ forms. It is not a new validating XML policy. Raw UTF-8 and input-budget policie
 are unchanged. Additional first-party grammar code has a maintenance cost;
 future changes must retain the differential checks.
 
+## Depth policy change: 500 to A12 100
+
+The earlier migration preserved the upstream TinyXML2 depth-500 profile of the
+immutable PR #108 control. Pugixml does not require that value. The first-party
+iterative scanner now selects A12's depth-100 profile at the owner's request:
+98 paired nested elements succeed, the 99th entered child list fails with error
+18, and a self-closed leaf at level 99 remains accepted. Attribute and EOF
+error precedence remain unchanged. Both ordinary parsing and legacy DOM
+construction go through the same policy inspection before DOM allocations.
+
+TinyXML2's limit guards its recursive descent against stack exhaustion. Our
+scanner is iterative, so this is not evidence of the same stack bug in pugixml.
+The lower bound narrows allowed nesting/work and aligns this selected A12
+contract, while rejecting formerly accepted paired depths 99 through 498.
+It does not cap document width, all input memory/CPU or prove general DoS safety.
+No real Consumer requirement for the larger depth was established by this review;
+real game compatibility still requires owner acceptance.
+
+The historical control and corpus stay byte-identical. Corpus rows 83 (100
+paired levels) and 84 (498) keep their original success/tree observations; the
+candidate must instead return the exact depth diagnostic and an empty DOM.
+The test verifies each complete frozen input and old tree before applying the
+explicit new expectation. All 12,087 rows still execute; the 20 pre-existing
+malformed-value corrections remain separate. Differential output exposes the
+two actual acceptance/status/diagnostic differences, 12,085 exact matches and
+zero unexpected differences. The runner validates those exact counts rather
+than hiding differences or accepting arbitrary error-18 results.
+
+The 33-case boundary suite retains the old control's statuses and explicitly
+asserts five named A12 policy deltas. Both versions' 498/499 cases remain;
+97/98/99/100 safety checks are also present. The timing fixture changes from
+120 to 80 paired levels so both backends perform accepted parse/traverse/destroy
+work. The 120-level rejection belongs in functional evidence, not a speedup
+comparison against successful traversal. Old timing receipts have different
+fixture bytes and cannot be inherited for this changed workload.
+
 ## Required checks and current evidence
 
 The runner now **fails** on a candidate reader/corpus assertion, any recorded
-acceptance/tree/status/full-diagnostic difference, message or storage mismatch,
+unexpected acceptance/tree/status/full-diagnostic difference, message or storage mismatch,
 differential-mutation mismatch, candidate allocation leak, sanitizer error or
 oracle linkage. Candidate failures are no longer permitted as successful
 diagnostic measurements.
@@ -78,10 +119,12 @@ The required Release and ASan+UBSan profiles cover the following matrices.
 Exact-head results are retained as workflow artifacts and in the PR description;
 this list is test scope, not a substitute for checking those results:
 
-- The unchanged 5,042-check reader test and 12,087-row corrected corpus test on
-  both backends. The corpus also compares every full diagnostic and tree:
-  **12,087 exact matches; zero differences**.
-- 27 explicit grammar/normalization/depth/diagnostic boundary cases, including
+- The complete current reader test and immutable 12,087-row corpus on both
+  backends. Current corpus comparison: **12,085 exact matches, two declared
+  A12 depth-policy differences, zero unexpected differences**. Historical
+  migration results at the old depth-500 profile were 12,087 exact matches.
+- 33 explicit grammar/normalization/depth/diagnostic boundary cases with five
+  declared A12 depth-policy deltas, including
   10,000-byte names/declarations and the 999-byte error-text bound. The existing
   entity, wide/deep/large-input and decoded-view ownership fixtures remain.
 - Actual message processing: **47 ordinary and nine negative flows match**,

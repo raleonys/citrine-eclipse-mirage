@@ -9,21 +9,75 @@
 #include <thread>
 #include <stdexcept>
 
-namespace fault {thread_local bool next=false;unsigned loads=0,frees=0,fail_frees=0,fail_on_free=0;void(*on_load)()=nullptr;void(*on_mode)(UINT)=nullptr;}
-void* operator new(std::size_t n){if(fault::next){fault::next=false;throw std::bad_alloc();}if(auto p=std::malloc(n?n:1))return p;throw std::bad_alloc();}
+namespace fault {
+thread_local bool next=false;
+unsigned loads=0,frees=0,fail_frees=0,fail_load=0,fail_on_free=0;
+void(*on_load)()=nullptr;void(*on_mode)(UINT)=nullptr;
+enum class Boundary {None,AfterLoad,PhaseCommit};
+Boundary boundary=Boundary::None,armed_boundary=Boundary::None;
+std::size_t minimum=0,maximum=0,matched=0;
+HMODULE acquired=nullptr;
+bool missed_result_allocation=false;
+struct BufferFailure final:std::bad_alloc {
+    Boundary boundary;std::size_t bytes;
+    BufferFailure(Boundary b,std::size_t n)noexcept:boundary(b),bytes(n){}
+};
+void arm_buffer()noexcept {
+    armed_boundary=boundary;
+    minimum=fail_load*sizeof(std::uintptr_t);
+    // A three-element result vector grows to three elements on MSVC or four
+    // on libstdc++; phase insertion into the empty destination requests three.
+    maximum=boundary==Boundary::AfterLoad&&fail_load==3?4*sizeof(std::uintptr_t):minimum;
+    boundary=Boundary::None;
+}
+void disarm()noexcept{next=false;boundary=armed_boundary=Boundary::None;minimum=maximum=0;}
+}
+#if defined(_MSC_VER) && _ITERATOR_DEBUG_LEVEL != 0
+// Debug iterator proxies can be allocated in noexcept move constructors.
+// Only fault the selected throwing element-buffer operations, never a proxy.
+static_assert(sizeof(std::_Container_proxy)!=sizeof(std::uintptr_t)&&
+              sizeof(std::_Container_proxy)!=3*sizeof(std::uintptr_t)&&
+              sizeof(std::_Container_proxy)!=4*sizeof(std::uintptr_t),
+    "Review extra-library allocation fault sizes for this MSVC proxy layout");
+#endif
+void* operator new(std::size_t n){
+    if(fault::next){fault::next=false;throw std::bad_alloc();}
+    if(fault::minimum&&(n==fault::minimum||n==fault::maximum)){
+        const auto boundary=fault::armed_boundary;fault::minimum=fault::maximum=0;
+        fault::matched=n;throw fault::BufferFailure(boundary,n);
+    }
+    if(auto p=std::malloc(n?n:1))return p;throw std::bad_alloc();
+}
 void* operator new[](std::size_t n){return ::operator new(n);}
 void operator delete(void* p)noexcept{std::free(p);}
 void operator delete[](void* p)noexcept{std::free(p);}
 void operator delete(void* p,std::size_t)noexcept{std::free(p);}
 void operator delete[](void* p,std::size_t)noexcept{std::free(p);}
-HMODULE WINAPI TestLoadLibraryW(LPCWSTR path){++fault::loads;if(fault::on_load)fault::on_load();return ::LoadLibraryW(path);}
+HMODULE WINAPI TestLoadLibraryW(LPCWSTR path){
+    ++fault::loads;if(fault::on_load)fault::on_load();
+    const auto module=::LoadLibraryW(path);
+    if(module)fault::acquired=module;
+    if(module&&fault::boundary==fault::Boundary::AfterLoad&&fault::loads==fault::fail_load)
+        fault::arm_buffer();
+    return module;
+}
 BOOL WINAPI TestFreeLibrary(HMODULE module){
     ++fault::frees;
     if(fault::fail_frees){--fault::fail_frees;SetLastError(ERROR_BUSY);return FALSE;}
     if(fault::fail_on_free==fault::frees){fault::fail_on_free=0;SetLastError(ERROR_BUSY);return FALSE;}
     return ::FreeLibrary(module);
 }
-UINT WINAPI TestSetErrorMode(UINT value){if(fault::on_mode)fault::on_mode(value);return ::SetErrorMode(value);}
+UINT WINAPI TestSetErrorMode(UINT mode){
+    if(fault::on_mode)fault::on_mode(mode);
+    const auto previous=::SetErrorMode(mode);
+    if(fault::armed_boundary==fault::Boundary::AfterLoad&&fault::minimum){
+        // Do not let an unmatched result-vector fault drift into phase commit.
+        fault::missed_result_allocation=true;fault::disarm();
+    }
+    if(fault::boundary==fault::Boundary::PhaseCommit&&fault::loads==fault::fail_load&&fault::acquired)
+        fault::arm_buffer();
+    return previous;
+}
 #define SetErrorMode TestSetErrorMode
 #define LoadLibraryW TestLoadLibraryW
 #define FreeLibrary TestFreeLibrary
@@ -47,7 +101,7 @@ struct Fixture {
     execution::Execution execution{mutex,{a,b,c},frequency,platform};
     application::ExtraLibraries extras{env,execution,c};
     application::Provider provider{state,env,files,execution,b};
-    Fixture(){execution::initialize_mutex_04a698(mutex,2);fault::loads=fault::frees=fault::fail_frees=fault::fail_on_free=0;}
+    Fixture(){execution::initialize_mutex_04a698(mutex,2);fault::disarm();fault::loads=fault::frees=fault::fail_frees=fault::fail_load=fault::fail_on_free=0;fault::matched=0;fault::acquired=nullptr;fault::missed_result_allocation=false;}
 };
 struct ModeInterleave {
     std::promise<void> enter,entered,release,finished;
@@ -176,6 +230,44 @@ void load_error_mode_unwind(const wchar_t* path) {
             "successful empty phase must retain error mode and readiness semantics");
     }
     std::cout<<"PASS: load-error-mode\n";
+}
+// Retained 035260 acquires a module before growing its result vector; 035850
+// inserts that result before worker readiness. A11-06 requires ownership to
+// survive either throwing allocation and later cleanup to retire each lease once.
+void post_acquisition_allocation(const wchar_t* path) {
+    for(const bool main:{true,false})
+    for(const auto boundary:{fault::Boundary::AfterLoad,fault::Boundary::PhaseCommit})
+    for(const unsigned acquisitions:{1U,3U}) {
+        require(::GetModuleHandleW(path)==nullptr,"allocation fixture starts without a native image lease");
+        const auto mode=GetErrorMode();Fixture f;
+        struct Restore {
+            DWORD mode;
+            ~Restore(){fault::disarm();fault::fail_frees=0;::SetErrorMode(mode);}
+        } restore{mode};
+        auto& paths=main?f.state.extra_dlls_from_main:f.state.extra_dlls;
+        for(unsigned i=0;i<acquisitions;++i)paths.push_back(application::detail::utf16(path));
+        f.a=f.b=1;f.extras.configure(f.state);
+        std::fprintf(stderr,"EXTRA_DLL_ALLOCATION phase=%s boundary=%s acquisitions=%u\n",
+            main?"main":"worker",boundary==fault::Boundary::AfterLoad?"after-load":"phase-commit",acquisitions);
+        std::fflush(stderr);
+        fault::boundary=boundary;fault::fail_load=acquisitions;bool original=false;
+        try{f.extras.load(main);}
+        catch(const fault::BufferFailure& error){original=error.boundary==boundary&&error.bytes==fault::matched;}
+        const auto matched=fault::matched;const bool consumed=fault::minimum==0&&fault::boundary==fault::Boundary::None;
+        fault::disarm();
+        require(original&&matched>=acquisitions*sizeof(std::uintptr_t)&&consumed&&!fault::missed_result_allocation,
+            "selected throwing vector allocation must preserve its original bad_alloc");
+        const auto module=fault::acquired;
+        require(fault::loads==acquisitions&&module&&fault::frees==0&&f.c==0&&::GetModuleHandleW(path)==module,
+            "post-acquisition allocation failure must retain native images without publishing readiness");
+        fault::fail_frees=1;bool pending=false;
+        try{f.extras.close();}catch(const std::runtime_error&){pending=true;}
+        require(pending&&fault::frees==acquisitions&&::GetModuleHandleW(path)==module,
+            "failed first release must retain its physical lease while other acquired references retire");
+        f.extras.close();f.extras.close();
+        require(fault::frees==acquisitions+1&&::GetModuleHandleW(path)==nullptr&&f.c==0,
+            "retry must release exactly the retained reference and remain idempotent after allocation failure");
+    }
 }
 void mixed_release(const wchar_t* path) {
     Fixture f;require(f.extras.load_library(path)!=0&&f.extras.load_library(path)!=0,"fixture DLL load");
@@ -404,7 +496,7 @@ void provider_byte_layout(const wchar_t*) {
 int wmain(int argc,wchar_t** argv)try {
     require(argc==2||argc==3,"expected fixture DLL path and optional case");
     const std::wstring_view selected=argc==3?argv[2]:L"all";bool ran=false;
-    for(auto [name,fn]:{std::pair{L"acquire",acquisition_failure},{L"mixed",mixed_release},{L"retry",repeated_failure},
+    for(auto [name,fn]:{std::pair{L"acquire",acquisition_failure},{L"post-acquisition-allocation",post_acquisition_allocation},{L"mixed",mixed_release},{L"retry",repeated_failure},
                       {L"provider-retry",provider_retry},{L"extra-provider-stage",extra_provider_stage_retry},
                       {L"provider-object",provider_object_once},
                       {L"provider-slot",provider_empty_slot},{L"provider-layout",provider_byte_layout},
