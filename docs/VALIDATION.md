@@ -242,3 +242,15 @@ replacement identities, cache state and readiness ordering. These cases run in
 both existing portable and full unit configurations. Providers and I/O are
 controlled; throwing before the write marker does not prove disk atomicity,
 real DLL ownership, thread publication or an automatic restart protocol.
+
+## Prepared response owner allocation failure
+
+The common Session-flow fixture arms its executable-only allocation probe after
+response bytes and receipt preparation. It rejects the shared PreparedResponse
+owner allocation before IO dispatch for isolated and coalesced frames, while
+allowing smaller checked-STL bookkeeping allocations. It requires one failure,
+one cancellation/destruction, no commit/output/dispatch/rearm, and preservation
+of an unadmitted successor. Later cancellation cannot settle the receipt again.
+The probe is normally disabled. Both existing portable and native registrations
+retain their 30-second budgets; caller-side Asio closure, real event storage and
+OS-wide memory exhaustion remain outside this controlled unit case.

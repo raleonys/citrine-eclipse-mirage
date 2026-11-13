@@ -5,10 +5,31 @@
 #include "citrine_eclipse_mirage/net/session_handler.hpp"
 #include "citrine_eclipse_mirage/xml/reader.hpp"
 #include "citrine_eclipse_mirage/handlers/misc_handlers.hpp"
+#include <cstdlib>
 #include <iostream>
+#include <new>
 #include <stdexcept>
 #include <type_traits>
 #include <vector>
+
+namespace allocation_fault {
+thread_local bool next=false;
+unsigned injected=0;
+}
+void* operator new(std::size_t size){
+    // A shared holder must fit its PreparedResponse. Permit smaller checked-STL
+    // bookkeeping allocations, which may occur in noexcept string moves.
+    if(allocation_fault::next&&size>=sizeof(citrine_eclipse_mirage::server::PreparedResponse)){
+        allocation_fault::next=false;++allocation_fault::injected;throw std::bad_alloc();
+    }
+    if(auto* value=std::malloc(size?size:1))return value;
+    throw std::bad_alloc();
+}
+void* operator new[](std::size_t size){return ::operator new(size);}
+void operator delete(void* value)noexcept{std::free(value);}
+void operator delete[](void* value)noexcept{std::free(value);}
+void operator delete(void* value,std::size_t)noexcept{std::free(value);}
+void operator delete[](void* value,std::size_t)noexcept{std::free(value);}
 
 namespace srv=citrine_eclipse_mirage::server;
 namespace net=citrine_eclipse_mirage::net;
@@ -24,10 +45,17 @@ struct Receipt final:srv::DeliveryReceipt {
 };
 struct Handler final:srv::Handler {
     Stats stats;unsigned processed=0;std::string response=std::string("reply\0event\0",12);
+    bool fail_owner_allocation=false;
     void reset_02bc70()override{}
     std::string initial_message_02d540()override{return std::string("hello\0",6);}
     std::string process_message_033d70(std::string_view)override{return response;}
-    srv::PreparedResponse prepare_response(std::string_view)override{++processed;return {response,std::make_unique<Receipt>(stats)};}
+    srv::PreparedResponse prepare_response(std::string_view)override{
+        ++processed;srv::PreparedResponse prepared{response,std::make_unique<Receipt>(stats)};
+        // The wire bytes and receipt already exist. The caller's shared owner
+        // allocation is the next object-sized allocation, before dispatch.
+        if(fail_owner_allocation)allocation_fault::next=true;
+        return prepared;
+    }
 };
 struct DispatchRefused {};
 struct Scheduler final:srv::Scheduling {
@@ -68,6 +96,34 @@ void delivery_and_order() {
     f.transport.complete(6);f.scheduling.drain();
     require(f.handler.stats.committed==1&&f.handler.stats.retried==0&&f.scheduling.jobs.size()==1,"full response/event commits before next frame admission");
     f.scheduling.job();f.transport.complete(12);require(f.handler.stats.committed==2,"next frame has its own delivery receipt");
+}
+void prepared_owner_allocation_failure() {
+    for(const bool coalesced:{false,true}) {
+        Fixture f;
+        struct Disarm {~Disarm(){allocation_fault::next=false;}} disarm;
+        f.handler.fail_owner_allocation=true;
+        const auto before=allocation_fault::injected;
+        const auto sends=f.transport.sends;
+        f.transport.deliver(coalesced?std::string("a\0b\0",4):std::string("a\0",2));
+        f.scheduling.drain();
+        bool threw=false;
+        try{f.scheduling.job();}catch(const std::bad_alloc&){threw=true;}
+        allocation_fault::next=false;
+        require(threw&&allocation_fault::injected==before+1,
+                "one prepared shared-owner allocation failure propagates before dispatch");
+        require(f.handler.processed==1&&f.handler.stats.committed==0&&
+                f.handler.stats.retried==1&&f.handler.stats.destroyed==1,
+                "unpublished prepared receipt cancels and is destroyed exactly once");
+        require(f.session.queued_messages()==0&&f.transport.writes.empty()&&f.transport.sends==sends,
+                "failed shared-owner construction cannot enqueue output or start a send");
+        require(f.scheduling.io.empty()&&f.scheduling.jobs.empty()&&!f.transport.read,
+                "failed preparation ownership cannot dispatch or resume ordered input");
+        require(f.session.buffered_input()==(coalesced?std::string_view("b\0",2):std::string_view{}),
+                "shared-owner failure preserves any unadmitted successor frame");
+        f.session.cancel_output();
+        require(f.handler.stats.committed==0&&f.handler.stats.retried==1&&f.handler.stats.destroyed==1,
+                "later output cancellation cannot settle the unpublished receipt again");
+    }
 }
 void failure_and_buffer_lifetime() {
     {Fixture f;f.request();f.transport.complete(6);f.transport.complete(0,{10054,srv::ErrorCategory::system});
@@ -318,5 +374,5 @@ void deadline_policy() {
             "lvalue policy remains borrowed rather than snapshotted");
 }
 }
-int main()try{delivery_and_order();failure_and_buffer_lifetime();no_response_same_session();unknown_message_same_session();invalid_dispatch_stops_ordered_admission();response_dispatch_refusal();deadline_policy();std::cout<<"PASS: "<<checks<<" delivery/FIFO/buffer ownership/deadline checks\n";}
+int main()try{delivery_and_order();prepared_owner_allocation_failure();failure_and_buffer_lifetime();no_response_same_session();unknown_message_same_session();invalid_dispatch_stops_ordered_admission();response_dispatch_refusal();deadline_policy();std::cout<<"PASS: "<<checks<<" delivery/FIFO/buffer ownership/deadline checks\n";}
 catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
