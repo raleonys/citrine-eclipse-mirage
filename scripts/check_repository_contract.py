@@ -262,7 +262,47 @@ def check_layout_migration_reference(root, contract):
 def declared_application_sources(text):
     # A vendor path such as third_party/pugixml/src/pugixml.cpp is not
     # an application-relative src/ path. Keep complete path boundaries.
-    return set(re.findall(r'(?<![A-Za-z0-9_./\\-])src/[A-Za-z0-9_/.-]+\.cpp\b', text))
+    # Exclude CMake line/bracket comments before source-path matching: a
+    # commented-out source must never satisfy the actual ownership inventory.
+    # Quoted arguments remain visible, including quoted source filenames.
+    active = []
+    index = 0
+    quoted = False
+    argument_start = True
+    while index < len(text):
+        char = text[index]
+        if char == '\\' and index + 1 < len(text):
+            active.extend((char, text[index + 1]))
+            if text[index + 1] != '\n':
+                argument_start = False
+            index += 2
+            continue
+        # Bracket arguments are opaque: their quotes and hashes cannot change
+        # the surrounding lexical context. Comments use the same delimiter.
+        if not quoted and (char == '#' or (char == '[' and argument_start)):
+            opening = index + (char == '#')
+            bracket = re.match(r'\[(=*)\[', text[opening:])
+            if bracket:
+                closing = ']' + bracket.group(1) + ']'
+                end = text.find(closing, opening + bracket.end())
+                end = len(text) if end < 0 else end + len(closing)
+                active.append(' ' if char == '#' else text[index:end])
+                argument_start = char == '#'
+                index = end
+                continue
+        if char == '"':
+            quoted = not quoted
+        if char == '#' and not quoted:
+            end = text.find('\n', index)
+            active.append(' ')
+            argument_start = True
+            index = len(text) if end < 0 else end
+            continue
+        active.append(char)
+        argument_start = not quoted and (char.isspace() or char in '()')
+        index += 1
+    return set(re.findall(r'(?<![A-Za-z0-9_./\\-])src/[A-Za-z0-9_/.-]+\.cpp\b',
+                          ''.join(active)))
 
 
 def check(root):

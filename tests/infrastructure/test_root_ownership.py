@@ -96,6 +96,63 @@ class RepositoryRootOwnership(unittest.TestCase):
         self.assertEqual({'src/xml/reader.cpp', 'src/platform/entry.cpp',
                           'src/runtime/unowned.cpp'}, declared_application_sources(text))
 
+    def test_commented_out_cmake_sources_do_not_satisfy_ownership(self):
+        text = """set(APPLICATION_SOURCES
+          src/core/active.cpp # src/net/disabled.cpp
+          "src/platform/quoted.cpp"
+          "literal # remains quoted" src/handlers/after_quote.cpp
+        )
+        # src/runtime/line_disabled.cpp
+        #[=[
+          src/config/bracket_disabled.cpp
+        ]=]
+        #[[ src/xml/simple_bracket_disabled.cpp ]]
+        """
+        self.assertEqual(
+            {'src/core/active.cpp', 'src/platform/quoted.cpp',
+             'src/handlers/after_quote.cpp'},
+            declared_application_sources(text))
+
+    def test_cmake_source_comments_preserve_literal_contexts(self):
+        # These are lexical controls, not CMake variable/condition evaluation.
+        cases = (
+            r'set(LABEL literal\#marker src/core/active.cpp)',
+            r'set(LABEL literal\"marker src/core/active.cpp) # src/core/disabled.cpp',
+            r'set(LABEL "literal \" # marker" src/core/active.cpp) # src/core/disabled.cpp',
+            'set(LABEL [[literal " # marker]] src/core/active.cpp)\n# src/core/disabled.cpp',
+            'set(LABEL [=[literal " # marker]=] src/core/active.cpp)\n# src/core/disabled.cpp',
+            'set(LABEL [==[literal ]=] " # marker]==] src/core/active.cpp)\n# src/core/disabled.cpp',
+            'set(LABEL literal[=[marker) # src/core/disabled.cpp\nset(APP src/core/active.cpp)',
+        )
+        for text in cases:
+            with self.subTest(text=text):
+                self.assertEqual({'src/core/active.cpp'}, declared_application_sources(text))
+
+    def test_cmake_source_comment_delimiters_and_file_boundaries(self):
+        cases = (
+            '# src/core/disabled.cpp',
+            '# src/core/disabled.cpp\r\nset(APP src/core/active.cpp)',
+            '#[==[src/core/disabled.cpp ]=] src/core/also_disabled.cpp]==]\nset(APP src/core/active.cpp)',
+            '#[["src/core/disabled.cpp"]]\nset(APP src/core/active.cpp)',
+            '#[[src/core/disabled.cpp',
+            '#[=[src/core/disabled.cpp',
+            '#[[ src/core/disabled.cpp ]]set(APP src/core/active.cpp)',
+        )
+        for text in cases:
+            with self.subTest(text=text):
+                expected = {'src/core/active.cpp'} if 'set(APP' in text else set()
+                self.assertEqual(expected, declared_application_sources(text))
+        self.assertEqual(set(), declared_application_sources('s#[[comment]]rc/core/fake.cpp'))
+
+    def test_cmake_commented_source_requires_active_repair(self):
+        actual = {'src/core/active.cpp', 'src/core/required.cpp'}
+        text = 'set(APP src/core/active.cpp src/core/required.cpp)'
+        self.assertEqual(actual, declared_application_sources(text))
+        commented = text.replace(' src/core/required.cpp', ' # src/core/required.cpp\n')
+        self.assertEqual({'src/core/required.cpp'}, actual - declared_application_sources(commented))
+        repaired = commented + '\nlist(APPEND APP src/core/required.cpp)'
+        self.assertEqual(actual, declared_application_sources(repaired))
+
     def test_nested_fixtures_preserve_inherited_worktree_repository(self):
         if not shutil.which('git'):
             self.skipTest('Git executable not available')

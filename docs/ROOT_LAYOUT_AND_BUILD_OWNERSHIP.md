@@ -62,6 +62,19 @@ retained. A total of 177 files were moved, and 261 source/header bodies were
 verified byte-identical except for include directives.
 [Complete path mapping](../metadata/evidence/LAYOUT_MIGRATION.json).
 
+## CMake source declaration inventory
+
+The repository-contract checker compares application `src/` declarations in
+`cmake/Sources.cmake` and `CMakeLists.txt` with the actual translation units.
+Its lexical scan excludes CMake line and matching equal-sign bracket comments;
+a commented-out path cannot satisfy source ownership. Quoted arguments, escaped
+hashes/quotes and opaque bracket arguments retain their lexical context, while
+the existing complete path boundaries exclude vendor and external `src/` paths.
+Regression fixtures cover comment delimiters, line endings, literal contexts and
+restoration of active declarations. This is a bounded textual ownership check,
+not evaluation of CMake variables, conditions or generator expressions. CMake
+configuration and build/test validation remain separate checks.
+
 ## Historical layout schema validation
 
 The layout-migration contract pointer is checked for safe paths, valid JSON and
