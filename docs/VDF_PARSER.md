@@ -69,8 +69,8 @@ or establish their precedence. Production Asio/filesystem adapters,
 automatic bootstrap, Consumer ABI, and native Windows/MSVC/game
 acceptance remain separate tasks. Pugixml and the first-party compatibility
 layer own XML; this grammar is not the XML/LSX parser. Vendored files and
-the project XML depth-500 boundary
-remain unchanged.
+the separate VDF grammar remain unchanged. XML depth now follows the owner-selected
+A12 depth-100 policy; see [A12_DEVIATIONS.md](A12_DEVIATIONS.md).
 
 All 115 existing parser assertions were retained without modification.
 The new `vdf_parser_regressions` test checks 23,417 inputs against

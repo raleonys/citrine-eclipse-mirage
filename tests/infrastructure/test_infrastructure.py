@@ -4,6 +4,7 @@
 from pathlib import Path
 import ast
 import contextlib
+import csv
 import hashlib
 import io
 import json
@@ -38,6 +39,46 @@ import run_source_qa as source_qa
 import ci_validation_readiness as ci_readiness
 import check_dll_exports as dll_exports
 from golden_policy import load_target, PolicyPending
+
+
+class PublicDefHeaderTests(unittest.TestCase):
+    def test_def_requires_single_ordered_library_and_exports_headers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'metadata').mkdir()
+            (root / 'exports').mkdir()
+            shutil.copyfile(ROOT / 'metadata/PUBLIC_DLL_ABI.json',
+                            root / 'metadata/PUBLIC_DLL_ABI.json')
+            original = (ROOT / 'exports/citrine_eclipse_mirage.def').read_text(encoding='utf-8')
+            destination = root / 'exports/citrine_eclipse_mirage.def'
+            header = 'LIBRARY "citrine_eclipse_mirage.unsigned.dll"'
+            self.assertIn(header, original)
+            self.assertIn('EXPORTS\n', original)
+            entry = next(line for line in original.splitlines(keepends=True)
+                         if line.strip().split() == ['DllMain', '@1'])
+            variants = {
+                'missing_library': original.replace(header + '\n', ''),
+                'missing_exports': original.replace('EXPORTS\n', ''),
+                'duplicate_library': original.replace(header + '\n', header + '\n' + header + '\n'),
+                'duplicate_exports': original.replace('EXPORTS\n', 'EXPORTS\nEXPORTS\n'),
+                'headers_out_of_order': original.replace(header + '\nEXPORTS\n',
+                                                         'EXPORTS\n' + header + '\n'),
+                'export_before_exports': original.replace(entry, '', 1).replace(
+                    'EXPORTS\n', entry + 'EXPORTS\n'),
+            }
+            spaced = '\n; controlled header spacing\n' + original.replace(
+                'EXPORTS\n', '\n; before exports\nEXPORTS\n\n')
+            for valid in (original, spaced):
+                destination.write_text(valid, encoding='utf-8')
+                self.assertEqual([], dll_exports.check_source(root))
+            for label, candidate in variants.items():
+                with self.subTest(case=label):
+                    self.assertNotEqual(candidate, original)
+                    destination.write_text(candidate, encoding='utf-8')
+                    self.assertTrue(dll_exports.check_source(root),
+                                    'Malformed application DEF header was accepted: ' + label)
+            destination.write_text(original, encoding='utf-8')
+            self.assertEqual([], dll_exports.check_source(root))
 
 
 class PublicAbiReportTests(unittest.TestCase):
@@ -802,13 +843,14 @@ class ValidationReadinessTests(unittest.TestCase):
         self.assertIn('runs-on: ubuntu-24.04', blocks['codeql'])
         self.assertIn('language: [actions, c-cpp, python]', blocks['codeql'])
         self.assertIn('security-events: write', blocks['codeql'])
-        selected_sha = "${{ github.event_name == 'push' && github.sha || needs.readiness.outputs.head_sha }}"
+        selected_sha = "${{ github.sha }}"
         self.assertIn('ref: ' + selected_sha, blocks['codeql'])
         self.assertIn('sha: ' + selected_sha, blocks['codeql'])
-        self.assertIn('needs: readiness', blocks['codeql'])
+        self.assertNotIn('needs:', blocks['codeql'])
         self.assertIn('build-mode: none', blocks['codeql'])
         self.assertNotIn('always()', blocks['codeql'])
-        self.assertIn('refs/pull/{0}/head', blocks['codeql'])
+        self.assertIn('ref: refs/heads/main', blocks['codeql'])
+        self.assertNotIn('refs/pull/', blocks['codeql'])
 
     @staticmethod
     def workflow_expression(expression, context):
@@ -857,20 +899,21 @@ class ValidationReadinessTests(unittest.TestCase):
                                  workflow.split('\njobs:\n', 1)[1], re.M | re.S))
         gates = {name: re.search(r'^    if: (.+)$', block, re.M)[1]
                  for name, block in blocks.items()}
-        # All jobs have explicit gates; other jobs must retain the default
-        # success() dependency behavior. CodeQL needs a status function to run
-        # despite skipped readiness on main, without running after cancellation.
+        # Exercise the actual job expressions for main, ready/unready PRs,
+        # manual diagnostics, preparation and cancellation. Only accepted-main
+        # pushes allocate CodeQL; all eleven existing merge contexts stay gated.
         self.assertIn('!cancelled()', gates['codeql'])
         builds = {'source-qa', 'windows', 'windows-portable', 'reference-graph'}
         scenarios = [
             ('push', 'refs/heads/main', '', 'skipped', '', False, {'codeql'}),
             ('push', 'refs/heads/feature', '', 'skipped', '', False, set()),
             ('push', 'refs/heads/main', '', 'skipped', '', True, set()),
-            ('pull_request', 'refs/pull/1/merge', '', 'success', 'true', False, builds | {'codeql'}),
+            ('pull_request', 'refs/pull/1/merge', '', 'success', 'true', False, builds),
             ('pull_request', 'refs/pull/1/merge', '', 'success', 'false', False, set()),
             ('pull_request', 'refs/pull/1/merge', '', 'failure', 'true', False, set()),
             ('pull_request', 'refs/pull/1/merge', '', 'cancelled', 'true', True, set()),
-            ('workflow_dispatch', 'refs/heads/feature', 'diagnostic', 'success', 'true', False, builds | {'codeql'}),
+            ('workflow_dispatch', 'refs/heads/feature', 'diagnostic', 'success', 'true', False, builds),
+            ('workflow_dispatch', 'refs/heads/main', 'diagnostic', 'success', 'true', False, builds),
             ('workflow_dispatch', 'refs/heads/feature', 'synchronize-pr', 'skipped', '', False, set()),
         ]
         for event, ref, operation, result, run_tests, cancelled, expected in scenarios:
@@ -888,7 +931,7 @@ class ValidationReadinessTests(unittest.TestCase):
                 prepare = self.workflow_expression(gates['sync-request'], context)
                 self.assertEqual(event == 'workflow_dispatch' and operation == 'synchronize-pr', prepare)
                 selection = re.search(r'^          sha: (.+)$', blocks['codeql'], re.M)[1]
-                self.assertEqual(('a' if event == 'push' else 'b')*40,
+                self.assertEqual('a'*40,
                                  self.workflow_expression(selection, context))
         trigger = workflow.split('\npermissions:', 1)[0]
         self.assertNotIn('opened', trigger)
@@ -951,6 +994,97 @@ class IdentityBoundaryTests(unittest.TestCase):
             payload=('namespace '+namespace+' {}\n').encode('utf-8');path.write_bytes(payload)
             (self.root/'metadata/SOURCE_FILES.json').write_text(json.dumps({'files':{'src/module.cpp':{'bytes':len(payload),'sha256':inventory.digest(payload)}}}))
             self.assertEqual(accepted,source_verification.verify(self.root)['status']=='PASS')
+
+    def test_source_namespace_scan_ignores_comments_and_literals(self):
+        for folder in ('include', 'tests', 'third_party'):
+            (self.root / folder).mkdir()
+        path = self.root / 'src/module.cpp'
+        manifest = self.root / 'metadata/SOURCE_FILES.json'
+
+        def verify_payload(source):
+            payload = source.encode('utf-8')
+            path.write_bytes(payload)
+            manifest.write_text(json.dumps({'files': {'src/module.cpp': {
+                'bytes': len(payload), 'sha256': inventory.digest(payload)}}}))
+            return source_verification.verify(self.root)
+
+        harmless = (
+            '// namespace other_vendor::comment {}\n'
+            '/* namespace other_vendor::block {}\n'
+            '   namespace other_vendor::more {} */\n'
+            'const char* url = "https://example.invalid/namespace other_vendor::string {}";\n'
+            'const char* raw = R"tag(namespace other_vendor::raw {} // still data)tag";\n'
+            'namespace citrine_eclipse_mirage::accepted {}\n'
+        )
+        result = verify_payload(harmless)
+        self.assertEqual('PASS', result['status'], result['errors'])
+        actual = harmless + 'namespace other_vendor::actual {}\n'
+        result = verify_payload(actual)
+        self.assertEqual('FAIL', result['status'])
+        self.assertTrue(any('Foreign first-party namespace' in error
+                            for error in result['errors']), result['errors'])
+
+    def source_namespace_fixture(self, source):
+        for folder in ('include', 'tests', 'third_party'):
+            (self.root / folder).mkdir(exist_ok=True)
+        payload = source.encode('utf-8')
+        (self.root / 'src/module.cpp').write_bytes(payload)
+        (self.root / 'metadata/SOURCE_FILES.json').write_text(json.dumps({
+            'files': {'src/module.cpp': {'bytes': len(payload),
+                                        'sha256': inventory.digest(payload)}}}))
+        return source_verification.verify(self.root)
+
+    def test_source_namespace_mask_keeps_numeric_and_character_tokens(self):
+        prefixes = [f'constexpr auto value = {number};\n' for number in (
+            "1'024", "0xDEAD'BEEFULL", "0b1010'0101", "1.25'0e+2", "0x1.2'3p+4",
+            "12'345'678")]
+        prefixes += ["constexpr auto value = " + value + ";\n" for value in (
+            "u8'a'", "L'a'", "u'a'", "U'a'", "'a'")]
+        for prefix in prefixes:
+            with self.subTest(prefix=prefix):
+                active = prefix + 'namespace other_vendor::actual {}\n'
+                result = self.source_namespace_fixture(active)
+                self.assertEqual('FAIL', result['status'])
+                self.assertTrue(any('Foreign first-party namespace' in str(error)
+                                    for error in result['errors']), result['errors'])
+        # Numeric source text and an actual declaration stay byte-for-byte visible.
+        active = "constexpr auto n = 1'024;\nnamespace other_vendor::actual {}\n"
+        self.assertEqual(active, source_verification.mask_cpp_noncode(active))
+
+    def test_source_namespace_mask_handles_raw_prefixes_and_continued_comments(self):
+        harmless = []
+        for prefix in ('R', 'u8R', 'uR', 'UR', 'LR'):
+            for delimiter in ('', 'tag', 'abcdefghijklmnop'):
+                harmless.append('const auto* value = ' + prefix + '"' + delimiter +
+                    '(namespace other_vendor::data {} " /* // )wrong")' + delimiter + '";\n')
+        harmless += [
+            '// continued comment ' + chr(92) + '\nnamespace other_vendor::data {}\n',
+            '// continued comment ' + chr(92) + '\r\nnamespace other_vendor::data {}\r\n',
+            'const char* value = "escaped ' + chr(92) + '" namespace other_vendor::data {}";\n',
+        ]
+        for source in harmless:
+            with self.subTest(source=source):
+                result = self.source_namespace_fixture(
+                    source + 'namespace citrine_eclipse_mirage::valid {}\n')
+                self.assertEqual('PASS', result['status'], result['errors'])
+                result = self.source_namespace_fixture(
+                    source + 'namespace other_vendor::actual {}\n')
+                self.assertEqual('FAIL', result['status'])
+                self.assertTrue(any('Foreign first-party namespace' in str(error)
+                                    for error in result['errors']), result['errors'])
+
+    def test_source_namespace_mask_preserves_positions_and_active_declarations(self):
+        source = ('/* namespace other_vendor::comment {}\r\n */\r\n'
+                  'namespace /* annotation */ other_vendor::actual {}\r\n')
+        masked = source_verification.mask_cpp_noncode(source)
+        self.assertEqual(len(source), len(masked))
+        self.assertEqual([(i, char) for i, char in enumerate(source) if char in '\r\n'],
+                         [(i, char) for i, char in enumerate(masked) if char in '\r\n'])
+        self.assertEqual(source.index('other_vendor::actual'), masked.index('other_vendor::actual'))
+        result = self.source_namespace_fixture(source)
+        self.assertEqual('FAIL', result['status'])
+        self.assertTrue(any('Foreign first-party namespace' in str(error)
+                            for error in result['errors']), result['errors'])
 
     def test_source_sizes_are_required_integer_byte_counts(self):
         for folder in ['include','tests','third_party']:(self.root/folder).mkdir()
@@ -1842,6 +1976,437 @@ class GitFixtureIsolationTests(unittest.TestCase):
             self.assertNotIn('skipped', result.stderr)
 
 
+class RuntimeBenchmarkTests(unittest.TestCase):
+    @staticmethod
+    def diagnostic():
+        import importlib.util
+        path = ROOT / 'tests/diagnostics/runtime_load/run.py'
+        spec = importlib.util.spec_from_file_location('runtime_load_diagnostic', path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    @staticmethod
+    def row(workers=2, workload='echo', **changes):
+        row = dict(workers=workers, clients=1, requests_per_client=2, pipeline=1,
+                   payload_bytes=1024, workload=workload, completed=2, errors=0,
+                   elapsed_ns=100000 // max(1, workers), cpu_ns=10000, cpu_cycles=1000,
+                   startup_ns=1000, shutdown_ns=1000,
+                   peak_working_set_bytes=4096, private_bytes=2048,
+                   profile='pool-' + str(workers) if workers else 'thread-per-message',
+                   created_message_threads=0 if workers else 2,
+                   observed_worker_threads=min(workers or 2, 2), peak_active_handlers=1,
+                   rtt_ns=[2000, 3000], queue_ns=[10, 20], handler_ns=[100, 200])
+        if workload.startswith('app_'):
+            row.update(payload_bytes=0, application_routed=True, verified_responses=2,
+                       handler_lock_calls=2, lock_wait_ns=[10, 20], lock_hold_ns=[30, 40], lock_calls=[1, 1],
+                       persistence_verified=workload == 'app_achievement_encrypted')
+        row.update(changes)
+        return row
+
+    def test_generated_candidates_retain_every_other_production_byte(self):
+        tool = self.diagnostic()
+        original = (ROOT / 'src/net/asio_service.cpp').read_text()
+        for workers in tool.WORKERS:
+            generated = tool.generated_service(original, workers)
+            restored = generated.removeprefix('#include "probe.hpp"\n').replace(
+                'jobs.push_back(citrine_eclipse_mirage::benchmark::timed_job(std::move(fn)));', tool.PUSH)
+            restored = restored.replace('\n    citrine_eclipse_mirage::benchmark::PerMessageJobs message_jobs;', '')
+            for needle, insertion in tool.CONTROL_INSERTIONS:
+                restored = restored.replace(needle + insertion, needle)
+            if workers not in (0, 2):
+                restored = restored.replace(tool.MARKER.replace('handler_policy::workers', str(workers)), tool.MARKER)
+            self.assertEqual(original, restored)
+        for source, count in [(original, 3), (original.replace(tool.PUSH, ''), 2),
+                              (original + tool.MARKER, 2), ('#include "probe.hpp"\n' + original, 2),
+                              (original.replace(tool.THREAD_ALIAS, ''), 2),
+                              (original.replace('OwnedThread=std::thread;', 'OwnedThread=std::jthread;'), 2)]:
+            with self.subTest(workers=count), self.assertRaises(ValueError):
+                tool.generated_service(source, count)
+
+    def test_application_copy_preserves_dispatch_and_lock_ownership(self):
+        tool = self.diagnostic()
+        original = (ROOT / 'src/runtime/application.cpp').read_text()
+        generated = tool.generated_application(original)
+        restored = generated.removeprefix('#include "application_probe.hpp"\n')
+        for before, after in tool.APPLICATION_INSERTIONS:
+            restored = restored.replace(after, before)
+        self.assertEqual(original, restored)
+        for bad in (original.replace(tool.APPLICATION_INSERTIONS[0][0], ''),
+                    original + tool.APPLICATION_INSERTIONS[1][0], generated):
+            with self.assertRaises(ValueError):
+                tool.generated_application(bad)
+
+    def test_generated_application_identity_is_bound_to_the_source_and_disk_copy(self):
+        tool = self.diagnostic()
+        with tempfile.TemporaryDirectory() as directory:
+            build = Path(directory)
+            (build / 'generated').mkdir()
+            source = (ROOT / 'src/net/asio_service.cpp').read_text()
+            hashes = {}
+            for workers in tool.WORKERS:
+                path = build / 'generated' / f'asio_{workers}.cpp'
+                path.write_bytes(tool.generated_service(source, workers).encode())
+                hashes[str(workers)] = tool.digest(path)
+            path = build / 'generated/application.cpp'
+            path.write_bytes(tool.generated_application((ROOT / 'src/runtime/application.cpp').read_text()).encode())
+            inputs = dict(generated_service_sha256=hashes, generated_application_sha256=tool.digest(path))
+            tool.verify_generated(build, inputs)
+            path.write_bytes(path.read_bytes() + b'\n// unreviewed copy\n')
+            with self.assertRaises(ValueError):
+                tool.verify_generated(build, inputs)
+            inputs['generated_application_sha256'] = tool.digest(path)
+            with self.assertRaises(ValueError):
+                tool.verify_generated(build, inputs)
+
+    def test_generated_set_rejects_aliases_before_any_output_changes(self):
+        tool = self.diagnostic()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source, first, last = root / 'source.cpp', root / 'asio_1.cpp', root / 'asio_2.cpp'
+            source.write_bytes(b'protected source')
+            first.write_bytes(b'old first copy')
+            os.link(source, last)
+            with self.assertRaises(ValueError):
+                tool.write_generated({first: b'new first copy', last: b'new second copy'})
+            self.assertEqual(b'protected source', source.read_bytes())
+            self.assertEqual(b'old first copy', first.read_bytes())
+            self.assertFalse(list(root.glob('*.partial')))
+            last.unlink()
+            tool.write_generated({first: b'new first copy', last: b'new second copy'})
+            self.assertEqual(b'new first copy', first.read_bytes())
+            self.assertEqual(b'new second copy', last.read_bytes())
+            self.assertEqual(b'protected source', source.read_bytes())
+
+    def test_bad_or_incomplete_measurements_cannot_pass(self):
+        tool = self.diagnostic()
+        good = self.row()
+        fields = ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes', 'workload')
+        expected = {key: good[key] for key in fields}
+        self.assertIs(good, tool.validate(good, expected))
+        for change in [dict(errors=1), dict(errors=False), dict(completed=1),
+                       dict(rtt_ns=[1]), dict(queue_ns=[float('nan'), 1]),
+                       dict(handler_ns=[-1, 0]), dict(elapsed_ns=0), dict(workers=4),
+                       dict(observed_worker_threads=3), dict(peak_active_handlers=2),
+                       dict(rtt_ns=[1, 1000000])]:
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                tool.validate({**good, **change}, expected)
+
+    def test_matrix_requires_every_candidate_round_and_unique_execution_order(self):
+        tool = self.diagnostic()
+        rows = [self.row(n, w, repeat=0, order=i)
+                for w in tool.WORKLOADS for i, n in enumerate(tool.WORKERS)]
+        summary = tool.summarize(rows, 1, (1,), (1,))
+        self.assertEqual(40, len(summary))
+        for row in summary:
+            self.assertEqual(max(1, row['workers']) / 2, row['throughput_ratio_to_2_workers'])
+            self.assertIsNone(row['throughput_ratio_95pct_bootstrap'])
+        for bad in (rows[:-1], rows + [rows[0]],
+                    [{**row, 'order': 0} for row in rows]):
+            with self.assertRaises(ValueError):
+                tool.summarize(bad, 1, (1,), (1,))
+        components = [r for r in rows if r['workload'] in tool.COMPONENT_WORKLOADS]
+        with self.assertRaises(ValueError):
+            tool.summarize(components, 1, (1,), (1,))
+        self.assertEqual(20, len(tool.summarize(components, 1, (1,), (1,), tool.COMPONENT_WORKLOADS)))
+
+    def test_application_measurements_require_responses_lock_samples_and_persistence(self):
+        tool = self.diagnostic()
+        good = self.row(workload='app_achievement_encrypted')
+        expected = {key: good[key] for key in
+                    ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes', 'workload')}
+        self.assertIs(good, tool.validate(good, expected))
+        for change in (dict(application_routed=False), dict(verified_responses=1),
+                       dict(handler_lock_calls=True), dict(lock_wait_ns=[1]),
+                       dict(lock_calls=[0, 2]), dict(lock_calls=[True, 1]),
+                       dict(lock_hold_ns=[-1, 1]), dict(lock_hold_ns=[100, 200]),
+                       dict(persistence_verified=False)):
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                tool.validate({**good, **change}, expected)
+
+    def test_percentiles_and_paired_intervals_have_known_answers(self):
+        tool = self.diagnostic()
+        self.assertEqual(95, tool.percentile(list(range(1, 101)), .95))
+        self.assertEqual([2.0, 2.0], tool.ratio_interval([2.0] * 5, 1))
+        for bad in ([], [float('nan')], [float('inf')], [-1], [0]):
+            with self.assertRaises(ValueError):
+                tool.ratio_interval(bad, 1)
+
+    def test_failed_child_and_ineffective_corruption_control_are_rejected(self):
+        tool = self.diagnostic()
+        row = self.row()
+        expected = {key: row[key] for key in
+                    ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes', 'workload')}
+        with tempfile.TemporaryDirectory() as directory:
+            bad = subprocess.CompletedProcess([], 1, '', 'fixture failure')
+            with patch.object(tool.subprocess, 'run', return_value=bad), self.assertRaises(ValueError):
+                tool.execute(Path('not-executed'), expected, directory)
+            good = subprocess.CompletedProcess([], 0, json.dumps(row), '')
+            with patch.object(tool.subprocess, 'run', return_value=good), self.assertRaises(ValueError):
+                tool.execute(Path('not-executed'), expected, directory, fault=True)
+
+    def test_application_controls_require_the_specific_response_or_persistence_failure(self):
+        tool = self.diagnostic()
+        row = self.row(workload='app_achievement_encrypted')
+        expected = {key: row[key] for key in
+                    ('workers', 'clients', 'requests_per_client', 'pipeline', 'payload_bytes', 'workload')}
+        with tempfile.TemporaryDirectory() as directory:
+            for fault, reason in ((True, 'application response validation failed'),
+                                  ('corrupt-persistence', 'Application persistence validation failed'),
+                                  ('corrupt-ini', 'Application persistence validation failed')):
+                bad = subprocess.CompletedProcess([], 1, '', reason)
+                with patch.object(tool.subprocess, 'run', return_value=bad) as child:
+                    tool.execute(Path('not-executed'), expected, directory, fault=fault)
+                    self.assertEqual('corrupt-response' if fault is True else fault,
+                                     child.call_args.kwargs['env']['RUNTIME_BENCHMARK_FAULT'])
+                with patch.object(tool.subprocess, 'run', return_value=subprocess.CompletedProcess([], 1, '', 'unrelated startup failure')):
+                    with self.assertRaises(ValueError):
+                        tool.execute(Path('not-executed'), expected, directory, fault=fault)
+
+    def test_failure_retains_partial_measurements_without_success_receipt(self):
+        tool = self.diagnostic()
+        with tempfile.TemporaryDirectory() as directory:
+            # Match run.py's resolved ROOT/output identity, including Windows
+            # temporary directories exposed through an 8.3 path or junction.
+            root = Path(directory).resolve()
+            build = root / 'build/binaries'
+            (build / 'generated').mkdir(parents=True)
+            (build / 'Release').mkdir()
+            (build / 'generated/inputs.json').write_text('{}')
+            for n in tool.WORKERS:
+                (build / 'Release' / ('runtime_load_' + str(n) + '.exe')).write_bytes(b'not executed')
+            calls = []
+            def execute(binary, params, output, fault=False):
+                if fault:
+                    return
+                calls.append(params)
+                if len(calls) > 1:
+                    raise ValueError('injected child failure')
+                count = params['clients'] * params['requests_per_client']
+                return {**self.row(params['workers']), **params, 'completed': count,
+                        'created_message_threads': count if not params['workers'] else 0,
+                        'rtt_ns': [2000] * count, 'queue_ns': [10] * count, 'handler_ns': [100] * count}
+            output = root / 'build/results'
+            with patch.object(tool, 'ROOT', root), patch.object(tool, 'verify_source'), \
+                 patch.object(tool, 'identity', return_value={}), \
+                 patch.object(tool, 'verify_generated'), \
+                 patch.object(tool, 'verified_builds', return_value={}), \
+                 patch.object(tool.platform, 'system', return_value='Windows'), \
+                 patch.object(tool, 'execute', side_effect=execute):
+                with self.assertRaisesRegex(ValueError, 'injected child failure'):
+                    tool.run(build, output, quick=True, suite='component')
+            receipt = json.loads((output / 'results.json').read_text())
+            self.assertEqual('FAIL', receipt['result'])
+            self.assertEqual(1, len(receipt['rows']))
+            self.assertNotIn('summary', receipt)
+
+
+class RuntimeEvidenceTests(unittest.TestCase):
+    @staticmethod
+    def auditor():
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('runtime_evidence_audit', ROOT / 'tests/diagnostics/runtime_load/audit.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    def fixture(self):
+        audit = self.auditor()
+        tool = audit.benchmark
+        identity = dict(commit='a' * 40, manifest_sha256='b' * 64, vendor_lock_sha256='c' * 64,
+                        asio_source_sha256='d' * 64, application_source_sha256='e' * 64)
+        hashes = tool.generated_hashes()
+        inputs = dict(schema='citrine.runtime-benchmark-inputs.v2', **identity,
+                      production_worker_policy=2, production_queue_limit=128,
+                      generated_service_sha256={str(n): hashes[f'asio_{n}.cpp'] for n in tool.WORKERS},
+                      generated_application_sha256=hashes['application.cpp'])
+        files = {'binaries/generated/inputs.json': json.dumps(inputs).encode()}
+        data = dict(schema='citrine.runtime-load.v3', result='PASS_CORRECTNESS_WITH_MEASUREMENTS',
+                    run_id='1' * 32,
+                    evidence_class='WINDOWS_NATIVE_COMPONENT_BENCHMARK', source=inputs, system='Windows',
+                    logical_cpus=4, binaries={}, builds={}, repeats=1, suite='all', workloads=list(tool.WORKLOADS),
+                    quick=True, performance_thresholds=False, statistical_comparison='SMOKE_ONLY',
+                    response_corruption_control='EXPECTED_FAILURE', persistence_corruption_control='EXPECTED_FAILURE_XML_AND_INI', rows=[])
+        for kind in ('runtime_load', 'application_load'):
+            for n in tool.WORKERS:
+                name = f'{kind}_{n}'
+                raw = ('synthetic non-executable ' + name).encode()
+                sha = hashlib.sha256(raw).hexdigest()
+                build = dict(schema='citrine.runtime-benchmark-build.v1', source=inputs,
+                             binary=name + '.exe', sha256=sha, kind=kind, workers=n,
+                             configuration='Release', compiler_id='MSVC', compiler_version='19.44', cxx_standard=20)
+                files[f'binaries/Release/{name}.exe'] = raw
+                files[f'binaries/Release/{name}.exe.build.json'] = json.dumps(build).encode()
+                data['binaries'][name], data['builds'][name] = sha, build
+        rows = []
+        for w in tool.WORKLOADS:
+            for clients in (1, 8):
+                for order, n in enumerate(tool.WORKERS):
+                    params = tool.parameters(w, clients, 1, n, True)
+                    total = clients * 8
+                    row = {**RuntimeBenchmarkTests.row(n, w), **params, 'repeat': 0, 'order': order,
+                           'run_id': data['run_id'], 'binary_sha256': data['binaries'][f'{tool.binary_kind(w)}_{n}'],
+                           'completed': total, 'created_message_threads': total if n == 0 else 0,
+                           'rtt_ns': [2000] * total, 'queue_ns': [10] * total, 'handler_ns': [100] * total}
+                    if w in tool.APPLICATION_WORKLOADS:
+                        row.update(verified_responses=total, handler_lock_calls=total, lock_calls=[1] * total,
+                                   lock_wait_ns=[10] * total, lock_hold_ns=[20] * total)
+                    path = f'samples/{len(rows):04d}.json'
+                    raw = json.dumps(row).encode()
+                    files['results/' + path] = raw
+                    data['rows'].append({**{k: v for k, v in row.items() if k not in tool.SAMPLE_FIELDS},
+                                         'samples_file': path, 'samples_sha256': hashlib.sha256(raw).hexdigest()})
+                    rows.append(row)
+        data['summary'] = tool.summarize(rows, 1, (1, 8), (1,))
+        output = io.StringIO()
+        writer = csv.DictWriter(output, fieldnames=list(data['summary'][0])); writer.writeheader(); writer.writerows(data['summary'])
+        files['results/summary.csv'] = output.getvalue().encode()
+        files['results/results.json'] = json.dumps(data).encode()
+        return audit, identity, data, files
+
+    def check(self, audit, identity, files):
+        class Evidence:
+            def read(self, name):
+                return files[name]
+        with patch.object(audit.benchmark, 'identity', return_value=identity):
+            return audit.audit(Evidence())
+
+    def test_complete_artifact_recomputes_json_csv_and_links_binaries(self):
+        audit, identity, data, files = self.fixture()
+        result = self.check(audit, identity, files)
+        self.assertEqual('PASS_INTEGRITY_NOT_EXECUTION_ATTESTATION', result['result'])
+        self.assertEqual((10, 80, 80), (result['binary_count'], result['measurements'], result['summary_cells']))
+        self.assertTrue(result['quick'])
+
+    def test_same_complete_evidence_is_auditable_from_a_directory_or_zip(self):
+        audit, identity, data, files = self.fixture()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name, raw in files.items():
+                path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(raw)
+            archive = root / 'evidence.zip'
+            with zipfile.ZipFile(archive, 'w') as zipped:
+                for name, raw in files.items(): zipped.writestr(name, raw)
+            with patch.object(audit.benchmark, 'identity', return_value=identity):
+                direct = audit.audit(audit.DirectoryEvidence(root / 'results', root / 'binaries'))
+                zipped = audit.ZipEvidence(archive)
+                try: self.assertEqual(direct, audit.audit(zipped))
+                finally: zipped.zip.close()
+
+    def test_paired_ratios_and_round_percentiles_have_independent_known_answers(self):
+        tool = RuntimeBenchmarkTests.diagnostic()
+        base, candidate = (10000, 1000000, 1000000), (100000, 100000, 10000000)
+        latencies = ([1000, 2000], [10000, 20000], [100000, 200000])
+        rows = [RuntimeBenchmarkTests.row(n, 'echo', repeat=r, order=i,
+                                        elapsed_ns=(candidate if n == 4 else base)[r], rtt_ns=latencies[r])
+                for r in range(3) for i, n in enumerate(tool.WORKERS)]
+        result = next(r for r in tool.summarize(rows, 3, (1,), (1,), ('echo',)) if r['workers'] == 4)
+        # Median paired ratios is median(0.1, 10, 0.1), not the quotient
+        # of median rates (20,000 / 2,000 == 10 in these scaled inputs).
+        self.assertEqual(.1, result['throughput_ratio_to_2_workers'])
+        self.assertEqual(20, result['median_round_p99_us'])
+        self.assertEqual(2, result['p99_rank_per_round'])
+        self.assertEqual(1, result['samples_at_or_above_p99_rank'])
+        self.assertIsNone(result['throughput_ratio_95pct_bootstrap'])
+
+    def test_tampered_or_missing_evidence_cannot_inherit_a_pass(self):
+        mutations = ('raw_hash', 'binary', 'build_source', 'summary', 'csv', 'missing_row', 'duplicate_sample', 'control', 'source', 'recipe', 'run_identity', 'sample_binary')
+        for mutation in mutations:
+            with self.subTest(mutation=mutation):
+                audit, identity, data, files = self.fixture()
+                if mutation == 'raw_hash': files['results/samples/0000.json'] += b' '
+                elif mutation == 'binary': files['binaries/Release/runtime_load_2.exe'] += b'changed binary'
+                elif mutation == 'build_source':
+                    build = audit.benchmark.load_json(files['binaries/Release/runtime_load_2.exe.build.json'])
+                    build['configuration'] = 'Debug'; files['binaries/Release/runtime_load_2.exe.build.json'] = json.dumps(build).encode()
+                elif mutation == 'summary': data['summary'][0]['median_requests_per_second'] += 1
+                elif mutation == 'csv': files['results/summary.csv'] += files['results/summary.csv'].splitlines(keepends=True)[1]
+                elif mutation == 'missing_row': data['rows'].pop()
+                elif mutation == 'duplicate_sample': data['rows'][1] = data['rows'][0]
+                elif mutation == 'control': data['persistence_corruption_control'] = 'EXPECTED_FAILURE'
+                elif mutation == 'source': identity = {**identity, 'commit': 'f' * 40}
+                elif mutation in ('recipe', 'run_identity', 'sample_binary'):
+                    row = audit.benchmark.load_json(files['results/samples/0000.json'])
+                    if mutation == 'recipe': row['payload_bytes'] = 1000
+                    elif mutation == 'run_identity': row['run_id'] = '2' * 32
+                    else: row['binary_sha256'] = 'f' * 64
+                    raw = json.dumps(row).encode(); files['results/samples/0000.json'] = raw
+                    data['rows'][0] = {**{k: v for k, v in row.items() if k not in audit.benchmark.SAMPLE_FIELDS},
+                                      'samples_file': 'samples/0000.json', 'samples_sha256': hashlib.sha256(raw).hexdigest()}
+                files['results/results.json'] = json.dumps(data).encode()
+                with self.assertRaises(ValueError): self.check(audit, identity, files)
+
+    def test_strict_json_refuses_duplicate_keys_and_nonfinite_values(self):
+        tool = RuntimeBenchmarkTests.diagnostic()
+        for raw in ('{"result": "FAIL", "result": "PASS"}', '{"a":{"x":1,"x":2}}', '[NaN]', '[Infinity]'):
+            with self.subTest(raw=raw), self.assertRaises(ValueError): tool.load_json(raw)
+
+    def test_zip_and_directory_paths_cannot_redirect_evidence(self):
+        audit = self.auditor()
+        for path in ('../escape', '/absolute', 'a/../b', 'C:/file', 'a\\file', 'a//file'):
+            with self.subTest(path=path), self.assertRaises(ValueError): audit.member(path)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for extra in ('../escape', 'RESULTS/results.json'):
+                archive = root / 'bad.zip'
+                with zipfile.ZipFile(archive, 'w') as z:
+                    z.writestr('results/results.json', '{}'); z.writestr(extra, '{}')
+                with self.assertRaises(ValueError): audit.ZipEvidence(archive)
+            archive = root / 'link.zip'
+            with zipfile.ZipFile(archive, 'w') as z:
+                z.writestr('results/results.json', '{}')
+                entry = zipfile.ZipInfo('results/link'); entry.create_system = 3; entry.external_attr = 0o120777 << 16
+                z.writestr(entry, '../outside')
+            with self.assertRaises(ValueError): audit.ZipEvidence(archive)
+
+    def test_stale_or_replaced_binary_does_not_match_link_receipt(self):
+        audit, identity, data, files = self.fixture()
+        tool = audit.benchmark
+        with tempfile.TemporaryDirectory() as directory:
+            build = Path(directory)
+            (build / 'Release').mkdir()
+            name = 'runtime_load_2'
+            binary = build / 'Release' / (name + '.exe')
+            binary.write_bytes(files[f'binaries/Release/{name}.exe'])
+            Path(str(binary) + '.build.json').write_bytes(files[f'binaries/Release/{name}.exe.build.json'])
+            tool.verified_builds({('runtime_load', 2): binary}, data['source'])
+            binary.write_bytes(b'stale candidate from another build')
+            with self.assertRaises(ValueError): tool.verified_builds({('runtime_load', 2): binary}, data['source'])
+            with self.assertRaises(ValueError): tool.validate_build(data['builds'][name], name, data['binaries'][name], {**data['source'], 'commit': 'f' * 40})
+
+    def test_source_archive_does_not_claim_parent_git_identity(self):
+        tool = RuntimeBenchmarkTests.diagnostic()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / 'parent/archive'
+            (root.parent / '.git').mkdir(parents=True)
+            for name in ('metadata/ACTIVE_SOURCE_MANIFEST.json', 'metadata/VENDOR_LOCK.json',
+                         'src/net/asio_service.cpp', 'src/runtime/application.cpp'):
+                path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(b'fixture')
+            with patch.object(tool, 'ROOT', root), patch.object(tool.subprocess, 'run', side_effect=AssertionError('Archive must not query parent Git')):
+                self.assertIsNone(tool.identity()['commit'])
+
+    def test_inherited_git_selectors_cannot_replace_the_benchmark_commit(self):
+        tool = RuntimeBenchmarkTests.diagnostic()
+        environment = os.environ.copy()
+        local_names = subprocess.run(['git', 'rev-parse', '--local-env-vars'],
+                                     cwd=ROOT, capture_output=True, text=True,
+                                     check=True, timeout=30).stdout.splitlines()
+        for name in local_names:
+            environment.pop(name, None)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            for name in ('metadata/ACTIVE_SOURCE_MANIFEST.json', 'metadata/VENDOR_LOCK.json',
+                         'src/net/asio_service.cpp', 'src/runtime/application.cpp'):
+                path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(b'fixture')
+            for args in (['init', '-q'], ['add', '.'], ['-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '-qm', 'fixture']):
+                subprocess.run(['git', '-C', str(root), *args], capture_output=True, check=True,
+                               env=environment, timeout=30)
+            expected = subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'],
+                                               text=True, env=environment, timeout=30).strip()
+            with patch.object(tool, 'ROOT', root), patch.dict(os.environ, {'GIT_DIR': str(root / 'absent-git'), 'GIT_WORK_TREE': str(root / 'absent-tree')}):
+                self.assertEqual(expected, tool.identity()['commit'])
+
+
 class DocumentationContractTests(unittest.TestCase):
     @staticmethod
     def catalog():
@@ -2101,6 +2666,42 @@ class GovernanceTests(unittest.TestCase):
             self.assertTrue(any('Unowned' in e for e in ownership.check(root)))
 
 
+    def test_uppercase_ownership_extensions_are_not_skipped(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for folder in ('metadata', 'scripts', 'tools'):
+                (root / folder).mkdir()
+            entry = lambda role: {'owner': 'qa', 'purpose': 'fixture', 'role': role}
+            metadata = {'schema': ownership.METADATA_SCHEMA, 'files': {
+                'METADATA_OWNERSHIP.json': entry('CURRENT_CONTRACT'),
+                'SCRIPT_OWNERSHIP.json': entry('CURRENT_CONTRACT')}}
+            scripts = {'schema': ownership.SCRIPT_SCHEMA, 'files': {}}
+            def save():
+                (root / 'metadata/METADATA_OWNERSHIP.json').write_text(json.dumps(metadata))
+                (root / 'metadata/SCRIPT_OWNERSHIP.json').write_text(json.dumps(scripts))
+            save()
+            self.assertEqual([], ownership.check(root))
+            cases = [
+                ('metadata/unlisted.JSON', 'Unowned metadata: unlisted.JSON', 'CURRENT_CONTRACT'),
+                ('scripts/unlisted.PY', 'Script ownership file-set mismatch', 'PYTHON_TOOL_OR_MODULE'),
+                ('tools/unlisted.PS1', 'Script ownership file-set mismatch', 'AUTOMATION'),
+                ('scripts/unlisted.CMD', 'Script ownership file-set mismatch', 'HUMAN_LAUNCHER'),
+            ]
+            for name, message, role in cases:
+                with self.subTest(name=name):
+                    path = root / name
+                    path.write_text('fixture\n')
+                    self.assertIn(message, ownership.check(root))
+                    ledger = metadata['files'] if name.startswith('metadata/') else scripts['files']
+                    key = path.name if name.startswith('metadata/') else name
+                    ledger[key] = entry(role)
+                    save()
+                    self.assertEqual([], ownership.check(root))
+                    path.unlink()
+                    del ledger[key]
+                    save()
+                    self.assertEqual([], ownership.check(root))
+
     def test_ownership_schemas_and_allowed_roles_fail_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -2153,6 +2754,107 @@ class GovernanceTests(unittest.TestCase):
                 write_records()
                 self.assertEqual([], ownership.check(root))
 
+            for ledger, name, kind in ((metadata, 'METADATA_OWNERSHIP.json', 'metadata'),
+                                       (scripts, 'scripts/audit_tool.py', 'script')):
+                record = ledger['files'][name]
+                for field, invalid in (('owner', True), ('owner', ['qa']),
+                                       ('owner', ' \t '), ('purpose', {'text': 'qa'}),
+                                       ('purpose', '   '), ('purpose', 42),
+                                       ('role', []), ('role', {}), ('role', True)):
+                    with self.subTest(kind=kind, field=field, value=invalid):
+                        previous = record[field]
+                        try:
+                            record[field] = invalid
+                            write_records()
+                            self.assertIn('Incomplete or invalid ' + kind + ' ownership: ' + name,
+                                          ownership.check(root))
+                        finally:
+                            record[field] = previous
+                            write_records()
+                        self.assertEqual([], ownership.check(root))
+
+    def test_duplicate_ownership_keys_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for folder in ('metadata', 'scripts', 'tools'):
+                (root / folder).mkdir()
+            (root / 'scripts/audit_tool.py').write_text('pass\n')
+            entry = lambda role: {'owner': 'qa', 'purpose': 'fixture', 'role': role}
+            ledgers = {
+                'METADATA_OWNERSHIP.json': {
+                    'schema': ownership.METADATA_SCHEMA, 'files': {
+                        'METADATA_OWNERSHIP.json': entry('CURRENT_CONTRACT'),
+                        'SCRIPT_OWNERSHIP.json': entry('CURRENT_CONTRACT')}},
+                'SCRIPT_OWNERSHIP.json': {
+                    'schema': ownership.SCRIPT_SCHEMA, 'files': {
+                        'scripts/audit_tool.py': entry('PYTHON_TOOL_OR_MODULE')}},
+            }
+            for name, document in ledgers.items():
+                (root / 'metadata' / name).write_text(json.dumps(document))
+            self.assertEqual([], ownership.check(root))
+            for name, document in ledgers.items():
+                target = root / 'metadata' / name
+                original = target.read_text()
+                record_name, record = next(iter(document['files'].items()))
+                fields = [('schema', document['schema'], 'unexpected.schema'),
+                          ('files', document['files'], {}),
+                          (record_name, record, {}),
+                          ('owner', record['owner'], 'Ambiguous'),
+                          ('purpose', record['purpose'], 'Ambiguous'),
+                          ('role', record['role'], 'UNKNOWN_ROLE')]
+                for key, valid, invalid in fields:
+                    needle = json.dumps(key) + ': ' + json.dumps(valid)
+                    self.assertIn(needle, original)
+                    for first in (invalid, valid):
+                        with self.subTest(ledger=name, key=key, identical=first == valid):
+                            duplicate = json.dumps(key) + ': ' + json.dumps(first) + ', ' + needle
+                            try:
+                                target.write_text(original.replace(needle, duplicate, 1))
+                                with self.assertRaisesRegex(ValueError, 'Duplicate JSON object key'):
+                                    ownership.check(root)
+                            finally:
+                                target.write_text(original)
+                            self.assertEqual([], ownership.check(root))
+
+    def test_duplicate_ownership_cli_fails_and_recovers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for folder in ('metadata', 'scripts', 'tools'):
+                (root / folder).mkdir()
+            checker = root / 'scripts/check_metadata_ownership.py'
+            helper = root / 'scripts/project_files.py'
+            checker.write_bytes(Path(ownership.__file__).read_bytes())
+            helper.write_bytes(Path(inventory.__file__).read_bytes())
+            entry = lambda role: {'owner': 'qa', 'purpose': 'fixture', 'role': role}
+            ledgers = {
+                'METADATA_OWNERSHIP.json': {'schema': ownership.METADATA_SCHEMA, 'files': {
+                    'METADATA_OWNERSHIP.json': entry('CURRENT_CONTRACT'),
+                    'SCRIPT_OWNERSHIP.json': entry('CURRENT_CONTRACT')}},
+                'SCRIPT_OWNERSHIP.json': {'schema': ownership.SCRIPT_SCHEMA, 'files': {
+                    'scripts/check_metadata_ownership.py': entry('PYTHON_TOOL_OR_MODULE'),
+                    'scripts/project_files.py': entry('PYTHON_TOOL_OR_MODULE')}},
+            }
+            for name, document in ledgers.items():
+                (root / 'metadata' / name).write_text(json.dumps(document))
+            def run():
+                return subprocess.run([sys.executable, '-B', str(checker)],
+                                      capture_output=True, text=True, timeout=15)
+            self.assertEqual(0, run().returncode)
+            for name in ledgers:
+                target = root / 'metadata' / name
+                original = target.read_text()
+                try:
+                    target.write_text(original.replace('"owner": "qa"',
+                                      '"owner": "Ambiguous", "owner": "qa"', 1))
+                    result = run()
+                    self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                    self.assertIn('METADATA_OWNERSHIP: FAIL', result.stdout)
+                    self.assertIn('Duplicate JSON object key', result.stdout)
+                    self.assertNotIn('Traceback', result.stderr)
+                finally:
+                    target.write_text(original)
+                self.assertEqual(0, run().returncode)
+
     def test_launcher_result_and_argument_mutations(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -2188,6 +2890,43 @@ class GovernanceTests(unittest.TestCase):
                                         launchers.check(root)))
             automation.write_text(original_automation.replace('exit $LASTEXITCODE','exit 0'))
             self.assertTrue(any('masks child exit' in e for e in launchers.check(root)))
+
+    def test_launcher_scan_rejects_unregistered_uppercase_cmd_and_accepts_owned_entry(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'metadata').mkdir()
+            (root / 'scripts').mkdir()
+            registry = root / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json'
+            launcher = root / 'scripts/review.CMD'
+            automation = root / 'scripts/review.ps1'
+            registry.write_text(json.dumps({'entrypoints': []}))
+            (root / 'scripts/ignored.CMD').mkdir()
+            self.assertEqual([], launchers.check(root))
+            launcher.write_text('REM unregistered fixture\n')
+            self.assertIn('Registered launcher set differs from actual CMD set',
+                          launchers.check(root))
+            automation.write_text('param([switch]$LauncherOwnsSummary)\n'
+                                  '& ./fixture_profile.ps1 -Mode "Native" '
+                                  '-LauncherOwnsSummary:$LauncherOwnsSummary\nexit $LASTEXITCODE\n')
+            launcher.write_text('\n'.join([
+                '@echo off', 'powershell.exe -NoProfile -File "%~dp0review.ps1" -LauncherOwnsSummary %*',
+                'set "RC=%ERRORLEVEL%"', 'echo Exit code: %RC%',
+                'REM ForegroundColor Green', 'REM ForegroundColor Red',
+                'REM SURGE - %LABEL%', 'pause >nul', 'exit /b %RC%',
+            ]) + '\n')
+            registry.write_text(json.dumps({'entrypoints': [{
+                'launcher': 'scripts/review.CMD',
+                'automation': 'scripts/review.ps1',
+                'mode': 'Native',
+            }]}))
+            self.assertEqual([], launchers.check(root))
+            registered = json.loads(registry.read_text())
+            registered['entrypoints'][0]['launcher'] = 'scripts/review.cmd'
+            registry.write_text(json.dumps(registered))
+            self.assertIn('Registered launcher set differs from actual CMD set', launchers.check(root))
+            registered['entrypoints'][0]['launcher'] = 'scripts/review.CMD'
+            registry.write_text(json.dumps(registered))
+            self.assertEqual([], launchers.check(root))
 
     def test_launcher_summary_ownership_must_reach_the_profile(self):
         entries = json.loads((ROOT / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').read_text())['entrypoints']
@@ -2417,6 +3156,17 @@ exit 0
 
 
 class BuildWordingTests(unittest.TestCase):
+    def test_uppercase_metadata_json_is_included_in_build_wording_scan(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'metadata').mkdir()
+            policy = root / 'metadata/contract.JSON'
+            policy.write_text('LOCAL_GOLDEN_PASS\n')
+            self.assertEqual(['Obsolete build wording: metadata/contract.JSON:1'],
+                             launchers.check_build_wording(root))
+            policy.write_text('GOLDEN_PASS\n')
+            self.assertEqual([], launchers.check_build_wording(root))
+
     def test_active_operator_tools_and_contracts_reject_retired_labels(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)

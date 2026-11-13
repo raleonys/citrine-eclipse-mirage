@@ -3,6 +3,17 @@ name: Windows shutdown listener acceptance
 
 on:
   workflow_dispatch:
+    inputs:
+      generator:
+        description: MSVC build generator
+        type: choice
+        options: [VisualStudio, NMake]
+        default: VisualStudio
+      attempts:
+        description: Independent lifecycle attempts per configuration (every attempt must pass)
+        type: choice
+        options: ["5", "20"]
+        default: "5"
 
 permissions:
   contents: read
@@ -16,6 +27,9 @@ jobs:
       fail-fast: false
       matrix:
         configuration: [Debug, Release]
+    env:
+      SHUTDOWN_GENERATOR: ${{ inputs.generator }}
+      SHUTDOWN_ATTEMPTS: ${{ inputs.attempts }}
     defaults:
       run:
         shell: pwsh
@@ -31,7 +45,18 @@ jobs:
       - name: Configure lifecycle acceptance
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF
+          if ($env:SHUTDOWN_GENERATOR -eq 'NMake') {
+            . ./scripts/build_orchestration/build_common.ps1
+            $vs = Find-VcVars64
+            Import-VcVarsEnvironment (Resolve-BoundExecutable 'cmd.exe') $vs[1]
+            # Later build steps need the same toolset environment.
+            foreach ($name in @('PATH','INCLUDE','LIB','LIBPATH')) {
+              "$name=$([Environment]::GetEnvironmentVariable($name,'Process'))" | Add-Content $env:GITHUB_ENV
+            }
+            cmake -S . -B $build -G "NMake Makefiles" -DCMAKE_BUILD_TYPE='${{ matrix.configuration }}' -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=ON
+          } else {
+            cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF
+          }
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown configure failed' }
       - name: Build actual DLL, lifecycle host and native fault fixtures
         id: native_build
@@ -45,16 +70,20 @@ jobs:
           $junit = Join-Path (Resolve-Path $build) 'unload-guard-junit.xml'
           ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(unload_guard_contracts|listener_owners_contracts)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/unload-guard-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'Unload guard or listener diagnostic contracts failed' }
-      - name: Repeat five independent DLL lifecycle tests
+      - name: Repeat independent DLL lifecycle tests
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
           $receipt = "$build/shutdown-receipt.txt"
           "checkout_sha=$(git rev-parse HEAD)" | Set-Content $receipt
           "pr_head=$env:GITHUB_HEAD_REF" | Add-Content $receipt
           "configuration=${{ matrix.configuration }}" | Add-Content $receipt
+          "generator=$env:SHUTDOWN_GENERATOR" | Add-Content $receipt
+          $attempts = [int]$env:SHUTDOWN_ATTEMPTS
+          if ($attempts -notin @(5,20)) { throw 'Unexpected lifecycle attempt count' }
+          "attempts=$attempts" | Add-Content $receipt
           $failed = 0
-          for ($attempt = 1; $attempt -le 5; $attempt++) {
-            "ATTEMPT $attempt/5" | Tee-Object -FilePath "$build/shutdown-ctest.log" -Append
+          for ($attempt = 1; $attempt -le $attempts; $attempt++) {
+            "ATTEMPT $attempt/$attempts" | Tee-Object -FilePath "$build/shutdown-ctest.log" -Append
             $junit = Join-Path (Resolve-Path $build) "shutdown-junit-$attempt.xml"
             ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^dll_public_lifecycle$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/shutdown-ctest.log" -Append
             $exitCode = $LASTEXITCODE
@@ -62,7 +91,7 @@ jobs:
             if ($exitCode -ne 0) { $failed++ }
           }
           "failed_attempts=$failed" | Add-Content $receipt
-          if ($failed -ne 0) { throw "$failed of five lifecycle attempts failed" }
+          if ($failed -ne 0) { throw "$failed of $attempts lifecycle attempts failed" }
       - name: Verify retained native socket completions and cleanup retries
         if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
         run: |

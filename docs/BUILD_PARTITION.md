@@ -41,6 +41,17 @@ are provided.
 The evaluated production graph rejects `third_party/tinyxml2/` sources.
 The external TinyXML2 control exists only in the standalone comparison.
 
+## Portable model checks
+
+`portable_bootstrap_model` and `portable_thread_model` compile the retained
+bootstrap/thread source models with their unchanged controlled-effects fixtures.
+Both portable CTest targets keep the existing native fixtures' 60-second budgets;
+`bootstrap_contracts` and `crt_thread_contracts` remain in the Windows/reference
+graph. Portable coverage checks model ordering, context/handle ownership and
+cleanup contracts without a Windows SDK or actual OS threads, module/FLS lifetime
+or private CRT execution. Production source lists and linkage remain unchanged;
+Application continues to use its owned standard-library workers and compiler CRT.
+
 ## Evidence and limits
 
 The matrices and measurements below describe the historical first partition of
@@ -102,6 +113,25 @@ first clean configure. The build produces a production linker map and checks:
 4. Entry-point and protected-reader host objects have positive map evidence.
 5. Reference tests and the development DLL retain their reference dependencies.
 
+Before comparing the declared source lists, the partition guard removes CMake
+line and matching equal-sign bracket comments from `cmake/Sources.cmake`.
+Commented-out `set(...)` commands and individual source entries cannot satisfy
+ownership. Quoted/escaped text and bracket arguments keep their lexical context;
+bracket-like text inside an ordinary unquoted word is not an argument opener.
+Unterminated bracket comments or arguments fail closed. This remains a bounded
+textual source-list scan, not evaluation of CMake variables, conditions or
+function calls; evaluated target graphs and link evidence retain their own gates.
+
+The generated `partition.<CONFIG>.targets` reader requires each target record
+to contain exactly `TARGET`, `TYPE`, `DEPS`, `SOURCES` and `END`, in that order.
+Target names and types must be nonempty; duplicate targets/fields, missing or
+reordered fields, unmatched terminators and unfinished records fail closed.
+Empty dependency/source lists remain valid when their field records are present.
+A target enters the parsed graph only after its complete record closes, so a
+later field cannot silently overwrite its executable classification or edges.
+This validates generated evidence structure; the closure, source, linker-map and
+native acceptance checks still establish their separate boundary properties.
+
 The check runs after linking and as an incremental `ALL` target. Unsupported or
 empty maps fail. Both LLVM-MinGW and MSVC map syntax have negative fixtures;
 actual MSVC linker acceptance is recorded by the selected head's Windows
@@ -113,6 +143,12 @@ and `production_network_hook_contracts` compile their native callback/connect
 fixtures with only the production core; reference-only adapter cases stay in the
 original mixed targets. This prevents reference libraries from masking a missing
 runtime binding in these tests.
+
+`asio_thread_launch_contracts` is also a production-core test target. Its private
+launcher selection exercises actual Asio worker rollback without linking any
+reference models or the development DLL. Register new executable tests in the
+partition policy as well as CTest; the generated Windows target graph rejects
+unclassified targets before native tests can run.
 
 ## Reproduce
 

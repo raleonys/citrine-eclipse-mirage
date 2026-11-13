@@ -16,18 +16,27 @@ BRANCH = 'badges'
 DIRECTORY = 'resources/badges'
 ROOT = Path(__file__).resolve().parents[1]
 STATIC = frozenset({'windows.svg', 'cpp.svg', 'python.svg', 'cmake.svg', 'license.svg', 'changelog.svg'})
-NAMES = STATIC | {'ci.svg', 'latest-release.svg', 'release-integrity.svg', 'tests.svg', 'checksums.svg'}
-LEGACY_NAMES = NAMES - {'tests.svg', 'checksums.svg'}
+PREVIOUS_NAMES = STATIC | {'ci.svg', 'latest-release.svg', 'release-integrity.svg', 'tests.svg', 'checksums.svg'}
+LEGACY_NAMES = PREVIOUS_NAMES - {'tests.svg', 'checksums.svg'}
+CODEQL_NAMES = PREVIOUS_NAMES | {'codeql.svg'}
+NAMES = CODEQL_NAMES | {'qa.svg'}
+# Shared README palette: License blue, QA green and CodeQL state colors.
+LABEL_COLOR = '#555'
+INFORMATION_COLOR = '#007ec6'
+SUCCESS_COLOR = '#4c1'
+WARNING_COLOR = '#dfb317'
+FAILURE_COLOR = '#e05d44'
+NEUTRAL_COLOR = '#9f9f9f'
 CONCLUSIONS = {
-    'success': ('passing', '#4c1'),
-    'failure': ('failing', '#e05d44'),
-    'cancelled': ('cancelled', '#9f9f9f'),
-    'timed_out': ('timed out', '#e05d44'),
-    'action_required': ('action required', '#dfb317'),
-    'neutral': ('neutral', '#9f9f9f'),
-    'skipped': ('skipped', '#9f9f9f'),
-    'startup_failure': ('startup failure', '#e05d44'),
-    'stale': ('stale', '#9f9f9f'),
+    'success': ('passing', SUCCESS_COLOR),
+    'failure': ('failing', FAILURE_COLOR),
+    'cancelled': ('cancelled', NEUTRAL_COLOR),
+    'timed_out': ('timed out', FAILURE_COLOR),
+    'action_required': ('action required', WARNING_COLOR),
+    'neutral': ('neutral', NEUTRAL_COLOR),
+    'skipped': ('skipped', NEUTRAL_COLOR),
+    'startup_failure': ('startup failure', FAILURE_COLOR),
+    'stale': ('stale', NEUTRAL_COLOR),
 }
 
 # Observed ASCII advances in pixels at 11px for the installed DejaVu Sans
@@ -64,7 +73,7 @@ def render(label, value, color):
             'stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient>\n'
             f'<clipPath id="r"><rect width="{left+right}" height="20" rx="3"/></clipPath>\n'
             '<g clip-path="url(#r)">'
-            f'<rect width="{left}" height="20" fill="#555"/>'
+            f'<rect width="{left}" height="20" fill="{LABEL_COLOR}"/>'
             f'<rect x="{left}" width="{right}" height="20" fill="{color}"/>'
             f'<rect width="{left+right}" height="20" fill="url(#s)"/></g>\n'
             '<g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" '
@@ -82,35 +91,11 @@ def render(label, value, color):
 
 
 def render_ci(conclusion):
-    # Retain the original GitHub workflow badge, including its embedded
-    # Octocat path, label typography, rounded ends and two gradients.
-    namespace = 'http://www.w3.org/2000/svg'
-    ET.register_namespace('', namespace)
-    root = ET.fromstring((ROOT / DIRECTORY / 'ci.svg').read_text(encoding='utf-8'))
-    value, _ = CONCLUSIONS.get(conclusion, ('not run', '#9f9f9f'))
-    state = root.find(".//{%s}path[@id='state-bg']/.." % namespace)
-    if state is None:
-        raise ValueError('Original GitHub workflow badge template is missing')
-    width = max(50, text_width(value) + 10)
-    left = int(state.attrib['transform'].removeprefix('translate(').removesuffix(')'))
-    root.set('width', str(left + width))
-    root.set('role', 'img')
-    root.set('aria-label', 'Source integrity: ' + value)
-    root.find('{%s}title' % namespace).text = 'Source integrity - ' + value
-    state.find("{%s}path[@id='state-bg']" % namespace).set(
-        'd', f'M0 0h{width-3}a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H0V0z')
-    for node in state.iter('{%s}tspan' % namespace):
-        node.text = value
-    colors = ('#34D058', '#28A745') if conclusion == 'success' else (
-        ('#D73A49', '#CB2431') if conclusion in {'failure', 'timed_out', 'startup_failure'}
-        else ('#959DA5', '#6A737D'))
-    for node, color in zip(root.findall(".//{%s}linearGradient[@id='state-fill']/{%s}stop" %
-                                        (namespace, namespace)), colors):
-        node.set('stop-color', color)
-    return ET.tostring(root, encoding='unicode') + '\n'
+    value, color = CONCLUSIONS.get(conclusion, ('not run', NEUTRAL_COLOR))
+    return render('Source integrity', value, color)
 
 
-def images(tag, conclusion, immutable=None, tests=None, checksum=None):
+def images(tag, conclusion, immutable=None, tests=None, checksum=None, codeql=None, qa=None):
     if tag is not None:
         require_tag(tag)
     if conclusion is not None and conclusion not in CONCLUSIONS:
@@ -119,26 +104,36 @@ def images(tag, conclusion, immutable=None, tests=None, checksum=None):
         raise ValueError('Invalid release immutability value')
     result = {name: (ROOT / DIRECTORY / name).read_text(encoding='utf-8') for name in STATIC}
     result['ci.svg'] = render_ci(conclusion)
-    result['latest-release.svg'] = render('Latest release', 'v' + tag if tag else 'none', '#007ec6')
-    integrity = ('no release', '#9f9f9f') if tag is None else (
-        ('immutable', '#4c1') if immutable is True else
-        ('mutable', '#dfb317') if immutable is False else ('unknown', '#9f9f9f'))
+    result['latest-release.svg'] = render('Latest release', 'v' + tag if tag else 'none', INFORMATION_COLOR)
+    integrity = ('no release', NEUTRAL_COLOR) if tag is None else (
+        ('immutable', SUCCESS_COLOR) if immutable is True else
+        ('mutable', WARNING_COLOR) if immutable is False else ('unknown', NEUTRAL_COLOR))
     result['release-integrity.svg'] = render('Release integrity', *integrity)
     if tests is None:
-        result['tests.svg'] = render('Tests (native)', 'not available', '#9f9f9f')
+        result['tests.svg'] = render('Tests (native)', 'not available', NEUTRAL_COLOR)
     else:
         passed, total, status = tests
         if (type(passed) is not int or type(total) is not int or not 0 <= passed <= total <= 100000
                 or total == 0 or status not in {'success', 'failure'}):
             raise ValueError('Invalid native test totals')
         result['tests.svg'] = render('Tests (native)', f'{passed}/{total}',
-                                     '#4c1' if passed == total and status == 'success' else '#e05d44')
+                                     SUCCESS_COLOR if passed == total and status == 'success' else FAILURE_COLOR)
     if checksum is not None and type(checksum) is not bool:
         raise ValueError('Invalid checksum availability')
-    checksum_state = ('no release', '#9f9f9f') if tag is None else (
-        ('SHA-256', '#4c1') if checksum is True else
-        ('missing', '#e05d44') if checksum is False else ('unknown', '#9f9f9f'))
+    checksum_state = ('no release', NEUTRAL_COLOR) if tag is None else (
+        ('SHA-256', SUCCESS_COLOR) if checksum is True else
+        ('missing', FAILURE_COLOR) if checksum is False else ('unknown', NEUTRAL_COLOR))
     result['checksums.svg'] = render('Checksums', *checksum_state)
+    states = {None: ('not available', NEUTRAL_COLOR),
+              'success': ('passing', SUCCESS_COLOR), 'failure': ('failing', FAILURE_COLOR),
+              'pending': ('running', WARNING_COLOR), 'cancelled': ('cancelled', NEUTRAL_COLOR)}
+    if codeql is not None and (not isinstance(codeql, str) or codeql not in states):
+        raise ValueError('Invalid CodeQL status')
+    result['codeql.svg'] = render('CodeQL', *states[codeql])
+    if qa is not None and (not isinstance(qa, str) or qa not in states):
+        raise ValueError('Invalid QA status')
+    qa_states = {**states, None: ('n/a', NEUTRAL_COLOR)}
+    result['qa.svg'] = render('QA', *qa_states[qa])
     return result
 
 
@@ -190,8 +185,11 @@ def native_result(api, base, default, repository):
     trees = {main['sha']: target}
     runs = api.request('GET', base + '/actions/workflows/msvc-reference-graph.yml/runs?event=pull_request&per_page=30')['workflow_runs']
     for run in runs:
-        if (run.get('event') != 'pull_request' or run.get('head_repository', {}).get('full_name') != repository
-                or not re.fullmatch(r'[0-9a-f]{40}', run.get('head_sha', '')) or type(run.get('id')) is not int):
+        owner = run.get('head_repository')
+        if (run.get('event') != 'pull_request' or not isinstance(owner, dict)
+                or owner.get('full_name') != repository or not isinstance(run.get('head_sha'), str)
+                or not re.fullmatch(r'[0-9a-f]{40}', run['head_sha'])
+                or type(run.get('id')) is not int or run['id'] <= 0):
             continue
         sha = run['head_sha']
         if sha not in trees:
@@ -213,6 +211,91 @@ def native_result(api, base, default, repository):
                 if match and step['conclusion'] == 'success':
                     return int(match[1]), int(match[2]), job['conclusion']
             return None
+    return None
+
+
+def qa_result(api, base, default, repository):
+    # The accepted merge and tested PR can have different SHAs but must have
+    # exactly the same Git tree, including their workflow and test sources.
+    main = api.request('GET', base + '/commits/' + default)
+    target = main['commit']['tree']['sha']
+    if not re.fullmatch(r'[0-9a-f]{40}', target):
+        raise ValueError('Invalid default-branch tree')
+    trees = {main['sha']: target}
+    runs = api.request('GET', base + '/actions/workflows/msvc-reference-graph.yml/runs?event=pull_request&per_page=30')['workflow_runs']
+    for run in runs:
+        owner = run.get('head_repository')
+        if (run.get('event') != 'pull_request' or not isinstance(owner, dict)
+                or owner.get('full_name') != repository
+                or not isinstance(run.get('head_sha'), str)
+                or not re.fullmatch(r'[0-9a-f]{40}', run['head_sha'])
+                or type(run.get('id')) is not int or run['id'] <= 0):
+            continue
+        sha = run['head_sha']
+        if sha not in trees:
+            commit = api.request('GET', base + '/git/commits/' + sha, missing_ok=True)
+            if commit is None:
+                continue
+            trees[sha] = commit['tree']['sha']
+        if trees[sha] != target:
+            continue
+        response = api.request('GET', base + '/actions/runs/' + str(run['id'])
+                               + '/jobs?filter=latest&per_page=100')
+        jobs = response['jobs']
+        if not isinstance(jobs, list):
+            return None
+        total = response.get('total_count', len(jobs))
+        if type(total) is not int or total != len(jobs):
+            return None
+        selected = [job for job in jobs if isinstance(job, dict)
+                    and job.get('name') == 'Source QA and portable tests']
+        # Never fall back to an older green result for this tested tree.
+        if len(selected) != 1:
+            return 'pending' if not selected and run.get('status') in {
+                'queued', 'in_progress', 'waiting', 'pending', 'requested'} else None
+        job = selected[0]
+        if job.get('status') != 'completed':
+            return 'pending' if job.get('status') in {
+                'queued', 'in_progress', 'waiting', 'pending', 'requested'} else None
+        conclusion = job.get('conclusion')
+        if conclusion == 'success':
+            return 'success'
+        if conclusion in {'failure', 'timed_out', 'action_required', 'startup_failure'}:
+            return 'failure'
+        return 'cancelled' if conclusion == 'cancelled' else None
+    return None
+
+
+def codeql_result(api, base, default, repository):
+    # Only the current accepted commit and all three actual analyses can be green.
+    main = api.request('GET', base + '/commits/' + default)
+    sha = main['sha']
+    if not re.fullmatch(r'[0-9a-f]{40}', sha):
+        raise ValueError('Invalid default-branch commit')
+    runs = api.request('GET', base + '/actions/workflows/msvc-reference-graph.yml/runs?event=push&branch='
+                       + default + '&per_page=30')['workflow_runs']
+    for run in runs:
+        owner = run.get('head_repository')
+        if (run.get('event') != 'push' or run.get('head_branch') != default
+                or run.get('head_sha') != sha or type(run.get('id')) is not int
+                or run['id'] <= 0 or not isinstance(owner, dict)
+                or owner.get('full_name') != repository):
+            continue
+        if run.get('status') != 'completed':
+            return 'pending' if run.get('status') in {'queued', 'in_progress', 'waiting', 'pending', 'requested'} else None
+        conclusion = run.get('conclusion')
+        if conclusion != 'success':
+            return ('failure' if conclusion in {'failure', 'timed_out', 'action_required'}
+                    else 'cancelled' if conclusion == 'cancelled' else None)
+        jobs = api.request('GET', base + '/actions/runs/' + str(run['id'])
+                           + '/jobs?filter=latest&per_page=100')['jobs']
+        expected = {'CodeQL (actions)', 'CodeQL (c-cpp)', 'CodeQL (python)'}
+        analyses = [job for job in jobs if job.get('name') in expected]
+        if (len(analyses) == 3 and {job['name'] for job in analyses} == expected
+                and all(job.get('status') == 'completed' and job.get('conclusion') == 'success'
+                        for job in analyses)):
+            return 'success'
+        return None
     return None
 
 
@@ -266,7 +349,9 @@ def live_images(api, repository):
         raise ValueError('CI badge requires a completed default-branch push run')
     return images(release['tag_name'] if release else None, runs[0]['conclusion'] if runs else None,
                   release.get('immutable') if release else None,
-                  native_result(api, base, default, repository), checksum_available(release))
+                  native_result(api, base, default, repository), checksum_available(release),
+                  codeql_result(api, base, default, repository),
+                  qa_result(api, base, default, repository))
 
 
 def blob_sha(content):
@@ -276,7 +361,7 @@ def blob_sha(content):
 
 def publish(api, repository, rendered):
     if set(rendered) != NAMES:
-        raise ValueError('Only the eleven badge SVGs may be published')
+        raise ValueError('Only the thirteen badge SVGs may be published')
     base = repository_path(repository)
     expected = {DIRECTORY + '/' + name: blob_sha(value) for name, value in rendered.items()}
     ref = api.request('GET', base + '/git/ref/heads/' + BRANCH, missing_ok=True)
@@ -289,7 +374,9 @@ def publish(api, repository, rendered):
         tree = api.request('GET', base + '/git/trees/' + commit['tree']['sha'] + '?recursive=1')
         actual = {entry['path']: entry['sha'] for entry in tree['tree'] if entry['type'] == 'blob'}
         legacy = {DIRECTORY + '/' + name for name in LEGACY_NAMES}
-        if (tree.get('truncated') or set(actual) not in (set(expected), legacy)
+        previous = {DIRECTORY + '/' + name for name in PREVIOUS_NAMES}
+        codeql = {DIRECTORY + '/' + name for name in CODEQL_NAMES}
+        if (tree.get('truncated') or set(actual) not in (set(expected), codeql, previous, legacy)
                 or any(entry['type'] not in {'tree', 'blob'} or
                        (entry['type'] == 'blob' and entry['mode'] != '100644') or
                        (entry['type'] == 'tree' and entry['path'] not in {'resources', DIRECTORY})

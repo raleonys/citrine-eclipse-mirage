@@ -14,6 +14,7 @@
 #include <new>
 #include <memory>
 #include <span>
+#include <vector>
 namespace receive_buffer_probe {
 struct Allocation{void* base;std::size_t bytes;};
 std::atomic<bool> recording{false};
@@ -108,10 +109,27 @@ int WSAAPI TestSend(SOCKET value,LPWSABUF buffers,DWORD n,LPDWORD bytes,DWORD fl
 }
 namespace fault {
 std::atomic<SOCKET> target{INVALID_SOCKET};
+struct ClientPublicationFailure {};
+bool fail_client_publication=false;
+unsigned publication_failures=0;
+std::weak_ptr<void> unpublished_client;
+template<class T> struct ClientList:std::vector<T> {
+    using std::vector<T>::push_back;
+    void push_back(const T& value) {
+        if(fail_client_publication) {
+            fail_client_publication=false;++publication_failures;
+            unpublished_client=value;
+            target=value->socket.native_handle();
+            throw ClientPublicationFailure{};
+        }
+        std::vector<T>::push_back(value);
+    }
+};
 std::atomic<int> error{0};
 std::atomic<unsigned> closes{0},option_failures{0};
 bool select_connected=false,select_next=false,close_then_error=false,hold_timer=false;
-void reset(){target=INVALID_SOCKET;error=0;closes=0;option_failures=0;select_connected=select_next=close_then_error=hold_timer=false;}
+void reset(){target=INVALID_SOCKET;error=0;closes=0;option_failures=0;select_connected=select_next=close_then_error=hold_timer=false;
+    fail_client_publication=false;publication_failures=0;unpublished_client.reset();}
 }
 int WSAAPI TestCloseSocket(SOCKET value){
     if(fault::target==INVALID_SOCKET&&(fault::select_next||fault::select_connected)){
@@ -151,7 +169,9 @@ public:
 };
 }
 #define steady_timer FixtureTimer
+#define CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_CLIENT_LIST ::fault::ClientList
 #include "src/net/asio_service.cpp"
+#undef CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_CLIENT_LIST
 #undef steady_timer
 #undef setsockopt
 #undef closesocket
@@ -165,20 +185,27 @@ void require(bool b,const char* text){if(!b)throw std::runtime_error(text);}
 struct Factory:net::HandlerFactory {
     bool throw_create=false;
     unsigned tickets=0,positive=0,negative=0;
+    unsigned created=0,destroyed=0,publication_errors=0;
     struct Ticket:server::DeliveryReceipt {
         Factory& f;explicit Ticket(Factory& x):f(x){++f.tickets;}
         ~Ticket(){--f.tickets;}
         bool finish(bool success)noexcept override{if(success)++f.positive;else ++f.negative;return true;}
     };
     struct Handler:server::Handler {
-        Factory& f;explicit Handler(Factory& x):f(x){}
+        Factory& f;explicit Handler(Factory& x):f(x){++f.created;}
+        ~Handler() override{++f.destroyed;}
         void reset_02bc70()override{}
         std::string initial_message_02d540()override{return std::string("hello\0",6);}
         std::string process_message_033d70(std::string_view)override{return {};}
         server::PreparedResponse prepare_response(std::string_view)override{return {std::string(128*1024,'X'),std::make_unique<Ticket>(f)};}
     };
     std::unique_ptr<server::Handler> create()override{if(throw_create)throw std::runtime_error("fixture handler failure");return std::make_unique<Handler>(*this);}
-    void error(std::string_view,std::exception_ptr)noexcept override{}
+    void error(std::string_view operation,std::exception_ptr failure)noexcept override{
+        if(operation!="accepted session"||!failure)return;
+        try{std::rethrow_exception(failure);}
+        catch(const fault::ClientPublicationFailure&){++publication_errors;}
+        catch(...){}
+    }
 };
 struct Context {
     Factory factory;execution::MutexState mutex{};
@@ -509,6 +536,52 @@ void constructor_rollback(){
     if(blocked)owner.stop();else if(raw!=INVALID_SOCKET)::closesocket(raw);
     require(raw!=INVALID_SOCKET&&blocked,"failed Client construction loses native rollback ownership");
 }
+void client_publication_rollback(){
+    for(const bool close_failure:{false,true}) {
+        fault::reset();Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.a,{});owner.used=true;
+        struct ClearFault {~ClearFault(){fault::error=0;fault::fail_client_publication=false;}} clear_fault;
+        owner.acceptor.open(Tcp::v4());owner.acceptor.bind({asio::ip::address_v4::loopback(),0});owner.acceptor.listen();
+        owner.queue_accept(owner.acceptor,0);
+        asio::io_context peer_io;Tcp::socket peer(peer_io);peer.connect(owner.acceptor.local_endpoint());
+        fault::fail_client_publication=true;
+        fault::error=close_failure?WSAEWOULDBLOCK:0;
+        const auto deadline=std::chrono::steady_clock::now()+2s;
+        do{owner.io.restart();owner.io.run_for(5ms);}
+        while(!fault::publication_failures&&std::chrono::steady_clock::now()<deadline);
+        const auto raw=fault::target.load();
+        const bool injected=fault::publication_failures==1&&!fault::fail_client_publication;
+        const bool lifetime=c.factory.created==1&&c.factory.destroyed==1&&
+            c.factory.publication_errors==1&&fault::unpublished_client.expired();
+        const bool uncounted=owner.clients.empty()&&owner.active_sessions==0;
+        const bool pending=owner.accept_pending[0];
+        const bool stopping=owner.stopping.load();
+        const bool retained=owner.deferred_closes.size()==1&&
+            owner.deferred_closes.front().socket==raw&&
+            owner.deferred_closes.front().state==net::NativeClose::State::retained;
+        const bool no_retained=owner.deferred_closes.empty();
+        const bool blocked=stop_failed(owner);const auto before_repair=fault::closes.load();
+        fault::error=0;
+        bool cleaned=!blocked;
+        if(blocked) {
+            const auto cleanup_deadline=std::chrono::steady_clock::now()+2s;
+            do{cleaned=!stop_failed(owner);}
+            while(!cleaned&&std::chrono::steady_clock::now()<cleanup_deadline);
+        }
+        else if(close_failure&&raw!=INVALID_SOCKET)::closesocket(raw); // Lost-owner negative-control cleanup only.
+        const auto repaired=fault::closes.load();owner.stop();
+        require(injected&&raw!=INVALID_SOCKET,"publication seam must fail after a connected Client was constructed");
+        require(lifetime&&uncounted,"failed publication destroys the unpublished Client/Handler without claiming a session slot");
+        require(pending==!close_failure&&stopping==close_failure,
+            "ordinary publication failure rearms accept; retained close failure stops admission");
+        require(close_failure?retained&&blocked:no_retained,
+            "failed close retains the exact owner and blocks stop; normal close retains no socket");
+        require(!close_failure||repaired==before_repair+1,
+            "repair closes the same retained socket exactly once");
+        require(cleaned&&owner.deferred_closes.empty()&&owner.clients.empty()&&owner.active_sessions==0&&
+            !owner.accept_pending[0]&&!owner.accept_pending[1]&&fault::closes==repaired,
+            "successful cleanup drains unpublished ownership and repeated stop does not close it again");
+    }
+}
 void bind_rollback(){
     fault::reset();Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.a,{});owner.used=true;
     Tcp::acceptor blocker(owner.io,{asio::ip::address_v4::loopback(),net::listener_policy::first_port});
@@ -540,7 +613,8 @@ int main(int argc,char** argv)try{
         {"late-receive-cancel",+[]{delayed_receive_completion(false);}},
         {"late-receive-success",+[]{delayed_receive_completion(true);}},
         {"late-send-success",delayed_send_completion},
-        {"timer",timer_retirement},{"constructor",constructor_rollback},{"bind",bind_rollback},{"listener",listener_retry}})
+        {"timer",timer_retirement},{"constructor",constructor_rollback},
+        {"publication",client_publication_rollback},{"bind",bind_rollback},{"listener",listener_retry}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");
 }catch(const std::exception& e){fault::error=0;fault::hold_timer=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

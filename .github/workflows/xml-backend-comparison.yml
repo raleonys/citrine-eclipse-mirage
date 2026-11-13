@@ -3,12 +3,19 @@ name: Isolated XML backend comparison
 
 on:
   workflow_dispatch:
+    inputs:
+      suite:
+        description: Select one isolated performance diagnostic
+        type: choice
+        options: [xml-backend, runtime-load]
+        default: xml-backend
 
 permissions:
   contents: read
 
 jobs:
   comparison:
+    if: inputs.suite != 'runtime-load'
     name: XML compatibility ${{ matrix.os }} ${{ matrix.configuration }} sanitizers=${{ matrix.sanitizers }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 25
@@ -76,5 +83,60 @@ jobs:
             build/xml-backend-comparison/*.txt
             build/xml-backend-comparison/binaries/CMakeCache.txt
             build/xml-backend-comparison/binaries/CMakeFiles/CMakeConfigureLog.yaml
+          if-no-files-found: warn
+          retention-days: 14
+
+  runtime-load:
+    if: inputs.suite == 'runtime-load'
+    name: Native component and Application load measurements
+    runs-on: windows-2022
+    timeout-minutes: 25
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Preserve pinned source bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Configure isolated Release candidates
+        run: |
+          cmake -S tests/diagnostics/runtime_load -B build/runtime-load/binaries -G "Visual Studio 17 2022" -A x64
+          if ($LASTEXITCODE -ne 0) { throw 'Runtime benchmark configure failed' }
+      - name: Build measured source candidates
+        run: |
+          cmake --build build/runtime-load/binaries --config Release --parallel 2
+          if ($LASTEXITCODE -ne 0) { throw 'Runtime benchmark build failed' }
+      - name: Check correctness and measure paired load rounds
+        run: |
+          ctest --test-dir build/runtime-load/binaries -C Release --output-on-failure --no-tests=error
+          if ($LASTEXITCODE -ne 0) { throw 'Runtime scheduler control contracts failed' }
+          python -B tests/diagnostics/runtime_load/run.py --build-dir build/runtime-load/binaries --output build/runtime-load/results --repeats 5 --suite all
+          if ($LASTEXITCODE -ne 0) { throw 'Runtime load correctness/measurement failed' }
+      - name: Audit raw samples, linked binaries and reported summaries
+        run: |
+          python -B tests/diagnostics/runtime_load/audit.py --results build/runtime-load/results --build-dir build/runtime-load/binaries > build/runtime-load/results/audit.json
+          if ($LASTEXITCODE -ne 0) { throw 'Runtime evidence audit failed' }
+          Get-Content build/runtime-load/results/audit.json
+      - name: Preserve measurements and failure diagnostics
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: native-runtime-load-evidence
+          path: |
+            build/runtime-load/results/*.json
+            build/runtime-load/results/*.csv
+            build/runtime-load/results/samples/*.json
+            build/runtime-load/binaries/generated/inputs.json
+            build/runtime-load/binaries/Release/runtime_load_*.exe
+            build/runtime-load/binaries/Release/application_load_*.exe
+            build/runtime-load/binaries/Release/*.exe.build.json
+            build/runtime-load/binaries/CMakeCache.txt
+            build/runtime-load/binaries/CMakeFiles/CMakeConfigureLog.yaml
+            build/runtime-load/binaries/Testing/Temporary/LastTest.log
           if-no-files-found: warn
           retention-days: 14

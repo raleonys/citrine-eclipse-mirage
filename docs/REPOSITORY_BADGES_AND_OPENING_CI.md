@@ -8,37 +8,40 @@ GitHub itself cannot have an outage.
 
 ## Badge ownership and updates
 
-`scripts/repository_badges.py` publishes eleven badges using the Python standard
-library. The six static SVGs are downloaded snapshots of the original Shields
-responses, including the embedded C++, Python and CMake logos. The Windows and
-license responses retain their original styling. Changelog uses the same style.
-The publisher copies these static bytes unchanged; no logo or font is loaded
-from a remote service by the reader or publisher.
+`scripts/repository_badges.py` publishes thirteen badges using the Python standard
+library. The six static SVGs retain Shields typography, gradients, clipping and
+text shadows, including the embedded C++, Python and CMake logos. Their right
+panels share License blue (`#007ec6`); every left panel uses `#555`.
+The publisher copies these normalized static bytes unchanged. No logo or font
+is loaded from a remote service by the reader or publisher.
 
-Dynamic release badges retain Shields typography, gradients, clipping and text
-shadows. The CI renderer retains the original GitHub workflow badge template,
-including its embedded Octocat path, workflow label and gradients, while changing
-the actual status and its color. No network image generator or font package is
-needed during updates. The source tree contains reviewable CI/release snapshots.
+All seven dynamic badges use the same renderer and gray label panel. Successful
+status panels share QA green (`#4c1`). Pending/action-required and mutable-release
+panels use CodeQL yellow (`#dfb317`); failed panels use CodeQL red (`#e05d44`).
+Unavailable, cancelled and neutral states remain gray (`#9f9f9f`), never green.
+Source integrity is text-only, without the former GitHub icon or separate
+workflow gradients. The source snapshots retain their recorded statuses;
+changing the palette does not turn missing evidence into a passing result.
 
-The static responses were retrieved from the image URLs previously used by the
-README; Changelog uses `https://img.shields.io/badge/Changelog-view-blue.svg`.
-Shields is published under CC0; embedded Simple Icons and product marks retain
-their original attribution and brand identities. The GitHub workflow template
-was retrieved from this repository's original `ci.yml/badge.svg?branch=main`
-endpoint. These cached assets are retained rather than represented as newly
-drawn project logos.
+The static responses originated from the image URLs previously used by the
+README; Changelog used `https://img.shields.io/badge/Changelog-view-blue.svg`.
+Their panel colors are now normalized to the shared palette. Shields is
+published under CC0; embedded Simple Icons and product marks retain their
+original attribution and brand identities. The retained product logos are not
+represented as newly drawn project logos.
 
-The live CI, Latest release, Release integrity, Tests and Checksums images are read from the same repository's
+The live CI, Latest release, Release integrity, Tests, Checksums, QA and CodeQL images are read from the same repository's
 long-lived `badges` branch, at `resources/badges/ci.svg` and
 `resources/badges/latest-release.svg`, plus `resources/badges/release-integrity.svg`,
-`resources/badges/tests.svg` and `resources/badges/checksums.svg`.
-All eleven generated SVGs live there, and
-only those eleven paths are permitted. That branch is generated image data, not
+`resources/badges/tests.svg`, `resources/badges/checksums.svg`, `resources/badges/qa.svg` and `resources/badges/codeql.svg`.
+All thirteen generated SVGs live there, and
+only those thirteen paths are permitted. That branch is generated image data, not
 an application/source branch or a PR head. Keep it after ordinary PR cleanup.
 
 The small Update repository badges workflow runs after a completed main-push
-Source integrity run, or a published/edited/deleted nondraft release. Manual
+Source integrity or Full validation after main synchronization run, or a
+published/edited/deleted nondraft release. The latter main-push event refreshes
+the CodeQL result after all analyses finish. Manual
 refresh is allowed from the default branch. Initial PRs and feature-branch
 pushes do not allocate a badge-update job. The workflow always checks out the
 trusted default branch; it never runs code or downloads artifacts from the
@@ -60,7 +63,7 @@ fast-forward reference updates and refuse an unexpected existing branch tree.
 The publisher never writes main, application sources, tags or release assets.
 The generated-only branch is maintained through the GitHub Git-data API;
 application source inventories and pre-push QA apply to the source PR, not to
-this eleven-image data tree. Initialize or refresh it from reviewed source with:
+this thirteen-image data tree. Initialize or refresh it from reviewed source with:
 
 ```sh
 python -B scripts/repository_badges.py --publish
@@ -105,8 +108,49 @@ with nonzero sizes. Otherwise it reports missing, unknown or no release. It
 checks availability, not a fresh cryptographic verification of the download.
 Both badges use the existing small main/release publisher; neither runs a
 workflow when a PR opens. The bounded data publisher permits a one-time
-upgrade from exactly the original nine SVG paths to exactly eleven; missing
-or extra files outside those two recognized layouts remain an error.
+upgrade from exactly the original nine, previous eleven or CodeQL twelve SVG paths to thirteen;
+missing or extra files outside those recognized layouts remain an error.
+
+## README rows and CodeQL status
+
+The first README row ends with Changelog and groups the seven blue information
+badges. An explicit line break starts the six status badges below it: Tests (native), Checksums, Release
+integrity, Source integrity, QA and CodeQL, in that order. The normal
+success state is green; pending, failed and unavailable results keep their honest
+status colors. On narrow screens each group can wrap naturally without forcing
+horizontal scrolling.
+
+CodeQL is green only when the current accepted main SHA has a completed successful
+main-push run and all three actual language jobs (Actions, C/C++ and Python) passed.
+An eligible newer pending/failed run cannot fall back to an older green result.
+Missing, duplicate or skipped analyses, a different commit, a feature branch or
+another repository cannot produce green. Pending is yellow, failure is red and
+unavailable/cancelled is gray. The source seed is unavailable; the generated branch
+publishes the live result after owner integration. This image adds no PR analysis,
+CodeQL runner, runtime dependency or new security permission.
+
+## QA status
+
+The compact QA badge reports the actual **Source QA and portable tests** job:
+complete source-regression checks and Linux portable CTest. It is separate from
+the lightweight Source integrity hash gate, Windows/native totals and CodeQL.
+A Windows job failure does not replace this job's own result.
+
+Only this repository's full-validation PR runs with a tested Git tree exactly
+equal to current accepted main are eligible. The merge SHA may differ, but an
+ancestor/different tree, fork or standalone diagnostic cannot supply green.
+The newest matching run's latest attempt must contain exactly one completed,
+successful QA job. Missing, duplicate, skipped, unrequested or truncated job
+evidence is unavailable; newer pending/failed evidence cannot fall back to an
+older green result. The run scan is bounded to thirty entries.
+
+Passing is green, failing red, running yellow and cancelled/unavailable gray.
+Unavailable uses the short n/a value. Updates use the existing completed-main,
+release and manual publisher events; no PR build or publisher runner is added.
+The source seed is unavailable. New generated paths appear after the publisher
+runs from owner-integrated source; the source branch's live URL can be absent
+before that first publication. Preview the source SVG for layout separately.
+The closed migration accepts only the exact recognized 9/11/12/13-image trees.
 
 ## One basic check when a PR opens
 
@@ -124,49 +168,42 @@ must authorize the exact PR/head/main before the full-validation label is added.
 The existing eleven required status names and strict current-main merge
 protection remain unchanged. Missing full checks still prevent merging.
 
-For PRs and manual diagnostics, CodeQL for Actions, C/C++ and Python sits
-behind that same readiness gate. It analyzes the verified source head and
-uploads to that head's PR reference. Accepted-main pushes also run these three
-analyses, using the exact pushed SHA and `refs/heads/main` so Security alerts
-have a default-branch baseline. On that event readiness, Source QA and all
-Windows/Golden/reference jobs skip before runner allocation; initial PR and
-feature-branch pushes do not gain automatic analysis. Cancellation prevents
-new analysis jobs, and main scans cannot cancel PR validation. The default
-query suite and C/C++ build-mode none are retained.
+CodeQL for Actions, C/C++ and Python runs only on accepted-main pushes.
+The job has no readiness dependency and binds checkout/analysis to the exact
+pushed SHA and `refs/heads/main`. PR opening, synchronization, validation labels
+and manual diagnostics do not schedule CodeQL, even when full validation is
+otherwise eligible. Source QA and all eleven required Windows/source/reference
+contexts retain their existing readiness gates. On main pushes those build/test
+jobs skip before runner allocation; only the three analyses run in this workflow.
+Cancellation prevents new analysis jobs, and main scans cannot cancel PR
+validation. The default query suite and C/C++ build-mode none are retained.
+This policy reports security findings after integration rather than requiring
+another analysis of each proposed PR head.
 
-## Required GitHub Default Setup migration
+## GitHub Default Setup is managed separately
 
 GitHub's autogenerated `dynamic/github-code-scanning/codeql` workflow is separate
 from repository YAML. It previously ran all three analyses when a PR opened;
-the observed C/C++ analysis alone took about 26 minutes. Editing `ci.yml` cannot
-disable that external trigger.
+the observed C/C++ analysis alone took about 26 minutes. Editing the advanced
+workflow does not disable an external Default Setup scheduler.
 
-The owner/admin must switch CodeQL from **Default Setup** to the reviewed
-**Advanced Setup** workflow in this PR. In repository Settings, open Code
-security (Code security and analysis on older layouts), find CodeQL analysis,
-and choose **Disable CodeQL** from its menu to disable Default Setup. Then use
-the existing advanced workflow `.github/workflows/msvc-reference-graph.yml`.
-This disables the default scheduler, not uploads from the advanced workflow.
-Do not create a second generated
-CodeQL workflow with an opening, feature-branch push or scheduled trigger;
-the existing advanced workflow owns the bounded main-push analysis. The
-analyzed languages remain Actions, C/C++ and Python; only their scheduling
-changes.
+Use **Advanced Setup** with the existing
+`.github/workflows/msvc-reference-graph.yml` for the main-only policy. If Default
+Setup is still enabled, the owner/admin can disable it under repository Settings,
+Code security, CodeQL analysis. This disables the default scheduler rather than
+SARIF uploads from the advanced workflow. Do not generate a second workflow with
+PR-opening, feature-push or scheduled triggers for the same analyses.
 
 The connected write account cannot read or change the Default Setup setting:
-its code-scanning configuration endpoint returns HTTP 403, Resource not
-accessible by integration. Until the owner performs the migration, GitHub can
-still start its autogenerated opening analyses, and advanced SARIF uploads may
-be rejected because Default Setup is still enabled. The one-check opening
-guarantee therefore requires both the repository change and that setting
-migration. This PR does not silently claim or alter an inaccessible setting.
-GitHub documents this migration in
+its configuration endpoint returns HTTP 403, Resource not accessible by
+integration. The setting is therefore not changed or represented as verified by
+this repository edit. An external scheduler, if enabled, needs separate owner
+administration. GitHub documents the distinction in
 [Default setup is enabled](https://docs.github.com/en/code-security/code-scanning/troubleshooting-sarif-uploads/default-setup-enabled).
 
-Once the migration is complete, verify a newly opened PR has only Source
-integrity, then use a later authorized synchronization to verify all eleven
-existing validation jobs plus the three gated CodeQL languages. After the
-owner merges the main-push change, verify that the resulting main run has
-only the three CodeQL analyses executing and uploads to `refs/heads/main`.
-A skipped, cancelled or old run is not a new PASS. Keep initial-PR validation deferred
-while this PR is reviewed; do not add a validation label merely to open it.
+Verify that a new PR opens with Source integrity only. On a later authorized
+synchronization, require the existing eleven validation contexts and no CodeQL
+analysis runners. After owner integration, verify a main-push run executes all
+three analyses and uploads to its exact main SHA. A skipped, cancelled or old run
+is not a fresh PASS. Do not add an initial validation label or dispatch merely
+to open the policy PR.

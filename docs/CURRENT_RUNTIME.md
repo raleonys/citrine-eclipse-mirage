@@ -38,7 +38,8 @@ Four owner-supplied vendors remain active: Asio 1.39.0, MinHook 1.3.4,
 PEGTL 4 (4.0.2 header on the owner-uploaded 4.x snapshot), and pugixml 1.16.
 Selected archive bytes are immutable; current snapshot identities are in
 [VENDORING.md](VENDORING.md). The project XML
-compatibility layer preserves the previous depth-500 boundary and corrected
+compatibility layer uses the A12 depth-100 profile (98 paired levels accepted,
+99 rejected) and corrected
 reference decoding, with no TinyXML2 production fallback. See
 [XML_BACKEND_COMPARISON.md](XML_BACKEND_COMPARISON.md). SAFE-FREEZE applies only to the pinned MinHook build copy. Windows I/O
 uses standard filesystem/fstream and approved atomic persistence adapters.

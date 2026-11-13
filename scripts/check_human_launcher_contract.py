@@ -17,7 +17,7 @@ def check_build_wording(root):
     paths = []
     for directory in ('scripts', 'tools', 'cmake', 'src', 'include', '.github/workflows'):
         paths.extend((root / directory).rglob('*'))
-    paths.extend((root / 'metadata').glob('*.json'))
+    paths.extend(p for p in (root / 'metadata').glob('*') if p.suffix.lower() == '.json')
     paths.extend(root / name for name in ('CMakeLists.txt', 'CMakePresets.json'))
     errors = []
     for path in sorted(paths):
@@ -44,7 +44,8 @@ def check(root):
     root = Path(root)
     entries = json.loads((root / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').read_text())['entrypoints']
     expected = {e['launcher'] for e in entries}
-    actual = {p.relative_to(root).as_posix() for p in (root / 'scripts').rglob('*.cmd')}
+    actual = {p.relative_to(root).as_posix() for p in (root / 'scripts').rglob('*')
+              if p.is_file() and p.suffix.lower() == '.cmd'}
     errors = check_build_wording(root)
     if expected != actual:
         errors.append('Registered launcher set differs from actual CMD set')

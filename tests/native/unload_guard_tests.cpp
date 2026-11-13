@@ -10,6 +10,8 @@
 #include <iostream>
 #include <set>
 #include <stdexcept>
+#include <sstream>
+#include "../../tools/citrine_eclipse_mirage_runtime_host/unload_diagnostics.hpp"
 
 namespace fake {
 struct State {
@@ -94,7 +96,12 @@ SIZE_T WINAPI query(LPCVOID address,PMEMORY_BASIC_INFORMATION out,SIZE_T){
 #define CloseHandle fake::close
 #define GetThreadContext fake::context
 #define VirtualQuery fake::query
+// Compile-time tripwires: scanner output must never return to the critical path.
+#define WriteFile UNLOAD_GUARD_MUST_NOT_CALL_WriteFile
+#define GetStdHandle UNLOAD_GUARD_MUST_NOT_CALL_GetStdHandle
 #include "../../src/platform/hook_unload_guard.cpp"
+#undef WriteFile
+#undef GetStdHandle
 #undef GetModuleHandleExW
 #undef GetCurrentThreadId
 #undef GetCurrentProcessId
@@ -294,6 +301,118 @@ void tls_data_marker(){
     directory.Size=sizeof(IMAGE_TLS_DIRECTORY64);tls->StartAddressOfRawData=base+901;
     require(!scan(),"reversed TLS data range fails closed");
 }
+#ifndef NDEBUG
+namespace wire=citrine_eclipse_mirage::unload_diagnostics;
+namespace diagnostic=citrine_eclipse_mirage::tools::unload_diagnostics;
+bool copy_memory(std::uintptr_t address,void* out,std::size_t count) noexcept {
+    std::memcpy(out,reinterpret_cast<const void*>(address),count);return true;
 }
-int main()try{resume_retry();close_retry();other_failures();volatile_register_guard();scan_behavior();stack_region_refusals();oversized_stack_region();tls_data_marker();std::cout<<"PASS: "<<checks<<" actual unload guard failure/retry and stack checks\n";}
+wire::Snapshot scan_snapshot(){
+    wire::Snapshot value{};
+    require(wire::read_snapshot(reinterpret_cast<std::uintptr_t>(&citrine_eclipse_mirage::scan_record),diagnostic::read_image,value),
+            "quiescent actual scanner record is readable");
+    return value;
+}
+void diagnostic_publication(){
+    reset();auto& s=fake::state;
+    const auto before=scan_snapshot().sequence;
+    s.register_value=reinterpret_cast<std::uintptr_t>(s.image.data())+128;s.error=12345;
+    require(!scan()&&s.error==12345,"diagnostic publication preserves failing result and LastError");
+    auto value=scan_snapshot();
+    require(value.sequence==before+2&&value.reason==static_cast<std::uint64_t>(wire::Reason::image_register)&&
+            value.peer==11&&value.slot==10&&value.image_rva==128&&!value.suspended,
+            "actual scanner publishes exact peer, R11 index and image-relative offset after cleanup");
+    require(s.depth==0&&s.threads.empty()&&s.snapshots.empty(),"diagnostics retain no scan owners");
+    std::ostringstream output;output<<std::hex;
+    require(diagnostic::report(output,reinterpret_cast<std::uintptr_t>(&value),copy_memory)&&
+            output.str().find("reason=image-register peer=11 image_rva=0x80 slot=10")!=std::string::npos&&
+            (output.flags()&std::ios::basefield)==std::ios::hex,"host formats a stable record and restores stream flags");
+    s.register_value=0;s.resume_fail=true;
+    require(!scan(),"failed resume diagnostic setup");value=scan_snapshot();
+    require(value.reason==static_cast<std::uint64_t>(wire::Reason::resume)&&value.suspended==1&&s.depth==1,
+            "failed resume publishes retained ownership without releasing it");
+    output.str("");
+    require(!diagnostic::report(output,reinterpret_cast<std::uintptr_t>(&value),copy_memory)&&output.str().empty(),
+            "host suppresses output for a retained scanner-owned suspension");
+    s.resume_fail=false;s.peer=false;
+    require(scan(),"diagnostic case repairs exact pending owners");value=scan_snapshot();
+    require(value.reason==0&&!value.suspended,"successful retry replaces stale refusal");
+    require(!diagnostic::report(output,reinterpret_cast<std::uintptr_t>(&value),copy_memory)&&output.str().empty(),
+            "successful retry produces no refusal log");
+    SetLastError(12345);std::uintptr_t found=0;
+    require(!diagnostic::locate(nullptr,found)&&GetLastError()==12345,"failed host image read preserves LastError");
+}
+void diagnostic_reader_bounds(){
+    wire::Snapshot value{},out{};const auto address=reinterpret_cast<std::uintptr_t>(&value);
+    unsigned reads=0;
+    auto reader=[&](std::uintptr_t at,void* target,std::size_t count){++reads;return copy_memory(at,target,count);};
+    require(!wire::read_snapshot((std::numeric_limits<std::uintptr_t>::max)(),reader,out)&&reads==0,
+            "overflowing record address is rejected without reading");
+    value.sequence=1;
+    require(!wire::read_snapshot(address,reader,out)&&reads==3,"busy publisher is rejected after exactly three reads");
+    value.sequence=2;reads=0;
+    auto moving=[&](std::uintptr_t at,void* target,std::size_t count){
+        ++reads;if(count==sizeof(wire::Snapshot))value.sequence+=2;return copy_memory(at,target,count);
+    };
+    require(!wire::read_snapshot(address,moving,out)&&reads==9,"moving publisher is rejected after three bounded attempts");
+    for(unsigned invalid=0;invalid<6;++invalid){
+        value={};
+        switch(invalid){case 0:value.magic1=0;break;case 1:value.version=2;break;case 2:value.bytes=8;break;
+            case 3:value.reason=999;break;case 4:value.suspended=2;break;case 5:value.peer=1ULL<<32;break;}
+        require(!wire::read_snapshot(address,copy_memory,out),"malformed wire records are rejected");
+    }
+    value={};value.reason=static_cast<std::uint64_t>(wire::Reason::stack_budget);
+    std::ostringstream output;
+    auto unreadable=[](std::uintptr_t,void*,std::size_t){return false;};
+    require(!diagnostic::report(output,address,unreadable)&&output.str().empty(),"unreadable snapshot emits no partial report");
+    output.setstate(std::ios::badbit);output.exceptions(std::ios::goodbit);
+    require(!diagnostic::report(output,address,copy_memory),"failed host output remains best effort");
+    struct FailingBuffer:std::streambuf{int_type overflow(int_type) override{throw std::runtime_error("output fault");}} buffer;
+    std::ostream throwing(&buffer);throwing.exceptions(std::ios::badbit);
+    require(!diagnostic::report(throwing,address,copy_memory),"throwing host output cannot escape the diagnostic boundary");
+}
+void diagnostic_image_bounds(){
+    alignas(8) std::array<unsigned char,4096> image{};
+    const auto base=reinterpret_cast<std::uintptr_t>(image.data());
+    IMAGE_DOS_HEADER dos{};dos.e_magic=IMAGE_DOS_SIGNATURE;dos.e_lfanew=128;
+    IMAGE_NT_HEADERS64 nt{};nt.Signature=IMAGE_NT_SIGNATURE;nt.FileHeader.Machine=IMAGE_FILE_MACHINE_AMD64;
+    nt.FileHeader.NumberOfSections=1;nt.FileHeader.SizeOfOptionalHeader=sizeof(IMAGE_OPTIONAL_HEADER64);
+    nt.OptionalHeader.Magic=IMAGE_NT_OPTIONAL_HDR64_MAGIC;nt.OptionalHeader.SizeOfImage=image.size();
+    IMAGE_SECTION_HEADER section{};section.VirtualAddress=1024;section.Misc.VirtualSize=2048;
+    section.Characteristics=IMAGE_SCN_MEM_READ|IMAGE_SCN_MEM_WRITE;
+    const auto table=128+sizeof(DWORD)+sizeof(IMAGE_FILE_HEADER)+sizeof(IMAGE_OPTIONAL_HEADER64);
+    auto headers=[&]{std::memcpy(image.data(),&dos,sizeof dos);std::memcpy(image.data()+128,&nt,sizeof nt);
+                    std::memcpy(image.data()+table,&section,sizeof section);};headers();
+    wire::Snapshot value{};std::memcpy(image.data()+1024,&value,sizeof value);
+    unsigned reads=0;std::uintptr_t found=0;
+    auto reader=[&](std::uintptr_t at,void* target,std::size_t count){
+        ++reads;if(at<base||at-base>image.size()||count>image.size()-(at-base))return false;
+        return copy_memory(at,target,count);
+    };
+    require(diagnostic::find_record(base,reader,found)&&found==base+1024,"unique writable private image record is found");
+    std::memcpy(image.data()+1200,&value,sizeof value);
+    require(!diagnostic::find_record(base,reader,found),"ambiguous image records are rejected");
+    std::memset(image.data()+1200,0,sizeof value);
+    section.Characteristics|=IMAGE_SCN_MEM_EXECUTE;headers();
+    require(!diagnostic::find_record(base,reader,found),"executable image section cannot supply a diagnostic record");
+    section.Characteristics=IMAGE_SCN_MEM_READ;headers();
+    require(!diagnostic::find_record(base,reader,found),"read-only image section cannot supply a diagnostic record");
+    section.Characteristics|=IMAGE_SCN_MEM_WRITE;section.Misc.VirtualSize=4096;headers();
+    require(!diagnostic::find_record(base,reader,found),"out-of-image section is rejected before copying");
+    section.Misc.VirtualSize=2048;nt.FileHeader.SizeOfOptionalHeader=1;headers();
+    require(!diagnostic::find_record(base,reader,found),"truncated optional header is rejected");
+    nt.FileHeader.SizeOfOptionalHeader=sizeof(IMAGE_OPTIONAL_HEADER64);nt.OptionalHeader.SizeOfImage=16*1024*1024;
+    section.Misc.VirtualSize=9*1024*1024;headers();reads=0;
+    require(!diagnostic::find_record(base,reader,found)&&reads==3,"oversized section is rejected before any section payload read");
+    dos.e_magic=0;headers();reads=0;
+    require(!diagnostic::find_record(base,reader,found)&&reads==1,"invalid DOS header terminates image search immediately");
+}
+#endif
+
+}
+int main()try{resume_retry();close_retry();other_failures();volatile_register_guard();scan_behavior();stack_region_refusals();oversized_stack_region();tls_data_marker();
+#ifndef NDEBUG
+diagnostic_publication();diagnostic_reader_bounds();diagnostic_image_bounds();
+#endif
+std::cout<<"PASS: "<<checks<<" actual unload guard failure/retry and stack checks\n";}
 catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}

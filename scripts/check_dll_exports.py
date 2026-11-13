@@ -17,14 +17,30 @@ def check_source(root):
     lines = (root / 'exports/citrine_eclipse_mirage.def').read_text().splitlines()
     expected = {name: record['ordinal'] for name, record in policy['exports'].items()}
     actual = {}
+    library_seen = False
+    exports_seen = False
     for line in lines:
         line = line.strip()
-        if not line or line.startswith(';') or line == 'EXPORTS' or line == 'LIBRARY "citrine_eclipse_mirage.unsigned.dll"':
+        if not line or line.startswith(';'):
             continue
+        if line == 'LIBRARY "citrine_eclipse_mirage.unsigned.dll"':
+            if library_seen or exports_seen:
+                return ['Missing, duplicate or out-of-order application DEF header: LIBRARY']
+            library_seen = True
+            continue
+        if line == 'EXPORTS':
+            if not library_seen or exports_seen:
+                return ['Missing, duplicate or out-of-order application DEF header: EXPORTS']
+            exports_seen = True
+            continue
+        if not exports_seen:
+            return ['Application DEF export before required header: ' + line]
         match = re.fullmatch(r'(\w+)\s+@(\d+)', line)
         if not match or match[1] in actual:
             return ['Invalid or duplicate application DEF declaration: '+line]
         actual[match[1]] = int(match[2])
+    if not library_seen or not exports_seen:
+        return ['Missing application DEF LIBRARY or EXPORTS header']
     return [] if actual == expected else ['Application DEF differs from public C ABI contract']
 
 

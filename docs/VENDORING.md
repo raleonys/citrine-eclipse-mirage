@@ -117,8 +117,12 @@ Pugixml is compiled directly from the complete, unmodified 191-file owner
 archive. Its MIT license and member hashes are included. Project grammar,
 checked reference decoding, diagnostic text and depth handling live in
 `src/xml/reader_policy.cpp` and `reader_values.cpp`, behind the unchanged reader
-interface. The legacy depth contract remains: 498 nested elements succeed and
-499 fail with error 18. This is a project policy, not a pugixml vendor patch.
+interface. The owner-requested A12 depth-100 profile accepts 98 paired nested
+elements and rejects the 99th entered child list with error 18. A self-closed
+leaf at level 99 remains valid; malformed-attribute and EOF error priority are
+preserved. This replaces the previous depth-500 profile (498/499 boundary). It
+is first-party policy, not a pugixml requirement or vendor patch. See
+[A12_DEVIATIONS.md](A12_DEVIATIONS.md) for rationale and remaining differences.
 
 The previous TinyXML2 lock/member list remains historical provenance in
 `retired_vendor_inputs`; its active tree and build input are removed. Git
@@ -156,6 +160,15 @@ retain C17. The VDF byte-sequence rules retain their character-pack API for
 CRLF, line comments and block-comment termination. Their byte sequences, action
 ordering, error mapping and grammar policy are unchanged. Vendor headers are
 unmodified. The unselected main snapshot requires C++23 and is not substituted.
+
+The toolchain-status reader requires exactly one active record for
+`CITRINE_ECLIPSE_MIRAGE_PEGTL_PUBLIC_INPUT_WORKS`, with type `INTERNAL`.
+The exact value `1` returns diagnostic exit 0 and directs the caller to run
+`vendor_pegtl_smoke`; it does not replace that execution. Empty or `0` returns
+`UNAVAILABLE` with CTest skip code 77. Missing or repeated records, wrong types
+and malformed values return `INVALID` with exit 1, so corrupted evidence cannot
+become a normal skip. Repeated logical keys remain ambiguous even when their
+types differ. Comment lines and unrelated prefixed keys are not probe records.
 
 The PEGTL public-input probe runs with Linux/GCC. The following compiler
 observations describe the earlier snapshot; fresh results for the selected

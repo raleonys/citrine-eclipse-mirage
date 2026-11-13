@@ -8,6 +8,78 @@ import re
 from project_files import vendor_symlinks, source_payload, alias_payload, load_unique_json
 
 
+def mask_cpp_noncode(source):
+    """Preserve code/newline positions while masking C++ comments and literals.
+
+    This is a bounded lexical prepass, not a replacement for native compilation.
+    """
+    masked = list(source)
+    length = len(source)
+
+    def blank(start, end):
+        for offset in range(start, end):
+            if source[offset] not in "\r\n":
+                masked[offset] = " "
+
+    index = 0
+    while index < length:
+        if source.startswith("//", index):
+            end = source.find("\n", index)
+            # C++20 removes backslash-newline before recognizing line comments.
+            while end >= 0:
+                last = end - 1
+                if last >= index and source[last] == "\r":
+                    last -= 1
+                if last < index or source[last] != "\\":
+                    break
+                end = source.find("\n", end + 1)
+            end = length if end < 0 else end
+            blank(index, end)
+            index = end
+        elif source.startswith("/*", index):
+            end = source.find("*/", index + 2)
+            end = length if end < 0 else end + 2
+            blank(index, end)
+            index = end
+        elif source.startswith('R"', index):
+            opening = source.find("(", index + 2, min(length, index + 19))
+            if (opening >= 0 and
+                    all(char not in "\r\n\t ()\\" for char in source[index + 2:opening])):
+                terminator = ")" + source[index + 2:opening] + '"'
+                end = source.find(terminator, opening + 1)
+                end = length if end < 0 else end + len(terminator)
+                blank(index, end)
+                index = end
+            else:
+                index += 1
+        elif ((source[index] in "0123456789" or
+               (source[index] == "." and index + 1 < length and
+                source[index + 1] in "0123456789")) and
+              (index == 0 or not (source[index - 1].isalnum() or source[index - 1] == "_"))):
+            # Consume pp-numbers without masking them. Their apostrophes are
+            # digit separators, not character-literal openers. The boundary
+            # check also keeps the u8 prefix of character/raw literals intact.
+            number = re.match(r"(?:[0-9]|\.[0-9])(?:[eEpP][+-]|[\w.]|'\w)*", source[index:])
+            index += number.end()
+        elif source[index] in ("'", '"'):
+            quote = source[index]
+            end = index + 1
+            while end < length:
+                if source[end] == "\\":
+                    end += 2
+                elif source[end] == quote:
+                    end += 1
+                    break
+                else:
+                    end += 1
+            end = min(end, length)
+            blank(index, end)
+            index = end
+        else:
+            index += 1
+    return "".join(masked)
+
+
 def verify(root):
     manifest=load_unique_json(root/'metadata/SOURCE_FILES.json')
     errors=[]
@@ -50,8 +122,9 @@ def verify(root):
         if not name.startswith('third_party/') and any(part.endswith('-source') or part=='recovered' for part in Path(name).parts):
             errors.append('Raw RE module directory in project: '+name)
         if name.startswith(('src/','include/')):
-            text=(root/name).read_text()
-            qualified=re.findall(r'\bnamespace\s+([A-Za-z_]\w*(?:::\w+)+)\s*\{',text)
+            text=(root/name).read_text(encoding='utf-8')
+            qualified=re.findall(r'\bnamespace\s+([A-Za-z_]\w*(?:::\w+)+)\s*\{',
+                                 mask_cpp_noncode(text))
             if any(value.split('::',1)[0]!='citrine_eclipse_mirage' for value in qualified):
                 errors.append('Foreign first-party namespace: '+name)
     return {'status':'FAIL' if errors else 'PASS','files_checked':len(expected),

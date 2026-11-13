@@ -449,6 +449,59 @@ static void status_and_cleanup() {
         throws<Injected>([&]{o::cleanup_0366f0(state.refs(),m);});CHECK(state.object==0);CHECK(state.module==99);
     }
 }
+struct CacheFailureEffects final:Mock {
+    std::vector<o::Object> destroyed;
+    std::vector<o::Module> freed;
+    void destroy_virtual_00(o::Object value)override{Mock::destroy_virtual_00(value);destroyed.push_back(value);}
+    bool free_library(o::Module value)override{const auto result=Mock::free_library(value);freed.push_back(value);return result;}
+};
+static void cache_failure_ownership_and_retry() {
+    for(const auto [authenticated,point]:{std::pair{false,"status-avatar"},std::pair{false,"read"},
+                                         std::pair{true,"status-avatar"},std::pair{true,"write"}}) {
+        State state;CacheFailureEffects m;state.use_last=1;
+        m.auth_status=authenticated?0:1;m.free_result=true;
+        m.statuses[state.cookie]={2,0,0};m.statuses[state.last_avatar]={2,0,0};
+        m.written="previous-cache";m.fail=point;
+        const auto old_object=m.created,old_module=m.loaded;
+        throws<Injected>([&]{o::worker_035b60(state.refs(),m);});
+        CHECK(m.calls.back()==point&&!m.called("finish"));
+        CHECK(state.online==authenticated&&state.object==old_object&&state.module==old_module&&m.mode==0x20);
+        CHECK(m.destroyed.empty()&&m.freed.empty());
+        CHECK(state.username==(authenticated?m.name:"old-name"));
+        CHECK(state.persona==(authenticated?m.persona:"old-persona"));
+        CHECK(state.user==(authenticated?m.user:"old-user"));
+        const bool avatar_applied=std::string_view(point)=="read"||std::string_view(point)=="write";
+        CHECK(state.avatar==(avatar_applied?state.last_avatar:u"old-avatar"));
+        CHECK(m.written=="previous-cache"); // This controlled effect throws before writing.
+        o::cleanup_0366f0(state.refs(),m);
+        CHECK(state.object==0&&state.module==0);
+        CHECK(m.destroyed==std::vector<o::Object>{old_object}&&m.freed==std::vector<o::Module>{old_module});
+        o::cleanup_0366f0(state.refs(),m);
+        CHECK(m.destroyed.size()==1&&m.freed.size()==1&&!m.called("finish"));
+        // The owning Provider clears its online byte after cleanup. The source
+        // cleanup helper deliberately leaves that byte unchanged; do not treat
+        // worker reentry with still-live tokens as a supported retry protocol.
+        state.online=0;m.fail.clear();m.calls.clear();
+        m.created=old_object+1;m.loaded=old_module+1;
+        m.name="retry-name";m.persona="retry-persona";m.user="retry-user";
+        m.read_value="retry-persona;retry-user;retry-name";
+        m.inspect=[&](std::string_view event){if(event=="finish"){
+            CHECK(state.username=="retry-name"&&state.persona=="retry-persona"&&state.user=="retry-user");
+            CHECK(state.avatar==state.last_avatar&&state.online==authenticated);
+            CHECK(state.object==(authenticated?m.created:0)&&state.module==(authenticated?m.loaded:0));
+            CHECK(m.called("read")==!authenticated&&m.called("write")==authenticated);
+            CHECK(m.destroyed.size()==(authenticated?1u:2u)&&m.freed.size()==(authenticated?1u:2u));
+            if(authenticated)CHECK(m.written=="retry-persona;retry-user;retry-name");
+        }};
+        o::worker_035b60(state.refs(),m);
+        CHECK(m.calls.back()=="finish"&&std::count(m.calls.begin(),m.calls.end(),"finish")==1);
+        CHECK(m.called("name")==authenticated);
+        o::cleanup_0366f0(state.refs(),m);o::cleanup_0366f0(state.refs(),m);
+        CHECK((m.destroyed==std::vector<o::Object>{old_object,m.created}));
+        CHECK((m.freed==std::vector<o::Module>{old_module,m.loaded}));
+        CHECK(state.object==0&&state.module==0);
+    }
+}
 static void exceptions() {
     for(auto fail:{"widen","parent","join","load"}) {
         State state;Mock m;m.fail=fail;
@@ -581,7 +634,7 @@ static void cookie_release_before_status() {
     }
 }
 int main() {
-    try {entry_branches();live_profile();profile_copy_allocation_failures();borrowed_profile_copy_ownership();cache_delimiter_integrity();offline_profile();malformed_cache_allocation_budget();split_cases();status_and_cleanup();exceptions();
+    try {entry_branches();live_profile();profile_copy_allocation_failures();borrowed_profile_copy_ownership();cache_delimiter_integrity();offline_profile();malformed_cache_allocation_budget();split_cases();status_and_cleanup();exceptions();cache_failure_ownership_and_retry();
 #if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ONLINE_TESTS)
         composition();
 #endif

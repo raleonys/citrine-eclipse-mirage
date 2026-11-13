@@ -108,10 +108,30 @@ void errors_and_depth() {
         std::string input;for(unsigned i=0;i<depth;++i)input+="<R>";
         for(unsigned i=0;i<depth;++i)input+="</R>";
         const auto parsed=backend.parse_c_string(input);
-        // Supplied unmodified vendor uses 500; ParseDeep also counts the document.
-        // This intentionally replaces the older RE copy's 100-limit profile.
-        check(parsed.returned_code==(depth>=499?18:0),"established project depth boundary");
+        // A12's depth-100 profile counts the document and entered child lists.
+        check(parsed.returned_code==(depth>=99?18:0),"A12 paired-element depth boundary");
+        check(parsed.has_error==(depth>=99),"depth error flag agrees with status");
+        if(depth>=99)check(!parsed.document->first_element(),"depth rejection exposes no partial DOM");
     }
+    std::string open,close,legacy;
+    for(unsigned i=0;i<98;++i){open+="<R>";legacy+="< R>";close+="</R>";}
+    constexpr std::string_view depth_error="Error=XML_ELEMENT_DEPTH_EXCEEDED ErrorID=18 (0x12) Line number=1: Element nesting is too deep.";
+    for(const auto& prefix:{open,legacy}) {
+        check(!backend.parse_c_string(prefix+"<L/>"+close).has_error,"depth-99 self-closed leaf remains accepted");
+        auto entered=backend.parse_c_string(prefix+"<L><C/></L>"+close);
+        check(entered.returned_code==18&&entered.document->error_name()==depth_error,"entered child list has exact A12 depth diagnostic");
+        check(backend.parse_c_string(prefix+"<L>").returned_code==14,"EOF mismatch precedes a child-list depth check");
+        check(backend.parse_c_string(prefix+"<L a=>").returned_code==7,"attribute failure precedes a child-list depth check");
+    }
+    {
+        vendor_allocations::Hooks hooks;
+        vendor_allocations::begin(1);
+        auto rejected=backend.parse_c_string(open+"<L><C/></L>"+close);
+        vendor_allocations::end();
+        check(rejected.returned_code==18&&!rejected.document->first_element(),"depth is rejected before DOM parsing");
+        check(vendor_allocations::calls==0&&!vendor_allocations::injected,"depth rejection does not request pugixml storage");
+    }
+    check(!backend.parse_c_string("<R/>").has_error,"valid parse succeeds after depth rejections");
 }
 void numeric_character_reference_bounds() {
     // C33 security applicability: exercise the actual production XML

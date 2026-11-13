@@ -5,6 +5,7 @@ from pathlib import Path
 import hashlib
 import json
 import shutil
+import subprocess
 import stat
 import sys
 import tempfile
@@ -25,6 +26,45 @@ import hook_cleanup_control as cleanup_control
 
 
 class VendorTests(unittest.TestCase):
+    def test_pegtl_toolchain_status_requires_single_active_cache_record(self):
+        key = 'CITRINE_ECLIPSE_MIRAGE_PEGTL_PUBLIC_INPUT_WORKS'
+        probe = key + ':INTERNAL='
+        fixtures = (
+            ('valid', probe + '1\n', 0),
+            ('unavailable_empty', probe + '\n', 77),
+            ('unavailable_zero', probe + '0\n', 77),
+            ('commented_success', '// ' + probe + '1\n' + probe + '\n', 77),
+            ('prefixed_success', 'UNRELATED_' + probe + '1\n' + probe + '0\n', 77),
+            ('suffix_spoof', probe + '10\n', 1),
+            ('duplicate_success', probe + '1\n' + probe + '0\n', 1),
+            ('missing', 'OTHER:INTERNAL=1\n', 1),
+            ('bare_comment', '// ' + probe + '1\n', 1),
+            ('malformed', probe + 'TRUE\n', 1),
+            ('wrong_type', key + ':BOOL=1\n', 1),
+            ('mixed_type_duplicate', probe + '1\n' + key + ':BOOL=0\n', 1),
+            ('identical_duplicate', probe + '1\n' + probe + '1\n', 1),
+            ('duplicate_unavailable', probe + '\n' + probe + '0\n', 1),
+            ('untyped', key + '=1\n', 1),
+            ('mixed_untyped_duplicate', probe + '1\n' + key + '=0\n', 1),
+            ('mixed_malformed_record', probe + '1\n' + key + ':INTERNAL\n', 1),
+            ('valid_crlf', probe + '1\r\n', 0),
+            ('hash_commented_success', '# ' + probe + '1\n' + probe + '0\n', 77),
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            cache = Path(tmp) / 'CMakeCache.txt'
+            for label, content, expected in fixtures:
+                with self.subTest(label=label):
+                    cache.write_text(content, encoding='utf-8')
+                    completed = subprocess.run(
+                        [sys.executable, '-B', str(ROOT / 'scripts/vendor_toolchain_status.py'),
+                         str(cache)], capture_output=True, text=True, timeout=30)
+                    self.assertEqual(expected, completed.returncode,
+                                     completed.stdout + completed.stderr)
+                    self.assertIn(
+                        'run vendor_pegtl_smoke' if expected == 0 else
+                        'UNAVAILABLE' if expected == 77 else 'INVALID',
+                        completed.stdout)
+
     def test_cleanup_controls_remove_only_one_guard_from_exact_verified_source(self):
         cmake = shutil.which('cmake')
         if not cmake:

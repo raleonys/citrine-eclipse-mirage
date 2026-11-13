@@ -114,10 +114,11 @@ Issue #109's Registry provenance and original-donor retirement remain open.
 | [REMAINING_WORK.md](REMAINING_WORK.md) | Review | [SOURCE_DIFFERENTIAL_B49_B54.md](SOURCE_DIFFERENTIAL_B49_B54.md) |
 | [REPOSITORY_BADGES_AND_OPENING_CI.md](REPOSITORY_BADGES_AND_OPENING_CI.md) | Current | [../.github/workflows/repository-badges.yml](../.github/workflows/repository-badges.yml) |
 | [RE_A11_09_REGISTRY_HKEY_BOUNDARY.md](RE_A11_09_REGISTRY_HKEY_BOUNDARY.md) | Review | [../src/platform/registry.cpp](../src/platform/registry.cpp) |
-| [PR_REVIEW_FOLLOWUPS.md](PR_REVIEW_FOLLOWUPS.md) | Review | [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md) |
+| [A12_DEVIATIONS.md](A12_DEVIATIONS.md) | Review | [XML_BACKEND_COMPARISON.md](XML_BACKEND_COMPARISON.md) |
 | [RE_COPY_RECOVERY.md](RE_COPY_RECOVERY.md) | Current | [../src/platform/file_copy.cpp](../src/platform/file_copy.cpp) |
 | [RE_INPUT_REVIEW.md](RE_INPUT_REVIEW.md) | Checkpoint | [REMAINING_WORK.md](REMAINING_WORK.md) |
 | [ROOT_LAYOUT_AND_BUILD_OWNERSHIP.md](ROOT_LAYOUT_AND_BUILD_OWNERSHIP.md) | Current | [../CMakeLists.txt](../CMakeLists.txt) |
+| [RUNTIME_BENCHMARKS.md](RUNTIME_BENCHMARKS.md) | Current | [../tests/diagnostics/runtime_load/run.py](../tests/diagnostics/runtime_load/run.py) |
 | [RUNTIME_BINDING.md](RUNTIME_BINDING.md) | Checkpoint | [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md) |
 | [RUNTIME_CONNECTIONS.csv](RUNTIME_CONNECTIONS.csv) | Checkpoint | [RUNTIME_CONNECTIONS.md](RUNTIME_CONNECTIONS.md) |
 | [RUNTIME_CONNECTIONS.md](RUNTIME_CONNECTIONS.md) | Checkpoint | [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md) |
@@ -151,3 +152,5 @@ A Markdown/link/contract check cannot decide whether every explanatory sentence
 is semantically current. Continue source-backed review after relevant changes.
 The remaining donor and Consumer questions are recorded in
 [REMAINING_WORK.md](REMAINING_WORK.md), not erased by this documentation pass.
+
+| [PR_REVIEW_FOLLOWUPS.md](PR_REVIEW_FOLLOWUPS.md) | Review | Consolidated Archive 12 comparisons and remaining research gates |

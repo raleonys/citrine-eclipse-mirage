@@ -12,7 +12,7 @@ earlier five-vendor target list by explicit owner instruction.
 | Gulrak usage | No longer present in application, includes, targets, or test backend |
 | Gulrak vendor | `third_party/filesystem`, CMake interface target, include dependency, and current lock entry removed |
 | I/O tests | Unicode/binary/rename/remove/error checks preserved with standard filesystem |
-| Active vendors | Asio, MinHook, PEGTL, pugixml; exact owner-archive member hashes retained; first-party XML policy preserves the depth-500 boundary |
+| Active vendors | Asio, MinHook, PEGTL, pugixml; exact owner-archive member hashes retained; first-party XML policy selects the A12 depth-100 profile |
 | Asio diagnostics | Brownfield `_WIN32_WINNT=0x0601` / `WINVER=0x0601` definitions propagated to consumers |
 
 The owner's original Gulrak archive and prior source packages remain preserved
