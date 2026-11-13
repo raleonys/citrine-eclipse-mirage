@@ -28,14 +28,14 @@ def canonicalize_generated_hook(output, expected_sha256):
 
 def checked_policy(root, expected):
     policy=json.loads((root/'metadata/HOOK_ENGINE_PATCH.json').read_text())
-    if set(policy['patch_modules'])!={'cmake/PatchHookCompletion.cmake'}:
+    if set(policy['patch_modules'])!={'cmake/PatchHookCompletion.cmake','cmake/PatchHookRelocator.cmake'}:
         raise ValueError('Hook engine patch module policy mismatch')
     scripts={policy['patch_script']:policy['patch_script_sha256'], **policy['patch_modules']}
     for name, digest in scripts.items():
         if sha(root/name)!=digest:
             raise ValueError('Hook engine patch script hash mismatch: '+name)
     outputs=policy['output_files']
-    if set(outputs)!={'src/hook.c','src/buffer.c','src/buffer.h'} or outputs['src/hook.c']!=policy['output_hook_sha256']:
+    if set(outputs)!={'src/hook.c','src/buffer.c','src/buffer.h','src/trampoline.c'} or outputs['src/hook.c']!=policy['output_hook_sha256']:
         raise ValueError('Hook engine patch output policy mismatch')
     if expected['src/hook.c']!=policy['input_hook_sha256']:
         raise ValueError('Hook engine patch input mismatch')

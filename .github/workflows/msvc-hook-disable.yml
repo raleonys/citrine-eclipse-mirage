@@ -41,12 +41,12 @@ jobs:
       - name: Build actual patched engine and upstream comparison tests
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target unload_guard_contracts cleanup_retry_contracts hook_transaction_contracts application_runtime_contracts application_shutdown_failure_contracts hook_retirement_peer_contracts hook_completion_contracts hook_freeze_contracts hook_engine_fixture_tests hook_real_peer_contracts hook_real_peer_stale_control hook_live_calls_contracts hook_thread_churn_contracts hook_cleanup_create_control hook_cleanup_remove_control hook_cleanup_enable_control hook_cleanup_queue_control hook_cleanup_apply_control --parallel 2 2>&1 | Tee-Object -FilePath "$build/hook-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target unload_guard_contracts cleanup_retry_contracts hook_transaction_contracts application_runtime_contracts application_shutdown_failure_contracts hook_retirement_peer_contracts hook_completion_contracts hook_relocator_contracts hook_freeze_contracts hook_engine_fixture_tests hook_real_peer_contracts hook_real_peer_stale_control hook_live_calls_contracts hook_thread_churn_contracts hook_cleanup_create_control hook_cleanup_remove_control hook_cleanup_enable_control hook_cleanup_queue_control hook_cleanup_apply_control --parallel 2 2>&1 | Tee-Object -FilePath "$build/hook-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC hook build failed' }
       - name: Bind focused test binaries to their source commit
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
-          $targets = @('unload_guard_contracts','cleanup_retry_contracts','hook_transaction_contracts','application_runtime_contracts','application_shutdown_failure_contracts','hook_retirement_peer_contracts','hook_completion_contracts','hook_freeze_contracts','hook_engine_fixture_tests','hook_real_peer_contracts',
+          $targets = @('unload_guard_contracts','cleanup_retry_contracts','hook_transaction_contracts','application_runtime_contracts','application_shutdown_failure_contracts','hook_retirement_peer_contracts','hook_completion_contracts','hook_relocator_contracts','hook_freeze_contracts','hook_engine_fixture_tests','hook_real_peer_contracts',
             'hook_real_peer_stale_control','hook_live_calls_contracts','hook_cleanup_create_control',
             'hook_cleanup_remove_control','hook_cleanup_enable_control','hook_cleanup_queue_control',
             'hook_cleanup_apply_control','hook_thread_churn_contracts')
@@ -60,7 +60,7 @@ jobs:
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
           $junit = Join-Path (Resolve-Path $build) 'hook-junit.xml'
-          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(unload_guard_contracts|cleanup_retry_contracts|hook_transaction_contracts|application_runtime_contracts|application_shutdown_failure_contracts|hook_retirement_peer_contracts|hook_completion_contracts|hook_freeze_contracts|hook_engine_fixtures|hook_real_peer_contracts|hook_real_peer_stale_control|hook_live_calls_contracts|hook_thread_churn_contracts|hook_cleanup_(create|remove|enable|queue|apply)_control)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/hook-ctest.log"
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(unload_guard_contracts|cleanup_retry_contracts|hook_transaction_contracts|application_runtime_contracts|application_shutdown_failure_contracts|hook_retirement_peer_contracts|hook_completion_contracts|hook_relocator_contracts|hook_freeze_contracts|hook_engine_fixtures|hook_real_peer_contracts|hook_real_peer_stale_control|hook_live_calls_contracts|hook_thread_churn_contracts|hook_cleanup_(create|remove|enable|queue|apply)_control)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/hook-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC hook regression failed' }
       - name: Preserve native hook evidence
         if: always()
@@ -76,6 +76,7 @@ jobs:
             build/ci-hook-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
             build/ci-hook-${{ matrix.configuration }}/vendor_build/minhook/src/hook.c
             build/ci-hook-${{ matrix.configuration }}/vendor_build/minhook/src/buffer.c
+            build/ci-hook-${{ matrix.configuration }}/vendor_build/minhook/src/trampoline.c
             build/ci-hook-${{ matrix.configuration }}/vendor_build/minhook/src/buffer.h
             build/ci-hook-${{ matrix.configuration }}/test_controls/minhook/src/hook.c
             build/ci-hook-${{ matrix.configuration }}/test_controls/hook_cleanup/

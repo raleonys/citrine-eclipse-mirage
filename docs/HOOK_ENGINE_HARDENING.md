@@ -1,5 +1,29 @@
 # Hook engine ownership and provenance
 
+## Trampoline relocation hardening
+
+`cmake/PatchHookRelocator.cmake` applies a separate, pinned transform to the
+staged `src/trampoline.c`. Its output matches the relocator from owner-fork
+commit `3c7c88ca220d9105cd45edf69153e7e5a310bc3c`. Original vendor source,
+decoder inputs and the public ABI remain unchanged.
+
+RIP-relative displacement arithmetic now checks the signed 32-bit range;
+address-size-prefixed EIP-relative arithmetic retains its 32-bit wrap.
+Only legacy `0F 8x` encodings enter the long conditional-branch rewrite, so
+VEX memory instructions are preserved. Unhandled decoder-marked relative
+instructions, including XBEGIN, are rejected. Code and padding are read into
+bounded buffers with VirtualQuery and ReadProcessMemory; missing instruction
+bytes and inaccessible trailing pages cause refusal instead of a direct read.
+The scratch buffer is initialized before decoding a partial readable span.
+
+The policy now independently pins both additional modules and all four modified
+members. `hook_relocator_contracts` exercises the actual staged relocator.
+Fork corpus tests and benchmarks belong to their own exact fork revision;
+native Citrine execution is established separately by its focused workflow.
+Caller ownership of target mappings and protection against concurrent foreign
+code modification remain required. These checks do not establish arbitrary
+instruction, unwind, CFG or CET compatibility.
+
 The owner selected the Brownfield SAFE-FREEZE implementation and vendor commit
 traceability. Application behavior and the three production exports retain their
 existing contracts. This document records the scoped lifecycle addition; it does

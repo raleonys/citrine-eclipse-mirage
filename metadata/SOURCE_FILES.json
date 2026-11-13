@@ -1230,8 +1230,8 @@
       "sha256": "5dc42178808bad041df976fceeb31a664c52668988c9f299f2184fdb45c8972e"
     },
     "tests/infrastructure/test_hook_disable_action.py": {
-      "bytes": 5807,
-      "sha256": "7f5107def7a8ed4fd9f609e2a558d435e5968083195cc5971a1d60bc3bd52ded"
+      "bytes": 5924,
+      "sha256": "b6bc8acf7f71e34cd8dca9fb48f2586964a30fd559ca247ee09bc3e8d3cfd892"
     },
     "tests/infrastructure/test_infrastructure.py": {
       "bytes": 199698,
@@ -1270,8 +1270,8 @@
       "sha256": "f7070b8f72d5c2881c146b3e875a2df498d5ab8f93cf4073aea9e578b62ebfbc"
     },
     "tests/infrastructure/test_vendor_contract.py": {
-      "bytes": 33800,
-      "sha256": "2ea84c08790702b6171cccd024459a955ef5a3a5efdd9cb535b7814cf74be2a6"
+      "bytes": 34454,
+      "sha256": "59f878def013d46032566a7a5968af9b2595ba1caa7039d211c0c2a954f06872"
     },
     "tests/infrastructure/test_weekly_release.py": {
       "bytes": 45127,
@@ -1372,6 +1372,10 @@
     "tests/native/hook_real_peer_tests.cpp": {
       "bytes": 14749,
       "sha256": "b3fdf6f0b75b9890c3c38719a7d70d6a18212b8aadda6db2fc442541ec21b14f"
+    },
+    "tests/native/hook_relocator_tests.c": {
+      "bytes": 2513,
+      "sha256": "aa20f9a38340697aa389de025947b9a9a14015924e7980db9f8ff5582069164e"
     },
     "tests/native/hook_retirement_peer_tests.cpp": {
       "bytes": 4175,

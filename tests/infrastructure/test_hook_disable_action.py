@@ -82,6 +82,8 @@ class SingleHookDisableIP(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             target = Path(temp) / 'hook.c'
             target.write_bytes(original)
+            (Path(temp) / 'trampoline.c').write_bytes(
+                (DONOR.parent / 'trampoline.c').read_bytes())
             subprocess.run([executable, '-DMINHOOK_HOOK_C=' + str(target),
                             '-P', str(PATCH)], check=True, capture_output=True, timeout=30)
             result = target.read_bytes().replace(b'\r\n', b'\n')

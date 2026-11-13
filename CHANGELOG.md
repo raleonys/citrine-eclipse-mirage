@@ -4,6 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
+- Harden trampoline instruction relocation: reject overflowing RIP displacements and unsupported relative instructions, preserve VEX instruction classification and EIP wrapping, and read code/padding through bounded Windows memory queries. Pin the new build-copy transform and add native regressions while preserving all original vendor bytes.
 - Harden the verified MinHook build copy without changing vendor inputs: track per-page protection and instruction-cache completion, preserve written state and failed cleanup owners, prevent generated-code retirement while peer registers/stacks still reference it, and retry partial buffer/heap shutdown. Add injected failure/page-boundary regressions and a real Windows suspended-peer retirement fixture; retain the public ABI, adapter contract and focused validation scheduling.
 
 ## Integrated development history

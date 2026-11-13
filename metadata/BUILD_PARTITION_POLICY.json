@@ -323,6 +323,7 @@
     "hash_contracts",
     "hook_freeze_contracts",
     "hook_completion_contracts",
+    "hook_relocator_contracts",
     "hook_retirement_peer_contracts",
     "hook_live_calls_contracts",
     "hook_real_peer_contracts",

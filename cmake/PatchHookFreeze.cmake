@@ -545,4 +545,5 @@ _guard_public_mutation("static MH_STATUS QueueHook(LPVOID pTarget, BOOL queueEna
 _guard_public_mutation("MH_STATUS WINAPI MH_ApplyQueued(VOID)")
 
 include("${CMAKE_CURRENT_LIST_DIR}/PatchHookCompletion.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/PatchHookRelocator.cmake")
 file(WRITE "${MINHOOK_HOOK_C}" "${_mh}")
