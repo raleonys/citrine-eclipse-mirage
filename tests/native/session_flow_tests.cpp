@@ -5,6 +5,7 @@
 #include "citrine_eclipse_mirage/net/session_handler.hpp"
 #include "citrine_eclipse_mirage/xml/reader.hpp"
 #include "citrine_eclipse_mirage/handlers/misc_handlers.hpp"
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <new>
@@ -37,11 +38,15 @@ using namespace std::chrono_literals;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
-struct Stats {unsigned committed=0,retried=0,destroyed=0;};
+struct Stats {unsigned committed=0,retried=0,destroyed=0,commit_attempts=0;bool accept_commit=true;};
 struct Receipt final:srv::DeliveryReceipt {
     Stats& stats;explicit Receipt(Stats& s):stats(s){}
     ~Receipt(){++stats.destroyed;}
-    bool finish(bool success)noexcept override{if(success)++stats.committed;else ++stats.retried;return true;}
+    bool finish(bool success)noexcept override{
+        if(success){++stats.commit_attempts;if(!stats.accept_commit)return false;++stats.committed;}
+        else ++stats.retried;
+        return true;
+    }
 };
 struct Handler final:srv::Handler {
     Stats stats;unsigned processed=0;std::string response=std::string("reply\0event\0",12);
@@ -59,7 +64,7 @@ struct Handler final:srv::Handler {
 };
 struct DispatchRefused {};
 struct Scheduler final:srv::Scheduling {
-    std::deque<std::function<void()>> io,jobs;bool failed=false,refuse_dispatch=false;unsigned dispatches=0;
+    std::deque<std::function<void()>> io,jobs;bool failed=false,refuse_dispatch=false;unsigned dispatches=0,failures=0;srv::Error failure{};
     std::size_t frame_limit=8,response_limit=16;
     void post_io(std::function<void()> fn)override{io.push_back(std::move(fn));}
     void launch_detached(std::function<void()> fn)override{jobs.push_back(std::move(fn));}
@@ -68,7 +73,7 @@ struct Scheduler final:srv::Scheduling {
     bool async_greeting()const override{return true;}
     std::size_t max_frame_bytes()const override{return frame_limit;}
     std::size_t max_response_bytes()const override{return response_limit;}
-    void fail_session(srv::Error)override{failed=true;}
+    void fail_session(srv::Error error)override{failed=true;++failures;failure=error;}
     void log_error(std::string_view,srv::Error)override{}
     [[noreturn]]void raise_write_error(srv::Error)override{throw std::runtime_error("unexpected sync greeting");}
     void drain(){while(!io.empty()){auto fn=std::move(io.front());io.pop_front();fn();}}
@@ -150,6 +155,50 @@ void failure_and_buffer_lifetime() {
     {Fixture f;bool failed=false;try{f.transport.deliver("12345678");}catch(const std::length_error&){failed=true;}
      require(failed&&f.handler.processed==0,"unterminated full frame is rejected");}
     {Fixture f;f.transport.deliver(std::string("1234567\0",8));f.scheduling.drain();require(f.scheduling.jobs.size()==1,"exact-limit terminated frame is admitted");}
+}
+// Socket completion and event settlement are separate outcomes. Rejecting a
+// receipt after every byte was accepted must still stop ordered admission.
+void rejected_delivery_stops_admission() {
+    for(const auto size:{std::size_t{0},std::size_t{12},std::size_t{0x10002}})
+    for(const bool fragmented:{false,true}) {
+        Fixture f;
+        f.handler.stats.accept_commit=false;
+        f.handler.response.assign(size,'X');
+        if(size){f.handler.response.front()='R';f.handler.response[size/2]='\0';f.handler.response.back()='\0';}
+        f.scheduling.response_limit=std::max(size,std::size_t{16});
+        f.transport.sent.clear();
+        const auto greeting_sends=f.transport.sends;
+        f.transport.deliver(std::string("a\0b\0",4));
+        f.scheduling.drain();f.scheduling.job();
+        require(f.handler.processed==1&&f.session.buffered_input()==std::string_view("b\0",2),
+            "only the first coalesced request reaches its handler");
+        while(!f.transport.writes.empty()) {
+            require(f.handler.stats.commit_attempts==0&&f.handler.stats.retried==0&&
+                    !f.scheduling.failed&&f.scheduling.jobs.empty()&&!f.transport.read,
+                "partial delivery cannot settle the receipt or admit the next request");
+            const auto offered=f.transport.writes.front().bytes.size();
+            require(offered>0&&offered<=0x10000,"response writes stay within the existing send quantum");
+            f.transport.complete(fragmented?std::max(std::size_t{1},offered/2):offered);
+        }
+        f.scheduling.drain();
+        require(f.transport.sent==f.handler.response,"receipt refusal occurs after exact counted wire delivery including NUL bytes");
+        require(size?f.transport.sends>greeting_sends:f.transport.sends==greeting_sends,
+            "empty response settles asynchronously without a zero-length send");
+        require(f.scheduling.failed&&f.scheduling.failures==1&&f.scheduling.failure.value==29&&
+                f.scheduling.failure.category==srv::ErrorCategory::system,
+            "rejected delivery receipt fails the session once with its current error");
+        require(f.handler.stats.commit_attempts==1&&f.handler.stats.committed==0&&
+                f.handler.stats.retried==1&&f.handler.stats.destroyed==1,
+            "refused commit is cancelled and its receipt destroyed exactly once");
+        require(f.handler.processed==1&&f.scheduling.jobs.empty()&&f.scheduling.io.empty()&&
+                !f.transport.read&&f.session.queued_messages()==0&&
+                f.session.buffered_input()==std::string_view("b\0",2),
+            "failed settlement cancels output without admitting buffered or new input");
+        f.session.cancel_output();f.scheduling.drain();
+        require(f.handler.stats.commit_attempts==1&&f.handler.stats.retried==1&&
+                f.handler.stats.destroyed==1&&f.scheduling.failures==1,
+            "repeated cancellation cannot settle, destroy or fail the retired owner again");
+    }
 }
 namespace msg=citrine_eclipse_mirage::messages;
 struct IdentityCipher final:msg::Cipher {
@@ -374,5 +423,5 @@ void deadline_policy() {
             "lvalue policy remains borrowed rather than snapshotted");
 }
 }
-int main()try{delivery_and_order();prepared_owner_allocation_failure();failure_and_buffer_lifetime();no_response_same_session();unknown_message_same_session();invalid_dispatch_stops_ordered_admission();response_dispatch_refusal();deadline_policy();std::cout<<"PASS: "<<checks<<" delivery/FIFO/buffer ownership/deadline checks\n";}
+int main()try{delivery_and_order();prepared_owner_allocation_failure();failure_and_buffer_lifetime();rejected_delivery_stops_admission();no_response_same_session();unknown_message_same_session();invalid_dispatch_stops_ordered_admission();response_dispatch_refusal();deadline_policy();std::cout<<"PASS: "<<checks<<" delivery/FIFO/buffer ownership/deadline checks\n";}
 catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

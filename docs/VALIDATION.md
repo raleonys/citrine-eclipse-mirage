@@ -356,3 +356,18 @@ The controlled and native function bodies remain shared and unchanged. The
 portable registration retains a 30-second budget and explicitly reports that
 Win32 was not executed. Host execution and sanitizer results do not establish
 native adapter/Windows acceptance, locale behavior or complete donor equivalence.
+
+## Rejected delivery settlement stops ordered admission
+
+The shared Session-flow fixture crosses empty, 12-byte counted binary and
+65,538-byte responses with whole/fragmented write completions. A receipt that
+rejects commit after exact output delivery must fail the Session once with
+system error 29, cancel and destroy the receipt once, preserve the buffered next
+frame and admit no new handler or receive. Repeated cancellation stays inert.
+Empty responses settle asynchronously without zero-length socket submission;
+nonempty writes retain the existing 65,536-byte quantum. Main's allocation,
+invalid-dispatch, silent-command, dispatch-refusal and deadline controls remain.
+Both existing portable and native registrations retain their 30-second budgets.
+Transport, scheduler and receipt outcomes are controlled; these tests do not
+establish real TCP peer acknowledgement, persistence rollback or Windows/game
+acceptance. Socket delivery and event settlement remain separate outcomes.

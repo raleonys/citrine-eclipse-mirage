@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Register the existing encoding source-contract fixture in portable checks. Use a target-local guard only for the Windows include and native test group, retaining unchanged controlled/native test bodies, native invocation and conversion policy. Portable output explicitly excludes Win32 execution.
+- Exercise ordered Session behavior when event delivery settlement rejects a fully written response. Verify exact binary output, one failure/cancellation/destruction, and no admission of the buffered next request across empty, fragmented and multi-chunk responses. Production transport and event policy are unchanged.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-13
 
+- [PR #332](https://github.com/raleonys/citrine-eclipse-mirage/pull/332): Register the existing encoding source-contract fixture in portable checks. Use a target-local guard only for the Windows include and native test group, retaining unchanged controlled/native test bodies, native invocation and conversion policy. Portable output explicitly excludes Win32 execution.
 - [PR #324](https://github.com/raleonys/citrine-eclipse-mirage/pull/324): Cover binary input exceptions at open, initial state, seek, position, read and close, including a read that copies bytes before throwing. Require the original failure, exact stopped call sequence, single stream destruction and successful retry through the same factory. Preserve compatibility short-read behavior and existing native file checks; production I/O is unchanged.
 - [PR #333](https://github.com/raleonys/citrine-eclipse-mirage/pull/333): Test refusal of ordinary event pops after delivery success or cancellation until locked receipt settlement. Cover last and nonlast binary events, exact retained fronts, cancelled retry, stale callbacks and normal pops after settlement without changing production ownership policy.
 - [PR #320](https://github.com/raleonys/citrine-eclipse-mirage/pull/320): Cover native file-status recovery after an initial sharing violation: use the production Windows adapter and real owned FindFirstFileW/FindClose calls, preserve normal/read-only permissions, propagate failed searches, avoid fallback for unrelated errors, and verify scoped recovery and search-handle cleanup. Production status policy is unchanged.
