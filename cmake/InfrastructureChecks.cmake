@@ -11,6 +11,9 @@ set_tests_properties(infrastructure_project_version PROPERTIES TIMEOUT 30)
 add_test(NAME infrastructure_english_only_audit COMMAND "${Python3_EXECUTABLE}" -B
   "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_english_only_audit.py")
 set_tests_properties(infrastructure_english_only_audit PROPERTIES TIMEOUT 60)
+add_test(NAME infrastructure_root_ownership COMMAND "${Python3_EXECUTABLE}" -B
+  "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_root_ownership.py")
+set_tests_properties(infrastructure_root_ownership PROPERTIES TIMEOUT 60)
 
 # Compile a real parser consumer without vendor usage requirements. Reject an
 # accidental PEGTL include even on hosts with a system-wide PEGTL installation.

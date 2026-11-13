@@ -73,6 +73,27 @@ malformed Unicode and non-string values. The independent evidence-retention
 policy still pins the complete archived file and its membership; schema checking
 does not replace whole-file byte validation or modify historical records.
 
+## Historical evidence path validation
+
+The repository-contract checker inspects the metadata directory, archive root
+and retention-policy file with `lstat` before reading policy contents. It rejects
+symlinks and Windows reparse points using attributes available on Python 3.9,
+without relying on newer `Path.is_junction()` support. Retained member names use
+the shared canonical source-path validator, including Windows alias restrictions.
+Archive traversal classifies entries without following redirected directories and
+rejects links or nonregular entries before reading any evidence payload. Regular
+files still require the exact retained membership and SHA-256 identities.
+
+The root-ownership regression module runs in existing Linux and Windows CTest.
+It covers changed pinned-file aliases, README/policy/parent links, nested traversal,
+read tripwires, recovery and modeled Windows reparse attributes. A Windows-only
+fixture creates owned junctions to targets both inside and outside its repository
+root, removes only each junction entry and verifies restored evidence bytes.
+A Linux skip of that fixture is not native Windows acceptance. These are
+point-in-time path checks, not race-free isolation against concurrent retargeting;
+the selected checkout root remains the caller's trust boundary. Historical
+records and retention-policy bytes remain unchanged.
+
 ## Ownership ledger input validation
 
 Metadata and script ledgers require nonblank string owner/purpose fields and a
