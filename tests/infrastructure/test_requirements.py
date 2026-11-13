@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 """Original SURGE directive guards adapted to the current authorized workstream."""
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -19,6 +20,7 @@ class RequirementsTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         for name in ['metadata/INTEGRATION_REQUIREMENTS.json','metadata/BRANDING_AND_IDENTITY.json',
+                     'metadata/AVATAR_DATA_CONTRACT.json',
                      'metadata/LOCAL_DATA_POLICY.json','metadata/INFRASTRUCTURE_TRANSFER_MATRIX.json',
                      'metadata/RUNTIME_CURRENT_STATUS.json','metadata/PUBLIC_DLL_ABI.json',
                      'resources/branding/surge.png']:
@@ -74,6 +76,36 @@ class RequirementsTests(unittest.TestCase):
     def test_surge_identity_and_exact_asset(self):
         (self.root / 'resources/branding/surge.png').write_bytes(b'tampered')
         self.assertIn('OWNER_AVATAR_CHANGED', check(self.root))
+
+    def test_owner_branding_path_and_digest_cannot_be_retargeted_together(self):
+        alternate = self.root / 'resources/branding/alternate.png'
+        alternate.write_bytes(b'synthetic unrelated avatar')
+        digest = hashlib.sha256(alternate.read_bytes()).hexdigest()
+        self.alter('metadata/BRANDING_AND_IDENTITY.json',
+                   lambda d: d.update(branding_asset='resources/branding/alternate.png',
+                                      asset_sha256=digest))
+        self.assertIn('OWNER_AVATAR_CONTRACT_MISMATCH', check(self.root))
+
+    def test_owner_avatar_bytes_and_identity_digest_cannot_change_together(self):
+        image = self.root / 'resources/branding/surge.png'
+        image.write_bytes(b'synthetic replacement')
+        digest = hashlib.sha256(image.read_bytes()).hexdigest()
+        self.alter('metadata/BRANDING_AND_IDENTITY.json',
+                   lambda d: d.update(asset_sha256=digest))
+        errors = check(self.root)
+        self.assertIn('OWNER_AVATAR_CONTRACT_MISMATCH', errors)
+        self.assertIn('OWNER_AVATAR_CHANGED', errors)
+
+    def test_profile_generator_source_must_match_owner_avatar_identity(self):
+        self.alter('metadata/AVATAR_DATA_CONTRACT.json',
+                   lambda d: d['assets']['profile'].update(
+                       source='resources/branding/alternate.png'))
+        self.assertIn('OWNER_AVATAR_CONTRACT_MISMATCH', check(self.root))
+
+    def test_runtime_avatar_digest_must_match_generator_profile_pin(self):
+        self.alter('metadata/RUNTIME_CURRENT_STATUS.json',
+                   lambda d: d.update(avatar_profile_sha256='0' * 64))
+        self.assertIn('CURRENT_RUNTIME_AVATAR_MISMATCH', check(self.root))
 
     def test_namespace_cannot_be_renamed_with_display_identity(self):
         self.alter('metadata/BRANDING_AND_IDENTITY.json', lambda d: d.update(cpp_root_namespace='SURGE'))

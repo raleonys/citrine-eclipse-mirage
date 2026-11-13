@@ -15,10 +15,10 @@ def check(root):
                  'resources': 'MANDATORY_ADAPT', 'root_layout': 'MANDATORY_CLEAN_ADAPT',
                  'scripts': 'MANDATORY_ADAPT', 'tooling': 'MANDATORY_EVALUATE_AND_ADAPT',
                  'tests': 'SELECT_COMPATIBLE_AND_PRESERVE_SURGE_OWN_TESTS',
-                 'preloader_l_application_code': 'NOT_INHERITED'}
+                 'citrine_eclipse_mirage_application_code': 'NOT_INHERITED'}
     if req.get('infrastructure') != mandatory:
         errors.append('INFRASTRUCTURE_SCOPE_CHANGED')
-    if req.get('third_party') != {name: 'REQUIRED_ACTIVE' for name in ['asio','minhook','pegtl','tinyxml2']}:
+    if req.get('third_party') != {name: 'REQUIRED_ACTIVE' for name in ['asio','minhook','pegtl','pugixml']}:
         errors.append('MANDATORY_VENDOR_POLICY_WEAKENED')
     for role in ['redfield', 'greenfield']:
         if req.get(role) != 'COMPARISON_AND_CODE_REVIEW_ONLY':
@@ -30,9 +30,18 @@ def check(root):
     if req.get('golden_pipeline_order') != order:
         errors.append('GOLDEN_ORDER_CHANGED')
     identity = json.loads((root / 'metadata/BRANDING_AND_IDENTITY.json').read_text())
-    if identity.get('cpp_root_namespace') != 'preloader_l' or identity.get('display_name') != 'SURGE':
+    if identity.get('cpp_root_namespace') != 'citrine_eclipse_mirage' or identity.get('display_name') != 'SURGE':
         errors.append('SURGE_IDENTITY_CHANGED')
-    if hashlib.sha256((root / identity['branding_asset']).read_bytes()).hexdigest() != identity['asset_sha256']:
+    # The owner avatar is independently pinned by the generator contract and
+    # current runtime record; a pair of edits to branding path/hash is not proof.
+    avatar = json.loads((root / 'metadata/AVATAR_DATA_CONTRACT.json').read_text())
+    profile = avatar['assets']['profile']
+    owner_path = 'resources/branding/surge.png'
+    if (identity.get('branding_asset') != owner_path
+            or profile.get('source') != owner_path
+            or identity.get('asset_sha256') != profile.get('sha256')):
+        errors.append('OWNER_AVATAR_CONTRACT_MISMATCH')
+    if hashlib.sha256((root / owner_path).read_bytes()).hexdigest() != profile.get('sha256'):
         errors.append('OWNER_AVATAR_CHANGED')
     local = json.loads((root / 'metadata/LOCAL_DATA_POLICY.json').read_text())
     if local.get('release_file_logging') != 'FORBIDDEN':
@@ -45,6 +54,8 @@ def check(root):
         abi=json.loads((root/'metadata/PUBLIC_DLL_ABI.json').read_text())
         if runtime.get('role')!='CURRENT_RUNTIME_STATE':
             errors.append('CURRENT_RUNTIME_SNAPSHOT_STALE')
+        if runtime.get('avatar_profile_sha256') != profile.get('sha256'):
+            errors.append('CURRENT_RUNTIME_AVATAR_MISMATCH')
         if runtime.get('exports')!={name:entry['ordinal'] for name,entry in abi['exports'].items()}:
             errors.append('CURRENT_RUNTIME_ABI_MISMATCH')
         if (set(runtime.get('active_vendors',{}))!=set(req['third_party'])

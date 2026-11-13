@@ -74,23 +74,45 @@ RIP, executable protections and malformed TLS ranges.
 
 ## Debug refusal diagnostics
 
-Debug builds emit `UNLOAD_SCAN_BLOCKED` with the first recorded refusal reason,
-peer ID, register index or stack-slot index, image-relative reference offset and
-validated TLS endpoint offset. Register indices follow the scanner's existing
-array (R11 is index 10); stack slots count from the suspended peer's RSP. Output
-contains no absolute image addresses or machine paths. This record diagnoses a
-refusal; it does not establish that a pointer is harmless or justify an exemption.
+Debug builds publish the first conservative unload-scan refusal into one private,
+fixed 96-byte image record. It contains a version, sequence, reason, peer ID,
+register or stack-slot index, image-relative reference offset, validated TLS
+endpoint offset, Windows error and retained-suspension flag. R11 is register
+index 10; stack slots count from the suspended peer's RSP. No absolute image
+address or machine path is logged. A refusal record diagnoses an observation;
+it does not establish that a pointer is harmless or justify a new exemption.
 
-The scanner records into gate-owned fixed state while inspecting a suspended
-peer, then formats into a bounded stack buffer after releasing its owned
-suspensions. Failed resume suppresses output while ownership remains pending.
-Output is best effort, preserves LastError and cannot change the scan result or
-discard retained handles. Release builds compile out this diagnostic. Existing
-scan, TLS, teardown retry and public shutdown requirements remain unchanged.
+The scan try-gate serializes writers. Publishing uses only lock-free atomic
+stores; it does not format text, allocate, call an output API, start a thread or
+invoke a callback. The record is committed before releasing the gate, including
+when failed resume retains ownership. Successful scans replace stale refusals.
+Release builds compile out the record and all diagnostic operations.
 
-The shutdown listener workflow keeps five Visual Studio lifecycle attempts per
-configuration for normal PRs. Its manual diagnostic dispatch can instead select
-NMake with the Native profile's testing/source-API configuration and twenty
-independent attempts. Every attempt must pass; failures are counted and retained,
-not retried until green. Generator, source commit and individual exits are recorded
-in the existing receipt and per-attempt JUnit artifacts.
+The existing lifecycle host locates the versioned record in bounded writable,
+non-executable sections of the loaded Debug DLL. It adds no public export or PE
+section. Lookup rejects malformed, unreadable, over-budget or ambiguous images.
+After a failed DllShutdown call returns, the host makes at most three snapshot
+attempts using ReadProcessMemory and matching even sequence values. Moving,
+malformed or unreadable snapshots produce no report. A retained scanner-owned
+suspension suppresses output. A usable refusal prints UNLOAD_SCAN_BLOCKED;
+LastError is preserved and output failure cannot change DLL scan decisions or
+release retained owners. Host output is best effort and can still be delayed by
+its output consumer; no scanner gate or DLL callback is held for that output.
+
+The manual-only shutdown listener workflow defaults to five Visual Studio
+attempts per Debug/Release configuration. A dispatch can select NMake with the
+Native profile's testing/source-API configuration and twenty independent
+attempts. Every attempt must pass; a failure is counted, retained and fails the
+job even if later attempts succeed. Generator, exact checkout, attempt count and
+individual exits are recorded alongside per-attempt JUnit artifacts. The workflow
+does not add PR triggers or replace the required synchronization validation.
+
+The actual-source unload fixture retains its existing scan, TLS, stack budget,
+foreign suspension and recovery assertions. Debug cases additionally check
+publication fields, successful-retry replacement, retained-resume suppression,
+bounded moving/busy readers, malformed/ambiguous image rejection and output
+failure. Compile-time tripwires reject scanner calls to WriteFile/GetStdHandle.
+The existing real-DLL lifecycle host requires successful Debug record discovery;
+its real Windows execution remains separate from cross-compilation and controlled
+failure models. Repeated successful runs describe only the executed attempts; they do not prove
+that the historical intermittent status-4 refusal cannot recur.

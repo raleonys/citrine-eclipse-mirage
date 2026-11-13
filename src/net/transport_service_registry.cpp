@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_service_registry.hpp"
+#include "citrine_eclipse_mirage/net/transport_service_registry.hpp"
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 bool matches(ServiceEntry& entry,const ServiceKey& key,ServiceRegistryEffects& effects){
     // The fixed022fa0 key has id0; keep the native short-circuit predicate without
@@ -59,4 +59,4 @@ void RegistryLifecycleEffects::close_and_cancel_026fb0(SocketService& service,So
 void RegistryLifecycleEffects::executor_cleanup(SocketObject& object,std::uintptr_t table){
     executor_.executor_cleanup(object,table);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

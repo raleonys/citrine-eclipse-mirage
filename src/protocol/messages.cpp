@@ -1,10 +1,20 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/protocol/messages.hpp"
+#include "citrine_eclipse_mirage/protocol/messages.hpp"
 #include <limits>
+#include <ostream>
 #include <stdexcept>
 
-namespace preloader_l::messages {
+namespace citrine_eclipse_mirage::messages {
+void report_unknown_message_07bd70(const UnknownMessageInput& input,std::ostream& stream,
+                                  UnknownMessageDialog& dialog) {
+    stream<<"[UNKNOWN MESSAGE]"<<std::endl;
+    {const auto request=input.view();
+     stream<<request;}
+    stream<<std::endl;
+    // The second flush can change/reallocate the original request object.
+    dialog.show("UNKNOWN MESSAGE",std::string(input.view()),0x10);
+}
 std::uint64_t EventQueue::reserve_front_locked(){throw std::logic_error("Event queue lacks delivery reservations");}
 bool EventDelivery::finish(bool success) noexcept {
     if(!token_)return true;
@@ -128,11 +138,31 @@ std::string process_message_033d70(State state,std::string& input,XmlBackend& xm
                 return {};
             }
         }
-        // tinyxml2 gets a C string with size_t(-1), so embedded NUL ends parsing.
+        // The project XML interface preserves C-string semantics: embedded NUL ends parsing.
         auto parsed=xml.parse_c_string(std::string_view(input.c_str()));
         if(!parsed.has_error) {
             if(state.show_lsx_0a3ef0)effects.log_received(input);
-            auto response=dispatch_032d00(*parsed.document,state.cipher,xml,factory,random,effects);
+            std::string response;
+            try{response=dispatch_032d00(*parsed.document,state.cipher,xml,factory,random,effects);}
+            catch(const NoResponseRequiredError&){
+                // Reference033d70 returns before response logging/encryption,
+                // NUL framing or event selection. An ordered Session completes
+                // this empty result without socket output and admits the next frame.
+                return {};
+            }
+            catch(const UnknownMessageError&){
+                auto* diagnostic=dynamic_cast<UnknownMessageEffects*>(&effects);
+                if(!diagnostic)throw;
+                struct Input final:UnknownMessageInput {
+                    std::string& original;
+                    explicit Input(std::string& value):original(value){}
+                    std::string_view view() const override{return original;}
+                } request(input);
+                // Diagnostic failures propagate. Only its normal return permits
+                // same-session continuation, without framing/cipher/event work.
+                diagnostic->unknown_message_07bd70(request);
+                return response;
+            }
             if(state.show_lsx_0a3ef0)effects.log_response(response);
             if(!state.encrypted_0c4) {
                 response.push_back('\0');
@@ -179,4 +209,4 @@ std::string process_message_033d70(State state,std::string& input,XmlBackend& xm
         return {};
     }
 }
-} // namespace preloader_l::messages
+} // namespace citrine_eclipse_mirage::messages

@@ -5,8 +5,6 @@
 #ifndef TAO_PEGTL_EXTRA_INTERNAL_UNHEX_UTILITY_HPP
 #define TAO_PEGTL_EXTRA_INTERNAL_UNHEX_UTILITY_HPP
 
-#include <cstddef>
-
 #include "../../config.hpp"
 
 namespace TAO_PEGTL_NAMESPACE::internal

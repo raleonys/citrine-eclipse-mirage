@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [RE_COPY_RECOVERY.md](RE_COPY_RECOVERY.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 > This research examined a source snapshot before the full copy
 > helper was integrated. Current implementation:
 > [RE copy recovery](RE_COPY_RECOVERY.md).
@@ -21,9 +24,9 @@ not select those branches.
 | API | Original location | Current source and finding |
 |---|---|---|
 | GetFileInformationByHandle | File-identity helper `FUN_18004895c`, called by certain options of general copy helper `FUN_180048d20`. | The avatar call site shows `0x180031b4c MOV R8D,2` and `0x180031b52 CALL048d20`. Mode 2 directly enters `CopyFileW(...,FALSE)` without calling the identity helper. Our `content_handlers` `copy_overwrite` contract and Environment adapter execute the same branch. Since the entire multi-option standard helper was not linked at this checkpoint, the import was unnecessary. No porting omission was found for this observed use. |
-| InitializeCriticalSectionAndSpinCount | Legacy Asio helper `027be0` and old VCRT/UCRT compatibility thunks `050c38` and `6707c`. | The RE native adapter still exists in `include/preloader_l/net/transport_service_constructor_native.hpp`. The active network implementation is `src/net/asio_service.cpp` with newly vendored Asio, whose `win_mutex` uses SRWLOCK. The examined modern static UCRT imports InitializeCriticalSectionEx, not the older SpinCount fallback. Not every body in the old native adapter must remain live in Production. |
+| InitializeCriticalSectionAndSpinCount | Legacy Asio helper `027be0` and old VCRT/UCRT compatibility thunks `050c38` and `6707c`. | The RE native adapter still exists in `include/citrine_eclipse_mirage/net/transport_service_constructor_native.hpp`. The active network implementation is `src/net/asio_service.cpp` with newly vendored Asio, whose `win_mutex` uses SRWLOCK. The examined modern static UCRT imports InitializeCriticalSectionEx, not the older SpinCount fallback. Not every body in the old native adapter must remain live in Production. |
 | TryAcquireSRWLockExclusive | Try/timed branches of old general mutex helper `04a6d4`. | Observed direct caller `04a6ac` supplies `deadline=nullptr` via `XOR EDX,EDX`, taking the blocking AcquireSRWLockExclusive path. The provided `anadius-execution-source` recovers only that untimed path, and current `execution.cpp` has the same contract. In the examined MSVC 14.51 `_Mtx_lock`, blocking Acquire is used; the Try API appears only in try/timed bodies. New Asio also defines `try_lock`, but this alone produces no import without active use. No missing try-lock call was found on the observed application path. |
-| VerifyVersionInfoA | Legacy IOCP constructor `024990`, selecting wait behavior by OS version. | The RE native adapter remains in `include/preloader_l/net/transport_iocp_constructor_native.hpp`. Active modern Asio `get_gqcs_timeout` directly returns INFINITE when `_WIN32_WINNT>=0x0600`. Brownfield's chosen `0x0601` target selects that path. The separate application VerifyVersionInfoW host/hook check is different. |
+| VerifyVersionInfoA | Legacy IOCP constructor `024990`, selecting wait behavior by OS version. | The RE native adapter remains in `include/citrine_eclipse_mirage/net/transport_iocp_constructor_native.hpp`. Active modern Asio `get_gqcs_timeout` directly returns INFINITE when `_WIN32_WINNT>=0x0600`. Brownfield's chosen `0x0601` target selects that path. The separate application VerifyVersionInfoW host/hook check is different. |
 
 There is more than one Asio difference: lock type and legacy
 OS-version checking are two distinct changes, and the removal

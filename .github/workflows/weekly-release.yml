@@ -4,7 +4,7 @@ name: Weekly draft release
 
 on:
   schedule:
-    - cron: '30 13 * * 5' # Friday 16:30 Europe/Istanbul (UTC+3).
+    - cron: '30 13 * * 6' # Saturday 13:30 UTC.
   workflow_dispatch:
     inputs:
       start_tag:
@@ -33,14 +33,15 @@ jobs:
     outputs:
       ready: ${{ steps.plan.outputs.ready }}
       source: ${{ steps.plan.outputs.source }}
+      version: ${{ steps.plan.outputs.version }}
     steps:
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
       - name: Find new commits or resume an incomplete candidate
@@ -55,15 +56,16 @@ jobs:
       - name: Run portable tests
         if: steps.plan.outputs.ready == 'true'
         run: |
-          cmake -S . -B build/weekly-portable -DPRELOADER_L_PORTABLE_CHECKS_ONLY=ON
+          cmake -S . -B build/weekly-portable -DCITRINE_ECLIPSE_MIRAGE_PORTABLE_CHECKS_ONLY=ON
           cmake --build build/weekly-portable --parallel 2
-          ctest --test-dir build/weekly-portable --output-on-failure --output-junit build/weekly-portable/CTEST_RESULTS.xml
-      - name: Package exact source and checksums
+          ctest --test-dir build/weekly-portable --output-on-failure --output-junit "$GITHUB_WORKSPACE/build/weekly-portable/CTEST_RESULTS.xml"
+          test -s "$GITHUB_WORKSPACE/build/weekly-portable/CTEST_RESULTS.xml"
+      - name: Package exact source for validation evidence
         if: steps.plan.outputs.ready == 'true'
         run: python -B scripts/weekly_release.py source --plan build/weekly-plan.json --output "$RUNNER_TEMP/weekly-source"
-      - name: Retain source candidate
+      - name: Retain source validation evidence
         if: steps.plan.outputs.ready == 'true'
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: weekly-source
           path: ${{ runner.temp }}/weekly-source/
@@ -73,6 +75,8 @@ jobs:
   windows:
     name: Validate Windows ${{ matrix.profile }}
     needs: plan
+    env:
+      CITRINE_ECLIPSE_MIRAGE_VERSION: ${{ needs.plan.outputs.version }}
     if: needs.plan.outputs.ready == 'true'
     runs-on: windows-2022
     timeout-minutes: 60
@@ -90,11 +94,11 @@ jobs:
     steps:
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ needs.plan.outputs.source }}
           persist-credentials: false
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
       - name: Run existing native MSVC profile
@@ -106,7 +110,7 @@ jobs:
           python -B scripts/weekly_release.py capture --profile "${{ matrix.profile }}" --build "build/weekly-${{ matrix.profile }}" --output "$env:RUNNER_TEMP/weekly-evidence" --source "${{ needs.plan.outputs.source }}"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Retain validated Windows candidate
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: weekly-windows-${{ matrix.profile }}
           path: ${{ runner.temp }}/weekly-evidence/
@@ -114,21 +118,23 @@ jobs:
           retention-days: 14
       - name: Retain failure evidence
         if: failure()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: weekly-failed-${{ matrix.profile }}
           path: |
-            build/weekly-${{ matrix.profile }}/LOCAL_BUILD_RECEIPT.json
+            build/weekly-${{ matrix.profile }}/BUILD_RECEIPT.json
             build/weekly-${{ matrix.profile }}/BUILD_TOOLCHAIN_PROVENANCE.log
             build/weekly-${{ matrix.profile }}/CTEST_RESULTS.xml
             build/weekly-${{ matrix.profile }}/Testing/Temporary/*.log
-            build/weekly-${{ matrix.profile }}/golden-local/*.json
+            build/weekly-${{ matrix.profile }}/golden/*.json
           if-no-files-found: warn
           retention-days: 14
 
   draft:
     name: Assemble a draft for owner review
     needs: [plan, windows]
+    env:
+      CITRINE_ECLIPSE_MIRAGE_VERSION: ${{ needs.plan.outputs.version }}
     if: needs.plan.outputs.ready == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -138,11 +144,11 @@ jobs:
     steps:
       - name: Preserve exact checkout bytes
         run: git config --global core.autocrlf false
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ needs.plan.outputs.source }}
           persist-credentials: false
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
       - name: Retrieve artifacts from this run only
@@ -155,7 +161,16 @@ jobs:
           gh run download "$GITHUB_RUN_ID" --name weekly-windows-production --dir "$RUNNER_TEMP/weekly-payload"
       - name: Validate and package the complete candidate
         run: python -B scripts/weekly_release.py bundle --payload "$RUNNER_TEMP/weekly-payload" --output "$RUNNER_TEMP/weekly-assets"
+      - name: Retain candidate receipt as workflow evidence
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: weekly-release-receipt
+          path: |
+            ${{ runner.temp }}/weekly-payload/RELEASE_RECEIPT.json
+            ${{ runner.temp }}/weekly-payload/RELEASE_RECEIPT.json.sha256
+          if-no-files-found: error
+          retention-days: 14
       - name: Create or finish the draft without publishing
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python -B scripts/weekly_release.py draft --plan "$RUNNER_TEMP/weekly-payload/plan.json" --assets "$RUNNER_TEMP/weekly-assets"
+        run: python -B scripts/weekly_release.py draft --plan "$RUNNER_TEMP/weekly-payload/plan.json" --assets "$RUNNER_TEMP/weekly-assets" --receipt "$RUNNER_TEMP/weekly-payload/RELEASE_RECEIPT.json"

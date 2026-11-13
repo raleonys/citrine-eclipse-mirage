@@ -9,8 +9,12 @@
 #include <array>
 #include <cstdlib>
 #include <cstdint>
+#include <chrono>
 #include <mutex>
 #include <new>
+#include <memory>
+#include <span>
+#include <vector>
 namespace receive_buffer_probe {
 struct Allocation{void* base;std::size_t bytes;};
 std::atomic<bool> recording{false};
@@ -49,16 +53,83 @@ void operator delete(void* memory)noexcept{
 void operator delete[](void* memory)noexcept{::operator delete(memory);}
 void operator delete(void* memory,std::size_t)noexcept{::operator delete(memory);}
 void operator delete[](void* memory,std::size_t)noexcept{::operator delete(memory);}
+namespace late_completion {
+// This fixture dispatches IO only on its controller (no service runner). Keep
+// one actual dequeued OS packet intact until the controller releases delivery.
+struct Packet {HANDLE port{};BOOL ok{};DWORD error{},bytes{};ULONG_PTR key{};OVERLAPPED* operation{};};
+bool armed=false,holding=false,cached=false;
+bool capture_send=false;
+SOCKET send_socket=INVALID_SOCKET;
+OVERLAPPED* target=nullptr;
+char* buffer=nullptr;
+int submitted=0;DWORD submit_error=0;
+unsigned captures=0,deliveries=0,timeouts=0;
+Packet packet;
+BOOL timeout(LPDWORD bytes,PULONG_PTR key,LPOVERLAPPED* operation,DWORD milliseconds){
+    // Honor the real caller's finite wait rather than simulating an immediate
+    // timeout and accidentally bypassing the production 100 ms drain budget.
+    if(milliseconds&&milliseconds!=INFINITE)Sleep(milliseconds);
+    *bytes=0;*key=0;*operation=nullptr;++timeouts;
+    SetLastError(WAIT_TIMEOUT);return FALSE;
+}
+}
+BOOL WINAPI TestGetQueuedCompletionStatus(HANDLE port,LPDWORD bytes,PULONG_PTR key,LPOVERLAPPED* operation,DWORD milliseconds){
+    using namespace late_completion;
+    if(cached&&packet.port==port){
+        if(holding)return timeout(bytes,key,operation,milliseconds);
+        *bytes=packet.bytes;*key=packet.key;*operation=packet.operation;
+        cached=false;++deliveries;SetLastError(packet.error);return packet.ok;
+    }
+    const auto ok=::GetQueuedCompletionStatus(port,bytes,key,operation,milliseconds);
+    const auto error=GetLastError();
+    if(armed&&target&&*operation==target){
+        packet={port,ok,error,*bytes,*key,*operation};cached=true;++captures;
+        return timeout(bytes,key,operation,0);
+    }
+    SetLastError(error);return ok;
+}
 int WSAAPI TestReceive(SOCKET value,LPWSABUF buffers,DWORD n,LPDWORD bytes,LPDWORD flags,LPWSAOVERLAPPED operation,LPWSAOVERLAPPED_COMPLETION_ROUTINE callback){
     receive_buffer_probe::observe_buffer(value,buffers,n);
-    return ::WSARecv(value,buffers,n,bytes,flags,operation,callback);
+    const bool selected=late_completion::armed&&value==receive_buffer_probe::socket&&n==1&&buffers[0].len==4096;
+    if(selected){late_completion::target=operation;late_completion::buffer=buffers[0].buf;}
+    const auto result=::WSARecv(value,buffers,n,bytes,flags,operation,callback);
+    const auto error=WSAGetLastError();
+    if(selected){late_completion::submitted=result;late_completion::submit_error=error;}
+    WSASetLastError(error);return result;
+}
+int WSAAPI TestSend(SOCKET value,LPWSABUF buffers,DWORD n,LPDWORD bytes,DWORD flags,
+    LPWSAOVERLAPPED operation,LPWSAOVERLAPPED_COMPLETION_ROUTINE callback){
+    const bool selected=late_completion::armed&&late_completion::capture_send&&
+        value==late_completion::send_socket&&n==1&&buffers[0].len==4;
+    if(selected){late_completion::target=operation;late_completion::buffer=buffers[0].buf;}
+    const auto result=::WSASend(value,buffers,n,bytes,flags,operation,callback);
+    const auto error=WSAGetLastError();
+    if(selected){late_completion::submitted=result;late_completion::submit_error=error;}
+    WSASetLastError(error);return result;
 }
 namespace fault {
 std::atomic<SOCKET> target{INVALID_SOCKET};
+struct ClientPublicationFailure {};
+bool fail_client_publication=false;
+unsigned publication_failures=0;
+std::weak_ptr<void> unpublished_client;
+template<class T> struct ClientList:std::vector<T> {
+    using std::vector<T>::push_back;
+    void push_back(const T& value) {
+        if(fail_client_publication) {
+            fail_client_publication=false;++publication_failures;
+            unpublished_client=value;
+            target=value->socket.native_handle();
+            throw ClientPublicationFailure{};
+        }
+        std::vector<T>::push_back(value);
+    }
+};
 std::atomic<int> error{0};
 std::atomic<unsigned> closes{0},option_failures{0};
 bool select_connected=false,select_next=false,close_then_error=false,hold_timer=false;
-void reset(){target=INVALID_SOCKET;error=0;closes=0;option_failures=0;select_connected=select_next=close_then_error=hold_timer=false;}
+void reset(){target=INVALID_SOCKET;error=0;closes=0;option_failures=0;select_connected=select_next=close_then_error=hold_timer=false;
+    fail_client_publication=false;publication_failures=0;unpublished_client.reset();}
 }
 int WSAAPI TestCloseSocket(SOCKET value){
     if(fault::target==INVALID_SOCKET&&(fault::select_next||fault::select_connected)){
@@ -81,12 +152,14 @@ int WSAAPI TestSetSockOpt(SOCKET value,int level,int name,const char* data,int s
 #define closesocket TestCloseSocket
 #define setsockopt TestSetSockOpt
 #define WSARecv TestReceive
+#define WSASend TestSend
+#define GetQueuedCompletionStatus TestGetQueuedCompletionStatus
 #include <asio.hpp>
-#include "preloader_l/net/server.hpp"
-#include "preloader_l/net/session_policy.hpp"
-#include "preloader_l/platform/execution_windows.hpp"
+#include "citrine_eclipse_mirage/net/server.hpp"
+#include "citrine_eclipse_mirage/net/session_policy.hpp"
+#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
 #define private public
-#include "preloader_l/net/asio_service.hpp"
+#include "citrine_eclipse_mirage/net/asio_service.hpp"
 #undef private
 namespace asio {
 class FixtureTimer:public steady_timer {
@@ -96,32 +169,43 @@ public:
 };
 }
 #define steady_timer FixtureTimer
+#define CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_CLIENT_LIST ::fault::ClientList
 #include "src/net/asio_service.cpp"
+#undef CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_CLIENT_LIST
 #undef steady_timer
 #undef setsockopt
 #undef closesocket
 #undef WSARecv
+#undef WSASend
+#undef GetQueuedCompletionStatus
 
 namespace {
-using namespace preloader_l;using Tcp=asio::ip::tcp;using namespace std::chrono_literals;
+using namespace citrine_eclipse_mirage;using Tcp=asio::ip::tcp;using namespace std::chrono_literals;
 void require(bool b,const char* text){if(!b)throw std::runtime_error(text);}
 struct Factory:net::HandlerFactory {
     bool throw_create=false;
     unsigned tickets=0,positive=0,negative=0;
+    unsigned created=0,destroyed=0,publication_errors=0;
     struct Ticket:server::DeliveryReceipt {
         Factory& f;explicit Ticket(Factory& x):f(x){++f.tickets;}
         ~Ticket(){--f.tickets;}
         bool finish(bool success)noexcept override{if(success)++f.positive;else ++f.negative;return true;}
     };
     struct Handler:server::Handler {
-        Factory& f;explicit Handler(Factory& x):f(x){}
+        Factory& f;explicit Handler(Factory& x):f(x){++f.created;}
+        ~Handler() override{++f.destroyed;}
         void reset_02bc70()override{}
         std::string initial_message_02d540()override{return std::string("hello\0",6);}
         std::string process_message_033d70(std::string_view)override{return {};}
         server::PreparedResponse prepare_response(std::string_view)override{return {std::string(128*1024,'X'),std::make_unique<Ticket>(f)};}
     };
     std::unique_ptr<server::Handler> create()override{if(throw_create)throw std::runtime_error("fixture handler failure");return std::make_unique<Handler>(*this);}
-    void error(std::string_view,std::exception_ptr)noexcept override{}
+    void error(std::string_view operation,std::exception_ptr failure)noexcept override{
+        if(operation!="accepted session"||!failure)return;
+        try{std::rethrow_exception(failure);}
+        catch(const fault::ClientPublicationFailure&){++publication_errors;}
+        catch(...){}
+    }
 };
 struct Context {
     Factory factory;execution::MutexState mutex{};
@@ -212,6 +296,231 @@ void receive_cancellation_lifetime(){
         "terminal completion drains the receive loan and releases the client exactly once");
     require(receive_buffer_probe::released==1,"terminal completion frees the exact observed receive allocation once");
 }
+void delayed_receive_completion(bool success){
+    Harness h(false);
+    require(!h.owner.runner.joinable(),"completion gate has a single controller and no service runner");
+    struct DeliveryGate {
+        DeliveryGate(){
+            require(!late_completion::armed&&!late_completion::cached,"previous completion gate must be drained");
+            late_completion::target=nullptr;late_completion::buffer=nullptr;
+            late_completion::captures=late_completion::deliveries=late_completion::timeouts=0;
+            late_completion::packet={};late_completion::armed=late_completion::holding=true;
+        }
+        void release(){late_completion::armed=late_completion::holding=false;}
+        ~DeliveryGate(){release();} // Harness cleanup can consume a held packet after an assertion failure.
+    } delivery;
+    struct ResetProbe {
+        ~ResetProbe(){receive_buffer_probe::recording=false;receive_buffer_probe::tracked=nullptr;}
+    } reset;
+    unsigned callbacks=0;
+    receive_buffer_probe::count=0;receive_buffer_probe::released=0;
+    receive_buffer_probe::socket=h.client->socket.native_handle();
+    receive_buffer_probe::recording=true;
+    h.client->async_receive(4096,[&](server::Error,std::string){++callbacks;});
+    receive_buffer_probe::recording=false;
+    require(late_completion::target&&late_completion::buffer&&receive_buffer_probe::tracked,
+        "actual WSARecv operation and containing buffer allocation are observed");
+    require(late_completion::submitted==SOCKET_ERROR&&late_completion::submit_error==WSA_IO_PENDING,
+        "real connected receive is kernel-pending before peer data or cancellation");
+    fault::target=receive_buffer_probe::socket;
+    if(success){
+        const char payload='Q';
+        require(::send(h.peer.native_handle(),&payload,1,0)==1,"real peer supplies the successful receive byte");
+    }else h.client->close();
+    const auto until=std::chrono::steady_clock::now()+2s;
+    while(!late_completion::cached&&std::chrono::steady_clock::now()<until){
+        h.owner.io.restart();h.owner.io.poll_one();
+        if(!late_completion::cached)Sleep(1);
+    }
+    const auto packet=late_completion::packet;
+    require(late_completion::cached&&late_completion::captures==1&&packet.operation==late_completion::target,
+        "one actual GetQueuedCompletionStatus packet matches the submitted OVERLAPPED");
+    require(packet.port&&packet.key==0,"packet comes from the real socket completion port, not a synthetic result key");
+    require(success?(packet.ok&&packet.error==ERROR_SUCCESS&&packet.bytes==1&&*late_completion::buffer=='Q'):
+        (!packet.ok&&packet.error!=ERROR_SUCCESS&&packet.error!=WAIT_TIMEOUT&&packet.bytes==0),
+        "actual native packet records the selected successful or cancelled receive result");
+    require(!callbacks&&!receive_buffer_probe::released,"held native completion cannot dispatch or release its buffer");
+    std::weak_ptr<net::AsioService::Impl::Client> lifetime=h.client;
+    h.client.reset();
+    const auto first=std::chrono::steady_clock::now();
+    for(unsigned attempt=0;attempt<2;++attempt){
+        const auto waits=late_completion::timeouts;
+        require(stop_failed(h.owner),"held socket completion must reject each bounded stop attempt");
+        require(late_completion::timeouts>waits,"each stop attempt reaches the controlled IOCP wait");
+        auto kept=lifetime.lock();
+        require(kept&&kept->closed&&kept->pending_reads==1&&!kept->retired(),
+            "incomplete stop retains the exact client and pending receive");
+        require(h.owner.clients.size()==1&&h.owner.active_sessions==1&&!h.owner.io.stopped(),
+            "service retains client capacity and outstanding IO across stop retries");
+        require(late_completion::cached&&late_completion::captures==1&&!late_completion::deliveries,
+            "retry cannot consume or duplicate the held native packet");
+        require(!callbacks&&!receive_buffer_probe::released&&receive_buffer_probe::tracked,
+            "business callbacks stay suppressed and exact buffer ownership survives both drain attempts");
+        require(fault::closes==1,"completed native socket close is not repeated while IO retirement waits");
+    }
+    const auto elapsed=std::chrono::steady_clock::now()-first;
+    require(elapsed>=100ms&&late_completion::timeouts>=2,
+        "real completion delivery remains held beyond the unchanged first 100 ms drain budget");
+    delivery.release();h.owner.stop();
+    require(late_completion::captures==1&&late_completion::deliveries==1&&!late_completion::cached,
+        "retry delivers the original native completion exactly once");
+    require(!callbacks&&receive_buffer_probe::released==1&&!receive_buffer_probe::tracked,
+        "terminal retirement frees the exact buffer once without a stale business callback");
+    require(!h.owner.active_sessions&&h.owner.clients.empty()&&lifetime.expired(),
+        "successful retry releases the retained client and session capacity");
+    h.owner.stop();
+    require(fault::closes==1&&late_completion::deliveries==1&&receive_buffer_probe::released==1,
+        "completed cleanup is idempotent without native-close or completion replay");
+    std::cout<<"native completion: success="<<success<<" error="<<packet.error<<" bytes="<<packet.bytes
+        <<" held_stops=2 elapsed_ms="<<std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count()
+        <<" captures="<<late_completion::captures<<" deliveries="<<late_completion::deliveries<<'\n';
+}
+void delayed_send_completion(){
+    // B50: exercise the actual WSASend -> IOCP callback path with its packet
+    // held after kernel dequeue. This is distinct from WSARecv in PR #107.
+    Harness h(false);
+    require(!h.owner.runner.joinable(),"send completion fixture uses a single IO controller");
+    struct SendScope {
+        SendScope(SOCKET native){
+            require(!late_completion::armed&&!late_completion::cached,
+                "previous delayed completion must already be retired");
+            late_completion::target=nullptr;late_completion::buffer=nullptr;
+            late_completion::packet={};
+            late_completion::captures=late_completion::deliveries=late_completion::timeouts=0;
+            late_completion::submitted=0;late_completion::submit_error=0;
+            late_completion::send_socket=native;
+            late_completion::capture_send=true;
+            late_completion::holding=late_completion::armed=true;
+        }
+        void release(){late_completion::holding=late_completion::armed=false;}
+        ~SendScope(){
+            release();late_completion::capture_send=false;
+            late_completion::send_socket=INVALID_SOCKET;
+        }
+    } gate(h.client->socket.native_handle());
+    auto output=std::make_shared<std::string>("PING");
+    std::weak_ptr<std::string> borrowed=output;
+    std::weak_ptr<net::AsioService::Impl::Client> lifetime=h.client;
+    unsigned stale_callbacks=0;
+    h.client->async_send(std::span<const char>(output->data(),output->size()),
+        [output,&stale_callbacks](server::Error,std::size_t){++stale_callbacks;});
+    output.reset();
+    require(late_completion::target!=nullptr&&late_completion::buffer!=nullptr&&
+            late_completion::submitted!=SOCKET_ERROR ||
+            (late_completion::target!=nullptr&&late_completion::buffer!=nullptr&&
+             late_completion::submit_error==WSA_IO_PENDING),
+        "actual overlapped WSASend was submitted through the native adapter");
+    require(h.client->pending_writes==1&&!borrowed.expired(),
+        "completion closure owns the borrowed WSASend bytes until dispatch");
+    const auto end=std::chrono::steady_clock::now()+2s;
+    while(!late_completion::cached&&std::chrono::steady_clock::now()<end){
+        h.owner.io.restart();h.owner.io.poll_one();
+        if(!late_completion::cached)Sleep(1);
+    }
+    const auto packet=late_completion::packet;
+    require(late_completion::cached&&late_completion::captures==1&&
+            packet.operation==late_completion::target&&packet.port&&packet.key==0,
+        "the real IOCP send completion was captured exactly once");
+    require(packet.ok&&packet.error==ERROR_SUCCESS&&packet.bytes==4,
+        "captured send packet reports the actual successful four-byte write");
+    require(!borrowed.expired()&&!stale_callbacks,
+        "holding the send completion retains output and suppresses callbacks");
+    fault::target=late_completion::send_socket;
+    h.client->close();
+    h.client.reset();
+    require(!borrowed.expired()&&!lifetime.expired()&&h.owner.active_sessions==1,
+        "cancel/close and caller release cannot retire the undelivered send");
+    const auto started=std::chrono::steady_clock::now();
+    for(unsigned i=0;i<2;++i){
+        const auto waits=late_completion::timeouts;
+        require(stop_failed(h.owner),"held WSASend completion must reject bounded shutdown");
+        require(late_completion::timeouts>waits&&late_completion::cached&&
+                late_completion::captures==1&&!late_completion::deliveries,
+            "every failed shutdown preserves the original native completion packet");
+        auto kept=lifetime.lock();
+        require(kept&&kept->closed&&kept->pending_writes==1&&
+                !kept->retired()&&h.owner.active_sessions==1&&
+                h.owner.clients.size()==1,
+            "held send completion retains the Client and session capacity");
+        require(!borrowed.expired()&&!stale_callbacks,
+            "pending write bytes remain owned without a business callback");
+        require(fault::closes==1,"completed socket close must not be repeated during retry");
+    }
+    require(std::chrono::steady_clock::now()-started>=100ms,
+        "held send delivery crossed the unchanged first 100 ms drain interval");
+    gate.release();
+    h.owner.stop();
+    require(late_completion::captures==1&&late_completion::deliveries==1&&
+            !late_completion::cached&&!stale_callbacks,
+        "the exact send completion is delivered once without a stale callback");
+    require(borrowed.expired()&&lifetime.expired()&&
+            h.owner.active_sessions==0&&h.owner.clients.empty(),
+        "terminal send completion retires output and Client exactly once");
+    h.owner.stop();
+    require(late_completion::deliveries==1&&fault::closes==1,
+        "later idempotent shutdown cannot repeat native send or close");
+    std::cout<<"native delayed WSASend: packet_bytes="<<packet.bytes
+        <<" captures="<<late_completion::captures
+        <<" deliveries="<<late_completion::deliveries<<'\n';
+}
+void combined_read_write_close_retry(){
+    // A source-linked B50 regression: real WSARecv and WSASend borrow two
+    // distinct live allocations while the same native socket close is retained.
+    // The retry is caused by an injected WSAEWOULDBLOCK close, not a fabricated
+    // Windows completion or a claim that the kernel took over 100 ms.
+    Harness h(false);
+    struct Reset {
+        ~Reset(){receive_buffer_probe::recording=false;receive_buffer_probe::tracked=nullptr;fault::error=0;}
+    } reset;
+    receive_buffer_probe::count=0;
+    receive_buffer_probe::released=0;
+    const auto native=h.client->socket.native_handle();
+    receive_buffer_probe::socket=native;
+    receive_buffer_probe::recording=true;
+    unsigned receive_callbacks=0,send_callbacks=0;
+    h.client->async_receive(4096,[&](server::Error,std::string){++receive_callbacks;});
+    receive_buffer_probe::recording=false;
+    require(receive_buffer_probe::tracked!=nullptr&&receive_buffer_probe::released==0,
+        "real WSARecv must own the observed receive buffer until completion");
+    auto payload=std::make_shared<std::string>(128*1024,'X');
+    std::weak_ptr<std::string> borrowed_write=payload;
+    h.client->async_send(std::span<const char>(payload->data(),payload->size()),
+        [payload,&send_callbacks](server::Error,std::size_t){++send_callbacks;});
+    payload.reset();
+    require(h.client->pending_reads==1&&h.client->pending_writes==1&&
+            !borrowed_write.expired(),
+        "both kernel-submitted operations retain independent read/write storage");
+    fault::target=native;
+    fault::error=WSAEWOULDBLOCK;
+    h.client->close();
+    require(h.client->pending_reads==1&&h.client->pending_writes==1&&
+            receive_buffer_probe::released==0&&!borrowed_write.expired()&&
+            h.owner.active_sessions==1&&!h.client->retired(),
+        "failed native close must retain both pending operation loans");
+    std::weak_ptr<net::AsioService::Impl::Client> lifetime=h.client;
+    h.client.reset();
+    require(!lifetime.expired(),"failed close may not retire the client at caller release");
+    const bool pending=stop_failed(h.owner);
+    require(pending&&h.owner.active_sessions==1&&!h.owner.clients.empty()&&
+            !lifetime.expired(),
+        "first shutdown must fail closed while the native close lease is retained");
+    require(receive_callbacks==0&&send_callbacks==0,
+        "cancelled operations must never dispatch stale business callbacks");
+    // The first run_for may already consume the Windows completions; either
+    // timing is valid, but the failing native close still owns the session.
+    fault::error=0;
+    h.owner.stop();
+    require(h.owner.active_sessions==0&&h.owner.clients.empty()&&
+            lifetime.expired()&&borrowed_write.expired()&&
+            receive_buffer_probe::released==1,
+        "successful retry must release both real I/O loans and the client once");
+    require(receive_callbacks==0&&send_callbacks==0,
+        "retry must not resurrect cancelled read/write business callbacks");
+    const auto close_count=fault::closes.load();
+    h.owner.stop();
+    require(fault::closes==close_count&&receive_buffer_probe::released==1,
+        "later shutdown cannot repeat an already-completed native close or buffer free");
+}
 void timer_retirement(){
     Harness h;fault::hold_timer=true;const bool pending=stop_failed(h.owner);fault::hold_timer=false;
     h.client->timer.cancel();h.owner.stop();
@@ -226,6 +535,52 @@ void constructor_rollback(){
     const auto raw=fault::target.load();const bool blocked=stop_failed(owner);fault::error=0;
     if(blocked)owner.stop();else if(raw!=INVALID_SOCKET)::closesocket(raw);
     require(raw!=INVALID_SOCKET&&blocked,"failed Client construction loses native rollback ownership");
+}
+void client_publication_rollback(){
+    for(const bool close_failure:{false,true}) {
+        fault::reset();Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.a,{});owner.used=true;
+        struct ClearFault {~ClearFault(){fault::error=0;fault::fail_client_publication=false;}} clear_fault;
+        owner.acceptor.open(Tcp::v4());owner.acceptor.bind({asio::ip::address_v4::loopback(),0});owner.acceptor.listen();
+        owner.queue_accept(owner.acceptor,0);
+        asio::io_context peer_io;Tcp::socket peer(peer_io);peer.connect(owner.acceptor.local_endpoint());
+        fault::fail_client_publication=true;
+        fault::error=close_failure?WSAEWOULDBLOCK:0;
+        const auto deadline=std::chrono::steady_clock::now()+2s;
+        do{owner.io.restart();owner.io.run_for(5ms);}
+        while(!fault::publication_failures&&std::chrono::steady_clock::now()<deadline);
+        const auto raw=fault::target.load();
+        const bool injected=fault::publication_failures==1&&!fault::fail_client_publication;
+        const bool lifetime=c.factory.created==1&&c.factory.destroyed==1&&
+            c.factory.publication_errors==1&&fault::unpublished_client.expired();
+        const bool uncounted=owner.clients.empty()&&owner.active_sessions==0;
+        const bool pending=owner.accept_pending[0];
+        const bool stopping=owner.stopping.load();
+        const bool retained=owner.deferred_closes.size()==1&&
+            owner.deferred_closes.front().socket==raw&&
+            owner.deferred_closes.front().state==net::NativeClose::State::retained;
+        const bool no_retained=owner.deferred_closes.empty();
+        const bool blocked=stop_failed(owner);const auto before_repair=fault::closes.load();
+        fault::error=0;
+        bool cleaned=!blocked;
+        if(blocked) {
+            const auto cleanup_deadline=std::chrono::steady_clock::now()+2s;
+            do{cleaned=!stop_failed(owner);}
+            while(!cleaned&&std::chrono::steady_clock::now()<cleanup_deadline);
+        }
+        else if(close_failure&&raw!=INVALID_SOCKET)::closesocket(raw); // Lost-owner negative-control cleanup only.
+        const auto repaired=fault::closes.load();owner.stop();
+        require(injected&&raw!=INVALID_SOCKET,"publication seam must fail after a connected Client was constructed");
+        require(lifetime&&uncounted,"failed publication destroys the unpublished Client/Handler without claiming a session slot");
+        require(pending==!close_failure&&stopping==close_failure,
+            "ordinary publication failure rearms accept; retained close failure stops admission");
+        require(close_failure?retained&&blocked:no_retained,
+            "failed close retains the exact owner and blocks stop; normal close retains no socket");
+        require(!close_failure||repaired==before_repair+1,
+            "repair closes the same retained socket exactly once");
+        require(cleaned&&owner.deferred_closes.empty()&&owner.clients.empty()&&owner.active_sessions==0&&
+            !owner.accept_pending[0]&&!owner.accept_pending[1]&&fault::closes==repaired,
+            "successful cleanup drains unpublished ownership and repeated stop does not close it again");
+    }
 }
 void bind_rollback(){
     fault::reset();Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.a,{});owner.used=true;
@@ -253,7 +608,13 @@ int main(int argc,char** argv)try{
     for(auto [name,fn]:{std::pair{"retry",+[]{retained_retry(false);}},
         {"retry-option",+[]{retained_retry(true);}},{"uncertain-open",+[]{unknown_quarantine(false);}},
         {"uncertain-closed",+[]{unknown_quarantine(true);}},{"completion",completion_lifetime},
-        {"receive-completion",receive_cancellation_lifetime},{"timer",timer_retirement},{"constructor",constructor_rollback},{"bind",bind_rollback},{"listener",listener_retry}})
+        {"receive-completion",receive_cancellation_lifetime},
+        {"read-write-retry",combined_read_write_close_retry},
+        {"late-receive-cancel",+[]{delayed_receive_completion(false);}},
+        {"late-receive-success",+[]{delayed_receive_completion(true);}},
+        {"late-send-success",delayed_send_completion},
+        {"timer",timer_retirement},{"constructor",constructor_rollback},
+        {"publication",client_publication_rollback},{"bind",bind_rollback},{"listener",listener_retry}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");
 }catch(const std::exception& e){fault::error=0;fault::hold_timer=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

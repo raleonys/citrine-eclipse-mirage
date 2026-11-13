@@ -1,7 +1,13 @@
+> **Historical checkpoint.** Use [HOOK_PATH_SCAN.md](HOOK_PATH_SCAN.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 > Later explicit owner decision: unbounded/heap-based path reading was
 > superseded by the [HOOK_PATH_SCAN.md](HOOK_PATH_SCAN.md) contract.
 > The limit of 32,768 UTF-16 units, fixed suffix buffer, and protected reads
-> apply. Descriptions of the older reader and body identity below are retained
+> apply. The unload scanner's later retained-handle correction is documented in
+> [UNLOAD_RECOVERY.md](UNLOAD_RECOVERY.md); its body is no longer token-identical
+> to the original Bluefield scanner. Descriptions of the older reader and
+> body identity below are retained
 > as historical records within that scope.
 
 # Bluefield hook 11 alignment
@@ -17,7 +23,7 @@ required by it. Other application modules were not copied from Bluefield.
 | Selector | Bluefield `crypt_query.cpp`; include/namespace adaptation only; normalized body unchanged |
 | Filename reading | UTF-16 unit reads via `ReadProcessMemory`; pointer-overflow check; no fixed path bound in the original version |
 | Unreadable/invalid UTF-16 | Fall back to the original object; no UD2/heap UTF-8 conversion |
-| Matching | Case-sensitive `preloader_l.dll` suffix; companion `EAAntiCheat.GameServiceLauncher.dll`; Bluefield null/non-file rules |
+| Matching | Case-sensitive `preloader_l.dll` compatibility suffix; companion `EAAntiCheat.GameServiceLauncher.dll`; Bluefield null/non-file rules |
 | Original call | Preserve all SDK arguments/output pointers and the result |
 | LastError / observation | Preserve incoming/outgoing LastError in Bluefield order; thread-local phase observation |
 | Missing trampoline | Bluefield failure log and fail-fast; no fabricated silent return |

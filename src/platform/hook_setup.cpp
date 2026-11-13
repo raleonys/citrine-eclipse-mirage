@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/hook_setup.hpp"
-#include "preloader_l/core/paths.hpp"
+#include "citrine_eclipse_mirage/platform/hook_setup.hpp"
+#include "citrine_eclipse_mirage/core/paths.hpp"
 
-namespace preloader_l::host_init {
+namespace citrine_eclipse_mirage::host_init {
 std::int32_t create_named_hook_046970(Effects& effects, std::u16string_view module,
     std::string_view name, Callback callback, Address& original, Address* target) {
     const Address handle = effects.get_module_handle(module);

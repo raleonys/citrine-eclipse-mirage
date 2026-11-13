@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [WINDOWS_IO_FIX.md](WINDOWS_IO_FIX.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 > This table represents the initial review snapshot. Following the owner's
 > subsequent instruction, standard Windows I/O was restored and Gulrak was
 > removed: [current status](WINDOWS_IO_FIX.md).
