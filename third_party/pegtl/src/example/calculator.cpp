@@ -303,7 +303,7 @@ namespace example
       static void apply( const ActionInput& in, const operators& /*unused*/, stacks& s )
       {
          std::stringstream ss( in.string() );
-         long v{};
+         long v;
          ss >> v;
          s.push( v );
       }
@@ -332,7 +332,7 @@ namespace example
 
 }  // namespace example
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    // Check the grammar for some possible issues.
 
@@ -343,7 +343,7 @@ int main( int argc, char** argv )
    // The objects required as state by the actions.
 
    example::stacks s;
-   const example::operators b;
+   example::operators b;
 
    for( int i = 1; i < argc; ++i ) {
       // Parse and process the command-line arguments as calculator expressions...

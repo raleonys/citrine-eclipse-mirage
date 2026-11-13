@@ -407,11 +407,17 @@ void log_failure_before_nonempty_apply() {
 
 void file_path_and_native(const std::filesystem::path& dir) {
     Files files;Effects deps;auto s=seed();config_application::Trace trace;
-    files.base="\xef\xbb\xbf\"Config2\" {\"User\" {\"Username\" \"base-user\"} \"Content\" {\"a\" {} \"!\" {}}}";
+    // a/i and b/j collide at eight buckets, but all four differ at 64.
+    // Omitting the 019d52 selection copy reverses each pair before section
+    // reuse at 64 buckets, even though scalar values and counts agree.
+    const std::vector<std::string> expected_ids{"a","i","b","j"};
+    files.base="\xef\xbb\xbf\"Config2\" {\"User\" {\"Username\" \"base-user\"} \"Content\" {\"a\" {} \"i\" {} \"b\" {} \"j\" {}}}";
     files.over=R"("Config2" {"User" {"Username" "override-user"} "Content" {"ignored" {}}})";
     config_application::load_and_apply(s,false,deps,files,&trace);
+    require(event(trace,"Content").bucket_count==64,"file fixture reaches section reuse at 64 buckets");
+    require(content_ids(s)==expected_ids,"raw file selection copy preserves exact observable Content order");
     config_application::load_and_apply(s,true,deps,files);
-    require(s.username=="override-user" && s.content.size()==2,"full raw-byte pipeline supports base collections and override skip");
+    require(s.username=="override-user" && content_ids(s)==expected_ids,"raw file override retains complete base Content order");
     require(files.opened==std::vector<configuration::Path>{u"C:/fixture/surge.cfg",u"C:/fixture/surge_override.cfg"} && deps.logs==files.opened,"file paths/log contract");
     const auto logs=deps.logs.size();files.base="\xef\xbb\xbf\xef\xbb\xbf\"Config2\" {}";
     rejects<parser::ParseError>([&]{config_application::load_and_apply(s,false,deps,files);},"BOM only once");
@@ -422,11 +428,15 @@ void file_path_and_native(const std::filesystem::path& dir) {
     deps.fail_log=true;rejects<std::runtime_error>([&]{config_application::load_and_apply(s,false,deps,files);},"log exception precedes apply");
     require(s.username=="override-user","log failure leaves scalars");deps.fail_log=false;
     files.initial=1;auto empty=config_application::read_config2(u"ignored",files);require(empty.children.empty(),"initial-state failure empty value");files.initial=0;
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_CONFIG_APPLICATION_TESTS)
     std::filesystem::create_directories(dir);const auto path=dir/"application-generated-fixture.cfg";
     {std::ofstream out(path,std::ios::binary|std::ios::trunc);out<<files.over;require(static_cast<bool>(out),"generated native fixture written");}
     file::NativeFactory native;auto own=config_application::read_config2(path.u16string(),native);
     require(own.lookup("User").lookup("Username").value=="override-user","native own-file stream/parser/copy");
     auto state=seed();config_application::apply_config2(state,own,false,deps);require(state.content.size()==1,"native own fixture reaches collection application");
+#else
+    (void)dir; // NativeFactory requires the Windows filesystem adapter.
+#endif
 }
 }
 int main(int argc,char** argv) {

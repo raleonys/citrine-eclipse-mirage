@@ -6,7 +6,10 @@ import json
 import os
 from pathlib import Path
 import re
+import stat
 import subprocess
+
+from project_files import safe_member
 
 
 def check_public_timezones(root):
@@ -148,8 +151,36 @@ def check_archived_evidence(root):
     errors = []
     if (root / 'docs/evidence').exists():
         errors.append('Forbidden legacy evidence directory: docs/evidence')
-    archive = root / 'metadata/evidence'
-    policy = json.loads((root / 'metadata/EVIDENCE_RETENTION_POLICY.json').read_text(encoding='utf-8'))
+    metadata = root / 'metadata'
+    archive = metadata / 'evidence'
+    policy_path = metadata / 'EVIDENCE_RETENTION_POLICY.json'
+
+    def kind(path):
+        try:
+            info = path.lstat()
+        except FileNotFoundError:
+            return 'missing'
+        except OSError:
+            return 'nonregular'
+        # Windows reparse attributes are available on Python 3.9; unlike
+        # Path.is_junction this does not depend on a newer pathlib API.
+        if (stat.S_ISLNK(info.st_mode) or
+                getattr(info, 'st_file_attributes', 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT):
+            return 'link'
+        if stat.S_ISDIR(info.st_mode):
+            return 'directory'
+        return 'file' if stat.S_ISREG(info.st_mode) else 'nonregular'
+
+    # Check the parent and trust-anchor file before reading policy contents.
+    for path, label, allowed in ((metadata, 'metadata directory', {'directory'}),
+                                 (archive, 'archive', {'directory', 'missing'}),
+                                 (policy_path, 'retention policy', {'file'})):
+        value = kind(path)
+        if value == 'link':
+            return errors + ['Historical evidence ' + label + ' is a link']
+        if value not in allowed:
+            return errors + ['Invalid historical evidence ' + label]
+    policy = json.loads(policy_path.read_text(encoding='utf-8'))
     retained = policy.get('retained_files')
     if (policy.get('schema') != 'surge.evidence-retention.v1' or
             not isinstance(retained, dict) or not retained or
@@ -157,25 +188,48 @@ def check_archived_evidence(root):
         return errors + ['Invalid historical evidence retention policy']
     for name, digest in retained.items():
         if (not isinstance(name, str) or not name or
-                not isinstance(digest, str) or not re.fullmatch(r'[a-f0-9]{64}', digest) or
-                name.startswith('/') or '\\' in name or
-                any(part in ('', '.', '..') for part in name.split('/'))):
+                not isinstance(digest, str) or not re.fullmatch(r'[a-f0-9]{64}', digest)):
             return errors + ['Unsafe historical evidence entry']
-    actual = {p.relative_to(archive).as_posix()
-              for p in archive.rglob('*') if p.is_file() or p.is_symlink()} if archive.is_dir() else set()
+        try:
+            safe_member(name)
+        except ValueError:
+            return errors + ['Unsafe historical evidence entry']
+
+    # Enumerate without following redirected directories. Classify the whole
+    # tree before reading any evidence payload, including nested pinned files.
+    actual = set()
+    pending = [archive] if kind(archive) == 'directory' else []
+    unsafe = False
+    while pending:
+        directory = pending.pop()
+        for path in sorted(directory.iterdir()):
+            name = path.relative_to(archive).as_posix()
+            value = kind(path)
+            if value == 'directory':
+                pending.append(path)
+            elif value == 'file':
+                actual.add(name)
+            else:
+                unsafe = True
+                if value == 'link':
+                    actual.add(name)
+                    errors.append('Historical evidence link is forbidden: ' + name)
+                else:
+                    errors.append('Historical evidence nonregular entry: ' + name)
     expected = set(retained) | {'README.md'}
     if actual != expected:
         errors.append('Historical evidence file-set mismatch: missing='
                       + str(sorted(expected - actual)) + ', unrecorded='
                       + str(sorted(actual - expected)))
+    if unsafe:
+        return errors
     for name, digest in retained.items():
         path = archive / name
-        if path.is_symlink() or not path.is_file():
+        if name not in actual:
             continue
         if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
             errors.append('Historical evidence bytes differ: ' + name)
     return errors
-
 
 
 def check_layout_migration_reference(root, contract):
@@ -196,7 +250,11 @@ def check_layout_migration_reference(root, contract):
     except (OSError, UnicodeError, ValueError):
         return ['Invalid or missing layout_migration file target: ' + name]
     schema = payload.get('schema') if isinstance(payload, dict) else None
-    if not isinstance(schema, str) or not schema.endswith('.layout-migration.v1'):
+    # The historical schema name is pinned by SHA-256 to avoid reproducing
+    # a reserved reference identifier in active source or metadata.
+    if (not isinstance(schema, str) or not schema.isascii() or
+            hashlib.sha256(schema.encode('ascii')).hexdigest() !=
+            '4f01afb8fc1e048dd02b9331c729506bc911ce880df79bb51b5008ba87d0d829'):
         return ['Unexpected layout_migration schema: ' + name]
     return []
 
@@ -204,7 +262,47 @@ def check_layout_migration_reference(root, contract):
 def declared_application_sources(text):
     # A vendor path such as third_party/pugixml/src/pugixml.cpp is not
     # an application-relative src/ path. Keep complete path boundaries.
-    return set(re.findall(r'(?<![A-Za-z0-9_./\\-])src/[A-Za-z0-9_/.-]+\.cpp\b', text))
+    # Exclude CMake line/bracket comments before source-path matching: a
+    # commented-out source must never satisfy the actual ownership inventory.
+    # Quoted arguments remain visible, including quoted source filenames.
+    active = []
+    index = 0
+    quoted = False
+    argument_start = True
+    while index < len(text):
+        char = text[index]
+        if char == '\\' and index + 1 < len(text):
+            active.extend((char, text[index + 1]))
+            if text[index + 1] != '\n':
+                argument_start = False
+            index += 2
+            continue
+        # Bracket arguments are opaque: their quotes and hashes cannot change
+        # the surrounding lexical context. Comments use the same delimiter.
+        if not quoted and (char == '#' or (char == '[' and argument_start)):
+            opening = index + (char == '#')
+            bracket = re.match(r'\[(=*)\[', text[opening:])
+            if bracket:
+                closing = ']' + bracket.group(1) + ']'
+                end = text.find(closing, opening + bracket.end())
+                end = len(text) if end < 0 else end + len(closing)
+                active.append(' ' if char == '#' else text[index:end])
+                argument_start = char == '#'
+                index = end
+                continue
+        if char == '"':
+            quoted = not quoted
+        if char == '#' and not quoted:
+            end = text.find('\n', index)
+            active.append(' ')
+            argument_start = True
+            index = len(text) if end < 0 else end
+            continue
+        active.append(char)
+        argument_start = not quoted and (char.isspace() or char in '()')
+        index += 1
+    return set(re.findall(r'(?<![A-Za-z0-9_./\\-])src/[A-Za-z0-9_/.-]+\.cpp\b',
+                          ''.join(active)))
 
 
 def check(root):
