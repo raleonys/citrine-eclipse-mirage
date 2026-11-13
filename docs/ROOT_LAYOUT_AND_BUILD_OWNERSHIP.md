@@ -62,6 +62,19 @@ retained. A total of 177 files were moved, and 261 source/header bodies were
 verified byte-identical except for include directives.
 [Complete path mapping](../metadata/evidence/LAYOUT_MIGRATION.json).
 
+## First-party namespace text filtering
+
+The source verifier decodes first-party C++ files as UTF-8 and applies its
+qualified-namespace check to a lexical mask of comments and ordinary/raw
+literals. Harmless namespace text in those regions cannot claim executable
+identity. Numeric digit separators remain active numeric text; prefixed literals
+and continued line comments retain their lexical meaning. The mask preserves
+character positions and CR/LF locations so later active declarations remain
+visible. The verifier still hashes the original bytes against SOURCE_FILES and
+retains the existing file-set, size, alias and layout checks. This bounded
+prepass is not complete C++ preprocessing or compilation; native compiler and
+runtime acceptance remain separate.
+
 ## CMake source declaration inventory
 
 The repository-contract checker compares application `src/` declarations in

@@ -995,6 +995,97 @@ class IdentityBoundaryTests(unittest.TestCase):
             (self.root/'metadata/SOURCE_FILES.json').write_text(json.dumps({'files':{'src/module.cpp':{'bytes':len(payload),'sha256':inventory.digest(payload)}}}))
             self.assertEqual(accepted,source_verification.verify(self.root)['status']=='PASS')
 
+    def test_source_namespace_scan_ignores_comments_and_literals(self):
+        for folder in ('include', 'tests', 'third_party'):
+            (self.root / folder).mkdir()
+        path = self.root / 'src/module.cpp'
+        manifest = self.root / 'metadata/SOURCE_FILES.json'
+
+        def verify_payload(source):
+            payload = source.encode('utf-8')
+            path.write_bytes(payload)
+            manifest.write_text(json.dumps({'files': {'src/module.cpp': {
+                'bytes': len(payload), 'sha256': inventory.digest(payload)}}}))
+            return source_verification.verify(self.root)
+
+        harmless = (
+            '// namespace other_vendor::comment {}\n'
+            '/* namespace other_vendor::block {}\n'
+            '   namespace other_vendor::more {} */\n'
+            'const char* url = "https://example.invalid/namespace other_vendor::string {}";\n'
+            'const char* raw = R"tag(namespace other_vendor::raw {} // still data)tag";\n'
+            'namespace citrine_eclipse_mirage::accepted {}\n'
+        )
+        result = verify_payload(harmless)
+        self.assertEqual('PASS', result['status'], result['errors'])
+        actual = harmless + 'namespace other_vendor::actual {}\n'
+        result = verify_payload(actual)
+        self.assertEqual('FAIL', result['status'])
+        self.assertTrue(any('Foreign first-party namespace' in error
+                            for error in result['errors']), result['errors'])
+
+    def source_namespace_fixture(self, source):
+        for folder in ('include', 'tests', 'third_party'):
+            (self.root / folder).mkdir(exist_ok=True)
+        payload = source.encode('utf-8')
+        (self.root / 'src/module.cpp').write_bytes(payload)
+        (self.root / 'metadata/SOURCE_FILES.json').write_text(json.dumps({
+            'files': {'src/module.cpp': {'bytes': len(payload),
+                                        'sha256': inventory.digest(payload)}}}))
+        return source_verification.verify(self.root)
+
+    def test_source_namespace_mask_keeps_numeric_and_character_tokens(self):
+        prefixes = [f'constexpr auto value = {number};\n' for number in (
+            "1'024", "0xDEAD'BEEFULL", "0b1010'0101", "1.25'0e+2", "0x1.2'3p+4",
+            "12'345'678")]
+        prefixes += ["constexpr auto value = " + value + ";\n" for value in (
+            "u8'a'", "L'a'", "u'a'", "U'a'", "'a'")]
+        for prefix in prefixes:
+            with self.subTest(prefix=prefix):
+                active = prefix + 'namespace other_vendor::actual {}\n'
+                result = self.source_namespace_fixture(active)
+                self.assertEqual('FAIL', result['status'])
+                self.assertTrue(any('Foreign first-party namespace' in str(error)
+                                    for error in result['errors']), result['errors'])
+        # Numeric source text and an actual declaration stay byte-for-byte visible.
+        active = "constexpr auto n = 1'024;\nnamespace other_vendor::actual {}\n"
+        self.assertEqual(active, source_verification.mask_cpp_noncode(active))
+
+    def test_source_namespace_mask_handles_raw_prefixes_and_continued_comments(self):
+        harmless = []
+        for prefix in ('R', 'u8R', 'uR', 'UR', 'LR'):
+            for delimiter in ('', 'tag', 'abcdefghijklmnop'):
+                harmless.append('const auto* value = ' + prefix + '"' + delimiter +
+                    '(namespace other_vendor::data {} " /* // )wrong")' + delimiter + '";\n')
+        harmless += [
+            '// continued comment ' + chr(92) + '\nnamespace other_vendor::data {}\n',
+            '// continued comment ' + chr(92) + '\r\nnamespace other_vendor::data {}\r\n',
+            'const char* value = "escaped ' + chr(92) + '" namespace other_vendor::data {}";\n',
+        ]
+        for source in harmless:
+            with self.subTest(source=source):
+                result = self.source_namespace_fixture(
+                    source + 'namespace citrine_eclipse_mirage::valid {}\n')
+                self.assertEqual('PASS', result['status'], result['errors'])
+                result = self.source_namespace_fixture(
+                    source + 'namespace other_vendor::actual {}\n')
+                self.assertEqual('FAIL', result['status'])
+                self.assertTrue(any('Foreign first-party namespace' in str(error)
+                                    for error in result['errors']), result['errors'])
+
+    def test_source_namespace_mask_preserves_positions_and_active_declarations(self):
+        source = ('/* namespace other_vendor::comment {}\r\n */\r\n'
+                  'namespace /* annotation */ other_vendor::actual {}\r\n')
+        masked = source_verification.mask_cpp_noncode(source)
+        self.assertEqual(len(source), len(masked))
+        self.assertEqual([(i, char) for i, char in enumerate(source) if char in '\r\n'],
+                         [(i, char) for i, char in enumerate(masked) if char in '\r\n'])
+        self.assertEqual(source.index('other_vendor::actual'), masked.index('other_vendor::actual'))
+        result = self.source_namespace_fixture(source)
+        self.assertEqual('FAIL', result['status'])
+        self.assertTrue(any('Foreign first-party namespace' in str(error)
+                            for error in result['errors']), result['errors'])
+
     def test_source_sizes_are_required_integer_byte_counts(self):
         for folder in ['include','tests','third_party']:(self.root/folder).mkdir()
         # UTF-8 and CRLF distinguish bytes from characters and normalized text.

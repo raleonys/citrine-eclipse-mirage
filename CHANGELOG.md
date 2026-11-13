@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Require one canonical active PEGTL CMakeCache probe record instead of searching for success text. Reject missing, duplicated, malformed or wrongly typed records, including mixed-type duplicates of the same key; preserve exit 0 for exact success and CTest skip 77 for exact unavailable values. Add real-subprocess regressions without changing vendor inputs or runtime behavior.
+- Mask C++ comments and ordinary/raw literals before checking first-party qualified namespaces, avoiding false errors from harmless text. Preserve active declarations, numeric digit separators, literal prefixes and source positions; follow continued line comments and add real-namespace controls. Keep original-byte hashing, source layout, runtime and ABI unchanged.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-13
 
+- [PR #285](https://github.com/raleonys/citrine-eclipse-mirage/pull/285): Require one canonical active PEGTL CMakeCache probe record instead of searching for success text. Reject missing, duplicated, malformed or wrongly typed records, including mixed-type duplicates of the same key; preserve exit 0 for exact success and CTest skip 77 for exact unavailable values. Add real-subprocess regressions without changing vendor inputs or runtime behavior.
 - [PR #279](https://github.com/raleonys/citrine-eclipse-mirage/pull/279): Exclude CMake line/bracket comments before selecting build-partition source declarations, so commented-out commands and entries cannot satisfy the source inventory. Preserve quoted, escaped and bracket arguments, distinguish ordinary unquoted bracket text, and reject unterminated bracket constructs; retain the strict generated-graph checks and production build behavior.
 - [PR #314](https://github.com/raleonys/citrine-eclipse-mirage/pull/314): Require exactly one canonical LIBRARY declaration followed by exactly one EXPORTS header before any source DEF export. Reject missing, repeated, reversed or misplaced headers while preserving comments, blank lines and the three accepted export names/ordinals; add malformed-header and restoration regressions without changing shipping ABI or DEF bytes.
 - [PR #316](https://github.com/raleonys/citrine-eclipse-mirage/pull/316): Reject incomplete, reordered or overwritten CMake-generated build partition records before accepting target classification, dependencies or sources. Require the exact TARGET/TYPE/DEPS/SOURCES/END sequence while preserving legitimate empty lists; add malformed-record regressions and align the synthetic size-evidence fixture with the existing emitter format. Production targets and runtime behavior are unchanged.
