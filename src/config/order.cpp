@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/config/order.hpp"
+#include "citrine_eclipse_mirage/config/order.hpp"
 #include <algorithm>
 
-namespace preloader_l::config_order {
+namespace citrine_eclipse_mirage::config_order {
 UnsupportedOrder::UnsupportedOrder()
     :std::runtime_error("Config2 order reconstruction supports at most eight unique children per container") {}
 std::uint64_t fnv1a64(std::string_view bytes) noexcept {
@@ -48,4 +48,4 @@ std::vector<std::string> SelectedCopyOrder::order_for(const parser::Node& node,
     (void)path; // Same one-copy rule at every depth of the selected subtree.
     return copy_order(parsed_order(node));
 }
-} // namespace preloader_l::config_order
+} // namespace citrine_eclipse_mirage::config_order

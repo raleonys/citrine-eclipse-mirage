@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include <asio.hpp>
-#include "preloader_l/net/server.hpp"
-#include "preloader_l/net/session_policy.hpp"
-#include "preloader_l/platform/execution_windows.hpp"
+#include "citrine_eclipse_mirage/net/server.hpp"
+#include "citrine_eclipse_mirage/net/session_policy.hpp"
+#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
 #include <memory>
 #include <new>
 #define private public
-#include "preloader_l/net/asio_service.hpp"
+#include "citrine_eclipse_mirage/net/asio_service.hpp"
 #undef private
 #include <iostream>
 #include <stdexcept>
@@ -32,19 +32,32 @@ public:
 #include "src/net/asio_service.cpp"
 #undef steady_timer
 namespace {
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 using Tcp=asio::ip::tcp;
 using namespace std::chrono_literals;
-void require(bool value,const char* text){if(!value)throw std::runtime_error(text);}
+unsigned checks=0;
+void require(bool value,const char* text){++checks;if(!value)throw std::runtime_error(text);}
 struct Factory:net::HandlerFactory {
-    unsigned errors=0;
+    unsigned errors=0,completion_errors=0,prepared=0,committed=0,cancelled=0,destroyed=0;
+    std::string response;
+    struct Receipt:server::DeliveryReceipt {
+        Factory& owner;explicit Receipt(Factory& f):owner(f){}
+        ~Receipt(){++owner.destroyed;}
+        bool finish(bool success)noexcept override{if(success)++owner.committed;else ++owner.cancelled;return true;}
+    };
     struct Handler:server::Handler {
+        Factory& owner;explicit Handler(Factory& f):owner(f){}
         void reset_02bc70()override{}
         std::string initial_message_02d540()override{return std::string("hello\0",6);}
-        std::string process_message_033d70(std::string_view)override{return {};}
+        std::string process_message_033d70(std::string_view)override{return owner.response;}
+        server::PreparedResponse prepare_response(std::string_view request)override{
+            ++owner.prepared;return {process_message_033d70(request),std::make_unique<Receipt>(owner)};
+        }
     };
-    std::unique_ptr<server::Handler> create()override{return std::make_unique<Handler>();}
-    void error(std::string_view,std::exception_ptr)noexcept override{++errors;}
+    std::unique_ptr<server::Handler> create()override{return std::make_unique<Handler>(*this);}
+    void error(std::string_view operation,std::exception_ptr)noexcept override{
+        ++errors;if(operation=="completion")++completion_errors;
+    }
 };
 struct Context {
     Factory factory;execution::MutexState mutex{};
@@ -90,6 +103,58 @@ void receive_failure(fault::Operation operation){
     h.peer.non_blocking(false);asio::write(h.peer,asio::buffer("partial",7));h.peer.non_blocking(true);
     h.wait_closed();require(fault::injected==prior+1&&h.c.factory.errors==1,"receive callback contains the injected timer exception");
 }
+// Drive one real received frame to the existing owned worker queue. Execute
+// its job here so the fault can be armed after response preparation but before
+// the IO executor initiates the socket write; no worker timing race is assumed.
+void queue_prepared_response(Harness& h){
+    h.c.factory.response=std::string("reply\0",6);
+    h.peer.non_blocking(false);asio::write(h.peer,asio::buffer("request\0",8));h.peer.non_blocking(true);
+    const auto until=std::chrono::steady_clock::now()+1s;
+    while(h.owner.jobs.empty()&&std::chrono::steady_clock::now()<until){
+        h.owner.io.restart();h.owner.io.poll();if(h.owner.jobs.empty())Sleep(1);
+    }
+    require(h.owner.jobs.size()==1&&!h.client->armed_deadline&&h.client->pending_reads==0,
+        "complete real frame pauses receive and admits exactly one handler job");
+    auto job=std::move(h.owner.jobs.front());h.owner.jobs.pop_front();job();
+    require(h.c.factory.prepared==1&&h.c.factory.committed==0&&h.c.factory.cancelled==0&&
+            h.c.factory.destroyed==0&&h.client->pending_writes==0&&
+            h.client->session.queued_messages()==0,
+        "prepared response and receipt await IO dispatch without a socket write");
+}
+void send_timer_failure(fault::Operation operation){
+    Harness h;queue_prepared_response(h);
+    const auto prior=fault::injected;fault::next=operation;
+    h.owner.io.restart();h.wait_closed();
+    require(fault::injected==prior+1&&fault::next==fault::Operation::none&&
+            h.c.factory.errors==1&&h.c.factory.completion_errors==1,
+        "send timer fault is contained at the response IO completion boundary");
+    require(h.c.factory.committed==0&&h.c.factory.cancelled==1&&h.c.factory.destroyed==1,
+        "failed send initiation cancels and destroys its delivery receipt exactly once");
+    require(h.client->pending_writes==0&&h.client->pending_reads==0&&h.client->pending_timers==0&&
+            h.client->session.queued_messages()==0&&h.owner.jobs.empty(),
+        "send timer failure leaves no pending socket timer output or handler owner");
+    h.owner.stop();h.client->close();h.client->session.cancel_output();
+    require(h.c.factory.errors==1&&h.c.factory.cancelled==1&&h.c.factory.destroyed==1,
+        "repeated retirement cannot duplicate diagnostics or delivery cancellation");
+}
+void successful_prepared_response(){
+    Harness h;queue_prepared_response(h);
+    const auto prior=fault::injected;
+    std::string received;const auto until=std::chrono::steady_clock::now()+1s;
+    while((received.size()<6||h.c.factory.destroyed!=1)&&std::chrono::steady_clock::now()<until){
+        h.owner.io.restart();h.owner.io.poll();
+        char bytes[16];asio::error_code error;const auto n=h.peer.read_some(asio::buffer(bytes),error);
+        if(!error)received.append(bytes,n);
+        else if(error!=asio::error::would_block&&error!=asio::error::try_again)throw asio::system_error(error);
+        if(received.size()<6||h.c.factory.destroyed!=1)Sleep(1);
+    }
+    require(received==h.c.factory.response&&h.c.factory.committed==1&&
+            h.c.factory.cancelled==0&&h.c.factory.destroyed==1&&h.c.factory.errors==0&&fault::injected==prior,
+        "unarmed control delivers exact bytes and commits its receipt once after fault cases");
+    require(!h.client->closed&&h.client->pending_reads==1&&h.client->pending_writes==0&&
+            h.client->armed_deadline.has_value()&&h.client->session.queued_messages()==0,
+        "successful response restores receive timing on the still-open real socket");
+}
 void callback_rearm_failure(){
     Harness h;const auto prior=fault::injected;
     // Preserve the already queued timer, while a later logical receive
@@ -98,8 +163,30 @@ void callback_rearm_failure(){
     fault::next=fault::Operation::wait;h.wait_closed();
     require(fault::injected==prior+1,"timer callback reschedule fault reached");
 }
+void send_initiation_failure(fault::Operation operation){
+    Harness h;
+    // A completed frame leaves no receive deadline. A subsequent ordered
+    // response must install its own send deadline through Client::async_send.
+    // Exercise the real Session output queue on the live IO executor, rather
+    // than calling the timer or the socket adapter in isolation.
+    h.client->frame_received();
+    require(!h.client->armed_deadline,"completed frame retires the receive deadline");
+    const auto prior=fault::injected;
+    fault::next=operation;
+    const auto client=h.client;
+    client->post_io([client]{client->session.do_write_028270("reply");});
+    h.wait_closed();
+    require(fault::injected==prior+1&&h.c.factory.errors==1,
+        "send timer initiation failure is contained by the IO callback");
+    require(client->pending_writes==0&&client->session.queued_messages()==0,
+        "failed send timer leaves no posted socket write or queued response");
+}
+
 }
 int main()try{
     receive_failure(fault::Operation::wait);receive_failure(fault::Operation::cancel);callback_rearm_failure();
-    std::cout<<"PASS: three timer exception paths close real sessions; internal cache hypothesis does not bypass caller containment\n";
+    send_initiation_failure(fault::Operation::wait);send_initiation_failure(fault::Operation::cancel);
+    send_timer_failure(fault::Operation::wait);send_timer_failure(fault::Operation::cancel);
+    successful_prepared_response();
+    std::cout<<"PASS: "<<checks<<" checks; seven fault runs across five timer boundaries; direct/prepared ownership and unarmed send control\n";
 }catch(const std::exception& e){fault::next=fault::Operation::none;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

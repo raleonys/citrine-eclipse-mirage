@@ -1,14 +1,68 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/status.hpp"
+#include "citrine_eclipse_mirage/runtime/status.hpp"
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <string_view>
 #include <vector>
-using namespace preloader_l::status;
+
+namespace native_status_probe {
+struct State {
+    bool armed=false,valid=true,closed=false,report_close_failure=false;
+    DWORD attribute_error=ERROR_SHARING_VIOLATION,find_error=0;
+    unsigned attributes=0,finds=0,closes=0;
+    HANDLE found=INVALID_HANDLE_VALUE;
+    std::u16string path;
+} state;
+bool same_path(LPCWSTR path) {
+    return path&&std::u16string_view(reinterpret_cast<const char16_t*>(path))==state.path;
+}
+BOOL WINAPI attributes(LPCWSTR path,GET_FILEEX_INFO_LEVELS level,LPVOID output) {
+    if(!state.armed)return ::GetFileAttributesExW(path,level,output);
+    ++state.attributes;
+    state.valid=state.valid&&same_path(path)&&level==GetFileExInfoStandard&&output;
+    SetLastError(state.attribute_error);return FALSE;
+}
+HANDLE WINAPI find(LPCWSTR path,LPWIN32_FIND_DATAW output) {
+    if(!state.armed)return ::FindFirstFileW(path,output);
+    ++state.finds;state.valid=state.valid&&same_path(path)&&output;
+    if(state.find_error){SetLastError(state.find_error);return INVALID_HANDLE_VALUE;}
+    state.found=::FindFirstFileW(path,output);return state.found;
+}
+BOOL WINAPI close(HANDLE handle) {
+    if(!state.armed)return ::FindClose(handle);
+    ++state.closes;
+    state.valid=state.valid&&handle==state.found&&handle!=INVALID_HANDLE_VALUE;
+    const auto result=::FindClose(handle);state.closed=result!=FALSE;
+    // Close the actual search handle even when testing the reference policy
+    // that ignores a reported FindClose failure. Never leak a test handle.
+    if(state.report_close_failure){SetLastError(ERROR_INVALID_HANDLE);return FALSE;}
+    return result;
+}
+struct Fault {
+    Fault(const std::u16string& path,DWORD attribute_error,DWORD find_error=0,bool close_failure=false) {
+        state={};state.path=path;state.attribute_error=attribute_error;
+        state.find_error=find_error;state.report_close_failure=close_failure;state.armed=true;
+    }
+    ~Fault(){state.armed=false;}
+};
+}
+// Exercise the production Windows adapter rather than a replacement
+// SystemCalls object. Only the initial attribute error and selected negative
+// outcomes are injected; successful find/close calls use real owned fixtures.
+#define GetFileAttributesExW native_status_probe::attributes
+#define FindFirstFileW native_status_probe::find
+#define FindClose native_status_probe::close
+#include "../../../src/platform/status_windows.cpp"
+#undef FindClose
+#undef FindFirstFileW
+#undef GetFileAttributesExW
+
+using namespace citrine_eclipse_mirage::status;
 namespace {
 int checks = 0;
 void check(bool value) { ++checks; if (!value) throw std::runtime_error("status test failed at check " + std::to_string(checks)); }
@@ -109,6 +163,43 @@ void route() {
         check(out && c.calls.empty());
     }
 }
+void native_sharing_recovery(const Path& file,std::uint32_t permissions) {
+    NativeStats stats;
+    for(const bool close_failure:{false,true}) {
+        native_status_probe::Fault fault(file,ERROR_SHARING_VIOLATION,0,close_failure);
+        const auto result=status_01ea20(file,3,stats);
+        check(result.kind==2&&result.error==0&&result.permissions==permissions);
+        const auto& p=native_status_probe::state;
+        check(p.valid&&p.attributes==1&&p.finds==1&&p.closes==1&&p.closed);
+    }
+    {
+        native_status_probe::Fault fault(file,ERROR_SHARING_VIOLATION,ERROR_ACCESS_DENIED);
+        const auto result=status_01ea20(file,3,stats);
+        check(result.kind==0&&result.error==ERROR_ACCESS_DENIED&&result.permissions==0xffff);
+        const auto& p=native_status_probe::state;
+        check(p.valid&&p.attributes==1&&p.finds==1&&p.closes==0&&!p.closed);
+    }
+    for(const DWORD error:{DWORD{ERROR_ACCESS_DENIED},DWORD{ERROR_PATH_NOT_FOUND}}) {
+        native_status_probe::Fault fault(file,error);
+        const auto result=status_01ea20(file,3,stats);
+        check(result.kind==(error==ERROR_PATH_NOT_FOUND?1:0)&&
+              result.error==error&&result.permissions==0xffff);
+        const auto& p=native_status_probe::state;
+        check(p.valid&&p.attributes==1&&p.finds==0&&p.closes==0);
+    }
+    {
+        const auto missing=file+u".missing-generated-fallback";
+        native_status_probe::Fault fault(missing,ERROR_SHARING_VIOLATION);
+        const auto result=status_01ea20(missing,3,stats);
+        check(result.kind==1&&result.error==ERROR_FILE_NOT_FOUND&&result.permissions==0xffff);
+        const auto& p=native_status_probe::state;
+        check(p.valid&&p.attributes==1&&p.finds==1&&p.closes==0&&p.found==INVALID_HANDLE_VALUE);
+    }
+    // The injection is scoped; an ordinary native query still succeeds after
+    // all success/failure cases and no fabricated handle reaches FindClose.
+    const auto result=status_01ea20(file,3,stats);
+    check(result.kind==2&&result.error==0&&result.permissions==permissions);
+}
 void native(const char* executable) {
     namespace fs = std::filesystem;
     // This executable only creates and queries its own generated fixture tree.
@@ -119,6 +210,7 @@ void native(const char* executable) {
     NativeStats stats;
     auto result = status_01ea20(file.u16string(), 3, stats);
     check(result.kind == 2 && result.error == 0 && result.permissions == 0x1ff);
+    native_sharing_recovery(file.u16string(),0x1ff);
     result = status_01ea20((fixture / "directory").u16string(), 3, stats);
     check(result.kind == 3 && result.error == 0);
     result = status_01ea20((fixture / "missing-generated-name.bin").u16string(), 3, stats);
@@ -126,6 +218,7 @@ void native(const char* executable) {
     check(SetFileAttributesW(file.c_str(), FILE_ATTRIBUTE_READONLY) != FALSE);
     result = status_01ea20(file.u16string(), 3, stats);
     check(result.kind == 2 && result.permissions == 0x16d);
+    native_sharing_recovery(file.u16string(),0x16d);
     check(SetFileAttributesW(file.c_str(), FILE_ATTRIBUTE_NORMAL) != FALSE);
     // Exercise actual CreateFileW/FileBasicInfo/CloseHandle without requiring
     // a privileged symlink or querying any original input.

@@ -8,12 +8,10 @@
 #include "../config.hpp"
 #include "../type_list.hpp"
 
-#include "enable_control.hpp"
-
 namespace TAO_PEGTL_NAMESPACE::internal
 {
    template< typename Rule, typename Peek >
-   struct terminal  //NOLINT(bugprone-crtp-constructor-accessibility)
+   struct terminal
    {
       using rule_t = Rule;
       using subs_t = empty_list;
@@ -31,9 +29,6 @@ namespace TAO_PEGTL_NAMESPACE::internal
          return false;
       }
    };
-
-   template< typename Rule, typename Peek >
-   inline constexpr bool enable_control< terminal< Rule, Peek > > = false;
 
 }  // namespace TAO_PEGTL_NAMESPACE::internal
 

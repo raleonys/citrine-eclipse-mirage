@@ -5,9 +5,12 @@ import argparse
 import hashlib
 import json
 import re
-from pathlib import Path, PurePosixPath, PureWindowsPath
+from pathlib import Path, PurePosixPath
+import stat
 import sys
 import unicodedata
+
+from project_files import safe_member
 
 ROOT = Path(__file__).resolve().parents[1]
 TEXT_EXTENSIONS = frozenset({
@@ -43,11 +46,11 @@ def source_paths(manifest):
     for name in sorted(files):
         if not isinstance(name, str):
             raise ValueError('Non-string file path')
+        try:
+            safe_member(name)
+        except ValueError as error:
+            raise ValueError('Unsafe source path: ' + name) from error
         path = PurePosixPath(name)
-        if (not name or '\\' in name or path.as_posix() != name
-                or path.is_absolute() or PureWindowsPath(name).drive
-                or any(part in {'.', '..'} for part in name.split('/'))):
-            raise ValueError('Unsafe source path: ' + name)
         if name.startswith(EXCLUDED_PREFIXES):
             continue
         if path.suffix.lower() not in TEXT_EXTENSIONS and name not in TEXT_NAMES:
@@ -76,7 +79,14 @@ def audit(root):
         path = root
         for part in PurePosixPath(name).parts:
             path = path / part
-            if path.is_symlink() or getattr(path, 'is_junction', lambda: False)():
+            try:
+                info = path.lstat()
+            except OSError as error:
+                raise ValueError('Missing or nonregular active source: ' + name) from error
+            # Windows lstat exposes reparse attributes on Python 3.9 as well;
+            # do not depend on the newer Path.is_junction convenience API.
+            if (stat.S_ISLNK(info.st_mode) or
+                    getattr(info, 'st_file_attributes', 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT):
                 raise ValueError('Missing or nonregular active source: ' + name)
         if not path.is_file() or not path.resolve().is_relative_to(resolved_root):
             raise ValueError('Missing or nonregular active source: ' + name)

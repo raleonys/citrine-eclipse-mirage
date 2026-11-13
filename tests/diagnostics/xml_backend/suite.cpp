@@ -17,11 +17,11 @@
 #include <sstream>
 #include <tuple>
 namespace eval {
-namespace msg=preloader_l::messages;
-namespace access=preloader_l::dispatch;
+namespace msg=citrine_eclipse_mirage::messages;
+namespace access=citrine_eclipse_mirage::dispatch;
 struct Profile {
  std::string name;
- preloader_l::xml_tiny_reference::Backend tiny;
+ citrine_eclipse_mirage::xml_tiny_reference::Backend tiny;
  xml_comparison::Backend pugi;
  explicit Profile(std::string name):name(std::move(name)){}
  msg::XmlBackend& backend(){return name=="tiny"?static_cast<msg::XmlBackend&>(tiny):pugi;}
@@ -49,7 +49,7 @@ std::vector<std::unique_ptr<Profile>> profiles(){
 void corpus(const char* corpus,const char* output){
  std::ifstream f(corpus);require(bool(f),"corpus input missing");std::ofstream detail(std::string(output)+".differences.tsv");
  detail<<"profile\trow\tbaseline_code\tcandidate_code\tkind\tinput_hex\tcandidate_diagnostic_hex\tbaseline_diagnostic_hex\tbaseline_tree\tcandidate_tree\n";
- auto ps=profiles();struct Totals{std::size_t acceptance=0,tree=0,failed_tree=0,code=0,diagnostic=0,exact=0,policy=0;};std::vector<Totals> totals(ps.size());
+ auto ps=profiles();struct Totals{std::size_t acceptance=0,tree=0,failed_tree=0,code=0,diagnostic=0,exact=0,policy=0,depth=0,unexpected=0;};std::vector<Totals> totals(ps.size());
  std::string line;std::size_t rows=0;
  while(std::getline(f,line)){
   ++rows;auto at=line.find(' ');auto s=unhex(std::string_view(line).substr(at+1));auto count=std::stoull(line.substr(0,at));require(count<=s.size(),"bad corpus slice");s.resize(count);
@@ -58,17 +58,28 @@ void corpus(const char* corpus,const char* output){
   for(std::size_t i=0;i<ps.size();++i){
    auto parsed=ps[i]->backend().parse_c_string({s.data(),s.size()});auto tree=snapshot(parsed.document->first_element(),ps[i]->nodes());auto& t=totals[i];
    bool a=baseline.has_error!=parsed.has_error,b=(!baseline.has_error&&!parsed.has_error&&base_tree!=tree),c=baseline.returned_code!=parsed.returned_code,d=baseline.document->error_name()!=parsed.document->error_name();
+   bool declared_depth=false;
+   if(i==1&&(rows==83||rows==84)) {
+    const unsigned depth=rows==83?100:498;std::string source,old_tree;
+    for(unsigned n=0;n<depth;++n){source+="<R>";old_tree+="[52;NULL";}
+    for(unsigned n=0;n<depth;++n){source+="</R>";old_tree+=']';}
+    require(s==source&&!baseline.has_error&&baseline.returned_code==0&&base_tree==old_tree&&baseline.document->error_name().empty(),"immutable old-control depth input/result");
+    require(parsed.returned_code==18&&parsed.has_error&&tree.empty()&&parsed.document->error_name()==
+      "Error=XML_ELEMENT_DEPTH_EXCEEDED ErrorID=18 (0x12) Line number=1: Element nesting is too deep.","explicit A12 corpus depth rejection");
+    declared_depth=true;++t.depth;
+   }
    t.acceptance+=a;t.tree+=b;t.failed_tree+=(baseline.has_error&&parsed.has_error&&base_tree!=tree);t.code+=c;t.diagnostic+=d;t.exact+=!(a||base_tree!=tree||c||d);t.policy+=parsed.returned_code>=1000;
-   if(a||b||c||d)detail<<ps[i]->name<<'\t'<<rows<<'\t'<<baseline.returned_code<<'\t'<<parsed.returned_code<<'\t'<<(a?"acceptance":b?"tree":c?"code":"diagnostic")<<'\t'<<hex(s)<<'\t'<<hex(parsed.document->error_name())<<'\t'<<hex(baseline.document->error_name())<<'\t'<<base_tree<<'\t'<<tree<<'\n';
+   t.unexpected+=(a||base_tree!=tree||c||d)&&!declared_depth;
+   if(a||b||c||d)detail<<ps[i]->name<<'\t'<<rows<<'\t'<<baseline.returned_code<<'\t'<<parsed.returned_code<<'\t'<<(declared_depth?"A12_DEPTH_100":a?"acceptance":b?"tree":c?"code":"diagnostic")<<'\t'<<hex(s)<<'\t'<<hex(parsed.document->error_name())<<'\t'<<hex(baseline.document->error_name())<<'\t'<<base_tree<<'\t'<<tree<<'\n';
   }
  }
- require(rows==12087,"corpus row count");std::ofstream summary(output);summary<<"profile\tcases\tacceptance_diff\tsuccess_DOM_diff\tfailed_DOM_diff\terror_code_diff\tdiagnostic_diff\texact_equal\tpolicy_rejections\n";
- for(std::size_t i=0;i<ps.size();++i){auto t=totals[i];summary<<ps[i]->name<<'\t'<<rows<<'\t'<<t.acceptance<<'\t'<<t.tree<<'\t'<<t.failed_tree<<'\t'<<t.code<<'\t'<<t.diagnostic<<'\t'<<t.exact<<'\t'<<t.policy<<'\n';}
- require(totals[1].exact==rows,"candidate differs from corrected reference corpus");
+ require(rows==12087,"corpus row count");std::ofstream summary(output);summary<<"profile\tcases\tacceptance_diff\tsuccess_DOM_diff\tfailed_DOM_diff\terror_code_diff\tdiagnostic_diff\texact_equal\tpolicy_rejections\tdeclared_depth_deltas\tunexpected_differences\n";
+ for(std::size_t i=0;i<ps.size();++i){auto t=totals[i];summary<<ps[i]->name<<'\t'<<rows<<'\t'<<t.acceptance<<'\t'<<t.tree<<'\t'<<t.failed_tree<<'\t'<<t.code<<'\t'<<t.diagnostic<<'\t'<<t.exact<<'\t'<<t.policy<<'\t'<<t.depth<<'\t'<<t.unexpected<<'\n';}
+ require(totals[1].depth==2&&totals[1].exact+2==rows&&totals[1].unexpected==0,"only the two declared A12 corpus depth changes are allowed");
  std::cout<<"PASS: differential results recorded (reference corpus validated by its separate target) for "<<rows<<" cases\n";
 }
 void compatibility_cases(const char* output){
- struct Case {const char* name;std::string input;int code;};
+ struct Case {const char* name;std::string input;int code;int candidate_code=-1;};
  std::vector<Case> cases={
   {"BOM-after-whitespace"," \t\n\xef\xbb\xbf<R>a\n\rb</R>",0},
   {"newline-pairs","<R a='a\r\n\rb'>a\n\r\nb</R>",0},
@@ -96,24 +107,42 @@ void compatibility_cases(const char* output){
   {"long-declaration-diagnostic","<R><?"+std::string(10000,'x')+"\r\n?></R>",11}
  };
  std::string open,close;for(unsigned i=0;i<498;++i){open+="<R>";close+="</R>";}
- cases.push_back({"deep-self-closed-leaf",open+"<R/>"+close,0});
- cases.push_back({"deep-open-at-EOF",open+"<R>",14});
+ cases.push_back({"deep-self-closed-leaf",open+"<R/>"+close,0,18});
+ cases.push_back({"deep-open-at-EOF",open+"<R>",14,18});
  cases.push_back({"deep-entered-child-list",open+"<R><C/></R>"+close,18});
+ open.clear();close.clear();std::string legacy;
+ for(unsigned i=0;i<98;++i){open+="<R>";legacy+="< R>";close+="</R>";}
+ cases.push_back({"a12-paired-98",open+close,0});
+ cases.push_back({"a12-paired-99",open+"<R></R>"+close,0,18});
+ cases.push_back({"a12-self-closed-leaf-99",open+"<L/>"+close,0});
+ cases.push_back({"a12-open-at-EOF",open+"<L>",14});
+ cases.push_back({"a12-entered-child-list",open+"<L><C/></L>"+close,0,18});
+ cases.push_back({"a12-legacy-entered-child-list",legacy+"<L><C/></L>"+close,0,18});
  auto ps=profiles();std::ofstream out(output);
- out<<"case\tprofile\tcode\tdiagnostic_hex\ttree\n";
+ out<<"case\tprofile\tcode\tdiagnostic_hex\ttree\tpolicy_delta\n";
+ unsigned depth_deltas=0;
  for(const auto& test:cases) {
   std::string reference_tree,reference_diagnostic;
   for(auto& p:ps) {
    auto result=p->backend().parse_c_string(test.input);
    auto tree=snapshot(result.document->first_element(),p->nodes());
-   require(result.returned_code==test.code&&result.has_error==(test.code!=0),test.name);
+   const int expected=p->name=="tiny"||test.candidate_code<0?test.code:test.candidate_code;
+   require(result.returned_code==expected&&result.has_error==(expected!=0),test.name);
    require(result.document->error_name().size()<=999,"bounded legacy diagnostic");
    if(p->name=="tiny"){reference_tree=tree;reference_diagnostic=result.document->error_name();}
-   else require(tree==reference_tree&&result.document->error_name()==reference_diagnostic,test.name);
-   out<<test.name<<'\t'<<p->name<<'\t'<<result.returned_code<<'\t'<<hex(result.document->error_name())<<'\t'<<tree<<'\n';
+   else if(expected!=test.code) {
+    // Only these named, explicit cases differ from the immutable depth-500
+    // control. Keep its old expected status and assert the new exact failure.
+    require(expected==18&&tree.empty()&&result.document->error_name()==
+      "Error=XML_ELEMENT_DEPTH_EXCEEDED ErrorID=18 (0x12) Line number=1: Element nesting is too deep.",test.name);
+    ++depth_deltas;
+   }else require(tree==reference_tree&&result.document->error_name()==reference_diagnostic,test.name);
+   out<<test.name<<'\t'<<p->name<<'\t'<<result.returned_code<<'\t'<<hex(result.document->error_name())<<'\t'<<tree<<'\t'
+      <<(p->name!="tiny"&&expected!=test.code?"A12_DEPTH_100":"NONE")<<'\n';
   }
  }
- std::cout<<"PASS: "<<cases.size()<<" explicit grammar, normalization, depth and full-diagnostic boundaries across both readers\n";
+ require(depth_deltas==5,"all five declared old-control/A12 depth deltas must be observed");
+ std::cout<<"PASS: "<<cases.size()<<" explicit grammar, normalization, depth and full-diagnostic boundaries; "<<depth_deltas<<" declared A12 depth-policy deltas\n";
 }
 void safety(const char* output){
  std::vector<std::pair<std::string,std::string>> cases={
@@ -140,7 +169,7 @@ void safety(const char* output){
  {"internal-entity-expansion","<!DOCTYPE R [<!ENTITY a '1234567890'><!ENTITY b '&a;&a;&a;&a;&a;&a;&a;&a;&a;&a;'><!ENTITY c '&b;&b;&b;&b;&b;&b;&b;&b;&b;&b;'>]><R>&c;</R>"},
  {"large-text","<R>"+std::string(1024*1024,'a')+"</R>"}
  };
- for(unsigned n:{498u,499u,1000u,20000u}){std::string s;for(unsigned i=0;i<n;++i)s+="<R>";for(unsigned i=0;i<n;++i)s+="</R>";cases.emplace_back("depth-"+std::to_string(n),std::move(s));}
+ for(unsigned n:{97u,98u,99u,100u,498u,499u,1000u,20000u}){std::string s;for(unsigned i=0;i<n;++i)s+="<R>";for(unsigned i=0;i<n;++i)s+="</R>";cases.emplace_back("depth-"+std::to_string(n),std::move(s));}
  std::string attributes="<R";for(unsigned i=0;i<12000;++i)attributes+=" a"+std::to_string(i)+"='x'";attributes+="/>";cases.emplace_back("wide-attributes",std::move(attributes));
  std::string zeroes="<R a='&#"+std::string(20000,'0')+"65;'/>";cases.emplace_back("leading-zero-reference",std::move(zeroes));
  // These cases exercise the common value policy independently of each
@@ -153,6 +182,11 @@ void safety(const char* output){
  for(auto& p:ps)for(auto& [name,s]:cases){
   auto begin=std::chrono::steady_clock::now();auto parsed=p->backend().parse_c_string(s);auto us=std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now()-begin).count();auto n=parsed.document->first_element();
   auto attr=n?n->attribute("a"):std::nullopt;auto text=n?p->nodes().text_003860(*n):nullptr;
+  if(name.starts_with("depth-")) {
+   const auto depth=std::stoul(name.substr(6));const bool rejected=depth>=(p->name=="tiny"?499u:99u);
+   require(parsed.returned_code==(rejected?18:0)&&parsed.has_error==rejected,"profile-specific depth safety boundary");
+   require(rejected?!n:bool(n),"depth status agrees with document visibility");
+  }
   if(std::find(common.begin(),common.end(),name)!=common.end()) {
    require(!parsed.has_error,"shared value-policy input was rejected");
    auto values=std::make_pair(attr?std::optional<std::string>(*attr):std::nullopt,
@@ -288,7 +322,7 @@ void storage(const char* output){
   std::pair<std::string,std::string> baseline;
   for(auto& p:ps){
    eval_storage::Fixture f;f.paths.xml_path=u"owned-fixture.xml";f.state.steam_app_id="42";f.effects.status={1,0,2};f.state.achievements["known"]=eval_storage::record("configured");f.files.input[f.paths.xml_path]=input;
-   preloader_l::achievement_storage::Storage s(f.paths,p->backend(),f.numbers,f.effects,f.files);s.update_01eb00(f.state);
+   citrine_eclipse_mirage::achievement_storage::Storage s(f.paths,p->backend(),f.numbers,f.effects,f.files);s.update_01eb00(f.state);
    std::string state;for(auto& [id,a]:f.state.achievements)state+=hex(id)+":"+std::to_string(a.field04)+":"+std::to_string(a.field08)+":"+hex(a.display_name)+":"+hex(a.timestamp)+";";
    require(f.files.output.size()==1,"storage must publish one INI fixture");auto ini=f.files.output.begin()->second;
    if(p->name=="tiny")baseline={state,ini};bool same=baseline==std::make_pair(state,ini);

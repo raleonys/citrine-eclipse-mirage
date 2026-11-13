@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_message_core_bridge.hpp"
+#include "citrine_eclipse_mirage/net/transport_message_core_bridge.hpp"
 #include <algorithm>
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 std::string BoundedMessageCoreStrings::read_request(const ReceiveBufferString& value){
     const auto count=value.size_10;
     if(value.capacity_18<=15){
@@ -41,4 +41,4 @@ void process_message_core(std::uintptr_t identity,ReceiveBufferString& response,
 void CompatibleMessageCoreApi::process_message_033d70(std::uintptr_t identity,ReceiveBufferString& response,ReceiveBufferString& request){
     process_message_core(identity,response,request,core_);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

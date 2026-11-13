@@ -9,7 +9,7 @@
 #include <unordered_set>
 #include <vector>
 
-namespace preloader_l::xml_reader_bridge::detail {
+namespace citrine_eclipse_mirage::xml_reader_bridge::detail {
 namespace {
 bool space(unsigned char c){return c==' '||(c>=9&&c<=13);}
 bool name_start(unsigned char c){return c>=128||(c>='A'&&c<='Z')||(c>='a'&&c<='z')||c==':'||c=='_';}
@@ -179,7 +179,11 @@ class Scanner {
             stack_.pop();return;
         }
         if(at_==input_.size()){fail(14,initial_line,"XMLElement name=",label);return;}
-        if(stack_.size()>=498){fail(18,line_,"Element nesting is too deep.");return;}
+        // Match A12's depth-100 ParseDeep profile, including its document and
+        // child-list accounting. A self-closed leaf and EOF errors above do
+        // not enter another child list. This is first-party policy, not a
+        // pugixml setting or a vendor patch.
+        if(stack_.size()>=98){fail(18,line_,"Element nesting is too deep.");return;}
         stack_.push({label,initial_line,native});
     }
 public:

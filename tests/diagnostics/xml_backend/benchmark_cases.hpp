@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 #pragma once
-#include "preloader_l/router/router.hpp"
+#include "citrine_eclipse_mirage/router/router.hpp"
 #include <cstdint>
 #include <string>
 #include <vector>
 
 namespace xml_comparison {
-inline std::uint64_t consume_xml(const preloader_l::messages::XmlNode* root,
-                                 preloader_l::dispatch::NodeAccess& access) {
+inline std::uint64_t consume_xml(const citrine_eclipse_mirage::messages::XmlNode* root,
+                                 citrine_eclipse_mirage::dispatch::NodeAccess& access) {
     std::uint64_t result=1469598103934665603ULL;
     auto add=[&](std::string_view value){for(unsigned char c:value){result^=c;result*=1099511628211ULL;}result^=255;result*=1099511628211ULL;};
     for(auto node=root;node;node=node->next_element()) {
@@ -35,8 +35,10 @@ inline std::vector<BenchmarkCase> benchmark_cases() {
     for(unsigned i=0;i<64;++i)attributes+=" a"+std::to_string(i)+"='prefix&amp;&#65;&unknown;suffix'";
     cases.push_back({"many-attributes",attributes+"/>"});
     std::string deep;
-    for(unsigned i=0;i<120;++i)deep+="<R v='1'>";
-    for(unsigned i=0;i<120;++i)deep+="</R>";
+    // Both profiles must accept the same work. Rejection is measured in the
+    // explicit safety matrix, not timed against successful tree traversal.
+    for(unsigned i=0;i<80;++i)deep+="<R v='1'>";
+    for(unsigned i=0;i<80;++i)deep+="</R>";
     cases.push_back({"deep-elements",deep});
     return cases;
 }

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "preloader_l/net/transport_response_hex.hpp"
+#include "citrine_eclipse_mirage/net/transport_response_hex.hpp"
 #include "tests/support/socket/request_growth_test_fixture.hpp"
 
 namespace response_hex_test {
-namespace s=preloader_l::socket;namespace b=buffer_test;namespace r=receive_test;
+namespace s=citrine_eclipse_mirage::socket;namespace b=buffer_test;namespace r=receive_test;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Failure {int code;};
 struct Effects:mutation_test::Copy {

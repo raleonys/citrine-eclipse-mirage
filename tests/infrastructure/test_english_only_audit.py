@@ -2,11 +2,16 @@
 
 """Deterministic first-party language audit and exclusion boundary tests."""
 import json
+import os
 import re
 from pathlib import Path, PurePosixPath
+import stat
+import subprocess
 import sys
 import tempfile
 import unittest
+from types import SimpleNamespace
+from unittest import mock
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'scripts'))
@@ -65,26 +70,73 @@ class LanguageSignalAuditTests(unittest.TestCase):
         self.assertEqual(2, checker.main(['--root', str(self.root), '--check']))
 
     def test_symlinked_directory_ancestor_fails_closed(self):
-        real = self.root / 'real'
-        real.mkdir()
-        (real / 'prose.md').write_text('English text only\n', encoding='utf-8')
-        try:
-            (self.root / 'docs').symlink_to(real, target_is_directory=True)
-        except (OSError, NotImplementedError) as error:
-            self.skipTest(f'Directory symlinks unavailable: {error}')
-        self.manifest(['docs/prose.md'])
-        with self.assertRaisesRegex(ValueError, 'Missing or nonregular'):
-            checker.audit(self.root)
+        with tempfile.TemporaryDirectory() as tmp:
+            for real in (self.root / 'real', Path(tmp) / 'outside'):
+                with self.subTest(target=real.name):
+                    real.mkdir()
+                    (real / 'prose.md').write_text('English text only\n', encoding='utf-8')
+                    link = self.root / 'docs'
+                    try:
+                        link.symlink_to(real, target_is_directory=True)
+                    except (OSError, NotImplementedError) as error:
+                        self.skipTest(f'Directory symlinks unavailable: {error}')
+                    try:
+                        self.manifest(['docs/prose.md'])
+                        with self.assertRaisesRegex(ValueError, 'Missing or nonregular'):
+                            checker.audit(self.root)
+                    finally:
+                        link.unlink()
 
     def test_manifest_paths_cannot_escape_root(self):
         for path in ['../outside.md', '/tmp/absolute.md', 'docs/../prose.md',
                      r'docs\..\outside.md', r'C:\temp\outside.md',
                      'C:/temp/outside.md', r'\\server\share\outside.md',
-                     'docs//prose.md']:
+                     'docs//prose.md', '', 'docs/./prose.md', 'docs/prose.md/',
+                     'C:relative.md', 'docs/NUL.md', 'docs/prose.md:stream',
+                     'docs/control\x01.md', 'docs/trailing./prose.md']:
             with self.subTest(path=path):
                 self.manifest([path])
                 with self.assertRaisesRegex(ValueError, 'Unsafe source path'):
                     checker.audit(self.root)
+
+    def test_reparse_parent_is_rejected_without_new_pathlib_api(self):
+        self.write('docs/prose.md', 'English text only\n')
+        self.manifest(['docs/prose.md'])
+        original = Path.lstat
+        def metadata(path, *args, **kwargs):
+            result = original(path, *args, **kwargs)
+            if path == self.root / 'docs':
+                return SimpleNamespace(st_mode=result.st_mode,
+                                       st_file_attributes=stat.FILE_ATTRIBUTE_REPARSE_POINT)
+            return result
+        # Model Windows reparse metadata with the older fallback returning
+        # false. The ordinary path is otherwise a real, readable directory.
+        with mock.patch.object(Path, 'lstat', metadata), \
+                mock.patch.object(Path, 'is_junction', return_value=False, create=True):
+            with self.assertRaisesRegex(ValueError, 'Missing or nonregular'):
+                checker.audit(self.root)
+        self.assertEqual(1, checker.audit(self.root)['scanned_text_files'])
+
+    @unittest.skipUnless(os.name == 'nt', 'Real junction fixture requires Windows')
+    def test_real_windows_junction_parents_are_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            for real in (self.root / 'real', Path(tmp) / 'outside'):
+                with self.subTest(target=real.name):
+                    real.mkdir()
+                    payload = real / 'prose.md'
+                    payload.write_text('English text only\n', encoding='utf-8')
+                    link = self.root / 'docs'
+                    made = subprocess.run(['cmd.exe', '/d', '/c', 'mklink', '/J',
+                                           str(link), str(real)], capture_output=True, text=True)
+                    self.assertEqual(0, made.returncode, made.stdout + made.stderr)
+                    try:
+                        self.assertTrue(link.lstat().st_file_attributes & stat.FILE_ATTRIBUTE_REPARSE_POINT)
+                        self.manifest(['docs/prose.md'])
+                        with self.assertRaisesRegex(ValueError, 'Missing or nonregular'):
+                            checker.audit(self.root)
+                    finally:
+                        os.rmdir(link)  # Remove only the owned junction entry.
+                    self.assertEqual('English text only\n', payload.read_text(encoding='utf-8'))
 
     def test_invalid_utf8_and_deterministic_order(self):
         self.write('docs/z.md', 'Plain English\n')
