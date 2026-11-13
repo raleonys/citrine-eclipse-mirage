@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/achievement_runtime.hpp"
-#include "preloader_l/xml/memory_printer.hpp"
-#include "preloader_l/core/paths.hpp"
+#include "citrine_eclipse_mirage/runtime/achievement_runtime.hpp"
+#include "citrine_eclipse_mirage/xml/memory_printer.hpp"
+#include "citrine_eclipse_mirage/core/paths.hpp"
 #include <stdexcept>
 
-namespace preloader_l::achievement_runtime {
+namespace citrine_eclipse_mirage::achievement_runtime {
 namespace {
 class WriteOnlyReader final:public xml::AttributeReader {
     const char* attribute(handlers::Request,const char*) override {
@@ -48,8 +48,10 @@ void PersistenceEffects::persist_achievement(const configuration::Path& path,std
     if(!path.empty())writes.push_back({path,xml});
     std::string ini;
     if(!paths_.ini_path.empty()) {
-        directories_.create_directories_018e00(path::parent_path_019820(paths_.ini_path));
+        // Validate and prepare the complete watcher INI before creating its
+        // parent directory. A rejected section name must have no disk effects.
         ini=achievement_writer::serialize_ini(state_);
+        directories_.create_directories_018e00(path::parent_path_019820(paths_.ini_path));
         writes.push_back({paths_.ini_path,ini});
     }
     if(!writes.empty())files_.replace_atomic(writes);
@@ -63,4 +65,4 @@ content_handlers::StateReferences bind_state(configuration::State& state,
         state.default_avatar,state.user_directory,state.last_avatar_path,online,
         saved_avatar_size,mutex,events};
 }
-} // namespace preloader_l::achievement_runtime
+} // namespace citrine_eclipse_mirage::achievement_runtime

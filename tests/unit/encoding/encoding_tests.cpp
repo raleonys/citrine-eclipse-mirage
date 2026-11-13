@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/codec/encoding.hpp"
+#include "citrine_eclipse_mirage/codec/encoding.hpp"
 #include <algorithm>
 #include <climits>
 #include <deque>
@@ -8,10 +8,12 @@
 #include <stdexcept>
 #include <system_error>
 #include <vector>
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ENCODING_TESTS)
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#endif
 
-namespace enc=preloader_l::encoding;
+namespace enc=citrine_eclipse_mirage::encoding;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -85,6 +87,40 @@ void synthetic() {
     bool caught=false;try{(void)enc::filesystem_widen_006d70(std::string_view("x",static_cast<std::size_t>(INT_MAX)+1),too_large,errors);}catch(const Failure& error){caught=error.runtime&&error.code==22;}
     check(caught&&too_large.calls.empty()&&too_large.locale_calls==1,"oversized input guard before buffer access");
 }
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ENCODING_TESTS)
+void native_failed_decodes(enc::NativeCalls& calls) {
+    // Win32 can partially write its own destination before returning zero.
+    // The adapter commits only successful conversions. Compare failure
+    // count/error with Win32 and verify caller storage independently.
+    struct Sample {const char* input;int size;int capacity;DWORD error;};
+    const Sample samples[]={
+        {"abc",3,1,ERROR_INSUFFICIENT_BUFFER},
+        {"abc",3,2,ERROR_INSUFFICIENT_BUFFER},
+        {"\xc3\xa7\xce\xa9\xf0\x9f\x98\x80",8,1,ERROR_INSUFFICIENT_BUFFER},
+        {"\xc3\xa7\xce\xa9\xf0\x9f\x98\x80",8,2,ERROR_INSUFFICIENT_BUFFER},
+        {"\xc3\xa7\xce\xa9\xf0\x9f\x98\x80",8,3,ERROR_INSUFFICIENT_BUFFER},
+        {"\xc3(",2,6,ERROR_NO_UNICODE_TRANSLATION},
+        {"ok\xc3(",4,6,ERROR_NO_UNICODE_TRANSLATION},
+        {"\xed\xa0\x80",3,6,ERROR_NO_UNICODE_TRANSLATION}
+    };
+    for(const auto& sample:samples) {
+        const auto size=static_cast<std::size_t>(sample.capacity)+2;
+        std::vector<wchar_t> reference(size,static_cast<wchar_t>(0x7777));
+        std::vector<char16_t> output(size,static_cast<char16_t>(0x7777));
+        SetLastError(31337);
+        const int direct=MultiByteToWideChar(65001,8,sample.input,sample.size,
+                                           reference.data()+1,sample.capacity);
+        const DWORD direct_error=GetLastError();
+        SetLastError(31337);
+        const int adapted=calls.multi_byte_to_wide(65001,8,sample.input,sample.size,
+                                                   output.data()+1,sample.capacity);
+        const DWORD adapted_error=GetLastError();
+        check(direct==0&&direct_error==sample.error,"native negative control fails with expected Win32 error");
+        check(adapted==direct&&adapted_error==direct_error,"failed decode count/error matches direct Win32");
+        check(std::all_of(output.begin(),output.end(),[](char16_t unit){return unit==0x7777;}),
+              "failed decode leaves caller destination and boundary guards untouched");
+    }
+}
 void native() {
     enc::NativeCalls calls;enc::PortableErrors errors;
     const enc::Path unicode=u"C:\\fixture_\u00e7\u0131\u015f_\u03a9_\U0001f600.bin";
@@ -101,17 +137,44 @@ void native() {
     bool caught=false;try{(void)enc::path_utf8_01e3f0(enc::Path(1,static_cast<char16_t>(0xd800)),calls,errors);}catch(const std::system_error& error){caught=error.code().value()==1113;}
     check(caught,"native lone-surrogate strict conversion failure");
     check(enc::convert_wide_048b30(calls,1252,u"\u03a9",1,nullptr,0).error==1113,"native no-best-fit substitution rejected");
-    wchar_t baseline=0x7777;char16_t adapted=0x7777;
-    SetLastError(31337);
-    const int direct=MultiByteToWideChar(65001,8,"abc",3,&baseline,1);
-    const auto direct_error=GetLastError();SetLastError(31337);
-    const int bridged=calls.multi_byte_to_wide(65001,8,"abc",3,&adapted,1);
-    check(direct==bridged&&GetLastError()==direct_error&&adapted==static_cast<char16_t>(baseline),"native buffer/error matches direct Win32 on insufficient capacity");
+    native_failed_decodes(calls);
     SetLastError(31337);
     const int query=MultiByteToWideChar(65001,8,"abc",3,nullptr,0);
     const auto query_error=GetLastError();SetLastError(31337);
     check(calls.multi_byte_to_wide(65001,8,"abc",3,nullptr,0)==query&&GetLastError()==query_error,"temporary allocation preserves API entry/exit error state");
+    char16_t query_output=u'?';wchar_t query_reference=L'?';
+    SetLastError(4141);
+    const int direct_size=MultiByteToWideChar(65001,8,"abc",3,&query_reference,0);
+    const DWORD direct_size_error=GetLastError();
+    SetLastError(4141);
+    const int adapted_size=calls.multi_byte_to_wide(65001,8,"abc",3,&query_output,0);
+    check(adapted_size==direct_size&&adapted_size==3&&GetLastError()==direct_size_error,
+          "zero-capacity size query with nonnull output preserves count/error");
+    check(query_output==static_cast<char16_t>(query_reference)&&query_output==u'?',
+          "zero-capacity size query leaves caller storage untouched");
+    // Output storage is an output-only destination. On success the adapter must
+    // publish precisely the converted prefix, not copy its temporary tail.
+    char16_t actual[5]={u'?',u'?',u'?',u'?',u'?'};
+    wchar_t reference[5]={L'?',L'?',L'?',L'?',L'?'};
+    SetLastError(4242);
+    const int direct_prefix=MultiByteToWideChar(65001,8,"abc",3,reference,5);
+    const DWORD direct_prefix_error=GetLastError();
+    SetLastError(4242);
+    const int adapted_prefix=calls.multi_byte_to_wide(65001,8,"abc",3,actual,5);
+    check(adapted_prefix==direct_prefix&&adapted_prefix==3&&
+          GetLastError()==direct_prefix_error,"native wide conversion prefix count/error parity");
+    check(std::equal(actual,actual+5,reference,[](char16_t a,wchar_t b){return a==static_cast<char16_t>(b);}),
+          "native wide conversion retains destination tail");
 }
+#endif
 }
-int main(){try{synthetic();native();std::cout<<"PASS: "<<checks<<" encoding checks; real Win32 only on synthetic strings, original targets not executed\n";return 0;
+int main(){try{
+    synthetic();
+#if defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ENCODING_TESTS)
+    std::cout<<"PASS: "<<checks<<" controlled encoding checks; native Win32 not executed\n";
+#else
+    native();
+    std::cout<<"PASS: "<<checks<<" encoding checks; real Win32 only on synthetic strings, original targets not executed\n";
+#endif
+    return 0;
 }catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}}

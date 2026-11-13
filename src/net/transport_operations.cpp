@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_operations.hpp"
+#include "citrine_eclipse_mirage/net/transport_operations.hpp"
 #include <algorithm>
 #include <bit>
 #include <limits>
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 std::int32_t address_028690(std::int32_t family,std::string_view raw,
     std::array<std::uint8_t,16>& output,std::uint32_t* scope,Error& error,Api& api) {
     api.set_last_error(0);
@@ -79,4 +79,4 @@ server::WriteResult SynchronousTransport::synchronous_send(std::span<const char>
     const auto count=send_02a200(socket_,state_,std::span<Buffer>(&buffer,1),0,bytes.empty(),error,api_);
     return {{error.value,error.category.logical},static_cast<std::size_t>(count)};
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

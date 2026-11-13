@@ -1,15 +1,47 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/event_queue.hpp"
+#include "citrine_eclipse_mirage/runtime/event_queue.hpp"
+#include <array>
+#include <chrono>
+#include <cstdlib>
+#include <exception>
+#include <future>
 #include <iostream>
+#include <latch>
 #include <limits>
+#include <mutex>
+#include <new>
 #include <stdexcept>
+#include <thread>
 #include <vector>
-namespace eq=preloader_l::event_queue;
+namespace allocation_fault {
+thread_local bool next=false;
+thread_local unsigned injected=0;
+}
+void* operator new(std::size_t bytes) {
+    // Deque data must fit a string. Let smaller checked-STL bookkeeping
+    // allocations succeed rather than faulting a noexcept string move.
+    if(allocation_fault::next&&bytes>=sizeof(std::string)) {
+        allocation_fault::next=false;++allocation_fault::injected;throw std::bad_alloc();
+    }
+    if(auto* value=std::malloc(bytes?bytes:1))return value;
+    throw std::bad_alloc();
+}
+void* operator new[](std::size_t bytes){return ::operator new(bytes);}
+void operator delete(void* value)noexcept{std::free(value);}
+void operator delete[](void* value)noexcept{std::free(value);}
+void operator delete(void* value,std::size_t)noexcept{std::free(value);}
+void operator delete[](void* value,std::size_t)noexcept{std::free(value);}
+namespace eq=citrine_eclipse_mirage::event_queue;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
 template<class F>void rejects(F f,const char* why){bool hit=false;try{f();}catch(const std::exception&){hit=true;}require(hit,why);}
+struct LatchRelease {
+    std::latch& gate;bool released=false;
+    void release()noexcept{if(!released){released=true;gate.count_down();}}
+    ~LatchRelease(){release();}
+};
 struct Mutex final:eq::Mutex {
     std::int32_t count=1;
     int lock_04a6ac()override{return 0;}
@@ -81,5 +113,189 @@ void owned_fifo(){
     for(unsigned i=0;i<1000;++i){require(storage.copy_front_locked()==std::to_string(i)+std::string("\0tail",5),"chosen FIFO backend preserves order and explicit bytes");storage.pop_front_locked();}
     require(!storage.nonempty_relaxed(),"all items consumed");rejects([&]{storage.pop_front_locked();},"empty pop rejected");rejects([&]{(void)storage.copy_front_locked();},"empty front rejected");
 }
+void stale_delivery_receipts(){
+    eq::OwnedStorage storage;storage.construct_seed_copy("first");
+    std::string second="second",third("third\0tail",10);
+    storage.push_move_034660(second);
+    const auto cancelled=storage.reserve_front_locked();
+    require(cancelled!=0&&!storage.front_available_locked(),"one reservation excludes another consumer");
+    require(storage.reserve_front_locked()==0,"second reservation cannot steal pending front");
+    require(!storage.finish_reserved(0,true),"zero receipt cannot complete a pending event");
+    rejects([&]{storage.pop_front_locked();},"ordinary pop cannot consume a reserved event");
+    require(storage.finish_reserved(cancelled,false),"failed delivery resolves its reservation");
+    require(!storage.finish_reserved(cancelled,true),"late success cannot reverse cancellation");
+    const auto retried=storage.reserve_front_locked();
+    require(retried!=0&&retried!=cancelled&&storage.copy_front_locked()=="first","retry uses a distinct receipt for the retained front");
+    require(!storage.finish_reserved(cancelled,true)&&!storage.finish_reserved(cancelled,false),"stale completion cannot settle a newer retry");
+    require(!storage.front_available_locked(),"retry remains exclusive after stale callbacks");
+    storage.push_move_034660(third);
+    require(storage.finish_reserved(retried,true),"current retry can commit delivery");
+    require(!storage.finish_reserved(retried,false)&&!storage.finish_reserved(retried,true),"duplicate callbacks cannot reverse or repeat commit");
+    require(storage.copy_front_locked()=="first","completion defers physical unlink until locked settlement");
+    require(storage.front_available_locked()&&storage.copy_front_locked()=="second","settlement removes exactly the delivered front");
+    const auto next=storage.reserve_front_locked();
+    require(next!=0&&next!=retried&&!storage.finish_reserved(retried,true),"previous successful receipt cannot consume the following event");
+    require(storage.finish_reserved(next,true)&&storage.front_available_locked(),"next delivery settles independently");
+    require(storage.copy_front_locked()==std::string("third\0tail",10),"append during delivery preserves FIFO and explicit bytes");
+    const auto last=storage.reserve_front_locked();
+    require(storage.finish_reserved(last,true)&&!storage.front_available_locked(),"last committed event settles to empty");
+    require(!storage.nonempty_relaxed()&&storage.reserve_front_locked()==0,"settled empty queue publishes no phantom event");
 }
-int main(){try{getters();failures();owned_fifo();std::cout<<"PASS: "<<checks<<" event queue checks; synthetic guards and chosen FIFO only\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+void allocation_precedes_persistence(){
+    for(const bool retain_seed:{false,true}) {
+        eq::OwnedStorage storage;storage.construct_seed_copy("seed");
+        std::vector<std::string> expected;expected.reserve(1026);
+        if(retain_seed)expected.emplace_back("seed");else storage.pop_front_locked();
+        unsigned persisted=0;
+        // Construct the callable and payload before arming the deque probe.
+        const std::function<void()> persist=[&]{++persisted;};
+        struct Disarm {~Disarm(){allocation_fault::next=false;}} disarm;
+        bool failed=false;std::string retry;
+        for(unsigned attempt=0;attempt<1024&&!failed;++attempt) {
+            std::string value=std::to_string(attempt)+std::string("\0event",6)+std::string(80,'x');
+            const auto original=value;
+            const auto before=persisted,injected=allocation_fault::injected;
+            bool threw=false;allocation_fault::next=true;
+            try{storage.push_persisted_locked(value,persist);}catch(const std::bad_alloc&){threw=true;}
+            const bool unconsumed=allocation_fault::next;allocation_fault::next=false;
+            if(threw) {
+                failed=true;
+                require(allocation_fault::injected==injected+1,
+                        "deque publication consumes exactly one selected allocation fault");
+                require(persisted==before,"queue allocation failure must precede persistence");
+                require(value==original,"failed queue allocation does not consume event bytes");
+                require(storage.nonempty_relaxed()==!expected.empty()&&storage.nonempty_locked()==!expected.empty(),
+                        "failed queue allocation preserves prior publication state");
+                retry=std::move(value);
+            } else {
+                require(unconsumed&&allocation_fault::injected==injected&&persisted==before+1&&value.empty(),
+                        "unfaulted publication persists once and consumes its input");
+                // Retain successful probes so storage must eventually grow;
+                // an empty deque may otherwise recycle its one spare block.
+                expected.push_back(original);
+            }
+        }
+        require(failed,"bounded queue growth reaches an actual throwing data allocation");
+        const auto original_retry=retry;const auto before=persisted;
+        storage.push_persisted_locked(retry,persist);expected.push_back(original_retry);
+        require(retry.empty()&&persisted==before+1,"unarmed retry persists and publishes exactly once");
+        for(const auto& value:expected) {
+            require(storage.copy_front_locked()==value,"failed allocation and retry preserve the complete FIFO");
+            storage.pop_front_locked();
+        }
+        require(!storage.nonempty_relaxed()&&!storage.nonempty_locked(),
+                "draining retry leaves no phantom or duplicate publication");
+    }
+}
+void completed_receipt_pop_guard() {
+    for(const bool delivered:{false,true}) for(const bool tail:{false,true}) {
+        eq::OwnedStorage storage;
+        const std::string first=std::string("first\0binary",12)+std::string(512,'F');
+        const std::string second("second\0tail",11);
+        storage.construct_seed_copy(first);
+        if(tail) {auto value=second;storage.push_move_034660(value);}
+        const auto token=storage.reserve_front_locked();
+        require(token!=0,"reserve exact front before completion");
+        require(storage.finish_reserved(token,delivered),"complete original reservation once");
+        bool rejected=false;
+        try {storage.pop_front_locked();} catch(const std::logic_error&) {rejected=true;}
+        require(rejected,"completed receipt still blocks ordinary pop before locked settlement");
+        require(storage.copy_front_locked()==first&&storage.nonempty_relaxed(),
+                "refused pop preserves the exact original binary front");
+        require(!storage.finish_reserved(token,!delivered),"refused pop cannot reopen completed receipt");
+        require(storage.front_available_locked()==(!delivered||tail),
+                "settlement removes only committed front");
+        if(!delivered) {
+            require(storage.copy_front_locked()==first,"cancelled front stays first after settlement");
+            const auto retry=storage.reserve_front_locked();
+            require(retry!=0&&retry!=token,"cancelled front receives a distinct retry");
+            require(!storage.finish_reserved(token,true),"old callback cannot consume retry");
+            require(storage.finish_reserved(retry,true),"retry may deliver retained front");
+            require(storage.front_available_locked()==tail,"retry retires only the original front");
+        }
+        if(tail) {
+            require(storage.copy_front_locked()==second,"following binary event remains exact");
+            storage.pop_front_locked();
+        }
+        require(!storage.nonempty_relaxed()&&!storage.front_available_locked(),
+                "normal pop works after settled ownership and leaves no phantom entry");
+    }
+}
+void competing_delivery_completions(){
+    for(unsigned round=0;round<64;++round){
+        eq::OwnedStorage storage;storage.construct_seed_copy("first");
+        std::string second="second";storage.push_move_034660(second);
+        const auto token=storage.reserve_front_locked();
+        std::latch start{1};std::array<bool,2> accepted{};
+        // Only finish_reserved is concurrent; deque access stays on this thread.
+        std::jthread delivered([&]{start.wait();accepted[0]=storage.finish_reserved(token,true);});
+        LatchRelease release_start{start};
+        std::jthread cancelled([&]{start.wait();accepted[1]=storage.finish_reserved(token,false);});
+        release_start.release();delivered.join();cancelled.join();
+        require(accepted[0]!=accepted[1],"exactly one competing delivery outcome is accepted");
+        require(!storage.finish_reserved(token,true)&&!storage.finish_reserved(token,false),"resolved receipt rejects both duplicate outcomes");
+        require(storage.front_available_locked(),"winner leaves a retriable front or the next queued event");
+        require(storage.copy_front_locked()==(accepted[0]?"second":"first"),"only successful winner removes the original front");
+        const auto retry=storage.reserve_front_locked();
+        require(retry!=0&&retry!=token&&!storage.finish_reserved(token,true),"late previous winner cannot settle the next reservation");
+        require(storage.finish_reserved(retry,true),"new receipt remains usable after the race");
+        if(accepted[0])require(!storage.front_available_locked(),"success followed by success consumes exactly two events");
+        else {
+            require(storage.front_available_locked()&&storage.copy_front_locked()=="second","cancel followed by retry consumes exactly one event");
+            const auto tail=storage.reserve_front_locked();
+            require(storage.finish_reserved(tail,true)&&!storage.front_available_locked(),"remaining tail can be independently delivered");
+        }
+        require(!storage.nonempty_relaxed(),"race and retry leave no lost or duplicated queue entry");
+    }
+}
+void completion_during_persistence(){
+    using namespace std::chrono_literals;
+    for(const bool delivered:{false,true})for(const bool disk_failure:{false,true}){
+        eq::OwnedStorage storage;std::mutex queue_mutex;
+        storage.construct_seed_copy("first");const auto token=storage.reserve_front_locked();
+        std::latch release_persistence{1};std::promise<void> entered;
+        auto entered_future=entered.get_future();std::exception_ptr producer_error;
+        std::string tail="persisted-tail";
+        std::jthread producer([&]{
+            bool announced=false;
+            try {
+                std::scoped_lock lock(queue_mutex);
+                storage.push_persisted_locked(tail,[&]{
+                    entered.set_value();announced=true;release_persistence.wait();
+                    if(disk_failure)throw std::runtime_error("injected persistence failure");
+                });
+            }catch(...){producer_error=std::current_exception();if(!announced)entered.set_exception(producer_error);}
+        });
+        LatchRelease release_held_producer{release_persistence};
+        const bool producer_entered=entered_future.wait_for(5s)==std::future_status::ready;
+        if(!producer_entered){release_held_producer.release();producer.join();require(false,"producer reached the held persistence callback");}
+        std::promise<bool> completed;auto completed_future=completed.get_future();
+        std::jthread finisher([&]{completed.set_value(storage.finish_reserved(token,delivered));});
+        const bool prompt=completed_future.wait_for(5s)==std::future_status::ready;
+        // Release and join before asserting, including on a failed progress oracle.
+        release_held_producer.release();producer.join();finisher.join();
+        require(prompt,"completion returns while persistence still owns the queue mutex");
+        require(completed_future.get(),"pending front resolves during another event's disk transaction");
+        require(static_cast<bool>(producer_error)==disk_failure,"persistence outcome remains independent of delivery outcome");
+        if(producer_error){
+            try{std::rethrow_exception(producer_error);}
+            catch(const std::runtime_error& error){require(std::string(error.what())=="injected persistence failure","only the injected disk failure is accepted");}
+        }
+        std::scoped_lock lock(queue_mutex);
+        require(!storage.finish_reserved(token,!delivered),"opposite late outcome cannot change the completed receipt");
+        if(!delivered){
+            require(storage.front_available_locked()&&storage.copy_front_locked()=="first","cancelled front remains ahead of any persisted tail");
+            const auto retry=storage.reserve_front_locked();
+            require(retry!=token&&storage.finish_reserved(retry,true),"cancelled front can be retried after persistence finishes");
+        }
+        require(storage.front_available_locked()==!disk_failure,"only a successfully persisted tail survives front settlement");
+        if(!disk_failure){
+            require(storage.copy_front_locked()=="persisted-tail","disk commit preserves the exact tail after concurrent completion");
+            const auto receipt=storage.reserve_front_locked();
+            require(storage.finish_reserved(receipt,true)&&!storage.front_available_locked(),"persisted tail retires exactly once");
+        }
+        require(!storage.nonempty_relaxed(),"rollback or final delivery leaves the queue empty");
+    }
+}
+}
+int main(){try{getters();failures();owned_fifo();stale_delivery_receipts();allocation_precedes_persistence();completed_receipt_pop_guard();competing_delivery_completions();completion_during_persistence();std::cout<<"PASS: "<<checks<<" event queue checks; synthetic guards, real completion threads and owned FIFO only\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

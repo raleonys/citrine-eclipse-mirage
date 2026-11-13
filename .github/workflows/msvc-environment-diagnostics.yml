@@ -2,20 +2,20 @@
 name: Windows Environment diagnostics acceptance
 
 on:
-  pull_request:
-    paths:
-      - "src/runtime/application_environment.cpp"
-      - "src/runtime/application_internal.hpp"
-      - "tests/native/environment_dialog_tests.cpp"
-      - "CMakeLists.txt"
-      - ".github/workflows/msvc-environment-diagnostics.yml"
   workflow_dispatch:
+    inputs:
+      operation:
+        description: Select the native diagnostic
+        type: choice
+        options: [environment, path-probe]
+        default: environment
 
 permissions:
   contents: read
 
 jobs:
   environment-diagnostics:
+    if: inputs.operation != 'path-probe'
     name: Windows x64 Environment diagnostics ${{ matrix.configuration }}
     runs-on: windows-2022
     timeout-minutes: 30
@@ -29,16 +29,16 @@ jobs:
     steps:
       - name: Preserve repository bytes
         run: git config --global core.autocrlf false
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
       - name: Configure native Environment diagnostics
         run: |
           $build = 'build/ci-environment-${{ matrix.configuration }}'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF
           if ($LASTEXITCODE -ne 0) { throw 'MSVC Environment configure failed' }
       - name: Build actual Environment regression target
         run: |
@@ -53,7 +53,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'MSVC Environment regression failed' }
       - name: Preserve native Environment evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: msvc-environment-${{ matrix.configuration }}-evidence
           path: |
@@ -64,4 +64,29 @@ jobs:
             build/ci-environment-${{ matrix.configuration }}/CMakeCache.txt
             build/ci-environment-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
           if-no-files-found: warn
+          retention-days: 14
+
+  path-probe:
+    if: inputs.operation == 'path-probe'
+    name: Native Win32 directory-leaf observation
+    runs-on: windows-2022
+    timeout-minutes: 5
+    steps:
+      - name: Preserve exact source bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Observe actual Win32 leaf behavior in owned directories
+        run: python -B tests/diagnostics/windows_paths/probe.py
+      - name: Retain native observations
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: win32-leaf-observations
+          path: build/win32-leaf-observations.json
+          if-no-files-found: error
           retention-days: 14

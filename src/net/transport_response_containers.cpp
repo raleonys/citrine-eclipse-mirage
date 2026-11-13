@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_response_containers.hpp"
+#include "citrine_eclipse_mirage/net/transport_response_containers.hpp"
 #include <algorithm>
 #include <cstring>
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 std::uint64_t word(std::span<const std::uint8_t> bytes){
     std::uint64_t result=0;for(unsigned i=0;i<8;++i)result|=std::uint64_t{bytes[i]}<<(i*8);return result;
@@ -129,4 +129,4 @@ ReceiveBufferString& ResponseContainersApi::copy_response_009eb0(ReceiveBufferSt
 void ResponseQueueApiAdapter::grow_deque_026670(WriteFinishOwner& owner,std::uint64_t extra){
     grow_response_deque_026670(owner,extra,growth_);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket
