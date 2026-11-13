@@ -47,6 +47,20 @@ struct Ops final:io::AtomicFileOps {
 };
 void injected_failures() {
     const std::array<io::FileWrite,2> writes{{{u"xml","new-xml"},{u"ini","new-ini"}}};
+    // An invalid later entry cannot leak an earlier stage or alter destinations.
+    for(const auto& invalid:std::array<io::FileWrite,2>{
+            io::FileWrite{u"", "invalid"},io::FileWrite{u"xml", "duplicate"}}) {
+        Ops ops;io::AtomicFiles files(ops);
+        const std::array<io::FileWrite,2> mixed{{{u"xml","new-xml"},invalid}};
+        rejects([&]{files.replace(mixed);},"invalid second destination rejected");
+        require(ops.files.size()==2 && ops.files.at(u"xml")=="old-xml" &&
+                ops.files.at(u"ini")=="old-ini",
+                "invalid second destination leaves original files and no staging");
+        require(!files.recovery_pending(),"invalid batch has no committed rollback owner");
+        files.replace(writes);
+        require(ops.files.size()==2&&ops.files.at(u"xml")=="new-xml"&&ops.files.at(u"ini")=="new-ini",
+                "valid batch succeeds after invalid destination cleanup");
+    }
     {Ops ops;io::AtomicFiles files(ops);ops.fail_stage=true;rejects([&]{files.replace(writes);},"staging failure is visible");
      require(ops.files.size()==2&&ops.files.at(u"xml")=="old-xml"&&ops.files.at(u"ini")=="old-ini","stage failure preserves both originals and cleans staging");}
     {Ops ops;io::AtomicFiles files(ops);ops.fail_stage=true;ops.fail_staged_cleanup=true;

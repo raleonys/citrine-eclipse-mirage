@@ -4,6 +4,15 @@
 #include <algorithm>
 #include <array>
 #include <filesystem>
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#endif
 #include <iostream>
 #include <stdexcept>
 #include <vector>
@@ -160,6 +169,22 @@ void native(const std::filesystem::path& directory) {
     catch(const std::ios_base::failure&){invalid_position=true;}
     check(invalid_position,"native EOF-state tellg rejects invalid position");
     input->close_03ae70();
+    // Native output opens in truncation mode. A foreign read lease without
+    // FILE_SHARE_WRITE must reject that open without destroying the old data.
+    const std::filesystem::path locked_path(file);
+    const auto held=CreateFileW(locked_path.c_str(),GENERIC_READ,FILE_SHARE_READ,
+                                nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
+    check(held!=INVALID_HANDLE_VALUE,"native locked output fixture handle");
+    const auto before_locked=io::read_binary_03b3f0(file,factory);
+    const bool wrote_while_held=io::write_binary_03c1d0(file,"forbidden",factory);
+    const auto after_locked=io::read_binary_03b3f0(file,factory);
+    const BOOL released=CloseHandle(held);
+    check(released!=FALSE,"native locked output fixture released");
+    check(!wrote_while_held&&after_locked==before_locked,
+          "locked native output open fails without truncating existing bytes");
+    check(io::write_binary_03c1d0(file,"recovered",factory) &&
+          io::read_binary_03b3f0(file,factory)=="recovered",
+          "native binary writer recovers after read-only sharing lease closes");
 }
 #endif
 }
