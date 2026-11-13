@@ -309,7 +309,7 @@ bool copy_memory(std::uintptr_t address,void* out,std::size_t count) noexcept {
 }
 wire::Snapshot scan_snapshot(){
     wire::Snapshot value{};
-    require(wire::read_snapshot(reinterpret_cast<std::uintptr_t>(&citrine_eclipse_mirage::scan_record),copy_memory,value),
+    require(wire::read_snapshot(reinterpret_cast<std::uintptr_t>(&citrine_eclipse_mirage::scan_record),diagnostic::read_image,value),
             "quiescent actual scanner record is readable");
     return value;
 }

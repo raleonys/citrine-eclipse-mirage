@@ -1430,8 +1430,8 @@
       "sha256": "59f55fd5890e9d8e4333d059f6d5b45655892b200eebc6cc0e18b2f33aa89ac1"
     },
     "tests/native/unload_guard_tests.cpp": {
-      "bytes": 25379,
-      "sha256": "5620e47eb67727cb8615074ac028a3f01f9c4d9ed1e9016d6430594f1557c28d"
+      "bytes": 25390,
+      "sha256": "c88ce7755975e8e0ed7d8f0948947b25269e4c9d3fd0d56113efe4b5d013d98b"
     },
     "tests/performance/xml_reader_probe.cpp": {
       "bytes": 11798,
