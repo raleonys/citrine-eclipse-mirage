@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Ignore CMake line and bracket comments when inventorying application source declarations so commented-out paths cannot hide missing build ownership. Preserve quoted, escaped and bracket argument contexts and complete source-path boundaries; add regression and recovery controls without changing the actual build graph.
+- Cross-check the owner avatar path and digest across branding metadata, the independently pinned profile-generator contract and the current runtime record. Reject coordinated branding path/hash or PNG/hash changes and divergent generator/runtime pins; preserve authorized image bytes and shipping behavior.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-13
 
+- [PR #222](https://github.com/raleonys/citrine-eclipse-mirage/pull/222): Ignore CMake line and bracket comments when inventorying application source declarations so commented-out paths cannot hide missing build ownership. Preserve quoted, escaped and bracket argument contexts and complete source-path boundaries; add regression and recovery controls without changing the actual build graph.
 - [PR #221](https://github.com/raleonys/citrine-eclipse-mirage/pull/221): Reject symlinks and Windows reparse points in the historical evidence archive, its metadata parent and retention-policy file before redirected content reads. Walk nested directories without following links, validate canonical retained paths, and cover Python 3.9-compatible detection, recovery and real Windows junctions through existing cross-platform CTest. Preserve retained evidence bytes and shipping behavior.
 - [PR #220](https://github.com/raleonys/citrine-eclipse-mirage/pull/220): Detect uppercase CMD launchers and metadata JSON in launcher-registration and retired build-label checks while preserving exact path identity, summary forwarding and final exit checks. Move weekly draft preparation from Friday to Saturday at the existing 13:30 UTC time; owner review and manual publication remain unchanged.
 - [PR #199](https://github.com/raleonys/citrine-eclipse-mirage/pull/199): Validate ownership ledger text and role types, reject duplicate JSON keys at every nesting level through the shared strict loader, and inventory uppercase JSON/script extensions while preserving exact filename identity. Consolidate the related ownership checks and failure/recovery regressions without changing accepted role sets, historical evidence or product runtime.
