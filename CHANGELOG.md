@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Confine the first-party language audit to canonical active-source paths through the shared inventory validator. Reject Windows aliases, symlink/reparse parents and resolved escapes before payload reads, including Python 3.9-compatible reparse checks. Register the regression module in existing cross-platform CTest, with controlled metadata and a real Windows junction fixture; valid-file language policy and shipping runtime remain unchanged.
+- Validate ownership ledger text and role types, reject duplicate JSON keys at every nesting level through the shared strict loader, and inventory uppercase JSON/script extensions while preserving exact filename identity. Consolidate the related ownership checks and failure/recovery regressions without changing accepted role sets, historical evidence or product runtime.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-13
 
+- [PR #194](https://github.com/raleonys/citrine-eclipse-mirage/pull/194): Confine the first-party language audit to canonical active-source paths through the shared inventory validator. Reject Windows aliases, symlink/reparse parents and resolved escapes before payload reads, including Python 3.9-compatible reparse checks. Register the regression module in existing cross-platform CTest, with controlled metadata and a real Windows junction fixture; valid-file language policy and shipping runtime remain unchanged.
 - [PR #120](https://github.com/raleonys/citrine-eclipse-mirage/pull/120): Require the archived layout-migration document's exact schema identity through its pinned SHA-256 rather than accepting arbitrary matching suffixes. Reject forged prefixes, malformed Unicode and non-string schemas; use the immutable historical schema as the valid fixture and preserve path, JSON and symlink controls without changing archived evidence.
 - [PR #263](https://github.com/raleonys/citrine-eclipse-mirage/pull/263): Exercise ordered Session behavior when event delivery settlement rejects a fully written response. Verify exact binary output, one failure/cancellation/destruction, and no admission of the buffered next request across empty, fragmented and multi-chunk responses. Production transport and event policy are unchanged.
 - [PR #332](https://github.com/raleonys/citrine-eclipse-mirage/pull/332): Register the existing encoding source-contract fixture in portable checks. Use a target-local guard only for the Windows include and native test group, retaining unchanged controlled/native test bodies, native invocation and conversion policy. Portable output explicitly excludes Win32 execution.

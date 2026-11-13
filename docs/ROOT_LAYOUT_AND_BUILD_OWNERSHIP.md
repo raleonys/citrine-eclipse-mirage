@@ -72,3 +72,16 @@ read the canonical schema from the retained evidence and reject forged prefixes,
 malformed Unicode and non-string values. The independent evidence-retention
 policy still pins the complete archived file and its membership; schema checking
 does not replace whole-file byte validation or modify historical records.
+
+## Ownership ledger input validation
+
+Metadata and script ledgers require nonblank string owner/purpose fields and a
+string role from their existing allowed sets. Both use the shared strict UTF-8
+JSON loader: duplicate keys are rejected at every nesting level, even when
+repeated values are identical or the final value would otherwise be valid.
+The CLI reports failure and can pass again after an operator repairs the file.
+Inventory discovery compares JSON and script extensions without case, while
+ownership keys retain their exact filename/path case. Unowned uppercase files
+are rejected; correctly registered uppercase files remain valid. These checks
+validate ownership metadata independently of the active-source byte inventory;
+they do not replace package identity, runtime or native acceptance checks.

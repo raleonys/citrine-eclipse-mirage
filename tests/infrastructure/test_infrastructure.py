@@ -2535,6 +2535,42 @@ class GovernanceTests(unittest.TestCase):
             self.assertTrue(any('Unowned' in e for e in ownership.check(root)))
 
 
+    def test_uppercase_ownership_extensions_are_not_skipped(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for folder in ('metadata', 'scripts', 'tools'):
+                (root / folder).mkdir()
+            entry = lambda role: {'owner': 'qa', 'purpose': 'fixture', 'role': role}
+            metadata = {'schema': ownership.METADATA_SCHEMA, 'files': {
+                'METADATA_OWNERSHIP.json': entry('CURRENT_CONTRACT'),
+                'SCRIPT_OWNERSHIP.json': entry('CURRENT_CONTRACT')}}
+            scripts = {'schema': ownership.SCRIPT_SCHEMA, 'files': {}}
+            def save():
+                (root / 'metadata/METADATA_OWNERSHIP.json').write_text(json.dumps(metadata))
+                (root / 'metadata/SCRIPT_OWNERSHIP.json').write_text(json.dumps(scripts))
+            save()
+            self.assertEqual([], ownership.check(root))
+            cases = [
+                ('metadata/unlisted.JSON', 'Unowned metadata: unlisted.JSON', 'CURRENT_CONTRACT'),
+                ('scripts/unlisted.PY', 'Script ownership file-set mismatch', 'PYTHON_TOOL_OR_MODULE'),
+                ('tools/unlisted.PS1', 'Script ownership file-set mismatch', 'AUTOMATION'),
+                ('scripts/unlisted.CMD', 'Script ownership file-set mismatch', 'HUMAN_LAUNCHER'),
+            ]
+            for name, message, role in cases:
+                with self.subTest(name=name):
+                    path = root / name
+                    path.write_text('fixture\n')
+                    self.assertIn(message, ownership.check(root))
+                    ledger = metadata['files'] if name.startswith('metadata/') else scripts['files']
+                    key = path.name if name.startswith('metadata/') else name
+                    ledger[key] = entry(role)
+                    save()
+                    self.assertEqual([], ownership.check(root))
+                    path.unlink()
+                    del ledger[key]
+                    save()
+                    self.assertEqual([], ownership.check(root))
+
     def test_ownership_schemas_and_allowed_roles_fail_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -2586,6 +2622,107 @@ class GovernanceTests(unittest.TestCase):
                 record['role'] = role
                 write_records()
                 self.assertEqual([], ownership.check(root))
+
+            for ledger, name, kind in ((metadata, 'METADATA_OWNERSHIP.json', 'metadata'),
+                                       (scripts, 'scripts/audit_tool.py', 'script')):
+                record = ledger['files'][name]
+                for field, invalid in (('owner', True), ('owner', ['qa']),
+                                       ('owner', ' \t '), ('purpose', {'text': 'qa'}),
+                                       ('purpose', '   '), ('purpose', 42),
+                                       ('role', []), ('role', {}), ('role', True)):
+                    with self.subTest(kind=kind, field=field, value=invalid):
+                        previous = record[field]
+                        try:
+                            record[field] = invalid
+                            write_records()
+                            self.assertIn('Incomplete or invalid ' + kind + ' ownership: ' + name,
+                                          ownership.check(root))
+                        finally:
+                            record[field] = previous
+                            write_records()
+                        self.assertEqual([], ownership.check(root))
+
+    def test_duplicate_ownership_keys_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for folder in ('metadata', 'scripts', 'tools'):
+                (root / folder).mkdir()
+            (root / 'scripts/audit_tool.py').write_text('pass\n')
+            entry = lambda role: {'owner': 'qa', 'purpose': 'fixture', 'role': role}
+            ledgers = {
+                'METADATA_OWNERSHIP.json': {
+                    'schema': ownership.METADATA_SCHEMA, 'files': {
+                        'METADATA_OWNERSHIP.json': entry('CURRENT_CONTRACT'),
+                        'SCRIPT_OWNERSHIP.json': entry('CURRENT_CONTRACT')}},
+                'SCRIPT_OWNERSHIP.json': {
+                    'schema': ownership.SCRIPT_SCHEMA, 'files': {
+                        'scripts/audit_tool.py': entry('PYTHON_TOOL_OR_MODULE')}},
+            }
+            for name, document in ledgers.items():
+                (root / 'metadata' / name).write_text(json.dumps(document))
+            self.assertEqual([], ownership.check(root))
+            for name, document in ledgers.items():
+                target = root / 'metadata' / name
+                original = target.read_text()
+                record_name, record = next(iter(document['files'].items()))
+                fields = [('schema', document['schema'], 'unexpected.schema'),
+                          ('files', document['files'], {}),
+                          (record_name, record, {}),
+                          ('owner', record['owner'], 'Ambiguous'),
+                          ('purpose', record['purpose'], 'Ambiguous'),
+                          ('role', record['role'], 'UNKNOWN_ROLE')]
+                for key, valid, invalid in fields:
+                    needle = json.dumps(key) + ': ' + json.dumps(valid)
+                    self.assertIn(needle, original)
+                    for first in (invalid, valid):
+                        with self.subTest(ledger=name, key=key, identical=first == valid):
+                            duplicate = json.dumps(key) + ': ' + json.dumps(first) + ', ' + needle
+                            try:
+                                target.write_text(original.replace(needle, duplicate, 1))
+                                with self.assertRaisesRegex(ValueError, 'Duplicate JSON object key'):
+                                    ownership.check(root)
+                            finally:
+                                target.write_text(original)
+                            self.assertEqual([], ownership.check(root))
+
+    def test_duplicate_ownership_cli_fails_and_recovers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for folder in ('metadata', 'scripts', 'tools'):
+                (root / folder).mkdir()
+            checker = root / 'scripts/check_metadata_ownership.py'
+            helper = root / 'scripts/project_files.py'
+            checker.write_bytes(Path(ownership.__file__).read_bytes())
+            helper.write_bytes(Path(inventory.__file__).read_bytes())
+            entry = lambda role: {'owner': 'qa', 'purpose': 'fixture', 'role': role}
+            ledgers = {
+                'METADATA_OWNERSHIP.json': {'schema': ownership.METADATA_SCHEMA, 'files': {
+                    'METADATA_OWNERSHIP.json': entry('CURRENT_CONTRACT'),
+                    'SCRIPT_OWNERSHIP.json': entry('CURRENT_CONTRACT')}},
+                'SCRIPT_OWNERSHIP.json': {'schema': ownership.SCRIPT_SCHEMA, 'files': {
+                    'scripts/check_metadata_ownership.py': entry('PYTHON_TOOL_OR_MODULE'),
+                    'scripts/project_files.py': entry('PYTHON_TOOL_OR_MODULE')}},
+            }
+            for name, document in ledgers.items():
+                (root / 'metadata' / name).write_text(json.dumps(document))
+            def run():
+                return subprocess.run([sys.executable, '-B', str(checker)],
+                                      capture_output=True, text=True, timeout=15)
+            self.assertEqual(0, run().returncode)
+            for name in ledgers:
+                target = root / 'metadata' / name
+                original = target.read_text()
+                try:
+                    target.write_text(original.replace('"owner": "qa"',
+                                      '"owner": "Ambiguous", "owner": "qa"', 1))
+                    result = run()
+                    self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                    self.assertIn('METADATA_OWNERSHIP: FAIL', result.stdout)
+                    self.assertIn('Duplicate JSON object key', result.stdout)
+                    self.assertNotIn('Traceback', result.stderr)
+                finally:
+                    target.write_text(original)
+                self.assertEqual(0, run().returncode)
 
     def test_launcher_result_and_argument_mutations(self):
         with tempfile.TemporaryDirectory() as tmp:
