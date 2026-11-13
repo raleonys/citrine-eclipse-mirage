@@ -1,5 +1,7 @@
 # Archive 11 A11-09 — Registry HKEY ownership and ABI crosswalk
 
+Historical Archive 11 checkpoint. Continue current-source work in [the Archive 12 Registry review](RE_A12_REGISTRY_HKEY_BOUNDARY.md); the original comparison and receipt identities below remain tied to their stated baselines.
+
 **SELECTED_SOURCE_REVIEW / NO_SHIPPING_DEFECT_CONFIRMED / REGISTRY_ORIGIN_EVIDENCE_BLOCKED**
 
 This is a **single C++ donor-source crosswalk**, not completion of Archive 11's 199 module groups / 4,266 reviewed-file candidates. Source comparison baseline: accepted `main@f0f82c81523beaa6b809f5e3b455452d40059d0a`. Retained donor [`anadius-registry-source/registry.cpp`](https://github.com/raleonys/citrine-eclipse-mirage/blob/e10561b256a5793f857ec4bed4b5a9fb9fcfbadd/reference-package/snapshot/anadius-registry-source/registry.cpp) SHA-256 `757e2ffb52077852d9ca509635a10bc5191f2176f6d05a1dd8c88131965680f5`, verified against the [retained file ledger](https://github.com/raleonys/citrine-eclipse-mirage/blob/e10561b256a5793f857ec4bed4b5a9fb9fcfbadd/docs/RE_ARCHIVE11_FILES.json). Retained Archive 11 ZIP SHA-256: `db394434e38c7edad33607a846ffdc36b04a1e5978d2fbe3d74da24bda5179da`; do not confuse with the historical different B49–B54 ZIP ([#115](https://github.com/raleonys/citrine-eclipse-mirage/pull/115)).
