@@ -119,6 +119,91 @@ class MapBoundaryTests(unittest.TestCase):
             self.assertEqual(boundary.map_errors(boundary.read_map(path), POLICY), ([], 'MSVC'))
 
 
+class TranslationUnitObjectPathTests(unittest.TestCase):
+    def test_canonical_relative_and_absolute_ninja_objects(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            # Windows TEMP can use an alternate spelling of the physical path.
+            # This positive fixture supplies canonical sources and expectations.
+            owned = Path(tmp).resolve()
+            root, build = owned / 'checkout', owned / 'build'
+            source = root / 'src/runtime/sample.cpp'
+            source.parent.mkdir(parents=True)
+            source.write_text('int sample;', encoding='utf-8')
+            obj = build / 'CMakeFiles/sample.dir/src/runtime/sample.cpp.obj'
+            obj.parent.mkdir(parents=True)
+            obj.write_bytes(b'owned-object')
+            self.assertEqual(unit_audit.object_path(root, build, 'sample',
+                            'src/runtime/sample.cpp'), obj)
+            self.assertEqual(unit_audit.object_path(root, build, 'sample',
+                            str(source)), obj)
+
+    def test_selected_root_aliases_return_the_canonical_owned_object(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            owned = Path(tmp).resolve()
+            physical = owned / 'physical'
+            root, build = physical / 'checkout', physical / 'build'
+            source = root / 'src/runtime/sample.cpp'
+            source.parent.mkdir(parents=True)
+            source.write_text('int sample;', encoding='utf-8')
+            obj = build / 'CMakeFiles/sample.dir/src/runtime/sample.cpp.obj'
+            obj.parent.mkdir(parents=True)
+            obj.write_bytes(b'owned-object')
+            logical = owned / 'logical'
+            try:
+                logical.symlink_to(physical, target_is_directory=True)
+            except (OSError, NotImplementedError):
+                self.skipTest('Directory symlink creation is unavailable')
+            for name in ('src/runtime/sample.cpp', str(source)):
+                with self.subTest(source=name):
+                    actual = unit_audit.object_path(logical / 'checkout',
+                                                   logical / 'build', 'sample', name)
+                    # Require the canonical path itself, not just the same file.
+                    self.assertEqual(actual, obj)
+                    self.assertEqual(actual.read_bytes(), b'owned-object')
+
+    def test_parent_traversal_cannot_select_an_unrelated_object(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, build = Path(tmp) / 'checkout', Path(tmp) / 'build'
+            root.mkdir()
+            directory = build / 'CMakeFiles/sample.dir'
+            directory.mkdir(parents=True)
+            fake = build / 'CMakeFiles/other.cpp.obj'
+            fake.write_bytes(b'unrelated-object')
+            # The old string concatenation accepts this existing foreign .obj
+            # even though it lives outside the selected target directory.
+            self.assertTrue((directory / '../other.cpp.obj').is_file())
+            with self.assertRaisesRegex(ValueError, 'Noncanonical source'):
+                unit_audit.object_path(root, build, 'sample', '../other.cpp')
+            with self.assertRaisesRegex(ValueError, 'Noncanonical CMake object target'):
+                unit_audit.object_path(root, build, '../sample', 'src/runtime/sample.cpp')
+            with self.assertRaisesRegex(ValueError, 'outside checkout'):
+                unit_audit.object_path(root, build, 'sample', str(Path(tmp) / 'other.cpp'))
+
+    def test_redirected_source_or_object_is_not_attributed_to_target(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, build = Path(tmp) / 'checkout', Path(tmp) / 'build'
+            source = root / 'src/runtime/real.cpp'
+            source.parent.mkdir(parents=True)
+            source.write_text('int real;', encoding='utf-8')
+            obj = build / 'CMakeFiles/sample.dir/src/runtime/real.cpp.obj'
+            obj.parent.mkdir(parents=True)
+            target = Path(tmp) / 'foreign.cpp'
+            target.write_text('int foreign;', encoding='utf-8')
+            try:
+                (source.parent / 'alias.cpp').symlink_to(target)
+            except (OSError, NotImplementedError):
+                self.skipTest('File symlink creation is unavailable')
+            alias_obj = obj.with_name('alias.cpp.obj')
+            alias_obj.write_bytes(b'wrong-source-object')
+            with self.assertRaisesRegex(ValueError, 'redirects or escapes'):
+                unit_audit.object_path(root, build, 'sample', 'src/runtime/alias.cpp')
+            outside_obj = Path(tmp) / 'outside.obj'
+            outside_obj.write_bytes(b'foreign-object')
+            obj.symlink_to(outside_obj)
+            with self.assertRaisesRegex(ValueError, 'redirected'):
+                unit_audit.object_path(root, build, 'sample', 'src/runtime/real.cpp')
+
+
 class InitializerInventoryTests(unittest.TestCase):
     def test_compiler_coff_header_includes_ctors_and_retains_crt_tls(self):
         # Captured section table shape from a compiled x64 COFF object; the .ctors
@@ -405,8 +490,10 @@ add_library(citrine_eclipse_mirage_pegtl INTERFACE)
             cmake += f'file(GENERATE OUTPUT "${{CMAKE_BINARY_DIR}}/crt.txt" CONTENT "{content}")\n'
             cmake += 'file(GENERATE OUTPUT "${CMAKE_BINARY_DIR}/dev-links.txt" CONTENT "$<TARGET_PROPERTY:citrine_eclipse_mirage_source_api,LINK_LIBRARIES>")\n'
             (source / 'CMakeLists.txt').write_text(cmake)
+            # Reuse compiler detection while still configuring and checking
+            # both configurations, including the Debug-to-Release transition.
+            build = Path(tmp) / 'build'
             for config, suffix in [('Debug', 'Debug'), ('Release', '')]:
-                build = Path(tmp) / config
                 cp = subprocess.run(['cmake', '-S', str(source), '-B', str(build),
                                      '-DCMAKE_BUILD_TYPE=' + config,
                                      '-DCMAKE_CONFIGURATION_TYPES=' + config], capture_output=True, text=True)

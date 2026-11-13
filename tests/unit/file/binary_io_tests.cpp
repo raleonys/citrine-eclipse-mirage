@@ -4,8 +4,18 @@
 #include <algorithm>
 #include <array>
 #include <filesystem>
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#endif
 #include <iostream>
 #include <stdexcept>
+#include <string_view>
 #include <vector>
 
 namespace io=citrine_eclipse_mirage::file;
@@ -13,27 +23,40 @@ namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
 struct Injected{};
+struct Trace;
+struct ReadFailure {const Trace* owner;std::string_view point;};
 struct Trace {
     std::vector<std::string> calls;
     std::string bytes,written;
     std::uint64_t size=0;
     std::uint32_t state=0;
     bool close_throws=false,close_fails=false,write_fails=false,write_throws=false;
+    std::string_view read_failure;
+    unsigned live_inputs=0,destroyed_inputs=0;
+    std::size_t read_copied=0;
+    void fail_input(std::string_view point)const {
+        if(read_failure==point)throw ReadFailure{this,point};
+    }
+    void input_call(const char* point) {
+        calls.emplace_back(point);fail_input(point);
+    }
+    bool clear_on_close=false;
 };
 class Input final:public io::Input {
     Trace& t;
 public:
-    explicit Input(Trace& value):t(value){}
-    ~Input()override{t.calls.push_back("destroy-input");}
-    std::uint32_t initial_state()const override{t.calls.push_back("state");return t.state;}
-    void seek_03b610(std::int64_t offset,io::Seek origin)override{check(offset==0,"seek offset");t.calls.push_back(origin==io::Seek::end?"end":"begin");}
-    std::uint64_t position_sum_03ba50()override{t.calls.push_back("tell");return t.size;}
+    explicit Input(Trace& value):t(value){++t.live_inputs;}
+    ~Input()override{--t.live_inputs;++t.destroyed_inputs;t.calls.push_back("destroy-input");}
+    std::uint32_t initial_state()const override{t.input_call("state");return t.state;}
+    void seek_03b610(std::int64_t offset,io::Seek origin)override{check(offset==0,"seek offset");t.input_call(origin==io::Seek::end?"end":"begin");}
+    std::uint64_t position_sum_03ba50()override{t.input_call("tell");return t.size;}
     std::int32_t peek_043790()override{throw Injected{};}
     std::size_t read_03b2a0(std::span<std::uint8_t> buffer)override {
-        t.calls.push_back("read");const auto length=std::min(buffer.size(),t.bytes.size());
-        std::copy_n(t.bytes.begin(),length,buffer.begin());return length;
+        t.input_call("read");const auto length=std::min(buffer.size(),t.bytes.size());
+        std::copy_n(t.bytes.begin(),length,buffer.begin());t.read_copied=length;
+        t.fail_input("read-after");return length;
     }
-    void close_03ae70()override{t.calls.push_back("close");if(t.close_throws)throw Injected{};}
+    void close_03ae70()override{t.input_call("close");if(t.close_throws)throw Injected{};}
 };
 class Output final:public io::Output {
     Trace& t;
@@ -42,18 +65,52 @@ public:
     ~Output()override{t.calls.push_back("destroy-output");}
     std::uint32_t initial_state()const override{t.calls.push_back("state");return t.state;}
     void write_03be80(std::string_view bytes)override{t.calls.push_back("write");if(t.write_throws)throw Injected{};t.written=bytes;if(t.write_fails)t.state=2;}
-    void close_03ae70()override{t.calls.push_back("close");if(t.close_fails)t.state=4;if(t.close_throws)throw Injected{};}
+    void close_03ae70()override{t.calls.push_back("close");if(t.clear_on_close)t.state=0;if(t.close_fails)t.state=4;if(t.close_throws)throw Injected{};}
 };
 class Factory final:public io::Factory {
 public:
     Trace t;
     std::unique_ptr<io::Input> open_input_039f70(const io::Path& path,std::uint32_t mode,std::uint32_t share)override {
-        check(path==u"fixture","input path");check(mode==0x20&&share==0x40,"input raw modes");t.calls.push_back("open-input");return std::make_unique<Input>(t);
+        check(path==u"fixture","input path");check(mode==0x20&&share==0x40,"input raw modes");t.input_call("open-input");return std::make_unique<Input>(t);
     }
     std::unique_ptr<io::Output> open_output_03a1a0(const io::Path& path,std::uint32_t mode,std::uint32_t share)override {
         check(path==u"fixture","output path");check(mode==0x20&&share==0x40,"output raw modes");t.calls.push_back("open-output");return std::make_unique<Output>(t);
     }
 };
+void input_failure_unwind() {
+    struct Case {const char* point;std::vector<std::string> calls;};
+    const std::array cases{
+        Case{"open-input",{"open-input"}},
+        Case{"state",{"open-input","state","destroy-input"}},
+        Case{"end",{"open-input","state","end","destroy-input"}},
+        Case{"tell",{"open-input","state","end","tell","destroy-input"}},
+        Case{"begin",{"open-input","state","end","tell","begin","destroy-input"}},
+        Case{"read",{"open-input","state","end","tell","begin","read","destroy-input"}},
+        Case{"read-after",{"open-input","state","end","tell","begin","read","destroy-input"}},
+        Case{"close",{"open-input","state","end","tell","begin","read","close","destroy-input"}}
+    };
+    const std::vector<std::string> success{
+        "open-input","state","end","tell","begin","read","close","destroy-input"};
+    for(const auto& row:cases) {
+        Factory f;f.t.bytes=std::string("a\0b",3);f.t.size=5;f.t.read_failure=row.point;
+        bool thrown=false;
+        try{(void)io::read_binary_03b3f0(u"fixture",f);}
+        catch(const ReadFailure& error) {
+            check(error.owner==&f.t&&error.point==row.point,"read failure retains its source and operation");
+            thrown=true;
+        }
+        check(thrown,"input failure propagates instead of publishing a partial result");
+        check(f.t.calls==row.calls,"read unwind stops at the failed operation without invented explicit close");
+        const unsigned destroyed=std::string_view(row.point)=="open-input"?0:1;
+        check(f.t.live_inputs==0&&f.t.destroyed_inputs==destroyed,"read unwind destroys its owned stream exactly once");
+        const bool copied=std::string_view(row.point)=="read-after"||std::string_view(row.point)=="close";
+        check(f.t.read_copied==(copied?3U:0U),"failure campaign includes an exception after bytes were copied");
+        f.t.read_failure={};f.t.calls.clear();f.t.read_copied=0;
+        check(io::read_binary_03b3f0(u"fixture",f)==std::string("a\0b\0\0",5),"same factory retries complete binary read after failure");
+        check(f.t.calls==success,"retry restores complete read and explicit close order");
+        check(f.t.live_inputs==0&&f.t.destroyed_inputs==destroyed+1,"retry releases one fresh stream");
+    }
+}
 void core() {
     Factory f;f.t.bytes=std::string("a\0b",3);f.t.size=5;
     check(io::read_binary_03b3f0(u"fixture",f)==std::string("a\0b\0\0",5),"short read keeps original zero-filled tail");
@@ -109,6 +166,24 @@ void core() {
     thrown=false;try{(void)io::read_binary_03b3f0(u"fixture",impossible);}catch(const std::length_error&){thrown=true;}
     check(thrown&&impossible.t.calls.back()=="destroy-input","invalid tell size reaches resize exception");
 }
+void checked_write_retains_error() {
+    Factory f;f.t.write_fails=true;f.t.clear_on_close=true;
+    const std::string first("first\0ticket",12);
+    check(!io::write_binary_checked(u"fixture",first,f),
+          "close success cannot erase an earlier checked write failure");
+    check(f.t.state==0&&f.t.written==first,
+          "controlled close cleared status after preserving counted input");
+    const std::vector<std::string> expected{
+        "open-output","state","write","state","close","state","destroy-output"};
+    check(f.t.calls==expected,
+          "write failure still observes close state and releases its output once");
+    f.t.calls.clear();f.t.write_fails=false;
+    const std::string next("next\0ticket",11);
+    check(io::write_binary_checked(u"fixture",next,f),
+          "same factory accepts a repaired independent output");
+    check(f.t.written==next&&f.t.calls==expected,
+          "repaired write preserves bytes and balanced output lifetime");
+}
 #if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
 void native(const std::filesystem::path& directory) {
     const auto root=std::filesystem::absolute(directory).lexically_normal();
@@ -141,11 +216,29 @@ void native(const std::filesystem::path& directory) {
     catch(const std::ios_base::failure&){invalid_position=true;}
     check(invalid_position,"native EOF-state tellg rejects invalid position");
     input->close_03ae70();
+    // Native output opens in truncation mode. A foreign read lease without
+    // FILE_SHARE_WRITE must reject that open without destroying the old data.
+    const std::filesystem::path locked_path(file);
+    const auto held=CreateFileW(locked_path.c_str(),GENERIC_READ,FILE_SHARE_READ,
+                                nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
+    check(held!=INVALID_HANDLE_VALUE,"native locked output fixture handle");
+    const auto before_locked=io::read_binary_03b3f0(file,factory);
+    const bool wrote_while_held=io::write_binary_03c1d0(file,"forbidden",factory);
+    const auto after_locked=io::read_binary_03b3f0(file,factory);
+    const BOOL released=CloseHandle(held);
+    check(released!=FALSE,"native locked output fixture released");
+    check(!wrote_while_held&&after_locked==before_locked,
+          "locked native output open fails without truncating existing bytes");
+    check(io::write_binary_03c1d0(file,"recovered",factory) &&
+          io::read_binary_03b3f0(file,factory)=="recovered",
+          "native binary writer recovers after read-only sharing lease closes");
 }
 #endif
 }
 int main(int argc,char** argv){try{
     core();
+    input_failure_unwind();
+    checked_write_retains_error();
 #if defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
     (void)argc;(void)argv;
 #else

@@ -84,6 +84,7 @@ public:
                 xml_reader_bridge::Backend&,achievement_storage::Paths&,
                 achievement_runtime::HostClock&,achievement_runtime::HostFormatter&);
     void configure();
+    void unknown_message_07bd70(const messages::UnknownMessageInput&);
     void log(std::string_view);
     void log(std::initializer_list<std::string_view>);
     void log_number(std::string_view,std::int64_t);

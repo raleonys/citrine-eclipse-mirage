@@ -14,6 +14,7 @@
 #include <fstream>
 #include <system_error>
 #include <limits>
+#include <iostream>
 #include "avatar_data.hpp"
 
 namespace citrine_eclipse_mirage::application::detail {
@@ -21,12 +22,16 @@ namespace {
 // Match the existing 65-byte envelope and AES policy while making text
 // fields structurally safe in the XML document before encryption.
 void append_license_xml_text(std::string& output,std::string_view text) {
-    for(char byte:text) {
+    for(unsigned char byte:text) {
+        // XML 1.0 permits TAB, LF and CR, but not the other C0 controls.
+        // Reject invalid counted bytes before any encrypted file is written.
+        if(byte<0x20 && byte!='\t' && byte!='\n' && byte!='\r')
+            throw std::invalid_argument("License XML text contains a forbidden control byte");
         switch(byte) {
         case '&':output+="&amp;";break;
         case '<':output+="&lt;";break;
         case '>':output+="&gt;";break;
-        default:output.push_back(byte);break;
+        default:output.push_back(static_cast<char>(byte));break;
         }
     }
 }
@@ -100,6 +105,20 @@ configuration::Node Environment::load_document(const Path& p){
 }
 void Environment::log(std::string_view event) {
     log({event});
+}
+void Environment::unknown_message_07bd70(const messages::UnknownMessageInput& input) {
+    struct Dialog final:messages::UnknownMessageDialog {
+        Environment& environment;
+        explicit Dialog(Environment& value):environment(value){}
+        void show(std::string title,std::string body,std::uint32_t flags) override {
+            const auto wide_title=wide(environment.widen_0145d0(title));
+            const auto wide_body=wide(environment.widen_0145d0(body));
+            (void)MessageBoxW(nullptr,wide_body.c_str(),wide_title.c_str(),flags);
+        }
+    } dialog(*this);
+    // This reference diagnostic uses the console stream in both build modes.
+    // It is independent of ShowLSX and the Debug-only surge.log sink.
+    messages::report_unknown_message_07bd70(input,std::cout,dialog);
 }
 void Environment::log(std::initializer_list<std::string_view> parts) {
 #ifndef NDEBUG
