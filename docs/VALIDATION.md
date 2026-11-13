@@ -315,3 +315,17 @@ failure, preserving the reference ignore-result policy without leaking a handle.
 Unarmed queries still work after the scoped injection. These assertions require
 native Windows execution; SDK models and cross-compilation neither establish
 real loader/filesystem acceptance nor induce a natural OS sharing violation.
+
+## Completed event receipts before locked settlement
+
+The existing event queue fixture crosses successful/cancelled completion with
+last/nonlast binary events against actual OwnedStorage. A completed callback
+must still exclude ordinary pop until a locked queue operation settles its
+receipt. Refusal preserves the exact binary front and closed receipt; cancelled
+fronts receive distinct retry tokens and reject stale callbacks. Settlement
+retires only the delivered front, preserves a following event and permits an
+ordinary pop afterward. The four cases add 40 deterministic assertions while
+retaining the allocation-before-persistence matrix and all competing-completion
+coverage. Full fixture counts vary with valid concurrent winners. Host runs use
+real completion threads and controlled persistence callbacks; they do not
+establish backend file I/O, natural Session misuse or native Windows acceptance.

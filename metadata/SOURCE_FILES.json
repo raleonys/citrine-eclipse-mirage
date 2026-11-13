@@ -1706,8 +1706,8 @@
       "sha256": "a991fa2c4f9cb351645e986ab7b73d60fe6a673ccb98e72bbde81cb102818d92"
     },
     "tests/unit/event_queue/queue_tests.cpp": {
-      "bytes": 19497,
-      "sha256": "6d837eb93e4cf3d043f9ea930d468d4b7fb3155b865584b77f8c28a5a379f57f"
+      "bytes": 21679,
+      "sha256": "c7587e99d0ff74ebd8c7f79307a41ea08678cab198caac648c19e839585a2f0c"
     },
     "tests/unit/execution/concurrency_tests.cpp": {
       "bytes": 9805,

@@ -187,6 +187,40 @@ void allocation_precedes_persistence(){
                 "draining retry leaves no phantom or duplicate publication");
     }
 }
+void completed_receipt_pop_guard() {
+    for(const bool delivered:{false,true}) for(const bool tail:{false,true}) {
+        eq::OwnedStorage storage;
+        const std::string first=std::string("first\0binary",12)+std::string(512,'F');
+        const std::string second("second\0tail",11);
+        storage.construct_seed_copy(first);
+        if(tail) {auto value=second;storage.push_move_034660(value);}
+        const auto token=storage.reserve_front_locked();
+        require(token!=0,"reserve exact front before completion");
+        require(storage.finish_reserved(token,delivered),"complete original reservation once");
+        bool rejected=false;
+        try {storage.pop_front_locked();} catch(const std::logic_error&) {rejected=true;}
+        require(rejected,"completed receipt still blocks ordinary pop before locked settlement");
+        require(storage.copy_front_locked()==first&&storage.nonempty_relaxed(),
+                "refused pop preserves the exact original binary front");
+        require(!storage.finish_reserved(token,!delivered),"refused pop cannot reopen completed receipt");
+        require(storage.front_available_locked()==(!delivered||tail),
+                "settlement removes only committed front");
+        if(!delivered) {
+            require(storage.copy_front_locked()==first,"cancelled front stays first after settlement");
+            const auto retry=storage.reserve_front_locked();
+            require(retry!=0&&retry!=token,"cancelled front receives a distinct retry");
+            require(!storage.finish_reserved(token,true),"old callback cannot consume retry");
+            require(storage.finish_reserved(retry,true),"retry may deliver retained front");
+            require(storage.front_available_locked()==tail,"retry retires only the original front");
+        }
+        if(tail) {
+            require(storage.copy_front_locked()==second,"following binary event remains exact");
+            storage.pop_front_locked();
+        }
+        require(!storage.nonempty_relaxed()&&!storage.front_available_locked(),
+                "normal pop works after settled ownership and leaves no phantom entry");
+    }
+}
 void competing_delivery_completions(){
     for(unsigned round=0;round<64;++round){
         eq::OwnedStorage storage;storage.construct_seed_copy("first");
@@ -264,4 +298,4 @@ void completion_during_persistence(){
     }
 }
 }
-int main(){try{getters();failures();owned_fifo();stale_delivery_receipts();allocation_precedes_persistence();competing_delivery_completions();completion_during_persistence();std::cout<<"PASS: "<<checks<<" event queue checks; synthetic guards, real completion threads and owned FIFO only\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+int main(){try{getters();failures();owned_fifo();stale_delivery_receipts();allocation_precedes_persistence();completed_receipt_pop_guard();competing_delivery_completions();completion_during_persistence();std::cout<<"PASS: "<<checks<<" event queue checks; synthetic guards, real completion threads and owned FIFO only\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
