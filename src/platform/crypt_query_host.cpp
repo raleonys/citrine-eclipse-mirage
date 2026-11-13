@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
-#include "preloader_l/platform/crypt_query.hpp"
+#include "citrine_eclipse_mirage/platform/crypt_query.hpp"
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
 
-namespace preloader_l::platform {
+namespace citrine_eclipse_mirage::platform {
 namespace {
 bool read_unit(std::uintptr_t address,char16_t& unit,void* process) noexcept {
     SIZE_T copied=0;

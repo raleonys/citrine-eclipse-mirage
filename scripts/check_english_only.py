@@ -6,8 +6,11 @@ import hashlib
 import json
 import re
 from pathlib import Path, PurePosixPath
+import stat
 import sys
 import unicodedata
+
+from project_files import safe_member
 
 ROOT = Path(__file__).resolve().parents[1]
 TEXT_EXTENSIONS = frozenset({
@@ -43,9 +46,11 @@ def source_paths(manifest):
     for name in sorted(files):
         if not isinstance(name, str):
             raise ValueError('Non-string file path')
+        try:
+            safe_member(name)
+        except ValueError as error:
+            raise ValueError('Unsafe source path: ' + name) from error
         path = PurePosixPath(name)
-        if path.is_absolute() or any(part in {'.', '..'} for part in name.split('/')):
-            raise ValueError('Unsafe source path: ' + name)
         if name.startswith(EXCLUDED_PREFIXES):
             continue
         if path.suffix.lower() not in TEXT_EXTENSIONS and name not in TEXT_NAMES:
@@ -65,13 +70,25 @@ def blocking_language_signal(name):
 
 def audit(root):
     root = Path(root)
+    resolved_root = root.resolve()
     manifest_path = root / 'metadata/ACTIVE_SOURCE_MANIFEST.json'
     manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
     findings = []
     scanned = 0
     for name in source_paths(manifest):
-        path = root.joinpath(*PurePosixPath(name).parts)
-        if not path.is_file() or path.is_symlink():
+        path = root
+        for part in PurePosixPath(name).parts:
+            path = path / part
+            try:
+                info = path.lstat()
+            except OSError as error:
+                raise ValueError('Missing or nonregular active source: ' + name) from error
+            # Windows lstat exposes reparse attributes on Python 3.9 as well;
+            # do not depend on the newer Path.is_junction convenience API.
+            if (stat.S_ISLNK(info.st_mode) or
+                    getattr(info, 'st_file_attributes', 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT):
+                raise ValueError('Missing or nonregular active source: ' + name)
+        if not path.is_file() or not path.resolve().is_relative_to(resolved_root):
             raise ValueError('Missing or nonregular active source: ' + name)
         try:
             text = path.read_text(encoding='utf-8')

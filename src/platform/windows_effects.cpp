@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/windows_effects.hpp"
+#include "citrine_eclipse_mirage/platform/windows_effects.hpp"
 #include <bit>
 #include <exception>
 
-namespace preloader_l::windows {
+namespace citrine_eclipse_mirage::windows {
 license::FileStatus WindowsEffects::status_01ea20(const Path& path,std::uint32_t flags) {
     const auto status=status::status_01ea20(path,flags,stats_);
     return {status.kind,std::bit_cast<std::int32_t>(status.error)};
@@ -28,4 +28,4 @@ bool WindowsEffects::write_ticket_03c1d0(const Path& path,std::string_view text)
 void WindowsEffects::dialog_038bc0(std::string_view title,std::string_view text,std::uint32_t flags){remaining_.dialog_038bc0(title,text,flags);}
 [[noreturn]] void WindowsEffects::exit_05cdc0(std::int32_t code){remaining_.exit_05cdc0(code);std::terminate();}
 [[noreturn]] void WindowsEffects::no_response_02bcd0_04d228(){remaining_.no_response_02bcd0_04d228();std::terminate();}
-} // namespace preloader_l::windows
+} // namespace citrine_eclipse_mirage::windows

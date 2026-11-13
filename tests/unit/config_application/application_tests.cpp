@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/config/application.hpp"
+#include "citrine_eclipse_mirage/config/application.hpp"
+#include "citrine_eclipse_mirage/runtime/online.hpp"
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
 
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 namespace {
 int checks=0;
 void require(bool ok,const char* label){++checks;if(!ok)throw std::runtime_error(label);}
@@ -16,6 +17,8 @@ configuration::Path wide(std::string_view s){return {s.begin(),s.end()};}
 struct Effects final:configuration::Dependencies {
     std::vector<configuration::Path> logs;
     bool fail_log=false;
+    configuration::State* license_state=nullptr;
+    std::vector<std::string> license_keys,license_content,license_users;
     std::string fail_path;
     configuration::State* state_for_callback=nullptr;
     configuration::Path executable_path_03c6d0()override{throw std::logic_error("not invoked");}
@@ -33,7 +36,10 @@ struct Effects final:configuration::Dependencies {
     void log_config_path(const configuration::Path& p)override{logs.push_back(p);if(fail_log)throw std::runtime_error("synthetic log failure");}
     bool crt_is_space(unsigned char c)override{return c==' ' || (c>='\t' && c<='\r');}
     int crt_tolower(int c)override{return c>='A' && c<='Z'?c+32:c;}
-    void apply_license_key_02a830(std::string_view)override{throw std::logic_error("licensing effect forbidden");}
+    void apply_license_key_02a830(std::string_view key)override{
+        license_keys.emplace_back(key);
+        if(license_state){license_content.push_back(license_state->content_id);license_users.push_back(license_state->user_id);}
+    }
     void create_directories_018e00(const configuration::Path&)override{throw std::logic_error("OS effect forbidden");}
     void write_embedded_png_03c020(const configuration::Path&,configuration::EmbeddedPng)override{throw std::logic_error("OS effect forbidden");}
     std::vector<configuration::Path> directory_entries(const configuration::Path&)override{throw std::logic_error("OS effect forbidden");}
@@ -99,6 +105,83 @@ void scalar_and_collections() {
     config_application::Trace again;config_application::apply_config2(s,n,false,deps,&again);
     require(s.content.size()==4 && s.entitlements.size()==4,"base invocation appends collections");
 }
+
+void active_field_bindings() {
+    for(const std::size_t length:{99,100,101}) {
+        const std::string token(length,'T');
+        auto cfg=parsed("\"Config2\" {\"Game\" {\"ContentId\" \"binding-content\" \"DenuvoToken\" \""+token+
+            R"(" "DenuvoExeHash" "ABCDEF0123456789ABCDEF0123456789ABCDEF01" "DenuvoDllHash" "FEDCBA9876543210FEDCBA9876543210FEDCBA98" "DenuvoDllName" "binding.dll" "KeyForLicense" "owned-key" "Languages" "en_US,fr_FR"}
+              "Emulator" {"FakeAuth" "false" "BlockReruns" "false"}
+              "User" {"UseLastOnlineProfile" "false" "UserId" "later-user"}
+              "Content" {"binding-id" {"Version" "explicit-version" "State" "DOWNLOADING"}}
+              "Achievements" {"SteamAppId" "42"}})");
+        auto state=seed();state.fake_auth=state.block_reruns=state.use_last_online_profile=1;state.user_id="earlier-user";
+        Effects deps;deps.license_state=&state;
+        config_application::apply_config2(state,cfg,false,deps);
+        require(state.denuvo_token==(length<=99?std::string{}:token),"active token length boundary");
+        require(state.exe_hash=="abcdef0123456789abcdef0123456789abcdef01" && state.dll_hash=="fedcba9876543210fedcba9876543210fedcba98","active hash inputs normalized");
+        require(state.denuvo_dll==u"binding.dll" && state.game_attributes.at("LANGUAGES")=="en_US,fr_FR","active DLL and language-list bindings");
+        require(deps.license_keys==std::vector<std::string>{"owned-key"} && deps.license_content==std::vector<std::string>{"binding-content"} && deps.license_users==std::vector<std::string>{"earlier-user"},"license effect observes Game before the later User section");
+        require(state.user_id=="later-user" && state.fake_auth==0 && state.block_reruns==0 && state.use_last_online_profile==0,"active false settings replace true state");
+        require(state.content.size()==1 && state.content[0].version=="explicit-version" && state.content[0].state=="DOWNLOADING","active explicit content version/state");
+        require(state.steam_app_id=="42","active Steam application identifier");
+    }
+    Effects deps;auto state=seed();state.denuvo_token=std::string(100,'R');state.exe_hash="ABC";state.dll_hash="DEF";
+    auto absent=parsed(R"("Config2" {})");config_application::apply_config2(state,absent,false,deps);
+    require(state.denuvo_token==std::string(100,'R') && state.exe_hash=="abc" && state.dll_hash=="def" && state.denuvo_dll==u"dbdata.dll","absent bindings retain token, normalize inherited hashes and select default DLL");
+}
+struct OfflineEffects final:online::Effects {
+    bool cookie_present=true;std::string profile="cached-person;cached-user;Cached Name";
+    int reads=0,destroys=0,unloads=0,finishes=0;
+    std::uint32_t suppress_errors_0450a0()override{return 7;}
+    void restore_error_mode(std::uint32_t n)override{require(n==7,"restore owned mode");}
+    online::Path filesystem_widen_006d70(std::string_view s)override{return wide(s);}
+    online::Path parent_path_019820(const online::Path&)override{return u"owned";}
+    online::Path join_016b00(const online::Path& a,const online::Path& b)override{return a+u"/"+b;}
+    online::Module load_copy_0450d0(const online::Path&)override{return 11;}
+    online::Procedure get_proc_address(online::Module m,std::string_view name)override{require(m==11,"owned module");return name=="version_check"?21:22;}
+    std::int32_t call_version_check(online::Procedure p)override{require(p==21,"owned version token");return 2;}
+    online::Object call_create_online(online::Procedure p,const char16_t* cookie)override{require(p==22 && std::u16string_view(cookie)==u"owned-cookie","owned factory token/cookie");return 31;}
+    std::int32_t status_virtual_08(online::Object o)override{require(o==31,"owned object");return 1;}
+    const char* username_virtual_10(online::Object)override{throw std::logic_error("online getter forbidden");}
+    const char* persona_virtual_18(online::Object)override{throw std::logic_error("online getter forbidden");}
+    const char* user_id_virtual_20(online::Object)override{throw std::logic_error("online getter forbidden");}
+    void destroy_virtual_00(online::Object o)override{require(o==31,"destroy owned object");++destroys;}
+    bool free_library(online::Module m)override{require(m==11,"unload owned module");++unloads;return true;}
+    status::Status status_01ea20(const online::Path& p,std::uint32_t flags)override{require(flags==3,"regular-file status flags");return {p==u"owned-cookie"&&cookie_present?2:1,0,0};}
+    [[noreturn]] void filesystem_error_018130(std::string_view,std::uint32_t,const online::Path&)override{throw std::logic_error("unexpected status error");}
+    std::string read_binary_03b3f0(const online::Path& p)override{require(p==u"owned-profile","selected profile path");++reads;return profile;}
+    bool write_binary_03c1d0(const online::Path&,std::string_view)override{throw std::logic_error("offline write forbidden");}
+    void log_literal_006880(std::string_view)override{}
+    void log_finish_0088e0()override{}
+    void dialog_038bc0(std::string_view,std::string_view,std::uint32_t)override{throw std::logic_error("unexpected dialog");}
+    void wait_steps_036880(std::int32_t n)override{require(n==1,"one wait step");}
+    void finish_flag_036820()override{++finishes;}
+};
+void profile_option_reaches_offline_consumer() {
+    // Execute the active Config2 producer and source worker together. The owned
+    // effect tokens never call a DLL, OS file backend or a real user profile.
+    for(const auto* option:{"true","false","invalid",""})for(bool override_false:{false,true}) {
+        auto state=seed();state.persona_id="configured-person";state.user_id="configured-user";
+        Effects deps;auto cfg=parsed(std::string("\"Config2\" {\"User\" {\"UseLastOnlineProfile\" \"")+option+"\"}}");
+        config_application::apply_config2(state,cfg,false,deps);
+        if(override_false){auto over=parsed(R"("Config2" {"User" {"UseLastOnlineProfile" "false"}})");config_application::apply_config2(state,over,true,deps);}
+        const bool enabled=std::string_view(option)=="true" && !override_false;
+        require(state.use_last_online_profile==enabled,"parsed profile reuse option and override");
+        for(int shape=0;shape<3;++shape) {
+            auto copy=state;OfflineEffects effects;
+            effects.cookie_present=shape!=1;if(shape==2)effects.profile="bad;four;field;profile";
+            online::Path cookie=u"owned-cookie",profile=u"owned-profile",avatar=u"owned-last-avatar";
+            online::Module module=0;online::Object object=0;std::uint8_t is_online=0;
+            online::worker_035b60({copy.executable_path,cookie,profile,avatar,copy.avatar,module,object,copy.username,copy.persona_id,copy.user_id,copy.use_last_online_profile,is_online},effects);
+            const bool cached=enabled && shape==0;
+            require(copy.username==(cached?"Cached Name":"retained") && copy.persona_id==(cached?"cached-person":"configured-person") && copy.user_id==(cached?"cached-user":"configured-user"),"profile option controls actual offline cache consumption");
+            require(effects.reads==(enabled && shape!=1?1:0),"disabled reuse or absent cookie prevents profile reads");
+            require(is_online==0 && module==0 && object==0 && effects.destroys==1 && effects.unloads==1 && effects.finishes==1,"offline completion retires owned provider tokens once");
+        }
+    }
+}
+
 void capacity_and_override() {
     std::string game;
     for(int i=0;i<70;++i)game+="\"extra"+std::to_string(i)+"\" \"fixture\" ";
@@ -127,6 +210,64 @@ void capacity_and_override() {
     std::vector<std::string> ids=content_ids(m);std::sort(ids.begin(),ids.end());
     require(std::adjacent_find(ids.begin(),ids.end())==ids.end(),"grown collection has no duplicate/lost records");
 }
+
+void license_content_id_boundary() {
+    const auto document=parsed(R"("Config2" {"Game" {"ContentId" "Origin.OFB.50-1" "KeyForLicense" "synthetic-key"}})");
+    for(const auto& id:std::vector<std::string>{"Origin.OFB.50-1","id_2026","ABC-123.456","a..b"}) {
+        auto cfg=document;
+        cfg.lookup("Game").lookup("ContentId").value=id;
+        Effects deps;auto state=seed();
+        config_application::apply_config2(state,cfg,false,deps);
+        require(state.content_id==id,"safe license identifier retained byte-exact");
+        require(state.license_directory==u"SYNTHETIC/Electronic Arts/EA Services/License/"+wide(id),
+                "safe identifier remains one child of the License directory");
+        require(deps.license_keys==std::vector<std::string>{"synthetic-key"},
+                "known-safe ContentId retains license effect callback");
+    }
+
+    const std::vector<std::string> invalid={
+        "..",".","../escape",R"(..\escape)","/rooted",R"(\rooted)",
+        R"(\\server\share)",R"(C:\outside)","C:/outside","dir/sub","a:b",
+        "trailing.","bad name","AUX","NUL.dlf","CON","PRN","COM1",
+        "lpt9.bin","folder?name","file*name","a<value",
+        std::string("safe\0unsafe",11),std::string(129,'x')
+    };
+    for(const auto& id:invalid) {
+        auto cfg=document;
+        cfg.lookup("Game").lookup("ContentId").value=id;
+        Effects deps;auto state=seed();
+        rejects<std::invalid_argument>(
+            [&]{config_application::apply_config2(state,cfg,false,deps);},
+            "unsafe Config2 ContentId must be rejected");
+        require(state.license_directory.empty(),
+                "invalid ContentId rejected before deriving a license filename");
+        require(deps.license_keys.empty(),"invalid ContentId cannot reach licensing callback");
+    }
+
+    // A preexisting inherited state value must not bypass the guard when the
+    // Config2 Game section omitted a new ContentId.
+    auto inherited=parsed(R"("Config2" {"Game" {"KeyForLicense" "synthetic-key"}})");
+    Effects prior_deps;auto prior=seed();prior.content_id="../old";
+    rejects<std::invalid_argument>(
+        [&]{config_application::apply_config2(prior,inherited,true,prior_deps);},
+        "inherited unsafe ContentId is rejected on override passes");
+    require(prior_deps.license_keys.empty()&&prior.license_directory.empty(),
+            "override path does not publish a license path for inherited unsafe ID");
+
+    // Ordinary missing-ContentId configuration remains supported. License
+    // writing, however, must never target the License base with an empty stem.
+    auto missing=parsed(R"("Config2" {"Game" {"Name" "fixture"}})");
+    Effects no_key_deps;auto no_key=seed();
+    config_application::apply_config2(no_key,missing,false,no_key_deps);
+    require(no_key.license_directory==u"SYNTHETIC/Electronic Arts/EA Services/License/",
+            "no-license configurations preserve the original empty-ID path model");
+    Effects missing_deps;auto empty_id=seed();
+    auto needs_id=parsed(R"("Config2" {"Game" {"KeyForLicense" "synthetic-key"}})");
+    rejects<std::invalid_argument>(
+        [&]{config_application::apply_config2(empty_id,needs_id,false,missing_deps);},
+        "license write requires a nonempty safe ContentId");
+    require(missing_deps.license_keys.empty(),"empty ID never reaches license callback");
+}
 void obsolete_fixed_settings() {
     Effects deps;
     for(const auto* key:{"ServerPort","SDK"})for(bool over:{false,true})for(const auto* text:{"default","random","-1","65536","invalid","70000suffix"}) {
@@ -150,13 +291,133 @@ void partial_failure() {
     s=seed();rejects<std::invalid_argument>([&]{config_application::apply_config2(s,reused,false,deps);},"reused descendant totals failure");
     require(s.achievements.at("a").field00==7 && s.achievements.at("i").field00==1,"positional reuse retains512bucket child table and changes partial-update order");
 }
+
+void csv_library_partial_failure() {
+    // B52: nonempty CSV clears a prior vector before resolving entries.
+    // A conversion error retains the successful prefix without continuing
+    // to the next list or any User/Content section.
+    {
+        Effects deps;auto state=seed();
+        state.extra_dlls_from_main={u"previous-main.dll"};
+        state.extra_dlls={u"previous-worker.dll"};
+        auto config=parsed(R"("Config2" {
+            "Game" {"Name" "committed-before-error"}
+            "Emulator" {"LoadExtraDLLsFromMain" "first.dll,,bad.dll,last.dll" "LoadExtraDLLs" "untouched.dll"}
+            "User" {"Username" "not-yet"}
+            "Content" {"later" {}}
+        })");
+        deps.fail_path="bad.dll";config_application::Trace trace;
+        rejects<std::runtime_error>(
+            [&]{config_application::apply_config2(state,config,false,deps,&trace);},
+            "main extra-DLL CSV conversion error propagates");
+        require(state.game_attributes.at("DISPLAY_NAME")=="committed-before-error" &&
+                state.extra_dlls_from_main==std::vector<configuration::Path>{u"first.dll"} &&
+                state.extra_dlls==std::vector<configuration::Path>{u"previous-worker.dll"} &&
+                state.username=="retained"&&state.content.empty()&&trace.copies.size()==2,
+            "main-list exception keeps the successful prefix and stops later sections");
+        deps.fail_path.clear();
+        config_application::apply_config2(state,config,false,deps);
+        require(state.extra_dlls_from_main==
+                    std::vector<configuration::Path>{u"first.dll",u"bad.dll",u"last.dll"} &&
+                state.extra_dlls==std::vector<configuration::Path>{u"untouched.dll"} &&
+                state.username=="not-yet"&&state.content.size()==1,
+            "explicit retry replaces incomplete lists and applies later sections");
+    }
+    for(bool override_pass:{false,true}) {
+        Effects deps;auto state=seed();
+        state.extra_dlls_from_main={u"previous-main.dll"};
+        state.extra_dlls={u"previous-worker.dll"};
+        auto config=parsed(R"("Config2" {
+            "Game" {"Name" "base-only"}
+            "Emulator" {"LoadExtraDLLsFromMain" "replacement-main.dll"
+                        "LoadExtraDLLs" "first-worker.dll,bad-worker.dll,last-worker.dll"}
+            "User" {"Username" "after-worker"}
+            "Content" {"after" {}}
+        })");
+        deps.fail_path="bad-worker.dll";config_application::Trace trace;
+        rejects<std::runtime_error>(
+            [&]{config_application::apply_config2(state,config,override_pass,deps,&trace);},
+            "worker extra-DLL conversion error propagates on both passes");
+        require(state.extra_dlls_from_main==
+                    std::vector<configuration::Path>{u"replacement-main.dll"} &&
+                state.extra_dlls==std::vector<configuration::Path>{u"first-worker.dll"} &&
+                state.username=="retained"&&state.content.empty()&&trace.copies.size()==2,
+            "worker-list error preserves complete main list and partial worker list");
+        const auto found=state.game_attributes.find("DISPLAY_NAME");
+        require(override_pass?
+                (found==state.game_attributes.end()||found->second.empty()):
+                (found!=state.game_attributes.end()&&found->second=="base-only"),
+            "base-only metadata is set before the failure only in the base pass");
+        deps.fail_path.clear();
+        config_application::apply_config2(state,config,override_pass,deps);
+        require(state.extra_dlls_from_main==
+                    std::vector<configuration::Path>{u"replacement-main.dll"} &&
+                state.extra_dlls==
+                    std::vector<configuration::Path>{u"first-worker.dll",u"bad-worker.dll",u"last-worker.dll"} &&
+                state.username=="after-worker"&&
+                state.content.size()==(override_pass?0U:1U),
+            "explicit retry completes both lists and keeps base-only Content policy");
+    }
+    {
+        Effects deps;auto state=seed();
+        state.extra_dlls_from_main={u"previous-main.dll"};
+        state.extra_dlls={u"previous-worker.dll"};
+        auto config=parsed(R"("Config2" {
+            "Emulator" {"LoadExtraDLLsFromMain" "" "LoadExtraDLLs" ",,,"}
+            "User" {"Username" "complete"}
+        })");
+        config_application::apply_config2(state,config,true,deps);
+        require(state.extra_dlls_from_main==
+                    std::vector<configuration::Path>{u"previous-main.dll"} &&
+                state.extra_dlls.empty()&&state.username=="complete",
+            "empty CSV retains the list but delimiter-only CSV clears the list");
+    }
+}
+
+void log_failure_before_nonempty_apply() {
+    for(bool override_pass:{false,true}) {
+        Effects deps;Files files;auto state=seed();
+        state.content_id="retained-id";
+        state.game_attributes["DISPLAY_NAME"]="retained-game";
+        state.license_directory=u"retained-license";
+        state.content.push_back({"retained-content","retained-name","1","INSTALLED"});
+        files.base=files.over=R"("Config2" {"Game" {"Name" "after-log-game" "ContentId" "after-log-id"} "User" {"Username" "after-log-user"} "Content" {"after-log-content" {}}})";
+        const configuration::Path expected=override_pass?u"C:/fixture/surge_override.cfg":u"C:/fixture/surge.cfg";
+        config_application::Trace denied;
+        deps.fail_log=true;
+        rejects<std::runtime_error>([&]{config_application::load_and_apply(state,override_pass,deps,files,&denied);},"nonempty config log failure propagates");
+        require(files.opened==std::vector<configuration::Path>{expected} && deps.logs==files.opened,"failed log follows the selected input exactly once");
+        require(state.username=="retained" && state.content_id=="retained-id" &&
+                state.game_attributes.at("DISPLAY_NAME")=="retained-game" &&
+                state.license_directory==u"retained-license" &&
+                content_ids(state)==std::vector<std::string>{"retained-content"} && denied.copies.empty(),
+                "failed log must prevent every configuration application prefix");
+        deps.fail_log=false;
+        config_application::load_and_apply(state,override_pass,deps,files);
+        require(files.opened==std::vector<configuration::Path>{expected,expected} && deps.logs==files.opened,"same-state retry reads and logs exactly once more");
+        require(state.username=="after-log-user","repaired logger allows nonempty user assignment");
+        require(state.content_id==(override_pass?"retained-id":"after-log-id") &&
+                state.game_attributes.at("DISPLAY_NAME")==(override_pass?"retained-game":"after-log-game"),
+                "retry preserves base-only scalar rules");
+        require(content_ids(state)==(override_pass?std::vector<std::string>{"retained-content"}:
+                std::vector<std::string>{"retained-content","after-log-content"}),
+                "base retry appends once while override skips base-only collections");
+    }
+}
+
 void file_path_and_native(const std::filesystem::path& dir) {
     Files files;Effects deps;auto s=seed();config_application::Trace trace;
-    files.base="\xef\xbb\xbf\"Config2\" {\"User\" {\"Username\" \"base-user\"} \"Content\" {\"a\" {} \"!\" {}}}";
+    // a/i and b/j collide at eight buckets, but all four differ at 64.
+    // Omitting the 019d52 selection copy reverses each pair before section
+    // reuse at 64 buckets, even though scalar values and counts agree.
+    const std::vector<std::string> expected_ids{"a","i","b","j"};
+    files.base="\xef\xbb\xbf\"Config2\" {\"User\" {\"Username\" \"base-user\"} \"Content\" {\"a\" {} \"i\" {} \"b\" {} \"j\" {}}}";
     files.over=R"("Config2" {"User" {"Username" "override-user"} "Content" {"ignored" {}}})";
     config_application::load_and_apply(s,false,deps,files,&trace);
+    require(event(trace,"Content").bucket_count==64,"file fixture reaches section reuse at 64 buckets");
+    require(content_ids(s)==expected_ids,"raw file selection copy preserves exact observable Content order");
     config_application::load_and_apply(s,true,deps,files);
-    require(s.username=="override-user" && s.content.size()==2,"full raw-byte pipeline supports base collections and override skip");
+    require(s.username=="override-user" && content_ids(s)==expected_ids,"raw file override retains complete base Content order");
     require(files.opened==std::vector<configuration::Path>{u"C:/fixture/surge.cfg",u"C:/fixture/surge_override.cfg"} && deps.logs==files.opened,"file paths/log contract");
     const auto logs=deps.logs.size();files.base="\xef\xbb\xbf\xef\xbb\xbf\"Config2\" {}";
     rejects<parser::ParseError>([&]{config_application::load_and_apply(s,false,deps,files);},"BOM only once");
@@ -167,14 +428,18 @@ void file_path_and_native(const std::filesystem::path& dir) {
     deps.fail_log=true;rejects<std::runtime_error>([&]{config_application::load_and_apply(s,false,deps,files);},"log exception precedes apply");
     require(s.username=="override-user","log failure leaves scalars");deps.fail_log=false;
     files.initial=1;auto empty=config_application::read_config2(u"ignored",files);require(empty.children.empty(),"initial-state failure empty value");files.initial=0;
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_CONFIG_APPLICATION_TESTS)
     std::filesystem::create_directories(dir);const auto path=dir/"application-generated-fixture.cfg";
     {std::ofstream out(path,std::ios::binary|std::ios::trunc);out<<files.over;require(static_cast<bool>(out),"generated native fixture written");}
     file::NativeFactory native;auto own=config_application::read_config2(path.u16string(),native);
     require(own.lookup("User").lookup("Username").value=="override-user","native own-file stream/parser/copy");
     auto state=seed();config_application::apply_config2(state,own,false,deps);require(state.content.size()==1,"native own fixture reaches collection application");
+#else
+    (void)dir; // NativeFactory requires the Windows filesystem adapter.
+#endif
 }
 }
 int main(int argc,char** argv) {
-    try {if(argc!=2)throw std::invalid_argument("requires own fixture directory");scalar_and_collections();capacity_and_override();obsolete_fixed_settings();partial_failure();file_path_and_native(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" Config2 application checks; no original execution or real user CFG\n";}
+    try {if(argc!=2)throw std::invalid_argument("requires own fixture directory");scalar_and_collections();active_field_bindings();profile_option_reaches_offline_consumer();capacity_and_override();license_content_id_boundary();obsolete_fixed_settings();partial_failure();csv_library_partial_failure();log_failure_before_nonempty_apply();file_path_and_native(std::filesystem::path(argv[1]));std::cout<<"PASS: "<<checks<<" Config2 application checks; no original execution or real user CFG\n";}
     catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 }

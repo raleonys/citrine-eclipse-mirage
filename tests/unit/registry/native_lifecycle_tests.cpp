@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/hook_native_callbacks.hpp"
-#include "preloader_l/platform/callback_lock.hpp"
+#include "citrine_eclipse_mirage/platform/hook_native_callbacks.hpp"
+#include "citrine_eclipse_mirage/platform/callback_lock.hpp"
 #include "../../support/fixture_ascii.hpp"
 #include <array>
 #include <cerrno>
@@ -18,8 +18,8 @@
 #include <thread>
 
 namespace {
-using namespace preloader_l::native;
-using preloader_l::registry::Handle;
+using namespace citrine_eclipse_mirage::native;
+using citrine_eclipse_mirage::registry::Handle;
 int checks;
 void require(bool condition, const char* message) {
     ++checks;
@@ -93,11 +93,11 @@ struct Wide final : WideOperations {
 struct Effects final : OriginalEffects {
     unsigned allocations{}, frees{};
     std::function<void()> startup_wait;
-    Effects(const std::array<std::uintptr_t, preloader_l::host_init::callback_count>& originals,
-            Wide& wide, preloader_l::platform::CryptQueryHost& crypt)
+    Effects(const std::array<std::uintptr_t, citrine_eclipse_mirage::host_init::callback_count>& originals,
+            Wide& wide, citrine_eclipse_mirage::platform::CryptQueryHost& crypt)
         : OriginalEffects(originals, wide, crypt) {}
     std::string filesystem_narrow(std::u16string_view value) override {
-        return preloader_l::test_support::fixture_ascii(value);
+        return citrine_eclipse_mirage::test_support::fixture_ascii(value);
     }
     int crt_stricmp(const char* a, const char* b) override { return _stricmp(a, b); }
     int crt_strcpy_s(char* out, std::size_t capacity, const char* value) override {
@@ -114,13 +114,13 @@ struct Effects final : OriginalEffects {
     }
     void wait_036880(std::int32_t) override {
         const auto error = GetLastError();
-        { preloader_l::callback_lock::Pause pause; if (startup_wait) startup_wait(); }
+        { citrine_eclipse_mirage::callback_lock::Pause pause; if (startup_wait) startup_wait(); }
         SetLastError(error);
     }
     void log_literal_006880(std::uint64_t) override {}
     void log_text_007990(std::string_view) override {}
     void finish_log_0088e0() override {}
-    void crypt_observed(preloader_l::hooks::Selection) noexcept override {}
+    void crypt_observed(citrine_eclipse_mirage::hooks::Selection) noexcept override {}
     void wait_steps_036880(std::int32_t) override { throw std::logic_error("unexpected network wait"); }
     void log_literal_006880(std::string_view) override {}
     void log_port_00ad70(std::uint16_t) override {}
@@ -129,20 +129,20 @@ struct Effects final : OriginalEffects {
     [[noreturn]] void exit_05cdc0(std::uint32_t) override { throw std::logic_error("unexpected exit"); }
 };
 struct Fixture {
-    preloader_l::registry::Values values{{"ClientKey", u"Client"}, {"ClientKey2", u"MissingClient"},
+    citrine_eclipse_mirage::registry::Values values{{"ClientKey", u"Client"}, {"ClientKey2", u"MissingClient"},
         {"ClientValue", u"ClientPath"}, {"ClientPath", u"C:\\overlay.exe"},
         {"LanguageKey", u"Language"}, {"LanguageValue", u"Locale"}, {"Language", u"fr_FR"}};
-    preloader_l::registry::Handles clients, languages, fabricated;
+    citrine_eclipse_mirage::registry::Handles clients, languages, fabricated;
     std::uint8_t language_enabled = 1;
     std::int32_t v4 = 16, v6 = 28;
     std::uint16_t port = 6099;
     std::uint32_t attempts = 0;
-    std::array<std::uintptr_t, preloader_l::host_init::callback_count> originals{
+    std::array<std::uintptr_t, citrine_eclipse_mirage::host_init::callback_count> originals{
         0, reinterpret_cast<std::uintptr_t>(&open_a), reinterpret_cast<std::uintptr_t>(&open_w),
         reinterpret_cast<std::uintptr_t>(&close_key), reinterpret_cast<std::uintptr_t>(&query_a),
         reinterpret_cast<std::uintptr_t>(&query_w)};
     Wide wide;
-    preloader_l::platform::WindowsCryptQueryHost crypt;
+    citrine_eclipse_mirage::platform::WindowsCryptQueryHost crypt;
     Effects effects{originals, wide, crypt};
     Faults faults;
     Context context{{values, clients, languages, fabricated, language_enabled},
@@ -325,6 +325,68 @@ void concurrent_close(bool wide, bool fabricated) {
     require(fixture.effects.frees == fixture.effects.allocations, "concurrent fabricated allocation freed exactly once");
     check_clean(fixture);
 }
+void alternate_sdk_routes(bool wide) {
+    // D03 bounded SDK-origin evidence. This executable calls entrypoints
+    // directly: it does not install MinHook or observe Consumer call paths.
+    Tree tree;
+    Fixture fixture;
+    {
+        Key legacy;
+        const auto result = wide
+            ? RegOpenKeyW(tree.root.value, L"Client", &legacy.value)
+            : RegOpenKeyA(tree.root.value, "Client", &legacy.value);
+        require(result == ERROR_SUCCESS && legacy.value,
+            "legacy RegOpenKey A/W returns a real native HKEY");
+        legacy.callback = true;
+        require(fixture.clients.empty() && fixture.languages.empty() && fixture.fabricated.empty(),
+            "direct legacy SDK open does not claim a callback-owned identity");
+        const auto reply = query(legacy.value, wide, false);
+        require(reply.original.status == ERROR_SUCCESS &&
+            text_is(reply, wide, "native-value", L"native-value"),
+            "SDK-origin legacy key query forwards native data, not an overlay");
+        require(reply.error == reply.original.error,
+            "legacy SDK query preserves the original LastError");
+        const auto before_close = observed.closes;
+        require(legacy.close() == ERROR_SUCCESS && observed.closes == before_close + 1,
+            "legacy SDK key close forwards to native RegCloseKey once");
+        check_clean(fixture);
+    }
+    {
+        Key created;
+        const wchar_t* name = wide ? L"D03CreatedW" : L"D03CreatedA";
+        DWORD disposition = 0;
+        const auto result = wide
+            ? RegCreateKeyExW(tree.root.value, name, 0, nullptr, REG_OPTION_VOLATILE,
+                KEY_ALL_ACCESS, nullptr, &created.value, &disposition)
+            : RegCreateKeyExA(tree.root.value, "D03CreatedA", 0, nullptr, REG_OPTION_VOLATILE,
+                KEY_ALL_ACCESS, nullptr, &created.value, &disposition);
+        require(result == ERROR_SUCCESS && created.value && disposition == REG_CREATED_NEW_KEY,
+            "alternate RegCreateKeyEx A/W returns a new native HKEY");
+        created.callback = true;
+        constexpr wchar_t value[] = L"alternate-native";
+        require(RegSetValueExW(created.value, L"NativeOnly", 0, REG_SZ,
+            reinterpret_cast<const BYTE*>(value), sizeof(value)) == ERROR_SUCCESS,
+            "seed a native value through a direct SDK write");
+        require(fixture.clients.empty() && fixture.languages.empty() && fixture.fabricated.empty(),
+            "alternate SDK creation never silently registers a fabricated key");
+        const auto reply = query(created.value, wide, false);
+        require(reply.original.status == ERROR_SUCCESS &&
+            text_is(reply, wide, "alternate-native", L"alternate-native"),
+            "SDK-created native value reaches original RegQueryValueEx A/W");
+        require(reply.error == reply.original.error,
+            "SDK-created query preserves original LastError");
+        const auto before_close = observed.closes;
+        require(created.close() == ERROR_SUCCESS && observed.closes == before_close + 1,
+            "SDK-created native HKEY close forwards exactly once");
+        require(RegDeleteKeyW(tree.root.value, name) == ERROR_SUCCESS,
+            "remove the SDK-created volatile child");
+        check_clean(fixture);
+    }
+    require(fixture.effects.allocations == 0 && fixture.effects.frees == 0,
+        "alternate native SDK routes never allocate or release fabricated handles");
+    std::cout << "PASS: alternate SDK Registry routes " << (wide ? "W" : "A") << '\n';
+}
+
 void numeric_reuse(bool wide) {
     Tree tree;
     Fixture fixture;
@@ -355,6 +417,7 @@ int main() {
                 concurrent_close(wide, fabricated);
             }
             language_and_foreign(wide);
+            alternate_sdk_routes(wide);
             numeric_reuse(wide);
         }
         std::cout << checks << " native Registry lifecycle checks passed\n";

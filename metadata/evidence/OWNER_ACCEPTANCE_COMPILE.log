@@ -19,12 +19,12 @@ SURGE: COMPILE ONLY / Release
 -- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Found Python3: C:/Users/Skysect/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
+-- Found Python3: C:/Users/<USER>/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
 -- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS
 -- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS - Success
 -- Configuring done (21.0s)
 -- Generating done (0.3s)
--- Build files have been written to: C:/Users/Skysect/Desktop/preloader_l_3.2.6_TALVOR_R17_source/build/compile_msvc
+-- Build files have been written to: C:/Users/<USER>/Desktop/preloader_l_3.2.6_TALVOR_R17_source/build/compile_msvc
 [2/3] Compile and link
 [  1%] Verify the four active owner-supplied vendor trees
 asio: INSTALLED_MEMBER_HASHES_PASS
@@ -351,7 +351,7 @@ BUILD_PARTITION: PASS_PRODUCTION_BOUNDARY
 zero-timeout shutdown status: 2
 PASS: public C API names/ordinals; 3 actual load/start/socket/profile/stop/unload cycles; single DllShutdown with bounded wait/retry; removed alias/ordinal absent
 COMPILE ONLY: PASS
-DLL: C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\build\compile_msvc\preloader.unsigned.dll
+DLL: C:\Users\<USER>\Desktop\preloader_l_3.2.6_TALVOR_R17_source\build\compile_msvc\preloader.unsigned.dll
 SHA256: bdda588afad1ec2110c4170174f92757cb4dbb0e21fb5d8fb2b79b35ef2c3ddb
 
 ============================================================

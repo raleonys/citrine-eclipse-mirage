@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 """Validate metadata and script registry schema, ownership and role contracts."""
-import json
 from pathlib import Path
+
+from project_files import load_unique_json
 
 METADATA_SCHEMA = 'surge.metadata-ownership.v1'
 SCRIPT_SCHEMA = 'surge.script-ownership.v1'
@@ -24,8 +25,8 @@ def valid_record(record, roles):
 
 def check(root):
     root = Path(root)
-    metadata = json.loads((root / 'metadata/METADATA_OWNERSHIP.json').read_text())
-    scripts = json.loads((root / 'metadata/SCRIPT_OWNERSHIP.json').read_text())
+    metadata = load_unique_json(root / 'metadata/METADATA_OWNERSHIP.json')
+    scripts = load_unique_json(root / 'metadata/SCRIPT_OWNERSHIP.json')
     errors = []
     if metadata.get('schema') != METADATA_SCHEMA:
         errors.append('Unrecognized metadata ownership schema')
@@ -36,14 +37,14 @@ def check(root):
     if not isinstance(registry, dict) or not isinstance(script_registry, dict):
         return sorted(errors + ['Ownership registry files must be a mapping'])
 
-    actual = {p.name for p in (root / 'metadata').glob('*.json')}
+    actual = {p.name for p in (root / 'metadata').iterdir() if p.suffix.lower() == '.json'}
     errors += ['Unowned metadata: ' + n for n in actual - registry.keys()]
     errors += ['Missing owned metadata: ' + n for n in registry.keys() - actual]
     for name, record in registry.items():
         if not valid_record(record, METADATA_ROLES):
             errors.append('Incomplete or invalid metadata ownership: ' + name)
     actual_scripts = {p.relative_to(root).as_posix() for directory in ['scripts', 'tools']
-                      for p in (root / directory).rglob('*') if p.suffix in {'.py', '.ps1', '.cmd'}}
+                      for p in (root / directory).rglob('*') if p.suffix.lower() in {'.py', '.ps1', '.cmd'}}
     if actual_scripts != set(script_registry):
         errors.append('Script ownership file-set mismatch')
     for name, record in script_registry.items():

@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/server.hpp"
+#include "citrine_eclipse_mirage/net/server.hpp"
 #include <algorithm>
 #include <limits>
 #include <utility>
 #include <stdexcept>
 
-namespace preloader_l::server {
+namespace citrine_eclipse_mirage::server {
 namespace {
 std::uint16_t network_port_to_host(std::uint16_t value) {
     return static_cast<std::uint16_t>((value >> 8) | (value << 8));
