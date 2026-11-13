@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Reject incomplete, reordered or overwritten CMake-generated build partition records before accepting target classification, dependencies or sources. Require the exact TARGET/TYPE/DEPS/SOURCES/END sequence while preserving legitimate empty lists; add malformed-record regressions and align the synthetic size-evidence fixture with the existing emitter format. Production targets and runtime behavior are unchanged.
+- Require exactly one canonical LIBRARY declaration followed by exactly one EXPORTS header before any source DEF export. Reject missing, repeated, reversed or misplaced headers while preserving comments, blank lines and the three accepted export names/ordinals; add malformed-header and restoration regressions without changing shipping ABI or DEF bytes.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-13
 
+- [PR #316](https://github.com/raleonys/citrine-eclipse-mirage/pull/316): Reject incomplete, reordered or overwritten CMake-generated build partition records before accepting target classification, dependencies or sources. Require the exact TARGET/TYPE/DEPS/SOURCES/END sequence while preserving legitimate empty lists; add malformed-record regressions and align the synthetic size-evidence fixture with the existing emitter format. Production targets and runtime behavior are unchanged.
 - [PR #302](https://github.com/raleonys/citrine-eclipse-mirage/pull/302): Cross-check the owner avatar path and digest across branding metadata, the independently pinned profile-generator contract and the current runtime record. Reject coordinated branding path/hash or PNG/hash changes and divergent generator/runtime pins; preserve authorized image bytes and shipping behavior.
 - [PR #222](https://github.com/raleonys/citrine-eclipse-mirage/pull/222): Ignore CMake line and bracket comments when inventorying application source declarations so commented-out paths cannot hide missing build ownership. Preserve quoted, escaped and bracket argument contexts and complete source-path boundaries; add regression and recovery controls without changing the actual build graph.
 - [PR #221](https://github.com/raleonys/citrine-eclipse-mirage/pull/221): Reject symlinks and Windows reparse points in the historical evidence archive, its metadata parent and retention-policy file before redirected content reads. Walk nested directories without following links, validate canonical retained paths, and cover Python 3.9-compatible detection, recovery and real Windows junctions through existing cross-platform CTest. Preserve retained evidence bytes and shipping behavior.

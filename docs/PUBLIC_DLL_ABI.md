@@ -38,6 +38,15 @@ Windows/native and game acceptance against the selected commit and DLL using
 
 The complete contract is in `metadata/PUBLIC_DLL_ABI.json`.
 
+The source DEF guard requires exactly one
+`LIBRARY "citrine_eclipse_mirage.unsigned.dll"` declaration, followed by exactly
+one `EXPORTS` header before any export entry. Missing, duplicate, reversed or
+misplaced headers fail even when the export names and ordinals would otherwise
+match the ABI record. Blank lines and semicolon comments remain accepted.
+The three names/ordinals and actual DEF bytes retain their existing contract;
+source syntax validation complements the read-only PE checks and separate
+native consumer acceptance.
+
 The public ABI and CORVEXON function gates require each nonzero, nonforwarded
 export entry byte to have exactly one executable section owner, backed by
 raw file data outside the headers and before EOF. Valid executable section

@@ -41,6 +41,46 @@ import check_dll_exports as dll_exports
 from golden_policy import load_target, PolicyPending
 
 
+class PublicDefHeaderTests(unittest.TestCase):
+    def test_def_requires_single_ordered_library_and_exports_headers(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'metadata').mkdir()
+            (root / 'exports').mkdir()
+            shutil.copyfile(ROOT / 'metadata/PUBLIC_DLL_ABI.json',
+                            root / 'metadata/PUBLIC_DLL_ABI.json')
+            original = (ROOT / 'exports/citrine_eclipse_mirage.def').read_text(encoding='utf-8')
+            destination = root / 'exports/citrine_eclipse_mirage.def'
+            header = 'LIBRARY "citrine_eclipse_mirage.unsigned.dll"'
+            self.assertIn(header, original)
+            self.assertIn('EXPORTS\n', original)
+            entry = next(line for line in original.splitlines(keepends=True)
+                         if line.strip().split() == ['DllMain', '@1'])
+            variants = {
+                'missing_library': original.replace(header + '\n', ''),
+                'missing_exports': original.replace('EXPORTS\n', ''),
+                'duplicate_library': original.replace(header + '\n', header + '\n' + header + '\n'),
+                'duplicate_exports': original.replace('EXPORTS\n', 'EXPORTS\nEXPORTS\n'),
+                'headers_out_of_order': original.replace(header + '\nEXPORTS\n',
+                                                         'EXPORTS\n' + header + '\n'),
+                'export_before_exports': original.replace(entry, '', 1).replace(
+                    'EXPORTS\n', entry + 'EXPORTS\n'),
+            }
+            spaced = '\n; controlled header spacing\n' + original.replace(
+                'EXPORTS\n', '\n; before exports\nEXPORTS\n\n')
+            for valid in (original, spaced):
+                destination.write_text(valid, encoding='utf-8')
+                self.assertEqual([], dll_exports.check_source(root))
+            for label, candidate in variants.items():
+                with self.subTest(case=label):
+                    self.assertNotEqual(candidate, original)
+                    destination.write_text(candidate, encoding='utf-8')
+                    self.assertTrue(dll_exports.check_source(root),
+                                    'Malformed application DEF header was accepted: ' + label)
+            destination.write_text(original, encoding='utf-8')
+            self.assertEqual([], dll_exports.check_source(root))
+
+
 class PublicAbiReportTests(unittest.TestCase):
     script = ROOT / 'scripts/check_dll_exports.py'
 
