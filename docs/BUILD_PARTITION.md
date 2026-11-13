@@ -113,6 +113,15 @@ first clean configure. The build produces a production linker map and checks:
 4. Entry-point and protected-reader host objects have positive map evidence.
 5. Reference tests and the development DLL retain their reference dependencies.
 
+Before comparing the declared source lists, the partition guard removes CMake
+line and matching equal-sign bracket comments from `cmake/Sources.cmake`.
+Commented-out `set(...)` commands and individual source entries cannot satisfy
+ownership. Quoted/escaped text and bracket arguments keep their lexical context;
+bracket-like text inside an ordinary unquoted word is not an argument opener.
+Unterminated bracket comments or arguments fail closed. This remains a bounded
+textual source-list scan, not evaluation of CMake variables, conditions or
+function calls; evaluated target graphs and link evidence retain their own gates.
+
 The generated `partition.<CONFIG>.targets` reader requires each target record
 to contain exactly `TARGET`, `TYPE`, `DEPS`, `SOURCES` and `END`, in that order.
 Target names and types must be nonempty; duplicate targets/fields, missing or

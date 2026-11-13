@@ -237,6 +237,92 @@ class TargetBoundaryTests(unittest.TestCase):
     def test_reference_and_source_api_coexist_outside_production_closure(self):
         self.assertEqual(boundary.codemodel_errors(graph(), POLICY), [])
 
+    def test_commented_cmake_source_lists_are_not_adopted(self):
+        variable = 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            (root / 'cmake/Sources.cmake').write_text(
+                f'# set({variable} src/runtime/retired.cpp)\n'
+                f'#[[ set({variable} src/runtime/removed.cpp) ]]\n'
+                f'#[=[ set({variable} src/runtime/removed_again.cpp) ]=]\n'
+                f'set({variable}\n'
+                '  src/runtime/active.cpp\n'
+                '  # src/runtime/disabled.cpp\n'
+                '  #[=[ src/runtime/bracket_disabled.cpp ]=]\n'
+                ')\n', encoding='utf-8')
+            self.assertEqual(['src/runtime/active.cpp'],
+                             boundary.declared_sources(root, variable))
+
+    def test_source_list_entirely_inside_comments_is_missing(self):
+        variable = 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            (root / 'cmake/Sources.cmake').write_text(
+                f'# set({variable} src/runtime/retired.cpp)\n'
+                f'#[[ set({variable} src/runtime/removed.cpp) ]]\n',
+                encoding='utf-8')
+            with self.assertRaisesRegex(ValueError, 'Missing CMake source list'):
+                boundary.declared_sources(root, variable)
+
+    def test_cmake_quoted_hash_and_bracket_argument_are_preserved(self):
+        variable = 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            (root / 'cmake/Sources.cmake').write_text(
+                f'set({variable} "literal#not-comment" '
+                '[=[literal # not-comment]=] src/runtime/active.CPP)\n',
+                encoding='utf-8')
+            self.assertEqual(['src/runtime/active.CPP'],
+                             boundary.declared_sources(root, variable))
+
+    def test_unterminated_cmake_bracket_comment_is_rejected(self):
+        variable = 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            (root / 'cmake/Sources.cmake').write_text(
+                f'#[[ set({variable} src/runtime/retired.cpp)\n', encoding='utf-8')
+            with self.assertRaisesRegex(ValueError, 'Unterminated CMake bracket comment'):
+                boundary.declared_sources(root, variable)
+
+    def test_cmake_comment_filter_keeps_valid_argument_contexts(self):
+        variable = 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES'
+        contexts = (
+            r'set(LABEL literal\#marker)',
+            r'set(LABEL literal\"marker)',
+            r'set(LABEL "literal \" # marker")',
+            'set(LABEL [[literal " # marker]])',
+            'set(LABEL [=[literal " # marker]=])',
+            'set(LABEL [==[literal ]=] " # marker]==])',
+            'set(LABEL literal[=[marker)',
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            for context in contexts:
+                with self.subTest(context=context):
+                    (root / 'cmake/Sources.cmake').write_text(
+                        context + f' # set({variable} src/runtime/retired.cpp)\n'
+                        + f'set({variable} src/runtime/active.cpp)\n', encoding='utf-8')
+                    self.assertEqual(['src/runtime/active.cpp'],
+                                     boundary.declared_sources(root, variable))
+
+    def test_unterminated_cmake_bracket_arguments_are_rejected(self):
+        variable = 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            for opening, ending in (('[[', ''), ('[=[', ''), ('[==[', ']=]')):
+                with self.subTest(opening=opening):
+                    (root / 'cmake/Sources.cmake').write_text(
+                        f'set({variable} {opening}src/runtime/active.cpp{ending})\n',
+                        encoding='utf-8')
+                    with self.assertRaisesRegex(ValueError, 'Unterminated CMake bracket argument'):
+                        boundary.declared_sources(root, variable)
+
     def test_case_insensitive_cpp_suffix_in_cmake_declaration(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
