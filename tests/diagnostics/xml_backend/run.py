@@ -50,6 +50,17 @@ def verify_inputs(reference, pugi):
             raise ValueError('External pugixml input hash mismatch: ' + name)
 
 
+def validate_corpus_policy(row):
+    """Keep actual differences visible; allow exactly the reviewed two rows."""
+    expected = {'cases': 12087, 'acceptance_diff': 2, 'success_DOM_diff': 0,
+                'failed_DOM_diff': 0, 'error_code_diff': 2, 'diagnostic_diff': 2,
+                'exact_equal': 12085, 'policy_rejections': 0,
+                'declared_depth_deltas': 2, 'unexpected_differences': 0}
+    if row.get('profile') != 'pugi_checked' or any(
+            int(row[name]) != count for name, count in expected.items()):
+        raise ValueError('Corpus differs outside the two reviewed A12 depth-policy rows')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--reference-root', type=Path, required=True)
@@ -255,6 +266,10 @@ def main():
         with (output / name).open(encoding='utf-8', newline='') as stream:
             return list(csv.DictReader(stream, delimiter='\t'))
     report['corpus'] = rows('corpus.tsv')
+    report['depth_policy'] = {'reference_profile': 500, 'candidate_profile': 100,
+                            'declared_corpus_rows': [83, 84],
+                            'boundary_deltas': [row for row in rows('compatibility.tsv')
+                                if row['policy_delta'] == 'A12_DEPTH_100']}
     report['application_differences'] = {
         name: sum(row.get('equal_to_tiny', row.get('compared_with_tiny')) == '0'
                   for row in rows(name + '.tsv') if row['profile'] == 'pugi_checked')
@@ -280,8 +295,10 @@ def main():
             for case in sorted({row['case'] for row in timing})}
             for profile in ['tiny', 'pugi_checked']}
     candidate_corpus = next(row for row in report['corpus'] if row['profile'] == 'pugi_checked')
-    incompatible = reader_result.returncode != 0 or any(int(candidate_corpus[field]) for field in
-        ['acceptance_diff', 'success_DOM_diff', 'failed_DOM_diff', 'error_code_diff', 'diagnostic_diff']) or any(report['application_differences'].values())
+    validate_corpus_policy(candidate_corpus)
+    if len(report['depth_policy']['boundary_deltas']) != 5:
+        raise ValueError('Missing declared A12 boundary deltas')
+    incompatible = reader_result.returncode != 0 or any(report['application_differences'].values())
     if incompatible:
         raise RuntimeError('Candidate compatibility regression')
     if measure_performance:

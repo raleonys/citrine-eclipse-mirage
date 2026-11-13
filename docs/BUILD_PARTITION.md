@@ -32,14 +32,25 @@ objects or archives. Non-MSVC development builds retain their existing graph.
 
 Production must never depend on a reference target or the source API DLL. With
 `BUILD_TESTING=OFF` and `CITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF`, reference targets
-are not configured. The owner-selected pugixml archive replaces TinyXML2; the other three vendor
-pins are unchanged. `xml/reader.cpp`, `xml/reader_policy.cpp`,
+are not configured. The owner-selected pugixml archive replaces TinyXML2; all current vendor
+pins are maintained in [VENDORING.md](VENDORING.md). `xml/reader.cpp`, `xml/reader_policy.cpp`,
 `xml/reader_values.cpp` and `xml/memory_printer.cpp` are production inputs.
 Production and test targets link `citrine_eclipse_mirage_pugixml`; the MSVC development
 DLL links `citrine_eclipse_mirage_source_pugixml`. No legacy XML vendor target aliases
 are provided.
 The evaluated production graph rejects `third_party/tinyxml2/` sources.
 The external TinyXML2 control exists only in the standalone comparison.
+
+## Portable model checks
+
+`portable_bootstrap_model` and `portable_thread_model` compile the retained
+bootstrap/thread source models with their unchanged controlled-effects fixtures.
+Both portable CTest targets keep the existing native fixtures' 60-second budgets;
+`bootstrap_contracts` and `crt_thread_contracts` remain in the Windows/reference
+graph. Portable coverage checks model ordering, context/handle ownership and
+cleanup contracts without a Windows SDK or actual OS threads, module/FLS lifetime
+or private CRT execution. Production source lists and linkage remain unchanged;
+Application continues to use its owned standard-library workers and compiler CRT.
 
 ## Evidence and limits
 
@@ -102,6 +113,25 @@ first clean configure. The build produces a production linker map and checks:
 4. Entry-point and protected-reader host objects have positive map evidence.
 5. Reference tests and the development DLL retain their reference dependencies.
 
+Before comparing the declared source lists, the partition guard removes CMake
+line and matching equal-sign bracket comments from `cmake/Sources.cmake`.
+Commented-out `set(...)` commands and individual source entries cannot satisfy
+ownership. Quoted/escaped text and bracket arguments keep their lexical context;
+bracket-like text inside an ordinary unquoted word is not an argument opener.
+Unterminated bracket comments or arguments fail closed. This remains a bounded
+textual source-list scan, not evaluation of CMake variables, conditions or
+function calls; evaluated target graphs and link evidence retain their own gates.
+
+The generated `partition.<CONFIG>.targets` reader requires each target record
+to contain exactly `TARGET`, `TYPE`, `DEPS`, `SOURCES` and `END`, in that order.
+Target names and types must be nonempty; duplicate targets/fields, missing or
+reordered fields, unmatched terminators and unfinished records fail closed.
+Empty dependency/source lists remain valid when their field records are present.
+A target enters the parsed graph only after its complete record closes, so a
+later field cannot silently overwrite its executable classification or edges.
+This validates generated evidence structure; the closure, source, linker-map and
+native acceptance checks still establish their separate boundary properties.
+
 The check runs after linking and as an incremental `ALL` target. Unsupported or
 empty maps fail. Both LLVM-MinGW and MSVC map syntax have negative fixtures;
 actual MSVC linker acceptance is recorded by the selected head's Windows
@@ -113,6 +143,12 @@ and `production_network_hook_contracts` compile their native callback/connect
 fixtures with only the production core; reference-only adapter cases stay in the
 original mixed targets. This prevents reference libraries from masking a missing
 runtime binding in these tests.
+
+`asio_thread_launch_contracts` is also a production-core test target. Its private
+launcher selection exercises actual Asio worker rollback without linking any
+reference models or the development DLL. Register new executable tests in the
+partition policy as well as CTest; the generated Windows target graph rejects
+unclassified targets before native tests can run.
 
 ## Reproduce
 
@@ -138,7 +174,14 @@ python -B scripts/audit_translation_units.py --build-dir <build-directory> --con
 
 The audit currently supports CMake's Ninja object layout and LLVM inspection
 tools; it fails for unsupported layouts rather than silently omitting files.
-Source QA includes 18 boundary regressions, separately from native tests.
+Object lookup resolves the selected checkout/build roots, rejects source
+parent traversal and absolute sources outside that checkout, and refuses
+redirected source/object paths or invalid target directory components. This
+prevents attributing an unrelated COFF object to the selected translation unit;
+it does not prove runtime reachability or Consumer coverage.
+Source QA runs the current boundary regressions in
+`tests/infrastructure/test_build_partition.py`, separately from native tests.
+The earlier fixed test count is not a current inventory.
 
 Five exhaustive reference fixtures have a 600-second test-process budget only
 for single-configuration Debug cross-builds under Wine (the process runner has

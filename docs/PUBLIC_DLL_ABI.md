@@ -31,10 +31,28 @@ The original Anadius `CDX@1` / `RUNE@2` / `anadius@3` markers target the
 same RET body; these unwanted names are not restored. Automatic compatibility
 with the original consumer import `anadius64!anadius` is not claimed.
 The earlier 548-byte ABI assertion was withdrawn because supporting source
-evidence was absent. The owner verified actual game startup for the parent
-package; Windows retesting is still required for the current I/O/ABI package.
+evidence was absent. Earlier owner game-startup reports and the I/O/ABI
+correction's pending Windows rerun belong to their own checkpoints. Assess
+Windows/native and game acceptance against the selected commit and DLL using
+[VALIDATION.md](VALIDATION.md), rather than inheriting those old statuses.
 
 The complete contract is in `metadata/PUBLIC_DLL_ABI.json`.
+
+The source DEF guard requires exactly one
+`LIBRARY "citrine_eclipse_mirage.unsigned.dll"` declaration, followed by exactly
+one `EXPORTS` header before any export entry. Missing, duplicate, reversed or
+misplaced headers fail even when the export names and ordinals would otherwise
+match the ABI record. Blank lines and semicolon comments remain accepted.
+The three names/ordinals and actual DEF bytes retain their existing contract;
+source syntax validation complements the read-only PE checks and separate
+native consumer acceptance.
+
+The public ABI and CORVEXON function gates require each nonzero, nonforwarded
+export entry byte to have exactly one executable section owner, backed by
+raw file data outside the headers and before EOF. Valid executable section
+names need not be `.text`, and functions may share an address. This structural
+check does not validate instructions, an entire function body or native calls.
+The generic PE export reader still permits data exports for other callers.
 
 The source-level status type is `DllShutdownStatus`. Its constants are
 `DLL_SHUTDOWN_OK`, `DLL_SHUTDOWN_CONCURRENT`,

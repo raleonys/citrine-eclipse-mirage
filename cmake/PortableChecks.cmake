@@ -27,17 +27,40 @@ portable_check(portable_execution src/runtime/execution.cpp tests/unit/execution
 portable_check(portable_execution_concurrency src/runtime/execution.cpp tests/unit/execution/concurrency_tests.cpp)
 target_link_libraries(portable_execution_concurrency PRIVATE Threads::Threads)
 set_tests_properties(portable_execution_concurrency PROPERTIES TIMEOUT 30)
+# Recovered source models with synthetic effects, not native CRT/OS threads.
+portable_check(portable_bootstrap_model src/runtime/bootstrap.cpp
+  tests/unit/bootstrap/bootstrap_tests.cpp)
+portable_check(portable_thread_model src/runtime/thread_launch.cpp src/runtime/bootstrap.cpp
+  tests/unit/thread/thread_tests.cpp)
+set_tests_properties(portable_bootstrap_model portable_thread_model PROPERTIES TIMEOUT 60)
 portable_check(portable_network_hook src/platform/hook_connect.cpp src/runtime/execution.cpp
   tests/unit/network_hook/hook_tests.cpp)
 target_compile_definitions(portable_network_hook PRIVATE CITRINE_ECLIPSE_MIRAGE_PRODUCTION_NETWORK_TESTS=1)
 target_link_libraries(portable_network_hook PRIVATE Threads::Threads)
+portable_check(portable_crypt_path_probe src/platform/crypt_query.cpp tests/native/crypt_path_probe_tests.cpp)
+target_compile_definitions(portable_crypt_path_probe PRIVATE CITRINE_ECLIPSE_MIRAGE_PORTABLE_CRYPT_PATH_TESTS=1)
+set_tests_properties(portable_crypt_path_probe PROPERTIES TIMEOUT 30)
 portable_check(portable_parser src/config/parser.cpp tests/unit/parser/parser_tests.cpp)
 portable_check(portable_hash src/hash/hash.cpp tests/unit/hash/hash_tests.cpp)
+portable_check(portable_encoding src/codec/encoding.cpp tests/unit/encoding/encoding_tests.cpp)
+target_compile_definitions(portable_encoding PRIVATE CITRINE_ECLIPSE_MIRAGE_PORTABLE_ENCODING_TESTS=1)
+set_tests_properties(portable_encoding PROPERTIES TIMEOUT 30)
+portable_check(portable_path src/core/paths.cpp tests/unit/path/path_tests.cpp)
+set_tests_properties(portable_path PROPERTIES TIMEOUT 60)
 portable_check(portable_file_io src/core/binary_io.cpp tests/unit/file/binary_io_tests.cpp)
 target_compile_definitions(portable_file_io PRIVATE CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS=1)
 portable_check(portable_config_order src/config/parser.cpp src/config/order.cpp tests/unit/config_order/order_tests.cpp)
 portable_check(portable_config_hash src/config/parser.cpp src/config/hash_table.cpp tests/unit/config_hash/hash_table_tests.cpp)
 portable_check(portable_config_hash_model_differential src/config/parser.cpp src/config/order.cpp src/config/hash_table.cpp tests/unit/config_hash/order_differential_tests.cpp)
+add_executable(portable_config_application tests/unit/config_application/application_tests.cpp
+  src/config/application.cpp src/config/parser.cpp src/config/hash_table.cpp
+  src/core/binary_io.cpp src/runtime/online.cpp)
+target_include_directories(portable_config_application PRIVATE include)
+target_link_libraries(portable_config_application PRIVATE portable_config citrine_eclipse_mirage_pegtl)
+target_compile_definitions(portable_config_application PRIVATE CITRINE_ECLIPSE_MIRAGE_PORTABLE_CONFIG_APPLICATION_TESTS=1)
+add_test(NAME portable_config_application COMMAND portable_config_application
+  "${CMAKE_CURRENT_BINARY_DIR}/config-application-fixtures")
+set_tests_properties(portable_config_application PROPERTIES TIMEOUT 60)
 portable_check(portable_host_hooks src/platform/hook_setup.cpp src/core/paths.cpp tests/unit/host_init/host_init_tests.cpp)
 foreach(_parser_target portable_parser portable_config_order portable_config_hash portable_config_hash_model_differential)
   target_link_libraries(${_parser_target} PRIVATE citrine_eclipse_mirage_pegtl)
@@ -54,5 +77,18 @@ target_link_libraries(portable_configuration_defaults_integration PRIVATE citrin
 portable_check(portable_online src/runtime/online.cpp src/core/paths.cpp tests/unit/online/online_tests.cpp)
 target_compile_definitions(portable_online PRIVATE CITRINE_ECLIPSE_MIRAGE_PORTABLE_ONLINE_TESTS=1)
 portable_check(portable_server src/net/server.cpp src/runtime/execution.cpp tests/unit/server/server_tests.cpp)
+portable_check(portable_session_handler
+  src/net/session_handler.cpp src/protocol/messages.cpp src/runtime/event_queue.cpp
+  tests/unit/session/handler_tests.cpp)
+target_link_libraries(portable_session_handler PRIVATE portable_xml_reader_backend)
+set_tests_properties(portable_session_handler PROPERTIES TIMEOUT 60)
+portable_check(portable_session_flow src/net/server.cpp src/runtime/execution.cpp
+  src/net/session_handler.cpp src/protocol/messages.cpp src/handlers/misc_handlers.cpp
+  tests/native/session_flow_tests.cpp)
+target_link_libraries(portable_session_flow PRIVATE portable_xml_reader_backend)
+set_tests_properties(portable_session_flow PROPERTIES TIMEOUT 30)
 portable_check(portable_hook_transaction src/platform/hook_transaction.cpp tests/unit/hooks/transaction_tests.cpp)
 portable_check(portable_registry_rollback src/platform/registry.cpp tests/unit/registry/allocation_failure_tests.cpp)
+
+portable_check(portable_atomic_recovery src/core/atomic_files.cpp tests/unit/file/atomic_recovery_tests.cpp)
+set_tests_properties(portable_atomic_recovery PROPERTIES TIMEOUT 30)

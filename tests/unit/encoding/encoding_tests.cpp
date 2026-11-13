@@ -8,8 +8,10 @@
 #include <stdexcept>
 #include <system_error>
 #include <vector>
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ENCODING_TESTS)
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#endif
 
 namespace enc=citrine_eclipse_mirage::encoding;
 namespace {
@@ -85,6 +87,7 @@ void synthetic() {
     bool caught=false;try{(void)enc::filesystem_widen_006d70(std::string_view("x",static_cast<std::size_t>(INT_MAX)+1),too_large,errors);}catch(const Failure& error){caught=error.runtime&&error.code==22;}
     check(caught&&too_large.calls.empty()&&too_large.locale_calls==1,"oversized input guard before buffer access");
 }
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ENCODING_TESTS)
 void native_failed_decodes(enc::NativeCalls& calls) {
     // Win32 can partially write its own destination before returning zero.
     // The adapter commits only successful conversions. Compare failure
@@ -163,6 +166,15 @@ void native() {
     check(std::equal(actual,actual+5,reference,[](char16_t a,wchar_t b){return a==static_cast<char16_t>(b);}),
           "native wide conversion retains destination tail");
 }
+#endif
 }
-int main(){try{synthetic();native();std::cout<<"PASS: "<<checks<<" encoding checks; real Win32 only on synthetic strings, original targets not executed\n";return 0;
+int main(){try{
+    synthetic();
+#if defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ENCODING_TESTS)
+    std::cout<<"PASS: "<<checks<<" controlled encoding checks; native Win32 not executed\n";
+#else
+    native();
+    std::cout<<"PASS: "<<checks<<" encoding checks; real Win32 only on synthetic strings, original targets not executed\n";
+#endif
+    return 0;
 }catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}}
