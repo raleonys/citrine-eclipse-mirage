@@ -14,10 +14,19 @@ external runtime avatar file is introduced. Normal startup writes that
 embedded profile PNG into the local user-data directory, except when the
 configured User/Avatar selection skips the profile write.
 
+The integration-requirements Source QA guard cross-checks the canonical
+`resources/branding/surge.png` path and its digest between branding metadata
+and the independent profile-generator contract. It hashes the canonical PNG
+against the generator pin and requires the current runtime avatar digest to
+match that same pin. A paired branding path/hash or PNG/hash edit cannot
+silently override the other records. The source manifests remain responsible
+for accepted source identity. Native startup/avatar behavior requires separate
+runtime validation.
+
 The separate original 3,882-byte `resources/branding/default-avatar.png`
 fallback, its C++ embedding and the default-avatar write are unchanged.
-The reference VERSIONINFO, Windows resource script, DLL exports, runtime C++
-source and vendor inputs are unchanged. This change updates only the profile
+The existing project VERSIONINFO policy, Windows resource script, DLL exports,
+runtime C++ source and vendor inputs are unchanged by this avatar update. This change updates only the profile
 image, its current metadata/hash pins and the documentation.
 
 The prior avatar validation files under

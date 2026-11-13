@@ -17,7 +17,7 @@ def check_build_wording(root):
     paths = []
     for directory in ('scripts', 'tools', 'cmake', 'src', 'include', '.github/workflows'):
         paths.extend((root / directory).rglob('*'))
-    paths.extend((root / 'metadata').glob('*.json'))
+    paths.extend(p for p in (root / 'metadata').glob('*') if p.suffix.lower() == '.json')
     paths.extend(root / name for name in ('CMakeLists.txt', 'CMakePresets.json'))
     errors = []
     for path in sorted(paths):
@@ -34,11 +34,18 @@ def check_build_wording(root):
     return errors
 
 
+def terminal_line(content):
+    """Inspect the entire final command, not a trailing token in a comment."""
+    lines = content.rstrip().splitlines()
+    return lines[-1].strip().casefold() if lines else ''
+
+
 def check(root):
     root = Path(root)
     entries = json.loads((root / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').read_text())['entrypoints']
     expected = {e['launcher'] for e in entries}
-    actual = {p.relative_to(root).as_posix() for p in (root / 'scripts').rglob('*.cmd')}
+    actual = {p.relative_to(root).as_posix() for p in (root / 'scripts').rglob('*')
+              if p.is_file() and p.suffix.lower() == '.cmd'}
     errors = check_build_wording(root)
     if expected != actual:
         errors.append('Registered launcher set differs from actual CMD set')
@@ -55,13 +62,13 @@ def check(root):
         for token in tokens:
             if token not in text:
                 errors.append('Missing launcher behavior ' + token + ': ' + entry['launcher'])
-        if not text.rstrip().endswith('exit /b %RC%'):
+        if terminal_line(text) != 'exit /b %rc%':
             errors.append('Launcher masks child exit: ' + entry['launcher'])
         automation = target.read_text()
         if ('[switch]$LauncherOwnsSummary' not in automation or
                 '-LauncherOwnsSummary:$LauncherOwnsSummary' not in automation):
             errors.append('Automation drops launcher summary ownership: ' + entry['automation'])
-        if not automation.rstrip().endswith('exit $LASTEXITCODE'):
+        if terminal_line(automation) != 'exit $lastexitcode':
             errors.append('Automation masks child exit: ' + entry['automation'])
         if ('-Mode "' + entry['mode'] + '"') not in automation:
             errors.append('Automation selects wrong build profile: ' + entry['automation'])

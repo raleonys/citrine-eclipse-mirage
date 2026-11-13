@@ -1,0 +1,89 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
+name: Refresh local release version
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-default-version
+  cancel-in-progress: false
+
+jobs:
+  propose:
+    if: >-
+      (github.event_name == 'release' && github.event.release.draft == false &&
+       github.event.release.prerelease == false) ||
+      (github.event_name == 'workflow_dispatch' &&
+       github.ref == format('refs/heads/{0}', github.event.repository.default_branch))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+      EVENT_RELEASE_TAG: ${{ github.event.release.tag_name || '' }}
+      PYTHONDONTWRITEBYTECODE: "1"
+      TZ: UTC
+    steps:
+      - name: Preserve exact checkout bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Prepare a bounded update from the latest published stable release
+        id: version
+        run: |
+          mkdir -p build/local-version
+          gh api "repos/$GH_REPO/releases/latest" > build/local-version/release.json
+          python -B scripts/project_version.py --refresh-default-from-release build/local-version/release.json --expected-tag "$EVENT_RELEASE_TAG"
+      - name: Validate and propose the version update
+        if: steps.version.outputs.changed == 'true'
+        env:
+          VERSION_BRANCH: ${{ steps.version.outputs.branch }}
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          case "$VERSION_BRANCH" in
+            release/default-version-*) ;;
+            *) echo 'Refusing unexpected version branch'; exit 1 ;;
+          esac
+          owner="${GH_REPO%%/*}"
+          existing=$(gh api --method GET "repos/$GH_REPO/pulls" -f state=open -f "head=$owner:$VERSION_BRANCH" -f "base=$DEFAULT_BRANCH" --jq 'length')
+          if [ "$existing" != 0 ]; then
+            echo 'The release-default update already has an open PR.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config core.hooksPath .github/hooks
+          gh auth setup-git
+          git add metadata/BRANDING_AND_IDENTITY.json CHANGELOG.md metadata/ACTIVE_SOURCE_MANIFEST.json
+          git commit -m "Align local default version with stable $RELEASE_VERSION"
+          if [ -n "$(git status --porcelain --untracked-files=all)" ]; then
+            echo 'Refusing to publish an unexpected dirty source tree'; exit 1
+          fi
+          if git ls-remote --exit-code --heads origin "$VERSION_BRANCH" > build/local-version/existing-ref.txt; then
+            git fetch --no-tags origin "refs/heads/$VERSION_BRANCH"
+            git diff --exit-code FETCH_HEAD HEAD
+            python -B scripts/run_source_qa.py --report build/local-version/source-qa.json
+          else
+            git push origin "HEAD:refs/heads/$VERSION_BRANCH"
+          fi
+          cat > build/local-version/pr-body.txt <<'BODY'
+          Update the offline build version to the latest published stable release. Only branding version metadata, the unreleased changelog and the active-source manifest change. The version override for release candidates remains available.
+
+          Complete local Source QA is required before publication of this branch. This PR is generated with GITHUB_TOKEN, so GitHub may suppress its initial workflow events; owner-requested later synchronization must run the repository-required exact-head checks before merge. Only the owner merges.
+          BODY
+          gh pr create --repo "$GH_REPO" --base "$DEFAULT_BRANCH" --head "$VERSION_BRANCH" --title "build: align local default version with stable $RELEASE_VERSION" --body-file build/local-version/pr-body.txt

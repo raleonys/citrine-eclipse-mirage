@@ -48,7 +48,7 @@
       14,
       0
     ],
-    "timestamp": "0xA6FD7C8F",
+    "timestamp": "PRESERVE_INPUT",
     "export_internal_name": "citrine_eclipse_mirage.unsigned.dll",
     "rich_header": "ABSENT",
     "additional_resource_assets": []
@@ -58,7 +58,7 @@
   "inherited_scope": "Project VERSIONINFO supersedes reference branding and random versions; all unrelated PE constraints remain effective",
   "public_export_contract": "metadata/PUBLIC_DLL_ABI.json",
   "avatar_data_contract": "metadata/AVATAR_DATA_CONTRACT.json",
-  "authority": "Explicit owner-approved project identity and release version; retain existing structural, ABI, import, timestamp and signature/debug exclusions",
+  "authority": "Explicit owner-approved project identity and release version; retain existing structural, ABI, import, timestamp and signature/debug exclusions; current owner instruction preserves the native compilation timestamp",
   "native_acceptance": "REQUIRES_ACTUAL_MSVC_GOLDEN_RUN",
   "forbidden_project_identity_tokens": [
     "3.2.3",
