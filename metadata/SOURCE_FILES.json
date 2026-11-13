@@ -1354,8 +1354,8 @@
       "sha256": "3c274f32f008286fdd6637d55427b9f4b600d0518a6a44d0adc6e13a51479b3d"
     },
     "tests/native/hook_completion_tests.c": {
-      "bytes": 14555,
-      "sha256": "34970546757641ce7e1816faf696ead3e2bc5b63ca097d899fd1b8e04cf369a4"
+      "bytes": 14663,
+      "sha256": "0c3353d87b73f358578f3f4fe8f34d8e5d91750b4451565e5d890ebe52e7d666"
     },
     "tests/native/hook_engine_fixture_tests.cpp": {
       "bytes": 15364,

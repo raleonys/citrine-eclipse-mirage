@@ -126,7 +126,9 @@ static void completion_retry(BOOL cache) {
     LPVOID original;unsigned before;
     setup();original=create_at(0);(void)original;
     fail_flush=cache;fail_restore=!cache;
+    before=resumes;
     require(MH_EnableHook(target)==MH_ERROR_MEMORY_PROTECT,"post-write completion failure must not report success");
+    require(resumes==before,"incomplete instruction stream cannot resume owned peers");
     before=enumerations;
     require(MH_ApplyQueued()==MH_ERROR_MEMORY_PROTECT && enumerations==before,"pending completion blocks even no-op apply without acquiring peers");
     require(MH_EnableHook(target)==MH_ERROR_MEMORY_PROTECT,"already-enabled request cannot hide incomplete completion");
