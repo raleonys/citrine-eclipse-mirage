@@ -161,6 +161,15 @@ CRLF, line comments and block-comment termination. Their byte sequences, action
 ordering, error mapping and grammar policy are unchanged. Vendor headers are
 unmodified. The unselected main snapshot requires C++23 and is not substituted.
 
+The toolchain-status reader requires exactly one active record for
+`CITRINE_ECLIPSE_MIRAGE_PEGTL_PUBLIC_INPUT_WORKS`, with type `INTERNAL`.
+The exact value `1` returns diagnostic exit 0 and directs the caller to run
+`vendor_pegtl_smoke`; it does not replace that execution. Empty or `0` returns
+`UNAVAILABLE` with CTest skip code 77. Missing or repeated records, wrong types
+and malformed values return `INVALID` with exit 1, so corrupted evidence cannot
+become a normal skip. Repeated logical keys remain ambiguous even when their
+types differ. Comment lines and unrelated prefixed keys are not probe records.
+
 The PEGTL public-input probe runs with Linux/GCC. The following compiler
 observations describe the earlier snapshot; fresh results for the selected
 head belong to its PR validation. The earlier public headers also
