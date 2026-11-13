@@ -1,5 +1,26 @@
 # Archive 12: shutdown ownership review
 
+## Current consolidated review (2026-11-13 UTC)
+
+This bounded report is carried by [PR #358](https://github.com/raleonys/citrine-eclipse-mirage/pull/358), preserving [original PR #119](https://github.com/raleonys/citrine-eclipse-mirage/pull/119) at `2d5f34f5a9f29d5bd087ab08da24ea69e9cce756`. Product source was rechecked at `35b074519594a3b2d58cac21e07c2a84fb3ad1f1`; reference authority remains A12 `56eab8795fa65325e4fa6fe31a645eb55cc58469`. Documentation acceptance does not complete the research project.
+
+**Current disposition.** The worker-owned Application, ordered stop stages, retained handles and explicit retry remain the product contract. The Application change since the earlier review is accepted #350 UnknownMessage dispatch; the Asio changes from #344/#336 add controlled client-list/thread seams while production retains std::vector/std::thread. They do not replace stop ordering. The recovery matrix #280 is accepted, not a missing proposal. Accepted #147 adds a fixed Debug scan record and host reporting after shutdown returns; it did not establish a cause for the historical intermittent refusal.
+
+**Next evidence gate.** A further teardown claim needs a distinct supported failing stage, exact retained owner and repaired retry. Foreign caller quiescence and actual Consumer unload remain separate observations.
+
+| Product counterpart at current reviewed main | SHA-256 |
+| --- | --- |
+| [src/platform/dll_entry.cpp](../src/platform/dll_entry.cpp) | `d638b43a6b627d0182a9eb63590cd7c4eaad3c81d67f4265e1318566d238c84d` |
+| [src/runtime/application.cpp](../src/runtime/application.cpp) | `7a2be80fd20f60a6e5b279ff8836c4be875040b5f3f32692219cce9265e4348b` |
+| [src/net/asio_service.cpp](../src/net/asio_service.cpp) | `5b4f8de8607a3978c53caf0926e11a0385644fb8944846b85fc664d9db12c070` |
+| [tests/native/application_shutdown_failure_tests.cpp](../tests/native/application_shutdown_failure_tests.cpp) | `cf6859408767beed320bbf679b866f1377aa0597ee97d04c5701215aecf6eb3b` |
+
+The selected reference rows were checked against the retained A12 inventory again. Current product deltas were read where hashes changed. Fresh product test results belong to the consolidated PR description and its exact head; historical PASS/NOT_RUN records below are not transferred. No archived program, script or DLL was executed.
+
+## Earlier review checkpoint
+
+The following text preserves the earlier source/product baseline and evidence record from PR #119. Its old open-PR labels, product hashes and depth/profile statements describe that checkpoint; the current disposition above supersedes them.
+
 **PARTIAL_A12_SOURCE_REVIEW / NO_NEW_PRODUCT_DEFECT_CONFIRMED / RESEARCH_REMAINS_OPEN**
 
 This refreshes existing PR #119, preserving its original research history.

@@ -1,5 +1,27 @@
 # Archive 12: achievement persistence contracts
 
+## Current consolidated review (2026-11-13 UTC)
+
+This bounded report is carried by [PR #358](https://github.com/raleonys/citrine-eclipse-mirage/pull/358), preserving [original PR #140](https://github.com/raleonys/citrine-eclipse-mirage/pull/140) at `0234579e2255204076d912eeec54bd4e6829909c`. Product source was rechecked at `35b074519594a3b2d58cac21e07c2a84fb3ad1f1`; reference authority remains A12 `56eab8795fa65325e4fa6fe31a645eb55cc58469`. Documentation acceptance does not complete the research project.
+
+**Current disposition.** All five earlier product counterpart hashes still match accepted main. Checked atomic XML/INI ownership remains intentional. #280, #346 and #348 have merged, supplying rollback/restoration and queue allocation/seed boundaries. They must not be listed as missing or used to justify the donor unchecked writer policy.
+
+**Next evidence gate.** A new persistence task needs a concrete uncovered failure schedule. Cross-process/power-loss behavior and full Consumer equivalence are outside the accepted component matrices.
+
+| Product counterpart at current reviewed main | SHA-256 |
+| --- | --- |
+| [src/runtime/achievement_storage.cpp](../src/runtime/achievement_storage.cpp) | `82409fa58fc88a9e82d678f11179088c3108e56c7d7211699355887d96871235` |
+| [src/runtime/achievement_writer.cpp](../src/runtime/achievement_writer.cpp) | `8dc98966b7fafc1fb1b8a83b683fd9173994242e542cfec1298e54850b5ac6bf` |
+| [src/runtime/achievement_runtime.cpp](../src/runtime/achievement_runtime.cpp) | `ac0cbc6e59043badacf438b0c1dd590bc795505a6b14916a69323d2ab83ccbda` |
+| [tests/unit/achievement_runtime/runtime_tests.cpp](../tests/unit/achievement_runtime/runtime_tests.cpp) | `bd7429d9ff8eb4543d8c0223a40c41ac10597bb979b3aef362d527ead3c2fb16` |
+| [tests/unit/achievement_storage/storage_tests.cpp](../tests/unit/achievement_storage/storage_tests.cpp) | `42aef77f78c2bfdd8118b9f0bd26c28b939b34d145d1eec49f9f7ed27518a85e` |
+
+The selected reference rows were checked against the retained A12 inventory again. Current product deltas were read where hashes changed. Fresh product test results belong to the consolidated PR description and its exact head; historical PASS/NOT_RUN records below are not transferred. No archived program, script or DLL was executed.
+
+## Earlier review checkpoint
+
+The following text preserves the earlier source/product baseline and evidence record from PR #140. Its old open-PR labels, product hashes and depth/profile statements describe that checkpoint; the current disposition above supersedes them.
+
 **PARTIAL_A12_SOURCE_REVIEW / NO_NEW_PRODUCT_DEFECT_CONFIRMED / RESEARCH_REMAINS_OPEN**
 
 This refreshes existing PR #140, preserving its original research history.

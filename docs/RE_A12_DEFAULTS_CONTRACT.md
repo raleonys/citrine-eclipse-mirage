@@ -1,5 +1,27 @@
 # Archive 12: defaults and allocation boundaries
 
+## Current consolidated review (2026-11-13 UTC)
+
+This bounded report is carried by [PR #358](https://github.com/raleonys/citrine-eclipse-mirage/pull/358), preserving [original PR #132](https://github.com/raleonys/citrine-eclipse-mirage/pull/132) at `73cc2605c26fc7b7e44ac9c9d7b31fae2126c658`. Product source was rechecked at `35b074519594a3b2d58cac21e07c2a84fb3ad1f1`; reference authority remains A12 `56eab8795fa65325e4fa6fe31a645eb55cc58469`. Documentation acceptance does not complete the research project.
+
+**Current disposition.** All five product counterpart hashes in the earlier review still match accepted main. Product branding/defaults, independent factory state and the supported allocation-failure boundaries remain intentional. The MSVC Debug constructor boundary from #76 must not be replaced by an unsafe throwing probe.
+
+**Next evidence gate.** A new scenario requires a reachable failure point and a discriminating assertion; terminal noexcept construction needs an isolated process expectation rather than a fabricated recovery path.
+
+| Product counterpart at current reviewed main | SHA-256 |
+| --- | --- |
+| [src/runtime/application_defaults.cpp](../src/runtime/application_defaults.cpp) | `75093d8c8f0de28b0b2a69f367ec37fc040e0c542335ddb4343a3e637da78979` |
+| [include/citrine_eclipse_mirage/config/configuration.hpp](../include/citrine_eclipse_mirage/config/configuration.hpp) | `996ca52c402a6419fa0a1fe10d05a00cf40c828da97ee383642c4fedbfc984eb` |
+| [include/citrine_eclipse_mirage/core/protocol_identity.hpp](../include/citrine_eclipse_mirage/core/protocol_identity.hpp) | `c2bc3e7cb25ab40a614c3b79667994fe2e53eee6abbb825b41c2af8ce3ac4d8a` |
+| [tests/unit/config_defaults/defaults_tests.cpp](../tests/unit/config_defaults/defaults_tests.cpp) | `3ec76e8dce9a3f140420f8c2bb1e6ecae10b0792b7a67455dc3f3a010dbee0b1` |
+| [tests/unit/config_defaults/defaults_integration_tests.cpp](../tests/unit/config_defaults/defaults_integration_tests.cpp) | `09f715fcdfd28ad90090d77a8d6ab7798159a2fb4a5ff41f9037f2c50c109d7b` |
+
+The selected reference rows were checked against the retained A12 inventory again. Current product deltas were read where hashes changed. Fresh product test results belong to the consolidated PR description and its exact head; historical PASS/NOT_RUN records below are not transferred. No archived program, script or DLL was executed.
+
+## Earlier review checkpoint
+
+The following text preserves the earlier source/product baseline and evidence record from PR #132. Its old open-PR labels, product hashes and depth/profile statements describe that checkpoint; the current disposition above supersedes them.
+
 **PARTIAL_A12_SOURCE_REVIEW / NO_NEW_PRODUCT_DEFECT_CONFIRMED / RESEARCH_REMAINS_OPEN**
 
 This refreshes existing PR #132, preserving its original research history.

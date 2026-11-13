@@ -1,200 +1,64 @@
-# All-PR review dispositions and Archive 12 continuation
+# Consolidated Archive 12 reviews and remaining research
 
-**BOUNDED_SOURCE/HISTORY_REVIEW / NOT_GLOBAL_SEMANTIC_ACCEPTANCE**
+## Scope and current decision
 
-## Snapshot and method
+Owner-authorized consolidation, 2026-11-13 UTC. Accepted product: `35b074519594a3b2d58cac21e07c2a84fb3ad1f1`. Retained A12 authority: `research/reconstruction-package@56eab8795fa65325e4fa6fe31a645eb55cc58469`. The delivery inventory contains 6,514 reference files; this proposal performs selected source/record comparisons, not a global review of every file or fresh donor/native/Consumer acceptance.
 
-The 2026-11-12 audit snapshot contains **346 PRs: 286 merged, 54 open and six
-closed without merging**, before the follow-up PRs created by this review.
-Accepted product baseline: `main@1405c01750317454e8c289a7ebad77391089cdd9`.
-Current A12 reference authority: retained `research/reconstruction-package@56eab8795fa65325e4fa6fe31a645eb55cc58469`.
-Archive identity and source-contract limitations are recorded in the refreshed
-research PRs below. A11 is historical, not the default authority for new work.
+PR #358 now carries eleven bounded documentation proposals: its original history report plus the ten reports below. Every source head is retained as a parent in the consolidation history and was preserved in a verified external Git bundle before integration. Closing an absorbed proposal records its transfer here; owner acceptance of this PR remains separate. No application, test, vendor, ABI, build, CI or README bytes are adopted from these reports.
 
-The complete paginated PR inventory was collected, all 346 head identities
-checked against fetched PR refs, and each PR's changed-path inventory and
-first-party patch captured for triage. Accepted PR diffs use the actual merge's
-first parent; open/closed-unmerged diffs use their declared target branch's merge
-base, including #236's retained research target. Merged tree replay and the
-specific source/test crosswalks below are stronger, separate checks.
+| Original PR | Bounded subject | Preserved proposed head | Current report |
+| --- | --- | --- | --- |
+| [#119](https://github.com/raleonys/citrine-eclipse-mirage/pull/119) | Shutdown and retained owners | `2d5f34f5a9f29d5bd087ab08da24ea69e9cce756` | [RE_A12_TEARDOWN_OWNER_MATRIX.md](RE_A12_TEARDOWN_OWNER_MATRIX.md) |
+| [#132](https://github.com/raleonys/citrine-eclipse-mirage/pull/132) | Defaults and allocation boundaries | `73cc2605c26fc7b7e44ac9c9d7b31fae2126c658` | [RE_A12_DEFAULTS_CONTRACT.md](RE_A12_DEFAULTS_CONTRACT.md) |
+| [#136](https://github.com/raleonys/citrine-eclipse-mirage/pull/136) | QPC and startup publication | `9797ad91a31807b1dc95ed112bea4340950faca7` | [RE_FREQUENCY_SOURCE_CROSSWALK.md](RE_FREQUENCY_SOURCE_CROSSWALK.md) |
+| [#139](https://github.com/raleonys/citrine-eclipse-mirage/pull/139) | Compiler CRT and reference applicability | `e2edb60208422a2e49de2cf96c8ad2375c27ff51` | [RE_A12_CRT_BOUNDARY.md](RE_A12_CRT_BOUNDARY.md) |
+| [#140](https://github.com/raleonys/citrine-eclipse-mirage/pull/140) | Achievement persistence | `0234579e2255204076d912eeec54bd4e6829909c` | [RE_A12_ACHIEVEMENT_CROSSWALK.md](RE_A12_ACHIEVEMENT_CROSSWALK.md) |
+| [#141](https://github.com/raleonys/citrine-eclipse-mirage/pull/141) | Admission, hooks and image lifetime | `2a52a47126d5a74bbeb54cabae74c4468d42ed0c` | [RE_A12_ADMISSION_OWNER_CROSSWALK.md](RE_A12_ADMISSION_OWNER_CROSSWALK.md) |
+| [#178](https://github.com/raleonys/citrine-eclipse-mirage/pull/178) | Messages and XML | `081a0371c47f6e39fece988c1629ef389ada9bf7` | [RE_A12_MESSAGES_XML_BOUNDARY.md](RE_A12_MESSAGES_XML_BOUNDARY.md) |
+| [#191](https://github.com/raleonys/citrine-eclipse-mirage/pull/191) | License, token and key files | `043c67354c9113a9e7c6d08dd88fe7fdaf5b7321` | [RE_A12_LICENSE_TOKEN_CROSSWALK.md](RE_A12_LICENSE_TOKEN_CROSSWALK.md) |
+| [#356](https://github.com/raleonys/citrine-eclipse-mirage/pull/356) | Reference linked image and loader | `183e4ebb6cd5b0ec6cf59b4de572dd434845b557` | [RE_A12_LOADER_LINK_BOUNDARY.md](RE_A12_LOADER_LINK_BOUNDARY.md) |
+| [#357](https://github.com/raleonys/citrine-eclipse-mirage/pull/357) | Registry ownership and provenance | `9b36db2e13fb449178aea47a0448111ebe610c2f` | [RE_A12_REGISTRY_HKEY_BOUNDARY.md](RE_A12_REGISTRY_HKEY_BOUNDARY.md) |
 
-This is **not** a claim that every implementation line, retained reference file,
-third-party change or possible interaction in all 346 PRs received an exhaustive
-semantic proof. An existing open proposal is not certified correct, current,
-conflict-free, fully validated or ready to merge by appearing in the inventory.
-No historic body/PASS claim substitutes for exact-head checks.
+The previous PR-history report is preserved at [its exact original commit](https://github.com/raleonys/citrine-eclipse-mirage/blob/1294cef438bb9a30028d4b0c4169dde69c86e42a/docs/PR_REVIEW_FOLLOWUPS.md). Its 346-PR snapshot (286 merged, 54 open, six closed-unmerged), later 287-merge-tree replay and four local portable results remain historical observations. They do not describe today's open count, prove every merge semantically correct or execute the current proposal. Original per-report source hashes and validation limits are retained in each earlier-checkpoint section.
 
-## Integration replay and evidence limit
+## What changed in the current comparison
 
-All **286 accepted PR merge commits** are reachable from the reviewed main.
-For every one, `git merge-tree --write-tree --messages <parent1> <parent2>`
-reproduced exactly the accepted tree hash. There were no mismatches or replay
-errors among the final PR merges. Tree hashes, rather than reconstructed commit
-hashes, are compared: a commit hash also contains message, author/committer,
-parent identities and timestamps, so a newly created equivalent commit need
-not have the original hash.
+- Five earlier report groups have changed product counterparts. Application/Environment gained accepted #350 UnknownMessage handling; Asio gained accepted #344/#336 test seams while production keeps its original concrete containers/threads. Those deltas do not replace the clock, stop-order or license ownership contracts.
+- The XML review is materially updated for accepted #359: first-party depth policy now follows the A12 depth-100 profile, including paired 98/99 nesting, self-closed-leaf handling and failure precedence. Its older depth-500 comparison remains historical. Pugixml and all vendor pins remain unchanged.
+- #280/#312/#324/#334/#341/#343 and the other existing fixture proposals are accepted work, not missing tests. #147 is accepted Debug diagnosis and does not prove the intermittent status-4 refusal fixed.
+- The owner closed #362/#363 to pursue a different hook approach. Their completion/retirement/relocation proposals are preserved work, not accepted production behavior and not prerequisites of this report.
+- A12's supplied linked image and Registry build-record identities remain bounded source/static evidence. Three export aliases to a RET leaf do not establish useful exported behavior, native loader safety or Consumer equivalence.
 
-The wider ancestry contains 635 merge commits, including prior synchronization
-merges and manual conflict resolutions. A final clean PR merge can still contain
-a mistake made earlier on its branch. Earlier reviewed resolution history was
-retained; the additional synchronization resolutions affecting executable
-scripts/tests were read directly for this update: #335 preserves descriptor
-preflight/staged restoration and moves, rather than removes, the earlier failure
-tests; #313 preserves both strict integer-zero exit checks and Source QA receipt
-validation; #307 combines the required copy/patch imports. No lost fix was
-identified in those resolutions. This bounded result is not proof that all
-cleanly merged behaviors are correct or that all historical CI was independently
-reexecuted.
+No newly confirmed application defect follows from these comparisons. A source difference is classified against the product's actual contract and tests; any confirmed correction needs its own scoped reproducer and code/test proposal.
 
-The ten newly accepted PRs since the prior replay (#289/#294/#307/#308/#313/
-#321/#327/#330/#335/#340) also have successful exact-head full-validation runs
-with 15 executed successful jobs each, all completed before their recorded merge
-times. Their one skipped preparation placeholder is not counted as a test PASS.
-This checks hosted job metadata, not independent artifact reexecution.
+## Three independent work packages
 
-Previously confirmed #71 interface collisions were remedied in #80; the pinned
-comparison-reference path problem from #249 was remedied in #328. Those accepted
-fixes are not reasons to create duplicate corrections. Failed runner acquisition
-and artifact service incidents also do not themselves demonstrate a product bug
-or a failed merge. Remaining native/integration evidence must be assessed for
-the exact PR head before owner integration.
-
-## Later integration during this campaign
-
-PR #350 was accepted as `eea758600fe0801ec91c31f85de563afff1d75a7` after
-the frozen inventory was collected. Its UnknownMessage continuation is now
-accepted product behavior. Its additional merge-tree replay also matches and
-its exact-head full-validation run 43198770171 has 15 successful executed jobs
-before merge. Including this later integration, **287 accepted PR merge trees**
-match. The initial 286/54 counts and 286-tree replay above
-refer to their stated snapshot; they do not classify #350 as still open.
-New documentation PRs are based on that later accepted main. Older refreshed
-research reports retain their explicit 1405c017 comparison baseline; #350
-changes message diagnostics rather than those owner/CRT/default contracts.
-The message-specific #178 is updated separately for the accepted continuation.
-
-## Closed without merge: all six dispositions
-
-| PR | Required disposition |
-| --- | --- |
-| [#92](https://github.com/raleonys/citrine-eclipse-mirage/pull/92) | Superseded by #95 startup gate; current CI policy also governs when full native validation runs. Do not restore an obsolete workflow. |
-| [#108](https://github.com/raleonys/citrine-eclipse-mirage/pull/108) | XML numeric-decoder work moved into #149. Current reader/corpus retain the 20 documented corrections. Historical comparison pins remain historical. |
-| [#126](https://github.com/raleonys/citrine-eclipse-mirage/pull/126) | Owner closed the old A11 blocked review and requested fresh A12 loader/runtime comparison. New [#356](https://github.com/raleonys/citrine-eclipse-mirage/pull/356) checks the linked-image/source boundary; runtime equivalence remains open. |
-| [#217](https://github.com/raleonys/citrine-eclipse-mirage/pull/217) | Superseded by #216 JUnit validation. Current declared counts/nested suites are checked; later badge changes have a separate scope. |
-| [#233](https://github.com/raleonys/citrine-eclipse-mirage/pull/233) | Owner rejected the optimization without a material workload benefit. Short-key SSO, long-key allocation reduction and timing do not establish broad wins. Existing #355 owns further measurement. |
-| [#281](https://github.com/raleonys/citrine-eclipse-mirage/pull/281) | Absorbed/refined into #261, including Windows filename controls and stated exceptions. Preserve attribution; do not duplicate or revive the closed head. |
-
-The closed bodies, owner closure explanations, referenced successor PRs and
-current counterparts were cross-checked for this decision. No closed workstream
-is reopened or rejected optimization resurrected by this review.
-
-## A12 corrections to existing research
-
-Seven existing A11 crosswalks were refreshed in place through normal integration
-of the reviewed main, preserving their PR/branch history and open research
-status. #178 was already refreshed against A12 and is included as an ongoing
-counterpart. These are bounded reports, not blanket archive/module closure.
-
-| Existing PR | Current correction / unresolved boundary |
-| --- | --- |
-| [#119](https://github.com/raleonys/citrine-eclipse-mirage/pull/119) | A12 Controller/runtime owner comparison; old missing-test claim corrected to accepted #168. Open #280 owns the actual rollback matrix. |
-| [#132](https://github.com/raleonys/citrine-eclipse-mirage/pull/132) | Defaults/identity and supported allocation boundaries; #76's MSVC Debug harness fix is accepted. Keep standard CRT and intentional branding/SDK choices. |
-| [#136](https://github.com/raleonys/citrine-eclipse-mirage/pull/136) | A12 QPC/publication source-owner comparison; distinguish donor one-query guarding from deliberate product cold-cache publication. #236 owns the separate retained ledger. |
-| [#139](https://github.com/raleonys/citrine-eclipse-mirage/pull/139) | Description-level private CRT applicability sample with explicit implementation/native limits; standard compiler CRT remains required. |
-| [#140](https://github.com/raleonys/citrine-eclipse-mirage/pull/140) | Achievement parser/writer/runtime comparison; accepted safety fixes are intentional, and #280/#346/#348 already own remaining proposed tests. |
-| [#141](https://github.com/raleonys/citrine-eclipse-mirage/pull/141) | Admission/worker/callback ownership; accepted #128/#130/#148/#239/#352 are acknowledged. Arbitrary foreign caller quiescence remains unproved. |
-| [#178](https://github.com/raleonys/citrine-eclipse-mirage/pull/178) | A12 message/XML source and static record recheck; distinguish accepted NoResponse/event policies from UnknownMessage continuation accepted in #350 during this campaign. |
-| [#191](https://github.com/raleonys/citrine-eclipse-mirage/pull/191) | License/key/token source contracts; accepted #290 and open #312/#324/#334 have distinct boundaries. Checked writes are not donor-ABI proof. |
-
-The distinct missing loader/link follow-up is [#356](https://github.com/raleonys/citrine-eclipse-mirage/pull/356). A12 supplies a matching linked DLL and receipt, but its three aliases target a single RET leaf and no loader/runtime execution is established. Preserve product worker startup, standard CRT and public ABI.
-
-Accepted #198 also required a distinct fresh A12 Registry crosswalk: [#357](https://github.com/raleonys/citrine-eclipse-mirage/pull/357). A12 changes language-log lifetime, already implemented by accepted #337, but does not add trusted HKEY provenance. Its earlier static no-rebuild stage is superseded by later supplied build records: current/previous source snapshots, the current Registry row and common build record were checked against the later link receipt. This is selected record identity, not runtime proof. Preserve the old A11 report as a marked historical checkpoint and keep Issue #109 open.
-
-## All 54 initially open PRs: ownership and next gate
-
-The table accounts for each initial open PR. “Existing proposal” means keep the
-review in that PR rather than open a duplicate; its implementation, integration
-conflicts and exact-head evidence still require normal review. Native tests
-are not executed here merely because a PR proposes them. Similar filenames
-across #222/#279 and #297/#305 cover different auditors, not automatic duplicates.
-
-| PR | Scope at snapshot | Disposition / next gate |
+| Owner / location | Deliverable | Completion gate |
 | --- | --- | --- |
-| [#81](https://github.com/raleonys/citrine-eclipse-mirage/pull/81) | research: four-field source provenance and retirement review | Continue independent four-field provenance/disposition research. GitHub ready/draft metadata conflicts with the documented owner-directed draft status; reconcile with the owner before treating it as ready. No state conversion or source retirement here. |
-| [#119](https://github.com/raleonys/citrine-eclipse-mirage/pull/119) | research: map A11-06 shutdown ownership and cross-stage retry evidence | Refreshed in the same PR against pinned A12; bounded findings and evidence limits retained. |
-| [#120](https://github.com/raleonys/citrine-eclipse-mirage/pull/120) | qa: pin historical layout-migration schema exactly | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#132](https://github.com/raleonys/citrine-eclipse-mirage/pull/132) | research: map A11-03 defaults contracts and MSVC Debug gap | Refreshed in the same PR against pinned A12; bounded findings and evidence limits retained. |
-| [#136](https://github.com/raleonys/citrine-eclipse-mirage/pull/136) | research: distinguish donor QPC serialization from product cold-cache policy (RPK-0001) | Refreshed in the same PR against pinned A12; bounded findings and evidence limits retained. |
-| [#139](https://github.com/raleonys/citrine-eclipse-mirage/pull/139) | research: map A11-08 private CRT applicability without replacement | Refreshed in the same PR against pinned A12; bounded findings and evidence limits retained. |
-| [#140](https://github.com/raleonys/citrine-eclipse-mirage/pull/140) | research: map A11-09 achievement persistence source contracts | Refreshed in the same PR against pinned A12; bounded findings and evidence limits retained. |
-| [#141](https://github.com/raleonys/citrine-eclipse-mirage/pull/141) | research: crosswalk A11-04 admission to current shutdown owners | Refreshed in the same PR against pinned A12; bounded findings and evidence limits retained. |
-| [#147](https://github.com/raleonys/citrine-eclipse-mirage/pull/147) | diagnose: identify Debug unload-scan refusals without changing retirement policy | Diagnostic scope only; historical intermittent refusal was not reproduced or proven fixed. Revalidate the need against current scanner and native evidence. |
-| [#178](https://github.com/raleonys/citrine-eclipse-mirage/pull/178) | research: refresh message and XML contracts against Archive 12 | A12 refresh already present; source/XML checks remain distinct from native acceptance. |
-| [#191](https://github.com/raleonys/citrine-eclipse-mirage/pull/191) | research: map A11-09 license, token and key-write source boundaries | Refreshed in the same PR against pinned A12; bounded findings and evidence limits retained. |
-| [#194](https://github.com/raleonys/citrine-eclipse-mirage/pull/194) | qa: reject unsafe active paths in language audit | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#199](https://github.com/raleonys/citrine-eclipse-mirage/pull/199) | qa: reject malformed ownership ledger record fields | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#202](https://github.com/raleonys/citrine-eclipse-mirage/pull/202) | qa: inventory uppercase metadata and script extensions | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#220](https://github.com/raleonys/citrine-eclipse-mirage/pull/220) | qa: detect uppercase CMD launchers and JSON build-label sources | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#221](https://github.com/raleonys/citrine-eclipse-mirage/pull/221) | qa: reject symlinks that bypass historical evidence hashes | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#222](https://github.com/raleonys/citrine-eclipse-mirage/pull/222) | qa: ignore commented-out CMake sources in ownership inventory | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#236](https://github.com/raleonys/citrine-eclipse-mirage/pull/236) | research: recheck Archive 12 clock and startup publication contracts (RPK-0001) | Separate A12 ledger proposal targets research/reconstruction-package, not product main. Product comparison in #136; no duplicate ledger PR. |
-| [#263](https://github.com/raleonys/citrine-eclipse-mirage/pull/263) | test: stop ordered admission after rejected delivery settlement | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#264](https://github.com/raleonys/citrine-eclipse-mirage/pull/264) | test: stop ordered admission after invalid dispatch | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#270](https://github.com/raleonys/citrine-eclipse-mirage/pull/270) | test: cover send timer failures and prepared response retirement | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#273](https://github.com/raleonys/citrine-eclipse-mirage/pull/273) | test: retain events when response dispatch refuses ownership | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#279](https://github.com/raleonys/citrine-eclipse-mirage/pull/279) | qa: ignore commented CMake source entries in partition checks | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#280](https://github.com/raleonys/citrine-eclipse-mirage/pull/280) | test: cover atomic rollback failures and recovery ownership | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#285](https://github.com/raleonys/citrine-eclipse-mirage/pull/285) | qa: require exact PEGTL CMakeCache probe record | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#288](https://github.com/raleonys/citrine-eclipse-mirage/pull/288) | test: cover Config2 lookup allocation rollback | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#293](https://github.com/raleonys/citrine-eclipse-mirage/pull/293) | qa: confine direct MSVC linker rules to build root | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#297](https://github.com/raleonys/citrine-eclipse-mirage/pull/297) | qa: ignore C++ comments and string literals in type identity checks | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#301](https://github.com/raleonys/citrine-eclipse-mirage/pull/301) | test: exercise native file identity fallback and field mapping | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#302](https://github.com/raleonys/citrine-eclipse-mirage/pull/302) | qa: cross-check owner avatar pins across metadata and runtime | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#305](https://github.com/raleonys/citrine-eclipse-mirage/pull/305) | qa: ignore C++ comments and literals in source namespace verification | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#312](https://github.com/raleonys/citrine-eclipse-mirage/pull/312) | test: cover profile cache failures and explicit provider cleanup | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#314](https://github.com/raleonys/citrine-eclipse-mirage/pull/314) | qa: require ordered LIBRARY and EXPORTS declarations in DLL DEF | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#316](https://github.com/raleonys/citrine-eclipse-mirage/pull/316) | qa: reject overwritten or incomplete generated partition graph records | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#320](https://github.com/raleonys/citrine-eclipse-mirage/pull/320) | test: exercise native status fallback and search cleanup | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#322](https://github.com/raleonys/citrine-eclipse-mirage/pull/322) | test: cover entry worker image-reference acquisition failure | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#323](https://github.com/raleonys/citrine-eclipse-mirage/pull/323) | test: pin raw Config2 selection-copy Content order | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#324](https://github.com/raleonys/citrine-eclipse-mirage/pull/324) | test: cover binary input exception unwinding and retry | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#325](https://github.com/raleonys/citrine-eclipse-mirage/pull/325) | test: register ordered Session flow in portable checks | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#326](https://github.com/raleonys/citrine-eclipse-mirage/pull/326) | test: register Windows lexical path contracts in portable checks | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#329](https://github.com/raleonys/citrine-eclipse-mirage/pull/329) | test: register prepared MessageHandler contracts in portable checks | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#331](https://github.com/raleonys/citrine-eclipse-mirage/pull/331) | test: retain prepared response ownership across failed Asio posts | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#332](https://github.com/raleonys/citrine-eclipse-mirage/pull/332) | test: run encoding source contracts in portable checks | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#333](https://github.com/raleonys/citrine-eclipse-mirage/pull/333) | test: cover event pops before completed receipt settlement | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#334](https://github.com/raleonys/citrine-eclipse-mirage/pull/334) | test: preserve checked writer failure after close clears status | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#336](https://github.com/raleonys/citrine-eclipse-mirage/pull/336) | test: cover Asio owned-thread launch rollback | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#341](https://github.com/raleonys/citrine-eclipse-mirage/pull/341) | test: disarm Registry fault probe before asserting failure | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#343](https://github.com/raleonys/citrine-eclipse-mirage/pull/343) | test: run thread and bootstrap models in portable checks | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#344](https://github.com/raleonys/citrine-eclipse-mirage/pull/344) | test: cover accepted Client publication failure and socket rollback | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#345](https://github.com/raleonys/citrine-eclipse-mirage/pull/345) | test: cover prepared response owner allocation failure | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#346](https://github.com/raleonys/citrine-eclipse-mirage/pull/346) | test: require event queue allocation before persistence | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#348](https://github.com/raleonys/citrine-eclipse-mirage/pull/348) | test: cover queue seed allocation abort and retry | Existing proposal; current-main integration and exact-head checks remain required. |
-| [#350](https://github.com/raleonys/citrine-eclipse-mirage/pull/350) | feat: restore reference UnknownMessage diagnostics and continuation | Open in the initial snapshot; merged during this campaign as eea75860. Owner-selected UnknownMessage continuation is now accepted; refresh #178 accordingly. It is not a newly discovered bug. |
-| [#355](https://github.com/raleonys/citrine-eclipse-mirage/pull/355) | perf: add reproducible runtime and Application benchmarks | Measurement infrastructure; no production tuning authorized or proven by benchmark existence. Performance conclusions require identified runs, raw artifacts and audit. |
+| [#358](https://github.com/raleonys/citrine-eclipse-mirage/pull/358), target main | Current bounded reports, accepted follow-ups, source identities and this navigation | Scoped source review, inventories, exact-head validation and owner review. This can finish while broader research remains open. |
+| [#236](https://github.com/raleonys/citrine-eclipse-mirage/pull/236), target research/reconstruction-package | A12 clock/publication file rows and RPK-0001 requirement/caller evidence | Hash-bound row review and honest in-review status; native/error/foreign-caller gaps stay explicit. No speculative exactly-once product change. |
+| [#81](https://github.com/raleonys/citrine-eclipse-mirage/pull/81), Draft four-field research | Source provenance/dispositions plus a separately assessed QA/package proposal | The file-to-product matrix and owner retirement decision; QA boundary changes need their own current safety review before adoption. Reference branches remain retained. |
 
-## Validation, artifacts and continuation
+## Concrete remaining evidence
 
-Fresh local product checks at the reviewed production bytes passed:
-`portable_configuration_defaults`, `portable_configuration_defaults_integration`,
-`portable_execution` and `portable_execution_concurrency` (**4/4 CTests**).
-The changed research reports each run complete local Source QA and the tracked
-clean-tree pre-push gate; exact heads and results belong to their PR descriptions.
-This documentation PR separately runs its own complete local gates.
+| Topic | What is already established | Next discriminating work |
+| --- | --- | --- |
+| Clock/publication | Two cold product queries and one serialized donor query are intentional selected contracts; product Application preinitializes a positive frequency. | #236 records external cache/owner sharing and any exactly-once requirement, QPC failure and native LastError evidence. |
+| Registry | Accepted language-temporary scope, failure-atomic fabrication and direct/installed A/W fixtures exist. | [Issue #109](https://github.com/raleonys/citrine-eclipse-mirage/issues/109): observed issuer, actual callback ingress, reuse epoch, query/close chain and error state. Numeric membership alone supplies no provenance. |
+| Loader/shutdown/hooks | Worker startup, explicit cleanup retries, native fixture schedules and Debug refusal diagnosis exist in the product. | The retained reconstruction needs a loader-safe host plan and exact attach/close/foreign-owner observations; a linked donor image is insufficient. A new hook approach is separate work. |
+| XML/messages | Current depth-100 profile, accepted continuation/NoResponse, event receipts and reader/corpus contracts exist. | A concrete uncovered malformed-input, exception/UI or foreign-host case; preserve accepted event and vendor policy. |
+| Four-field source retirement | Four source families and their original provenance are a continuing research scope. | #81 needs per-file/function dispositions, applicable evidence and explicit owner retirement. Importing bytes does not complete semantic review. |
 
-Transient review artifacts stay in ignored `build/pr-closure-audit/`, including
-`all-prs.json`, `inventory.json`, `all-prs.csv`, all per-PR first-party patches,
-`dispositions.csv`, `pr-replay.json`, `tree-hashes.csv`, selected A12 inventory
-checks, read-only PE inspection and per-head QA/push records. These local
-artifacts are not checked-in or hosted execution attestations. Their existence
-is not proof of complete line-level review. The full raw archive is not added
-to product main.
+## Separate QA/package assessment for #81
 
-No new production code defect is confirmed by this bounded review. Additional
-code/test PRs require a distinct current reproducer or unowned coverage gap;
-existing proposals remain open and retain their specific owners. Do not infer
-that no bug can remain, discard usable source material, retire a branch/module,
-weaken a failure assertion, merge, self-approve, publish or claim native/Golden/
-Consumer acceptance from this inventory. The owner continues integration review.
+The preserved #81 head contains actual Python QA changes, not only a report. It verifies and excludes `field-source/` snapshots from application inventory/source packages, using a new import policy and regressions. Those changes are intentionally excluded from #358.
+
+Before adopting that code, reconcile it with current canonical-path and duplicate-key rules, Python 3.9 Windows reparse/junction detection, parent confinement, exact registered fields and file kinds, malformed record behavior, and output/source-package tamper controls. The old implementation uses plain json.loads and is_symlink-only checks; it has not been refreshed to the newer QA boundaries. A current acceptance test set must cover the supported controls. This is a proposal review, not a newly demonstrated active-product defect.
+
+The #81 Draft metadata is restored under the owner's instruction. Its long-term research, QA proposal and eventual retirement decision are independently visible; none is merged or completed by this documentation consolidation.
+
+## Evidence and preservation boundary
+
+All original proposal heads remain Git ancestors; no shared history is rebased or force-updated. Current report product pins are computed from the exact accepted main above. Selected A12 input rows are rechecked against the retained inventory. Archived agent notes are reference data, and no archived script, test executable or DLL is run by this work.
+
+Complete local QA, focused product checks, tracked pre-push results and hosted checks belong to their exact proposed heads and are reported in the PR description. Old source/Wine/native/Golden/game receipts are never relabelled as current execution. This PR makes no source-retirement, CRT/vendor, release or public-ABI decision.

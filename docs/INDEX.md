@@ -153,4 +153,20 @@ is semantically current. Continue source-backed review after relevant changes.
 The remaining donor and Consumer questions are recorded in
 [REMAINING_WORK.md](REMAINING_WORK.md), not erased by this documentation pass.
 
-| [PR_REVIEW_FOLLOWUPS.md](PR_REVIEW_FOLLOWUPS.md) | Review | Consolidated Archive 12 comparisons and remaining research gates |
+## Consolidated Archive 12 reviews
+
+These bounded comparisons are coordinated by [PR_REVIEW_FOLLOWUPS.md](PR_REVIEW_FOLLOWUPS.md). Original source baselines and evidence limits remain attributed.
+
+| Document | Role | Current coordinator |
+| --- | --- | --- |
+| [PR_REVIEW_FOLLOWUPS.md](PR_REVIEW_FOLLOWUPS.md) | Review | Current dispositions and separate research gates |
+| [RE_A12_TEARDOWN_OWNER_MATRIX.md](RE_A12_TEARDOWN_OWNER_MATRIX.md) | Review | [Consolidated review](PR_REVIEW_FOLLOWUPS.md): Shutdown and retained owners |
+| [RE_A12_DEFAULTS_CONTRACT.md](RE_A12_DEFAULTS_CONTRACT.md) | Review | [Consolidated review](PR_REVIEW_FOLLOWUPS.md): Defaults and allocation boundaries |
+| [RE_FREQUENCY_SOURCE_CROSSWALK.md](RE_FREQUENCY_SOURCE_CROSSWALK.md) | Review | [Consolidated review](PR_REVIEW_FOLLOWUPS.md): QPC and startup publication |
+| [RE_A12_CRT_BOUNDARY.md](RE_A12_CRT_BOUNDARY.md) | Review | [Consolidated review](PR_REVIEW_FOLLOWUPS.md): Compiler CRT and reference applicability |
+| [RE_A12_ACHIEVEMENT_CROSSWALK.md](RE_A12_ACHIEVEMENT_CROSSWALK.md) | Review | [Consolidated review](PR_REVIEW_FOLLOWUPS.md): Achievement persistence |
+| [RE_A12_ADMISSION_OWNER_CROSSWALK.md](RE_A12_ADMISSION_OWNER_CROSSWALK.md) | Review | [Consolidated review](PR_REVIEW_FOLLOWUPS.md): Admission, hooks and image lifetime |
+| [RE_A12_MESSAGES_XML_BOUNDARY.md](RE_A12_MESSAGES_XML_BOUNDARY.md) | Review | [Consolidated review](PR_REVIEW_FOLLOWUPS.md): Messages and XML |
+| [RE_A12_LICENSE_TOKEN_CROSSWALK.md](RE_A12_LICENSE_TOKEN_CROSSWALK.md) | Review | [Consolidated review](PR_REVIEW_FOLLOWUPS.md): License, token and key files |
+| [RE_A12_LOADER_LINK_BOUNDARY.md](RE_A12_LOADER_LINK_BOUNDARY.md) | Review | [Consolidated review](PR_REVIEW_FOLLOWUPS.md): Reference linked image and loader |
+| [RE_A12_REGISTRY_HKEY_BOUNDARY.md](RE_A12_REGISTRY_HKEY_BOUNDARY.md) | Review | [Consolidated review](PR_REVIEW_FOLLOWUPS.md): Registry ownership and provenance |

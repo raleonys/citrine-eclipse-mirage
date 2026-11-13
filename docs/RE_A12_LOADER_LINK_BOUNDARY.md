@@ -1,5 +1,26 @@
 # Archive 12 loader and linked-image boundary
 
+## Current consolidated review (2026-11-13 UTC)
+
+This bounded report is carried by [PR #358](https://github.com/raleonys/citrine-eclipse-mirage/pull/358), preserving [original PR #356](https://github.com/raleonys/citrine-eclipse-mirage/pull/356) at `183e4ebb6cd5b0ec6cf59b4de572dd434845b557`. Product source was rechecked at `35b074519594a3b2d58cac21e07c2a84fb3ad1f1`; reference authority remains A12 `56eab8795fa65325e4fa6fe31a645eb55cc58469`. Documentation acceptance does not complete the research project.
+
+**Current disposition.** All four earlier product counterpart hashes still match accepted main. #322 image-reference acquisition failure is accepted and #147 diagnosis is accepted. The supplied A12 image remains LINKED_NOT_RUNTIME_VALIDATED; three aliases to a RET leaf establish neither useful exports nor a loader-safe runtime. The original source/receipt/static PE limits below remain in force.
+
+**Next evidence gate.** The reconstruction project needs an explicit loader-safe executable host plan, exact source/toolchain/image closure and attach/close failure observations. This documentation PR does not execute the donor DLL or close reconstruction.
+
+| Product counterpart at current reviewed main | SHA-256 |
+| --- | --- |
+| [src/platform/dll_entry.cpp](../src/platform/dll_entry.cpp) | `d638b43a6b627d0182a9eb63590cd7c4eaad3c81d67f4265e1318566d238c84d` |
+| [src/runtime/application.cpp](../src/runtime/application.cpp) | `7a2be80fd20f60a6e5b279ff8836c4be875040b5f3f32692219cce9265e4348b` |
+| [exports/citrine_eclipse_mirage.def](../exports/citrine_eclipse_mirage.def) | `4553dc30226a83083be75f6b41c4eef463f55e571f1080454c1cf6f3640278b2` |
+| [metadata/PUBLIC_DLL_ABI.json](../metadata/PUBLIC_DLL_ABI.json) | `d5c0126423ae1d4a288153f6f2a19864c43baf10550c09e3bb2ee0d04fbbcae0` |
+
+The selected reference rows were checked against the retained A12 inventory again. Current product deltas were read where hashes changed. Fresh product test results belong to the consolidated PR description and its exact head; historical PASS/NOT_RUN records below are not transferred. No archived program, script or DLL was executed.
+
+## Earlier review checkpoint
+
+The following text preserves the earlier source/product baseline and evidence record from PR #356. Its old open-PR labels, product hashes and depth/profile statements describe that checkpoint; the current disposition above supersedes them.
+
 **PARTIAL_STATIC_A12_REVIEW / LINKED_NOT_RUNTIME_VALIDATED / RESEARCH_REMAINS_OPEN**
 
 This is the fresh A12 follow-up requested when [PR #126](https://github.com/raleonys/citrine-eclipse-mirage/pull/126)

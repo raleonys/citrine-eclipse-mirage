@@ -1,5 +1,24 @@
 # Archive 12: private CRT applicability
 
+## Current consolidated review (2026-11-13 UTC)
+
+This bounded report is carried by [PR #358](https://github.com/raleonys/citrine-eclipse-mirage/pull/358), preserving [original PR #139](https://github.com/raleonys/citrine-eclipse-mirage/pull/139) at `e2edb60208422a2e49de2cf96c8ad2375c27ff51`. Product source was rechecked at `35b074519594a3b2d58cac21e07c2a84fb3ad1f1`; reference authority remains A12 `56eab8795fa65325e4fa6fe31a645eb55cc58469`. Documentation acceptance does not complete the research project.
+
+**Current disposition.** The two product source hashes recorded earlier remain unchanged. Standard compiler CRT remains accepted. #343 has merged: portable bootstrap/thread models are existing controlled coverage. It does not establish private PTD/FLS/allocator ABI equivalence. The six selected A12 README files are an applicability sample rather than a full private-CRT implementation review.
+
+**Next evidence gate.** Retain standard CRT. Any useful additional test needs an actual product entry, valid fault contract and lifetime observation; complete private-CRT equivalence is not a requirement established by this report.
+
+| Product counterpart at current reviewed main | SHA-256 |
+| --- | --- |
+| [tests/unit/thread/thread_tests.cpp](../tests/unit/thread/thread_tests.cpp) | `6ee291034beb8675d7277204ada62ae836cdb25da1a79a8962fcf44fb1087ed0` |
+| [metadata/CRT_POLICY.json](../metadata/CRT_POLICY.json) | `3c959c822cd35ff50a03724ca16337380aa283b1eeb43b3f85f4c4b16f7377df` |
+
+The selected reference rows were checked against the retained A12 inventory again. Current product deltas were read where hashes changed. Fresh product test results belong to the consolidated PR description and its exact head; historical PASS/NOT_RUN records below are not transferred. No archived program, script or DLL was executed.
+
+## Earlier review checkpoint
+
+The following text preserves the earlier source/product baseline and evidence record from PR #139. Its old open-PR labels, product hashes and depth/profile statements describe that checkpoint; the current disposition above supersedes them.
+
 **PARTIAL_A12_SOURCE_REVIEW / NO_NEW_PRODUCT_DEFECT_CONFIRMED / RESEARCH_REMAINS_OPEN**
 
 This refreshes existing PR #139, preserving its original research history.

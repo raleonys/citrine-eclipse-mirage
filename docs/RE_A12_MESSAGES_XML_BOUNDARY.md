@@ -1,5 +1,28 @@
 # Archive 12 message processing and XML reader review
 
+## Current consolidated review (2026-11-13 UTC)
+
+This bounded report is carried by [PR #358](https://github.com/raleonys/citrine-eclipse-mirage/pull/358), preserving [original PR #178](https://github.com/raleonys/citrine-eclipse-mirage/pull/178) at `081a0371c47f6e39fece988c1629ef389ada9bf7`. Product source was rechecked at `35b074519594a3b2d58cac21e07c2a84fb3ad1f1`; reference authority remains A12 `56eab8795fa65325e4fa6fe31a645eb55cc58469`. Documentation acceptance does not complete the research project.
+
+**Current disposition.** The earlier depth-500 distinction is superseded by accepted #359. Current first-party reader policy rejects an entered child list at stack size 98: paired nesting 98 succeeds and 99 fails, with separately tested self-closed-leaf and EOF/attribute precedence. Pugixml 1.16 remains unchanged. #350 UnknownMessage continuation, #234 NoResponse and prepared event-delivery ownership remain accepted. The source delta and current reader assertions were read; old 5,120-check/corpus receipts below remain tied to their earlier head.
+
+**Next evidence gate.** Retain current depth-100 policy and vendor pins. Further malformed-input/exception/UI/foreign-host equivalence needs an uncovered case and fresh matching evidence, not restoration of the historical depth-500 statement.
+
+| Product counterpart at current reviewed main | SHA-256 |
+| --- | --- |
+| [src/protocol/messages.cpp](../src/protocol/messages.cpp) | `dda0871d186751b2588a79720292dfecc80d31ecae11a668b1b58c14f39fb983` |
+| [src/xml/reader.cpp](../src/xml/reader.cpp) | `65a948782f75b57ca4f66e7e1267ac90e013a8951f7080e894251ea92993c7e4` |
+| [src/xml/reader_policy.cpp](../src/xml/reader_policy.cpp) | `49c6eb01d8ccf21290ae6ed4d17a7a5a7a7575ef83c9d115cc23331c3f643e4b` |
+| [src/xml/reader_values.cpp](../src/xml/reader_values.cpp) | `ce49cebfeb830e95cb2b7492399a950ce3beda6e16750f032f81cb5846b63007` |
+| [tests/unit/messages/messages_tests.cpp](../tests/unit/messages/messages_tests.cpp) | `151eae79a45c3d6f24e880a43d8de668ea9eb96360458c9540a81e139bc28228` |
+| [tests/unit/xml_reader/reader_tests.cpp](../tests/unit/xml_reader/reader_tests.cpp) | `47cab3635f0f70a065dcf42a9687899f0242aabbf264147997a6b34fc8e9b01c` |
+
+The selected reference rows were checked against the retained A12 inventory again. Current product deltas were read where hashes changed. Fresh product test results belong to the consolidated PR description and its exact head; historical PASS/NOT_RUN records below are not transferred. No archived program, script or DLL was executed.
+
+## Earlier review checkpoint
+
+The following text preserves the earlier source/product baseline and evidence record from PR #178. Its old open-PR labels, product hashes and depth/profile statements describe that checkpoint; the current disposition above supersedes them.
+
 **PARTIAL_SOURCE_COMPARISON / ARCHIVE12_RECHECKED / NO_NEW_PRODUCT_DEFECT_CONFIRMED**
 
 This updates the existing PR #178 research workstream against the current

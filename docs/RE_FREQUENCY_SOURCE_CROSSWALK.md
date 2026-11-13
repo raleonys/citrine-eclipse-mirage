@@ -1,5 +1,27 @@
 # Archive 12: QPC and publication crosswalk
 
+## Current consolidated review (2026-11-13 UTC)
+
+This bounded report is carried by [PR #358](https://github.com/raleonys/citrine-eclipse-mirage/pull/358), preserving [original PR #136](https://github.com/raleonys/citrine-eclipse-mirage/pull/136) at `9797ad91a31807b1dc95ed112bea4340950faca7`. Product source was rechecked at `35b074519594a3b2d58cac21e07c2a84fb3ad1f1`; reference authority remains A12 `56eab8795fa65325e4fa6fe31a645eb55cc58469`. Documentation acceptance does not complete the research project.
+
+**Current disposition.** The current cold-cache fixture still deliberately starts two frequency queries and publishes one common value atomically. Application validates its frequency before launching owned workers. Its intervening #350 change affects UnknownMessage handling, not that initialization. A12 serializes the shared wrapper and expects one query. The query-count distinction is observed policy, with no confirmed shipping race. #236 owns the detailed research ledger; #358 owns this product report.
+
+**Next evidence gate.** Record the actual external caller and exactly-once requirement or QPC/error failure before proposing a product correction. Native error/foreign-owner behavior remains unproved by the controlled model.
+
+| Product counterpart at current reviewed main | SHA-256 |
+| --- | --- |
+| [src/runtime/execution.cpp](../src/runtime/execution.cpp) | `317dc0c460013ddf621cabc3f9b06d88c6db24fa3728f3be1463cb70d8d02b27` |
+| [include/citrine_eclipse_mirage/runtime/execution.hpp](../include/citrine_eclipse_mirage/runtime/execution.hpp) | `0271621e3c5fa9325bd59a7eaf158df56ab53296ffe9d6a7db08551c1c013df8` |
+| [src/runtime/application.cpp](../src/runtime/application.cpp) | `7a2be80fd20f60a6e5b279ff8836c4be875040b5f3f32692219cce9265e4348b` |
+| [src/platform/execution_windows.cpp](../src/platform/execution_windows.cpp) | `0bae86f6b949aec256b34fe45172fdac0a98e21d66c506d562567096c0099a99` |
+| [tests/unit/execution/concurrency_tests.cpp](../tests/unit/execution/concurrency_tests.cpp) | `3e03a9e0aa226c819b18eed7f5dafe510debcdde0e9eb1343c7d6019d656f8f9` |
+
+The selected reference rows were checked against the retained A12 inventory again. Current product deltas were read where hashes changed. Fresh product test results belong to the consolidated PR description and its exact head; historical PASS/NOT_RUN records below are not transferred. No archived program, script or DLL was executed.
+
+## Earlier review checkpoint
+
+The following text preserves the earlier source/product baseline and evidence record from PR #136. Its old open-PR labels, product hashes and depth/profile statements describe that checkpoint; the current disposition above supersedes them.
+
 **PARTIAL_A12_SOURCE_REVIEW / NO_NEW_PRODUCT_DEFECT_CONFIRMED / RESEARCH_REMAINS_OPEN**
 
 This refreshes existing PR #136, preserving its original research history.

@@ -1,5 +1,28 @@
 # Archive 12 Registry ownership and source/build boundary
 
+## Current consolidated review (2026-11-13 UTC)
+
+This bounded report is carried by [PR #358](https://github.com/raleonys/citrine-eclipse-mirage/pull/358), preserving [original PR #357](https://github.com/raleonys/citrine-eclipse-mirage/pull/357) at `9b36db2e13fb449178aea47a0448111ebe610c2f`. Product source was rechecked at `35b074519594a3b2d58cac21e07c2a84fb3ad1f1`; reference authority remains A12 `56eab8795fa65325e4fa6fe31a645eb55cc58469`. Documentation acceptance does not complete the research project.
+
+**Current disposition.** All six earlier product counterpart hashes still match accepted main. #337 already scopes the language-log temporary; #240 owns query alias ordering; #98 owns fabrication rollback. #341 has merged and concerns the fixture fault-probe boundary. Issue #109 remains open: scalar HKEY membership and supplied link records do not provide trusted issuer/generation provenance.
+
+**Next evidence gate.** The next evidence is an observed issuer-to-callback/query/close chain with reuse epochs and LastError, through a distinct alternate API or applicable Consumer trace. Instrumentation needs its own bounded design and Release exclusion.
+
+| Product counterpart at current reviewed main | SHA-256 |
+| --- | --- |
+| [src/platform/registry.cpp](../src/platform/registry.cpp) | `b9a6ff60fa2a1d2c5f472cf1bb425db171d5ce9c7df1db735649c8ecaa8c0d6e` |
+| [include/citrine_eclipse_mirage/platform/registry.hpp](../include/citrine_eclipse_mirage/platform/registry.hpp) | `8662cd03498131f45f6f9193b72b35f2479b09e02aaff7eb8d9c774850b6081e` |
+| [src/platform/hook_native_callbacks.cpp](../src/platform/hook_native_callbacks.cpp) | `9c1b913d2dbfdc2ac25e23b53357764579eed81e9da57f8be751dfc727251b4c` |
+| [src/platform/hook_original_effects.cpp](../src/platform/hook_original_effects.cpp) | `1d950f2f1f7549391c4a4bf18232f64b94048c63dd78e54f278407e434b42dc8` |
+| [tests/unit/registry/registry_tests.cpp](../tests/unit/registry/registry_tests.cpp) | `6878178e0658bd2f8f752f1f62ae08aec0f127973b3ae65b2f2cabbaac992f80` |
+| [tests/native/application_runtime_tests.cpp](../tests/native/application_runtime_tests.cpp) | `cd4c4de89db63be19b003c1fdf08c40dd78c26ea7a5121e7b1976b3d2827aaa0` |
+
+The selected reference rows were checked against the retained A12 inventory again. Current product deltas were read where hashes changed. Fresh product test results belong to the consolidated PR description and its exact head; historical PASS/NOT_RUN records below are not transferred. No archived program, script or DLL was executed.
+
+## Earlier review checkpoint
+
+The following text preserves the earlier source/product baseline and evidence record from PR #357. Its old open-PR labels, product hashes and depth/profile statements describe that checkpoint; the current disposition above supersedes them.
+
 **PARTIAL_A12_SOURCE_REVIEW / NO_NEW_PRODUCT_DEFECT_CONFIRMED / ORIGIN_EVIDENCE_BLOCKED**
 
 This continues the bounded Registry research accepted in PR #198. Its

@@ -1,5 +1,28 @@
 # Archive 12: license and token boundaries
 
+## Current consolidated review (2026-11-13 UTC)
+
+This bounded report is carried by [PR #358](https://github.com/raleonys/citrine-eclipse-mirage/pull/358), preserving [original PR #191](https://github.com/raleonys/citrine-eclipse-mirage/pull/191) at `043c67354c9113a9e7c6d08dd88fe7fdaf5b7321`. Product source was rechecked at `35b074519594a3b2d58cac21e07c2a84fb3ad1f1`; reference authority remains A12 `56eab8795fa65325e4fa6fe31a645eb55cc58469`. Documentation acceptance does not complete the research project.
+
+**Current disposition.** The token/license/key-file and selected unit-test hashes still match. Environment changed only for accepted #350 UnknownMessage diagnostics in the inspected delta. #312 cache/provider cleanup, #324 binary-read unwinding and #334 checked-writer status retention have merged; they are existing coverage. Caller/provider lifetime, token boundaries and the distinct key/achievement writer policies remain separate.
+
+**Next evidence gate.** A further provider/locale/cancellation claim needs a current-product reproducer and lifetime observation. Do not import the donor authentication-owner ABI merely from a source-design difference.
+
+| Product counterpart at current reviewed main | SHA-256 |
+| --- | --- |
+| [src/core/license.cpp](../src/core/license.cpp) | `a982ee939382b5a1b774d842cf36392ee5eabb72d80bab6478a845b5d3a909e9` |
+| [src/core/token.cpp](../src/core/token.cpp) | `95d8241b62fdf2302e0b9877f6262a1bfd2167877196c0731076e10e50903726` |
+| [src/runtime/application_environment.cpp](../src/runtime/application_environment.cpp) | `09be4a64b22162420a3b2f019bba70ef392133a82c62bafaa01ee21b226bfac9` |
+| [src/core/license_files.cpp](../src/core/license_files.cpp) | `bedeaac9a100548d913b6a0ffc302d1cbdf8dccc020b9afcafc0b977f5b82713` |
+| [tests/unit/license/license_tests.cpp](../tests/unit/license/license_tests.cpp) | `f061792280841d902ad96b3bbfd5d31111996936739181b9fb11ec9e3557f45b` |
+| [tests/unit/token/token_tests.cpp](../tests/unit/token/token_tests.cpp) | `653221d3ac5344e4e4df51e6e7e87eecf1c2c035797b70f0b1b33567edf548eb` |
+
+The selected reference rows were checked against the retained A12 inventory again. Current product deltas were read where hashes changed. Fresh product test results belong to the consolidated PR description and its exact head; historical PASS/NOT_RUN records below are not transferred. No archived program, script or DLL was executed.
+
+## Earlier review checkpoint
+
+The following text preserves the earlier source/product baseline and evidence record from PR #191. Its old open-PR labels, product hashes and depth/profile statements describe that checkpoint; the current disposition above supersedes them.
+
 **PARTIAL_A12_SOURCE_REVIEW / NO_NEW_PRODUCT_DEFECT_CONFIRMED / RESEARCH_REMAINS_OPEN**
 
 This refreshes existing PR #191, preserving its original research history.

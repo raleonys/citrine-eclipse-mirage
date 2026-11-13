@@ -1,5 +1,27 @@
 # Archive 12: admission and shutdown boundaries
 
+## Current consolidated review (2026-11-13 UTC)
+
+This bounded report is carried by [PR #358](https://github.com/raleonys/citrine-eclipse-mirage/pull/358), preserving [original PR #141](https://github.com/raleonys/citrine-eclipse-mirage/pull/141) at `2a52a47126d5a74bbeb54cabae74c4468d42ed0c`. Product source was rechecked at `35b074519594a3b2d58cac21e07c2a84fb3ad1f1`; reference authority remains A12 `56eab8795fa65325e4fa6fe31a645eb55cc58469`. Documentation acceptance does not complete the research project.
+
+**Current disposition.** The callback/context interfaces and selected native fixture hashes still match. Application changed for accepted UnknownMessage handling, not its worker/admission graph. #352 retained-cleanup, live-call and churn coverage remains accepted. #147 adds diagnosis, not a new quiescence rule. The owner closed #362/#363 to pursue another approach; neither proposed hook-engine patch is accepted product behavior.
+
+**Next evidence gate.** Any new hook work must identify an uncovered schedule, its original-call and code/image owners, and positive/negative observations. Arbitrary foreign continuation remains an explicit limit; changing the engine requires its own scoped proposal.
+
+| Product counterpart at current reviewed main | SHA-256 |
+| --- | --- |
+| [src/platform/dll_entry.cpp](../src/platform/dll_entry.cpp) | `d638b43a6b627d0182a9eb63590cd7c4eaad3c81d67f4265e1318566d238c84d` |
+| [src/runtime/application.cpp](../src/runtime/application.cpp) | `7a2be80fd20f60a6e5b279ff8836c4be875040b5f3f32692219cce9265e4348b` |
+| [src/platform/hook_native_callbacks.cpp](../src/platform/hook_native_callbacks.cpp) | `9c1b913d2dbfdc2ac25e23b53357764579eed81e9da57f8be751dfc727251b4c` |
+| [include/citrine_eclipse_mirage/platform/hook_native_callbacks.hpp](../include/citrine_eclipse_mirage/platform/hook_native_callbacks.hpp) | `514e02789ee26ee8f56bda3c825055f1289a2e539098893942d9a0559587fef5` |
+| [tests/unit/native/native_tests.cpp](../tests/unit/native/native_tests.cpp) | `e9534dcbc9f2318995b76c21c6dc3b3c94dd4445ca2ef8dfe5261889ee4b4bab` |
+
+The selected reference rows were checked against the retained A12 inventory again. Current product deltas were read where hashes changed. Fresh product test results belong to the consolidated PR description and its exact head; historical PASS/NOT_RUN records below are not transferred. No archived program, script or DLL was executed.
+
+## Earlier review checkpoint
+
+The following text preserves the earlier source/product baseline and evidence record from PR #141. Its old open-PR labels, product hashes and depth/profile statements describe that checkpoint; the current disposition above supersedes them.
+
 **PARTIAL_A12_SOURCE_REVIEW / NO_NEW_PRODUCT_DEFECT_CONFIRMED / RESEARCH_REMAINS_OPEN**
 
 This refreshes existing PR #141, preserving its original research history.
