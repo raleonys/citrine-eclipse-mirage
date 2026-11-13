@@ -28,6 +28,7 @@ struct Trace {
     std::uint64_t size=0;
     std::uint32_t state=0;
     bool close_throws=false,close_fails=false,write_fails=false,write_throws=false;
+    bool clear_on_close=false;
 };
 class Input final:public io::Input {
     Trace& t;
@@ -51,7 +52,7 @@ public:
     ~Output()override{t.calls.push_back("destroy-output");}
     std::uint32_t initial_state()const override{t.calls.push_back("state");return t.state;}
     void write_03be80(std::string_view bytes)override{t.calls.push_back("write");if(t.write_throws)throw Injected{};t.written=bytes;if(t.write_fails)t.state=2;}
-    void close_03ae70()override{t.calls.push_back("close");if(t.close_fails)t.state=4;if(t.close_throws)throw Injected{};}
+    void close_03ae70()override{t.calls.push_back("close");if(t.clear_on_close)t.state=0;if(t.close_fails)t.state=4;if(t.close_throws)throw Injected{};}
 };
 class Factory final:public io::Factory {
 public:
@@ -118,6 +119,24 @@ void core() {
     thrown=false;try{(void)io::read_binary_03b3f0(u"fixture",impossible);}catch(const std::length_error&){thrown=true;}
     check(thrown&&impossible.t.calls.back()=="destroy-input","invalid tell size reaches resize exception");
 }
+void checked_write_retains_error() {
+    Factory f;f.t.write_fails=true;f.t.clear_on_close=true;
+    const std::string first("first\0ticket",12);
+    check(!io::write_binary_checked(u"fixture",first,f),
+          "close success cannot erase an earlier checked write failure");
+    check(f.t.state==0&&f.t.written==first,
+          "controlled close cleared status after preserving counted input");
+    const std::vector<std::string> expected{
+        "open-output","state","write","state","close","state","destroy-output"};
+    check(f.t.calls==expected,
+          "write failure still observes close state and releases its output once");
+    f.t.calls.clear();f.t.write_fails=false;
+    const std::string next("next\0ticket",11);
+    check(io::write_binary_checked(u"fixture",next,f),
+          "same factory accepts a repaired independent output");
+    check(f.t.written==next&&f.t.calls==expected,
+          "repaired write preserves bytes and balanced output lifetime");
+}
 #if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
 void native(const std::filesystem::path& directory) {
     const auto root=std::filesystem::absolute(directory).lexically_normal();
@@ -171,6 +190,7 @@ void native(const std::filesystem::path& directory) {
 }
 int main(int argc,char** argv){try{
     core();
+    checked_write_retains_error();
 #if defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
     (void)argc;(void)argv;
 #else

@@ -254,3 +254,13 @@ of an unadmitted successor. Later cancellation cannot settle the receipt again.
 The probe is normally disabled. Both existing portable and native registrations
 retain their 30-second budgets; caller-side Asio closure, real event storage and
 OS-wide memory exhaustion remain outside this controlled unit case.
+
+## Checked writer error retention across close
+
+The common binary-IO fixture has an opt-in controlled Output whose close clears
+its status. A prior checked-write failure must remain a failure, with exact
+counted bytes and balanced state/write/close/state/destruction ordering. A
+repaired independent Output from the same factory must succeed. This interface
+stimulus does not assert that native fstream clears failed-write status, recover
+a physical handle, or exercise disk I/O. The recovered initial-state-only writer
+and the unarmed native cases remain unchanged.
