@@ -163,7 +163,7 @@ class VendorTests(unittest.TestCase):
             policy=prepare_hook_engine.verify(ROOT,stage)
             self.assertEqual(policy['output_hook_sha256'],vendor_sync.hash_file(stage/'src/hook.c'))
             self.assertNotEqual(before,(stage/'src/hook.c').read_bytes())
-            for rel in ['src/hook.c','include/MinHook.h']:
+            for rel in ['src/hook.c','src/buffer.c','src/buffer.h','include/MinHook.h']:
                 target=stage/rel;data=target.read_bytes();target.write_bytes(data+b'X')
                 with self.assertRaisesRegex(ValueError,'build-copy member/hash mismatch'):
                     prepare_hook_engine.verify(ROOT,stage)
@@ -172,6 +172,28 @@ class VendorTests(unittest.TestCase):
             stamp=(stage/'src/hook.c').stat().st_mtime_ns
             prepare_hook_engine.prepare(ROOT,stage,cmake)
             self.assertEqual(stamp,(stage/'src/hook.c').stat().st_mtime_ns)
+
+    def test_completion_module_is_independently_hash_pinned(self):
+        cmake=shutil.which('cmake')
+        if not cmake:self.skipTest('CMake needed to execute the real patch script')
+        real_sha=prepare_hook_engine.sha
+        def changed_module(path):
+            return '0'*64 if path.name=='PatchHookCompletion.cmake' else real_sha(path)
+        parent=ROOT/'build/qa';parent.mkdir(parents=True,exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=parent,prefix='hook-module-') as tmp:
+            stage=Path(tmp)/'engine'
+            with patch.object(prepare_hook_engine,'sha',side_effect=changed_module):
+                with self.assertRaisesRegex(ValueError,'patch script hash mismatch: cmake/PatchHookCompletion'):
+                    prepare_hook_engine.prepare(ROOT,stage,cmake)
+            self.assertFalse(stage.exists())
+
+    def test_completion_module_cannot_be_omitted_from_verification_policy(self):
+        policy=json.loads((ROOT/'metadata/HOOK_ENGINE_PATCH.json').read_text())
+        expected={'src/hook.c':policy['input_hook_sha256']}
+        policy['patch_modules']={}
+        with patch.object(prepare_hook_engine.json,'loads',return_value=policy):
+            with self.assertRaisesRegex(ValueError,'patch module policy mismatch'):
+                prepare_hook_engine.checked_policy(ROOT,expected)
 
     def test_windows_cmake_crlf_output_is_pinned_lf_before_full_verification(self):
         cmake=shutil.which('cmake')
@@ -183,7 +205,8 @@ class VendorTests(unittest.TestCase):
         def windows_write(command, **kwargs):
             result=real_run(command, **kwargs)
             target=Path(next(v.split('=',1)[1] for v in command if v.startswith('-DMINHOOK_HOOK_C=')))
-            target.write_bytes(target.read_bytes().replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
+            for path in (target,target.parent/'buffer.c',target.parent/'buffer.h'):
+                path.write_bytes(path.read_bytes().replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
             return result
         parent=ROOT/'build/qa';parent.mkdir(parents=True,exist_ok=True)
         with tempfile.TemporaryDirectory(dir=parent,prefix='hook-crlf-') as tmp:

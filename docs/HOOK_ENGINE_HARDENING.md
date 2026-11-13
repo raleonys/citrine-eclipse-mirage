@@ -39,13 +39,14 @@ helper stored only the first handle. The second could disappear from ownership
 tracking. The helper now uses the existing second emergency slot as well. A new
 test failed on the exact donor output and passes on the corrected copy. No success
 path, enumeration policy or public API is changed by this supplement.
-The current transform also selects `ACTION_DISABLE` for a single-hook disable
-(D326-F0006 / PR #19). The public mutation cleanup barriers described below
-are also included. Current adapted patch script SHA-256:
-`b99c83d085ba2af558c2c0536c1cb6e2ce5245c7ca369ce3f6f8bd310f8372cb`.
-Current patched `hook.c` SHA-256:
-`c915c65764c72d30e022a60696d916542a31de2964d57cbf032e81740383194e`.
-These are the active values in `metadata/HOOK_ENGINE_PATCH.json`.
+The transform also selects `ACTION_DISABLE` for a single-hook disable
+(D326-F0006 / PR #19) and retains the public mutation cleanup barriers below.
+The completion/retirement addition described below is first-party hardening,
+not an unchanged donor patch. `metadata/HOOK_ENGINE_PATCH.json` is the current
+authority for the entry script, completion module and all three generated
+member hashes. Before that addition the script/output identities were
+`b99c83d085ba2af558c2c0536c1cb6e2ce5245c7ca369ce3f6f8bd310f8372cb`
+and `c915c65764c72d30e022a60696d916542a31de2964d57cbf032e81740383194e`.
 
 Before these barriers, the active script/output hashes were
 `a95b5f1e263c3bac4ff5c048054fc913e0c0469da7fb95b26f54446c06a0eda9`
@@ -64,16 +65,17 @@ not as the current shipping engine or the current build-only counterfactual.
 
 At configure time, `prepare_hook_engine.py` verifies the original tree, copies all
 61 MinHook files under the selected project `build/` directory and applies this
-script only to that copy. It verifies all staged members, the pinned script and
-the expected patched `hook.c` SHA-256. Every build repeats read-only verification.
+script only to that copy. It verifies all staged members, both pinned scripts and
+the expected patched `hook.c`, `buffer.c` and `buffer.h` SHA-256 identities.
+Every build repeats read-only verification.
 Both testing-enabled and testing-disabled application builds compile this copy.
 The new transaction owner and tests are first-party adaptation, not claimed to be
 byte-identical donor application code. Existing MinHook license files and source
 license headers are retained in both original and staged trees.
 
-Windows CMake's `file(WRITE)` emits CRLF for this generated source, while the
-pinned output uses LF. The preparation helper canonicalizes only the newly
-generated `hook.c`, and only when replacing CRLF with LF produces the exact
+Windows CMake's `file(WRITE)` emits CRLF for generated sources, while the
+pinned outputs use LF. The preparation helper canonicalizes only the three
+declared generated members, and only when replacing CRLF with LF produces the exact
 existing output hash. It then verifies every staged member as before. Unknown
 content is not rewritten or accepted; read-only verification still rejects a
 CRLF build copy. That newline canonicalization does not alter vendor inputs or
@@ -132,11 +134,11 @@ Persistent cleanup failure returns the existing MH_ERROR_MEMORY_PROTECT status
 before changing hooks, pending intent or caller output. A successful retry can
 continue the original operation. The patch requires exactly one entry/lock
 anchor for each insertion and rejects ambiguity before writing the build copy.
-The only engine-source differences from the preceding verified copy are these
-five guards. SAFE-FREEZE remains enabled; upstream's optional default-OFF
+That backport added only those five guards. The current completion/retirement
+addition is separate. SAFE-FREEZE remains enabled; upstream's optional default-OFF
 selection and benchmark-only dependencies are not imported.
 
-The injected fixture now runs 130 checks: it retains its original 53 checks and
+The inherited injected fixture retains its original 53 checks and
 the upstream candidate's extended cases, then exercises all five entry barriers for resume, close and
 backing-array release failures. It verifies unchanged output, hook/trampoline
 ownership and queued intent, followed by successful public-API cleanup retry.
@@ -251,6 +253,63 @@ as well; see [UNLOAD_RECOVERY.md](UNLOAD_RECOVERY.md). This is an application
 correction and does not change the pinned MinHook patch or original vendor bytes.
 
 ## Upstream port and limits
+
+### Patch completion and generated-code retirement
+
+`PatchHookCompletion.cmake` extends the same verified build-copy pipeline.
+Vendor inputs, MinHook's public header/status numbers, production exports and
+the application adapter ABI remain unchanged. The generated buffer header is
+internal: its release functions return a status and expose an internal address
+membership check to the generated hook translation unit.
+
+The engine records each affected page's original protection independently,
+including five-byte and seven-byte patch-above ranges crossing a page boundary.
+Once bytes are written, enabled/queued bookkeeping reflects those physical
+bytes even if cache/protection completion fails. An incomplete record retains
+the exact pages and pending operations. New mutations retry completion before
+acquiring or resuming peers. If completion fails while a peer set is frozen,
+the engine keeps that suspension ownership until completion and resume succeed;
+persistent OS failures can therefore leave peers suspended and shutdown pending.
+The mechanism does not promise continued process availability under such failures.
+Generated trampoline/relay code is flushed before its original pointer is
+published. A failed unpublished-buffer release retains its own retry record.
+
+Target bytes can remain unchanged after a failed preparation/write even though
+an earlier peer IP was redirected into a trampoline. Consequently retirement
+does not rely solely on enabled bits or the application's callback counter.
+Before removing a slot or destroying all blocks, the engine freezes peers and
+checks full integer/control registers plus stack words against the generated
+slot/block ranges. Reads are bounded to 64MiB per stack; query, read, short-read,
+context and preparation failures defer retirement. Existing external suspension
+counts are preserved. The application still disables hooks and drains callback
+leases plus its module-range guard; that protocol and the engine's generated-code
+retirement guard cover distinct resources.
+
+VirtualFree failure preserves a linked, unrecycled block/slot. Partial engine
+retirement enters a shutdown-only state: remaining blocks and the private heap
+stay owned, other mutations fail, and uninitialize retries only unresolved work.
+HeapDestroy is checked and occurs after frozen-array cleanup; its success also
+reclaims the hook-entry array. Failure does not discard the heap handle.
+
+`hook_completion_contracts` includes the actual generated hook/buffer sources
+with projected peer contexts and injected completion/release failures. It checks
+repeated failures, no-op mutation barriers, publication, two-peer preparation,
+partial batches, stack-read failures and separate real page protections for both
+ordinary and patch-above ranges. Targets and projected trampoline IPs are never
+executed. `hook_retirement_peer_contracts` separately creates a real suspended
+Windows thread and edits/restores its actual context and stack to verify busy
+IP/register/return-address retirement barriers and foreign suspension counts.
+It restores all state before the peer executes; it does not execute arbitrary
+relocated functions or prove general host-stack safety. Both are in the focused
+manual MSVC Debug/Release workflow and the native inventory. Configured tests
+are not execution receipts; results belong to their exact tested commit.
+
+The seven-byte/five-byte transforms do not provide an atomic all-hook commit,
+instruction-decoder completeness, exception/unwind equivalence, or a universal
+barrier against threads born after enumeration. Target code must remain mapped
+and must not be concurrently patched by an unrelated owner. Caller-held original
+pointers remain subject to their documented lifetime. These limits are not
+removed by the new resource ownership and conservative retirement checks.
 
 The separate [upstream MinHook proposal #179](https://github.com/TsudaKageyu/minhook/pull/179)
 uses owner-fork candidate `9c4753f771b437898025bd75912f2ac1f063cd07`.

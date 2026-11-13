@@ -9,8 +9,8 @@ import subprocess
 import sys
 import tempfile
 
-CURRENT_SHA256 = 'c915c65764c72d30e022a60696d916542a31de2964d57cbf032e81740383194e'
-GUARD = b'''\n\n    if (g_hHeap != NULL && !RetryRetainedThreadOwnership())
+CURRENT_SHA256 = '34390dda120e912d642d46874e21fdadf786db7f6e183e4621c782a0c034f28a'
+GUARD = b'''\n\n    if (g_hHeap != NULL && (g_shutdownPending || !RetryRetainedThreadOwnership()))
     {
         LeaveSpinLock();
         return MH_ERROR_MEMORY_PROTECT;
@@ -18,23 +18,23 @@ GUARD = b'''\n\n    if (g_hHeap != NULL && !RetryRetainedThreadOwnership())
 CONTROLS = {
     'create': (
         b'MH_STATUS WINAPI MH_CreateHook(LPVOID pTarget, LPVOID pDetour, LPVOID *ppOriginal)',
-        'a4e291dc3a8e1eea2570a1c4ec5f73d094ab05fadfa379d0ab81b934ef5bf9a7',
+        'ee27d06f2f52a5d3357c3b3fb525316493812b796e5392bc754481a2384d7e1f',
         'FAIL: new hook creation cannot bypass retained cleanup'),
     'remove': (
         b'MH_STATUS WINAPI MH_RemoveHook(LPVOID pTarget)',
-        '493dd454883774431bcf5a36d78a925297b4b0b37d2c2a02b01e42985f880795',
+        '61717f4e04b9789387226160346411cda0360d32b502fe70770c51546a95765c',
         'FAIL: disabled removal cannot retire trampoline under unresolved ownership'),
     'enable': (
         b'static MH_STATUS EnableHook(LPVOID pTarget, BOOL enable)',
-        '7a0dcb46fe73da9939805d956790831eebbaebdd6e7231a866775cd0cf8750d2',
+        '97a74400e2bf6c975963ac234a46c99d299ed6a1c14f65ff6c982cfabee7ad7a',
         'FAIL: already-disabled mutation must report pending cleanup'),
     'queue': (
         b'static MH_STATUS QueueHook(LPVOID pTarget, BOOL queueEnable)',
-        'f0dc7360cb7a276ba08261bbc1ee69a6e62f406cad06a49648c399e76707fc80',
+        'da81bbd6643d2d462437c11529fb92d427826ab7681d3f4eae0130de51eddaf3',
         'FAIL: queue mutation cannot bypass retained cleanup'),
     'apply': (
         b'MH_STATUS WINAPI MH_ApplyQueued(VOID)',
-        '994282f5b041d657d4e2a1db7417dc6b86eddf2797700d6dc958db48c70c8761',
+        'fb6874e9d715ea8679886b1636c2f60f82e17fea69baedce7d15b2ecb448307a',
         'FAIL: no-op apply must not hide unresolved owner'),
 }
 

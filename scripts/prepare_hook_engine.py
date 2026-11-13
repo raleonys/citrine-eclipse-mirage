@@ -26,6 +26,22 @@ def canonicalize_generated_hook(output, expected_sha256):
         path.write_bytes(canonical)
 
 
+def checked_policy(root, expected):
+    policy=json.loads((root/'metadata/HOOK_ENGINE_PATCH.json').read_text())
+    if set(policy['patch_modules'])!={'cmake/PatchHookCompletion.cmake'}:
+        raise ValueError('Hook engine patch module policy mismatch')
+    scripts={policy['patch_script']:policy['patch_script_sha256'], **policy['patch_modules']}
+    for name, digest in scripts.items():
+        if sha(root/name)!=digest:
+            raise ValueError('Hook engine patch script hash mismatch: '+name)
+    outputs=policy['output_files']
+    if set(outputs)!={'src/hook.c','src/buffer.c','src/buffer.h'} or outputs['src/hook.c']!=policy['output_hook_sha256']:
+        raise ValueError('Hook engine patch output policy mismatch')
+    if expected['src/hook.c']!=policy['input_hook_sha256']:
+        raise ValueError('Hook engine patch input mismatch')
+    return policy
+
+
 def verify(root, output):
     root, output = Path(root).resolve(), Path(output).absolute()
     build=root/'build'
@@ -34,14 +50,10 @@ def verify(root, output):
     record=load_lock(root)['vendors']['minhook']
     expected=expected_files(root,record)
     validate_installed(root,'minhook',record,expected,{})
-    policy=json.loads((root/'metadata/HOOK_ENGINE_PATCH.json').read_text())
+    policy=checked_policy(root,expected)
     if policy['input_commit']!=record['upstream_commit']:
         raise ValueError('Hook engine patch commit mismatch')
-    if sha(root/policy['patch_script'])!=policy['patch_script_sha256']:
-        raise ValueError('Hook engine patch script hash mismatch')
-    if expected['src/hook.c']!=policy['input_hook_sha256']:
-        raise ValueError('Hook engine patch input mismatch')
-    expected['src/hook.c']=policy['output_hook_sha256']
+    expected.update(policy['output_files'])
     actual={p.relative_to(output).as_posix():sha(p) for p in output.rglob('*') if p.is_file()}
     links = sorted(p.relative_to(output).as_posix() for p in output.rglob('*') if p.is_symlink())
     if links or actual!=expected:
@@ -60,10 +72,8 @@ def prepare(root, output, cmake):
     if root/'build' not in output.parents or output.is_symlink() or output.resolve()!=output:
         raise ValueError('Hook engine copy must remain in the owned build directory')
     output.parent.mkdir(parents=True,exist_ok=True)
-    policy=json.loads((root/'metadata/HOOK_ENGINE_PATCH.json').read_text())
-    if sha(root/policy['patch_script'])!=policy['patch_script_sha256']:
-        raise ValueError('Hook engine patch script hash mismatch')
     record=load_lock(root)['vendors']['minhook'];expected=expected_files(root,record)
+    policy=checked_policy(root,expected)
     if policy['input_commit']!=record['upstream_commit']:
         raise ValueError('Hook engine patch commit mismatch')
     validate_installed(root,'minhook',record,expected,{})
@@ -73,7 +83,11 @@ def prepare(root, output, cmake):
         stage=Path(temporary)/'engine'
         shutil.copytree(root/record['source_install_path'],stage)
         subprocess.run([str(cmake),'-DMINHOOK_HOOK_C='+str(stage/'src/hook.c'),'-P',str(root/policy['patch_script'])],check=True)
-        canonicalize_generated_hook(stage, policy['output_hook_sha256'])
+        for name,digest in policy['output_files'].items():
+            path=stage/name
+            original=path.read_bytes();canonical=original.replace(b'\r\n',b'\n')
+            if canonical!=original and hashlib.sha256(canonical).hexdigest()==digest:
+                path.write_bytes(canonical)
         # Verify every file, not only the patched translation unit.
         verify(root,stage)
         if output.exists():
