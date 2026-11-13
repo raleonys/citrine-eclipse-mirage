@@ -85,3 +85,13 @@ ownership keys retain their exact filename/path case. Unowned uppercase files
 are rejected; correctly registered uppercase files remain valid. These checks
 validate ownership metadata independently of the active-source byte inventory;
 they do not replace package identity, runtime or native acceptance checks.
+
+## Human launcher and build-label inventory
+
+The launcher contract discovers regular CMD files without case while retaining
+exact registered path spelling. A CMD-named directory is not a launcher; a
+registered uppercase launcher retains the same summary-forwarding and final
+exit-command checks as lowercase launchers. Top-level metadata JSON extensions
+are also matched without case for retired build-label screening. Ownership,
+launcher registration and wording remain separate checks, and source inventories
+are still responsible for complete file-set and byte identity.

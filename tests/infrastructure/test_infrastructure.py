@@ -2760,6 +2760,43 @@ class GovernanceTests(unittest.TestCase):
             automation.write_text(original_automation.replace('exit $LASTEXITCODE','exit 0'))
             self.assertTrue(any('masks child exit' in e for e in launchers.check(root)))
 
+    def test_launcher_scan_rejects_unregistered_uppercase_cmd_and_accepts_owned_entry(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'metadata').mkdir()
+            (root / 'scripts').mkdir()
+            registry = root / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json'
+            launcher = root / 'scripts/review.CMD'
+            automation = root / 'scripts/review.ps1'
+            registry.write_text(json.dumps({'entrypoints': []}))
+            (root / 'scripts/ignored.CMD').mkdir()
+            self.assertEqual([], launchers.check(root))
+            launcher.write_text('REM unregistered fixture\n')
+            self.assertIn('Registered launcher set differs from actual CMD set',
+                          launchers.check(root))
+            automation.write_text('param([switch]$LauncherOwnsSummary)\n'
+                                  '& ./fixture_profile.ps1 -Mode "Native" '
+                                  '-LauncherOwnsSummary:$LauncherOwnsSummary\nexit $LASTEXITCODE\n')
+            launcher.write_text('\n'.join([
+                '@echo off', 'powershell.exe -NoProfile -File "%~dp0review.ps1" -LauncherOwnsSummary %*',
+                'set "RC=%ERRORLEVEL%"', 'echo Exit code: %RC%',
+                'REM ForegroundColor Green', 'REM ForegroundColor Red',
+                'REM SURGE - %LABEL%', 'pause >nul', 'exit /b %RC%',
+            ]) + '\n')
+            registry.write_text(json.dumps({'entrypoints': [{
+                'launcher': 'scripts/review.CMD',
+                'automation': 'scripts/review.ps1',
+                'mode': 'Native',
+            }]}))
+            self.assertEqual([], launchers.check(root))
+            registered = json.loads(registry.read_text())
+            registered['entrypoints'][0]['launcher'] = 'scripts/review.cmd'
+            registry.write_text(json.dumps(registered))
+            self.assertIn('Registered launcher set differs from actual CMD set', launchers.check(root))
+            registered['entrypoints'][0]['launcher'] = 'scripts/review.CMD'
+            registry.write_text(json.dumps(registered))
+            self.assertEqual([], launchers.check(root))
+
     def test_launcher_summary_ownership_must_reach_the_profile(self):
         entries = json.loads((ROOT / 'metadata/HUMAN_ENTRYPOINT_REGISTRY.json').read_text())['entrypoints']
         for entry in entries:
@@ -2988,6 +3025,17 @@ exit 0
 
 
 class BuildWordingTests(unittest.TestCase):
+    def test_uppercase_metadata_json_is_included_in_build_wording_scan(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'metadata').mkdir()
+            policy = root / 'metadata/contract.JSON'
+            policy.write_text('LOCAL_GOLDEN_PASS\n')
+            self.assertEqual(['Obsolete build wording: metadata/contract.JSON:1'],
+                             launchers.check_build_wording(root))
+            policy.write_text('GOLDEN_PASS\n')
+            self.assertEqual([], launchers.check_build_wording(root))
+
     def test_active_operator_tools_and_contracts_reject_retired_labels(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
