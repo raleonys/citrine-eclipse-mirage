@@ -2,4 +2,4 @@
 
 #include <windows.h>
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#include "preloader_version.rc"
+#include "version.rc"

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/registry.hpp"
+#include "citrine_eclipse_mirage/platform/registry.hpp"
 #include <array>
 #include <cstdlib>
 #include <iostream>
@@ -9,7 +9,18 @@
 namespace allocation {
 unsigned remaining=0;
 bool fired=false;
+// Observe only the long language log buffer returned by the test effect.
+// Count/reject another language payload allocation while that buffer is alive.
+// Ignore small library bookkeeping allocations, including Debug iterator proxies.
+void* watched=nullptr;
+bool watched_live=false,reject_overlap=false;
+unsigned overlaps=0,retired=0;
+void release(void* p) noexcept{
+    if(watched&&p==watched){watched=nullptr;watched_live=false;++retired;}
+    std::free(p);
+}
 void* acquire(std::size_t size){
+    if(watched_live&&size>=256){++overlaps;if(reject_overlap)throw std::bad_alloc();}
     if(remaining&&!--remaining){fired=true;throw std::bad_alloc();}
     if(auto* p=std::malloc(size?size:1))return p;
     throw std::bad_alloc();
@@ -17,19 +28,19 @@ void* acquire(std::size_t size){
 }
 void* operator new(std::size_t size){return allocation::acquire(size);}
 void* operator new[](std::size_t size){return allocation::acquire(size);}
-void operator delete(void* p) noexcept{std::free(p);}
-void operator delete[](void* p) noexcept{std::free(p);}
-void operator delete(void* p,std::size_t) noexcept{std::free(p);}
-void operator delete[](void* p,std::size_t) noexcept{std::free(p);}
+void operator delete(void* p) noexcept{allocation::release(p);}
+void operator delete[](void* p) noexcept{allocation::release(p);}
+void operator delete(void* p,std::size_t) noexcept{allocation::release(p);}
+void operator delete[](void* p,std::size_t) noexcept{allocation::release(p);}
 
 namespace {
-namespace r=preloader_l::registry;
+namespace r=citrine_eclipse_mirage::registry;
 void require(bool ok,const char* message){if(!ok)throw std::runtime_error(message);}
 struct LogFailure {unsigned identity=73;};
 enum Event {original,allocate,log,finish,release};
 struct Effects final:r::Effects {
     unsigned fail_at=0,log_fault=0,allocations=0,frees=0;
-    bool fail_allocate=false,live=false;
+    bool fail_allocate=false,live=false,observe_language=false;unsigned language_conversions=0;
     r::Handle allocated=0;
     std::array<Event,8> events{};
     unsigned count=0;
@@ -53,16 +64,26 @@ struct Effects final:r::Effects {
     void finish_log_0088e0() override{
         events[count++]=finish;if(log_fault==2)throw LogFailure{};
     }
-    std::string filesystem_narrow(std::u16string_view text) override{return {text.begin(),text.end()};}
+    std::string filesystem_narrow(std::u16string_view text) override{
+        std::string value{text.begin(),text.end()};
+        if(observe_language&&text.size()==256&&language_conversions++==0){
+            allocation::watched=value.data();allocation::watched_live=true;
+        }
+        return value;
+    }
     int crt_stricmp(const char* a,const char* b) override{return std::string_view(a).compare(b);}
     int crt_wcsicmp(const char16_t* a,const char16_t* b) override{return std::u16string_view(a).compare(b);}
-    int crt_strcpy_s(char*,std::size_t,const char*) override{throw std::logic_error("unexpected query copy");}
-    int crt_wcscpy_s(char16_t*,std::size_t,const char16_t*) override{throw std::logic_error("unexpected query copy");}
-    r::Status original_query_a(const r::QueryA&) override{throw std::logic_error("unexpected query");}
-    r::Status original_query_w(const r::QueryW&) override{throw std::logic_error("unexpected query");}
+    int crt_strcpy_s(char* dst,std::size_t capacity,const char* src) override{
+        require(observe_language,"unexpected query copy");std::size_t i=0;do{require(i<capacity,"copy bound");dst[i]=src[i];}while(src[i++]);return 0;
+    }
+    int crt_wcscpy_s(char16_t* dst,std::size_t capacity,const char16_t* src) override{
+        require(observe_language,"unexpected query copy");std::size_t i=0;do{require(i<capacity,"copy bound");dst[i]=src[i];}while(src[i++]);return 0;
+    }
+    r::Status original_query_a(const r::QueryA&) override{require(observe_language,"unexpected query");return 5;}
+    r::Status original_query_w(const r::QueryW&) override{require(observe_language,"unexpected query");return 5;}
     r::Status original_close(r::Handle) override{throw std::logic_error("fabricated key must not reach native close");}
     void wait_036880(std::int32_t) override{throw std::logic_error("unexpected wait");}
-    void log_text_007990(std::string_view) override{throw std::logic_error("unexpected query log");}
+    void log_text_007990(std::string_view text) override{require(observe_language&&text.size()==256,"unexpected query log");}
 };
 struct Fixture {
     r::Values values{{"ClientKey",u"client"},{"ClientKey2",u"client2"},{"LanguageKey",u"language"}};
@@ -120,10 +141,39 @@ void other_failures(){
         }
     }
     {Fixture f;r::Status status=5;f.effects.fail_at=1;
-     try{r::fabricate_010170(f.state(),f.effects,&f.output,status);require(false,"expected direct fabrication insertion failure");}
-     catch(const std::bad_alloc&){allocation::remaining=0;require(status==5,"direct failure preserves original status");f.unchanged();}}
+     allocation::fired=false;bool failed=false;
+     try{r::fabricate_010170(f.state(),f.effects,&f.output,status);}
+     catch(const std::bad_alloc&){failed=true;}
+     // Disable the probe before any diagnostic can allocate its own message.
+     allocation::remaining=0;
+     require(failed&&allocation::fired,"direct fabrication must fail at the injected allocation");
+     require(status==5,"direct failure preserves original status");f.unchanged();}
+}
+void language_temporary_lifetime(){
+    for(bool pressure:{true,false})for(bool wide:{false,true}){
+        Fixture f;f.values["LanguageValue"]=u"Locale";f.values["Language"]=std::u16string(256,u'x');
+        f.effects.observe_language=true;
+        std::array<char16_t,257> buffer{};std::uint32_t size=sizeof(buffer),type=0;
+        allocation::watched=nullptr;allocation::watched_live=false;allocation::overlaps=0;allocation::retired=0;
+        allocation::reject_overlap=pressure;
+        r::Status status;
+        try{
+            status=wide?r::query_w_00fb60(f.state(),f.effects,{22,u"Locale",nullptr,&type,buffer.data(),&size}):
+                r::query_a_00fac0(f.state(),f.effects,{22,"Locale",nullptr,&type,buffer.data(),&size});
+        }catch(...){allocation::reject_overlap=false;throw;}
+        allocation::reject_overlap=false;
+        require(status==0&&type==1,"replacement completes after retired log temporary");
+        require(size==(wide?514u:257u),"replacement counted bytes");
+        require(!allocation::watched_live&&allocation::retired==1&&allocation::overlaps==0,
+            "log allocation retired exactly once before replacement payload allocation");
+        require(f.effects.language_conversions==(wide?1u:2u),"independent counted log and replacement conversions");
+        require(f.effects.count==2&&f.effects.events[0]==log&&f.effects.events[1]==finish,
+            "existing log prefix and completion order retained");
+        if(wide){for(unsigned i=0;i<256;++i)require(buffer[i]==u'x',"wide replacement bytes");require(buffer[256]==0,"wide terminator");}
+        else{auto* bytes=reinterpret_cast<const char*>(buffer.data());for(unsigned i=0;i<256;++i)require(bytes[i]=='x',"narrow replacement bytes");require(bytes[256]==0,"narrow terminator");}
+    }
 }
 }
-int main()try{insertion_failures();other_failures();std::cout<<"PASS: actual registry set insertion failures, ownership rollback and A/W success controls\n";}
+int main()try{insertion_failures();other_failures();language_temporary_lifetime();std::cout<<"PASS: actual registry set insertion failures, ownership rollback, A/W success controls and language log retirement\n";}
 catch(const std::exception& e){allocation::remaining=0;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
 catch(...){allocation::remaining=0;std::cerr<<"FAIL: unexpected exception\n";return 1;}

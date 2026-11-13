@@ -17,6 +17,7 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 from check_repository_contract import (
     check_root_file_ownership, check_archived_evidence, check_active_identifiers,
     check_layout_migration_reference, declared_application_sources,
+    check_public_timezones,
 )
 
 
@@ -33,6 +34,43 @@ def fixture_git_environment():
 
 
 class RepositoryRootOwnership(unittest.TestCase):
+    def test_public_time_metadata_rejects_regional_zones_without_echoing_them(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            names = ['CHANGELOG.md', 'docs/WEEKLY_RELEASE.md', '.github/workflows/weekly.yml',
+                     'metadata/POLICY.json', 'scripts/tool.py', 'src/runtime/tool.cpp']
+            (root / 'metadata').mkdir()
+            (root / 'metadata/ACTIVE_SOURCE_MANIFEST.json').write_text(
+                json.dumps({'files': dict.fromkeys(names, '')}), encoding='utf-8')
+            for name in names:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('Friday 13:30 UTC\n', encoding='utf-8')
+            self.assertEqual([], check_public_timezones(root))
+            for name in names:
+                path = root / name
+                for zone in ('Europe/Paris', 'America/Argentina/Buenos_Aires', 'asia/Tokyo'):
+                    path.write_text('heading\n' + zone + '\n', encoding='utf-8')
+                    self.assertEqual(
+                        [f'Regional time-zone name in active source: {name}:2; use UTC'],
+                        check_public_timezones(root))
+                path.write_text('Friday 13:30 UTC\n', encoding='utf-8')
+
+    def test_public_time_guard_preserves_historical_vendor_and_test_bytes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            names = ['metadata/evidence/old.json', 'docs/evidence/old.md',
+                     'third_party/vendor/NOTICE.txt', 'tests/fixture.txt']
+            for name in names:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('Europe/Paris\n', encoding='utf-8')
+            (root / 'metadata/ACTIVE_SOURCE_MANIFEST.json').write_text(
+                json.dumps({'files': dict.fromkeys(names, '')}), encoding='utf-8')
+            before = {name: (root / name).read_bytes() for name in names}
+            self.assertEqual([], check_public_timezones(root))
+            self.assertEqual(before, {name: (root / name).read_bytes() for name in names})
+
     def test_application_declarations_keep_complete_source_path_boundaries(self):
         text = '''add_library(app src/xml/reader.cpp "src/platform/entry.cpp")
         add_library(vendor third_party/pugixml/src/pugixml.cpp)
@@ -191,8 +229,22 @@ class RepositoryRootOwnership(unittest.TestCase):
             target = root / 'metadata/evidence/LAYOUT_MIGRATION.json'
             target.parent.mkdir(parents=True)
             contract = {'layout_migration': 'metadata/evidence/LAYOUT_MIGRATION.json'}
-            target.write_text('{"schema":"surge.layout-migration.v1"}', encoding='utf-8')
+            # Read the immutable historical schema instead of introducing a
+            # reserved source-identity label in active test code.
+            canonical_schema = json.loads(
+                (ROOT / 'metadata/evidence/LAYOUT_MIGRATION.json').read_text(
+                    encoding='utf-8'))['schema']
+            target.write_text(json.dumps({'schema': canonical_schema}), encoding='utf-8')
             self.assertEqual([], check_layout_migration_reference(root, contract))
+            # Suffix-only checks previously accepted forged schema namespaces.
+            for wrong_schema in ('surge.layout-migration.v1', 'forged.layout-migration.v1',
+                                 '.layout-migration.v1', canonical_schema + '.extra',
+                                 chr(0xd800), chr(0xe9) + '.layout-migration.v1',
+                                 None, 1, []):
+                with self.subTest(wrong_schema=wrong_schema):
+                    target.write_text(json.dumps({'schema': wrong_schema}), encoding='utf-8')
+                    self.assertTrue(check_layout_migration_reference(root, contract))
+            target.write_text(json.dumps({'schema': canonical_schema}), encoding='utf-8')
             self.assertTrue(check_layout_migration_reference(
                 root, {'layout_migration': 'docs/evidence/LAYOUT_MIGRATION.json'}))
             for unsafe in ('../escape.json', '/tmp/absolute.json',
@@ -209,7 +261,7 @@ class RepositoryRootOwnership(unittest.TestCase):
             self.assertTrue(check_layout_migration_reference(root, contract))
             target.unlink()
             outside = root / 'elsewhere.json'
-            outside.write_text('{"schema":"surge.layout-migration.v1"}')
+            outside.write_text(json.dumps({'schema': canonical_schema}), encoding='utf-8')
             try:
                 target.symlink_to(outside)
             except (OSError, NotImplementedError):

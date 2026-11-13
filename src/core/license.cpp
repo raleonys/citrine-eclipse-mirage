@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/core/license.hpp"
-#include "preloader_l/core/license_literals.hpp"
+#include "citrine_eclipse_mirage/core/license.hpp"
+#include "citrine_eclipse_mirage/core/license_literals.hpp"
 #include <optional>
 #include <stdexcept>
 
-namespace preloader_l::license {
+namespace citrine_eclipse_mirage::license {
 namespace {
 using namespace literals;
 // Input attributes are C strings in 002cc0. The portable reader exposes a view;
@@ -148,4 +148,4 @@ bool Handlers::request_license_0320c0(const Node& request,Xml& xml) {
         fatal(c_085978,std::string(c_085a7c)+effects_.path_utf8_01e3f0(state_.executable_path_0a39e0)+c_085ba0,-7);
     ticket_required(ticket->c_str(),engine->c_str());
 }
-} // namespace preloader_l::license
+} // namespace citrine_eclipse_mirage::license

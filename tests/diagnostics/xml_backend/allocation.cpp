@@ -57,10 +57,10 @@ int main(int argc,char** argv){
  if(argc<2)return 2;std::string_view name=argv[1];long fail=argc>2?std::strtol(argv[2],nullptr,10):-1;bool persistent=argc>3&&std::string_view(argv[3])=="persistent";
  probe::profile=argv[1];
  pugi::set_memory_management_functions(probe::pugi_allocate,probe::pugi_release);
- preloader_l::xml_tiny_reference::Backend tiny;xml_comparison::Backend candidate;
+ citrine_eclipse_mirage::xml_tiny_reference::Backend tiny;xml_comparison::Backend candidate;
  if(name!="tiny"&&name!="pugi_checked")return 2;
- auto& backend=name=="tiny"?static_cast<preloader_l::messages::XmlBackend&>(tiny):static_cast<preloader_l::messages::XmlBackend&>(candidate);
- auto& nodes=name=="tiny"?static_cast<preloader_l::dispatch::NodeAccess&>(tiny):static_cast<preloader_l::dispatch::NodeAccess&>(candidate);
+ auto& backend=name=="tiny"?static_cast<citrine_eclipse_mirage::messages::XmlBackend&>(tiny):static_cast<citrine_eclipse_mirage::messages::XmlBackend&>(candidate);
+ auto& nodes=name=="tiny"?static_cast<citrine_eclipse_mirage::dispatch::NodeAccess&>(tiny):static_cast<citrine_eclipse_mirage::dispatch::NodeAccess&>(candidate);
  const std::string_view payload=argc>4?argv[4]:"small";
  std::string input=payload=="rewrite"?"<R a='pre&amp;&#65;&unknown;mid&#0;suffix'><C>&#x110000;&#xD800;</C></R>":"<LSX><Request id='1' recipient='EALS'><GetProfile index='0'/></Request></LSX>";
  if(payload=="legacy")input="<R><!odd>\v<C a='A&amp;'>\n\r</C></R>";
@@ -78,8 +78,8 @@ int main(int argc,char** argv){
   if(!measured_case)return 2;
  }
  const bool cache=payload=="cache-attribute"||payload=="cache-text";
- std::optional<preloader_l::messages::ParseResult> retained;
- const preloader_l::messages::XmlNode* cached_root=nullptr;
+ std::optional<citrine_eclipse_mirage::messages::ParseResult> retained;
+ const citrine_eclipse_mirage::messages::XmlNode* cached_root=nullptr;
  if(cache) {
   input="<R a='prefix&amp;&#65;&unknown;suffix'>prefix&amp;&#65;&unknown;suffix</R>";
   retained.emplace(backend.parse_c_string(input));cached_root=retained->document->first_element();

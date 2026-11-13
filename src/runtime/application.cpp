@@ -1,25 +1,51 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "application_internal.hpp"
-#include "preloader_l/codec/crypto.hpp"
-#include "preloader_l/core/protocol_identity.hpp"
-#include "preloader_l/net/asio_service.hpp"
-#include "preloader_l/net/session_handler.hpp"
-#include "preloader_l/net/session_routing.hpp"
-#include "preloader_l/runtime/startup.hpp"
-#include "preloader_l/runtime/libraries.hpp"
-#include "preloader_l/platform/hook_unload_guard.hpp"
-#include "preloader_l/platform/callback_lock.hpp"
-#include "preloader_l/platform/hook_transaction.hpp"
+#include "citrine_eclipse_mirage/codec/crypto.hpp"
+#include "citrine_eclipse_mirage/core/protocol_identity.hpp"
+#include "citrine_eclipse_mirage/net/asio_service.hpp"
+#include "citrine_eclipse_mirage/net/session_handler.hpp"
+#include "citrine_eclipse_mirage/net/session_routing.hpp"
+#include "citrine_eclipse_mirage/runtime/startup.hpp"
+#include "citrine_eclipse_mirage/runtime/libraries.hpp"
+#include "citrine_eclipse_mirage/platform/hook_unload_guard.hpp"
+#include "citrine_eclipse_mirage/platform/callback_lock.hpp"
+#include "citrine_eclipse_mirage/platform/hook_transaction.hpp"
 #include <algorithm>
 #include <atomic>
 #include <cstring>
 #include <future>
+#include <exception>
+#include <mutex>
+#include <optional>
 #include <thread>
 
-namespace preloader_l::application {
+namespace citrine_eclipse_mirage::application {
 namespace {
 using namespace detail;
+// Provider and main-thread extra loads intentionally overlap. Their process-wide
+// suppression is one shared lease, not independent save/restore transactions.
+// Hold the mutex only while updating the mode/count, never across loader calls
+// or foreign callbacks. Unrelated host SetErrorMode calls remain outside this
+// module's coordination contract.
+class ErrorModeLease final {
+    struct Shared {std::mutex mutex;std::size_t users=0;DWORD previous=0;};
+    static Shared& shared(){static Shared value;return value;}
+    DWORD previous_;
+public:
+    ErrorModeLease() {
+        auto& state=shared();std::lock_guard lock(state.mutex);
+        if(!state.users){state.previous=GetErrorMode();SetErrorMode(state.previous|SEM_FAILCRITICALERRORS);}
+        previous_=state.previous;++state.users;
+    }
+    ~ErrorModeLease() {
+        auto& state=shared();std::lock_guard lock(state.mutex);
+        if(!--state.users)SetErrorMode(state.previous);
+    }
+    ErrorModeLease(const ErrorModeLease&)=delete;
+    ErrorModeLease& operator=(const ErrorModeLease&)=delete;
+    DWORD previous()const noexcept{return previous_;}
+};
 class Console final:public startup::NativeConsolePlatform {
     std::uintptr_t stream_052238(unsigned n) override {
         if(n==0)return reinterpret_cast<std::uintptr_t>(stdin);
@@ -40,6 +66,9 @@ public:
     std::uint8_t& ready;
     std::uintptr_t module=0,object=0;
     std::uint8_t online=0;
+    bool destruction_unknown=false;
+    std::exception_ptr destruction_failure;
+    std::optional<ErrorModeLease> error_mode;
     Provider(configuration::State& s,Environment& e,file::Factory& f,
         execution::Execution& x,std::uint8_t& r):state(s),env(e),files(f),execution(x),ready(r){}
     online::StateRefs refs(){return {state.executable_path,state.cookie_path,state.last_profile_path,
@@ -56,8 +85,20 @@ public:
         if(!address)throw std::logic_error("Provider method is unavailable");
         return reinterpret_cast<Fn>(address);
     }
-    std::uint32_t suppress_errors_0450a0() override {auto m=GetErrorMode();SetErrorMode(m|1);return m;}
-    void restore_error_mode(std::uint32_t m) override {SetErrorMode(m);}
+    void require_known_destruction() const {
+        if(destruction_unknown) {
+            if(destruction_failure)std::rethrow_exception(destruction_failure);
+            throw std::runtime_error("Online provider destruction outcome is unknown");
+        }
+    }
+    template<class Fn> Fn checked_method(std::uintptr_t o,std::size_t slot) const {
+        require_known_destruction();return method<Fn>(o,slot);
+    }
+    std::uint32_t suppress_errors_0450a0() override {
+        if(error_mode)throw std::logic_error("Provider error suppression already active");
+        error_mode.emplace();return error_mode->previous();
+    }
+    void restore_error_mode(std::uint32_t) override {error_mode.reset();}
     Path filesystem_widen_006d70(std::string_view s) override {
         return env.filesystem_widen_006d70(s);
     }
@@ -69,12 +110,22 @@ public:
     std::uintptr_t call_create_online(std::uintptr_t fn,const char16_t* p) override {
         const auto value=wide(p);return reinterpret_cast<std::uintptr_t>(reinterpret_cast<void*(*)(const wchar_t*)>(fn)(value.c_str()));
     }
-    std::int32_t status_virtual_08(std::uintptr_t o) override{return method<int(*)(void*)>(o,1)(reinterpret_cast<void*>(o));}
-    const char* username_virtual_10(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,2)(reinterpret_cast<void*>(o));}
-    const char* persona_virtual_18(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,3)(reinterpret_cast<void*>(o));}
-    const char* user_id_virtual_20(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,4)(reinterpret_cast<void*>(o));}
-    void destroy_virtual_00(std::uintptr_t o) override{method<void(*)(void*)>(o,0)(reinterpret_cast<void*>(o));}
+    std::int32_t status_virtual_08(std::uintptr_t o) override{return checked_method<int(*)(void*)>(o,1)(reinterpret_cast<void*>(o));}
+    const char* username_virtual_10(std::uintptr_t o) override{return checked_method<const char*(*)(void*)>(o,2)(reinterpret_cast<void*>(o));}
+    const char* persona_virtual_18(std::uintptr_t o) override{return checked_method<const char*(*)(void*)>(o,3)(reinterpret_cast<void*>(o));}
+    const char* user_id_virtual_20(std::uintptr_t o) override{return checked_method<const char*(*)(void*)>(o,4)(reinterpret_cast<void*>(o));}
+    void destroy_virtual_00(std::uintptr_t o) override {
+        const auto destroy=checked_method<void(*)(void*)>(o,0);
+        // Slot resolution can fail before entry and remains retryable. Once
+        // entered, a foreign destructor may have consumed the object even if
+        // it throws. Keep both identities and block all further foreign use.
+        destruction_unknown=true;
+        try{destroy(reinterpret_cast<void*>(o));}
+        catch(...){destruction_failure=std::current_exception();throw;}
+        destruction_unknown=false;
+    }
     bool free_library(std::uintptr_t m) override {
+        require_known_destruction();
         if(!FreeLibrary(reinterpret_cast<HMODULE>(m)))
             throw std::runtime_error("Online DLL cleanup incomplete");
         return true;
@@ -88,7 +139,7 @@ public:
     void dialog_038bc0(std::string_view,std::string_view text,std::uint32_t flags) override{MessageBoxW(nullptr,wide(env.widen_0145d0(text)).c_str(),L"SURGE",flags);}
     void wait_steps_036880(std::int32_t n) override{execution.wait_steps_036880(n);}
     void finish_flag_036820() override{execution.finish_flag_036820(ready);}
-    void load(){online::worker_035b60(refs(),*this);env.provider=object;}
+    void load(){require_known_destruction();online::worker_035b60(refs(),*this);env.provider=object;}
     void close(){env.provider=0;online::cleanup_0366f0(refs(),*this);online=0;}
 };
 class ExtraLibraries final:public system_services::libraries::SystemCalls,
@@ -99,13 +150,19 @@ class ExtraLibraries final:public system_services::libraries::SystemCalls,
     system_services::libraries::NativeSystemCalls native_;
     system_services::libraries::State state_;
     std::vector<std::uintptr_t> leases_;
+    std::optional<ErrorModeLease> error_mode_;
 public:
     ExtraLibraries(Environment& e,execution::Execution& x,std::uint8_t& r):env_(e),execution_(x),ready_(r){}
     void configure(const configuration::State& s) {
         for(const auto& p:s.extra_dlls_from_main)state_.from_main.push_back(wide(p));
         for(const auto& p:s.extra_dlls)state_.from_worker.push_back(wide(p));
     }
-    void load(bool main){system_services::libraries::load_phase_035850(*this,*this,state_,main);}
+    void load(bool main) {
+        // The normal helper exit releases before publication/finish_flag. On
+        // unwind, release the remaining lease while preserving the exception.
+        struct Cleanup {std::optional<ErrorModeLease>& mode;~Cleanup(){mode.reset();}} cleanup{error_mode_};
+        system_services::libraries::load_phase_035850(*this,*this,state_,main);
+    }
     void close() {
         bool pending=false;
         for(auto& module:leases_)if(module) {
@@ -119,6 +176,11 @@ public:
     }
     std::uint32_t get_error_mode() override{return native_.get_error_mode();}
     std::uint32_t set_error_mode(std::uint32_t m) override{return native_.set_error_mode(m);}
+    std::uint32_t begin_error_suppression() override {
+        if(error_mode_)throw std::logic_error("Extra-library error suppression already active");
+        error_mode_.emplace();return error_mode_->previous();
+    }
+    void end_error_suppression(std::uint32_t) override {error_mode_.reset();}
     std::uintptr_t load_library(const wchar_t* p) override {
         // Reserve ownership before native acquisition; a vector allocation
         // failure must not leave an untracked module and fallible rollback.
@@ -145,7 +207,7 @@ class LicenseEffects final:public license::Effects {
 public:
     LicenseEffects(Environment& e,Provider& p,file::Factory& f):env_(e),provider_(p),files_(f){}
     const char* online_auth_virtual_30(const char* id) override {
-        return Provider::method<const char*(*)(void*,const char*)>(provider_.object,6)(reinterpret_cast<void*>(provider_.object),id);
+        return provider_.checked_method<const char*(*)(void*,const char*)>(provider_.object,6)(reinterpret_cast<void*>(provider_.object),id);
     }
     license::FileStatus status_01ea20(const Path& p,std::uint32_t f) override {auto s=env_.status_01ea20(p,f);return {s.kind,static_cast<std::int32_t>(s.error)};}
     [[noreturn]] void filesystem_error_018130(std::string_view op,std::int32_t e,const Path& p) override{env_.filesystem_error_018130(op,e,p);}
@@ -156,11 +218,11 @@ public:
     Path parent_path_019820(const Path& p) override{return env_.parent_path_019820(p);}
     Path join_016b00(const Path& a,const Path& b) override{return env_.join_016b00(a,b);}
     std::string path_utf8_01e3f0(const Path& p) override{return env_.path_to_utf8_031ca0(p);}
-    std::string current_time_041b60_null_true() override{return env_.current_time_041b60();}
+    std::string current_time_041b60_null_true() override{return env_.ticket_time_041b60();}
     bool wine_detected_045010() override{return GetProcAddress(GetModuleHandleW(L"ntdll.dll"),"wine_get_version")!=nullptr;}
     void log_literal_006880(std::string_view text) override{env_.debug_log({"licensing status: ",text});}
     void log_string_006860(std::string_view text) override{env_.debug_log({"licensing diagnostic: ",text});}
-    bool write_ticket_03c1d0(const Path& p,std::string_view v) override{return file::write_binary_03c1d0(p,v,files_);}
+    bool write_ticket_03c1d0(const Path& p,std::string_view v) override{return file::write_binary_checked(p,v,files_);}
     void dialog_038bc0(std::string_view,std::string_view body,std::uint32_t flags) override{MessageBoxW(nullptr,wide(env_.widen_0145d0(body)).c_str(),L"SURGE",flags);}
     [[noreturn]] void exit_05cdc0(std::int32_t code) override{ExitProcess(code);}
     [[noreturn]] void no_response_02bcd0_04d228() override{throw NoResponse();}
@@ -231,7 +293,9 @@ public:
     void crypt_observed(hooks::Selection) noexcept override {
 #ifndef NDEBUG
         thread_local bool logging=false;if(logging)return;logging=true;
-        env_.debug_log("phase");
+        // Diagnostics cannot escape this noexcept observer or prevent the
+        // original API result from reaching the host. Always reset reentry.
+        try{env_.debug_log("phase");}catch(...){}
         logging=false;
 #endif
     }
@@ -304,7 +368,7 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
     Events events;
     Mutex achievements_mutex;
     handlers::Profile profile;
-    std::int32_t saved_avatar_size=0,attempted_files=0;
+    std::int32_t saved_avatar_size=-1,attempted_files=0;
     std::uint8_t blocked=0;
     LicenseEffects license_base{environment,provider,files};
     file::NativeTextEnvironment hash_text;
@@ -317,7 +381,12 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
     std::unique_ptr<net::AsioService> service;
     std::atomic<bool> accepting{false};
     bool started=false,used=false;
-    std::thread provider_worker,extra_worker;
+#ifdef CITRINE_ECLIPSE_MIRAGE_TEST_APPLICATION_WORKER_THREAD
+    using WorkerThread=CITRINE_ECLIPSE_MIRAGE_TEST_APPLICATION_WORKER_THREAD;
+#else
+    using WorkerThread=std::thread;
+#endif
+    WorkerThread provider_worker,extra_worker;
     std::exception_ptr extra_failure;
     explicit Impl(Options o):options(std::move(o)) {
         execution::initialize_mutex_04a698(mutex,2);
@@ -329,7 +398,7 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
     ~Impl(){try{stop();}catch(...){std::terminate();}}
     [[noreturn]] void throw_no_response_02bcd0_04d228() override{throw detail::NoResponse();}
     void error(std::string_view,std::exception_ptr) noexcept override{try{environment.debug_log("session operation failed");}catch(...){}}
-    struct SessionHandler final:server::Handler,messages::Effects {
+    struct SessionHandler final:server::Handler,messages::Effects,messages::UnknownMessageEffects {
         Impl& app;
         std::uint8_t encrypted=0,unknown=0;
         crypto::Cipher cipher;
@@ -353,7 +422,10 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
             std::lock_guard lock(app.handler_state_mutex);return router.registered_handler(rva,n,out);
         }
         int atoi_05ee08(std::string_view s) override{return app.environment.atoi_05ee08(s);}
-        [[noreturn]] void invalid_message_02bd30_04d228() override{throw std::invalid_argument("RE invalid LSX message");}
+        [[noreturn]] void invalid_message_02bd30_04d228() override{throw messages::UnknownMessageError{};}
+        void unknown_message_07bd70(const messages::UnknownMessageInput& input) override{
+            app.environment.unknown_message_07bd70(input);
+        }
         [[noreturn]] void thread_error_04a648(int c) override{thread_error(c);}
         void log_received(std::string_view input) override{app.environment.debug_log({"message received: ",input});}
         void log_response(std::string_view response) override{app.environment.debug_log({"message response: ",response});}
@@ -386,11 +458,11 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
             auto provider_result=completed.get_future().share();
             // Preserve the source worker/main-extra overlap and dependency
             // order using standard-CRT threads owned until stop/join.
-            provider_worker=std::thread([this,done=std::move(completed)]() mutable {
+            provider_worker=WorkerThread([this,done=std::move(completed)]() mutable {
                 try{provider.load();done.set_value(nullptr);}catch(...){done.set_value(std::current_exception());}
             });
             extras.load(true);
-            extra_worker=std::thread([this,provider_result] {
+            extra_worker=WorkerThread([this,provider_result] {
                 if(provider_result.get())return; // Failed predecessor must not leave an infinite wait_steps loop.
                 try{extras.load(false);}
                 catch(...){extra_failure=std::current_exception();}

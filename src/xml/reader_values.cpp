@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <utility>
 
-namespace preloader_l::xml_reader_bridge::detail {
+namespace citrine_eclipse_mirage::xml_reader_bridge::detail {
 bool xml_character(std::uint32_t value) {
     return value==9 || value==10 || value==13 ||
         (value>=0x20 && value<=0xd7ff) || (value>=0xe000 && value<=0xfffd) ||

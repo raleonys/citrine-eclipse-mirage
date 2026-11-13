@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/xml/pool_clear.hpp"
+#include "citrine_eclipse_mirage/xml/pool_clear.hpp"
 #include <bit>
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -39,4 +39,4 @@ void clear_pool_blocks_002e10(std::uintptr_t pool,NativePoolClearContext& contex
 void PoolClearEffects::clear_pool_002d70(std::uintptr_t pool){clear_pool_blocks_002d70(pool,pool_clear_);}
 void PoolClearEffects::clear_pool_002dc0(std::uintptr_t pool){clear_pool_blocks_002dc0(pool,pool_clear_);}
 void PoolClearEffects::clear_pool_002e10(std::uintptr_t pool){clear_pool_blocks_002e10(pool,pool_clear_);}
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

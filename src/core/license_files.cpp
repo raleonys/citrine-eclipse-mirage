@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/core/license_files.hpp"
-#include "preloader_l/core/token.hpp"
+#include "citrine_eclipse_mirage/core/license_files.hpp"
+#include "citrine_eclipse_mirage/core/token.hpp"
 #include <cctype>
 #include <exception>
 #include <iomanip>
 #include <sstream>
 #include <stdexcept>
 
-namespace preloader_l::file {
+namespace citrine_eclipse_mirage::file {
 namespace {
 class HashInput final:public hash::InputStream {
     std::unique_ptr<Input> stream_;
@@ -61,7 +61,7 @@ std::string LicenseFiles::load_token_02afa0(const Path& path) {
     TokenFiles files(*this,files_);return token::load_token_02afa0(path,files);
 }
 bool LicenseFiles::write_ticket_03c1d0(const Path& path,std::string_view bytes) {
-    return write_binary_03c1d0(path,bytes,files_);
+    return write_binary_checked(path,bytes,files_);
 }
 const char* LicenseFiles::online_auth_virtual_30(const char* value){return remaining_.online_auth_virtual_30(value);}
 license::FileStatus LicenseFiles::status_01ea20(const Path& path,std::uint32_t flags){return remaining_.status_01ea20(path,flags);}
@@ -78,4 +78,4 @@ void LicenseFiles::log_string_006860(std::string_view text){remaining_.log_strin
 void LicenseFiles::dialog_038bc0(std::string_view title,std::string_view text,std::uint32_t flags){remaining_.dialog_038bc0(title,text,flags);}
 [[noreturn]] void LicenseFiles::exit_05cdc0(std::int32_t code){remaining_.exit_05cdc0(code);std::terminate();}
 [[noreturn]] void LicenseFiles::no_response_02bcd0_04d228(){remaining_.no_response_02bcd0_04d228();std::terminate();}
-} // namespace preloader_l::file
+} // namespace citrine_eclipse_mirage::file
