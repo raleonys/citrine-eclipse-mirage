@@ -1210,8 +1210,8 @@
       "sha256": "ba37779910cc2fd47ddd8a429fd201d15c9d587cbafdec357facc3b6e695fb90"
     },
     "tests/infrastructure/test_build_partition.py": {
-      "bytes": 29135,
-      "sha256": "64a42da4a6dc3c543320d2add5b032da90d1c4b408a860071ad54fd9abef53b5"
+      "bytes": 32046,
+      "sha256": "c13dc4a7725e76f50fadf889d71b2aab58278346201f2f93a96bcd299055dc6b"
     },
     "tests/infrastructure/test_build_path_reparse.ps1": {
       "bytes": 17701,
@@ -1262,8 +1262,8 @@
       "sha256": "b2e05e7fdf5f2a4d1536514cd1b4ed8f5a2fd3c9cc939a4dccdc4d97daecc1d3"
     },
     "tests/infrastructure/test_size_evidence.py": {
-      "bytes": 15632,
-      "sha256": "35fd99162c842052d279a85640c19275b2b4e5dc38240bc1c9224890bfd21572"
+      "bytes": 15648,
+      "sha256": "cdb9fc50f496b662a06e8d5a00623fdf3bdaf16b00902939814e5235d9f05508"
     },
     "tests/infrastructure/test_source_identity_license.py": {
       "bytes": 6969,

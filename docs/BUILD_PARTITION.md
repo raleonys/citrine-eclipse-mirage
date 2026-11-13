@@ -113,6 +113,16 @@ first clean configure. The build produces a production linker map and checks:
 4. Entry-point and protected-reader host objects have positive map evidence.
 5. Reference tests and the development DLL retain their reference dependencies.
 
+The generated `partition.<CONFIG>.targets` reader requires each target record
+to contain exactly `TARGET`, `TYPE`, `DEPS`, `SOURCES` and `END`, in that order.
+Target names and types must be nonempty; duplicate targets/fields, missing or
+reordered fields, unmatched terminators and unfinished records fail closed.
+Empty dependency/source lists remain valid when their field records are present.
+A target enters the parsed graph only after its complete record closes, so a
+later field cannot silently overwrite its executable classification or edges.
+This validates generated evidence structure; the closure, source, linker-map and
+native acceptance checks still establish their separate boundary properties.
+
 The check runs after linking and as an incremental `ALL` target. Unsupported or
 empty maps fail. Both LLVM-MinGW and MSVC map syntax have negative fixtures;
 actual MSVC linker acceptance is recorded by the selected head's Windows
