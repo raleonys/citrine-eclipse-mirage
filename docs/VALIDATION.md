@@ -329,3 +329,17 @@ retaining the allocation-before-persistence matrix and all competing-completion
 coverage. Full fixture counts vary with valid concurrent winners. Host runs use
 real completion threads and controlled persistence callbacks; they do not
 establish backend file I/O, natural Session misuse or native Windows acceptance.
+
+## Binary input exception unwinding and retry
+
+The shared binary-I/O fixture controls failures at input opening, initial state,
+seek-to-end, position, seek-to-beginning, read before/after copying and close.
+Each failure must retain its type, source and operation, stop the call sequence
+at that operation and destroy an acquired stream once without inventing an
+explicit close during unwind. Clearing the fault and retrying through the same
+factory must preserve embedded NUL bytes, the compatibility zero-filled tail
+on short read, full operation order and a fresh balanced stream lifetime.
+Both existing portable and native registrations reuse these cases; the checked
+writer's error-retention control and all unarmed native file cases remain.
+Faults target controlled Input implementations, not the native filesystem;
+portable and sanitizer execution do not establish native Windows fault behavior.
