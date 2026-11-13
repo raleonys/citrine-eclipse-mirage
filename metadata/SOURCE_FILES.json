@@ -1226,8 +1226,8 @@
       "sha256": "51d28be29d541180bcf6093153277073bc2fca33b9776f13b50fe75f909d2f43"
     },
     "tests/infrastructure/test_english_only_audit.py": {
-      "bytes": 9119,
-      "sha256": "5dc42178808bad041df976fceeb31a664c52668988c9f299f2184fdb45c8972e"
+      "bytes": 12884,
+      "sha256": "238efd3d471cc0fa9aad1a804260c85a7c38df81f3ec025d381d827af808bff2"
     },
     "tests/infrastructure/test_hook_disable_action.py": {
       "bytes": 5807,

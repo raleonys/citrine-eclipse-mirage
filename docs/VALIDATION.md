@@ -371,3 +371,18 @@ Both existing portable and native registrations retain their 30-second budgets.
 Transport, scheduler and receipt outcomes are controlled; these tests do not
 establish real TCP peer acknowledgement, persistence rollback or Windows/game
 acceptance. Socket delivery and event settlement remain separate outcomes.
+
+## Active language-audit path confinement
+
+The language audit uses the shared source-inventory name validator before
+filtering exclusions and extensions. Active payload paths reject Windows
+aliases, traversal, noncanonical separators and forbidden components. Every
+component is inspected with lstat: symbolic links and Windows reparse attributes
+are refused before file reads, followed by a resolved-root check. Reparse
+metadata works with Python 3.9 without Path.is_junction. The selected repository
+root remains the caller's boundary; checks are point-in-time and do not prevent
+concurrent component replacement. Language classification for valid files is
+unchanged. The existing Source QA and new cross-platform CTest registration run
+the same regression module. Host tests exercise real symlinks and controlled
+Windows metadata; the real owned-junction fixture runs only on Windows. A host
+skip is not native junction acceptance. No external package is required.
