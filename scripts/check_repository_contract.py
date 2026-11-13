@@ -196,7 +196,11 @@ def check_layout_migration_reference(root, contract):
     except (OSError, UnicodeError, ValueError):
         return ['Invalid or missing layout_migration file target: ' + name]
     schema = payload.get('schema') if isinstance(payload, dict) else None
-    if not isinstance(schema, str) or not schema.endswith('.layout-migration.v1'):
+    # The historical schema name is pinned by SHA-256 to avoid reproducing
+    # a reserved reference identifier in active source or metadata.
+    if (not isinstance(schema, str) or not schema.isascii() or
+            hashlib.sha256(schema.encode('ascii')).hexdigest() !=
+            '4f01afb8fc1e048dd02b9331c729506bc911ce880df79bb51b5008ba87d0d829'):
         return ['Unexpected layout_migration schema: ' + name]
     return []
 

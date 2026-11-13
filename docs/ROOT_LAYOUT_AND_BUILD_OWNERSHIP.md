@@ -61,3 +61,14 @@ layers are represented by filenames. The pre-migration source package is
 retained. A total of 177 files were moved, and 261 source/header bodies were
 verified byte-identical except for include directives.
 [Complete path mapping](../metadata/evidence/LAYOUT_MIGRATION.json).
+
+## Historical layout schema validation
+
+The layout-migration contract pointer is checked for safe paths, valid JSON and
+an exact historical schema identity. The checker requires an ASCII string with
+a fixed SHA-256 digest; a matching suffix with another namespace is insufficient.
+The digest keeps the archived source-identity label out of active code. Tests
+read the canonical schema from the retained evidence and reject forged prefixes,
+malformed Unicode and non-string values. The independent evidence-retention
+policy still pins the complete archived file and its membership; schema checking
+does not replace whole-file byte validation or modify historical records.
