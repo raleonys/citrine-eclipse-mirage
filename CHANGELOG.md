@@ -4,7 +4,7 @@ This file distinguishes source imports, integrated pull requests and published r
 
 ## This PR
 
-- Record the bounded review of three changed Archive 12 clock/publication source files against accepted product main, preserving their earlier review history. Move only those file rows to in_review, record current source/caller/test identities and concrete native/error/requirement gates, and retain RPK-0001 as an unconfirmed contract difference. This research-targeted proposal changes no product or reference payload bytes.
+- Record the bounded review of three changed Archive 12 clock/publication source files against accepted product main, preserving their earlier review history. Move only those file rows to in_review, record current source/caller/test identities and concrete native/error/requirement gates, and retain RPK-0001 as an unconfirmed contract difference. Backport the already accepted temporary-Git-fixture isolation and its enclosing-repository regression so the tracked pre-push can run safely on this older research baseline. Product and reference payload bytes remain unchanged.
 
 The sections below retain this research branch's historical changelog and do not describe current product-main release status.
 
