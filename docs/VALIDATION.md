@@ -343,3 +343,16 @@ Both existing portable and native registrations reuse these cases; the checked
 writer's error-retention control and all unarmed native file cases remain.
 Faults target controlled Input implementations, not the native filesystem;
 portable and sanitizer execution do not establish native Windows fault behavior.
+
+## Portable encoding source contracts
+
+`portable_encoding` compiles the actual codec implementation and existing
+encoding fixture. A target-local definition excludes only its Windows include
+and native test group; the default native registration still invokes both
+controlled and real Win32 groups. The controlled fixture checks codepage
+selection, conversion flags, replacement refusal, invalid-flags fallback,
+query/fill counts and failure/length behavior without changing conversion policy.
+The controlled and native function bodies remain shared and unchanged. The
+portable registration retains a 30-second budget and explicitly reports that
+Win32 was not executed. Host execution and sanitizer results do not establish
+native adapter/Windows acceptance, locale behavior or complete donor equivalence.
