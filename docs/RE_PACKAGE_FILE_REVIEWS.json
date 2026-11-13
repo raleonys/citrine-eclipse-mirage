@@ -13488,10 +13488,58 @@
     {
       "path": "anadius-execution-source/execution.cpp",
       "source_sha256": "c9a30ba892a526b9b00068d7e8d15927a60e2ecf7eda8d23a02bbfa2576f6884",
-      "status": "pending",
-      "compared_product_paths": [],
-      "finding_ids": [],
-      "review_record": null,
+      "status": "in_review",
+      "compared_product_paths": [
+        "include/citrine_eclipse_mirage/runtime/execution.hpp",
+        "src/runtime/execution.cpp",
+        "src/platform/execution_windows.cpp",
+        "src/runtime/application.cpp",
+        "src/net/asio_service.cpp",
+        "tests/unit/execution/concurrency_tests.cpp"
+      ],
+      "finding_ids": [
+        "RPK-0001"
+      ],
+      "review_record": {
+        "document": "docs/RE_PACKAGE_COMPARISONS.md",
+        "section": "Current bounded RPK-0001 review (2026-11-13 UTC)",
+        "source_commit": "56eab8795fa65325e4fa6fe31a645eb55cc58469",
+        "product_commit": "35b074519594a3b2d58cac21e07c2a84fb3ad1f1",
+        "product_files": [
+          {
+            "path": "include/citrine_eclipse_mirage/runtime/execution.hpp",
+            "sha256": "0271621e3c5fa9325bd59a7eaf158df56ab53296ffe9d6a7db08551c1c013df8"
+          },
+          {
+            "path": "src/runtime/execution.cpp",
+            "sha256": "317dc0c460013ddf621cabc3f9b06d88c6db24fa3728f3be1463cb70d8d02b27"
+          },
+          {
+            "path": "src/platform/execution_windows.cpp",
+            "sha256": "0bae86f6b949aec256b34fe45172fdac0a98e21d66c506d562567096c0099a99"
+          },
+          {
+            "path": "src/runtime/application.cpp",
+            "sha256": "7a2be80fd20f60a6e5b279ff8836c4be875040b5f3f32692219cce9265e4348b"
+          },
+          {
+            "path": "src/net/asio_service.cpp",
+            "sha256": "5b4f8de8607a3978c53caf0926e11a0385644fb8944846b85fc664d9db12c070"
+          },
+          {
+            "path": "tests/unit/execution/concurrency_tests.cpp",
+            "sha256": "3e03a9e0aa226c819b18eed7f5dafe510debcdde0e9eb1343c7d6019d656f8f9"
+          }
+        ],
+        "scope": "Owner load/store and real SRW ordering, recursive SourceGuard/LastError scope, flag write and post-unlock observer order, port composition, count predicate, signed wrapping conversion, cold-cache QPC serialization and sleep outside the source gate were read. Unknown OS outcomes and invalid frequency domains are not assigned invented recovery semantics.",
+        "disposition": "Observed source-contract distinction; no confirmed product defect or exactly-once product requirement. Native/error/foreign-owner proof remains open.",
+        "validation": "Selected input bytes verified. Current compared product portable_execution and portable_execution_concurrency passed in the consolidated product workspace; no archived code or native Windows execution performed.",
+        "remaining": [
+          "Native QPC/error and SRW/LastError observations for a real supported caller",
+          "External/shared-cache ownership and an externally required exactly-once sampling contract",
+          "Referenced helper/native source review and complete original/Consumer equivalence"
+        ]
+      },
       "prior_reviews": [
         {
           "path": "anadius-execution-source/execution.cpp",
@@ -13516,10 +13564,58 @@
     {
       "path": "anadius-execution-source/execution.hpp",
       "source_sha256": "eb6c3dd0fd279ee9aecafef33c60ba184ab424b3e003143b5271f91ce818ab55",
-      "status": "pending",
-      "compared_product_paths": [],
-      "finding_ids": [],
-      "review_record": null,
+      "status": "in_review",
+      "compared_product_paths": [
+        "include/citrine_eclipse_mirage/runtime/execution.hpp",
+        "src/runtime/execution.cpp",
+        "src/platform/execution_windows.cpp",
+        "src/runtime/application.cpp",
+        "src/net/asio_service.cpp",
+        "tests/unit/execution/concurrency_tests.cpp"
+      ],
+      "finding_ids": [
+        "RPK-0001"
+      ],
+      "review_record": {
+        "document": "docs/RE_PACKAGE_COMPARISONS.md",
+        "section": "Current bounded RPK-0001 review (2026-11-13 UTC)",
+        "source_commit": "56eab8795fa65325e4fa6fe31a645eb55cc58469",
+        "product_commit": "35b074519594a3b2d58cac21e07c2a84fb3ad1f1",
+        "product_files": [
+          {
+            "path": "include/citrine_eclipse_mirage/runtime/execution.hpp",
+            "sha256": "0271621e3c5fa9325bd59a7eaf158df56ab53296ffe9d6a7db08551c1c013df8"
+          },
+          {
+            "path": "src/runtime/execution.cpp",
+            "sha256": "317dc0c460013ddf621cabc3f9b06d88c6db24fa3728f3be1463cb70d8d02b27"
+          },
+          {
+            "path": "src/platform/execution_windows.cpp",
+            "sha256": "0bae86f6b949aec256b34fe45172fdac0a98e21d66c506d562567096c0099a99"
+          },
+          {
+            "path": "src/runtime/application.cpp",
+            "sha256": "7a2be80fd20f60a6e5b279ff8836c4be875040b5f3f32692219cce9265e4348b"
+          },
+          {
+            "path": "src/net/asio_service.cpp",
+            "sha256": "5b4f8de8607a3978c53caf0926e11a0385644fb8944846b85fc664d9db12c070"
+          },
+          {
+            "path": "tests/unit/execution/concurrency_tests.cpp",
+            "sha256": "3e03a9e0aa226c819b18eed7f5dafe510debcdde0e9eb1343c7d6019d656f8f9"
+          }
+        ],
+        "scope": "Recovered 0x50 mutex layout, atomic owner projection requirements, caller-owned flags/cache, noncopyable one-wrapper ownership, optional Publication interface and direct/shared-owner exclusions were read. Product has a separate public C++ shape and no donor observer ABI.",
+        "disposition": "Observed source-contract distinction; no confirmed product defect or exactly-once product requirement. Native/error/foreign-owner proof remains open.",
+        "validation": "Selected input bytes verified. Current compared product portable_execution and portable_execution_concurrency passed in the consolidated product workspace; no archived code or native Windows execution performed.",
+        "remaining": [
+          "Native QPC/error and SRW/LastError observations for a real supported caller",
+          "External/shared-cache ownership and an externally required exactly-once sampling contract",
+          "Referenced helper/native source review and complete original/Consumer equivalence"
+        ]
+      },
       "prior_reviews": [
         {
           "path": "anadius-execution-source/execution.hpp",
@@ -39680,10 +39776,58 @@
     {
       "path": "anadius-startup-publication-source/publication_tests.cpp",
       "source_sha256": "7af4e858d48fc91b64989dde02db2fa4cc67de25995cf4c9681e435c78dccd4b",
-      "status": "pending",
-      "compared_product_paths": [],
-      "finding_ids": [],
-      "review_record": null,
+      "status": "in_review",
+      "compared_product_paths": [
+        "include/citrine_eclipse_mirage/runtime/execution.hpp",
+        "src/runtime/execution.cpp",
+        "src/platform/execution_windows.cpp",
+        "src/runtime/application.cpp",
+        "src/net/asio_service.cpp",
+        "tests/unit/execution/concurrency_tests.cpp"
+      ],
+      "finding_ids": [
+        "RPK-0001"
+      ],
+      "review_record": {
+        "document": "docs/RE_PACKAGE_COMPARISONS.md",
+        "section": "Current bounded RPK-0001 review (2026-11-13 UTC)",
+        "source_commit": "56eab8795fa65325e4fa6fe31a645eb55cc58469",
+        "product_commit": "35b074519594a3b2d58cac21e07c2a84fb3ad1f1",
+        "product_files": [
+          {
+            "path": "include/citrine_eclipse_mirage/runtime/execution.hpp",
+            "sha256": "0271621e3c5fa9325bd59a7eaf158df56ab53296ffe9d6a7db08551c1c013df8"
+          },
+          {
+            "path": "src/runtime/execution.cpp",
+            "sha256": "317dc0c460013ddf621cabc3f9b06d88c6db24fa3728f3be1463cb70d8d02b27"
+          },
+          {
+            "path": "src/platform/execution_windows.cpp",
+            "sha256": "0bae86f6b949aec256b34fe45172fdac0a98e21d66c506d562567096c0099a99"
+          },
+          {
+            "path": "src/runtime/application.cpp",
+            "sha256": "7a2be80fd20f60a6e5b279ff8836c4be875040b5f3f32692219cce9265e4348b"
+          },
+          {
+            "path": "src/net/asio_service.cpp",
+            "sha256": "5b4f8de8607a3978c53caf0926e11a0385644fb8944846b85fc664d9db12c070"
+          },
+          {
+            "path": "tests/unit/execution/concurrency_tests.cpp",
+            "sha256": "3e03a9e0aa226c819b18eed7f5dafe510debcdde0e9eb1343c7d6019d656f8f9"
+          }
+        ],
+        "scope": "Read every test function: mapping/failure, port payload, waiter/clock, observer release/payload. Assertions cover foreign/reused issuers, duplicate/preseeded/aliased flags, native error prefixes, failed unlock, payload sequencing, source-gate release and 8x100 samples with one frequency query. Helper/native implementation dependencies remain separate file rows; no supplied test was executed.",
+        "disposition": "Observed source-contract distinction; no confirmed product defect or exactly-once product requirement. Native/error/foreign-owner proof remains open.",
+        "validation": "Selected input bytes verified. Current compared product portable_execution and portable_execution_concurrency passed in the consolidated product workspace; no archived code or native Windows execution performed.",
+        "remaining": [
+          "Native QPC/error and SRW/LastError observations for a real supported caller",
+          "External/shared-cache ownership and an externally required exactly-once sampling contract",
+          "Referenced helper/native source review and complete original/Consumer equivalence"
+        ]
+      },
       "prior_reviews": [
         {
           "path": "anadius-startup-publication-source/publication_tests.cpp",

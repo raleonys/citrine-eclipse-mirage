@@ -2,6 +2,12 @@
 
 This file distinguishes source imports, integrated pull requests and published releases. A GitHub merge is a source change, not an R-numbered release or release tag.
 
+## This PR
+
+- Record the bounded review of three changed Archive 12 clock/publication source files against accepted product main, preserving their earlier review history. Move only those file rows to in_review, record current source/caller/test identities and concrete native/error/requirement gates, and retain RPK-0001 as an unconfirmed contract difference. Backport the already accepted temporary-Git-fixture isolation and its enclosing-repository regression so the tracked pre-push can run safely on this older research baseline. Product and reference payload bytes remain unchanged.
+
+The sections below retain this research branch's historical changelog and do not describe current product-main release status.
+
 ## Unreleased — post-import GitHub development (2026-10-30 to 2026-10-31)
 
 The 52 entries below are the merged pull requests verified through PR #62, linked to their individual review records. The GitHub Releases collection was empty at this checkpoint, so these entries must not be read as published releases or evidence of Windows/native/game acceptance.
