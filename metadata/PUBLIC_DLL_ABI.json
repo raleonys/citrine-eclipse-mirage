@@ -1,8 +1,8 @@
 {
   "schema": "surge.public-dll-abi.v1",
   "task": "SURGE-WINDOWS-IO-20261029",
-  "target": "preloader_l",
-  "dll": "preloader.unsigned.dll",
+  "target": "citrine_eclipse_mirage",
+  "dll": "citrine_eclipse_mirage.unsigned.dll",
   "platform": "Windows x64",
   "implementation": "OWNED_C_INTERFACE_NOT_UNKNOWN_BINARY_LAYOUT",
   "exports": {
@@ -31,7 +31,7 @@
   },
   "caller_lifetime": "Retain the LoadLibrary reference until DllShutdown succeeds. Readiness/port exports removed by owner correction; tools observe existing EALsxPort/LSX protocol.",
   "worker_lifetime": "Extra image lease acquired by worker outside loader lock, released only after successful application destruction. Failure retains application and image.",
-  "source_api_target": "preloader_l_source_api / preloader.source.dll; separate development C++ exports, opt-in when BUILD_TESTING=OFF",
+  "source_api_target": "citrine_eclipse_mirage_source_api / citrine_eclipse_mirage.source.dll; separate development C++ exports, opt-in when BUILD_TESTING=OFF",
   "original_consumer_linkage": "See the original-linkage evidence in the provenance document; no executable import patching is performed",
   "unverified_548_byte_claim": "WITHDRAWN_NO_AUTHORITATIVE_LAYOUT_FOUND_IN_SUPPLIED_RE",
   "native_windows_msvc": "NOT_RUN",

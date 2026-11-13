@@ -1,29 +1,30 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "preloader_l/runtime/application.hpp"
-#include "preloader_l/codec/encoding.hpp"
-#include "preloader_l/core/license_files.hpp"
-#include "preloader_l/runtime/achievement_runtime.hpp"
-#include "preloader_l/runtime/timestamp.hpp"
-#include "preloader_l/runtime/online.hpp"
-#include "preloader_l/runtime/event_queue.hpp"
-#include "preloader_l/runtime/event_adapters.hpp"
-#include "preloader_l/platform/hook_native_callbacks.hpp"
-#include "preloader_l/platform/execution_windows.hpp"
-#include "preloader_l/xml/reader.hpp"
+#include "citrine_eclipse_mirage/runtime/application.hpp"
+#include "citrine_eclipse_mirage/protocol/messages.hpp"
+#include "citrine_eclipse_mirage/codec/encoding.hpp"
+#include "citrine_eclipse_mirage/core/license_files.hpp"
+#include "citrine_eclipse_mirage/runtime/achievement_runtime.hpp"
+#include "citrine_eclipse_mirage/runtime/timestamp.hpp"
+#include "citrine_eclipse_mirage/runtime/online.hpp"
+#include "citrine_eclipse_mirage/runtime/event_queue.hpp"
+#include "citrine_eclipse_mirage/runtime/event_adapters.hpp"
+#include "citrine_eclipse_mirage/platform/hook_native_callbacks.hpp"
+#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
 #include <filesystem>
 #include <initializer_list>
 #include <mutex>
 #include <array>
 #include <system_error>
 
-namespace preloader_l::application::detail {
+namespace citrine_eclipse_mirage::application::detail {
 using Path=configuration::Path;
 namespace fs=std::filesystem;
 inline std::wstring wide(std::u16string_view p){return {p.begin(),p.end()};}
 inline Path utf16(std::wstring_view p){return {p.begin(),p.end()};}
-struct NoResponse:std::runtime_error {NoResponse():std::runtime_error("RE no-response") {}};
+using NoResponse=messages::NoResponseRequiredError;
 [[noreturn]] inline void thread_error(int index){
     struct Spec {int code;const char* context;};
     static constexpr std::array<Spec,7> errors{{
@@ -76,12 +77,14 @@ public:
 class Environment final:public configuration::Dependencies,
                         public achievement_storage::Effects,
                         public handlers::Effects,
-                        public achievement_runtime::PersistenceEffects {
+                        public achievement_runtime::PersistenceEffects,
+                        public content_handlers::AvatarRequest {
 public:
     Environment(configuration::State&,Options&,file::NativeFactory&,
                 xml_reader_bridge::Backend&,achievement_storage::Paths&,
                 achievement_runtime::HostClock&,achievement_runtime::HostFormatter&);
     void configure();
+    void unknown_message_07bd70(const messages::UnknownMessageInput&);
     void log(std::string_view);
     void log(std::initializer_list<std::string_view>);
     void log_number(std::string_view,std::int64_t);
@@ -138,9 +141,11 @@ public:
     std::int64_t timestamp_to_epoch_041e10(std::string_view) override;
     void log_profile_name_084f48(std::string_view) override;
     std::string current_time_041b60() override;
+    std::string ticket_time_041b60();
     std::int32_t atoi_05ee08(std::string_view) override;
     void unknown_entitlement_field(std::string_view) override;
     bool online_avatar_virtual_28(const Path&) override;
+    bool request_online_avatar(const Path&,const char*,std::int32_t) override;
     bool copy_overwrite_048d20(const Path&,const Path&) override;
     void log_saved_size_085530(std::int32_t) override;
     online::Object provider=0;

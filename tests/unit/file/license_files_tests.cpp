@@ -1,19 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/core/license_files.hpp"
-#include "preloader_l/core/token_constants.hpp"
-#include "preloader_l/xml/reader.hpp"
+#include "citrine_eclipse_mirage/core/license_files.hpp"
+#include "citrine_eclipse_mirage/core/token_constants.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
 #include <filesystem>
 #include <iostream>
 #include <locale>
 #include <stdexcept>
 
-namespace file=preloader_l::file;
-namespace license=preloader_l::license;
-namespace crypto=preloader_l::crypto;
-namespace token=preloader_l::token;
-namespace xml=preloader_l::xml;
-namespace reader=preloader_l::xml_reader_bridge;
+namespace file=citrine_eclipse_mirage::file;
+namespace license=citrine_eclipse_mirage::license;
+namespace crypto=citrine_eclipse_mirage::crypto;
+namespace token=citrine_eclipse_mirage::token;
+namespace xml=citrine_eclipse_mirage::xml;
+namespace reader=citrine_eclipse_mirage::xml_reader_bridge;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -50,12 +50,43 @@ public:
     [[noreturn]] void no_response_02bcd0_04d228()override{throw NoResponse{};}
 };
 class NoAttributes final:public xml::AttributeReader {
-public:const char* attribute(preloader_l::handlers::Request,const char*)override{unused();}
+public:const char* attribute(citrine_eclipse_mirage::handlers::Request,const char*)override{unused();}
 };
 std::string encrypted_fixture(std::string_view value) {
     std::string bytes(65,'H');bytes+="<GameToken>";bytes+=value;bytes+="</GameToken>";
     crypto::Cipher cipher;cipher.set_key_and_iv_042760(token::constants::key_084a50,token::constants::iv_084a60);
     check(cipher.encrypt_with_offset(bytes,65),"synthetic token fixture encryption");return bytes;
+}
+void native_hash_boundaries(const std::filesystem::path& root,file::Factory& io,file::LicenseFiles& binding) {
+    // Independent hashlib.sha1 answers for bytes[i] = (i * 37 + 11) & 255.
+    // Exercise the real file stream at, below and beyond its 8192-byte reads.
+    constexpr struct {std::size_t size;const char* digest;} cases[]{
+        {0,"da39a3ee5e6b4b0d3255bfef95601890afd80709"},
+        {1,"067d5096f219c64b53bb1c7d5e3754285b565a47"},
+        {8191,"9dc1ee7f066f90afe5b2c74e97e4a45c3a4b0e3d"},
+        {8192,"706e3fc6a93a816c4bb435f166fa60e969a18d35"},
+        {8193,"97a5881d35343154191c8f5e692c0eeb565ec878"},
+        {16384,"d93c49629ae0053dc6df04e92aa1b87228033b9c"},
+        {16385,"29e9ecd464319da3f344c91f06735ea85eaca042"},
+        {32769,"ebc0fbcfadc1295f8f39a7a5572b50febe780bda"}
+    };
+    const auto path=(root/std::filesystem::path(u"hash-boundary-\u0131.bin")).u16string();
+    for(const auto& test:cases) {
+        std::string bytes(test.size,'\0');
+        for(std::size_t i=0;i<bytes.size();++i)bytes[i]=static_cast<char>((i*37+11)&255);
+        check(file::write_binary_03c1d0(path,bytes,io),"write native hash boundary fixture");
+        check(std::filesystem::file_size(std::filesystem::path(path))==test.size,"native hash fixture exact size");
+        check(binding.file_hash_matches_042d20(path,test.digest),"native complete-file SHA1 known answer");
+        if(test.size>8192) {
+            check(!binding.file_hash_matches_042d20(path,cases[3].digest),"native hash rejects first-read prefix digest");
+            bytes.back()=static_cast<char>(static_cast<unsigned char>(bytes.back())^0x80U);
+            check(file::write_binary_03c1d0(path,bytes,io),"rewrite native hash fixture with changed tail");
+            check(!binding.file_hash_matches_042d20(path,test.digest),"native hash detects changed byte beyond first read");
+        }
+    }
+    check(file::write_binary_03c1d0(path,"abc",io),"truncate multi-read native hash fixture");
+    check(binding.file_hash_matches_042d20(path,"a9993e364706816aba3e25717850c26c9cd0d89d"),
+        "native hash after truncation excludes old trailing bytes");
 }
 void run(const std::filesystem::path& directory) {
     const auto root=std::filesystem::absolute(directory).lexically_normal();
@@ -70,6 +101,7 @@ void run(const std::filesystem::path& directory) {
     check(expected=="A9993E364706816ABA3E25717850C26C9CD0D89D","expected source string not consumed");
     check(!binding.file_hash_matches_042d20(dll,std::string(40,'0')),"actual file hash mismatch");
     check(!binding.file_hash_matches_042d20((root/"absent.bin").u16string(),expected),"actual file missing returns false");
+    native_hash_boundaries(root,io,binding);
     const auto base=(root/"synthetic-license").u16string();
     const auto normal=base+u".dlf",cached=base+u"_cached.dlf";
     check(file::write_binary_03c1d0(normal,encrypted_fixture("fixture-A<&"),io),"write synthetic normal token file");
@@ -78,7 +110,7 @@ void run(const std::filesystem::path& directory) {
     std::string auth,license_value,exe_hash(40,'0'),content_id="fixture-content";
     std::uint8_t online=0,fake_auth=0,blocked=0;
     std::int32_t attempts=0;
-    preloader_l::handlers::Attributes game;
+    citrine_eclipse_mirage::handlers::Attributes game;
     license::Handlers core({auth,online,fake_auth,license_value,expected,exe_hash,content_id,
         dll,dll,base,game,attempts,blocked},binding);
     reader::Backend backend;auto request=backend.parse_c_string("<RequestLicense/>");

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/platform/registry.hpp"
+#include "citrine_eclipse_mirage/platform/registry.hpp"
 #include <limits>
 
-namespace preloader_l::registry {
+namespace citrine_eclipse_mirage::registry {
 std::string resolve_narrow_008980(const Values& v, ValueEffects& e, std::string_view k) {
     const auto it = v.find(k);
     return it == v.end() ? std::string{} : e.filesystem_narrow(it->second);
@@ -113,11 +113,13 @@ Status query_impl(StateRefs s, Effects& e, const Query& a, Original original, Co
         replacement = write(a.data, a.size, "ClientPath", capacity);
         replaced = true;
     } else if (s.language_0a37f0.contains(a.key) && compare(a.name, "LanguageValue") == 0) {
-        // Original obtains its narrow log string before emitting the prefix.
-        const auto language = resolve_narrow_008980(s.values, e, "Language");
-        e.log_literal_006880(0x1800808e0);
-        e.log_text_007990(language);
-        e.finish_log_0088e0();
+        {
+            // Retire the counted log conversion before constructing the replacement.
+            const auto language = resolve_narrow_008980(s.values, e, "Language");
+            e.log_literal_006880(0x1800808e0);
+            e.log_text_007990(language);
+            e.finish_log_0088e0();
+        }
         replacement = write(a.data, a.size, "Language", capacity);
         replaced = true;
     }

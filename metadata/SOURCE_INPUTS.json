@@ -5,19 +5,37 @@
   "library_access": false,
   "next_phase_vendor_archives": {
     "PEGTL-main.zip": {
-      "sha256": "80ac358a098e83637b2ee367baab1ca569e1475c51b1b8dacece2088f86349ad",
-      "bytes": 906094,
-      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
-      "path": "/workspace/project-input/3RD PARTY/PEGTL-main.zip",
-      "source_materialization": "INSTALLED_BYTE_EXACT"
+      "sha256": "a7d08187f517fc10f7ca459c13254bed0e63191262102bdab4436dcc3d6cdd11",
+      "bytes": 973410,
+      "production_integration": "Owner-authorized upstream snapshot update; exact-head compatibility/native evidence remains separate",
+      "path": "/workspace/attachments/60f1d60d-1072-41ea-a7b2-cd873d4f7a2f/PEGTL-main (1).zip",
+      "source_materialization": "NOT_SELECTED_OWNER_REPLACED_WITH_UPLOADED_PEGTL_4_X_SNAPSHOT",
+      "upstream_commit_from_archive_comment": "419ba27d27e80e33bf180932a9e4c483c4b8dd65",
+      "supplied_filename": "PEGTL-main (1).zip",
+      "previous_selected_input": {
+        "sha256": "80ac358a098e83637b2ee367baab1ca569e1475c51b1b8dacece2088f86349ad",
+        "bytes": 906094,
+        "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+        "path": "/workspace/project-input/3RD PARTY/PEGTL-main.zip",
+        "source_materialization": "INSTALLED_BYTE_EXACT"
+      }
     },
     "asio-master.zip": {
-      "sha256": "d28dbc79b8c98b860ba6c06bd89de76bc352931560f9d169819e46280778975b",
-      "bytes": 4239595,
-      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
-      "path": "/workspace/attachments/62ce09d4-104d-4eab-900c-3f1a385be3ef/asio-master.zip",
+      "sha256": "5f384a220751aff27e517e559b9257292f00e7a2c31c2e83282d3e522d591ade",
+      "bytes": 4256615,
+      "production_integration": "Owner-authorized upstream snapshot update; exact-head compatibility/native evidence remains separate",
+      "path": "/workspace/attachments/90122c9d-61de-45d3-b5cd-bf2ba887f891/asio-master (1).zip",
       "source_materialization": "INSTALLED_BYTE_EXACT",
-      "upstream_commit_from_archive_comment": "bdf337ddb1a667c274372a602de5857ad3cb3ed0"
+      "upstream_commit_from_archive_comment": "190a8d8daf1cc62909b4e0c72ff491ba264ca98e",
+      "supplied_filename": "asio-master (1).zip",
+      "previous_selected_input": {
+        "sha256": "d28dbc79b8c98b860ba6c06bd89de76bc352931560f9d169819e46280778975b",
+        "bytes": 4239595,
+        "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+        "path": "/workspace/attachments/62ce09d4-104d-4eab-900c-3f1a385be3ef/asio-master.zip",
+        "source_materialization": "INSTALLED_BYTE_EXACT",
+        "upstream_commit_from_archive_comment": "bdf337ddb1a667c274372a602de5857ad3cb3ed0"
+      }
     },
     "filesystem-master.zip": {
       "sha256": "5db08830a172ca4d8d2ecf98d6397041a3d0fa4d04584a0bcddb29778b68a251",
@@ -47,6 +65,39 @@
       "path": "/workspace/attachments/cfef2e33-0dee-4155-91e6-b72b67b6c675/pugixml-master.zip",
       "source_materialization": "INSTALLED_BYTE_EXACT",
       "upstream_commit_from_archive_comment": "f0a3faa76e04f35110257ca8713363dee3c890e8"
+    },
+    "PEGTL-4.x.zip": {
+      "sha256": "3eb2096ceeb7bbf722775d7cfd98ddf0f3ca008c5e2f44835b11dd014c1400a0",
+      "bytes": 815458,
+      "production_integration": "Owner-selected 4.x branch snapshot; not selected by stable release tag; exact-head native evidence remains separate",
+      "path": "/workspace/attachments/cf09f8f3-ce37-46b0-8f57-42b90420e9f1/PEGTL-4.x.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT",
+      "upstream_commit_from_archive_comment": "b60f6110abd37e502d202d13a6c565410c552c33",
+      "supplied_filename": "PEGTL-4.x.zip",
+      "selected_branch": "4.x",
+      "previous_selected_input": {
+        "active_build_link_proved": false,
+        "archive": "PEGTL-main.zip",
+        "archive_folder": "PEGTL-main/",
+        "bytes": 973410,
+        "intended_active_use": "APPLICATION_CONFIG2_VDF_GRAMMAR",
+        "license": "Boost Software License 1.0 (LICENSE_1_0.txt)",
+        "license_source_retained": true,
+        "member_count": 881,
+        "member_manifest": "metadata/vendor_files/pegtl.sha256",
+        "member_manifest_sha256": "42009e2eb2e2776cbe422c3820e6ed3c5644ccebcc0feaab648643de96b77085",
+        "reported_version": "4.0.0 (archive header; newer main snapshot)",
+        "sha256": "a7d08187f517fc10f7ca459c13254bed0e63191262102bdab4436dcc3d6cdd11",
+        "source_install_path": "third_party/pegtl",
+        "symlinks": {},
+        "upstream_commit": "419ba27d27e80e33bf180932a9e4c483c4b8dd65",
+        "installed_member_integrity": "PASS",
+        "production_role": "APPLICATION_CONFIG2_VDF_GRAMMAR",
+        "cmake_target": "citrine_eclipse_mirage_pegtl",
+        "application_owner": "citrine_eclipse_mirage_vdf_objects",
+        "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification",
+        "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC_AND_GOLDEN_FOR_SELECTED_SNAPSHOT"
+      }
     }
   },
   "source_reference_document": "metadata/evidence/contracts/SOURCE_INPUTS.json"

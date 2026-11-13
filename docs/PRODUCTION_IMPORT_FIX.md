@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 > Historical snapshot: the subsequent hook 11/lifecycle and metadata
 > corrections are documented in
 > [Bluefield alignment](HOOK_ALIGNMENT.md) and
@@ -53,12 +56,13 @@ and the owner's native log are in
 
 The parent package had also failed to write the final
 file to dist. After six Golden stages and three actual
-runtime cycles with the finalized `preloader_l.dll`
+runtime cycles with the finalized `citrine_eclipse_mirage.dll`
 copy, it now writes the DLL, SHA-256, and receipt.
 The runtime host uses the supplied file's actual
 basename during unload checks instead of hard-coding
-the unsigned name. The filter remains
-`preloader_l.dll`.
+the unsigned name. The hook's compatibility filter remains `preloader_l.dll`; the current
+shipping name is independently `citrine_eclipse_mirage.dll`. This corrects a
+later documentation rename; it does not change the historical hook policy.
 See [Golden and dist flow](GOLDEN_PROTOCOLS.md) and
 [distribution contract](../metadata/DIST_CONTRACT.json).
 
@@ -73,7 +77,7 @@ actual Windows/MSVC, and no game call trace was provided.
 Local validation passed Release/Wine 173/173,
 affected Debug 5/5, and 28 infrastructure regressions.
 Three runtime cycles passed with an actual LLVM DLL
-named `preloader_l.dll`. Both Release and Debug imports
+named `citrine_eclipse_mirage.dll`. Both Release and Debug imports
 included CRYPT32!CryptQueryObject, OLE32 was absent,
 and the VERSIONINFO and PNG data placement remained
 unchanged. Native MSVC acceptance of the current

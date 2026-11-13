@@ -103,7 +103,7 @@ namespace example
       struct cache
       {
          std::size_t pos = 0;
-         std::array< void*, N > data{};
+         std::array< void*, N > data;
 
          cache() = default;
 
@@ -113,7 +113,7 @@ namespace example
          ~cache()
          {
             while( pos != 0 ) {
-               ::operator delete( data.at( --pos ) );
+               ::operator delete( data[ --pos ] );
             }
          }
 
@@ -123,7 +123,7 @@ namespace example
          void* get( std::size_t sz )
          {
             if( pos != 0 ) {
-               return data.at( --pos );
+               return data[ --pos ];
             }
             return ::operator new( sz );
          }
@@ -131,7 +131,7 @@ namespace example
          void put( void* p )
          {
             if( pos < N ) {
-               data.at( pos++ ) = p;
+               data[ pos++ ] = p;
             }
             else {
                ::operator delete( p );
@@ -139,17 +139,13 @@ namespace example
          }
       };
 
-      namespace
-      {
-         cache< 32 > the_cache;
-
-      }  // namespace
+      static cache< 32 > the_cache;
 
    }  // namespace internal
 
    // this is not necessary for the example, but serves as a demonstration for an additional optimization.
    struct node
-      : pegtl::parse_tree::basic_node< node, pegtl::argv_input<>::error_position_t >
+      : pegtl::parse_tree::basic_node< node, typename pegtl::argv_input<>::error_position_t >
    {
       void* operator new( std::size_t sz )
       {

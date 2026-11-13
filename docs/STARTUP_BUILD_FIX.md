@@ -1,7 +1,10 @@
+> **Historical checkpoint.** Use [DEVELOPMENT.md](DEVELOPMENT.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # Startup lock and build entrypoints
 
 The owner reported that the game did not start at all with
-`dist/preloader_l.dll` built from the last
+`dist/citrine_eclipse_mirage.dll` built from the last
 `yellowfield-bluefield-aligned-source.zip` package, while Bluefield performed
 the same product task. `surge.cfg` must remain optional. A successful build
 or test does not establish real game compatibility.

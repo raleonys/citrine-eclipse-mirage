@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/xml/reader.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -9,8 +9,8 @@
 #include <string>
 
 namespace {
-namespace reader=preloader_l::xml_reader_bridge;
-namespace messages=preloader_l::messages;
+namespace reader=citrine_eclipse_mirage::xml_reader_bridge;
+namespace messages=citrine_eclipse_mirage::messages;
 // Keep the historical fixture unchanged. Each reviewed exception checks both
 // its frozen row and the exact repaired value; no row or error check is skipped.
 // 1792/10495 preserve invalid control references (#6/#5) literally. All other
@@ -75,7 +75,7 @@ int main(int argc,char** argv)try {
     std::ifstream corpus(argv[1]),expected(argv[2]);
     if(!corpus||!expected)throw std::runtime_error("Cannot open pinned XML corpus");
     reader::Backend backend;
-    std::size_t cases=0,corrected=0;
+    std::size_t cases=0,corrected=0,depth_corrected=0;
     std::string line,reference;
     while(std::getline(corpus,line)) {
         ++cases;
@@ -85,6 +85,16 @@ int main(int argc,char** argv)try {
         const auto count=std::stoull(line.substr(0,split));
         auto input=unhex(std::string_view(line).substr(split+1));
         if(count>input.size())throw std::runtime_error("Corpus count exceeds actual input");
+        if(cases==83||cases==84) {
+            const unsigned depth=cases==83?100:498;
+            std::string source,old_tree="0|0||";
+            for(unsigned i=0;i<depth;++i){source+="<R>";old_tree+="[52;NULL";}
+            for(unsigned i=0;i<depth;++i){source+="</R>";old_tree+=']';}
+            if(count!=source.size()||input.compare(0,count,source)!=0||reference!=old_tree)
+                throw std::runtime_error("Reviewed frozen depth row changed");
+            reference="18|1|"+hex("Error=XML_ELEMENT_DEPTH_EXCEEDED ErrorID=18 (0x12) Line number=1: Element nesting is too deep.")+"|";
+            ++depth_corrected;
+        }
         auto parsed=backend.parse_c_string({input.data(),static_cast<std::size_t>(count)});
         input.assign(input.size(),'X'); // Only the parsed document owns live text.
         std::ostringstream actual;
@@ -101,6 +111,7 @@ int main(int argc,char** argv)try {
         throw std::runtime_error("Corpus IO error or extra expected rows");
     if(cases!=12087)throw std::runtime_error("Incomplete XML corpus");
     if(corrected!=std::size(corrections))throw std::runtime_error("Incomplete reviewed XML value corrections");
-    std::cout<<"PASS: "<<cases<<" pinned XML parse/ownership/error/tree corpus cases; "<<corrected<<" reviewed malformed-value corrections\n";
+    if(depth_corrected!=2)throw std::runtime_error("Incomplete reviewed A12 depth-policy changes");
+    std::cout<<"PASS: "<<cases<<" pinned XML parse/ownership/error/tree corpus cases; "<<corrected<<" reviewed malformed-value corrections; "<<depth_corrected<<" declared A12 depth-policy changes\n";
     return 0;
 }catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}

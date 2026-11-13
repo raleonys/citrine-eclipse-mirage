@@ -1,22 +1,95 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/event_adapters.hpp"
-#include "preloader_l/runtime/achievement_runtime.hpp"
-#include "preloader_l/xml/reader.hpp"
+#include "citrine_eclipse_mirage/runtime/event_adapters.hpp"
+#include "citrine_eclipse_mirage/runtime/achievement_runtime.hpp"
+#include "citrine_eclipse_mirage/xml/reader.hpp"
 #include <algorithm>
+#include <cstdlib>
 #include <iostream>
 #include <limits>
+#include <new>
 #include <stdexcept>
 #include <vector>
-namespace eq=preloader_l::event_queue;
-namespace msg=preloader_l::messages;
-namespace content=preloader_l::content_handlers;
-namespace ar=preloader_l::achievement_runtime;
-namespace cfg=preloader_l::configuration;
+namespace seed_allocations {
+thread_local bool armed=false;
+thread_local std::size_t count=0,fail_at=std::numeric_limits<std::size_t>::max();
+}
+void* operator new(std::size_t bytes) {
+    // Select container/string data, allowing smaller checked-STL proxy nodes
+    // that can be allocated by noexcept string moves.
+    if(seed_allocations::armed&&bytes>=sizeof(std::string)&&
+       ++seed_allocations::count==seed_allocations::fail_at)throw std::bad_alloc();
+    if(auto* value=std::malloc(bytes?bytes:1))return value;
+    throw std::bad_alloc();
+}
+void* operator new[](std::size_t bytes){return ::operator new(bytes);}
+void operator delete(void* value)noexcept{std::free(value);}
+void operator delete[](void* value)noexcept{std::free(value);}
+void operator delete(void* value,std::size_t)noexcept{std::free(value);}
+void operator delete[](void* value,std::size_t)noexcept{std::free(value);}
+namespace eq=citrine_eclipse_mirage::event_queue;
+namespace msg=citrine_eclipse_mirage::messages;
+namespace content=citrine_eclipse_mirage::content_handlers;
+namespace ar=citrine_eclipse_mirage::achievement_runtime;
+namespace cfg=citrine_eclipse_mirage::configuration;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
 [[noreturn]]void unused(){throw std::logic_error("Unexpected event test provider");}
+struct SeedMutex final:eq::Mutex {
+    std::int32_t count=0;
+    int lock_04a6ac()override{++count;return 0;}
+    std::int32_t& count_4c()override{return count;}
+    void unlock_04a6b4()override{--count;}
+    [[noreturn]]void thread_error_04a648(int)override{unused();}
+};
+struct SeedRuntime final:eq::Initialization {
+    std::int32_t tls=std::numeric_limits<std::int32_t>::min(),epoch=0;
+    unsigned headers=0,footers=0,registrations=0,aborts=0,mutexes=0;
+    eq::Cleanup cleanup=eq::Cleanup::mutex_07e030;
+    std::int32_t thread_epoch()override{return tls;}
+    void header_04b838(std::int32_t& guard)override{++headers;guard=-1;}
+    void footer(std::int32_t& guard)override{++footers;guard=++epoch;tls=guard;}
+    void construct_mutex_04a698(eq::Mutex&,std::uint32_t)override{++mutexes;}
+    int register_atexit(eq::Cleanup which)override{++registrations;cleanup=which;return 0;}
+    void abort_initialization(std::int32_t& guard)noexcept override{++aborts;guard=0;}
+};
+struct SeedOwner {
+    SeedMutex mutex;SeedRuntime runtime;eq::OwnedStorage storage;
+    eq::Guards guards{0,0};eq::Context context{guards,runtime,mutex,storage};
+};
+void seed_getter_allocation_retry() {
+    struct Disarm {~Disarm(){seed_allocations::armed=false;}} disarm;
+    const auto arm=[](std::size_t ordinal){seed_allocations::count=0;seed_allocations::fail_at=ordinal;seed_allocations::armed=true;};
+    SeedOwner success;arm(std::numeric_limits<std::size_t>::max());
+    (void)eq::queue_02c400(success.context);seed_allocations::armed=false;
+    const auto allocations=seed_allocations::count;
+    require(allocations>0&&allocations<256,"seed construction reaches bounded data allocations");
+    require(success.storage.copy_front_locked()==eq::initial_down_event&&success.runtime.registrations==1,
+            "unfaulted getter publishes exact DOWN seed and one cleanup registration");
+    for(std::size_t ordinal=1;ordinal<=allocations;++ordinal) {
+        SeedOwner owner;bool failed=false;arm(ordinal);
+        try{(void)eq::queue_02c400(owner.context);}catch(const std::bad_alloc&){failed=true;}
+        seed_allocations::armed=false;
+        require(failed&&seed_allocations::count==ordinal,"each selected seed allocation failure propagates");
+        require(owner.guards.queue_0a39a0==0&&owner.runtime.aborts==1&&owner.runtime.headers==1&&
+                owner.runtime.footers==0&&owner.runtime.registrations==0&&owner.runtime.mutexes==0,
+                "failed seed aborts the getter before registration or publication");
+        bool unconstructed=false;
+        try{(void)owner.storage.nonempty_locked();}catch(const std::logic_error&){unconstructed=true;}
+        require(unconstructed&&!owner.storage.nonempty_relaxed(),"failed seed leaves no engaged partial storage");
+        require(&eq::queue_02c400(owner.context)==&owner.storage&&owner.storage.nonempty_relaxed()&&
+                owner.storage.copy_front_locked()==eq::initial_down_event,
+                "getter retry constructs and publishes the exact original seed");
+        require(owner.runtime.headers==2&&owner.runtime.footers==1&&owner.runtime.registrations==1&&
+                owner.runtime.cleanup==eq::Cleanup::queue_07e000&&owner.runtime.aborts==1,
+                "repaired initialization completes once after the aborted attempt");
+        owner.storage.pop_front_locked();
+        (void)eq::queue_02c400(owner.context);
+        require(!owner.storage.nonempty_relaxed()&&owner.runtime.headers==2&&owner.runtime.registrations==1,
+                "hot getter does not reseed an already initialized empty queue");
+    }
+}
 struct Mutex final:eq::Mutex {
     std::vector<std::string>& trace;bool held=false;std::int32_t count=1;
     explicit Mutex(std::vector<std::string>& t):trace(t){}
@@ -55,10 +128,10 @@ struct Clock final:ar::Clock {
     std::int64_t time_05eeb8()override{require(achievement.held,"grant clock under achievement mutex");return 123;}
     std::optional<ar::BrokenDown> gmtime_05fffc(std::int64_t)override{return ar::BrokenDown{0,0,0,1,0,100,6,0,0};}
 };
-struct Directories final:preloader_l::achievement_writer::Effects {void create_directories_018e00(const cfg::Path&)override{unused();}};
-struct Files final:preloader_l::file::Factory {
-    std::unique_ptr<preloader_l::file::Input> open_input_039f70(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
-    std::unique_ptr<preloader_l::file::Output> open_output_03a1a0(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
+struct Directories final:citrine_eclipse_mirage::achievement_writer::Effects {void create_directories_018e00(const cfg::Path&)override{unused();}};
+struct Files final:citrine_eclipse_mirage::file::Factory {
+    std::unique_ptr<citrine_eclipse_mirage::file::Input> open_input_039f70(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
+    std::unique_ptr<citrine_eclipse_mirage::file::Output> open_output_03a1a0(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
 };
 struct ContentEffects final:ar::PersistenceEffects {
     using PersistenceEffects::PersistenceEffects;
@@ -99,10 +172,10 @@ struct Effects final:msg::Effects {
 struct Fixture {
     std::vector<std::string> trace,achievement_trace;Mutex mutex{trace},achievement{achievement_trace};Runtime runtime{trace};Storage storage{mutex,trace};eq::Guards guards{0,0};eq::Context context{guards,runtime,mutex,storage};
     eq::IgoQueue igo{context};eq::ContentQueue content_queue{context};eq::MessageQueue messages{context};
-    cfg::State state{};preloader_l::achievement_storage::Paths paths;Clock clock{achievement};ar::HostFormatter formatter;Directories directories;Files files;ContentEffects content_effects{state,paths,clock,formatter,directories,files};
-    preloader_l::xml_reader_bridge::Backend xml;Factory factory;Random random;Effects effects;std::uint8_t encrypted=1,show=1,online=0;std::int32_t saved=0;
+    cfg::State state{};citrine_eclipse_mirage::achievement_storage::Paths paths;Clock clock{achievement};ar::HostFormatter formatter;Directories directories;Files files;ContentEffects content_effects{state,paths,clock,formatter,directories,files};
+    citrine_eclipse_mirage::xml_reader_bridge::Backend xml;Factory factory;Random random;Effects effects;std::uint8_t encrypted=1,show=1,online=0;std::int32_t saved=0;
     Fixture(){state.achievements_set="set";state.game_attributes["DISPLAY_NAME"]="Game";state.achievements.emplace("a",cfg::Achievement{1,0,0,"old","Award","1",0});}
-    void show_igo(){auto response=content_effects.printer_0019b0();require(preloader_l::misc_handlers::show_igo_032b10(response->xml(),igo),"real IGO handler succeeds");}
+    void show_igo(){auto response=content_effects.printer_0019b0();require(citrine_eclipse_mirage::misc_handlers::show_igo_032b10(response->xml(),igo),"real IGO handler succeeds");}
     void grant(){auto response=content_effects.printer_0019b0();const auto refs=ar::bind_state(state,paths,online,saved,achievement,content_queue);content::RequestTree request;request.attributes={{"AchievementId","a"}};require(content::grant_achievement_030010(request,response->xml(),refs,content_effects),"real grant handler succeeds");require(!achievement.held && !mutex.held,"grant releases both mutexes");}
     std::string process(Cipher& cipher,msg::EventDelivery* delivery=nullptr){std::string input=encrypted?"00":"<LSX><Request id=\"1\" recipient=\"EbisuSDK\"><GetConfig/></Request></LSX>";return msg::process_message_033d70({encrypted,show,cipher,messages,delivery},input,xml,factory,random,effects);}
 };
@@ -153,4 +226,4 @@ void failure_modes(){
     {Fixture f;f.encrypted=0;Cipher cipher(f.mutex,f.trace);const auto wire=f.process(cipher);require(!wire.empty() && wire.back()=='\0' && cipher.encrypted.empty() && f.trace.empty() && f.guards.queue_0a39a0==0,"unencrypted response leaves queue uninitialized");}
 }
 }
-int main(){try{cold_consumer();shared_producers();failure_modes();delivery_reservations();std::cout<<"PASS: "<<checks<<" event queue integration checks; shared synthetic guards and controlled cipher only\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+int main(){try{seed_getter_allocation_retry();cold_consumer();shared_producers();failure_modes();delivery_reservations();std::cout<<"PASS: "<<checks<<" event queue integration checks; shared synthetic guards and controlled cipher only\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/runtime/status.hpp"
+#include "citrine_eclipse_mirage/runtime/status.hpp"
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <cstdlib>
-namespace preloader_l::status {
+namespace citrine_eclipse_mirage::status {
 namespace {
 const wchar_t* wide(const Path& path) { static_assert(sizeof(wchar_t) == sizeof(char16_t)); return reinterpret_cast<const wchar_t*>(path.c_str()); }
 HANDLE handle(Handle value) { return reinterpret_cast<HANDLE>(value); }
@@ -29,7 +29,7 @@ OpenResult NativeSystemCalls::open_attributes(const Path& path, std::uint32_t ac
 }
 std::uint32_t NativeSystemCalls::basic_information(Handle value, Metadata& out) {
     FILE_BASIC_INFO info;
-    if (!GetFileInformationByHandleEx(handle(value), FileBasicInfo, &info, 0x28)) return GetLastError();
+    if (!GetFileInformationByHandleEx(handle(value), FileBasicInfo, &info, static_cast<DWORD>(sizeof(info)))) return GetLastError();
     out.attributes = info.FileAttributes;
     out.last_write = static_cast<std::uint64_t>(info.LastWriteTime.QuadPart);
     return 0;

@@ -18,7 +18,9 @@ def package(root, output):
     output = Path(os.path.abspath(output))
     if output.is_symlink():
         raise ValueError('Refusing a symlinked source ZIP destination')
-    if output == root or root in output.parents or root in output.parent.resolve().parents:
+    resolved_parent = output.parent.resolve()
+    if (output == root or root in output.parents or
+            resolved_parent == root or root in resolved_parent.parents):
         raise ValueError('Write the source ZIP outside the source tree.')
     errors = check(root)
     if errors:
