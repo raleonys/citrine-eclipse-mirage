@@ -16,9 +16,10 @@ not build inputs to the current product.
   registry, file, time, hash, and native platform adapters.
 - Separate preloader Core/Once/process-enumeration/mutex and version-wrapper
   projects are not imported. Only the explicitly requested `CryptQueryObject`
-  behavior is isolated behind an independent platform interface. The host
-  now requires four allocation/trap operations instead of importing the
-  entire old preloader Host/HookEngine dependency graph.
+  behavior and approved protected-reader/lifetime dependencies are integrated
+  behind the current platform interfaces. The bounded scanner supersedes the
+  initial allocation/trap interface; the entire old preloader Host/HookEngine
+  dependency graph is not imported. See [HOOK_PATH_SCAN.md](HOOK_PATH_SCAN.md).
 - Original custom CRT/VCRT recovery packages and the historical B2-B6
   composition experiments dependent on them are not part of the product
   target. They are not automatically linked in place of the standard CRT.
@@ -29,8 +30,8 @@ not build inputs to the current product.
   copies are removed from the active tree, and Brownfield's vendor tree is
   not imported. PR #149 replaces the active TinyXML2 tree with the owner's
   exact pugixml archive; the external pinned control and historical member
-  list preserve retired input provenance. The project depth-500 boundary
-  remains in first-party XML policy. No vendor bytes are patched.
+  list preserve retired input provenance. The A12 depth-100 profile
+  is implemented in first-party XML policy. No vendor bytes are patched.
 - Tests are separate from headers and application `.cpp` files. CRT/preloader
   tests excluded from the product scope are not modified to conceal failures;
   they remain in the earlier package and are itemized in the scope list.

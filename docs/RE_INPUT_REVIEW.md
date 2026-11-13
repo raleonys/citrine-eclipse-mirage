@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [REMAINING_WORK.md](REMAINING_WORK.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 # Review of the new reverse-engineering input
 
 The owner authorized separate correction PRs for the supplied ten-part

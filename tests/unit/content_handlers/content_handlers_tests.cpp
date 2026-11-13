@@ -103,7 +103,8 @@ struct MockEffects:Effects {
     void unknown_entitlement_field(std::string_view value)override {diagnostics.emplace_back(value);}
     std::string utc_time_041b60(std::uint64_t& tick)override {
         require(achievement_mutex&&achievement_mutex->held);++times;tick=12000+times;
-        if(time_hook)time_hook();return "2040-01-02T03:04:"+std::to_string(times);
+        if(time_hook)time_hook();
+        return "2040-01-02T03:04:"+std::to_string(times);
     }
     std::unique_ptr<DocumentWriter> printer_0019b0()override {
         require(achievement_mutex&&achievement_mutex->held);
@@ -254,6 +255,66 @@ static void grant_edges() {
     try{grant_achievement_030010({{{"AchievementId","z"},{"Progress","three"}},{}},no_response,queue_failed.refs(),queue_failed.effects);require(false);}catch(const ThreadError& e){require(e.code==5);}
     require(queue_failed.achievements.at("z").field04==0&&!queue_failed.mutex.held&&queue_failed.effects.files.empty()&&queue_failed.effects.steam_snapshots.empty());
 }
+static void grant_response_failure_tests() {
+    // Persistence/event publication commits before response serialization.
+    // A completed retry is a no-op; a partial request remains an increment.
+    for(const auto scenario:{0,1,2})for(int fault=-1;fault<10;++fault) {
+        Fixture f;
+        const bool inserted=scenario==2,completed=scenario!=0;
+        const std::string id=inserted?"new-after-response-failure":"z";
+        const auto increment=inserted?2:completed?3:1;
+        const auto total=inserted?2:3,progress=completed?total:1;
+        f.effects.atoi_value=increment;
+        RequestTree request{{{"AchievementId",id},{"Progress","controlled"}}, {}};
+        MockXml failed;failed.fail_attribute=fault;bool response_started=false;
+        failed.after_open=[&]{
+            response_started=true;
+            require(f.effects.files.size()==1&&f.effects.steam_snapshots.size()==1);
+            require(f.mutex.held&&!f.events.mutex.held);
+            if(fault<0)throw WriterError{};
+        };
+        bool threw=false;
+        try{(void)grant_achievement_030010(request,failed,f.refs(),f.effects);}catch(const WriterError&){threw=true;}
+        require(threw&&response_started&&failed.writes==(fault<0?0:fault+1));
+        const auto found=f.achievements.find(id);require(found!=f.achievements.end());
+        const auto& current=found->second;
+        require(current.field00==total&&current.field08==progress&&current.field04==(completed?1:0));
+        require(current.field70==12001&&current.timestamp=="2040-01-02T03:04:1"&&f.effects.times==1);
+        require(f.effects.files.size()==1&&f.effects.files.at(0).first==f.achievement_file);
+        require(f.effects.files.at(0).second==(completed?"synthetic-printer-1":"synthetic-printer-0"));
+        require(f.effects.steam_snapshots.size()==1);
+        const auto& persisted=f.effects.steam_snapshots.at(0).at(id);
+        require(persisted.field00==current.field00&&persisted.field08==current.field08&&persisted.field04==current.field04);
+        require(persisted.timestamp==current.timestamp&&persisted.field70==current.field70);
+        require(!f.mutex.held&&f.mutex.locks==1&&f.mutex.unlocks==1&&!f.events.mutex.held);
+        require(f.effects.documents.size()==(completed?2u:1u));
+        if(completed) {
+            require(f.events.entries==std::vector<std::string>{"<LSX><Event sender=\"EbisuSDK\"><IGOEvent State=\"DOWN\"/></Event></LSX>","synthetic-printer-0"});
+            require(f.events.initializations==1&&f.events.mutex.locks==1&&f.events.mutex.unlocks==1);
+        } else require(f.events.entries.empty()&&!f.events.initialized&&f.events.mutex.locks==0);
+        const auto committed_files=f.effects.files;
+        const auto committed_events=f.events.entries;
+        const auto documents=f.effects.documents.size();
+        MockXml query;require(query_achievements_030d30({{{"All","true"}},{}},query,f.refs()));
+        const auto visible=query.named("Achievement");
+        const auto row=std::find_if(visible.begin(),visible.end(),[&](const auto& value){return value.get("Id")==id;});
+        require(row!=visible.end());
+        require(row->get("Progress")==std::to_string(progress)&&row->get("Count")==std::to_string(completed?1:0));
+        require(row->get("GrantDate")=="2040-01-02T03:04:1");
+        require(f.effects.files==committed_files&&f.effects.steam_snapshots.size()==1&&f.events.entries==committed_events);
+        MockXml retry;require(grant_achievement_030010(request,retry,f.refs(),f.effects));
+        if(completed) {
+            require(f.achievements.at(id).field08==total&&f.achievements.at(id).field04==1);
+            require(f.effects.times==1&&f.effects.files==committed_files&&f.effects.steam_snapshots.size()==1);
+            require(f.events.entries==committed_events&&f.effects.documents.size()==documents);
+        } else {
+            require(f.achievements.at(id).field08==2&&f.achievements.at(id).field04==0);
+            require(f.effects.times==2&&f.effects.files.size()==2&&f.effects.steam_snapshots.size()==2);
+            require(f.effects.steam_snapshots.at(1).at(id).field08==2&&f.events.entries.empty());
+        }
+        require(!f.mutex.held&&!f.events.mutex.held&&f.mutex.locks==3&&f.mutex.unlocks==3);
+    }
+}
 static RequestTree image(std::string width="416",std::string owner="user-test") {
     return{{{"Width",std::move(width)},{"Height","odd-height"},{"ImageId","avatar:"+owner}}, {}};
 }
@@ -300,6 +361,37 @@ static void image_tests() {
             require(effects.online_paths.size()==calls&&effects.paths_widened.size()==widened&&effects.atoi_inputs.size()==parsed);
             require(response.named("Image")[0].get("ResourcePath")==
                 (owner=="user-test"?"synthetic-avatar.png":"synthetic-default.png"));
+        }
+    }
+    // Inclusive cache-component maxima: do not silently drop valid provider
+    // requests while rejecting the first over-limit value.
+    for(const auto length:{127u,128u,129u})for(bool own:{false,true}){
+        const auto owner=std::string(length,'u');
+        for(const auto& width:std::vector<std::string>{"0000208","00000208","000000208"}){
+            Fixture limits;limits.online=1;limits.saved_size=-1;
+            limits.user_id=own?owner:"different-owner";
+            CompleteAvatar effects;effects.avatar_success=true;effects.copy_success=true;effects.atoi_value=208;
+            MockXml response;
+            require(query_image_0314f0(image(width,owner),response,limits.refs(),effects));
+            const bool accepted=length<=128&&width.size()<=8;
+            const auto output=response.named("Image");require(output.size()==1);
+            require(output[0].get("ImageId")=="avatar:"+owner&&output[0].get("Width")==width);
+            require(effects.online_paths.size()==static_cast<unsigned>(accepted));
+            require(effects.paths_widened.size()==static_cast<unsigned>(accepted));
+            require(effects.atoi_inputs.size()==static_cast<unsigned>(accepted));
+            if(accepted){
+                const auto filename="_AVATAR_"+owner+"_"+width;
+                require(effects.paths_widened[0]==filename&&effects.atoi_inputs[0]==width);
+                require(effects.owner==owner&&effects.size==1);
+                require(effects.online_paths[0]==u"synthetic-user\\"+Path(filename.begin(),filename.end()));
+                require(output[0].get("ResourcePath")=="synthetic-user\\"+filename);
+            }else require(output[0].get("ResourcePath")==
+                (own?"synthetic-avatar.png":"synthetic-default.png"));
+            const bool saved=accepted&&own;
+            require(effects.copies.size()==static_cast<unsigned>(saved));
+            require(effects.saved_logs==(saved?std::vector<int>{1}:std::vector<int>{}));
+            require(limits.saved_size==(saved?1:-1));
+            if(saved)require(effects.copies[0]==std::pair<Path,Path>{effects.online_paths[0],u"synthetic-last.png"});
         }
     }
     Fixture f;
@@ -375,6 +467,6 @@ static void image_tests() {
     require(f.mutex.locks==0&&f.events.mutex.locks==0);
 }
 int main() {
-    try{content_tests();entitlement_tests();achievement_query_tests();grant_tests();grant_edges();image_tests();std::printf("PASS: %u synthetic content/entitlement/achievement/image checks; original binaries were not loaded or executed.\n",checks);return 0;}
+    try{content_tests();entitlement_tests();achievement_query_tests();grant_tests();grant_edges();grant_response_failure_tests();image_tests();std::printf("PASS: %u synthetic content/entitlement/achievement/image checks; original binaries were not loaded or executed.\n",checks);return 0;}
     catch(const std::exception& e){std::fprintf(stderr,"FAIL: %s\n",e.what());return 1;}
 }

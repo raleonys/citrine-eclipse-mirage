@@ -1,5 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
+add_executable(dll_attach_failure_contracts tests/native/dll_attach_failure_tests.cpp)
+target_include_directories(dll_attach_failure_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
+target_link_libraries(dll_attach_failure_contracts PRIVATE citrine_eclipse_mirage_core)
+add_test(NAME dll_attach_failure_contracts COMMAND dll_attach_failure_contracts)
+set_tests_properties(dll_attach_failure_contracts PROPERTIES TIMEOUT 30)
+
 add_executable(application_worker_launch_contracts tests/native/application_worker_launch_tests.cpp resources/surge.rc)
 target_include_directories(application_worker_launch_contracts PRIVATE "${PROJECT_SOURCE_DIR}" resources)
 target_link_libraries(application_worker_launch_contracts PRIVATE citrine_eclipse_mirage_core advapi32)
@@ -60,6 +66,11 @@ add_executable(net_failure_contracts tests/native/net_failure_tests.cpp)
 target_include_directories(net_failure_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
 target_link_libraries(net_failure_contracts PRIVATE citrine_eclipse_mirage_core)
 add_test(NAME net_failure_contracts COMMAND net_failure_contracts)
+add_executable(asio_thread_launch_contracts tests/native/asio_thread_launch_tests.cpp)
+target_include_directories(asio_thread_launch_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
+target_link_libraries(asio_thread_launch_contracts PRIVATE citrine_eclipse_mirage_core)
+add_test(NAME asio_thread_launch_contracts COMMAND asio_thread_launch_contracts)
+set_tests_properties(asio_thread_launch_contracts PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
 if(MINGW)
   # Exercise the pinned MSVC aligned-CRT memory helper under the cross runner
   # as well as the compiler's ordinary path. No production definitions change.
@@ -118,6 +129,11 @@ target_link_libraries(network_policy_contracts PRIVATE citrine_eclipse_mirage_co
 add_test(NAME network_policy_contracts COMMAND network_policy_contracts)
 set_tests_properties(network_policy_contracts PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
 # Application tests retained from RE; historical CRT/preloader tests stay outside this project.
+add_executable(atomic_recovery_matrix_contracts tests/unit/file/atomic_recovery_tests.cpp src/core/atomic_files.cpp)
+target_include_directories(atomic_recovery_matrix_contracts PRIVATE include)
+add_test(NAME atomic_recovery_matrix_contracts COMMAND atomic_recovery_matrix_contracts)
+set_tests_properties(atomic_recovery_matrix_contracts PROPERTIES TIMEOUT 30)
+
 add_executable(atomic_persistence_contracts tests/native/atomic_persistence_tests.cpp)
 target_link_libraries(atomic_persistence_contracts PRIVATE citrine_eclipse_mirage_core)
 add_test(NAME atomic_persistence_contracts COMMAND atomic_persistence_contracts)
@@ -150,9 +166,50 @@ add_executable(hook_real_peer_contracts tests/native/hook_real_peer_tests.cpp)
 target_link_libraries(hook_real_peer_contracts PRIVATE citrine_eclipse_mirage_minhook)
 add_test(NAME hook_real_peer_contracts COMMAND hook_real_peer_contracts)
 set_tests_properties(hook_real_peer_contracts PROPERTIES TIMEOUT 30)
+add_executable(hook_live_calls_contracts tests/native/hook_live_calls_tests.c)
+target_link_libraries(hook_live_calls_contracts PRIVATE citrine_eclipse_mirage_minhook)
+add_test(NAME hook_live_calls_contracts COMMAND hook_live_calls_contracts)
+set_tests_properties(hook_live_calls_contracts PROPERTIES TIMEOUT 45)
+add_executable(hook_thread_churn_contracts tests/native/hook_thread_churn_tests.c)
+target_include_directories(hook_thread_churn_contracts PRIVATE "${_hook_build_copy}/src")
+target_link_libraries(hook_thread_churn_contracts PRIVATE citrine_eclipse_mirage_minhook)
+add_test(NAME hook_thread_churn_contracts COMMAND hook_thread_churn_contracts 50)
+set_tests_properties(hook_thread_churn_contracts PROPERTIES TIMEOUT 60)
+
+# Every cleanup control compiles the same functional regression against a
+# hash-pinned copy with exactly one public retry barrier removed. None is a
+# production source, and only its precise assertion failure counts as success.
+add_executable(hook_cleanup_create_control tests/native/hook_freeze_tests.c)
+add_executable(hook_cleanup_remove_control tests/native/hook_freeze_tests.c)
+add_executable(hook_cleanup_enable_control tests/native/hook_freeze_tests.c)
+add_executable(hook_cleanup_queue_control tests/native/hook_freeze_tests.c)
+add_executable(hook_cleanup_apply_control tests/native/hook_freeze_tests.c)
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+  "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_cleanup_control.py")
+foreach(_cleanup_mode IN ITEMS create remove enable queue apply)
+  set(_cleanup_dir "${CMAKE_CURRENT_BINARY_DIR}/test_controls/hook_cleanup/${_cleanup_mode}")
+  execute_process(COMMAND "${Python3_EXECUTABLE}" -B
+    "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_cleanup_control.py" prepare
+    --source "${_hook_build_copy}/src/hook.c" --mode "${_cleanup_mode}"
+    --output "${_cleanup_dir}/src/hook.c"
+    RESULT_VARIABLE _cleanup_status OUTPUT_VARIABLE _cleanup_output ERROR_VARIABLE _cleanup_error)
+  if(NOT _cleanup_status EQUAL 0)
+    message(FATAL_ERROR "Cleanup control preparation failed: ${_cleanup_output}${_cleanup_error}")
+  endif()
+  file(MAKE_DIRECTORY "${_cleanup_dir}/include")
+  configure_file("${_hook_build_copy}/include/MinHook.h" "${_cleanup_dir}/include/MinHook.h" COPYONLY)
+  set(_cleanup_target "hook_cleanup_${_cleanup_mode}_control")
+  target_include_directories(${_cleanup_target} PRIVATE
+    "${_cleanup_dir}/include" "${_cleanup_dir}/src" "${_hook_build_copy}/src")
+  target_link_libraries(${_cleanup_target} PRIVATE citrine_eclipse_mirage_minhook)
+  add_test(NAME ${_cleanup_target} COMMAND "${Python3_EXECUTABLE}" -B
+    "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_cleanup_control.py" run --mode "${_cleanup_mode}" --
+    ${CMAKE_CROSSCOMPILING_EMULATOR} "$<TARGET_FILE:${_cleanup_target}>")
+  set_tests_properties(${_cleanup_target} PROPERTIES TIMEOUT 30)
+endforeach()
 
 # Counterfactual source lives outside the verified engine tree and is never a
-# shipping input. Require the exact pre-fix SHA, not an arbitrary test mutation.
+# shipping input. Pin the exact one-action mutation with all cleanup guards kept.
 set(_stale_hook_dir "${CMAKE_CURRENT_BINARY_DIR}/test_controls/minhook")
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
   "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_real_peer_control.py")
@@ -273,6 +330,10 @@ target_link_libraries(startup_contracts PRIVATE citrine_eclipse_mirage_core)
 target_include_directories(startup_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
 add_test(NAME startup_contracts COMMAND startup_contracts )
 set_tests_properties(startup_contracts PROPERTIES TIMEOUT 60)
+add_executable(startup_native_argv_contracts tests/native/startup_argv_tests.cpp)
+target_link_libraries(startup_native_argv_contracts PRIVATE citrine_eclipse_mirage_core)
+add_test(NAME startup_native_argv_contracts COMMAND startup_native_argv_contracts)
+set_tests_properties(startup_native_argv_contracts PROPERTIES TIMEOUT 60)
 add_executable(parser_contracts tests/unit/parser/parser_tests.cpp)
 target_link_libraries(parser_contracts PRIVATE citrine_eclipse_mirage_core)
 target_include_directories(parser_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
@@ -355,6 +416,11 @@ target_link_libraries(event_queue_integration_contracts PRIVATE citrine_eclipse_
 target_include_directories(event_queue_integration_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
 add_test(NAME event_queue_integration_contracts COMMAND event_queue_integration_contracts )
 set_tests_properties(event_queue_integration_contracts PROPERTIES TIMEOUT 60)
+add_executable(session_aes_event_contracts tests/unit/session/aes_handler_tests.cpp)
+target_link_libraries(session_aes_event_contracts PRIVATE citrine_eclipse_mirage_core)
+target_include_directories(session_aes_event_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
+add_test(NAME session_aes_event_contracts COMMAND session_aes_event_contracts )
+set_tests_properties(session_aes_event_contracts PROPERTIES TIMEOUT 60)
 add_executable(session_handler_contracts tests/unit/session/handler_tests.cpp)
 target_link_libraries(session_handler_contracts PRIVATE citrine_eclipse_mirage_core)
 target_include_directories(session_handler_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
