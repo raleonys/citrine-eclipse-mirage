@@ -300,3 +300,18 @@ three-attempt cleanup case and checks release of both caller and worker leases.
 The Application is a controlled counter implementation with no sockets or hooks.
 Cross-compilation and SDK effect models do not establish real Windows loader,
 thread or physical-unload acceptance; those assertions require native execution.
+
+## Native status sharing recovery and search ownership
+
+`status_contracts` source-includes the unchanged Windows status adapter and
+controls only the initial attribute error plus selected search/close failures.
+For normal and read-only owned files, ERROR_SHARING_VIOLATION must fall back
+through NativeStats/UsedStats to real FindFirstFileW and FindClose, retaining
+permissions and closing each acquired search handle exactly once. Failed
+searches preserve their error without a fabricated close; unrelated attribute
+errors do not enter the fallback. Missing files retain their classification.
+A reported-close-failure control closes the actual handle before reporting
+failure, preserving the reference ignore-result policy without leaking a handle.
+Unarmed queries still work after the scoped injection. These assertions require
+native Windows execution; SDK models and cross-compilation neither establish
+real loader/filesystem acceptance nor induce a natural OS sharing violation.
