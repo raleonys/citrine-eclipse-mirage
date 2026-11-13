@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/core/license.hpp"
-#include "preloader_l/xml/memory_printer.hpp"
+#include "citrine_eclipse_mirage/core/license.hpp"
+#include "citrine_eclipse_mirage/xml/memory_printer.hpp"
 #include <algorithm>
+#include <array>
 #include <functional>
 #include <iostream>
 #include <limits>
@@ -12,7 +13,7 @@
 #include <vector>
 
 namespace {
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 using namespace license;
 int checked=0;
 void check(bool condition,const char* description) {
@@ -43,8 +44,10 @@ struct Node final : messages::XmlNode {
 struct Xml final : handlers::Xml {
     xml::MemoryPrinter printer;
     std::vector<std::string> calls;
+    std::function<void()> before_open;
     const char* attribute_002cc0(handlers::Request,const char*) override { throw Injected{}; }
     void open_004080(const char* element,bool compact) override {
+        if(before_open)before_open(); // A provider may reuse borrowed storage before serialization.
         calls.emplace_back("open:"+std::string(element)); printer.open_element(element,compact);
     }
     void attribute_005560(const char* key,const char* value) override {
@@ -72,6 +75,8 @@ struct Mock final : Effects {
     Path written_path;
     FileStatus file_status{2,0};
     std::string online_value="synthetic-online";
+    std::array<char,128> online_scratch{};
+    bool borrowed_online=false;
     bool null_online=false;
     bool dll_matches=true,exe_matches=true,write_result=true;
     std::vector<std::string> tokens{"",""};
@@ -84,7 +89,8 @@ struct Mock final : Effects {
         if(text==injected) throw Injected{};
     }
     const char* online_auth_virtual_30(const char* client) override {
-        called("online:"+std::string(client)); return null_online?nullptr:online_value.c_str();
+        called("online:"+std::string(client));
+        return null_online?nullptr:(borrowed_online?online_scratch.data():online_value.c_str());
     }
     FileStatus status_01ea20(const Path& path,std::uint32_t flags) override {
         called("status:"+ascii(path)); check(flags==3,"status uses flag 3"); return file_status;
@@ -188,6 +194,39 @@ void test_auth_and_invalidation() {
         check(f.blocked==1&&f.attempts==2,"invalidate preserves block and retry state");
         check(f.effects.calls.empty()&&f.request.reads.empty(),"invalidate does no filesystem/provider/request work");
         check(f.xml.text()=="<ErrorSuccess Code=\"0\" Description=\"License Deleted.\"/>\n","invalidate literal XML");
+    }
+}
+void test_borrowed_online_auth_snapshot() {
+    // The foreign provider may recycle a borrowed C-string immediately after
+    // its method returns. AuthCode must snapshot bytes before XML effects run.
+    struct Case {std::string source,expected;};
+    const std::array<Case,3> cases{{
+        {"provider<&\"", "provider&lt;&amp;&quot;"},
+        {std::string("prefix\0hidden",13), "prefix"},
+        {"", "original-fallback"}
+    }};
+    for(const auto& value:cases) {
+        Fixture f;f.online=1;f.auth="original-fallback";
+        f.effects.borrowed_online=true;
+        f.effects.online_scratch.fill('\0');
+        std::copy(value.source.begin(),value.source.end(),f.effects.online_scratch.begin());
+        unsigned opens=0;
+        f.xml.before_open=[&]{
+            ++opens;
+            f.effects.online_scratch.fill('!');
+            f.effects.online_scratch[0]='X';
+            f.effects.online_scratch[1]='\0';
+            f.auth="mutated-fallback";
+        };
+        f.request.attributes={{"ClientId","borrowed-client"}};
+        check(f.handlers.auth_code_02e3b0(f.request,f.xml),
+            "provider snapshot returns the actual AuthCode response");
+        check(f.xml.text()=="<AuthCode value=\""+value.expected+"\"/>\n",
+            "AuthCode copies provider's C-string/fallback before printer recycles scratch");
+        check(opens==1&&f.auth=="mutated-fallback"&&f.effects.online_scratch[0]=='X',
+            "real printer effect recycled the original provider scratch buffer");
+        check(f.effects.calls==std::vector<std::string>{"online:borrowed-client"},
+            "exactly one original provider invocation and no invented later reads");
     }
 }
 void test_guard_order() {
@@ -351,7 +390,7 @@ void test_ticket_construction_and_effects() {
 }
 int main() {
     try {
-        test_auth_and_invalidation();test_guard_order();test_attempts_and_blocking();test_ticket_guards();test_ticket_construction_and_effects();
+        test_auth_and_invalidation();test_borrowed_online_auth_snapshot();test_guard_order();test_attempts_and_blocking();test_ticket_guards();test_ticket_construction_and_effects();
         std::cout<<"PASS "<<checked<<" deterministic licensing checks (synthetic dependencies; original targets not executed)\n";
         return 0;
     } catch(const std::exception& e) { std::cerr<<"FAIL: "<<e.what()<<'\n'; return 1; }

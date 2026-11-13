@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [REMAINING_WORK.md](REMAINING_WORK.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 This document records the earlier delta review. The subsequent wider
 audit and corrections are in
 [the whole-source audit](BROAD_SOURCE_AUDIT.md).

@@ -1,3 +1,6 @@
+> **Historical checkpoint.** Use [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md) for current guidance.
+> Old counts, outcomes and pending work are source-bound; see [INDEX.md](INDEX.md).
+
 Later owner-provided Windows/Golden/native and game acceptance,
 including DLL size measurements, is recorded in
 [the current acceptance record](DLL_SIZE_AND_NATIVE_ACCEPTANCE.md).

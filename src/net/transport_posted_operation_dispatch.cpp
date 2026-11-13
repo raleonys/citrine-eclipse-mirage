@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_posted_operation_dispatch.hpp"
+#include "citrine_eclipse_mirage/net/transport_posted_operation_dispatch.hpp"
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 void PostedDispatcherEffects::complete(IocpSchedulerEntry* owner,CancelOperation& operation,
     const Error& error,std::uint32_t bytes){
     for(auto& binding:bindings_){
@@ -13,4 +13,4 @@ void PostedDispatcherEffects::complete(IocpSchedulerEntry* owner,CancelOperation
     }
     complete_other(owner,operation,error,bytes);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

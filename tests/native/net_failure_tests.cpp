@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include <winsock2.h>
+#include <windows.h>
 #include <atomic>
 #include <cstddef>
 #include <cstdlib>
@@ -33,7 +35,7 @@ void* aligned_malloc(std::size_t size,std::size_t alignment) noexcept {
 #endif
 // Cross replay changes only the allocation helper header, not compiler/platform
 // detection for the rest of Asio. Native MSVC already selects this CRT branch.
-#if defined(PRELOADER_L_TEST_MSVC_MEMORY_REPLAY) && !defined(ASIO_MSVC)
+#if defined(CITRINE_ECLIPSE_MIRAGE_TEST_MSVC_MEMORY_REPLAY) && !defined(ASIO_MSVC)
 #define ASIO_MSVC 1
 #define FIXTURE_RESTORE_ASIO_MSVC
 #endif
@@ -47,15 +49,47 @@ void* aligned_malloc(std::size_t size,std::size_t alignment) noexcept {
 #undef ASIO_MSVC
 #undef FIXTURE_RESTORE_ASIO_MSVC
 #endif
+// A11-05: capture an actual Windows IOCP accept packet immediately after it
+// leaves the kernel, before the source-included Asio dispatcher observes it.
+// Only the single-owner accept fixture arms this hook; normal tests pass through.
+namespace held_accept {
+struct Packet {HANDLE port{};BOOL success{};DWORD error{},bytes{};ULONG_PTR key{};OVERLAPPED* operation{};};
+bool armed=false,holding=false,cached=false;
+unsigned captures=0,deliveries=0,waits=0;
+Packet packet;
+BOOL timeout(LPDWORD bytes,PULONG_PTR key,LPOVERLAPPED* operation,DWORD milliseconds){
+    if(milliseconds&&milliseconds!=INFINITE)Sleep(milliseconds);
+    *bytes=0;*key=0;*operation=nullptr;++waits;
+    SetLastError(WAIT_TIMEOUT);return FALSE;
+}
+}
+BOOL WINAPI TestAcceptCompletion(HANDLE port,LPDWORD bytes,PULONG_PTR key,
+    LPOVERLAPPED* operation,DWORD milliseconds){
+    using namespace held_accept;
+    if(cached&&packet.port==port){
+        if(holding)return timeout(bytes,key,operation,milliseconds);
+        *bytes=packet.bytes;*key=packet.key;*operation=packet.operation;
+        cached=false;++deliveries;SetLastError(packet.error);
+        return packet.success;
+    }
+    const auto ok=::GetQueuedCompletionStatus(port,bytes,key,operation,milliseconds);
+    const auto error=GetLastError();
+    if(armed&&!cached&&ok&&*operation){
+        packet={port,ok,error,*bytes,*key,*operation};cached=true;++captures;
+        return timeout(bytes,key,operation,0);
+    }
+    SetLastError(error);return ok;
+}
+#define GetQueuedCompletionStatus TestAcceptCompletion
 #include <asio.hpp>
-#include "preloader_l/net/server.hpp"
-#include "preloader_l/net/session_policy.hpp"
-#include "preloader_l/platform/execution_windows.hpp"
+#include "citrine_eclipse_mirage/net/server.hpp"
+#include "citrine_eclipse_mirage/net/session_policy.hpp"
+#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
 #include <memory>
 #include <exception>
 // White-box access is confined to this source-included test executable.
 #define private public
-#include "preloader_l/net/asio_service.hpp"
+#include "citrine_eclipse_mirage/net/asio_service.hpp"
 #undef private
 #include <atomic>
 #include <cstdlib>
@@ -75,9 +109,10 @@ void operator delete[](void* p) noexcept{std::free(p);}
 void operator delete(void* p,std::size_t) noexcept{std::free(p);}
 void operator delete[](void* p,std::size_t) noexcept{std::free(p);}
 #include "src/net/asio_service.cpp"
+#undef GetQueuedCompletionStatus
 
 namespace {
-using namespace preloader_l;
+using namespace citrine_eclipse_mirage;
 using Tcp=asio::ip::tcp;
 using namespace std::chrono_literals;
 void require(bool value,const char* text){if(!value)throw std::runtime_error(text);}
@@ -89,10 +124,18 @@ template<class F> bool until(F f) {
 struct HandlerFailure{};
 struct Factory final:net::HandlerFactory {
     std::atomic<unsigned> creates{0},errors{0},dispatch_errors{0};
-    std::atomic<bool> null_handler{false};
+    std::atomic<bool> null_handler{false},fail_greeting_once{false};
+    std::atomic<unsigned> accepted_session_errors{0};
+    std::atomic<bool> fail_create_once{false};
+    std::atomic<unsigned> construction_errors{0};
     struct Handler final:server::Handler {
+        Factory& factory;
+        explicit Handler(Factory& f):factory(f){}
         void reset_02bc70()override{}
-        std::string initial_message_02d540()override{return std::string("hello\0",6);}
+        std::string initial_message_02d540()override{
+            if(factory.fail_greeting_once.exchange(false))throw HandlerFailure{};
+            return std::string("hello\0",6);
+        }
         std::string process_message_033d70(std::string_view input)override {
             if(input=="fail")throw HandlerFailure{};
             if(input=="fail-post"){fault::next=true;throw HandlerFailure{};}
@@ -100,10 +143,15 @@ struct Factory final:net::HandlerFactory {
         }
     };
     std::unique_ptr<server::Handler> create()override {
-        ++creates;return null_handler.load()?nullptr:std::make_unique<Handler>();
+        ++creates;
+        if(fail_create_once.exchange(false))throw std::bad_alloc();
+        return null_handler.load()?nullptr:std::make_unique<Handler>(*this);
     }
     void error(std::string_view op,std::exception_ptr)noexcept override {
-        ++errors;if(op=="cleanup dispatch")++dispatch_errors;
+        ++errors;
+        if(op=="cleanup dispatch")++dispatch_errors;
+        if(op=="accepted session")++construction_errors;
+        if(op=="accepted session")++accepted_session_errors;
     }
 };
 struct Context {
@@ -173,6 +221,77 @@ void factory_failure_rearms() {
     require(healthy.frame()=="recovered","new handler cannot process traffic after factory recovery");
     service.stop();service.stop();
 }
+void throwing_handler_factory_rearms() {
+    // D53-A: a real accepted TCP socket has no published session until the
+    // handler factory succeeds. A throwing factory must release that socket,
+    // preserve any existing live peer, and rearm the listener once.
+    for(const bool keep_existing:{false,true}) {
+        Context c;net::AsioService service(c.factory,c.execution,c.port,c.ready);
+        service.start();
+        std::unique_ptr<Peer> existing;
+        if(keep_existing) {
+            existing=std::make_unique<Peer>(c.port);
+            require(existing->frame()=="hello","existing peer greeting before factory failure");
+        }
+        c.factory.fail_create_once.store(true);
+        Peer rejected(c.port);
+        require(rejected.closed(),"throwing handler factory retained accepted socket");
+        require(until([&]{return c.factory.construction_errors.load()==1;}),
+                "throwing factory did not report the accepted-session error");
+        if(existing) {
+            existing->send("still-live");
+            require(existing->frame()=="still-live",
+                    "rejected construction affected an unrelated established session");
+        }
+        Peer recovered(c.port);
+        require(recovered.frame()=="hello",
+                "listener did not rearm after throwing accepted-handler construction");
+        recovered.send("rearmed");
+        require(recovered.frame()=="rearmed",
+                "rearmed accepted session cannot complete real socket request/response");
+        service.stop();service.stop();
+        require(c.factory.creates.load()==(keep_existing?3U:2U),
+                "factory failure unexpectedly retried or duplicated handler creation");
+        require(c.factory.construction_errors.load()==1,
+                "throwing factory failure was reported more than once");
+        require(service.impl_->active_sessions==0&&service.impl_->clients.empty()&&
+                !service.impl_->accept_pending[0]&&!service.impl_->accept_pending[1],
+                "shutdown retained a session or listener after construction rollback");
+    }
+}
+void greeting_failure_retires_published_client() {
+    // B53: unlike a factory-constructor failure, a greeting exception occurs
+    // after Client has already entered clients and consumed a session slot.
+    // The real accept error path must retire that published owner once.
+    Context c;
+    net::AsioService service(c.factory,c.execution,c.port,c.ready);
+    service.start();
+    Peer existing(c.port);
+    require(existing.frame()=="hello","live control greeting before failure");
+    c.factory.fail_greeting_once.store(true);
+    Peer rejected(c.port);
+    require(rejected.closed(),
+        "throwing initial greeting retained a partially published TCP session");
+    require(until([&]{return c.factory.creates.load()>=2&&
+                              c.factory.accepted_session_errors.load()==1;}),
+        "greeting failure did not report exactly one accepted-session error");
+    Peer recovered(c.port);
+    require(recovered.frame()=="hello",
+        "listener did not rearm after a post-publication greeting exception");
+    existing.send("existing-alive");
+    require(existing.frame()=="existing-alive",
+        "failed greeting disrupted an unrelated committed session");
+    recovered.send("new-owner");
+    require(recovered.frame()=="new-owner",
+        "new session cannot handle messages after greeting rollback");
+    require(c.factory.creates.load()==3&&
+            c.factory.accepted_session_errors.load()==1,
+        "greeting exception duplicated creation or error reporting");
+    service.stop();service.stop();
+    require(service.impl_->active_sessions==0&&service.impl_->clients.empty()&&
+            !service.impl_->accept_pending[0]&&!service.impl_->accept_pending[1],
+        "shutdown left a counted Client or accept pending after greeting failure");
+}
 void accept_cancellation_finality() {
     Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.ready,{});
     owner.used=true;
@@ -234,6 +353,70 @@ void dual_stack_accept_cancellation_finality() {
                 "post-stop polling must not rearm either listener");
     }
 }
+void held_successful_accept_retirement() {
+    // Single actual pending AcceptEx on a loopback listener. With only one
+    // submitted operation, the captured successful IOCP packet belongs to it.
+    // A kernel dequeue is not Asio callback completion or buffer retirement.
+    Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.ready,{});
+    owner.used=true;
+    owner.acceptor.open(Tcp::v4());
+    owner.acceptor.bind({asio::ip::address_v4::loopback(),0});
+    owner.acceptor.listen();
+    owner.queue_accept(owner.acceptor,0);
+    require(owner.accept_pending[0]&&!owner.accept_pending[1]&&owner.active_sessions==0,
+        "one pending native accept owns admission before the peer connects");
+    struct Gate {
+        Gate(){
+            require(!held_accept::armed&&!held_accept::cached,
+                "previous held accept must be fully retired");
+            held_accept::packet={};
+            held_accept::captures=held_accept::deliveries=held_accept::waits=0;
+            held_accept::armed=held_accept::holding=true;
+        }
+        void release(){held_accept::armed=held_accept::holding=false;}
+        ~Gate(){release();}
+    } gate;
+    asio::io_context peer_io;
+    Tcp::socket peer(peer_io);
+    peer.connect(owner.acceptor.local_endpoint());
+    const auto deadline=std::chrono::steady_clock::now()+3s;
+    while(!held_accept::cached&&std::chrono::steady_clock::now()<deadline){
+        owner.io.restart();owner.io.poll_one();
+        if(!held_accept::cached)Sleep(1);
+    }
+    const auto packet=held_accept::packet;
+    require(held_accept::cached&&held_accept::captures==1&&
+            packet.success&&packet.port&&packet.operation&&packet.key==0,
+        "one real successful native accept completion is held after IOCP dequeue");
+    require(owner.accept_pending[0]&&owner.active_sessions==0&&c.factory.creates==0,
+        "dequeued but unconsumed accept cannot create a handler or release its owner");
+    owner.stopping.store(true,std::memory_order_release);
+    const auto begin=std::chrono::steady_clock::now();
+    for(unsigned i=0;i<2;++i){
+        const auto previous_waits=held_accept::waits;
+        bool incomplete=false;
+        try{owner.stop();}catch(const std::runtime_error&){incomplete=true;}
+        require(incomplete&&held_accept::waits>previous_waits,
+            "held accept completion must force each bounded stop to remain incomplete");
+        require(owner.accept_pending[0]&&owner.active_sessions==0&&
+                held_accept::cached&&held_accept::captures==1&&!held_accept::deliveries,
+            "stop cannot retire the pending accept or replay the original IOCP packet");
+        require(c.factory.creates==0&&owner.clients.empty(),
+            "a stopped listener cannot construct a session before accept completion");
+    }
+    require(std::chrono::steady_clock::now()-begin>=100ms,
+        "native accept packet must survive beyond the first 100 ms drain budget");
+    gate.release();
+    owner.stop();owner.stop();
+    require(!held_accept::cached&&held_accept::captures==1&&held_accept::deliveries==1,
+        "the original successful accept packet must be delivered exactly once");
+    require(!owner.accept_pending[0]&&!owner.accept_pending[1]&&
+            owner.active_sessions==0&&owner.clients.empty()&&c.factory.creates==0,
+        "post-stop successful accept never rearms or publishes a new handler");
+    owner.io.restart();
+    require(owner.io.poll()==0&&!owner.accept_pending[0],
+        "subsequent executor polling cannot resurrect a stopped accept");
+}
 void post_failure() {
     Context c;net::AsioService service(c.factory,c.execution,c.port,c.ready);service.start();
     Peer control(c.port);require(control.frame()=="hello","control greeting");control.send("fail");
@@ -247,6 +430,66 @@ void post_failure() {
     require(broken.closed()&&healthy.closed(),"failed cleanup dispatch leaves live sockets stranded");
     require(service.impl_->stopping.load(),"failed dispatch keeps accepting work");
     service.stop();service.stop();
+}
+void prepared_owner_post_failure() {
+    // Exercise real Client::post_io allocation/ownership, without listener,
+    // worker-pool or peer scheduling. The prepared receipt is controlled.
+    struct Counts {unsigned committed=0,cancelled=0,destroyed=0,executed=0;};
+    struct Receipt final:server::DeliveryReceipt {
+        std::shared_ptr<Counts> counts;
+        explicit Receipt(std::shared_ptr<Counts> value):counts(std::move(value)){}
+        ~Receipt(){++counts->destroyed;}
+        bool finish(bool success)noexcept override {
+            if(success)++counts->committed;else ++counts->cancelled;
+            return true;
+        }
+    };
+    struct Disarm {~Disarm(){fault::next=false;}};
+    Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.ready,{});
+    auto client=std::make_shared<net::AsioService::Impl::Client>(owner,Tcp::socket(owner.io));
+    const std::string payload("reply\0event\0",12);
+    for(bool fail:{false,true,false}) {
+        auto counts=std::make_shared<Counts>();
+        auto response=std::make_shared<server::PreparedResponse>(payload,std::make_unique<Receipt>(counts));
+        const std::weak_ptr<server::PreparedResponse> weak=response;
+        std::function<void()> work=[response=std::move(response),counts,payload] {
+            ++counts->executed;
+            require(response->bytes==payload,"posted owner lost exact counted response bytes");
+            require(response->finish(true),"successful post control cannot settle its receipt");
+        };
+        const auto before=fault::injected.load();
+        bool threw=false,unconsumed=false;
+        {
+            Disarm disarm;
+            fault::last=fault::Route::none;fault::next=fail;
+            try{client->post_io(std::move(work));}catch(const std::bad_alloc&){threw=true;}
+            unconsumed=fault::next;fault::next=false;
+        }
+        work={}; // Do not depend on the moved-from std::function representation.
+        if(fail) {
+            require(threw&&!unconsumed&&fault::injected.load()==before+1,
+                    "prepared post must propagate exactly one injected allocation failure");
+#ifdef FIXTURE_ALIGNED_CRT_PATH
+            require(fault::last==fault::Route::aligned_crt,"prepared post missed aligned CRT allocation");
+#else
+            require(fault::last==fault::Route::scalar_new,"prepared post missed scalar allocation");
+#endif
+            require(weak.expired()&&counts->cancelled==1&&counts->committed==0&&
+                    counts->destroyed==1&&counts->executed==0,
+                    "failed Asio post must release and cancel its prepared owner before returning");
+        } else {
+            require(!threw&&!unconsumed&&fault::injected.load()==before&&!weak.expired()&&
+                    counts->destroyed==0&&counts->executed==0,
+                    "accepted Asio post must retain its prepared owner without inline execution");
+        }
+        owner.io.restart();owner.io.poll();
+        require(weak.expired()&&counts->destroyed==1&&counts->executed==unsigned(!fail)&&
+                counts->committed==unsigned(!fail)&&counts->cancelled==unsigned(fail),
+                "executor drain must neither run a failed post nor repeat delivery settlement");
+        require(!client->closed&&!owner.stopping&&c.factory.errors==0,
+                "direct post boundary must leave ordinary recovery controls usable");
+    }
+    client->close();owner.io.restart();owner.io.poll();
 }
 void stop_without_allocation() {
     Context c;net::AsioService service(c.factory,c.execution,c.port,c.ready);service.start();
@@ -277,7 +520,7 @@ void drain_retry() {
 int main(int argc,char** argv)try {
     const std::string_view selected=argc==2?argv[1]:"all";
     bool ran=false;
-    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms}})
+    for(auto [name,fn]:{std::pair<const char*,void(*)()>{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"held-accept-stop",held_successful_accept_retirement},{"post",post_failure},{"post-owner",prepared_owner_post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms},{"throwing-factory-rearm",throwing_handler_factory_rearms},{"greeting-throw",greeting_failure_retires_published_client}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

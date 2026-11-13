@@ -5,19 +5,37 @@ import shutil
 import hashlib
 import json
 import os
+import stat
 import subprocess
 import sys
 import tempfile
 import unittest
 from unittest import mock
 from pathlib import Path
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from check_repository_contract import (
     check_root_file_ownership, check_archived_evidence, check_active_identifiers,
     check_layout_migration_reference, declared_application_sources,
+    check_public_timezones,
 )
+
+
+def evidence_fixture(root, nested=False):
+    archive = root / 'metadata/evidence'
+    archive.mkdir(parents=True)
+    name = 'nested/original.json' if nested else 'original.json'
+    member = archive / name
+    member.parent.mkdir(parents=True, exist_ok=True)
+    member.write_bytes(b'original controlled evidence')
+    (archive / 'README.md').write_text('immutable historical fixture')
+    policy = root / 'metadata/EVIDENCE_RETENTION_POLICY.json'
+    policy.write_text(json.dumps({'schema': 'surge.evidence-retention.v1',
+        'retained_count': 1, 'retained_files': {
+            name: hashlib.sha256(member.read_bytes()).hexdigest()}}))
+    return archive, policy, member
 
 
 def fixture_git_environment():
@@ -33,6 +51,43 @@ def fixture_git_environment():
 
 
 class RepositoryRootOwnership(unittest.TestCase):
+    def test_public_time_metadata_rejects_regional_zones_without_echoing_them(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            names = ['CHANGELOG.md', 'docs/WEEKLY_RELEASE.md', '.github/workflows/weekly.yml',
+                     'metadata/POLICY.json', 'scripts/tool.py', 'src/runtime/tool.cpp']
+            (root / 'metadata').mkdir()
+            (root / 'metadata/ACTIVE_SOURCE_MANIFEST.json').write_text(
+                json.dumps({'files': dict.fromkeys(names, '')}), encoding='utf-8')
+            for name in names:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('Friday 13:30 UTC\n', encoding='utf-8')
+            self.assertEqual([], check_public_timezones(root))
+            for name in names:
+                path = root / name
+                for zone in ('Europe/Paris', 'America/Argentina/Buenos_Aires', 'asia/Tokyo'):
+                    path.write_text('heading\n' + zone + '\n', encoding='utf-8')
+                    self.assertEqual(
+                        [f'Regional time-zone name in active source: {name}:2; use UTC'],
+                        check_public_timezones(root))
+                path.write_text('Friday 13:30 UTC\n', encoding='utf-8')
+
+    def test_public_time_guard_preserves_historical_vendor_and_test_bytes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            names = ['metadata/evidence/old.json', 'docs/evidence/old.md',
+                     'third_party/vendor/NOTICE.txt', 'tests/fixture.txt']
+            for name in names:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('Europe/Paris\n', encoding='utf-8')
+            (root / 'metadata/ACTIVE_SOURCE_MANIFEST.json').write_text(
+                json.dumps({'files': dict.fromkeys(names, '')}), encoding='utf-8')
+            before = {name: (root / name).read_bytes() for name in names}
+            self.assertEqual([], check_public_timezones(root))
+            self.assertEqual(before, {name: (root / name).read_bytes() for name in names})
+
     def test_application_declarations_keep_complete_source_path_boundaries(self):
         text = '''add_library(app src/xml/reader.cpp "src/platform/entry.cpp")
         add_library(vendor third_party/pugixml/src/pugixml.cpp)
@@ -191,8 +246,22 @@ class RepositoryRootOwnership(unittest.TestCase):
             target = root / 'metadata/evidence/LAYOUT_MIGRATION.json'
             target.parent.mkdir(parents=True)
             contract = {'layout_migration': 'metadata/evidence/LAYOUT_MIGRATION.json'}
-            target.write_text('{"schema":"surge.layout-migration.v1"}', encoding='utf-8')
+            # Read the immutable historical schema instead of introducing a
+            # reserved source-identity label in active test code.
+            canonical_schema = json.loads(
+                (ROOT / 'metadata/evidence/LAYOUT_MIGRATION.json').read_text(
+                    encoding='utf-8'))['schema']
+            target.write_text(json.dumps({'schema': canonical_schema}), encoding='utf-8')
             self.assertEqual([], check_layout_migration_reference(root, contract))
+            # Suffix-only checks previously accepted forged schema namespaces.
+            for wrong_schema in ('surge.layout-migration.v1', 'forged.layout-migration.v1',
+                                 '.layout-migration.v1', canonical_schema + '.extra',
+                                 chr(0xd800), chr(0xe9) + '.layout-migration.v1',
+                                 None, 1, []):
+                with self.subTest(wrong_schema=wrong_schema):
+                    target.write_text(json.dumps({'schema': wrong_schema}), encoding='utf-8')
+                    self.assertTrue(check_layout_migration_reference(root, contract))
+            target.write_text(json.dumps({'schema': canonical_schema}), encoding='utf-8')
             self.assertTrue(check_layout_migration_reference(
                 root, {'layout_migration': 'docs/evidence/LAYOUT_MIGRATION.json'}))
             for unsafe in ('../escape.json', '/tmp/absolute.json',
@@ -209,7 +278,7 @@ class RepositoryRootOwnership(unittest.TestCase):
             self.assertTrue(check_layout_migration_reference(root, contract))
             target.unlink()
             outside = root / 'elsewhere.json'
-            outside.write_text('{"schema":"surge.layout-migration.v1"}')
+            outside.write_text(json.dumps({'schema': canonical_schema}), encoding='utf-8')
             try:
                 target.symlink_to(outside)
             except (OSError, NotImplementedError):
@@ -242,46 +311,137 @@ class RepositoryRootOwnership(unittest.TestCase):
                           check_archived_evidence(root))
 
     def test_historical_evidence_links_fail_closed(self):
+        # Each redirection is private to this fixture; restore before cleanup.
+        for label, relative in (('original.json', 'metadata/evidence/original.json'),
+                                ('README.md', 'metadata/evidence/README.md'),
+                                ('archive', 'metadata/evidence'),
+                                ('metadata directory', 'metadata'),
+                                ('retention policy', 'metadata/EVIDENCE_RETENTION_POLICY.json')):
+            with self.subTest(label=label), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                evidence_fixture(root)
+                self.assertEqual([], check_archived_evidence(root))
+                entry = root / relative
+                target = root / 'relocated'
+                is_directory = entry.is_dir()
+                entry.rename(target)
+                try:
+                    entry.symlink_to(target, target_is_directory=is_directory)
+                except (OSError, NotImplementedError) as error:
+                    target.rename(entry)
+                    self.skipTest(f'Symlinks unavailable: {error}')
+                try:
+                    # A pinned-file alias points at modified, unpinned content.
+                    if label == 'original.json':
+                        target.write_bytes(b'changed and unpinned bytes')
+                    errors = check_archived_evidence(root)
+                    expected = ('Historical evidence link is forbidden: ' + label
+                                if label in ('original.json', 'README.md') else
+                                'Historical evidence ' + label + ' is a link')
+                    self.assertIn(expected, errors)
+                finally:
+                    entry.unlink()
+                    target.rename(entry)
+                if label == 'original.json':
+                    entry.write_bytes(b'original controlled evidence')
+                self.assertEqual([], check_archived_evidence(root))
+
+    def test_historical_evidence_nested_link_stops_before_payload_reads(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            archive = root / 'metadata/evidence'
-            archive.mkdir(parents=True)
-            data = b'original owner evidence'
-            pinned = archive / 'original.json'
-            pinned.write_bytes(data)
-            readme = archive / 'README.md'
-            readme.write_text('immutable historical records')
-            (root / 'metadata/EVIDENCE_RETENTION_POLICY.json').write_text(json.dumps({
-                'schema': 'surge.evidence-retention.v1',
-                'retained_count': 1,
-                'retained_files': {'original.json': hashlib.sha256(data).hexdigest()},
-            }))
-            unpinned = root / 'outside.json'
-            unpinned.write_bytes(b'changed and unpinned bytes')
-            self.assertEqual([], check_archived_evidence(root))
+            archive, _, _ = evidence_fixture(root, nested=True)
+            nested = archive / 'nested'
+            target = root / 'relocated'
+            nested.rename(target)
             try:
-                pinned.unlink()
-                pinned.symlink_to(unpinned)
+                nested.symlink_to(target, target_is_directory=True)
             except (OSError, NotImplementedError) as error:
+                target.rename(nested)
                 self.skipTest(f'Symlinks unavailable: {error}')
-            self.assertIn('Historical evidence link is forbidden: original.json',
-                          check_archived_evidence(root))
-            pinned.unlink()
-            pinned.write_bytes(data)
-            self.assertEqual([], check_archived_evidence(root))
-            readme.unlink()
-            readme.symlink_to(unpinned)
-            self.assertIn('Historical evidence link is forbidden: README.md',
-                          check_archived_evidence(root))
-            readme.unlink()
-            readme.write_text('immutable historical records')
-            archive.rename(root / 'relocated-evidence')
             try:
-                archive.symlink_to(root / 'relocated-evidence', target_is_directory=True)
-            except (OSError, NotImplementedError) as error:
-                self.skipTest(f'Directory symlinks unavailable: {error}')
-            self.assertIn('Historical evidence archive is a link',
-                          check_archived_evidence(root))
+                with mock.patch.object(Path, 'read_bytes',
+                                       side_effect=AssertionError('Evidence payload read')):
+                    self.assertIn('Historical evidence link is forbidden: nested',
+                                  check_archived_evidence(root))
+            finally:
+                nested.unlink()
+                target.rename(nested)
+            self.assertEqual([], check_archived_evidence(root))
+
+    def test_historical_evidence_reparse_metadata_on_older_python(self):
+        for relative in ('metadata', 'metadata/evidence',
+                         'metadata/EVIDENCE_RETENTION_POLICY.json',
+                         'metadata/evidence/nested',
+                         'metadata/evidence/nested/original.json',
+                         'metadata/evidence/README.md'):
+            with self.subTest(path=relative), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                evidence_fixture(root, nested=True)
+                target = root / relative
+                original_lstat = Path.lstat
+
+                def controlled_lstat(path, *args, **kwargs):
+                    info = original_lstat(path, *args, **kwargs)
+                    if path == target:
+                        return SimpleNamespace(st_mode=info.st_mode,
+                            st_file_attributes=stat.FILE_ATTRIBUTE_REPARSE_POINT)
+                    return info
+
+                read_method = ('read_text' if relative in ('metadata', 'metadata/evidence',
+                               'metadata/EVIDENCE_RETENTION_POLICY.json') else 'read_bytes')
+                with mock.patch.object(Path, 'lstat', controlled_lstat), \
+                        mock.patch.object(Path, 'is_junction', return_value=False, create=True), \
+                        mock.patch.object(Path, read_method,
+                                          side_effect=AssertionError('Redirected content read')):
+                    self.assertTrue(any('link' in error for error in check_archived_evidence(root)))
+                self.assertEqual([], check_archived_evidence(root))
+
+    @unittest.skipUnless(os.name == 'nt', 'Requires real Windows directory junctions')
+    def test_historical_evidence_real_windows_junctions(self):
+        for relative in ('metadata', 'metadata/evidence', 'metadata/evidence/nested'):
+            for outside in (False, True):
+                with self.subTest(path=relative, outside=outside), \
+                        tempfile.TemporaryDirectory() as tmp:
+                    owned = Path(tmp)
+                    root = owned / 'repository'
+                    evidence_fixture(root, nested=True)
+                    entry = root / relative
+                    target = (owned if outside else root) / 'relocated'
+                    entry.rename(target)
+                    result = subprocess.run(['cmd.exe', '/d', '/c', 'mklink', '/J',
+                                             str(entry), str(target)],
+                                            capture_output=True, text=True, timeout=30)
+                    try:
+                        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                        self.assertTrue(entry.lstat().st_file_attributes &
+                                        stat.FILE_ATTRIBUTE_REPARSE_POINT)
+                        # Older Python must reject junctions without is_junction.
+                        with mock.patch.object(Path, 'is_junction', return_value=False, create=True), \
+                                mock.patch.object(Path, 'read_bytes',
+                                                  side_effect=AssertionError('Evidence payload read')):
+                            self.assertTrue(any('link' in error
+                                                for error in check_archived_evidence(root)))
+                    finally:
+                        # Remove only the owned junction entry, never its target.
+                        if entry.exists():
+                            os.rmdir(entry)
+                        target.rename(entry)
+                    self.assertEqual([], check_archived_evidence(root))
+                    self.assertEqual(b'original controlled evidence',
+                                     (root / 'metadata/evidence/nested/original.json').read_bytes())
+
+    def test_historical_evidence_rejects_unsafe_retained_names(self):
+        for name in ('../outside.json', 'C:outside.json', 'nested\\original.json',
+                     'nested/../original.json', '/outside.json', 'original.json:stream'):
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                _, policy_path, _ = evidence_fixture(root)
+                policy = json.loads(policy_path.read_text())
+                policy['retained_files'] = {name: '0' * 64}
+                policy_path.write_text(json.dumps(policy))
+                with mock.patch.object(Path, 'read_bytes',
+                                       side_effect=AssertionError('Unsafe payload read')):
+                    self.assertIn('Unsafe historical evidence entry', check_archived_evidence(root))
 
     def test_archived_provenance_labels_do_not_exempt_active_metadata(self):
         with tempfile.TemporaryDirectory() as tmp:

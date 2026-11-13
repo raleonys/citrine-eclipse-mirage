@@ -16,6 +16,8 @@ from weekly_naming import FIRST, successor, approved_tag, require_tag, asset_nam
 from check_falcion_golden_cleaning import check
 from package_source import package
 from run_golden_pipeline import ORDER
+from run_source_qa import CHECKS as SOURCE_QA_CHECKS
+from project_version import selected_version
 
 ROOT = Path(__file__).resolve().parents[1]
 COMMIT = re.compile(r'[0-9a-f]{40}\Z')
@@ -89,8 +91,47 @@ def plan(releases, source, start_tag=''):
 
 def junit(path):
     tree = ET.parse(path).getroot()
+    if tree.tag not in ('testsuite', 'testsuites'):
+        raise ValueError('CTest JUnit root must be testsuite or testsuites')
+    if tree.tag == 'testsuites' and any(child.tag != 'testsuite' for child in tree):
+        raise ValueError('CTest evidence has no valid test suites')
+    suites = list(tree.iter('testsuite'))
     cases = list(tree.iter('testcase'))
-    if not cases or any(node.tag in ('failure', 'error', 'skipped') for node in tree.iter()):
+    if not suites or not cases:
+        raise ValueError('CTest evidence is empty')
+    parents = {child: parent for parent in tree.iter() for child in parent}
+    totals = dict.fromkeys(suites, 0)
+    for node in tree.iter('testsuites'):
+        if node is not tree:
+            raise ValueError('CTest aggregate container must be the root')
+    for suite in suites:
+        parent = parents.get(suite)
+        if suite is not tree and parent not in totals and parent is not tree:
+            raise ValueError('CTest suite must belong directly to a suite or aggregate root')
+    for case in cases:
+        parent = parents.get(case)
+        if parent not in totals:
+            raise ValueError('CTest testcase must belong directly to a suite')
+        totals[parent] += 1
+
+    def declared_count(node):
+        count = node.get('tests', '')
+        if re.fullmatch(r'[0-9]+', count) is None:
+            raise ValueError('CTest declared tests must be an unsigned ASCII integer')
+        return int(count)
+
+    # Reverse document order visits children before parents without recursion or
+    # repeatedly walking each subtree. Each testcase contributes once to the result.
+    for suite in reversed(suites):
+        if declared_count(suite) != totals[suite]:
+            raise ValueError('CTest declared tests do not match testcases')
+        parent = parents.get(suite)
+        if parent in totals:
+            totals[parent] += totals[suite]
+    if tree.tag == 'testsuites' and tree.get('tests') is not None:
+        if declared_count(tree) != len(cases):
+            raise ValueError('CTest aggregate tests do not match testcases')
+    if any(node.tag in ('failure', 'error', 'skipped') for node in tree.iter()):
         raise ValueError('CTest evidence is empty, failed or skipped')
     for node in tree.iter():
         for key in ('failures', 'errors', 'skipped', 'disabled'):
@@ -99,17 +140,45 @@ def junit(path):
     return len(cases)
 
 
-def validate_profile(folder, profile, manifest, source):
+def _successful_exit(value):
+    # JSON false compares equal to 0 in Python, and absent/empty Golden step
+    # outcomes are falsey. Neither is evidence that a process exited with 0.
+    return type(value) is int and value == 0
+
+
+def validate_source_qa(report):
+    if not isinstance(report, dict) or report.get('result') != 'PASS_SOURCE_QA':
+        raise ValueError('Source QA did not pass')
+    checks = report.get('checks')
+    expected = {name for name, _ in SOURCE_QA_CHECKS}
+    if not isinstance(checks, list) or len(checks) != len(expected):
+        raise ValueError('Source QA must contain every required check exactly once')
+    seen = set()
+    for check in checks:
+        if not isinstance(check, dict) or not isinstance(check.get('check'), str):
+            raise ValueError('Source QA check record is invalid')
+        name = check['check']
+        if name not in expected or name in seen:
+            raise ValueError('Source QA must contain every required check exactly once')
+        if type(check.get('exit_code')) is not int or check['exit_code'] != 0:
+            raise ValueError('Source QA did not pass')
+        seen.add(name)
+    return len(seen)
+
+
+def validate_profile(folder, profile, manifest, source, version=None):
     folder = Path(folder)
     identity = load(folder / 'EVIDENCE_IDENTITY.json')
     if identity != {'source_sha': source, 'source_manifest_sha256': manifest, 'profile': profile}:
         raise ValueError('Evidence belongs to a different source or profile')
     receipt = load(folder / 'BUILD_RECEIPT.json')
+    if receipt.get('project_version') != (version or selected_version()):
+        raise ValueError('Build resource version does not match the planned release')
     mode = 'Native' if profile == 'native' else 'Golden'
     if (receipt.get('mode') != mode or receipt.get('configuration') != 'Release'
             or receipt.get('build_succeeded') is not True
             or receipt.get('validation_result') != 'PASS_SELECTED_PROFILE'
-            or receipt.get('validation_exit_code') != 0
+            or not _successful_exit(receipt.get('validation_exit_code'))
             or receipt.get('source_manifest_sha256') != manifest):
         raise ValueError('A successful exact-source native MSVC profile is required')
     if not receipt.get('compiler', '').lower().endswith('cl.exe'):
@@ -119,7 +188,7 @@ def validate_profile(folder, profile, manifest, source):
             raise ValueError('Missing build evidence: ' + name)
     if profile == 'native':
         return {'tests': junit(folder / 'CTEST_RESULTS.xml')}
-    dll = folder / 'dist/preloader_l.dll'
+    dll = folder / 'dist/citrine_eclipse_mirage.dll'
     digest = sha(dll)
     verify_sidecar(dll)
     dist = load(folder / 'dist/DIST_RECEIPT.json')
@@ -127,10 +196,10 @@ def validate_profile(folder, profile, manifest, source):
     for report in (dist, golden):
         if (report.get('result') != 'GOLDEN_PASS' or report.get('sha256') != digest
                 or [s['stage'] for s in report.get('steps', [])] != ORDER
-                or any(s['exit_code'] for s in report['steps'])):
+                or any(not _successful_exit(s.get('exit_code')) for s in report['steps'])):
             raise ValueError('All six Golden gates must pass for this exact DLL')
         runtime = report.get('runtime_check', {})
-        if (runtime.get('exit_code') != 0 or runtime.get('sha256_before') != digest
+        if (not _successful_exit(runtime.get('exit_code')) or runtime.get('sha256_before') != digest
                 or runtime.get('sha256_after') != digest):
             raise ValueError('Final-name DLL runtime acceptance is missing')
     if (dist.get('source_manifest_sha256') != manifest
@@ -169,7 +238,7 @@ def capture(root, profile, build, output, source):
         shutil.copyfile(build / 'golden/GOLDEN_REPORT.json', folder / 'GOLDEN_REPORT.json')
         dist = folder / 'dist'
         dist.mkdir()
-        for name in ('preloader_l.dll', 'preloader_l.dll.sha256', 'DIST_RECEIPT.json'):
+        for name in ('citrine_eclipse_mirage.dll', 'citrine_eclipse_mirage.dll.sha256', 'DIST_RECEIPT.json'):
             shutil.copyfile(root / 'dist' / name, dist / name)
     manifest = sha(root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')
     write(folder / 'EVIDENCE_IDENTITY.json',
@@ -187,50 +256,48 @@ def bundle(root, payload, output):
         raise ValueError('Candidate checkout does not match planned source')
     manifest = sha(root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')
     qa = load(payload / 'SOURCE_QA.json')
-    if qa.get('result') != 'PASS_SOURCE_QA' or not qa.get('checks') or any(
-            c['exit_code'] != 0 for c in qa['checks']):
-        raise ValueError('Source QA did not pass')
+    source_qa_groups = validate_source_qa(qa)
     portable_tests = junit(payload / 'PORTABLE_CTEST.xml')
-    native = validate_profile(payload / 'native', 'native', manifest, p['source_sha'])
-    golden = validate_profile(payload / 'production', 'production', manifest, p['source_sha'])
+    version = require_tag(p['tag'])
+    native = validate_profile(payload / 'native', 'native', manifest, p['source_sha'], version)
+    golden = validate_profile(payload / 'production', 'production', manifest, p['source_sha'], version)
     source_name, binary_name = asset_names(p['tag'])
     source = payload / source_name
     verify_sidecar(source)
     errors = check(root, source)
     if errors:
         raise ValueError('Source package mismatch: ' + '; '.join(errors))
-    output.mkdir(parents=True)
-    shutil.copyfile(source, output / source.name)
-    shutil.copyfile(Path(str(source) + '.sha256'), output / (source.name + '.sha256'))
     receipt = {'schema': 'surge.draft-release-receipt.v1', 'publication_status': 'DRAFT',
                'tag': p['tag'], 'source_sha': p['source_sha'], 'source_manifest_sha256': manifest,
-               'source_qa_groups': len(qa['checks']), 'portable_tests': portable_tests,
+               'source_qa_groups': source_qa_groups, 'portable_tests': portable_tests,
                'native_tests': native['tests'], 'dll_sha256': golden['dll_sha256'],
                'source_zip_sha256': sha(source), 'game_acceptance': 'NOT_RUN',
                'publication': False}
-    write(output / 'RELEASE_RECEIPT.json', receipt)
-    binary = output / binary_name
-    files = {path.name: path for path in (payload / 'production/dist').iterdir() if path.is_file()}
-    if set(files) != {'preloader_l.dll', 'preloader_l.dll.sha256', 'DIST_RECEIPT.json'}:
+    dist_files = {path.name: path for path in (payload / 'production/dist').iterdir() if path.is_file()}
+    if set(dist_files) != {'citrine_eclipse_mirage.dll', 'citrine_eclipse_mirage.dll.sha256', 'DIST_RECEIPT.json'}:
         raise ValueError('Unexpected runtime payload')
-    files['RELEASE_RECEIPT.json'] = output / 'RELEASE_RECEIPT.json'
-    files['LICENSE'] = root / 'LICENSE'
-    for vendor, license_file in (('asio', 'LICENSE_1_0.txt'), ('minhook', 'LICENSE.txt'),
-                                 ('pegtl', 'LICENSE_1_0.txt'), ('pugixml', 'LICENSE.md')):
-        files['licenses/' + vendor + '.txt'] = root / 'third_party' / vendor / license_file
-    for profile in ('native', 'production'):
-        for path in (payload / profile).rglob('*'):
-            if path.is_file() and 'dist' not in path.relative_to(payload / profile).parts:
-                files['evidence/' + path.relative_to(payload).as_posix()] = path
-    for name in ('SOURCE_QA.json', 'PORTABLE_CTEST.xml'):
-        files['evidence/' + name] = payload / name
+    files = {'citrine_eclipse_mirage.dll': dist_files['citrine_eclipse_mirage.dll'],
+             'citrine_eclipse_mirage.dll.sha256': dist_files['citrine_eclipse_mirage.dll.sha256'],
+             'LICENSE': root / 'LICENSE'}
+    # Refuse malformed or aliased inputs before claiming the fresh output path.
+    for path in files.values():
+        if path.is_symlink():
+            raise ValueError('Candidate payload cannot contain symlinks')
+        if not path.is_file():
+            raise ValueError('Candidate payload input is missing or nonregular')
+    output.mkdir(parents=True)
+    binary = output / binary_name
     with zipfile.ZipFile(binary, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
         for name, path in sorted(files.items()):
             if path.is_symlink():
                 raise ValueError('Candidate payload cannot contain symlinks')
             archive.writestr(name, path.read_bytes())
     sidecar(binary)
-    sidecar(output / 'RELEASE_RECEIPT.json')
+    receipt['binary_zip_sha256'] = sha(binary)
+    # Receipts describe preparation, not the eventual publication state. Keep
+    # them with workflow evidence instead of shipping stale DRAFT data to users.
+    write(payload / 'RELEASE_RECEIPT.json', receipt)
+    sidecar(payload / 'RELEASE_RECEIPT.json')
     return receipt
 
 
@@ -278,9 +345,12 @@ class GitHub:
                         '--clobber', *map(str, paths)], check=True, timeout=300)
 
 
-def publish_draft(github, p, assets):
-    assets = Path(assets)
-    receipt = load(assets / 'RELEASE_RECEIPT.json')
+def publish_draft(github, p, assets, receipt_path):
+    assets, receipt_path = Path(assets).resolve(), Path(receipt_path).resolve()
+    if receipt_path.is_relative_to(assets):
+        raise ValueError('Release receipt must stay outside release assets')
+    verify_sidecar(receipt_path)
+    receipt = load(receipt_path)
     tag = p['tag']
     require_tag(tag)
     if (not p['ready'] or receipt['source_sha'] != p['source_sha'] or receipt['tag'] != tag
@@ -289,13 +359,13 @@ def publish_draft(github, p, assets):
             or receipt.get('game_acceptance') != 'NOT_RUN'):
         raise ValueError('Draft receipt/source mismatch')
     paths = sorted(assets.iterdir())
-    source_name, binary_name = asset_names(tag)
-    expected = {source_name, source_name + '.sha256', binary_name, binary_name + '.sha256'}
-    expected |= {'RELEASE_RECEIPT.json', 'RELEASE_RECEIPT.json.sha256'}
+    _, binary_name = asset_names(tag)
+    expected = {binary_name, binary_name + '.sha256'}
     if {path.name for path in paths} != expected:
         raise ValueError('Unexpected release assets')
-    for name in (source_name, binary_name, 'RELEASE_RECEIPT.json'):
-        verify_sidecar(assets / name)
+    verify_sidecar(assets / binary_name)
+    if receipt.get('binary_zip_sha256') != sha(assets / binary_name):
+        raise ValueError('Draft receipt/binary mismatch')
     releases = github.releases()
     existing = next((r for r in releases if r['tag_name'] == tag), None)
     if existing and (not existing['draft'] or not state(existing)
@@ -304,16 +374,43 @@ def publish_draft(github, p, assets):
         raise ValueError('Refusing to modify a published or unrelated release')
     complete = existing and state(existing)['status'] == 'complete'
     if complete:
-        return existing
+        # A completed marker is not a permanent receipt for mutable remote
+        # assets. Re-read the live draft and verify its exact package pair.
+        latest = github.api(f"releases/{existing['id']}")
+        live_state = state(latest)
+        if (not latest.get('draft') or latest.get('tag_name') != tag
+                or latest.get('target_commitish') != p['source_sha']
+                or not live_state or live_state.get('status') != 'complete'
+                or live_state.get('source_sha') != p['source_sha']):
+            raise ValueError('Completed draft changed before reuse')
+        remote_assets = latest.get('assets')
+        if not isinstance(remote_assets, list) or len(remote_assets) != len(expected):
+            raise ValueError('Completed draft remote asset set mismatch')
+        by_name = {}
+        for asset in remote_assets:
+            if (not isinstance(asset, dict) or not isinstance(asset.get('name'), str)
+                    or asset['name'] in by_name):
+                raise ValueError('Completed draft remote asset set mismatch')
+            by_name[asset['name']] = asset
+        if set(by_name) != expected:
+            raise ValueError('Completed draft remote asset set mismatch')
+        for path in paths:
+            asset = by_name[path.name]
+            if type(asset.get('size')) is not int or asset['size'] != path.stat().st_size:
+                raise ValueError('Completed draft remote asset size mismatch')
+            if asset.get('digest') != 'sha256:' + sha(path):
+                raise ValueError('Completed draft remote asset digest missing or mismatched')
+        return latest
     if not existing:
         refs = github.api('git/matching-refs/tags/' + tag)
         if any(ref['ref'] == 'refs/tags/' + tag for ref in refs):
             raise ValueError('Refusing to reuse an existing Git tag')
     notes = github.api('releases/generate-notes', {'tag_name': tag, 'target_commitish': p['source_sha']})
-    summary = ('# Draft candidate\n\nSource: `' + p['source_sha'] + '`\n\n'
+    summary = ('Source: `' + p['source_sha'] + '`\n\n'
                'Source QA, portable tests, native MSVC acceptance, and Production/Golden '
-               'passed for this source. Game acceptance is NOT RUN. '
-               'The owner must review and publish this draft.\n\n')
+               'passed for this source.\n\n'
+               'Downloads: `' + binary_name + '` and its `.sha256` checksum. '
+               'GitHub supplies the Source code (zip/tar.gz) archives for this tag.\n\n')
     preparing = marker(p['source_sha'], 'preparing') + '\n\n**Asset preparation is incomplete; do not publish yet.**\n\n'
     if not existing:
         existing = github.api('releases', {'tag_name': tag, 'target_commitish': p['source_sha'],
@@ -334,8 +431,8 @@ def publish_draft(github, p, assets):
         asset = remote[path.name]
         if asset['size'] != path.stat().st_size:
             raise ValueError('Remote asset size mismatch')
-        if asset.get('digest') and asset['digest'] != 'sha256:' + sha(path):
-            raise ValueError('Remote asset hash mismatch')
+        if asset.get('digest') != 'sha256:' + sha(path):
+            raise ValueError('Remote asset hash missing or mismatched')
     result = github.update(release_id, marker(p['source_sha'], 'complete') + '\n\n' + summary + notes['body'])
     if not result['draft']:
         raise ValueError('Candidate was published concurrently; manual review is required')
@@ -362,6 +459,7 @@ def main():
     publishing = sub.add_parser('draft')
     publishing.add_argument('--plan', type=Path, required=True)
     publishing.add_argument('--assets', type=Path, required=True)
+    publishing.add_argument('--receipt', type=Path, required=True)
     args = ap.parse_args()
     if subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT):
         raise ValueError('Release preparation requires a clean, committed checkout')
@@ -375,7 +473,8 @@ def main():
         write(args.output, p)
         if 'GITHUB_OUTPUT' in os.environ:
             with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out:
-                out.write('ready=' + str(p['ready']).lower() + '\nsource=' + p['source_sha'] + '\n')
+                version = require_tag(p['tag']) if p['ready'] else ''
+                out.write('ready=' + str(p['ready']).lower() + '\nsource=' + p['source_sha'] + '\nversion=' + version + '\n')
         print(json.dumps(p))
     elif args.command == 'source':
         p = load(args.plan)
@@ -395,7 +494,7 @@ def main():
         p = load(args.plan)
         if head() != p['source_sha']:
             raise ValueError('Publishing checkout does not match validated source')
-        result = publish_draft(GitHub(os.environ['GITHUB_REPOSITORY']), p, args.assets)
+        result = publish_draft(GitHub(os.environ['GITHUB_REPOSITORY']), p, args.assets, args.receipt)
         print(json.dumps({'draft_url': result['html_url'], 'draft': result['draft']}))
 
 

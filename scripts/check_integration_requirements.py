@@ -15,7 +15,7 @@ def check(root):
                  'resources': 'MANDATORY_ADAPT', 'root_layout': 'MANDATORY_CLEAN_ADAPT',
                  'scripts': 'MANDATORY_ADAPT', 'tooling': 'MANDATORY_EVALUATE_AND_ADAPT',
                  'tests': 'SELECT_COMPATIBLE_AND_PRESERVE_SURGE_OWN_TESTS',
-                 'preloader_l_application_code': 'NOT_INHERITED'}
+                 'citrine_eclipse_mirage_application_code': 'NOT_INHERITED'}
     if req.get('infrastructure') != mandatory:
         errors.append('INFRASTRUCTURE_SCOPE_CHANGED')
     if req.get('third_party') != {name: 'REQUIRED_ACTIVE' for name in ['asio','minhook','pegtl','pugixml']}:
@@ -30,7 +30,7 @@ def check(root):
     if req.get('golden_pipeline_order') != order:
         errors.append('GOLDEN_ORDER_CHANGED')
     identity = json.loads((root / 'metadata/BRANDING_AND_IDENTITY.json').read_text())
-    if identity.get('cpp_root_namespace') != 'preloader_l' or identity.get('display_name') != 'SURGE':
+    if identity.get('cpp_root_namespace') != 'citrine_eclipse_mirage' or identity.get('display_name') != 'SURGE':
         errors.append('SURGE_IDENTITY_CHANGED')
     if hashlib.sha256((root / identity['branding_asset']).read_bytes()).hexdigest() != identity['asset_sha256']:
         errors.append('OWNER_AVATAR_CHANGED')

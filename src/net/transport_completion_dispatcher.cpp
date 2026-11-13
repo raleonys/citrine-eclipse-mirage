@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "preloader_l/net/transport_completion_dispatcher.hpp"
+#include "citrine_eclipse_mirage/net/transport_completion_dispatcher.hpp"
 #include <algorithm>
 #include <bit>
 
-namespace preloader_l::socket {
+namespace citrine_eclipse_mirage::socket {
 namespace {
 CancelOperation* pop(DispatcherQueue& queue){
     auto* const operation=queue.head;
@@ -139,4 +139,4 @@ std::uint64_t DispatcherWorkerEffects::dispatch_027c10(IocpSchedulerEntry& entry
     if(&entry!=&state_.entry)throw UnsupportedInput("Dispatcher bridge is bound to one live scheduler entry");
     return dispatch_completion_027c10(state_,timeout,thread,result,environment_,api_,effects_,worker_api_,errors_,*this);
 }
-} // namespace preloader_l::socket
+} // namespace citrine_eclipse_mirage::socket

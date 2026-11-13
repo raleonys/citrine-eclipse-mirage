@@ -1,53 +1,69 @@
 # Current outstanding work
 
-Recent changes are documented in
-[CODEBASE_OPTIMIZATION.md](CODEBASE_OPTIMIZATION.md); local test results are
-in the [validation record](../metadata/evidence/optimization/VALIDATION.json).
-
-Five Windows profiles and Native 193/193 PASS were confirmed by logs for
-the previously uploaded DLL; the owner reported game acceptance. The
-[pinned acceptance record](../metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json)
-retains these results. Acceptance of that earlier DLL does not cover
-subsequent XML/Release source changes.
+This list is reconciled against accepted
+`main@b6d3cfc48b1cbd0cca560d7f6f8931d7951be21c`.
+Current build/CI policy is in [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md), and
+runtime contracts are described in [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md).
+The dated evidence below records earlier source and DLL checkpoints; former
+compiler failures and their old test totals are not current acceptance status.
 
 | Outstanding item | Next action | Evidence boundary |
 |---|---|---|
-| New Windows/MSVC acceptance | Run the five normal build profiles and Native Acceptance on a clean source checkout. | LLVM-MinGW/Wine and sanitizer evidence exists for new source; MSVC was not executed. |
-| New game acceptance | Verify the applicable game scenarios and shutdown with the Production `dist/preloader_l.dll`. | The earlier game PASS does not replace retesting of new source. |
-| Native size attribution | Build before/after with identical MSVC/SDK/Release settings; collect DLL/MAP/OBJ evidence using `collect_size_evidence.py`. | The earlier native DLL/log exists, but its same-build native OBJ/MAP was not uploaded. |
-| Exceptional Asio teardown | Inject native faults in the `stop()` post/join/resource-failure paths while preserving ownership. | A destructor-exception warning remains open; no exception-swallowing change was introduced without proof of a safe fix. |
+| Validation of a changed head | Inspect all eleven required source/portable/Windows/reference checks for that exact head after eligible synchronization. | PR creation runs integrity only; old receipts and skipped jobs are not fresh acceptance. |
+| Owner game acceptance for a release candidate | Exercise the named/versioned host, startup, LSX flow and shutdown using the identified Production DLL. | Earlier owner-reported game acceptance belongs to its recorded DLL, not all later source changes. |
+| Actual external online provider | Pin the external provider hash/version and exercise factory, getter, cleanup and callback lifetime behavior. | Controlled fixture DLLs do not establish arbitrary external provider compatibility. |
+| Native size attribution | Collect comparable DLL/MAP/OBJ evidence with identical MSVC/SDK/settings using `collect_size_evidence.py`. | Earlier DLL/log sizes without matching same-build native objects do not prove current attribution. |
+| Exceptional Asio teardown | Extend fault coverage for exceptional stop/resource ownership and unresolved destructor paths without discarding retained owners. | Receive/send/accept schedules, active-provider drain, partial provider startup and receive-to-send timer faults have source-linked coverage; see SOURCE_DIFFERENTIAL_B49_B54.md. They do not prove every partial-construction failure or arbitrary provider/handler liveness. |
+| Original-source equivalence and retirement | Resolve source-provenance, kernel identity, Registry origin and foreign-callback questions with the exact inputs and meaningful source-linked tests. | The donor review remains open; controlled packet schedules and successful builds do not authorize donor retirement. |
 
-An absent AST reference is not proof that a file can be removed; virtual,
-callback, lifetime, and development API roots remain in scope. The earlier
-notes below are historical and must not replace the current local results
-or outstanding-work list.
+[PR #352's full-validation run](https://github.com/raleonys/citrine-eclipse-mirage/actions/runs/42889357574)
+passed all eleven required contexts, including Native Debug/Release and
+Production/Golden, for `7f592289d64494793a45290a854fa3830f63cb21` before its
+integration into this baseline. This is exact-head hosted evidence, not fresh
+execution for this documentation PR or owner game acceptance. Older failures
+below are historical, not live universal blockers.
+
+Current source already contains the five retained-cleanup MinHook entry guards,
+real-peer/live-call/churn fixtures, installed Registry A/W fixture paths and
+bounded provider/startup/packet-delay regressions. Do not propose those same
+scenarios as absent features. Registry provenance (Issue #109), aggregate memory
+budgets, arbitrary foreign activity and complete donor semantic equivalence
+remain unresolved. Invalid-LSX behavior also remains an explicit difference:
+Production closes the rejected peer; the donor's modal diagnostic and same-session
+continuation are not silently restored. Proposed reference work in open PR #350
+is not an accepted Production policy. The [documentation index](INDEX.md) maps
+each current guide and historical comparison.
+
+An absent AST reference is not proof that a file can be removed. Virtual,
+callback, lifetime and development API roots remain in scope. Historical
+results retain their original limits and are not reclassified as current PASS.
 
 ## Historical acceptance notes
 
-Current note (`YF-BLUEFIELD-ALIGN-20261029`): the Bluefield eleventh
+2026-10-29 checkpoint (`YF-BLUEFIELD-ALIGN-20261029`): the Bluefield eleventh
 hook/lifecycle and all declared Brownfield metadata targets are connected
-at source level. Current verification is recorded in
-[BLUEFIELD_ALIGNMENT_STATUS.json](../metadata/evidence/HOOK_ALIGNMENT_STATUS.json).
+at source level. Checkpoint verification is recorded in
+[HOOK_ALIGNMENT_STATUS.json](../metadata/evidence/HOOK_ALIGNMENT_STATUS.json).
 Actual Windows/MSVC Native/Production and game acceptance on the new source
 remain required. The earlier acceptance details below are historical.
 
-Current note (`YF-GOLDEN-AVATAR-20261029`): all four Golden product targets
+2026-10-29 checkpoint (`YF-GOLDEN-AVATAR-20261029`): all four Golden product targets
 are now defined, resolving the former missing-target `BLOCKED` status.
 The remaining task is actual Windows Native/Golden acceptance on new source.
 See [current record](GOLDEN_AVATAR_FIX.md). The list below preserves
 historical acceptance details.
 
-# Outstanding acceptance tasks
+### Outstanding acceptance tasks at that checkpoint
 
 This list distinguishes missing application code from acceptance tests
-that were not executed. Current source, the fixed C interface, and Wine
+that were not executed. The checkpoint source, its C interface, and Wine
 results are in [PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json).
 
-| Item | Concrete next action | Current limit |
+| Item | Checkpoint next action | Limit at checkpoint |
 |---|---|---|
 | Windows/MSVC | Rerun the Native profile with the namespace-collision fix and retain full CTest results. | Latest owner logs show Compile/Debug runtime and CRT 6/6 PASS. The complete Native test suite did not run because of C2668 in an asynchronous receive test. |
 | Windows command interface | Exercise error codes, final result, and console pause behavior for Compile/Debug/Native/CRT entrypoints using actual PowerShell/CMD. | Source and negative contract checks passed; the Windows console behavior was not exercised. |
-| Actual online provider | Exercise version 2/factory/virtual-slot and error/cleanup paths using a `preloader_l_online.dll` with a known hash and version. | Current tests use a controlled fixture DLL; an original external provider has not been supplied or accepted. |
+| Actual online provider | Exercise version 2/factory/virtual-slot and error/cleanup paths using a `citrine_eclipse_mirage_online.dll` with a known hash and version. | Current tests use a controlled fixture DLL; an original external provider has not been supplied or accepted. |
 | Named/versioned Consumer/game | Pin the exact host and how it loads the branded DLL; observe actual startup, LSX requests, hook conditions, and shutdown. | Static imports in the supplied original EXE reference `anadius64!anadius`. This source package does not modify the EXE or claim automatic compatibility under other names. |
 | Complete Golden pipeline | Prove remaining section/header/import/CRT targets after actual MSVC linking, then run all six stages against the real DLL. | Resource profile and five C exports are pinned. All product targets are now defined; actual MSVC six-gate acceptance and final-name runtime checks remain required for new source. Fixture results are not an MSVC Golden substitute. |
 
