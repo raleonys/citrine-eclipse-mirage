@@ -2,7 +2,7 @@
   "schema": "cem.reference-findings.v1",
   "master_branch": "research/reconstruction-package",
   "master_pr": null,
-  "master_pr_status": "Creation pending GitHub API availability; do not invent a PR number.",
+  "master_pr_status": "Retained project branch remains research/reconstruction-package. PR #236 is the scoped RPK-0001 ledger proposal, not completion of the 6,514-file review or authorization to retire the project.",
   "closure": "Owner decision after detailed file reviews and resolution of linked findings/child PRs.",
   "findings": [
     {
@@ -51,7 +51,7 @@
       "delivery_recheck": {
         "delivery_label": "archive-12",
         "archive_sha256": "539fc80596bfa058afdfe74b01cee95c1c1b807be3e983127510e4dc170acb6d",
-        "status": "pending_changed_donor_review",
+        "status": "selected_source_review_recorded_native_requirement_open",
         "current_donor_files": [
           {
             "path": "anadius-execution-source/execution.hpp",
@@ -69,7 +69,44 @@
             "sha256": "7af4e858d48fc91b64989dde02db2fa4cc67de25995cf4c9681e435c78dccd4b"
           }
         ],
-        "note": "All three donor sources changed in Archive 12. A preliminary hash-pinned source crosswalk now records the updated source gate, clock test and optional publication observer in docs/RE_PACKAGE_COMPARISONS.md; product defect remains unconfirmed. Detailed per-file review, caller/native evidence and disposition remain pending. Historical comparison is preserved."
+        "note": "Three changed A12 rows are now in_review with explicit source, current-product and test-provenance records. The bounded clock/publication review is recorded; full native/error/foreign-owner proof remains open. Earlier Archive 11 records are preserved."
+      },
+      "current_product_recheck": {
+        "product_commit": "35b074519594a3b2d58cac21e07c2a84fb3ad1f1",
+        "product_files": [
+          {
+            "path": "include/citrine_eclipse_mirage/runtime/execution.hpp",
+            "sha256": "0271621e3c5fa9325bd59a7eaf158df56ab53296ffe9d6a7db08551c1c013df8"
+          },
+          {
+            "path": "src/runtime/execution.cpp",
+            "sha256": "317dc0c460013ddf621cabc3f9b06d88c6db24fa3728f3be1463cb70d8d02b27"
+          },
+          {
+            "path": "src/platform/execution_windows.cpp",
+            "sha256": "0bae86f6b949aec256b34fe45172fdac0a98e21d66c506d562567096c0099a99"
+          },
+          {
+            "path": "src/runtime/application.cpp",
+            "sha256": "7a2be80fd20f60a6e5b279ff8836c4be875040b5f3f32692219cce9265e4348b"
+          },
+          {
+            "path": "src/net/asio_service.cpp",
+            "sha256": "5b4f8de8607a3978c53caf0926e11a0385644fb8944846b85fc664d9db12c070"
+          },
+          {
+            "path": "tests/unit/execution/concurrency_tests.cpp",
+            "sha256": "3e03a9e0aa226c819b18eed7f5dafe510debcdde0e9eb1343c7d6019d656f8f9"
+          }
+        ],
+        "review_date_utc": "2026-11-13",
+        "documentation_pr": 358,
+        "classification": "observed_contract_difference",
+        "product_defect_confirmed": false,
+        "observed_contract": "Product permits two cold queries with atomic publication; Application preinitializes and validates its frequency before owned workers. A12 serializes one wrapper and requires one query.",
+        "native_adapter_boundary": "The Windows adapter preserves its existing ignored BOOL behavior. A meaningful failure/LastError requirement needs native evidence and a supported caller; this review adds no speculative handling.",
+        "validation": "Current compared product portable_execution and portable_execution_concurrency PASS in the consolidated product workspace. No supplied donor test/DLL, native Windows or Consumer execution.",
+        "closure_gate": "Owner disposition of exactly-once/caller requirements and applicable native/error/lifetime evidence; this source review alone does not resolve RPK-0001."
       }
     }
   ]

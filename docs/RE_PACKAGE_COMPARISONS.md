@@ -9,6 +9,33 @@ reviews in `prior_reviews`. The following comparison remains historical;
 `RPK-0001` is open and requires rechecking against the new donor hashes. See
 [the delivery update](RE_ARCHIVE12_UPDATE.md).
 
+## Current bounded RPK-0001 review (2026-11-13 UTC)
+
+This is the research-ledger proposal [#236](https://github.com/raleonys/citrine-eclipse-mirage/pull/236), targeting `research/reconstruction-package`, with product documentation coordinated in [#358](https://github.com/raleonys/citrine-eclipse-mirage/pull/358). Source authority remains A12 `56eab8795fa65325e4fa6fe31a645eb55cc58469`. Current product comparison is `35b074519594a3b2d58cac21e07c2a84fb3ad1f1`; the older research checkout is not substituted for that accepted product. No current product code is merged into the retained research branch.
+
+All three changed source bodies were re-read and checked against the A12 inventory. Their file rows now contain in_review records with the exact source/product identities, inspected behavior, assumptions, evidence and remaining work. Full file acceptance is not claimed: native error and referenced helper/foreign-owner evidence remain open, and all other file rows keep their original status/history.
+
+| A12 row | Inspected contract | Product disposition / remaining evidence |
+| --- | --- | --- |
+| execution.hpp | Raw mutex layout; atomic owner access lifetime; caller-owned flags/cache; one-wrapper exclusions; optional observer and port interface. | Product ownership and ABI are separate. External/shared-cache and foreign-owner assumptions need explicit callers. |
+| execution.cpp | SRW/owner ordering; guarded frequency/counter; signed conversion; post-unlock notification; actual flag predicate and sleep outside the source gate. | Product deliberately uses atomic cache publication and validates Application frequency before workers. Native adapter BOOL/error semantics remain their existing contract; no speculative correction is adopted. |
+| publication_tests.cpp | All mapping/failure, port, waiter/clock and observer functions; duplicate/preseeded/foreign/alias refusals; failed release; LastError; eight readers and 800 samples. | These are supplied assertions read as source, not newly executed tests. Their helper/native implementations and real Windows observations remain separate evidence. |
+
+| Compared product path at pinned accepted main | SHA-256 |
+| --- | --- |
+| `include/citrine_eclipse_mirage/runtime/execution.hpp` | `0271621e3c5fa9325bd59a7eaf158df56ab53296ffe9d6a7db08551c1c013df8` |
+| `src/runtime/execution.cpp` | `317dc0c460013ddf621cabc3f9b06d88c6db24fa3728f3be1463cb70d8d02b27` |
+| `src/platform/execution_windows.cpp` | `0bae86f6b949aec256b34fe45172fdac0a98e21d66c506d562567096c0099a99` |
+| `src/runtime/application.cpp` | `7a2be80fd20f60a6e5b279ff8836c4be875040b5f3f32692219cce9265e4348b` |
+| `src/net/asio_service.cpp` | `5b4f8de8607a3978c53caf0926e11a0385644fb8944846b85fc664d9db12c070` |
+| `tests/unit/execution/concurrency_tests.cpp` | `3e03a9e0aa226c819b18eed7f5dafe510debcdde0e9eb1343c7d6019d656f8f9` |
+
+The current product's controlled concurrency fixture requires exactly two cold frequency queries, a common correct sample/cache and no later query. Its startup fixture checks distinct worker flags; joins/control gates also synchronize that test, so it is not an isolated proof of every memory-order property. Application initializes a positive QPC frequency before starting provider/extra workers. Query-count differences alone therefore remain an observed contract distinction, not a confirmed startup defect.
+
+Fresh Linux portable_execution and portable_execution_concurrency ran successfully against those unchanged product bytes in the consolidated product workspace. The supplied A12 test/DLL was not executed, and no new Windows QPC/LastError, Golden, original DLL or Consumer result is claimed. Full local QA and tracked pre-push for this research proposal are recorded against its own final head in the PR description.
+
+RPK-0001 remains open with product_defect_confirmed=false. Its next gate is a real supported caller/owner and exactly-once requirement or an observed QPC/error failure, followed by a discriminating regression where appropriate. Accepting this bounded ledger update does not complete the archive, replace standard CRT, add a donor observer ABI or retire the research branch. The earlier source review below retains its historical baseline and former pending labels.
+
 ## Archive 12 preliminary recheck: RPK-0001 and startup publication
 
 **Reviewed inputs (2026-11-05).** Archive 12 changed the three files behind the historical RPK-0001 comparison. This is a bounded source inspection, not a completed per-file ledger review or a native acceptance test.

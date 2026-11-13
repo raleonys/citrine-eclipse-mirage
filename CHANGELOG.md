@@ -2,13 +2,17 @@
 
 This file distinguishes source imports, integrated pull requests and published releases. A GitHub merge is a source change, not an R-numbered release or release tag.
 
+## This PR
+
+- Record the bounded review of three changed Archive 12 clock/publication source files against accepted product main, preserving their earlier review history. Move only those file rows to in_review, record current source/caller/test identities and concrete native/error/requirement gates, and retain RPK-0001 as an unconfirmed contract difference. This research-targeted proposal changes no product or reference payload bytes.
+
+The sections below retain this research branch's historical changelog and do not describe current product-main release status.
+
 ## Unreleased — post-import GitHub development (2026-10-30 to 2026-10-31)
 
 The 52 entries below are the merged pull requests verified through PR #62, linked to their individual review records. The GitHub Releases collection was empty at this checkpoint, so these entries must not be read as published releases or evidence of Windows/native/game acceptance.
 
 ### Additional unreleased changes
-
-- Recheck the changed Archive 12 clock/Execution and startup-publication source against accepted product semantics, retaining RPK-0001 as an unconfirmed contract difference. Record exact input hashes, intentional caller/admission differences, outstanding native evidence and existing PR overlaps without modifying runtime code or claiming donor test execution.
 
 - Update the retained reconstruction snapshot to the owner's nine-part Archive 12 delivery: 2,294 added, 898 changed and 46 removed files, with 6,514 byte-pinned files in total. Preserve review history, reopen changed rows, and record input provenance and supplied linked-but-not-runtime-validated donor DLL status without adopting product code or claiming fresh native execution.
 
