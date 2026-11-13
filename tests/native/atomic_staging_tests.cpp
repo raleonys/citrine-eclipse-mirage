@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include <windows.h>
+#include <array>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <iterator>
 #include <new>
 #include <set>
 #include <stdexcept>
@@ -57,6 +59,38 @@ namespace fs=std::filesystem;
 unsigned checks=0;
 void require(bool b,const char* text){++checks;if(!b)throw std::runtime_error(text);}
 template<class F>void rejects(F f){bool failed=false;try{f();}catch(const std::exception&){failed=true;}require(failed,"injected operation failed visibly");}
+void duplicate_native_destinations(const fs::path& root) {
+    const auto directory=root/"batch-alias";
+    fs::create_directory(directory);
+    struct Cleanup {fs::path path;~Cleanup(){std::error_code e;fs::remove_all(path,e);}} cleanup{directory};
+    const auto target=directory/"Profile.dat",case_alias=directory/"PROFILE.DAT";
+    {std::ofstream output(target,std::ios::binary);output<<"original";}
+    file::NativeFactory files;
+    const std::array<file::FileWrite,2> duplicate{{{target.u16string(),"first"},
+                                                   {case_alias.u16string(),"second"}}};
+    bool rejected=false;
+    try{files.replace_atomic(duplicate);}
+    catch(const std::invalid_argument&){rejected=true;}
+    auto unchanged=[&]{std::ifstream input(target,std::ios::binary);return std::string(
+        std::istreambuf_iterator<char>(input),std::istreambuf_iterator<char>{})=="original";};
+    auto members=[&]{return std::distance(fs::directory_iterator(directory),fs::directory_iterator{});};
+    require(rejected&&unchanged()&&members()==1&&fault::handles.empty(),
+        "case-fold-equivalent Windows batch destinations rejected before staging or replacement");
+    auto nul_path=target.u16string();nul_path.push_back(u'\0');nul_path.append(u"hidden");
+    const file::FileWrite nul{nul_path,"unwanted"};
+    rejected=false;
+    try{files.replace_atomic({&nul,1});}
+    catch(const std::invalid_argument&){rejected=true;}
+    require(rejected&&unchanged()&&members()==1&&fault::handles.empty(),
+        "embedded NUL cannot alias an existing Windows destination or create staging");
+    const file::FileWrite single{target.u16string(),"accepted"};
+    files.replace_atomic({&single,1});
+    {std::ifstream input(target,std::ios::binary);
+     require(std::string(std::istreambuf_iterator<char>(input),std::istreambuf_iterator<char>{})=="accepted",
+         "one ordinary destination still replaces successfully after invalid batch rejection");}
+    require(members()==1&&fault::handles.empty(),
+        "valid retry leaves no staging or backup artifacts");
+}
 void readonly_backup_recovery(const fs::path& root){
     for(int failure=0;failure<4;++failure){
         const auto directory=root/("readonly-"+std::to_string(failure));fs::create_directory(directory);
@@ -118,5 +152,6 @@ int main()try{
     files.replace_atomic({&value,1});
     require(!old()&&members()==1&&fault::handles.empty(),"normal update works after native recovery");
     readonly_backup_recovery(root);
-    std::cout<<"PASS: "<<checks<<" real native staging/backup handle and path recovery checks\n";
+    duplicate_native_destinations(root);
+    std::cout<<"PASS: "<<checks<<" real native staging/backup handle, path aliases and recovery checks\n";
 }catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

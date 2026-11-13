@@ -4,6 +4,15 @@
 #include <algorithm>
 #include <array>
 #include <filesystem>
+#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#endif
 #include <iostream>
 #include <stdexcept>
 #include <string_view>
@@ -31,6 +40,7 @@ struct Trace {
     void input_call(const char* point) {
         calls.emplace_back(point);fail_input(point);
     }
+    bool clear_on_close=false;
 };
 class Input final:public io::Input {
     Trace& t;
@@ -55,7 +65,7 @@ public:
     ~Output()override{t.calls.push_back("destroy-output");}
     std::uint32_t initial_state()const override{t.calls.push_back("state");return t.state;}
     void write_03be80(std::string_view bytes)override{t.calls.push_back("write");if(t.write_throws)throw Injected{};t.written=bytes;if(t.write_fails)t.state=2;}
-    void close_03ae70()override{t.calls.push_back("close");if(t.close_fails)t.state=4;if(t.close_throws)throw Injected{};}
+    void close_03ae70()override{t.calls.push_back("close");if(t.clear_on_close)t.state=0;if(t.close_fails)t.state=4;if(t.close_throws)throw Injected{};}
 };
 class Factory final:public io::Factory {
 public:
@@ -156,6 +166,24 @@ void core() {
     thrown=false;try{(void)io::read_binary_03b3f0(u"fixture",impossible);}catch(const std::length_error&){thrown=true;}
     check(thrown&&impossible.t.calls.back()=="destroy-input","invalid tell size reaches resize exception");
 }
+void checked_write_retains_error() {
+    Factory f;f.t.write_fails=true;f.t.clear_on_close=true;
+    const std::string first("first\0ticket",12);
+    check(!io::write_binary_checked(u"fixture",first,f),
+          "close success cannot erase an earlier checked write failure");
+    check(f.t.state==0&&f.t.written==first,
+          "controlled close cleared status after preserving counted input");
+    const std::vector<std::string> expected{
+        "open-output","state","write","state","close","state","destroy-output"};
+    check(f.t.calls==expected,
+          "write failure still observes close state and releases its output once");
+    f.t.calls.clear();f.t.write_fails=false;
+    const std::string next("next\0ticket",11);
+    check(io::write_binary_checked(u"fixture",next,f),
+          "same factory accepts a repaired independent output");
+    check(f.t.written==next&&f.t.calls==expected,
+          "repaired write preserves bytes and balanced output lifetime");
+}
 #if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
 void native(const std::filesystem::path& directory) {
     const auto root=std::filesystem::absolute(directory).lexically_normal();
@@ -188,11 +216,29 @@ void native(const std::filesystem::path& directory) {
     catch(const std::ios_base::failure&){invalid_position=true;}
     check(invalid_position,"native EOF-state tellg rejects invalid position");
     input->close_03ae70();
+    // Native output opens in truncation mode. A foreign read lease without
+    // FILE_SHARE_WRITE must reject that open without destroying the old data.
+    const std::filesystem::path locked_path(file);
+    const auto held=CreateFileW(locked_path.c_str(),GENERIC_READ,FILE_SHARE_READ,
+                                nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
+    check(held!=INVALID_HANDLE_VALUE,"native locked output fixture handle");
+    const auto before_locked=io::read_binary_03b3f0(file,factory);
+    const bool wrote_while_held=io::write_binary_03c1d0(file,"forbidden",factory);
+    const auto after_locked=io::read_binary_03b3f0(file,factory);
+    const BOOL released=CloseHandle(held);
+    check(released!=FALSE,"native locked output fixture released");
+    check(!wrote_while_held&&after_locked==before_locked,
+          "locked native output open fails without truncating existing bytes");
+    check(io::write_binary_03c1d0(file,"recovered",factory) &&
+          io::read_binary_03b3f0(file,factory)=="recovered",
+          "native binary writer recovers after read-only sharing lease closes");
 }
 #endif
 }
 int main(int argc,char** argv){try{
-    core();input_failure_unwind();
+    core();
+    input_failure_unwind();
+    checked_write_retains_error();
 #if defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
     (void)argc;(void)argv;
 #else
