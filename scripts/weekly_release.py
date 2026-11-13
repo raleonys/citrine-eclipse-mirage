@@ -16,6 +16,7 @@ from weekly_naming import FIRST, successor, approved_tag, require_tag, asset_nam
 from check_falcion_golden_cleaning import check
 from package_source import package
 from run_golden_pipeline import ORDER
+from run_source_qa import CHECKS as SOURCE_QA_CHECKS
 from project_version import selected_version
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -139,6 +140,32 @@ def junit(path):
     return len(cases)
 
 
+def _successful_exit(value):
+    # JSON false compares equal to 0 in Python, and absent/empty Golden step
+    # outcomes are falsey. Neither is evidence that a process exited with 0.
+    return type(value) is int and value == 0
+
+
+def validate_source_qa(report):
+    if not isinstance(report, dict) or report.get('result') != 'PASS_SOURCE_QA':
+        raise ValueError('Source QA did not pass')
+    checks = report.get('checks')
+    expected = {name for name, _ in SOURCE_QA_CHECKS}
+    if not isinstance(checks, list) or len(checks) != len(expected):
+        raise ValueError('Source QA must contain every required check exactly once')
+    seen = set()
+    for check in checks:
+        if not isinstance(check, dict) or not isinstance(check.get('check'), str):
+            raise ValueError('Source QA check record is invalid')
+        name = check['check']
+        if name not in expected or name in seen:
+            raise ValueError('Source QA must contain every required check exactly once')
+        if type(check.get('exit_code')) is not int or check['exit_code'] != 0:
+            raise ValueError('Source QA did not pass')
+        seen.add(name)
+    return len(seen)
+
+
 def validate_profile(folder, profile, manifest, source, version=None):
     folder = Path(folder)
     identity = load(folder / 'EVIDENCE_IDENTITY.json')
@@ -151,7 +178,7 @@ def validate_profile(folder, profile, manifest, source, version=None):
     if (receipt.get('mode') != mode or receipt.get('configuration') != 'Release'
             or receipt.get('build_succeeded') is not True
             or receipt.get('validation_result') != 'PASS_SELECTED_PROFILE'
-            or receipt.get('validation_exit_code') != 0
+            or not _successful_exit(receipt.get('validation_exit_code'))
             or receipt.get('source_manifest_sha256') != manifest):
         raise ValueError('A successful exact-source native MSVC profile is required')
     if not receipt.get('compiler', '').lower().endswith('cl.exe'):
@@ -169,10 +196,10 @@ def validate_profile(folder, profile, manifest, source, version=None):
     for report in (dist, golden):
         if (report.get('result') != 'GOLDEN_PASS' or report.get('sha256') != digest
                 or [s['stage'] for s in report.get('steps', [])] != ORDER
-                or any(s['exit_code'] for s in report['steps'])):
+                or any(not _successful_exit(s.get('exit_code')) for s in report['steps'])):
             raise ValueError('All six Golden gates must pass for this exact DLL')
         runtime = report.get('runtime_check', {})
-        if (runtime.get('exit_code') != 0 or runtime.get('sha256_before') != digest
+        if (not _successful_exit(runtime.get('exit_code')) or runtime.get('sha256_before') != digest
                 or runtime.get('sha256_after') != digest):
             raise ValueError('Final-name DLL runtime acceptance is missing')
     if (dist.get('source_manifest_sha256') != manifest
@@ -229,9 +256,7 @@ def bundle(root, payload, output):
         raise ValueError('Candidate checkout does not match planned source')
     manifest = sha(root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')
     qa = load(payload / 'SOURCE_QA.json')
-    if qa.get('result') != 'PASS_SOURCE_QA' or not qa.get('checks') or any(
-            c['exit_code'] != 0 for c in qa['checks']):
-        raise ValueError('Source QA did not pass')
+    source_qa_groups = validate_source_qa(qa)
     portable_tests = junit(payload / 'PORTABLE_CTEST.xml')
     version = require_tag(p['tag'])
     native = validate_profile(payload / 'native', 'native', manifest, p['source_sha'], version)
@@ -242,20 +267,26 @@ def bundle(root, payload, output):
     errors = check(root, source)
     if errors:
         raise ValueError('Source package mismatch: ' + '; '.join(errors))
-    output.mkdir(parents=True)
     receipt = {'schema': 'surge.draft-release-receipt.v1', 'publication_status': 'DRAFT',
                'tag': p['tag'], 'source_sha': p['source_sha'], 'source_manifest_sha256': manifest,
-               'source_qa_groups': len(qa['checks']), 'portable_tests': portable_tests,
+               'source_qa_groups': source_qa_groups, 'portable_tests': portable_tests,
                'native_tests': native['tests'], 'dll_sha256': golden['dll_sha256'],
                'source_zip_sha256': sha(source), 'game_acceptance': 'NOT_RUN',
                'publication': False}
-    binary = output / binary_name
     dist_files = {path.name: path for path in (payload / 'production/dist').iterdir() if path.is_file()}
     if set(dist_files) != {'citrine_eclipse_mirage.dll', 'citrine_eclipse_mirage.dll.sha256', 'DIST_RECEIPT.json'}:
         raise ValueError('Unexpected runtime payload')
     files = {'citrine_eclipse_mirage.dll': dist_files['citrine_eclipse_mirage.dll'],
              'citrine_eclipse_mirage.dll.sha256': dist_files['citrine_eclipse_mirage.dll.sha256'],
              'LICENSE': root / 'LICENSE'}
+    # Refuse malformed or aliased inputs before claiming the fresh output path.
+    for path in files.values():
+        if path.is_symlink():
+            raise ValueError('Candidate payload cannot contain symlinks')
+        if not path.is_file():
+            raise ValueError('Candidate payload input is missing or nonregular')
+    output.mkdir(parents=True)
+    binary = output / binary_name
     with zipfile.ZipFile(binary, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
         for name, path in sorted(files.items()):
             if path.is_symlink():
@@ -343,7 +374,33 @@ def publish_draft(github, p, assets, receipt_path):
         raise ValueError('Refusing to modify a published or unrelated release')
     complete = existing and state(existing)['status'] == 'complete'
     if complete:
-        return existing
+        # A completed marker is not a permanent receipt for mutable remote
+        # assets. Re-read the live draft and verify its exact package pair.
+        latest = github.api(f"releases/{existing['id']}")
+        live_state = state(latest)
+        if (not latest.get('draft') or latest.get('tag_name') != tag
+                or latest.get('target_commitish') != p['source_sha']
+                or not live_state or live_state.get('status') != 'complete'
+                or live_state.get('source_sha') != p['source_sha']):
+            raise ValueError('Completed draft changed before reuse')
+        remote_assets = latest.get('assets')
+        if not isinstance(remote_assets, list) or len(remote_assets) != len(expected):
+            raise ValueError('Completed draft remote asset set mismatch')
+        by_name = {}
+        for asset in remote_assets:
+            if (not isinstance(asset, dict) or not isinstance(asset.get('name'), str)
+                    or asset['name'] in by_name):
+                raise ValueError('Completed draft remote asset set mismatch')
+            by_name[asset['name']] = asset
+        if set(by_name) != expected:
+            raise ValueError('Completed draft remote asset set mismatch')
+        for path in paths:
+            asset = by_name[path.name]
+            if type(asset.get('size')) is not int or asset['size'] != path.stat().st_size:
+                raise ValueError('Completed draft remote asset size mismatch')
+            if asset.get('digest') != 'sha256:' + sha(path):
+                raise ValueError('Completed draft remote asset digest missing or mismatched')
+        return latest
     if not existing:
         refs = github.api('git/matching-refs/tags/' + tag)
         if any(ref['ref'] == 'refs/tags/' + tag for ref in refs):
@@ -374,8 +431,8 @@ def publish_draft(github, p, assets, receipt_path):
         asset = remote[path.name]
         if asset['size'] != path.stat().st_size:
             raise ValueError('Remote asset size mismatch')
-        if asset.get('digest') and asset['digest'] != 'sha256:' + sha(path):
-            raise ValueError('Remote asset hash mismatch')
+        if asset.get('digest') != 'sha256:' + sha(path):
+            raise ValueError('Remote asset hash missing or mismatched')
     result = github.update(release_id, marker(p['source_sha'], 'complete') + '\n\n' + summary + notes['body'])
     if not result['draft']:
         raise ValueError('Candidate was published concurrently; manual review is required')

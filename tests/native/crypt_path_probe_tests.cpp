@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "citrine_eclipse_mirage/platform/crypt_query.hpp"
+#ifndef CITRINE_ECLIPSE_MIRAGE_PORTABLE_CRYPT_PATH_TESTS
+#include <windows.h>
+#endif
 #include <atomic>
 #include <cstdlib>
 #include <cstring>
@@ -87,6 +90,7 @@ void scan_boundaries() {
     Memory last_unit(u"xx");last_unit.base=std::numeric_limits<std::uintptr_t>::max()-1;
     require(!last_unit.probe().valid&&last_unit.calls==1,"increment cannot wrap past final readable unit");
 }
+#ifndef CITRINE_ECLIPSE_MIRAGE_PORTABLE_CRYPT_PATH_TESTS
 void native_reader() {
     platform::WindowsCryptQueryHost host;
     std::u16string longest(hooks::max_path_units-1,u'x');
@@ -135,6 +139,15 @@ void native_reader() {
             "fully inaccessible native page cannot be treated as a pathname");
     require(VirtualFree(pages,0,MEM_RELEASE)!=FALSE,"release owned native pages");
 }
+#endif
 }
-int main()try{selection_and_streaming();scan_boundaries();native_reader();std::cout<<"PASS: "<<checks<<" bounded heap-free protected path/UTF16/suffix checks\n";}
+int main()try{
+    selection_and_streaming();scan_boundaries();
+#ifndef CITRINE_ECLIPSE_MIRAGE_PORTABLE_CRYPT_PATH_TESTS
+    native_reader();
+    std::cout<<"PASS: "<<checks<<" bounded heap-free protected path/UTF16/suffix checks\n";
+#else
+    std::cout<<"PASS: "<<checks<<" bounded heap-free path/UTF16/suffix checks with controlled reads; native reader not run\n";
+#endif
+}
 catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
