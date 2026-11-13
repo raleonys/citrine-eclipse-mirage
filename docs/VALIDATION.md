@@ -276,3 +276,13 @@ failure detection does not replace this focused bridge matrix. Both native and
 portable handler targets retain a 60-second budget. Cipher, effects and mutex
 adapters are controlled; these tests do not establish native sockets, AES or
 physical persistence.
+
+## Portable Windows lexical path contracts
+
+`portable_path` reuses the unchanged native `path_contracts` fixture and actual
+`src/core/paths.cpp`, retaining the native 60-second budget. It checks drive,
+UNC and device roots, decomposition/joining, trailing separators, counted UTF-16
+and bounded self-alias behavior. Existing host-hook and online consumers also
+compile this source but do not exercise the entire lexical matrix. These are
+controlled string contracts; portable execution does not establish host
+filesystem compatibility or native Windows file access.
