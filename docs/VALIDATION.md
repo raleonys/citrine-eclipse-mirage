@@ -286,3 +286,17 @@ and bounded self-alias behavior. Existing host-hook and online consumers also
 compile this source but do not exercise the entire lexical matrix. These are
 controlled string contracts; portable execution does not establish host
 filesystem compatibility or native Windows file access.
+
+## Worker image-reference acquisition failure
+
+`cleanup_retry_contracts` loads the existing fixture DLL with a scoped environment
+selection that rejects its one address-based GetModuleHandleExW acquisition
+before obtaining any image reference. The fixture source-includes the unchanged
+production entry once and forwards unarmed calls to the SDK. Require worker
+termination with the original error, zero Application construction/cleanup,
+idempotent public shutdown, cleared caller exclusion and physical unload after
+the sole caller reference is released. A healthy reload retains the original
+three-attempt cleanup case and checks release of both caller and worker leases.
+The Application is a controlled counter implementation with no sockets or hooks.
+Cross-compilation and SDK effect models do not establish real Windows loader,
+thread or physical-unload acceptance; those assertions require native execution.

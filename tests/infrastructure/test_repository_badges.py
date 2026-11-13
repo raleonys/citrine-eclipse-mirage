@@ -225,8 +225,38 @@ class BadgeTests(unittest.TestCase):
             with self.subTest(conclusion=conclusion):
                 root = ET.fromstring(badges.images(None, conclusion)['ci.svg'])
                 self.assertTrue(root.findall('.//'+svg+'linearGradient'))
-                self.assertTrue(root.find(".//"+svg+"path[@id='workflow-bg']") is not None)
+                self.assertFalse(root.findall('.//'+svg+'path'), 'Source integrity has no GitHub icon')
+                self.assertFalse(root.findall('.//'+svg+'image'))
                 self.assertIn(badges.CONCLUSIONS.get(conclusion, ('not run',))[0], root.attrib['aria-label'])
+
+    def test_readme_palette_is_shared_by_static_seeds_and_live_statuses(self):
+        svg = '{http://www.w3.org/2000/svg}'
+        def colors(source):
+            root = ET.fromstring(source)
+            background = root.find(svg+'g')
+            return [node.attrib['fill'] for node in background.findall(svg+'rect')[:2]]
+        for name in badges.STATIC:
+            with self.subTest(information=name):
+                self.assertEqual(['#555', '#007ec6'],
+                                 colors((ROOT/badges.DIRECTORY/name).read_text()))
+        states = [
+            ('success', True, (235, 235, 'success'), True, 'success', '#4c1'),
+            ('action_required', False, None, None, 'pending', '#dfb317'),
+            ('failure', True, (234, 235, 'failure'), False, 'failure', '#e05d44'),
+            (None, None, None, None, None, '#9f9f9f'),
+        ]
+        for conclusion, immutable, tests, checksum, status, expected in states:
+            rendered = badges.images('3.2.7-ERINTHAR', conclusion, immutable,
+                                      tests, checksum, status, status)
+            for name in badges.NAMES-badges.STATIC-{'latest-release.svg'}:
+                # Missing evidence stays neutral; immutable release stays green.
+                value = (('#4c1' if immutable else '#dfb317') if immutable is not None
+                         else '#9f9f9f') if name == 'release-integrity.svg' else (
+                    '#9f9f9f' if name in {'tests.svg', 'checksums.svg'} and status == 'pending'
+                    else expected)
+                with self.subTest(status=status, name=name):
+                    self.assertEqual(['#555', value], colors(rendered[name]))
+            self.assertEqual(['#555', '#007ec6'], colors(rendered['latest-release.svg']))
 
     def test_native_report_counts_failures_and_skips_without_claiming_them_as_passes(self):
         with tempfile.TemporaryDirectory() as tmp:

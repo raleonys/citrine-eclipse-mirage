@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Register the existing Windows lexical path contract suite in portable checks, including drive/UNC/device roots, trailing separators, counted UTF-16 and alias boundaries. Retain the unchanged native test and its 60-second budget; product path behavior and Windows filesystem coverage are unchanged.
+- Test entry-worker image-reference acquisition failure before Application construction, preserved exit error, idempotent shutdown and physical unload, followed by the existing healthy cleanup retries. Standardize README badge panels on License blue, QA green and CodeQL warning/failure colors; render Source integrity without the GitHub icon and preserve evidence-based status selection.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-13
 
+- [PR #326](https://github.com/raleonys/citrine-eclipse-mirage/pull/326): Register the existing Windows lexical path contract suite in portable checks, including drive/UNC/device roots, trailing separators, counted UTF-16 and alias boundaries. Retain the unchanged native test and its 60-second budget; product path behavior and Windows filesystem coverage are unchanged.
 - [PR #329](https://github.com/raleonys/citrine-eclipse-mirage/pull/329): Register the unchanged MessageHandler contract fixture in portable checks. Exercise actual prepared event reservations, binary FIFO ownership, cancel/commit and failure unwind through the production message core, XML reader and queue while retaining the native target and its timeout.
 - [PR #334](https://github.com/raleonys/citrine-eclipse-mirage/pull/334): Test that the checked ticket writer retains an observed write failure even when a controlled output adapter clears its status during close. Verify counted bytes, complete status/close/destruction order and a successful later output through the same factory; production and native stream policy are unchanged.
 - [PR #345](https://github.com/raleonys/citrine-eclipse-mirage/pull/345): Test ordered Session shared-response owner allocation failure after preparation: cancel the unpublished receipt once, submit no output and preserve a buffered successor. Keep production transport and error policy unchanged.

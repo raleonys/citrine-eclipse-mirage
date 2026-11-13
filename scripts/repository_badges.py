@@ -20,16 +20,23 @@ PREVIOUS_NAMES = STATIC | {'ci.svg', 'latest-release.svg', 'release-integrity.sv
 LEGACY_NAMES = PREVIOUS_NAMES - {'tests.svg', 'checksums.svg'}
 CODEQL_NAMES = PREVIOUS_NAMES | {'codeql.svg'}
 NAMES = CODEQL_NAMES | {'qa.svg'}
+# Shared README palette: License blue, QA green and CodeQL state colors.
+LABEL_COLOR = '#555'
+INFORMATION_COLOR = '#007ec6'
+SUCCESS_COLOR = '#4c1'
+WARNING_COLOR = '#dfb317'
+FAILURE_COLOR = '#e05d44'
+NEUTRAL_COLOR = '#9f9f9f'
 CONCLUSIONS = {
-    'success': ('passing', '#4c1'),
-    'failure': ('failing', '#e05d44'),
-    'cancelled': ('cancelled', '#9f9f9f'),
-    'timed_out': ('timed out', '#e05d44'),
-    'action_required': ('action required', '#dfb317'),
-    'neutral': ('neutral', '#9f9f9f'),
-    'skipped': ('skipped', '#9f9f9f'),
-    'startup_failure': ('startup failure', '#e05d44'),
-    'stale': ('stale', '#9f9f9f'),
+    'success': ('passing', SUCCESS_COLOR),
+    'failure': ('failing', FAILURE_COLOR),
+    'cancelled': ('cancelled', NEUTRAL_COLOR),
+    'timed_out': ('timed out', FAILURE_COLOR),
+    'action_required': ('action required', WARNING_COLOR),
+    'neutral': ('neutral', NEUTRAL_COLOR),
+    'skipped': ('skipped', NEUTRAL_COLOR),
+    'startup_failure': ('startup failure', FAILURE_COLOR),
+    'stale': ('stale', NEUTRAL_COLOR),
 }
 
 # Observed ASCII advances in pixels at 11px for the installed DejaVu Sans
@@ -66,7 +73,7 @@ def render(label, value, color):
             'stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient>\n'
             f'<clipPath id="r"><rect width="{left+right}" height="20" rx="3"/></clipPath>\n'
             '<g clip-path="url(#r)">'
-            f'<rect width="{left}" height="20" fill="#555"/>'
+            f'<rect width="{left}" height="20" fill="{LABEL_COLOR}"/>'
             f'<rect x="{left}" width="{right}" height="20" fill="{color}"/>'
             f'<rect width="{left+right}" height="20" fill="url(#s)"/></g>\n'
             '<g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" '
@@ -84,32 +91,8 @@ def render(label, value, color):
 
 
 def render_ci(conclusion):
-    # Retain the original GitHub workflow badge, including its embedded
-    # Octocat path, label typography, rounded ends and two gradients.
-    namespace = 'http://www.w3.org/2000/svg'
-    ET.register_namespace('', namespace)
-    root = ET.fromstring((ROOT / DIRECTORY / 'ci.svg').read_text(encoding='utf-8'))
-    value, _ = CONCLUSIONS.get(conclusion, ('not run', '#9f9f9f'))
-    state = root.find(".//{%s}path[@id='state-bg']/.." % namespace)
-    if state is None:
-        raise ValueError('Original GitHub workflow badge template is missing')
-    width = max(50, text_width(value) + 10)
-    left = int(state.attrib['transform'].removeprefix('translate(').removesuffix(')'))
-    root.set('width', str(left + width))
-    root.set('role', 'img')
-    root.set('aria-label', 'Source integrity: ' + value)
-    root.find('{%s}title' % namespace).text = 'Source integrity - ' + value
-    state.find("{%s}path[@id='state-bg']" % namespace).set(
-        'd', f'M0 0h{width-3}a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H0V0z')
-    for node in state.iter('{%s}tspan' % namespace):
-        node.text = value
-    colors = ('#34D058', '#28A745') if conclusion == 'success' else (
-        ('#D73A49', '#CB2431') if conclusion in {'failure', 'timed_out', 'startup_failure'}
-        else ('#959DA5', '#6A737D'))
-    for node, color in zip(root.findall(".//{%s}linearGradient[@id='state-fill']/{%s}stop" %
-                                        (namespace, namespace)), colors):
-        node.set('stop-color', color)
-    return ET.tostring(root, encoding='unicode') + '\n'
+    value, color = CONCLUSIONS.get(conclusion, ('not run', NEUTRAL_COLOR))
+    return render('Source integrity', value, color)
 
 
 def images(tag, conclusion, immutable=None, tests=None, checksum=None, codeql=None, qa=None):
@@ -121,35 +104,35 @@ def images(tag, conclusion, immutable=None, tests=None, checksum=None, codeql=No
         raise ValueError('Invalid release immutability value')
     result = {name: (ROOT / DIRECTORY / name).read_text(encoding='utf-8') for name in STATIC}
     result['ci.svg'] = render_ci(conclusion)
-    result['latest-release.svg'] = render('Latest release', 'v' + tag if tag else 'none', '#007ec6')
-    integrity = ('no release', '#9f9f9f') if tag is None else (
-        ('immutable', '#4c1') if immutable is True else
-        ('mutable', '#dfb317') if immutable is False else ('unknown', '#9f9f9f'))
+    result['latest-release.svg'] = render('Latest release', 'v' + tag if tag else 'none', INFORMATION_COLOR)
+    integrity = ('no release', NEUTRAL_COLOR) if tag is None else (
+        ('immutable', SUCCESS_COLOR) if immutable is True else
+        ('mutable', WARNING_COLOR) if immutable is False else ('unknown', NEUTRAL_COLOR))
     result['release-integrity.svg'] = render('Release integrity', *integrity)
     if tests is None:
-        result['tests.svg'] = render('Tests (native)', 'not available', '#9f9f9f')
+        result['tests.svg'] = render('Tests (native)', 'not available', NEUTRAL_COLOR)
     else:
         passed, total, status = tests
         if (type(passed) is not int or type(total) is not int or not 0 <= passed <= total <= 100000
                 or total == 0 or status not in {'success', 'failure'}):
             raise ValueError('Invalid native test totals')
         result['tests.svg'] = render('Tests (native)', f'{passed}/{total}',
-                                     '#4c1' if passed == total and status == 'success' else '#e05d44')
+                                     SUCCESS_COLOR if passed == total and status == 'success' else FAILURE_COLOR)
     if checksum is not None and type(checksum) is not bool:
         raise ValueError('Invalid checksum availability')
-    checksum_state = ('no release', '#9f9f9f') if tag is None else (
-        ('SHA-256', '#4c1') if checksum is True else
-        ('missing', '#e05d44') if checksum is False else ('unknown', '#9f9f9f'))
+    checksum_state = ('no release', NEUTRAL_COLOR) if tag is None else (
+        ('SHA-256', SUCCESS_COLOR) if checksum is True else
+        ('missing', FAILURE_COLOR) if checksum is False else ('unknown', NEUTRAL_COLOR))
     result['checksums.svg'] = render('Checksums', *checksum_state)
-    states = {None: ('not available', '#9f9f9f'),
-              'success': ('passing', '#4c1'), 'failure': ('failing', '#e05d44'),
-              'pending': ('running', '#dfb317'), 'cancelled': ('cancelled', '#9f9f9f')}
+    states = {None: ('not available', NEUTRAL_COLOR),
+              'success': ('passing', SUCCESS_COLOR), 'failure': ('failing', FAILURE_COLOR),
+              'pending': ('running', WARNING_COLOR), 'cancelled': ('cancelled', NEUTRAL_COLOR)}
     if codeql is not None and (not isinstance(codeql, str) or codeql not in states):
         raise ValueError('Invalid CodeQL status')
     result['codeql.svg'] = render('CodeQL', *states[codeql])
     if qa is not None and (not isinstance(qa, str) or qa not in states):
         raise ValueError('Invalid QA status')
-    qa_states = {**states, None: ('n/a', '#9f9f9f')}
+    qa_states = {**states, None: ('n/a', NEUTRAL_COLOR)}
     result['qa.svg'] = render('QA', *qa_states[qa])
     return result
 

@@ -9,25 +9,26 @@ GitHub itself cannot have an outage.
 ## Badge ownership and updates
 
 `scripts/repository_badges.py` publishes thirteen badges using the Python standard
-library. The six static SVGs are downloaded snapshots of the original Shields
-responses, including the embedded C++, Python and CMake logos. The Windows and
-license responses retain their original styling. Changelog uses the same style.
-The publisher copies these static bytes unchanged; no logo or font is loaded
-from a remote service by the reader or publisher.
+library. The six static SVGs retain Shields typography, gradients, clipping and
+text shadows, including the embedded C++, Python and CMake logos. Their right
+panels share License blue (`#007ec6`); every left panel uses `#555`.
+The publisher copies these normalized static bytes unchanged. No logo or font
+is loaded from a remote service by the reader or publisher.
 
-Dynamic release badges retain Shields typography, gradients, clipping and text
-shadows. The CI renderer retains the original GitHub workflow badge template,
-including its embedded Octocat path, workflow label and gradients, while changing
-the actual status and its color. No network image generator or font package is
-needed during updates. The source tree contains reviewable CI/release snapshots.
+All seven dynamic badges use the same renderer and gray label panel. Successful
+status panels share QA green (`#4c1`). Pending/action-required and mutable-release
+panels use CodeQL yellow (`#dfb317`); failed panels use CodeQL red (`#e05d44`).
+Unavailable, cancelled and neutral states remain gray (`#9f9f9f`), never green.
+Source integrity is text-only, without the former GitHub icon or separate
+workflow gradients. The source snapshots retain their recorded statuses;
+changing the palette does not turn missing evidence into a passing result.
 
-The static responses were retrieved from the image URLs previously used by the
-README; Changelog uses `https://img.shields.io/badge/Changelog-view-blue.svg`.
-Shields is published under CC0; embedded Simple Icons and product marks retain
-their original attribution and brand identities. The GitHub workflow template
-was retrieved from this repository's original `ci.yml/badge.svg?branch=main`
-endpoint. These cached assets are retained rather than represented as newly
-drawn project logos.
+The static responses originated from the image URLs previously used by the
+README; Changelog used `https://img.shields.io/badge/Changelog-view-blue.svg`.
+Their panel colors are now normalized to the shared palette. Shields is
+published under CC0; embedded Simple Icons and product marks retain their
+original attribution and brand identities. The retained product logos are not
+represented as newly drawn project logos.
 
 The live CI, Latest release, Release integrity, Tests, Checksums, QA and CodeQL images are read from the same repository's
 long-lived `badges` branch, at `resources/badges/ci.svg` and
