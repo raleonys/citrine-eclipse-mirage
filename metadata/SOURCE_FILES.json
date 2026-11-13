@@ -1121,6 +1121,38 @@
       "bytes": 3029,
       "sha256": "ce49cebfeb830e95cb2b7492399a950ce3beda6e16750f032f81cb5846b63007"
     },
+    "tests/diagnostics/runtime_load/CMakeLists.txt": {
+      "bytes": 6242,
+      "sha256": "d532e68f1018964501fa2f7b97efee3542f9003b695b0eff3ca8faf9407fac86"
+    },
+    "tests/diagnostics/runtime_load/application_load.cpp": {
+      "bytes": 20369,
+      "sha256": "9140454394a6ae0cf476f80e3a02fb0ae9eced059faf058a28013bdcfb4cc98b"
+    },
+    "tests/diagnostics/runtime_load/application_probe.hpp": {
+      "bytes": 2863,
+      "sha256": "e336989051fc46fa4eed2107930bbafe7b4fbd1ef9774ae04c367b94d5dfad7c"
+    },
+    "tests/diagnostics/runtime_load/audit.py": {
+      "bytes": 10443,
+      "sha256": "c09263f7d69875797aa8488e10685228366bf4a78a4a08ca1ffc12d444358d1a"
+    },
+    "tests/diagnostics/runtime_load/load.cpp": {
+      "bytes": 12765,
+      "sha256": "0e8e9cae0271874268e0816428e6b88cd04cb87faf8996981413135278bd551a"
+    },
+    "tests/diagnostics/runtime_load/probe.hpp": {
+      "bytes": 2200,
+      "sha256": "04970fb8eeae67df8ca6fb87bcd13f907610dceb0b1d3821095de61d1c5ade52"
+    },
+    "tests/diagnostics/runtime_load/probe_tests.cpp": {
+      "bytes": 3763,
+      "sha256": "a0f3d2f75b930111c533a608f552bbd1fcbaa05a2073e1a9dc7543311dc9b981"
+    },
+    "tests/diagnostics/runtime_load/run.py": {
+      "bytes": 31180,
+      "sha256": "55145cb79da8716481c76ab18eb237af38e27d3e34e4ebc035a56dcdb4326da2"
+    },
     "tests/diagnostics/windows_paths/probe.py": {
       "bytes": 5404,
       "sha256": "6e27e95607879d98c6d0476edebf369c37d89e621e378934f23b9b1f918afbde"
@@ -1202,8 +1234,8 @@
       "sha256": "7f5107def7a8ed4fd9f609e2a558d435e5968083195cc5971a1d60bc3bd52ded"
     },
     "tests/infrastructure/test_infrastructure.py": {
-      "bytes": 171898,
-      "sha256": "79b8164e5634e8794b92f5b98d5e9f9925cc3a0dd1b56ae64271de67200c3bc8"
+      "bytes": 199698,
+      "sha256": "ffe19ba9b1172185fe81c812637bec9285794ce4167c495047e258dac7c34cd0"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
       "bytes": 52197,
