@@ -4,6 +4,8 @@
 import argparse
 import hashlib
 import json
+import os
+import tempfile
 from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
@@ -80,6 +82,37 @@ def inspect(path, root, final=False):
             'golden_shipping_acceptance': 'NOT_RUN', 'game_acceptance': 'NOT_RUN'}
 
 
+def _report_destination(dll, requested):
+    """Reject report aliases before inspecting a read-only DLL input."""
+    requested = Path(requested)
+    if requested.is_symlink():
+        raise ValueError('DLL inspection report must not be a symlink')
+    path = requested.resolve()
+    source = Path(dll).resolve(strict=True)
+    if path == source or (path.exists() and path.samefile(source)):
+        raise ValueError('DLL inspection report must not alias the inspected DLL')
+    if path.exists() and not path.is_file():
+        raise ValueError('DLL inspection report must name a regular file')
+    return path
+
+
+def _write_report(path, report):
+    """Replace a report name without truncating a shared output inode."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8',
+                                         prefix='.' + path.name + '.', suffix='.tmp',
+                                         dir=path.parent, delete=False) as output:
+            temporary = Path(output.name)
+            json.dump(report, output, indent=2)
+            output.write('\n')
+        os.replace(temporary, path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+
+
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('dll', type=Path)
@@ -87,10 +120,10 @@ if __name__ == '__main__':
     ap.add_argument('--final',action='store_true',help='Require the finalized Infrastructure metadata profile and checksum')
     args = ap.parse_args()
     try:
+        report_path = _report_destination(args.dll, args.report) if args.report else None
         report = inspect(args.dll, Path(__file__).resolve().parents[1], final=args.final)
-        if args.report:
-            args.report.parent.mkdir(parents=True, exist_ok=True)
-            args.report.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+        if report_path:
+            _write_report(report_path, report)
         print(json.dumps(report, indent=2))
         raise SystemExit(0 if report['result'].startswith('PASS') else 1)
     except (OSError, ValueError, PEError, KeyError) as error:

@@ -1,14 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 """COFF evidence reader rejects malformed input and preserves object-size meaning."""
+import os
 from pathlib import Path
 import struct
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
+import zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scripts'))
+import collect_size_evidence as size_evidence
 from collect_size_evidence import coff_sections, collect, current_objects, vs_object_paths
 
 
@@ -144,8 +148,8 @@ class CoffEvidenceTests(unittest.TestCase):
             current.parent.mkdir(parents=True)
             current.write_bytes(object_bytes())
             stale.write_bytes(object_bytes())
-            graph = ('TARGET\towned\nTYPE\tOBJECT_LIBRARY\nSOURCES\tsrc/current.cpp\nEND\n'
-                     'TARGET\tshipping\nTYPE\tSHARED_LIBRARY\nSOURCES\t' + str(current) + '\nEND\n')
+            graph = ('TARGET\towned\nTYPE\tOBJECT_LIBRARY\nDEPS\t\nSOURCES\tsrc/current.cpp\nEND\n'
+                     'TARGET\tshipping\nTYPE\tSHARED_LIBRARY\nDEPS\t\nSOURCES\t' + str(current) + '\nEND\n')
             (build / 'partition.Release.targets').write_text(graph)
             self.assertEqual(current_objects(root, build, {'owned', 'shipping'}, 'Release'), [current])
 
@@ -165,12 +169,141 @@ class CoffEvidenceTests(unittest.TestCase):
             self.assertEqual(vs_object_paths(project, 'Release', {source}),
                              {source: build / 'shipping.dir/Release/explicit.obj'})
 
+    def test_vs_object_mapping_ignores_other_configuration_itemgroups(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            build = root / 'build'
+            build.mkdir()
+            source = root / 'src/entry.cpp'
+            debug_only = root / 'src/debug_only.cpp'
+            project = build / 'shipping.vcxproj'
+            project.write_text('''<Project>
+<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+<IntDir>shipping.dir/Release/</IntDir></PropertyGroup>
+<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+<ClCompile Include="../src/entry.cpp"><ObjectFileName>$(IntDir)release.obj</ObjectFileName></ClCompile>
+</ItemGroup>
+<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+<ClCompile Include="../src/entry.cpp"><ObjectFileName>$(IntDir)debug.obj</ObjectFileName></ClCompile>
+<ClCompile Include="../src/debug_only.cpp"><ObjectFileName>$(IntDir)debug_only.obj</ObjectFileName></ClCompile>
+</ItemGroup></Project>''')
+            self.assertEqual(vs_object_paths(project, 'Release', {source, debug_only}),
+                             {source: build / 'shipping.dir/Release/release.obj'})
+
+    def test_vs_object_mapping_ignores_conditioned_compile_items(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            build = root / 'build'
+            build.mkdir()
+            source = root / 'src/entry.cpp'
+            project = build / 'shipping.vcxproj'
+            project.write_text('''<Project>
+<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+<IntDir>shipping.dir/Release/</IntDir></PropertyGroup>
+<ItemGroup>
+<ClCompile Include="../src/entry.cpp" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+<ObjectFileName>$(IntDir)selected.obj</ObjectFileName></ClCompile>
+<ClCompile Include="../src/entry.cpp" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+<ObjectFileName>$(IntDir)wrong.obj</ObjectFileName></ClCompile>
+</ItemGroup></Project>''')
+            self.assertEqual(vs_object_paths(project, 'Release', {source}),
+                             {source: build / 'shipping.dir/Release/selected.obj'})
+
     def test_unknown_vs_path_macros_are_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             project = Path(directory) / 'shipping.vcxproj'
             project.write_text('<Project><PropertyGroup><IntDir>$(Unknown)/</IntDir></PropertyGroup></Project>')
             with self.assertRaisesRegex(ValueError, 'Unresolved'):
                 vs_object_paths(project, 'Release', set())
+
+
+
+class EvidencePublicationTests(unittest.TestCase):
+    def test_new_bundle_preserves_sorted_members_and_sidecar_digest(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'size.zip'
+            payload = {'z/last.txt': b'last', 'a/first.txt': b'first'}
+            digest = size_evidence.publish_evidence(output, payload)
+            with zipfile.ZipFile(output) as archive:
+                self.assertEqual(['a/first.txt', 'z/last.txt'], archive.namelist())
+                for name, data in payload.items():
+                    self.assertEqual(data, archive.read(name))
+            self.assertEqual(digest, size_evidence.sha(output.read_bytes()))
+            self.assertEqual(digest + '  size.zip\n',
+                             Path(str(output) + '.sha256').read_text(encoding='utf-8'))
+            self.assertEqual(['size.zip', 'size.zip.sha256'],
+                             sorted(path.name for path in output.parent.iterdir()))
+
+    def test_preexisting_outputs_and_legacy_partials_are_not_overwritten(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output = root / 'size.zip'
+            victim = root / 'unrelated-source'
+            victim.write_bytes(b'preserved source bytes')
+            for name in ('size.zip', 'size.zip.sha256',
+                         'size.zip.partial', 'size.zip.sha256.partial'):
+                target = root / name
+                with self.subTest(name=name):
+                    os.link(victim, target)
+                    try:
+                        with self.assertRaisesRegex(ValueError, 'Existing or unsafe'):
+                            size_evidence.publish_evidence(output, {'test': b'data'})
+                        self.assertEqual(b'preserved source bytes', victim.read_bytes())
+                    finally:
+                        target.unlink()
+                    self.assertEqual(['unrelated-source'],
+                                     sorted(path.name for path in root.iterdir()))
+
+    def test_symlinked_legacy_partial_cannot_redirect_archive_write(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output = root / 'size.zip'
+            victim = root / 'unrelated-source'
+            victim.write_bytes(b'preserved source bytes')
+            legacy = root / 'size.zip.partial'
+            try:
+                legacy.symlink_to(victim)
+            except (OSError, NotImplementedError):
+                self.skipTest('Symlink creation unavailable on this host')
+            with self.assertRaisesRegex(ValueError, 'Existing or unsafe'):
+                size_evidence.publish_evidence(output, {'test': b'data'})
+            self.assertEqual(b'preserved source bytes', victim.read_bytes())
+            self.assertTrue(legacy.is_symlink())
+            self.assertFalse(output.exists())
+
+    def test_checksum_publication_failure_removes_new_zip_and_staging(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output = root / 'size.zip'
+            original_replace = os.replace
+            calls = []
+
+            def inject(source, destination):
+                calls.append(Path(destination))
+                if len(calls) == 2:
+                    self.assertEqual(Path(str(output) + '.sha256'), Path(destination))
+                    self.assertTrue(output.is_file())
+                    raise OSError('injected checksum publication failure')
+                return original_replace(source, destination)
+
+            with patch.object(size_evidence.os, 'replace', side_effect=inject):
+                with self.assertRaisesRegex(OSError, 'injected checksum publication failure'):
+                    size_evidence.publish_evidence(output, {'test': b'data'})
+            self.assertEqual(2, len(calls))
+            self.assertEqual([], list(root.iterdir()))
+
+    def test_collect_rejects_dangling_output_symlink_before_any_build_reads(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'build').mkdir()
+            output = root / 'build/size.zip'
+            try:
+                output.symlink_to(root / 'build/target-not-yet-created.zip')
+            except (OSError, NotImplementedError):
+                self.skipTest('Symlink creation unavailable on this host')
+            with self.assertRaisesRegex(ValueError, 'symlink'):
+                size_evidence.collect(root, root / 'build', 'Release', None, output)
+            self.assertFalse((root / 'build/target-not-yet-created.zip').exists())
 
 
 if __name__ == '__main__':

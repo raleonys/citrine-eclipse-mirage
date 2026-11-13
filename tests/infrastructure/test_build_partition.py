@@ -119,6 +119,91 @@ class MapBoundaryTests(unittest.TestCase):
             self.assertEqual(boundary.map_errors(boundary.read_map(path), POLICY), ([], 'MSVC'))
 
 
+class TranslationUnitObjectPathTests(unittest.TestCase):
+    def test_canonical_relative_and_absolute_ninja_objects(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            # Windows TEMP can use an alternate spelling of the physical path.
+            # This positive fixture supplies canonical sources and expectations.
+            owned = Path(tmp).resolve()
+            root, build = owned / 'checkout', owned / 'build'
+            source = root / 'src/runtime/sample.cpp'
+            source.parent.mkdir(parents=True)
+            source.write_text('int sample;', encoding='utf-8')
+            obj = build / 'CMakeFiles/sample.dir/src/runtime/sample.cpp.obj'
+            obj.parent.mkdir(parents=True)
+            obj.write_bytes(b'owned-object')
+            self.assertEqual(unit_audit.object_path(root, build, 'sample',
+                            'src/runtime/sample.cpp'), obj)
+            self.assertEqual(unit_audit.object_path(root, build, 'sample',
+                            str(source)), obj)
+
+    def test_selected_root_aliases_return_the_canonical_owned_object(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            owned = Path(tmp).resolve()
+            physical = owned / 'physical'
+            root, build = physical / 'checkout', physical / 'build'
+            source = root / 'src/runtime/sample.cpp'
+            source.parent.mkdir(parents=True)
+            source.write_text('int sample;', encoding='utf-8')
+            obj = build / 'CMakeFiles/sample.dir/src/runtime/sample.cpp.obj'
+            obj.parent.mkdir(parents=True)
+            obj.write_bytes(b'owned-object')
+            logical = owned / 'logical'
+            try:
+                logical.symlink_to(physical, target_is_directory=True)
+            except (OSError, NotImplementedError):
+                self.skipTest('Directory symlink creation is unavailable')
+            for name in ('src/runtime/sample.cpp', str(source)):
+                with self.subTest(source=name):
+                    actual = unit_audit.object_path(logical / 'checkout',
+                                                   logical / 'build', 'sample', name)
+                    # Require the canonical path itself, not just the same file.
+                    self.assertEqual(actual, obj)
+                    self.assertEqual(actual.read_bytes(), b'owned-object')
+
+    def test_parent_traversal_cannot_select_an_unrelated_object(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, build = Path(tmp) / 'checkout', Path(tmp) / 'build'
+            root.mkdir()
+            directory = build / 'CMakeFiles/sample.dir'
+            directory.mkdir(parents=True)
+            fake = build / 'CMakeFiles/other.cpp.obj'
+            fake.write_bytes(b'unrelated-object')
+            # The old string concatenation accepts this existing foreign .obj
+            # even though it lives outside the selected target directory.
+            self.assertTrue((directory / '../other.cpp.obj').is_file())
+            with self.assertRaisesRegex(ValueError, 'Noncanonical source'):
+                unit_audit.object_path(root, build, 'sample', '../other.cpp')
+            with self.assertRaisesRegex(ValueError, 'Noncanonical CMake object target'):
+                unit_audit.object_path(root, build, '../sample', 'src/runtime/sample.cpp')
+            with self.assertRaisesRegex(ValueError, 'outside checkout'):
+                unit_audit.object_path(root, build, 'sample', str(Path(tmp) / 'other.cpp'))
+
+    def test_redirected_source_or_object_is_not_attributed_to_target(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, build = Path(tmp) / 'checkout', Path(tmp) / 'build'
+            source = root / 'src/runtime/real.cpp'
+            source.parent.mkdir(parents=True)
+            source.write_text('int real;', encoding='utf-8')
+            obj = build / 'CMakeFiles/sample.dir/src/runtime/real.cpp.obj'
+            obj.parent.mkdir(parents=True)
+            target = Path(tmp) / 'foreign.cpp'
+            target.write_text('int foreign;', encoding='utf-8')
+            try:
+                (source.parent / 'alias.cpp').symlink_to(target)
+            except (OSError, NotImplementedError):
+                self.skipTest('File symlink creation is unavailable')
+            alias_obj = obj.with_name('alias.cpp.obj')
+            alias_obj.write_bytes(b'wrong-source-object')
+            with self.assertRaisesRegex(ValueError, 'redirects or escapes'):
+                unit_audit.object_path(root, build, 'sample', 'src/runtime/alias.cpp')
+            outside_obj = Path(tmp) / 'outside.obj'
+            outside_obj.write_bytes(b'foreign-object')
+            obj.symlink_to(outside_obj)
+            with self.assertRaisesRegex(ValueError, 'redirected'):
+                unit_audit.object_path(root, build, 'sample', 'src/runtime/real.cpp')
+
+
 class InitializerInventoryTests(unittest.TestCase):
     def test_compiler_coff_header_includes_ctors_and_retains_crt_tls(self):
         # Captured section table shape from a compiled x64 COFF object; the .ctors
@@ -151,6 +236,92 @@ class InitializerInventoryTests(unittest.TestCase):
 class TargetBoundaryTests(unittest.TestCase):
     def test_reference_and_source_api_coexist_outside_production_closure(self):
         self.assertEqual(boundary.codemodel_errors(graph(), POLICY), [])
+
+    def test_commented_cmake_source_lists_are_not_adopted(self):
+        variable = 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            (root / 'cmake/Sources.cmake').write_text(
+                f'# set({variable} src/runtime/retired.cpp)\n'
+                f'#[[ set({variable} src/runtime/removed.cpp) ]]\n'
+                f'#[=[ set({variable} src/runtime/removed_again.cpp) ]=]\n'
+                f'set({variable}\n'
+                '  src/runtime/active.cpp\n'
+                '  # src/runtime/disabled.cpp\n'
+                '  #[=[ src/runtime/bracket_disabled.cpp ]=]\n'
+                ')\n', encoding='utf-8')
+            self.assertEqual(['src/runtime/active.cpp'],
+                             boundary.declared_sources(root, variable))
+
+    def test_source_list_entirely_inside_comments_is_missing(self):
+        variable = 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            (root / 'cmake/Sources.cmake').write_text(
+                f'# set({variable} src/runtime/retired.cpp)\n'
+                f'#[[ set({variable} src/runtime/removed.cpp) ]]\n',
+                encoding='utf-8')
+            with self.assertRaisesRegex(ValueError, 'Missing CMake source list'):
+                boundary.declared_sources(root, variable)
+
+    def test_cmake_quoted_hash_and_bracket_argument_are_preserved(self):
+        variable = 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            (root / 'cmake/Sources.cmake').write_text(
+                f'set({variable} "literal#not-comment" '
+                '[=[literal # not-comment]=] src/runtime/active.CPP)\n',
+                encoding='utf-8')
+            self.assertEqual(['src/runtime/active.CPP'],
+                             boundary.declared_sources(root, variable))
+
+    def test_unterminated_cmake_bracket_comment_is_rejected(self):
+        variable = 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            (root / 'cmake/Sources.cmake').write_text(
+                f'#[[ set({variable} src/runtime/retired.cpp)\n', encoding='utf-8')
+            with self.assertRaisesRegex(ValueError, 'Unterminated CMake bracket comment'):
+                boundary.declared_sources(root, variable)
+
+    def test_cmake_comment_filter_keeps_valid_argument_contexts(self):
+        variable = 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES'
+        contexts = (
+            r'set(LABEL literal\#marker)',
+            r'set(LABEL literal\"marker)',
+            r'set(LABEL "literal \" # marker")',
+            'set(LABEL [[literal " # marker]])',
+            'set(LABEL [=[literal " # marker]=])',
+            'set(LABEL [==[literal ]=] " # marker]==])',
+            'set(LABEL literal[=[marker)',
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            for context in contexts:
+                with self.subTest(context=context):
+                    (root / 'cmake/Sources.cmake').write_text(
+                        context + f' # set({variable} src/runtime/retired.cpp)\n'
+                        + f'set({variable} src/runtime/active.cpp)\n', encoding='utf-8')
+                    self.assertEqual(['src/runtime/active.cpp'],
+                                     boundary.declared_sources(root, variable))
+
+    def test_unterminated_cmake_bracket_arguments_are_rejected(self):
+        variable = 'CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            for opening, ending in (('[[', ''), ('[=[', ''), ('[==[', ']=]')):
+                with self.subTest(opening=opening):
+                    (root / 'cmake/Sources.cmake').write_text(
+                        f'set({variable} {opening}src/runtime/active.cpp{ending})\n',
+                        encoding='utf-8')
+                    with self.assertRaisesRegex(ValueError, 'Unterminated CMake bracket argument'):
+                        boundary.declared_sources(root, variable)
 
     def test_case_insensitive_cpp_suffix_in_cmake_declaration(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -271,6 +442,54 @@ class TargetBoundaryTests(unittest.TestCase):
             self.assertEqual(g['citrine_eclipse_mirage']['dependencies'], [{'id': 'citrine_eclipse_mirage_core'}])
             self.assertEqual(g['citrine_eclipse_mirage']['sources'][1]['path'], 'C:/build path/other.cpp.obj')
 
+    def test_generated_graph_rejects_incomplete_and_overwritten_records(self):
+        # The exact BuildPartition.cmake emitter publishes one complete record
+        # with TYPE/DEPS/SOURCES in order. Malformed evidence must not hide
+        # forbidden dependencies or reclassify an executable as a library.
+        original = (
+            'TARGET\tgate\nTYPE\tEXECUTABLE\nDEPS\treference_model\n'
+            'SOURCES\tsrc/runtime/gate.cpp\nEND\n')
+        malformed = {
+            'duplicate_type': original.replace(
+                'TYPE\tEXECUTABLE\n', 'TYPE\tEXECUTABLE\nTYPE\tSTATIC_LIBRARY\n'),
+            'duplicate_deps': original.replace(
+                'DEPS\treference_model\n', 'DEPS\treference_model\nDEPS\tclean\n'),
+            'duplicate_sources': original.replace(
+                'SOURCES\tsrc/runtime/gate.cpp\n',
+                'SOURCES\tsrc/runtime/gate.cpp\nSOURCES\tsrc/runtime/decoy.cpp\n'),
+            'missing_type': original.replace('TYPE\tEXECUTABLE\n', ''),
+            'missing_deps': original.replace('DEPS\treference_model\n', ''),
+            'missing_sources': original.replace('SOURCES\tsrc/runtime/gate.cpp\n', ''),
+            'out_of_order': original.replace(
+                'DEPS\treference_model\nSOURCES\tsrc/runtime/gate.cpp\n',
+                'SOURCES\tsrc/runtime/gate.cpp\nDEPS\treference_model\n'),
+            'unclosed_prior_target': original.removesuffix('END\n') +
+                original.replace('TARGET\tgate\n', 'TARGET\tsecond\n'),
+            'orphan_end': 'END\n' + original,
+            'stray_type': 'TYPE\tEXECUTABLE\n' + original,
+            'empty_name': original.replace('TARGET\tgate\n', 'TARGET\t\n'),
+            'empty_type': original.replace('TYPE\tEXECUTABLE\n', 'TYPE\t\n'),
+            'missing_end': original.removesuffix('END\n'),
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            record = root / 'partition.Release.targets'
+            for label, contents in malformed.items():
+                with self.subTest(case=label):
+                    record.write_text(contents, encoding='utf-8')
+                    with self.assertRaises(ValueError):
+                        boundary.load_generated_graph(root, 'Release')
+            # Empty dependencies and sources are valid, not missing records.
+            record.write_text(
+                'TARGET\tlibrary\nTYPE\tSTATIC_LIBRARY\nDEPS\t\nSOURCES\t\nEND\n'
+                + original, encoding='utf-8')
+            parsed = boundary.load_generated_graph(root, 'Release')
+            self.assertEqual(set(parsed), {'library', 'gate'})
+            self.assertEqual(parsed['library']['dependencies'], [])
+            self.assertEqual(parsed['library']['sources'], [])
+            self.assertEqual(parsed['gate']['type'], 'EXECUTABLE')
+            self.assertEqual(parsed['gate']['dependencies'], [{'id': 'reference_model'}])
+
     def test_actual_compiler_source_set_is_checked(self):
         g = graph()
         g['citrine_eclipse_mirage_objects']['sources'].append({'path': POLICY['reference_sources'][0]})
@@ -357,8 +576,10 @@ add_library(citrine_eclipse_mirage_pegtl INTERFACE)
             cmake += f'file(GENERATE OUTPUT "${{CMAKE_BINARY_DIR}}/crt.txt" CONTENT "{content}")\n'
             cmake += 'file(GENERATE OUTPUT "${CMAKE_BINARY_DIR}/dev-links.txt" CONTENT "$<TARGET_PROPERTY:citrine_eclipse_mirage_source_api,LINK_LIBRARIES>")\n'
             (source / 'CMakeLists.txt').write_text(cmake)
+            # Reuse compiler detection while still configuring and checking
+            # both configurations, including the Debug-to-Release transition.
+            build = Path(tmp) / 'build'
             for config, suffix in [('Debug', 'Debug'), ('Release', '')]:
-                build = Path(tmp) / config
                 cp = subprocess.run(['cmake', '-S', str(source), '-B', str(build),
                                      '-DCMAKE_BUILD_TYPE=' + config,
                                      '-DCMAKE_CONFIGURATION_TYPES=' + config], capture_output=True, text=True)

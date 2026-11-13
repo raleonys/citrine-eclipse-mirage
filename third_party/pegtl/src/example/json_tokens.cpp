@@ -109,6 +109,7 @@ namespace example
       : token_char_action
    {};
 
+
    template<>
    struct lexer_action< pegtl::json::string::content >
       : pegtl::change_action_and_state< pegtl::unescape, std::string >
@@ -118,6 +119,7 @@ namespace example
       {
          out.emplace_back( token_type::string, unescaped );
       }
+
    };
 
    template<>
@@ -233,7 +235,7 @@ namespace example
 
 }  // namespace example
 
-int main( int argc, char** argv )
+int main( int argc, char** argv )  // NOLINT(bugprone-exception-escape)
 {
    if( argc != 2 ) {
       std::cerr << "usage: " << argv[ 0 ] << " <filename.json>\n";

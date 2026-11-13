@@ -35,8 +35,10 @@ inline std::vector<BenchmarkCase> benchmark_cases() {
     for(unsigned i=0;i<64;++i)attributes+=" a"+std::to_string(i)+"='prefix&amp;&#65;&unknown;suffix'";
     cases.push_back({"many-attributes",attributes+"/>"});
     std::string deep;
-    for(unsigned i=0;i<120;++i)deep+="<R v='1'>";
-    for(unsigned i=0;i<120;++i)deep+="</R>";
+    // Both profiles must accept the same work. Rejection is measured in the
+    // explicit safety matrix, not timed against successful tree traversal.
+    for(unsigned i=0;i<80;++i)deep+="<R v='1'>";
+    for(unsigned i=0;i<80;++i)deep+="</R>";
     cases.push_back({"deep-elements",deep});
     return cases;
 }

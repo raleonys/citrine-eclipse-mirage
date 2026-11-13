@@ -14,8 +14,10 @@
 > XML checkpoint: the TinyXML2 implementation and vendor-default statements in
 > this report and its companion CSV describe the October 28 comparison.
 > The current application uses pugixml with first-party compatibility code that
-> preserves the depth boundary (498 nested elements accepted; 499 rejected).
-> See [VENDORING.md](VENDORING.md) for the current contract.
+> now selects the A12 depth-100 profile (98 paired levels accepted; 99 rejected).
+> The depth-500 decisions/results in the historical rows and CSV below remain
+> tied to their original comparison and are superseded as current instructions.
+> See [VENDORING.md](VENDORING.md) and [A12_DEVIATIONS.md](A12_DEVIATIONS.md).
 
 > Historical-snapshot correction: the scalar-only generalization in CFG01/RE11
 > was inaccurate. The complete config_application/FilePass path already existed

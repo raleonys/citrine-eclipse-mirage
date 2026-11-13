@@ -25,6 +25,14 @@ def mask_cpp_noncode(source):
     while index < length:
         if source.startswith("//", index):
             end = source.find("\n", index)
+            # C++20 removes backslash-newline before recognizing line comments.
+            while end >= 0:
+                last = end - 1
+                if last >= index and source[last] == "\r":
+                    last -= 1
+                if last < index or source[last] != "\\":
+                    break
+                end = source.find("\n", end + 1)
             end = length if end < 0 else end
             blank(index, end)
             index = end
@@ -44,6 +52,15 @@ def mask_cpp_noncode(source):
                 index = end
             else:
                 index += 1
+        elif ((source[index] in "0123456789" or
+               (source[index] == "." and index + 1 < length and
+                source[index + 1] in "0123456789")) and
+              (index == 0 or not (source[index - 1].isalnum() or source[index - 1] == "_"))):
+            # Consume pp-numbers without masking them. Their apostrophes are
+            # digit separators, not character-literal openers. The boundary
+            # check also keeps the u8 prefix of character/raw literals intact.
+            number = re.match(r"(?:[0-9]|\.[0-9])(?:[eEpP][+-]|[\w.]|'\w)*", source[index:])
+            index += number.end()
         elif source[index] in ("'", '"'):
             quote = source[index]
             end = index + 1

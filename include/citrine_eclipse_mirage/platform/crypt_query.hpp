@@ -3,8 +3,7 @@
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
-#include <windows.h>
-#include <wincrypt.h>
+// SDK calls belong to the Windows host adapter; this selector interface is portable.
 #include <string_view>
 #include <cstdint>
 #include <cstddef>
