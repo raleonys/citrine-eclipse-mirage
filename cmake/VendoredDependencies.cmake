@@ -68,7 +68,8 @@ if(WIN32)
   set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
     "${PROJECT_SOURCE_DIR}/metadata/HOOK_ENGINE_PATCH.json"
     "${PROJECT_SOURCE_DIR}/scripts/prepare_hook_engine.py"
-    "${PROJECT_SOURCE_DIR}/cmake/PatchHookFreeze.cmake")
+    "${PROJECT_SOURCE_DIR}/cmake/PatchHookFreeze.cmake"
+    "${PROJECT_SOURCE_DIR}/cmake/PatchHookCompletion.cmake")
   execute_process(COMMAND "${Python3_EXECUTABLE}" -B
     "${PROJECT_SOURCE_DIR}/scripts/prepare_hook_engine.py" --root "${PROJECT_SOURCE_DIR}"
     --output "${_hook_build_copy}" --prepare --cmake "${CMAKE_COMMAND}"

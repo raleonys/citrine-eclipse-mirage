@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Test that the checked ticket writer retains an observed write failure even when a controlled output adapter clears its status during close. Verify counted bytes, complete status/close/destruction order and a successful later output through the same factory; production and native stream policy are unchanged.
+- Harden the verified MinHook build copy without changing vendor inputs: track per-page protection and instruction-cache completion, preserve written state and failed cleanup owners, prevent generated-code retirement while peer registers/stacks still reference it, and retry partial buffer/heap shutdown. Add injected failure/page-boundary regressions and a real Windows suspended-peer retirement fixture; retain the public ABI, adapter contract and focused validation scheduling.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-13
 
+- [PR #334](https://github.com/raleonys/citrine-eclipse-mirage/pull/334): Test that the checked ticket writer retains an observed write failure even when a controlled output adapter clears its status during close. Verify counted bytes, complete status/close/destruction order and a successful later output through the same factory; production and native stream policy are unchanged.
 - [PR #345](https://github.com/raleonys/citrine-eclipse-mirage/pull/345): Test ordered Session shared-response owner allocation failure after preparation: cancel the unpublished receipt once, submit no output and preserve a buffered successor. Keep production transport and error policy unchanged.
 - [PR #355](https://github.com/raleonys/citrine-eclipse-mirage/pull/355): Add opt-in native runtime load measurements for real TCP framing/handler queues, production XML and atomic persistence, plus hook-disabled Application routing with plaintext/encrypted profile, mixed command and durable achievement workloads. Compare diagnostic-only 1/2/4/8 worker copies and a drained per-message-thread control with paired rounds, actual per-request handler-state lock observations and complete response/persistence controls. Bind linked executables to source/compiler receipts and add reproducible offline binary/raw-sample/JSON/CSV evidence auditing, strict workload recipes, XML/INI corruption controls and explicit statistical/proof boundaries. Preserve production defaults and ordinary PR validation scheduling; retain the existing XML benchmark as the manual workflow default. Adapt strict diagnostic generation to the current OwnedThread selector while requiring its ordinary std::thread alias unchanged; retain historical measurements under their original source identities. Isolate disposable Git fixture setup from inherited pre-push repository selectors.
 

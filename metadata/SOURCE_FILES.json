@@ -1202,12 +1202,12 @@
       "sha256": "ff8dadab50028201077b165b2b725a4466845291a8361efd2d302449795b2d07"
     },
     "tests/infrastructure/hook_cleanup_control.py": {
-      "bytes": 5051,
-      "sha256": "ab900d631814218fd93c7c5d53b0512e929c030fc753e0192ca702b20e2e3d4f"
+      "bytes": 5074,
+      "sha256": "82dfd83997156be4de6e6497527c604f5c60f37677296d198637fa822b723a26"
     },
     "tests/infrastructure/hook_real_peer_control.py": {
       "bytes": 3576,
-      "sha256": "ba37779910cc2fd47ddd8a429fd201d15c9d587cbafdec357facc3b6e695fb90"
+      "sha256": "e71816ac2de79eb09a5fbe55cb701d6fe4c2fc4dcb6737a11488a8f3827eec81"
     },
     "tests/infrastructure/test_build_partition.py": {
       "bytes": 29135,
@@ -1270,8 +1270,8 @@
       "sha256": "f7070b8f72d5c2881c146b3e875a2df498d5ab8f93cf4073aea9e578b62ebfbc"
     },
     "tests/infrastructure/test_vendor_contract.py": {
-      "bytes": 32346,
-      "sha256": "2749ad630890883fb6741fba8ffcc197c89dbb1df17fd63f31a05885b8518af4"
+      "bytes": 33800,
+      "sha256": "2ea84c08790702b6171cccd024459a955ef5a3a5efdd9cb535b7814cf74be2a6"
     },
     "tests/infrastructure/test_weekly_release.py": {
       "bytes": 45127,
@@ -1353,13 +1353,17 @@
       "bytes": 6495,
       "sha256": "3c274f32f008286fdd6637d55427b9f4b600d0518a6a44d0adc6e13a51479b3d"
     },
+    "tests/native/hook_completion_tests.c": {
+      "bytes": 13663,
+      "sha256": "ef5ad1fe69e3b44e25c4722a7bf45013594956517dfb007b26ee716f8a124b45"
+    },
     "tests/native/hook_engine_fixture_tests.cpp": {
       "bytes": 15364,
       "sha256": "b44b7a448065fb462cdd2e822e6f4b0cd802a84d7f0fca62e1d6fa1d6b983d45"
     },
     "tests/native/hook_freeze_tests.c": {
-      "bytes": 21020,
-      "sha256": "eed767c8efd1a22fe14a8c5374c88692d92a01fcd9d77760d9347f1cd5f1fe22"
+      "bytes": 21761,
+      "sha256": "03104c5c9a414a208af3000faf32b3259ed1f00f3fb75795a4020badc6ba4fca"
     },
     "tests/native/hook_live_calls_tests.c": {
       "bytes": 5771,
@@ -1368,6 +1372,10 @@
     "tests/native/hook_real_peer_tests.cpp": {
       "bytes": 14749,
       "sha256": "b3fdf6f0b75b9890c3c38719a7d70d6a18212b8aadda6db2fc442541ec21b14f"
+    },
+    "tests/native/hook_retirement_peer_tests.cpp": {
+      "bytes": 4175,
+      "sha256": "d363621bfed6d1903f99881ee6992ab6380637ba28eeb0dcf1b4747169444665"
     },
     "tests/native/hook_thread_churn_tests.c": {
       "bytes": 8094,
