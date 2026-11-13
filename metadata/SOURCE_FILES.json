@@ -926,8 +926,8 @@
       "sha256": "9a2b0f9c3310dbd75710bb27b8d92d2771a769e91f1fb10c1ae25ab5fd4225b2"
     },
     "src/platform/hook_unload_guard.cpp": {
-      "bytes": 7635,
-      "sha256": "2f666a3766d7d11d463502a278f6806de5d7e5c53bc9b24ea4e9b0e5ed0e6777"
+      "bytes": 10276,
+      "sha256": "ecbe5a7fc86384563c71db8fd6b105d7d792673db43554a32706f453fde82846"
     },
     "src/platform/library_system.cpp": {
       "bytes": 1305,
@@ -944,6 +944,10 @@
     "src/platform/status_windows.cpp": {
       "bytes": 2333,
       "sha256": "d10ffba149513e7afe0b86130bac6fa6cf8d681b0a56272e5c5912fca4dd46c7"
+    },
+    "src/platform/unload_scan_record.hpp": {
+      "bytes": 4738,
+      "sha256": "25e16a25822d53b4adb843d84a2f272751879a7096d4238d9e37a12d5761ac4f"
     },
     "src/platform/windows_effects.cpp": {
       "bytes": 2564,
@@ -1426,8 +1430,8 @@
       "sha256": "59f55fd5890e9d8e4333d059f6d5b45655892b200eebc6cc0e18b2f33aa89ac1"
     },
     "tests/native/unload_guard_tests.cpp": {
-      "bytes": 17166,
-      "sha256": "8a8e1dd155a64bd3094b0828ffee4742419c65a3fbbcf77cfd5b634154106d1f"
+      "bytes": 25390,
+      "sha256": "c88ce7755975e8e0ed7d8f0948947b25269e4c9d3fd0d56113efe4b5d013d98b"
     },
     "tests/performance/xml_reader_probe.cpp": {
       "bytes": 11798,

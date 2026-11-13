@@ -4,7 +4,7 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Mask C++ comments and ordinary/raw literals before checking first-party qualified namespaces, avoiding false errors from harmless text. Preserve active declarations, numeric digit separators, literal prefixes and source positions; follow continued line comments and add real-namespace controls. Keep original-byte hashing, source layout, runtime and ABI unchanged.
+- Diagnose conservative Debug unload refusals through a private fixed image record, with bounded host reads and best-effort output only after shutdown returns. Keep I/O, allocation and callbacks out of the scan path, suppress output while scanner-owned suspensions remain, and compile diagnostics out of Release. Add publication/reader fault contracts and manual Visual Studio/NMake five-or-twenty-attempt lifecycle diagnostics without changing scan decisions, TLS exemptions, cleanup ownership, public ABI or PR validation scheduling.
 
 ## Integrated development history
 
@@ -12,6 +12,7 @@ These entries record accepted source changes; integration does not imply a publi
 
 ### Integrated 2026-11-13
 
+- [PR #305](https://github.com/raleonys/citrine-eclipse-mirage/pull/305): Mask C++ comments and ordinary/raw literals before checking first-party qualified namespaces, avoiding false errors from harmless text. Preserve active declarations, numeric digit separators, literal prefixes and source positions; follow continued line comments and add real-namespace controls. Keep original-byte hashing, source layout, runtime and ABI unchanged.
 - [PR #285](https://github.com/raleonys/citrine-eclipse-mirage/pull/285): Require one canonical active PEGTL CMakeCache probe record instead of searching for success text. Reject missing, duplicated, malformed or wrongly typed records, including mixed-type duplicates of the same key; preserve exit 0 for exact success and CTest skip 77 for exact unavailable values. Add real-subprocess regressions without changing vendor inputs or runtime behavior.
 - [PR #279](https://github.com/raleonys/citrine-eclipse-mirage/pull/279): Exclude CMake line/bracket comments before selecting build-partition source declarations, so commented-out commands and entries cannot satisfy the source inventory. Preserve quoted, escaped and bracket arguments, distinguish ordinary unquoted bracket text, and reject unterminated bracket constructs; retain the strict generated-graph checks and production build behavior.
 - [PR #314](https://github.com/raleonys/citrine-eclipse-mirage/pull/314): Require exactly one canonical LIBRARY declaration followed by exactly one EXPORTS header before any source DEF export. Reject missing, repeated, reversed or misplaced headers while preserving comments, blank lines and the three accepted export names/ordinals; add malformed-header and restoration regressions without changing shipping ABI or DEF bytes.

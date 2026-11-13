@@ -5,6 +5,7 @@
 #include "../../tests/fixtures/xml_reader/wire_contracts.hpp"
 #include <chrono>
 #include "listener_owners.hpp"
+#include "unload_diagnostics.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -25,6 +26,9 @@ namespace listeners=citrine_eclipse_mirage::tools::listener_diagnostics;
 struct Module {
     HMODULE image=nullptr;
     Wait shutdown=nullptr;
+#ifndef NDEBUG
+    std::uintptr_t scan_record=0;
+#endif
     explicit Module(const wchar_t* path) {
         image=LoadLibraryW(path);
         if(!image)throw std::runtime_error("LoadLibrary failed (Win32 "+std::to_string(GetLastError())+")");
@@ -95,6 +99,10 @@ void cycle(const wchar_t* path,unsigned index,bool validate_xml) {
     struct RestorePort {const char* value;~RestorePort(){SetEnvironmentVariableA("EALsxPort",value);}} restore{old_size?old_port:nullptr};
     require(SetEnvironmentVariableA("EALsxPort",nullptr)!=FALSE,"cannot reset tool EALsxPort observation");
     Module module(path);
+#ifndef NDEBUG
+    require(citrine_eclipse_mirage::tools::unload_diagnostics::locate(module.image,module.scan_record),
+            "Debug unload diagnostic record missing or ambiguous");
+#endif
     // Resolve DllMain to verify the loader table, but never manually invoke it.
     module.resolve<FARPROC>("DllMain",1);
     const auto marker=module.resolve<Marker>("SURGE",2);
@@ -116,6 +124,10 @@ void cycle(const wchar_t* path,unsigned index,bool validate_xml) {
     if(validate_xml)xml_contracts(socket,buffered,response);
     auto complete_shutdown=[&](const char* failure) {
         const DWORD result=shutdown(20000);
+#ifndef NDEBUG
+        if(result!=DLL_SHUTDOWN_OK)
+            citrine_eclipse_mirage::tools::unload_diagnostics::report_after_shutdown(std::cerr,module.scan_record);
+#endif
         if(result!=DLL_SHUTDOWN_OK)
             listeners::report(std::cerr,"shutdown_failed",result,bound,GetCurrentProcessId(),
                               listener_before,listeners::capture(bound));
