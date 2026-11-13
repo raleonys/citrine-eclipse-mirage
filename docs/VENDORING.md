@@ -46,7 +46,22 @@ Original archives remain external to the source package. Previous selections
 remain recorded in SOURCE_INPUTS.json and
 Git history; earlier execution evidence is not new-snapshot acceptance.
 
+Before CRC verification or payload reads, the pinned vendor ZIP inspector
+preflights every member's root/path, case-fold identity, supported type and
+header-reported uncompressed size. Existing limits remain 32 MiB per member
+and 100 MiB in total; nonempty directory entries are rejected. Exact archive
+SHA-256/size and commit-comment binding precede this scan; CRC, per-member
+hashes and locked symlink targets are still verified after it. These byte
+budgets do not establish complete resource isolation for arbitrary ZIP input.
+
 ## Installed tree verification
+
+Vendor member manifests and ZIP entries share the source-package path policy:
+[`vendor_sync.safe_rel()`](../scripts/vendor_sync.py) delegates to
+[`project_files.safe_member()`](../scripts/project_files.py) before staging or
+materialization. It rejects Windows device names, trailing spaces/dots, forbidden
+punctuation and controls while retaining ordinary pinned paths. Link targets
+remain subject to the separate archive-locked alias checks.
 
 All 2,690 file/link entries are verified against
 archive-member hash lists. Licenses and Asio's
@@ -102,8 +117,12 @@ Pugixml is compiled directly from the complete, unmodified 191-file owner
 archive. Its MIT license and member hashes are included. Project grammar,
 checked reference decoding, diagnostic text and depth handling live in
 `src/xml/reader_policy.cpp` and `reader_values.cpp`, behind the unchanged reader
-interface. The legacy depth contract remains: 498 nested elements succeed and
-499 fail with error 18. This is a project policy, not a pugixml vendor patch.
+interface. The owner-requested A12 depth-100 profile accepts 98 paired nested
+elements and rejects the 99th entered child list with error 18. A self-closed
+leaf at level 99 remains valid; malformed-attribute and EOF error priority are
+preserved. This replaces the previous depth-500 profile (498/499 boundary). It
+is first-party policy, not a pugixml requirement or vendor patch. See
+[A12_DEVIATIONS.md](A12_DEVIATIONS.md) for rationale and remaining differences.
 
 The previous TinyXML2 lock/member list remains historical provenance in
 `retired_vendor_inputs`; its active tree and build input are removed. Git
@@ -219,7 +238,7 @@ than merging into an earlier damaged
 extraction. Optional verified extraction:
 
 ```sh
-python -B scripts/extract_source.py ../yellowfield-windows-vendor-source.zip ../yellowfield-clean
+python -B scripts/extract_source.py ../citrine-eclipse-mirage-source.zip ../citrine-eclipse-mirage-clean
 ```
 
 The extractor verifies CRC, hash, member
@@ -239,12 +258,20 @@ remains optional for converting the
 correct text back into real links;
 it is not a build prerequisite.
 
+Restoration validates the complete locked alias set before publishing any
+conversion. Each link is created in owned temporary staging and atomically
+replaces its descriptor after creation succeeds. If a later conversion fails,
+earlier valid links remain published and pending descriptors retain their
+exact bytes. An ordinary retry processes only the remaining descriptors;
+source-manifest identity is preserved across this partial state.
+
 Current runtime integration:
 [RUNTIME_BINDING.md](RUNTIME_BINDING.md).
 Earlier vendor/parser test counts here
 are historical snapshot evidence; newer
-Application tests are in
-[RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json).
+Application bindings are in
+[RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json). New
+test execution belongs to the exact selected head's workflow results.
 
 Owner authorization to remove Gulrak
 and restore Windows I/O:
