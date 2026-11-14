@@ -11,6 +11,11 @@
       "role": "CURRENT_CONTRACT_OR_PROVENANCE",
       "purpose": "aryra golden layout"
     },
+    "ASIO_UPDATE_REVIEW.json": {
+      "owner": "SURGE explicit owner dependency update",
+      "role": "CURRENT_CONTRACT",
+      "purpose": "Exact new Asio archive snapshot, delta and validation limits"
+    },
     "AVATAR_DATA_CONTRACT.json": {
       "owner": "SURGE Golden and avatar correction",
       "purpose": "Pinned replacement profile bytes and recovered separate fallback data provenance",
@@ -25,6 +30,11 @@
       "owner": "SURGE whole-source review",
       "role": "CURRENT_CONTRACT_OR_PROVENANCE",
       "purpose": "Whole-source review scope, file/test evidence and verification limits"
+    },
+    "BUILD_CLEANUP_REVIEW.json": {
+      "owner": "SURGE production boundary and diagnostic cleanup",
+      "role": "CURRENT_CONTRACT",
+      "purpose": "Reviewed production/model split, narrow cleanup scope and current validation limits"
     },
     "BUILD_PARTITION_POLICY.json": {
       "owner": "SURGE target ownership",
@@ -51,10 +61,20 @@
       "role": "CURRENT_CONTRACT_OR_PROVENANCE",
       "purpose": "crt static contract"
     },
-    "HOOK_ENGINE_PATCH.json": {
-      "owner": "SURGE hook lifecycle",
-      "purpose": "Immutable hook input, patch and compiled-copy hash contract",
-      "role": "CURRENT_CONTRACT"
+    "DIST_CONTRACT.json": {
+      "owner": "SURGE final local output",
+      "purpose": "Final runtime name, Golden/runtime gating, hash sidecar and bounded acceptance status",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE"
+    },
+    "EVIDENCE_RETENTION_POLICY.json": {
+      "owner": "SURGE historical evidence archive",
+      "role": "CURRENT_CONTRACT",
+      "purpose": "Locked byte-exact retained evidence and explicit historic-source SHA-256 references"
+    },
+    "HOOK_ENGINE.json": {
+      "owner": "Laureondo hook integration",
+      "role": "CURRENT_CONTRACT",
+      "purpose": "Exact immutable MithrilHook engine selection, provenance and lifetime boundaries"
     },
     "HOOK_PATH_SCAN_POLICY.json": {
       "owner": "SURGE hook11 path inspection",
@@ -91,11 +111,6 @@
       "role": "CURRENT_CONTRACT_OR_PROVENANCE",
       "purpose": "local data policy"
     },
-    "DIST_CONTRACT.json": {
-      "owner": "SURGE final local output",
-      "purpose": "Final runtime name, Golden/runtime gating, hash sidecar and bounded acceptance status",
-      "role": "CURRENT_CONTRACT_OR_PROVENANCE"
-    },
     "METADATA_OWNERSHIP.json": {
       "owner": "SURGE infrastructure",
       "role": "CURRENT_CONTRACT_OR_PROVENANCE",
@@ -105,6 +120,11 @@
       "owner": "SURGE infrastructure",
       "role": "CURRENT_CONTRACT_OR_PROVENANCE",
       "purpose": "mustavex golden metadata"
+    },
+    "NATIVE_FIXTURE_REVIEW.json": {
+      "owner": "SURGE native fault-injection fixture",
+      "role": "CURRENT_CONTRACT",
+      "purpose": "Pinned Asio allocation routes, owner Windows log review and test-only failure injection correction"
     },
     "ONLINE_PROVIDER_POLICY.json": {
       "owner": "SURGE source and target contracts",
@@ -195,26 +215,6 @@
       "owner": "SURGE vendor source ownership",
       "purpose": "vendor lock",
       "role": "CURRENT_VENDOR_CONTRACT_OR_VALIDATION"
-    },
-    "BUILD_CLEANUP_REVIEW.json": {
-      "owner": "SURGE production boundary and diagnostic cleanup",
-      "role": "CURRENT_CONTRACT",
-      "purpose": "Reviewed production/model split, narrow cleanup scope and current validation limits"
-    },
-    "NATIVE_FIXTURE_REVIEW.json": {
-      "owner": "SURGE native fault-injection fixture",
-      "role": "CURRENT_CONTRACT",
-      "purpose": "Pinned Asio allocation routes, owner Windows log review and test-only failure injection correction"
-    },
-    "ASIO_UPDATE_REVIEW.json": {
-      "owner": "SURGE explicit owner dependency update",
-      "role": "CURRENT_CONTRACT",
-      "purpose": "Exact new Asio archive snapshot, delta and validation limits"
-    },
-    "EVIDENCE_RETENTION_POLICY.json": {
-      "owner": "SURGE historical evidence archive",
-      "role": "CURRENT_CONTRACT",
-      "purpose": "Locked byte-exact retained evidence and explicit historic-source SHA-256 references"
     },
     "WEEKLY_NAMING_POLICY.json": {
       "owner": "Laureondo weekly release governance",

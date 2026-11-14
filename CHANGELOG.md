@@ -4,11 +4,17 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Adopt the owner-requested Laureondo identity and exact supplied logo across the public overview, Windows product resources, C++ namespace/include root, CMake targets/options, host tools, DLL/provider names, version environment, CI and weekly package naming. Keep SURGE runtime/configuration and avatars, the three C exports/ordinals, vendor payloads, historical evidence and existing GitHub repository coordinates unchanged. Document the consumer/provider/build-cache migration; this PR does not rename the hosted repository or publish a release.
+- Replace the standalone MinHook tree, MH application API and generated SAFE-FREEZE source patch with the exact owner-supplied vanilla MithrilHook 1.0.4 archive. Pin all 104 payloads, retain upstream licensing/provenance and keep Asio/PEGTL/pugixml bytes unchanged. Link private static engine state per DLL and preserve the separate shared-CRT development graph, eleven-hook topology, staged batch rollback, callback drain, retained cleanup and three production exports.
+- Run the selected package's real decoder/relocator, freeze, completion, reentry, retirement, unwind and exact negative controls. Retain the physical-IP stale-disable counterexample and add Laureondo-specific actual-backend/original-call/batch/rollback/cleanup-retry tests with explicitly identified injected failures. Extend only the existing manual focused hook diagnostic; keep ordinary PR/full-validation scheduling unchanged.
+- Finish the previously requested Laureondo cleanup in the Registry fixture key and present-day documentation examples. Preserve historical records, release compatibility checks and existing repository coordinates.
 
 ## Integrated development history
 
 These entries record accepted source changes; integration does not imply a published release.
+
+### Integrated 2026-11-14
+
+- [PR #364](https://github.com/raleonys/citrine-eclipse-mirage/pull/364): Adopt the owner-requested Laureondo identity and exact supplied logo across the public overview, Windows product resources, C++ namespace/include root, CMake targets/options, host tools, DLL/provider names, version environment, CI and weekly package naming. Keep SURGE runtime/configuration and avatars, the three C exports/ordinals, vendor payloads, historical evidence and existing GitHub repository coordinates unchanged. Document the consumer/provider/build-cache migration; this PR does not rename the hosted repository or publish a release.
 
 ### Integrated 2026-11-13
 

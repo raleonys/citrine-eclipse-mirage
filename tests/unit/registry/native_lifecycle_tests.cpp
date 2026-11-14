@@ -166,7 +166,7 @@ struct Tree {
     Key root;
     Tree() {
         static unsigned sequence;
-        path = L"Software\\LaureondoEclipseMirage.RegistryTests." + std::to_wstring(GetCurrentProcessId())
+        path = L"Software\\Laureondo.RegistryTests." + std::to_wstring(GetCurrentProcessId())
             + L"." + std::to_wstring(GetTickCount64()) + L"." + std::to_wstring(++sequence);
         DWORD disposition = 0;
         require(RegCreateKeyExW(HKEY_CURRENT_USER, path.c_str(), 0, nullptr, REG_OPTION_VOLATILE,
@@ -327,7 +327,7 @@ void concurrent_close(bool wide, bool fabricated) {
 }
 void alternate_sdk_routes(bool wide) {
     // D03 bounded SDK-origin evidence. This executable calls entrypoints
-    // directly: it does not install MinHook or observe Consumer call paths.
+    // directly: it does not install MithrilHook or observe Consumer call paths.
     Tree tree;
     Fixture fixture;
     {

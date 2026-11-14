@@ -4,7 +4,7 @@ add_executable(vendor_api_smoke "${PROJECT_SOURCE_DIR}/tests/vendors/vendor_api_
 target_link_libraries(vendor_api_smoke PRIVATE laureondo_asio
   laureondo_pugixml)
 if(WIN32)
-  target_link_libraries(vendor_api_smoke PRIVATE laureondo_minhook)
+  target_link_libraries(vendor_api_smoke PRIVATE mithrilhook)
 endif()
 add_test(NAME vendor_api_smoke COMMAND vendor_api_smoke)
 set_tests_properties(vendor_api_smoke PROPERTIES TIMEOUT 60)

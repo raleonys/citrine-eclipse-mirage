@@ -79,7 +79,7 @@ add_library(laureondo_objects OBJECT ${LAUREONDO_APPLICATION_SOURCES}
   src/platform/crypt_query_host.cpp "${_avatar_header}")
 target_include_directories(laureondo_objects PUBLIC include)
 target_include_directories(laureondo_objects PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
-target_link_libraries(laureondo_objects PUBLIC laureondo_minhook laureondo_pugixml
+target_link_libraries(laureondo_objects PUBLIC mithrilhook laureondo_pugixml
   laureondo_asio)
 target_compile_definitions(laureondo_objects PUBLIC NOMINMAX)
 set_target_properties(laureondo_objects PROPERTIES POSITION_INDEPENDENT_CODE ON)
@@ -88,7 +88,7 @@ add_library(laureondo_core STATIC $<TARGET_OBJECTS:laureondo_objects>
   $<TARGET_OBJECTS:laureondo_vdf_objects>)
 target_include_directories(laureondo_core PUBLIC include)
 target_compile_definitions(laureondo_core PUBLIC NOMINMAX)
-target_link_libraries(laureondo_core PUBLIC laureondo_minhook laureondo_pugixml
+target_link_libraries(laureondo_core PUBLIC mithrilhook laureondo_pugixml
   laureondo_asio
   crypt32 ws2_32 kernel32 user32 shell32)
 
@@ -121,7 +121,7 @@ endif()
 if(BUILD_TESTING OR LAUREONDO_BUILD_SOURCE_API_DLL)
   add_library(laureondo_reference_objects OBJECT ${LAUREONDO_REFERENCE_SOURCES})
   target_include_directories(laureondo_reference_objects PUBLIC include)
-  target_link_libraries(laureondo_reference_objects PRIVATE laureondo_minhook laureondo_pugixml laureondo_asio)
+  target_link_libraries(laureondo_reference_objects PRIVATE mithrilhook laureondo_pugixml laureondo_asio)
   target_compile_definitions(laureondo_reference_objects PRIVATE NOMINMAX)
   set_target_properties(laureondo_reference_objects PROPERTIES POSITION_INDEPENDENT_CODE ON)
   if(MSVC)
@@ -136,16 +136,15 @@ if(LAUREONDO_BUILD_SOURCE_API_DLL)
     # container proxies. Both modules must use the same shared compiler CRT.
     # Never reuse the shipping /MT or /MTd objects in this /MD or /MDd graph.
     set(_source_api_crt "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
-    get_target_property(_source_hook_sources laureondo_minhook SOURCES)
-    get_target_property(_source_hook_includes laureondo_minhook INTERFACE_INCLUDE_DIRECTORIES)
-    add_library(laureondo_source_minhook STATIC ${_source_hook_sources})
-    target_include_directories(laureondo_source_minhook PUBLIC ${_source_hook_includes})
-    add_dependencies(laureondo_source_minhook laureondo_verify_vendors laureondo_verify_hook_engine)
+    add_library(laureondo_source_mithrilhook STATIC ${_mithrilhook_sources})
+    target_include_directories(laureondo_source_mithrilhook PUBLIC "${_mithrilhook_root}/include")
+    target_compile_definitions(laureondo_source_mithrilhook PRIVATE _WIN32_WINNT=0x0601)
+    add_dependencies(laureondo_source_mithrilhook laureondo_verify_vendors laureondo_verify_mithrilhook_stage)
     add_library(laureondo_source_pugixml STATIC third_party/pugixml/src/pugixml.cpp)
     target_include_directories(laureondo_source_pugixml PUBLIC third_party/pugixml/src)
     target_compile_definitions(laureondo_source_pugixml PUBLIC PUGIXML_NO_XPATH)
     add_dependencies(laureondo_source_pugixml laureondo_verify_vendors)
-    set_target_properties(laureondo_source_minhook laureondo_source_pugixml
+    set_target_properties(laureondo_source_mithrilhook laureondo_source_pugixml
       PROPERTIES MSVC_RUNTIME_LIBRARY "${_source_api_crt}")
     add_library(laureondo_source_api SHARED ${LAUREONDO_APPLICATION_SOURCES}
       src/platform/crypt_query_host.cpp "${_avatar_header}"
@@ -154,7 +153,7 @@ if(LAUREONDO_BUILD_SOURCE_API_DLL)
     target_include_directories(laureondo_source_api PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
     target_compile_definitions(laureondo_source_api PRIVATE NOMINMAX)
     target_compile_options(laureondo_source_api PRIVATE /GS)
-    target_link_libraries(laureondo_source_api PRIVATE laureondo_source_minhook
+    target_link_libraries(laureondo_source_api PRIVATE laureondo_source_mithrilhook
       laureondo_source_pugixml laureondo_asio laureondo_pegtl
       crypt32 ws2_32 kernel32 user32 shell32)
     set_target_properties(laureondo_source_api PROPERTIES MSVC_RUNTIME_LIBRARY "${_source_api_crt}")
@@ -238,6 +237,10 @@ if(BUILD_TESTING)
   add_test(NAME crt_runtime_smoke COMMAND laureondo_crt_host)
   set_tests_properties(crt_runtime_smoke PROPERTIES TIMEOUT 60)
   include(cmake/Tests.cmake)
+  get_property(_mithrilhook_native_targets DIRECTORY "${_mithrilhook_root}/tests" PROPERTY BUILDSYSTEM_TARGETS)
+  add_custom_target(laureondo_hook_acceptance DEPENDS ${_mithrilhook_native_targets}
+    hook_backend_contracts hook_transaction_contracts application_runtime_contracts)
+
   add_executable(vdf_parser_regressions tests/unit/parser/vdf_regression_tests.cpp)
   target_link_libraries(vdf_parser_regressions PRIVATE laureondo_core)
   add_test(NAME vdf_parser_regressions COMMAND vdf_parser_regressions)
@@ -259,24 +262,9 @@ if(BUILD_TESTING)
   add_test(NAME dll_public_export_negatives COMMAND "${Python3_EXECUTABLE}" -B
     "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_public_abi.py" $<TARGET_FILE:laureondo>)
   set_tests_properties(dll_public_export_contract dll_public_export_negatives PROPERTIES TIMEOUT 30)
-  # Keep the upstream behavior fixtures as a comparison baseline. Production
-  # uses the verified patched copy; hook_freeze_contracts tests that actual code.
-  set(_mh third_party/minhook/src)
-  add_library(hook_engine_fixture_objects OBJECT
-    ${_mh}/hook.c ${_mh}/buffer.c ${_mh}/trampoline.c ${_mh}/hde/hde64.c)
-  if(MSVC)
-    target_compile_options(hook_engine_fixture_objects PRIVATE
-      "/FI${PROJECT_SOURCE_DIR}/tests/support/hook_engine/fake_win32.h")
-  else()
-    target_compile_options(hook_engine_fixture_objects PRIVATE -include
-      "${PROJECT_SOURCE_DIR}/tests/support/hook_engine/fake_win32.h")
-  endif()
-  add_executable(hook_engine_fixture_tests tests/native/hook_engine_fixture_tests.cpp
-    tests/support/hook_engine/fake_win32.cpp $<TARGET_OBJECTS:hook_engine_fixture_objects>)
-  target_include_directories(hook_engine_fixture_tests PRIVATE include "${PROJECT_SOURCE_DIR}")
-  target_compile_definitions(hook_engine_fixture_tests PRIVATE NOMINMAX)
-  target_link_libraries(hook_engine_fixture_tests PRIVATE laureondo_minhook)
-  add_test(NAME hook_engine_fixtures COMMAND hook_engine_fixture_tests)
+  # MithrilHook's immutable package registers its actual engine, decoder,
+  # relocation, unwind, retained-cleanup and exact-negative controls itself.
+
 endif()
 
 laureondo_install_partition_gate()

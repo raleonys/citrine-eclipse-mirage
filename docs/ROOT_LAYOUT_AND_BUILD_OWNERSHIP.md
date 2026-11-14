@@ -11,7 +11,7 @@
 | `tests/unit/`, `tests/native/` | Current Laureondo source and adapter tests |
 | `tests/infrastructure/`, `tests/support/golden/` | Adapted infrastructure tests and explicitly synthetic policies |
 | `resources/branding/` | Repository campaign logo plus separate SURGE/profile and fallback avatars; avatar bytes are read-only C++ data, not PNG PE resources |
-| `third_party/` | Four immutable owner-supplied vendor trees: Asio, MinHook, PEGTL and pugixml; retired archive provenance is retained separately |
+| `third_party/` | Four immutable owner-supplied vendor trees: Asio, MithrilHook, PEGTL and pugixml; retired archive provenance is retained separately |
 | `docs/`, `metadata/` | Current guides, explicitly historical checkpoints and machine-readable records; see `docs/INDEX.md`; root `GOVERNANCE.md` and `AGENTS.md` own policy and agent workflow |
 | `build/`, `dist/` | Transient local outputs; excluded from source ZIP packages |
 

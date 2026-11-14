@@ -8,7 +8,7 @@ supersedes the reference VERSIONINFO branding and versions described below.
 The current timestamp policy is `PRESERVE_INPUT`, and [AVATAR_UPDATE.md](AVATAR_UPDATE.md)
 owns the later 4,478-byte profile image; the fixed timestamp and 4,181-byte
 image below remain historical inputs.
-Current `resources/version.rc` uses Citrine Eclipse Mirage and the selected
+Current `resources/version.rc` uses Laureondo and the selected
 semantic release version. See [DEVELOPMENT.md](DEVELOPMENT.md).
 
 The owner supplied a new metadata-reference DLL and a ZIP containing the new

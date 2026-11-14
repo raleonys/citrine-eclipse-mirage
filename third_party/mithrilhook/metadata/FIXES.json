@@ -1,0 +1,175 @@
+{
+  "schema": "mithrilhook.fixes.v1",
+  "fixes": [
+    {
+      "id": "F01",
+      "change": "Stable owned peer handles, strict preparation, both emergency slots",
+      "origin": "cyanoleon SAFE-FREEZE"
+    },
+    {
+      "id": "F02",
+      "change": "Correct single-disable IP relocation",
+      "origin": "cyanoleon SAFE-FREEZE / Citrine D326-F0006"
+    },
+    {
+      "id": "F03",
+      "change": "Five public mutation cleanup barriers",
+      "origin": "cyanoleon SAFE-FREEZE / Citrine #352"
+    },
+    {
+      "id": "F04",
+      "change": "Per-page patch completion journal and physical state tracking",
+      "origin": "cyanoleon completion / Citrine #362"
+    },
+    {
+      "id": "F05",
+      "change": "Flush generated code before publishing its pointer",
+      "origin": "cyanoleon completion / Citrine #362"
+    },
+    {
+      "id": "F06",
+      "change": "Generated-code retirement IP/register/stack checks",
+      "origin": "cyanoleon retirement / Citrine #362"
+    },
+    {
+      "id": "F07",
+      "change": "Retained buffer/block/heap owners and shutdown-only partial retirement",
+      "origin": "cyanoleon retirement / Citrine #362"
+    },
+    {
+      "id": "F08",
+      "change": "Signed RIP displacement checks and EIP wrapping",
+      "origin": "Citrine #363"
+    },
+    {
+      "id": "F09",
+      "change": "VEX/relative instruction classification and XBEGIN refusal",
+      "origin": "Citrine #363"
+    },
+    {
+      "id": "F10",
+      "change": "Bounded instruction and padding reads",
+      "origin": "Citrine #363"
+    },
+    {
+      "id": "F11",
+      "change": "Alignment-safe multi-byte decoder reads and displacement writes",
+      "origin": "MithrilHook"
+    },
+    {
+      "id": "F12",
+      "change": "Same-thread API reentry refusal",
+      "origin": "MithrilHook"
+    },
+    {
+      "id": "F13",
+      "change": "Reject guarded/nonaccessible executable target and detour regions",
+      "origin": "MithrilHook"
+    },
+    {
+      "id": "F14",
+      "change": "Retryable original-IP reconciliation against physically committed hook transitions",
+      "origin": "MithrilHook thread/batch/unwind audit"
+    },
+    {
+      "id": "F15",
+      "change": "Post-suspension stable-handle coverage observation refuses observed late live peers",
+      "origin": "MithrilHook thread/batch/unwind audit; final observation window remains documented"
+    },
+    {
+      "id": "F16",
+      "change": "Refuse unsupported registered x64 unwind-sensitive relocation before publishing a hook",
+      "origin": "MithrilHook thread/batch/unwind audit; conservative compatibility boundary"
+    },
+    {
+      "id": "F17",
+      "change": "Owned bounded version-2 x64 prefix unwind metadata with a synthetic prologue covering the complete jump-back",
+      "origin": "MithrilHook x64 compatibility follow-up"
+    },
+    {
+      "id": "F18",
+      "change": "Retryable runtime-table registration/deletion and memory-release rollback ownership",
+      "origin": "MithrilHook x64 compatibility follow-up"
+    },
+    {
+      "id": "F19",
+      "change": "Runtime-table registry operations outside owned peer-suspension windows under consumer quiescence",
+      "origin": "MithrilHook x64 compatibility follow-up"
+    },
+    {
+      "id": "F20",
+      "change": "Refuse ambiguous operand-size-prefixed near CALL/JMP/Jcc relocation before publication",
+      "origin": "MithrilHook review #7; vendor/mode-dependent destination semantics"
+    },
+    {
+      "id": "F21",
+      "change": "Normalize high-byte and REX byte-register aliases before unwind stack/frame protection checks",
+      "origin": "MithrilHook review #8; predicate-level alias mismatch"
+    },
+    {
+      "id": "F22",
+      "change": "Refuse relocated CALL-next address-discovery idioms before publication; preserve ordinary relative calls",
+      "origin": "MithrilHook review #10; explicit return-address-observation boundary"
+    },
+    {
+      "id": "F23",
+      "change": "Refuse unsupported copied REX2/APX forms and any inferred unwind-neutral APX instruction",
+      "origin": "MithrilHook review #11; decoder recognition does not establish a complete APX register/unwind contract"
+    },
+    {
+      "id": "F24",
+      "change": "Resolve internal JMP/Jcc/LOOP displacements through the completed instruction map; refuse unmapped boundaries and preserve forward-span growth refusals",
+      "origin": "MithrilHook review #13; inherited backward-branch offset corruption after an earlier Jcc expansion"
+    },
+    {
+      "id": "F25",
+      "change": "Refuse relocated x64 RIP-relative loads and stores of the five-byte hook patch; keep LEA and accesses outside that window on the absolute-address fixup",
+      "origin": "MithrilHook; relocated self-read observed the published JMP instead of the original bytes"
+    },
+    {
+      "id": "F26",
+      "change": "Reserve complete normal/hotpatch physical write intervals, including disabled entries; refuse overlapping owners before original publication",
+      "origin": "MithrilHook review #16; distinct target addresses can own intersecting patch bytes"
+    },
+    {
+      "id": "F27",
+      "change": "Apply effective REX.W precedence over 66 for the full RIP-relative PUSH memory range and preserve proven disjoint controls",
+      "origin": "MithrilHook review #17; operand-size underestimation introduced in the F25 range guard"
+    },
+    {
+      "id": "F28",
+      "change": "Refuse copied relative CALL destinations inside the five-byte entry patch before original publication; preserve ordinary outside CALLs",
+      "origin": "MithrilHook review #18; inherited absolute-CALL fixup retains a callee in overwritten source bytes"
+    },
+    {
+      "id": "F29",
+      "change": "Refuse copied x87 operations before FIP can escape through a state save, including beyond the prefix; retain fixed FXSAVE/FXRSTOR without copied producers and refuse extended state layouts",
+      "origin": "MithrilHook review #19; inherited x87 instruction-pointer observation mismatch"
+    },
+    {
+      "id": "F30",
+      "change": "Refuse copied SYSCALL and unsupported transition/interrupt/far-return classes before publication; preserve source-resident syscall bodies after an ordinary prefix",
+      "origin": "MithrilHook review #20; inherited copying of SYSCALL changes its architectural next RIP exposed in RCX"
+    },
+    {
+      "id": "F31",
+      "change": "Refuse copied UD0/UD1/UD2 before their deliberate invalid-opcode exception address can move to a trampoline; preserve source-resident trap bodies",
+      "origin": "MithrilHook review #21; omission in the explicit copied-trap refusal policy"
+    },
+    {
+      "id": "F32",
+      "change": "Track allocated slots across publication and failed/successful release; whole-engine retirement ignores unused slots/header while preserving all occupied code/metadata byte checks",
+      "origin": "MithrilHook review #22; actual Win32 stack word 0x01010100 falsely matched an unused slot beside the sole live trampoline at 0x01010FE0"
+    },
+    {
+      "id": "F33",
+      "change": "Inspect every complete pointer window with alignment-safe loads and carried overlap across stack reads/readable regions; retain live-slot and incomplete-scan refusal boundaries",
+      "origin": "MithrilHook review #23; pointer-width stack stepping misses packed/unaligned original-call owners"
+    }
+  ],
+  "excluded_unreviewed_proposals": {
+    "TsudaKageyu/minhook#151": "Loader-lock/fixed-PEB-offset proposal not imported; thread-birth boundary remains open",
+    "TsudaKageyu/minhook#175": "No demonstrated truncation: four-bit nIP holds the bounded maximum of eight entries",
+    "TsudaKageyu/minhook#176": "Additional process-handle/error ownership needs review; not imported"
+  }
+}

@@ -12,7 +12,7 @@ namespace status_code {
 inline constexpr int unknown=-1,ok=0,already_initialized=1,not_initialized=2;
 inline constexpr int already_created=3,not_created=4,enabled=5,disabled=6;
 inline constexpr int not_executable=7,unsupported_function=8,memory_alloc=9;
-inline constexpr int memory_protect=10,module_not_found=11,function_not_found=12;
+inline constexpr int memory_protect=10,module_not_found=11,function_not_found=12,reentrant_call=13;
 }
 class Api {
 public:
@@ -30,7 +30,7 @@ public:
     virtual int queue_enable(void*)=0;
     virtual int apply_queued()=0;
 };
-// Selected patched MinHook backend. Each DLL links its own engine state.
+// Selected unmodified MithrilHook 1.0.4 backend. Each DLL links its own engine state.
 class NativeApi final : public BatchApi {
 public:
     int initialize() override;

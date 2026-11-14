@@ -13,7 +13,7 @@
 #include "laureondo/platform/execution_windows.hpp"
 #include "../../src/runtime/application_internal.hpp"
 #include <asio.hpp>
-#include <MinHook.h>
+#include <MithrilHook.h>
 #include <filesystem>
 #include <iostream>
 #include <stdexcept>
@@ -775,15 +775,15 @@ int main(int argc,char** argv) try {
     fs::copy_file(fs::path(argv[1]),hook_dir/"fixture-extra.dll");
     fs::copy_file(fs::path(argv[1]),hook_dir/"laureondo_online.dll");
     require(file::write_binary_03c1d0((hook_dir/"surge.cfg").u16string(),R"("Config2" {"Emulator" {"Documents" "fixture-documents" "BlockReruns" "true" "LoadExtraDLLsFromMain" "fixture-extra.dll" "LoadExtraDLLs" "fixture-extra.dll"}})",files),"all conditional hooks config");
-    require(MH_Initialize()==MH_OK,"external engine initialized for ownership failure test");
+    require(MTH_Initialize()==MTH_OK,"external engine initialized for ownership failure test");
     bool rejected_owner=false;
     try {
         application::Application conflict({(hook_dir/"host.exe").u16string(),(hook_dir/"conflict-data").u16string(),true});
         conflict.start();
     }catch(const std::runtime_error&){rejected_owner=true;}
     require(rejected_owner&&!native::is_bound(),"failed engine ownership rolls back server/native binding");
-    require(MH_Initialize()==MH_ERROR_ALREADY_INITIALIZED,"rollback leaves external engine initialized");
-    require(MH_Uninitialize()==MH_OK,"external engine remains releasable by its owner");
+    require(MTH_Initialize()==MTH_ERROR_ALREADY_INITIALIZED,"rollback leaves external engine initialized");
+    require(MTH_Uninitialize()==MTH_OK,"external engine remains releasable by its owner");
     {
         RegistryProviderProbe probe;probe.load(hook_dir/"laureondo_online.dll");
         application::Application hooked({(hook_dir/"host.exe").u16string(),(hook_dir/"data").u16string(),true});hooked.start();
@@ -795,7 +795,7 @@ int main(int argc,char** argv) try {
         for(auto name:names) {
             bool enabled=false;
             for(auto module:modules)if(auto handle=GetModuleHandleW(module))if(auto target=GetProcAddress(handle,name))
-                if(MH_EnableHook(reinterpret_cast<void*>(target))==MH_ERROR_ENABLED)enabled=true;
+                if(MTH_EnableHook(reinterpret_cast<void*>(target))==MTH_ERROR_ENABLED)enabled=true;
             require(enabled,name);
         }
         wchar_t documents[MAX_PATH]{};

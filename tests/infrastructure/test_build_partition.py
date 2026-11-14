@@ -495,6 +495,57 @@ class TargetBoundaryTests(unittest.TestCase):
         g['laureondo_objects']['sources'].append({'path': POLICY['reference_sources'][0]})
         self.assertTrue(boundary.codemodel_errors(g, POLICY))
 
+    def test_vendor_engine_executables_are_classified_and_cannot_enter_production(self):
+        policy = copy.deepcopy(POLICY)
+        policy['vendor_engine_test_targets'] = ['selected_engine_contract']
+        targets = graph()
+        targets['selected_engine_contract'] = target('selected_engine_contract')
+        targets['selected_engine_contract']['type'] = 'EXECUTABLE'
+        self.assertEqual(boundary.codemodel_errors(targets, policy), [])
+        targets['laureondo_core']['dependencies'].append({'id': 'selected_engine_contract'})
+        self.assertTrue(any('nonproduction' in error for error in
+                            boundary.codemodel_errors(targets, policy)))
+
+    @unittest.skipUnless(shutil.which('cmake'), 'CMake required for recursive target proof')
+    def test_actual_emitter_records_subproject_targets_and_source_roots(self):
+        root = Path(__file__).resolve().parents[2]
+        text = (root / 'cmake/BuildPartition.cmake').read_text()
+        helper = text[text.index('function(laureondo_collect_targets'):]
+        helper = helper.split('\nendfunction()', 1)[0] + '\nendfunction()\n'
+        emitter = text[text.index('  laureondo_collect_targets("${PROJECT_SOURCE_DIR}" _targets)'):]
+        emitter = emitter.split('  # Keep the unsigned application output', 1)[0]
+        with tempfile.TemporaryDirectory() as tmp:
+            source, build = Path(tmp) / 'source', Path(tmp) / 'build'
+            child = source / 'third_party/engine'
+            child.mkdir(parents=True)
+            (source / 'host.c').write_text('int host(void) { return 1; }\n')
+            (child / 'engine.c').write_text('int engine(void) { return 2; }\n')
+            (child / 'CMakeLists.txt').write_text('add_library(engine STATIC engine.c)\n')
+            (source / 'CMakeLists.txt').write_text(
+                'cmake_minimum_required(VERSION 3.20)\nproject(target_proof LANGUAGES C)\n'
+                'file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/.cmake/api/v1/query")\n'
+                'file(WRITE "${CMAKE_BINARY_DIR}/.cmake/api/v1/query/codemodel-v2" "")\n'
+                'add_subdirectory(third_party/engine)\nadd_library(host STATIC host.c)\n'
+                'target_link_libraries(host PRIVATE engine)\n' + helper + emitter)
+            query = build / '.cmake/api/v1/query'
+            query.mkdir(parents=True)
+            (query / 'codemodel-v2').write_text('')
+            result = subprocess.run(['cmake', '-S', str(source), '-B', str(build),
+                                     '-DCMAKE_BUILD_TYPE=Release'], capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            generated = boundary.load_generated_graph(build, 'Release')
+            self.assertEqual(boundary.target_closure(generated, 'host'), {'host', 'engine'})
+            self.assertEqual(generated['engine']['sources'], [{'path': 'third_party/engine/engine.c'}])
+            reply = build / '.cmake/api/v1/reply'
+            index = json.loads(next(reply.glob('index-*.json')).read_text())
+            model = json.loads((reply / index['reply']['codemodel-v2']['jsonFile']).read_text())
+            actual = {}
+            for item in model['configurations'][0]['targets']:
+                data = json.loads((reply / item['jsonFile']).read_text())
+                actual[data['name']] = [entry['path'] for entry in data['sources']]
+            for name, data in generated.items():
+                self.assertEqual([entry['path'] for entry in data['sources']], actual[name])
+
     def test_retained_reference_target_source_set_is_checked(self):
         g = graph(); g['laureondo_reference_objects']['sources'].pop()
         self.assertTrue(boundary.codemodel_errors(g, POLICY))
@@ -523,7 +574,7 @@ class TargetBoundaryTests(unittest.TestCase):
             self.assertTrue(boundary.codemodel_errors(broken, POLICY), source)
         for dependency in ['laureondo_core', 'laureondo_objects', 'laureondo_vdf_objects',
                            'laureondo_reference_objects', 'laureondo_reference_models',
-                           'laureondo_minhook', 'laureondo_pugixml']:
+                           'mithrilhook', 'laureondo_pugixml']:
             broken = copy.deepcopy(g)
             broken.setdefault(dependency, target(dependency))
             broken['laureondo_source_api']['dependencies'].append({'id': dependency})
@@ -542,9 +593,9 @@ class TargetBoundaryTests(unittest.TestCase):
         block = text.split('\nif(LAUREONDO_BUILD_SOURCE_API_DLL)\n', 1)[1]
         block = 'if(LAUREONDO_BUILD_SOURCE_API_DLL)\n' + block.split('\nadd_executable(laureondo_runtime_host', 1)[0]
         dev = ['laureondo_source_api', 'laureondo_source_host',
-               'laureondo_source_minhook', 'laureondo_source_pugixml']
+               'laureondo_source_mithrilhook', 'laureondo_source_pugixml']
         static = ['laureondo_core', 'laureondo_objects', 'laureondo_vdf_objects',
-                  'laureondo_reference_objects', 'laureondo_minhook', 'laureondo_pugixml']
+                  'laureondo_reference_objects', 'mithrilhook', 'laureondo_pugixml']
         with tempfile.TemporaryDirectory() as tmp:
             source = Path(tmp) / 'src'; source.mkdir()
             for name in ['application.cpp', 'parser.cpp', 'reference.cpp', 'hook.c',
@@ -561,15 +612,17 @@ set(LAUREONDO_APPLICATION_SOURCES application.cpp)
 set(LAUREONDO_VDF_SOURCES parser.cpp)
 set(LAUREONDO_REFERENCE_SOURCES reference.cpp)
 set(_avatar_header "${CMAKE_CURRENT_SOURCE_DIR}/avatar.hpp")
+set(_mithrilhook_sources application.cpp)
+set(_mithrilhook_root "${CMAKE_CURRENT_SOURCE_DIR}")
 add_custom_target(laureondo_verify_vendors)
-add_custom_target(laureondo_verify_hook_engine)
+add_custom_target(laureondo_verify_mithrilhook_stage)
 add_library(laureondo_asio INTERFACE)
 add_library(laureondo_pegtl INTERFACE)
 '''
             for name in static:
                 kind = 'OBJECT' if name.endswith('_objects') else 'STATIC'
                 cmake += f'add_library({name} {kind} application.cpp)\n'
-            cmake += 'target_include_directories(laureondo_minhook PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")\n'
+            cmake += 'target_include_directories(mithrilhook PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")\n'
             cmake += 'set(MSVC TRUE)\n' + block
             content = ''.join(f'{name}=$<TARGET_GENEX_EVAL:{name},$<TARGET_PROPERTY:{name},MSVC_RUNTIME_LIBRARY>>\\n'
                               for name in dev + static)
@@ -590,7 +643,7 @@ add_library(laureondo_pegtl INTERFACE)
                 for name in static:
                     self.assertEqual(modes[name], 'MultiThreaded' + suffix, name)
                 links = (build / 'dev-links.txt').read_text().split(';')
-                self.assertIn('laureondo_source_minhook', links)
+                self.assertIn('laureondo_source_mithrilhook', links)
                 self.assertIn('laureondo_source_pugixml', links)
                 self.assertFalse(set(links) & set(static), links)
 

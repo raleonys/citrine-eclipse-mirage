@@ -181,11 +181,6 @@
       "purpose": "pe resources",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
-    "scripts/prepare_hook_engine.py": {
-      "owner": "SURGE hook lifecycle",
-      "purpose": "Prepare and verify pinned hook engine build copy without modifying vendor input",
-      "role": "PYTHON_TOOL_OR_MODULE"
-    },
     "scripts/project_files.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "project files",
@@ -270,6 +265,11 @@
     "tools/inspect_dll.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "inspect dll",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/stage_mithrilhook.py": {
+      "owner": "Laureondo hook integration",
+      "purpose": "Stage and verify unchanged MithrilHook input for its native test build layout",
       "role": "PYTHON_TOOL_OR_MODULE"
     }
   }

@@ -1,0 +1,106 @@
+name: MithrilHook validation
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  portable:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/verify_sources.py
+      - run: cmake -S . -B build/portable -DCMAKE_BUILD_TYPE=Debug -DMITHRILHOOK_SANITIZERS=ON
+      - run: cmake --build build/portable --parallel 2
+      - run: ctest --test-dir build/portable --output-on-failure --output-junit portable.xml
+        env:
+          UBSAN_OPTIONS: halt_on_error=1
+          ASAN_OPTIONS: detect_leaks=1
+  native:
+    runs-on: windows-2022
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {arch: x64, config: Debug, shared: 'OFF', toolset: v143}
+          - {arch: x64, config: Release, shared: 'OFF', toolset: v143}
+          - {arch: Win32, config: Debug, shared: 'OFF', toolset: v143}
+          - {arch: Win32, config: Release, shared: 'OFF', toolset: v143}
+          - {arch: x64, config: Release, shared: 'ON', toolset: v143}
+          - {arch: Win32, config: Release, shared: 'ON', toolset: v143}
+          - {arch: x64, config: Release, shared: 'OFF', toolset: ClangCL}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read distribution version
+        shell: python
+        run: |
+          import os,re
+          from pathlib import Path
+          version=Path('VERSION').read_text().strip()
+          assert re.fullmatch(r'\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?',version)
+          with open(os.environ['GITHUB_ENV'],'a',encoding='utf-8') as output:
+              output.write('MTH_DISTRIBUTION_VERSION='+version+'\n')
+      - run: python scripts/verify_sources.py
+      - run: cmake -S . -B build/native -A ${{ matrix.arch }} -T ${{ matrix.toolset }} -DBUILD_SHARED_LIBS=${{ matrix.shared }} -DBUILD_TESTING=ON
+      - run: cmake --build build/native --config ${{ matrix.config }} --parallel 2
+      - run: ctest --test-dir build/native -C ${{ matrix.config }} --output-on-failure --output-junit native.xml
+      - name: Report target compatibility classifications
+        shell: python
+        run: |
+          from pathlib import Path
+          for line in Path('build/native/Testing/Temporary/LastTest.log').read_text(errors='replace').splitlines():
+              if line.startswith(('TARGET_PROBE', 'TARGET_COMPARISON', 'UNWIND_TARGET')):
+                  print(line)
+      - name: Diagnose shared live-call teardown across independent processes
+        if: matrix.config == 'Release' && matrix.shared == 'ON'
+        shell: python
+        run: |
+          import hashlib,json,subprocess
+          from pathlib import Path
+          executable=Path('build/native/tests/Release/mithrilhook_live_call_contracts.exe').resolve()
+          output=Path('build/native/live-call-stress.log')
+          results=[]
+          with output.open('w',encoding='utf-8') as log:
+              for index in range(250):
+                  result=subprocess.run([str(executable)],capture_output=True,text=True,timeout=45)
+                  log.write(f'RUN {index+1} returncode={result.returncode}\n'+result.stdout+result.stderr)
+                  log.flush()
+                  if result.returncode:
+                      print(f'LIVE_CALL_STRESS_FAILED run={index+1}')
+                      print(result.stdout+result.stderr)
+                      raise SystemExit(result.returncode)
+                  records=[json.loads(line) for line in result.stdout.splitlines() if line.startswith('{')]
+                  assert len(records)==1
+                  record=records[0]
+                  assert record['sessions']==20 and record['patch_transitions']==800
+                  assert record['bad_results']==0 and record['residual_handles']==0
+                  results.append(record)
+                  if (index+1)%10==0:print(f'LIVE_CALL_STRESS_COMPLETED processes={index+1}')
+          Path('build/native/live-call-stress.json').write_text(json.dumps({
+              'processes':250,'sessions':5000,'patch_transitions':200000,
+              'binary_sha256':hashlib.sha256(executable.read_bytes()).hexdigest(),
+              'results':results},indent=2)+'\n')
+      - run: cmake --install build/native --config ${{ matrix.config }} --prefix dist/install
+      - if: matrix.shared == 'ON'
+        run: python scripts/verify_dll.py build/native/Release/mithrilhook.dll
+      - name: Configure installed-package consumer
+        run: cmake -S tests/package -B build/package-consumer -A ${{ matrix.arch }} -T ${{ matrix.toolset }} -DCMAKE_PREFIX_PATH="${{ github.workspace }}/dist/install"
+      - run: cmake --build build/package-consumer --config ${{ matrix.config }} --parallel 2
+      - run: ctest --test-dir build/package-consumer -C ${{ matrix.config }} --output-on-failure --output-junit package.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: MithrilHook-${{ env.MTH_DISTRIBUTION_VERSION }}-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.toolset }}-shared-${{ matrix.shared }}
+          path: |
+            build/native/native.xml
+            build/native/Testing/Temporary/LastTest.log
+            build/native/live-call-stress.log
+            build/native/live-call-stress.json
+            build/package-consumer/package.xml
+            build/package-consumer/Testing/Temporary/LastTest.log
+            dist/install

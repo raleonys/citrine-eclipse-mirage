@@ -66,7 +66,7 @@ void initialize_host_00e310(StateRefs state, Effects& effects) {
     mask = effects.version_condition_mask(mask, 0x20, 3);
     const bool modern = effects.verify_version(VersionRequest{}, 0x23, mask);
     const auto status = effects.initialize_engine_046a20();
-    effects.log_text_006880("MinHook initialization ");
+    effects.log_text_006880("MithrilHook initialization ");
     effects.log_text_006880(status == 0 ? "succeeded" : "failed");
     effects.finish_log_0088e0();
     if (status != 0) return;

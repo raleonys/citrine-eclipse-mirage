@@ -23,7 +23,7 @@ CHECKS = [
     ('owner integration requirements', ['scripts/check_integration_requirements.py']),
     ('metadata ownership', ['scripts/check_metadata_ownership.py']),
     ('production/reference build boundary regressions', ['tests/infrastructure/test_build_partition.py']),
-    ('MinHook single-disable IP action and build-copy integrity', ['tests/infrastructure/test_hook_disable_action.py']),
+    ('MithrilHook exact-source identity and disable IP controls', ['tests/infrastructure/test_hook_engine_selection.py']),
     ('native size evidence reader regressions', ['tests/infrastructure/test_size_evidence.py']),
     ('XML performance receipt regressions', ['tests/infrastructure/test_xml_performance.py']),
     ('weekly draft release regressions', ['tests/infrastructure/test_weekly_release.py']),

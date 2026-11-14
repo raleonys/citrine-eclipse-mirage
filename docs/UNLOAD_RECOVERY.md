@@ -1,3 +1,8 @@
+> The selected engine is now vanilla MithrilHook 1.0.4. Its strict completion and
+> retirement checks complement the application ownership protocol below; see
+> [current engine integration](MITHRILHOOK_INTEGRATION.md). References to the old
+> patched MinHook tree describe the pre-migration checkpoint, not the active build.
+
 # Unload guard retained ownership and retry
 
 The continuation fixes the confirmed ResumeThread ownership defect shared by the

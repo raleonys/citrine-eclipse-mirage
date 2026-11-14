@@ -143,7 +143,7 @@ void combinations() {
                 (f.modern ? u"KernelBase.dll" : u"Kernel32.dll") : u"shell32.dll";
             require(h.module == expected_module, "version selects module");
         }
-        require(f.lines.at(0) == "MinHook initialization succeeded", "initialization success log");
+        require(f.lines.at(0) == "MithrilHook initialization succeeded", "initialization success log");
     }
 }
 void errors() {
@@ -151,7 +151,7 @@ void errors() {
         Fixture f; f.initialize_status = status;
         initialize_host_00e310(f.refs(), f);
         require(f.hooks.empty() && f.enabled.empty(), "nonzero initialization prevents hooks");
-        require(f.lines == std::vector<std::string>{"MinHook initialization failed"}, "failure log");
+        require(f.lines == std::vector<std::string>{"MithrilHook initialization failed"}, "failure log");
         require(!f.values.contains("Documents"), "documents inserted only after engine success");
     }
     for (int index = 0; index < static_cast<int>(callback_count); ++index) {

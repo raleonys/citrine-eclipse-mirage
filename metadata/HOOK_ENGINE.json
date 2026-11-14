@@ -1,0 +1,22 @@
+{
+  "schema": "laureondo.hook-engine.v1",
+  "engine": "MithrilHook",
+  "version": "1.0.4",
+  "public_api_prefix": "MTH_",
+  "source_root": "third_party/mithrilhook",
+  "source_commit": "10203713702b7d9349eb2212bf1bf2e4314a5068",
+  "archive_sha256": "e2c1248ed063beb23cb6b5dc63bd6cef8cf9dfc5adbf8fd333729cfac97b76b3",
+  "hook_sha256": "2b795f8a28a307282c02f752348246a39b10ffb189bbc8ea8a6d1926e4259c92",
+  "application_source_patches": false,
+  "private_static_engine_per_dll": true,
+  "status_codes_preserved": {
+    "old_range": [
+      -1,
+      12
+    ],
+    "reentrant_call": 13
+  },
+  "lifetime": "Disable; drain original/callback users; retry retained cleanup before retirement/unload",
+  "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC",
+  "build_source_materialization": "Exact unmodified member copy under owned build root; upstream native test controls stay in its build subtree"
+}

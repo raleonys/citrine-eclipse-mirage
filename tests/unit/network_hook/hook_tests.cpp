@@ -157,14 +157,14 @@ void test_cleanup(){
         CleanupFake e;e.engine_status=engine;e.statuses={1,0,-7,0};cleanup_hooks_0102b0(targets,e);
         require(e.seen==targets,"cleanup forward order, zero/invalid/duplicate targets retained");
         require(std::count(e.events.begin(),e.events.end(),"literal:disabling hook failed")==2,"each nonzero disable status logs but does not abort");
-        require(e.events[e.events.size()-4]=="literal:MinHook uninitialization "&&e.events[e.events.size()-3]=="uninitialize","uninitialize prefix logged before actual engine call");
+        require(e.events[e.events.size()-4]=="literal:MithrilHook uninitialization "&&e.events[e.events.size()-3]=="uninitialize","uninitialize prefix logged before actual engine call");
         require(e.events[e.events.size()-2]==(engine==0?"literal:succeeded":"literal:failed")&&e.events.back()=="flush","engine result logs/flushes");
     }
     {CleanupFake e;cleanup_hooks_0102b0({},e);require(e.seen.empty()&&e.events.size()==4,"empty target list still uninitializes engine");}
     {std::array<std::uintptr_t,4> data{1,2,3,4};CleanupFake e;e.mutate=&data[1];
      cleanup_hooks_0102b0(std::span{data}.first(2),e);
      require(e.seen==std::vector<std::uintptr_t>{1,55}&&data[2]==3,"stable span observes future element mutation and excludes appended region");}
-    for(const char* failure:{"disable","literal:MinHook uninitialization ","uninitialize","literal:succeeded","flush"}){
+    for(const char* failure:{"disable","literal:MithrilHook uninitialization ","uninitialize","literal:succeeded","flush"}){
         CleanupFake e;e.throw_at=failure;
         try{cleanup_hooks_0102b0(targets,e);require(false,"cleanup effect failure propagates");}
         catch(const Injected&){require(e.events.back()==failure,"cleanup has no invented exception rollback");}

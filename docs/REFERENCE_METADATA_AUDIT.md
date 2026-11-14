@@ -91,7 +91,7 @@ not the original archive filenames or current acceptance of the old field table.
 ## File under inspection
 
 Do not modify the raw
-`build/.../citrine_eclipse_mirage.unsigned.dll`.
+`build/.../laureondo.unsigned.dll`.
 URSYNEX can modify only the four-byte timestamp,
 two-byte linker value, Rich block, and four-byte
 checksum in a separate candidate copy.
@@ -101,14 +101,14 @@ removed to conceal a bad build. Reject finalization
 if any other bytes change.
 
 After all Golden checks and the final-named runtime
-test, write `dist/citrine_eclipse_mirage.dll`, its SHA-256,
+test, write `dist/laureondo.dll`, its SHA-256,
 and receipt. Renaming the file does not change
 the internal export-module name. Inspection of
 the old raw unsigned file does not show the final
 metadata outcome.
 
 ```powershell
-python -B tools/inspect_dll.py dist/citrine_eclipse_mirage.dll --final --report build/final-metadata.json
+python -B tools/inspect_dll.py dist/laureondo.dll --final --report build/final-metadata.json
 ```
 
 This read-only check reports MUSTAVEX/header/checksum/

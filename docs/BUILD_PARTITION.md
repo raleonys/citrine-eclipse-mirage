@@ -15,7 +15,7 @@ recorded in [BUILD_CLEANUP.md](BUILD_CLEANUP.md).
 | `laureondo_reference_objects` | 52 transport models, 16 XML models and ten reference adapters/compositions |
 | `laureondo_reference_models` | Retained models; may depend on the production core |
 | `laureondo_source_api` | Both source sets, preserving the development C++ API |
-| `laureondo_source_minhook`, `laureondo_source_pugixml` | MSVC shared-CRT vendor builds used only by the C++ development DLL |
+| `laureondo_source_mithrilhook`, `laureondo_source_pugixml` | MSVC shared-CRT vendor builds used only by the C++ development DLL |
 
 MSVC compiles the complete development DLL source set separately with `/MD`
 (Release) or `/MDd` (Debug); its C++ host and vendor libraries use the same CRT.
