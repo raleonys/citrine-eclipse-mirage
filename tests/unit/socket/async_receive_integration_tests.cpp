@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "tests/support/socket/async_receive_test_fixture.hpp"
-#include "citrine_eclipse_mirage/net/transport_io_completion_dispatch.hpp"
+#include "laureondo/net/transport_io_completion_dispatch.hpp"
 // Compile-time regression: reproduce MSVC eh.h global lookup on other compilers.
 // Only the qualified fixture helper below may be called; no definition is needed.
 #if !defined(_MSC_VER)

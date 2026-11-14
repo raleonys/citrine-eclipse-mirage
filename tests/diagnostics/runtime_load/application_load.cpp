@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 #include "application_probe.hpp"
-#include "citrine_eclipse_mirage/runtime/application.hpp"
-#include "citrine_eclipse_mirage/runtime/event_queue.hpp"
-#include "citrine_eclipse_mirage/codec/crypto.hpp"
+#include "laureondo/runtime/application.hpp"
+#include "laureondo/runtime/event_queue.hpp"
+#include "laureondo/codec/crypto.hpp"
 #include <asio.hpp>
 #include <pugixml.hpp>
 #include <windows.h>
@@ -16,7 +16,7 @@
 #include <map>
 #include <set>
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace {
 namespace fs=std::filesystem;
 using benchmark::Clock;

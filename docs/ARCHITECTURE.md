@@ -3,13 +3,13 @@
 This scope does not redesign the runtime architecture. The current RE application
 sources reside under
 `src/{config,core,runtime,net,platform,protocol,router,handlers,codec,hash,xml}`,
-with headers under `include/citrine_eclipse_mirage/`. CMake uses explicit source lists and
+with headers under `include/laureondo/`. CMake uses explicit source lists and
 does not add glob patterns or include paths into research or frozen roots.
 
 `tools/` and `scripts/` form the operator and QA layer; Golden Python,
 PowerShell, and test fixtures are not linked into the application DLL. Mock
 operating-system providers remain confined to test targets. The first-party
-`citrine_eclipse_mirage` namespace is preserved.
+`laureondo` namespace is preserved.
 
 The intended architecture retains distinct boundaries for ABI ingress,
 application/domain logic, narrow ports, Windows/transport/storage adapters,
@@ -25,6 +25,6 @@ current contract. Actual Windows/native quiescence and game acceptance require
 separate evidence; Wine tests do not establish either.
 
 The current Config2/VDF byte grammar is compiled with PEGTL under the
-`citrine_eclipse_mirage_vdf_objects` owner target. Both the actual DLL and
+`laureondo_vdf_objects` owner target. Both the actual DLL and
 DocumentPipeline use this parser. Source/action coverage and regression
 boundaries are recorded in [VDF_PARSER.md](VDF_PARSER.md).

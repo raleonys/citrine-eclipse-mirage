@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/server.hpp"
-#include "citrine_eclipse_mirage/net/session_policy.hpp"
-#include "citrine_eclipse_mirage/net/session_handler.hpp"
-#include "citrine_eclipse_mirage/xml/reader.hpp"
-#include "citrine_eclipse_mirage/handlers/misc_handlers.hpp"
+#include "laureondo/net/server.hpp"
+#include "laureondo/net/session_policy.hpp"
+#include "laureondo/net/session_handler.hpp"
+#include "laureondo/xml/reader.hpp"
+#include "laureondo/handlers/misc_handlers.hpp"
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>
@@ -20,7 +20,7 @@ unsigned injected=0;
 void* operator new(std::size_t size){
     // A shared holder must fit its PreparedResponse. Permit smaller checked-STL
     // bookkeeping allocations, which may occur in noexcept string moves.
-    if(allocation_fault::next&&size>=sizeof(citrine_eclipse_mirage::server::PreparedResponse)){
+    if(allocation_fault::next&&size>=sizeof(laureondo::server::PreparedResponse)){
         allocation_fault::next=false;++allocation_fault::injected;throw std::bad_alloc();
     }
     if(auto* value=std::malloc(size?size:1))return value;
@@ -32,8 +32,8 @@ void operator delete[](void* value)noexcept{std::free(value);}
 void operator delete(void* value,std::size_t)noexcept{std::free(value);}
 void operator delete[](void* value,std::size_t)noexcept{std::free(value);}
 
-namespace srv=citrine_eclipse_mirage::server;
-namespace net=citrine_eclipse_mirage::net;
+namespace srv=laureondo::server;
+namespace net=laureondo::net;
 using namespace std::chrono_literals;
 namespace {
 unsigned checks=0;
@@ -200,7 +200,7 @@ void rejected_delivery_stops_admission() {
             "repeated cancellation cannot settle, destroy or fail the retired owner again");
     }
 }
-namespace msg=citrine_eclipse_mirage::messages;
+namespace msg=laureondo::messages;
 struct IdentityCipher final:msg::Cipher {
     unsigned encryptions=0,decryptions=0;
     void construct_0423d0_in_place()override{}
@@ -229,11 +229,11 @@ struct PendingEvent final:msg::EventQueue {
     std::uint64_t reserve_front_locked()override{require(!reserved&&present,"one live event reservation");reserved=true;return 1;}
     bool finish_reserved(std::uint64_t token,bool success)noexcept override{if(token!=1||!reserved)return false;reserved=false;if(success){present=false;++commits;}else ++cancellations;return true;}
 };
-struct ProtocolEffects final:msg::Effects,citrine_eclipse_mirage::misc_handlers::NoResponse,msg::UnknownMessageEffects {
+struct ProtocolEffects final:msg::Effects,laureondo::misc_handlers::NoResponse,msg::UnknownMessageEffects {
     unsigned silent=0,valid=0,invalid=0,diagnostics=0;bool reference_invalid=false;std::string unknown_request;
     int atoi_05ee08(std::string_view)override{return 0;}
     bool registered_handler(std::uint32_t rva,const msg::XmlNode&,msg::XmlPrinter& printer)override{
-        if(rva==0x030eb0){++silent;citrine_eclipse_mirage::misc_handlers::query_chunk_status_030eb0(*this);}
+        if(rva==0x030eb0){++silent;laureondo::misc_handlers::query_chunk_status_030eb0(*this);}
         require(rva==0x02f2d0,"follow-up uses registered connected-state command");++valid;
         printer.open("InternetConnectedState");printer.attribute("connected","1");printer.close();return true;
     }
@@ -252,9 +252,9 @@ void no_response_same_session() {
     // a controlled cipher, command effects and in-memory transport. No socket,
     // original DLL, foreign provider or file backend is executed here.
     for(bool encrypted:{false,true})for(bool coalesced:{false,true}) {
-        citrine_eclipse_mirage::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;PendingEvent events;ProtocolEffects effects;
+        laureondo::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;PendingEvent events;ProtocolEffects effects;
         std::uint8_t encrypted_flag=0,unknown=0,show=0;const std::string version="fixture";
-        citrine_eclipse_mirage::session_bridge::MessageHandler handler({encrypted_flag,unknown,show,version,cipher,events},xml,factory,random,effects);
+        laureondo::session_bridge::MessageHandler handler({encrypted_flag,unknown,show,version,cipher,events},xml,factory,random,effects);
         Scheduler scheduling;scheduling.frame_limit=scheduling.response_limit=4096;
         Transport transport;transport.max_request=4096;srv::Session session(transport,scheduling,handler);
         session.start_025720();transport.complete(transport.writes.front().bytes.size());transport.sent.clear();encrypted_flag=encrypted;
@@ -295,9 +295,9 @@ void unknown_message_same_session(){
         "<LSX><Request id='bad' recipient='EbisuSDK'><Unknown/></Request></LSX>",
         "<LSX><Request id='bad' recipient='EbisuSDK'><ChallengeResponse/></Request></LSX>"};
     for(bool encrypted:{false,true})for(bool coalesced:{false,true})for(const auto& bad:invalid){
-        citrine_eclipse_mirage::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;PendingEvent events;ProtocolEffects effects;effects.reference_invalid=true;
+        laureondo::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;PendingEvent events;ProtocolEffects effects;effects.reference_invalid=true;
         std::uint8_t encrypted_flag=0,unknown=0,show=0;const std::string version="fixture";
-        citrine_eclipse_mirage::session_bridge::MessageHandler handler({encrypted_flag,unknown,show,version,cipher,events},xml,factory,random,effects);
+        laureondo::session_bridge::MessageHandler handler({encrypted_flag,unknown,show,version,cipher,events},xml,factory,random,effects);
         Scheduler scheduling;scheduling.frame_limit=scheduling.response_limit=4096;Transport transport;transport.max_request=4096;srv::Session session(transport,scheduling,handler);
         session.start_025720();transport.complete(transport.writes.front().bytes.size());transport.sent.clear();encrypted_flag=encrypted;const auto sends=transport.sends;
         auto frame=[&](std::string value){if(encrypted)msg::hex_encode_03d190(value);value.push_back('\0');return value;};
@@ -324,9 +324,9 @@ void invalid_dispatch_stops_ordered_admission() {
     // distinct from Application's selected UnknownMessage diagnostic/continuation.
     // Observe the Session/bridge/core boundary, without native sockets/workers.
     for(bool encrypted:{false,true})for(bool coalesced:{false,true}) {
-        citrine_eclipse_mirage::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;PendingEvent events;ProtocolEffects effects;
+        laureondo::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;PendingEvent events;ProtocolEffects effects;
         std::uint8_t mode=0,unknown=0,show=0;const std::string version="fixture";
-        citrine_eclipse_mirage::session_bridge::MessageHandler handler({mode,unknown,show,version,cipher,events},xml,factory,random,effects);
+        laureondo::session_bridge::MessageHandler handler({mode,unknown,show,version,cipher,events},xml,factory,random,effects);
         Scheduler scheduling;scheduling.frame_limit=scheduling.response_limit=4096;
         Transport transport;transport.max_request=4096;srv::Session session(transport,scheduling,handler);
         session.start_025720();transport.complete(transport.writes.front().bytes.size());transport.sent.clear();mode=encrypted;
@@ -358,9 +358,9 @@ void response_dispatch_refusal() {
             if(encoded)msg::hex_encode_03d190(value);value.push_back('\0');return value;
         };
         {
-            citrine_eclipse_mirage::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;ProtocolEffects effects;
+            laureondo::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;ProtocolEffects effects;
             std::uint8_t mode=0,unknown=0,show=0;const std::string version="fixture";
-            citrine_eclipse_mirage::session_bridge::MessageHandler handler({mode,unknown,show,version,cipher,events},xml,factory,random,effects);
+            laureondo::session_bridge::MessageHandler handler({mode,unknown,show,version,cipher,events},xml,factory,random,effects);
             Scheduler scheduling;scheduling.frame_limit=scheduling.response_limit=4096;
             Transport transport;transport.max_request=4096;srv::Session session(transport,scheduling,handler);
             session.start_025720();transport.complete(transport.writes.front().bytes.size());transport.sent.clear();mode=encrypted;
@@ -383,9 +383,9 @@ void response_dispatch_refusal() {
         }
         // The failed peer does not resume. A separate Session sharing the queue
         // retries the released event and acknowledges it only after full output.
-        citrine_eclipse_mirage::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;ProtocolEffects effects;
+        laureondo::xml_reader_bridge::Backend xml;IdentityCipher cipher;CipherFactory factory;Random random;ProtocolEffects effects;
         std::uint8_t mode=0,unknown=0,show=0;const std::string version="fixture";
-        citrine_eclipse_mirage::session_bridge::MessageHandler handler({mode,unknown,show,version,cipher,events},xml,factory,random,effects);
+        laureondo::session_bridge::MessageHandler handler({mode,unknown,show,version,cipher,events},xml,factory,random,effects);
         Scheduler scheduling;scheduling.frame_limit=scheduling.response_limit=4096;
         Transport transport;transport.max_request=4096;srv::Session retry(transport,scheduling,handler);
         retry.start_025720();transport.complete(transport.writes.front().bytes.size());transport.sent.clear();mode=1;

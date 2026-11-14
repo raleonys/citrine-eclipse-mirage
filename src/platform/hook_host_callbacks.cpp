@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/platform/hook_host_callbacks.hpp"
+#include "laureondo/platform/hook_host_callbacks.hpp"
 
-namespace citrine_eclipse_mirage::host_callbacks {
+namespace laureondo::host_callbacks {
 std::int32_t create_process_a_00f3f0(const Values& values, Effects& effects,
                                    const ProcessCall<char>& call) {
     if (registry::compare_narrow_0086b0(values, effects, call.application, "ClientPath") == 0)

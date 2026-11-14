@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/native_document.hpp"
+#include "laureondo/xml/native_document.hpp"
 #include <bit>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 void store(ReceiveBufferMemory& memory,std::uintptr_t address,std::uint64_t value,unsigned width){
     auto bytes=memory.view(address,width);
@@ -106,4 +106,4 @@ int MessageDocumentApi::parse_document_004280(NativeMessageDocument& document,st
 void MessageDocumentApi::destroy_document_001e00(NativeMessageDocument& document){
     destroy_native_document_001e00(resolve(document),documents_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

@@ -30,7 +30,7 @@
   "lineage": "Infrastructure supplied URSYNEX policy adopted by explicit latest owner instruction, scoped to declared metadata fields",
   "mode": "BOUNDED_MUTATING_POST_LINK_FINALIZER",
   "purpose": "Apply only approved post-link PE metadata mutations before all read-only Golden validators.",
-  "input": "MSVC-linked citrine_eclipse_mirage.unsigned.dll",
+  "input": "MSVC-linked laureondo.unsigned.dll",
   "output": "same file after bounded mutation",
   "approved_mutations": [
     "#10 LinkerVersion 14.0",

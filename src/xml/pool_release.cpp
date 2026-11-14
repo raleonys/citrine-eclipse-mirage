@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/pool_release.hpp"
+#include "laureondo/xml/pool_release.hpp"
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -34,4 +34,4 @@ void PoolReleaseEffects::pool_track(std::uintptr_t target,std::uintptr_t pool){
     if(target!=targets_.track)throw UnsupportedInput("Pool tracking target is outside the selected source binding");
     track_pool_005a20(pool,memory_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

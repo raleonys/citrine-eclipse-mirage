@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/core/paths.hpp"
+#include "laureondo/core/paths.hpp"
 
-namespace citrine_eclipse_mirage::path {
+namespace laureondo::path {
 namespace {
 constexpr bool separator(char16_t c) noexcept { return c == u'\\' || c == u'/'; }
 constexpr bool drive(View path) noexcept {

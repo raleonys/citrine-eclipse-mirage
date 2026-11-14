@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/calendar.hpp"
+#include "laureondo/runtime/calendar.hpp"
 #include <bit>
 
-namespace citrine_eclipse_mirage::calendar {
+namespace laureondo::calendar {
 namespace {
 std::int32_t add(std::int32_t a,std::int32_t b) noexcept {
     return std::bit_cast<std::int32_t>(std::bit_cast<std::uint32_t>(a)+std::bit_cast<std::uint32_t>(b));
@@ -42,4 +42,4 @@ std::int64_t epoch_041ff0(const BrokenDown& time) noexcept {
     // CDQE at0420f1 ends the32-bit wrapping domain. This range cannot overflow64.
     return (((static_cast<std::int64_t>(days)*24+time.hour)*60+time.minute)*60+time.second);
 }
-} // namespace citrine_eclipse_mirage::calendar
+} // namespace laureondo::calendar

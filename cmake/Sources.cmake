@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 # Explicit runtime and retained reference model graphs; no source file is deleted.
-set(CITRINE_ECLIPSE_MIRAGE_VDF_SOURCES src/config/parser.cpp)
-set(CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES
+set(LAUREONDO_VDF_SOURCES src/config/parser.cpp)
+set(LAUREONDO_APPLICATION_SOURCES
   src/core/atomic_files.cpp
   src/platform/atomic_files_windows.cpp
   src/platform/hook_transaction.cpp
@@ -65,7 +65,7 @@ set(CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES
 )
 
 # Retained for reference contracts and the optional C++ development DLL only.
-set(CITRINE_ECLIPSE_MIRAGE_REFERENCE_SOURCES
+set(LAUREONDO_REFERENCE_SOURCES
   src/config/order.cpp
   src/config/config_startup.cpp
   src/net/session_routing.cpp

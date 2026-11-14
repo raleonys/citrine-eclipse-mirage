@@ -184,7 +184,7 @@ through three load/start/shutdown/unload cycles.
 
 The identical input fixtures are also checked against both source readers before
 benchmarking. Native Debug/Release run the actual-DLL test automatically. Golden
-runs the same XML contracts on the finalized `citrine_eclipse_mirage.dll`, preserving its
+runs the same XML contracts on the finalized `laureondo.dll`, preserving its
 before/after hash checks and all existing stages. No production logging, export
 or parser code is added. These are automated application protocol contracts;
 they do not assert execution of an unavailable real game/provider.

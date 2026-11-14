@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "tests/support/socket/composed_read_test_fixture.hpp"
-#include "citrine_eclipse_mirage/net/transport_io_completion_dispatch.hpp"
+#include "laureondo/net/transport_io_completion_dispatch.hpp"
 #include <deque>
 using namespace read_test;
 namespace {

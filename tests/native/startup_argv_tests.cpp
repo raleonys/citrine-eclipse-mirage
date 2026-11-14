@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/startup.hpp"
+#include "laureondo/runtime/startup.hpp"
 #include <iostream>
 #include <optional>
 #include <stdexcept>
 #include <utility>
 
 namespace {
-using namespace citrine_eclipse_mirage::startup;
+using namespace laureondo::startup;
 unsigned checks=0;
 void require(bool value,const char* why) {
     ++checks;

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/config/hash_table.hpp"
+#include "laureondo/config/hash_table.hpp"
 #include <algorithm>
 #include <array>
 #include <iostream>
@@ -48,7 +48,7 @@ void operator delete(void* p,std::size_t) noexcept {std::free(p);}
 void operator delete[](void* p) noexcept {::operator delete(p);}
 void operator delete[](void* p,std::size_t) noexcept {::operator delete(p);}
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace {
 std::size_t checks=0;
 void require(bool value,const char* message) {++checks;if(!value)throw std::runtime_error(message);}

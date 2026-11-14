@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/bootstrap.hpp"
+#include "laureondo/runtime/bootstrap.hpp"
 #include <new>
 
-namespace citrine_eclipse_mirage::system_services {
+namespace laureondo::system_services {
 // Evidence: ev_0a232e746d99beddba99fe362a4f132625939b77bd747e39ad749975c6f32a06
 bool Bootstrap::application_dll_main(std::uint32_t reason) {
     if (reason == 1) initialize(); // DLL_PROCESS_ATTACH; others have no app action
@@ -100,4 +100,4 @@ void cleanup_exit_waits(ExitWaitBlock& head, ExitWaitDependencies& deps) {
     } while (block);
     deps.unlock_047e04();
 }
-} // namespace citrine_eclipse_mirage::system_services
+} // namespace laureondo::system_services

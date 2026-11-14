@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_posted_operation.hpp"
+#include "laureondo/net/transport_posted_operation.hpp"
 #include <algorithm>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 OperationStorage& storage_at(std::uintptr_t identity,PostedEnvironment environment){
     for(auto& binding:environment.storage)
@@ -133,4 +133,4 @@ void complete_posted_027120(std::uintptr_t owner,PostedOperation& operation,Post
     if(local)local->call_slot_00(0);
     cleanup_posted_028fd0(frame,environment,api,memory);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

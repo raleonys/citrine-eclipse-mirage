@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/platform/hook_native_callbacks.hpp"
-#include "citrine_eclipse_mirage/platform/callback_lock.hpp"
+#include "laureondo/platform/hook_native_callbacks.hpp"
+#include "laureondo/platform/callback_lock.hpp"
 #include "../../support/fixture_ascii.hpp"
 #include <array>
 #include <cerrno>
@@ -18,8 +18,8 @@
 #include <thread>
 
 namespace {
-using namespace citrine_eclipse_mirage::native;
-using citrine_eclipse_mirage::registry::Handle;
+using namespace laureondo::native;
+using laureondo::registry::Handle;
 int checks;
 void require(bool condition, const char* message) {
     ++checks;
@@ -93,11 +93,11 @@ struct Wide final : WideOperations {
 struct Effects final : OriginalEffects {
     unsigned allocations{}, frees{};
     std::function<void()> startup_wait;
-    Effects(const std::array<std::uintptr_t, citrine_eclipse_mirage::host_init::callback_count>& originals,
-            Wide& wide, citrine_eclipse_mirage::platform::CryptQueryHost& crypt)
+    Effects(const std::array<std::uintptr_t, laureondo::host_init::callback_count>& originals,
+            Wide& wide, laureondo::platform::CryptQueryHost& crypt)
         : OriginalEffects(originals, wide, crypt) {}
     std::string filesystem_narrow(std::u16string_view value) override {
-        return citrine_eclipse_mirage::test_support::fixture_ascii(value);
+        return laureondo::test_support::fixture_ascii(value);
     }
     int crt_stricmp(const char* a, const char* b) override { return _stricmp(a, b); }
     int crt_strcpy_s(char* out, std::size_t capacity, const char* value) override {
@@ -114,13 +114,13 @@ struct Effects final : OriginalEffects {
     }
     void wait_036880(std::int32_t) override {
         const auto error = GetLastError();
-        { citrine_eclipse_mirage::callback_lock::Pause pause; if (startup_wait) startup_wait(); }
+        { laureondo::callback_lock::Pause pause; if (startup_wait) startup_wait(); }
         SetLastError(error);
     }
     void log_literal_006880(std::uint64_t) override {}
     void log_text_007990(std::string_view) override {}
     void finish_log_0088e0() override {}
-    void crypt_observed(citrine_eclipse_mirage::hooks::Selection) noexcept override {}
+    void crypt_observed(laureondo::hooks::Selection) noexcept override {}
     void wait_steps_036880(std::int32_t) override { throw std::logic_error("unexpected network wait"); }
     void log_literal_006880(std::string_view) override {}
     void log_port_00ad70(std::uint16_t) override {}
@@ -129,20 +129,20 @@ struct Effects final : OriginalEffects {
     [[noreturn]] void exit_05cdc0(std::uint32_t) override { throw std::logic_error("unexpected exit"); }
 };
 struct Fixture {
-    citrine_eclipse_mirage::registry::Values values{{"ClientKey", u"Client"}, {"ClientKey2", u"MissingClient"},
+    laureondo::registry::Values values{{"ClientKey", u"Client"}, {"ClientKey2", u"MissingClient"},
         {"ClientValue", u"ClientPath"}, {"ClientPath", u"C:\\overlay.exe"},
         {"LanguageKey", u"Language"}, {"LanguageValue", u"Locale"}, {"Language", u"fr_FR"}};
-    citrine_eclipse_mirage::registry::Handles clients, languages, fabricated;
+    laureondo::registry::Handles clients, languages, fabricated;
     std::uint8_t language_enabled = 1;
     std::int32_t v4 = 16, v6 = 28;
     std::uint16_t port = 6099;
     std::uint32_t attempts = 0;
-    std::array<std::uintptr_t, citrine_eclipse_mirage::host_init::callback_count> originals{
+    std::array<std::uintptr_t, laureondo::host_init::callback_count> originals{
         0, reinterpret_cast<std::uintptr_t>(&open_a), reinterpret_cast<std::uintptr_t>(&open_w),
         reinterpret_cast<std::uintptr_t>(&close_key), reinterpret_cast<std::uintptr_t>(&query_a),
         reinterpret_cast<std::uintptr_t>(&query_w)};
     Wide wide;
-    citrine_eclipse_mirage::platform::WindowsCryptQueryHost crypt;
+    laureondo::platform::WindowsCryptQueryHost crypt;
     Effects effects{originals, wide, crypt};
     Faults faults;
     Context context{{values, clients, languages, fabricated, language_enabled},
@@ -166,7 +166,7 @@ struct Tree {
     Key root;
     Tree() {
         static unsigned sequence;
-        path = L"Software\\CitrineEclipseMirage.RegistryTests." + std::to_wstring(GetCurrentProcessId())
+        path = L"Software\\LaureondoEclipseMirage.RegistryTests." + std::to_wstring(GetCurrentProcessId())
             + L"." + std::to_wstring(GetTickCount64()) + L"." + std::to_wstring(++sequence);
         DWORD disposition = 0;
         require(RegCreateKeyExW(HKEY_CURRENT_USER, path.c_str(), 0, nullptr, REG_OPTION_VOLATILE,

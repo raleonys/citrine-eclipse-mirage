@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
-#include "citrine_eclipse_mirage/platform/crypt_query.hpp"
+#include "laureondo/platform/crypt_query.hpp"
 #include <array>
 #include <limits>
 
-namespace citrine_eclipse_mirage::hooks {
+namespace laureondo::hooks {
 PathProbe probe_path(const void* object,ReadPathUnit read,void* context) noexcept {
     PathProbe result;
     if(!object||!read)return result;

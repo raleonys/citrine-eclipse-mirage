@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_native.hpp"
+#include "laureondo/net/transport_native.hpp"
 #include <cstring>
 #include <iostream>
 #include <vector>
 
-namespace sock=citrine_eclipse_mirage::socket;
-namespace srv=citrine_eclipse_mirage::server;
+namespace sock=laureondo::socket;
+namespace srv=laureondo::server;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "../../src/runtime/application_internal.hpp"
-#include "citrine_eclipse_mirage/config/application.hpp"
-#include "citrine_eclipse_mirage/core/token_constants.hpp"
+#include "laureondo/config/application.hpp"
+#include "laureondo/core/token_constants.hpp"
 #include <algorithm>
 #include <array>
 #include <fstream>
@@ -14,7 +14,7 @@
 #include "../../src/runtime/application_environment.cpp"
 
 namespace key_fixture {
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace fs=std::filesystem;
 using namespace std::string_literals;
 unsigned checks=0;
@@ -267,7 +267,7 @@ void configuration_live_callpoint(){
 
 // Only the test executable supplies these external boundary definitions. The
 // production status policy, file helper, AES and Environment bodies are linked.
-namespace citrine_eclipse_mirage::status {
+namespace laureondo::status {
 std::uint32_t NativeSystemCalls::attributes_ex(const Path& path,Metadata& data){
     auto& b=key_fixture::boundary();key_fixture::require(path==b.path,"status uses expected license path");
     b.calls.emplace_back("status");b.content_at_status=b.state->content_id;b.user_at_status=b.state->user_id;
@@ -280,7 +280,7 @@ std::uint32_t NativeSystemCalls::basic_information(Handle,Metadata&){throw std::
 bool NativeSystemCalls::close(Handle){throw std::logic_error("unexpected status handle close");}
 [[noreturn]] void NativeSystemCalls::abort_close_failure_05f03c(){throw std::logic_error("unexpected status abort");}
 }
-namespace citrine_eclipse_mirage::file {
+namespace laureondo::file {
 std::unique_ptr<Input> NativeFactory::open_input_039f70(const Path&,std::uint32_t,std::uint32_t){throw std::logic_error("key generation cannot read a file");}
 std::unique_ptr<Output> NativeFactory::open_output_03a1a0(const Path& path,std::uint32_t mode,std::uint32_t share){
     auto& b=key_fixture::boundary();key_fixture::require(path==b.path&&mode==0x20&&share==0x40,"output uses expected path/binary/share modes");

@@ -155,11 +155,11 @@ int WSAAPI TestSetSockOpt(SOCKET value,int level,int name,const char* data,int s
 #define WSASend TestSend
 #define GetQueuedCompletionStatus TestGetQueuedCompletionStatus
 #include <asio.hpp>
-#include "citrine_eclipse_mirage/net/server.hpp"
-#include "citrine_eclipse_mirage/net/session_policy.hpp"
-#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
+#include "laureondo/net/server.hpp"
+#include "laureondo/net/session_policy.hpp"
+#include "laureondo/platform/execution_windows.hpp"
 #define private public
-#include "citrine_eclipse_mirage/net/asio_service.hpp"
+#include "laureondo/net/asio_service.hpp"
 #undef private
 namespace asio {
 class FixtureTimer:public steady_timer {
@@ -169,9 +169,9 @@ public:
 };
 }
 #define steady_timer FixtureTimer
-#define CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_CLIENT_LIST ::fault::ClientList
+#define LAUREONDO_TEST_ASIO_CLIENT_LIST ::fault::ClientList
 #include "src/net/asio_service.cpp"
-#undef CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_CLIENT_LIST
+#undef LAUREONDO_TEST_ASIO_CLIENT_LIST
 #undef steady_timer
 #undef setsockopt
 #undef closesocket
@@ -180,7 +180,7 @@ public:
 #undef GetQueuedCompletionStatus
 
 namespace {
-using namespace citrine_eclipse_mirage;using Tcp=asio::ip::tcp;using namespace std::chrono_literals;
+using namespace laureondo;using Tcp=asio::ip::tcp;using namespace std::chrono_literals;
 void require(bool b,const char* text){if(!b)throw std::runtime_error(text);}
 struct Factory:net::HandlerFactory {
     bool throw_create=false;

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_write_finish.hpp"
+#include "laureondo/net/transport_write_finish.hpp"
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 std::uintptr_t heap_address(const WriteFinishString& string){
     std::uint64_t address=0;
@@ -93,4 +93,4 @@ void finish_write_025a70(SendHandler& handler,Error& error,WriteFinishContext& c
 void FinishedWriteEffects::finish_write_025a70(SendHandler& handler,Error& error){
     socket::finish_write_025a70(handler,error,finish_context_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

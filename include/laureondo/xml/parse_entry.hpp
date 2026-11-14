@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
+#pragma once
+#include "laureondo/xml/node_base.hpp"
+
+namespace laureondo::socket {
+// Required lower effects. No locale/classifier implementation or native parse
+// virtual target is supplied by this stage. The target is an identity only;
+// it must never be cast to an original-image host function pointer.
+class NativeParseEntryEffects {
+public:
+    virtual ~NativeParseEntryEffects()=default;
+    virtual std::int32_t classify_051fc0(std::uint32_t byte)=0;
+    // The void entry projection discards the tail target's return value. These
+    // are observed register arguments, not a verified native callee ABI.
+    virtual void parse_virtual(std::uintptr_t target,std::uintptr_t document,
+        std::uintptr_t cursor,std::uintptr_t zero_argument,std::uintptr_t line_counter)=0;
+};
+struct NativeParseEntryContext {
+    ReceiveBufferMemory& memory;NativeDocumentEffects& documents;NativeParseEntryEffects& lower;
+};
+void parse_document_entry_0041b0(std::uintptr_t document,NativeParseEntryContext&);
+
+class ParseEntryEffects:public NodeBaseEffects,public NativeParseEntryEffects {
+public:
+    ParseEntryEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes)
+        :NodeBaseEffects(memory,nodes),parse_entry_{memory,*this,*this}{}
+    void parse_0041b0(std::uintptr_t) final;
+private:NativeParseEntryContext parse_entry_;
+};
+} // namespace laureondo::socket

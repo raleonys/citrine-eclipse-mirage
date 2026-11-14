@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_iocp_constructor.hpp"
+#include "laureondo/net/transport_iocp_constructor.hpp"
 #include <algorithm>
 #include <bit>
 #include <cstring>
@@ -8,7 +8,7 @@
 #include <iostream>
 #include <limits>
 #include <vector>
-namespace s=citrine_eclipse_mirage::socket;
+namespace s=laureondo::socket;
 namespace {
 unsigned checks=0;
 void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
@@ -82,7 +82,7 @@ std::int32_t Gates::initialize(CRITICAL_SECTION& section,std::uint32_t spin){
     check(f.entry.word_88==21 && f.entry.worker_a8==&f.old,"late fields not cleared before gate");f.event("gate");return f.gate_result;
 }
 std::uint32_t Gates::get_last_error(){f.event("gate-error");return f.gate_error;}
-s::Category Errors::system_category_028620(){++f.categories;f.event("category");return {0x9922,citrine_eclipse_mirage::server::ErrorCategory::system};}
+s::Category Errors::system_category_028620(){++f.categories;f.event("category");return {0x9922,laureondo::server::ErrorCategory::system};}
 std::uintptr_t Api::create_completion_port(std::uintptr_t file,std::uintptr_t existing,std::uintptr_t key,std::uint32_t threads){
     check(file==~std::uintptr_t{0} && !existing && !key && threads==((f.hint&0x80000000U)?0xffffffffU:f.hint),"CreateIOCP exact invalid/null/zero/sign-normalized hint");
     check(!f.entry.word_88 && !f.entry.word_90 && !f.entry.word_98 && f.entry.concurrency_a0==f.hint && !f.entry.worker_a8,"late fields cleared and RAWhint stored before CreateIOCP");

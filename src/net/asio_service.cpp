@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/asio_service.hpp"
-#include "citrine_eclipse_mirage/net/listener_policy.hpp"
-#include "citrine_eclipse_mirage/net/handler_policy.hpp"
+#include "laureondo/net/asio_service.hpp"
+#include "laureondo/net/listener_policy.hpp"
+#include "laureondo/net/handler_policy.hpp"
 #include <asio.hpp>
 #include <algorithm>
 #include <condition_variable>
@@ -13,7 +13,7 @@
 #include <utility>
 #include <vector>
 
-namespace citrine_eclipse_mirage::net {
+namespace laureondo::net {
 namespace {
 using namespace server;
 Error translated(const asio::error_code& e) {
@@ -83,8 +83,8 @@ using OwnedAcceptor=RetainedSocket<asio::ip::tcp::acceptor>;
 SessionPolicy validated(SessionPolicy policy){policy.validate();return policy;}
 }
 struct AsioService::Impl final:ServerBackend {
-#ifdef CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_THREAD
-    using OwnedThread=CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_THREAD;
+#ifdef LAUREONDO_TEST_ASIO_THREAD
+    using OwnedThread=LAUREONDO_TEST_ASIO_THREAD;
 #else
     using OwnedThread=std::thread;
 #endif
@@ -110,8 +110,8 @@ struct AsioService::Impl final:ServerBackend {
     std::array<OwnedThread,handler_policy::workers> workers;
     bool jobs_stopping=false;
     // The production list remains std::vector; source fixtures can fail publication.
-#if defined(CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_CLIENT_LIST)
-    CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_CLIENT_LIST<std::shared_ptr<Client>> clients;
+#if defined(LAUREONDO_TEST_ASIO_CLIENT_LIST)
+    LAUREONDO_TEST_ASIO_CLIENT_LIST<std::shared_ptr<Client>> clients;
 #else
     std::vector<std::shared_ptr<Client>> clients;
 #endif

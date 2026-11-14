@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/pool_allocate.hpp"
+#include "laureondo/xml/pool_allocate.hpp"
 #include <bit>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 std::uint64_t word(std::span<const std::uint8_t> bytes,unsigned at,unsigned width){
     std::uint64_t value=0;
@@ -90,4 +90,4 @@ std::uintptr_t PoolAllocationEffectsAdapter::pool_allocate(std::uintptr_t target
     if(target==targets_.allocate[3])return allocate_pool_item_0027b0(pool,context_);
     throw UnsupportedInput("Pool allocation target is outside the selected source binding");
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

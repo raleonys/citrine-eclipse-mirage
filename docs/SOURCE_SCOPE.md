@@ -51,9 +51,9 @@ to the original or an independent owner signature.
 
 ## Production DLL and development interface
 
-`citrine_eclipse_mirage` is a SHARED target: all selected application objects are
-linked into the production DLL. `citrine_eclipse_mirage_source_host` links against the
-separate `citrine_eclipse_mirage_source_api` development DLL, which also retains the
+`laureondo` is a SHARED target: all selected application objects are
+linked into the production DLL. `laureondo_source_host` links against the
+separate `laureondo_source_api` development DLL, which also retains the
 reference models. It does not expand the shipping three-export interface.
 See [BUILD_PARTITION.md](BUILD_PARTITION.md) and
 [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md) for the current target boundaries.

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/platform/hook_cleanup.hpp"
-namespace citrine_eclipse_mirage::network_hook {
+#include "laureondo/platform/hook_cleanup.hpp"
+namespace laureondo::network_hook {
 void cleanup_hooks_0102b0(std::span<const std::uintptr_t> targets, CleanupEffects& e) {
     for (const auto& target : targets) {
         if (e.disable_hook_046a00(target) != 0) {

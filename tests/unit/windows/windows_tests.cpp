@@ -1,22 +1,22 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/platform/windows_effects.hpp"
-#include "citrine_eclipse_mirage/core/license_files.hpp"
-#include "citrine_eclipse_mirage/core/token_constants.hpp"
-#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "laureondo/platform/windows_effects.hpp"
+#include "laureondo/core/license_files.hpp"
+#include "laureondo/core/token_constants.hpp"
+#include "laureondo/xml/reader.hpp"
 #include <filesystem>
 #include <iostream>
 #include <stdexcept>
 
-namespace win=citrine_eclipse_mirage::windows;
-namespace file=citrine_eclipse_mirage::file;
-namespace lic=citrine_eclipse_mirage::license;
-namespace enc=citrine_eclipse_mirage::encoding;
-namespace file_status=citrine_eclipse_mirage::status;
-namespace token=citrine_eclipse_mirage::token;
-namespace crypto=citrine_eclipse_mirage::crypto;
-namespace xml=citrine_eclipse_mirage::xml;
-namespace reader=citrine_eclipse_mirage::xml_reader_bridge;
+namespace win=laureondo::windows;
+namespace file=laureondo::file;
+namespace lic=laureondo::license;
+namespace enc=laureondo::encoding;
+namespace file_status=laureondo::status;
+namespace token=laureondo::token;
+namespace crypto=laureondo::crypto;
+namespace xml=laureondo::xml;
+namespace reader=laureondo::xml_reader_bridge;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -44,7 +44,7 @@ public:
     [[noreturn]] void no_response_02bcd0_04d228()override{throw NoResponse{};}
 };
 class NoAttributes final:public xml::AttributeReader {
-public:const char* attribute(citrine_eclipse_mirage::handlers::Request,const char*)override{unused();}
+public:const char* attribute(laureondo::handlers::Request,const char*)override{unused();}
 };
 std::string encrypted_fixture() {
     std::string bytes(65,'H');bytes+="<GameToken>synthetic-win-token<&</GameToken>";
@@ -79,7 +79,7 @@ void run(const std::filesystem::path& directory) {
     check(complete.load_token_02afa0(base+u".dlf")=="synthetic-win-token<&","native status/read/CBC/raw extraction");
     std::string auth,license_value,exe_hash(40,'0'),content_id="fixture-content";
     std::uint8_t online=0,fake_auth=0,blocked=0;std::int32_t attempts=0;
-    citrine_eclipse_mirage::handlers::Attributes game;
+    laureondo::handlers::Attributes game;
     lic::Handlers handler({auth,online,fake_auth,license_value,expected,exe_hash,content_id,
         artifact,artifact,base,game,attempts,blocked},complete);
     reader::Backend backend;auto parsed=backend.parse_c_string("<RequestLicense/>");check(!parsed.has_error,"actual XML parse");

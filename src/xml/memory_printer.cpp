@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/memory_printer.hpp"
+#include "laureondo/xml/memory_printer.hpp"
 
 #include <functional>
 
-namespace citrine_eclipse_mirage::xml {
+namespace laureondo::xml {
 namespace {
 // bytes_without_terminator() lends a view directly into buffer_. Appending
 // to that same string may reallocate before the writer finishes reading it.
@@ -93,4 +93,4 @@ void MemoryPrinter::close_element(bool compact) {
 std::string MemoryPrinter::buffer_including_terminator() const {
     auto output=buffer_;output.push_back('\0');return output;
 }
-} // namespace citrine_eclipse_mirage::xml
+} // namespace laureondo::xml

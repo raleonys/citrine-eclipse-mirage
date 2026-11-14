@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/status.hpp"
+#include "laureondo/runtime/status.hpp"
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <filesystem>
@@ -62,7 +62,7 @@ struct Fault {
 #undef FindFirstFileW
 #undef GetFileAttributesExW
 
-using namespace citrine_eclipse_mirage::status;
+using namespace laureondo::status;
 namespace {
 int checks = 0;
 void check(bool value) { ++checks; if (!value) throw std::runtime_error("status test failed at check " + std::to_string(checks)); }

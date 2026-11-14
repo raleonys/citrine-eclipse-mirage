@@ -19,7 +19,7 @@
 #include <cstdio>
 namespace config_path_conversion {
 struct Observation {
-    const citrine_eclipse_mirage::configuration::Path& path;
+    const laureondo::configuration::Path& path;
     std::size_t utf8_bytes;
     unsigned fail_at=0,calls=0;
     DWORD error=ERROR_NOT_ENOUGH_MEMORY;
@@ -105,8 +105,8 @@ DWORD WINAPI read(LPCWSTR variable,LPWSTR output,DWORD capacity) {
     SetLastError(ERROR_ACCESS_DENIED); // Success does not require cleared last error.
     return static_cast<DWORD>(expected.size()); // Successful count EXCLUDES NUL.
 }
-void check(citrine_eclipse_mirage::application::detail::Environment& env,citrine_eclipse_mirage::application::Options& options) {
-    using citrine_eclipse_mirage::configuration::Path;
+void check(laureondo::application::detail::Environment& env,laureondo::application::Options& options) {
+    using laureondo::configuration::Path;
     options.program_data=u"D:\\configured\\\u00e9-data";
     select(L"ProgramData",Mode::missing);
     require(env.program_data_03c920()==options.program_data&&capacities.empty(),
@@ -146,7 +146,7 @@ std::string log_bytes(const std::filesystem::path& path){
     return {std::istreambuf_iterator<char>(input),std::istreambuf_iterator<char>()};
 }
 void config_path_failure_routes(){
-    using namespace citrine_eclipse_mirage;namespace fs=std::filesystem;
+    using namespace laureondo;namespace fs=std::filesystem;
     const configuration::Path path=u"C:/fixture/caf\u00e9 config.cfg";
     const std::string utf8="C:/fixture/caf\xc3\xa9 config.cfg";
     for(bool queued:{true,false})for(unsigned fail_at:{1U,2U}){
@@ -211,7 +211,7 @@ std::string expected(unsigned worker,unsigned row,unsigned phase){
     default:return "config loaded: C:/fixture/"+id+"file.cfg";
     }
 }
-void write(citrine_eclipse_mirage::application::detail::Environment& env,unsigned worker,unsigned row,unsigned phase){
+void write(laureondo::application::detail::Environment& env,unsigned worker,unsigned row,unsigned phase){
     const auto id=prefix(worker,row,phase),bytes=payload();
     switch(worker){
     case 0:env.log({id,bytes});break;
@@ -222,7 +222,7 @@ void write(citrine_eclipse_mirage::application::detail::Environment& env,unsigne
     default:{const auto path="C:/fixture/"+id+"file.cfg";env.log_config_path({path.begin(),path.end()});break;}
     }
 }
-void concurrent_phase(citrine_eclipse_mirage::application::detail::Environment& env,unsigned phase){
+void concurrent_phase(laureondo::application::detail::Environment& env,unsigned phase){
     std::mutex gate;std::exception_ptr failure;
     {
         std::vector<std::jthread> workers;
@@ -233,7 +233,7 @@ void concurrent_phase(citrine_eclipse_mirage::application::detail::Environment& 
     }
     if(failure)std::rethrow_exception(failure);
 }
-void actual_environment_logging(citrine_eclipse_mirage::application::detail::Environment& env,citrine_eclipse_mirage::configuration::State& state){
+void actual_environment_logging(laureondo::application::detail::Environment& env,laureondo::configuration::State& state){
     namespace fs=std::filesystem;
     const auto directory=fs::temp_directory_path()/("surge-log-fixture-"+std::to_string(GetCurrentProcessId())+"-"+std::to_string(GetTickCount64()));
     require(fs::create_directory(directory),"own fresh logging fixture directory");
@@ -259,8 +259,8 @@ void actual_environment_logging(citrine_eclipse_mirage::application::detail::Env
 #endif
 }
 
-void failed_open_preserves_startup(citrine_eclipse_mirage::application::detail::Environment& env,
-                                   citrine_eclipse_mirage::configuration::State& state) {
+void failed_open_preserves_startup(laureondo::application::detail::Environment& env,
+                                   laureondo::configuration::State& state) {
     namespace fs=std::filesystem;
     const auto directory=fs::temp_directory_path()/("surge-log-open-retry-"+
         std::to_string(GetCurrentProcessId())+"-"+std::to_string(GetTickCount64()));
@@ -291,8 +291,8 @@ void failed_open_preserves_startup(citrine_eclipse_mirage::application::detail::
 #endif
 }
 
-void unknown_entitlement_is_nonmodal_and_redacted(citrine_eclipse_mirage::application::detail::Environment& env,
-                                                  citrine_eclipse_mirage::configuration::State& state) {
+void unknown_entitlement_is_nonmodal_and_redacted(laureondo::application::detail::Environment& env,
+                                                  laureondo::configuration::State& state) {
     namespace fs=std::filesystem;
     const auto directory=fs::temp_directory_path()/("surge-unknown-field-fixture-"+
         std::to_string(GetCurrentProcessId())+"-"+std::to_string(GetTickCount64()));
@@ -359,9 +359,9 @@ public:
     UnknownMessageModalWatchdog& operator=(const UnknownMessageModalWatchdog&)=delete;
 };
 
-void actual_unknown_message_diagnostic(citrine_eclipse_mirage::application::detail::Environment& env){
+void actual_unknown_message_diagnostic(laureondo::application::detail::Environment& env){
     UnknownMessageModalWatchdog watchdog(std::chrono::seconds(10));
-    using namespace citrine_eclipse_mirage;
+    using namespace laureondo;
     struct Input final:messages::UnknownMessageInput{
         std::string bytes=std::string("request-\xc3\xa9\0tail",15);
         std::string_view view()const override{return bytes;}
@@ -382,7 +382,7 @@ void actual_unknown_message_diagnostic(citrine_eclipse_mirage::application::deta
 }
 
 int main()try{
-    using namespace citrine_eclipse_mirage;
+    using namespace laureondo;
     configuration::State state{};application::Options options;
     file::NativeFactory files;xml_reader_bridge::Backend xml;achievement_storage::Paths paths;
     achievement_runtime::HostClock clock;achievement_runtime::HostFormatter formatter;

@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/core/token.hpp"
-#include "citrine_eclipse_mirage/core/token_constants.hpp"
+#include "laureondo/core/token.hpp"
+#include "laureondo/core/token_constants.hpp"
 #include <algorithm>
 #include <array>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
 
-namespace token = citrine_eclipse_mirage::token;
-namespace crypto = citrine_eclipse_mirage::crypto;
+namespace token = laureondo::token;
+namespace crypto = laureondo::crypto;
 namespace {
 unsigned checks;
 void check(bool value) { ++checks; if (!value) throw std::runtime_error("token check failed at " + std::to_string(checks)); }

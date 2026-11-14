@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/config/hash_table.hpp"
-#include "citrine_eclipse_mirage/config/order.hpp"
+#include "laureondo/config/hash_table.hpp"
+#include "laureondo/config/order.hpp"
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace {
 std::size_t checks=0;
 void require(bool value,const char* message) {++checks;if(!value)throw std::runtime_error(message);}

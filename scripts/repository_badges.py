@@ -304,13 +304,14 @@ def checksum_available(release):
         return None
     tag = release['tag_name']
     require_tag(tag)
-    name = 'Citrine_Eclipse_Mirage_' + tag.replace('-', '_') + '.zip'
+    names = [prefix + tag.replace('-', '_') + '.zip'
+             for prefix in ('Laureondo_', 'Citrine_Eclipse_Mirage_')]
     assets = release.get('assets')
     if not isinstance(assets, list):
         return None
-    return all(any(asset.get('name') == expected and asset.get('state') == 'uploaded'
-                   and type(asset.get('size')) is int and asset['size'] > 0 for asset in assets)
-               for expected in (name, name + '.sha256'))
+    return any(all(any(asset.get('name') == expected and asset.get('state') == 'uploaded'
+                       and type(asset.get('size')) is int and asset['size'] > 0 for asset in assets)
+                   for expected in (name, name + '.sha256')) for name in names)
 
 
 class GitHub:

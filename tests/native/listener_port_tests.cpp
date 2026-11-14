@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/asio_service.hpp"
-#include "citrine_eclipse_mirage/net/listener_policy.hpp"
-#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
+#include "laureondo/net/asio_service.hpp"
+#include "laureondo/net/listener_policy.hpp"
+#include "laureondo/platform/execution_windows.hpp"
 #include <asio.hpp>
 #include <array>
 #include <iostream>
 #include <stdexcept>
 #include <string>
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace {
 using Tcp=asio::ip::tcp;
 int checks=0;

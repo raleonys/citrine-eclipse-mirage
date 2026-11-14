@@ -50,7 +50,7 @@ def run():
     api.RemoveDirectoryW.restype = wintypes.BOOL
     api.GetFileAttributesW.argtypes = (wintypes.LPCWSTR,)
     api.GetFileAttributesW.restype = wintypes.DWORD
-    report = {'schema': 'citrine.win32-leaf-observation.v1',
+    report = {'schema': 'laureondo.win32-leaf-observation.v1',
               'api': 'CreateDirectoryW/GetFileAttributesW/RemoveDirectoryW',
               'native_windows': True, 'windows_version': platform.version(),
               'commit': os.environ.get('GITHUB_SHA'), 'result': 'RUNNING', 'rows': []}

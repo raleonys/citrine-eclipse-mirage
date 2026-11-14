@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/core/paths.hpp"
+#include "laureondo/core/paths.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <vector>
 
-using namespace citrine_eclipse_mirage::path;
+using namespace laureondo::path;
 namespace {
 int checks;
 void check(bool condition, int line) {

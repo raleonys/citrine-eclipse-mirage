@@ -51,7 +51,7 @@ Compiler/cache/hash and shipping-link checks remain independent.
 
 Following the owner's instruction to complete missing
 targets, four profiles entered `READY_TARGET`
-status. These are Citrine Eclipse Mirage product rules;
+status. These are Laureondo product rules;
 fixed fixture identities under
 `tests/support/golden/` are not activated.
 
@@ -59,7 +59,7 @@ fixed fixture identities under
 |---|---|
 | URSYNEX | Preserve the native link output compilation timestamp; apply linker 14.0 and the no-Rich-header profile to the copy, then recompute checksum. Permute complete import descriptors into the fixed DLL order; preserve names/thunks/IAT data. |
 | ARYRA | MSVC six sections, or seven with the static UCRT `.fptable`: verify ordering, power-of-two SectionAlignment, FileAlignment compatibility, file bounds and non-overlap. Valid alternate power-of-two section alignments remain supported. `.fptable` must have virtual 0x100, raw 0x200, index 4, characteristics 0xC0000040 and all-zero data. Other section RVAs/sizes are not fixed. |
-| MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem 6.0, linker 14.0, native compilation timestamp preserved, no Rich header. Citrine Eclipse Mirage VERSIONINFO, Copyright 2026 SURGE, and matching selected numeric/string file and product versions. No PNG/RCDATA/manifest or COFF symbol/debug/certificate. Internal export name `citrine_eclipse_mirage.unsigned.dll`. |
+| MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem 6.0, linker 14.0, native compilation timestamp preserved, no Rich header. Laureondo VERSIONINFO, Copyright 2026 SURGE, and matching selected numeric/string file and product versions. No PNG/RCDATA/manifest or COFF symbol/debug/certificate. Internal export name `laureondo.unsigned.dll`. |
 | CORVEXON | Exactly three C exports/ordinals. The CRT entrypoint is separate from exported DllMain and lies in executable `.text`. No static imports outside CRYPT32/WS2_32/KERNEL32/USER32/SHELL32/MSWSOCK; MSWSOCK only AcceptEx/GetAcceptExSockaddrs, CRYPT32 only CryptQueryObject. `/MT`, writable image-backed `/GS` cookie and valid checksum. |
 
 MUSTAVEX rejects duplicate `StringFileInfo` string keys, including identical
@@ -122,21 +122,21 @@ cannot activate actual product policy.
 
 After all six stages, the finalized copy is
 passed to the existing runtime host as
-**citrine_eclipse_mirage.dll**. Three actual
+**laureondo.dll**. Three actual
 load/start/socket/profile/stop/unload cycles
 must pass without mutation of the candidate
 bytes. Only then are these files written:
 
-- `dist/citrine_eclipse_mirage.dll`
-- `dist/citrine_eclipse_mirage.dll.sha256`
+- `dist/laureondo.dll`
+- `dist/laureondo.dll.sha256`
 - `dist/DIST_RECEIPT.json`
 
 The distribution name is the current project identity. Hook 11 deliberately
 retains the independent `preloader_l.dll` compatibility suffix in
-`include/citrine_eclipse_mirage/platform/crypt_query.hpp`; neither renaming the
+`include/laureondo/platform/crypt_query.hpp`; neither renaming the
 shipping DLL nor running its host test proves selection of that suffix.
 The raw link output remains
-`citrine_eclipse_mirage.unsigned.dll`; copying does not
+`laureondo.unsigned.dll`; copying does not
 change the export-directory internal name
 or the three C exports. The earlier
 hash-named build candidate is also retained.
@@ -179,7 +179,7 @@ field matrix and former fixed-timestamp decision. Current timestamp and
 VERSIONINFO rules are the product targets and owning policies above.
 
 The owner requires the same import descriptor order in every MSVC
-application DLL profile, including `citrine_eclipse_mirage.unsigned.dll`. The shared
+application DLL profile, including `laureondo.unsigned.dll`. The shared
 `scripts/import_descriptor_order.py` normalizes the unsigned image immediately
 after the linker completes and before the build partition gate and raw-asset
 inspection; `build_profile.ps1` independently verifies the resulting

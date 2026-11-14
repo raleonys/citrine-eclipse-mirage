@@ -13,14 +13,35 @@ objects cross that module boundary. Linux portable or Wine results do not
 establish PowerShell/CMD or native MSVC execution; inspect the selected
 commit's Windows results separately.
 
+## Laureondo identity migration
+
+The owner-requested project identity is Laureondo. Migrate C++ consumers from
+`citrine_eclipse_mirage` to `laureondo`, including header paths, namespaces,
+CMake target names and the separate development DLL. CMake options and version
+selection now use `LAUREONDO_*`, including `LAUREONDO_VERSION`; old options and
+provider filenames are not aliases. Use a fresh build directory, deploy the
+renamed `laureondo_online.dll` provider, and update explicit DLL load paths.
+Weekly binary assets now use `Laureondo_x.y.z_CODENAME.zip`; existing releases
+and retained receipts keep their original names and hashes. Runtime benchmark
+receipt schemas now use `laureondo.*`; regenerate measurements for the new source.
+
+The exact owner-supplied `resources/branding/laureondo.png` is the project logo.
+It is independent of the retained SURGE profile/fallback avatars and is not a
+new PE resource. SURGE configuration/data names, protocol identity and the
+`DllMain@1`, `SURGE@2`, `DllShutdown@3` exports retain their compatibility meaning.
+GitHub links keep the existing repository coordinates until a separate hosted
+repository rename; opening this PR does not perform that settings change.
+Historical checkpoint documents and retained evidence describe their original
+source identities; use this guide for current names.
+
 Human-facing commands under `scripts/build_orchestration/`:
 
 The first-party namespace, include root and build target prefix are
-`citrine_eclipse_mirage`. Raw application output is
-`citrine_eclipse_mirage.unsigned.dll`; Production promotes the validated copy to
-`citrine_eclipse_mirage.dll`. The separate development API is
-`citrine_eclipse_mirage.source.dll`, and the optional online provider is
-`citrine_eclipse_mirage_online.dll`. Reconfigure in a fresh build directory after
+`laureondo`. Raw application output is
+`laureondo.unsigned.dll`; Production promotes the validated copy to
+`laureondo.dll`. The separate development API is
+`laureondo.source.dll`, and the optional online provider is
+`laureondo_online.dll`. Reconfigure in a fresh build directory after
 this rename; external C++ consumers and provider deployments must migrate too.
 Public C exports and ordinals remain unchanged.
 
@@ -29,7 +50,7 @@ version is recorded in `metadata/BRANDING_AND_IDENTITY.json` and follows the
 latest published stable release after its version-update PR is merged. Local
 builds and downloaded source archives read this committed value offline;
 they do not query GitHub or infer a version from locally available Git tags.
-Set `CITRINE_ECLIPSE_MIRAGE_VERSION=3.2.8` for the entire configure/build/validation
+Set `LAUREONDO_VERSION=3.2.8` for the entire configure/build/validation
 session to select another release version. Numeric FILEVERSION and PRODUCTVERSION
 are then `3,2,8,0`; FileVersion and ProductVersion strings are `3.2.8`. The revision
 component is always zero. Reconfigure after changing the environment value.
@@ -46,7 +67,7 @@ historical inputs; they are not renamed product source.
 |---|---|
 | `build_unstable.cmd` | Release application DLL; checks exports/resources and actual load/socket/shutdown/unload |
 | `build_debug.cmd` | Debug application DLL with the same public API checks; debugger symbols are retained |
-| `build_native_acceptance.cmd` | Citrine Eclipse Mirage CTest source/adapter/CRT tests on Windows |
+| `build_native_acceptance.cmd` | Laureondo CTest source/adapter/CRT tests on Windows |
 | `build_crt_acceptance.cmd` | Builds and runs only selected compiler CRT/public DLL/source smoke targets |
 | `build_production.cmd` | Native MSVC Golden link, six-stage verification and validated `dist` artifacts |
 
@@ -92,8 +113,8 @@ identity, then verify it again:
 ```sh
 python -B scripts/check_manifest.py --refresh
 python -B scripts/run_source_qa.py
-python -B scripts/package_source.py --output ../citrine-eclipse-mirage-source.zip
-python -B scripts/check_falcion_golden_cleaning.py --package ../citrine-eclipse-mirage-source.zip
+python -B scripts/package_source.py --output ../laureondo-source.zip
+python -B scripts/check_falcion_golden_cleaning.py --package ../laureondo-source.zip
 ```
 
 Packaging does not refresh the manifest automatically. The Golden command
@@ -107,7 +128,7 @@ operator launcher or GitHub Actions.
 Application ownership, actual vendor I/O, and DLL worker startup are
 described in [RUNTIME_BINDING.md](RUNTIME_BINDING.md).
 Normal Windows/MSVC builds do not use Wine. For LLVM-MinGW/Wine cross-tests,
-the CMake option `-DCITRINE_ECLIPSE_MIRAGE_WINE_EXECUTABLE=/path/to/wine64` selects
+the CMake option `-DLAUREONDO_WINE_EXECUTABLE=/path/to/wine64` selects
 `scripts/run_wine_test.py`, which preserves the actual process exit code.
 Output descriptors inherited by Wine services do not determine test success
 or timeout behavior.

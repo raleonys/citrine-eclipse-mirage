@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_owned_response.hpp"
+#include "laureondo/net/transport_owned_response.hpp"
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 void reset(ReceiveBufferString& value){value.size_10=0;value.capacity_18=15;value.storage_00[0]=0;}
 void destroy(ReceiveBufferString& value,FrameReadContext& context){
@@ -82,4 +82,4 @@ void OwnedResponseTask::call_slot_00(std::uint8_t flag){
 void OwnedResponseApi::make_owned_response_020cb0(PostedFunctor*& out,MessageWriteTask& task){
     socket::make_owned_response_020cb0(out,task,context_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

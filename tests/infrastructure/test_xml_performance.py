@@ -54,7 +54,7 @@ class ReferenceBindings(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             legacy = root / 'include/preloader_l/xml/reader.hpp'
-            decoy = root / 'include/citrine_eclipse_mirage/xml/reader.hpp'
+            decoy = root / 'include/laureondo/xml/reader.hpp'
             legacy.parent.mkdir(parents=True)
             decoy.parent.mkdir(parents=True)
             legacy.write_text('#include "preloader_l/router/router.hpp"\n'
@@ -63,8 +63,8 @@ class ReferenceBindings(unittest.TestCase):
             before = legacy.read_bytes(), decoy.read_bytes()
             result, output = self.run_binding(directory, 'xml_read_reference_header("${reference}" bound)')
             self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-            self.assertEqual('#include "citrine_eclipse_mirage/router/router.hpp"\n'
-                             'namespace citrine_eclipse_mirage::xml_reader_bridge {}\n', output.read_text())
+            self.assertEqual('#include "laureondo/router/router.hpp"\n'
+                             'namespace laureondo::xml_reader_bridge {}\n', output.read_text())
             self.assertEqual(before, (legacy.read_bytes(), decoy.read_bytes()))
 
     def test_binds_fixture_aliases_without_renaming_compatibility_filename(self):
@@ -76,14 +76,14 @@ class ReferenceBindings(unittest.TestCase):
                          'xml_bind_legacy_reference(bound)')
             result, output = self.run_binding(directory, statement)
             self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-            self.assertEqual('#include "citrine_eclipse_mirage/xml/reader.hpp"\n'
-                             'namespace reader=citrine_eclipse_mirage::xml_reader_bridge;\n'
-                             'using namespace citrine_eclipse_mirage;\n'
+            self.assertEqual('#include "laureondo/xml/reader.hpp"\n'
+                             'namespace reader=laureondo::xml_reader_bridge;\n'
+                             'using namespace laureondo;\n'
                              'const char* filename="preloader_l.dll";\n', output.read_text())
 
     def test_missing_historical_header_does_not_adopt_current_identity_file(self):
         with tempfile.TemporaryDirectory() as directory:
-            decoy = Path(directory) / 'include/citrine_eclipse_mirage/xml/reader.hpp'
+            decoy = Path(directory) / 'include/laureondo/xml/reader.hpp'
             decoy.parent.mkdir(parents=True)
             decoy.write_text('// not the pinned historical header\n', encoding='utf-8')
             result, _ = self.run_binding(directory, 'xml_read_reference_header("${reference}" bound)')

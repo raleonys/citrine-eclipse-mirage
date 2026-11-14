@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/online.hpp"
-#include "citrine_eclipse_mirage/core/product_identity.hpp"
+#include "laureondo/runtime/online.hpp"
+#include "laureondo/core/product_identity.hpp"
 
-namespace citrine_eclipse_mirage::online {
+namespace laureondo::online {
 bool exists_035b00(const Path& path, Effects& effects) {
     const auto status = effects.status_01ea20(path, 3);
     const auto kind = static_cast<std::uint32_t>(status.kind);
@@ -141,4 +141,4 @@ void worker_035b60(StateRefs state, Effects& effects) {
     if (!state.online_0a3c3b) cleanup_0366f0(state, effects);
     effects.finish_flag_036820();
 }
-} // namespace citrine_eclipse_mirage::online
+} // namespace laureondo::online

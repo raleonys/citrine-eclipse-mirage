@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/timestamp.hpp"
+#include "laureondo/runtime/timestamp.hpp"
 #include <ctime>
 #include <iomanip>
 #include <sstream>
 #include <stdexcept>
 
-namespace citrine_eclipse_mirage::timestamp {
+namespace laureondo::timestamp {
 namespace {
 bool classic_space(char c) noexcept {
     return c==' ' || (c>='\t' && c<='\r');
@@ -98,4 +98,4 @@ std::int64_t timestamp_to_epoch_041e10(std::string_view raw,Parser& parser) {
 std::int64_t StorageEffects::timestamp_to_epoch_041e10(std::string_view value) {
     return timestamp::timestamp_to_epoch_041e10(value,parser_);
 }
-} // namespace citrine_eclipse_mirage::timestamp
+} // namespace laureondo::timestamp

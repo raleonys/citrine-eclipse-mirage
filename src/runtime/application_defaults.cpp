@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/application.hpp"
+#include "laureondo/runtime/application.hpp"
 
-namespace citrine_eclipse_mirage::application {
+namespace laureondo::application {
 configuration::State initial_state() {
     // Documented RE constructor FUN_180036d20 (43881ff), verified
     // against the corresponding assembly. These are application values only;

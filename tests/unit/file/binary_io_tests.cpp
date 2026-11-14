@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/core/binary_io.hpp"
+#include "laureondo/core/binary_io.hpp"
 #include <algorithm>
 #include <array>
 #include <filesystem>
-#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
+#if !defined(LAUREONDO_PORTABLE_FILE_IO_TESTS)
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
@@ -18,7 +18,7 @@
 #include <string_view>
 #include <vector>
 
-namespace io=citrine_eclipse_mirage::file;
+namespace io=laureondo::file;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -184,7 +184,7 @@ void checked_write_retains_error() {
     check(f.t.written==next&&f.t.calls==expected,
           "repaired write preserves bytes and balanced output lifetime");
 }
-#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
+#if !defined(LAUREONDO_PORTABLE_FILE_IO_TESTS)
 void native(const std::filesystem::path& directory) {
     const auto root=std::filesystem::absolute(directory).lexically_normal();
     check(root.filename()=="file-io-fixtures","dedicated generated-fixture directory required");
@@ -239,7 +239,7 @@ int main(int argc,char** argv){try{
     core();
     input_failure_unwind();
     checked_write_retains_error();
-#if defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_FILE_IO_TESTS)
+#if defined(LAUREONDO_PORTABLE_FILE_IO_TESTS)
     (void)argc;(void)argv;
 #else
     if(argc!=2)throw std::invalid_argument("Pass a dedicated file-io-fixtures directory");

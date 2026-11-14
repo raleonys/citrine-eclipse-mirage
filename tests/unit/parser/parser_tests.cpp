@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/config/parser.hpp"
+#include "laureondo/config/parser.hpp"
 #include <iostream>
 #include <utility>
 
-using namespace citrine_eclipse_mirage::parser;
+using namespace laureondo::parser;
 namespace {
 int checks=0;
 void require(bool ok,const char* why){++checks;if(!ok)throw std::runtime_error(why);}

@@ -1,31 +1,31 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/memory_printer.hpp"
+#include "laureondo/xml/memory_printer.hpp"
 #include <algorithm>
 #include <cstdio>
 #include <map>
 #include <stdexcept>
-using namespace citrine_eclipse_mirage::xml;
+using namespace laureondo::xml;
 static unsigned checks;
 static void require(bool v){++checks;if(!v)throw std::runtime_error("check "+std::to_string(checks));}
 static std::string terminated(std::string value){value.push_back('\0');return value;}
 struct Reader final : AttributeReader {
     std::map<std::string,std::string,std::less<>> values;
-    const char* attribute(citrine_eclipse_mirage::handlers::Request request,const char* key) override {
+    const char* attribute(laureondo::handlers::Request request,const char* key) override {
         require(request==77);auto it=values.find(key);return it==values.end()?nullptr:it->second.c_str();
     }
 };
-struct Backend final : citrine_eclipse_mirage::messages::XmlBackend {
-    citrine_eclipse_mirage::messages::ParseResult parse_c_string(std::string_view) override {
+struct Backend final : laureondo::messages::XmlBackend {
+    laureondo::messages::ParseResult parse_c_string(std::string_view) override {
         throw std::logic_error("Synthetic printer test has no XML reader");
     }
-    std::unique_ptr<citrine_eclipse_mirage::messages::XmlPrinter> printer() override {
+    std::unique_ptr<laureondo::messages::XmlPrinter> printer() override {
         return std::make_unique<MemoryPrinter>();
     }
 };
-struct Random final : citrine_eclipse_mirage::messages::Random {
-    citrine_eclipse_mirage::messages::Key challenge_bytes_034cf0() override {return {};}
-    citrine_eclipse_mirage::messages::Key key_from_response_034c30(std::string_view) override {throw std::logic_error("unused");}
+struct Random final : laureondo::messages::Random {
+    laureondo::messages::Key challenge_bytes_034cf0() override {return {};}
+    laureondo::messages::Key key_from_response_034c30(std::string_view) override {throw std::logic_error("unused");}
 };
 
 static void shapes() {
@@ -107,7 +107,7 @@ static void self_aliased_writer_inputs() {
     }
 }
 static void actual_handler_and_greeting() {
-    using namespace citrine_eclipse_mirage::handlers;
+    using namespace laureondo::handlers;
     Attributes game,settings;Profile profile{};std::uint8_t online=0,pretend=7;
     StateReferences state{game,settings,profile,online,pretend};
     Reader reader;MemoryPrinter connected;HandlerWriter connected_writer(connected,reader);
@@ -124,7 +124,7 @@ static void actual_handler_and_greeting() {
     require(bytes.ends_with("    <Service Name=\"EbisuSDK\" Facility=\"CONTENT\"/>\n</GetConfigResponse>\n"));
     require(std::count(bytes.begin(),bytes.end(),'\n')==36);
     Backend backend;Random random;
-    const auto greeting=citrine_eclipse_mirage::messages::initial_message_02d540(backend,random,"sdk<&");
+    const auto greeting=laureondo::messages::initial_message_02d540(backend,random,"sdk<&");
     require(greeting==terminated("<LSX>\n    <Event sender=\"EALS\">\n        <Challenge version=\"sdk&lt;&amp;\" build=\"release\" key=\"00000000000000000000000000000000\"/>\n    </Event>\n</LSX>\n"));
 }
 int main(){shapes();byte_semantics();self_aliased_writer_inputs();actual_handler_and_greeting();std::printf("PASS: %u checks; concrete recovered serializer; synthetic readers/random only\n",checks);}

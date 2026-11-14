@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/node_delete.hpp"
+#include "laureondo/xml/node_delete.hpp"
 #include <bit>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width=8){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -79,4 +79,4 @@ void delete_native_node_003240(std::uintptr_t node,NativeNodeDeleteContext& cont
 }
 void NodeDeleteEffects::remove_parent_003030(std::uintptr_t parent,std::uintptr_t node){unlink_native_node_003030(parent,node,nodes_);}
 void NodeDeleteEffects::delete_node_003240(std::uintptr_t node){delete_native_node_003240(node,nodes_);}
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/codec/encoding.hpp"
+#include "laureondo/codec/encoding.hpp"
 #include <climits>
 #include <exception>
 #include <system_error>
 
-namespace citrine_eclipse_mirage::encoding {
+namespace laureondo::encoding {
 std::uint32_t filesystem_codepage_048ac0(Calls& calls) {
     if(calls.locale_codepage_0629ec()==65001)return 65001;
     return calls.are_file_apis_ansi()?0U:1U;
@@ -62,4 +62,4 @@ std::string path_utf8_01e3f0(const Path& path,Calls& calls,Errors& errors) {
 }
 [[noreturn]] void PortableErrors::runtime_00cd70(int code){throw std::system_error(code,std::generic_category());}
 [[noreturn]] void PortableErrors::filesystem_00cdb0(std::uint32_t code){throw std::system_error(static_cast<int>(code),std::system_category());}
-} // namespace citrine_eclipse_mirage::encoding
+} // namespace laureondo::encoding

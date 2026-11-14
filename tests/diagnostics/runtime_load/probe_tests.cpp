@@ -6,16 +6,16 @@
 #include <latch>
 #include <memory>
 #include <stdexcept>
-using citrine_eclipse_mirage::benchmark::PerMessageJobs;
+using laureondo::benchmark::PerMessageJobs;
 namespace {
 void require(bool value,const char* why){if(!value)throw std::runtime_error(why);}
 void ordinary_jobs(){
     PerMessageJobs jobs;std::atomic<unsigned> calls{0},errors{0};
-    const auto before=citrine_eclipse_mirage::benchmark::created_message_threads.load();
+    const auto before=laureondo::benchmark::created_message_threads.load();
     for(unsigned i=0;i<64;++i)jobs.submit([&]{++calls;},[&](std::exception_ptr)noexcept{++errors;});
     jobs.stop();jobs.stop();
     require(calls==64&&errors==0,"control lost work or reported spurious failures");
-    require(citrine_eclipse_mirage::benchmark::created_message_threads-before==64,"one thread per admitted job required");
+    require(laureondo::benchmark::created_message_threads-before==64,"one thread per admitted job required");
     bool rejected=false;try{jobs.submit([]{},[](std::exception_ptr)noexcept{});}catch(const std::runtime_error&){rejected=true;}
     require(rejected,"control admitted work after stop");
 }
@@ -34,7 +34,7 @@ void failed_job_lifetime(){
     require(held&&released_before_stop_return==1&&retired==1&&errors==1,"stop must drain failed job and release its capture exactly once");
 }
 void application_observation(){
-    using namespace citrine_eclipse_mirage::benchmark;
+    using namespace laureondo::benchmark;
     {ApplicationRequest ignored;ApplicationLock lock(Clock::now());}
     require(application_record==nullptr,"disabled observation must not retain a TLS record");
     ApplicationMeasurements measured(64);application_measurements=&measured;

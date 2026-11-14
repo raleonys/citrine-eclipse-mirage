@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/net/transport_prefix_cipher.hpp"
+#include "laureondo/net/transport_prefix_cipher.hpp"
 #include "tests/support/socket/append_growth_test_fixture.hpp"
 
 namespace cipher_test {
-namespace s=citrine_eclipse_mirage::socket;namespace c=citrine_eclipse_mirage::crypto;namespace b=buffer_test;
+namespace s=laureondo::socket;namespace c=laureondo::crypto;namespace b=buffer_test;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Failure{int code;};
 inline std::string unhex(std::string_view in){std::string out;const auto n=[](char ch){return ch<='9'?ch-'0':ch-'a'+10;};for(std::size_t i=0;i<in.size();i+=2)out.push_back(static_cast<char>((n(in[i])<<4)|n(in[i+1])));return out;}

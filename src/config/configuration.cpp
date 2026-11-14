@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/config/configuration.hpp"
-#include "citrine_eclipse_mirage/core/product_identity.hpp"
+#include "laureondo/config/configuration.hpp"
+#include "laureondo/core/product_identity.hpp"
 #include <algorithm>
 #include <limits>
 #include <stdexcept>
 
-namespace citrine_eclipse_mirage::configuration {
+namespace laureondo::configuration {
 const Node& Node::child(std::string_view key) const {
     static const Node absent{};
     const auto found = children.find(key);
@@ -275,4 +275,4 @@ void cleanup_cached_avatars(const Path& path,Dependencies& deps) {
             effects.remove_04948c(entry);
     }});
 }
-} // namespace citrine_eclipse_mirage::configuration
+} // namespace laureondo::configuration

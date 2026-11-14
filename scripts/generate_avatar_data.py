@@ -11,7 +11,7 @@ def generate(root, output):
     root, output = Path(root), Path(output)
     contract = json.loads((root/'metadata/AVATAR_DATA_CONTRACT.json').read_text(encoding='utf-8'))
     text = ['#pragma once', '// Generated from pinned PNG inputs; not a PE resource.',
-            'namespace citrine_eclipse_mirage::application::detail::avatar_data {']
+            'namespace laureondo::application::detail::avatar_data {']
     for symbol in ('profile', 'fallback'):
         spec = contract['assets'][symbol]
         path = root/spec['source']

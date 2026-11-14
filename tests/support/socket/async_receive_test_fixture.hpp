@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/net/transport_async_receive.hpp"
+#include "laureondo/net/transport_async_receive.hpp"
 #include <functional>
 #include <iostream>
 #include <memory>
 #include <vector>
 
 namespace receive_test {
-namespace s=citrine_eclipse_mirage::socket;
+namespace s=laureondo::socket;
 inline unsigned checks=0;
 inline void check(bool value,const char* message){++checks;if(!value)throw std::runtime_error(message);}
 [[noreturn]]inline void unexpected(){throw std::logic_error("Unexpected synthetic receive dependency");}

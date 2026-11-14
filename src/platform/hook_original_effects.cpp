@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/platform/hook_native_callbacks.hpp"
+#include "laureondo/platform/hook_native_callbacks.hpp"
 #include <bit>
-namespace citrine_eclipse_mirage::native {
+namespace laureondo::native {
 using namespace registry;
 std::uint32_t OriginalEffects::increment_attempts(std::uint32_t& value) {
     const auto incoming=GetLastError();

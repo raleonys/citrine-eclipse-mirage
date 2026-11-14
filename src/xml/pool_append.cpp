@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/pool_append.hpp"
+#include "laureondo/xml/pool_append.hpp"
 #include <bit>
 #include <limits>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -51,4 +51,4 @@ void PoolAppendEffectsAdapter::append_block_005440(std::uintptr_t array,std::uin
     PoolAppendContext context{memory_,*this};
     append_pool_block_005440(array,block,context);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

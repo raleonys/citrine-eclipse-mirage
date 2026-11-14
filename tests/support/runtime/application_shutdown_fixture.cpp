@@ -1,19 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include <winsock2.h>
-#include "citrine_eclipse_mirage/runtime/application.hpp"
-#include "citrine_eclipse_mirage/platform/hook_engine_api.hpp"
-#include "citrine_eclipse_mirage/platform/hook_unload_guard.hpp"
+#include "laureondo/runtime/application.hpp"
+#include "laureondo/platform/hook_engine_api.hpp"
+#include "laureondo/platform/hook_unload_guard.hpp"
 #include "src/runtime/application_internal.hpp"
-#include "citrine_eclipse_mirage/codec/crypto.hpp"
-#include "citrine_eclipse_mirage/core/protocol_identity.hpp"
-#include "citrine_eclipse_mirage/net/asio_service.hpp"
-#include "citrine_eclipse_mirage/net/session_handler.hpp"
-#include "citrine_eclipse_mirage/net/session_routing.hpp"
-#include "citrine_eclipse_mirage/runtime/startup.hpp"
-#include "citrine_eclipse_mirage/runtime/libraries.hpp"
-#include "citrine_eclipse_mirage/platform/callback_lock.hpp"
-#include "citrine_eclipse_mirage/platform/hook_transaction.hpp"
+#include "laureondo/codec/crypto.hpp"
+#include "laureondo/core/protocol_identity.hpp"
+#include "laureondo/net/asio_service.hpp"
+#include "laureondo/net/session_handler.hpp"
+#include "laureondo/net/session_routing.hpp"
+#include "laureondo/runtime/startup.hpp"
+#include "laureondo/runtime/libraries.hpp"
+#include "laureondo/platform/callback_lock.hpp"
+#include "laureondo/platform/hook_transaction.hpp"
 #include <algorithm>
 #include <MinHook.h>
 #include <atomic>
@@ -46,7 +46,7 @@ int apply(){return MH_OK;}
 int disable(void*){++disables;return mode==1?MH_ERROR_MEMORY_PROTECT:MH_OK;}
 int release(){++releases;return mode==3?MH_ERROR_MEMORY_PROTECT:MH_OK;}
 }
-namespace citrine_eclipse_mirage {bool fixture_threads_outside_module(){
+namespace laureondo {bool fixture_threads_outside_module(){
     if(fixture::fail_next_scan.exchange(0,std::memory_order_acq_rel))return false;
     return fixture::mode!=4;
 }}
@@ -66,11 +66,11 @@ namespace citrine_eclipse_mirage {bool fixture_threads_outside_module(){
 #undef MH_DisableHook
 #undef MH_Uninitialize
 #include "src/platform/hook_native_callbacks.cpp"
-namespace fixture {std::unique_ptr<citrine_eclipse_mirage::native::Lease> held_call;}
+namespace fixture {std::unique_ptr<laureondo::native::Lease> held_call;}
 // Observe the real startup calls before readiness publication. All application
 // headers above are included before this local type substitution. Asio retains
 // its ordinary Execution base reference; no shipping class or DLL is changed.
-namespace citrine_eclipse_mirage::execution {
+namespace laureondo::execution {
 class StartupExecution:public Execution {
     FlagReferences flags_;
 public:
@@ -114,7 +114,7 @@ void after_file_recovery() {
 #undef external_threads_outside_module
 #undef Execution
 
-namespace citrine_eclipse_mirage::application {
+namespace laureondo::application {
 class FixtureApplication {
     struct Directory {
         std::filesystem::path path=std::filesystem::temp_directory_path()/
@@ -185,7 +185,7 @@ extern "C" __declspec(dllexport) void FixtureMode(unsigned mode){
     fixture::mode=mode;
     if(mode==5)fixture::fail_next_scan=1;
     if(mode==6)fixture::fail_after_file_recovery.store(1,std::memory_order_release);
-    if(mode==2)fixture::held_call=std::make_unique<citrine_eclipse_mirage::native::Lease>();
+    if(mode==2)fixture::held_call=std::make_unique<laureondo::native::Lease>();
     else fixture::held_call.reset();
 }
 extern "C" __declspec(dllexport) void FixtureReleaseWorker(){fixture::release_before_loop=1;}
@@ -201,8 +201,8 @@ extern "C" __declspec(dllexport) void FixtureReleaseFailureWait(){
 extern "C" __declspec(dllexport) unsigned FixtureValue(unsigned key){
     switch(key){case 0:return fixture::ready;case 1:return fixture::attempts;
     case 2:return fixture::created;case 3:return fixture::destroyed;case 4:return fixture::disables;
-    case 5:return fixture::releases;case 6:return citrine_eclipse_mirage::native::is_bound();
-    case 7:return static_cast<unsigned>(citrine_eclipse_mirage::native::active_calls());
+    case 5:return fixture::releases;case 6:return laureondo::native::is_bound();
+    case 7:return static_cast<unsigned>(laureondo::native::active_calls());
     case 8:return fixture::held_before_loop.load(std::memory_order_acquire);
     case 9:return fixture::file_recovery_visits.load(std::memory_order_acquire);
     case 10:return fixture::requested_file_recovery_visits.load(std::memory_order_acquire);

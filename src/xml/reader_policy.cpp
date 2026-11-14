@@ -9,7 +9,7 @@
 #include <unordered_set>
 #include <vector>
 
-namespace citrine_eclipse_mirage::xml_reader_bridge::detail {
+namespace laureondo::xml_reader_bridge::detail {
 namespace {
 bool space(unsigned char c){return c==' '||(c>=9&&c<=13);}
 bool name_start(unsigned char c){return c>=128||(c>='A'&&c<='Z')||(c>='a'&&c<='z')||c==':'||c=='_';}

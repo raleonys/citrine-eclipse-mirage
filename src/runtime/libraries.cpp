@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/libraries.hpp"
+#include "laureondo/runtime/libraries.hpp"
 #include <climits>
 
-namespace citrine_eclipse_mirage::system_services::libraries {
+namespace laureondo::system_services::libraries {
 Conversion convert_wide_048b30(SystemCalls& os, std::uint32_t codepage,
     const wchar_t* input, int count, char* output, int capacity) {
     int converted;
@@ -95,4 +95,4 @@ void unload_035ab0(SystemCalls& os, const State& state) {
         if (entries[i] != 0) os.free_library(entries[i]);
     }
 }
-} // namespace citrine_eclipse_mirage::system_services::libraries
+} // namespace laureondo::system_services::libraries

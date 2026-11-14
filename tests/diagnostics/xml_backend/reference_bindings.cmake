@@ -4,11 +4,11 @@
 # generated copies; never rename the pinned checkout or its vendor sources.
 function(xml_bind_legacy_reference variable)
   set(_xml_bound "${${variable}}")
-  string(REPLACE "#include \"preloader_l/" "#include \"citrine_eclipse_mirage/"
+  string(REPLACE "#include \"preloader_l/" "#include \"laureondo/"
     _xml_bound "${_xml_bound}")
-  string(REPLACE "preloader_l::" "citrine_eclipse_mirage::"
+  string(REPLACE "preloader_l::" "laureondo::"
     _xml_bound "${_xml_bound}")
-  string(REPLACE "using namespace preloader_l;" "using namespace citrine_eclipse_mirage;"
+  string(REPLACE "using namespace preloader_l;" "using namespace laureondo;"
     _xml_bound "${_xml_bound}")
   set(${variable} "${_xml_bound}" PARENT_SCOPE)
 endfunction()

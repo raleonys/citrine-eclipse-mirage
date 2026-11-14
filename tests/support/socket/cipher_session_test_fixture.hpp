@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/net/transport_cipher_session.hpp"
+#include "laureondo/net/transport_cipher_session.hpp"
 #include "tests/support/socket/prefix_cipher_test_fixture.hpp"
-#include "citrine_eclipse_mirage/codec/crypto_constants.hpp"
+#include "laureondo/codec/crypto_constants.hpp"
 
 namespace session_cipher_test {
-namespace s=citrine_eclipse_mirage::socket;namespace c=citrine_eclipse_mirage::crypto;namespace m=citrine_eclipse_mirage::messages;
+namespace s=laureondo::socket;namespace c=laureondo::crypto;namespace m=laureondo::messages;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Time:c::TimeSource{std::int64_t unix_seconds_05eeb8()override{throw std::runtime_error("time must not be queried by response-key derivation");}};
 struct Effects:core_test::Effects{int atoi_05ee08(std::string_view value)override{return std::stoi(std::string(value));}};
@@ -21,5 +21,5 @@ struct Api:cipher_test::Api {
 inline std::string challenge_xml(std::string_view key,std::string_view version){return "<LSX><Request id=\"bridge\" recipient=\"fixture\"><ChallengeResponse key=\""+std::string(key)+"\""+(version.empty()?std::string{}:" version=\""+std::string(version)+"\"")+"/></Request></LSX>";}
 inline std::string challenge_answer(std::string_view response){return "<LSX>\n    <Response id=\"bridge\" sender=\"fixture\">\n        <ChallengeAccepted response=\""+std::string(response)+"\"/>\n    </Response>\n</LSX>\n";}
 inline std::string response_hex(std::string key){c::Cipher fixed;fixed.set_fixed_key_084c98();check(fixed.encrypt_042610(key),"independent challenge reference fixed encryption");return core_test::hex(key);}
-inline c::Key selected_key(std::string_view response,std::string_view version){if(!version.empty()&&std::stoi(std::string(version))<=2)return citrine_eclipse_mirage::crypto::constants::fixed_key;Time time;c::Random random{time};return random.key_from_response_034c30(response);}
+inline c::Key selected_key(std::string_view response,std::string_view version){if(!version.empty()&&std::stoi(std::string(version))<=2)return laureondo::crypto::constants::fixed_key;Time time;c::Random random{time};return random.key_from_response_034c30(response);}
 } // namespace session_cipher_test

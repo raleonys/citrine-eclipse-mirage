@@ -42,9 +42,9 @@ path, enumeration policy or public API is changed by this supplement.
 The current transform also selects `ACTION_DISABLE` for a single-hook disable
 (D326-F0006 / PR #19). The public mutation cleanup barriers described below
 are also included. Current adapted patch script SHA-256:
-`b99c83d085ba2af558c2c0536c1cb6e2ce5245c7ca369ce3f6f8bd310f8372cb`.
+`95877f3dd33307516a7535092fc890f2b7b812a33ef061e0ac216771b93e1c5a`.
 Current patched `hook.c` SHA-256:
-`c915c65764c72d30e022a60696d916542a31de2964d57cbf032e81740383194e`.
+`2bdd1a2a76b2451b5994edc332dbe1addd203e5ecbebe3b1693989c80765a124`.
 These are the active values in `metadata/HOOK_ENGINE_PATCH.json`.
 
 Before these barriers, the active script/output hashes were
@@ -219,7 +219,7 @@ retains unresolved resources until the isolated test child exits.
 The same C++ fixture is also linked to a separate build-only stale-action control.
 `hook_real_peer_control.py` accepts only the exact current hook SHA, reverses the
 single action-selection correction while keeping all five cleanup barriers, and
-requires the exact `021f5d42c3687eaaa2229a4a7ae893315ab50993dbb742e8256e43567f697337`
+requires the exact `96a3dc171af489afb76cdf0a49988fa8291cddccb4743980bf7df54b2f60ffcf`
 counterfactual SHA before writing under `build/…/test_controls/`. This is a pinned
 one-action control, not the byte-exact older historical engine. It does not modify the verified
 engine copy or vendor tree. `hook_real_peer_stale_control` succeeds only when

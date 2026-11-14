@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_recycle_storage.hpp"
+#include "laureondo/net/transport_recycle_storage.hpp"
 #include <algorithm>
 #include <iostream>
 #include <map>
@@ -8,8 +8,8 @@
 #include <type_traits>
 #include <vector>
 
-namespace s=citrine_eclipse_mirage::socket;
-namespace srv=citrine_eclipse_mirage::server;
+namespace s=laureondo::socket;
+namespace srv=laureondo::server;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

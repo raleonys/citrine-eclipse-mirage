@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/achievement_runtime.hpp"
-#include "citrine_eclipse_mirage/xml/memory_printer.hpp"
-#include "citrine_eclipse_mirage/core/paths.hpp"
+#include "laureondo/runtime/achievement_runtime.hpp"
+#include "laureondo/xml/memory_printer.hpp"
+#include "laureondo/core/paths.hpp"
 #include <stdexcept>
 
-namespace citrine_eclipse_mirage::achievement_runtime {
+namespace laureondo::achievement_runtime {
 namespace {
 class WriteOnlyReader final:public xml::AttributeReader {
     const char* attribute(handlers::Request,const char*) override {
@@ -65,4 +65,4 @@ content_handlers::StateReferences bind_state(configuration::State& state,
         state.default_avatar,state.user_directory,state.last_avatar_path,online,
         saved_avatar_size,mutex,events};
 }
-} // namespace citrine_eclipse_mirage::achievement_runtime
+} // namespace laureondo::achievement_runtime

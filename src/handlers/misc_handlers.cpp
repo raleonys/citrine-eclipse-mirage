@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/handlers/misc_handlers.hpp"
+#include "laureondo/handlers/misc_handlers.hpp"
 #include <exception>
 #include <limits>
 
-namespace citrine_eclipse_mirage::misc_handlers {
+namespace laureondo::misc_handlers {
 static bool response(Xml& xml,const char* element,const char* key,const char* value) {
     xml.open_004080(element,false);
     xml.attribute_005560(key,value);
@@ -119,4 +119,4 @@ bool query_offers_031ec0(Xml& xml) {
     xml.close_virtual_48(false);
     return true;
 }
-} // namespace citrine_eclipse_mirage::misc_handlers
+} // namespace laureondo::misc_handlers

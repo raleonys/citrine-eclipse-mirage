@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_composed_read.hpp"
+#include "laureondo/net/transport_composed_read.hpp"
 #include <algorithm>
 #include <bit>
 #include <limits>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 constexpr auto npos=std::numeric_limits<std::uint64_t>::max();
 ReceiveBufferString& string_at(std::uintptr_t identity,ComposedReadContext& context){
@@ -110,4 +110,4 @@ void ComposedReadEffects::receive_body_025c40(ReceiveHandler& h,Error& error,std
     if(!read_ || &read_->completion!=this)throw UnsupportedInput("Composed receive context must be bound to these completion effects");
     composed_receive_025c40(h,error,bytes,flag,*read_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

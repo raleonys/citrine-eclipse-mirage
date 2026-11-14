@@ -9,8 +9,8 @@ import subprocess
 import sys
 import tempfile
 
-CURRENT_SHA256 = 'c915c65764c72d30e022a60696d916542a31de2964d57cbf032e81740383194e'
-STALE_SHA256 = '021f5d42c3687eaaa2229a4a7ae893315ab50993dbb742e8256e43567f697337'
+CURRENT_SHA256 = '2bdd1a2a76b2451b5994edc332dbe1addd203e5ecbebe3b1693989c80765a124'
+STALE_SHA256 = '96a3dc171af489afb76cdf0a49988fa8291cddccb4743980bf7df54b2f60ffcf'
 ANCHOR = b'Freeze(&threads, pos, enable ? ACTION_ENABLE : ACTION_DISABLE)'
 STALE = b'Freeze(&threads, pos, ACTION_ENABLE)'
 MISMATCH = 'SINGLE_DISABLE_IP_MISMATCH: real IP retained the trampoline/relay address'

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_async_receive.hpp"
+#include "laureondo/net/transport_async_receive.hpp"
 #include <algorithm>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 IocpSchedulerEntry& receive_scheduler(AsyncReceiveService& service){
     if(!service.scheduler_08)throw UnsupportedInput("Native receive scheduler has no live projection");
@@ -83,4 +83,4 @@ void AsyncReceiveEffectsAdapter::construct_environment_023dd0(IoHandlerEnvironme
     if(!source)throw UnsupportedInput("Receive environment source identity has no live projection");
     construct_io_environment_023dd0(destination,*source,sentinels_,constructor_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

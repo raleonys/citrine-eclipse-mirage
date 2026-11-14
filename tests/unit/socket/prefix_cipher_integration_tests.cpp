@@ -46,7 +46,7 @@ struct Loop {
     s::QueuedWriteOwner owner{0x12000,&f.m.base.owner,&f.queue,&streams[0]};
     std::array<s::QueuedWriteOwnerBinding,1> owners{{{0x12000,&owner}}};
     s::WriteFinishContext finished{effects,finish,f.owners,{},containers.bytes.headers};
-    citrine_eclipse_mirage::crypto::Cipher schedule,oracle;s::PrefixCipherState cipher{2,schedule,cipher_test::test_iv};
+    laureondo::crypto::Cipher schedule,oracle;s::PrefixCipherState cipher{2,schedule,cipher_test::test_iv};
     s::PrefixCipherBlocksAdapter blocks{containers.bytes.memory};s::PrefixCipherContext cipher_context{native.strings,blocks};
     std::array<s::PrefixCipherBinding,1> cipher_bindings{{{0x120f0,&cipher}}};cipher_test::Api cipher_api{cipher_context,cipher_bindings,native.api};
     s::NativeMessageContext selected{native.bindings,core.show,native.strings,native.mutation,native.locals,cipher_api};

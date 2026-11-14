@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/execution.hpp"
+#include "laureondo/runtime/execution.hpp"
 #include <bit>
 #include <limits>
 #include <atomic>
 
-namespace citrine_eclipse_mirage::execution {
+namespace laureondo::execution {
 namespace {
 std::int64_t wrap_add(std::int64_t a, std::int64_t b) {
     return std::bit_cast<std::int64_t>(static_cast<std::uint64_t>(a) + static_cast<std::uint64_t>(b));

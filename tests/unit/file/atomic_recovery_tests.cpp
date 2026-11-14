@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/core/atomic_files.hpp"
+#include "laureondo/core/atomic_files.hpp"
 #include <array>
 #include <iostream>
 #include <map>
@@ -10,8 +10,8 @@
 #include <vector>
 
 namespace {
-namespace io=citrine_eclipse_mirage::file;
-using Path=citrine_eclipse_mirage::configuration::Path;
+namespace io=laureondo::file;
+using Path=laureondo::configuration::Path;
 using Files=std::map<Path,std::string>;
 const std::array<Path,4> targets{u"a",u"b",u"c",u"d"};
 const std::array<std::string,4> original{std::string("old-a\0kept",10),"","old-c","old-d"};

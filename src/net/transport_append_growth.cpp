@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_append_growth.hpp"
+#include "laureondo/net/transport_append_growth.hpp"
 #include <algorithm>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 void word(std::span<std::uint8_t> bytes,std::uint64_t value){for(unsigned i=0;i<8;++i)bytes[i]=static_cast<std::uint8_t>(value>>(i*8));}
 std::uint64_t word(std::span<const std::uint8_t> bytes){std::uint64_t value=0;for(unsigned i=0;i<8;++i)value|=std::uint64_t{bytes[i]}<<(i*8);return value;}
@@ -61,4 +61,4 @@ void MessageAppendApi::grow_nul_012350(ReceiveBufferString& value,std::uint64_t 
 void MessageAppendApi::grow_append_007e30(ReceiveBufferString& value,std::uint64_t extra,std::uint64_t hint,std::uintptr_t source,std::uint64_t count){
     grow_append_bytes_007e30(value,extra,hint,source,count,strings_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

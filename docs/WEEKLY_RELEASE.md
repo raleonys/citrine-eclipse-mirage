@@ -17,8 +17,8 @@ Minor and patch may be 0..9 only. On patch 9, increment minor and reset patch: `
 
 Each new release uploads exactly two files. For example, tag `3.2.7-ERINTHAR` has:
 
-- `Citrine_Eclipse_Mirage_3.2.7_ERINTHAR.zip`: exactly three files at the archive root: validated `citrine_eclipse_mirage.dll`, `citrine_eclipse_mirage.dll.sha256` (the DLL's checksum), and the project's `LICENSE`.
-- `Citrine_Eclipse_Mirage_3.2.7_ERINTHAR.zip.sha256`: the SHA-256 checksum of that ZIP, with its exact filename.
+- `Laureondo_3.2.7_ERINTHAR.zip`: exactly three files at the archive root: validated `laureondo.dll`, `laureondo.dll.sha256` (the DLL's checksum), and the project's `LICENSE`.
+- `Laureondo_3.2.7_ERINTHAR.zip.sha256`: the SHA-256 checksum of that ZIP, with its exact filename.
 
 GitHub supplies the automatic **Source code (zip)** and **Source code (tar.gz)** links for the release tag. Do not upload an additional source ZIP, source checksum, receipt or test log. The binary ZIP has no other files or directories: receipts, publication status, test evidence and separate vendor license files stay outside it. Third-party license files remain intact in the repository's source archives.
 
@@ -49,13 +49,13 @@ Completed release notes contain the source identity, validated build summary, do
 
 This policy applies to future candidates. Published `3.2.6-TALVOR` assets and earlier historical artifacts are retained unchanged; historical Brownfield `preloader_l_...FINAL_RELEASE.zip` artifacts use their separate former grammar.
 
-Source QA, portable CTest, Windows Native MSVC, Production/Golden six gates and finalized DLL acceptance must complete on one source SHA before marking a draft complete. The plan supplies its semantic version to both Windows builds through `CITRINE_ECLIPSE_MIRAGE_VERSION`; matching build receipts are required before bundling. `citrine_eclipse_mirage.dll` carries Citrine Eclipse Mirage VERSIONINFO with identical numeric file/product versions (x,y,z,0) and string versions (x.y.z). Public C exports, CRT, SDK protocol and runtime behavior are unchanged. Only the owner publishes the draft after separate game acceptance.
+Source QA, portable CTest, Windows Native MSVC, Production/Golden six gates and finalized DLL acceptance must complete on one source SHA before marking a draft complete. The plan supplies its semantic version to both Windows builds through `LAUREONDO_VERSION`; matching build receipts are required before bundling. `laureondo.dll` carries Laureondo VERSIONINFO with identical numeric file/product versions (x,y,z,0) and string versions (x.y.z). Public C exports, CRT, SDK protocol and runtime behavior are unchanged. Only the owner publishes the draft after separate game acceptance.
 
 ## Local build version upkeep
 
 The committed `default_project_version` and its release-tag provenance in
 `metadata/BRANDING_AND_IDENTITY.json` identify the default for local and offline
-source-archive builds. Explicit `CITRINE_ECLIPSE_MIRAGE_VERSION` values still
+source-archive builds. Explicit `LAUREONDO_VERSION` values still
 override it for release candidates and the corresponding Golden checks/receipts.
 
 After a stable release is published, **Refresh local release version** reads

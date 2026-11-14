@@ -355,7 +355,7 @@ class BadgeTests(unittest.TestCase):
 
     def test_checksum_badge_requires_the_matching_uploaded_zip_and_sidecar(self):
         api = API()
-        name = 'Citrine_Eclipse_Mirage_3.2.7_ERINTHAR.zip'
+        name = 'Laureondo_3.2.7_ERINTHAR.zip'
         api.release['assets'] = [dict(name=name, state='uploaded', size=100),
                                  dict(name=name+'.sha256', state='uploaded', size=108)]
         self.assertIn('Checksums: SHA-256', badges.live_images(api, REPOSITORY)['checksums.svg'])
@@ -368,6 +368,16 @@ class BadgeTests(unittest.TestCase):
             with self.subTest(problem=problem):
                 self.assertFalse(badges.checksum_available(bad))
         self.assertIsNone(badges.checksum_available(None))
+
+    def test_historical_release_checksum_pair_survives_project_rename(self):
+        release = API().release
+        old = 'Citrine_Eclipse_Mirage_3.2.7_ERINTHAR.zip'
+        new = 'Laureondo_3.2.7_ERINTHAR.zip'
+        release['assets'] = [dict(name=old, state='uploaded', size=100),
+                             dict(name=old+'.sha256', state='uploaded', size=108)]
+        self.assertTrue(badges.checksum_available(release))
+        release['assets'][1]['name'] = new + '.sha256'
+        self.assertFalse(badges.checksum_available(release))
 
     def test_only_exact_previous_nine_eleven_and_twelve_file_trees_can_upgrade(self):
         rendered = badges.images(None, None)

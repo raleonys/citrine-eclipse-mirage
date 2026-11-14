@@ -188,7 +188,7 @@ def validate_profile(folder, profile, manifest, source, version=None):
             raise ValueError('Missing build evidence: ' + name)
     if profile == 'native':
         return {'tests': junit(folder / 'CTEST_RESULTS.xml')}
-    dll = folder / 'dist/citrine_eclipse_mirage.dll'
+    dll = folder / 'dist/laureondo.dll'
     digest = sha(dll)
     verify_sidecar(dll)
     dist = load(folder / 'dist/DIST_RECEIPT.json')
@@ -238,7 +238,7 @@ def capture(root, profile, build, output, source):
         shutil.copyfile(build / 'golden/GOLDEN_REPORT.json', folder / 'GOLDEN_REPORT.json')
         dist = folder / 'dist'
         dist.mkdir()
-        for name in ('citrine_eclipse_mirage.dll', 'citrine_eclipse_mirage.dll.sha256', 'DIST_RECEIPT.json'):
+        for name in ('laureondo.dll', 'laureondo.dll.sha256', 'DIST_RECEIPT.json'):
             shutil.copyfile(root / 'dist' / name, dist / name)
     manifest = sha(root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')
     write(folder / 'EVIDENCE_IDENTITY.json',
@@ -274,10 +274,10 @@ def bundle(root, payload, output):
                'source_zip_sha256': sha(source), 'game_acceptance': 'NOT_RUN',
                'publication': False}
     dist_files = {path.name: path for path in (payload / 'production/dist').iterdir() if path.is_file()}
-    if set(dist_files) != {'citrine_eclipse_mirage.dll', 'citrine_eclipse_mirage.dll.sha256', 'DIST_RECEIPT.json'}:
+    if set(dist_files) != {'laureondo.dll', 'laureondo.dll.sha256', 'DIST_RECEIPT.json'}:
         raise ValueError('Unexpected runtime payload')
-    files = {'citrine_eclipse_mirage.dll': dist_files['citrine_eclipse_mirage.dll'],
-             'citrine_eclipse_mirage.dll.sha256': dist_files['citrine_eclipse_mirage.dll.sha256'],
+    files = {'laureondo.dll': dist_files['laureondo.dll'],
+             'laureondo.dll.sha256': dist_files['laureondo.dll.sha256'],
              'LICENSE': root / 'LICENSE'}
     # Refuse malformed or aliased inputs before claiming the fresh output path.
     for path in files.values():

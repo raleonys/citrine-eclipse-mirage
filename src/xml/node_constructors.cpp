@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/node_constructors.hpp"
+#include "laureondo/xml/node_constructors.hpp"
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address){
     const auto bytes=memory.view(address,8);std::uint64_t value=0;
@@ -47,4 +47,4 @@ std::uintptr_t NodeConstructorEffects::construct_001610(std::uintptr_t document,
 std::uintptr_t NodeConstructorEffects::construct_001690(std::uintptr_t document,std::uintptr_t pool){return construct_node_001690(document,pool,constructors_);}
 std::uintptr_t NodeConstructorEffects::construct_001720(std::uintptr_t document,std::uintptr_t pool){return construct_node_001720(document,pool,constructors_);}
 std::uintptr_t NodeConstructorEffects::construct_0017b0(std::uintptr_t document,std::uintptr_t pool){return construct_node_0017b0(document,pool,constructors_);}
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

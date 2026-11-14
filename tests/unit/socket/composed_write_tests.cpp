@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_composed_write_native.hpp"
+#include "laureondo/net/transport_composed_write_native.hpp"
 #include <functional>
 #include <iostream>
 #include <memory>
 #include <vector>
-namespace s=citrine_eclipse_mirage::socket;
+namespace s=laureondo::socket;
 namespace {
 unsigned checks=0;void check(bool x,const char* why){++checks;if(!x)throw std::runtime_error(why);}
 [[noreturn]]void unexpected(){throw std::logic_error("Unexpected synthetic composed write dependency");}

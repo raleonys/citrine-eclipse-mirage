@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/config/application.hpp"
-#include "citrine_eclipse_mirage/runtime/online.hpp"
+#include "laureondo/config/application.hpp"
+#include "laureondo/runtime/online.hpp"
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace {
 int checks=0;
 void require(bool ok,const char* label){++checks;if(!ok)throw std::runtime_error(label);}
@@ -428,7 +428,7 @@ void file_path_and_native(const std::filesystem::path& dir) {
     deps.fail_log=true;rejects<std::runtime_error>([&]{config_application::load_and_apply(s,false,deps,files);},"log exception precedes apply");
     require(s.username=="override-user","log failure leaves scalars");deps.fail_log=false;
     files.initial=1;auto empty=config_application::read_config2(u"ignored",files);require(empty.children.empty(),"initial-state failure empty value");files.initial=0;
-#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_CONFIG_APPLICATION_TESTS)
+#if !defined(LAUREONDO_PORTABLE_CONFIG_APPLICATION_TESTS)
     std::filesystem::create_directories(dir);const auto path=dir/"application-generated-fixture.cfg";
     {std::ofstream out(path,std::ios::binary|std::ios::trunc);out<<files.over;require(static_cast<bool>(out),"generated native fixture written");}
     file::NativeFactory native;auto own=config_application::read_config2(path.u16string(),native);

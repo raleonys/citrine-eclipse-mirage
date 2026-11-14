@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "../../src/runtime/application_internal.hpp"
-#include "citrine_eclipse_mirage/config/application.hpp"
-#include "citrine_eclipse_mirage/core/paths.hpp"
-#include "citrine_eclipse_mirage/codec/crypto.hpp"
-#include "citrine_eclipse_mirage/core/token_constants.hpp"
+#include "laureondo/config/application.hpp"
+#include "laureondo/core/paths.hpp"
+#include "laureondo/codec/crypto.hpp"
+#include "laureondo/core/token_constants.hpp"
 #include <map>
 #include <algorithm>
 #include <array>
@@ -65,7 +65,7 @@ int WINAPI convert(UINT cp,DWORD flags,LPCCH input,int size,LPWSTR output,int ca
 #undef MultiByteToWideChar
 #include "../../src/runtime/application_environment.cpp"
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace fs=std::filesystem;
 namespace {
 unsigned checks=0;

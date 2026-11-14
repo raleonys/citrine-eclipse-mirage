@@ -33,9 +33,9 @@ def _owned_link_source(root: Path, candidate: Path):
 
 
 def normalized_link_source(build_dir: Path):
-    """Return the target-local source that CMake generated for citrine_eclipse_mirage linking."""
+    """Return the target-local source that CMake generated for laureondo linking."""
     root = build_dir.resolve()
-    target_dir = root / 'CMakeFiles' / 'citrine_eclipse_mirage.dir'
+    target_dir = root / 'CMakeFiles' / 'laureondo.dir'
     for name in ('link.txt', 'build.make'):
         direct = target_dir / name
         if direct.is_file() or direct.is_symlink():
@@ -51,7 +51,7 @@ def normalized_link_source(build_dir: Path):
             if safe is None:
                 continue
             parts = [x.lower() for x in safe.parts]
-            if 'citrine_eclipse_mirage.dir' in parts:
+            if 'laureondo.dir' in parts:
                 candidates.append((safe, name))
     unique = []
     seen = set()
@@ -64,11 +64,11 @@ def normalized_link_source(build_dir: Path):
         return p, kind, []
     if not unique:
         return None, None, [
-            f'normalized citrine_eclipse_mirage link rule not found under: {root} '
+            f'normalized laureondo link rule not found under: {root} '
             '(expected target-local link.txt or build.make)'
         ]
     return None, None, [
-        'ambiguous citrine_eclipse_mirage link rule: ' + ', '.join(str(p) for p, _ in unique)
+        'ambiguous laureondo link rule: ' + ', '.join(str(p) for p, _ in unique)
     ]
 
 
@@ -264,14 +264,14 @@ def self_test():
 
     with tempfile.TemporaryDirectory() as td:
         root = Path(td)
-        target = root / 'CMakeFiles' / 'citrine_eclipse_mirage.dir'
+        target = root / 'CMakeFiles' / 'laureondo.dir'
         target.mkdir(parents=True)
 
         # NMake inline response is part of the selected invocation and needs no
         # unrelated target-local response-file scan.
         (target / 'build.make').write_text(
-            'citrine_eclipse_mirage.unsigned.dll:\n\tlink.exe @<<\n'
-            '/DLL /INCREMENTAL:NO /DEBUG:NONE /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO /OUT:citrine_eclipse_mirage.unsigned.dll\n<<\n',
+            'laureondo.unsigned.dll:\n\tlink.exe @<<\n'
+            '/DLL /INCREMENTAL:NO /DEBUG:NONE /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO /OUT:laureondo.unsigned.dll\n<<\n',
             encoding='utf-8',
         )
         (target / 'stale.rsp').write_text('/INCREMENTAL /DEBUG /LTCG /MANIFEST:EMBED\n', encoding='utf-8')

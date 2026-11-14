@@ -14,7 +14,7 @@ from verify_corvexon_golden_trail import PE, PEError, u16, validate_application_
 def check_source(root):
     root = Path(root)
     policy = json.loads((root / 'metadata/PUBLIC_DLL_ABI.json').read_text())
-    lines = (root / 'exports/citrine_eclipse_mirage.def').read_text().splitlines()
+    lines = (root / 'exports/laureondo.def').read_text().splitlines()
     expected = {name: record['ordinal'] for name, record in policy['exports'].items()}
     actual = {}
     library_seen = False
@@ -23,7 +23,7 @@ def check_source(root):
         line = line.strip()
         if not line or line.startswith(';'):
             continue
-        if line == 'LIBRARY "citrine_eclipse_mirage.unsigned.dll"':
+        if line == 'LIBRARY "laureondo.unsigned.dll"':
             if library_seen or exports_seen:
                 return ['Missing, duplicate or out-of-order application DEF header: LIBRARY']
             library_seen = True

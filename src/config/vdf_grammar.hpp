@@ -6,7 +6,7 @@
 // Rules reconstructed from the documented owner-supplied Config2/VDF evidence.
 // This is the project-specific Config2/VDF byte grammar, not a generic Valve VDF spec.
 // Actions and the owned ParseError mapping live in src/config/parser.cpp.
-namespace citrine_eclipse_mirage::parser::vdf {
+namespace laureondo::parser::vdf {
 namespace peg = tao::pegtl;
 
 // 013640/0141a0: unknown escapes fall through as literal bytes. No UTF-8 check.
@@ -44,4 +44,4 @@ struct Object : peg::seq<ObjectName,peg::star<Separator>,peg::one<'{'>,
 // 014310: root accepts objects and separators; invalid input throws, not false.
 struct Document : peg::until<peg::eof,
     peg::sor<LineEnding,Separator,Object,peg::raise<Document>>> {};
-} // namespace citrine_eclipse_mirage::parser::vdf
+} // namespace laureondo::parser::vdf

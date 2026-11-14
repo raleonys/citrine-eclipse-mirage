@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_handler_dispatch.hpp"
+#include "laureondo/net/transport_handler_dispatch.hpp"
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 OperationStorage& lookup_storage(std::uintptr_t identity,PostedEnvironment environment){
     for(auto& binding:environment.storage)
@@ -190,4 +190,4 @@ void schedule_send_handler_0229d0(IoHandlerEnvironment& environment,SendHandler&
     }
     environment_table(moved).destroy_slot_00(moved);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

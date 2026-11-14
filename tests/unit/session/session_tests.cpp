@@ -1,28 +1,28 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/session_handler.hpp"
-#include "citrine_eclipse_mirage/net/session_routing.hpp"
-#include "citrine_eclipse_mirage/runtime/achievement_runtime.hpp"
-#include "citrine_eclipse_mirage/runtime/event_adapters.hpp"
-#include "citrine_eclipse_mirage/codec/crypto.hpp"
-#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "laureondo/net/session_handler.hpp"
+#include "laureondo/net/session_routing.hpp"
+#include "laureondo/runtime/achievement_runtime.hpp"
+#include "laureondo/runtime/event_adapters.hpp"
+#include "laureondo/codec/crypto.hpp"
+#include "laureondo/xml/reader.hpp"
 #include <algorithm>
 #include <cstdlib>
 #include <deque>
 #include <iostream>
 #include <limits>
 #include <stdexcept>
-namespace msg=citrine_eclipse_mirage::messages;
-namespace srv=citrine_eclipse_mirage::server;
-namespace cfg=citrine_eclipse_mirage::configuration;
-namespace content=citrine_eclipse_mirage::content_handlers;
-namespace info=citrine_eclipse_mirage::handlers;
-namespace misc=citrine_eclipse_mirage::misc_handlers;
-namespace dispatch=citrine_eclipse_mirage::dispatch;
-namespace eq=citrine_eclipse_mirage::event_queue;
-namespace ar=citrine_eclipse_mirage::achievement_runtime;
-namespace crypto=citrine_eclipse_mirage::crypto;
-namespace bridge=citrine_eclipse_mirage::session_bridge;
+namespace msg=laureondo::messages;
+namespace srv=laureondo::server;
+namespace cfg=laureondo::configuration;
+namespace content=laureondo::content_handlers;
+namespace info=laureondo::handlers;
+namespace misc=laureondo::misc_handlers;
+namespace dispatch=laureondo::dispatch;
+namespace eq=laureondo::event_queue;
+namespace ar=laureondo::achievement_runtime;
+namespace crypto=laureondo::crypto;
+namespace bridge=laureondo::session_bridge;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -46,10 +46,10 @@ struct Clock final:ar::Clock {
     std::int64_t time_05eeb8()override{return 946684800;}
     std::optional<ar::BrokenDown> gmtime_05fffc(std::int64_t)override{return ar::BrokenDown{0,0,0,1,0,100,6,0,0};}
 };
-struct Directories final:citrine_eclipse_mirage::achievement_writer::Effects {void create_directories_018e00(const cfg::Path&)override{unused();}};
-struct Files final:citrine_eclipse_mirage::file::Factory {
-    std::unique_ptr<citrine_eclipse_mirage::file::Input> open_input_039f70(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
-    std::unique_ptr<citrine_eclipse_mirage::file::Output> open_output_03a1a0(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
+struct Directories final:laureondo::achievement_writer::Effects {void create_directories_018e00(const cfg::Path&)override{unused();}};
+struct Files final:laureondo::file::Factory {
+    std::unique_ptr<laureondo::file::Input> open_input_039f70(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
+    std::unique_ptr<laureondo::file::Output> open_output_03a1a0(const cfg::Path&,std::uint32_t,std::uint32_t)override{unused();}
 };
 struct ContentEffects final:ar::PersistenceEffects {
     using PersistenceEffects::PersistenceEffects;
@@ -112,8 +112,8 @@ cfg::State fixture_state(){
 struct Fixture {
     cfg::State state=fixture_state();info::Attributes settings;info::Profile profile{};std::uint8_t online=0,pretend=0,encrypted=7,unknown=9,show=1;std::int32_t saved=0;std::string version="fixture-v1";
     Mutex achievement,event_mutex;eq::Guards guards{0,0};Initialization initialization;eq::OwnedStorage storage;eq::Context context{guards,initialization,event_mutex,storage};eq::ContentQueue content_events{context};eq::IgoQueue igo{context};eq::MessageQueue message_events{context};
-    citrine_eclipse_mirage::achievement_storage::Paths paths;Clock clock;ar::HostFormatter formatter;Directories directories;Files files;ContentEffects content_effects{state,paths,clock,formatter,directories,files};
-    citrine_eclipse_mirage::xml_reader_bridge::Backend xml;Information information;NoResponse no_response;Licenses licenses;
+    laureondo::achievement_storage::Paths paths;Clock clock;ar::HostFormatter formatter;Directories directories;Files files;ContentEffects content_effects{state,paths,clock,formatter,directories,files};
+    laureondo::xml_reader_bridge::Backend xml;Information information;NoResponse no_response;Licenses licenses;
     dispatch::Router router;Effects effects;crypto::Cipher cipher,client;crypto::CryptoFactory factory;Time time;crypto::Random random{time};bridge::MessageHandler handler;Transport transport;Scheduler scheduler;srv::Session session;
     Fixture():router({state.game_attributes,settings,profile,online,pretend},ar::bind_state(state,paths,online,saved,achievement,content_events),{xml,information,igo,no_response,content_effects,licenses}),effects(router),handler({encrypted,unknown,show,version,cipher,message_events},xml,factory,random,effects),session(transport,scheduler,handler){
         client.set_fixed_key_084c98();

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_lifecycle.hpp"
+#include "laureondo/net/transport_lifecycle.hpp"
 #include <new>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 void release(Control* control){
     if(control && control->strong.fetch_sub(1,std::memory_order_seq_cst)==1){
@@ -80,4 +80,4 @@ void LifecycleRuntime::reset_cancellation_0237f0(AcceptorState& state){
     replace_owner_0237f0(object_.cancellation,0,factory_);
 }
 void LifecycleRuntime::destroy_socket_024db0(){destroy_024db0(object_,effects_);}
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

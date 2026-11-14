@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_receive_buffer.hpp"
+#include "laureondo/net/transport_receive_buffer.hpp"
 #include <algorithm>
 #include <cstring>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 std::uint64_t read_word(std::span<const std::uint8_t> bytes){
     std::uint64_t value=0;for(unsigned i=0;i<8;++i)value|=std::uint64_t{bytes[i]}<<(i*8);return value;
@@ -106,4 +106,4 @@ void resize_receive_buffer_010040(ReceiveBufferString& value,std::uint64_t new_s
         terminate(tail+static_cast<std::uintptr_t>(extra),context.memory);
     }else grow_receive_buffer_008350(value,extra,0,extra,fill,context);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

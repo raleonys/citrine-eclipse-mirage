@@ -5,7 +5,7 @@
   "wire_value": "10,6,2,31",
   "normalization": "FOUR_NUMERIC_COMPONENTS; DOTS_TO_COMMAS; BUILD_SUFFIX_OMITTED_BY_OWNER",
   "independent_consumer_binary_verification": false,
-  "source_header": "include/citrine_eclipse_mirage/core/protocol_identity.hpp",
+  "source_header": "include/laureondo/core/protocol_identity.hpp",
   "runtime_owner": "const Application::Impl string; existing session version reference",
   "config_override_supported": false,
   "removed_legacy_key": "Emulator/SDK",

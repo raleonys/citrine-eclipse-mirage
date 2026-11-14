@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "../../support/fixture_ascii.hpp"
-#include "citrine_eclipse_mirage/config/configuration.hpp"
+#include "laureondo/config/configuration.hpp"
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
 #include <string>
 
-using namespace citrine_eclipse_mirage::configuration;
+using namespace laureondo::configuration;
 namespace {
 int assertions = 0;
 void require(bool condition, const char* label) {
@@ -20,7 +20,7 @@ template<class F> void rejects_runtime(F operation,const char* label) {
     require(caught,label); // The assertion must be outside the operation's catch.
 }
 Path utf16(std::string_view text) { return {text.begin(), text.end()}; }
-std::string ascii(const Path& path) { return citrine_eclipse_mirage::test_support::fixture_ascii(path); }
+std::string ascii(const Path& path) { return laureondo::test_support::fixture_ascii(path); }
 void fixture_ascii_contract() {
     require(ascii(u"ASCII/fixture")=="ASCII/fixture","ASCII fixture path preserves bytes");
     bool refused=false;

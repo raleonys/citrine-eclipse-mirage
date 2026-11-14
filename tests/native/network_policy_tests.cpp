@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/asio_service.hpp"
-#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
+#include "laureondo/net/asio_service.hpp"
+#include "laureondo/platform/execution_windows.hpp"
 #include <asio.hpp>
 #include <array>
 #include <atomic>
@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include <vector>
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 using namespace std::chrono_literals;
 namespace {
 unsigned checks=0;

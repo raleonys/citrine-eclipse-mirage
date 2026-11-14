@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/net/transport_request_growth.hpp"
+#include "laureondo/net/transport_request_growth.hpp"
 #include "tests/support/socket/request_mutation_test_fixture.hpp"
 
 namespace growth_test {
-namespace s=citrine_eclipse_mirage::socket;namespace b=buffer_test;namespace r=receive_test;
+namespace s=laureondo::socket;namespace b=buffer_test;namespace r=receive_test;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Failure {int code;};
 struct Api:s::RequestGrowthApi {

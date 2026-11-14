@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include <asio.hpp>
-#include "citrine_eclipse_mirage/net/server.hpp"
-#include "citrine_eclipse_mirage/net/session_policy.hpp"
-#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
+#include "laureondo/net/server.hpp"
+#include "laureondo/net/session_policy.hpp"
+#include "laureondo/platform/execution_windows.hpp"
 #include <memory>
 #include <new>
 #define private public
-#include "citrine_eclipse_mirage/net/asio_service.hpp"
+#include "laureondo/net/asio_service.hpp"
 #undef private
 #include <iostream>
 #include <stdexcept>
@@ -32,7 +32,7 @@ public:
 #include "src/net/asio_service.cpp"
 #undef steady_timer
 namespace {
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 using Tcp=asio::ip::tcp;
 using namespace std::chrono_literals;
 unsigned checks=0;

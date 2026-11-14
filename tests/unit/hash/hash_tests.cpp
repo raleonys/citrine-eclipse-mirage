@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/hash/hash.hpp"
+#include "laureondo/hash/hash.hpp"
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
 #include <utility>
 #include <vector>
-using namespace citrine_eclipse_mirage::hash;
+using namespace laureondo::hash;
 namespace {
 std::size_t checks=0;
 void check(bool good) {++checks;if(!good)throw std::runtime_error("hash check failed at "+std::to_string(checks));}

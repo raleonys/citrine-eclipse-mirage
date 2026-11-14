@@ -125,7 +125,7 @@ def verify(root):
             text=(root/name).read_text(encoding='utf-8')
             qualified=re.findall(r'\bnamespace\s+([A-Za-z_]\w*(?:::\w+)+)\s*\{',
                                  mask_cpp_noncode(text))
-            if any(value.split('::',1)[0]!='citrine_eclipse_mirage' for value in qualified):
+            if any(value.split('::',1)[0]!='laureondo' for value in qualified):
                 errors.append('Foreign first-party namespace: '+name)
     return {'status':'FAIL' if errors else 'PASS','files_checked':len(expected),
             'scope':'declared source bytes and project boundaries, not native equivalence or signed authorization',

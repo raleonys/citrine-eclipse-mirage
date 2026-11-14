@@ -6,7 +6,7 @@
 #include <string>
 #include <string_view>
 
-namespace citrine_eclipse_mirage::test_support {
+namespace laureondo::test_support {
 inline std::string fixture_ascii(std::u16string_view value) {
     std::string result;
     result.reserve(value.size());
@@ -17,4 +17,4 @@ inline std::string fixture_ascii(std::u16string_view value) {
     }
     return result;
 }
-} // namespace citrine_eclipse_mirage::test_support
+} // namespace laureondo::test_support

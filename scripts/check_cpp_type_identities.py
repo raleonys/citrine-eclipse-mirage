@@ -96,7 +96,7 @@ def inspect_text(text, filename="<fixture>"):
 
 
 def inspect(root=ROOT):
-    headers = sorted((Path(root) / "include" / "citrine_eclipse_mirage").rglob("*.hpp"))
+    headers = sorted((Path(root) / "include" / "laureondo").rglob("*.hpp"))
     counts = defaultdict(list)
     all_definitions = defaultdict(list)
     errors = []
@@ -105,7 +105,7 @@ def inspect(root=ROOT):
             errors.append(f"Symlinked active header is not accepted: {path}")
             continue
         data = path.read_text(encoding="utf-8")
-        if "namespace citrine_eclipse_mirage::socket" not in code_only(data):
+        if "namespace laureondo::socket" not in code_only(data):
             continue
         definitions, problems = inspect_text(data, path.relative_to(root).as_posix())
         errors.extend(problems)

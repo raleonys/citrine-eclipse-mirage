@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/document_clear.hpp"
+#include "laureondo/xml/document_clear.hpp"
 #include <bit>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width=8){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -78,4 +78,4 @@ void clear_native_document_002e60(std::uintptr_t document,NativeDocumentClearCon
 }
 void DocumentClearEffects::clear_002e60(std::uintptr_t document){clear_native_document_002e60(document,clear_);}
 void DocumentClearEffects::delete_nodes_003110(std::uintptr_t owner){delete_native_nodes_003110(owner,clear_);}
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

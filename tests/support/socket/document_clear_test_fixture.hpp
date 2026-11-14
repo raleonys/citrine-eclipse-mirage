@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/xml/document_clear.hpp"
+#include "laureondo/xml/document_clear.hpp"
 #include "tests/support/socket/native_document_test_fixture.hpp"
 
 namespace clear_test {
-namespace s=citrine_eclipse_mirage::socket;
+namespace s=laureondo::socket;
 using document_test::State;using document_test::Failure;
 using response_test::check;using response_test::checks;
 struct Graph {

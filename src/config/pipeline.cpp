@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/config/pipeline.hpp"
+#include "laureondo/config/pipeline.hpp"
 
-namespace citrine_eclipse_mirage::config_pipeline {
+namespace laureondo::config_pipeline {
 configuration::Node DocumentPipeline::read(const configuration::Path& path) const {
     // read_binary preserves stream initial-state and short-read/NUL-tail behavior.
     // parse already removes exactly ONE UTF-8 BOM. Do not pre-strip or decode.
@@ -39,4 +39,4 @@ configuration::Node ScalarDependencies::load_document(const configuration::Path&
     require_scalar_application(document);
     return document;
 }
-} // namespace citrine_eclipse_mirage::config_pipeline
+} // namespace laureondo::config_pipeline

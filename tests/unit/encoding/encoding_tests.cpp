@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/codec/encoding.hpp"
+#include "laureondo/codec/encoding.hpp"
 #include <algorithm>
 #include <climits>
 #include <deque>
@@ -8,12 +8,12 @@
 #include <stdexcept>
 #include <system_error>
 #include <vector>
-#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ENCODING_TESTS)
+#if !defined(LAUREONDO_PORTABLE_ENCODING_TESTS)
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
 
-namespace enc=citrine_eclipse_mirage::encoding;
+namespace enc=laureondo::encoding;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -87,7 +87,7 @@ void synthetic() {
     bool caught=false;try{(void)enc::filesystem_widen_006d70(std::string_view("x",static_cast<std::size_t>(INT_MAX)+1),too_large,errors);}catch(const Failure& error){caught=error.runtime&&error.code==22;}
     check(caught&&too_large.calls.empty()&&too_large.locale_calls==1,"oversized input guard before buffer access");
 }
-#if !defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ENCODING_TESTS)
+#if !defined(LAUREONDO_PORTABLE_ENCODING_TESTS)
 void native_failed_decodes(enc::NativeCalls& calls) {
     // Win32 can partially write its own destination before returning zero.
     // The adapter commits only successful conversions. Compare failure
@@ -170,7 +170,7 @@ void native() {
 }
 int main(){try{
     synthetic();
-#if defined(CITRINE_ECLIPSE_MIRAGE_PORTABLE_ENCODING_TESTS)
+#if defined(LAUREONDO_PORTABLE_ENCODING_TESTS)
     std::cout<<"PASS: "<<checks<<" controlled encoding checks; native Win32 not executed\n";
 #else
     native();

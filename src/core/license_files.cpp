@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/core/license_files.hpp"
-#include "citrine_eclipse_mirage/core/token.hpp"
+#include "laureondo/core/license_files.hpp"
+#include "laureondo/core/token.hpp"
 #include <cctype>
 #include <exception>
 #include <iomanip>
 #include <sstream>
 #include <stdexcept>
 
-namespace citrine_eclipse_mirage::file {
+namespace laureondo::file {
 namespace {
 class HashInput final:public hash::InputStream {
     std::unique_ptr<Input> stream_;
@@ -78,4 +78,4 @@ void LicenseFiles::log_string_006860(std::string_view text){remaining_.log_strin
 void LicenseFiles::dialog_038bc0(std::string_view title,std::string_view text,std::uint32_t flags){remaining_.dialog_038bc0(title,text,flags);}
 [[noreturn]] void LicenseFiles::exit_05cdc0(std::int32_t code){remaining_.exit_05cdc0(code);std::terminate();}
 [[noreturn]] void LicenseFiles::no_response_02bcd0_04d228(){remaining_.no_response_02bcd0_04d228();std::terminate();}
-} // namespace citrine_eclipse_mirage::file
+} // namespace laureondo::file

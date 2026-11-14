@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_worker_run.hpp"
+#include "laureondo/net/transport_worker_run.hpp"
 #include <bit>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 void stop_worker_02a190(IocpSchedulerEntry& scheduler,WorkerRunApi& api,Api& errors,WorkerRunEffects& effects){
     if(effects.exchange_stop_34(scheduler,1)!=0)return;
     if(effects.exchange_wake_38(scheduler,1)!=0)return;
@@ -61,4 +61,4 @@ void WorkerFunctionEffects::delete_function_slot_00(IocpWorkerFunction& function
 void WorkerFunctionEffects::invoke_function_slot_08(IocpWorkerFunction& function){
     run_worker_function_029890(function,environment_,api_,errors_,effects_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

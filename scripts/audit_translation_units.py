@@ -25,7 +25,7 @@ def symbols(nm, path):
     defined, undefined = set(), set()
     for line in run(nm, '--extern-only', '--format=posix', path).splitlines():
         cells = line.split()
-        if len(cells) < 2 or 'citrine_eclipse_mirage' not in cells[0]:
+        if len(cells) < 2 or 'laureondo' not in cells[0]:
             continue
         name = cells[0].removeprefix('__imp_')
         (undefined if cells[1] == 'U' else defined).add(name)
@@ -70,9 +70,9 @@ def build_report(root, build, config, nm, objdump, readobj):
     production = policy['production_object_sources'] + policy['vdf_sources'] + policy['dll_entry_sources']
     records = {}
     for source in production + policy['reference_sources']:
-        target = ('citrine_eclipse_mirage_reference_objects' if source in ref else
-                  'citrine_eclipse_mirage_vdf_objects' if source in policy['vdf_sources'] else
-                  'citrine_eclipse_mirage' if source in policy['dll_entry_sources'] else 'citrine_eclipse_mirage_objects')
+        target = ('laureondo_reference_objects' if source in ref else
+                  'laureondo_vdf_objects' if source in policy['vdf_sources'] else
+                  'laureondo' if source in policy['dll_entry_sources'] else 'laureondo_objects')
         path = object_path(root, build, target, source)
         defined, undefined = symbols(nm, path)
         sections = run(objdump, '-h', path)
@@ -104,7 +104,7 @@ def build_report(root, build, config, nm, objdump, readobj):
                 refs.update(undefined & ref_providers.keys())
         test_refs[name] = refs
     exports = set()
-    source_api = build / 'citrine_eclipse_mirage.source.dll'
+    source_api = build / 'laureondo.source.dll'
     if source_api.is_file():
         exports = set(re.findall(r'^\s+Name: (.*)$', run(readobj, '--coff-exports', source_api), re.M))
     adjacency = {}

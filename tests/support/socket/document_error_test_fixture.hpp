@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/xml/document_error.hpp"
+#include "laureondo/xml/document_error.hpp"
 #include "tests/support/socket/parse_entry_test_fixture.hpp"
 #include <cstring>
 
 namespace document_error_test {
-namespace s=citrine_eclipse_mirage::socket;
+namespace s=laureondo::socket;
 using parse_entry_test::check;using parse_entry_test::checks;using parse_entry_test::word;using parse_entry_test::put;
 struct Failure{};
 template<class F>void fails(F f){bool caught=false;try{f();}catch(const Failure&){caught=true;}check(caught,"controlled lower failure propagated");}

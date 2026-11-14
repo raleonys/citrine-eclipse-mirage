@@ -31,7 +31,7 @@ jobs:
       - name: Configure focused native hook acceptance
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DLAUREONDO_BUILD_SOURCE_API_DLL=OFF
           if ($LASTEXITCODE -ne 0) { throw 'MSVC hook configure failed' }
       - name: Verify actual generated test target ownership
         run: |

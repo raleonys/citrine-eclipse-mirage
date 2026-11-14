@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 #pragma once
-#include "citrine_eclipse_mirage/router/router.hpp"
+#include "laureondo/router/router.hpp"
 #include <cstdint>
 #include <string>
 #include <vector>
 
 namespace xml_comparison {
-inline std::uint64_t consume_xml(const citrine_eclipse_mirage::messages::XmlNode* root,
-                                 citrine_eclipse_mirage::dispatch::NodeAccess& access) {
+inline std::uint64_t consume_xml(const laureondo::messages::XmlNode* root,
+                                 laureondo::dispatch::NodeAccess& access) {
     std::uint64_t result=1469598103934665603ULL;
     auto add=[&](std::string_view value){for(unsigned char c:value){result^=c;result*=1099511628211ULL;}result^=255;result*=1099511628211ULL;};
     for(auto node=root;node;node=node->next_element()) {

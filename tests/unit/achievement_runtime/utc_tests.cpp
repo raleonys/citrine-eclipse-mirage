@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/achievement_utc.hpp"
+#include "laureondo/runtime/achievement_utc.hpp"
 #include <iostream>
 #include <limits>
 #include <stdexcept>
 #include <vector>
 
-namespace ar=citrine_eclipse_mirage::achievement_runtime;
+namespace ar=laureondo::achievement_runtime;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

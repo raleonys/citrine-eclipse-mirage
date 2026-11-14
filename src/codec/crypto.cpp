@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/codec/crypto.hpp"
-#include "citrine_eclipse_mirage/codec/crypto_constants.hpp"
+#include "laureondo/codec/crypto.hpp"
+#include "laureondo/codec/crypto_constants.hpp"
 #include <algorithm>
 #include <bit>
 #include <limits>
 #include <windows.h>
 
-namespace citrine_eclipse_mirage::crypto {
+namespace laureondo::crypto {
 namespace {
 std::uint8_t multiply(std::uint8_t a,std::uint8_t b){
     std::uint8_t result=0;

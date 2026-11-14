@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_service_registry.hpp"
+#include "laureondo/net/transport_service_registry.hpp"
 #include <array>
 #include <functional>
 #include <iostream>
 #include <vector>
 
-namespace s=citrine_eclipse_mirage::socket;
+namespace s=laureondo::socket;
 namespace {
 unsigned checks=0;
 void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}

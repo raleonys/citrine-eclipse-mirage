@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/config/parser.hpp"
+#include "laureondo/config/parser.hpp"
 #include <array>
 #include <cstdint>
 #include <iostream>
@@ -12,7 +12,7 @@
 // not from another product line. The old implementation stays outside the DLL
 // and this source package. See docs/VDF_PARSER.md for baseline hashes and scope.
 namespace {
-using namespace citrine_eclipse_mirage::parser;
+using namespace laureondo::parser;
 struct Corpus {
     std::uint64_t signature=14695981039346656037ULL;
     std::uint64_t cases=0,accepted=0,rejected=0;

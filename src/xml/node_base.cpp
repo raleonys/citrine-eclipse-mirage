@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/node_base.hpp"
+#include "laureondo/xml/node_base.hpp"
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width=8){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -43,4 +43,4 @@ void destroy_native_node_base_001ea0(std::uintptr_t node,NativeNodeBaseContext& 
     store(memory,node+0x28,0);
 }
 void NodeBaseEffects::destroy_node_base_001ea0(std::uintptr_t node){destroy_native_node_base_001ea0(node,node_base_);}
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

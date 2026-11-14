@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/session_handler.hpp"
-#include "citrine_eclipse_mirage/codec/crypto.hpp"
-#include "citrine_eclipse_mirage/runtime/event_queue.hpp"
-#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "laureondo/net/session_handler.hpp"
+#include "laureondo/codec/crypto.hpp"
+#include "laureondo/runtime/event_queue.hpp"
+#include "laureondo/xml/reader.hpp"
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
 
 namespace {
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 unsigned checks=0;
 void require(bool value,const char* label){++checks;if(!value)throw std::runtime_error(label);}
 struct Queue final:messages::EventQueue {

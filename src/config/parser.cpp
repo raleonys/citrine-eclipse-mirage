@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/config/parser.hpp"
+#include "laureondo/config/parser.hpp"
 #include "vdf_grammar.hpp"
 #include <type_traits>
 #include <utility>
 
-namespace citrine_eclipse_mirage::parser {
+namespace laureondo::parser {
 ParseError::ParseError(ErrorRule r,Position p)
  :std::runtime_error("Config2 grammar mismatch"),rule(r),position(p) {}
 const Node* Node::find(std::string_view key) const {
@@ -136,4 +136,4 @@ bool parse(std::string_view raw,State& state) {
 configuration::Node to_configuration_node(const Node& node,const BinaryIterationOrder& order) {
     std::vector<std::string> path;return convert(node,order,path);
 }
-} // namespace citrine_eclipse_mirage::parser
+} // namespace laureondo::parser

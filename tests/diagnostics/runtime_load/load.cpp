@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 #include "probe.hpp"
-#include "citrine_eclipse_mirage/net/asio_service.hpp"
-#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
-#include "citrine_eclipse_mirage/core/binary_io.hpp"
-#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "laureondo/net/asio_service.hpp"
+#include "laureondo/platform/execution_windows.hpp"
+#include "laureondo/core/binary_io.hpp"
+#include "laureondo/xml/reader.hpp"
 #include <asio.hpp>
 #include <windows.h>
 #include <psapi.h>
@@ -21,7 +21,7 @@
 #include <set>
 #include <thread>
 #include <vector>
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace {
 using Clock=benchmark::Clock;
 namespace fs=std::filesystem;

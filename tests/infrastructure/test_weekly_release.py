@@ -129,15 +129,15 @@ class PlannerTests(unittest.TestCase):
         self.assertEqual(34, len(names))
         self.assertEqual(('TALVOR', 'VESPERKAI', 'COLOZHEM'),
                          (names['3.2.6'], names['3.3.0'], names['3.5.9']))
-        self.assertEqual(('Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip',
-                          'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'),
+        self.assertEqual(('Laureondo_3.2.6_TALVOR_source.zip',
+                          'Laureondo_3.2.6_TALVOR.zip'),
                          release.asset_names('3.2.6-TALVOR'))
 
     def test_duplicate_registry_json_keys_are_rejected(self):
         source = naming.FILE.read_text(encoding='utf-8')
         cases = (
-            ('"schema": "cem.weekly.naming.v1",',
-             '"schema": "spoofed",\n  "schema": "cem.weekly.naming.v1",'),
+            ('"schema": "laureondo.weekly.naming.v1",',
+             '"schema": "spoofed",\n  "schema": "laureondo.weekly.naming.v1",'),
             ('"3.2.6": "TALVOR",',
              '"3.2.6": "UNAPPROVED",\n    "3.2.6": "TALVOR",'),
         )
@@ -243,7 +243,7 @@ class PayloadTests(unittest.TestCase):
     invalid_exit_codes = (None, False, True, 0.0, '', '0', [], {}, 1, -1)
 
     def setUp(self):
-        version_selection = patch.dict('os.environ', {'CITRINE_ECLIPSE_MIRAGE_VERSION': '3.2.6'})
+        version_selection = patch.dict('os.environ', {'LAUREONDO_VERSION': '3.2.6'})
         version_selection.start()
         self.addCleanup(version_selection.stop)
         self.temporary = tempfile.TemporaryDirectory()
@@ -283,7 +283,7 @@ class PayloadTests(unittest.TestCase):
         else:
             dist = folder / 'dist'
             dist.mkdir()
-            dll = dist / 'citrine_eclipse_mirage.dll'
+            dll = dist / 'laureondo.dll'
             dll.write_bytes(b'MZ fixture; not real MSVC or game acceptance')
             release.sidecar(dll)
             digest = release.sha(dll)
@@ -333,7 +333,7 @@ class PayloadTests(unittest.TestCase):
         output=self.base/'captured'
         with patch.object(release,'head',return_value=SOURCE):
             release.capture(root,'production',build,output,SOURCE)
-        self.assertEqual({'citrine_eclipse_mirage.dll','citrine_eclipse_mirage.dll.sha256','DIST_RECEIPT.json'},
+        self.assertEqual({'laureondo.dll','laureondo.dll.sha256','DIST_RECEIPT.json'},
                          {path.name for path in (output/'production/dist').iterdir()})
         self.assertEqual(b'previous receipt retained outside the new package',historical.read_bytes())
         self.assertEqual(self.validate('production'),
@@ -515,7 +515,7 @@ class PayloadTests(unittest.TestCase):
         self.validate('production')
 
     def test_invalid_exit_evidence_cannot_create_assets_or_release_receipts(self):
-        release.package(ROOT, self.payload / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip')
+        release.package(ROOT, self.payload / 'Laureondo_3.2.6_TALVOR_source.zip')
         locations = (
             ('native/BUILD_RECEIPT.json', 'build'),
             ('production/BUILD_RECEIPT.json', 'build'),
@@ -549,7 +549,7 @@ class PayloadTests(unittest.TestCase):
         self.assertEqual(1, receipt['native_tests'])
 
     def test_changed_dll_is_rejected_even_if_it_has_a_new_sidecar(self):
-        dll = self.payload / 'production/dist/citrine_eclipse_mirage.dll'
+        dll = self.payload / 'production/dist/laureondo.dll'
         dll.write_bytes(b'changed DLL')
         release.sidecar(dll)
         with self.assertRaises(ValueError):
@@ -588,7 +588,7 @@ class PayloadTests(unittest.TestCase):
                 self.assertFalse((self.payload / 'RELEASE_RECEIPT.json.sha256').exists())
 
     def test_bundle_ships_exactly_dll_dll_checksum_and_project_license(self):
-        release.package(ROOT, self.payload / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip')
+        release.package(ROOT, self.payload / 'Laureondo_3.2.6_TALVOR_source.zip')
         output = self.base / 'assets'
         with patch.object(release, 'head', return_value=SOURCE):
             receipt = release.bundle(ROOT, self.payload, output)
@@ -597,7 +597,7 @@ class PayloadTests(unittest.TestCase):
         self.assertEqual(len(CHECKS), receipt['source_qa_groups'])
         self.assertNotIn('classification',receipt)
         self.assertEqual('NOT_RUN', receipt['game_acceptance'])
-        binary = output / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'
+        binary = output / 'Laureondo_3.2.6_TALVOR.zip'
         self.assertEqual({binary.name, binary.name + '.sha256'},
                          {path.name for path in output.iterdir()})
         release.verify_sidecar(binary)
@@ -606,15 +606,15 @@ class PayloadTests(unittest.TestCase):
         release.verify_sidecar(self.payload / 'RELEASE_RECEIPT.json')
         self.assertTrue((self.payload / 'native/CTEST_RESULTS.xml').is_file())
         self.assertTrue((self.payload / 'production/GOLDEN_REPORT.json').is_file())
-        with zipfile.ZipFile(output / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip') as archive:
-            self.assertEqual({'citrine_eclipse_mirage.dll', 'citrine_eclipse_mirage.dll.sha256', 'LICENSE'},
+        with zipfile.ZipFile(output / 'Laureondo_3.2.6_TALVOR.zip') as archive:
+            self.assertEqual({'laureondo.dll', 'laureondo.dll.sha256', 'LICENSE'},
                              set(archive.namelist()))
-            self.assertEqual((self.payload / 'production/dist/citrine_eclipse_mirage.dll').read_bytes(),
-                             archive.read('citrine_eclipse_mirage.dll'))
+            self.assertEqual((self.payload / 'production/dist/laureondo.dll').read_bytes(),
+                             archive.read('laureondo.dll'))
             self.assertEqual((ROOT / 'LICENSE').read_bytes(), archive.read('LICENSE'))
-            self.assertEqual(release.sha(self.payload / 'production/dist/citrine_eclipse_mirage.dll')
-                             + '  citrine_eclipse_mirage.dll',
-                             archive.read('citrine_eclipse_mirage.dll.sha256').decode('utf-8').strip())
+            self.assertEqual(release.sha(self.payload / 'production/dist/laureondo.dll')
+                             + '  laureondo.dll',
+                             archive.read('laureondo.dll.sha256').decode('utf-8').strip())
 
     def test_invalid_runtime_member_set_does_not_claim_bundle_output(self):
         # Limit this fixture to output preflight; the successful real ZIP path
@@ -641,7 +641,7 @@ class PayloadTests(unittest.TestCase):
         source = self.payload / source_name
         source.write_bytes(b'synthetic source package fixture')
         release.sidecar(source)
-        original = self.payload / 'production/dist/citrine_eclipse_mirage.dll'
+        original = self.payload / 'production/dist/laureondo.dll'
         target = self.base / 'borrowed-dll'
         target.write_bytes(original.read_bytes())
         original.unlink()
@@ -672,7 +672,7 @@ class DraftTests(unittest.TestCase):
         self.assets.mkdir()
         self.receipt = self.assets.parent / 'evidence/RELEASE_RECEIPT.json'
         self.p = {'ready': True, 'tag': '3.2.6-TALVOR', 'source_sha': SOURCE, 'existing_id': None}
-        binary = self.assets / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'
+        binary = self.assets / 'Laureondo_3.2.6_TALVOR.zip'
         binary.write_bytes(b'fixture package')
         release.sidecar(binary)
         release.write(self.receipt, {
@@ -691,8 +691,8 @@ class DraftTests(unittest.TestCase):
         self.assertEqual('complete', release.state(result)['status'])
         self.assertTrue(self.github.writes[0]['draft'])
         self.assertNotIn('draft', self.github.writes[-1])
-        self.assertEqual({'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip',
-                          'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip.sha256'},
+        self.assertEqual({'Laureondo_3.2.6_TALVOR.zip',
+                          'Laureondo_3.2.6_TALVOR.zip.sha256'},
                          {asset['name'] for asset in result['assets']})
 
     def test_invalid_publication_status_cannot_prepare_a_draft(self):
@@ -714,7 +714,7 @@ class DraftTests(unittest.TestCase):
                          'Game acceptance is NOT RUN', 'Asset preparation is incomplete'):
             self.assertNotIn(leftover, body)
         self.assertIn('Source: `' + SOURCE + '`', body)
-        self.assertIn('Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip', body)
+        self.assertIn('Laureondo_3.2.6_TALVOR.zip', body)
         self.assertIn('## Changes\n\nOwner-reviewed changes.', body)
         self.assertIn('Source code (zip/tar.gz)', body)
         # Publishing changes GitHub's draft flag; the already prepared notes
@@ -821,13 +821,13 @@ class DraftTests(unittest.TestCase):
             self.assertEqual('preparing', release.state(self.github.items[0])['status'])
 
     def test_local_checksum_failure_happens_before_any_external_write(self):
-        (self.assets / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip').write_bytes(b'changed package')
+        (self.assets / 'Laureondo_3.2.6_TALVOR.zip').write_bytes(b'changed package')
         with self.assertRaisesRegex(ValueError, 'Checksum'):
             self.publish()
         self.assertEqual([], self.github.writes)
 
     def test_different_binary_with_valid_sidecar_cannot_reuse_receipt(self):
-        binary = self.assets / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'
+        binary = self.assets / 'Laureondo_3.2.6_TALVOR.zip'
         binary.write_bytes(b'different package with its own checksum')
         release.sidecar(binary)
         with self.assertRaisesRegex(ValueError, 'receipt/binary mismatch'):
@@ -835,7 +835,7 @@ class DraftTests(unittest.TestCase):
         self.assertEqual([], self.github.writes)
 
     def test_extra_source_receipt_and_log_assets_are_rejected_before_writes(self):
-        for name in ('Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip',
+        for name in ('Laureondo_3.2.6_TALVOR_source.zip',
                      'RELEASE_RECEIPT.json', 'RELEASE_RECEIPT.json.sha256', 'build.log'):
             path = self.assets / name
             path.write_bytes(b'internal evidence')

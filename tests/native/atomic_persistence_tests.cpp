@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/core/binary_io.hpp"
-#include "citrine_eclipse_mirage/runtime/event_queue.hpp"
+#include "laureondo/core/binary_io.hpp"
+#include "laureondo/runtime/event_queue.hpp"
 #include <windows.h>
 #include <array>
 #include <filesystem>
@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include <type_traits>
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace io=file;
 namespace fs=std::filesystem;
 static_assert(!std::is_copy_constructible_v<io::AtomicFiles>,

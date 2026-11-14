@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/router/router.hpp"
+#include "laureondo/router/router.hpp"
 #include <deque>
 #include <stdexcept>
 
-namespace citrine_eclipse_mirage::dispatch {
+namespace laureondo::dispatch {
 namespace {
 using Node=messages::XmlNode;
 using Request=handlers::Request;
@@ -98,4 +98,4 @@ bool Router::registered_handler(std::uint32_t rva,const Node& request,messages::
     default:throw std::invalid_argument("Unregistered handler RVA passed to source integration adapter");
     }
 }
-} // namespace citrine_eclipse_mirage::dispatch
+} // namespace laureondo::dispatch

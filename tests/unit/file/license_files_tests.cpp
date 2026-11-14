@@ -1,19 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/core/license_files.hpp"
-#include "citrine_eclipse_mirage/core/token_constants.hpp"
-#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "laureondo/core/license_files.hpp"
+#include "laureondo/core/token_constants.hpp"
+#include "laureondo/xml/reader.hpp"
 #include <filesystem>
 #include <iostream>
 #include <locale>
 #include <stdexcept>
 
-namespace file=citrine_eclipse_mirage::file;
-namespace license=citrine_eclipse_mirage::license;
-namespace crypto=citrine_eclipse_mirage::crypto;
-namespace token=citrine_eclipse_mirage::token;
-namespace xml=citrine_eclipse_mirage::xml;
-namespace reader=citrine_eclipse_mirage::xml_reader_bridge;
+namespace file=laureondo::file;
+namespace license=laureondo::license;
+namespace crypto=laureondo::crypto;
+namespace token=laureondo::token;
+namespace xml=laureondo::xml;
+namespace reader=laureondo::xml_reader_bridge;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -50,7 +50,7 @@ public:
     [[noreturn]] void no_response_02bcd0_04d228()override{throw NoResponse{};}
 };
 class NoAttributes final:public xml::AttributeReader {
-public:const char* attribute(citrine_eclipse_mirage::handlers::Request,const char*)override{unused();}
+public:const char* attribute(laureondo::handlers::Request,const char*)override{unused();}
 };
 std::string encrypted_fixture(std::string_view value) {
     std::string bytes(65,'H');bytes+="<GameToken>";bytes+=value;bytes+="</GameToken>";
@@ -110,7 +110,7 @@ void run(const std::filesystem::path& directory) {
     std::string auth,license_value,exe_hash(40,'0'),content_id="fixture-content";
     std::uint8_t online=0,fake_auth=0,blocked=0;
     std::int32_t attempts=0;
-    citrine_eclipse_mirage::handlers::Attributes game;
+    laureondo::handlers::Attributes game;
     license::Handlers core({auth,online,fake_auth,license_value,expected,exe_hash,content_id,
         dll,dll,base,game,attempts,blocked},binding);
     reader::Backend backend;auto request=backend.parse_c_string("<RequestLicense/>");

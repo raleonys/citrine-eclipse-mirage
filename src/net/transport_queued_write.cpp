@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_queued_write.hpp"
+#include "laureondo/net/transport_queued_write.hpp"
 #include <algorithm>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 QueuedWriteOwner& owner_at(std::uintptr_t identity,QueuedWriteContext& context){
     QueuedWriteOwner* found=nullptr;bool matched=false;
@@ -74,4 +74,4 @@ void start_queued_write_02a500(std::uintptr_t owner_identity,QueuedWriteContext&
 void QueuedWriteApi::next_write_02a500(std::uintptr_t owner_identity){
     start_queued_write_02a500(owner_identity,context_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

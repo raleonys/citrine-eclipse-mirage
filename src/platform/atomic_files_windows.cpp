@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/core/binary_io.hpp"
+#include "laureondo/core/binary_io.hpp"
 #include <windows.h>
 #include <algorithm>
 #include <atomic>
@@ -12,7 +12,7 @@
 #include <vector>
 #include <exception>
 
-namespace citrine_eclipse_mirage::file {
+namespace laureondo::file {
 namespace {
 [[noreturn]] void fail(const char* operation,DWORD error=GetLastError()) {
     throw std::system_error(static_cast<int>(error),std::system_category(),operation);
@@ -172,4 +172,4 @@ void NativeFactory::replace_atomic(std::span<const FileWrite> writes) {
 void NativeFactory::recover_atomic() {
     std::lock_guard lock(atomic_->mutex);atomic_->files.recover();
 }
-} // namespace citrine_eclipse_mirage::file
+} // namespace laureondo::file

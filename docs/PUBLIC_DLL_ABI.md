@@ -4,7 +4,7 @@ Under the owner's latest instruction, Production returned to Brownfield's
 three-export/ordinal layout: **DllMain@1, SURGE@2, DllShutdown@3**.
 `DllWaitReady@4` and `DllServerPort@5`, their implementations, and public
 declarations were removed. C++ source APIs remain in the separate
-`citrine_eclipse_mirage.source.dll` development target.
+`laureondo.source.dll` development target.
 
 The Windows loader invokes `DllMain` through the CRT entrypoint; tools do
 not call it manually. `SURGE` is a RET-only branded import marker.
@@ -39,7 +39,7 @@ Windows/native and game acceptance against the selected commit and DLL using
 The complete contract is in `metadata/PUBLIC_DLL_ABI.json`.
 
 The source DEF guard requires exactly one
-`LIBRARY "citrine_eclipse_mirage.unsigned.dll"` declaration, followed by exactly
+`LIBRARY "laureondo.unsigned.dll"` declaration, followed by exactly
 one `EXPORTS` header before any export entry. Missing, duplicate, reversed or
 misplaced headers fail even when the export names and ordinals would otherwise
 match the ABI record. Blank lines and semicolon comments remain accepted.

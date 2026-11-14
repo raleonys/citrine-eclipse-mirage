@@ -54,7 +54,7 @@ BOOL WINAPI setting(LPCWSTR path,DWORD attributes){if(attributes_failure){SetLas
 #undef GetFileAttributesW
 #undef SetFileAttributesW
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace fs=std::filesystem;
 unsigned checks=0;
 void require(bool b,const char* text){++checks;if(!b)throw std::runtime_error(text);}
