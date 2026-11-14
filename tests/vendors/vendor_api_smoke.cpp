@@ -9,7 +9,7 @@
 #include <stdexcept>
 #include <string>
 #ifdef _WIN32
-#include <MinHook.h>
+#include <MithrilHook.h>
 #endif
 
 int main() {
@@ -32,11 +32,11 @@ int main() {
         if(!document.load_string("<Vendor value='ok'/>")) return 13;
         if(std::string(document.document_element().attribute("value").value())!="ok") return 14;
 #ifdef _WIN32
-        stage="MinHook lifecycle";
-        if(MH_Initialize()!=MH_OK) return 15;
-        if(MH_Uninitialize()!=MH_OK) return 16;
+        stage="MithrilHook lifecycle";
+        if(MTH_Initialize()!=MTH_OK) return 15;
+        if(MTH_Uninitialize()!=MTH_OK) return 16;
 #endif
-        std::cout << "PASS: supplied vendor API fixture (Asio, pugixml; standard filesystem; MinHook lifecycle on Windows); PEGTL has a separate toolchain probe; not production integration\n";
+        std::cout << "PASS: supplied vendor API fixture (Asio, pugixml; standard filesystem; MithrilHook lifecycle on Windows); PEGTL has a separate toolchain probe; not production integration\n";
         return 0;
     } catch(const std::system_error& error) {
         std::cerr << stage << ": " << error.what() << "; code=" << error.code().value()

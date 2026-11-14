@@ -20,9 +20,7 @@ import project_files
 import package_source
 import extract_source
 import restore_vendor_links
-import prepare_hook_engine
 import hook_real_peer_control as peer_control
-import hook_cleanup_control as cleanup_control
 
 
 class VendorTests(unittest.TestCase):
@@ -65,71 +63,9 @@ class VendorTests(unittest.TestCase):
                         'UNAVAILABLE' if expected == 77 else 'INVALID',
                         completed.stdout)
 
-    def test_cleanup_controls_remove_only_one_guard_from_exact_verified_source(self):
-        cmake = shutil.which('cmake')
-        if not cmake:
-            self.skipTest('CMake needed for the actual verified engine copy')
-        parent = ROOT / 'build/qa'
-        parent.mkdir(parents=True, exist_ok=True)
-        with tempfile.TemporaryDirectory(dir=parent, prefix='cleanup-control-') as tmp:
-            stage = Path(tmp) / 'engine'
-            prepare_hook_engine.prepare(ROOT, stage, cmake)
-            source = stage / 'src/hook.c'
-            current = source.read_bytes()
-            self.assertEqual(current.count(cleanup_control.GUARD), 5)
-            for mode, (_, expected, _) in cleanup_control.CONTROLS.items():
-                with self.subTest(mode=mode):
-                    mutant = cleanup_control.controlled_source(current, mode)
-                    self.assertEqual(hashlib.sha256(mutant).hexdigest(), expected)
-                    self.assertEqual(mutant.count(cleanup_control.GUARD), 4)
-                    self.assertEqual(current, source.read_bytes())
-                    for bad in (current + b'X', mutant):
-                        with self.assertRaises(ValueError):
-                            cleanup_control.controlled_source(bad, mode)
-                    output = Path(tmp) / mode / 'src/hook.c'
-                    cleanup_control.prepare(source, output, mode)
-                    self.assertEqual(output.read_bytes(), mutant)
-            with self.assertRaises(ValueError):
-                cleanup_control.controlled_source(current, 'unknown')
-            self.assertEqual(current, source.read_bytes())
 
-    def test_cleanup_control_oracles_reject_arbitrary_failures(self):
-        for mode, (_, _, failure) in cleanup_control.CONTROLS.items():
-            with self.subTest(mode=mode):
-                cleanup_control.require_failure(mode, 1, '', failure + '\n')
-                for code, stdout, stderr in (
-                        (0, '', failure), (42, '', failure), (124, '', failure),
-                        (1, '', 'unrelated error'), (1, '', 'FAIL: unrelated assertion'),
-                        (1, '', failure + '\nFAIL: cleanup'),
-                        (1, '', failure + '\n' + failure)):
-                    with self.assertRaises(RuntimeError):
-                        cleanup_control.require_failure(mode, code, stdout, stderr)
 
-    def test_cleanup_control_paths_cannot_publish_outside_owned_build(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            source = Path(tmp) / 'hook.c'
-            source.write_bytes(b'untrusted source')
-            output = Path(tmp) / 'output.c'
-            with self.assertRaisesRegex(ValueError, 'owned build'):
-                cleanup_control.prepare(source, output, 'apply')
-            self.assertFalse(output.exists())
 
-    def test_real_peer_counterfactual_requires_exact_current_and_stale_sources(self):
-        cmake = shutil.which('cmake')
-        if not cmake:
-            self.skipTest('CMake needed for the actual verified engine copy')
-        parent = ROOT / 'build/qa'
-        parent.mkdir(parents=True, exist_ok=True)
-        with tempfile.TemporaryDirectory(dir=parent, prefix='real-peer-control-') as tmp:
-            stage = Path(tmp) / 'engine'
-            prepare_hook_engine.prepare(ROOT, stage, cmake)
-            current = (stage / 'src/hook.c').read_bytes()
-            stale = peer_control.stale_source(current)
-            self.assertEqual(peer_control.STALE_SHA256, hashlib.sha256(stale).hexdigest())
-            self.assertEqual(current, (stage / 'src/hook.c').read_bytes())
-            for bad in (current + b'X', stale, current.replace(peer_control.ANCHOR, peer_control.STALE)):
-                with self.assertRaises(ValueError):
-                    peer_control.stale_source(bad)
 
     def test_real_peer_control_rejects_success_unrelated_errors_and_incomplete_cleanup(self):
         peer_control.require_failure(42, peer_control.CLEANUP + '\n', peer_control.MISMATCH + '\n')
@@ -144,7 +80,7 @@ class VendorTests(unittest.TestCase):
                     peer_control.require_failure(code, stdout, stderr)
 
     def test_archive_comment_commit_is_bound_to_the_pinned_payload(self):
-        record=vendor_sync.load_lock(ROOT)['vendors']['minhook'].copy()
+        record=vendor_sync.load_lock(ROOT)['vendors']['mithrilhook'].copy()
         expected=vendor_sync.expected_files(ROOT,record)
         with tempfile.TemporaryDirectory() as tmp:
             path=Path(tmp);archive=path/Path(record['archive']).name
@@ -155,14 +91,14 @@ class VendorTests(unittest.TestCase):
                     info.external_attr=0o100644<<16
                     out.writestr(info,(ROOT/record['source_install_path']/rel).read_bytes())
             record.update(sha256=vendor_sync.hash_file(archive),bytes=archive.stat().st_size)
-            self.assertEqual(expected,vendor_sync.inspect_archive(ROOT,'minhook',record,path)[0])
+            self.assertEqual(expected,vendor_sync.inspect_archive(ROOT,'mithrilhook',record,path)[0])
             record['upstream_commit']='0'*40
             with self.assertRaisesRegex(ValueError,'archive commit comment mismatch'):
-                vendor_sync.inspect_archive(ROOT,'minhook',record,path)
+                vendor_sync.inspect_archive(ROOT,'mithrilhook',record,path)
 
     def test_vendor_archive_budgets_precede_crc_and_member_reads(self):
         # A valid pinned archive digest does not bypass ZIP expansion budgets.
-        record=vendor_sync.load_lock(ROOT)['vendors']['minhook'].copy()
+        record=vendor_sync.load_lock(ROOT)['vendors']['mithrilhook'].copy()
         with tempfile.TemporaryDirectory() as tmp:
             parent=Path(tmp)
             archive=parent/Path(record['archive']).name
@@ -188,80 +124,10 @@ class VendorTests(unittest.TestCase):
                                 with patch.object(zipfile.ZipFile, 'read',
                                                   side_effect=AssertionError('read before budget')):
                                     with self.assertRaisesRegex(ValueError, diagnostic):
-                                        vendor_sync.inspect_archive(ROOT, 'minhook', record, parent)
+                                        vendor_sync.inspect_archive(ROOT, 'mithrilhook', record, parent)
 
-    def test_build_copy_patch_is_hash_pinned_and_original_tree_unchanged(self):
-        cmake=shutil.which('cmake')
-        if not cmake:self.skipTest('CMake needed to execute the real patch script')
-        record=vendor_sync.load_lock(ROOT)['vendors']['minhook']
-        original=ROOT/record['source_install_path']/'src/hook.c'
-        before=original.read_bytes()
-        parent=ROOT/'build/qa';parent.mkdir(parents=True,exist_ok=True)
-        with tempfile.TemporaryDirectory(dir=parent,prefix='hook-copy-') as tmp:
-            stage=Path(tmp)/'engine'
-            prepare_hook_engine.prepare(ROOT,stage,cmake)
-            policy=prepare_hook_engine.verify(ROOT,stage)
-            self.assertEqual(policy['output_hook_sha256'],vendor_sync.hash_file(stage/'src/hook.c'))
-            self.assertNotEqual(before,(stage/'src/hook.c').read_bytes())
-            for rel in ['src/hook.c','include/MinHook.h']:
-                target=stage/rel;data=target.read_bytes();target.write_bytes(data+b'X')
-                with self.assertRaisesRegex(ValueError,'build-copy member/hash mismatch'):
-                    prepare_hook_engine.verify(ROOT,stage)
-                target.write_bytes(data)
-            self.assertEqual(before,original.read_bytes())
-            stamp=(stage/'src/hook.c').stat().st_mtime_ns
-            prepare_hook_engine.prepare(ROOT,stage,cmake)
-            self.assertEqual(stamp,(stage/'src/hook.c').stat().st_mtime_ns)
 
-    def test_windows_cmake_crlf_output_is_pinned_lf_before_full_verification(self):
-        cmake=shutil.which('cmake')
-        if not cmake:self.skipTest('CMake needed to execute the real patch script')
-        real_run=prepare_hook_engine.subprocess.run
-        record=vendor_sync.load_lock(ROOT)['vendors']['minhook']
-        original=ROOT/record['source_install_path']/'src/hook.c'
-        before=original.read_bytes()
-        def windows_write(command, **kwargs):
-            result=real_run(command, **kwargs)
-            target=Path(next(v.split('=',1)[1] for v in command if v.startswith('-DMINHOOK_HOOK_C=')))
-            target.write_bytes(target.read_bytes().replace(b'\r\n',b'\n').replace(b'\n',b'\r\n'))
-            return result
-        parent=ROOT/'build/qa';parent.mkdir(parents=True,exist_ok=True)
-        with tempfile.TemporaryDirectory(dir=parent,prefix='hook-crlf-') as tmp:
-            stage=Path(tmp)/'engine'
-            with patch.object(prepare_hook_engine.subprocess,'run',side_effect=windows_write):
-                prepare_hook_engine.prepare(ROOT,stage,cmake)
-            policy=prepare_hook_engine.verify(ROOT,stage)
-            target=stage/'src/hook.c';generated=target.read_bytes()
-            self.assertNotIn(b'\r',generated)
-            self.assertEqual(policy['output_hook_sha256'],vendor_sync.hash_file(target))
-            self.assertEqual(before,original.read_bytes())
-            # Read-only verification never accepts CRLF as an alternative hash.
-            target.write_bytes(generated.replace(b'\n',b'\r\n'))
-            with self.assertRaisesRegex(ValueError,'build-copy member/hash mismatch') as error:
-                prepare_hook_engine.verify(ROOT,stage)
-            self.assertIn('src/hook.c',str(error.exception))
-            self.assertIn('expected_sha256',str(error.exception))
-            target.write_bytes(generated)
-            def changed_windows_write(command, **kwargs):
-                result=windows_write(command, **kwargs)
-                changed=Path(next(v.split('=',1)[1] for v in command if v.startswith('-DMINHOOK_HOOK_C=')))
-                changed.write_bytes(changed.read_bytes()+b'X')
-                return result
-            with patch.object(prepare_hook_engine.subprocess,'run',side_effect=changed_windows_write):
-                with self.assertRaisesRegex(ValueError,'build-copy member/hash mismatch'):
-                    prepare_hook_engine.prepare(ROOT,stage,cmake)
-            self.assertEqual(generated,target.read_bytes())
-            self.assertEqual(before,original.read_bytes())
 
-    def test_newline_canonicalization_cannot_accept_changed_content(self):
-        policy=json.loads((ROOT/'metadata/HOOK_ENGINE_PATCH.json').read_text())
-        with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp);(root/'src').mkdir()
-            target=root/'src/hook.c'
-            for bad in [b'changed\r\n',b'changed\n',b'changed\r\r\n']:
-                target.write_bytes(bad)
-                prepare_hook_engine.canonicalize_generated_hook(root,policy['output_hook_sha256'])
-                self.assertEqual(bad,target.read_bytes())
 
     def test_all_active_vendors_match_owner_pins_and_member_hashes(self):
         lock=vendor_sync.load_lock(ROOT)
@@ -272,14 +138,14 @@ class VendorTests(unittest.TestCase):
             self.assertTrue(vendor_sync.validate_installed(ROOT,name,record,files,record.get('symlinks',{})))
 
     def test_wrong_archive_is_rejected_before_install(self):
-        lock=vendor_sync.load_lock(ROOT);record=lock['vendors']['minhook']
+        lock=vendor_sync.load_lock(ROOT);record=lock['vendors']['mithrilhook']
         with tempfile.TemporaryDirectory() as tmp:
             path=Path(tmp);(path/Path(record['archive']).name).write_bytes(b'wrong archive')
             with self.assertRaisesRegex(ValueError,'archive SHA/size mismatch'):
-                vendor_sync.inspect_archive(ROOT,'minhook',record,path)
+                vendor_sync.inspect_archive(ROOT,'mithrilhook',record,path)
 
     def test_member_manifest_mutation_is_rejected(self):
-        record=vendor_sync.load_lock(ROOT)['vendors']['minhook']
+        record=vendor_sync.load_lock(ROOT)['vendors']['mithrilhook']
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);manifest=root/record['member_manifest'];manifest.parent.mkdir(parents=True)
             manifest.write_text('mutated manifest')
@@ -287,22 +153,22 @@ class VendorTests(unittest.TestCase):
                 vendor_sync.expected_files(root,record)
 
     def test_installed_single_byte_mutation_is_rejected(self):
-        record=vendor_sync.load_lock(ROOT)['vendors']['minhook']
+        record=vendor_sync.load_lock(ROOT)['vendors']['mithrilhook']
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);destination=root/record['source_install_path']
             shutil.copytree(ROOT/record['source_install_path'],destination)
             files=vendor_sync.expected_files(ROOT,record)
-            header=destination/'include/MinHook.h';header.write_bytes(header.read_bytes()+b'X')
+            header=destination/'include/MithrilHook.h';header.write_bytes(header.read_bytes()+b'X')
             with self.assertRaisesRegex(ValueError,'member set/hash mismatch'):
-                vendor_sync.validate_installed(root,'minhook',record,files,{})
+                vendor_sync.validate_installed(root,'mithrilhook',record,files,{})
 
     def test_installer_refuses_overwrite(self):
-        record=vendor_sync.load_lock(ROOT)['vendors']['minhook']
+        record=vendor_sync.load_lock(ROOT)['vendors']['mithrilhook']
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);destination=root/record['source_install_path'];destination.mkdir(parents=True)
             marker=destination/'keep';marker.write_bytes(b'owned input')
             with self.assertRaisesRegex(ValueError,'refusing overwrite'):
-                vendor_sync.install(root,'minhook',record,{}, {})
+                vendor_sync.install(root,'mithrilhook',record,{}, {})
             self.assertEqual(b'owned input',marker.read_bytes())
 
     def test_asio_same_count_damage_identifies_exact_alias_paths(self):
@@ -337,7 +203,7 @@ class VendorTests(unittest.TestCase):
         for name in unsafe:
             with self.subTest(member=name), self.assertRaises(ValueError):
                 vendor_sync.safe_rel(name)
-        for name in ('include/MinHook.h', 'src/COM10.hpp', 'src/conveyor.hpp'):
+        for name in ('include/MithrilHook.h', 'src/COM10.hpp', 'src/conveyor.hpp'):
             with self.subTest(member=name):
                 self.assertEqual(name, vendor_sync.safe_rel(name).as_posix())
 

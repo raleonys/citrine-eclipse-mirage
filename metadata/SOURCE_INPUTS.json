@@ -44,13 +44,6 @@
       "path": "/workspace/project-input/3RD PARTY/filesystem-master.zip",
       "source_materialization": "INSTALLED_BYTE_EXACT"
     },
-    "minhook-master.zip": {
-      "sha256": "9ba14a6d748d65ca9ed83763a96a144d888f50cc5771dd9a798ad50ee35336f5",
-      "bytes": 84197,
-      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
-      "path": "/workspace/project-input/3RD PARTY/minhook-master.zip",
-      "source_materialization": "INSTALLED_BYTE_EXACT"
-    },
     "tinyxml2-master.zip": {
       "sha256": "8b7508a943e0a06d4c44d40fcc8c6e71f51dd43b342c4c29f768c53a370399cd",
       "bytes": 819823,
@@ -98,6 +91,12 @@
         "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification",
         "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC_AND_GOLDEN_FOR_SELECTED_SNAPSHOT"
       }
+    },
+    "mithrilhook-1.0.4.zip": {
+      "path": "owner-supplied/mithrilhook-1.0.4.zip",
+      "sha256": "e2c1248ed063beb23cb6b5dc63bd6cef8cf9dfc5adbf8fd333729cfac97b76b3",
+      "bytes": 1531895,
+      "status": "OWNER_SUPPLIED_EXACT_ARCHIVE"
     }
   },
   "source_reference_document": "metadata/evidence/contracts/SOURCE_INPUTS.json"

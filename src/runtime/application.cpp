@@ -333,7 +333,7 @@ public:
     std::uintptr_t get_proc_address(std::uintptr_t m,std::string_view s) override {
         // Required hook11: a real SDK dllimport reference keeps CRYPT32 in the
         // loader dependency graph, as in the supplied Infrastructure/Hook reference path.
-        // MinHook still writes the original trampoline into the owned slot.
+        // MithrilHook still writes the original trampoline into the owned slot.
         if(s=="CryptQueryObject"&&reinterpret_cast<HMODULE>(m)==GetModuleHandleW(L"crypt32.dll"))
             return reinterpret_cast<std::uintptr_t>(&::CryptQueryObject);
         return reinterpret_cast<std::uintptr_t>(GetProcAddress(reinterpret_cast<HMODULE>(m),std::string(s).c_str()));

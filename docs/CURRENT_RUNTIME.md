@@ -34,14 +34,14 @@ were removed from Production linkage, and mixed tests were separated.
 The crypt diagnostic TLS guard remains Debug-only.
 See [cleanup scope](BUILD_CLEANUP.md).
 
-Four owner-supplied vendors remain active: Asio 1.39.0, MinHook 1.3.4,
+Four owner-supplied vendors remain active: Asio 1.39.0, MithrilHook 1.0.4,
 PEGTL 4 (4.0.2 header on the owner-uploaded 4.x snapshot), and pugixml 1.16.
 Selected archive bytes are immutable; current snapshot identities are in
 [VENDORING.md](VENDORING.md). The project XML
 compatibility layer uses the A12 depth-100 profile (98 paired levels accepted,
 99 rejected) and corrected
 reference decoding, with no TinyXML2 production fallback. See
-[XML_BACKEND_COMPARISON.md](XML_BACKEND_COMPARISON.md). SAFE-FREEZE applies only to the pinned MinHook build copy. Windows I/O
+[XML_BACKEND_COMPARISON.md](XML_BACKEND_COMPARISON.md). Strict freeze/completion/retirement are supplied by vanilla MithrilHook; see [engine integration](MITHRILHOOK_INTEGRATION.md). Windows I/O
 uses standard filesystem/fstream and approved atomic persistence adapters.
 Gulrak is not an active dependency.
 

@@ -9,8 +9,8 @@ import subprocess
 import sys
 import tempfile
 
-CURRENT_SHA256 = '2bdd1a2a76b2451b5994edc332dbe1addd203e5ecbebe3b1693989c80765a124'
-STALE_SHA256 = '96a3dc171af489afb76cdf0a49988fa8291cddccb4743980bf7df54b2f60ffcf'
+CURRENT_SHA256 = '2b795f8a28a307282c02f752348246a39b10ffb189bbc8ea8a6d1926e4259c92'
+STALE_SHA256 = '872b53241e5fe605f33f6d8cde341d2971936c170dbabe2e6af57366e614ecc6'
 ANCHOR = b'Freeze(&threads, pos, enable ? ACTION_ENABLE : ACTION_DISABLE)'
 STALE = b'Freeze(&threads, pos, ACTION_ENABLE)'
 MISMATCH = 'SINGLE_DISABLE_IP_MISMATCH: real IP retained the trampoline/relay address'
@@ -30,9 +30,10 @@ def prepare(source, output):
     root = Path(__file__).resolve().parents[2]
     build = root / 'build'
     source, output = Path(source).absolute(), Path(output).absolute()
-    for path in (source, output):
-        if build not in path.parents or path.is_symlink() or path.resolve() != path:
-            raise ValueError('Real-peer control paths must remain inside the owned build directory')
+    if source != root / 'third_party/mithrilhook/src/hook.c' or source.is_symlink():
+        raise ValueError('Real-peer control requires the pinned MithrilHook source')
+    if build not in output.parents or output.is_symlink() or output.resolve() != output:
+        raise ValueError('Real-peer control output must remain inside the owned build directory')
     data = stale_source(source.read_bytes())
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = None

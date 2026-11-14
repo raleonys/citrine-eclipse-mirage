@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-only
-name: Windows MinHook safety acceptance
+name: Windows MithrilHook integration acceptance
 
 on:
   workflow_dispatch:
@@ -9,9 +9,9 @@ permissions:
 
 jobs:
   hook-disable:
-    name: Windows x64 MinHook ${{ matrix.configuration }}
+    name: Windows x64 MithrilHook ${{ matrix.configuration }}
     runs-on: windows-2022
-    timeout-minutes: 20
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -38,29 +38,24 @@ jobs:
           $build = 'build/ci-hook-${{ matrix.configuration }}'
           python -B scripts/check_build_partition.py --build-dir $build --config '${{ matrix.configuration }}' --graph-only --report "$build/hook-partition.json"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC hook target ownership failed' }
-      - name: Build actual patched engine and upstream comparison tests
+      - name: Build immutable engine and Laureondo integration tests
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target hook_freeze_contracts hook_engine_fixture_tests hook_real_peer_contracts hook_real_peer_stale_control hook_live_calls_contracts hook_thread_churn_contracts hook_cleanup_create_control hook_cleanup_remove_control hook_cleanup_enable_control hook_cleanup_queue_control hook_cleanup_apply_control --parallel 2 2>&1 | Tee-Object -FilePath "$build/hook-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target laureondo_hook_acceptance --parallel 2 2>&1 | Tee-Object -FilePath "$build/hook-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC hook build failed' }
       - name: Bind focused test binaries to their source commit
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
-          $targets = @('hook_freeze_contracts','hook_engine_fixture_tests','hook_real_peer_contracts',
-            'hook_real_peer_stale_control','hook_live_calls_contracts','hook_cleanup_create_control',
-            'hook_cleanup_remove_control','hook_cleanup_enable_control','hook_cleanup_queue_control',
-            'hook_cleanup_apply_control','hook_thread_churn_contracts')
-          $binaries = foreach ($target in $targets) {
-            $path = Join-Path $build '${{ matrix.configuration }}' "$target.exe"
-            @{ target = $target; sha256 = (Get-FileHash -Algorithm SHA256 $path).Hash.ToLowerInvariant() }
+          $binaries = foreach ($path in (Get-ChildItem $build -Recurse -Filter '*.exe' -File)) {
+            @{ path = $path.FullName.Substring((Resolve-Path $build).Path.Length + 1); sha256 = (Get-FileHash -Algorithm SHA256 $path.FullName).Hash.ToLowerInvariant() }
           }
-          @{ commit = '${{ github.sha }}'; configuration = '${{ matrix.configuration }}'; binaries = @($binaries) } |
+          @{ commit = '${{ github.sha }}'; configuration = '${{ matrix.configuration }}'; source_manifest_sha256 = (Get-FileHash metadata/ACTIVE_SOURCE_MANIFEST.json -Algorithm SHA256).Hash.ToLowerInvariant(); binaries = @($binaries) } |
             ConvertTo-Json -Depth 4 | Set-Content -Encoding utf8 "$build/hook-binary-identities.json"
       - name: Run native hook regressions
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
           $junit = Join-Path (Resolve-Path $build) 'hook-junit.xml'
-          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(hook_freeze_contracts|hook_engine_fixtures|hook_real_peer_contracts|hook_real_peer_stale_control|hook_live_calls_contracts|hook_thread_churn_contracts|hook_cleanup_(create|remove|enable|queue|apply)_control)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/hook-ctest.log"
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(mithrilhook_.+|hook_(backend_contracts|real_peer_stale_control|transaction_contracts)|application_runtime_contracts)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/hook-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC hook regression failed' }
       - name: Preserve native hook evidence
         if: always()
@@ -74,12 +69,13 @@ jobs:
             build/ci-hook-${{ matrix.configuration }}/hook-binary-identities.json
             build/ci-hook-${{ matrix.configuration }}/hook-partition.json
             build/ci-hook-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
-            build/ci-hook-${{ matrix.configuration }}/vendor_build/minhook/src/hook.c
-            build/ci-hook-${{ matrix.configuration }}/test_controls/minhook/src/hook.c
-            build/ci-hook-${{ matrix.configuration }}/test_controls/hook_cleanup/
+            build/ci-hook-${{ matrix.configuration }}/test_controls/mithrilhook/src/hook.c
+            build/ci-hook-${{ matrix.configuration }}/vendor_build/mithrilhook/tests/controls/
+            build/ci-hook-${{ matrix.configuration }}/vendor_build/mithrilhook/tests/${{ matrix.configuration }}/*.exe
             build/ci-hook-${{ matrix.configuration }}/${{ matrix.configuration }}/hook*.exe
             build/ci-hook-${{ matrix.configuration }}/CMakeCache.txt
             build/ci-hook-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
-            metadata/HOOK_ENGINE_PATCH.json
+            metadata/HOOK_ENGINE.json
+            third_party/mithrilhook/metadata/SOURCE_MANIFEST.json
           if-no-files-found: warn
           retention-days: 14

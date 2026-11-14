@@ -1,3 +1,9 @@
+> **Retired MinHook integration checkpoint.** The current selected engine is
+> vanilla MithrilHook 1.0.4; see [MITHRILHOOK_INTEGRATION.md](MITHRILHOOK_INTEGRATION.md).
+> The former patch, vendor path and execution records below describe the
+> [accepted pre-migration source](https://github.com/raleonys/citrine-eclipse-mirage/tree/b926b43f31d6b31e573a1e1034bc91f9593b8d47).
+> They remain historical evidence, not current build instructions or new-engine acceptance.
+
 # Hook engine ownership and provenance
 
 The owner selected the Brownfield SAFE-FREEZE implementation and vendor commit

@@ -63,28 +63,18 @@ add_dependencies(laureondo_pugixml laureondo_verify_vendors)
 add_dependencies(laureondo_asio laureondo_verify_vendors)
 add_dependencies(laureondo_pegtl laureondo_verify_vendors)
 
+# Build the exact supplied engine without application-specific source patches.
+# Scope BUILD_SHARED_LIBS to this dependency: production embeds a private static
+# engine and does not deploy an additional public DLL.
+set(_mithrilhook_root "${PROJECT_SOURCE_DIR}/third_party/mithrilhook")
+function(laureondo_add_mithrilhook)
+  set(BUILD_SHARED_LIBS OFF)
+  add_subdirectory("${_mithrilhook_root}" "${CMAKE_CURRENT_BINARY_DIR}/vendor_build/mithrilhook")
+endfunction()
+laureondo_add_mithrilhook()
 if(WIN32)
-  set(_hook_build_copy "${CMAKE_CURRENT_BINARY_DIR}/vendor_build/minhook")
-  set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
-    "${PROJECT_SOURCE_DIR}/metadata/HOOK_ENGINE_PATCH.json"
-    "${PROJECT_SOURCE_DIR}/scripts/prepare_hook_engine.py"
-    "${PROJECT_SOURCE_DIR}/cmake/PatchHookFreeze.cmake")
-  execute_process(COMMAND "${Python3_EXECUTABLE}" -B
-    "${PROJECT_SOURCE_DIR}/scripts/prepare_hook_engine.py" --root "${PROJECT_SOURCE_DIR}"
-    --output "${_hook_build_copy}" --prepare --cmake "${CMAKE_COMMAND}"
-    RESULT_VARIABLE _hook_patch_result OUTPUT_VARIABLE _hook_patch_output ERROR_VARIABLE _hook_patch_error)
-  if(NOT _hook_patch_result EQUAL 0)
-    message(FATAL_ERROR "Hook engine preparation failed:\n${_hook_patch_output}${_hook_patch_error}")
-  endif()
-  add_custom_target(laureondo_verify_hook_engine ALL
-    COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/scripts/prepare_hook_engine.py"
-      --root "${PROJECT_SOURCE_DIR}" --output "${_hook_build_copy}"
-    COMMENT "Verify the pinned hook engine build copy" VERBATIM)
-  add_library(laureondo_minhook STATIC
-    "${_hook_build_copy}/src/hook.c"
-    "${_hook_build_copy}/src/buffer.c"
-    "${_hook_build_copy}/src/trampoline.c"
-    "${_hook_build_copy}/src/hde/hde64.c")
-  target_include_directories(laureondo_minhook PUBLIC "${_hook_build_copy}/include")
-  add_dependencies(laureondo_minhook laureondo_verify_vendors laureondo_verify_hook_engine)
+  add_dependencies(mithrilhook laureondo_verify_vendors)
+  set(_mithrilhook_sources
+    "${_mithrilhook_root}/src/hook.c" "${_mithrilhook_root}/src/buffer.c"
+    "${_mithrilhook_root}/src/trampoline.c" "${_mithrilhook_root}/src/hde/hde64.c")
 endif()

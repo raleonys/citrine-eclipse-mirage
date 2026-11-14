@@ -410,7 +410,7 @@ jobs:
             build/msvc-reference-${{ matrix.configuration }}/source-api-graph.json
             build/msvc-reference-${{ matrix.configuration }}/laureondo_source_api.vcxproj
             build/msvc-reference-${{ matrix.configuration }}/laureondo_source_host.vcxproj
-            build/msvc-reference-${{ matrix.configuration }}/laureondo_source_minhook.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/laureondo_source_mithrilhook.vcxproj
             build/msvc-reference-${{ matrix.configuration }}/laureondo_source_pugixml.vcxproj
             build/msvc-reference-${{ matrix.configuration }}/laureondo_objects.vcxproj
             build/msvc-reference-${{ matrix.configuration }}/laureondo_vdf_objects.vcxproj

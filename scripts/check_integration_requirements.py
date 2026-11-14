@@ -18,7 +18,7 @@ def check(root):
                  'laureondo_application_code': 'NOT_INHERITED'}
     if req.get('infrastructure') != mandatory:
         errors.append('INFRASTRUCTURE_SCOPE_CHANGED')
-    if req.get('third_party') != {name: 'REQUIRED_ACTIVE' for name in ['asio','minhook','pegtl','pugixml']}:
+    if req.get('third_party') != {name: 'REQUIRED_ACTIVE' for name in ['asio','mithrilhook','pegtl','pugixml']}:
         errors.append('MANDATORY_VENDOR_POLICY_WEAKENED')
     for role in ['redfield', 'greenfield']:
         if req.get(role) != 'COMPARISON_AND_CODE_REVIEW_ONLY':

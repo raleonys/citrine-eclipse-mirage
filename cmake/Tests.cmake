@@ -157,81 +157,34 @@ target_link_libraries(listener_port_contracts PRIVATE laureondo_core)
 add_test(NAME listener_port_contracts COMMAND listener_port_contracts)
 # This test intentionally occupies the complete production range.
 set_tests_properties(listener_port_contracts PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
-add_executable(hook_freeze_contracts tests/native/hook_freeze_tests.c)
-target_include_directories(hook_freeze_contracts PRIVATE "${_hook_build_copy}/src")
-target_link_libraries(hook_freeze_contracts PRIVATE laureondo_minhook)
-add_test(NAME hook_freeze_contracts COMMAND hook_freeze_contracts)
-set_tests_properties(hook_freeze_contracts PROPERTIES TIMEOUT 30)
-add_executable(hook_real_peer_contracts tests/native/hook_real_peer_tests.cpp)
-target_link_libraries(hook_real_peer_contracts PRIVATE laureondo_minhook)
-add_test(NAME hook_real_peer_contracts COMMAND hook_real_peer_contracts)
-set_tests_properties(hook_real_peer_contracts PROPERTIES TIMEOUT 30)
-add_executable(hook_live_calls_contracts tests/native/hook_live_calls_tests.c)
-target_link_libraries(hook_live_calls_contracts PRIVATE laureondo_minhook)
-add_test(NAME hook_live_calls_contracts COMMAND hook_live_calls_contracts)
-set_tests_properties(hook_live_calls_contracts PROPERTIES TIMEOUT 45)
-add_executable(hook_thread_churn_contracts tests/native/hook_thread_churn_tests.c)
-target_include_directories(hook_thread_churn_contracts PRIVATE "${_hook_build_copy}/src")
-target_link_libraries(hook_thread_churn_contracts PRIVATE laureondo_minhook)
-add_test(NAME hook_thread_churn_contracts COMMAND hook_thread_churn_contracts 50)
-set_tests_properties(hook_thread_churn_contracts PROPERTIES TIMEOUT 60)
-
-# Every cleanup control compiles the same functional regression against a
-# hash-pinned copy with exactly one public retry barrier removed. None is a
-# production source, and only its precise assertion failure counts as success.
-add_executable(hook_cleanup_create_control tests/native/hook_freeze_tests.c)
-add_executable(hook_cleanup_remove_control tests/native/hook_freeze_tests.c)
-add_executable(hook_cleanup_enable_control tests/native/hook_freeze_tests.c)
-add_executable(hook_cleanup_queue_control tests/native/hook_freeze_tests.c)
-add_executable(hook_cleanup_apply_control tests/native/hook_freeze_tests.c)
-set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
-  "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_cleanup_control.py")
-foreach(_cleanup_mode IN ITEMS create remove enable queue apply)
-  set(_cleanup_dir "${CMAKE_CURRENT_BINARY_DIR}/test_controls/hook_cleanup/${_cleanup_mode}")
-  execute_process(COMMAND "${Python3_EXECUTABLE}" -B
-    "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_cleanup_control.py" prepare
-    --source "${_hook_build_copy}/src/hook.c" --mode "${_cleanup_mode}"
-    --output "${_cleanup_dir}/src/hook.c"
-    RESULT_VARIABLE _cleanup_status OUTPUT_VARIABLE _cleanup_output ERROR_VARIABLE _cleanup_error)
-  if(NOT _cleanup_status EQUAL 0)
-    message(FATAL_ERROR "Cleanup control preparation failed: ${_cleanup_output}${_cleanup_error}")
-  endif()
-  file(MAKE_DIRECTORY "${_cleanup_dir}/include")
-  configure_file("${_hook_build_copy}/include/MinHook.h" "${_cleanup_dir}/include/MinHook.h" COPYONLY)
-  set(_cleanup_target "hook_cleanup_${_cleanup_mode}_control")
-  target_include_directories(${_cleanup_target} PRIVATE
-    "${_cleanup_dir}/include" "${_cleanup_dir}/src" "${_hook_build_copy}/src")
-  target_link_libraries(${_cleanup_target} PRIVATE laureondo_minhook)
-  add_test(NAME ${_cleanup_target} COMMAND "${Python3_EXECUTABLE}" -B
-    "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_cleanup_control.py" run --mode "${_cleanup_mode}" --
-    ${CMAKE_CROSSCOMPILING_EMULATOR} "$<TARGET_FILE:${_cleanup_target}>")
-  set_tests_properties(${_cleanup_target} PROPERTIES TIMEOUT 30)
-endforeach()
-
-# Counterfactual source lives outside the verified engine tree and is never a
-# shipping input. Pin the exact one-action mutation with all cleanup guards kept.
-set(_stale_hook_dir "${CMAKE_CURRENT_BINARY_DIR}/test_controls/minhook")
+# The pinned MithrilHook package supplies the positive native peer test and
+# exact cleanup/completion/retirement controls. Preserve the application-specific
+# stale single-disable IP counterexample against that same selected engine.
+set(_stale_hook_dir "${CMAKE_CURRENT_BINARY_DIR}/test_controls/mithrilhook")
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
   "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_real_peer_control.py")
 execute_process(COMMAND "${Python3_EXECUTABLE}" -B
   "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_real_peer_control.py" prepare
-  --source "${_hook_build_copy}/src/hook.c"
+  --source "${_mithrilhook_root}/src/hook.c"
   --output "${_stale_hook_dir}/src/hook.c"
   RESULT_VARIABLE _stale_hook_status OUTPUT_VARIABLE _stale_hook_output ERROR_VARIABLE _stale_hook_error)
 if(NOT _stale_hook_status EQUAL 0)
   message(FATAL_ERROR "Real-peer control preparation failed: ${_stale_hook_output}${_stale_hook_error}")
 endif()
-# hook.c uses relative ../include/MinHook.h and local internal headers.
 file(MAKE_DIRECTORY "${_stale_hook_dir}/include")
-configure_file("${_hook_build_copy}/include/MinHook.h" "${_stale_hook_dir}/include/MinHook.h" COPYONLY)
-add_executable(hook_real_peer_stale_control tests/native/hook_real_peer_tests.cpp
+configure_file("${_mithrilhook_root}/include/MithrilHook.h" "${_stale_hook_dir}/include/MithrilHook.h" COPYONLY)
+add_executable(hook_real_peer_stale_control "${_mithrilhook_root}/tests/native/real_peer.cpp"
   "${_stale_hook_dir}/src/hook.c")
-target_include_directories(hook_real_peer_stale_control PRIVATE "${_hook_build_copy}/src")
-target_link_libraries(hook_real_peer_stale_control PRIVATE laureondo_minhook)
+target_include_directories(hook_real_peer_stale_control PRIVATE "${_mithrilhook_root}/src")
+target_link_libraries(hook_real_peer_stale_control PRIVATE mithrilhook)
 add_test(NAME hook_real_peer_stale_control COMMAND "${Python3_EXECUTABLE}" -B
   "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_real_peer_control.py" run --
   ${CMAKE_CROSSCOMPILING_EMULATOR} "$<TARGET_FILE:hook_real_peer_stale_control>")
-set_tests_properties(hook_real_peer_stale_control PROPERTIES TIMEOUT 30)
+set_tests_properties(hook_real_peer_stale_control PROPERTIES TIMEOUT 45)
+add_executable(hook_backend_contracts tests/native/hook_backend_tests.cpp)
+target_link_libraries(hook_backend_contracts PRIVATE laureondo_core)
+add_test(NAME hook_backend_contracts COMMAND hook_backend_contracts)
+set_tests_properties(hook_backend_contracts PROPERTIES TIMEOUT 45)
 add_executable(hook_transaction_contracts tests/unit/hooks/transaction_tests.cpp)
 target_link_libraries(hook_transaction_contracts PRIVATE laureondo_core)
 add_test(NAME hook_transaction_contracts COMMAND hook_transaction_contracts)

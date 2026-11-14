@@ -42,7 +42,7 @@
   "surge_branding": "MANDATORY",
   "third_party": {
     "asio": "REQUIRED_ACTIVE",
-    "minhook": "REQUIRED_ACTIVE",
+    "mithrilhook": "REQUIRED_ACTIVE",
     "pegtl": "REQUIRED_ACTIVE",
     "pugixml": "REQUIRED_ACTIVE"
   },
@@ -66,7 +66,7 @@
   "previous_five_vendor_requirements": {
     "asio": "REQUIRED_ACTIVE",
     "filesystem": "REQUIRED_ACTIVE",
-    "minhook": "REQUIRED_ACTIVE",
+    "mithrilhook": "REQUIRED_ACTIVE",
     "pegtl": "REQUIRED_ACTIVE",
     "tinyxml2": "REQUIRED_ACTIVE"
   }

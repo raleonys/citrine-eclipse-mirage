@@ -181,11 +181,6 @@
       "purpose": "pe resources",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
-    "scripts/prepare_hook_engine.py": {
-      "owner": "SURGE hook lifecycle",
-      "purpose": "Prepare and verify pinned hook engine build copy without modifying vendor input",
-      "role": "PYTHON_TOOL_OR_MODULE"
-    },
     "scripts/project_files.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "project files",

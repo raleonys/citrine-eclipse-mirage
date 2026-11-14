@@ -88,7 +88,7 @@ target_include_directories(runtime_application_parts PUBLIC "${RUNTIME_ROOT}/inc
   "${CMAKE_CURRENT_BINARY_DIR}/generated")
 target_compile_definitions(runtime_application_parts PUBLIC NOMINMAX)
 target_link_libraries(runtime_application_parts PUBLIC laureondo_asio
-  laureondo_pegtl laureondo_minhook laureondo_pugixml
+  laureondo_pegtl mithrilhook laureondo_pugixml
   crypt32 ws2_32 kernel32 user32 shell32 advapi32 psapi)
 if(MINGW AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   set_source_files_properties("${RUNTIME_ROOT}/src/platform/hook_unload_guard.cpp"

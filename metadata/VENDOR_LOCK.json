@@ -3,10 +3,10 @@
   "external_network_download_forbidden": true,
   "production_active_use_required_for_all": true,
   "production_active_use_verified": false,
-  "revision": "2026-11-09",
+  "revision": "2026-11-14",
   "schema": "surge.vendor-lock.v2",
   "upstream_exact_commit_verified": false,
-  "vendor_source_status": "FOUR_ACTIVE_OWNER_ARCHIVES_WITH_PUGIXML_REPLACING_TINYXML2",
+  "vendor_source_status": "FOUR_ACTIVE_OWNER_ARCHIVES_WITH_MITHRILHOOK_REPLACING_MINHOOK",
   "vendors": {
     "asio": {
       "active_build_link_proved": false,
@@ -33,26 +33,27 @@
       "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification",
       "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC_AND_GOLDEN_FOR_SELECTED_SNAPSHOT"
     },
-    "minhook": {
-      "active_build_link_proved": true,
-      "archive": "minhook-master.zip",
-      "archive_folder": "minhook-master/",
-      "bytes": 84197,
+    "mithrilhook": {
+      "active_build_link_proved": false,
+      "archive": "mithrilhook-1.0.4.zip",
+      "archive_folder": "mithrilhook-1.0.4/",
+      "bytes": 1531895,
       "intended_active_use": "APPLICATION_QUEUED_HOOK_ENGINE",
-      "license": "BSD-2-Clause (LICENSE.txt)",
+      "license": "GPL-3.0-only combined distribution; retained BSD-2-Clause and SAFE-FREEZE notices",
       "license_source_retained": true,
-      "member_count": 61,
-      "member_manifest": "metadata/vendor_files/minhook.sha256",
-      "member_manifest_sha256": "9988604d81d6e5baa7293c9f68c11a42190a8776d80da294d1df9d9170872bcf",
-      "reported_version": "v1.3.4 listed in README; exact archive commit NOT_VERIFIED",
-      "sha256": "9ba14a6d748d65ca9ed83763a96a144d888f50cc5771dd9a798ad50ee35336f5",
-      "source_install_path": "third_party/minhook",
+      "member_count": 104,
+      "member_manifest": "metadata/vendor_files/mithrilhook.sha256",
+      "member_manifest_sha256": "227f48b51a46ffc3829ef40d0737c65599969782ac47c820b9cf423d8358b690",
+      "reported_version": "1.0.4",
+      "sha256": "e2c1248ed063beb23cb6b5dc63bd6cef8cf9dfc5adbf8fd333729cfac97b76b3",
+      "source_install_path": "third_party/mithrilhook",
       "symlinks": {},
-      "upstream_commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
+      "upstream_commit": "10203713702b7d9349eb2212bf1bf2e4314a5068",
       "installed_member_integrity": "PASS",
       "production_role": "APPLICATION_QUEUED_HOOK_ENGINE",
-      "cmake_target": "laureondo_minhook",
-      "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification"
+      "cmake_target": "mithrilhook",
+      "commit_evidence": "USER_SUPPLIED_ZIP_COMMENT_AND_EXACT_MEMBER_HASHES; not independent Git object verification",
+      "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC_AND_GOLDEN"
     },
     "pegtl": {
       "active_build_link_proved": false,
@@ -106,11 +107,9 @@
   },
   "task": "SURGE-VENDOR-20261028",
   "archive_location_policy": "Explicit --archive-dir; original input ZIPs are outside the product source package",
-  "compiled_vendor_patches": [
-    "metadata/HOOK_ENGINE_PATCH.json"
-  ],
+  "compiled_vendor_patches": [],
   "vendor_defaults_modified": false,
-  "latest_owner_selection": "OWNER_AUTHORIZED_ASIO_1_39_0_AND_PEGTL_4_X_SNAPSHOTS_2026_11_09",
+  "latest_owner_selection": "OWNER_AUTHORIZED_MITHRILHOOK_1_0_4_REPLACES_MINHOOK_2026_11_14",
   "upstream_commit_identifiers_recorded": true,
   "retired_vendor_inputs": {
     "tinyxml2": {

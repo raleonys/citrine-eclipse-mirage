@@ -19,7 +19,7 @@ import zipfile
 
 from project_files import safe_member
 
-VENDORS = ('asio','minhook','pegtl','pugixml')
+VENDORS = ('asio','mithrilhook','pegtl','pugixml')
 MAX_ARCHIVE_BYTES = 100 * 1024 * 1024
 MAX_MEMBER_BYTES = 32 * 1024 * 1024
 

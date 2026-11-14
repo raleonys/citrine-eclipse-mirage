@@ -15,7 +15,7 @@
 #include "laureondo/platform/callback_lock.hpp"
 #include "laureondo/platform/hook_transaction.hpp"
 #include <algorithm>
-#include <MinHook.h>
+#include <MithrilHook.h>
 #include <atomic>
 #include <cstring>
 #include <filesystem>
@@ -39,32 +39,32 @@ std::atomic<unsigned> startup_returns{},startup_failures{},startup_throw{},start
 // unload-scan and test startup barriers are controlled; owners are real.
 std::atomic<unsigned> file_recovery_visits{},fail_after_file_recovery{};
 std::atomic<unsigned> requested_file_recovery_visits{};
-int initialize(){return MH_OK;}
-int create(void* target,void*,void** original){*original=target;return MH_OK;}
-int queue(void*){return MH_OK;}
-int apply(){return MH_OK;}
-int disable(void*){++disables;return mode==1?MH_ERROR_MEMORY_PROTECT:MH_OK;}
-int release(){++releases;return mode==3?MH_ERROR_MEMORY_PROTECT:MH_OK;}
+int initialize(){return MTH_OK;}
+int create(void* target,void*,void** original){*original=target;return MTH_OK;}
+int queue(void*){return MTH_OK;}
+int apply(){return MTH_OK;}
+int disable(void*){++disables;return mode==1?MTH_ERROR_MEMORY_PROTECT:MTH_OK;}
+int release(){++releases;return mode==3?MTH_ERROR_MEMORY_PROTECT:MTH_OK;}
 }
 namespace laureondo {bool fixture_threads_outside_module(){
     if(fixture::fail_next_scan.exchange(0,std::memory_order_acq_rel))return false;
     return fixture::mode!=4;
 }}
-#define MH_Initialize fixture::initialize
-#define MH_CreateHook fixture::create
-#define MH_EnableHook fixture::queue
-#define MH_QueueEnableHook fixture::queue
-#define MH_ApplyQueued fixture::apply
-#define MH_DisableHook fixture::disable
-#define MH_Uninitialize fixture::release
+#define MTH_Initialize fixture::initialize
+#define MTH_CreateHook fixture::create
+#define MTH_EnableHook fixture::queue
+#define MTH_QueueEnableHook fixture::queue
+#define MTH_ApplyQueued fixture::apply
+#define MTH_DisableHook fixture::disable
+#define MTH_Uninitialize fixture::release
 #include "src/platform/hook_engine_api.cpp"
-#undef MH_Initialize
-#undef MH_CreateHook
-#undef MH_EnableHook
-#undef MH_QueueEnableHook
-#undef MH_ApplyQueued
-#undef MH_DisableHook
-#undef MH_Uninitialize
+#undef MTH_Initialize
+#undef MTH_CreateHook
+#undef MTH_EnableHook
+#undef MTH_QueueEnableHook
+#undef MTH_ApplyQueued
+#undef MTH_DisableHook
+#undef MTH_Uninitialize
 #include "src/platform/hook_native_callbacks.cpp"
 namespace fixture {std::unique_ptr<laureondo::native::Lease> held_call;}
 // Observe the real startup calls before readiness publication. All application

@@ -175,9 +175,11 @@ def target_closure(targets, root):
 
 def codemodel_errors(targets, policy):
     errors = []
-    forbidden = set(policy['reference_targets'] + policy['source_api_targets'])
+    forbidden = set(policy['reference_targets'] + policy['source_api_targets'] +
+                    policy.get('vendor_engine_test_targets', []))
     classified = set(policy['production_test_targets'] + policy['reference_test_targets'] +
-                     policy['source_api_targets'] + policy.get('vendor_comparison_targets', []))
+                     policy['source_api_targets'] + policy.get('vendor_comparison_targets', []) +
+                     policy.get('vendor_engine_test_targets', []))
     for name, data in targets.items():
         if data.get('type') == 'EXECUTABLE' and name not in classified:
             errors.append('Unclassified executable test/tool target: ' + name)
@@ -227,7 +229,7 @@ def codemodel_errors(targets, policy):
             if actual != expected:
                 errors.append('Source API lost the retained reference object payload or complete development source set')
             static_targets = set(policy['production_targets'] + policy['reference_targets'] +
-                                 ['laureondo_minhook', 'laureondo_pugixml'])
+                                 ['mithrilhook', 'laureondo_pugixml'])
             overlap = closure & static_targets
             if overlap:
                 errors.append('Separate source API graph reuses shipping static-CRT targets: ' + ', '.join(sorted(overlap)))

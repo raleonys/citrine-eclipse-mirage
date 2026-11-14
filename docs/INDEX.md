@@ -94,7 +94,8 @@ Issue #109's Registry provenance and original-donor retirement remain open.
 | [GOLDEN_AVATAR_FIX.md](GOLDEN_AVATAR_FIX.md) | Checkpoint | [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) |
 | [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) | Current | [../scripts/run_golden_pipeline.py](../scripts/run_golden_pipeline.py) |
 | [HOOK_ALIGNMENT.md](HOOK_ALIGNMENT.md) | Checkpoint | [HOOK_PATH_SCAN.md](HOOK_PATH_SCAN.md) |
-| [HOOK_ENGINE_HARDENING.md](HOOK_ENGINE_HARDENING.md) | Current | [../metadata/HOOK_ENGINE_PATCH.json](../metadata/HOOK_ENGINE_PATCH.json) |
+| [HOOK_ENGINE_HARDENING.md](HOOK_ENGINE_HARDENING.md) | Checkpoint | [MITHRILHOOK_INTEGRATION.md](MITHRILHOOK_INTEGRATION.md) |
+| [MITHRILHOOK_INTEGRATION.md](MITHRILHOOK_INTEGRATION.md) | Current | [../metadata/HOOK_ENGINE.json](../metadata/HOOK_ENGINE.json) |
 | [HOOK_PATH_SCAN.md](HOOK_PATH_SCAN.md) | Current | [../include/laureondo/platform/crypt_query.hpp](../include/laureondo/platform/crypt_query.hpp) |
 | [HOOK_PIONEERING_REVIEW.md](HOOK_PIONEERING_REVIEW.md) | Review | [RE_A11_09_REGISTRY_HKEY_BOUNDARY.md](RE_A11_09_REGISTRY_HKEY_BOUNDARY.md) |
 | [IDENTIFIER_POLICY.md](IDENTIFIER_POLICY.md) | Current | [../scripts/check_repository_contract.py](../scripts/check_repository_contract.py) |

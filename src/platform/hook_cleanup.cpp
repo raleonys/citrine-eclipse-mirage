@@ -9,7 +9,7 @@ void cleanup_hooks_0102b0(std::span<const std::uintptr_t> targets, CleanupEffect
             e.log_finish_0088e0();
         }
     }
-    e.log_literal_006880("MinHook uninitialization ");
+    e.log_literal_006880("MithrilHook uninitialization ");
     const auto status = e.uninitialize_engine_046ac0();
     e.log_literal_006880(status == 0 ? "succeeded" : "failed");
     e.log_finish_0088e0();

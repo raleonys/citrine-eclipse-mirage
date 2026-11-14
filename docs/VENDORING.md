@@ -2,8 +2,8 @@
 
 The source consists of four active ZIP archives supplied
 by the owner. The owner refreshed Asio and PEGTL from the supplied upstream snapshots on
-2026-11-09; pugixml replaced TinyXML2 in PR #149. MinHook and pugixml
-archive selections are unchanged by this refresh. Gulrak was removed by the
+2026-11-09; pugixml replaced TinyXML2 in PR #149. The owner subsequently selected
+vanilla MithrilHook 1.0.4 as the hook engine, replacing the separate MinHook tree. Gulrak was removed by the
 owner's later instruction. Brownfield vendor copies
 or other versions downloaded from the internet
 are not substituted.
@@ -11,7 +11,7 @@ are not substituted.
 | Vendor | Version stated in archive | Location |
 |---|---|---|
 | Asio | 1.39.0; owner snapshot `190a8d8daf1cc62909b4e0c72ff491ba264ca98e` | `third_party/asio` |
-| MinHook | v1.3.4 in README; owner snapshot `8af6b4acae5a9388fd742b56fa79ece89d96f823` | `third_party/minhook` |
+| MithrilHook | 1.0.4; ZIP comment `10203713702b7d9349eb2212bf1bf2e4314a5068` | `third_party/mithrilhook` |
 | PEGTL | 4.0.2 in header; owner 4.x branch snapshot `b60f6110abd37e502d202d13a6c565410c552c33` | `third_party/pegtl` |
 | pugixml | 1.16; owner snapshot `f0a3faa76e04f35110257ca8713363dee3c890e8` | `third_party/pugixml` |
 
@@ -25,7 +25,7 @@ commit ID and the per-member hashes used to check the installed tree.
 | Vendor | Supplied archive | Archive SHA-256 |
 |---|---|---|
 | Asio | `asio-master.zip` | `5f384a220751aff27e517e559b9257292f00e7a2c31c2e83282d3e522d591ade` |
-| MinHook | `minhook-master.zip` | `9ba14a6d748d65ca9ed83763a96a144d888f50cc5771dd9a798ad50ee35336f5` |
+| MithrilHook | `mithrilhook-1.0.4.zip` | `e2c1248ed063beb23cb6b5dc63bd6cef8cf9dfc5adbf8fd333729cfac97b76b3` |
 | PEGTL | `PEGTL-4.x.zip` | `3eb2096ceeb7bbf722775d7cfd98ddf0f3ca008c5e2f44835b11dd014c1400a0` |
 | pugixml | `pugixml-master.zip` | `4cd80a72fde87ce1f23eae4ed048446b2e887fc25437793e525367448be2cf81` |
 
@@ -63,7 +63,7 @@ materialization. It rejects Windows device names, trailing spaces/dots, forbidde
 punctuation and controls while retaining ordinary pinned paths. Link targets
 remain subject to the separate archive-locked alias checks.
 
-All 2,690 file/link entries are verified against
+All 2,733 file/link entries are verified against
 archive-member hash lists. Licenses and Asio's
 logical links `asio/include → ../include`
 and `asio/src → ../src` are preserved.
@@ -87,13 +87,13 @@ python -B scripts/vendor_sync.py --root . --archive-dir "/path/to/3RD PARTY" --v
 An installation with `--install` does not
 overwrite a populated target. CMake verifies
 vendored sources offline at configure time;
-it does not execute upstream CMake, fetch
-dependencies or use a package manager.
+the exact MithrilHook CMake project is included offline. No dependency is fetched
+and no package manager is used.
 Project CMake targets are
-`laureondo_asio`, `laureondo_minhook`,
+`laureondo_asio`, `mithrilhook`,
 `laureondo_pegtl`, and
 `laureondo_pugixml`. The development DLL uses its own shared-CRT
-`laureondo_source_pugixml` build. No legacy XML vendor target aliases are provided.
+`laureondo_source_pugixml` and `laureondo_source_mithrilhook` builds. No legacy XML vendor target aliases are provided.
 XPath is disabled with the public `PUGIXML_NO_XPATH` definition.
 Build-time member-hash verification also runs.
 On mismatch, the checker reports missing,
@@ -136,7 +136,7 @@ checkpoint; they are not fresh pugixml native acceptance.
 
 ## Build-time versus active runtime use
 
-MinHook and pugixml are linked to existing
+MithrilHook and pugixml are linked to existing
 DLL hook-engine/XML targets. PEGTL now runs
 the existing Config2/VDF grammar documented
 in RE within the actual Application parser:
@@ -289,9 +289,8 @@ Asio Windows consumers use
 `_WIN32_WINNT`/`WINVER=0x0601`
 as in Brownfield.
 
-Current commit evidence and hash-pinned
-SAFE-FREEZE exception applied only to
-a build copy:
-[HOOK_ENGINE_HARDENING.md](HOOK_ENGINE_HARDENING.md).
-The MinHook SAFE-FREEZE source pin and pugixml selection are unchanged by
-the current Asio/PEGTL refresh.
+Current engine identity, ownership limits and application-specific tests:
+[MITHRILHOOK_INTEGRATION.md](MITHRILHOOK_INTEGRATION.md).
+No application source patch is applied to the 104-file MithrilHook tree.
+Retained MinHook/BSD, HDE and SAFE-FREEZE attribution is part of that immutable
+GPL-3.0-only combined distribution; see its THIRD_PARTY_NOTICES.txt.
