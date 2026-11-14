@@ -1206,8 +1206,8 @@
       "sha256": "ff8dadab50028201077b165b2b725a4466845291a8361efd2d302449795b2d07"
     },
     "tests/infrastructure/hook_real_peer_control.py": {
-      "bytes": 3713,
-      "sha256": "11feadbb352ffaed48ebddac09de10ac73072767a063ca94fc434efd19a67a44"
+      "bytes": 3749,
+      "sha256": "cf24471912cd753850eca92e4ea6ff26befb96ee1dddc8de0274d6fd346e0a4e"
     },
     "tests/infrastructure/test_build_partition.py": {
       "bytes": 38616,
@@ -1230,8 +1230,8 @@
       "sha256": "238efd3d471cc0fa9aad1a804260c85a7c38df81f3ec025d381d827af808bff2"
     },
     "tests/infrastructure/test_hook_engine_selection.py": {
-      "bytes": 2682,
-      "sha256": "edfdcf3db003d7465992b6d1a7bcaa7574552239de556e8f9c255abd1dd9d484"
+      "bytes": 2690,
+      "sha256": "a4ff76956a1b9cde16a5331ebb846e68e3fbd2a5b818ea7478e2d95f3f9de1d3"
     },
     "tests/infrastructure/test_infrastructure.py": {
       "bytes": 217840,

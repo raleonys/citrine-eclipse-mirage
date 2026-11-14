@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
-"""Build-only stale-action control and exact-failure oracle for real-peer tests."""
+"""Build-only stale-IP reconciliation control and exact-failure oracle for real-peer tests."""
 import argparse
 import hashlib
 import os
@@ -10,9 +10,9 @@ import sys
 import tempfile
 
 CURRENT_SHA256 = '2b795f8a28a307282c02f752348246a39b10ffb189bbc8ea8a6d1926e4259c92'
-STALE_SHA256 = '872b53241e5fe605f33f6d8cde341d2971936c170dbabe2e6af57366e614ecc6'
-ANCHOR = b'Freeze(&threads, pos, enable ? ACTION_ENABLE : ACTION_DISABLE)'
-STALE = b'Freeze(&threads, pos, ACTION_ENABLE)'
+STALE_SHA256 = '998a9d88e14af37e1e053e28c2010d22c32e1cbc6d8f83c897c3432658da6a33'
+ANCHOR = b'ip = hook->isEnabled ? FindNewIP(hook, desired) : FindOldIP(hook, desired);'
+STALE = b'ip = hook->isEnabled ? FindNewIP(hook, desired) : 0;'
 MISMATCH = 'SINGLE_DISABLE_IP_MISMATCH: real IP retained the trampoline/relay address'
 CLEANUP = 'REAL_PEER_CLEANUP: PASS original context restored, worker joined, handle count restored'
 
@@ -22,7 +22,7 @@ def stale_source(source):
         raise ValueError('Real-peer control requires the exact current verified hook source')
     result = source.replace(ANCHOR, STALE, 1)
     if hashlib.sha256(result).hexdigest() != STALE_SHA256:
-        raise ValueError('Real-peer control does not match the pinned stale-action source')
+        raise ValueError('Real-peer control does not match the pinned stale-IP source')
     return result
 
 

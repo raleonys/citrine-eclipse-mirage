@@ -56,10 +56,15 @@ Engine operations must remain outside DllMain/loader lock.
 | Previous coverage | Selected-engine coverage |
 | --- | --- |
 | Patched-copy SAFE-FREEZE and retained cleanup | Pristine package fault/cleanup/churn tests plus five exact cleanup negative controls |
-| Physical suspended-peer mapping | Package real-peer fixture; the project retains its exact stale single-disable mutation and cleanup oracle |
+| Physical suspended-peer mapping | Package real-peer fixture; the project retains its pinned omission of disable IP reconciliation and cleanup oracle |
 | Live trampoline calls and thread churn | Package live-call/churn fixtures, completion journal and retirement tests |
 | Upstream-only fake Win32 comparison | Replaced by actual selected-engine decoder/relocator, completion, reentry, retirement, unwind and exact-refusal controls; no upstream comparison motor remains linked |
 | Application lifecycle and original slots | Existing application/transaction fixtures plus `hook_backend_contracts` using the real `NativeApi`, real patched leaf calls and original trampolines |
+
+The old Freeze-action mutation is not reused: the selected engine reconciles IPs
+from actual written state at completion. The retained project counterexample
+omits the disable-side FindOldIP reconciliation in a build-only mutant and
+requires the real worker mismatch plus complete cleanup, never an arbitrary crash.
 
 The project-specific backend fixture tests external ownership refusal, staged
 batch activation, preserved original slots and real target restoration. Its

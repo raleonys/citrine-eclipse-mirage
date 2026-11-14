@@ -37,7 +37,7 @@ class MithrilHookIdentity(unittest.TestCase):
             capture_output=True, text=True, timeout=30)
         self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
 
-    def test_stale_disable_requires_exact_input_and_one_known_action_change(self):
+    def test_stale_disable_requires_exact_input_and_one_known_reconciliation_change(self):
         source = (ROOT / 'third_party/mithrilhook/src/hook.c').read_bytes()
         stale = control.stale_source(source)
         self.assertEqual(hashlib.sha256(stale).hexdigest(), control.STALE_SHA256)
