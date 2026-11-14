@@ -13,7 +13,7 @@
     ".github/workflows/msvc-connect-pointer.yml": "b55c230ffe11246a88cd3521146b19eba7f5749a6b38f27dbd9e7a9f3bcca48a",
     ".github/workflows/msvc-debug-defaults-diagnostic.yml": "e829ae6bc1fbafa7f74574846e09a2466813885ebabe9d6801722759fc905d1f",
     ".github/workflows/msvc-environment-diagnostics.yml": "d8264e0d14182fed39e7b24abc8179223e9ca7f4929bfad46a0fc57faa8395fb",
-    ".github/workflows/msvc-hook-disable.yml": "3f29c89234e28f163b90151e238bee4d8a9202904ad6a8a6e16dfb46d0d00e3b",
+    ".github/workflows/msvc-hook-disable.yml": "5f598e84e6536a2673861bb94f2a46a30f0cf5ced6106dfc65bfcd04369c8d93",
     ".github/workflows/msvc-online-provider-lease.yml": "997c5a452d2fb75f9f78f701f419763dd90e2e621566c87cc0b71c3b2ced9836",
     ".github/workflows/msvc-reference-graph.yml": "0862e7c70b3ad0deb0836bf09e6ee78144d308cddc57b183da09fce98153634f",
     ".github/workflows/msvc-registry-lifecycle.yml": "45bdb00acb5404578198b9735e20ad5dbc999903354b72b39e0282d9687e3820",

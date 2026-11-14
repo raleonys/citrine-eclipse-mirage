@@ -46,7 +46,16 @@ jobs:
       - name: Bind focused test binaries to their source commit
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
-          $binaries = foreach ($path in (Get-ChildItem $build -Recurse -Filter '*.exe' -File)) {
+          $rootTests = @('hook_backend_contracts', 'hook_transaction_contracts', 'application_runtime_contracts')
+          $files = @(Get-ChildItem $build -Recurse -File | Where-Object {
+            ($_.Extension -eq '.exe' -and ($_.BaseName -like 'mithrilhook_*' -or $_.BaseName -in $rootTests)) -or
+            $_.Name -eq 'laureondo_online.dll'
+          })
+          foreach ($target in $rootTests) {
+            if (@($files | Where-Object BaseName -eq $target).Count -ne 1) { throw "Missing or ambiguous project test: $target" }
+          }
+          if (@($files | Where-Object Name -eq 'laureondo_online.dll').Count -ne 1) { throw 'Missing or ambiguous provider fixture' }
+          $binaries = foreach ($path in $files) {
             @{ path = $path.FullName.Substring((Resolve-Path $build).Path.Length + 1); sha256 = (Get-FileHash -Algorithm SHA256 $path.FullName).Hash.ToLowerInvariant() }
           }
           @{ commit = '${{ github.sha }}'; configuration = '${{ matrix.configuration }}'; source_manifest_sha256 = (Get-FileHash metadata/ACTIVE_SOURCE_MANIFEST.json -Algorithm SHA256).Hash.ToLowerInvariant(); binaries = @($binaries) } |
@@ -72,6 +81,8 @@ jobs:
             build/ci-hook-${{ matrix.configuration }}/vendor_build/mithrilhook/build/tests/controls/
             build/ci-hook-${{ matrix.configuration }}/vendor_build/mithrilhook/build/tests/${{ matrix.configuration }}/*.exe
             build/ci-hook-${{ matrix.configuration }}/${{ matrix.configuration }}/hook*.exe
+            build/ci-hook-${{ matrix.configuration }}/${{ matrix.configuration }}/application_runtime_contracts.exe
+            build/ci-hook-${{ matrix.configuration }}/fixtures/${{ matrix.configuration }}/laureondo_online.dll
             build/ci-hook-${{ matrix.configuration }}/CMakeCache.txt
             build/ci-hook-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
             metadata/HOOK_ENGINE.json
