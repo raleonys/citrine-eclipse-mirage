@@ -67,13 +67,40 @@ add_dependencies(laureondo_pegtl laureondo_verify_vendors)
 # Scope BUILD_SHARED_LIBS to this dependency: production embeds a private static
 # engine and does not deploy an additional public DLL.
 set(_mithrilhook_root "${PROJECT_SOURCE_DIR}/third_party/mithrilhook")
+set(_mithrilhook_binary "${CMAKE_CURRENT_BINARY_DIR}/vendor_build/mithrilhook")
+if(WIN32)
+  # Native upstream controls require <their source root>/build. Preserve that
+  # guard by staging all unchanged payloads, never by modifying the dependency.
+  set(_mithrilhook_root "${CMAKE_CURRENT_BINARY_DIR}/vendor_build/mithrilhook")
+  set(_mithrilhook_binary "${_mithrilhook_root}/build")
+  set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+    "${PROJECT_SOURCE_DIR}/scripts/stage_mithrilhook.py"
+    "${PROJECT_SOURCE_DIR}/metadata/HOOK_ENGINE.json")
+  execute_process(COMMAND "${Python3_EXECUTABLE}" -B
+    "${PROJECT_SOURCE_DIR}/scripts/stage_mithrilhook.py" --root "${PROJECT_SOURCE_DIR}"
+    --output "${_mithrilhook_root}" --prepare
+    RESULT_VARIABLE _mithrilhook_stage_status OUTPUT_VARIABLE _mithrilhook_stage_out ERROR_VARIABLE _mithrilhook_stage_error)
+  if(NOT _mithrilhook_stage_status EQUAL 0)
+    message(FATAL_ERROR "Immutable engine staging failed: ${_mithrilhook_stage_out}${_mithrilhook_stage_error}")
+  endif()
+  add_custom_target(laureondo_verify_mithrilhook_stage ALL
+    COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/scripts/stage_mithrilhook.py"
+      --root "${PROJECT_SOURCE_DIR}" --output "${_mithrilhook_root}"
+    COMMENT "Verify every unchanged MithrilHook build input" VERBATIM)
+endif()
 function(laureondo_add_mithrilhook)
   set(BUILD_SHARED_LIBS OFF)
-  add_subdirectory("${_mithrilhook_root}" "${CMAKE_CURRENT_BINARY_DIR}/vendor_build/mithrilhook")
+  add_subdirectory("${_mithrilhook_root}" "${_mithrilhook_binary}")
 endfunction()
 laureondo_add_mithrilhook()
 if(WIN32)
-  add_dependencies(mithrilhook laureondo_verify_vendors)
+  add_dependencies(mithrilhook laureondo_verify_vendors laureondo_verify_mithrilhook_stage)
+  if(BUILD_TESTING)
+    get_property(_mithrilhook_tests DIRECTORY "${_mithrilhook_root}/tests" PROPERTY BUILDSYSTEM_TARGETS)
+    foreach(_test_target IN LISTS _mithrilhook_tests)
+      add_dependencies(${_test_target} laureondo_verify_mithrilhook_stage)
+    endforeach()
+  endif()
   set(_mithrilhook_sources
     "${_mithrilhook_root}/src/hook.c" "${_mithrilhook_root}/src/buffer.c"
     "${_mithrilhook_root}/src/trampoline.c" "${_mithrilhook_root}/src/hde/hde64.c")

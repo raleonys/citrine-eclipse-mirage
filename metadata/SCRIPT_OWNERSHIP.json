@@ -266,6 +266,11 @@
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "inspect dll",
       "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/stage_mithrilhook.py": {
+      "owner": "Laureondo hook integration",
+      "purpose": "Stage and verify unchanged MithrilHook input for its native test build layout",
+      "role": "PYTHON_TOOL_OR_MODULE"
     }
   }
 }

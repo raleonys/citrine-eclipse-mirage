@@ -377,9 +377,7 @@
     "laureondo_source_mithrilhook",
     "laureondo_source_pugixml"
   ],
-  "vendor_comparison_targets": [
-    "hook_real_peer_stale_control"
-  ],
+  "vendor_comparison_targets": [],
   "production_exports": [
     "DllMain",
     "SURGE",
@@ -416,11 +414,13 @@
     "mithrilhook_cleanup_contracts",
     "mithrilhook_completion_contracts",
     "mithrilhook_control_apply",
+    "mithrilhook_control_coverage",
     "mithrilhook_control_create",
     "mithrilhook_control_enable",
     "mithrilhook_control_internal_call",
     "mithrilhook_control_overlap",
     "mithrilhook_control_queue",
+    "mithrilhook_control_reconcile",
     "mithrilhook_control_remove",
     "mithrilhook_control_stale",
     "mithrilhook_control_transition",
@@ -428,6 +428,7 @@
     "mithrilhook_control_undefined_trap",
     "mithrilhook_control_unused_slot",
     "mithrilhook_control_unwind",
+    "mithrilhook_control_unwind_engine",
     "mithrilhook_control_x87",
     "mithrilhook_decoder_contracts",
     "mithrilhook_fault_contracts",

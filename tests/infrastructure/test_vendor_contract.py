@@ -20,7 +20,14 @@ import project_files
 import package_source
 import extract_source
 import restore_vendor_links
-import hook_real_peer_control as peer_control
+import importlib.util
+import contextlib
+import io
+
+_spec = importlib.util.spec_from_file_location(
+    "selected_engine_controls", ROOT / "third_party/mithrilhook/scripts/negative_controls.py")
+peer_control = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(peer_control)
 
 
 class VendorTests(unittest.TestCase):
@@ -68,16 +75,21 @@ class VendorTests(unittest.TestCase):
 
 
     def test_real_peer_control_rejects_success_unrelated_errors_and_incomplete_cleanup(self):
-        peer_control.require_failure(42, peer_control.CLEANUP + '\n', peer_control.MISMATCH + '\n')
+        cleanup = 'REAL_PEER_CLEANUP: PASS original context restored, worker joined, handle count restored'
+        mismatch = 'SINGLE_DISABLE_IP_MISMATCH: real IP retained the trampoline/relay address'
+        def run(code, stdout, stderr):
+            result = subprocess.CompletedProcess(['fixture'], code, stdout, stderr)
+            with patch.object(peer_control.subprocess, 'run', return_value=result):
+                with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                    peer_control.run('stale', ['fixture'])
+        run(42, cleanup + '\n', mismatch + '\n')
         for code, stdout, stderr in (
-                (0, peer_control.CLEANUP, peer_control.MISMATCH),
-                (1, peer_control.CLEANUP, peer_control.MISMATCH),
-                (42, '', peer_control.MISMATCH),
-                (42, peer_control.CLEANUP, 'unrelated error'),
-                (42, peer_control.CLEANUP, peer_control.MISMATCH + '\nFAIL: cleanup')):
+                (0, cleanup, mismatch), (1, cleanup, mismatch),
+                (42, '', mismatch), (42, cleanup, 'unrelated error'),
+                (42, cleanup, mismatch + '\nFAIL: cleanup')):
             with self.subTest(code=code, stdout=stdout, stderr=stderr):
                 with self.assertRaises(RuntimeError):
-                    peer_control.require_failure(code, stdout, stderr)
+                    run(code, stdout, stderr)
 
     def test_archive_comment_commit_is_bound_to_the_pinned_payload(self):
         record=vendor_sync.load_lock(ROOT)['vendors']['mithrilhook'].copy()

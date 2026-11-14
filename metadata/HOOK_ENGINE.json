@@ -17,5 +17,6 @@
     "reentrant_call": 13
   },
   "lifetime": "Disable; drain original/callback users; retry retained cleanup before retirement/unload",
-  "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC"
+  "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC",
+  "build_source_materialization": "Exact unmodified member copy under owned build root; upstream native test controls stay in its build subtree"
 }

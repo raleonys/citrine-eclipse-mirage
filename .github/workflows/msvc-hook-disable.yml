@@ -55,7 +55,7 @@ jobs:
         run: |
           $build = 'build/ci-hook-${{ matrix.configuration }}'
           $junit = Join-Path (Resolve-Path $build) 'hook-junit.xml'
-          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(mithrilhook_.+|hook_(backend_contracts|real_peer_stale_control|transaction_contracts)|application_runtime_contracts)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/hook-ctest.log"
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(mithrilhook_.+|hook_(backend_contracts|transaction_contracts)|application_runtime_contracts)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/hook-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC hook regression failed' }
       - name: Preserve native hook evidence
         if: always()
@@ -69,9 +69,8 @@ jobs:
             build/ci-hook-${{ matrix.configuration }}/hook-binary-identities.json
             build/ci-hook-${{ matrix.configuration }}/hook-partition.json
             build/ci-hook-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
-            build/ci-hook-${{ matrix.configuration }}/test_controls/mithrilhook/src/hook.c
-            build/ci-hook-${{ matrix.configuration }}/vendor_build/mithrilhook/tests/controls/
-            build/ci-hook-${{ matrix.configuration }}/vendor_build/mithrilhook/tests/${{ matrix.configuration }}/*.exe
+            build/ci-hook-${{ matrix.configuration }}/vendor_build/mithrilhook/build/tests/controls/
+            build/ci-hook-${{ matrix.configuration }}/vendor_build/mithrilhook/build/tests/${{ matrix.configuration }}/*.exe
             build/ci-hook-${{ matrix.configuration }}/${{ matrix.configuration }}/hook*.exe
             build/ci-hook-${{ matrix.configuration }}/CMakeCache.txt
             build/ci-hook-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml

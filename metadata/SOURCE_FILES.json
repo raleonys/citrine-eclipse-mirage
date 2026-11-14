@@ -1205,13 +1205,9 @@
       "bytes": 2192,
       "sha256": "ff8dadab50028201077b165b2b725a4466845291a8361efd2d302449795b2d07"
     },
-    "tests/infrastructure/hook_real_peer_control.py": {
-      "bytes": 3749,
-      "sha256": "cf24471912cd753850eca92e4ea6ff26befb96ee1dddc8de0274d6fd346e0a4e"
-    },
     "tests/infrastructure/test_build_partition.py": {
-      "bytes": 38616,
-      "sha256": "635a24678073015ab6d7df4f9750342cadc938d47eb3d4b9b02c63f7dceff2dc"
+      "bytes": 38670,
+      "sha256": "35d048a3b30aace750cdcafd452274e6f652e75d779fbf6e524b91e5cff7ccc0"
     },
     "tests/infrastructure/test_build_path_reparse.ps1": {
       "bytes": 17701,
@@ -1230,8 +1226,8 @@
       "sha256": "238efd3d471cc0fa9aad1a804260c85a7c38df81f3ec025d381d827af808bff2"
     },
     "tests/infrastructure/test_hook_engine_selection.py": {
-      "bytes": 2690,
-      "sha256": "a4ff76956a1b9cde16a5331ebb846e68e3fbd2a5b818ea7478e2d95f3f9de1d3"
+      "bytes": 6659,
+      "sha256": "c86a8c45607eb8d9939c6982cd69ee3e08845cb92f872bbfd7f9f28737cc01c6"
     },
     "tests/infrastructure/test_infrastructure.py": {
       "bytes": 217840,
@@ -1270,8 +1266,8 @@
       "sha256": "10e0060c94200ed2d51275757588f43e1bd5e74d430a61d0ec79ecf9eefe71e1"
     },
     "tests/infrastructure/test_vendor_contract.py": {
-      "bytes": 26196,
-      "sha256": "08a6aa7103ae7af3040f3407eda284f7bb98663d369ddfcfc855535e51056987"
+      "bytes": 26801,
+      "sha256": "1b8d69578415af736b37b37e89ea47cb57b44a683f91df323e6d29389bebffdb"
     },
     "tests/infrastructure/test_weekly_release.py": {
       "bytes": 44801,

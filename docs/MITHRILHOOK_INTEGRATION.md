@@ -13,6 +13,11 @@ See [the selection contract](../metadata/HOOK_ENGINE.json) and
 The project no longer contains the previous standalone MinHook vendor tree,
 `MH_*` application calls, compatibility aliases or the old source-copy patch
 script. MithrilHook's original CMake project builds the exact pinned source.
+Windows staging makes a byte-identical 104-member copy inside the owned build
+root so the unmodified package can keep native control outputs in its own
+build/ subtree. Configure and build-time checks verify every source byte and
+reject drift without silently repairing it; only generated build/ output is
+excluded. Neither the installed vendor nor its staged source is patched.
 The dependency is statically linked, with a separate engine instance per DLL.
 MSVC's development C++ DLL rebuilds those same immutable C sources using its
 shared CRT; it does not reuse the shipping static-CRT archive.
@@ -56,13 +61,13 @@ Engine operations must remain outside DllMain/loader lock.
 | Previous coverage | Selected-engine coverage |
 | --- | --- |
 | Patched-copy SAFE-FREEZE and retained cleanup | Pristine package fault/cleanup/churn tests plus five exact cleanup negative controls |
-| Physical suspended-peer mapping | Package real-peer fixture; the project retains its pinned omission of disable IP reconciliation and cleanup oracle |
+| Physical suspended-peer mapping | Package real-peer fixture and exact disable-reconciliation omission/cleanup control; project host tests also reject false success in that vanilla oracle |
 | Live trampoline calls and thread churn | Package live-call/churn fixtures, completion journal and retirement tests |
 | Upstream-only fake Win32 comparison | Replaced by actual selected-engine decoder/relocator, completion, reentry, retirement, unwind and exact-refusal controls; no upstream comparison motor remains linked |
 | Application lifecycle and original slots | Existing application/transaction fixtures plus `hook_backend_contracts` using the real `NativeApi`, real patched leaf calls and original trampolines |
 
 The old Freeze-action mutation is not reused: the selected engine reconciles IPs
-from actual written state at completion. The retained project counterexample
+from actual written state at completion. The package counterexample
 omits the disable-side FindOldIP reconciliation in a build-only mutant and
 requires the real worker mismatch plus complete cleanup, never an arbitrary crash.
 

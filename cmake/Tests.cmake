@@ -157,30 +157,7 @@ target_link_libraries(listener_port_contracts PRIVATE laureondo_core)
 add_test(NAME listener_port_contracts COMMAND listener_port_contracts)
 # This test intentionally occupies the complete production range.
 set_tests_properties(listener_port_contracts PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
-# The pinned MithrilHook package supplies the positive native peer test and
-# exact cleanup/completion/retirement controls. Preserve the application-specific
-# stale single-disable IP counterexample against that same selected engine.
-set(_stale_hook_dir "${CMAKE_CURRENT_BINARY_DIR}/test_controls/mithrilhook")
-set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
-  "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_real_peer_control.py")
-execute_process(COMMAND "${Python3_EXECUTABLE}" -B
-  "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_real_peer_control.py" prepare
-  --source "${_mithrilhook_root}/src/hook.c"
-  --output "${_stale_hook_dir}/src/hook.c"
-  RESULT_VARIABLE _stale_hook_status OUTPUT_VARIABLE _stale_hook_output ERROR_VARIABLE _stale_hook_error)
-if(NOT _stale_hook_status EQUAL 0)
-  message(FATAL_ERROR "Real-peer control preparation failed: ${_stale_hook_output}${_stale_hook_error}")
-endif()
-file(MAKE_DIRECTORY "${_stale_hook_dir}/include")
-configure_file("${_mithrilhook_root}/include/MithrilHook.h" "${_stale_hook_dir}/include/MithrilHook.h" COPYONLY)
-add_executable(hook_real_peer_stale_control "${_mithrilhook_root}/tests/native/real_peer.cpp"
-  "${_stale_hook_dir}/src/hook.c")
-target_include_directories(hook_real_peer_stale_control PRIVATE "${_mithrilhook_root}/src")
-target_link_libraries(hook_real_peer_stale_control PRIVATE mithrilhook)
-add_test(NAME hook_real_peer_stale_control COMMAND "${Python3_EXECUTABLE}" -B
-  "${PROJECT_SOURCE_DIR}/tests/infrastructure/hook_real_peer_control.py" run --
-  ${CMAKE_CROSSCOMPILING_EMULATOR} "$<TARGET_FILE:hook_real_peer_stale_control>")
-set_tests_properties(hook_real_peer_stale_control PROPERTIES TIMEOUT 45)
+# The immutable package supplies real-peer and exact negative controls.
 add_executable(hook_backend_contracts tests/native/hook_backend_tests.cpp)
 target_link_libraries(hook_backend_contracts PRIVATE laureondo_core)
 add_test(NAME hook_backend_contracts COMMAND hook_backend_contracts)

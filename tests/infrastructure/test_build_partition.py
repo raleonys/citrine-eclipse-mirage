@@ -615,6 +615,7 @@ set(_avatar_header "${CMAKE_CURRENT_SOURCE_DIR}/avatar.hpp")
 set(_mithrilhook_sources application.cpp)
 set(_mithrilhook_root "${CMAKE_CURRENT_SOURCE_DIR}")
 add_custom_target(laureondo_verify_vendors)
+add_custom_target(laureondo_verify_mithrilhook_stage)
 add_library(laureondo_asio INTERFACE)
 add_library(laureondo_pegtl INTERFACE)
 '''
