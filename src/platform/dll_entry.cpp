@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/control.h"
-#include "citrine_eclipse_mirage/runtime/application.hpp"
-#include "citrine_eclipse_mirage/platform/hook_unload_guard.hpp"
+#include "laureondo/runtime/control.h"
+#include "laureondo/runtime/application.hpp"
+#include "laureondo/platform/hook_unload_guard.hpp"
 #include <atomic>
 #include <cstdint>
 #include <memory>
@@ -26,9 +26,9 @@ DWORD WINAPI application_worker(void*) {
         const auto error=GetLastError();shutdown_result=ERROR_SUCCESS;
         return error;
     }
-    std::unique_ptr<citrine_eclipse_mirage::application::Application> owner;
+    std::unique_ptr<laureondo::application::Application> owner;
     try {
-        owner=std::make_unique<citrine_eclipse_mirage::application::Application>();
+        owner=std::make_unique<laureondo::application::Application>();
         owner->start();
     }catch(...) {
         // Startup failure also requires exactly one cleanup attempt.
@@ -63,11 +63,11 @@ DWORD WINAPI application_worker(void*) {
 }
 extern "C" DWORD WINAPI DllShutdown(DWORD timeout) {
     if(shutdown_call.test_and_set())return DLL_SHUTDOWN_CONCURRENT;
-    citrine_eclipse_mirage::set_shutdown_caller(GetCurrentThreadId());
+    laureondo::set_shutdown_caller(GetCurrentThreadId());
     struct Release {~Release(){
         // A timeout/failure returns control to a live caller. It must become
         // eligible for subsequent unload scans before another shutdown call.
-        citrine_eclipse_mirage::set_shutdown_caller(0);
+        laureondo::set_shutdown_caller(0);
         shutdown_call.clear();
     }} release;
     if(!worker_thread||!stop_event)return DLL_SHUTDOWN_WAIT_FAILED;

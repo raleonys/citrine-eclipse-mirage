@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_composed_write.hpp"
+#include "laureondo/net/transport_composed_write.hpp"
 #include <algorithm>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 IocpSchedulerEntry& scheduler(AsyncSendService& service){
     if(!service.scheduler_08)throw UnsupportedInput("Native send scheduler has no live projection");
@@ -125,4 +125,4 @@ void composed_write_0261d0(SendHandler& handler,const Error& error,std::uint64_t
 void ComposedWriteEffectsAdapter::send_body_0261d0(SendHandler& handler,Error& error,std::uint64_t bytes,std::uint32_t flag){
     composed_write_0261d0(handler,error,bytes,flag,context_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

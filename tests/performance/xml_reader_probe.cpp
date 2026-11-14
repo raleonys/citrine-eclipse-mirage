@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "laureondo/xml/reader.hpp"
 #include <atomic>
 #include <pugixml.hpp>
 #include <chrono>
@@ -73,10 +73,10 @@ void operator delete[](void* p,std::size_t) noexcept {std::free(p);}
 namespace {
 void* pugi_allocate(std::size_t size){try{return ::operator new(size);}catch(const std::bad_alloc&){return nullptr;}}
 void pugi_release(void* pointer){::operator delete(pointer);}
-namespace reader=citrine_eclipse_mirage::xml_reader_bridge;
+namespace reader=laureondo::xml_reader_bridge;
 std::atomic<std::size_t> result_sink{0};
 void require(bool value,const char* reason){if(!value)throw std::runtime_error(reason);}
-std::size_t traverse(const citrine_eclipse_mirage::messages::XmlNode* node){
+std::size_t traverse(const laureondo::messages::XmlNode* node){
     std::size_t result=0;
     for(;node;node=node->next_element()){
         result+=node->name().size();if(auto value=node->attribute("v"))result+=value->size();
@@ -89,8 +89,8 @@ struct RetainedViews {
     const std::string stem=std::string(192,'v');
     const std::string kept_attribute=stem+"&old",kept_text=stem+"\nold&text";
     const std::string target_attribute=stem+"\nnew&value",target_text=stem+"\nnew&text";
-    citrine_eclipse_mirage::messages::ParseResult parsed{};
-    const citrine_eclipse_mirage::messages::XmlNode *root=nullptr,*old=nullptr,*target=nullptr;
+    laureondo::messages::ParseResult parsed{};
+    const laureondo::messages::XmlNode *root=nullptr,*old=nullptr,*target=nullptr;
     std::string_view attribute_view;
     const char* text_pointer=nullptr;
     std::optional<std::string_view> result;

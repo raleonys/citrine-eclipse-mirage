@@ -2,13 +2,13 @@
 
 | Path | Responsibility |
 |---|---|
-| `src/`, `include/citrine_eclipse_mirage/` | Application sources selected from the RE inputs; detailed provenance in SOURCE_LAYOUT.json |
+| `src/`, `include/laureondo/` | Application sources selected from the RE inputs; detailed provenance in SOURCE_LAYOUT.json |
 | `cmake/` | Explicit source lists, Windows DLL, portable targets, and infrastructure test targets |
 | `scripts/build_orchestration/` | Five registered human-facing launchers and automation-ready PowerShell profiles |
 | `scripts/` | Golden tools, source QA, manifest handling, and package validation |
 | `tools/` | Application C API loader, separate source host, compiler CRT host, and read-only PE/resource reporting |
 | `exports/` | The application's fixed C export table of three names/ordinals |
-| `tests/unit/`, `tests/native/` | Current Citrine Eclipse Mirage source and adapter tests |
+| `tests/unit/`, `tests/native/` | Current Laureondo source and adapter tests |
 | `tests/infrastructure/`, `tests/support/golden/` | Adapted infrastructure tests and explicitly synthetic policies |
 | `resources/branding/` | Repository campaign logo plus separate SURGE/profile and fallback avatars; avatar bytes are read-only C++ data, not PNG PE resources |
 | `third_party/` | Four immutable owner-supplied vendor trees: Asio, MinHook, PEGTL and pugixml; retired archive provenance is retained separately |
@@ -47,15 +47,15 @@ src/runtime/achievement_storage.cpp
 src/runtime/calendar.cpp
 src/xml/reader.cpp
 
-include/citrine_eclipse_mirage/net/asio_service.hpp
-include/citrine_eclipse_mirage/platform/hook_setup.hpp
-include/citrine_eclipse_mirage/runtime/achievement_storage.hpp
-include/citrine_eclipse_mirage/runtime/calendar.hpp
-include/citrine_eclipse_mirage/xml/reader.hpp
+include/laureondo/net/asio_service.hpp
+include/laureondo/platform/hook_setup.hpp
+include/laureondo/runtime/achievement_storage.hpp
+include/laureondo/runtime/calendar.hpp
+include/laureondo/xml/reader.hpp
 ```
 
 No additional module subdirectories exist beneath `src/<module>/<file>` or
-`include/citrine_eclipse_mirage/<module>/<file>`. Former `transport`, `session`, `hooks`,
+`include/laureondo/<module>/<file>`. Former `transport`, `session`, `hooks`,
 `hook_engine`, `windows`, `achievements`, `events`, `time`, `files`, and `native`
 layers are represented by filenames. The pre-migration source package is
 retained. A total of 177 files were moved, and 261 source/header bodies were

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_close.hpp"
+#include "laureondo/net/transport_close.hpp"
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 Error capture(Api& errors){
     const auto category=errors.system_category_028620();
@@ -35,4 +35,4 @@ std::int32_t close_026e50(Socket socket,std::uint8_t& state,bool destroying,
     else error=capture(errors);
     return result;
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/xml/node_constructors.hpp"
+#include "laureondo/xml/node_constructors.hpp"
 #include "tests/support/socket/node_identify_test_fixture.hpp"
 
 namespace node_constructors_test {
-namespace s=citrine_eclipse_mirage::socket;
+namespace s=laureondo::socket;
 using node_identify_test::check;using node_identify_test::checks;using node_identify_test::put;using node_identify_test::word;
 using node_identify_test::Failure;using node_identify_test::fails;using node_identify_test::unmapped;
 inline constexpr std::array<unsigned,5> addresses{0x1590,0x1610,0x1690,0x1720,0x17b0};

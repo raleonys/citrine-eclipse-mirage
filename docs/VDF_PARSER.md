@@ -31,7 +31,7 @@ corroborates these inputs.
 `tao::pegtl::parse<vdf::Document,...>`. There is neither the former
 hand-written parser nor an alternate backend after failure.
 
-The consumer interface is `include/citrine_eclipse_mirage/config/parser.hpp`: `Node`,
+The consumer interface is `include/laureondo/config/parser.hpp`: `Node`,
 `State`, `Position`, `ParseError` and `parse` use project/standard types only.
 PEGTL rules stay behind the parser implementation; consumers do not include
 its private grammar header. The move preserves the grammar bytes, actions,
@@ -56,9 +56,9 @@ Duplicate keys replace the entire preceding node, including values
 and children. A fresh `State` is used per document and input must
 remain alive throughout parsing.
 
-On Windows, `citrine_eclipse_mirage_vdf_objects` compiles against the
-`citrine_eclipse_mirage_pegtl` target. Its objects link into both the
-`citrine_eclipse_mirage_core` test archive and actual `citrine_eclipse_mirage` DLL.
+On Windows, `laureondo_vdf_objects` compiles against the
+`laureondo_pegtl` target. Its objects link into both the
+`laureondo_core` test archive and actual `laureondo` DLL.
 DocumentPipeline and the existing configuration application path use
 this parser. Through the DLL, the dynamic source host checks a
 BOM-prefixed nested Config2 document, duplicate assignments, and

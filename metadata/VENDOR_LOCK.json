@@ -29,7 +29,7 @@
       "upstream_commit": "190a8d8daf1cc62909b4e0c72ff491ba264ca98e",
       "installed_member_integrity": "PASS",
       "production_role": "APPLICATION_ASYNCHRONOUS_TRANSPORT",
-      "cmake_target": "citrine_eclipse_mirage_asio",
+      "cmake_target": "laureondo_asio",
       "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification",
       "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC_AND_GOLDEN_FOR_SELECTED_SNAPSHOT"
     },
@@ -51,7 +51,7 @@
       "upstream_commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
       "installed_member_integrity": "PASS",
       "production_role": "APPLICATION_QUEUED_HOOK_ENGINE",
-      "cmake_target": "citrine_eclipse_mirage_minhook",
+      "cmake_target": "laureondo_minhook",
       "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification"
     },
     "pegtl": {
@@ -72,8 +72,8 @@
       "upstream_commit": "b60f6110abd37e502d202d13a6c565410c552c33",
       "installed_member_integrity": "PASS",
       "production_role": "APPLICATION_CONFIG2_VDF_GRAMMAR",
-      "cmake_target": "citrine_eclipse_mirage_pegtl",
-      "application_owner": "citrine_eclipse_mirage_vdf_objects",
+      "cmake_target": "laureondo_pegtl",
+      "application_owner": "laureondo_vdf_objects",
       "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT_AND_INDEPENDENT_GIT_TREE_MEMBER_MATCH",
       "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC_AND_GOLDEN_FOR_SELECTED_SNAPSHOT",
       "selected_branch": "4.x"
@@ -96,7 +96,7 @@
       "upstream_commit": "f0a3faa76e04f35110257ca8713363dee3c890e8",
       "installed_member_integrity": "PASS",
       "production_role": "APPLICATION_XML_AND_PERSISTENCE",
-      "cmake_target": "citrine_eclipse_mirage_pugixml",
+      "cmake_target": "laureondo_pugixml",
       "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT_AND_INDEPENDENT_CORE_FILE_MATCH",
       "configuration": [
         "PUGIXML_NO_XPATH"
@@ -131,7 +131,7 @@
       "upstream_commit": "8224e427b655b83dae5e2298f1e6919523a78737",
       "installed_member_integrity": "PASS",
       "production_role": "APPLICATION_XML_AND_PERSISTENCE",
-      "cmake_target": "citrine_eclipse_mirage_tinyxml2",
+      "cmake_target": "laureondo_tinyxml2",
       "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification"
     }
   }

@@ -4,13 +4,15 @@ This file distinguishes integrated source changes, imported source history and p
 
 ## This PR
 
-- Diagnose conservative Debug unload refusals through a private fixed image record, with bounded host reads and best-effort output only after shutdown returns. Keep I/O, allocation and callbacks out of the scan path, suppress output while scanner-owned suspensions remain, and compile diagnostics out of Release. Add publication/reader fault contracts and manual Visual Studio/NMake five-or-twenty-attempt lifecycle diagnostics without changing scan decisions, TLS exemptions, cleanup ownership, public ABI or PR validation scheduling.
+- Adopt the owner-requested Laureondo identity and exact supplied logo across the public overview, Windows product resources, C++ namespace/include root, CMake targets/options, host tools, DLL/provider names, version environment, CI and weekly package naming. Keep SURGE runtime/configuration and avatars, the three C exports/ordinals, vendor payloads, historical evidence and existing GitHub repository coordinates unchanged. Document the consumer/provider/build-cache migration; this PR does not rename the hosted repository or publish a release.
 
 ## Integrated development history
 
 These entries record accepted source changes; integration does not imply a published release.
 
 ### Integrated 2026-11-13
+
+- [PR #147](https://github.com/raleonys/citrine-eclipse-mirage/pull/147): Diagnose conservative Debug unload refusals through a private fixed image record, with bounded host reads and best-effort output only after shutdown returns. Keep I/O, allocation and callbacks out of the scan path, suppress output while scanner-owned suspensions remain, and compile diagnostics out of Release. Add publication/reader fault contracts and manual Visual Studio/NMake five-or-twenty-attempt lifecycle diagnostics without changing scan decisions, TLS exemptions, cleanup ownership, public ABI or PR validation scheduling.
 
 - [PR #305](https://github.com/raleonys/citrine-eclipse-mirage/pull/305): Mask C++ comments and ordinary/raw literals before checking first-party qualified namespaces, avoiding false errors from harmless text. Preserve active declarations, numeric digit separators, literal prefixes and source positions; follow continued line comments and add real-namespace controls. Keep original-byte hashing, source layout, runtime and ABI unchanged.
 - [PR #285](https://github.com/raleonys/citrine-eclipse-mirage/pull/285): Require one canonical active PEGTL CMakeCache probe record instead of searching for success text. Reject missing, duplicated, malformed or wrongly typed records, including mixed-type duplicates of the same key; preserve exit 0 for exact success and CTest skip 77 for exact unavailable values. Add real-subprocess regressions without changing vendor inputs or runtime behavior.

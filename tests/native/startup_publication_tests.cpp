@@ -3,16 +3,16 @@
 // Compile the real application with an Execution observer. Only flag-publication
 // timing is controlled; the Windows mutex, workers, service and factory are real.
 #include "../../src/runtime/application_internal.hpp"
-#include "citrine_eclipse_mirage/codec/crypto.hpp"
-#include "citrine_eclipse_mirage/core/protocol_identity.hpp"
-#include "citrine_eclipse_mirage/net/asio_service.hpp"
-#include "citrine_eclipse_mirage/net/session_handler.hpp"
-#include "citrine_eclipse_mirage/net/session_routing.hpp"
-#include "citrine_eclipse_mirage/runtime/startup.hpp"
-#include "citrine_eclipse_mirage/runtime/libraries.hpp"
-#include "citrine_eclipse_mirage/platform/hook_unload_guard.hpp"
-#include "citrine_eclipse_mirage/platform/callback_lock.hpp"
-#include "citrine_eclipse_mirage/platform/hook_transaction.hpp"
+#include "laureondo/codec/crypto.hpp"
+#include "laureondo/core/protocol_identity.hpp"
+#include "laureondo/net/asio_service.hpp"
+#include "laureondo/net/session_handler.hpp"
+#include "laureondo/net/session_routing.hpp"
+#include "laureondo/runtime/startup.hpp"
+#include "laureondo/runtime/libraries.hpp"
+#include "laureondo/platform/hook_unload_guard.hpp"
+#include "laureondo/platform/callback_lock.hpp"
+#include "laureondo/platform/hook_transaction.hpp"
 #include <algorithm>
 #include <atomic>
 #include <cstring>
@@ -27,9 +27,9 @@ using namespace std::chrono_literals;
 std::promise<void> entered,release;
 std::shared_future<void> released=release.get_future().share();
 std::atomic<bool> held{false};
-citrine_eclipse_mirage::execution::Execution* execution=nullptr;
+laureondo::execution::Execution* execution=nullptr;
 }
-namespace citrine_eclipse_mirage::execution {
+namespace laureondo::execution {
 class AuditedExecution:public Execution {
     FlagReferences flags_;
 public:
@@ -48,7 +48,7 @@ public:
 #undef Execution
 
 int main()try{
-    using namespace citrine_eclipse_mirage;using namespace std::chrono_literals;
+    using namespace laureondo;using namespace std::chrono_literals;
     const auto directory=std::filesystem::temp_directory_path()/("surge-publication-"+std::to_string(GetCurrentProcessId()));
     std::filesystem::remove_all(directory);std::filesystem::create_directories(directory);
     struct Remove {std::filesystem::path path;~Remove(){std::error_code error;std::filesystem::remove_all(path,error);}} remove{directory};

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_response_dispatch.hpp"
+#include "laureondo/net/transport_response_dispatch.hpp"
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 void reset(ReceiveBufferString& value){value.size_10=0;value.capacity_18=15;value.storage_00[0]=0;}
 void destroy(ReceiveBufferString& value,FrameReadContext& context){
@@ -144,4 +144,4 @@ void BorrowedResponse::invoke(ResponseDispatchContext& context) const{
 void ResponseDispatchApiAdapter::dispatch_response_021420(IoHandlerEnvironment& env,MessageWriteTask& task,std::uint64_t,std::uint64_t){
     socket::dispatch_response_021420(env,task,context_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

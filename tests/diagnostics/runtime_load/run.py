@@ -36,8 +36,8 @@ APPLICATION_INSERTIONS = (
             std::lock_guard lock(app.handler_state_mutex);
             benchmark::ApplicationLock measured_lock(waiting);
             return router.registered_handler(rva,n,out);'''))
-THREAD_ALIAS = '''#ifdef CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_THREAD
-    using OwnedThread=CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_THREAD;
+THREAD_ALIAS = '''#ifdef LAUREONDO_TEST_ASIO_THREAD
+    using OwnedThread=LAUREONDO_TEST_ASIO_THREAD;
 #else
     using OwnedThread=std::thread;
 #endif'''
@@ -49,7 +49,7 @@ CONTROL_INSERTIONS = (
     ('    void job(std::function<void()> fn) {', '''
         if constexpr(RUNTIME_BENCHMARK_WORKERS==0){
             if(stopping)return;
-            message_jobs.submit(citrine_eclipse_mirage::benchmark::timed_job(std::move(fn)),
+            message_jobs.submit(laureondo::benchmark::timed_job(std::move(fn)),
                 [this](std::exception_ptr e)noexcept{factory.error("handler",e);});
             return;
         }'''))
@@ -98,8 +98,8 @@ def generated_service(source, workers):
         raise ValueError('Source is already instrumented')
     count = MARKER if workers in (0, 2) else MARKER.replace('handler_policy::workers', str(workers))
     generated = ('#include "probe.hpp"\n' + source.replace(MARKER, count)
-            .replace(PUSH, 'jobs.push_back(citrine_eclipse_mirage::benchmark::timed_job(std::move(fn)));'))
-    generated = generated.replace(count, count + '\n    citrine_eclipse_mirage::benchmark::PerMessageJobs message_jobs;')
+            .replace(PUSH, 'jobs.push_back(laureondo::benchmark::timed_job(std::move(fn)));'))
+    generated = generated.replace(count, count + '\n    laureondo::benchmark::PerMessageJobs message_jobs;')
     for needle, insertion in CONTROL_INSERTIONS:
         if generated.count(needle) != 1:
             raise ValueError('Production scheduling method changed')
@@ -128,7 +128,7 @@ def verify_source():
     subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/vendor_sync.py'),
                     '--root', str(ROOT), '--verify-installed'], check=True,
                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=120)
-    policy = (ROOT / 'include/citrine_eclipse_mirage/net/handler_policy.hpp').read_text()
+    policy = (ROOT / 'include/laureondo/net/handler_policy.hpp').read_text()
     if 'workers=2;' not in policy or 'queued_jobs=128;' not in policy:
         raise ValueError('Production worker/queue policy changed; review benchmark baseline')
 
@@ -201,7 +201,7 @@ def prepare(output):
         hashes[str(workers)] = hashlib.sha256(payload).hexdigest()
     app_payload = generated_application((ROOT / 'src/runtime/application.cpp').read_text()).encode('utf-8')
     payloads[output / 'application.cpp'] = app_payload
-    receipt = {'schema': 'citrine.runtime-benchmark-inputs.v2', **identity(),
+    receipt = {'schema': 'laureondo.runtime-benchmark-inputs.v2', **identity(),
                'generated_service_sha256': hashes,
                'generated_application_sha256': hashlib.sha256(app_payload).hexdigest(),
                'instrumentation': 'common queue-clock wrapper/control branches; separate per-message scheduler',
@@ -243,7 +243,7 @@ def record_build(build, binary, kind, workers, configuration, compiler_id, compi
     if any(inputs.get(key) != value for key, value in identity().items()):
         raise ValueError('Reconfigure after source identity changes before linking')
     verify_generated(build, inputs)
-    receipt = {'schema': 'citrine.runtime-benchmark-build.v1', 'source': inputs,
+    receipt = {'schema': 'laureondo.runtime-benchmark-build.v1', 'source': inputs,
                'binary': binary.name, 'sha256': digest(binary), 'kind': kind, 'workers': workers,
                'configuration': configuration, 'compiler_id': compiler_id,
                'compiler_version': compiler_version, 'cxx_standard': 20}
@@ -252,7 +252,7 @@ def record_build(build, binary, kind, workers, configuration, compiler_id, compi
 
 def validate_build(receipt, name, sha256, inputs):
     match = re.fullmatch(r'(runtime_load|application_load)_([01248])', name)
-    if not match or receipt.get('schema') != 'citrine.runtime-benchmark-build.v1':
+    if not match or receipt.get('schema') != 'laureondo.runtime-benchmark-build.v1':
         raise ValueError('Missing linked-build receipt or unknown candidate')
     expected = {'source': inputs, 'binary': name + '.exe', 'sha256': sha256,
                 'kind': match[1], 'workers': int(match[2]), 'configuration': 'Release', 'cxx_standard': 20}
@@ -453,7 +453,7 @@ def run(build, output, repeats=5, quick=False, suite='all'):
     output.mkdir(parents=True)
     (output / 'samples').mkdir()
     data_rows = []
-    receipt = {'schema': 'citrine.runtime-load.v3', 'result': 'RUNNING',
+    receipt = {'schema': 'laureondo.runtime-load.v3', 'result': 'RUNNING',
                'run_id': uuid.uuid4().hex,
                'evidence_class': 'WINDOWS_NATIVE_COMPONENT_BENCHMARK',
                'source': inputs, 'system': platform.system(), 'logical_cpus': os.cpu_count(),

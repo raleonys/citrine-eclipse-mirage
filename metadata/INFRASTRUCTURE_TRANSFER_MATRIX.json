@@ -122,10 +122,10 @@
       "disposition": "COMPATIBILITY_REVIEW",
       "evidence": [
         "tools/README.md",
-        "tools/citrine_eclipse_mirage_source_host/main.cpp",
-        "tools/citrine_eclipse_mirage_crt_host/main.cpp",
+        "tools/laureondo_source_host/main.cpp",
+        "tools/laureondo_crt_host/main.cpp",
         "tools/inspect_dll.py",
-        "tools/citrine_eclipse_mirage_runtime_host/main.cpp"
+        "tools/laureondo_runtime_host/main.cpp"
       ],
       "id": "INFRA-TOOLS",
       "implementation": "REVIEWED_AND_ADAPTED_TO_ACTUAL_C_API_AND_SEPARATE_SOURCE_API",

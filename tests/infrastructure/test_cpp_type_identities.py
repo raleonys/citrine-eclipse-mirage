@@ -36,11 +36,11 @@ class CppTypeIdentityTests(unittest.TestCase):
 
     def test_duplicate_types_across_socket_headers_are_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
-            folder = Path(tmp) / "include" / "citrine_eclipse_mirage" / "net"
+            folder = Path(tmp) / "include" / "laureondo" / "net"
             folder.mkdir(parents=True)
             for name in ("a.hpp", "b.hpp"):
                 (folder / name).write_text(
-                    "namespace citrine_eclipse_mirage::socket {\nclass ShadowApi {};\n}\n",
+                    "namespace laureondo::socket {\nclass ShadowApi {};\n}\n",
                     encoding="utf-8")
             _, errors = checker.inspect(tmp)
             self.assertTrue(any("across socket headers for ShadowApi" in e for e in errors))
@@ -60,11 +60,11 @@ class CppTypeIdentityTests(unittest.TestCase):
 
     def test_commented_interface_pairs_cannot_satisfy_identity_guard(self):
         with tempfile.TemporaryDirectory() as tmp:
-            folder = Path(tmp) / "include" / "citrine_eclipse_mirage" / "net"
+            folder = Path(tmp) / "include" / "laureondo" / "net"
             folder.mkdir(parents=True)
             names = [name for pair in checker.INTERFACES
                      for name in (pair, pair + "Adapter")]
-            contents = ("namespace citrine_eclipse_mirage::socket {\n/*\n"
+            contents = ("namespace laureondo::socket {\n/*\n"
                         + ''.join("class " + name + " {};\n" for name in names)
                         + "*/\n}\n")
             (folder / "commented.hpp").write_text(contents, encoding="utf-8")

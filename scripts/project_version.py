@@ -9,7 +9,7 @@ import re
 from datetime import datetime
 
 ROOT = Path(__file__).resolve().parents[1]
-ENVIRONMENT = 'CITRINE_ECLIPSE_MIRAGE_VERSION'
+ENVIRONMENT = 'LAUREONDO_VERSION'
 
 
 def components(version):
@@ -53,8 +53,8 @@ def write_header(path, version):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text('// SPDX-License-Identifier: GPL-3.0-only\n'
                     '// Generated from the selected project version; do not edit.\n'
-                    f'#define CEM_VERSION_NUMERIC {values}\n'
-                    f'#define CEM_VERSION_STRING "{version}\\0"\n', encoding='utf-8')
+                    f'#define LAUREONDO_VERSION_NUMERIC {values}\n'
+                    f'#define LAUREONDO_VERSION_STRING "{version}\\0"\n', encoding='utf-8')
 
 
 def refresh_release_default(root, release, expected_tag=''):

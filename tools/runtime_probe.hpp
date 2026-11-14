@@ -10,7 +10,7 @@
 
 // Tool-side observation of the existing RE EALsxPort + LSX protocol.
 // No diagnostic export or added application protocol is needed.
-namespace citrine_eclipse_mirage::tools {
+namespace laureondo::tools {
 using ProbeClock=std::chrono::steady_clock;
 inline std::string frame(asio::ip::tcp::socket& socket,std::string& buffered,ProbeClock::time_point until) {
     while(ProbeClock::now()<until) {

@@ -12,7 +12,7 @@
 #include "src/runtime/application.cpp"
 
 namespace {
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace fs=std::filesystem;
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

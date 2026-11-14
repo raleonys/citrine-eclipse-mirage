@@ -28,7 +28,7 @@ void operator delete[](void* p,std::size_t)noexcept{std::free(p);}
 #include "src/runtime/application.cpp"
 
 namespace {
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 void require(bool value,const char* text){if(!value)throw std::runtime_error(text);}
 struct Fixture {
     configuration::State state=application::initial_state();application::Options options;

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "laureondo/xml/reader.hpp"
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -9,8 +9,8 @@
 #include <string>
 
 namespace {
-namespace reader=citrine_eclipse_mirage::xml_reader_bridge;
-namespace messages=citrine_eclipse_mirage::messages;
+namespace reader=laureondo::xml_reader_bridge;
+namespace messages=laureondo::messages;
 // Keep the historical fixture unchanged. Each reviewed exception checks both
 // its frozen row and the exact repaired value; no row or error check is skipped.
 // 1792/10495 preserve invalid control references (#6/#5) literally. All other

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/session_handler.hpp"
+#include "laureondo/net/session_handler.hpp"
 
-namespace citrine_eclipse_mirage::session_bridge {
+namespace laureondo::session_bridge {
 namespace {
 struct Receipt final:server::DeliveryReceipt {
     messages::EventDelivery delivery;
@@ -31,4 +31,4 @@ server::PreparedResponse MessageHandler::prepare_response(std::string_view input
         message,xml_,factory_,random_,effects_);
     return {std::move(bytes),std::move(receipt)};
 }
-} // namespace citrine_eclipse_mirage::session_bridge
+} // namespace laureondo::session_bridge

@@ -5,7 +5,7 @@
 #endif
 #include <winsock2.h>
 #include <windows.h>
-#include "citrine_eclipse_mirage/platform/registry.hpp"
+#include "laureondo/platform/registry.hpp"
 #include <algorithm>
 #include <array>
 #include <cstring>
@@ -13,7 +13,7 @@
 #include <iostream>
 #include <type_traits>
 #include <vector>
-using namespace citrine_eclipse_mirage::registry;
+using namespace laureondo::registry;
 namespace {
 int checks=0;
 void check(bool ok) { ++checks; if(!ok) throw std::runtime_error("check "+std::to_string(checks)); }

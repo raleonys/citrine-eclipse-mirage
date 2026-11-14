@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_worker_startup.hpp"
+#include "laureondo/net/transport_worker_startup.hpp"
 #include <bit>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 void start_worker_02a000(IocpWorker& worker,IocpWorkerFunction* function,std::uint32_t stack,
     WorkerStartupApi& api,Api& errors,WorkerStartupEffects& effects){
     const auto entry_event=api.create_event(0,1,0,0);
@@ -55,4 +55,4 @@ std::uintptr_t WorkerStartupEffectsAdapter::begin_thread_05e8e0(std::uintptr_t s
     return threads::begin_thread_05e8e0(reinterpret_cast<void*>(security),stack,
         entry,reinterpret_cast<std::uintptr_t>(argument),flags,&id,threads_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

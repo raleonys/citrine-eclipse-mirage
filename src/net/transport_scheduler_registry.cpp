@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_scheduler_registry.hpp"
+#include "laureondo/net/transport_scheduler_registry.hpp"
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 bool matches(ServiceEntry& entry,const ServiceKey& key,SchedulerRegistryEffects& effects){
     if(entry.key.id && key.id && entry.key.id==key.id)return true;
@@ -51,4 +51,4 @@ std::uintptr_t SchedulerConstructionEffects::resolve_scheduler_023b30(std::uintp
     }
     throw UnsupportedInput("Scheduler resolver has no registry identity binding");
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

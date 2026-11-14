@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_io_completion_dispatch.hpp"
-namespace citrine_eclipse_mirage::socket {
+#include "laureondo/net/transport_io_completion_dispatch.hpp"
+namespace laureondo::socket {
 void IoDispatcherEffects::complete_other(IocpSchedulerEntry* owner,CancelOperation& operation,const Error& error,std::uint32_t bytes){
     for(auto& binding:bindings_){
         if(binding.identity!=&operation)continue;
@@ -17,4 +17,4 @@ void IoDispatcherEffects::complete_other(IocpSchedulerEntry* owner,CancelOperati
     }
     complete_unknown(owner,operation,error,bytes);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

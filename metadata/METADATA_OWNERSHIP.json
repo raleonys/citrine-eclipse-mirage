@@ -217,7 +217,7 @@
       "purpose": "Locked byte-exact retained evidence and explicit historic-source SHA-256 references"
     },
     "WEEKLY_NAMING_POLICY.json": {
-      "owner": "Citrine Eclipse Mirage weekly release governance",
+      "owner": "Laureondo weekly release governance",
       "role": "CURRENT_CONTRACT",
       "purpose": "Owner-approved LUTRAVEX semantic-version/codename queue and permanent root reservations"
     }

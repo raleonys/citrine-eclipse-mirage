@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/net/transport_receive_buffer.hpp"
+#include "laureondo/net/transport_receive_buffer.hpp"
 #include <functional>
 #include <iostream>
 #include <memory>
@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace buffer_test {
-namespace s=citrine_eclipse_mirage::socket;
+namespace s=laureondo::socket;
 inline unsigned checks=0;
 inline void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
 struct Terminal:std::runtime_error {unsigned kind;explicit Terminal(unsigned n):std::runtime_error("synthetic buffer terminal"),kind(n){}};

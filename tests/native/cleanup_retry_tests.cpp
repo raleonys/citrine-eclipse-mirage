@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/control.h"
+#include "laureondo/runtime/control.h"
 #include <chrono>
 #include <filesystem>
 #include <iostream>
@@ -10,7 +10,7 @@ void require(bool value,const char* text){if(!value)throw std::runtime_error(tex
 namespace {
 struct Environment {
     std::string previous;bool present=false;
-    static constexpr const char* name="CEM_TEST_FAIL_WORKER_IMAGE_LEASE";
+    static constexpr const char* name="LAUREONDO_TEST_FAIL_WORKER_IMAGE_LEASE";
     explicit Environment(const char* value) {
         SetLastError(ERROR_SUCCESS);const auto size=GetEnvironmentVariableA(name,nullptr,0);
         if(size) {

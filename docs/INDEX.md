@@ -37,7 +37,7 @@ contract if a later approved change alters the implementation.
 | Production C++ TUs | `62` | [partition policy](../metadata/BUILD_PARTITION_POLICY.json): 60 objects + VDF + DLL entry |
 | Reference C++ TUs | `78` | [partition policy](../metadata/BUILD_PARTITION_POLICY.json); retained, not globally dead |
 | Production C exports | `DllMain@1, SURGE@2, DllShutdown@3` | [public ABI](../metadata/PUBLIC_DLL_ABI.json) |
-| CryptQuery compatibility suffix | `preloader_l.dll` | [selector header](../include/citrine_eclipse_mirage/platform/crypt_query.hpp); independent of the shipping DLL name |
+| CryptQuery compatibility suffix | `preloader_l.dll` | [selector header](../include/laureondo/platform/crypt_query.hpp); independent of the shipping DLL name |
 | Additional PE resource assets | `0` | [resource policy](../metadata/RESOURCE_METADATA_CONTRACT.json); VERSIONINFO only, both avatars are read-only C++ data |
 | Manual operator fixture workflow | `operator-output.yml` | [workflow](../.github/workflows/operator-output.yml); no `operator_output` input on `ci.yml` |
 
@@ -95,7 +95,7 @@ Issue #109's Registry provenance and original-donor retirement remain open.
 | [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) | Current | [../scripts/run_golden_pipeline.py](../scripts/run_golden_pipeline.py) |
 | [HOOK_ALIGNMENT.md](HOOK_ALIGNMENT.md) | Checkpoint | [HOOK_PATH_SCAN.md](HOOK_PATH_SCAN.md) |
 | [HOOK_ENGINE_HARDENING.md](HOOK_ENGINE_HARDENING.md) | Current | [../metadata/HOOK_ENGINE_PATCH.json](../metadata/HOOK_ENGINE_PATCH.json) |
-| [HOOK_PATH_SCAN.md](HOOK_PATH_SCAN.md) | Current | [../include/citrine_eclipse_mirage/platform/crypt_query.hpp](../include/citrine_eclipse_mirage/platform/crypt_query.hpp) |
+| [HOOK_PATH_SCAN.md](HOOK_PATH_SCAN.md) | Current | [../include/laureondo/platform/crypt_query.hpp](../include/laureondo/platform/crypt_query.hpp) |
 | [HOOK_PIONEERING_REVIEW.md](HOOK_PIONEERING_REVIEW.md) | Review | [RE_A11_09_REGISTRY_HKEY_BOUNDARY.md](RE_A11_09_REGISTRY_HKEY_BOUNDARY.md) |
 | [IDENTIFIER_POLICY.md](IDENTIFIER_POLICY.md) | Current | [../scripts/check_repository_contract.py](../scripts/check_repository_contract.py) |
 | [INDEX.md](INDEX.md) | Current | [../GOVERNANCE.md](../GOVERNANCE.md) |
@@ -107,7 +107,7 @@ Issue #109's Registry provenance and original-donor retirement remain open.
 | [PR23_POSTMERGE_SHUTDOWN_ACCEPTANCE.md](PR23_POSTMERGE_SHUTDOWN_ACCEPTANCE.md) | Checkpoint | [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md) |
 | [PRODUCTION_IMPORT_FIX.md](PRODUCTION_IMPORT_FIX.md) | Checkpoint | [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) |
 | [PRODUCT_IDENTITY_FIX.md](PRODUCT_IDENTITY_FIX.md) | Checkpoint | [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md) |
-| [PROJECT_BRANDING.md](PROJECT_BRANDING.md) | Current | [../resources/branding/citrine-eclipse-mirage.png](../resources/branding/citrine-eclipse-mirage.png) |
+| [PROJECT_BRANDING.md](PROJECT_BRANDING.md) | Current | [../resources/branding/laureondo.png](../resources/branding/laureondo.png) |
 | [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md) | Current | [../metadata/PUBLIC_DLL_ABI.json](../metadata/PUBLIC_DLL_ABI.json) |
 | [REFERENCE_METADATA_AUDIT.md](REFERENCE_METADATA_AUDIT.md) | Checkpoint | [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) |
 | [REFERENCE_METADATA_AVATAR.md](REFERENCE_METADATA_AVATAR.md) | Checkpoint | [AVATAR_UPDATE.md](AVATAR_UPDATE.md) |

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/status.hpp"
-namespace citrine_eclipse_mirage::status {
+#include "laureondo/runtime/status.hpp"
+namespace laureondo::status {
 Status status_01ea20(const Path& path, std::uint32_t flags, Stats& stats) {
     const auto raw = stats.query(path, flags);
     Status result{0, 0xffff, raw.error};

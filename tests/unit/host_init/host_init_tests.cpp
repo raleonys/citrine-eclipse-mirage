@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/platform/hook_setup.hpp"
+#include "laureondo/platform/hook_setup.hpp"
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
 #include <utility>
 
-using namespace citrine_eclipse_mirage::host_init;
+using namespace laureondo::host_init;
 namespace {
 int checks = 0;
 void require(bool value, const char* detail) {
@@ -16,7 +16,7 @@ void require(bool value, const char* detail) {
 struct Injected {};
 struct HookCall { std::u16string module; std::string name; Callback callback; };
 struct Fixture : Effects {
-    citrine_eclipse_mirage::configuration::State config{};
+    laureondo::configuration::State config{};
     Values values{{"old", u"remove"}};
     std::vector<Address> enabled{0x111, 0x222};
     std::array<Address, callback_count> originals{};

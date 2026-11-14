@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_prefix_cipher.hpp"
+#include "laureondo/net/transport_prefix_cipher.hpp"
 #include <algorithm>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 void PrefixCipherBlocksAdapter::decrypt_ecb_045620(PrefixCipherState& state,std::uintptr_t address){
     state.schedule.decrypt_block_0458d0(std::span<std::uint8_t,16>(memory_.view(address,16).data(),16));
 }
@@ -63,4 +63,4 @@ PrefixCipherState& bound(std::uintptr_t id,std::span<PrefixCipherBinding> bindin
 }
 bool MessageCipherApi::decrypt_042480(std::uintptr_t id,ReceiveBufferString& value,std::uint32_t offset){return decrypt_prefix_042480(bound(id,bindings_),value,offset,context_);}
 bool MessageCipherApi::encrypt_042610(std::uintptr_t id,ReceiveBufferString& value,std::uint32_t offset){return encrypt_prefix_042610(bound(id,bindings_),value,offset,context_);}
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-#include "citrine_eclipse_mirage/platform/hook_unload_guard.hpp"
+#include "laureondo/platform/hook_unload_guard.hpp"
 #include <windows.h>
 #include <tlhelp32.h>
 #include <atomic>
@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <cstring>
 #include "unload_scan_record.hpp"
-namespace citrine_eclipse_mirage {
+namespace laureondo {
 namespace {
 std::atomic<DWORD> shutdown_caller{0};
 std::atomic_flag scan_active=ATOMIC_FLAG_INIT;

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_io_completion.hpp"
+#include "laureondo/net/transport_io_completion.hpp"
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 IoHandlerVtable& table(IoHandlerEnvironment& environment){
     if(!environment.operations_10)throw UnsupportedInput("Native handler vtable has no live projection");
@@ -146,4 +146,4 @@ void complete_receive_027710(std::uintptr_t owner,ReceiveIoOperation& operation,
     table(local_environment).destroy_slot_00(local_environment);
     cleanup_receive_0293f0(frame,environment,api,memory);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

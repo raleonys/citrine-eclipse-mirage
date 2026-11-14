@@ -3,11 +3,11 @@
 #include <winsock2.h>
 #include <windows.h>
 #include <asio.hpp>
-#include "citrine_eclipse_mirage/net/server.hpp"
-#include "citrine_eclipse_mirage/net/session_policy.hpp"
-#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
+#include "laureondo/net/server.hpp"
+#include "laureondo/net/session_policy.hpp"
+#include "laureondo/platform/execution_windows.hpp"
 #define private public
-#include "citrine_eclipse_mirage/net/asio_service.hpp"
+#include "laureondo/net/asio_service.hpp"
 #undef private
 #include <array>
 #include <atomic>
@@ -58,12 +58,12 @@ public:
 
 // Only this executable selects the controlled launcher. It throws before the
 // selected std::thread construction; earlier workers are real owned threads.
-#define CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_THREAD ::asio_launch_fixture::Thread
+#define LAUREONDO_TEST_ASIO_THREAD ::asio_launch_fixture::Thread
 #include "src/net/asio_service.cpp"
-#undef CITRINE_ECLIPSE_MIRAGE_TEST_ASIO_THREAD
+#undef LAUREONDO_TEST_ASIO_THREAD
 
 namespace {
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 using namespace std::chrono_literals;
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -152,7 +152,7 @@ void fresh_pool() {
 }
 }
 int main()try{
-    for(unsigned failure=1;failure<=citrine_eclipse_mirage::net::handler_policy::workers+1;++failure)
+    for(unsigned failure=1;failure<=laureondo::net::handler_policy::workers+1;++failure)
         launch_failure(failure);
     fresh_pool();
     std::cout<<"PASS: "<<checks<<" controlled Asio launcher checks; real threads, not OS launch-failure evidence\n";

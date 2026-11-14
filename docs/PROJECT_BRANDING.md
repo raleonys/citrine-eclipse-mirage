@@ -1,23 +1,31 @@
-# Campaign artwork and repository links
+# Laureondo project identity and logo
 
-## Repository URL identity
+## Project and repository identity
 
-The repository has been renamed by its owner and now resolves as [`raleonys/citrine-eclipse-mirage`](https://github.com/raleonys/citrine-eclipse-mirage). The current clone URL is `https://github.com/raleonys/citrine-eclipse-mirage.git`. The unchanged GitHub repository ID is `1438458869`.
+The owner-requested project identity is **Laureondo**. Active source, build,
+resource and package names use this identity; see the
+[consumer migration](DEVELOPMENT.md#laureondo-identity-migration).
 
-Use this repository identity in live documentation, badges, clone examples and new project links. Historical references and earlier artifact names remain unchanged when needed for provenance.
+The hosted repository currently remains
+[`raleonys/citrine-eclipse-mirage`](https://github.com/raleonys/citrine-eclipse-mirage),
+with clone URL `https://github.com/raleonys/citrine-eclipse-mirage.git` and
+repository ID `1438458869`. Keep live repository links at those coordinates.
+This source PR does not perform a GitHub repository settings rename.
+Historical records and published artifacts retain their original identities.
 
-## Owner-approved campaign artwork
+## Exact owner-supplied logo
 
-The owner-approved project campaign image is the exact supplied PNG:
+- Repository path: `resources/branding/laureondo.png`
+- PNG dimensions: 1536 x 1024 pixels
+- Exact byte length: **1882575**
+- SHA-256: `5d4dee05d2d9773a48f133939dfe9ad34d64b7210536dd9c4d661d44cd4905ac`
+- Git blob SHA-1: `96b3a7b1a3fbbeda6423d3ee72959cd3e2f7264a`
+- Supplied `laureondo.zip` SHA-256: `6e38946bc30602b93cea364e79cee25682b004fabe54cb4094c1bc97d51f65c0`
 
-- Repository path: `resources/branding/citrine-eclipse-mirage.png`
-- Format: PNG RGBA, 1400 x 1100 pixels, 8 bits per channel
-- Exact byte length: **627905**
-- SHA-256: `3614b4dc24cc0e8d26389a73b0b68ef84aba4faaf40758e50c39c35d07e7cdec`
-- Git blob SHA-1: `2b6b673dc18110bc42f20bc7a9c0a446c4662182`
-- Supplied ZIP SHA-256: `8052e4166a1a6e7a395c3b473881ee3b89bc615b3db5c33dfe85f43e71933f94`
+The PNG is copied byte-for-byte from the supplied ZIP and replaces the previous
+README campaign artwork. Do not resize or re-encode the supplied master.
+Its current identity is recorded in `metadata/BRANDING_AND_IDENTITY.json`.
 
-**Source identity (owner master received 2026-11-05):** The PNG is stored byte-for-byte from the owner's latest `citrine-eclipse-mirage.zip` and uses the existing README hero path. ZIP CRC, complete extracted bytes, PNG decoding, dimensions and alpha transparency were checked. This master supersedes the 611501-byte image integrated in PR #226 (PNG SHA-256 `2bedf07ab74c1875a7a6392162805cf05ce1e11ad9c1315d1fea2a079e5d39bc`). Do not generate, resize or re-encode substitutes.
-
-The campaign artwork is separate from `resources/branding/surge.png`, a runtime/profile avatar that remains unchanged.
-
+The logo is independent of `resources/branding/surge.png` and
+`resources/branding/default-avatar.png`. Those runtime avatars, SURGE
+configuration/data identity and the PE resource inventory remain unchanged.

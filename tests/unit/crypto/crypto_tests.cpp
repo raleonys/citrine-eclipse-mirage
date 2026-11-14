@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/codec/crypto.hpp"
-#include "citrine_eclipse_mirage/codec/crypto_constants.hpp"
+#include "laureondo/codec/crypto.hpp"
+#include "laureondo/codec/crypto_constants.hpp"
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>
 
-using namespace citrine_eclipse_mirage::crypto;
+using namespace laureondo::crypto;
 static unsigned checks=0;
 void check(bool value,const char* message){++checks;if(!value){std::cerr<<"FAILED "<<message<<'\n';std::exit(1);}}
 std::string unhex(std::string_view in){std::string out;auto n=[](char c){return c<='9'?c-'0':c-'a'+10;};for(std::size_t i=0;i<in.size();i+=2)out.push_back(static_cast<char>((n(in[i])<<4)|n(in[i+1])));return out;}

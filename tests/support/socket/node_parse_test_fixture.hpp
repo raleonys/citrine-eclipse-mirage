@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/xml/node_parse.hpp"
+#include "laureondo/xml/node_parse.hpp"
 #include "tests/support/socket/document_error_test_fixture.hpp"
 #include <map>
 
 namespace node_parse_test {
-namespace s=citrine_eclipse_mirage::socket;
+namespace s=laureondo::socket;
 using document_error_test::check;using document_error_test::checks;
 using document_error_test::put;using document_error_test::word;
 using document_error_test::Failure;using document_error_test::fails;using document_error_test::unmapped;

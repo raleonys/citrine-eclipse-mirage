@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_response_hex.hpp"
+#include "laureondo/net/transport_response_hex.hpp"
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 void encode_response_hex_03d190(ReceiveBufferString& value,ReceiveBufferContext& context){
     const auto count=value.size_10;if(!count)return;
     const auto doubled=count+count;
@@ -15,4 +15,4 @@ void encode_response_hex_03d190(ReceiveBufferString& value,ReceiveBufferContext&
         context.memory.view(receive_buffer_address(value)+static_cast<std::uintptr_t>(destination),1)[0]=static_cast<std::uint8_t>(high+(high<10?0x30:0x57));
     }
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

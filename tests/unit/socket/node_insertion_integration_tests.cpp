@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "tests/support/socket/node_insertion_test_fixture.hpp"
-#include "citrine_eclipse_mirage/xml/pool_release.hpp"
+#include "laureondo/xml/pool_release.hpp"
 using namespace node_constructors_test;
 namespace {
 using Memory=node_parse_test::Memory;

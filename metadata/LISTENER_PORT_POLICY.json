@@ -17,7 +17,7 @@
   "connect_hook_ipv6": "SUPPORTED_WITH_SAME_PORT_LOOPBACK_LISTENER",
   "connect_legacy_port": 3216,
   "implementation": "src/net/asio_service.cpp",
-  "constants": "include/citrine_eclipse_mirage/net/listener_policy.hpp",
+  "constants": "include/laureondo/net/listener_policy.hpp",
   "reference_provenance": "docs/AUTOMATIC_LISTENER.md",
   "windows_bind_ownership": "SO_EXCLUSIVEADDRUSE before bind; no sharing of a live endpoint",
   "listen_addresses": [

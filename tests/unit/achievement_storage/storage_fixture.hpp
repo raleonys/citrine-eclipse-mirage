@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/runtime/achievement_storage.hpp"
-#include "citrine_eclipse_mirage/xml/reader.hpp"
-#include "citrine_eclipse_mirage/core/paths.hpp"
+#include "laureondo/runtime/achievement_storage.hpp"
+#include "laureondo/xml/reader.hpp"
+#include "laureondo/core/paths.hpp"
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
@@ -11,7 +11,7 @@
 #include <iterator>
 #include <stdexcept>
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace {
 unsigned checks=0;
 void require(bool ok,const char* label){++checks;if(!ok)throw std::runtime_error(label);}

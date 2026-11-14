@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/protocol/messages.hpp"
-#include "citrine_eclipse_mirage/codec/crypto.hpp"
-#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "laureondo/protocol/messages.hpp"
+#include "laureondo/codec/crypto.hpp"
+#include "laureondo/xml/reader.hpp"
 #include <algorithm>
 #include <cstdio>
 #include <cstdlib>
@@ -13,7 +13,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <vector>
-using namespace citrine_eclipse_mirage::messages;
+using namespace laureondo::messages;
 static unsigned checks;
 static void check(bool v){++checks;if(!v)throw std::runtime_error("check "+std::to_string(checks));}
 struct Invalid {};
@@ -188,7 +188,7 @@ static void dispatch_tests(){
 static void multi_command_request_contract_tests(){
     // C21-RISK-001: retain observed first-child-only dispatch. This tests the
     // real pugixml-backed document tree without inventing a Consumer acceptance rule.
-    citrine_eclipse_mirage::xml_reader_bridge::Backend reader;
+    laureondo::xml_reader_bridge::Backend reader;
     struct Accepted {const char* xml;std::string_view first_name;std::uint32_t rva;};
     const Accepted accepted[]={
         {R"XML(<LSX><Request id="multi" recipient="service"><GetConfig/><GetProfile/></Request></LSX>)XML",
@@ -364,13 +364,13 @@ static void process_invalid_dispatch_boundaries(){
     }
 }
 static void encrypted_rekey_boundary(){
-    namespace crypto=citrine_eclipse_mirage::crypto;
+    namespace crypto=laureondo::crypto;
     struct NoClock final:crypto::TimeSource {
         std::int64_t unix_seconds_05eeb8()override{throw std::runtime_error("rekey must not query time");}
     } time;
     crypto::Cipher server,client;server.set_fixed_key_084c98();client.set_fixed_key_084c98();
     crypto::CryptoFactory factory;crypto::Random random{time};
-    citrine_eclipse_mirage::xml_reader_bridge::Backend xml;
+    laureondo::xml_reader_bridge::Backend xml;
     Queue queue;FakeEffects effects;std::uint8_t encrypted=1,show=0;
     auto decode=[&](std::string wire,crypto::Cipher& cipher){
         std::vector<std::string> frames;std::size_t begin=0;

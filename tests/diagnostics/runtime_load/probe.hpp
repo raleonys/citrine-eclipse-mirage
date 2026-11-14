@@ -10,7 +10,7 @@
 #include <thread>
 #include <stdexcept>
 #include <utility>
-namespace citrine_eclipse_mirage::benchmark {
+namespace laureondo::benchmark {
 using Clock=std::chrono::steady_clock;
 inline thread_local std::uint64_t queue_wait_ns=0;
 inline std::atomic<std::uint64_t> created_message_threads{0};

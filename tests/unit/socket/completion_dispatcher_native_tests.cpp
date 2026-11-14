@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_completion_dispatcher_native.hpp"
-#include "citrine_eclipse_mirage/net/transport_worker_run_native.hpp"
+#include "laureondo/net/transport_completion_dispatcher_native.hpp"
+#include "laureondo/net/transport_worker_run_native.hpp"
 #include <functional>
 #include <iostream>
 #include <limits>
 #include <vector>
-namespace s=citrine_eclipse_mirage::socket;namespace t=citrine_eclipse_mirage::threads;
+namespace s=laureondo::socket;namespace t=laureondo::threads;
 namespace {
 unsigned checks=0;void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
 [[noreturn]]void unused(){throw std::logic_error("Unexpected dispatcher native dependency");}

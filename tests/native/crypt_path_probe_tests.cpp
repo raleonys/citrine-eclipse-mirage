@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/platform/crypt_query.hpp"
-#ifndef CITRINE_ECLIPSE_MIRAGE_PORTABLE_CRYPT_PATH_TESTS
+#include "laureondo/platform/crypt_query.hpp"
+#ifndef LAUREONDO_PORTABLE_CRYPT_PATH_TESTS
 #include <windows.h>
 #endif
 #include <atomic>
@@ -25,8 +25,8 @@ void operator delete[](void* p)noexcept{std::free(p);}
 void operator delete(void* p,std::size_t)noexcept{std::free(p);}
 void operator delete[](void* p,std::size_t)noexcept{std::free(p);}
 
-namespace hooks=citrine_eclipse_mirage::hooks;
-namespace platform=citrine_eclipse_mirage::platform;
+namespace hooks=laureondo::hooks;
+namespace platform=laureondo::platform;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -90,7 +90,7 @@ void scan_boundaries() {
     Memory last_unit(u"xx");last_unit.base=std::numeric_limits<std::uintptr_t>::max()-1;
     require(!last_unit.probe().valid&&last_unit.calls==1,"increment cannot wrap past final readable unit");
 }
-#ifndef CITRINE_ECLIPSE_MIRAGE_PORTABLE_CRYPT_PATH_TESTS
+#ifndef LAUREONDO_PORTABLE_CRYPT_PATH_TESTS
 void native_reader() {
     platform::WindowsCryptQueryHost host;
     std::u16string longest(hooks::max_path_units-1,u'x');
@@ -143,7 +143,7 @@ void native_reader() {
 }
 int main()try{
     selection_and_streaming();scan_boundaries();
-#ifndef CITRINE_ECLIPSE_MIRAGE_PORTABLE_CRYPT_PATH_TESTS
+#ifndef LAUREONDO_PORTABLE_CRYPT_PATH_TESTS
     native_reader();
     std::cout<<"PASS: "<<checks<<" bounded heap-free protected path/UTF16/suffix checks\n";
 #else

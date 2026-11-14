@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/achievement_writer.hpp"
-#include "citrine_eclipse_mirage/core/paths.hpp"
+#include "laureondo/runtime/achievement_writer.hpp"
+#include "laureondo/core/paths.hpp"
 #include <charconv>
 #include <stdexcept>
 
-namespace citrine_eclipse_mirage::achievement_writer {
+namespace laureondo::achievement_writer {
 namespace {
 template<class Number> void append_decimal(std::string& output,Number value) {
     char digits[32];
@@ -59,4 +59,4 @@ void write_ini_01f9a0(const configuration::Path& ini_path,
     const auto bytes=serialize_ini(state);
     const file::FileWrite write{ini_path,bytes};files.replace_atomic({&write,1});
 }
-} // namespace citrine_eclipse_mirage::achievement_writer
+} // namespace laureondo::achievement_writer

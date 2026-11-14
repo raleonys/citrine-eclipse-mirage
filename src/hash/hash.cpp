@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/hash/hash.hpp"
+#include "laureondo/hash/hash.hpp"
 #include <algorithm>
 #include <bit>
 #include <stdexcept>
 
-namespace citrine_eclipse_mirage::hash {
+namespace laureondo::hash {
 void Sha1::transform_043900(const std::array<std::uint8_t,64>& block) {
     std::array<std::uint32_t,80> w{};
     // 042aa0 forms each initial word in big-endian byte order.
@@ -90,4 +90,4 @@ bool file_hash_matches_042d20(const Path& path,std::string expected,
     lowercase_03d2c0(expected,text);
     return expected==actual;
 }
-} // namespace citrine_eclipse_mirage::hash
+} // namespace laureondo::hash

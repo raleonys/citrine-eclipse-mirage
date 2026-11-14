@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/net/transport_owned_response.hpp"
+#include "laureondo/net/transport_owned_response.hpp"
 #include "tests/support/socket/response_dispatch_test_fixture.hpp"
 
 namespace owned_test {
-namespace s=citrine_eclipse_mirage::socket;namespace r=receive_test;
+namespace s=laureondo::socket;namespace r=receive_test;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct OwnedFixture;inline OwnedFixture* active_owned=nullptr;
 void publish_owned(s::IoHandlerEnvironment&,s::PostedFunctor*&);

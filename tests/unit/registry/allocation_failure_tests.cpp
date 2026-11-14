@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/platform/registry.hpp"
+#include "laureondo/platform/registry.hpp"
 #include <array>
 #include <cstdlib>
 #include <iostream>
@@ -34,7 +34,7 @@ void operator delete(void* p,std::size_t) noexcept{allocation::release(p);}
 void operator delete[](void* p,std::size_t) noexcept{allocation::release(p);}
 
 namespace {
-namespace r=citrine_eclipse_mirage::registry;
+namespace r=laureondo::registry;
 void require(bool ok,const char* message){if(!ok)throw std::runtime_error(message);}
 struct LogFailure {unsigned identity=73;};
 enum Event {original,allocate,log,finish,release};

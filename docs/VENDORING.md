@@ -90,10 +90,10 @@ vendored sources offline at configure time;
 it does not execute upstream CMake, fetch
 dependencies or use a package manager.
 Project CMake targets are
-`citrine_eclipse_mirage_asio`, `citrine_eclipse_mirage_minhook`,
-`citrine_eclipse_mirage_pegtl`, and
-`citrine_eclipse_mirage_pugixml`. The development DLL uses its own shared-CRT
-`citrine_eclipse_mirage_source_pugixml` build. No legacy XML vendor target aliases are provided.
+`laureondo_asio`, `laureondo_minhook`,
+`laureondo_pegtl`, and
+`laureondo_pugixml`. The development DLL uses its own shared-CRT
+`laureondo_source_pugixml` build. No legacy XML vendor target aliases are provided.
 XPath is disabled with the public `PUGIXML_NO_XPATH` definition.
 Build-time member-hash verification also runs.
 On mismatch, the checker reports missing,
@@ -162,7 +162,7 @@ ordering, error mapping and grammar policy are unchanged. Vendor headers are
 unmodified. The unselected main snapshot requires C++23 and is not substituted.
 
 The toolchain-status reader requires exactly one active record for
-`CITRINE_ECLIPSE_MIRAGE_PEGTL_PUBLIC_INPUT_WORKS`, with type `INTERNAL`.
+`LAUREONDO_PEGTL_PUBLIC_INPUT_WORKS`, with type `INTERNAL`.
 The exact value `1` returns diagnostic exit 0 and directs the caller to run
 `vendor_pegtl_smoke`; it does not replace that execution. Empty or `0` returns
 `UNAVAILABLE` with CTest skip code 77. Missing or repeated records, wrong types
@@ -183,7 +183,7 @@ Vendor files were not patched and the
 PEGTL version was not changed.
 
 The default
-`CITRINE_ECLIPSE_MIRAGE_REQUIRE_VENDOR_COMPATIBILITY=ON`
+`LAUREONDO_REQUIRE_VENDOR_COMPATIBILITY=ON`
 gate stops CMake if the PEGTL public API
 cannot compile, even with
 `BUILD_TESTING=OFF`. The previously
@@ -209,7 +209,7 @@ are in VENDOR_LOCK.json. Historical results and tool provenance are in
 
 For diagnosing an old/incompatible compiler
 only, a separate build directory may use
-`-DCITRINE_ECLIPSE_MIRAGE_REQUIRE_VENDOR_COMPATIBILITY=OFF`.
+`-DLAUREONDO_REQUIRE_VENDOR_COMPATIBILITY=OFF`.
 This mode is solely for vendor diagnostics.
 The PEGTL test remains **SKIPPED/UNAVAILABLE**;
 the real VDF parser target still fails
@@ -247,7 +247,7 @@ than merging into an earlier damaged
 extraction. Optional verified extraction:
 
 ```sh
-python -B scripts/extract_source.py ../citrine-eclipse-mirage-source.zip ../citrine-eclipse-mirage-clean
+python -B scripts/extract_source.py ../laureondo-source.zip ../laureondo-clean
 ```
 
 The extractor verifies CRC, hash, member

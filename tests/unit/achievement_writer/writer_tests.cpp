@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/achievement_writer.hpp"
+#include "laureondo/runtime/achievement_writer.hpp"
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
@@ -8,7 +8,7 @@
 #include <limits>
 #include <stdexcept>
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace {
 unsigned checks=0;
 void require(bool ok,const char* label){++checks;if(!ok)throw std::runtime_error(label);}

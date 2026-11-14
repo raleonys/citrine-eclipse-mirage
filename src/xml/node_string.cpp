@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/node_string.hpp"
+#include "laureondo/xml/node_string.hpp"
 #include <bit>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& m,std::uintptr_t a,unsigned width=8){
     const auto b=m.view(a,width);std::uint64_t v=0;
@@ -102,4 +102,4 @@ std::uintptr_t materialize_node_string_0035e0(std::uintptr_t pair,NativeNodeStri
 std::uintptr_t NodeStringEffects::materialize_0035e0(std::uintptr_t pair){
     return materialize_node_string_0035e0(pair,string_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

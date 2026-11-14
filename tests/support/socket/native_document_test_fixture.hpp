@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/xml/native_document.hpp"
+#include "laureondo/xml/native_document.hpp"
 #include "tests/support/socket/native_dispatch_test_fixture.hpp"
 #include <bit>
 #include <cstring>
 
 namespace document_test {
-namespace s=citrine_eclipse_mirage::socket;namespace m=citrine_eclipse_mirage::messages;
+namespace s=laureondo::socket;namespace m=laureondo::messages;
 using response_test::check;using response_test::checks;
 struct Failure {int code;};
 struct State {
@@ -37,7 +37,7 @@ struct State {
 // Controlled native lower providers, not new implementations of clear/parser,
 // XML nodes/mempools, allocator/free or native vtables/EH.
 struct Effects:s::NativeDocumentEffects {
-    State& state;native_message_test::Fixture* native=nullptr;citrine_eclipse_mirage::xml_reader_bridge::Backend xml;
+    State& state;native_message_test::Fixture* native=nullptr;laureondo::xml_reader_bridge::Backend xml;
     std::unique_ptr<m::XmlDocument> parsed;std::vector<std::string> trace;std::vector<std::uintptr_t> freed;std::vector<std::uint64_t> allocations;
     std::function<void(std::string)> hook;std::deque<int> codes;bool clear_model=true,null_allocate=false;
     unsigned parses=0,clears=0,destroys=0,node_clears=0;std::uintptr_t copy_destination=0,copy_source=0;std::uint64_t copy_count=0;

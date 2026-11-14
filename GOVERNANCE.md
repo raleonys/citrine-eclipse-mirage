@@ -1,8 +1,8 @@
-# Citrine Eclipse Mirage governance
+# Laureondo governance
 
 ## Authority and scope
 
-This document defines the GitHub-centered contribution and release model for Citrine Eclipse Mirage. The repository became public by owner decision on 2026-11-02; release publication, ABI changes and other protected decisions remain separately governed.
+This document defines the GitHub-centered contribution and release model for Laureondo. The repository became public by owner decision on 2026-11-02; release publication, ABI changes and other protected decisions remain separately governed.
 
 The owner's latest explicit instructions take precedence over repository guidance. Technical safety requirements and compatibility contracts remain effective unless an approved change explicitly replaces them. A successful check does not prove a different validation class.
 
@@ -63,7 +63,7 @@ Reserve the independent `## This PR` section for the current unmerged proposal. 
 - The owner separately runs real Consumer/game acceptance before stable publication. This acceptance is not repeated for every pull request.
 - A failing unmerged pull request does not stop a weekly draft based on an already accepted `main` commit. A failed weekly candidate remains unpublished until resolved.
 - Prospective weekly semantic versions advance 3.2.6 TALVOR → 3.2.7 ERINTHAR → 3.2.8 FORMADRIL → 3.2.9 CETRION → 3.3.0 VESPERKAI and follow the owner-approved LUTRAVEX registry. The retired -RNN weekly model must not be used.
-- Upload exactly `Citrine_Eclipse_Mirage_x.y.z_CODENAME.zip` and its `.zip.sha256` checksum as release assets. The binary ZIP contains exactly `citrine_eclipse_mirage.dll`, `citrine_eclipse_mirage.dll.sha256` and the project `LICENSE` at its root, with no other files or directories. GitHub supplies the tag's automatic source archives; source companion ZIPs, receipts and test evidence remain workflow artifacts, outside the release assets and binary ZIP. Minor and patch are one digit (0..9). Do not change historical releases or compatibility-sensitive binary/Golden fields.
+- Upload exactly `Laureondo_x.y.z_CODENAME.zip` and its `.zip.sha256` checksum as release assets. The binary ZIP contains exactly `laureondo.dll`, `laureondo.dll.sha256` and the project `LICENSE` at its root, with no other files or directories. GitHub supplies the tag's automatic source archives; source companion ZIPs, receipts and test evidence remain workflow artifacts, outside the release assets and binary ZIP. Minor and patch are one digit (0..9). Do not change historical releases or compatibility-sensitive binary/Golden fields.
 - Associate released assets and retained results with the exact commit, binary and package checksums. Verify the actual distributed archive once; ordinary PR work does not require repeated ZIP fresh-extract campaigns.
 - Do not reintroduce Brownfield G0-G4 gates, mandatory eight-shard release cycles, Library current-pointer transactions, or publication classifications on build and test results.
 
@@ -107,6 +107,6 @@ The former scope ledger mixed superseded task decisions with live application co
 - Preserve the exact three-entry production export/ordinal contract and the separate development C++ ABI. An ABI change requires explicit owner review.
 - The shipping hook architecture retains scoped native callback, rollback, safe quiescence, destination filtering, resource lifetime and original-call semantics; no process-wide byte-order hook may be introduced.
 - Preserve accepted vendor pins, the standard compiler CRT, source/reference link partition, current configuration and network protocols, and the existing startup/shutdown contracts.
-- Golden checks still validate actual finalized production PE copies and not merely synthetic fixtures. The owner-approved project identity uses Citrine Eclipse Mirage resources and release-derived matching file/product versions. Other PE identity, import and resource changes require independent review.
+- Golden checks still validate actual finalized production PE copies and not merely synthetic fixtures. The owner-approved project identity uses Laureondo resources and release-derived matching file/product versions. Other PE identity, import and resource changes require independent review.
 - Tie published source, binary, and archive receipts to the precise accepted commit and checksums. A ZIP package is an output, not a second release authority.
 - `metadata/` and specialist `docs/` files provide detailed machine and implementation constraints. Retiring a stale task log does not authorize source rewrites or waive existing tests.

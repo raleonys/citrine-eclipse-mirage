@@ -9,7 +9,7 @@ import subprocess
 import sys
 import tempfile
 
-CURRENT_SHA256 = 'c915c65764c72d30e022a60696d916542a31de2964d57cbf032e81740383194e'
+CURRENT_SHA256 = '2bdd1a2a76b2451b5994edc332dbe1addd203e5ecbebe3b1693989c80765a124'
 GUARD = b'''\n\n    if (g_hHeap != NULL && !RetryRetainedThreadOwnership())
     {
         LeaveSpinLock();
@@ -18,23 +18,23 @@ GUARD = b'''\n\n    if (g_hHeap != NULL && !RetryRetainedThreadOwnership())
 CONTROLS = {
     'create': (
         b'MH_STATUS WINAPI MH_CreateHook(LPVOID pTarget, LPVOID pDetour, LPVOID *ppOriginal)',
-        'a4e291dc3a8e1eea2570a1c4ec5f73d094ab05fadfa379d0ab81b934ef5bf9a7',
+        '8e5851b4fa463c9aa1af00e79bea09b7c5ad9aa6fdb7e18089a7a0dab9a2a408',
         'FAIL: new hook creation cannot bypass retained cleanup'),
     'remove': (
         b'MH_STATUS WINAPI MH_RemoveHook(LPVOID pTarget)',
-        '493dd454883774431bcf5a36d78a925297b4b0b37d2c2a02b01e42985f880795',
+        '16294366f09bc5ca9cabbe4f2e108e367381ab61fd40c9326186ae379edd973b',
         'FAIL: disabled removal cannot retire trampoline under unresolved ownership'),
     'enable': (
         b'static MH_STATUS EnableHook(LPVOID pTarget, BOOL enable)',
-        '7a0dcb46fe73da9939805d956790831eebbaebdd6e7231a866775cd0cf8750d2',
+        'f67dfe6dda5c4450ddd1ae265d2734b79bdad08b2dbebb2f41abd0427cf569c2',
         'FAIL: already-disabled mutation must report pending cleanup'),
     'queue': (
         b'static MH_STATUS QueueHook(LPVOID pTarget, BOOL queueEnable)',
-        'f0dc7360cb7a276ba08261bbc1ee69a6e62f406cad06a49648c399e76707fc80',
+        'bc69f5479cae616cde163603769b0d30cb209a350543cce0281ee3ca1535927e',
         'FAIL: queue mutation cannot bypass retained cleanup'),
     'apply': (
         b'MH_STATUS WINAPI MH_ApplyQueued(VOID)',
-        '994282f5b041d657d4e2a1db7417dc6b86eddf2797700d6dc958db48c70c8761',
+        '0aaf779b468313d4f5f8d6c1e41f3ef54c9de21810947b5bdf3a2679538340cf',
         'FAIL: no-op apply must not hide unresolved owner'),
 }
 

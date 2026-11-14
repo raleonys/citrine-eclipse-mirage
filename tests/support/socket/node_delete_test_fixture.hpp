@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/xml/node_delete.hpp"
+#include "laureondo/xml/node_delete.hpp"
 #include "tests/support/socket/document_clear_test_fixture.hpp"
 
 namespace delete_test {
-namespace s=citrine_eclipse_mirage::socket;
+namespace s=laureondo::socket;
 using clear_test::Graph;using document_test::State;using document_test::Failure;
 using response_test::check;using response_test::checks;
 struct Nodes:s::NodeDeleteEffects {

@@ -49,9 +49,9 @@ class PublicDefHeaderTests(unittest.TestCase):
             (root / 'exports').mkdir()
             shutil.copyfile(ROOT / 'metadata/PUBLIC_DLL_ABI.json',
                             root / 'metadata/PUBLIC_DLL_ABI.json')
-            original = (ROOT / 'exports/citrine_eclipse_mirage.def').read_text(encoding='utf-8')
-            destination = root / 'exports/citrine_eclipse_mirage.def'
-            header = 'LIBRARY "citrine_eclipse_mirage.unsigned.dll"'
+            original = (ROOT / 'exports/laureondo.def').read_text(encoding='utf-8')
+            destination = root / 'exports/laureondo.def'
+            header = 'LIBRARY "laureondo.unsigned.dll"'
             self.assertIn(header, original)
             self.assertIn('EXPORTS\n', original)
             entry = next(line for line in original.splitlines(keepends=True)
@@ -358,7 +358,7 @@ class MsvcCompilerReceiptTests(unittest.TestCase):
 
     def test_compiler_id_rejection_preserves_actual_link_validation(self):
         (self.build / 'BUILD_RECEIPT.json').write_text(json.dumps(self.receipt), encoding='utf-8')
-        target = self.build / 'CMakeFiles/citrine_eclipse_mirage.dir'
+        target = self.build / 'CMakeFiles/laureondo.dir'
         target.mkdir()
         link = target / 'link.txt'
         command = 'link.exe /DLL /DEBUG:NONE /INCREMENTAL:NO /LTCG:OFF /NOCOFFGRPINFO /MANIFEST:NO a.obj'
@@ -377,7 +377,7 @@ class MsvcCompilerReceiptTests(unittest.TestCase):
         # Real receipt/cache/compiler binding and link-text collection, with
         # owned byte fixtures only: no MSVC executable or DLL is run here.
         (self.build / 'BUILD_RECEIPT.json').write_text(json.dumps(self.receipt), encoding='utf-8')
-        target = self.build / 'CMakeFiles/citrine_eclipse_mirage.dir'
+        target = self.build / 'CMakeFiles/laureondo.dir'
         target.mkdir()
         source = target / 'link.txt'
         response = self.build / 'shipping.rsp'
@@ -990,7 +990,7 @@ class IdentityBoundaryTests(unittest.TestCase):
     def test_namespace_boundary_uses_the_owned_root(self):
         for folder in ['include','tests','third_party']:(self.root/folder).mkdir()
         path=self.root/'src/module.cpp'
-        for namespace,accepted in [('citrine_eclipse_mirage::module',True),('upstream::module',False)]:
+        for namespace,accepted in [('laureondo::module',True),('upstream::module',False)]:
             payload=('namespace '+namespace+' {}\n').encode('utf-8');path.write_bytes(payload)
             (self.root/'metadata/SOURCE_FILES.json').write_text(json.dumps({'files':{'src/module.cpp':{'bytes':len(payload),'sha256':inventory.digest(payload)}}}))
             self.assertEqual(accepted,source_verification.verify(self.root)['status']=='PASS')
@@ -1014,7 +1014,7 @@ class IdentityBoundaryTests(unittest.TestCase):
             '   namespace other_vendor::more {} */\n'
             'const char* url = "https://example.invalid/namespace other_vendor::string {}";\n'
             'const char* raw = R"tag(namespace other_vendor::raw {} // still data)tag";\n'
-            'namespace citrine_eclipse_mirage::accepted {}\n'
+            'namespace laureondo::accepted {}\n'
         )
         result = verify_payload(harmless)
         self.assertEqual('PASS', result['status'], result['errors'])
@@ -1065,7 +1065,7 @@ class IdentityBoundaryTests(unittest.TestCase):
         for source in harmless:
             with self.subTest(source=source):
                 result = self.source_namespace_fixture(
-                    source + 'namespace citrine_eclipse_mirage::valid {}\n')
+                    source + 'namespace laureondo::valid {}\n')
                 self.assertEqual('PASS', result['status'], result['errors'])
                 result = self.source_namespace_fixture(
                     source + 'namespace other_vendor::actual {}\n')
@@ -1089,7 +1089,7 @@ class IdentityBoundaryTests(unittest.TestCase):
     def test_source_sizes_are_required_integer_byte_counts(self):
         for folder in ['include','tests','third_party']:(self.root/folder).mkdir()
         # UTF-8 and CRLF distinguish bytes from characters and normalized text.
-        payload=b'// \xc3\xa9\r\nnamespace citrine_eclipse_mirage::fixture {}\r\n'
+        payload=b'// \xc3\xa9\r\nnamespace laureondo::fixture {}\r\n'
         (self.root/'src/module.cpp').write_bytes(payload)
         manifest=self.root/'metadata/SOURCE_FILES.json'
         entry={'bytes':len(payload),'sha256':inventory.digest(payload)}
@@ -1113,7 +1113,7 @@ class IdentityBoundaryTests(unittest.TestCase):
             (self.root / folder).mkdir()
         for name in ('verify_sources.py', 'project_files.py'):
             shutil.copyfile(ROOT / 'scripts' / name, self.root / 'scripts' / name)
-        payload = b'namespace citrine_eclipse_mirage::fixture {}\n'
+        payload = b'namespace laureondo::fixture {}\n'
         (self.root / 'src/module.cpp').write_bytes(payload)
         manifest = self.root / 'metadata/SOURCE_FILES.json'
         for valid in (True, False):
@@ -1134,7 +1134,7 @@ class IdentityBoundaryTests(unittest.TestCase):
     def test_duplicate_source_inventory_object_keys_fail_closed(self):
         for folder in ('include', 'tests', 'third_party'):
             (self.root / folder).mkdir()
-        payload=b'namespace citrine_eclipse_mirage::fixture {}\n'
+        payload=b'namespace laureondo::fixture {}\n'
         (self.root / 'src/module.cpp').write_bytes(payload)
         entry={'bytes':len(payload), 'sha256':inventory.digest(payload)}
         serialized=json.dumps(entry, separators=(',', ':'))
@@ -2010,8 +2010,8 @@ class RuntimeBenchmarkTests(unittest.TestCase):
         for workers in tool.WORKERS:
             generated = tool.generated_service(original, workers)
             restored = generated.removeprefix('#include "probe.hpp"\n').replace(
-                'jobs.push_back(citrine_eclipse_mirage::benchmark::timed_job(std::move(fn)));', tool.PUSH)
-            restored = restored.replace('\n    citrine_eclipse_mirage::benchmark::PerMessageJobs message_jobs;', '')
+                'jobs.push_back(laureondo::benchmark::timed_job(std::move(fn)));', tool.PUSH)
+            restored = restored.replace('\n    laureondo::benchmark::PerMessageJobs message_jobs;', '')
             for needle, insertion in tool.CONTROL_INSERTIONS:
                 restored = restored.replace(needle + insertion, needle)
             if workers not in (0, 2):
@@ -2216,12 +2216,12 @@ class RuntimeEvidenceTests(unittest.TestCase):
         identity = dict(commit='a' * 40, manifest_sha256='b' * 64, vendor_lock_sha256='c' * 64,
                         asio_source_sha256='d' * 64, application_source_sha256='e' * 64)
         hashes = tool.generated_hashes()
-        inputs = dict(schema='citrine.runtime-benchmark-inputs.v2', **identity,
+        inputs = dict(schema='laureondo.runtime-benchmark-inputs.v2', **identity,
                       production_worker_policy=2, production_queue_limit=128,
                       generated_service_sha256={str(n): hashes[f'asio_{n}.cpp'] for n in tool.WORKERS},
                       generated_application_sha256=hashes['application.cpp'])
         files = {'binaries/generated/inputs.json': json.dumps(inputs).encode()}
-        data = dict(schema='citrine.runtime-load.v3', result='PASS_CORRECTNESS_WITH_MEASUREMENTS',
+        data = dict(schema='laureondo.runtime-load.v3', result='PASS_CORRECTNESS_WITH_MEASUREMENTS',
                     run_id='1' * 32,
                     evidence_class='WINDOWS_NATIVE_COMPONENT_BENCHMARK', source=inputs, system='Windows',
                     logical_cpus=4, binaries={}, builds={}, repeats=1, suite='all', workloads=list(tool.WORKLOADS),
@@ -2232,7 +2232,7 @@ class RuntimeEvidenceTests(unittest.TestCase):
                 name = f'{kind}_{n}'
                 raw = ('synthetic non-executable ' + name).encode()
                 sha = hashlib.sha256(raw).hexdigest()
-                build = dict(schema='citrine.runtime-benchmark-build.v1', source=inputs,
+                build = dict(schema='laureondo.runtime-benchmark-build.v1', source=inputs,
                              binary=name + '.exe', sha256=sha, kind=kind, workers=n,
                              configuration='Release', compiler_id='MSVC', compiler_version='19.44', cxx_standard=20)
                 files[f'binaries/Release/{name}.exe'] = raw
@@ -2463,7 +2463,7 @@ class DocumentationContractTests(unittest.TestCase):
         ordered = sorted(abi, key=lambda name: abi[name]['ordinal'])
         self.assertEqual(', '.join(name + '@' + str(abi[name]['ordinal']) for name in ordered),
                          facts['Production C exports'])
-        header = (ROOT / 'include/citrine_eclipse_mirage/platform/crypt_query.hpp').read_text()
+        header = (ROOT / 'include/laureondo/platform/crypt_query.hpp').read_text()
         suffix = re.search(r'target_suffix\s*=\s*u"([^"]+)"', header)[1]
         self.assertEqual(suffix, facts['CryptQuery compatibility suffix'])
         resource = json.loads((ROOT / 'metadata/RESOURCE_METADATA_CONTRACT.json').read_text())
@@ -2983,7 +2983,7 @@ Write-ToolchainProvenance (Join-Path $FixtureRoot 'provenance.log') `
             self.assertEqual(0, result.returncode, result.stdout + result.stderr)
             text = (root / 'provenance.log').read_text(encoding='utf-8-sig')
             lines = text.splitlines()
-            self.assertEqual(['CITRINE_ECLIPSE_MIRAGE_TOOLCHAIN_PROVENANCE_V1',
+            self.assertEqual(['LAUREONDO_TOOLCHAIN_PROVENANCE_V1',
                               'VS_INSTALLATION=<redacted>', 'VCVARS64=<redacted>'], lines[:3])
             self.assertEqual(8, len(lines))
             self.assertNotIn(str(root), text)
@@ -3012,7 +3012,7 @@ $labels = @{Compile='COMPILE ONLY';Debug='DEBUG BUILD';Native='NATIVE ACCEPTANCE
 $record = @{mode=$Mode;build_dir=$BuildDir;configuration=$Config;owns_summary=[bool]$LauncherOwnsSummary}
 Write-Host ('FIXTURE_ARGS:' + ($record | ConvertTo-Json -Compress))
 if ($code -eq 0 -or ($Mode -eq 'Golden' -and $code -eq 3)) {
-    Write-SelectedProfileResult -ProfileLabel $labels[$Mode] -Dll 'fixture/citrine_eclipse_mirage.dll' -Sha256 ('a' * 64) -GoldenBlocked:($code -eq 3) -LauncherOwnsSummary:$LauncherOwnsSummary
+    Write-SelectedProfileResult -ProfileLabel $labels[$Mode] -Dll 'fixture/laureondo.dll' -Sha256 ('a' * 64) -GoldenBlocked:($code -eq 3) -LauncherOwnsSummary:$LauncherOwnsSummary
 } else {
     Write-Host 'ERROR: injected validation failure'
 }
@@ -3075,7 +3075,7 @@ exit 0
                         self.assertIn('ERROR: injected validation failure', lines)
                         self.assertFalse(any(': PASS' in line for line in lines))
                     if record['expected_code'] in (0, 3):
-                        self.assertEqual(1, lines.count('DLL: citrine_eclipse_mirage.dll'))
+                        self.assertEqual(1, lines.count('DLL: laureondo.dll'))
                         self.assertEqual(1, lines.count('SHA256: ' + 'a' * 64))
 
     def run_cmd(self, launcher, code):
@@ -3116,7 +3116,7 @@ exit 0
                             self.assertTrue(args['owns_summary'])
                             self.assertEqual(r'build\fixture path (1)', args['build_dir'])
                             if code in (0, 3):
-                                self.assertEqual(1, output.count('DLL: citrine_eclipse_mirage.dll'), output)
+                                self.assertEqual(1, output.count('DLL: laureondo.dll'), output)
                                 self.assertEqual(1, output.count('SHA256: ' + 'a' * 64), output)
                             if code == 3:
                                 self.assertNotIn('Golden: BLOCKED', output)
@@ -3173,7 +3173,7 @@ class BuildWordingTests(unittest.TestCase):
             for name in ('scripts/build_orchestration/build.ps1','tools/inspect.py',
                          'cmake/Policy.cmake','.github/workflows/ci.yml',
                          'metadata/POLICY.json','src/platform/module.cpp',
-                         'include/citrine_eclipse_mirage/platform/module.hpp','CMakeLists.txt'):
+                         'include/laureondo/platform/module.hpp','CMakeLists.txt'):
                 path=root/name
                 path.parent.mkdir(parents=True,exist_ok=True)
                 for label in ('NOT_RELEASE','LOCAL_GOLDEN_PASS','LOCAL_BUILD_RECEIPT.json',
@@ -3210,7 +3210,7 @@ class DistTests(unittest.TestCase):
         shutil.copyfile(ROOT/'metadata/DIST_CONTRACT.json',self.root/'metadata/DIST_CONTRACT.json')
         self.build=self.root/'build/golden'
         self.build.mkdir(parents=True)
-        self.raw=self.build/'citrine_eclipse_mirage.unsigned.dll'
+        self.raw=self.build/'laureondo.unsigned.dll'
         self.raw.write_bytes(b'synthetic orchestration fixture, not a PE or MSVC result')
         self.output=self.build/'golden'
 
@@ -3220,8 +3220,8 @@ class DistTests(unittest.TestCase):
             self.assertEqual('1',kwargs['env']['PYTHONDONTWRITEBYTECODE'])
             index=len(calls);calls.append(command)
             if index==6:
-                self.assertTrue(command[0].endswith('citrine_eclipse_mirage_runtime_host.exe'))
-                self.assertEqual('citrine_eclipse_mirage.dll',Path(command[-2]).name)
+                self.assertTrue(command[0].endswith('laureondo_runtime_host.exe'))
+                self.assertEqual('laureondo.dll',Path(command[-2]).name)
                 self.assertEqual('--xml-contracts',command[-1])
                 if corrupt_runtime:Path(command[-2]).write_bytes(b'changed during runtime')
             return subprocess.CompletedProcess(command,37 if index==failed_stage or (index==6 and runtime_failure) else 0,'synthetic process result\n','')
@@ -3299,10 +3299,10 @@ class DistTests(unittest.TestCase):
         report,calls=self.run_pipeline()
         self.assertEqual('GOLDEN_PASS',report['result'])
         self.assertEqual(7,len(calls))
-        target=self.root/'dist/citrine_eclipse_mirage.dll'
+        target=self.root/'dist/laureondo.dll'
         self.assertEqual(before,target.read_bytes())
         self.assertEqual(before,self.raw.read_bytes())
-        self.assertEqual(golden.sha(target)+'  citrine_eclipse_mirage.dll\n',Path(report['dist_sha256_file']).read_text())
+        self.assertEqual(golden.sha(target)+'  laureondo.dll\n',Path(report['dist_sha256_file']).read_text())
         receipt=json.loads(Path(report['dist_receipt']).read_text())
         self.assertEqual(report['sha256'],receipt['sha256'])
         self.assertEqual(golden.sha(self.root/'metadata/ACTIVE_SOURCE_MANIFEST.json'),receipt['source_manifest_sha256'])
@@ -3319,7 +3319,7 @@ class DistTests(unittest.TestCase):
         victim = self.root.parent / 'outside-golden-victim.bin'
         victim.write_bytes(b'original external fixture bytes')
         candidate_hash = golden.sha(self.raw)[:16]
-        output_name = 'citrine_eclipse_mirage.' + candidate_hash + '.dll'
+        output_name = 'laureondo.' + candidate_hash + '.dll'
         artifact = self.output / output_name
         sidecar = Path(str(artifact) + '.sha256')
         for unsafe in (artifact, sidecar):
@@ -3380,7 +3380,7 @@ class DistTests(unittest.TestCase):
         report['runtime_check'].update(sha256_before=report['sha256'],sha256_after=report['sha256'])
         replace=golden.os.replace
         def fail_sidecar(source,target):
-            if Path(source).name=='citrine_eclipse_mirage.dll.sha256' and '.golden-transaction' in Path(source).parts:
+            if Path(source).name=='laureondo.dll.sha256' and '.golden-transaction' in Path(source).parts:
                 raise OSError('injected sidecar commit failure')
             return replace(source,target)
         with patch.object(golden.os,'replace',side_effect=fail_sidecar):
@@ -3519,13 +3519,13 @@ else:
 
     def test_project_filename_is_separate_from_cryptquery_compatibility_filter(self):
         contract=json.loads((ROOT/'metadata/DIST_CONTRACT.json').read_text())
-        header=(ROOT/'include/citrine_eclipse_mirage/platform/crypt_query.hpp').read_text()
+        header=(ROOT/'include/laureondo/platform/crypt_query.hpp').read_text()
         source=(ROOT/'src/platform/crypt_query.cpp').read_text()
         declaration=re.search(r'\btarget_suffix\s*=\s*u"([^"\n]+)"\s*;',header)
         self.assertIsNotNone(declaration)
         self.assertEqual(declaration.group(1),contract['hook11']['existing_filename_filter'])
         self.assertNotEqual(declaration.group(1),contract['runtime_dll_name'])
-        self.assertEqual('citrine_eclipse_mirage.dll',contract['runtime_dll_name'])
+        self.assertEqual('laureondo.dll',contract['runtime_dll_name'])
         self.assertIn('target_suffix[j]',source)
 
 

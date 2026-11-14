@@ -93,8 +93,8 @@
         "upstream_commit": "419ba27d27e80e33bf180932a9e4c483c4b8dd65",
         "installed_member_integrity": "PASS",
         "production_role": "APPLICATION_CONFIG2_VDF_GRAMMAR",
-        "cmake_target": "citrine_eclipse_mirage_pegtl",
-        "application_owner": "citrine_eclipse_mirage_vdf_objects",
+        "cmake_target": "laureondo_pegtl",
+        "application_owner": "laureondo_vdf_objects",
         "commit_evidence": "SHA256_PINNED_OWNER_ARCHIVE_COMMENT; not independent Git object verification",
         "native_acceptance": "PENDING_EXACT_HEAD_WINDOWS_MSVC_AND_GOLDEN_FOR_SELECTED_SNAPSHOT"
       }

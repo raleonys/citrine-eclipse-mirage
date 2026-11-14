@@ -88,7 +88,7 @@ UINT WINAPI TestSetErrorMode(UINT mode){
 #undef SetErrorMode
 
 namespace {
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 struct Fixture {
     configuration::State state=application::initial_state();application::Options options;

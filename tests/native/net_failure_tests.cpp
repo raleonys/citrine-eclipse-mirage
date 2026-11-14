@@ -35,7 +35,7 @@ void* aligned_malloc(std::size_t size,std::size_t alignment) noexcept {
 #endif
 // Cross replay changes only the allocation helper header, not compiler/platform
 // detection for the rest of Asio. Native MSVC already selects this CRT branch.
-#if defined(CITRINE_ECLIPSE_MIRAGE_TEST_MSVC_MEMORY_REPLAY) && !defined(ASIO_MSVC)
+#if defined(LAUREONDO_TEST_MSVC_MEMORY_REPLAY) && !defined(ASIO_MSVC)
 #define ASIO_MSVC 1
 #define FIXTURE_RESTORE_ASIO_MSVC
 #endif
@@ -82,14 +82,14 @@ BOOL WINAPI TestAcceptCompletion(HANDLE port,LPDWORD bytes,PULONG_PTR key,
 }
 #define GetQueuedCompletionStatus TestAcceptCompletion
 #include <asio.hpp>
-#include "citrine_eclipse_mirage/net/server.hpp"
-#include "citrine_eclipse_mirage/net/session_policy.hpp"
-#include "citrine_eclipse_mirage/platform/execution_windows.hpp"
+#include "laureondo/net/server.hpp"
+#include "laureondo/net/session_policy.hpp"
+#include "laureondo/platform/execution_windows.hpp"
 #include <memory>
 #include <exception>
 // White-box access is confined to this source-included test executable.
 #define private public
-#include "citrine_eclipse_mirage/net/asio_service.hpp"
+#include "laureondo/net/asio_service.hpp"
 #undef private
 #include <atomic>
 #include <cstdlib>
@@ -112,7 +112,7 @@ void operator delete[](void* p,std::size_t) noexcept{std::free(p);}
 #undef GetQueuedCompletionStatus
 
 namespace {
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 using Tcp=asio::ip::tcp;
 using namespace std::chrono_literals;
 void require(bool value,const char* text){if(!value)throw std::runtime_error(text);}

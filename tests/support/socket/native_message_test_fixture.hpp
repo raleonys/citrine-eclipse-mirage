@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/net/transport_native_message.hpp"
+#include "laureondo/net/transport_native_message.hpp"
 #include "tests/support/socket/request_growth_test_fixture.hpp"
 
 namespace native_message_test {
-namespace s=citrine_eclipse_mirage::socket;namespace m=citrine_eclipse_mirage::messages;
+namespace s=laureondo::socket;namespace m=laureondo::messages;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Failure{int code;};
 struct Bytes:s::ReceiveBufferApi {

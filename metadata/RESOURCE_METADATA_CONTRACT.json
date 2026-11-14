@@ -1,12 +1,12 @@
 {
   "schema": "surge.resource-metadata-contract.v1",
   "task": "PROJECT-IDENTITY-AND-RELEASE-VERSION",
-  "owner_instruction": "Use Citrine Eclipse Mirage branding and the selected release version in VERSIONINFO",
+  "owner_instruction": "Use Laureondo branding and the selected release version in VERSIONINFO",
   "scope": "Owner-approved project identity replaces reference VERSIONINFO; existing PE structural, ABI and avatar policies remain effective",
   "source": {
     "kind": "OWNER_APPROVED_PROJECT_RESOURCE",
     "member": "resources/version.rc",
-    "member_sha256": "1da044b3b97fec6e7fd536b0e93ea3ce48dfb33a0883443724a2bcf060998739",
+    "member_sha256": "0cd1c44197abce0ed531888e9000483a4d5ce2f70bcd38ac1f6408f9799afae7",
     "adaptation": "Generated numeric and string versions share the selected semantic version; revision is zero"
   },
   "required": {
@@ -27,10 +27,10 @@
         "dwFileDateLS": "0x00000000"
       },
       "strings": {
-        "FileDescription": "Citrine Eclipse Mirage",
+        "FileDescription": "Laureondo",
         "FileVersion": "3.2.6",
         "LegalCopyright": "Copyright 2026 SURGE. All rights reserved.",
-        "ProductName": "Citrine Eclipse Mirage",
+        "ProductName": "Laureondo",
         "ProductVersion": "3.2.6"
       },
       "string_table": "040904b0",
@@ -39,7 +39,7 @@
     },
     "additional_resource_assets": []
   },
-  "visible_SURGE_identity": "SURGE runtime/UI and avatar; project resource identity is Citrine Eclipse Mirage",
+  "visible_SURGE_identity": "SURGE runtime/UI and avatar; project resource identity is Laureondo",
   "resource_only_acceptance": "REQUIRES_FRESH_NATIVE_MSVC_RUN",
   "whole_golden_acceptance": "NOT_GRANTED_BY_RESOURCE_ONLY_PROFILE",
   "avatar_data_contract": "metadata/AVATAR_DATA_CONTRACT.json",

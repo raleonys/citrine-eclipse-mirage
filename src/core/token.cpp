@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/core/token.hpp"
-#include "citrine_eclipse_mirage/core/token_constants.hpp"
+#include "laureondo/core/token.hpp"
+#include "laureondo/core/token_constants.hpp"
 
-namespace citrine_eclipse_mirage::token {
+namespace laureondo::token {
 std::string extract_game_token(std::string_view value) {
     constexpr std::string_view opening = "<GameToken>";
     constexpr std::string_view closing = "</GameToken>";
@@ -41,4 +41,4 @@ std::string load_token_02afa0(const Path& path, Dependencies& dependencies) {
     }
     return extract_game_token(bytes);
 }
-} // namespace citrine_eclipse_mirage::token
+} // namespace laureondo::token

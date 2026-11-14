@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/execution.hpp"
+#include "laureondo/runtime/execution.hpp"
 #include <atomic>
 #include <barrier>
 #include <chrono>
@@ -15,7 +15,7 @@
 #include <utility>
 #include <vector>
 
-using namespace citrine_eclipse_mirage::execution;
+using namespace laureondo::execution;
 struct OS final:Platform {
     std::mutex gate;
     inline static std::atomic<unsigned> next{1};

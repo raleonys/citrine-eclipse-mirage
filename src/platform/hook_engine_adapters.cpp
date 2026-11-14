@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/platform/hook_engine_adapters.hpp"
-namespace citrine_eclipse_mirage::platform::hook_engine {
+#include "laureondo/platform/hook_engine_adapters.hpp"
+namespace laureondo::platform::hook_engine {
 std::u16string HostInitEffects::filesystem_widen_006d70(std::string_view s) {return remaining_.filesystem_widen_006d70(s);}
 std::uint64_t HostInitEffects::version_condition_mask(std::uint64_t m,std::uint32_t t,std::uint8_t c) {return remaining_.version_condition_mask(m,t,c);}
-bool HostInitEffects::verify_version(const citrine_eclipse_mirage::host_init::VersionRequest& v,std::uint32_t t,std::uint64_t m) {return remaining_.verify_version(v,t,m);}
+bool HostInitEffects::verify_version(const laureondo::host_init::VersionRequest& v,std::uint32_t t,std::uint64_t m) {return remaining_.verify_version(v,t,m);}
 std::int32_t HostInitEffects::initialize_engine_046a20() {return engine_.initialize();}
 std::uintptr_t HostInitEffects::get_module_handle(std::u16string_view m) {return remaining_.get_module_handle(m);}
 std::uintptr_t HostInitEffects::get_proc_address(std::uintptr_t m,std::string_view s) {return remaining_.get_proc_address(m,s);}
-std::int32_t HostInitEffects::create_hook_0466e0(std::uintptr_t t,citrine_eclipse_mirage::host_init::Callback callback,std::uintptr_t& original) {
+std::int32_t HostInitEffects::create_hook_0466e0(std::uintptr_t t,laureondo::host_init::Callback callback,std::uintptr_t& original) {
     const auto rebuilt = callbacks_.rebuilt_address(callback);
     void* output = reinterpret_cast<void*>(original);
     const auto status = engine_.create(reinterpret_cast<void*>(t),reinterpret_cast<void*>(rebuilt),&output);

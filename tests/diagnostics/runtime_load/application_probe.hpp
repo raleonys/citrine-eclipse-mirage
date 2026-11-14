@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace citrine_eclipse_mirage::benchmark {
+namespace laureondo::benchmark {
 struct ApplicationRecord {
     std::uint64_t queue=0,handler=0,lock_wait=0,lock_hold=0;
     unsigned lock_calls=0;

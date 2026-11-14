@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/achievement_utc.hpp"
+#include "laureondo/runtime/achievement_utc.hpp"
 #include <ctime>
 #include <iomanip>
 #include <sstream>
 
-namespace citrine_eclipse_mirage::achievement_runtime {
+namespace laureondo::achievement_runtime {
 std::int64_t HostClock::time_05eeb8() {
     return static_cast<std::int64_t>(std::time(nullptr));
 }
@@ -37,4 +37,4 @@ std::string utc_time_041b60(Clock& clock,Formatter& formatter,std::uint64_t* epo
     return formatter.put_time_03d610(*fields,filename_mode?
         "%Y-%m-%d_%H-%M-%S":"%Y-%m-%dT%H:%M:%S");
 }
-} // namespace citrine_eclipse_mirage::achievement_runtime
+} // namespace laureondo::achievement_runtime

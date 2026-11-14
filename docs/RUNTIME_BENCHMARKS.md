@@ -185,8 +185,8 @@ later replies in the batch can include time spent validating earlier replies.
 These client costs and common probe overhead are part of this diagnostic.
 Do not subtract independent p95 values to estimate missing processing stages.
 
-The current receipt schemas are `citrine.runtime-benchmark-inputs.v2`,
-`citrine.runtime-benchmark-build.v1` and `citrine.runtime-load.v3`. Earlier
+The current receipt schemas are `laureondo.runtime-benchmark-inputs.v2`,
+`laureondo.runtime-benchmark-build.v1` and `laureondo.runtime-load.v3`. Earlier
 artifacts retain their original source head/schema and coverage. The strict
 v3 auditor does not silently upgrade older results or borrow their PASS.
 

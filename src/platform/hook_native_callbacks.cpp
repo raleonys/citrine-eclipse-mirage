@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/platform/hook_native_callbacks.hpp"
-#include "citrine_eclipse_mirage/platform/callback_lock.hpp"
+#include "laureondo/platform/hook_native_callbacks.hpp"
+#include "laureondo/platform/callback_lock.hpp"
 #include <array>
 #include <bit>
 #include <mutex>
@@ -9,7 +9,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace citrine_eclipse_mirage::native {
+namespace laureondo::native {
 namespace {
 std::mutex gate;
 Context* current{};

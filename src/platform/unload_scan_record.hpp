@@ -10,7 +10,7 @@
 #include <limits>
 #include <type_traits>
 
-namespace citrine_eclipse_mirage::unload_diagnostics {
+namespace laureondo::unload_diagnostics {
 inline constexpr std::uint64_t magic_first=0x43454d554e4c4431ULL;
 inline constexpr std::uint64_t magic_second=0x5350414e54524331ULL;
 enum class Reason:std::uint64_t {

@@ -53,16 +53,16 @@ jobs:
             foreach ($name in @('PATH','INCLUDE','LIB','LIBPATH')) {
               "$name=$([Environment]::GetEnvironmentVariable($name,'Process'))" | Add-Content $env:GITHUB_ENV
             }
-            cmake -S . -B $build -G "NMake Makefiles" -DCMAKE_BUILD_TYPE='${{ matrix.configuration }}' -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=ON
+            cmake -S . -B $build -G "NMake Makefiles" -DCMAKE_BUILD_TYPE='${{ matrix.configuration }}' -DBUILD_TESTING=ON -DLAUREONDO_BUILD_SOURCE_API_DLL=ON
           } else {
-            cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DCITRINE_ECLIPSE_MIRAGE_BUILD_SOURCE_API_DLL=OFF
+            cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DLAUREONDO_BUILD_SOURCE_API_DLL=OFF
           }
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown configure failed' }
       - name: Build actual DLL, lifecycle host and native fault fixtures
         id: native_build
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target citrine_eclipse_mirage_runtime_host unload_guard_contracts listener_owners_contracts net_failure_contracts socket_retirement_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target laureondo_runtime_host unload_guard_contracts listener_owners_contracts net_failure_contracts socket_retirement_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown build failed' }
       - name: Verify unload ownership, TLS boundaries and listener diagnostic faults
         run: |
@@ -126,7 +126,7 @@ jobs:
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-junit-*.xml
             build/ci-shutdown-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
             build/ci-shutdown-${{ matrix.configuration }}/CMakeCache.txt
-            build/ci-shutdown-${{ matrix.configuration }}/citrine_eclipse_mirage.production.*.map
+            build/ci-shutdown-${{ matrix.configuration }}/laureondo.production.*.map
             build/ci-shutdown-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
           if-no-files-found: warn
           retention-days: 14

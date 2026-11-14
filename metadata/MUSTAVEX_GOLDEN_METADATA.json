@@ -23,10 +23,10 @@
         "dwFileDateLS": "0x00000000"
       },
       "strings": {
-        "FileDescription": "Citrine Eclipse Mirage",
+        "FileDescription": "Laureondo",
         "FileVersion": "3.2.6",
         "LegalCopyright": "Copyright 2026 SURGE. All rights reserved.",
-        "ProductName": "Citrine Eclipse Mirage",
+        "ProductName": "Laureondo",
         "ProductVersion": "3.2.6"
       },
       "string_table": "040904b0",
@@ -49,7 +49,7 @@
       0
     ],
     "timestamp": "PRESERVE_INPUT",
-    "export_internal_name": "citrine_eclipse_mirage.unsigned.dll",
+    "export_internal_name": "laureondo.unsigned.dll",
     "rich_header": "ABSENT",
     "additional_resource_assets": []
   },
@@ -64,7 +64,8 @@
     "3.2.3",
     "MELOTRIX",
     "melotrix",
-    "citrine_eclipse_mirage-3.2.3"
+    "citrine_eclipse_mirage-3.2.3",
+    "laureondo-3.2.3"
   ],
   "strict_recovery_allowlist": [
     "#1",
@@ -143,7 +144,19 @@
     "3.2.5",
     "SQUALERIS",
     "squaleris",
-    "citrine_eclipse_mirage-3.2.5"
+    "citrine_eclipse_mirage-3.2.5",
+    "laureondo-3.1.3",
+    "laureondo-3.1.4",
+    "laureondo-3.1.5",
+    "laureondo-3.1.6",
+    "laureondo-3.1.7",
+    "laureondo-3.1.8",
+    "laureondo-3.1.9",
+    "laureondo-3.2.0",
+    "laureondo-3.2.1",
+    "laureondo-3.2.2",
+    "laureondo-3.2.4",
+    "laureondo-3.2.5"
   ],
   "source_policy": {
     "archive_sha256": "2f32febfcd7ed330cb84b7fcf876ae4bdc8037ce4d7826c921f775c7b6dc6e67",

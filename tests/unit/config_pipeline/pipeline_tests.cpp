@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/config/pipeline.hpp"
-#include "citrine_eclipse_mirage/config/order.hpp"
+#include "laureondo/config/pipeline.hpp"
+#include "laureondo/config/order.hpp"
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
@@ -10,7 +10,7 @@
 #include <map>
 #include <optional>
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace {
 int checks=0;
 void require(bool ok,const char* reason) {

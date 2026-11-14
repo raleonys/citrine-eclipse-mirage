@@ -11,7 +11,7 @@ The donor and file-ledger links are pinned to retained Archive 11 commit `e10561
 | Product source | SHA-256 (reviewed baseline) | Role |
 | --- | --- | --- |
 | [`src/platform/registry.cpp`](../src/platform/registry.cpp) | `5b5fbdf646f1c8a2169078c97696e74f5e43fc9c80640201bc49581add4c1f48` | Value comparisons, original-first open/query, fabricate/close state |
-| [`include/citrine_eclipse_mirage/platform/registry.hpp`](../include/citrine_eclipse_mirage/platform/registry.hpp) | `c66f67c0ef14edeb606b817ff074b76846d636478ac2b54964206ec4ad3e8c98` | `Handle` and per-callback scalar cells; current numeric handle sets |
+| [`include/citrine_eclipse_mirage/platform/registry.hpp`](../include/laureondo/platform/registry.hpp) | `c66f67c0ef14edeb606b817ff074b76846d636478ac2b54964206ec4ad3e8c98` | `Handle` and per-callback scalar cells; current numeric handle sets |
 | [`src/platform/hook_native_callbacks.cpp`](../src/platform/hook_native_callbacks.cpp) | `7b0df0c9e00497cc0fb5fe17574f0fd9576718684d19f8a2a1c4f1bee43dd1ee` | Real `HKEY` / `PHKEY` native entry adapters, without origin tickets |
 | [`src/platform/hook_original_effects.cpp`](../src/platform/hook_original_effects.cpp) | `33b5c342470b1b1cc39a610f5770480ead8191f5911eeb32fbf22ab0c4b2a66d` | Exact typed original Win32 API calls; no invented return or handle namespace |
 

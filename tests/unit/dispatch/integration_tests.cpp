@@ -1,23 +1,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/router/router.hpp"
-#include "citrine_eclipse_mirage/codec/crypto.hpp"
-#include "citrine_eclipse_mirage/xml/reader.hpp"
-#include "citrine_eclipse_mirage/core/license.hpp"
+#include "laureondo/router/router.hpp"
+#include "laureondo/codec/crypto.hpp"
+#include "laureondo/xml/reader.hpp"
+#include "laureondo/core/license.hpp"
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>
 
-namespace msg=citrine_eclipse_mirage::messages;
-namespace xml=citrine_eclipse_mirage::xml;
-namespace info=citrine_eclipse_mirage::handlers;
-namespace misc=citrine_eclipse_mirage::misc_handlers;
-namespace content=citrine_eclipse_mirage::content_handlers;
-namespace dispatch=citrine_eclipse_mirage::dispatch;
-namespace crypto=citrine_eclipse_mirage::crypto;
-namespace config=citrine_eclipse_mirage::configuration;
-namespace reader=citrine_eclipse_mirage::xml_reader_bridge;
-namespace license=citrine_eclipse_mirage::license;
+namespace msg=laureondo::messages;
+namespace xml=laureondo::xml;
+namespace info=laureondo::handlers;
+namespace misc=laureondo::misc_handlers;
+namespace content=laureondo::content_handlers;
+namespace dispatch=laureondo::dispatch;
+namespace crypto=laureondo::crypto;
+namespace config=laureondo::configuration;
+namespace reader=laureondo::xml_reader_bridge;
+namespace license=laureondo::license;
 namespace {
 int checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

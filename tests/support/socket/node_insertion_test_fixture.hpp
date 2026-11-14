@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/xml/node_insertion.hpp"
+#include "laureondo/xml/node_insertion.hpp"
 #include "tests/support/socket/node_constructors_test_fixture.hpp"
 
 namespace node_insertion_test {
-namespace s=citrine_eclipse_mirage::socket;
+namespace s=laureondo::socket;
 using node_constructors_test::check;using node_constructors_test::checks;
 using node_constructors_test::put;using node_constructors_test::word;
 using node_constructors_test::Failure;using node_constructors_test::fails;using node_constructors_test::unmapped;

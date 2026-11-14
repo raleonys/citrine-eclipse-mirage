@@ -1,8 +1,8 @@
 # Tools
 
-- `citrine_eclipse_mirage_source_host`: dynamically loads the development DLL and executes
+- `laureondo_source_host`: dynamically loads the development DLL and executes
   the calendar, SHA-1, and parser calls.
-- `citrine_eclipse_mirage_crt_host`: checks the compiler's standard CRT
+- `laureondo_crt_host`: checks the compiler's standard CRT
   heap/unwind/container/thread/TLS behavior.
 - `inspect_dll.py <dll>`: produces a read-only PE/import/export/resource report
   and verifies the exact profile/fallback avatar bytes in read-only C++ data.

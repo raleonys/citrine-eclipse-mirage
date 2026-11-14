@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/server.hpp"
+#include "laureondo/net/server.hpp"
 #include <algorithm>
 #include <iostream>
 #include <limits>
@@ -34,12 +34,12 @@ void operator delete(void* p) noexcept {greeting_lifetime::release(p);}
 void operator delete[](void* p) noexcept {greeting_lifetime::release(p);}
 void operator delete(void* p,std::size_t) noexcept {greeting_lifetime::release(p);}
 void operator delete[](void* p,std::size_t) noexcept {greeting_lifetime::release(p);}
-using namespace citrine_eclipse_mirage::server;
+using namespace laureondo::server;
 namespace {
 int checks=0;
 void check(bool value,const char* text) {++checks;if(!value)throw std::runtime_error(text);}
 struct Raised {Error error; std::string context;};
-struct FakeExecutionPlatform final : citrine_eclipse_mirage::execution::Platform {
+struct FakeExecutionPlatform final : laureondo::execution::Platform {
     int acquired=0,released=0;
     std::uint32_t current_thread_id() override {return 7;}
     void acquire_srw_exclusive(std::uintptr_t&) override {++acquired;}
@@ -159,11 +159,11 @@ struct Fixture {
 };
 void server_tests() {
     FakeExecutionPlatform platform;
-    citrine_eclipse_mirage::execution::MutexState mutex{};
-    citrine_eclipse_mirage::execution::initialize_mutex_04a698(mutex,2);
+    laureondo::execution::MutexState mutex{};
+    laureondo::execution::initialize_mutex_04a698(mutex,2);
     std::uint8_t first=0,second=0,third=0;
     std::int64_t frequency=0;
-    citrine_eclipse_mirage::execution::Execution execution{mutex,{first,second,third},frequency,platform};
+    laureondo::execution::Execution execution{mutex,{first,second,third},frequency,platform};
     FakeServer server;server.ready=&first;server.env_result=false;
     std::uint16_t port=0;
     server_start_029ea0(server,port,first,execution);
@@ -252,11 +252,11 @@ void initial_accept_submission_failure(){
     // C15-RISK-001: source-linked pre-accept publication ordering, not a
     // Consumer declaration that Application startup has succeeded.
     FakeExecutionPlatform platform;
-    citrine_eclipse_mirage::execution::MutexState mutex{};
-    citrine_eclipse_mirage::execution::initialize_mutex_04a698(mutex,2);
+    laureondo::execution::MutexState mutex{};
+    laureondo::execution::initialize_mutex_04a698(mutex,2);
     std::uint8_t first=0,second=0,third=0;
     std::int64_t frequency=0;
-    citrine_eclipse_mirage::execution::Execution execution{mutex,{first,second,third},frequency,platform};
+    laureondo::execution::Execution execution{mutex,{first,second,third},frequency,platform};
     FakeServer server;server.ready=&first;server.fail_accept_submission=true;
     std::uint16_t port=0;
     bool failed=false;

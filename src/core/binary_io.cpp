@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/core/binary_io.hpp"
+#include "laureondo/core/binary_io.hpp"
 #include <stdexcept>
 
-namespace citrine_eclipse_mirage::file {
+namespace laureondo::file {
 void Factory::replace_atomic(std::span<const FileWrite>) {
     throw std::logic_error("File factory does not implement atomic achievement persistence");
 }
@@ -41,4 +41,4 @@ bool write_binary_checked(const Path& path,std::string_view value,Factory& facto
     const bool close_failed=stream->initial_state()!=0;
     return !write_failed && !close_failed;
 }
-} // namespace citrine_eclipse_mirage::file
+} // namespace laureondo::file

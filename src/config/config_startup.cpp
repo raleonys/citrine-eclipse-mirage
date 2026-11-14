@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/config/startup.hpp"
+#include "laureondo/config/startup.hpp"
 
-namespace citrine_eclipse_mirage::config_startup {
+namespace laureondo::config_startup {
 void FilePass::load_and_apply(configuration::State& state,bool override_pass,configuration::Dependencies& deps) {
     config_application::load_and_apply(state,override_pass,deps,files_);
 }
@@ -27,4 +27,4 @@ void BootstrapConfiguration::setup_console_038760() {
 void BootstrapConfiguration::load_configuration_01c870() {
     config_startup::initialize_configuration(state_,dependencies_,files_);
 }
-} // namespace citrine_eclipse_mirage::config_startup
+} // namespace laureondo::config_startup

@@ -35,7 +35,7 @@ The implementation is in
 [file_copy.cpp](../src/platform/file_copy.cpp) and the
 actual SDK boundary in
 [file_copy_windows.cpp](../src/platform/file_copy_windows.cpp).
-The [source interface](../include/citrine_eclipse_mirage/platform/file_copy.hpp)
+The [source interface](../include/laureondo/platform/file_copy.hpp)
 carries explicit boolean/error fields. It does not claim to
 reproduce three undefined padding bytes of the original
 compiler or its former C++ binary ABI. Private CRT/heap

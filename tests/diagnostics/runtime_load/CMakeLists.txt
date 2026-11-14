@@ -69,8 +69,8 @@ function(runtime_application_dependencies)
 endfunction()
 runtime_application_dependencies()
 include("${RUNTIME_ROOT}/cmake/Sources.cmake")
-set(application_sources ${CITRINE_ECLIPSE_MIRAGE_APPLICATION_SOURCES}
-  ${CITRINE_ECLIPSE_MIRAGE_VDF_SOURCES} src/platform/crypt_query_host.cpp)
+set(application_sources ${LAUREONDO_APPLICATION_SOURCES}
+  ${LAUREONDO_VDF_SOURCES} src/platform/crypt_query_host.cpp)
 list(REMOVE_ITEM application_sources src/net/asio_service.cpp src/runtime/application.cpp)
 list(TRANSFORM application_sources PREPEND "${RUNTIME_ROOT}/")
 set(avatar_header "${CMAKE_CURRENT_BINARY_DIR}/generated/avatar_data.hpp")
@@ -87,8 +87,8 @@ target_include_directories(runtime_application_parts PUBLIC "${RUNTIME_ROOT}/inc
   "${RUNTIME_ROOT}/src/runtime" "${CMAKE_CURRENT_SOURCE_DIR}"
   "${CMAKE_CURRENT_BINARY_DIR}/generated")
 target_compile_definitions(runtime_application_parts PUBLIC NOMINMAX)
-target_link_libraries(runtime_application_parts PUBLIC citrine_eclipse_mirage_asio
-  citrine_eclipse_mirage_pegtl citrine_eclipse_mirage_minhook citrine_eclipse_mirage_pugixml
+target_link_libraries(runtime_application_parts PUBLIC laureondo_asio
+  laureondo_pegtl laureondo_minhook laureondo_pugixml
   crypt32 ws2_32 kernel32 user32 shell32 advapi32 psapi)
 if(MINGW AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   set_source_files_properties("${RUNTIME_ROOT}/src/platform/hook_unload_guard.cpp"

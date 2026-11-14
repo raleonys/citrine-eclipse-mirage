@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_iocp_constructor.hpp"
+#include "laureondo/net/transport_iocp_constructor.hpp"
 #include <bit>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 IocpSchedulerEntry& construct_iocp_024990(IocpSchedulerEntry& entry,std::uintptr_t owner,
     std::uint32_t hint,std::uint8_t own_thread,IocpConstructorApi& api,ServiceGateApi& gates,Api& errors,IocpConstructionEffects& effects){
     entry.key.type=0;entry.key.id=0;entry.owner_context=owner;entry.next=nullptr;
@@ -54,4 +54,4 @@ ServiceEntry* IocpSchedulerRegistryEffects::construct_scheduler_024990(ServiceEn
     if(!entry)throw UnsupportedInput("Scheduler allocation has no live IOCP entry projection");
     return &construct_iocp_024990(*entry,owner,hint,own_thread,api_,gates_,errors_,effects_);
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

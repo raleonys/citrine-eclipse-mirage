@@ -320,7 +320,7 @@ def check(root):
         if not (root / name).is_dir():
             errors.append('Required source directory missing: ' + name)
     # Infrastructure-style module ownership: one module folder, then files.
-    for base in [root / 'src', root / 'include/citrine_eclipse_mirage']:
+    for base in [root / 'src', root / 'include/laureondo']:
         for path in base.rglob('*'):
             if path.is_file() and len(path.relative_to(base).parts) > 2:
                 errors.append('Nested first-party module directory: ' + path.relative_to(root).as_posix())

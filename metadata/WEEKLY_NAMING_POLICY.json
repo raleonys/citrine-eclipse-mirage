@@ -1,7 +1,7 @@
 {
-  "schema": "cem.weekly.naming.v1",
+  "schema": "laureondo.weekly.naming.v1",
   "first_version": "3.2.6",
-  "project": "Citrine Eclipse Mirage",
+  "project": "Laureondo",
   "authority": "LUTRAVEX",
   "historical_reserved_roots": [
     "ACCESSORS",

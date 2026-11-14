@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/protocol/messages.hpp"
+#include "laureondo/protocol/messages.hpp"
 #include <limits>
 #include <ostream>
 #include <stdexcept>
 
-namespace citrine_eclipse_mirage::messages {
+namespace laureondo::messages {
 void report_unknown_message_07bd70(const UnknownMessageInput& input,std::ostream& stream,
                                   UnknownMessageDialog& dialog) {
     stream<<"[UNKNOWN MESSAGE]"<<std::endl;
@@ -209,4 +209,4 @@ std::string process_message_033d70(State state,std::string& input,XmlBackend& xm
         return {};
     }
 }
-} // namespace citrine_eclipse_mirage::messages
+} // namespace laureondo::messages

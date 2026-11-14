@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/config/application.hpp"
-#include "citrine_eclipse_mirage/core/product_identity.hpp"
+#include "laureondo/config/application.hpp"
+#include "laureondo/core/product_identity.hpp"
 #include <stdexcept>
 
-namespace citrine_eclipse_mirage::config_application {
+namespace laureondo::config_application {
 namespace {
 using namespace configuration;
 using HashNode=config_hash::Node;
@@ -174,4 +174,4 @@ void load_and_apply(configuration::State& state,bool override_pass,
     deps.log_config_path(path);
     apply_config2(state,selected,override_pass,deps,trace);
 }
-} // namespace citrine_eclipse_mirage::config_application
+} // namespace laureondo::config_application

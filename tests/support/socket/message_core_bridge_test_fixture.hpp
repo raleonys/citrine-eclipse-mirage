@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/net/transport_message_core_bridge.hpp"
+#include "laureondo/net/transport_message_core_bridge.hpp"
 #include "tests/support/socket/response_containers_test_fixture.hpp"
-#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "laureondo/xml/reader.hpp"
 #include <deque>
 
 namespace core_test {
-namespace s=citrine_eclipse_mirage::socket;namespace m=citrine_eclipse_mirage::messages;
+namespace s=laureondo::socket;namespace m=laureondo::messages;
 namespace b=buffer_test;namespace r=receive_test;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Failure {int code;};
@@ -15,7 +15,7 @@ inline const std::string request_xml="<LSX><Request id=\"bridge\" recipient=\"fi
 inline std::string hex(std::string_view bytes){const char* digits="0123456789abcdef";std::string out;for(unsigned char c:bytes){out+=digits[c>>4];out+=digits[c&15];}return out;}
 inline std::string unhex(std::string_view value){auto digit=[](char c){if(c>='0'&&c<='9')return c-'0';if(c>='a'&&c<='f')return c-'a'+10;throw std::runtime_error("oracle invalid hex");};check(value.size()%2==0,"oracle complete hex pairs");std::string out;for(std::size_t i=0;i<value.size();i+=2)out.push_back(static_cast<char>((digit(value[i])<<4)|digit(value[i+1])));return out;}
 struct Xml:m::XmlBackend {
-    citrine_eclipse_mirage::xml_reader_bridge::Backend actual;std::deque<int> forced;std::vector<std::string> inputs;
+    laureondo::xml_reader_bridge::Backend actual;std::deque<int> forced;std::vector<std::string> inputs;
     m::ParseResult parse_c_string(std::string_view input)override{inputs.emplace_back(input);if(!forced.empty()){const auto code=forced.front();forced.pop_front();auto result=actual.parse_c_string("<LSX>");result.returned_code=code;result.has_error=true;return result;}return actual.parse_c_string(input);}
     std::unique_ptr<m::XmlPrinter> printer()override{return actual.printer();}
 };

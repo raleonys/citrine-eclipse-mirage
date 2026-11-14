@@ -6,7 +6,7 @@ import sys
 
 cache=Path(sys.argv[1])
 text=cache.read_text(encoding='utf-8')
-key='CITRINE_ECLIPSE_MIRAGE_PEGTL_PUBLIC_INPUT_WORKS'
+key='LAUREONDO_PEGTL_PUBLIC_INPUT_WORKS'
 probe=key+':INTERNAL='
 # Count the logical key even when its type or separator is malformed: a
 # second record must not disappear merely because it is not INTERNAL.

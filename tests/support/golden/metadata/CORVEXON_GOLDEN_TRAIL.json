@@ -1,5 +1,5 @@
 {
-  "schema": "citrine_eclipse_mirage.corvexon_golden_trail.v1",
+  "schema": "laureondo.corvexon_golden_trail.v1",
   "policy": "CORVEXON Golden Trail",
   "lineage": "3.1.1 CORVEXON provenance-preserving derived gate",
   "finding": "F1411-001",

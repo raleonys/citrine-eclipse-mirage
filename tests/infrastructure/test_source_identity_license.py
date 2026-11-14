@@ -78,9 +78,9 @@ class SourceIdentityTests(unittest.TestCase):
 
     def test_legacy_namespace_and_type_fail(self):
         with tempfile.TemporaryDirectory() as tmp:
-            path = Path(tmp) / 'include/citrine_eclipse_mirage/a.hpp'
+            path = Path(tmp) / 'include/laureondo/a.hpp'
             path.parent.mkdir(parents=True)
-            path.write_text('// SPDX-License-Identifier: GPL-3.0-only\nnamespace citrine_eclipse_mirage::crypto_recovered {}\n')
+            path.write_text('// SPDX-License-Identifier: GPL-3.0-only\nnamespace laureondo::crypto_recovered {}\n')
             self.assertTrue(any('Legacy recovery-derived' in e for e in checker.inspect(tmp)[1]))
             path.write_text('// SPDX-License-Identifier: GPL-3.0-only\nstruct RecoveredCipher {};\n')
             self.assertTrue(any('Legacy recovery-derived' in e for e in checker.inspect(tmp)[1]))
@@ -100,7 +100,7 @@ class SourceIdentityTests(unittest.TestCase):
             for name in ('third_party/lib/a.cpp', 'tests/vendors/lib.cpp', 'tests/fixtures/a.cpp'):
                 path = Path(tmp) / name
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text('namespace citrine_eclipse_mirage::crypto_recovered {}\n')
+                path.write_text('namespace laureondo::crypto_recovered {}\n')
             count, errors = checker.inspect(tmp)
             self.assertEqual((count, errors), (0, []))
 
@@ -115,7 +115,7 @@ class SourceIdentityTests(unittest.TestCase):
 
     def test_cryptquery_compatibility_literal_is_the_only_source_exception(self):
         with tempfile.TemporaryDirectory() as tmp:
-            path = Path(tmp) / 'include/citrine_eclipse_mirage/platform/crypt_query.hpp'
+            path = Path(tmp) / 'include/laureondo/platform/crypt_query.hpp'
             path.parent.mkdir(parents=True)
             source = '// SPDX-License-Identifier: GPL-3.0-only\n' + 'inline constexpr auto target_suffix=u"preloader' + '_l.dll";\n'
             path.write_text(source)

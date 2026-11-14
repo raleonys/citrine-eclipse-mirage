@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/net/transport_acceptor_native.hpp"
+#include "laureondo/net/transport_acceptor_native.hpp"
 #include <bit>
 
-namespace citrine_eclipse_mirage::socket {
+namespace laureondo::socket {
 static_assert(sizeof(Socket)==8 && sizeof(SOCKET)==8 && sizeof(HANDLE)==8);
 static_assert(sizeof(int)==4 && sizeof(u_long)==4 && sizeof(long)==4);
 static_assert(FIONBIO==0x8004667eU && AF_INET==2 && AF_INET6==23);
@@ -33,4 +33,4 @@ std::int32_t NativeAcceptorApi::set_nonblocking(Socket socket,std::uint32_t comm
     const auto result=imports_.ioctl(static_cast<SOCKET>(socket),std::bit_cast<long>(command),&native);
     value=native;return result;
 }
-} // namespace citrine_eclipse_mirage::socket
+} // namespace laureondo::socket

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/timestamp.hpp"
-#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "laureondo/runtime/timestamp.hpp"
+#include "laureondo/xml/reader.hpp"
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
@@ -10,7 +10,7 @@
 #include <sstream>
 #include <stdexcept>
 
-using namespace citrine_eclipse_mirage;
+using namespace laureondo;
 namespace {
 unsigned checks=0;
 void require(bool ok,const char* label){++checks;if(!ok)throw std::runtime_error(label);}

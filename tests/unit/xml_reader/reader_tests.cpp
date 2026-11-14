@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/xml/reader.hpp"
+#include "laureondo/xml/reader.hpp"
 #include <pugixml.hpp>
 #include <iostream>
 #include <new>
 #include <stdexcept>
 
-namespace reader=citrine_eclipse_mirage::xml_reader_bridge;
-namespace msg=citrine_eclipse_mirage::messages;
+namespace reader=laureondo::xml_reader_bridge;
+namespace msg=laureondo::messages;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* reason){++checks;if(!value)throw std::runtime_error(reason);}

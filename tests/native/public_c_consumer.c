@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/control.h"
+#include "laureondo/runtime/control.h"
 #include <stdio.h>
 
 int main(void) {

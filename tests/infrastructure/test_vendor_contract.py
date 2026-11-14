@@ -27,7 +27,7 @@ import hook_cleanup_control as cleanup_control
 
 class VendorTests(unittest.TestCase):
     def test_pegtl_toolchain_status_requires_single_active_cache_record(self):
-        key = 'CITRINE_ECLIPSE_MIRAGE_PEGTL_PUBLIC_INPUT_WORKS'
+        key = 'LAUREONDO_PEGTL_PUBLIC_INPUT_WORKS'
         probe = key + ':INTERNAL='
         fixtures = (
             ('valid', probe + '1\n', 0),

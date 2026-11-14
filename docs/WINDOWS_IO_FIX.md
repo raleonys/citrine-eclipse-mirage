@@ -81,7 +81,7 @@ values and guards all other bytes. It fails closed if the module set differs.
 The null descriptor is preserved, the checksum recomputed, and CORVEXON
 separately verifies final order.
 
-The current order applies to both `dist/citrine_eclipse_mirage.dll` after
+The current order applies to both `dist/laureondo.dll` after
 Golden finalization and the normalized unsigned MSVC application artifact.
 The raw link initially has linker order; current MSVC application builds
 then normalize the unsigned artifact's import descriptors before inspection.

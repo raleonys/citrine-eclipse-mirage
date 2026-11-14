@@ -2,14 +2,14 @@
   "schema": "surge.build-partition.v1",
   "owner": "Explicit owner approval of audited runtime/reference/source-API separation without deleting source models",
   "production_targets": [
-    "citrine_eclipse_mirage",
-    "citrine_eclipse_mirage_core",
-    "citrine_eclipse_mirage_objects",
-    "citrine_eclipse_mirage_vdf_objects"
+    "laureondo",
+    "laureondo_core",
+    "laureondo_objects",
+    "laureondo_vdf_objects"
   ],
   "reference_targets": [
-    "citrine_eclipse_mirage_reference_models",
-    "citrine_eclipse_mirage_reference_objects"
+    "laureondo_reference_models",
+    "laureondo_reference_objects"
   ],
   "production_object_sources": [
     "src/core/atomic_files.cpp",
@@ -341,8 +341,8 @@
     "parser_contracts",
     "parser_header_contracts",
     "path_contracts",
-    "citrine_eclipse_mirage_crt_host",
-    "citrine_eclipse_mirage_runtime_host",
+    "laureondo_crt_host",
+    "laureondo_runtime_host",
     "production_callback_contracts",
     "production_network_hook_contracts",
     "registry_contracts",
@@ -375,10 +375,10 @@
     "net_failure_msvc_memory_replay_contracts"
   ],
   "source_api_targets": [
-    "citrine_eclipse_mirage_source_api",
-    "citrine_eclipse_mirage_source_host",
-    "citrine_eclipse_mirage_source_minhook",
-    "citrine_eclipse_mirage_source_pugixml"
+    "laureondo_source_api",
+    "laureondo_source_host",
+    "laureondo_source_minhook",
+    "laureondo_source_pugixml"
   ],
   "vendor_comparison_targets": [
     "hook_engine_fixture_tests",

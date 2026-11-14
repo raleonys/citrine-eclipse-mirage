@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/platform/file_copy.hpp"
+#include "laureondo/platform/file_copy.hpp"
 #include <windows.h>
 #include <filesystem>
 #include <fstream>
@@ -43,7 +43,7 @@ BOOL WINAPI legacy(HANDLE handle,LPBY_HANDLE_FILE_INFORMATION output){
 
 namespace {
 namespace fs=std::filesystem;
-namespace copy=citrine_eclipse_mirage::file_copy;
+namespace copy=laureondo::file_copy;
 unsigned checks=0;
 void require(bool value,const char* what) {++checks;if(!value)throw std::runtime_error(what);}
 struct Directory {

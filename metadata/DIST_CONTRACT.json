@@ -1,15 +1,15 @@
 {
   "schema": "surge.dist-contract.v1",
   "task": "SURGE-WINDOWS-IO-20261029",
-  "owner_intent": "Expected final citrine_eclipse_mirage.dll under dist; user inspected unsigned build output because final file was missing",
+  "owner_intent": "Expected final laureondo.dll under dist; user inspected unsigned build output because final file was missing",
   "directory": "dist",
-  "runtime_dll_name": "citrine_eclipse_mirage.dll",
-  "raw_build_dll": "citrine_eclipse_mirage.unsigned.dll",
-  "runtime_internal_export_module_name": "citrine_eclipse_mirage.unsigned.dll",
+  "runtime_dll_name": "laureondo.dll",
+  "raw_build_dll": "laureondo.unsigned.dll",
+  "runtime_internal_export_module_name": "laureondo.unsigned.dll",
   "export_module_name_policy": "Preserve linked PE bytes; filesystem copy/rename does not rewrite the export directory or three C exports",
   "required_files": [
-    "citrine_eclipse_mirage.dll",
-    "citrine_eclipse_mirage.dll.sha256",
+    "laureondo.dll",
+    "laureondo.dll.sha256",
     "DIST_RECEIPT.json"
   ],
   "gate": "ALL_SIX_GOLDEN_STAGES_THEN_FINAL_NAME_RUNTIME_LOAD_START_SOCKET_PROFILE_SHUTDOWN_UNLOAD_PASS",

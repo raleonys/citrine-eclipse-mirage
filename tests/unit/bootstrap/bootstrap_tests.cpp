@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/bootstrap.hpp"
+#include "laureondo/runtime/bootstrap.hpp"
 #include <array>
 #include <iostream>
 #include <new>
@@ -9,7 +9,7 @@
 #include <vector>
 #include <algorithm>
 
-using namespace citrine_eclipse_mirage::system_services;
+using namespace laureondo::system_services;
 namespace {
 int checks = 0;
 void require(bool ok, const char* message) {

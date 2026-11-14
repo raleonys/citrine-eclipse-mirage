@@ -73,7 +73,7 @@ class ZipEvidence:
 def audit(evidence):
     b = benchmark
     data = b.load_json(evidence.read('results/results.json'))
-    if data.get('schema') != 'citrine.runtime-load.v3' or data.get('result') != 'PASS_CORRECTNESS_WITH_MEASUREMENTS':
+    if data.get('schema') != 'laureondo.runtime-load.v3' or data.get('result') != 'PASS_CORRECTNESS_WITH_MEASUREMENTS':
         raise ValueError('Only complete v3 correctness receipts can pass this audit')
     if not isinstance(data.get('run_id'), str) or not re.fullmatch('[0-9a-f]{32}', data['run_id']):
         raise ValueError('Missing per-run measurement identity')
@@ -91,7 +91,7 @@ def audit(evidence):
     inputs = data['source']
     if inputs != b.load_json(evidence.read('binaries/generated/inputs.json')):
         raise ValueError('Run and generated input receipts differ')
-    if inputs.get('schema') != 'citrine.runtime-benchmark-inputs.v2' or any(inputs.get(k) != v for k, v in b.identity().items()):
+    if inputs.get('schema') != 'laureondo.runtime-benchmark-inputs.v2' or any(inputs.get(k) != v for k, v in b.identity().items()):
         raise ValueError('Artifact source identity differs from the selected clean checkout')
     expected = b.generated_hashes()
     recorded = {f'asio_{n}.cpp': inputs.get('generated_service_sha256', {}).get(str(n)) for n in b.WORKERS}
@@ -146,7 +146,7 @@ def audit(evidence):
     table = list(reader)
     if len(table) != len(summary) or any(record != {k: '' if v is None else str(v) for k, v in row.items()} for record, row in zip(table, summary)):
         raise ValueError('CSV summary differs from recomputed JSON metrics')
-    return {'schema': 'citrine.runtime-benchmark-audit.v1', 'result': 'PASS_INTEGRITY_NOT_EXECUTION_ATTESTATION',
+    return {'schema': 'laureondo.runtime-benchmark-audit.v1', 'result': 'PASS_INTEGRITY_NOT_EXECUTION_ATTESTATION',
             'source_commit': inputs['commit'], 'source_manifest_sha256': inputs['manifest_sha256'],
             'run_id': data['run_id'],
             'binary_count': len(names), 'measurements': len(rows),

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/runtime/event_queue.hpp"
+#include "laureondo/runtime/event_queue.hpp"
 #include <array>
 #include <chrono>
 #include <cstdlib>
@@ -32,7 +32,7 @@ void operator delete(void* value)noexcept{std::free(value);}
 void operator delete[](void* value)noexcept{std::free(value);}
 void operator delete(void* value,std::size_t)noexcept{std::free(value);}
 void operator delete[](void* value,std::size_t)noexcept{std::free(value);}
-namespace eq=citrine_eclipse_mirage::event_queue;
+namespace eq=laureondo::event_queue;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

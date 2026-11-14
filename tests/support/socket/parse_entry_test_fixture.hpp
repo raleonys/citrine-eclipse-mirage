@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #pragma once
-#include "citrine_eclipse_mirage/xml/parse_entry.hpp"
+#include "laureondo/xml/parse_entry.hpp"
 #include "tests/support/socket/node_base_test_fixture.hpp"
 
 namespace parse_entry_test {
-namespace s=citrine_eclipse_mirage::socket;
+namespace s=laureondo::socket;
 using node_base_test::check;using node_base_test::checks;using node_base_test::word;using node_base_test::put;using node_base_test::Failure;
 using node_base_test::unsupported;using node_base_test::failure;
 struct CoreDocs:s::NativeDocumentEffects {

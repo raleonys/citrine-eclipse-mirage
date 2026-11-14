@@ -33,7 +33,7 @@ def tag_parts(tag):
 
 def asset_names(tag):
     version, codename = tag_parts(tag)
-    base = f'Citrine_Eclipse_Mirage_{version}_{codename}'
+    base = f'Laureondo_{version}_{codename}'
     return base + '_source.zip', base + '.zip'
 
 
@@ -42,8 +42,8 @@ def load_registry():
 
 
 def validate_registry(data):
-    if (not isinstance(data, dict) or data.get('schema') != 'cem.weekly.naming.v1'
-            or data.get('first_version') != FIRST or data.get('project') != 'Citrine Eclipse Mirage'):
+    if (not isinstance(data, dict) or data.get('schema') != 'laureondo.weekly.naming.v1'
+            or data.get('first_version') != FIRST or data.get('project') != 'Laureondo'):
         raise ValueError('Wrong LUTRAVEX naming authority')
     reserved, names = data.get('historical_reserved_roots'), data.get('approved_codenames')
     if not isinstance(reserved, list) or reserved != sorted(set(reserved)) or not isinstance(names, dict) or not names:

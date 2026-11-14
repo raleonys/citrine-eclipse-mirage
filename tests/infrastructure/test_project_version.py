@@ -81,7 +81,7 @@ class ProjectVersionTests(unittest.TestCase):
             path = Path(tmp) / 'generated/project_version.h'
             version.write_header(path, '3.2.6')
             version.write_header(path, '3.3.0')
-            self.assertIn('#define CEM_VERSION_NUMERIC 3,3,0,0', path.read_text())
+            self.assertIn('#define LAUREONDO_VERSION_NUMERIC 3,3,0,0', path.read_text())
             self.assertIn('"3.3.0\\0"', path.read_text())
             self.assertNotIn('3.2.6', path.read_text())
 
@@ -101,7 +101,7 @@ class ProjectVersionTests(unittest.TestCase):
                                  env=environment, capture_output=True, text=True, timeout=30)
             self.assertEqual(0, run.returncode, run.stderr)
             self.assertEqual('5.4.3', run.stdout.strip())
-            self.assertIn('#define CEM_VERSION_NUMERIC 5,4,3,0', header.read_text())
+            self.assertIn('#define LAUREONDO_VERSION_NUMERIC 5,4,3,0', header.read_text())
             self.assertFalse((root / '.git').exists())
     def test_generated_header_rejects_symlink_output_without_mutating_target(self):
         with tempfile.TemporaryDirectory() as tmp:

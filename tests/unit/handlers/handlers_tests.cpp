@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/handlers/handlers.hpp"
-#include "citrine_eclipse_mirage/xml/memory_printer.hpp"
+#include "laureondo/handlers/handlers.hpp"
+#include "laureondo/xml/memory_printer.hpp"
 #include <algorithm>
 #include <cstdio>
 #include <functional>
@@ -9,7 +9,7 @@
 #include <tuple>
 #include <vector>
 
-using namespace citrine_eclipse_mirage::handlers;
+using namespace laureondo::handlers;
 static unsigned checks;
 static void require(bool v) {++checks;if(!v)throw std::runtime_error("check "+std::to_string(checks));}
 struct Fixture {
@@ -80,7 +80,7 @@ static void config_and_connected() {
 // This literal is independent of the production table at test runtime. It pins
 // the advertisement, not the existence of complete external service engines.
 static void config_advertisement_wire() {
-    struct NoInput final : citrine_eclipse_mirage::xml::AttributeReader {
+    struct NoInput final : laureondo::xml::AttributeReader {
         const char* attribute(Request,const char*) override {
             throw std::logic_error("GetConfig must not read request attributes");
         }
@@ -123,8 +123,8 @@ static void config_advertisement_wire() {
 </GetConfigResponse>
 )";
     for(int repeat=0;repeat<2;++repeat) {
-        citrine_eclipse_mirage::xml::MemoryPrinter printer;
-        citrine_eclipse_mirage::xml::HandlerWriter writer(printer,reader);
+        laureondo::xml::MemoryPrinter printer;
+        laureondo::xml::HandlerWriter writer(printer,reader);
         require(get_config_02e5f0(writer));
         require(printer.depth()==0);
         // Include exactly one trailing protocol terminator in the comparison.

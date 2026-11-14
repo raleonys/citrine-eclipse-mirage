@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "citrine_eclipse_mirage/handlers/content_handlers.hpp"
+#include "laureondo/handlers/content_handlers.hpp"
 #include <bit>
 #include <limits>
 
-namespace citrine_eclipse_mirage::content_handlers {
+namespace laureondo::content_handlers {
 namespace {
 class Guard {
     Mutex& mutex;
@@ -210,4 +210,4 @@ bool query_image_0314f0(const RequestTree& request,Xml& x,StateReferences s,Effe
     attr(x,"ResourcePath",effects.path_to_utf8_031ca0(result));attr(x,"ImageId",*id);
     close(x);close(x);return true;
 }
-} // namespace citrine_eclipse_mirage::content_handlers
+} // namespace laureondo::content_handlers
